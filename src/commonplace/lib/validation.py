@@ -920,13 +920,6 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
-MEMBER_TYPES = frozenset({
-    "types/agentic-system-runtime-report.md",
-    "types/agentic-system-epistemic-report.md",
-})
-
-
-@type_rule("types/agentic-system-analysis-result.md")
 @type_rule("types/agent-memory-analysis-report.md")
 @type_rule("types/agentic-system-runtime-report.md")
 @type_rule("types/agentic-system-epistemic-report.md")
@@ -936,45 +929,19 @@ def _agentic_evidence_and_references_rule(
     from commonplace.lib.agentic_records import record_reference_errors
 
     metadata = parsed.document.frontmatter or {}
-    note_type = metadata.get("type")
-    is_report = note_type == "types/agent-memory-analysis-report.md"
+    is_report = metadata.get("type") == "types/agent-memory-analysis-report.md"
     finalized = is_report and isinstance(metadata.get("finalized-from"), str)
     # A member validated alone cannot resolve references the set declares
-    # elsewhere; the set verifier does that. The single-file result and the
-    # specialist's local report keep their own resolution rules.
-    member = note_type in MEMBER_TYPES or finalized
+    # elsewhere; run-state verification resolves them across the set, and
+    # applies the set's quote minimum. The specialist's local report keeps
+    # its own rule: it may cite commissioned IDs it does not declare.
     errors = record_reference_errors(
-        parsed.document.body, memory_report=is_report and not finalized, member=member
+        parsed.document.body, memory_report=is_report and not finalized, member=True
     )
     results.fails.extend(errors)
     if not errors:
         results.passes.append("record references: explicit IDs and declarations checked")
     validate_quote_citations(results, parsed.content)
-    disposition = metadata.get("report-status" if is_report else "result-disposition")
-    if disposition == "complete" and not any(
-        citation.quote and citation.attribution for citation in parse_blockquotes(parsed.document.body)
-    ):
-        results.fails.append(
-            "source evidence: complete analysis requires quoted source evidence; "
-            "bare file and line citations are insufficient"
-        )
-
-
-@type_rule("types/agentic-system-analysis-result.md")
-def _agentic_comparison_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    from commonplace.lib.systems_matrix import validate_comparison
-
-    metadata = parsed.document.frontmatter or {}
-    if "memory-comparison" not in metadata:
-        return
-    try:
-        validate_comparison(metadata["memory-comparison"], parsed.document.body)
-    except ValueError as exc:
-        results.fails.append(f"memory comparison: {exc}")
-    else:
-        results.passes.append("memory comparison: assessments and canonical references resolve")
 
 
 @type_rule("types/agent-memory-analysis-report.md")
@@ -982,13 +949,17 @@ def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     from commonplace.lib.agentic_records import annotated_ids, declared_ids
-    from commonplace.lib.systems_matrix import validate_comparison
+    from commonplace.lib.systems_matrix import shared_record_ids, validate_comparison
 
     metadata = parsed.document.frontmatter or {}
     body = parsed.document.body
     finalized = isinstance(metadata.get("finalized-from"), str)
-    # A finalized member cites seeded records through its annotations.
-    known = set(declared_ids(body)) | annotated_ids(body) if finalized else None
+    # Either regime cites seeded records through its `On <ID>` annotations.
+    # The local report also declares proposals; the finalized member declares
+    # their canonical records.
+    known = annotated_ids(body) | (
+        set(declared_ids(body)) if finalized else shared_record_ids(body, memory_report=True)
+    )
     try:
         validate_comparison(
             metadata.get("memory-comparison"), body,

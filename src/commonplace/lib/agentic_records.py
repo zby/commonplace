@@ -7,12 +7,16 @@ from collections import Counter
 
 _KINDS = r"(?:SRC|CMP|OBJ|RTE|CLM|ABS|BAP)"
 _ID = rf"{_KINDS}-\d+"
+RECORD_ID = _ID
+"""Pattern of one canonical record ID, for callers that build their own regexes."""
 _REFERENCE = re.compile(rf"(?<![\w-])({_ID})(?![\w-])")
 _DECLARATION = re.compile(
     rf"(?m)^[ \t]*(?:\|[ \t]*|[-*][ \t]+|#{{3,6}}[ \t]+)?[*`]*({_ID})(?![\w-])"
 )
 _ANNOTATION = re.compile(rf"(?m)^[ \t]*#{{3,6}}[ \t]+On[ \t]+({_ID})(?![\w-])")
 _PROPOSAL = re.compile(rf"\b(?:MEM|EPI)-(?:{_ID}|[OCRSAB]\d+)\b")
+PROPOSAL_TOKEN = re.compile(rf"(?<![\w-])(?:MEM|EPI)-{_ID}(?![\w-])")
+"""One complete proposal ID, the unit of exact-token mapping at finalization."""
 _SHORTHAND = re.compile(
     rf"(?<![\w-])(?:(?:MEM|EPI)-)?{_ID}[*`]*[ \t]*"
     rf"(?:[/,][ \t]*[*`]*(?:[OCRSAB]\d+|{_KINDS}\d+|\d+)"
@@ -40,7 +44,8 @@ def _analysis_prose(body: str) -> str:
     return "\n".join(lines) + "\n"
 
 
-def _section(body: str, title: str) -> str:
+def section(body: str, title: str) -> str:
+    """The text under one level-two heading, or empty when the heading is absent."""
     match = re.search(rf"(?ms)^## {re.escape(title)}[ \t]*\n(.*?)(?=^## |\Z)", body)
     return match[1] if match else ""
 
@@ -50,7 +55,7 @@ def declared_ids(body: str) -> list[str]:
 
     An annotation heading (`#### On OBJ-1 — label`) is not a declaration.
     """
-    return _DECLARATION.findall(_section(_analysis_prose(body), "Shared records"))
+    return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
 
 def annotated_ids(body: str) -> set[str]:
@@ -60,7 +65,7 @@ def annotated_ids(body: str) -> set[str]:
 
 def source_ids(body: str) -> set[str]:
     return {value for value in _REFERENCE.findall(
-        _section(_analysis_prose(body), "Source register")
+        section(_analysis_prose(body), "Source register")
     ) if value.startswith("SRC-")}
 
 
@@ -99,7 +104,7 @@ def record_reference_errors(
             "record references: unintegrated proposal IDs outside Reconciliation: "
             + ", ".join(local_records)
         )
-    declarations = _DECLARATION.findall(_section(prose, "Shared records"))
+    declarations = _DECLARATION.findall(section(prose, "Shared records"))
     repeated = sorted(key for key, count in Counter(declarations).items() if count > 1)
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))

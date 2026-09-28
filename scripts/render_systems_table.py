@@ -69,7 +69,7 @@ def render(rows: list[dict[str, str]], output: Path) -> str:
         )
         for row in selected:
             public = os.path.relpath(REPO_ROOT / row["review_file"], output.parent)
-            evidence = os.path.relpath(REPO_ROOT / row["result_file"], output.parent)
+            evidence = os.path.relpath(REPO_ROOT / row["overview_file"], output.parent)
             cells = [
                 f"[{cell(row['system_name'])}]({public})",
                 cell(row["comparison_scope"]),
@@ -82,7 +82,7 @@ def render(rows: list[dict[str, str]], output: Path) -> str:
     for row in rows:
         lines.extend(
             [
-                f"- `{row['review_file']}`: `{row['review_sha256']}`; exact result `{row['result_file']}`: `{row['result_sha256']}`; source `{row['source_identity']}` at `{row['reviewed_revision']}`."
+                f"- `{row['review_file']}`: `{row['review_sha256']}`; overview `{row['overview_file']}`: `{row['overview_sha256']}`; source `{row['source_identity']}` at `{row['reviewed_revision']}`."
             ]
         )
     return "\n".join(lines) + "\n"

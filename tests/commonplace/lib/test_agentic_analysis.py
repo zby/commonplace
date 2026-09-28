@@ -17,7 +17,7 @@ from commonplace.cli import (
     agentic_analysis_publication,
     quote,
 )
-from commonplace.lib import agentic_publication, systems_matrix, validation
+from commonplace.lib import agentic_publication, agentic_set, systems_matrix, validation
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
     render_agentic_analysis_handoff,
@@ -32,6 +32,16 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
+SOURCE = "https://example.invalid/example-system"
+STATE_DIR = Path("kb/reports/state/agentic-system-analysis")
+REVIEW_PATH = "kb/agentic-systems/reviews/example-system.md"
+# The fixture set's Reconciliation mapping: the specialist's one proposal.
+MAPPING = {"MEM-OBJ-1": "OBJ-2"}
+MEMBER_TYPES = {
+    "runtime.md": "types/agentic-system-runtime-report.md",
+    "memory.md": "types/agent-memory-analysis-report.md",
+    "epistemic.md": "types/agentic-system-epistemic-report.md",
+}
 
 
 def write(path: Path, content: str) -> Path:
@@ -49,6 +59,10 @@ def configure_types(tmp_path: Path) -> None:
     shutil.copytree(
         REPO_ROOT / "kb/agent-memory-systems/types",
         tmp_path / "kb/agent-memory-systems/types",
+    )
+    shutil.copytree(
+        REPO_ROOT / "kb/agentic-systems/types",
+        tmp_path / "kb/agentic-systems/types",
     )
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
     shutil.copytree(
@@ -98,48 +112,260 @@ def state_text(frontmatter: dict[str, object]) -> str:
     )
 
 
+def frontmatter(path: Path) -> dict[str, object]:
+    content = path.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    return document.frontmatter
+
+
+def body_of(path: Path) -> str:
+    document, error = validation.parse_document(path.read_text(encoding="utf-8"))
+    assert error is None and document is not None
+    return document.body
+
+
+def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
+    content = path.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None
+    path.write_text(
+        "---\n"
+        + yaml.safe_dump(values, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+
+def uninspected_profile(scope: str) -> dict:
+    return {
+        "scope": scope,
+        "axes": {
+            axis: {"assessment": "uninspected", "evidence": {}, "values": [],
+                   "records": [], "note": "Not inspected in this fixture."}
+            for axis in systems_matrix.AXES
+        },
+    }
+
+
 def memory_report_fixture(run_dir: Path, revision: str) -> Path:
-    handoff = write(run_dir / "memory-input.md", "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n")
-    profile = {
-        "scope": "Fixture scope",
-        "axes": {axis: {"assessment": "uninspected", "evidence": {},
-                         "values": [], "records": [], "note": "Fixture gap."}
-                 for axis in systems_matrix.AXES},
+    """The specialist's local report: one proposal, one re-declared seed, one quote."""
+    handoff = write(
+        run_dir / "memory-input.md",
+        "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n",
+    )
+    profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
+    profile["axes"]["storage_substrate"] = {
+        "assessment": "known", "values": ["sqlite", "files"],
+        "evidence": {v: {"basis": "wired", "records": ["MEM-OBJ-1"], "note": "Fixture witness."}
+                     for v in ["sqlite", "files"]},
+        "records": ["MEM-OBJ-1"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
         "type": "types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "analysis-run": RUN_ID,
-        "source-identity": "https://example.invalid/example-system",
+        "source-identity": SOURCE,
         "reviewed-boundary": revision,
         "report-status": "complete",
         "canonical-register-sha256": digest(handoff),
         "worker-model": "fixture-model",
         "method-sha256": "a" * 64,
+        "finalized-from": None,
         "memory-comparison": profile,
     }
-    body = "# Fixture memory analysis\n\n" + "\n\n".join(
-        f"## {heading}\n\nFixture evidence."
-        for heading in ("Boundary and evidence", "Core ideas", "Shared records",
-                        "Write side", "Read-back", "Comparison rationale",
-                        "Integration issues", "Limitations and checks")
+    body = f"""# Fixture memory analysis
+
+## Boundary and evidence
+
+Fixture evidence at `README.md:1`.
+
+## Core ideas
+
+Fixture finding.
+
+> # Frozen source
+> --- `README.md` @ `{revision}`
+
+## Shared records
+
+### Components
+
+none proposed.
+
+### Operative objects
+
+#### MEM-OBJ-1 — Fixture memory store
+
+Proposed store, from SRC-1.
+
+### Routes
+
+#### RTE-1 — Fixture route
+
+Seeded route with the specialist's memory fields.
+
+### Claims
+
+none proposed.
+
+### Evidenced absences
+
+none proposed.
+
+### Behavioral-authority paths
+
+none proposed.
+
+## Write side
+
+Fixture evidence on MEM-OBJ-1.
+
+## Read-back
+
+Fixture evidence on RTE-1.
+
+## Comparison rationale
+
+Both stores are MEM-OBJ-1.
+
+## Integration issues
+
+none
+
+## Limitations and checks
+
+Fixture evidence.
+"""
+    return write(
+        run_dir / "memory-report.md",
+        "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n" + body,
     )
-    body += f"\n\n> # Frozen source\n> --- `README.md` @ `{revision}`\n"
-    return write(run_dir / "memory-report.md", "---\n" + yaml.safe_dump(values) + "---\n\n" + body + "\n")
 
 
-def valid_run_state(tmp_path: Path) -> Path:
-    configure_types(tmp_path)
-    run_dir = tmp_path / "kb/reports/state/agentic-system-analysis" / RUN_ID
-    source_root, revision = git_checkout(
-        tmp_path / "related-systems/example--system"
+def finalized_member_text(local: Path, mapping: dict[str, str] = MAPPING) -> str:
+    """The coordinator's finalization, written out by hand for the fixture.
+
+    Exact-token mapping of proposal IDs, the re-declared seed turned into an
+    annotation heading, ``finalized-from`` set, and an Amendments section.
+    """
+    text = local.read_text(encoding="utf-8")
+    for proposal, canonical in mapping.items():
+        text = re.sub(rf"(?<![\w-]){re.escape(proposal)}(?![\w-])", canonical, text)
+    text = text.replace("#### RTE-1 — Fixture route", "#### On RTE-1 — Fixture route")
+    document, error = validation.parse_document(text)
+    assert error is None and document is not None and document.frontmatter is not None
+    values = {**document.frontmatter, "finalized-from": digest(local)}
+    return (
+        "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n"
+        + document.body.rstrip("\n") + "\n\n## Amendments\n\nnone\n"
     )
-    result_path = f"kb/reports/state/agentic-system-analysis/{RUN_ID}/result.md"
-    report = memory_report_fixture(run_dir, revision)
-    result = write(
-        tmp_path / result_path,
-        f'''---
-type: types/agentic-system-analysis-result.md
+
+
+def runtime_text(revision: str) -> str:
+    return f"""---
+type: types/agentic-system-runtime-report.md
+description: "Runtime baseline of Example System at the fixture boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+---
+
+# Example System runtime report
+
+## Runtime account
+
+No dynamic check planned; static evidence at `README.md:1` sufficed.
+
+## Probe evidence
+
+none
+
+## Shared records
+
+### Components
+
+#### CMP-1 — Fixture component
+
+Record. Evidence: SRC-1.
+
+### Operative objects
+
+#### OBJ-1 — Fixture object
+
+Record. Evidence: SRC-1.
+
+### Routes
+
+#### RTE-1 — Fixture route
+
+Record. Evidence: SRC-1.
+
+### Claims
+
+#### CLM-1 — Fixture claim
+
+Record. Evidence: SRC-1.
+
+### Evidenced absences
+
+none found within the fixture boundary.
+
+### Behavioral-authority paths
+
+#### BAP-1 — Fixture authority path
+
+Record. Evidence: SRC-1.
+
+## Annotations
+
+none
+"""
+
+
+def epistemic_text(revision: str) -> str:
+    return f"""---
+type: types/agentic-system-epistemic-report.md
+description: "Epistemic routes of Example System at the fixture boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+---
+
+# Example System epistemic report
+
+## Source-and-claim boundary
+
+Boundary from the overview's Source register.
+
+## Epistemic-object inventory
+
+OBJ-1 and OBJ-2 carry no candidate truth-apt content.
+
+## Authority-route ledger
+
+RTE-1: no content change.
+
+## Per-object lifecycle disposition
+
+No candidate lifecycle records: no candidate truth-apt output found within the source boundary.
+
+## System-claim versus route comparison
+
+CLM-1 is compared with RTE-1.
+
+## Bounded conclusion
+
+Conclusion.
+"""
+
+
+def overview_text(revision: str, members: dict[str, Path]) -> str:
+    manifest = "\n".join(
+        f"  - path: {name}\n    sha256: {digest(path)}\n    type: {MEMBER_TYPES[name]}"
+        for name, path in members.items()
+    )
+    return f"""---
+type: types/agentic-system-analysis-overview.md
 description: "Complete fixture analysis at one frozen source boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -150,19 +376,17 @@ boundary-kind: whole-system
 reviewed-boundary: {revision}
 analysis-cutoff: "2026-09-04"
 evidence-tier: code-grounded
+members:
+{manifest}
 ---
 
-# Example result
+# Example System agentic-system analysis
 
 ## Run identity
 
 **Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md`
 
-**Generated review:** `kb/agentic-systems/reviews/example-system.md`
-
-**Memory analysis report:** `{report.relative_to(tmp_path).as_posix()}`
-
-**Memory analysis report SHA-256:** `{digest(report)}`
+**Generated review:** `{REVIEW_PATH}`
 
 ## Boundary and evidence
 
@@ -170,40 +394,7 @@ Fixture boundary at `{revision}`.
 
 ## Source register
 
-Source evidence: SRC-1, `https://example.invalid/example-system`, `README.md:1`.
-
-> # Frozen source
-> --- `README.md` @ `{revision}`
-
-## Shared records
-
-### Components
-
-CMP-1 fixture component.
-
-### Operative objects
-
-OBJ-1 fixture object.
-
-### Routes
-
-RTE-1 fixture route.
-
-### Claims
-
-CLM-1 fixture claim.
-
-### Evidenced absences
-
-None found within the fixture boundary.
-
-### Behavioral-authority paths
-
-BAP-1 fixture authority path.
-
-## Runtime account
-
-No dynamic check planned.
+| SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md:1` | none |
 
 ## Lens scoping
 
@@ -215,23 +406,17 @@ Brief fixture scope.
 
 Brief fixture scope.
 
-## Lens outputs
-
-### Memory/context lens
-
-Fixture finding.
-
-### Epistemic lens
-
-Fixture finding.
-
 ## Reconciliation
 
-No conflicts.
+| specialist proposal | canonical record | disposition |
+|---|---|---|
+| MEM-OBJ-1 | OBJ-2 | registered |
+
+Finalized from `memory-report.md`; no mechanical edits beyond the mapping.
 
 ## Bounded synthesis
 
-Fixture synthesis.
+Fixture synthesis over OBJ-1, OBJ-2 and RTE-1.
 
 ## Limitations
 
@@ -250,44 +435,64 @@ Passed.
 ### Blockers
 
 None.
-''',
-    )
-    profile = {
-        "scope": "The fixture's accumulated project memory and retrieval routes",
-        "axes": {
-            axis: {"assessment": "uninspected", "evidence": {}, "values": [],
-                   "records": [], "note": "Not inspected in this fixture."}
-            for axis in systems_matrix.AXES
-        },
-    }
-    profile["axes"]["storage_substrate"] = {
-        "assessment": "known", "values": ["sqlite", "files"],
-        "evidence": {v: {"basis": "wired", "records": ["OBJ-1"], "note": "Fixture witness."} for v in ["sqlite", "files"]},
-        "records": ["OBJ-1"], "note": "Both stores occur within the fixture boundary.",
-    }
-    replace_frontmatter(result, {**frontmatter(result), "memory-comparison": profile})
-    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
-    retained.parent.mkdir(parents=True, exist_ok=True)
-    retained.write_bytes(result.read_bytes())
-    generated_path = "kb/agentic-systems/reviews/example-system.md"
-    generated = write(
-        tmp_path / generated_path,
-        f'''---
+"""
+
+
+def review_text(revision: str, overview: Path) -> str:
+    return f"""---
 description: "Generated fixture review of one external agentic system"
-type: types/note.md
+type: agentic-systems/types/generated-review.md
 generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
-source-identity: https://example.invalid/example-system
+source-identity: {SOURCE}
 reviewed-revision: {revision}
-analysis-result: {systems_matrix.retained_result_path(RUN_ID).as_posix()}
-analysis-result-sha256: {digest(result)}
+analysis-overview: {agentic_set.retained_overview_path(RUN_ID).as_posix()}
+analysis-overview-sha256: {digest(overview)}
 ---
 
 # Example System
 
-**Evidence basis:** `README.md:1` at `{revision}`.
-''',
+Evidence basis: `README.md:1` at `{revision}`.
+"""
+
+
+def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
+    return tmp_path / STATE_DIR / run_id
+
+
+def refinalize(run_dir: Path) -> None:
+    """Rebuild memory.md from the local report and re-pin the overview manifest."""
+    write(run_dir / "memory.md", finalized_member_text(run_dir / "memory-report.md"))
+    overview = run_dir / "overview.md"
+    values = frontmatter(overview)
+    values["members"] = [
+        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]
+    replace_frontmatter(overview, values)
+
+
+def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
+    for name, retained in agentic_set.retained_set_paths(run_id).items():
+        (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / retained).write_bytes((run_dir / name).read_bytes())
+
+
+def valid_run_state(tmp_path: Path) -> Path:
+    configure_types(tmp_path)
+    run_dir = run_dir_of(tmp_path)
+    source_root, revision = git_checkout(
+        tmp_path / "related-systems/example--system"
     )
+    local = memory_report_fixture(run_dir, revision)
+    members = {
+        "runtime.md": write(run_dir / "runtime.md", runtime_text(revision)),
+        "memory.md": write(run_dir / "memory.md", finalized_member_text(local)),
+        "epistemic.md": write(run_dir / "epistemic.md", epistemic_text(revision)),
+    }
+    overview = write(run_dir / "overview.md", overview_text(revision, members))
+    retain_set(tmp_path, run_dir)
+    generated = write(tmp_path / REVIEW_PATH, review_text(revision, overview))
     run_frontmatter: dict[str, object] = {
         "type": "types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
@@ -297,57 +502,51 @@ analysis-result-sha256: {digest(result)}
         "result-disposition": "complete",
         "source": {
             "kind": "git",
-            "identity": "https://example.invalid/example-system",
+            "identity": SOURCE,
             "revision": revision,
             "path": source_root.as_posix(),
             "sha256": None,
         },
-        "result": {"path": result_path, "sha256": digest(result)},
+        "overview": {
+            "path": (STATE_DIR / RUN_ID / "overview.md").as_posix(),
+            "sha256": digest(overview),
+        },
         "generated-review": {
-            "path": generated_path,
+            "path": REVIEW_PATH,
             "sha256": digest(generated),
         },
-
-
-
         "failure": None,
     }
     return write(run_dir / "run-state.md", state_text(run_frontmatter))
 
 
-def frontmatter(path: Path) -> dict[str, object]:
-    content = path.read_text(encoding="utf-8")
-    document, error = validation.parse_document(content)
-    assert error is None and document is not None and document.frontmatter is not None
-    return document.frontmatter
+def sync_set(tmp_path: Path, values: dict) -> None:
+    """Re-derive the member, manifest, retained copies and pins after an edit.
 
-
-def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
-    content = path.read_text(encoding="utf-8")
-    document, error = validation.parse_document(content)
-    assert error is None and document is not None
-    path.write_text(
-        "---\n"
-        + yaml.safe_dump(values, sort_keys=False)
-        + "---\n"
-        + document.body,
-        encoding="utf-8",
-    )
-
-
-def sync_retained_fixture(tmp_path: Path, values: dict) -> None:
-    result = tmp_path / values["result"]["path"]
-    report = result.parent / "memory-report.md"
+    The local report follows the state's source identity and boundary, as the
+    specialist's handoff would; the review's pin follows the overview.
+    """
+    run_dir = tmp_path / Path(values["overview"]["path"]).parent
+    report = run_dir / "memory-report.md"
     report_values = frontmatter(report)
     report_values.update({"source-identity": values["source"]["identity"],
                           "reviewed-boundary": values["source"]["revision"]})
     replace_frontmatter(report, report_values)
-    result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
-                             rf"\g<1>`{digest(report)}`", result.read_text()))
-    values["result"]["sha256"] = digest(result)
+    refinalize(run_dir)
+    retain_set(tmp_path, run_dir)
+    values["overview"]["sha256"] = digest(run_dir / "overview.md")
     generated = tmp_path / values["generated-review"]["path"]
-    (tmp_path / systems_matrix.retained_result_path(RUN_ID)).write_bytes(result.read_bytes())
-    replace_frontmatter(generated, {**frontmatter(generated), "analysis-result-sha256": digest(result)})
+    replace_frontmatter(generated, {
+        **frontmatter(generated), "analysis-overview-sha256": digest(run_dir / "overview.md"),
+    })
+    values["generated-review"]["sha256"] = digest(generated)
+
+
+def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
+    """Move every set document, the local report and the review to another boundary."""
+    for path in (*(run_dir / name for name in ("overview.md", *MEMBER_TYPES)),
+                 run_dir / "memory-report.md", tmp_path / REVIEW_PATH):
+        path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
 
 def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
@@ -360,9 +559,9 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     candidate = state.parent / "generated-review.candidate.md"
     candidate.write_bytes(generated_bytes)
     public.unlink()
-    (tmp_path / systems_matrix.retained_result_path(RUN_ID)).unlink()
+    shutil.rmtree(tmp_path / agentic_set.retained_overview_path(RUN_ID).parent)
     values.update({"run-status": "running", "result-disposition": None,
-                   "result": None, "generated-review": None, "failure": None})
+                   "overview": None, "generated-review": None, "failure": None})
     replace_frontmatter(state, values)
     return state, PublicationSpec(tmp_path, state, candidate, destination, "absent"), generated_bytes
 
@@ -405,11 +604,8 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
         "run-status": "running",
         "result-disposition": None,
         "source": None,
-        "result": None,
+        "overview": None,
         "generated-review": None,
-
-
-
         "failure": None,
     }
     write(state, state_text(values))
@@ -430,11 +626,8 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
         "run-status": "failed",
         "result-disposition": None,
         "source": None,
-        "result": None,
+        "overview": None,
         "generated-review": None,
-
-
-
         "failure": "Generated review candidate failed validation; rerun required.",
     }
     write(state, state_text(values))
@@ -452,11 +645,8 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
             "run-status": "failed",
             "result-disposition": None,
             "source": None,
-            "result": None,
+            "overview": None,
             "generated-review": None,
-
-
-
             "failure": None,
         }
     )
@@ -467,35 +657,67 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
     assert any("failure" in item for item in results.fails)
 
 
-def test_complete_state_rejects_changed_result_bytes(tmp_path: Path) -> None:
+def test_complete_state_rejects_changed_overview_bytes(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    result = state.parent / "result.md"
-    result.write_text(result.read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
+    overview = state.parent / "overview.md"
+    overview.write_text(overview.read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("result: SHA-256 mismatch" in item for item in results.fails)
+    assert any("overview: SHA-256 mismatch" in item for item in results.fails)
 
 
-def test_complete_state_rejects_invalid_exact_result_with_matching_hash(
+@pytest.mark.parametrize("member", ["runtime.md", "memory.md", "epistemic.md"])
+def test_complete_state_rejects_a_member_that_drifted_from_the_manifest(
+    tmp_path: Path, member: str
+) -> None:
+    state = valid_run_state(tmp_path)
+    path = state.parent / member
+    path.write_text(path.read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(f"member set: manifest: {member} bytes hash to" in item for item in results.fails)
+
+
+def test_complete_state_rejects_invalid_overview_with_matching_hash(
     tmp_path: Path,
 ) -> None:
     state = valid_run_state(tmp_path)
-    result = state.parent / "result.md"
-    result.write_text(
-        result.read_text(encoding="utf-8").replace(
-            "## Reconciliation\n\nNo conflicts.\n\n",
-            "",
-        ),
+    overview = state.parent / "overview.md"
+    overview.write_text(
+        overview.read_text(encoding="utf-8").replace("## Limitations\n\nNone.\n\n", ""),
         encoding="utf-8",
     )
     values = frontmatter(state)
-    values["result"]["sha256"] = digest(result)  # type: ignore[index]
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("result validation" in item for item in results.fails)
+    assert any("overview validation" in item for item in results.fails)
+
+
+@pytest.mark.parametrize("member", ["runtime.md", "memory.md", "epistemic.md"])
+def test_complete_state_rejects_an_invalid_member_pinned_by_the_manifest(
+    tmp_path: Path, member: str
+) -> None:
+    state = valid_run_state(tmp_path)
+    path = state.parent / member
+    heading = {"runtime.md": "## Annotations", "memory.md": "## Read-back",
+               "epistemic.md": "## Bounded conclusion"}[member]
+    path.write_text(path.read_text(encoding="utf-8").replace(heading, "## Renamed"), encoding="utf-8")
+    if member == "memory.md":
+        # Keep the derivation honest: the local report carries the same edit.
+        local = state.parent / "memory-report.md"
+        local.write_text(local.read_text(encoding="utf-8").replace(heading, "## Renamed"), encoding="utf-8")
+    values = frontmatter(state)
+    sync_set(tmp_path, values)
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(f"{member} validation" in item for item in results.fails)
 
 
 def test_complete_state_rejects_generated_review_from_another_source(
@@ -517,30 +739,30 @@ def test_complete_state_rejects_generated_review_from_another_source(
     assert any("source-identity" in item for item in results.fails)
 
 
-def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
+def test_blocked_overview_completes_without_members_or_public_review(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
     values = frontmatter(state)
-    result = state.parent / "result.md"
-    content = result.read_text(encoding="utf-8")
-    content = content.replace("result-disposition: complete", "result-disposition: blocked")
-    content = content.replace(
-        f"reviewed-boundary: {values['source']['revision']}",  # type: ignore[index]
-        "reviewed-boundary: null",
+    overview = state.parent / "overview.md"
+    overview.write_text(
+        overview.read_text(encoding="utf-8").replace(
+            f"**Generated review:** `{REVIEW_PATH}`",
+            "**Generated review:** not applicable",
+        ),
+        encoding="utf-8",
     )
-    content = content.replace(
-        "**Generated review:** `kb/agentic-systems/reviews/example-system.md`",
-        "**Generated review:** not applicable",
-    )
-    result.write_text(content, encoding="utf-8")
+    replace_frontmatter(overview, {
+        **frontmatter(overview), "result-disposition": "blocked", "target-class": None,
+        "boundary-kind": None, "reviewed-boundary": None, "analysis-cutoff": None,
+        "evidence-tier": None, "members": [],
+    })
+    for name in MEMBER_TYPES:
+        (state.parent / name).unlink()
     values.update(
         {
             "result-disposition": "blocked",
             "source": None,
-            "result": {"path": values["result"]["path"], "sha256": digest(result)},  # type: ignore[index]
+            "overview": {"path": values["overview"]["path"], "sha256": digest(overview)},  # type: ignore[index]
             "generated-review": None,
-
-
-
         }
     )
     replace_frontmatter(state, values)
@@ -548,6 +770,93 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert results.fails == []
+
+
+@pytest.mark.parametrize("mutation", [
+    "unmapped-proposal", "reworded-member", "re-declared-seed", "stale-finalized-from",
+    "runtime-run-id", "epistemic-boundary", "memory-source",
+])
+def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, mutation: str) -> None:
+    state = valid_run_state(tmp_path)
+    run_dir = state.parent
+    values = frontmatter(state)
+    sync_set(tmp_path, values)
+    expected = {
+        "unmapped-proposal": "finalization: memory member frontmatter differs",
+        "reworded-member": "finalization: memory member body differs",
+        "re-declared-seed": "RTE-1 declared in more than one member",
+        "stale-finalized-from": "finalized-from does not match memory-report.md bytes",
+        "runtime-run-id": "member set: runtime.md: run-id does not match the overview",
+        "epistemic-boundary": "member set: epistemic.md: reviewed-boundary does not match the overview",
+        "memory-source": "member set: memory.md: source-identity does not match the frozen source",
+    }[mutation]
+    if mutation == "unmapped-proposal":
+        overview = run_dir / "overview.md"
+        overview.write_text(overview.read_text().replace("| MEM-OBJ-1 | OBJ-2 | registered |", ""))
+    elif mutation == "reworded-member":
+        member = run_dir / "memory.md"
+        member.write_text(member.read_text().replace("Fixture finding.", "Coordinator's own finding."))
+    elif mutation == "re-declared-seed":
+        member = run_dir / "memory.md"
+        member.write_text(member.read_text().replace("#### On RTE-1 —", "#### RTE-1 —"))
+    elif mutation == "stale-finalized-from":
+        report = run_dir / "memory-report.md"
+        report.write_text(report.read_text() + "\nLater specialist edit.\n")
+    elif mutation == "runtime-run-id":
+        path = run_dir / "runtime.md"
+        replace_frontmatter(path, {**frontmatter(path), "run-id": RUN_ID[:-2] + "09"})
+    elif mutation == "epistemic-boundary":
+        path = run_dir / "epistemic.md"
+        replace_frontmatter(path, {**frontmatter(path), "reviewed-boundary": "0" * 40})
+    else:
+        path = run_dir / "memory.md"
+        replace_frontmatter(path, {**frontmatter(path), "source-identity": "https://example.invalid/other"})
+    # Re-pin the manifest and copies around the edit without regenerating the member.
+    overview = run_dir / "overview.md"
+    data = frontmatter(overview)
+    data["members"] = [
+        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]
+    replace_frontmatter(overview, data)
+    retain_set(tmp_path, run_dir)
+    values["overview"]["sha256"] = digest(overview)
+    generated = tmp_path / REVIEW_PATH
+    replace_frontmatter(generated, {**frontmatter(generated), "analysis-overview-sha256": digest(overview)})
+    values["generated-review"]["sha256"] = digest(generated)
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(expected in item for item in results.fails), results.fails
+
+
+def test_complete_state_resolves_the_profile_against_the_whole_set(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    run_dir = state.parent
+    report = run_dir / "memory-report.md"
+    metadata = frontmatter(report)
+    axis = metadata["memory-comparison"]["axes"]["read_back_direction"]
+    axis.update({"assessment": "known", "values": ["pull"], "records": ["RTE-1"],
+                 "evidence": {"pull": {"basis": "wired", "records": ["RTE-1"], "note": "Seeded route."}}})
+    metadata["memory-comparison"]["axes"]["read_back_signal"]["assessment"] = "inapplicable"
+    replace_frontmatter(report, metadata)
+    values = frontmatter(state)
+    sync_set(tmp_path, values)
+    replace_frontmatter(state, values)
+
+    assert validation.validate_note(state, repo_root=tmp_path).fails == []
+
+    # A record no member declares fails at the set, even though the member alone passes.
+    report.write_text(report.read_text().replace("- RTE-1", "- RTE-77"))
+    sync_set(tmp_path, values)
+    replace_frontmatter(state, values)
+    assert validation.validate_note(run_dir / "memory-report.md", repo_root=tmp_path).fails != []
+    results = validation.validate_note(state, repo_root=tmp_path)
+    assert any(
+        "set memory comparison: read_back_direction: unresolved canonical records" in item
+        for item in results.fails
+    ), results.fails
 
 
 def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
@@ -561,37 +870,24 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         "path": capture.as_posix(),
         "sha256": digest(capture),
     }
-    result = state.parent / "result.md"
-    content = result.read_text(encoding="utf-8")
-    old_revision = frontmatter(result)["reviewed-boundary"]
-    result.write_text(
-        content.replace(
-            f"reviewed-boundary: {old_revision}",
-            "reviewed-boundary: capture-2026-09-04",
-        ),
-        encoding="utf-8",
-    )
-    for artifact in (result, state.parent / "memory-report.md"):
-        artifact.write_text(artifact.read_text().replace(
-            f"`README.md` @ `{old_revision}`",
-            f"`{capture.as_posix()}` @ `sha256:{digest(capture)}`",
-        ))
-    values["result"]["sha256"] = digest(result)  # type: ignore[index]
+    old_revision = frontmatter(state.parent / "overview.md")["reviewed-boundary"]
+    rewrite_boundary(tmp_path, state.parent, old_revision, "capture-2026-09-04")
+    report = state.parent / "memory-report.md"
+    report.write_text(report.read_text().replace(
+        "`README.md` @ `capture-2026-09-04`",
+        f"`{capture.as_posix()}` @ `sha256:{digest(capture)}`",
+    ))
     generated = tmp_path / values["generated-review"]["path"]  # type: ignore[index]
     generated.write_text(
         generated.read_text(encoding="utf-8").replace(
-            f"reviewed-revision: {old_revision}",
-            "reviewed-revision: capture-2026-09-04",
-        ).replace(
-            "source-identity: https://example.invalid/example-system",
+            f"source-identity: {SOURCE}",
             "source-identity: document bundle",
         )
         + "\n> captured\n> source\n"
         + f"> --- `{capture.as_posix()}` @ `sha256:{digest(capture)}`\n",
         encoding="utf-8",
     )
-    sync_retained_fixture(tmp_path, values)
-    values["generated-review"]["sha256"] = digest(generated)  # type: ignore[index]
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
@@ -602,21 +898,22 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
 
 def test_source_anchor_past_blob_end_is_rejected(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    result = state.parent / "result.md"
-    result.write_text(
-        result.read_text(encoding="utf-8") + "\nBad citation: `README.md:99`.\n",
+    runtime = state.parent / "runtime.md"
+    runtime.write_text(
+        runtime.read_text(encoding="utf-8") + "\nBad citation: `README.md:99`.\n",
         encoding="utf-8",
     )
     values = frontmatter(state)
-    values["result"]["sha256"] = digest(result)  # type: ignore[index]
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("outside the recorded blob" in item for item in results.fails)
+    assert any("runtime.md source citation" in item and "outside the recorded blob" in item
+               for item in results.fails)
 
 
-@pytest.mark.parametrize("output_role", ["result", "generated-review"])
+@pytest.mark.parametrize("output_role", ["overview", "generated-review"])
 @pytest.mark.parametrize(
     ("citation", "expected_error"),
     [
@@ -655,9 +952,7 @@ def test_github_citations_match_the_frozen_source(
     )
     with output.open("a", encoding="utf-8") as handle:
         handle.write(f"\nSource evidence: [source](https://github.com/{target}).\n")
-    sync_retained_fixture(tmp_path, values)
-    for role in ("result", "generated-review"):
-        values[role]["sha256"] = digest(tmp_path / values[role]["path"])
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
@@ -669,7 +964,7 @@ def test_github_citations_match_the_frozen_source(
         assert any(expected_error in item for item in results.fails)
 
 
-@pytest.mark.parametrize("output_role", ["result", "generated-review"])
+@pytest.mark.parametrize("output_role", ["overview", "generated-review"])
 @pytest.mark.parametrize("citation_kind", ["local", "github"])
 def test_quote_anchors_resolve_from_the_recorded_commit(
     tmp_path: Path, output_role: str, citation_kind: str
@@ -700,9 +995,7 @@ def test_quote_anchors_resolve_from_the_recorded_commit(
             "\n> # Frozen\n> source\n"
             f"> --- {attribution}\n"
         )
-    sync_retained_fixture(tmp_path, values)
-    for role in ("result", "generated-review"):
-        values[role]["sha256"] = digest(tmp_path / values[role]["path"])
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
@@ -723,9 +1016,7 @@ def test_quote_anchor_rejects_text_found_only_in_the_worktree(tmp_path: Path) ->
             "\n> # Changed worktree\n"
             f"> --- `README.md` @ `{revision}`\n"
         )
-    sync_retained_fixture(tmp_path, values)
-    values["result"]["sha256"] = digest(tmp_path / values["result"]["path"])
-    values["generated-review"]["sha256"] = digest(generated)
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
@@ -742,9 +1033,7 @@ def test_quote_anchor_rejects_a_local_revision_mismatch(tmp_path: Path) -> None:
             "\n> # Frozen source\n"
             f"> --- `README.md` @ `{'0' * 40}`\n"
         )
-    sync_retained_fixture(tmp_path, values)
-    values["result"]["sha256"] = digest(tmp_path / values["result"]["path"])
-    values["generated-review"]["sha256"] = digest(generated)
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
@@ -766,7 +1055,8 @@ def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> Non
     rendered = render_agentic_analysis_handoff(state)
 
     assert RUN_ID in rendered
-    assert "**Result:**" in rendered
+    assert "**Overview:**" in rendered
+    assert "**Members:** runtime.md, memory.md, epistemic.md" in rendered
     assert "**Frozen source:**" in rendered
     assert (
         "**Generated system review:** "
@@ -787,11 +1077,8 @@ def test_handoff_command_refuses_a_running_run(
             "run-status": "running",
             "result-disposition": None,
             "source": None,
-            "result": None,
+            "overview": None,
             "generated-review": None,
-
-
-
         }
     )
     replace_frontmatter(state, values)
@@ -828,28 +1115,29 @@ def test_prepare_checks_handoff_without_publishing(tmp_path: Path) -> None:
     assert frontmatter(state)["run-status"] == "running"
 
 
-def test_prepare_validates_result_once_through_regular_bundle_validation(tmp_path, monkeypatch):
+def test_prepare_validates_each_member_once_through_regular_bundle_validation(tmp_path, monkeypatch):
     state, spec, _ = publication_fixture(tmp_path)
-    result = state.parent / "result.md"
+    members = {state.parent / name for name in ("overview.md", *MEMBER_TYPES)}
     validate = validation._validate_parsed_note
     visits = []
 
     def track(parsed, *, run):
-        if parsed.path == result:
+        if parsed.path in members:
             visits.append(parsed.path)
         return validate(parsed, run=run)
 
     monkeypatch.setattr(validation, "_validate_parsed_note", track)
     assert prepare_publication(spec).prepared
-    assert visits == [result]
+    assert sorted(visits) == sorted(members)
 
 
-@pytest.mark.parametrize("mutation", ["valid", "vocabulary", "empty", "outside", "absence", "dependency"])
+@pytest.mark.parametrize("mutation", ["valid", "annotated-seed", "vocabulary", "empty", "outside", "absence", "dependency"])
 def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: str) -> None:
     state = valid_run_state(tmp_path)
     report = state.parent / "memory-report.md"
     body = report.read_text().replace(
-        "## Shared records\n", "## Shared records\n\nMEM-OBJ-1 fixture object.\nMEM-ABS-1 inspected absence.\n"
+        "### Evidenced absences\n\nnone proposed.\n",
+        "### Evidenced absences\n\n#### MEM-ABS-1 — Inspected absence\n\nSearched.\n",
     )
     report.write_text(body)
     metadata = frontmatter(report)
@@ -864,14 +1152,24 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
         "records": ["MEM-ABS-1"], "note": "Fixture source was inspected.",
     }
     expected_error = None
-    if mutation == "vocabulary":
+    if mutation == "annotated-seed":
+        report.write_text(report.read_text().replace("#### RTE-1 — Fixture route", "#### On RTE-1 — Fixture route"))
+        axes["read_back_direction"] = {
+            "assessment": "known", "values": ["pull"],
+            "evidence": {"pull": {"basis": "wired", "records": ["RTE-1"], "note": "Seeded route."}},
+            "records": ["RTE-1"], "note": "The annotated seed carries the route.",
+        }
+        axes["read_back_signal"]["assessment"] = "inapplicable"
+    elif mutation == "vocabulary":
         axes["storage_substrate"]["values"] = ["invented"]
         expected_error = "off-vocabulary"
     elif mutation == "empty":
         axes["storage_substrate"]["values"] = []
         expected_error = "known assessment needs"
     elif mutation == "outside":
-        report.write_text(report.read_text().replace("MEM-OBJ-1 fixture object.\n", "") + "\nMEM-OBJ-1 outside the register.\n")
+        report.write_text(report.read_text().replace(
+            "#### MEM-OBJ-1 — Fixture memory store\n", "",
+        ) + "\nMEM-OBJ-1 outside the register.\n")
         expected_error = "unresolved shared or proposed"
     elif mutation == "absence":
         axes["trace_learning"]["records"] = ["MEM-OBJ-1"]
@@ -892,7 +1190,11 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
             systems_matrix.validate_comparison(metadata["memory-comparison"], document.body)
 
 
-@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md", "incumbent-review.md", "incumbent-result.md"])
+@pytest.mark.parametrize("name", [
+    "memory-report.md", "memory-input.md", "incumbent-review.md",
+    "overview.md", "runtime.md", "memory.md", "epistemic.md",
+    "incumbent-overview.md", "incumbent-memory.md",
+])
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path, name: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     with pytest.raises(ValueError, match="reserved"):
@@ -915,10 +1217,8 @@ def test_memory_report_quote_is_checked_at_the_frozen_source(tmp_path: Path) -> 
     report = state.parent / "memory-report.md"
     revision = frontmatter(state)["source"]["revision"]
     report.write_text(report.read_text() + f"\n> absent quotation\n> --- `README.md` @ `{revision}`\n")
-    result = state.parent / "result.md"
-    result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
-                             rf"\g<1>`{digest(report)}`", result.read_text()))
-    with pytest.raises(ValueError, match="memory report:.*quote does not occur"):
+    refinalize(state.parent)
+    with pytest.raises(ValueError, match="memory.md quote-anchored.*quote does not occur"):
         prepare_publication(spec)
 
 
@@ -1010,9 +1310,8 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
         field = {"run": "analysis-run", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
         values[field] = "blocked" if mutation == "blocked" else "different"
         replace_frontmatter(report, values)
-        result = state.parent / "result.md"
-        result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`", rf"\g<1>`{digest(report)}`", result.read_text()))
-    with pytest.raises(ValueError, match="memory report"):
+        refinalize(state.parent)
+    with pytest.raises(ValueError, match="memory"):
         publish_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
@@ -1028,17 +1327,20 @@ def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> 
     assert not spec.generated_candidate_path.exists()
     values = frontmatter(state)
     assert values["run-status"] == "complete"
-    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "result.md").read_bytes()
+    assert values["overview"]["path"].endswith(f"{RUN_ID}/overview.md")
+    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "overview.md").read_bytes()
+    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+        assert (tmp_path / retained).read_bytes() == (state.parent / name).read_bytes()
     assert published.cleanup_warnings == ()
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
 
 def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     candidate = spec.generated_candidate_path
     content = candidate.read_text() + (
-        f"\n[Exact analysis](../../reports/retained/agentic-system-analysis/{RUN_ID}/result.md)\n"
+        f"\n[Exact analysis](../../reports/retained/agentic-system-analysis/{RUN_ID}/overview.md)\n"
     )
     candidate.write_text(content)
 
@@ -1054,7 +1356,7 @@ def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path
     candidate.write_text(content)
     prepare_publication(spec)
     publish_publication(spec)
-    assert retained.read_bytes() == (state.parent / "result.md").read_bytes()
+    assert retained.read_bytes() == (state.parent / "overview.md").read_bytes()
     assert (tmp_path / spec.generated_destination).read_text() == content
     checks = validation.validate_note(state, repo_root=tmp_path)
     assert checks.fails == []
@@ -1086,7 +1388,7 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
         raise AssertionError("publication unexpectedly survived injected failure")
 
     assert not (tmp_path / spec.generated_destination).exists()
-    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID)).exists()
+    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID)).exists()
     assert state.read_bytes() == original_state
     assert spec.generated_candidate_path.exists()
 
@@ -1099,7 +1401,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     from scripts import analyze_matrix, build_systems_matrix, render_systems_table
 
     state = valid_run_state(tmp_path)
-    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     shutil.rmtree(tmp_path / "kb/reports/state")
     shutil.rmtree(tmp_path / "kb/agent-memory-systems")
     shutil.rmtree(tmp_path / "related-systems")
@@ -1109,7 +1411,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     assert len(inputs.rows) == 1
     assert inputs.rows[0]["storage_substrate"] == '["files","sqlite"]'
     assert inputs.rows[0]["lineage_assessment"] == "uninspected"
-    assert inputs.rows[0]["result_sha256"] == digest(retained)
+    assert inputs.rows[0]["overview_sha256"] == digest(retained)
     for module in (analyze_matrix, build_systems_matrix, render_systems_table):
         monkeypatch.setattr(module, "REPO_ROOT", tmp_path)
     matrix = tmp_path / "kb/agentic-systems/comparisons/memory-systems.csv"
@@ -1132,21 +1434,38 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 @pytest.mark.parametrize("mutation, error", [
     ("bytes", "SHA-256 mismatch"), ("profile", "memory-comparison"),
     ("source", "source identity missing"), ("revision", "identity mismatch"),
-    ("missing", "No such file"),
+    ("missing", "No such file"), ("member", "manifest: memory.md bytes hash to"),
+    ("declared-twice", "declared in more than one member"),
 ])
 def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
     valid_run_state(tmp_path)
-    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
+    memory = retained.with_name("memory.md")
     review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
+
+    def repin_overview() -> None:
+        data = frontmatter(retained)
+        data["members"] = [
+            {"path": name, "sha256": digest(retained.with_name(name)), "type": MEMBER_TYPES[name]}
+            for name in MEMBER_TYPES
+        ]
+        replace_frontmatter(retained, data)
+        replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(retained)})
+
     if mutation == "bytes":
         retained.write_bytes(retained.read_bytes() + b"drift\n")
     elif mutation == "missing":
         retained.unlink()
+    elif mutation == "member":
+        memory.write_bytes(memory.read_bytes() + b"drift\n")
     elif mutation == "profile":
-        data = frontmatter(retained)
+        data = frontmatter(memory)
         data.pop("memory-comparison")
-        replace_frontmatter(retained, data)
-        replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(retained)})
+        replace_frontmatter(memory, data)
+        repin_overview()
+    elif mutation == "declared-twice":
+        memory.write_text(memory.read_text().replace("#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"))
+        repin_overview()
     else:
         key = "source-identity" if mutation == "source" else "reviewed-revision"
         value = "https://example.invalid/example-system-other" if mutation == "source" else "other"
@@ -1171,18 +1490,28 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
     state, spec, _ = publication_fixture(tmp_path)
-    result = state.parent / "result.md"
-    data = frontmatter(result)
+    memory = state.parent / "memory.md"
+    old_bytes = {name: (state.parent / name).read_bytes() for name in ("memory.md", "overview.md")}
+    data = frontmatter(memory)
     data.pop("memory-comparison")
-    old_bytes = result.read_bytes()
-    replace_frontmatter(result, data)
+    replace_frontmatter(memory, data)
+    with pytest.raises(ValueError, match="manifest: memory.md bytes hash to"):
+        prepare_publication(spec)
+    overview = state.parent / "overview.md"
+    values = frontmatter(overview)
+    values["members"] = [
+        {"path": name, "sha256": digest(state.parent / name), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]
+    replace_frontmatter(overview, values)
     with pytest.raises(ValueError, match="memory-comparison"):
         prepare_publication(spec)
-    result.write_bytes(old_bytes)
-    retained = write(tmp_path / systems_matrix.retained_result_path(RUN_ID), "frozen earlier result\n")
+    for name, content in old_bytes.items():
+        (state.parent / name).write_bytes(content)
+    retained = write(tmp_path / agentic_set.retained_overview_path(RUN_ID), "frozen earlier overview\n")
     with pytest.raises(ValueError, match="already exists"):
         prepare_publication(spec)
-    assert retained.read_text() == "frozen earlier result\n"
+    assert retained.read_text() == "frozen earlier overview\n"
     assert frontmatter(state)["run-status"] == "running"
 
 
@@ -1196,14 +1525,21 @@ def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monk
     from scripts import analyze_matrix
 
     valid_run_state(tmp_path)
-    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
+    memory = retained.with_name("memory.md")
+    profile = frontmatter(memory)
+    for support in profile["memory-comparison"]["axes"]["storage_substrate"]["evidence"].values():
+        support["basis"] = basis
+    replace_frontmatter(memory, profile)
     data = frontmatter(retained)
     data["evidence-tier"] = tier
-    for support in data["memory-comparison"]["axes"]["storage_substrate"]["evidence"].values():
-        support["basis"] = basis
+    data["members"] = [
+        {"path": name, "sha256": digest(retained.with_name(name)), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]
     replace_frontmatter(retained, data)
     review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
-    replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(retained)})
+    replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(retained)})
     monkeypatch.setattr(analyze_matrix, "REPO_ROOT", tmp_path)
     assert analyze_matrix.main([]) == 0
     output = capsys.readouterr().out
@@ -1221,7 +1557,7 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     state, first, _ = publication_fixture(tmp_path)
     publish_publication(first)
     old_review = (tmp_path / first.generated_destination).read_bytes()
-    old_result = (state.parent / "result.md").read_bytes()
+    old_set = {name: (state.parent / name).read_bytes() for name in ("overview.md", *MEMBER_TYPES)}
     next_id = RUN_ID[:-2] + "02"
     new_dir = state.parent.with_name(next_id)
     shutil.copytree(state.parent, new_dir)
@@ -1230,25 +1566,21 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     report = new_dir / "memory-report.md"
     replace_frontmatter(report, {**frontmatter(report),
         "canonical-register-sha256": digest(new_dir / "memory-input.md")})
-    result = new_dir / "result.md"
-    result.write_text(re.sub(
-        r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
-        rf"\g<1>`{digest(report)}`", result.read_text(),
-    ))
+    refinalize(new_dir)
     next_state = new_dir / "run-state.md"
     values = frontmatter(next_state)
     values.update({"run-status": "running", "result-disposition": None,
-                   "result": None, "generated-review": None})
+                   "overview": None, "generated-review": None})
     replace_frontmatter(next_state, values)
     candidate = new_dir / "review-candidate.md"
     candidate.write_text(old_review.decode().replace(RUN_ID, next_id))
-    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-result-sha256": digest(result)})
+    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-overview-sha256": digest(new_dir / "overview.md")})
     inspection = inspect_destination(
         repo_root=tmp_path, generated_destination=first.generated_destination,
         source_identity=values["source"]["identity"],
     )
     return PublicationSpec(tmp_path, next_state, candidate, first.generated_destination,
-                           inspection["expected_incumbent_sha256"]), old_review, old_result
+                           inspection["expected_incumbent_sha256"]), old_review, old_set
 
 
 def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsys) -> None:
@@ -1274,32 +1606,36 @@ def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsy
 
 @pytest.mark.parametrize("tracked", [False, True])
 def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path: Path, tracked: bool) -> None:
-    spec, old_review, old_result = rerun_publication_fixture(tmp_path)
+    spec, old_review, old_set = rerun_publication_fixture(tmp_path)
     if tracked:
         commit_incumbent(tmp_path, tmp_path / spec.generated_destination)
     prepare_publication(spec)
     publish_publication(spec)
     assert (spec.run_state_path.parent / "incumbent-review.md").read_bytes() == old_review
-    assert (spec.run_state_path.parent / "incumbent-result.md").read_bytes() == old_result
+    for name, content in old_set.items():
+        assert (spec.run_state_path.parent / f"incumbent-{name}").read_bytes() == content
     assert validation.validate_note(spec.run_state_path, repo_root=tmp_path).fails == []
 
 
-@pytest.mark.parametrize("mutation", ["review", "receipt", "missing-result", "result", "source", "missing-receipt"])
+@pytest.mark.parametrize("mutation", ["review", "receipt", "missing-overview", "overview", "member", "source", "missing-receipt"])
 def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str) -> None:
     from commonplace.lib.agentic_publication import inspect_destination
     spec, _, _ = rerun_publication_fixture(tmp_path)
     review = tmp_path / spec.generated_destination
     metadata = frontmatter(review)
-    retained = tmp_path / metadata["analysis-result"]
+    retained = tmp_path / metadata["analysis-overview"]
     receipt = spec.run_state_path.parent.with_name(RUN_ID) / "run-state.md"
     if mutation == "review":
         review.write_text(review.read_text() + "\nHuman correction.\n")
     elif mutation == "receipt":
         replace_frontmatter(receipt, {**frontmatter(receipt), "run-status": "running"})
-    elif mutation == "missing-result":
+    elif mutation == "missing-overview":
         retained.unlink()
-    elif mutation == "result":
+    elif mutation == "overview":
         retained.write_text(retained.read_text() + "\nAltered evidence.\n")
+    elif mutation == "member":
+        member = retained.with_name("runtime.md")
+        member.write_text(member.read_text() + "\nAltered evidence.\n")
     elif mutation == "source":
         replace_frontmatter(review, {**metadata, "source-identity": "other"})
     else:
@@ -1346,11 +1682,11 @@ def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monk
         publish_publication(spec)
     assert public.read_bytes() == changed
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
-    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID[:-2] + "02")).exists()
+    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).exists()
 
 
 def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypatch) -> None:
-    spec, old_review, old_result = rerun_publication_fixture(tmp_path)
+    spec, old_review, old_set = rerun_publication_fixture(tmp_path)
     original_write = agentic_publication._atomic_write
 
     def fail_completion(path, content):
@@ -1362,10 +1698,11 @@ def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypa
     with pytest.raises(OSError, match="injected completion failure"):
         publish_publication(spec)
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
-    assert (tmp_path / systems_matrix.retained_result_path(RUN_ID)).read_bytes() == old_result
+    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+        assert (tmp_path / retained).read_bytes() == old_set[name]
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
     assert spec.generated_candidate_path.exists()
-    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID[:-2] + "02")).exists()
+    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).exists()
 
 
 def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> None:
@@ -1378,23 +1715,24 @@ def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> N
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
 
 
-@pytest.mark.parametrize("role", ["result.md", "memory-report.md"])
-def test_complete_analysis_cannot_omit_quoted_source_evidence(tmp_path: Path, role: str) -> None:
+def test_complete_set_cannot_omit_quoted_source_evidence(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    path = state.parent / role
-    path.write_text("\n".join(line for line in path.read_text().splitlines()
-                               if not line.startswith(">")) + "\n")
-    checked = validation.validate_note(path, repo_root=tmp_path)
-    assert any("requires quoted source evidence" in error for error in checked.fails)
-    with pytest.raises(ValueError, match="requires quoted source evidence"):
+    report = state.parent / "memory-report.md"
+    report.write_text("\n".join(line for line in report.read_text().splitlines()
+                                 if not line.startswith(">")) + "\n")
+    refinalize(state.parent)
+    # No single member owes a quotation; the set does.
+    for name in ("memory-report.md", *MEMBER_TYPES):
+        assert validation.validate_note(state.parent / name, repo_root=tmp_path).fails == []
+    with pytest.raises(ValueError, match="requires at least one attributed quotation"):
         prepare_publication(spec)
 
 
-def test_result_validation_catches_shorthand_in_ordinary_prose(tmp_path: Path) -> None:
+def test_member_validation_catches_shorthand_in_ordinary_prose(tmp_path: Path) -> None:
     state, _, _ = publication_fixture(tmp_path)
-    result = state.parent / "result.md"
-    result.write_text(result.read_text() + "\nBroken integration: OBJ-1/O2/O3.\n")
-    checked = validation.validate_note(result, repo_root=tmp_path)
+    runtime = state.parent / "runtime.md"
+    runtime.write_text(runtime.read_text() + "\nBroken integration: OBJ-1/O2/O3.\n")
+    checked = validation.validate_note(runtime, repo_root=tmp_path)
     assert any("expand shorthand" in error for error in checked.fails)
 
 
@@ -1429,8 +1767,8 @@ def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
 
 def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
-    (state.parent / "result.md").unlink()
-    (state.parent / "memory-report.md").unlink()
+    for name in ("overview.md", "memory-report.md", *MEMBER_TYPES):
+        (state.parent / name).unlink()
     spec.generated_candidate_path.unlink()
     text = write(tmp_path / "selection.txt", "Frozen source")
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
@@ -1534,27 +1872,28 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
     identity = SourceIdentity("git", source["identity"], source["revision"], Path(source["path"]), None)
     # The worktree must not supply either the selected text or its locations.
     write(identity.path / "README.md", "uncommitted replacement\n")
-    result = state.parent / "result.md"
+    runtime = state.parent / "runtime.md"
     for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
         payload = generate_quotes(text, source=identity, source_path="README.md")
         if text == "* repeated comment":
             assert [entry["start_line"] for entry in payload["occurrences"]] == [5, 6]
         citation = payload if isinstance(payload, str) else payload["occurrences"][-1]["citation"]
-        result.write_text(result.read_text() + "\n" + citation)
+        runtime.write_text(runtime.read_text() + "\n" + citation)
+    refinalize(state.parent)
     replace_frontmatter(spec.generated_candidate_path, {
-        **frontmatter(spec.generated_candidate_path), "analysis-result-sha256": digest(result),
+        **frontmatter(spec.generated_candidate_path),
+        "analysis-overview-sha256": digest(state.parent / "overview.md"),
     })
     assert prepare_publication(spec).prepared
     published = publish_publication(spec)
     checked = validation.validate_note(state, repo_root=tmp_path)
     assert not checked.warns and not checked.fails
-    assert (tmp_path / published.retained_path).read_bytes() == result.read_bytes()
+    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "overview.md").read_bytes()
 
     # An author-added bad range is still rejected by the same ordinary validator.
-    result.write_text(result.read_text() + "\nAuthor anchor: `README.md:999`.\n")
+    runtime.write_text(runtime.read_text() + "\nAuthor anchor: `README.md:999`.\n")
     values = frontmatter(state)
-    sync_retained_fixture(tmp_path, values)
-    values["generated-review"]["sha256"] = digest(tmp_path / values["generated-review"]["path"])
+    sync_set(tmp_path, values)
     replace_frontmatter(state, values)
     checked = validation.validate_note(state, repo_root=tmp_path)
     assert any("outside the recorded blob" in error for error in checked.fails)
@@ -1571,6 +1910,7 @@ def test_publication_validator_rejects_bad_evidence_without_writes(tmp_path, add
     artifact = state.parent / "memory-report.md"
     revision = frontmatter(state)["source"]["revision"]
     artifact.write_text(artifact.read_text() + addition.format(revision=revision))
+    refinalize(state.parent)
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
     with pytest.raises(ValueError, match=diagnostic):
         prepare_publication(spec)
@@ -1582,6 +1922,7 @@ def test_source_failure_stops_dependent_shell_command(tmp_path):
     state, spec, _ = publication_fixture(tmp_path)
     artifact = state.parent / "memory-report.md"
     artifact.write_text(artifact.read_text() + "\nBad range: `README.md:999`.\n")
+    refinalize(state.parent)
     marker = tmp_path / "incorrect-success"
     command = shlex.join([
         sys.executable, "-m", "commonplace.cli.agentic_analysis_publication",
@@ -1637,10 +1978,16 @@ def test_publication_trial_stops_wrong_specialist_range_then_publishes_unranged(
     revision = frontmatter(state)["source"]["revision"]
     with report.open("a") as handle:
         handle.write(f"\n> Frozen source\n> --- `README.md:2` @ `{revision}`\n")
+    refinalize(state.parent)
     with pytest.raises(ValueError, match="cited line range"):
         prepare_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
     report.write_bytes(original)
+    refinalize(state.parent)
+    replace_frontmatter(spec.generated_candidate_path, {
+        **frontmatter(spec.generated_candidate_path),
+        "analysis-overview-sha256": digest(state.parent / "overview.md"),
+    })
     published = publish_publication(spec)
     assert (tmp_path / published.retained_path).exists()
     assert frontmatter(state)["run-status"] == "complete"

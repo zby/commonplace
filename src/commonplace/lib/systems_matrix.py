@@ -1,4 +1,4 @@
-"""Read memory comparisons directly from retained main-analysis results."""
+"""Read memory comparisons directly from retained analysis sets."""
 
 from __future__ import annotations
 
@@ -13,12 +13,29 @@ from pathlib import Path
 
 import yaml
 
+from commonplace.lib.agentic_records import section, set_record_errors
+from commonplace.lib.agentic_set import (
+    OVERVIEW_TYPE,
+    RETAINED_ROOT,
+    RUN_ID,
+    declared_union,
+    load_member_set,
+    retained_overview_path,
+    set_identity_errors,
+)
 from commonplace.lib.note_parser import parse_document
 
-RESULT_TYPE = "types/agentic-system-analysis-result.md"
-RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
+__all__ = [
+    "AXES",
+    "RETAINED_ROOT",
+    "RUN_ID",
+    "csv_text",
+    "load_results",
+    "retained_overview_path",
+    "shared_record_ids",
+    "validate_comparison",
+]
 REVIEWS_ROOT = Path("kb/agentic-systems/reviews")
-RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
 AXES = {
     "storage_substrate": {
         "files",
@@ -82,8 +99,8 @@ METADATA = [
     "system_name",
     "review_file",
     "review_sha256",
-    "result_file",
-    "result_sha256",
+    "overview_file",
+    "overview_sha256",
     "analysis_run",
     "source_identity",
     "reviewed_revision",
@@ -100,12 +117,6 @@ COLUMNS = METADATA + [
 ]
 
 
-def retained_result_path(run_id: str) -> Path:
-    if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
-        raise ValueError("invalid analysis run ID")
-    return RETAINED_ROOT / run_id / "result.md"
-
-
 def _strings(value: object, label: str) -> list[str]:
     if not isinstance(value, list) or any(
         not isinstance(v, str) or not v.strip() for v in value
@@ -114,6 +125,18 @@ def _strings(value: object, label: str) -> list[str]:
     if len(value) != len(set(value)):
         raise ValueError(f"{label}: duplicate values")
     return value
+
+
+def shared_record_ids(body: str, *, memory_report: bool = False) -> set[str]:
+    """IDs declared at line start under Shared records; proposals count in a local report."""
+    shared = section(body, "Shared records")
+    record_prefix = r"(?:MEM-)?" if memory_report else ""
+    return set(
+        re.findall(
+            rf"(?m)^\s*(?:\|\s*|[-*]\s+|#{{3,6}}\s+)?[*`]*({record_prefix}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
+            shared,
+        )
+    )
 
 
 def validate_comparison(
@@ -140,18 +163,8 @@ def validate_comparison(
         raise ValueError(
             "memory-comparison.axes must contain every registered axis exactly once"
         )
-    end_heading = "Write side" if memory_report else "Runtime account"
-    shared_match = re.search(
-        rf"(?ms)^## Shared records[ \t]*\n(.*?)(?=^## {end_heading}[ \t]*$|\Z)",
-        body,
-    )
-    shared = shared_match.group(1) if shared_match else ""
-    record_prefix = r"(?:MEM-)?" if memory_report else ""
-    ids = known_ids if known_ids is not None else set(
-        re.findall(
-            rf"(?m)^\s*(?:\|\s*|[-*]\s+|#{{3,6}}\s+)?[*`]*({record_prefix}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
-            shared,
-        )
+    ids = known_ids if known_ids is not None else shared_record_ids(
+        body, memory_report=memory_report
     )
     for name, vocabulary in AXES.items():
         entry = axes[name]
@@ -249,13 +262,6 @@ def validate_comparison(
     return profile
 
 
-def _document(content: bytes, label: str):
-    document, error = parse_document(content.decode("utf-8"))
-    if error or document is None or document.frontmatter is None:
-        raise ValueError(f"{label}: malformed typed Markdown")
-    return document
-
-
 @dataclass(frozen=True)
 class MatrixInputs:
     rows: list[dict[str, str]]
@@ -297,8 +303,24 @@ def _redirected_link(warning: str, source: Path, root: Path) -> bool:
     return target in _redirect_sources(root.resolve())
 
 
+def _validated(root: Path, path: Path, label: str) -> None:
+    from commonplace.lib import validation
+
+    checks = validation.validate_note(path, repo_root=root)
+    # Retained members keep their link bytes; a link to a retired artifact
+    # resolves through the published redirect map instead.
+    warns = [warn for warn in checks.warns if not _redirected_link(warn, path, root)]
+    if checks.fails or warns:
+        raise ValueError(f"invalid retained {label}: " + "; ".join([*checks.fails, *warns]))
+
+
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
-    """Select explicit main reviews, or all generated main reviews; fail on gaps."""
+    """Select explicit main reviews, or all generated main reviews; fail on gaps.
+
+    Each review pins its run's retained overview; the overview's manifest pins
+    the other members. The profile comes from the memory member, the register
+    and identity from the overview, and every member is validated.
+    """
     root = root.resolve()
     paths = (
         review_paths
@@ -320,64 +342,65 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             if review_paths is not None:
                 raise ValueError(f"not a generated main review: {relative}")
             continue
-        retained = retained_result_path(meta.get("analysis-run"))
-        if meta.get("analysis-result") != retained.as_posix():
+        retained = retained_overview_path(meta.get("analysis-run"))
+        if meta.get("analysis-overview") != retained.as_posix():
             raise ValueError(
-                f"{relative}: missing or mismatched retained result; regenerate the main review"
+                f"{relative}: missing or mismatched retained overview; regenerate the main review"
             )
-        result_path = (root / retained).resolve()
-        if result_path.relative_to(root) != retained:
-            raise ValueError(f"retained result must use its canonical path: {retained}")
-        result_bytes = result_path.read_bytes()
-        result_hash = sha256(result_bytes).hexdigest()
-        if meta.get("analysis-result-sha256") != result_hash:
-            raise ValueError(f"retained result SHA-256 mismatch: {retained}")
-        result = _document(result_bytes, str(retained))
-        from commonplace.lib import validation
-
-        checks = validation.validate_note(result_path, repo_root=root)
-        # Retained results keep their link bytes; a link to a retired artifact
-        # resolves through the published redirect map instead.
-        warns = [
-            warn
-            for warn in checks.warns
-            if not _redirected_link(warn, result_path, root)
-        ]
-        if checks.fails or warns:
-            raise ValueError(
-                f"invalid retained result {retained}: "
-                + "; ".join([*checks.fails, *warns])
-            )
-        data = result.frontmatter
+        overview_path = (root / retained).resolve()
+        if overview_path.relative_to(root) != retained:
+            raise ValueError(f"retained overview must use its canonical path: {retained}")
+        overview_bytes = overview_path.read_bytes()
+        overview_hash = sha256(overview_bytes).hexdigest()
+        if meta.get("analysis-overview-sha256") != overview_hash:
+            raise ValueError(f"retained overview SHA-256 mismatch: {retained}")
+        try:
+            member_set = load_member_set(overview_path)
+        except ValueError as exc:
+            raise ValueError(f"{retained}: {exc}") from exc
+        data = member_set.overview.frontmatter
         if (
-            data.get("type") != RESULT_TYPE
+            data.get("type") != OVERVIEW_TYPE
             or data.get("result-disposition") != "complete"
         ):
-            raise ValueError(f"not a complete main-analysis result: {retained}")
+            raise ValueError(f"not a complete analysis overview: {retained}")
         if data.get("run-id") != meta["analysis-run"] or data.get(
             "reviewed-boundary"
         ) != meta.get("reviewed-revision"):
-            raise ValueError(f"review/result identity mismatch: {relative}")
+            raise ValueError(f"review/overview identity mismatch: {relative}")
         source = meta.get("source-identity")
         if not isinstance(source, str) or not source.strip():
             raise ValueError(f"missing source identity: {relative}")
-        register = result.body.split("## Source register\n", 1)[-1].split(
-            "## Shared records", 1
-        )[0]
+        register = section(member_set.overview.body, "Source register")
         source_ids = {
             s.rstrip(".,;") for s in re.findall(r"https?://[^\s<>()`\"']+", register)
         }
         source_ids.update(re.findall(r"`([^`\n]+)`", register))
         if source not in source_ids:
             raise ValueError(
-                f"source identity missing from result register: {relative}"
+                f"source identity missing from overview register: {relative}"
             )
+        errors = set_identity_errors(member_set, source_identity=source)
+        if errors:
+            raise ValueError(f"{retained}: " + "; ".join(errors))
+        for document in member_set.documents:
+            _validated(root, document.path, f"{document.name} of {retained.parent}")
         if source in identities:
             raise ValueError(
                 f"multiple selected reviews of source {source}; choose one boundary explicitly"
             )
         identities.add(source)
-        profile = validate_comparison(data.get("memory-comparison"), result.body)
+        bodies = {name: member.body for name, member in member_set.members.items()}
+        errors = set_record_errors(bodies, register_body=member_set.overview.body)
+        if errors:
+            raise ValueError(f"{retained}: " + "; ".join(errors))
+        memory = member_set.memory
+        assert memory is not None  # a complete manifest names the memory member
+        profile = validate_comparison(
+            memory.frontmatter.get("memory-comparison"),
+            memory.body,
+            known_ids=declared_union(member_set),
+        )
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
             raise ValueError(f"invalid evidence tier: {retained}")
@@ -389,7 +412,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
                     relative.as_posix(),
                     sha256(review_bytes).hexdigest(),
                     retained.as_posix(),
-                    result_hash,
+                    overview_hash,
                     meta["analysis-run"],
                     source,
                     str(data["reviewed-boundary"]),
@@ -410,7 +433,8 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             row[name + "_records"] = ";".join(entry["records"])
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
-        hashes[retained.as_posix()] = result_hash
+        for document in member_set.documents:
+            hashes[(retained.parent / document.name).as_posix()] = document.sha256
     if not rows:
         raise ValueError("no generated main reviews selected")
     return MatrixInputs(

@@ -8,9 +8,10 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib import library, systems_matrix
+from commonplace.lib import agentic_set, library
 from scripts import bundle_agentic_landscape as bundle
 from tests.commonplace.lib.test_agentic_analysis import (
+    MEMBER_TYPES,
     REPO_ROOT,
     RUN_ID,
     digest,
@@ -27,20 +28,31 @@ def _source_repository_is_the_library(tmp_path: Path, monkeypatch: pytest.Monkey
     monkeypatch.setenv(library.LIBRARY_ENV, str(tmp_path / "source" / "kb"))
 
 
+def repin_set(root: Path, review: Path) -> None:
+    """Re-pin the overview manifest and the review after a member edit."""
+    overview = root / frontmatter(review)["analysis-overview"]
+    data = frontmatter(overview)
+    data["members"] = [
+        {"path": name, "sha256": digest(overview.with_name(name)), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]
+    replace_frontmatter(overview, data)
+    replace_frontmatter(
+        review, {**frontmatter(review), "analysis-overview-sha256": digest(overview)}
+    )
+
+
 def copy_member(root: Path, original: str, name: str) -> Path:
+    """Copy one review and its retained set under another system name."""
     review = root / f"kb/agentic-systems/reviews/{original}.md"
-    result = root / frontmatter(review)["analysis-result"]
+    old_dir = (root / frontmatter(review)["analysis-overview"]).parent
     new_review = write(
         review.with_name(name + ".md"), review.read_text().replace(original, name)
     )
-    new_result = write(
-        root / frontmatter(new_review)["analysis-result"],
-        result.read_text().replace(original, name),
-    )
-    replace_frontmatter(
-        new_review,
-        {**frontmatter(new_review), "analysis-result-sha256": digest(new_result)},
-    )
+    new_dir = (root / frontmatter(new_review)["analysis-overview"]).parent
+    for path in old_dir.iterdir():
+        write(new_dir / path.name, path.read_text().replace(original, name))
+    repin_set(root, new_review)
     return new_review
 
 
@@ -60,29 +72,30 @@ def landscape_source(tmp_path: Path) -> Path:
     )
     for name, tier, basis, values in members:
         review = copy_member(root, "example-system", name)
-        result = root / frontmatter(review)["analysis-result"]
-        data = frontmatter(result)
+        overview = root / frontmatter(review)["analysis-overview"]
+        memory = overview.with_name("memory.md")
+        data = frontmatter(overview)
         data["system"] = name
         data["evidence-tier"] = tier
-        data["memory-comparison"]["axes"]["storage_substrate"].update(
+        replace_frontmatter(overview, data)
+        profile = frontmatter(memory)
+        profile["memory-comparison"]["axes"]["storage_substrate"].update(
             assessment="known" if basis else "uninspected",
-            evidence={v: {"basis": basis, "records": ["OBJ-1"], "note": "Fixture witness."} for v in values},
+            evidence={v: {"basis": basis, "records": ["OBJ-2"], "note": "Fixture witness."} for v in values},
             values=values,
-            records=["OBJ-1"] if basis else [],
+            records=["OBJ-2"] if basis else [],
         )
-        replace_frontmatter(result, data)
+        replace_frontmatter(memory, profile)
         if name == "wired-fixture":
-            result.write_text(
-                result.read_text().replace(
-                    "OBJ-1 fixture object.",
-                    "OBJ-1 stores session notes in Markdown files and rebuilds a SQLite lookup index from them. This is fixture wiring, not an observed run.",
+            memory.write_text(
+                memory.read_text().replace(
+                    "Proposed store, from SRC-1.",
+                    "The store OBJ-2 keeps session notes in Markdown files and rebuilds a SQLite lookup index from them. This is fixture wiring, not an observed run.",
                 )
             )
-        replace_frontmatter(
-            review, {**frontmatter(review), "analysis-result-sha256": digest(result)}
-        )
+        repin_set(root, review)
     (root / "kb/agentic-systems/reviews/example-system.md").unlink()
-    (root / systems_matrix.retained_result_path(RUN_ID)).unlink()
+    shutil.rmtree(root / agentic_set.retained_overview_path(RUN_ID).parent)
     shutil.rmtree(root / "kb/reports/state")
     shutil.rmtree(root / "kb/agent-memory-systems")
     shutil.rmtree(root / "related-systems")
@@ -115,8 +128,8 @@ def test_bundle_and_query_use_one_population_without_live_or_legacy_inputs(
     assert len(eligible) == len(matched) == 1
     assert matched[0]["system_name"] == "wired-fixture"
     assert len(json.loads(matched[0]["storage_substrate"])) == 2
-    text = (output / matched[0]["result_file"]).read_text()
-    assert "OBJ-1 stores session notes" in text
+    text = (output / matched[0]["overview_file"]).with_name("memory.md").read_text()
+    assert "The store OBJ-2 keeps session notes" in text
     assert "not an observed run" in text
 
 
@@ -124,9 +137,9 @@ def test_linked_ontology_must_be_captured_before_a_bundle_is_published(landscape
     root = landscape_source
     ontology = write(root / "kb/notes/reliability-ontology.md", "# Ontology witness\n")
     review = root / "kb/agentic-systems/reviews/wired-fixture.md"
-    result = root / frontmatter(review)["analysis-result"]
-    result.write_text(result.read_text() + "\n[Ontology witness](../../../../notes/reliability-ontology.md)\n")
-    replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(result)})
+    runtime = (root / frontmatter(review)["analysis-overview"]).with_name("runtime.md")
+    runtime.write_text(runtime.read_text() + "\n[Ontology witness](../../../../notes/reliability-ontology.md)\n")
+    repin_set(root, review)
     output = tmp_path / "bundle"
     with pytest.raises(ValueError, match="missing target.*reliability-ontology"):
         bundle.prepare(root, output)
@@ -135,15 +148,17 @@ def test_linked_ontology_must_be_captured_before_a_bundle_is_published(landscape
     assert bundle.verify(output, accepted["manifest_sha256"], source_root=root) == accepted
 
 
-@pytest.mark.parametrize("changed", ["result", "matrix", "manifest", "extra"])
+@pytest.mark.parametrize("changed", ["overview", "member", "matrix", "manifest", "extra"])
 def test_verify_rejects_drift_from_the_pinned_bundle(
     landscape_source, tmp_path, changed
 ):
     output = tmp_path / "bundle"
     report = bundle.prepare(landscape_source, output)
-    if changed == "result":
+    if changed in {"overview", "member"}:
         review = output / report["reviews"][0]
-        path = output / frontmatter(review)["analysis-result"]
+        path = output / frontmatter(review)["analysis-overview"]
+        if changed == "member":
+            path = path.with_name("epistemic.md")
     else:
         path = (
             output
@@ -213,7 +228,7 @@ def test_missing_evidence_leaves_no_bundle_and_existing_bundle_is_preserved(
         bundle.prepare(landscape_source, output)
     assert bundle.verify(output, report["manifest_sha256"]) == report
     review = landscape_source / report["reviews"][0]
-    (landscape_source / frontmatter(review)["analysis-result"]).unlink()
+    (landscape_source / frontmatter(review)["analysis-overview"]).unlink()
     with pytest.raises(OSError):
         bundle.prepare(landscape_source, tmp_path / "missing")
     assert not (tmp_path / "missing").exists()

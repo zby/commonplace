@@ -11,6 +11,20 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import unquote, urlsplit
 
+from commonplace.lib.agentic_set import (
+    LOCAL_INPUT_NAME,
+    LOCAL_REPORT_NAME,
+    MEMBER_TYPES,
+    OVERVIEW_NAME,
+    REVIEW_TYPE,
+    MemberSet,
+    declared_union,
+    finalization_errors,
+    load_member_set,
+    proposal_mapping,
+    retained_set_paths,
+    set_identity_errors,
+)
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
     blank_quote_bodies,
@@ -21,8 +35,6 @@ from commonplace.lib.quote_matching import (
 )
 
 AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
-AGENTIC_ANALYSIS_RESULT_TYPE = "types/agentic-system-analysis-result.md"
-OVERVIEW_NAME = "overview.md"
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _LOCAL_SOURCE_ANCHOR_RE = re.compile(
@@ -596,11 +608,18 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         if state.source is None
         else f"{state.source.identity} @ {state.source.revision}"
     )
+    members = (
+        ", ".join(MEMBER_TYPES) + " (pinned by the overview manifest)"
+        if state.result_disposition == "complete"
+        else "none"
+    )
     return "\n".join(
         [
             f"# Agentic-system analysis handoff — {state.run_id}",
             "",
-            f"**Result:** [{state.overview.display_path}](<{state.overview.path.as_posix()}>)",
+            f"**Overview:** [{state.overview.display_path}](<{state.overview.path.as_posix()}>)",
+            "",
+            f"**Members:** {members}",
             "",
             f"**System and disposition:** {state.system} — {state.result_disposition}",
             "",
@@ -623,9 +642,9 @@ def _run_identity_value(body: str, label: str) -> str | None:
     return value
 
 
-def _verify_result_projection_paths(
+def _verify_overview_projection_paths(
     state: AgenticAnalysisRunState,
-    result_document: ParsedDocument,
+    overview_body: str,
 ) -> tuple[list[str], list[str]]:
     expected = {
         "Run state": state.path.relative_to(state.repo_root).as_posix(),
@@ -637,66 +656,120 @@ def _verify_result_projection_paths(
     }
     failures: list[str] = []
     for label, expected_value in expected.items():
-        actual = _run_identity_value(result_document.body, label)
+        actual = _run_identity_value(overview_body, label)
         if actual != expected_value:
             failures.append(
-                f"result: {label.lower()} projection is {actual!r}, "
+                f"overview: {label.lower()} projection is {actual!r}, "
                 f"expected {expected_value!r}"
             )
     if failures:
         return [], failures
-    return ["result: intended publication paths match run state"], []
+    return ["overview: intended publication paths match run state"], []
 
 
-def _verify_memory_report(
-    state: AgenticAnalysisRunState, result_document: ParsedDocument,
+def _validate_document(
+    state: AgenticAnalysisRunState,
+    *,
+    role: str,
+    path: Path,
+    content_overrides: Mapping[Path, str] | None,
 ) -> tuple[list[str], list[str]]:
-    """Check the specialist's retained handoff without certifying its conclusions."""
+    # Import lazily because validation registers this module's type rule.
     from commonplace.lib import validation as validation_lib
 
-    report_path = state.run_dir / "memory-report.md"
-    expected_path = report_path.relative_to(state.repo_root).as_posix()
-    if _run_identity_value(result_document.body, "Memory analysis report") != expected_path:
-        return [], ["memory report: result must identify this run's memory-report.md"]
+    override = _text_override(path, content_overrides)
+    checked = (
+        validation_lib.validate_note_text_at_path(
+            override,
+            path=path,
+            repo_root=state.repo_root,
+            content_overrides=dict(content_overrides or {}),
+        )
+        if override is not None
+        else validation_lib.validate_note(path, repo_root=state.repo_root)
+    )
+    diagnostics = [*checked.warns, *checked.fails]
+    if diagnostics:
+        return [], [f"{role} validation: {diagnostic}" for diagnostic in diagnostics]
+    return [f"{role}: direct validation passed"], []
+
+
+def _verify_memory_member(
+    state: AgenticAnalysisRunState, member_set: MemberSet
+) -> tuple[list[str], list[str]]:
+    """Check the memory member's provenance and its derivation from the local report.
+
+    The coordinator authors the finalized member; this verifies that it is
+    the specialist's report with the Reconciliation mapping applied and
+    amendments appended, without certifying either's conclusions.
+    """
+    member = member_set.memory
+    if member is None:
+        return [], ["memory member: the manifest names no memory report"]
     try:
-        report_bytes = report_path.read_bytes()
-        input_bytes = (state.run_dir / "memory-input.md").read_bytes()
-        document, error = parse_document(report_bytes.decode("utf-8"))
-        if error or document is None:
-            raise ValueError(error or "missing document")
-    except (OSError, UnicodeError, ValueError) as exc:
-        return [], [f"memory report: cannot read report or frozen input: {exc}"]
-    failures = []
-    if _run_identity_value(result_document.body, "Memory analysis report SHA-256") != sha256(report_bytes).hexdigest():
-        failures.append("memory report: result's report SHA-256 does not match exact report bytes")
-    expected = {
-        "type": "types/agent-memory-analysis-report.md",
-        "analysis-run": state.run_id,
-        "source-identity": None if state.source is None else state.source.identity,
-        "reviewed-boundary": None if state.source is None else state.source.revision,
-        "report-status": "complete",
-        "canonical-register-sha256": sha256(input_bytes).hexdigest(),
-    }
-    actual = document.frontmatter or {}
-    for field, value in expected.items():
-        if actual.get(field) != value:
-            failures.append(f"memory report: {field} does not match completed run handoff")
-    checks = validation_lib.validate_note(report_path, repo_root=state.repo_root)
-    failures.extend(f"memory report validation: {message}" for message in (*checks.warns, *checks.fails))
-    if state.source is not None:
-        content = report_bytes.decode("utf-8")
-        if state.source.kind == "git":
-            _, errors = _verify_source_anchors(
-                content, source_root=state.source.path,
-                source_identity=state.source.identity,
-                source_revision=state.source.revision,
-            )
-            failures.extend(f"memory report: {error}" for error in errors)
-        _, errors = _verify_quote_anchors(content, source=state.source)
-        failures.extend(f"memory report: {error}" for error in errors)
+        report_bytes = (state.run_dir / LOCAL_REPORT_NAME).read_bytes()
+        input_bytes = (state.run_dir / LOCAL_INPUT_NAME).read_bytes()
+        report_text = report_bytes.decode("utf-8")
+    except (OSError, UnicodeError) as exc:
+        return [], [f"memory member: cannot read the local report or frozen input: {exc}"]
+    failures: list[str] = []
+    values = member.frontmatter
+    if values.get("report-status") != "complete":
+        failures.append("memory member: report-status must be complete")
+    if values.get("canonical-register-sha256") != sha256(input_bytes).hexdigest():
+        failures.append("memory member: canonical-register-sha256 does not match memory-input.md")
+    if values.get("finalized-from") != sha256(report_bytes).hexdigest():
+        failures.append("memory member: finalized-from does not match memory-report.md bytes")
+    try:
+        mapping = proposal_mapping(member_set.overview.body)
+    except ValueError as exc:
+        failures.append(f"memory member: {exc}")
+        mapping = {}
+    failures.extend(
+        f"memory member: {error}"
+        for error in finalization_errors(local_text=report_text, member=member, mapping=mapping)
+    )
     if failures:
         return [], failures
-    return ["memory report: typed report, frozen input, and integration byte identities match"], []
+    return ["memory member: finalized from the local report under the Reconciliation mapping"], []
+
+
+def _verify_set_records(member_set: MemberSet) -> tuple[list[str], list[str]]:
+    """Resolve declarations, references, the profile and the quote minimum across the set."""
+    from commonplace.lib.agentic_records import set_record_errors
+    from commonplace.lib.systems_matrix import validate_comparison
+
+    overview_body = re.sub(
+        r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", member_set.overview.body
+    )
+    bodies = {OVERVIEW_NAME: overview_body}
+    bodies.update({name: member.body for name, member in member_set.members.items()})
+    failures = [
+        f"set {error}"
+        for error in set_record_errors(bodies, register_body=member_set.overview.body)
+    ]
+    memory = member_set.memory
+    if memory is not None:
+        try:
+            validate_comparison(
+                memory.frontmatter.get("memory-comparison"),
+                memory.body,
+                known_ids=declared_union(member_set),
+            )
+        except ValueError as exc:
+            failures.append(f"set memory comparison: {exc}")
+    if not any(
+        citation.quote and citation.attribution
+        for document in member_set.documents
+        for citation in parse_blockquotes(document.body)
+    ):
+        failures.append(
+            "set source evidence: a complete set requires at least one attributed "
+            "quotation; bare file and line citations are insufficient"
+        )
+    if failures:
+        return [], failures
+    return ["set: declarations, references, profile and quotations resolve across members"], []
 
 
 def verify_agentic_analysis_run_state(
@@ -732,77 +805,86 @@ def verify_agentic_analysis_run_state(
     if state.status != "complete" or state.overview is None:
         return passes, failures
 
-    # Import lazily because validation registers this module's type rule.
-    from commonplace.lib import validation as validation_lib
-
     for output in outputs:
         if any(message.startswith(f"{output.role}:") for message in failures):
             continue
-        override = _text_override(output.path, content_overrides)
-        checked = (
-            validation_lib.validate_note_text_at_path(
-                override,
-                path=output.path,
-                repo_root=state.repo_root,
-                content_overrides=dict(content_overrides or {}),
-            )
-            if override is not None
-            else validation_lib.validate_note(output.path, repo_root=state.repo_root)
+        checked_passes, checked_failures = _validate_document(
+            state, role=output.role, path=output.path, content_overrides=content_overrides
         )
-        diagnostics = [*checked.warns, *checked.fails]
-        if diagnostics:
-            failures.extend(
-                f"{output.role} validation: {diagnostic}"
-                for diagnostic in diagnostics
-            )
-        else:
-            passes.append(f"{output.role}: direct validation passed")
+        passes.extend(checked_passes)
+        failures.extend(checked_failures)
 
-    result_document, error = _parsed_output(state.overview, content_overrides)
-    if error is not None or result_document is None:
-        failures.append(f"result: {error}")
+    def read(path: Path) -> bytes:
+        override = _text_override(path, content_overrides)
+        return override.encode("utf-8") if override is not None else path.read_bytes()
+
+    try:
+        member_set = load_member_set(state.overview.path, read=read)
+    except ValueError as exc:
+        failures.append(f"member set: {exc}")
         return passes, failures
-    result_frontmatter = result_document.frontmatter
-    assert result_frontmatter is not None
-    if state.result_disposition == "complete":
-        report_passes, report_failures = _verify_memory_report(state, result_document)
-        passes.extend(report_passes)
-        failures.extend(report_failures)
-    if result_frontmatter.get("type") != AGENTIC_ANALYSIS_RESULT_TYPE:
-        failures.append(f"result: expected type {AGENTIC_ANALYSIS_RESULT_TYPE}")
-    if result_frontmatter.get("run-id") != state.run_id:
-        failures.append("result: run-id does not match run state")
-    if result_frontmatter.get("system") != state.system:
-        failures.append("result: system does not match run state")
-    if result_frontmatter.get("result-disposition") != state.result_disposition:
-        failures.append("result: disposition does not match run state")
+    overview_frontmatter = member_set.overview.frontmatter
+    if overview_frontmatter.get("run-id") != state.run_id:
+        failures.append("overview: run-id does not match run state")
+    if overview_frontmatter.get("system") != state.system:
+        failures.append("overview: system does not match run state")
+    if overview_frontmatter.get("result-disposition") != state.result_disposition:
+        failures.append("overview: disposition does not match run state")
     if state.source is not None and (
-        result_frontmatter.get("reviewed-boundary") != state.source.revision
+        overview_frontmatter.get("reviewed-boundary") != state.source.revision
     ):
-        failures.append("result: reviewed-boundary does not match frozen source")
-    if not any(message.startswith("result:") for message in failures):
-        passes.append("result: workflow identity matches run state")
-    projection_passes, projection_failures = _verify_result_projection_paths(
-        state, result_document
+        failures.append("overview: reviewed-boundary does not match frozen source")
+    if not any(message.startswith("overview:") for message in failures):
+        passes.append("overview: workflow identity matches run state")
+    projection_passes, projection_failures = _verify_overview_projection_paths(
+        state, member_set.overview.body
     )
     passes.extend(projection_passes)
     failures.extend(projection_failures)
 
-    if state.generated_review is not None:
-        from commonplace.lib.systems_matrix import retained_result_path
-
-        retained_relative = retained_result_path(state.run_id)
-        retained = OutputIdentity(
-            role="retained result",
-            display_path=retained_relative.as_posix(),
-            path=state.repo_root / retained_relative,
-            expected_sha256=state.overview.expected_sha256,
+    if state.result_disposition == "complete":
+        passes.append("member set: manifest members present, hashed and typed")
+        failures.extend(
+            f"member set: {error}"
+            for error in set_identity_errors(
+                member_set,
+                source_identity=None if state.source is None else state.source.identity,
+            )
         )
-        retained_error = _verify_output(retained, content_overrides)
-        if retained_error:
-            failures.append(retained_error)
+        for name, member in member_set.members.items():
+            checked_passes, checked_failures = _validate_document(
+                state, role=name, path=member.path, content_overrides=content_overrides
+            )
+            passes.extend(checked_passes)
+            failures.extend(checked_failures)
+        memory_passes, memory_failures = _verify_memory_member(state, member_set)
+        passes.extend(memory_passes)
+        failures.extend(memory_failures)
+        records_passes, records_failures = _verify_set_records(member_set)
+        passes.extend(records_passes)
+        failures.extend(records_failures)
+
+    if state.generated_review is not None:
+        retained_paths = retained_set_paths(state.run_id)
+        expected_hashes = {OVERVIEW_NAME: state.overview.expected_sha256}
+        expected_hashes.update(
+            {name: member.sha256 for name, member in member_set.members.items()}
+        )
+        retained_failures = []
+        for name, expected_sha256 in expected_hashes.items():
+            retained = OutputIdentity(
+                role=f"retained {name}",
+                display_path=retained_paths[name].as_posix(),
+                path=state.repo_root / retained_paths[name],
+                expected_sha256=expected_sha256,
+            )
+            retained_error = _verify_output(retained, content_overrides)
+            if retained_error:
+                retained_failures.append(retained_error)
+        if retained_failures:
+            failures.extend(retained_failures)
         else:
-            passes.append("retained result: exact result bytes preserved")
+            passes.append("retained set: exact member bytes preserved")
         generated_frontmatter, error = _parsed_frontmatter(
             state.generated_review, content_overrides
         )
@@ -810,13 +892,13 @@ def verify_agentic_analysis_run_state(
             failures.append(f"generated review: {error}")
         else:
             expected = {
-                "type": "types/note.md",
+                "type": REVIEW_TYPE,
                 "generated-by": "analyse-agentic-system",
                 "analysis-run": state.run_id,
                 "source-identity": None if state.source is None else state.source.identity,
                 "reviewed-revision": None if state.source is None else state.source.revision,
-                "analysis-result": retained_relative.as_posix(),
-                "analysis-result-sha256": state.overview.expected_sha256,
+                "analysis-overview": retained_paths[OVERVIEW_NAME].as_posix(),
+                "analysis-overview-sha256": state.overview.expected_sha256,
             }
             mismatches = [
                 field
@@ -832,11 +914,15 @@ def verify_agentic_analysis_run_state(
                 passes.append("generated review: workflow identity matches run state")
 
     if state.source is not None:
-        for output in outputs:
+        contents = [(document.name, document.text) for document in member_set.documents]
+        if state.generated_review is not None:
             try:
-                content = _read_output_text(output, content_overrides)
+                contents.append(
+                    (state.generated_review.role, _read_output_text(state.generated_review, content_overrides))
+                )
             except (OSError, UnicodeError):
-                continue
+                pass
+        for role, content in contents:
             if state.source.kind == "git":
                 anchor_passes, anchor_failures = _verify_source_anchors(
                     content,
@@ -844,12 +930,12 @@ def verify_agentic_analysis_run_state(
                     source_identity=state.source.identity,
                     source_revision=state.source.revision,
                 )
-                passes.extend(anchor_passes)
-                failures.extend(anchor_failures)
+                passes.extend(f"{role} {message}" for message in anchor_passes)
+                failures.extend(f"{role} {message}" for message in anchor_failures)
             quote_passes, quote_failures = _verify_quote_anchors(
                 content, source=state.source
             )
-            passes.extend(f"{output.role} {message}" for message in quote_passes)
-            failures.extend(f"{output.role} {message}" for message in quote_failures)
+            passes.extend(f"{role} {message}" for message in quote_passes)
+            failures.extend(f"{role} {message}" for message in quote_failures)
 
     return passes, failures
