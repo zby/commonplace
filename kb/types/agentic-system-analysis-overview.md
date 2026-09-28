@@ -203,6 +203,9 @@ and recorded only in this table.
 
 It also names the local specialist report the memory member was finalized
 from, by path and SHA-256, and every mechanical edit finalization made.
+The path and digest are code spans, never a Markdown link. Every member's
+relative links stay inside the set directory, because the set moves when
+it is retained; member validation rejects a link that leaves it.
 
 ### Bounded synthesis
 

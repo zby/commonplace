@@ -1081,6 +1081,30 @@ def _agentic_plain_source_anchor_rule(
         results.passes.append("source anchors: prose anchors cite paths without ranges")
 
 
+@type_rule("types/agentic-system-analysis-overview.md")
+@type_rule("types/agentic-system-runtime-report.md")
+@type_rule("types/agent-memory-analysis-report.md")
+@type_rule("types/agentic-system-epistemic-report.md")
+def _agentic_set_member_link_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Relative links stay inside the set directory, which moves on retention."""
+    del run
+    directory = parsed.path.resolve().parent
+    escaping = [
+        link for link in parsed.document.links
+        if (target := _resolve_local_link_target(parsed.path, link)) is not None
+        and target.parent != directory
+    ]
+    for link in escaping:
+        results.fails.append(
+            f"set member link: {link} leaves the set directory and breaks once "
+            "retained; name the file by path in a code span"
+        )
+    if not escaping:
+        results.passes.append("set member links: relative links stay inside the set directory")
+
+
 @type_rule("types/agent-memory-analysis-report.md")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun

@@ -1446,6 +1446,23 @@ def test_set_validation_requires_a_finalized_memory_member(tmp_path: Path) -> No
     assert any("finalized-from" in error for error in fails), fails
 
 
+@pytest.mark.parametrize("link, error", [
+    ("[local report](../memory-report.md)", "set member link: ../memory-report.md leaves the set directory"),
+    ("[runtime member](runtime.md)", None),
+])
+def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: str, error: str | None) -> None:
+    """A link out of output/ resolves in the run directory but breaks once retained."""
+    overview = member_fixture(tmp_path) / "output/overview.md"
+    overview.write_text(overview.read_text().replace(
+        "Finalized from `memory-report.md`;", f"Finalized from {link};"
+    ))
+    fails = validation.validate_note(overview, repo_root=tmp_path).fails
+    if error is None:
+        assert fails == []
+    else:
+        assert any(error in failure for failure in fails), fails
+
+
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     """Run-state and comparison readers reject the same duplicate set declaration."""
     state = valid_run_state(tmp_path)

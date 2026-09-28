@@ -369,7 +369,9 @@ four members, each under its type:
 3. `<run-id>/output/epistemic.md` under the epistemic report type, from step 5.
 4. `<run-id>/output/overview.md` under the overview type, with `inputs-commit`
    from step 1. Its Reconciliation names the local report by path and SHA-256
-   and every mechanical edit finalization made.
+   in code spans, never as a Markdown link, and lists every mechanical edit
+   finalization made. A relative link that leaves the set directory breaks
+   once the set is retained, and member validation rejects it.
 
 Write `output/ARTIFACT.yaml` last, under the
 [analysis set type](../../reports/types/agentic-system-analysis-set.md).
