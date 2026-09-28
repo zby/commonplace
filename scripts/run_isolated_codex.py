@@ -138,6 +138,72 @@ def sandbox(run, vendor, readonly=False, authenticate=True, auth_mode="saved"):
     return command, env
 
 
+def installation_sandbox(run, vendor, uv_binary, uv_runtime=None, **kwargs):
+    """The outer namespace owns installation permissions, including .agents."""
+    command, env = sandbox(run, vendor, **kwargs)
+    for name in ("source", "cache", "tmp"):
+        path = run / name
+        if not path.is_dir() or path.is_symlink():
+            raise ValueError(f"Expected a real directory: {path}")
+    for name in ("tools", "bin"):
+        index = command.index(str(run / name))
+        command[index - 1] = "--bind"
+    for name in ("source", "cache", "tmp"):
+        command += [
+            "--ro-bind" if name == "source" else "--bind",
+            str(run / name), str(run / name),
+        ]
+    command += ["--ro-bind", str(uv_binary.resolve()), "/opt/uv/bin/uv"]
+    if uv_runtime:
+        command += ["--ro-bind", str(uv_runtime), str(uv_runtime)]
+    env.update(
+        PATH=f"{run / 'bin'}:/opt/uv/bin:/opt/codex/bin:/usr/bin:/bin",
+        UV_TOOL_DIR=str(run / "tools"), UV_TOOL_BIN_DIR=str(run / "bin"),
+        UV_CACHE_DIR=str(run / "cache"), TMPDIR=str(run / "tmp"),
+        UV_PYTHON="/usr/bin/python3", UV_PYTHON_DOWNLOADS="never",
+        UV_NO_CONFIG="true",
+    )
+    return command, env
+
+
+INSTALL_PROBE = r"""
+import json, os, pathlib, subprocess, sys
+run = pathlib.Path(sys.argv[1])
+checks = {"install_readable": (run / "source/INSTALL.md").is_file()}
+for name in json.loads(sys.argv[2]):
+    checks["hidden:" + name] = not os.path.lexists(name)
+for name in ("project", "tools", "bin", "cache", "tmp"):
+    target = run / name / ".installation-write-probe"
+    target.write_text("probe")
+    target.unlink()
+    checks["writable:" + name] = True
+root = run / "project/.agents"
+skills = root / "skills"
+root_existed, skills_existed = root.exists(), skills.exists()
+skills.mkdir(parents=True, exist_ok=True)
+target = skills / ".installation-write-probe"
+target.write_text("probe")
+target.unlink()
+if not skills_existed:
+    skills.rmdir()
+if not root_existed:
+    root.rmdir()
+checks["skill_stub_creation"] = True
+try:
+    with (run / "source/INSTALL.md").open("a"):
+        pass
+except OSError:
+    checks["source_immutable"] = True
+else:
+    checks["source_immutable"] = False
+for name in ("uv", "python3", "codex"):
+    checks[name + "_starts"] = subprocess.run(
+        [name, "--version"], capture_output=True).returncode == 0
+print(json.dumps({"checks": checks}))
+sys.exit(0 if all(checks.values()) else 1)
+"""
+
+
 PROBE = r"""
 import json, os, pathlib, subprocess, sys
 project, tools, bindir = map(pathlib.Path, sys.argv[1:4])
@@ -173,7 +239,7 @@ sys.exit(0 if all(checks.values()) else 1)
 """
 
 
-def probe(command, env, run, readonly):
+def probe(command, env, run, readonly, installation=False):
     checkout = Path(__file__).resolve().parent.parent
     personal = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
     forbidden = [
@@ -183,19 +249,25 @@ def probe(command, env, run, readonly):
         str(personal / "memories"),
         str(personal / "skills"),
         str(Path.home() / ".agents"),
+        str(run / "inputs"),
+        str(run / "fixtures"),
     ]
+    if installation:
+        forbidden += [str(run / "source/tests/scenarios/installed")]
+        probe_args = [INSTALL_PROBE, str(run), json.dumps(forbidden)]
+    else:
+        forbidden += [str(run / name) for name in ("source", "cache", "tmp")]
+        probe_args = [
+            PROBE, str(run / "project"), str(run / "tools"),
+            str(run / "bin"), json.dumps(forbidden), str(readonly).lower(),
+        ]
     result = subprocess.run(
         command
         + [
             "--",
             "/usr/bin/python3",
             "-c",
-            PROBE,
-            str(run / "project"),
-            str(run / "tools"),
-            str(run / "bin"),
-            json.dumps(forbidden),
-            str(readonly).lower(),
+            *probe_args,
         ],
         env=env,
         capture_output=True,
@@ -208,7 +280,7 @@ def probe(command, env, run, readonly):
     return json.loads(result.stdout)
 
 
-def codex_args(project, readonly):
+def codex_args(project, readonly, installation=False, model=None, effort=None):
     args = [
         "--",
         "/opt/codex/bin/codex",
@@ -224,8 +296,14 @@ def codex_args(project, readonly):
         "-C",
         str(project),
         "--sandbox",
-        "read-only" if readonly else "workspace-write",
+        "danger-full-access" if installation else (
+            "read-only" if readonly else "workspace-write"
+        ),
     ]
+    if model:
+        args += ["--model", model]
+    if effort:
+        args += ["-c", f'model_reasoning_effort="{effort}"']
     for setting in (
         "sandbox_workspace_write.network_access=true",
         "memories.use_memories=false",
@@ -302,6 +380,10 @@ def main():
     )
     parser.add_argument("--prompt-file", type=Path)
     parser.add_argument("--codex-vendor", type=Path)
+    parser.add_argument("--model")
+    parser.add_argument("--effort", choices=("low", "medium", "high", "xhigh"))
+    parser.add_argument("--uv-binary", type=Path, help="Native uv executable for installation")
+    parser.add_argument("--uv-runtime", type=Path, help="Optional read-only system runtime for uv")
     parser.add_argument(
         "--auth",
         choices=("saved", "env"),
@@ -312,7 +394,7 @@ def main():
         "--timeout", type=int, help="Orchestrator-supplied time limit in seconds"
     )
     parser.add_argument(
-        "--access", choices=("read-only", "workspace-write"), required=True
+        "--access", choices=("installation", "read-only", "workspace-write"), required=True
     )
     parser.add_argument("--probe-only", action="store_true")
     args = parser.parse_args()
@@ -327,15 +409,26 @@ def main():
     ):
         parser.error("Need a positive timeout and --prompt-file (unless --probe-only)")
     readonly = args.access == "read-only"
+    installation = args.access == "installation"
+    if installation and not args.uv_binary:
+        parser.error("Installation requires --uv-binary")
+    if not installation and (args.uv_binary or args.uv_runtime):
+        parser.error("uv runtime options apply only to installation")
     run = args.run_dir.resolve()
     records = run / "records" / args.record
     records_created = False
     try:
         vendor = native_vendor(args.codex_vendor)
-        command, env = sandbox(run, vendor, readonly, not args.probe_only, args.auth)
+        if installation:
+            command, env = installation_sandbox(
+                run, vendor, args.uv_binary, args.uv_runtime,
+                authenticate=not args.probe_only, auth_mode=args.auth,
+            )
+        else:
+            command, env = sandbox(run, vendor, readonly, not args.probe_only, args.auth)
         records.mkdir(parents=True, exist_ok=False)
         records_created = True
-        evidence = probe(command, env, run, readonly)
+        evidence = probe(command, env, run, readonly, installation)
         save_json(records / "isolation.json", evidence)
         if args.probe_only:
             print(f"Isolation probe passed: {records}")
@@ -348,7 +441,9 @@ def main():
         sessions.mkdir()
         runtime_home = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
         command += ["--bind", str(sessions), str(runtime_home / "sessions")]
-        launch = command + codex_args(run / "project", readonly)
+        launch = command + codex_args(
+            run / "project", readonly, installation, args.model, args.effort
+        )
         save_json(
             records / "launch.json",
             {

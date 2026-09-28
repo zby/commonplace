@@ -3,7 +3,9 @@
 Run this pack with [Test Commonplace in an isolated installation](../../../kb/instructions/test-installed-commonplace.md).
 The supervisor reads this file. Agents under test receive only the current
 stage prompt and its permitted inputs, never the acceptance key below.
-The default package is a wheel built from the working checkout; select a
+The default input is a disposable source copy of the working checkout. The
+stage-0 agent follows its full INSTALL.md and installs directly from that
+directory; no wheel or Commonplace installation is prepared for it. Select a
 published release explicitly when testing PyPI installation.
 
 This ports the task families from the existing context scenarios:
@@ -41,14 +43,17 @@ before taking the stage's starting-state capture. These copies are test
 inputs, not worker-produced captures; their bytes must remain unchanged.
 
 Each numbered stage is a fresh session in the same project. Stage 0 starts
-after `commonplace-init`; stage N depends on stages 0 through N-1 passing.
-No test-specific framework hints are added to the prompts. Let the agent
-choose filenames and ordinary implementation details.
+with an empty project and no installed Commonplace commands; it owns build,
+installation, initialization, and setup. Stage N depends on stages 0 through
+N-1 passing. Only stage 0 can access the source copy and write installation
+outputs. No test-specific framework hints are added beyond its declared
+isolation adaptations. Let the agent choose filenames and ordinary
+implementation details.
 
 The orchestrator follows the instruction above and owns stage progression and
 assessment. Launch each stage through a separate CLI agent selected and
 isolated under that instruction. Keep `inputs/` and `records/` outside
-`project/`; pass only the selected prompt to the worker. Enforce read-only
+`project/`; pass only the selected prompt and declared inputs to the worker. Enforce read-only
 project access for stages 3 and 5. Start each stage only after accepting its
 prerequisites. A zero process exit code is not an acceptance verdict. If a
 suitable CLI or its isolation mechanism is unavailable, report the blocker
@@ -56,18 +61,33 @@ without substituting an internal sub-agent.
 
 ## Stage prompts
 
-### 0 — Bootstrap
+### 0 — Install and set up
 
+> Use INSTALL.md in {source_repo} to install Commonplace and set up {project}.
+> Install from {source_repo} instead of the published package name, using a
+> regular non-editable install. Use the
+> provided isolated tool directories and PATH instead of changing a real
+> shell profile. Live-source capture dependencies are outside this test;
+> later source inputs will be supplied as local snapshots. You may write
+> installation/build outputs in the supplied temporary directories and edit
+> the project, but do not change the supplied source or installation
+> instructions. Do not commit or publish.
+>
 > Set up this new Commonplace wiki for Aster Lending Library. It should help
 > staff answer member questions about camera-kit and tripod loans and keep
 > lending procedures current. Include lending rules, equipment inspections,
 > and policy changes; exclude marketing and unrelated operations. Useful notes
 > should separate current rules from history and cite evidence for policy
 > claims. Complete the project setup so a fresh agent session can use the wiki.
-> Use the installed defaults where they fit. You may edit this project's
-> files, but not the Commonplace installation. Do not commit or publish.
+> Use the installed defaults where they fit.
 
-Bootstrap passes its file and pointer checks here. Verify automatic loading
+Resolve `{source_repo}` and `{project}` to the isolated run paths. The runtime
+supplies the tool/cache/build directory environment and a usable interpreter
+as specified by the supervisor procedure; these are setup boundaries, not
+Commonplace instructions. INSTALL.md stays in the source copy; do not supply
+it separately or paste its contents into the prompt.
+
+Installation and setup pass their package, file, and pointer checks here. Verify automatic loading
 of the resulting project instructions in stage 1's fresh session, before
 accepting stage 1. Inspect runtime evidence; an explicit `cat AGENTS.md` alone
 does not establish automatic loading. If loading cannot be established,
@@ -117,12 +137,19 @@ missing framework capability is a blocker, not a successful operation.
 
 | Stage | Required outcome |
 |---|---|
-| 0 | Project instructions are created with purpose and scope filled in; library and skill pointers resolve to the isolated installation. The files contain the supplied scope and resolving procedure pointers; verify runtime loading in stage 1. A passing `init --check` alone is insufficient. |
+| 0 | Trace shows the agent read INSTALL.md, installed from the supplied source through a non-editable build, and ran init. Commands resolve inside the isolated installation and work after source access is removed. Project instructions are created with purpose and scope filled in; library and skill pointers resolve to the isolated installation. The files contain the supplied scope and resolving procedure pointers; verify runtime loading in stage 1. A passing `init --check` alone is insufficient. |
 | 1 | The fresh session automatically loads the project instructions created in stage 0. A retained artifact distinguishes recording a return from inspecting equipment, preserves the supplied rationale and its status as a chosen procedure, and invents no measured result. It is reachable through the normal project search/navigation path. |
 | 2 | A tracked ingest exists under the installed contracts, identifies the supplied snapshot's source URL, preserves all three policy facts, and pins the supplied copy's exact checksum. The provided snapshot remains unchanged; the worker need not capture a source. Any required worker isolation occurred. A connection report can legitimately contain no candidates; do not require invented connections or authored backlinks. |
 | 3 | Camera kit: no, the limit is 48 hours. Tripod: yes, seven days exceeds 60 hours. Fee: unknown/not specified. Citations resolve and the cited retained material supports each policy answer. No KB content is changed. |
 | 4 | The supplied v2 snapshot has a distinct tracked ingest. Both supplied snapshots and the old ingest's pinned checksum remain unchanged. Current guidance clearly says 72 hours for camera kits and seven days for tripods, with supporting links; the old 48-hour rule is historical, not a competing current rule. Inspection guidance remains intact. |
-| 5 | Camera kit: yes, 60 is within 72 hours. Tripod: yes. Recording return alone is insufficient; inspection is still required. Fee remains unspecified. The camera answer cites the new policy/current grounded guidance; inspection cites the retained procedure. No KB content is changed. |
+| 5 | Camera kit: yes, 60 is within 72 hours. Tripod: yes. Recording return alone is insufficient; inspection is still required. Fee remains unspecified. The camera answer cites the new policy/current grounded guidance; inspection cites supporting retained guidance or policy evidence. No KB content is changed. |
+
+Judge citations by whether the retained evidence supports the answer. The
+inspection answer may cite the procedure retained in stage 1, current guidance,
+or the supporting policy ingest under the evidence rules below. Preservation
+of the original inspection guidance is checked in stage 4; stage 5 does not
+require the answer to cite that particular artifact. Keep filename and
+navigation choices open as the prompts specify.
 
 Assess policy fidelity by reading the supporting text, not by checking only
 that a citation resolves. For authored KB artifacts, apply the installed
@@ -132,15 +159,17 @@ and declare `(snapshot required)` in the link text.
 
 For read-only answers in stages 3 and 5, accept citations to grounded retained
 guidance, sufficient retained source quotes, or an ingest whose pinned snapshot
-the agent checked in that session. For the snapshot route, require trace
-evidence that the agent read the exact name-paired snapshot and checked its
-SHA-256 against the ingest. Verify canonical source equality and that the
-snapshot supports the answer. The response must identify the cited ingest and
-disclose that it checked the snapshot; a prose disclosure is sufficient, and
-the exact `(snapshot required)` link-text marker is not required in chat.
-An empty Quotes section alone does not fail this route. An ingest paraphrase
-alone does not establish source support, and a claimed snapshot check without
-execution evidence is insufficient.
+the agent read in that session. The evaluator runs the installed
+`commonplace-validate` on the cited artifacts; quote matching, snapshot
+checksums, and source pairing are the validator's responsibility. Do not
+require the answering agent to repeat those checks or narrate them in chat.
+For the snapshot route, require trace evidence that the agent read the exact
+name-paired snapshot, and assess whether its content supports the answer.
+Confirm that the snapshot is present: a clean validation with unavailable
+source bytes does not establish verified evidence. The response must identify
+the cited ingest; the exact `(snapshot required)` link-text marker is not
+required in chat. An empty Quotes section alone does not fail this route.
+An ingest paraphrase alone does not establish source support.
 
 Do not require quote appends or other KB changes to satisfy a read-only answer's
 citations. This answer criterion does not relax the grounding requirements for
@@ -154,7 +183,7 @@ output is incomplete, keep that dependency in the diagnosis.
 
 ## First-run boundary
 
-This pack tests ingestion of supplied snapshots and one small wiki through
+This pack tests installation from local source, ingestion of supplied snapshots, and one small wiki through
 one revision. It does not test HTTP access, web/PDF capture, shared-clone
 source availability, large-KB retrieval, other operating systems, or stability
 across repeated runs.

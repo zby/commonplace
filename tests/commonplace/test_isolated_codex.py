@@ -12,6 +12,7 @@ from pathlib import Path
 import pytest
 
 from scripts.run_isolated_codex import (
+    installation_sandbox,
     probe,
     run_bounded,
     sandbox,
@@ -144,6 +145,30 @@ def test_rejects_checkout_as_run_directory():
     checkout = Path(__file__).resolve().parents[2]
     with pytest.raises(ValueError, match="outside the Commonplace checkout"):
         sandbox(checkout, checkout, authenticate=False)
+
+
+@pytest.mark.skipif(not shutil.which("bwrap"), reason="Requires bubblewrap")
+def test_installation_can_create_skills_but_cannot_change_source(installation):
+    run = installation
+    for name in ("source", "cache", "tmp"):
+        (run / name).mkdir()
+    (run / "source/INSTALL.md").write_text("installation instructions")
+    uv = run / "uv"
+    uv.write_text("#!/bin/sh\necho uv-test\n")
+    uv.chmod(0o755)
+    command, env = installation_sandbox(
+        run, run / "vendor", uv, authenticate=False
+    )
+    available = subprocess.run(
+        command + ["--", "/bin/true"], env=env, capture_output=True, check=False
+    )
+    if available.returncode and b"Operation not permitted" in available.stderr:
+        pytest.skip("User namespaces unavailable")
+    assert available.returncode == 0, available.stderr.decode()
+    evidence = probe(command, env, run, False, installation=True)
+    assert all(evidence["checks"].values())
+    assert not (run / "project/.agents").exists()
+    assert (run / "source/INSTALL.md").read_text() == "installation instructions"
 
 
 def test_rejects_evaluator_directory_inside_project(installation):

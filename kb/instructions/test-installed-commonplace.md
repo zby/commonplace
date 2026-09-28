@@ -5,20 +5,25 @@ type: types/instruction.md
 
 # Test Commonplace in an isolated installation
 
-Determine whether an external user can complete ordinary wiki operations
-using the installed package and its instructions.
+Determine whether an agent can install Commonplace by following INSTALL.md
+and then complete ordinary wiki operations in fresh sessions.
 
 You are the orchestrator. Read the scenario pack, launch its tasks, inspect
 results, and judge each outcome. Scripts handle process isolation and state
 capture; keep scenario decisions yourself. Agents under test receive only
-the current prompt, installed instructions, and permitted inputs.
+the current prompt and permitted inputs. The installation agent reads the
+source copy's INSTALL.md by following a path in its prompt; do not supply the
+document separately or inline its contents. Later agents use only the
+installed project.
 
 ## Choose the package and runtime
 
-- Default to a new wheel built from the working Commonplace checkout, including
-  uncommitted package changes. Use a supplied wheel or PyPI release only when
-  explicitly selected. Never substitute an editable install or silently fall
-  back to a released version.
+- Default to a disposable source copy of the working Commonplace checkout,
+  including tracked working-tree changes and explicitly identified untracked
+  package inputs. The installation agent installs from that directory with
+  a regular, non-editable install; the installer builds the package. Do not
+  prebuild a wheel, install Commonplace, or run init on the agent's behalf.
+  A published-release test must be explicitly selected and recorded separately.
 - Find a command-line agent similar to yourself: prefer your application's CLI
   counterpart and the same model where available. Verify its supported launch
   options and record material differences. Launch each task in a separate
@@ -37,40 +42,63 @@ launch mechanisms.
 ## Prepare once
 
 1. Create a disposable run directory outside the checkout with `project/`,
-   `tools/`, `bin/`, `package/`, `inputs/`, and `records/`. Keep evaluator
+   `tools/`, `bin/`, `source/`, `cache/`, `tmp/`, `inputs/`, and `records/`. Keep evaluator
    records and future fixtures outside the worker's readable scope. Save a
    copy of this instruction and the selected scenario pack in `records/` and
    use those copies throughout this run. The default pack is
    `tests/scenarios/installed/README.md` in the source checkout.
-2. For a local build, record Git HEAD and whether the working tree is dirty.
-   Build with `uv build --wheel --no-sources --no-config --out-dir
-   <run>/package <checkout>`, using absolute paths. Put build temporary files
-   and `UV_CACHE_DIR` under the run directory. Otherwise retain the explicitly
-   selected wheel there. Record its origin, version, and SHA-256; the checksum
-   identifies the actual build even when its version is unchanged. Stop on a
-   build failure. No commit, version bump, or publication is needed.
-3. From outside the checkout, install the exact wheel by absolute path with
-   `uv tool install --no-config`, setting `UV_TOOL_DIR=<run>/tools`,
-   `UV_TOOL_BIN_DIR=<run>/bin`, and `UV_CACHE_DIR=<run>/cache`. Use a Python
-   interpreter accessible inside the isolation boundary. Put this bin directory
-   first on the test PATH; verify the commands resolve there. Do not update
-   the shell profile or developer installation. Set
-   `PYTHONDONTWRITEBYTECODE=1` for setup, evaluator commands, and workers.
-4. Initialize only the disposable project with `commonplace-init --root
-   <project> --name <scenario-project>`. From that project, run
-   `commonplace-init --check` and `commonplace-validate landings`. Supply local
-   snapshots only at the stages named by the pack. No HTTP server or capture
-   tools are needed; do not fetch the fixtures' synthetic URLs.
-5. Verify that the worker can read the installed library and its permitted
-   inputs, while the installation is read-only and the project has the chosen
-   write mode. Exclude the parent conversation, checkout, personal memory,
-   unrelated configuration/skills, evaluator records, and earlier session
-   logs. An empty chat or temporary working directory alone is insufficient.
-   Record the isolation check once, plus CLI/model/OS and network boundary.
-   The worker may use native sub-agents when an installed skill requires them.
-6. Archive the initial project and inventory installed `tools/` and `bin/`
-   once. Use the state helper below. Do not archive or rehash the installation
-   after every stage when it stays mounted read-only.
+   Before launching, check that each acceptance requirement follows from its
+   prompt, supplied inputs, or installed contracts. A required citation target
+   or execution method must be explicit there; otherwise accept equivalent
+   evidence and methods. Resolve contradictions before freezing the pack.
+2. Record Git HEAD, working-tree status, and the selected source files. Copy
+   them to `<run>/source/`, preserving the paths required by the build and
+   the full `INSTALL.md`. Exclude `.git`, credentials, local environments,
+   caches, runtime state, prior transcripts, and the scenario pack, acceptance
+   key, and future fixtures. Record exclusions and hash/archive the supplied
+   tree so its exact inputs are recoverable. Verify that the build inputs
+   remain complete; stop rather than silently substitute committed files for
+   selected working-tree changes. Keep the real checkout inaccessible.
+3. Prepare an empty `project/` and isolated writable tool, executable, cache,
+   and build-temporary directories. Provide Python and uv as runtime
+   prerequisites, not a Commonplace installation. Set `UV_TOOL_DIR`,
+   `UV_TOOL_BIN_DIR`, `UV_CACHE_DIR`, and `TMPDIR` to those run-local paths,
+   put the run's executable directory first on PATH, and set
+   `PYTHONDONTWRITEBYTECODE=1`. Do not modify the user's shell profile.
+4. Verify the installation boundary before stage 0: the agent can read the
+   source copy, including its INSTALL.md, write installation outputs and the project (including `.agents/skills/`),
+   and use the build/dependency and model services needed for installation.
+   It cannot access the real checkout, personal instructions/configuration,
+   evaluator records, or future fixtures. Start in `project/`; the source
+   checkout's contributor instructions must not become project instructions.
+   Permit build-generated files only in the disposable source/build area;
+   the agent may not repair or alter the supplied source or INSTALL.md.
+5. Point stage 0 to `INSTALL.md` inside the source copy. Give it the source
+   and project paths, the scenario brief, and the
+   isolation adaptations: follow INSTALL.md's full-install path, replacing
+   the published package argument with the source directory, without
+   `--editable`; use the supplied run-local tool directories and PATH instead
+   of changing a real shell profile. Select a Python interpreter available
+   to later sessions. Skip optional live-capture dependencies: this pack uses
+   fixed snapshots. Do not replace INSTALL.md with a supervisor-written list
+   of installation or template-activation steps, a separate copy, or inline
+   excerpts. The prompt names the file; the agent reads it from the source.
+6. Archive the empty project before stage 0. After that agent finishes, inspect
+   its trace for reading INSTALL.md and performing the build/install, init,
+   and setup. Verify command resolution, installed package origin/version,
+   and absence of editable/source-tree dependencies. Retain build logs and
+   wheel checksum if the installer leaves a wheel available; do not rebuild
+   solely to obtain one. Compare the supplied source with its initial
+   inventory and distinguish build outputs from forbidden source edits.
+7. From the initialized project, run the installed `commonplace-init --check`
+   and `commonplace-validate landings`, then assess stage 0's project files.
+   Before stage 1, remove source/build/cache access and mount installed
+   `tools/` and `bin/` read-only. Inventory that accepted installation as the
+   baseline for final integrity checks. Probe command startup and library
+   access in this later-session boundary. Each later stage gets only its
+   prompt, the project, installed library, and that stage's permitted fixtures.
+   Stages 3 and 5 also mount the project read-only. The worker may use native
+   sub-agents when an installed skill requires them.
 
 ## Run the scenarios
 
@@ -83,14 +111,24 @@ For each stage, in order:
    answer stages. Observe the time limit and stop its workers when it expires.
 3. Once the worker stops, capture and compare the project inventory. Inspect
    its response, changed artifacts, and cited evidence against the pack's
-   acceptance key. Run the installed validator on authored KB artifacts from
-   the disposable project. Check warnings according to the pack. A zero
-   process exit code or the worker's self-report is not a verdict.
+   acceptance key. Run the installed validator on authored and cited KB
+   artifacts from the disposable project. Use a collection root or individual
+   artifact paths; a report subdirectory need not be a collection. Let the
+   validator check quote matching, snapshot checksums, and source pairing;
+   assess policy meaning and evidential support yourself. Do not require the
+   worker to duplicate mechanical checks. Check warnings and unavailable-source
+   diagnostics according to the pack. A zero process exit code or the worker's
+   self-report is not a verdict.
 4. Inspect relevant trace evidence: runtime errors, project instruction loading,
    and fresh-worker launches where an installed skill requires them. Verify
    bootstrap's newly created instructions in the next scenario's session;
    do not launch a separate verification conversation. Missing evidence for
    a required criterion is a blocker, not an assumed pass.
+   Include delegated workers and nested tool results in the audit. Inspect
+   command diagnostics even when a compound command exits zero. Record each
+   recovered error with its cause, recovery, and effect on acceptance; separate
+   expected nonzero results such as a diff showing changes or a search finding
+   no matches. A clean final artifact does not erase earlier execution errors.
 5. Record `pass`, `fail`, or `blocked` with a short reason and evidence paths.
    Stop on the first failure or blocker and mark remaining stages `not run`.
    Keep diagnosis and repair out of this rehearsal; after a fix, start a new
@@ -106,13 +144,16 @@ context sizes as a prerequisite for advancing to the next stage.
 ## Finish or stop
 
 Stop owned processes, then archive the final project and compare installed
-`tools/` and `bin/` with their initial inventories. An unexpected installation
+`tools/` and `bin/` with their post-installation baseline inventories. If
+installation never completed, retain its partial outputs and mark later
+stages not run. An unexpected installation
 change prevents a full-chain pass. On interruption, preserve partial logs
 and state and mark incomplete work `not run: interrupted`; distinguish this
 from a timeout or product failure. Recover missing records after an abrupt
 termination without inventing an exit status.
 
-Write one short `records/report.md`: package origin/version/checksum,
+Write one short `records/report.md`: source origin/inventory, INSTALL.md hash,
+installed package origin/version, available build or wheel evidence,
 runtime and isolation method, a stage outcome table with evidence paths,
 interventions, and the first issue to fix. The chain passes only if all stages
 and final integrity checks pass without repair. List untested surfaces; local

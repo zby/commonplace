@@ -14,9 +14,13 @@ A script graduates to a `commonplace-*` command when it has been invoked, unmodi
 
 Start with [the orchestrator instruction](../kb/instructions/test-installed-commonplace.md)
 and [the installed-wiki scenarios](../tests/scenarios/installed/README.md).
-By default, build and install a wheel from the working checkout, including
-uncommitted package changes. Select a PyPI release explicitly to test a
+By default, give the installation agent a disposable source copy, including
+selected working-tree changes and INSTALL.md, and point it to that file. The agent builds and
+installs from that source, runs init, and completes setup. The supervisor does
+not prebuild or preinstall. Select a PyPI release explicitly to test a
 published version; development rehearsals require no publication.
+The Codex helper supports installation inside its outer sandbox, including
+skill-stub creation, and restores the inner Codex sandbox for later stages.
 The orchestrator selects stages, prepares prompts and inputs, assigns budgets,
 inspects evidence, judges outcomes, and decides whether to continue. It looks
 for a CLI counterpart of its own agent runtime and reports a blocker if none
