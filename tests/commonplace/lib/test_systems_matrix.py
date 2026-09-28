@@ -113,8 +113,6 @@ def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
 
 
 def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives():
-    import json
-
     from scripts.render_systems_table import assessment
 
     data = profile()
@@ -126,12 +124,12 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
         sm.validate_comparison(data, BODY)
         row = {
             "source_tier": "code-grounded",
-            "write_agency": json.dumps(entry["values"]),
+            "write_agency": entry["values"],
             "write_agency_assessment": disposition,
-            "write_agency_evidence": json.dumps(entry["evidence"]),
+            "write_agency_evidence": entry["evidence"],
         }
         assert sm.supported_values(row, "write_agency") == {"automatic"}
-        assert sm.complete_values(row, "write_agency") == ""
+        assert sm.complete_values(row, "write_agency") is None
         assert "automatic [wired], manual [afforded]" in assessment(row, "write_agency")
         assert ("partial coverage" in assessment(row, "write_agency")) == (
             disposition == "partial"
@@ -139,12 +137,10 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
         row["source_tier"] = "doc-grounded"
         assert sm.supported_values(row, "write_agency") == set()
     entry["evidence"]["manual"]["basis"] = "wired"
-    row.update(
-        source_tier="code-grounded", write_agency_evidence=json.dumps(entry["evidence"])
-    )
-    assert sm.complete_values(row, "write_agency") == ""  # still partial
+    row.update(source_tier="code-grounded", write_agency_evidence=entry["evidence"])
+    assert sm.complete_values(row, "write_agency") is None  # still partial
     row["write_agency_assessment"] = "known"
-    assert sm.complete_values(row, "write_agency") == '["automatic","manual"]'
+    assert sm.complete_values(row, "write_agency") == ("automatic", "manual")
 
 
 @pytest.mark.parametrize(

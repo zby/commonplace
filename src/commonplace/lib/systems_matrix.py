@@ -425,12 +425,10 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             )
         )
         for name, entry in profile["axes"].items():
-            row[name] = json.dumps(sorted(entry["values"]), separators=(",", ":"))
+            row[name] = sorted(entry["values"])
             row[name + "_assessment"] = entry["assessment"]
-            row[name + "_evidence"] = json.dumps(
-                entry["evidence"], sort_keys=True, separators=(",", ":")
-            )
-            row[name + "_records"] = ";".join(entry["records"])
+            row[name + "_evidence"] = entry["evidence"]
+            row[name + "_records"] = list(entry["records"])
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
         for document in member_set.documents:
@@ -448,32 +446,48 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
 STRONG_BASES = {"wired", "observed", "causally supported"}
 
 
-def supported_values(row: dict[str, str], axis: str) -> set[str]:
+def supported_values(row: dict, axis: str) -> set[str]:
     """Positive implementation evidence, counted once per value and system."""
     if row["source_tier"] != "code-grounded":
         return set()
     return {
         value
-        for value, support in json.loads(row[axis + "_evidence"]).items()
+        for value, support in row[axis + "_evidence"].items()
         if support["basis"] in STRONG_BASES
     }
 
 
-def complete_values(row: dict[str, str], axis: str) -> str:
-    """Complete strong profiles only; a filtered subset is not a full profile."""
+def complete_values(row: dict, axis: str) -> tuple[str, ...] | None:
+    """A complete strong profile, or None; a filtered subset is not a full profile.
+
+    An evidenced absence is the empty profile.
+    """
     if row["source_tier"] != "code-grounded":
-        return ""
+        return None
     if row[axis + "_assessment"] == "absent":
-        return "none"
-    values = set(json.loads(row[axis]))
+        return ()
+    values = set(row[axis])
     if row[axis + "_assessment"] == "known" and values == supported_values(row, axis):
-        return json.dumps(sorted(values), separators=(",", ":"))
-    return ""
+        return tuple(sorted(values))
+    return None
+
+
+def csv_row(row: dict) -> dict[str, str]:
+    """Serialize one structured row; JSON cells exist only in the CSV file."""
+    out = {name: row[name] for name in METADATA}
+    for axis in AXES:
+        out[axis] = json.dumps(row[axis], separators=(",", ":"))
+        out[axis + "_assessment"] = row[axis + "_assessment"]
+        out[axis + "_evidence"] = json.dumps(
+            row[axis + "_evidence"], sort_keys=True, separators=(",", ":")
+        )
+        out[axis + "_records"] = ";".join(row[axis + "_records"])
+    return out
 
 
 def csv_text(inputs: MatrixInputs) -> str:
     output = io.StringIO(newline="")
     writer = csv.DictWriter(output, fieldnames=COLUMNS, lineterminator="\n")
     writer.writeheader()
-    writer.writerows(inputs.rows)
+    writer.writerows(csv_row(row) for row in inputs.rows)
     return output.getvalue()

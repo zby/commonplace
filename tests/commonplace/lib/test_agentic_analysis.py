@@ -1414,7 +1414,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     write(tmp_path / "kb/agentic-systems/reviews/README.md", "# Ordinary navigation\n")
     inputs = systems_matrix.load_results(tmp_path)
     assert len(inputs.rows) == 1
-    assert inputs.rows[0]["storage_substrate"] == '["files","sqlite"]'
+    assert inputs.rows[0]["storage_substrate"] == ["files", "sqlite"]
     assert inputs.rows[0]["lineage_assessment"] == "uninspected"
     assert inputs.rows[0]["overview_sha256"] == digest(retained)
     for module in (analyze_matrix, build_systems_matrix, render_systems_table):
@@ -1422,7 +1422,10 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     matrix = tmp_path / "kb/agentic-systems/comparisons/memory-systems.csv"
     table = matrix.with_suffix(".md")
     assert build_systems_matrix.main(["--output", str(matrix)]) == 0
-    assert list(csv.DictReader(io.StringIO(matrix.read_text()))) == inputs.rows
+    assert list(csv.DictReader(io.StringIO(matrix.read_text()))) == [
+        systems_matrix.csv_row(row) for row in inputs.rows
+    ]
+    assert '"[""files"",""sqlite""]"' in matrix.read_text()
     assert render_systems_table.main(["--output", str(table)]) == 0
     assert "files [wired], sqlite [wired]" in table.read_text()
     assert "## code-grounded (1)" in table.read_text()
@@ -1430,9 +1433,10 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     assert validation.validate_note(table, repo_root=tmp_path).fails == []
     assert analyze_matrix.main([]) == 0
     output = capsys.readouterr().out
-    line = next(line for line in output.splitlines() if line.startswith("storage_substrate "))
-    assert line.split()[:3] == ["storage_substrate", "100%", "1"]
+    assert "complete storage_substrate: 1 of 1 rows" in output
+    assert "profiles: {'files,sqlite': 1}" in output
     assert "'uninspected':" in output
+    assert "keep the more legible" not in output
     assert "doc-grounded excluded from statistics: 0" in output
 
 
@@ -1548,9 +1552,9 @@ def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monk
     monkeypatch.setattr(analyze_matrix, "REPO_ROOT", tmp_path)
     assert analyze_matrix.main([]) == 0
     output = capsys.readouterr().out
-    assert f"rows: {expected_rows}  (code-grounded" in output
-    line = next(line for line in output.splitlines() if line.startswith("storage_substrate "))
-    assert line.split()[1] == expected_fill
+    assert f"code-grounded rows: {expected_rows}" in output
+    complete = 1 if expected_fill == "100%" else 0
+    assert f"complete storage_substrate: {complete} of {expected_rows} rows" in output
     if expected_rows:
         assert f"known:{basis}" in output
 

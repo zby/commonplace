@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import sys
 from pathlib import Path
@@ -26,18 +25,16 @@ def cell(text: str) -> str:
     return text.replace("|", "\\|").replace("\n", " ")
 
 
-def assessment(row: dict[str, str], axis: str) -> str:
+def assessment(row: dict, axis: str) -> str:
     disposition = row[axis + "_assessment"]
     if disposition not in {"known", "partial"}:
         return disposition
-    evidence = json.loads(row[axis + "_evidence"])
-    values = ", ".join(
-        f"{value} [{evidence[value]['basis']}]" for value in json.loads(row[axis])
-    )
+    evidence = row[axis + "_evidence"]
+    values = ", ".join(f"{value} [{evidence[value]['basis']}]" for value in row[axis])
     return values + ("; partial coverage" if disposition == "partial" else "")
 
 
-def render(rows: list[dict[str, str]], output: Path) -> str:
+def render(rows: list[dict], output: Path) -> str:
     lines = [
         "---",
         'description: "Generated memory comparisons from retained main-review evidence"',
