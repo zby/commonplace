@@ -184,7 +184,7 @@ def test_check_reports_current_and_stale_outputs(
     assert library.stale_outputs(tmp_path) == []
 
 
-def test_migration_removes_matching_copies_and_keeps_differing_ones(tmp_path: Path) -> None:
+def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path) -> None:
     root = library.library_root()
     legacy = tmp_path / "kb" / "commonplace" / "instructions"
     legacy.mkdir(parents=True)
@@ -197,18 +197,17 @@ def test_migration_removes_matching_copies_and_keeps_differing_ones(tmp_path: Pa
     old_skill = tmp_path / ".claude" / "skills" / "cp-skill-validate"
     shutil.copytree(root / "instructions" / "cp-skill-validate", old_skill)
 
+    before = {path: path.read_bytes() for path in tmp_path.rglob("*") if path.is_file()}
+
     report = init_project(tmp_path)
 
-    assert Path("kb/commonplace/instructions/FIX-SYSTEM.md") in report.removed
-    assert Path("kb/commonplace/instructions/re-ingest.md") in report.migration_kept
-    assert (legacy / "re-ingest.md").read_text(encoding="utf-8") == "locally edited\n"
-    assert not (types / "note.md").exists()
-    assert (types / "my-shared-type.md").exists()
-    assert Path("kb/types/my-shared-type.md") not in report.migration_kept
-    assert (old_skill / library.STUB_MARKER).is_file()
+    assert all(path.read_bytes() == content for path, content in before.items())
+    assert report.removed == []
+    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+    assert not (old_skill / library.STUB_MARKER).exists()
 
 
-def test_init_project_retires_baselines_recorded_under_the_old_library_copy(tmp_path: Path) -> None:
+def test_init_project_preserves_review_baselines(tmp_path: Path) -> None:
     from commonplace.review import review_db
     from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
@@ -245,16 +244,15 @@ def test_init_project_retires_baselines_recorded_under_the_old_library_copy(tmp_
                 baseline_updated_at="2026-07-01T00:00:00+00:00",
             )
         conn.commit()
+        before = review_db.load_current_freshness_baselines(conn)
 
-    report = init_project(tmp_path)
+    init_project(tmp_path)
 
     with review_db.connect(db_path) as conn:
-        remaining = {criterion for _, criterion, _ in review_db.load_current_freshness_baselines(conn)}
-    assert remaining == {project_gate}
-    assert report.retired_baselines == [f"{note_path} × {legacy_gate} (test-model)"]
+        assert review_db.load_current_freshness_baselines(conn) == before
 
 
-def test_migration_never_deletes_through_a_symlinked_skill_directory(tmp_path: Path) -> None:
+def test_init_project_preserves_symlinked_skill_directories(tmp_path: Path) -> None:
     root = library.library_root()
     outside = tmp_path / "outside" / "cp-skill-validate"
     shutil.copytree(root / "instructions" / "cp-skill-validate", outside)
@@ -270,168 +268,32 @@ def test_migration_never_deletes_through_a_symlinked_skill_directory(tmp_path: P
     assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
 
 
-def test_init_project_reports_skill_copies_it_replaced_with_stubs(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
-    root = library.library_root()
-    old_copy = tmp_path / ".claude" / "skills" / "cp-skill-write"
-    shutil.copytree(root / "instructions" / "cp-skill-write", old_copy)
-
-    exit_code = main(["--root", str(tmp_path)])
-
-    assert exit_code == 0
-    assert (old_copy / library.STUB_MARKER).is_file()
-    assert "git rm -r --cached .claude/skills/cp-skill-write" in capsys.readouterr().out
-
-
-def test_init_project_migrates_pointers_to_global_types(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    notes.mkdir(parents=True)
-    (notes / "COLLECTION.md").write_text("# Notes\n", encoding="utf-8")
-    (notes / "a.md").write_text(
-        "---\ndescription: Repo-relative pointer to a global type\ntype: kb/types/note.md\n---\n\n"
-        "# A\n\n- kb/types/note.md stays as prose in the body\n",
-        encoding="utf-8",
-    )
-    (notes / "b.md").write_text(
-        "---\ndescription: Relative pointer\ntype: ../types/definition.md\n---\n\n# B\n", encoding="utf-8"
-    )
-    (notes / "c.md").write_text(
-        '---\n{\n  "description": "JSON-style frontmatter",\n  "type": "kb/types/note.md"\n}\n---\n\n# C\n',
-        encoding="utf-8",
-    )
-    shared = tmp_path / "kb" / "types" / "my-type.md"
-    shared.parent.mkdir(parents=True)
-    shared.write_text("---\ntype: kb/types/type-spec.md\nname: my-type\n---\n", encoding="utf-8")
-    (notes / "d.md").write_text(
-        "---\ndescription: A project's own kb/types spec keeps its file\ntype: kb/types/my-type.md\n---\n\n# D\n",
-        encoding="utf-8",
-    )
-    (notes / "e.md").write_text(
-        "---\ndescription: Bare global name from ADR 086\ntype: note\n---\n\n# E\n", encoding="utf-8"
-    )
-    adr = tmp_path / "kb" / "reference" / "adr" / "001-x.md"
-    adr.parent.mkdir(parents=True)
-    (tmp_path / "kb" / "reference" / "types").mkdir(parents=True)
-    (tmp_path / "kb" / "reference" / "types" / "adr.md").write_text("---\n---\n", encoding="utf-8")
-    adr.write_text("---\ndescription: File-relative local type\ntype: ../types/adr.md\n---\n# X\n", encoding="utf-8")
-    schema = tmp_path / "kb" / "reports" / "types" / "old-report.schema.yaml"
-    schema.parent.mkdir(parents=True)
-    schema.write_text('allOf:\n  - $ref: "../../types/note.schema.yaml"\n', encoding="utf-8")
-
-    report = init_project(tmp_path)
-
-    assert "type: types/note.md\n" in (notes / "a.md").read_text(encoding="utf-8")
-    assert "- kb/types/note.md stays as prose" in (notes / "a.md").read_text(encoding="utf-8")
-    assert "type: types/definition.md\n" in (notes / "b.md").read_text(encoding="utf-8")
-    assert '"type": "types/note.md"' in (notes / "c.md").read_text(encoding="utf-8")
-    # The project's own kb/types file keeps its path under kb/; validation then
-    # reports it as ineligible (ADR 088 drops project-shared types).
-    assert "type: types/my-type.md" in (notes / "d.md").read_text(encoding="utf-8")
-    assert "type: types/note.md\n" in (notes / "e.md").read_text(encoding="utf-8")
-    assert "type: reference/types/adr.md\n" in adr.read_text(encoding="utf-8")
-    assert "type: types/type-spec.md" in shared.read_text(encoding="utf-8")
-    assert '$ref: "commonplace:types/note.schema.yaml"' in schema.read_text(encoding="utf-8")
-    assert set(report.rewritten_type_pointers) == {
-        Path("kb/notes/a.md"),
-        Path("kb/notes/b.md"),
-        Path("kb/notes/c.md"),
-        Path("kb/notes/d.md"),
-        Path("kb/notes/e.md"),
-        Path("kb/reference/adr/001-x.md"),
-        Path("kb/types/my-type.md"),
-        Path("kb/reports/types/old-report.schema.yaml"),
-    }
-
-
-def test_init_project_migrates_copied_source_and_report_types(tmp_path: Path) -> None:
-    root = library.library_root()
-    source_types = tmp_path / "kb" / "sources" / "types"
-    source_types.mkdir(parents=True)
-    shutil.copy2(root / "types" / "ingest-report.md", source_types / "ingest-report.md")
-    (source_types / "snapshot.md").write_text("locally edited\n", encoding="utf-8")
-    (source_types / "paper-note.md").write_text("project-owned\n", encoding="utf-8")
-    report_types = tmp_path / "kb" / "reports" / "types"
-    report_types.mkdir(parents=True)
-    shutil.copy2(root / "types" / "connect-report.md", report_types / "connect-report.md")
-    ingest = tmp_path / "kb" / "sources" / "a.ingest.md"
-    ingest.write_text(
-        "---\ndescription: Ingest typed by the old copy\ntype: ./types/ingest-report.md\n---\n\n# A\n",
-        encoding="utf-8",
-    )
-    live = tmp_path / "kb" / "reports" / "state" / "full-pass" / "n" / "p" / "full-pass-report.md"
-    live.parent.mkdir(parents=True)
-    live.write_text("---\ntype: kb/reports/types/full-pass-report.md\n---\n# P\n", encoding="utf-8")
-    frozen = tmp_path / "kb" / "reports" / "state" / "review-jobs" / "j" / "input.md"
-    frozen.parent.mkdir(parents=True)
-    frozen.write_text("---\ntype: kb/types/note.md\n---\n# J\n", encoding="utf-8")
-
-    report = init_project(tmp_path)
-
-    assert Path("kb/sources/types/ingest-report.md") in report.removed
-    assert Path("kb/reports/types/connect-report.md") in report.removed
-    assert Path("kb/sources/types/snapshot.md") in report.migration_kept
-    assert (source_types / "paper-note.md").exists()
-    assert Path("kb/sources/types/paper-note.md") not in report.migration_kept
-    assert report_types.is_dir()
-    assert "type: types/ingest-report.md\n" in ingest.read_text(encoding="utf-8")
-    assert "type: types/full-pass-report.md\n" in live.read_text(encoding="utf-8")
-    assert "type: kb/types/note.md\n" in frozen.read_text(encoding="utf-8")
-    assert init_project(tmp_path).created == []
-
-
-@pytest.mark.parametrize(
-    "area", ["agentic-system-analysis", "agentic-system-analysis-archive"]
-)
-def test_init_project_leaves_retained_analysis_directories_frozen(tmp_path: Path, area: str) -> None:
+def test_init_project_preserves_existing_kb_content_and_snapshot_pins(tmp_path: Path) -> None:
     import hashlib
 
-    member = tmp_path / "kb" / "reports" / "retained" / area / "run" / "runtime.md"
-    member.parent.mkdir(parents=True)
-    member.write_text("---\ntype: agentic-system-runtime-report\n---\n# R\n", encoding="utf-8")
-    pinned = hashlib.sha256(member.read_bytes()).hexdigest()
-    live = tmp_path / "kb" / "reports" / "retained" / "other" / "report.md"
-    live.parent.mkdir(parents=True)
-    live.write_text("---\ntype: note\n---\n# Live\n", encoding="utf-8")
-
-    report = init_project(tmp_path)
-
-    assert hashlib.sha256(member.read_bytes()).hexdigest() == pinned
-    assert "type: types/note.md\n" in live.read_text(encoding="utf-8")
-    assert Path("kb/reports/retained/other/report.md") in report.rewritten_type_pointers
-    assert not any(str(path).startswith(f"kb/reports/retained/{area}/") for path in report.rewritten_type_pointers)
-
-
-def test_init_project_migrates_local_schema_identity_and_quoted_values(tmp_path: Path) -> None:
-    types = tmp_path / "kb" / "notes" / "types"
-    types.mkdir(parents=True)
-    (tmp_path / "kb" / "notes" / "COLLECTION.md").write_text("# Notes\n", encoding="utf-8")
-    (types / "custom.md").write_text(
-        "---\ntype: type-spec\nname: custom\ndescription: A custom local type for the check\n"
-        "schema: ./custom.schema.yaml\n---\n# Custom\n",
-        encoding="utf-8",
-    )
-    schema = types / "custom.schema.yaml"
-    schema.write_text(
-        "type: object\nproperties:\n  frontmatter:\n    type: object\n    properties:\n"
-        "      type:\n        const: kb/notes/types/custom.md\n",
-        encoding="utf-8",
-    )
-    instance = tmp_path / "kb" / "notes" / "custom.md"
-    instance.write_text(
-        "---\ndescription: An instance of the custom type\ntype: kb/notes/types/custom.md\n---\n# C\n",
-        encoding="utf-8",
-    )
-    quoted = tmp_path / "kb" / "notes" / "quoted.md"
-    quoted.write_text("---\ndescription: Quoted bare type\ntype: 'note'\n---\n# Q\n", encoding="utf-8")
+    snapshot = b"---\ntype: kb/sources/types/snapshot.md\n---\n# Captured source\n"
+    checksum = hashlib.sha256(snapshot).hexdigest()
+    existing = {
+        "kb/notes/note.md": b"---\ntype: note\n---\n# Note\n",
+        "kb/notes/types/custom.schema.yaml": b"properties:\n  type:\n    const: kb/notes/types/custom.md\n",
+        "kb/reports/types/custom.schema.yaml": b'allOf:\n  - $ref: "../../types/note.schema.yaml"\n',
+        "kb/reports/state/report.md": b"---\ntype: kb/reports/types/full-pass-report.md\n---\n# Report\n",
+        "kb/reports/retained/report.md": b"---\ntype: note\n---\n# Retained report\n",
+        "kb/sources/.snapshots/source.md": snapshot,
+        "kb/sources/source.ingest.md": (
+            "---\ntype: ./types/ingest-report.md\n"
+            f"snapshot_sha256: {checksum}\noriginal_snapshot_sha256: {checksum}\n---\n# Ingest\n"
+        ).encode(),
+    }
+    for rel, content in existing.items():
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
 
     init_project(tmp_path)
-    again = init_project(tmp_path)
+    init_project(tmp_path)
 
-    assert "const: notes/types/custom.md" in schema.read_text(encoding="utf-8")
-    assert "type: notes/types/custom.md" in instance.read_text(encoding="utf-8")
-    assert "type: types/note.md\n" in quoted.read_text(encoding="utf-8")
-    assert again.rewritten_type_pointers == []
+    assert {rel: (tmp_path / rel).read_bytes() for rel in existing} == existing
 
 
 def test_check_reports_a_project_copy_of_a_global_type_as_a_collision(tmp_path: Path) -> None:

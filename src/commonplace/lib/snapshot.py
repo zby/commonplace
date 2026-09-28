@@ -91,6 +91,7 @@ def ingest_metadata_from_snapshot(path: Path) -> dict[str, object]:
     return metadata
 
 
+# BACKCOMPAT: explicit snapshot conversion for old clones - remove after no clone needs scripts/migrate-snapshot-types.py.
 # The values earlier releases wrote; the line may close the frontmatter block.
 _RETIRED_SNAPSHOT_TYPE = re.compile(
     rb"^type: (?:kb/sources/types/snapshot\.md|\./types/snapshot\.md|snapshot)(?=\r?\n|\Z)",

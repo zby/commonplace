@@ -12,6 +12,8 @@ status: accepted
 **Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (bare global type names; project-shared types stay allowed), [ADR 087](./087-source-and-report-types-are-global-library-types.md) (the one permitted snapshot rewrite), and [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (type eligibility)
 **Restores:** the path-valued `type:` of [ADR 018](./018-types-are-path-references-to-instruction-docs.md), for every type
 
+**Initialization amendment (2026-09-28).** `commonplace-init` only creates missing scaffold files and refreshes its own library pointers. The automatic migration behavior described below records the original adoption and is no longer shipped: init leaves existing library copies, type values, snapshots, ingest checksums, and review baselines unchanged. Snapshot conversion remains available through the explicit source-checkout script.
+
 ## Context
 
 ADR 018 made every `type:` value a path to the type's spec, so a reader, agent,

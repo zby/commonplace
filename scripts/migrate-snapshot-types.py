@@ -1,8 +1,8 @@
 """Retype this checkout's local snapshots to `type: types/snapshot.md` (ADRs 087, 088).
 
-One-off for clones of the Commonplace source checkout, which never run
-`commonplace-init` (installed projects get the same migration from init). Run it
-after pulling a commit that retyped snapshots and re-pinned the ingests:
+One-off for clones of the Commonplace source checkout. `commonplace-init`
+does not migrate snapshots. Run this script after pulling a commit that
+retyped snapshots and re-pinned the ingests:
 
     uv run python scripts/migrate-snapshot-types.py
 

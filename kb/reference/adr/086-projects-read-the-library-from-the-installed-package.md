@@ -13,6 +13,8 @@ status: accepted
 **Amended by:** [ADR 087](./087-source-and-report-types-are-global-library-types.md) — the source and report types also become global library types instead of project copies; [ADR 088](./088-type-values-are-paths-on-a-two-root-search-path.md) — type values are paths on a two-root search path, bare names are retired, and project-shared types are dropped
 **Partly reverses:** [ADR 018](./018-types-are-path-references-to-instruction-docs.md) (path-valued `type:` for global types) and [ADR 048](./048-imperative-type-rules-dispatch-by-canonical-path.md) (type rules keyed by canonical path)
 
+**Initialization amendment (2026-09-28).** `commonplace-init` only creates missing scaffold files and refreshes its own library pointers. The automatic migration behavior described below records the original adoption and is no longer shipped: init leaves existing library copies, type values, snapshots, ingest checksums, and review baselines unchanged. Snapshot conversion remains available through the explicit source-checkout script.
+
 ## Context
 
 In this ADR, *the library* means everything Commonplace owns and a project only reads: the library collections (notes, reference, instructions), the global types and their schemas, the review gates, the critique instruction, the templates, and the promoted skills.

@@ -12,6 +12,8 @@ status: accepted
 **Date:** 2026-09-25
 **Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (projects read the library from the installed package) and [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md) (ingests own source authority; snapshots are local and immutable)
 
+**Initialization amendment (2026-09-28).** `commonplace-init` only creates missing scaffold files and refreshes its own library pointers. The automatic migration behavior described below records the original adoption and is no longer shipped: init leaves existing library copies, type values, snapshots, ingest checksums, and review baselines unchanged. Snapshot conversion remains available through the explicit source-checkout script.
+
 ## Context
 
 ADR 086 stopped copying the library into projects, but init still copies the

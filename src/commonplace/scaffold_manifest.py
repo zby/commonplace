@@ -28,7 +28,6 @@ class ScaffoldManifest:
     skills_dirs: tuple[Path, ...]
     promoted_skills: tuple[str, ...]
     router_skill: str
-    legacy_copies: tuple[tuple[str, str], ...]
 
 
 MANIFEST = ScaffoldManifest(
@@ -113,14 +112,4 @@ MANIFEST = ScaffoldManifest(
     ),
     # Indexes the library's instructions by name; receives a stub like the others.
     router_skill="cp-skill-library",
-    # Where earlier releases copied the library into a project, and the library
-    # path each copy came from. Migration removes copies that match the library.
-    legacy_copies=(
-        ("kb/commonplace/instructions", "instructions"),
-        ("kb/commonplace/notes", "notes"),
-        ("kb/commonplace/reference", "reference"),
-        ("kb/types", "types"),
-        ("kb/sources/types", "types"),
-        ("kb/reports/types", "types"),
-    ),
 )

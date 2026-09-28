@@ -101,7 +101,7 @@ The project's own files are never overwritten. Existing files are classified int
 
 The pointers into the library are rewritten whenever they differ from what init would write now, and reported as refreshed. `commonplace-init --check` compares them without writing, and every `commonplace-*` command runs the same comparison and warns when they are stale.
 
-A rerun also migrates library copies left by earlier releases. Init removes each copied file that matches the installed library and keeps and lists each one that differs, because it may carry a local change. It retires, once, the review baselines whose criteria were files in the copy.
+Init creates missing scaffold files and refreshes its own library pointers. Existing KB content, snapshots, ingest checksums, and review baselines stay unchanged. Converting data from an older layout is a separate maintenance task.
 
 `.envrc` is outside the current manifest, so re-running init neither inspects nor changes it.
 

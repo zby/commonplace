@@ -28,7 +28,7 @@ Use it for a change to something several kinds of consumer read: a frontmatter f
    - resolvers and validators, including rules keyed by the old value;
    - schemas and every derived copy of the value, such as schema `const` constraints;
    - emitters: commands and code that write the form;
-   - migration code in `commonplace-init`;
+   - explicit migration scripts, when the change needs them;
    - promoted skills and procedures that name or template the form;
    - collection contracts, type specs, and their templates and frontmatter tables;
    - control-plane templates (`AGENTS.md.template`) and the root `AGENTS.md`;
