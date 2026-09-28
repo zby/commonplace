@@ -202,9 +202,26 @@ Open items for step 2, from the hunt and the plan:
   side-channel sentence in the report type are routing rules of marginal
   procedural character; left as is.
 
-The regression test on the three pilots is prepared in
-[cleanup-rerun-test.md](./cleanup-rerun-test.md) for a separate session.
-Step 1 closes when that test reports no gap and no weakened finding.
+The [regression test](./cleanup-rerun-test.md) ran on 2026-09-27 and its
+[record](./cleanup-rerun-20260927.md) reports no gap: no worker asked for
+missing instruction content, invented a controlled value, or followed a type
+pointer that lacked what the step needed, across four audited traces. All
+three runs validated, published and passed the independent handoff. Step 1
+is accepted on that basis (operator, 2026-09-28). Two findings carry over:
+
+- Two profile classifications the type still requires were dropped while
+  their prose survived: `other-compiled` lineage in Dynamic Cheatsheet and
+  `promote` curation in Napkin. Structural validation cannot catch a value
+  the frontmatter omits but the body supports. Step 2's consumer contracts
+  need a semantic check for profile values against the records they cite.
+- The test froze the source pin but not the functional scope, so two pilots
+  chose narrower boundaries than their baselines and breadth could not be
+  compared. Step 4's trial fixes the functional scope alongside the pin.
+
+A separate consequence, handled outside this workshop: every worker wrapped
+the quote generator in a per-quote loop, so `commonplace-quote` gained a
+`--selections` batch mode (`e984a460`), verified by a specialist-only trial
+in the memory-refresh workshop.
 
 ## Work sequence and decision points
 
