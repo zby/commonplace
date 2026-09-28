@@ -127,7 +127,10 @@ insert unchanged, `status: candidates` with the same occurrence list as the
 single-selection case, or `status: error` with the reason. Exit status 0 means
 every key resolved to a citation; 2 means at least one key needs a choice or
 failed, and stderr names them; 1 is a malformed list or an unusable run state.
-Each source file is read once per call.
+Each source file is read once per call. Treat a `candidates` entry as a choice
+to make (insert one candidate's citation unchanged, or lengthen the selection)
+and an `error` entry as a selection to rewrite from a fresh source read; an
+assembler that only handles `citation` fails silently on both.
 
 ### Generated indexes (no command)
 
