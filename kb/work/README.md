@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [directory-artifacts](./directory-artifacts/README.md) — how the validator should model a set of typed documents in one directory as one artifact; the analysis set is the first instance; candidate implementation reverted pending the decision
 - [agentic-analysis-output-documents](./agentic-analysis-output-documents/README.md) — replace the monolithic exact analysis with smaller authoritative reports; simplify contracts and verify publication and downstream consumers
 - [agentic-memory-refresh](./agentic-memory-refresh/README.md) — 162 legacy memory analyses inventoried; per-value evidence adopted and three fresh pilots verified; 159 refreshes remain
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
