@@ -91,11 +91,6 @@ class PublicationSpec:
 
 
 @dataclass(frozen=True)
-class PreparedPublication:
-    prepared: bool = True
-
-
-@dataclass(frozen=True)
 class PublishedPublication:
     generated_path: str
     retained_path: str
@@ -380,7 +375,6 @@ def inspect_destination(
     require_publishable_worktree(repo_root)
     incumbent = _check_incumbent(path=path, repo_root=repo_root, source_identity=source_identity)
     return {
-        "replaceable": True,
         "exists": incumbent.review_bytes is not None,
         "expected_incumbent_sha256": incumbent.digest,
     }
@@ -504,10 +498,9 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     )
 
 
-def prepare_publication(spec: PublicationSpec) -> PreparedPublication:
+def prepare_publication(spec: PublicationSpec) -> None:
     """Validate the exact member set, specialist handoff, and compact publication bytes."""
     _check_set(spec)
-    return PreparedPublication()
 
 
 def _atomic_write(path: Path, content: bytes) -> None:

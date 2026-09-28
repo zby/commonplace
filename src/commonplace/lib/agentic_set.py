@@ -187,12 +187,3 @@ def set_identity_errors(
             errors.append(f"{name}: source-identity does not match the frozen source")
     return errors
 
-
-def declared_union(member_set: MemberSet) -> set[str]:
-    """Every canonical ID declared across the members plus the register's sources."""
-    from commonplace.lib.agentic_records import declared_ids, source_ids
-
-    declared = source_ids(member_set.overview.body)
-    for member in member_set.members.values():
-        declared.update(declared_ids(member.body))
-    return declared

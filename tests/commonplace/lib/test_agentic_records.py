@@ -6,7 +6,6 @@ from commonplace.lib.agentic_records import (
     annotated_ids,
     declared_ids,
     record_reference_errors,
-    set_record_errors,
 )
 
 BASE = """# Example
@@ -53,12 +52,6 @@ print("RTE-999–R9")
 See OBJ-15 and SRC-1.
 """
     assert record_reference_errors(content) == []
-
-
-def test_rejects_reference_outside_comparison_fields() -> None:
-    assert record_reference_errors(BASE + "Conclusion depends on OBJ-1/OBJ-99.") == [
-        "record references: unresolved IDs: OBJ-99"
-    ]
 
 
 def test_rejects_duplicate_declarations() -> None:
@@ -112,44 +105,8 @@ Memory fields on the seeded route.
 Record citing SRC-2 and OBJ-1.
 """
 
-OVERVIEW = """# Overview
-
-## Source register
-
-| SRC-1 | Git | x |
-| SRC-2 | Git | y |
-"""
-
 
 def test_annotation_headings_are_not_declarations() -> None:
     assert declared_ids(MEMORY) == ["RTE-10"]
     assert annotated_ids(MEMORY) == {"RTE-1"}
     assert declared_ids(RUNTIME) == ["RTE-1"]
-
-
-def test_member_mode_checks_syntax_but_leaves_resolution_to_the_set() -> None:
-    assert record_reference_errors(RUNTIME, member=True) == []
-    assert any("unresolved" in error for error in record_reference_errors(RUNTIME))
-
-
-def test_set_resolves_references_across_members() -> None:
-    errors = set_record_errors(
-        {"runtime.md": RUNTIME, "memory.md": MEMORY}, register_body=OVERVIEW
-    )
-    assert errors == ["record references: memory.md: unresolved IDs: OBJ-1"]
-
-
-def test_set_rejects_a_record_declared_in_two_members() -> None:
-    twice = MEMORY.replace("#### RTE-10 — Benchmark import", "#### RTE-1 — Again")
-    errors = set_record_errors(
-        {"runtime.md": RUNTIME, "memory.md": twice}, register_body=OVERVIEW
-    )
-    assert any("RTE-1 declared in more than one member" in error for error in errors)
-
-
-def test_set_rejects_surviving_proposal_ids() -> None:
-    leaked = MEMORY.replace("OBJ-1", "MEM-OBJ-1")
-    errors = set_record_errors(
-        {"runtime.md": RUNTIME, "memory.md": leaked}, register_body=OVERVIEW
-    )
-    assert any("proposal IDs survive finalization: MEM-OBJ-1" in error for error in errors)

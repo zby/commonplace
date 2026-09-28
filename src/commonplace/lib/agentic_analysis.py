@@ -401,20 +401,6 @@ def _git_blob_text(
     return content, None
 
 
-def _git_blob_lines(
-    *, source_root: Path, revision: str, source_path: str
-) -> tuple[int | None, str | None]:
-    content, error = _git_blob_text(
-        source_root=source_root,
-        revision=revision,
-        source_path=source_path,
-    )
-    if error is not None or content is None:
-        return None, error
-    return len(content.splitlines()), None
-
-
-
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
@@ -463,14 +449,15 @@ def _verify_source_anchors(
         anchors.setdefault((source_path, line_ranges), set()).add("GitHub")
 
     for (source_path, line_ranges), kinds in sorted(anchors.items()):
-        line_count, error = _git_blob_lines(
+        blob, error = _git_blob_text(
             source_root=source_root,
             revision=source_revision,
             source_path=source_path,
         )
-        if error is not None or line_count is None:
+        if error is not None or blob is None:
             failures.append(f"source citation: {source_path}: {error}")
             continue
+        line_count = len(blob.splitlines())
         invalid_ranges = [
             (start, end)
             for start, end in line_ranges
@@ -579,16 +566,6 @@ def _parsed_output(
     if error is not None or document is None or document.frontmatter is None:
         return None, "frontmatter is not parseable"
     return document, None
-
-
-def _parsed_frontmatter(
-    identity: OutputIdentity,
-    content_overrides: Mapping[Path, str] | None,
-) -> tuple[dict[str, Any] | None, str | None]:
-    document, error = _parsed_output(identity, content_overrides)
-    if error is not None or document is None:
-        return None, error
-    return document.frontmatter, None
 
 
 def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
@@ -846,12 +823,11 @@ def verify_agentic_analysis_run_state(
             failures.extend(retained_failures)
         else:
             passes.append("retained set: exact member bytes preserved")
-        generated_frontmatter, error = _parsed_frontmatter(
-            state.generated_review, content_overrides
-        )
-        if error is not None or generated_frontmatter is None:
+        generated, error = _parsed_output(state.generated_review, content_overrides)
+        if error is not None or generated is None:
             failures.append(f"generated review: {error}")
         else:
+            generated_frontmatter = generated.frontmatter or {}
             expected = {
                 "type": REVIEW_TYPE,
                 "generated-by": "analyse-agentic-system",

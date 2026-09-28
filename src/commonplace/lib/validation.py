@@ -937,7 +937,7 @@ def _agentic_evidence_and_references_rule(
     # "Relaxed run-state verification"). The specialist's local report keeps
     # its own rule: it may cite commissioned IDs it does not declare.
     errors = record_reference_errors(
-        parsed.document.body, memory_report=is_report and not finalized, member=True
+        parsed.document.body, memory_report=is_report and not finalized
     )
     results.fails.extend(errors)
     if not errors:

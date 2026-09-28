@@ -140,17 +140,11 @@ def shared_record_ids(body: str, *, memory_report: bool = False) -> set[str]:
 
 
 def validate_comparison(
-    profile: object,
-    body: str,
-    *,
-    memory_report: bool = False,
-    known_ids: set[str] | None = None,
+    profile: object, *, known_ids: set[str], memory_report: bool = False
 ) -> dict:
     """Validate authored assessments and references, without classifying prose.
 
-    ``known_ids`` replaces the IDs parsed from the body's Shared records: a
-    finalized memory member cites records other members declare, and a set
-    verifier supplies the whole set's declarations.
+    ``known_ids`` are the record IDs the profile may cite.
     """
     if not isinstance(profile, dict) or set(profile) != {"scope", "axes"}:
         raise ValueError("memory-comparison requires exactly scope and axes")
@@ -163,9 +157,7 @@ def validate_comparison(
         raise ValueError(
             "memory-comparison.axes must contain every registered axis exactly once"
         )
-    ids = known_ids if known_ids is not None else shared_record_ids(
-        body, memory_report=memory_report
-    )
+    ids = known_ids
     for name, vocabulary in AXES.items():
         entry = axes[name]
         if not isinstance(entry, dict) or set(entry) != {
@@ -275,8 +267,7 @@ def memory_member_comparison(metadata: dict, body: str) -> dict:
         set(declared_ids(body)) if finalized else shared_record_ids(body, memory_report=True)
     )
     return validate_comparison(
-        metadata.get("memory-comparison"), body,
-        memory_report=not finalized, known_ids=known,
+        metadata.get("memory-comparison"), known_ids=known, memory_report=not finalized
     )
 
 

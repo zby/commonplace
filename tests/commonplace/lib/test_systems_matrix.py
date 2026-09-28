@@ -4,7 +4,7 @@ import pytest
 
 from commonplace.lib import systems_matrix as sm
 
-BODY = "## Shared records\n\n### Operative objects\n\n| OBJ-1 | memory stores |\n\n### Routes\n\nRTE-1 retrieval route.\n\n### Evidenced absences\n\nABS-1 searched without finding curation.\n\n## Runtime account\n"
+KNOWN = {"OBJ-1", "RTE-1", "ABS-1"}
 
 
 def profile():
@@ -46,7 +46,7 @@ def test_multiple_stores_and_distinct_unknown_assessments():
     data["axes"]["curation_operations"].update(assessment="absent", records=["ABS-1"])
     data["axes"]["lineage"]["assessment"] = "not-determinable"
     before = deepcopy(data)
-    assert sm.validate_comparison(data, BODY) == before
+    assert sm.validate_comparison(data, known_ids=KNOWN) == before
     assert data == before
 
 
@@ -86,15 +86,15 @@ def test_rejects_unsupported_or_contradictory_classification(edit, error):
     data = profile()
     edit(data)
     with pytest.raises(ValueError, match=error):
-        sm.validate_comparison(data, BODY)
+        sm.validate_comparison(data, known_ids=KNOWN)
 
 
 def test_cross_reference_is_not_a_record_declaration():
     data = profile()
-    data["axes"]["storage_substrate"] = known(["files"], ["OBJ-99"])
-    body = BODY.replace("### Routes", "See OBJ-99 for more details.\n\n### Routes")
+    data["axes"]["storage_substrate"] = known(["files"], ["MEM-OBJ-9"])
+    body = "## Shared records\n\nSee MEM-OBJ-9 for more details.\n\n#### MEM-OBJ-1 — store\n"
     with pytest.raises(ValueError, match="unresolved"):
-        sm.validate_comparison(data, body)
+        sm.memory_member_comparison({"memory-comparison": data}, body)
 
 
 def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
@@ -109,7 +109,7 @@ def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
         "distilled_form",
     ):
         data["axes"][axis]["assessment"] = "inapplicable"
-    sm.validate_comparison(data, BODY)
+    sm.validate_comparison(data, known_ids=KNOWN)
 
 
 def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives():
@@ -121,7 +121,7 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
     data["axes"]["write_agency"] = entry
     for disposition in ("known", "partial"):
         entry["assessment"] = disposition
-        sm.validate_comparison(data, BODY)
+        sm.validate_comparison(data, known_ids=KNOWN)
         row = {
             "source_tier": "code-grounded",
             "write_agency": entry["values"],
@@ -165,7 +165,7 @@ def test_each_value_requires_its_own_witness(mutation):
         del entry["evidence"]
         entry["basis"] = "afforded"
     with pytest.raises(ValueError):
-        sm.validate_comparison(data, BODY)
+        sm.validate_comparison(data, known_ids=KNOWN)
 
 
 def test_partial_negative_does_not_establish_absence():
@@ -173,12 +173,4 @@ def test_partial_negative_does_not_establish_absence():
     data["axes"]["trace_learning"] = known(["no"], ["ABS-1"])
     data["axes"]["trace_learning"]["assessment"] = "partial"
     with pytest.raises(ValueError, match="partial coverage cannot establish no"):
-        sm.validate_comparison(data, BODY)
-
-
-def test_known_ids_replace_the_body_declarations():
-    data = profile()
-    data["axes"]["storage_substrate"] = known(["files"], records=["RTE-7"])
-    with pytest.raises(ValueError, match="unresolved"):
-        sm.validate_comparison(data, BODY)
-    assert sm.validate_comparison(data, BODY, known_ids={"RTE-7"}) == data
+        sm.validate_comparison(data, known_ids=KNOWN)

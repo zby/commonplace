@@ -26,6 +26,7 @@ from commonplace.lib.agentic_publication import (
     prepare_publication,
     publish_publication,
 )
+from commonplace.lib.agentic_records import declared_ids
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -1162,7 +1163,7 @@ def test_handoff_command_renders_a_valid_run(
 
 def test_prepare_checks_handoff_without_publishing(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
@@ -1179,7 +1180,7 @@ def test_prepare_validates_each_member_once_through_regular_set_validation(tmp_p
         return validate(parsed, run=run)
 
     monkeypatch.setattr(validation, "_validate_parsed_note", track)
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     assert sorted(visits) == sorted(members)
 
 
@@ -1239,7 +1240,9 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
         document, error = validation.parse_document(report.read_text())
         assert error is None
         with pytest.raises(ValueError, match="unresolved canonical"):
-            systems_matrix.validate_comparison(metadata["memory-comparison"], document.body)
+            systems_matrix.validate_comparison(
+                metadata["memory-comparison"], known_ids=set(declared_ids(document.body))
+            )
 
 
 @pytest.mark.parametrize("name", [
@@ -1386,7 +1389,7 @@ def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -
     )
     candidate.write_text(content)
 
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     assert not retained.exists()
     assert not (tmp_path / spec.generated_destination).exists()
 
@@ -1690,7 +1693,7 @@ def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsy
             "--source-identity", source]
     assert main(args, cwd=tmp_path) == 0
     assert json.loads(capsys.readouterr().out) == {
-        "replaceable": True, "exists": False, "expected_incumbent_sha256": "absent",
+        "exists": False, "expected_incumbent_sha256": "absent",
     }
     secret = "INCUMBENT-PROSE-MUST-NOT-ENTER-COORDINATOR-CONTEXT"
     candidate = spec.generated_candidate_path
@@ -1699,7 +1702,7 @@ def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsy
     assert main(args, cwd=tmp_path) == 0
     output = capsys.readouterr().out
     assert secret not in output
-    assert set(json.loads(output)) == {"replaceable", "exists", "expected_incumbent_sha256"}
+    assert set(json.loads(output)) == {"exists", "expected_incumbent_sha256"}
     assert json.loads(output)["expected_incumbent_sha256"] == digest(tmp_path / spec.generated_destination)
 
 
@@ -1831,8 +1834,8 @@ def test_untracked_files_block_publication_only_under_kb_outside_its_outputs(
     state, spec, _ = publication_fixture(tmp_path)
     write(tmp_path / path, "A sibling run's publication, or a stray file.\n")
     if accepted:
-        assert inspect(tmp_path, spec)["replaceable"]
-        assert prepare_publication(spec).prepared
+        inspect(tmp_path, spec)
+        prepare_publication(spec)
         return
     with pytest.raises(ValueError, match="clean worktree") as error:
         inspect(tmp_path, spec)
@@ -1863,7 +1866,7 @@ def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path
     sibling = write(tmp_path / "kb/agentic-systems/reviews/sibling.md", "# Sibling\n")
     commit_paths(tmp_path, "Record the sibling's earlier review", sibling)
     sibling.write_text("# Sibling, replaced by a later run\n")
-    assert inspect(tmp_path, spec)["replaceable"]
+    inspect(tmp_path, spec)
     publish_publication(spec)
     assert frontmatter(state)["run-status"] == "complete"
 
@@ -1873,7 +1876,7 @@ def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path:
     # Unrelated commits after inputs-commit, such as a sibling's publication, are fine.
     note = write(tmp_path / "kb/notes/unrelated.md", "# Unrelated\n")
     commit_paths(tmp_path, "Unrelated change", note)
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     # A method change since inputs-commit is not.
     method = tmp_path / "kb/types/agentic-system-analysis-overview.md"
     method.write_text(method.read_text() + "\nMethod change.\n")
@@ -1893,7 +1896,7 @@ def test_publication_requires_the_running_package_to_match_inputs_commit(
     commit_paths(tmp_path, "Add package source", package)
     pin_inputs_commit(state.parent, run_git(tmp_path, "rev-parse", "HEAD").strip(),
                       spec.generated_candidate_path)
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     # A running package edited after inputs-commit, even uncommitted in another
     # checkout, is not the pinned method.
     other = tmp_path.parent / (tmp_path.name + "-running")
@@ -2073,7 +2076,7 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
         **frontmatter(spec.generated_candidate_path),
         "analysis-overview-sha256": digest(state.parent / "overview.md"),
     })
-    assert prepare_publication(spec).prepared
+    prepare_publication(spec)
     published = publish_publication(spec)
     checked = validation.validate_note(state, repo_root=tmp_path)
     assert not checked.warns and not checked.fails
