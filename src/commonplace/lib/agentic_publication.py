@@ -287,6 +287,46 @@ def require_method_unchanged(repo_root: Path, inputs_commit: object) -> None:
         )
 
 
+def running_package_root() -> Path:
+    """The checkout whose ``src/commonplace`` supplies the running code.
+
+    Commonplace is installed editable from one checkout; commands run inside
+    a batch worktree still execute that checkout's source.
+    """
+    import commonplace
+
+    return Path(commonplace.__file__).resolve().parents[2]
+
+
+def require_running_package_unchanged(inputs_commit: str) -> None:
+    """Require the executing package source to equal ``inputs-commit``.
+
+    The method-path check compares the publishing tree's history; this check
+    covers the code actually running, which may come from another checkout.
+    """
+    root = running_package_root()
+    if not (root / ".git").exists():
+        raise ValueError(
+            f"running commonplace package is not a source checkout ({root}); "
+            "cannot confirm it matches inputs-commit"
+        )
+    if _git(root, "cat-file", "-e", f"{inputs_commit}^{{commit}}").returncode != 0:
+        raise ValueError(
+            f"inputs-commit {inputs_commit} is unknown to the checkout running "
+            f"commonplace ({root})"
+        )
+    changed = _git(root, "diff", "--name-only", inputs_commit, "--", "src/commonplace")
+    untracked = _git(root, "ls-files", "--others", "--exclude-standard", "--", "src/commonplace")
+    if changed.returncode != 0 or untracked.returncode != 0:
+        raise ValueError("cannot compare the running package source against inputs-commit")
+    paths = sorted({*changed.stdout.split(), *untracked.stdout.split()})
+    if paths:
+        raise ValueError(
+            f"running commonplace source ({root}) differs from inputs-commit "
+            f"{inputs_commit}: " + ", ".join(paths)
+        )
+
+
 def _check_incumbent(
     *, path: Path, repo_root: Path, source_identity: str,
 ) -> _Incumbent:
@@ -403,7 +443,9 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
         raise ValueError(f"exact member set: {exc}") from exc
     if member_set.overview.frontmatter.get("result-disposition") != "complete":
         raise ValueError("publication requires a complete exact overview")
-    require_method_unchanged(repo_root, member_set.overview.frontmatter.get("inputs-commit"))
+    inputs_commit = member_set.overview.frontmatter.get("inputs-commit")
+    require_method_unchanged(repo_root, inputs_commit)
+    require_running_package_unchanged(inputs_commit)
     incumbent = _check_incumbent(
         path=generated_path, repo_root=repo_root,
         source_identity=running_state.source.identity,

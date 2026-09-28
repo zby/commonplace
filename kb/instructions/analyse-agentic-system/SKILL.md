@@ -60,8 +60,11 @@ hash or later successful command does not clear an earlier failure. Use
    to be clean outside the publication outputs: no staged change, no
    modified tracked file and no untracked file under `kb/`, except untracked
    or modified files under `kb/agentic-systems/reviews/` and
-   `kb/reports/retained/agentic-system-analysis/`. Commit a pending method
-   change before opening the run, not after.
+   `kb/reports/retained/agentic-system-analysis/`. It also requires the
+   running `commonplace` package's source to equal `inputs-commit`, since an
+   editable install executes its own checkout's code even inside another
+   worktree. Commit a pending method change before opening the run, not
+   after.
    Run `commonplace-validate <run-state-path>` immediately. Choose the
    source-native system name once here and copy it exactly into the overview.
 2. Derive the public review path as

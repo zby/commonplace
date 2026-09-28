@@ -66,8 +66,12 @@ publication may sit; ignored paths never count. `prepare` and `publish` also
 require the overview's `inputs-commit` to be an ancestor of or equal to HEAD
 with the method paths unchanged between them, so the commit identifies the
 method the run used. The method paths are the `METHOD_PATHS` constant in
-`src/commonplace/lib/agentic_publication.py`. Both errors name the offending
-paths.
+`src/commonplace/lib/agentic_publication.py`. They also require the source
+of the running `commonplace` package, which may come from another checkout
+than the one publishing (an editable install run inside a batch worktree),
+to have no committed, staged, modified or untracked difference under
+`src/commonplace/` from `inputs-commit`. All three errors name the
+offending paths.
 
 An incumbent is checked by bytes: it must be a generated review of the same
 source whose retained overview and members hash to their pins. It may be

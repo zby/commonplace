@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import re
-import shlex
 import shutil
 import subprocess
 import sys
@@ -29,6 +28,12 @@ from commonplace.lib.agentic_publication import (
 )
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
+
+
+@pytest.fixture(autouse=True)
+def running_package_is_the_fixture_repository(tmp_path, monkeypatch):
+    """Fixture runs pin inputs-commit in their own repository, not this checkout."""
+    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
@@ -1880,6 +1885,30 @@ def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path:
     assert frontmatter(state)["run-status"] == "running"
 
 
+def test_publication_requires_the_running_package_to_match_inputs_commit(
+    tmp_path: Path, monkeypatch
+) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    package = write(tmp_path / "src/commonplace/__init__.py", "")
+    commit_paths(tmp_path, "Add package source", package)
+    pin_inputs_commit(state.parent, run_git(tmp_path, "rev-parse", "HEAD").strip(),
+                      spec.generated_candidate_path)
+    assert prepare_publication(spec).prepared
+    # A running package edited after inputs-commit, even uncommitted in another
+    # checkout, is not the pinned method.
+    other = tmp_path.parent / (tmp_path.name + "-running")
+    subprocess.run(["git", "clone", "--quiet", str(tmp_path), str(other)], check=True)
+    (other / "src/commonplace/__init__.py").write_text("# drifted\n")
+    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: other)
+    with pytest.raises(ValueError, match="running commonplace source .* differs") as error:
+        prepare_publication(spec)
+    assert "src/commonplace/__init__.py" in str(error.value)
+    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path / "kb")
+    with pytest.raises(ValueError, match="not a source checkout"):
+        prepare_publication(spec)
+    assert frontmatter(state)["run-status"] == "running"
+
+
 def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     pin_inputs_commit(state.parent, "0" * 40, spec.generated_candidate_path)
@@ -2078,23 +2107,18 @@ def test_publication_validator_rejects_bad_evidence_without_writes(tmp_path, add
     assert not (tmp_path / spec.generated_destination).exists()
 
 
-def test_source_failure_stops_dependent_shell_command(tmp_path):
+def test_source_failure_makes_prepare_exit_nonzero(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
     artifact = state.parent / "memory-report.md"
     artifact.write_text(artifact.read_text() + "\nBad range: `README.md:999`.\n")
     refinalize(state.parent)
-    marker = tmp_path / "incorrect-success"
-    command = shlex.join([
-        sys.executable, "-m", "commonplace.cli.agentic_analysis_publication",
+    status = agentic_analysis_publication.main([
         "prepare", str(state), "--generated-candidate", str(spec.generated_candidate_path),
         "--generated-destination", spec.generated_destination,
         "--expected-incumbent-sha256", "absent",
-    ])
-    later = shlex.join([sys.executable, "-c", "from pathlib import Path; Path('incorrect-success').touch()"])
-    result = subprocess.run(["bash", "-c", command + " && " + later], cwd=tmp_path, capture_output=True, text=True, check=False)
-    assert result.returncode == 1
-    assert "outside the recorded blob" in result.stderr
-    assert not marker.exists()
+    ], cwd=tmp_path)
+    assert status == 1
+    assert "outside the recorded blob" in capsys.readouterr().err
     assert not (tmp_path / spec.generated_destination).exists()
 
 
