@@ -347,13 +347,25 @@ four members, each under its type:
    probe evidence, the records the runtime pass declared, and its annotations
    on records the memory member declares.
 2. `<run-id>/output/memory.md` under the memory report type, authored from the local
-   `memory-report.md` and nothing else: replace proposal IDs by exact-token
-   mapping from the overview's Reconciliation table, rewrite a seeded record
-   the specialist re-declared under `## Shared records` to an `On <ID>`
-   annotation heading, set `finalized-from` to the SHA-256 of
-   `memory-report.md`, and append `## Amendments`. Code checks the hash
-   pins, not the derivation; keeping the member to those mechanical edits is
-   your responsibility, and a substantive change goes back to the specialist.
+   `memory-report.md` and nothing else, by these mechanical edits:
+   - Replace proposal IDs by exact-token mapping from the overview's
+     Reconciliation table.
+   - Under `## Shared records`, rewrite each heading that would otherwise
+     declare a record another member declares to an `On <ID>` annotation
+     heading. This covers a seeded record the specialist re-declared and a
+     proposal merged into a record another member declares. The set allows
+     one declaration per ID.
+   - Remove a rejected proposal's heading and body. Its only record is its
+     row in the overview's Reconciliation table, with disposition
+     `rejected`. If other findings in the report depend on the rejected
+     proposal, the removal is not mechanical: return the report to the
+     specialist.
+   - Set `finalized-from` to the SHA-256 of `memory-report.md` and append
+     `## Amendments`.
+
+   Code checks the hash pins, not the derivation; keeping the member to
+   those mechanical edits is your responsibility, and a substantive change
+   goes back to the specialist.
 3. `<run-id>/output/epistemic.md` under the epistemic report type, from step 5.
 4. `<run-id>/output/overview.md` under the overview type, with `inputs-commit`
    from step 1. Its Reconciliation names the local report by path and SHA-256

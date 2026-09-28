@@ -1385,6 +1385,46 @@ def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None
         assert any(error in failure for failure in fails), fails
 
 
+@pytest.mark.parametrize("disposition", ["merged", "rejected"])
+@pytest.mark.parametrize("finalized", [True, False])
+def test_finalization_of_merged_and_rejected_proposals(
+    tmp_path: Path, disposition: str, finalized: bool
+) -> None:
+    """The skill's mechanical edits for merged and rejected proposals yield a valid set."""
+    run_dir = member_fixture(tmp_path)
+    local = run_dir / "memory-report.md"
+    kind, proposal, canonical, label = {
+        "merged": ("Components", "MEM-CMP-1", "CMP-1", "Memory view of the component"),
+        "rejected": ("Claims", "MEM-CLM-1", "none", "Unsupported memory claim"),
+    }[disposition]
+    block = f"#### {proposal} — {label}\n\nSpecialist proposal body.\n"
+    text = local.read_text()
+    assert f"### {kind}\n\nnone proposed.\n" in text
+    local.write_text(text.replace(f"### {kind}\n\nnone proposed.\n", f"### {kind}\n\n{block}"))
+    member = finalized_member_text(local, {**MAPPING, proposal: canonical} if disposition == "merged" else MAPPING)
+    if finalized and disposition == "merged":
+        member = member.replace(f"#### {canonical} — {label}", f"#### On {canonical} — {label}")
+    elif finalized:
+        member = member.replace(block, "none proposed.\n")
+    write(run_dir / "output/memory.md", member)
+    overview = run_dir / "output/overview.md"
+    overview.write_text(overview.read_text().replace(
+        "| MEM-OBJ-1 | OBJ-2 | registered |\n",
+        f"| MEM-OBJ-1 | OBJ-2 | registered |\n| {proposal} | {canonical} | {disposition} |\n",
+    ))
+    repin(overview.parent)
+
+    fails = validation.ValidationRun(tmp_path, ()).validate(overview.parent).fails
+
+    if finalized:
+        assert fails == []
+    elif disposition == "merged":
+        assert any("duplicate set declaration: CMP-1" in error for error in fails), fails
+    else:
+        assert any("unintegrated proposal IDs outside Reconciliation: MEM-CLM-1" in error
+                   for error in fails), fails
+
+
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     """Run-state and comparison readers reject the same duplicate set declaration."""
     state = valid_run_state(tmp_path)

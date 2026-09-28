@@ -46,7 +46,8 @@ follow those public fields without ignored state or a source checkout.
 Every complete analysis requires the typed `memory-report.md` and frozen
 `memory-input.md` in its run directory. The coordinator finalizes that report
 as `memory.md`: proposal IDs mapped to canonical IDs by exact token, seeded
-records the specialist re-declared turned into `On <ID>` annotations, and an
+records the specialist re-declared and proposals merged into another member's
+record turned into `On <ID>` annotations, rejected proposals removed, and an
 `## Amendments` section appended; the member's `finalized-from` is the local
 report's SHA-256. Completion verification checks the manifest, run and
 boundary identity across members, the memory member's complete status and

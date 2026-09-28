@@ -196,6 +196,11 @@ The specialist proposal mapping is one table:
 
 `specialist proposal | canonical record | disposition`
 
+A proposal merged into a record another member declares appears in the
+memory member only as an `On <ID>` annotation of that record. A rejected
+proposal, with disposition `rejected`, is removed from the memory member
+and recorded only in this table.
+
 It also names the local specialist report the memory member was finalized
 from, by path and SHA-256, and every mechanical edit finalization made.
 
