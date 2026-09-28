@@ -16,53 +16,112 @@ then judged that extending validation from single notes to directories
 is an architectural change to the validator's model and must be planned
 before it is implemented. This workshop owns that planning.
 
-A candidate implementation exists in git history as commit `6d8d9fd0`
-("Check the analysis set through a type rule on the overview"), made
-under the mid-flight direction and reverted pending this workshop. It is
-evidence of what the change touches, not a decision: a set rule in
-`validation.py`, directory-to-overview resolution in `project_paths.py`,
-a sweep that yields the overview for such a directory, and consumers
-(publication, the comparison loader) calling validate instead of
-re-checking.
+A candidate implementation exists as commit `6d8d9fd0` ("Check the
+analysis set through a type rule on the overview"), made under the
+mid-flight direction and reverted in `597055b5`. It is evidence of what
+the change touches, not a decision: a set rule in `validation.py`,
+directory-to-overview resolution in `project_paths.py`, a sweep that
+yields the overview for such a directory, and consumers (publication, the
+comparison loader) calling validate instead of re-checking. Its
+recognition rule (a directory whose `overview.md` carries the overview
+type) and its manifest location (the overview's `members` field) are
+superseded by the chosen path below.
 
 ## Question
 
 How should the validator model an artifact composed of several typed
 documents in one directory, so that validating the directory gives the
-same guarantees as validating a note, without a general manifest
-framework the repository does not yet need?
+same guarantees as validating a note? The operator's constraint: reuse an
+existing language for the directory spec instead of inventing one.
 
-Decision points:
+## Chosen path (2026-09-28)
 
-1. **Where the manifest lives.** A field in an entry document's
-   frontmatter (the overview's `members`, as designed), or a directory-level
-   manifest file. The entry-document form keeps one `type:` line per
-   artifact and reuses the existing type-rule mechanism; the file form
-   separates set identity from any member's content.
-2. **Which mechanism carries the set check.** A type rule on the entry
-   document's type, which any validation of that document triggers; or a
-   new artifact kind the validator recognizes by directory shape. The
-   type-spec contract already states that schemas cannot dereference and
-   that such checks live outside the schema.
-3. **How a directory is recognized and reported.** By the presence of an
-   entry document whose type declares a manifest; what
-   `commonplace-validate <dir>` and a collection sweep do with it; how
-   diagnostics are attributed to members.
-4. **What the schema layer can absorb.** Manifest shape, member type
-   enum, disposition-conditional cardinality are schema-expressible and
-   already in the overview schema. Everything that opens another file is
-   not.
-5. **What depends on it.** Publication, the comparison loader, the
-   handoff, run-state verification, the site build, and the landscape
-   bundle each either call validate or re-check; the transition plan's
-   revised layering lists the intended split, with source-bound checks
-   confined to run-state verification.
+A directory artifact is described by a
+[Frictionless Data Package v2](https://datapackage.org/standard/data-resource/)
+descriptor, constrained by a JSON Schema profile, with Commonplace adding
+only the member-type check and the cross-member type rules.
+
+| Concern | Carried by |
+|---|---|
+| Recognition: this directory is one artifact | the standard descriptor filename, `datapackage.json` |
+| Which files the set contains, at which paths, of which declared types, how many | a JSON Schema profile of the descriptor (existing languages) |
+| Existence and integrity of each file | Data Package `path` and `hash` semantics |
+| Each file has its declared type and conforms to it | the validator: one comparison, then ordinary note validation |
+| Value equality and citation resolution across members | type rules (code) |
+
+- **Recognition.** A directory containing `datapackage.json` is one
+  artifact. The filename is hardcoded, as `COLLECTION.md`, `README.md`
+  and `SKILL.md` are; the type spec does not declare it.
+- **Manifest.** The descriptor lists each member as a resource with
+  `path` and `hash` (`sha256:`-prefixed; the standard's default is MD5).
+  The standard permits extra properties, so each resource carries
+  `commonplace_type`, the member's expected type; the standard's own
+  `type` property means something else (`"table"`). The manifest leaves
+  the overview's frontmatter: the overview becomes an ordinary member,
+  and the descriptor pins its hash like any other member's.
+- **Directory spec.** The set type's profile is a JSON Schema over the
+  descriptor, extending the base Data Package schema and stored in
+  `kb/types/`. It requires resources by path and declared type, and
+  states cardinality with `contains`, `minContains` and `maxContains`.
+  Validating it reuses the JSON Schema pipeline notes already use.
+- **Member conformance.** Data Package constrains file content only for
+  tabular resources (Table Schema), so this step is Commonplace's. The
+  validator reads each member's `type:` value, compares it with
+  `commonplace_type`, and validates the member under that type. Member
+  findings are reported under the directory artifact, naming the member.
+- **Cross-member checks.** Identity agreement across members, identifiers
+  declared once, and record-citation resolution cannot be written in
+  JSON Schema. They stay imperative type rules of the set type, as the
+  [validation contract](../../reference/validation-contract.md) already
+  places referential checks.
+- **Dependency.** The `frictionless` library is optional. Checking hashes
+  and validating the descriptor against a JSON Schema are small, so the
+  language can be adopted without the library unless the library earns
+  its place.
+
+Rejected alternatives:
+
+- **dirschema**, a path-regex plus JSON Schema directory language, fits
+  the problem closely but has one release (0.1.0, May 2023), requires
+  Python `<3.11` and pins `pydantic<2`, so it cannot be installed here.
+- **RO-Crate with SHACL** could express cross-member equality
+  declaratively, but brings JSON-LD, schema.org vocabulary and a second
+  constraint language for checks a type rule already covers.
+- **BagIt** covers hashes only, with no member typing.
+- **A home-grown manifest** (`MANIFEST.yaml`, or `members` in the
+  overview's frontmatter) was dropped in favour of the standard
+  descriptor.
+
+## Open questions
+
+1. **How the descriptor names its set type.** Type rules dispatch by
+   type-spec path (ADR 048). Leaning: a package-level `commonplace_type`
+   names a set type spec whose `schema:` is the profile, keeping one
+   identity mechanism; the descriptor's `$schema` may also name the
+   profile for external tools. To settle before implementation.
+2. **What `commonplace-validate <dir>` and a collection sweep report.**
+   One artifact per descriptor; members are not also reported as
+   standalone notes. The exact JSON envelope entry (`analysed_artifacts`
+   path and type) is undecided.
+3. **Second instance.** Whether skill directories (open membership, no
+   hashes) should test the model. They would need an open-set profile
+   and hash-free resources; `SKILL.md` stays as the external standard
+   requires.
+4. **Nesting.** Whether a directory artifact may contain another. Default:
+   no.
+5. **Sidecar pairs.** Whether the write-brief and snapshot-pairing base
+   rules should migrate onto the model; a clean migration would be
+   evidence the model is general.
+6. **Source.** Ingest the Data Package v2 specification into
+   `kb/sources/` so the ADR cites it rather than this summary.
 
 ## Boundary and inputs
 
-The analysis set is the only instance today and the evaluation boundary:
-the design must serve it and must not be sized for instances that do not
-exist. Inputs: the [transition plan](../agentic-analysis-output-documents/transition-plan.md)
+The analysis set is the first instance and the evaluation boundary: the
+design must serve it and must not be sized for instances that do not
+exist. A second instance enters only if it already exists in the
+repository (open question 3). Inputs: the
+[transition plan](../agentic-analysis-output-documents/transition-plan.md)
 and its revised-layering section; the
 [consumer inventory](../agentic-analysis-output-documents/consumer-inventory-20260928.md);
 the member type specs under `kb/types/`; the
@@ -75,14 +134,17 @@ inform but does not own.
 Coupling: the [output-documents workshop](../agentic-analysis-output-documents/README.md)
 owns the set design and the producer transition, whose remaining commits
 proceed on the approved plan with set checks in run-state verification.
-The refresh batch in `kb/work/agentic-memory-refresh/batch-01-handoff.md`
-waits on that transition, not on this workshop.
+Moving the manifest from the overview's `members` field into
+`datapackage.json` changes that set design; it is applied when this
+workshop's ADR lands, not before. The refresh batch in
+`kb/work/agentic-memory-refresh/batch-01-handoff.md` waits on that
+transition, not on this workshop.
 
 ## Closure
 
-Close when an ADR records the directory-artifact model the validator
-adopts, its implementation has landed with tests, the analysis set
-validates through it from a clean checkout, and the redundant checks it
-replaces in run-state verification, publication and the comparison loader
-have been removed. If the decision is to keep set checks outside the
-validator, record that and close without implementation.
+Close when an ADR records the directory-artifact model, its
+implementation has landed with tests, the analysis set validates through
+it from a clean checkout, and the redundant checks it replaces in
+run-state verification, publication and the comparison loader have been
+removed. If the decision is to keep set checks outside the validator,
+record that and close without implementation.
