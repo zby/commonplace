@@ -24,7 +24,7 @@ There are no runtime variables in the generated artifacts. `AGENTS.md`, the skil
 | `{{project_name}}` | Same | same |
 | `/PATH/TO/COMMONPLACE/` | Absolute path to the project root, with trailing slash | `root` resolved to absolute path |
 
-Substitution is a flat string replace in `_write_template`. Files that don't need substitution (scaffold trees and files) are copied byte-for-byte instead.
+Substitution is a flat string replace in `_write_template`. Files that don't need substitution (scaffold files) are copied byte-for-byte instead.
 
 ## Project files created once
 
@@ -40,7 +40,7 @@ These outputs belong to the project. Init creates each one only when it is missi
 - `kb/work/` — user's workshop surface
 - `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
 
-**Scaffold trees** — none. The source, snapshot, and report types that Commonplace commands and procedures produce are global library types, read in place like the rest of the library.
+There are no scaffold trees: the source, snapshot, and report types that Commonplace commands and procedures produce are global library types, read in place like the rest of the library.
 
 **Scaffold files** — individual files copied into the user's collections:
 
@@ -121,7 +121,7 @@ Relevant Notes:
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decided-by: shipping scripts as an installable Python package and consolidating scaffold into one tree
 - [027-package-scaffold-assets-without-source-tree-symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decided-by: package scaffold assets with explicit wheel includes and source-checkout fallback instead of source-tree symlinks
 - [064-install-commonplace-commands-as-a-user-level-uv-tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decided-by: user-level command installation and removal of project command-environment scaffolding
-- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decided-by: the skills-first delivery model and the core/local type split that `MANIFEST.trees` and `MANIFEST.promoted_skills` implement
+- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decided-by: the skills-first delivery model and the core/local type split that `MANIFEST.promoted_skills` implements
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decided-by: the installation layout that `commonplace-init` produces
 - [architecture](./architecture.md) — shipped architecture: where the generation pipeline sits inside the installed surface
 - [control-plane-goals](./control-plane-goals.md) — how the generated `AGENTS.md.template` carries the `## KB Goals and Scope` section for practitioners to fill in

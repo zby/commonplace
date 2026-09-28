@@ -48,28 +48,6 @@ def _record_existing(
     report.preserved_different.append(rel_path)
 
 
-def _copy_tree_files(
-    src_dir: Path,
-    dest_root: Path,
-    target_rel: str | Path,
-    report: InitReport,
-) -> None:
-    """Recursively copy a directory tree, classifying existing files."""
-    for src_file in sorted(src_dir.rglob("*")):
-        if not src_file.is_file():
-            continue
-        rel = src_file.relative_to(src_dir)
-        rel_path = Path(target_rel) / rel
-        target = dest_root / rel_path
-        expected_bytes = src_file.read_bytes()
-        if target.exists():
-            _record_existing(report, rel_path, target, expected_bytes)
-            continue
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src_file, target)
-        report.created.append(rel_path)
-
-
 def _copy_scaffold_file(
     scaffold_root: Path,
     src_rel: str,
@@ -235,10 +213,6 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
 
     data_pkg = files("commonplace") / "_data"
     with as_file(data_pkg) as scaffold_root:
-        for src_rel, target_rel in MANIFEST.trees:
-            src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
-            _copy_tree_files(src_dir, root, target_rel, report)
-
         for src_rel, target_rel in MANIFEST.files:
             _copy_scaffold_file(scaffold_root, src_rel, root, target_rel, report)
 

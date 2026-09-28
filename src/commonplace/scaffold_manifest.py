@@ -1,7 +1,7 @@
 """What commonplace-init installs: the scaffold manifest as data.
 
 `commonplace.cli.init_project` executes this manifest. Changing what ships —
-directories, scaffold trees, templates, promoted skills — is an edit here,
+directories, scaffold files, templates, promoted skills — is an edit here,
 not in installer code.
 """
 
@@ -15,14 +15,13 @@ from pathlib import Path
 class ScaffoldManifest:
     """One Commonplace project scaffold.
 
-    Tree/file/template entries are (scaffold_relative_path, target_relative_path)
+    File/template entries are (scaffold_relative_path, target_relative_path)
     pairs; sources resolve from packaged `commonplace/_data/` or a source
     checkout. The library itself is not scaffolded: projects read it from the
     installed package (see `commonplace.lib.library`).
     """
 
     directories: tuple[Path, ...]
-    trees: tuple[tuple[str, str], ...]
     files: tuple[tuple[str, str], ...]
     templates: tuple[tuple[str, str], ...]
     skills_dirs: tuple[Path, ...]
@@ -53,10 +52,9 @@ MANIFEST = ScaffoldManifest(
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
     ),
-    # No scaffold trees: every type Commonplace code or procedures produce is a
-    # global type read from the installed library.
-    trees=(),
-    # Single files copied without a tree walk. User-collection contract,
+    # Single files copied byte-for-byte. Every type Commonplace code or
+    # procedures produce is a global type read from the installed library.
+    # User-collection contract,
     # landing, and local-policy templates seed empty collections.
     files=(
         ("kb/sources/.gitignore", "kb/sources/.gitignore"),

@@ -1030,56 +1030,6 @@ def prune_superseded_freshness_baselines(
     return deleted_job_ids
 
 
-def load_review_pairs_for_note(
-    conn: sqlite3.Connection,
-    *,
-    note_path: str,
-    model_partition: str,
-) -> list[ReviewPairRow]:
-    rows = conn.execute(
-        f"""
-        SELECT {_PAIR_SELECT}
-        FROM review_pairs AS rp
-        JOIN review_jobs AS j
-          ON j.review_job_id = rp.review_job_id
-        WHERE rp.note_path = ? AND j.model_partition = ?
-        ORDER BY rp.criterion_path, rp.completed_at, rp.review_pair_id
-        """,
-        (note_path, model_partition),
-    ).fetchall()
-    return _review_pairs_from_rows(rows)
-
-
-def load_latest_completed_review_pair(
-    conn: sqlite3.Connection,
-    *,
-    note_path: str,
-    criterion_path: str,
-    model_partition: str,
-) -> ReviewPairRow | None:
-    row = conn.execute(
-        f"""
-        SELECT {_PAIR_SELECT}
-        FROM review_pairs AS rp
-        JOIN review_jobs AS j
-          ON j.review_job_id = rp.review_job_id
-        WHERE rp.note_path = ?
-          AND rp.criterion_path = ?
-          AND j.model_partition = ?
-          AND j.status = 'completed'
-          AND rp.completed_at IS NOT NULL
-          AND (rp.result_kind = 'report' OR rp.outcome IS NOT NULL)
-        ORDER BY rp.completed_at DESC, rp.review_pair_id DESC
-        LIMIT 1
-        """,
-        (note_path, criterion_path, model_partition),
-    ).fetchone()
-    if row is None:
-        return None
-    pairs = _review_pairs_from_rows([row])
-    return pairs[0]
-
-
 def load_effective_review_pair_map(
     conn: sqlite3.Connection,
     *,

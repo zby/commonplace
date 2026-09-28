@@ -192,34 +192,6 @@ def ack_target_inputs(
     )
 
 
-def refresh_target_from_captures(
-    conn: sqlite3.Connection,
-    *,
-    note_path: str,
-    criterion_path: str,
-    model_partition: str,
-    evidence_review_pair_id: int,
-    baseline_note_snapshot_id: int,
-    baseline_criterion_snapshot_id: int,
-    expected_baseline_revision: int | None,
-    accepted_at: str,
-    expected_generation_next_revision: int | None = None,
-) -> tuple[int | None, int | None]:
-    """Review-owned capture refresh. Returns superseded evidence pair and target ids."""
-    return freshness_baselines.refresh_review_baseline_from_captures(
-        conn,
-        note_path=note_path,
-        criterion_path=criterion_path,
-        model_partition=model_partition,
-        evidence_review_pair_id=evidence_review_pair_id,
-        baseline_note_snapshot_id=baseline_note_snapshot_id,
-        baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
-        expected_baseline_revision=expected_baseline_revision,
-        accepted_at=accepted_at,
-        expected_generation_next_revision=expected_generation_next_revision,
-    )
-
-
 def parse_target_key(raw: object) -> dict[str, str]:
     if not isinstance(raw, dict):
         raise TypeError("target_key must be an object")

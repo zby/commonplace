@@ -69,10 +69,6 @@ class TagSpace:
     heads: dict[str, Path]
     declaration_error: str | None
 
-    @property
-    def tags_in_use(self) -> set[str]:
-        return set(self.notes_by_tag)
-
     def is_participating(self, path: Path) -> bool:
         """Return True when path is a membership candidate: inside a
         participating collection and not in an excluded subtree."""
