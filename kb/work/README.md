@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [code-simplification](./code-simplification/README.md) — backlog of verified-by-review duplication, test clean-up, and design-level simplifications left after the 2026-09-28 dead-code sweep; one commit per item
 - [agentic-analysis-output-documents](./agentic-analysis-output-documents/README.md) — replace the monolithic exact analysis with smaller authoritative reports; simplify contracts and verify publication and downstream consumers
 - [agentic-memory-refresh](./agentic-memory-refresh/README.md) — 162 legacy memory analyses inventoried; per-value evidence adopted and three fresh pilots verified; 159 refreshes remain
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
