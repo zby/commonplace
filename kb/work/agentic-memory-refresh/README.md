@@ -38,8 +38,8 @@ legacy descriptions, findings, matrix values, or previous results to that
 coordinator or its mandatory fresh memory specialist. Source identifiers
 extracted from old records are discovery hints; verify them before freezing.
 Prior-analysis exposure requires a new coordinator and run, as the skill says.
-Avoid unfiltered agent-status listings: they may include complete earlier
-reports. Restrict any necessary listing to the current coordinator subtree.
+Do not use agent-status listings, including filtered listings: they may include
+complete earlier reports. Use completion events and owned report paths instead.
 
 One coordinator owns one run, one public destination, and one retained result.
 Workers may delegate the mandatory memory lens, but do not share publication
@@ -84,12 +84,23 @@ testing all downstream paths.
 
 ## Pilot acceptance and next decision
 
+The [three-pilot citation-generation rerun](./citation-generation-rerun-20260927.md)
+completed at commit `5057c874` and the fixed pins in its
+[execution handoff](./next-pilot-test.md). All six authors used the generator;
+121 requests succeeded, and all 186 final quote blocks match returned citations
+unchanged. No quotation or range failures were observed. One prepare failure
+on workflow identity formatting was corrected. Independent handoffs and the
+bounded matrix, table and statistics checks passed. The report records the
+reasoning-effort mismatch in four workers and the remaining trace gaps; this
+is bounded evidence of reduced authoring friction, not a general zero-error
+claim. Inventory pointers name the three new results.
+
 All three pilot analyses have now been regenerated under the adopted per-value
 evidence contract. The pilot passes: matrix, table, numerical analysis and
 reproducible membership queries all read the same retained evidence. Wired
 automatic writing and push are countable without upgrading weaker manual/pull
 values; partial coverage preserves positives without asserting a complete set.
-See the [current acceptance record](./per-value-acceptance.md),
+See the [per-value pilot acceptance record](./per-value-acceptance.md),
 [query ledger](./per-value-query-ledger.md), and
 [synthesis trial](./per-value-synthesis-trial.md).
 
@@ -103,10 +114,54 @@ The reliability repairs commissioned after the [trace audit](./trace-audit.md)
 completed on 2026-09-27. The [retained acceptance record](../../reports/retained/agentic-analysis-reliability-20260927/README.md)
 contains the eight repair dispositions, fresh Napkin publication, verified
 three-system comparison and synthesis, exact query replay, and trace recoveries.
-The repair workshop is closed. The inventory now points to Napkin run
-`AAS-2026-09-27-napkin-01`; its predecessor remains historical. This is bounded
+The repair workshop is closed. That trial published Napkin run
+`AAS-2026-09-27-napkin-01`; subsequent runs supersede it in the inventory. This is bounded
 acceptance for expanding the refresh, not full-corpus completion. Scheduling,
 Pond regeneration and the remaining 159 artifacts remain owned here.
+
+After commit `2d5a9d9a`, the operator commissioned another
+[three-system rerun and trace audit](./reliability-rerun-20260927.md) at the same
+source pins. All three new runs completed; handoff, matrix, table and statistics
+checks passed. The six-session audit records recovered citation errors and
+remaining read truncation. The inventory points to these latest results;
+earlier comparison and synthesis snapshots remain historical.
+
+The operator then commissioned a [fresh three-pilot quote-verification
+rerun](./quote-rerun-20260927.md) after the quote-matching migration and the
+parser/source-identity fixes in `4a97ad71`. It holds the same source revisions
+fixed and audits first-check failures as well as final publication. All three
+pilots completed: 199 result/specialist quote blocks and two compact-review
+quote blocks pass the stronger checks. Five failed source-check attempts were
+repaired before publication; authoring is not error-free. The audit records
+two remaining instruction/validator inconsistencies. The bounded matrix,
+table and statistics checks pass, and the inventory points to these new runs.
+The follow-up [root-cause analysis](./source-check-root-causes.md) traces the
+failures to specialist contract delivery, citation construction and conflicting
+validation rules; it records repair priorities without changing the producer.
+
+After the 2026-09-27 cleanup regression showed every worker wrapping the
+generator in a per-quote loop, `commonplace-quote` gained a `--selections`
+batch mode (`e984a460`). The [quote-batch trial](./quote-batch-trial.md)
+prepares three specialist-only reruns on the same frozen inputs to test
+whether fresh specialists adopt it unprompted and make no quotation errors. The
+[completed trial](./quote-batch-trial-20260928.md) audited failed attempts and
+recovery: no quote-tool misuse failure was observed, but five oversized reads
+were truncated and followed by narrower reads. Two quote batches returned
+ambiguity responses, handled without parsing failures. All 66 final citations
+resolved; that final check is separate from the execution-failure audit.
+
+The [validator investigation](./validator-disagreements.md) reproduces the
+competing citation grammars and source-context errors. It also confirms that
+workers used the source checker: the shipped tools detect invalid citations
+after drafting but do not construct them. The subsequent instruction fix
+delivers the citation contract to specialists and aligns range optionality;
+validator implementation remains unchanged.
+
+The subsequent [citation-generation change](./citation-generation-change.md)
+implements the clarified workflow, repairs the validator disagreements, and
+removes the separate source-check operation. It records implementation acceptance
+and the command-count/simplification audit; the completed authoring trial is
+recorded separately in the citation-generation rerun above.
 
 The pilot is accepted only when:
 

@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [agentic-analysis-output-documents](./agentic-analysis-output-documents/README.md) — replace the monolithic exact analysis with smaller authoritative reports; simplify contracts and verify publication and downstream consumers
+- [agentic-memory-refresh](./agentic-memory-refresh/README.md) — 162 legacy memory analyses inventoried; per-value evidence adopted and three fresh pilots verified; 159 refreshes remain
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
 - [decision-lifecycle-evidence](./decision-lifecycle-evidence/README.md) — exploring proposals and ADRs as views of a continuing decision record, separating deliberation, implementation, and outcome evidence; records ADR 089's premature placement as the motivating case
 - [framework-delivery](./framework-delivery/README.md) — follow-ups to ADR 086 (library served from the installed package, adopted 2026-09-25): release, probe replies from other harnesses, sub-agent emulation for `cp-skill-ingest`
