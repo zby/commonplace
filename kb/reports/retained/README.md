@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Archived single-file agentic-system analysis results](./agentic-system-analysis-archive/README.md) — 60 retained results produced under the retired single-file result type; cited by archived reviews and trial records, read by no loader
 - [Agentic-analysis reliability trial](./agentic-analysis-reliability-20260927/README.md) — eight repair dispositions, fresh analysis, comparison/query replay and recovered-failure audit.
 - [AutoReason compounding trial](./autoreason-compounding-trial-20260925/README.md) — model-preferred revision remained hard to read; experiment closed without application, with autorevision kept experimental.
 - [Curiosity prompts experiment](./curiosity-prompts-20260310/README.md)
