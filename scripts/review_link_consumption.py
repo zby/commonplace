@@ -1,5 +1,6 @@
 """Summarize offered and consumed link cost from the Commonplace review store.
 
+Only jobs with availability schema v3 are included.
 Run from the repository root with ``python3 scripts/review_link_consumption.py``.
 The optional positional argument overrides ``COMMONPLACE_STORE`` and the default
 ``kb/reports/state/commonplace-store.sqlite`` path.
@@ -34,15 +35,8 @@ def _distribution(values: list[int]) -> str:
     )
 
 
-def _offered_count(version: object, offered: dict[str, Any]) -> int | None:
-    if version == 3:
-        value = offered.get("distinct_consumption_target_count")
-    elif version == 1 or version == 2:
-        # BACKCOMPAT: availability v1/v2 used this name for the same logical
-        # count - remove after historical v1/v2 jobs are excluded from reports.
-        value = offered.get("distinct_artifact_count")
-    else:
-        return None
+def _offered_count(offered: dict[str, Any]) -> int | None:
+    value = offered.get("distinct_consumption_target_count")
     if not isinstance(value, int) or isinstance(value, bool) or value < 0:
         return None
     return value
@@ -81,6 +75,8 @@ def _load_rows(
         consumption = commonplace.get("review_link_consumption")
         if not isinstance(availability, dict) or not isinstance(consumption, dict):
             continue
+        if availability.get("version") != 3:
+            continue
 
         versions[("availability", availability.get("version"))] += 1
         versions[("consumption", consumption.get("version"))] += 1
@@ -104,7 +100,7 @@ def _load_rows(
             if offered is None:
                 continue
 
-            offered_count = _offered_count(availability.get("version"), offered)
+            offered_count = _offered_count(offered)
             offered_bytes = offered.get("total_bytes")
             consumed_count = report.get("distinct_artifact_count")
             consumed_bytes = report.get("total_bytes")
