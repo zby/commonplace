@@ -277,6 +277,12 @@ the review gets its own type under `kb/agentic-systems/types/` pinning
 three open choices in the candidate, after which step 3 plans the code and
 consumer transition.
 
+The operator confirmed the embedded decisions and the three open choices on
+2026-09-28: no split of the runtime report yet, the review's pin field is
+renamed `analysis-overview`, and the finalized memory member keeps the
+specialist's section order. Step 2 is closed; step 3 opens with a consumer
+inventory against the live code.
+
 ## Work sequence and decision points
 
 1. Clean up the current procedure before drawing any partition. Working from
