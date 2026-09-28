@@ -52,6 +52,9 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/types/agentic-system-analysis-run-state.schema.yaml",
     "kb/agentic-systems/types/generated-review.md",
     "kb/agentic-systems/types/generated-review.schema.yaml",
+    # Every member schema references these.
+    "kb/types/note.schema.yaml",
+    "kb/types/note-base.schema.yaml",
 )
 
 # Untracked or modified files may sit here while a batch runs: a sibling run's

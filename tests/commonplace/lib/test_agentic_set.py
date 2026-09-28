@@ -17,8 +17,7 @@ def write_set(root: Path, *, disposition: str = "complete") -> Path:
     }
     hashes = {}
     for name, member_type in members.items():
-        run_field = "analysis-run" if name == "memory.md" else "run-id"
-        content = f"---\ntype: {member_type}\n{run_field}: AAS-2026-09-28-x-01\n---\n# {name}\n".encode()
+        content = f"---\ntype: {member_type}\nrun-id: AAS-2026-09-28-x-01\n---\n# {name}\n".encode()
         (root / name).write_bytes(content)
         hashes[name] = sha256(content).hexdigest()
     manifest = "".join(
@@ -80,7 +79,7 @@ def test_identity_errors_are_reported_per_member() -> None:
         overview=document("overview.md", "run-id: R\nreviewed-boundary: B"),
         members={
             "runtime.md": document("runtime.md", "run-id: R\nreviewed-boundary: other"),
-            "memory.md": document("memory.md", "analysis-run: R\nreviewed-boundary: B\nsource-identity: s"),
+            "memory.md": document("memory.md", "run-id: R\nreviewed-boundary: B\nsource-identity: s"),
             "epistemic.md": document("epistemic.md", "run-id: other\nreviewed-boundary: B"),
         },
     )

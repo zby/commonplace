@@ -58,14 +58,15 @@ without emitting prior review prose or descriptions. Both `prepare` and
 for a vacant destination). Destination drift requires a new inspection.
 
 All three operations require a worktree that is clean outside the workflow's
-output locations: no modified or staged tracked file anywhere, and no
-untracked file under `kb/` except under `kb/agentic-systems/reviews/` and
-`kb/reports/retained/agentic-system-analysis/`, where a sibling run's
-uncommitted publication may sit; ignored paths never count. `prepare` and
-`publish` also require the overview's `inputs-commit` to be an ancestor of or
-equal to HEAD with the method paths (the analysis instructions, the set's type
-specs and schemas, and `src/commonplace/`) unchanged between them, so the
-commit identifies the method the run used. Both errors name the offending
+output locations: no staged change or modified tracked file, and no untracked
+file under `kb/`, except that `kb/agentic-systems/reviews/` and
+`kb/reports/retained/agentic-system-analysis/` may hold untracked files and
+unstaged modifications of tracked files, where a sibling run's uncommitted
+publication may sit; ignored paths never count. `prepare` and `publish` also
+require the overview's `inputs-commit` to be an ancestor of or equal to HEAD
+with the method paths unchanged between them, so the commit identifies the
+method the run used. The method paths are the `METHOD_PATHS` constant in
+`src/commonplace/lib/agentic_publication.py`. Both errors name the offending
 paths.
 
 An incumbent is checked by bytes: it must be a generated review of the same

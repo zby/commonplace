@@ -168,7 +168,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
     values = {
         "type": "types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
-        "analysis-run": RUN_ID,
+        "run-id": RUN_ID,
         "source-identity": SOURCE,
         "reviewed-boundary": revision,
         "report-status": "complete",
@@ -1344,7 +1344,7 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
         (state.parent / "memory-input.md").write_text("Changed input.\n")
     else:
         values = frontmatter(report)
-        field = {"run": "analysis-run", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
+        field = {"run": "run-id", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
         values[field] = "blocked" if mutation == "blocked" else "different"
         replace_frontmatter(report, values)
         refinalize(state.parent)
@@ -1514,6 +1514,32 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
         replace_frontmatter(review, {**frontmatter(review), key: value})
     with pytest.raises((ValueError, OSError), match=error):
         systems_matrix.load_results(tmp_path)
+
+
+@pytest.mark.parametrize("mutation, error", [
+    ("none", None),
+    ("section-after-amendments", "last level-two section"),
+    ("no-finalized-from", "finalized-from"),
+    ("legacy-run-field", "analysis-run"),
+])
+def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None) -> None:
+    """Amendments close the member; finalized-from and run-id are required fields."""
+    state = valid_run_state(tmp_path)
+    memory = state.parent / "memory.md"
+    values = frontmatter(memory)
+    if mutation == "section-after-amendments":
+        memory.write_text(memory.read_text() + "\n## Stray\n\nText.\n")
+    elif mutation == "no-finalized-from":
+        values.pop("finalized-from")
+        replace_frontmatter(memory, values)
+    elif mutation == "legacy-run-field":
+        values["analysis-run"] = values.pop("run-id")
+        replace_frontmatter(memory, values)
+    fails = validation.validate_note(memory, repo_root=tmp_path).fails
+    if error is None:
+        assert fails == []
+    else:
+        assert any(error in failure for failure in fails), fails
 
 
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):

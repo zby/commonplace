@@ -177,9 +177,8 @@ def set_identity_errors(
     errors: list[str] = []
     for name, member in member_set.members.items():
         values = member.frontmatter
-        run_field = "analysis-run" if name == "memory.md" else "run-id"
-        if values.get(run_field) != run_id:
-            errors.append(f"{name}: {run_field} does not match the overview")
+        if values.get("run-id") != run_id:
+            errors.append(f"{name}: run-id does not match the overview")
         if values.get("reviewed-boundary") != boundary:
             errors.append(f"{name}: reviewed-boundary does not match the overview")
         if name == "memory.md" and source_identity is not None and (

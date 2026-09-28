@@ -55,11 +55,11 @@ hash or later successful command does not clear an earlier failure. Use
    `epistemic.md` beside it. Record the method commit now: run
    `git rev-parse HEAD` and keep the full commit for the overview's
    `inputs-commit`. Publication requires HEAD to still descend from it with
-   the method paths (this skill, the two lens instructions, the set's type
-   specs and schemas, and `src/commonplace/`) unchanged, and requires the
-   worktree to be clean outside the publication outputs: no modified or
-   staged tracked file, and no untracked file under `kb/` except under
-   `kb/agentic-systems/reviews/` and
+   the method paths unchanged (the list is the `METHOD_PATHS` constant in
+   `src/commonplace/lib/agentic_publication.py`), and requires the worktree
+   to be clean outside the publication outputs: no staged change, no
+   modified tracked file and no untracked file under `kb/`, except untracked
+   or modified files under `kb/agentic-systems/reviews/` and
    `kb/reports/retained/agentic-system-analysis/`. Commit a pending method
    change before opening the run, not after.
    Run `commonplace-validate <run-state-path>` immediately. Choose the
@@ -289,8 +289,8 @@ declares no records and cites the set's.
 Resolve proposed records into canonical IDs: return a worker's abbreviated
 proposals for expansion first, map exact identifier tokens rather than
 substrings, and verify that every mapped target is declared and unique.
-Attach corrections and amendments to the affected records, preserve anchored
-conflicts, and report independent convergence only when the lenses reached it
+Record corrections as `Amendment:` entries in the declaring member's
+`## Amendments` section, preserve anchored conflicts, and report independent convergence only when the lenses reached it
 independently. Recheck shared-route ownership. Attach the admission fields
 of memory routes from the specialist's findings rather than tracing those
 mechanisms twice. The specialist's `memory-comparison` profile stays in the

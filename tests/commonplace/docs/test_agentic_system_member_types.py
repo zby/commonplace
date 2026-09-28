@@ -263,6 +263,16 @@ def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Pat
     assert any("Claims" in failure for failure in results.fails)
 
 
+def test_runtime_report_accepts_amendments_only_as_its_last_section(tmp_path: Path) -> None:
+    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: OBJ-1 label changed.\n"
+    assert validate(tmp_path, "runtime.md", amended).fails == []
+    misplaced = RUNTIME_TEXT.replace(
+        "## Annotations", "## Amendments\n\nAmendment: OBJ-1 label changed.\n\n## Annotations"
+    )
+    results = validate(tmp_path, "runtime.md", misplaced)
+    assert any("last level-two section" in failure for failure in results.fails)
+
+
 def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
     assert validate(tmp_path, "epistemic.md", EPISTEMIC_TEXT).fails == []
     swapped = EPISTEMIC_TEXT.replace("## Authority-route ledger", "## TEMP", 1)

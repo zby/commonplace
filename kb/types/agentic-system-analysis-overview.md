@@ -31,7 +31,7 @@ any member.
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
 | `members` | Yes | The manifest: a list of `{path, sha256, type}` entries, one per other member of the set, paths relative to the overview's directory; empty for a `blocked` or `out-of-scope` run |
-| `inputs-commit` | Yes | The full commit of this repository whose tree supplied the run's method: the analysis instructions, the set's type specs and schemas, and the package code. The coordinator writes HEAD here when the run opens; publication requires HEAD to descend from it with those method paths unchanged |
+| `inputs-commit` | Yes | The full commit of this repository whose tree supplied the run's method: the analysis instructions, the set's type specs and schemas, and the package code. The coordinator writes HEAD here when the run opens; publication requires HEAD to descend from it with the method paths, the `METHOD_PATHS` constant in `src/commonplace/lib/agentic_publication.py`, unchanged |
 
 For a `complete` run, the five boundary fields are non-null and `members`
 names exactly one runtime report, one memory report and one epistemic
@@ -75,8 +75,8 @@ and fenced excerpts are excluded from identifier checks.
 `SRC-*` records are declared only in this overview's Source register.
 Every other record is declared exactly once, in the member that
 established it: the runtime report for records the coordinator's runtime
-pass registered, the memory report for records registered from specialist
-proposals. A cross-member reference is the bare ID.
+pass registered, the memory report for records registered from the memory
+specialist's proposals. A cross-member reference is the bare ID.
 
 Canonical identity applies from allocation and sharing, not only final
 acceptance. A split gives the new parts fresh IDs and marks the combined
@@ -92,14 +92,21 @@ OBJ-1 ...` or `Evidence: SRC-1 ...`. A level-four heading of the form
 `#### On OBJ-1 — Short label` is an **annotation**: another member's
 lens-specific fields on a record it does not declare. It never redefines
 generic identity, and a member never annotates a record it declares.
+Annotations sit in the section the member's type names: `## Annotations`
+in the runtime report, under `## Shared records` in the memory report.
 
-An **amendment** corrects a declared fact and lives under the declaring
-record, as a paragraph opening `Amendment:` that gives the superseded
-value, replacement value, evidence anchor, and affected findings. An
-anchored conflict is an amendment carrying both values. Finalization of a
-member appends deltas, never a second version of a record; a relabelling
-from proposal to registered is carried by the overview's Reconciliation
-mapping and is not an amendment.
+An **amendment** corrects a declared fact. Amendments live in one place:
+an `## Amendments` section at the end of the declaring member, holding one
+paragraph per amendment that opens `Amendment:` followed by the amended
+record's ID and gives the superseded value, replacement value, evidence
+anchor, and affected findings. An anchored conflict is an amendment
+carrying both values. Finalization of a member appends deltas, never a
+second version of a record; a relabelling from proposal to registered is
+carried by the overview's Reconciliation mapping and is not an amendment.
+
+The epistemic specialist proposes new records under `EPI-` IDs and
+declares none. The coordinator registers an accepted `EPI-` proposal in
+the runtime report, under a canonical ID the epistemic member then cites.
 
 ### Status fields
 

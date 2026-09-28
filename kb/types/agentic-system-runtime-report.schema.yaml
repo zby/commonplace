@@ -29,12 +29,14 @@ allOf:
                 - "## Probe evidence"
                 - "## Shared records"
                 - "## Annotations"
+                - "## Amendments"
             - pattern: '^#{3,6} .+$'
         allOf:
           - {contains: {const: "## Runtime account"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Probe evidence"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Shared records"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Annotations"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Amendments"}, minContains: 0, maxContains: 1}
           - {contains: {const: "### Components"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Operative objects"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Routes"}, minContains: 1, maxContains: 1}
@@ -45,5 +47,7 @@ allOf:
         allOf:
           - description: "The runtime sections must appear in their canonical reading order."
             pattern: '(?ms)^## Runtime account\s*$.*?^## Probe evidence\s*$.*?^## Shared records\s*$.*?^## Annotations\s*$'
+          - description: "An optional Amendments section, when present, is the last level-two section."
+            pattern: '(?ms)\A(?!.*^## Amendments[ \t]*$.*^## )'
           - description: "Shared-record subheadings must appear under Shared records in canonical order."
             pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Annotations\s*$)'

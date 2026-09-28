@@ -12,13 +12,14 @@
           "required": [
             "type",
             "description",
-            "analysis-run",
+            "run-id",
             "source-identity",
             "reviewed-boundary",
             "report-status",
             "canonical-register-sha256",
             "worker-model",
             "method-sha256",
+            "finalized-from",
             "memory-comparison"
           ],
           "properties": {
@@ -29,7 +30,7 @@
               "type": "string",
               "minLength": 1
             },
-            "analysis-run": {
+            "run-id": {
               "type": "string",
               "pattern": "^AAS-\\d{4}-\\d{2}-\\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\\d{2}$"
             },
@@ -233,8 +234,20 @@
               },
               "minContains": 1,
               "maxContains": 1
+            },
+            {
+              "description": "An optional Amendments section occurs at most once.",
+              "contains": {
+                "const": "## Amendments"
+              },
+              "minContains": 0,
+              "maxContains": 1
             }
           ]
+        },
+        "body": {
+          "description": "An Amendments section, when present, is the last level-two section.",
+          "pattern": "(?ms)\\A(?!.*^## Amendments[ \\t]*$.*^## )"
         }
       }
     }

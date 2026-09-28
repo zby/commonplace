@@ -198,6 +198,12 @@ runtime-declared records. It repeats no generic identity, evidence
 passage or memory finding. State `none` when the runtime pass annotated no
 memory-declared record.
 
+### Amendments
+
+An optional `## Amendments` section, last in the report, holds
+corrections to records this report declares, under the set's
+[amendment grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar).
+
 ## Template
 
 ```markdown

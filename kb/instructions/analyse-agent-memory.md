@@ -89,7 +89,9 @@ no separate quote check.
 You own the proposed classifications in `memory-comparison` as well as their
 supporting analysis, under the report type's per-value evidence contract. Do
 not weaken a wired value because another value is
-merely afforded. Distinguish missing evidence from a negative finding. Use
+merely afforded. Distinguish missing evidence from a negative finding. Every record the
+profile cites is declared or annotated (`On <ID>`) in your report; annotate
+any seeded record the profile cites. Use
 local proposal IDs where the parent has not yet registered a discovered
 object or route; the parent maps exact tokens.
 

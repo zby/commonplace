@@ -25,7 +25,7 @@ provenance. Set-wide conventions are those of the
 |---|---:|---|
 | `type` | Yes | `types/agent-memory-analysis-report.md` |
 | `description` | Yes | Subject and discriminating memory boundary |
-| `analysis-run` | Yes | The set's run ID |
+| `run-id` | Yes | The set's run ID |
 | `source-identity` | Yes | Exact repository or capture identity |
 | `reviewed-boundary` | Yes | Full Git commit or capture label |
 | `report-status` | Yes | `complete` or `blocked` |
@@ -83,7 +83,10 @@ supported witness for that value's existence, with weaker alternatives and
 their limits retained in the records. A wired witness does not upgrade
 another route or value. A value counts once per system even if several
 routes support it. Axis-level `records` support the coverage assessment.
-Every referenced record is declared somewhere in the set. Other
+Every record the profile references is declared or annotated
+(`#### On <ID>`) in this report itself; the specialist annotates any
+seeded record its profile cites, so the profile validates without the
+other members. Other
 assessments require `values: []` and `evidence: {}`. `absent` requires an
 `ABS-*` record establishing bounded absence. Every assessment and value
 has a nonempty explanatory note. An opaque included branch prevents
@@ -230,9 +233,11 @@ make the report appear ready for integration.
 
 ### Amendments
 
-Present only in the finalized member. `## Amendments` holds the deltas
-reconciliation applied, each attached to its record as the set's amendment
-grammar requires: a changed token with its superseded value, an added
-field, an added link. It carries no re-narration of a declared record and
-no coordinator classification; those are annotations in the runtime
-report. State `none` when finalization changed nothing beyond ID mapping.
+Present only in the finalized member, as its last section. `## Amendments`
+holds the deltas reconciliation applied, as `Amendment:` entries keyed by
+record ID under the set's
+[amendment grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar):
+a changed token with its superseded value, an added field, an added link.
+It carries no re-narration of a declared record and no coordinator
+classification; those are annotations in the runtime report. State `none`
+when finalization changed nothing beyond ID mapping.
