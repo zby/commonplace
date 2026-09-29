@@ -1,7 +1,8 @@
 # Workshop: offload analyse-agentic-system mechanics into code
 
 - **Posed:** 2026-09-28, by the operator's direction after a review of the skill.
-- **Start condition:** implementation begins only after the current batch of agentic-analysis runs (batch 01 rerun and batch 02) is done. Until then this workshop holds design only; do not change commands, schemas, or the skill.
+- **Start condition:** met on 2026-09-29, when the operator reported the batch finished.
+- **Decision 2026-09-29 (operator):** fix all of the issues first, then rerun once. The rerun is therefore one bundled method change, not a sequence of separately comparable ones. The operator wants to compare its results with the batch 01 rerun, so the comparison will not isolate which change caused which difference. Freeze the method commit before opening the rerun.
 - **Closes when:** each item below is implemented, or explicitly dropped, and `kb/instructions/analyse-agentic-system/SKILL.md` has been trimmed to the judgment core plus command calls. Then extract any durable decisions to `kb/reference/` and delete this workshop.
 
 ## Goal
@@ -42,6 +43,21 @@ Tier 3 — code proposes, the agent decides (lower priority):
 ## Decided against
 
 - **Scaffold command for the four members.** It would have to emit empty sections. Those either fail validation or need a placeholder convention, and a placeholder that passes validation records a section as present when nothing was analysed. The validator's missing-section errors already serve as the checklist. The useful part, deterministic frontmatter, is covered by item 1's printed block or a validator cross-check of member frontmatter against run-state.
+
+## Survey of existing code (2026-09-29)
+
+A read-only survey by a subagent compared the backlog with the code. I have not re-checked its file:line evidence; verify each before building.
+
+- **Item 1 (`open`): partial.** The worktree-clean, method-unchanged and running-package checks exist as functions in `src/commonplace/lib/agentic_publication.py` but run only at inspect, prepare and publish. Nothing allocates run IDs, writes run-state or records HEAD. `inspect-destination` prints JSON and stores nothing. Storing the incumbent digest needs a new run-state schema field, which is a contract change and needs a proposal; the alternative is for `prepare` and `publish` to re-run inspection themselves and drop the `--expected-incumbent-sha256` flag.
+- **Items 2 and 3 (`finalize-memory`, `manifest build`): absent in `src/`, prototyped in tests.** `finalized_member_text` and `repin` in `tests/commonplace/lib/test_agentic_analysis.py` do the mapping, the `On <ID>` rewrite, `finalized-from`, `Amendments`, and hash pinning. Publication checks `finalized-from` by hash only, not by re-deriving. The Reconciliation table has a fixed parseable format that no code parses. Plan: promote the helpers into `lib`, merge item 3 into item 2's command family, and have item 2 parse the Reconciliation table instead of taking a separate mapping.
+- **Item 4 (register alloc and map): mostly redundant.** Once item 2 parses the table, `register map` is not needed. `register alloc` is small enough to fold into `open` or drop.
+- **Item 5 (review renderer): much smaller than assumed.** Only the frontmatter, the H1 and an Evidence-basis line are derivable. The generated-review type requires little beyond those, and the body is authored prose. Rescope to frontmatter plus an evidence-basis stub, unless the type is changed to a derivable body.
+- **Item 6 (read command): partial.** `commonplace-quote` covers the quote half. The new work is the commit-addressed read with size, truncation status and byte budget. Keep together with 10a.
+- **Item 9 (schema completeness): needs a contract change.** The RTE read-back and CMP fixity fields are prose inside record bodies with no structured form, so a JSON schema cannot require them. It needs a record-body line convention plus a Python rule, and a proposal.
+- **Item 10 (cross-member checks): partial.** Identity, declaration uniqueness, reference resolution and comparison references are checked. Scope agreement, trace-fed writes, push consumer and selector, and same-ID amendments and annotations are not.
+- **Item 13: `publish` already runs the full prepare check.** Drop that half. A `status` command is optional.
+- **Item 14: dropped.** `kb/agentic-systems/comparisons/` holds only a README, and the matrix is rebuilt from all reviews, so any review change makes all of it stale. One sentence in the skill covers it.
+- **Items 7, 8, 10a, 11, 12: absent.** Genuinely new; nothing to reuse except the existing hash check for item 12.
 
 ## Evidence from real runs
 
