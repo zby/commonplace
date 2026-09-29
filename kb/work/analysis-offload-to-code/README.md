@@ -44,6 +44,10 @@ Tier 3 — code proposes, the agent decides (lower priority):
 
 - **Scaffold command for the four members.** It would have to emit empty sections. Those either fail validation or need a placeholder convention, and a placeholder that passes validation records a section as present when nothing was analysed. The validator's missing-section errors already serve as the checklist. The useful part, deterministic frontmatter, is covered by item 1's printed block or a validator cross-check of member frontmatter against run-state.
 
+## Contract decisions (2026-09-29, operator)
+
+Read as: item 1 takes option A of its proposal (a run-state field for the incumbent digest, fixed when `open` runs; `prepare` and `publish` read it and the `--expected-incumbent-sha256` flag goes away). Item 9 takes option D of its proposal (a labelled-line presence rule in code plus an assay for adequacy). Proposals: `kb/reference/proposals/open-an-analysis-run-in-code.md` and `kb/reference/proposals/required-route-fields-as-labelled-record-lines.md`. The item 9 label vocabulary is still to be chosen and measured across the retained sets on the target branch before the rule ships. When each ships, the proposal becomes an ADR and archives.
+
 ## Survey of existing code (2026-09-29)
 
 A read-only survey by a subagent compared the backlog with the code. I have not re-checked its file:line evidence; verify each before building.
