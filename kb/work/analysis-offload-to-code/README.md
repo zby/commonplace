@@ -30,6 +30,8 @@ Tier 2 — replace prose guards with code guards:
 9. **Schema-required completeness.** Require the RTE read-back fields and CMP fixity fields, each filled or marked `uninspected`/`inapplicable` with a reason, so most of the Verify list becomes `commonplace-validate --full`.
 10. **Cross-member checks in `--full`.** The structural parts of the memory-comparison checks (scope agreement with canonical records, trace-fed writes including compaction, push-signal consumer and selector, amendments and annotations on the same IDs). Whether the scope is right stays with the agent.
 
+10a. **Fail-fast command wrapper.** Run multi-step reads and edits so that any failed step fails the whole call: `check=True` semantics, pipefail, and a nonzero aggregate exit when a discovery loop skips a missing path. Motivating case: in the batch 01 rerun a Python excerpt-assembly step raised `ValueError` under an outer exit status of zero, and the shell went on to validate the old report (MM 160). Two more zero-status failures came from `git show ... | sed` without pipefail (B 142) and a read loop that printed stderr and continued (BM 99). The skill already states the rule; the prose did not prevent it. Belongs beside item 6.
+
 Tier 3 — code proposes, the agent decides (lower priority):
 
 11. **Seed scanners over the frozen commit.** Entry points, model and provider references (CMP seeds), alternate paths (subprocess, shell, provider-native tools, callbacks), prompt files, and a file-layer classification for the SRC register. Each emits candidates with quote blocks and a search-boundary receipt (patterns plus tree) that can support a load-bearing `ABS-*` claim. Output must say it is a seed list, not coverage, to limit anchoring.
@@ -40,6 +42,19 @@ Tier 3 — code proposes, the agent decides (lower priority):
 ## Decided against
 
 - **Scaffold command for the four members.** It would have to emit empty sections. Those either fail validation or need a placeholder convention, and a placeholder that passes validation records a section as present when nothing was analysed. The validator's missing-section errors already serve as the checklist. The useful part, deterministic frontmatter, is covered by item 1's printed block or a validator cross-check of member frontmatter against run-state.
+
+## Evidence from real runs
+
+The batch 01 rerun trace audit (2026-09-28) is in the `commonplace-refresh-batch-01-rerun` worktree at `kb/work/agentic-memory-refresh/batch-01-rerun-trace-audit-2026-09-28.md`; it is not on main yet, so cite it by path and date until it lands. It covers three published sets and six worker traces (476 tool outputs). What it shows for this backlog:
+
+- **Item 2 (`finalize-memory`).** The audit rebuilt all three memory members from their local reports by exact-token mapping, merged-heading conversion, provenance hash and appended Amendments, with no substantive parent rewrite. Proposals mapped: 26, 19 and 34. Eight merged records exercised the `On <ID>` rule. No proposal was rejected, so the rejected-proposal refusal path has no real-run evidence yet.
+- **Item 6 (read command).** 17 worker tool-output deliveries and 2 batch-coordinator deliveries were truncated. Raising the token budget on the nested shell call did not raise the outer wrapper's limit, although the skill already tells agents to check truncation at both levels.
+- **Item 8 (deny and write guard).** The audit found no worker agent-listing call and no prior-review read, but only by scanning every tool output by hand. It also found one write outside the assigned worktree (`cat AGENTS.md >/tmp/...`), later deleted. A path-scoped guard would make both checks automatic.
+- **Item 9 (schema-required completeness).** One specialist report passed validation and still needed two correction turns for heterogeneous objects, missing route read-back fields, and irregular kind headings and IDs.
+- **Item 10a (fail-fast wrapper).** Three of six recovered worker command errors ran under an outer exit status of zero, so a grep for nonzero exits undercounts them.
+- **Item 12 (input generator).** Specialists never loaded the runtime type whose route fields the final review applies, and two guessed a wrong contract filename. Embedding or linking the runtime-type route fields in the frozen input would remove the dependence on the specialist following links. The audit also proposes an instruction fix; the two are complementary.
+
+The audit's other proposals (separating report content from execution accounting, keeping structural and semantic acceptance apart, stating that the runtime supplies doctrine and model identity, and allowing scratch selections inside the run) are instruction changes owned by that session's method follow-up, not part of this backlog.
 
 ## Constraints and risks
 
