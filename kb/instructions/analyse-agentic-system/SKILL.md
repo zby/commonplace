@@ -26,7 +26,7 @@ Invocation authorizes the run directory under `kb/reports/state/agentic-system-a
      --param source="<the caller's source input, as given>"
    ```
 
-   The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/reports/state/agentic-system-analysis/<run-id>`.
+   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/reports/state/agentic-system-analysis/<run-id>`.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/reports/retained/agentic-system-analysis/` at any point; the jobs analyse from sources only.
 

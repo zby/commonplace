@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
+from urllib.parse import urlsplit, urlunsplit
 
 from commonplace.lib.directory_artifact import MANIFEST_NAME, DirectoryArtifact
 
@@ -23,7 +24,6 @@ OUTPUT_DIR = "output"
 OVERVIEW_NAME = "overview.md"
 MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md")
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
-LOCAL_INPUT_NAME = "memory-input.md"
 
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
 REVIEWS_ROOT = PurePosixPath("kb/agentic-systems/reviews")
@@ -43,6 +43,20 @@ def is_review_path(value: str) -> bool:
     pure = PurePosixPath(value)
     return is_normalized_relative(value) and pure.parent == REVIEWS_ROOT and pure.suffix == ".md"
 
+
+def normalize_source_identity(identity: str) -> str:
+    """One form of a source identity: surrounding whitespace, a trailing ``/``
+    and a trailing ``.git`` removed, and a URL's scheme and host lowercased.
+
+    It decides only between forms of one identity, not whether two different
+    URLs name one repository.
+    """
+    value = identity.strip().rstrip("/").removesuffix(".git")
+    parts = urlsplit(value)
+    if not (parts.scheme and parts.netloc):
+        return value
+    user, at, host = parts.netloc.rpartition("@")
+    return urlunsplit(parts._replace(netloc=f"{user}{at}{host.lower()}"))
 
 
 def retained_overview_path(run_id: str) -> Path:

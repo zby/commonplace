@@ -10,16 +10,15 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from commonplace.lib.agentic_set import (
-    LOCAL_INPUT_NAME,
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     REVIEW_TYPE,
     SET_NAMES,
-    MemberSet,
     is_normalized_relative,
     is_review_path,
     load_member_set,
+    normalize_source_identity,
     retained_set_paths,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
@@ -358,7 +357,7 @@ def git_blob_text(
 
 
 def _same_repository(repository: str, source_identity: str) -> bool:
-    expected = source_identity.rstrip("/").removesuffix(".git")
+    expected = normalize_source_identity(source_identity)
     return repository.casefold() == expected.casefold()
 
 
@@ -569,32 +568,6 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
     )
 
 
-def _verify_memory_member(
-    state: AgenticAnalysisRunState, member_set: MemberSet
-) -> tuple[list[str], list[str]]:
-    """Check the memory member's provenance pin, not its content.
-
-    The memory member is the specialist's report unchanged; this checks only
-    that ``canonical-register-sha256`` names the bytes of the frozen input
-    in the run directory.
-    """
-    member = member_set.memory
-    if member is None:
-        return [], ["memory member: the manifest names no memory report"]
-    path = state.run_dir / LOCAL_INPUT_NAME
-    if not path.exists():
-        return [], [f"memory member: {LOCAL_INPUT_NAME} is missing from the run directory"]
-    try:
-        actual = sha256(path.read_bytes()).hexdigest()
-    except OSError as exc:
-        return [], [f"memory member: cannot read {LOCAL_INPUT_NAME}: {exc}"]
-    if member.frontmatter.get("canonical-register-sha256") != actual:
-        return [], [
-            f"memory member: canonical-register-sha256 does not match {LOCAL_INPUT_NAME} bytes"
-        ]
-    return ["memory member: complete and pinned to the frozen input"], []
-
-
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
     *,
@@ -665,9 +638,6 @@ def verify_agentic_analysis_run_state(
         passes.append("member set: manifest members present, hashed and typed")
         if state.source is not None and member_set.memory.frontmatter.get("source-identity") != state.source.identity:
             failures.append("memory.md: source-identity does not match the frozen source")
-        memory_passes, memory_failures = _verify_memory_member(state, member_set)
-        passes.extend(memory_passes)
-        failures.extend(memory_failures)
 
     if state.generated_review is not None:
         retained_paths = retained_set_paths(state.run_id)

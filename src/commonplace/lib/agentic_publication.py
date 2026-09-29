@@ -16,7 +16,6 @@ import yaml
 from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_state
 from commonplace.lib.agentic_set import (
-    LOCAL_INPUT_NAME,
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
@@ -72,7 +71,6 @@ def incumbent_copy_name(name: str) -> str:
 RESERVED_CANDIDATE_NAMES = frozenset(
     {
         *SET_NAMES,
-        LOCAL_INPUT_NAME,
         INCUMBENT_REVIEW_NAME,
         *(incumbent_copy_name(name) for name in SET_NAMES),
     }
@@ -481,7 +479,7 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
 
 
 def prepare_publication(spec: PublicationSpec) -> None:
-    """Validate the exact member set, specialist handoff, and compact publication bytes."""
+    """Validate the exact member set and compact publication bytes."""
     _check_set(spec)
 
 

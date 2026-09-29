@@ -1,5 +1,5 @@
 ---
-description: "Use in a fresh worker commissioned by analyse-agentic-system to analyse memory and context routes from frozen inputs and return a typed report."
+description: "Use in the memory job of an analyse-agentic-system run to analyse memory and context routes from the frozen boundary and write the set's memory member."
 type: types/instruction.md
 ---
 
@@ -9,44 +9,34 @@ Goal: a source-grounded account of the system's memory mechanisms and their
 comparison classifications, returned as one typed report that becomes the
 memory member of the main agentic-system analysis.
 
-## Commission and boundary
+## Inputs and boundary
 
-Run as a fresh specialist under `analyse-agentic-system`. Require the parent
-run ID, frozen `memory-input.md`, report destination, and permitted source
-access. The input supplies the subject, source register with full revision or
-capture digest and access root, relevant canonical records, requested memory
-scope and depth, exclusions, and any specific question. Its records are
+Run as the memory job of an `analyse-agentic-system` run. Your prompt names
+the run, the system and the report's output path. Work from `boundary.md`,
+which gives the frozen source with its full revision or capture digest and
+access root, the boundary and the source register, and from
+`output/runtime.md`, the runtime member. The runtime member's records are
 provisional findings to check against sources, not accepted conclusions.
+Choose the memory scope from the runtime member's routes and state it, with
+its exclusions, in the profile's `scope` and the report's Boundary and
+evidence.
 
-Write only the commissioned report under the
+Write only the report under the
 [`agent-memory-analysis-report`](../types/agent-memory-analysis-report.md)
 type. Read that contract, including its Memory comparison fields, and the
 set-wide conventions of the
 [overview type](../types/agentic-system-analysis-overview.md#the-set):
 canonical identity, the declaration and annotation grammar, status fields
 and the Source register's quotation contract. Together they fix every
-section, field and controlled value the report uses. The parent's last
+section, field and controlled value the report uses. The run's last
 accepted report becomes the set's memory member, `memory.md`, byte for
-byte: nothing is mapped, merged or appended afterwards, and the parent's
+byte: nothing is mapped, merged or appended afterwards, and the reconciliation's
 corrections to your records are amendments in the overview. Write it as
 the member.
 Do not load the legacy review type, prior system reviews, surveys, matrix
-outputs, or style exemplars. The parent owns the unprefixed IDs,
-integration, publication and completion. Do not publish, modify the parent's input or
-set, delegate, or stage and commit.
-
-Do not call agent listings for status: their payloads may include prior
-analyses, even with a path filter. Return through the final report and
-completion event. If a notification fails, do not assume it arrived; include
-that failure in the final response and end the turn so the supervisor can
-relay the report path, hash and status. Prior-analysis exposure blocks this
-worker's handoff; report it and stop for a fresh source-only replacement.
-
-Hash the input and this instruction before analysis. Report those identities
-and your actual model identity; state `unknown` if the runtime does not expose
-it. Verify input and method hashes again before returning. Changed input
-requires a new handoff from the parent, not silent reconciliation in the
-worker.
+outputs, or style exemplars. The runtime pass owns the unprefixed IDs; the
+reconciliation owns integration. Do not call agent listings for status: their
+payloads may include prior analyses, even with a path filter.
 
 ## Inspect and explain
 
@@ -83,26 +73,20 @@ a citation, strip source characters, or calculate a range by hand. Assess
 semantic support yourself; publication validates the assembled set, so run
 no separate quote check.
 
-## Classify and hand back
+## Classify and check
 
 You own the proposed classifications in `memory-comparison` as well as their
 supporting analysis, under the report type's per-value evidence contract. Do
 not weaken a wired value because another value is
 merely afforded. Distinguish missing evidence from a negative finding. Every record the
 profile cites is declared or annotated (`On <ID>`) in your report; annotate
-any seeded record the profile cites. Declare each object, route or other
+any runtime record the profile cites. Declare each object, route or other
 record you establish under a `MEM-` ID, such as `MEM-RTE-1`; the ID is
-final. Annotate a seeded record rather than re-declaring it, and name a
-record of yours that may duplicate a seeded one under Integration issues.
+final. Annotate a runtime record rather than re-declaring it, and name a
+record of yours that may duplicate a runtime record under Integration issues.
 
 Record corrections, possible duplicates, unresolved questions and
-limitations inside the report. Validate it with `commonplace-validate --full
-<report-path>` and correct structural errors. Inspect exit status and stderr,
-not only stdout. Run dependent commands separately or with `&&` (and
-`set -o pipefail` for pipelines); later validation or hashing cannot clear an
-earlier failure. Rehash only the final corrected report.
-
-Return the report path, SHA-256, status and a short summary of integration
-issues. Progress and urgent scope or access requests may be sent separately,
-but every substantive finding or unresolved issue must be in the final
-report.
+limitations inside the report; every substantive finding or unresolved issue
+is in the report. Validate it with `commonplace-validate --full
+<report-path>` and correct structural errors, inspecting exit status and
+stderr, not only stdout.

@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import posixpath
 import re
 import subprocess
 from collections.abc import Callable, Sequence
@@ -45,15 +46,15 @@ from commonplace.lib.agentic_publication import (
 )
 from commonplace.lib.agentic_records import section, set_record_errors
 from commonplace.lib.agentic_set import (
-    LOCAL_INPUT_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
     REVIEW_TYPE,
     REVIEWS_ROOT,
     RUN_ID,
+    normalize_source_identity,
 )
-from commonplace.lib.note_parser import parse_document
+from commonplace.lib.note_parser import parse_document, replace_markdown_links
 from commonplace.lib.validation import validate_note
 from commonplace.workflow import Job, Recognition, Workflow
 
@@ -64,8 +65,6 @@ RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
 
 OPENING = "opening.json"
 BOUNDARY = "boundary.md"
-SCOPING = "scoping.md"
-REVIEW_BODY = "review-body.md"
 CANDIDATE = "review-candidate.md"
 RUN_STATE = "run-state.md"
 RUNTIME = f"{OUTPUT_DIR}/runtime.md"
@@ -84,6 +83,9 @@ BOUNDARY_FIELDS = (
 )
 SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
 RETURNED = "Returned to the specialist"
+DESCRIPTION_LENGTH = (50, 250)
+"""The length the note schema expects of a description; the reconciliation's
+description becomes the overview's and the review's."""
 
 
 def memory_report(round_: int) -> str:
@@ -171,7 +173,9 @@ def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
     return found
 
 
-def boundary_refusals(path: Path, *, enums: dict[str, list[Any]]) -> list[str]:
+def boundary_refusals(
+    path: Path, *, enums: dict[str, list[Any]], identity: str
+) -> list[str]:
     try:
         fields, body = split(path.read_text(encoding="utf-8"))
     except ValueError as error:
@@ -203,6 +207,10 @@ def boundary_refusals(path: Path, *, enums: dict[str, list[Any]]) -> list[str]:
     ):
         refusals.append(
             "source must be null or a mapping of " + ", ".join(SOURCE_FIELDS)
+        )
+    elif source is not None and source.get("identity") != identity:
+        refusals.append(
+            f"source.identity must be `{identity}`, the run's source identity"
         )
     wanted = ["Boundary and evidence", "Source register"]
     if disposition == "complete":
@@ -270,12 +278,20 @@ def reconcile_refusals(
     epistemic: Path,
     may_return: bool,
 ) -> list[str]:
-    """The reconciliation's sections, the last-round rule, and every record it
-    cites, amendments included, declared in the set it will make."""
+    """The reconciliation's sections, the description's length, the last-round
+    rule, and every record it cites, amendments included, declared in the set
+    it will make."""
     body = path.read_text(encoding="utf-8")
     refusals = require_sections(
-        body, 2, ["Reconciliation", "Bounded synthesis", "Limitations"]
+        body, 2, ["Description", "Reconciliation", "Bounded synthesis", "Limitations"]
     )
+    description = one_line(section(body, "Description"))
+    shortest, longest = DESCRIPTION_LENGTH
+    if description and not shortest <= len(description) <= longest:
+        refusals.append(
+            f"the `## Description` sentence has {len(description)} characters; "
+            f"write {shortest} to {longest}"
+        )
     returned = RETURNED in headings(body, 2)
     if returned and not may_return:
         refusals.append(
@@ -296,23 +312,50 @@ def reconcile_refusals(
     )
 
 
-def review_body_refusals(path: Path) -> list[str]:
-    try:
-        fields, body = split(path.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return [f"review-body.md does not parse: {error}"]
-    refusals = []
-    if (
-        set(fields) != {"description"}
-        or not str(fields.get("description") or "").strip()
+def blockers_refusals(blockers: str) -> list[str]:
+    """Blockers are exactly `none`, or a Markdown list: every non-blank line
+    starts an entry with `- ` or continues one with indentation."""
+    if blockers == "none":
+        return []
+    lines = [line for line in blockers.splitlines() if line.strip()]
+    if lines and lines[0].startswith("- ") and all(
+        line.startswith(("- ", " ", "\t")) for line in lines
     ):
-        refusals.append("the frontmatter must have only a non-empty `description`")
-    lines = body.strip().splitlines()
-    if not lines or not lines[0].startswith("# "):
-        refusals.append("the body must open with `# <System>`")
-    if not any(line.startswith("Evidence basis:") for line in lines):
-        refusals.append("the body needs one line starting `Evidence basis:`")
-    return refusals
+        return []
+    return [
+        (
+            "`### Blockers` must be exactly `none` or a Markdown list whose "
+            "entries start with `- `"
+        )
+    ]
+
+
+def verification_refusals(path: Path) -> list[str]:
+    text = path.read_text(encoding="utf-8")
+    return require_sections(
+        text, 3, ["Semantic verification", "Blockers"]
+    ) or blockers_refusals(subsection(text, "Blockers"))
+
+
+def one_line(text: str) -> str:
+    return " ".join(text.split())
+
+
+def retarget_links(text: str, *, set_dir: str, destination: str) -> str:
+    """Rewrite the relative links of set text, which resolve inside the set
+    directory, to resolve from ``destination`` into ``set_dir``. Absolute
+    URLs and anchor-only links stay as they are."""
+    base = posixpath.dirname(destination)
+
+    def retarget(target: str) -> str:
+        parts = urlsplit(target.strip())
+        if parts.scheme or parts.netloc or not parts.path or parts.path.startswith("/"):
+            return target
+        path, rest = re.fullmatch(r"([^?#]*)(.*)", target.strip(), re.DOTALL).groups()
+        joined = posixpath.normpath(posixpath.join(set_dir, path))
+        return posixpath.relpath(joined, base) + rest
+
+    return replace_markdown_links(text, retarget)
 
 
 def dump_frontmatter(fields: dict[str, Any], body: str) -> str:
@@ -331,13 +374,25 @@ class AnalyseAgenticSystem(Workflow):
     """Analyse one external agentic system at one frozen evidence boundary.
 
     Parameters: `system` (the name the caller gave), `source-identity` (the
-    stable identity destination inspection uses), `source` (the caller's
-    source input, as given), and optionally `review-path`.
+    stable identity of the source), `source` (the caller's source input, as
+    given), and optionally `review-path`.
+
+    Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` lenses;
+    then rounds of `reconcile-<n>` and `verify-<n>`. Code renders the
+    overview and the public review.
     """
 
     correction_rounds = 2
     """How many reconciliation rounds may follow the first, whether a round
     returned findings to the specialist or its verification named blockers."""
+
+    def __init__(self, params=None) -> None:
+        super().__init__(params)
+        # The one form of the source identity that the run slug, destination
+        # inspection, the boundary and publication use.
+        self.source_identity = normalize_source_identity(
+            str(self.params["source-identity"])
+        )
 
     def run_location(self) -> tuple[str, str]:
         """`AAS-<today>-<slug>` under the analysis state directory.
@@ -347,8 +402,8 @@ class AnalyseAgenticSystem(Workflow):
         keep one review path whatever the system is called; otherwise it is the
         system parameter.
         """
-        identity = urlsplit(str(self.params["source-identity"]))
-        segment = identity.path.rstrip("/").rsplit("/", 1)[-1].removesuffix(".git")
+        identity = urlsplit(self.source_identity)
+        segment = identity.path.rsplit("/", 1)[-1]
         name = segment if identity.scheme and identity.netloc and segment else ""
         name = name or str(self.params["system"])
         slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
@@ -378,8 +433,14 @@ class AnalyseAgenticSystem(Workflow):
                 "boundary",
                 BOUNDARY,
                 reads=(OPENING,),
-                validator=partial(boundary_refusals, enums=enums),
-                note=f"The caller's source input: {self.params['source']}",
+                validator=partial(
+                    boundary_refusals, enums=enums, identity=self.source_identity
+                ),
+                note=(
+                    f"The caller's source input: {self.params['source']}\n\n"
+                    f"The run's source identity is `{self.source_identity}`. When "
+                    "you freeze a source, write exactly this as `source.identity`."
+                ),
             )
         ).wait()
         fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
@@ -405,27 +466,13 @@ class AnalyseAgenticSystem(Workflow):
                 ),
             )
         ).wait()
-        ctx.agent(
-            self.job(
-                "scoping",
-                SCOPING,
-                reads=(BOUNDARY, RUNTIME),
-                validator=lambda path: require_sections(
-                    path.read_text(encoding="utf-8"),
-                    3,
-                    ["Memory/context scope", "Epistemic scope"],
-                ),
-            )
-        ).wait()
-        self.write_memory_input(run_dir, fields, boundary_body)
-
         ctx.parallel(
             lambda: ctx.agent(self.memory_job(run_dir, 0, 0)).wait(),
             lambda: ctx.agent(
                 self.job(
                     "epistemic",
                     EPISTEMIC,
-                    reads=(BOUNDARY, RUNTIME, SCOPING),
+                    reads=(BOUNDARY, RUNTIME),
                     norms=True,
                     extra=("../../analyse-external-system-epistemic-architecture.md",),
                     validator=partial(
@@ -460,7 +507,7 @@ class AnalyseAgenticSystem(Workflow):
                 ctx, run_dir, opening, fields, boundary_body, reconcile, memory
             )
             blockers = subsection(verification, "Blockers")
-            if blockers.lower().rstrip(".") == "none":
+            if blockers == "none":
                 break
             if last:
                 raise ValueError(
@@ -472,15 +519,6 @@ class AnalyseAgenticSystem(Workflow):
 
         self.assemble(run_dir, opening, fields, boundary_body, reconcile, verification)
         self.validate_set(run_dir)
-
-        ctx.agent(
-            self.job(
-                "review",
-                REVIEW_BODY,
-                reads=(OVERVIEW, RUNTIME, MEMORY, EPISTEMIC, MANIFEST),
-                validator=review_body_refusals,
-            )
-        ).wait()
         self.write_candidate(run_dir, opening, fields)
 
         spec = PublicationSpec(
@@ -539,7 +577,7 @@ class AnalyseAgenticSystem(Workflow):
         """One round of the memory specialist. Its report cites the boundary's
         sources, the runtime member and its own records; a correction round,
         which runs after the epistemic member exists, may cite that member too."""
-        reads: tuple[str, ...] = (LOCAL_INPUT_NAME,)
+        reads: tuple[str, ...] = (BOUNDARY, RUNTIME)
         note = "This is the first pass."
         cited = {"runtime": run_dir / RUNTIME}
         if round_ > 0:
@@ -575,13 +613,7 @@ class AnalyseAgenticSystem(Workflow):
         may_return: bool,
     ) -> Job:
         report = memory_report(memory)
-        reads: tuple[str, ...] = (
-            BOUNDARY,
-            SCOPING,
-            RUNTIME,
-            report,
-            EPISTEMIC,
-        )
+        reads: tuple[str, ...] = (BOUNDARY, RUNTIME, report, EPISTEMIC)
         note = (
             f"This is reconciliation round {round_}. The memory report is `{report}`."
         )
@@ -662,11 +694,7 @@ class AnalyseAgenticSystem(Workflow):
                 reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
                 instruction="verify",
                 norms=True,
-                validator=lambda path: require_sections(
-                    path.read_text(encoding="utf-8"),
-                    3,
-                    ["Semantic verification", "Blockers"],
-                ),
+                validator=verification_refusals,
             )
         ).wait()
         return (run_dir / verification).read_text(encoding="utf-8")
@@ -707,7 +735,7 @@ class AnalyseAgenticSystem(Workflow):
         found = inspect_destination(
             repo_root=self.repo,
             generated_destination=destination,
-            source_identity=str(self.params["source-identity"]),
+            source_identity=self.source_identity,
         )
         return str(found["expected_incumbent_sha256"])
 
@@ -773,30 +801,6 @@ class AnalyseAgenticSystem(Workflow):
         )
         path.write_text(dump_frontmatter(frontmatter, body), encoding="utf-8")
 
-    def write_memory_input(
-        self, run_dir: Path, fields: dict[str, Any], boundary_body: str
-    ) -> None:
-        _, runtime_body = split((run_dir / RUNTIME).read_text(encoding="utf-8"))
-        scope = subsection(
-            (run_dir / SCOPING).read_text(encoding="utf-8"), "Memory/context scope"
-        )
-        source = yaml.safe_dump(fields["source"], sort_keys=False).strip()
-        text = (
-            f"# Memory specialist input — {self.run_id}\n\n"
-            f"- Run: {self.run_id}\n- System: {self.params['system']}\n"
-            f"- Reviewed boundary: {fields['reviewed-boundary']}\n"
-            f"- Target class: {fields['target-class']}; boundary kind: {fields['boundary-kind']}\n\n"
-            f"## Source\n\n```yaml\n{source}\n```\n\n"
-            f"## Boundary and source register\n\n{boundary_body.strip()}\n\n"
-            f"## Memory scope, depth, exclusions and question\n\n{scope}\n\n"
-            "## Provisional canonical records\n\n"
-            "The runtime member's records below are source-checkable seeds, not accepted "
-            "conclusions. Route records carry the fields of the runtime report type's "
-            "Routes records.\n\n"
-            f"{runtime_body.strip()}\n"
-        )
-        (run_dir / LOCAL_INPUT_NAME).write_text(text, encoding="utf-8")
-
     def assemble(
         self,
         run_dir: Path,
@@ -824,13 +828,19 @@ class AnalyseAgenticSystem(Workflow):
         build_manifest(run_dir)
 
     def overview_frontmatter(
-        self, opening: dict[str, Any], fields: dict[str, Any]
+        self,
+        opening: dict[str, Any],
+        fields: dict[str, Any],
+        description: str | None = None,
     ) -> dict[str, Any]:
+        """The overview's frontmatter. A complete run's description is the
+        reconciliation's; code writes the others."""
         disposition = fields["result-disposition"]
         boundary = fields.get("reviewed-boundary") or "no established boundary"
         return {
             "type": OVERVIEW_TYPE,
-            "description": (
+            "description": description
+            or (
                 f"Analysis of {self.params['system']} at {boundary}, with {disposition} disposition"
             ),
             "run-id": self.run_id,
@@ -866,7 +876,6 @@ class AnalyseAgenticSystem(Workflow):
         final: str,
         verification: str | None,
     ) -> str:
-        scoping = (run_dir / SCOPING).read_text(encoding="utf-8")
         reconciled = (run_dir / final).read_text(encoding="utf-8")
         semantic = (
             subsection(verification, "Semantic verification")
@@ -879,9 +888,6 @@ class AnalyseAgenticSystem(Workflow):
             else "Not checked yet."
         )
         rest = (
-            "## Lens scoping\n\n"
-            f"### Memory/context scope\n\n{subsection(scoping, 'Memory/context scope')}\n\n"
-            f"### Epistemic scope\n\n{subsection(scoping, 'Epistemic scope')}\n\n"
             f"## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n\n"
             f"## Bounded synthesis\n\n{section(reconciled, 'Bounded synthesis').strip()}\n\n"
             f"## Limitations\n\n{section(reconciled, 'Limitations').strip()}\n\n"
@@ -891,7 +897,9 @@ class AnalyseAgenticSystem(Workflow):
             f"### Blockers\n\n{blockers}\n"
         )
         return dump_frontmatter(
-            self.overview_frontmatter(opening, fields),
+            self.overview_frontmatter(
+                opening, fields, one_line(section(reconciled, "Description"))
+            ),
             self.overview_body(boundary_body, rest),
         )
 
@@ -906,9 +914,6 @@ class AnalyseAgenticSystem(Workflow):
         reason = section(boundary_body, "Not reached").strip()
         not_reached = f"Not reached. {reason}"
         rest = (
-            "## Lens scoping\n\n"
-            f"### Memory/context scope\n\n{not_reached}\n\n"
-            f"### Epistemic scope\n\n{not_reached}\n\n"
             f"## Reconciliation\n\n{not_reached}\n\n"
             f"## Bounded synthesis\n\n{not_reached}\n\n"
             f"## Limitations\n\n{reason}\n\n"
@@ -950,21 +955,41 @@ class AnalyseAgenticSystem(Workflow):
     def write_candidate(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any]
     ) -> None:
-        extra, body = split((run_dir / REVIEW_BODY).read_text(encoding="utf-8"))
+        """Render the public review from the verified overview: its
+        description, an evidence-basis line from the boundary, the Bounded
+        synthesis and the Limitations, with the set's relative links pointing
+        into the retained set."""
+        overview, body = split((run_dir / OVERVIEW).read_text(encoding="utf-8"))
+        source = fields["source"]
+        retained = RETAINED_ROOT / self.run_id
+        text = (
+            f"# {self.params['system']}\n\n"
+            f"Evidence basis: {fields['evidence-tier']} analysis of "
+            f"`{source['identity']}` at `{fields['reviewed-boundary']}`, with an "
+            f"analysis cutoff of {fields['analysis-cutoff']}.\n\n"
+            f"{section(body, 'Bounded synthesis').strip()}\n\n"
+            f"## Limitations\n\n{section(body, 'Limitations').strip()}\n"
+        )
         frontmatter = {
             "type": REVIEW_TYPE,
-            "description": extra["description"],
+            "description": overview["description"],
             "generated-by": "analyse-agentic-system",
             "analysis-run": self.run_id,
-            "source-identity": fields["source"]["identity"],
+            "source-identity": source["identity"],
             "reviewed-revision": fields["reviewed-boundary"],
-            "analysis-artifact": (
-                RETAINED_ROOT / self.run_id / "ARTIFACT.yaml"
-            ).as_posix(),
+            "analysis-artifact": (retained / "ARTIFACT.yaml").as_posix(),
             "analysis-artifact-sha256": digest(run_dir / MANIFEST),
         }
         (run_dir / CANDIDATE).write_text(
-            dump_frontmatter(frontmatter, body), encoding="utf-8"
+            dump_frontmatter(
+                frontmatter,
+                retarget_links(
+                    text,
+                    set_dir=retained.as_posix(),
+                    destination=opening["review-path"],
+                ),
+            ),
+            encoding="utf-8",
         )
 
     # Publication

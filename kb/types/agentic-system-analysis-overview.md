@@ -8,8 +8,8 @@ schema: ./agentic-system-analysis-overview.schema.yaml
 # Agentic system analysis overview
 
 The reading entry point of one `analyse-agentic-system` run's retained set.
-It holds identity, evidence boundary, source register, lens scoping,
-reconciliation, synthesis, limitations and verification. Runtime, memory
+It holds identity, evidence boundary, source register, reconciliation,
+synthesis, limitations and verification. Runtime, memory
 and epistemic findings live in their respective members. The sibling
 `ARTIFACT.yaml` selects the [analysis set type](../reports/types/agentic-system-analysis-set.md)
 and pins every member, including this overview.
@@ -19,7 +19,7 @@ and pins every member, including this overview.
 | Field | Required | Use |
 |---|---:|---|
 | `type` | Yes | `types/agentic-system-analysis-overview.md` |
-| `description` | Yes | Retrieval description naming the system, selected boundary, and disposition |
+| `description` | Yes | For a `complete` run, the reconciliation's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
 | `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
@@ -180,13 +180,6 @@ invented ellipses and formatting fences are not part of the quoted text;
 discontiguous passages use separate blocks. Semantic support remains part
 of semantic verification.
 
-### Lens scoping
-
-`## Lens scoping` contains `### Memory/context scope` and `### Epistemic
-scope`. Each record gives trigger-evidence IDs, inspected boundary,
-pointed-to routes and objects, warranted depth, and rationale. Both
-records exist even when their evidence warrants only a brief lens pass.
-
 ### Reconciliation
 
 `## Reconciliation` records supersessions of duplicate records, the set's
@@ -221,6 +214,13 @@ self-improvement findings it leads with the strongest supported
 contribution, including partial results, then states the unresolved
 question, at the level of the comparison actually performed.
 
+The Bounded synthesis has a second reader. Code publishes it, after an
+evidence-basis line and before the Limitations, as the body of the public
+[generated review](../agentic-systems/types/generated-review.md). It must
+therefore read without the members' context: a public reader has the IDs
+it cites and its links, which code rewrites to point into the retained
+set, but not the members' prose.
+
 ### Limitations
 
 `## Limitations` contains one row per limitation:
@@ -248,7 +248,7 @@ inside its own bytes.
 ```markdown
 ---
 type: types/agentic-system-analysis-overview.md
-description: "Complete analysis of {system} at {boundary}, with {disposition} disposition"
+description: "{one sentence on the system's mechanism and limits}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "{source-native system name}"
 run-date: "YYYY-MM-DD"
@@ -266,12 +266,6 @@ inputs-commit: "{full commit of this repository at run start}"
 ## Boundary and evidence
 
 ## Source register
-
-## Lens scoping
-
-### Memory/context scope
-
-### Epistemic scope
 
 ## Reconciliation
 

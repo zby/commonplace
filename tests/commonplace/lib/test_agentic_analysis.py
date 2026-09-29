@@ -160,10 +160,6 @@ def uninspected_profile(scope: str) -> dict:
 def memory_report_fixture(run_dir: Path, revision: str) -> Path:
     """The specialist's report, which is the memory member unchanged: one
     `MEM-` record, one annotated seed, one quote."""
-    handoff = write(
-        run_dir / "memory-input.md",
-        "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n",
-    )
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
     profile["axes"]["storage_substrate"] = {
         "assessment": "known", "values": ["sqlite", "files"],
@@ -178,9 +174,6 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "source-identity": SOURCE,
         "reviewed-boundary": revision,
         "report-status": "complete",
-        "canonical-register-sha256": digest(handoff),
-        "worker-model": "fixture-model",
-        "method-sha256": "a" * 64,
         "memory-comparison": profile,
     }
     body = f"""# Fixture memory analysis
@@ -384,16 +377,6 @@ Fixture boundary at `{revision}`.
 
 | SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md` | none |
 
-## Lens scoping
-
-### Memory/context scope
-
-Brief fixture scope.
-
-### Epistemic scope
-
-Brief fixture scope.
-
 ## Reconciliation
 
 MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record; the memory member is `memory-report-0.md` unchanged.
@@ -418,7 +401,7 @@ Passed.
 
 ### Blockers
 
-None.
+none
 """
 
 
@@ -464,7 +447,7 @@ def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
 
 
 def write_set(run_dir: Path, revision: str) -> Path:
-    """Write the members, the memory input and the overview pinning them."""
+    """Write the members and the overview pinning them."""
     members = {
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
@@ -837,19 +820,19 @@ def test_member_pass_needs_every_member_named(tmp_path: Path) -> None:
     assert any("properties" in item for item in results.fails), results.fails
 
 
-@pytest.mark.parametrize("mutation", ["stale-memory-input", "runtime-run-id"])
+@pytest.mark.parametrize("mutation", ["memory-source-identity", "runtime-run-id"])
 def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, mutation: str) -> None:
     state = valid_run_state(tmp_path)
     run_dir = state.parent
     values = frontmatter(state)
     sync_set(tmp_path, values)
     expected = {
-        "stale-memory-input": "canonical-register-sha256 does not match memory-input.md bytes",
+        "memory-source-identity": "memory.md: source-identity does not match the frozen source",
         "runtime-run-id": "runtime.md: run-id does not match the overview",
     }[mutation]
-    if mutation == "stale-memory-input":
-        commission = run_dir / "memory-input.md"
-        commission.write_text(commission.read_text() + "\nLater commission edit.\n")
+    if mutation == "memory-source-identity":
+        path = run_dir / "output/memory.md"
+        replace_frontmatter(path, {**frontmatter(path), "source-identity": "https://example.invalid/other"})
     else:
         path = run_dir / "output/runtime.md"
         replace_frontmatter(path, {**frontmatter(path), "run-id": RUN_ID[:-2] + "09"})
@@ -1127,7 +1110,7 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     for name in (
-        "memory-input.md", "incumbent-review.md",
+        "incumbent-review.md",
         "overview.md", "runtime.md", "memory.md", "epistemic.md",
         "incumbent-overview.md", "incumbent-memory.md",
     ):
@@ -1163,14 +1146,12 @@ def test_prepare_rejects_a_locally_deleted_review(
     assert frontmatter(state)["run-status"] == "running"
 
 
-@pytest.mark.parametrize("mutation", ["bytes", "input", "run", "source", "boundary", "blocked"])
-def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mutation: str) -> None:
+@pytest.mark.parametrize("mutation", ["bytes", "run", "source", "boundary", "blocked"])
+def test_publication_requires_an_exact_complete_memory_member(tmp_path: Path, mutation: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     report = state.parent / "output/memory.md"
     if mutation == "bytes":
         report.write_text(report.read_text() + "\nChanged.\n")
-    elif mutation == "input":
-        (state.parent / "memory-input.md").write_text("Changed input.\n")
     else:
         values = frontmatter(report)
         field = {"run": "run-id", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
@@ -1180,14 +1161,6 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
     with pytest.raises(ValueError, match="memory"):
         publish_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
-    assert frontmatter(state)["run-status"] == "running"
-
-
-def test_publication_fails_when_the_memory_input_is_missing(tmp_path: Path) -> None:
-    state, spec, _ = publication_fixture(tmp_path)
-    (state.parent / "memory-input.md").unlink()
-    with pytest.raises(ValueError, match="memory member: memory-input.md is missing from the run directory"):
-        prepare_publication(spec)
     assert frontmatter(state)["run-status"] == "running"
 
 
@@ -1546,9 +1519,6 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     shutil.copytree(state.parent, new_dir)
     for path in new_dir.rglob("*.md"):
         path.write_text(path.read_text().replace(RUN_ID, next_id))
-    report = new_dir / "output/memory.md"
-    replace_frontmatter(report, {**frontmatter(report),
-        "canonical-register-sha256": digest(new_dir / "memory-input.md")})
     repin(new_dir / "output")
     next_state = new_dir / "run-state.md"
     values = frontmatter(next_state)

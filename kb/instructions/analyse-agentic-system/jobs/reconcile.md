@@ -5,9 +5,11 @@ type: types/instruction.md
 
 # Reconcile the lenses and write the synthesis
 
-Write the output your prompt names, with exactly these sections, which go into the overview unchanged; the [overview type](../../../types/agentic-system-analysis-overview.md) fixes what each holds:
+Write the output your prompt names, with exactly these sections. The last three go into the overview unchanged; the [overview type](../../../types/agentic-system-analysis-overview.md) fixes what each holds:
 
 ```markdown
+## Description
+
 ## Reconciliation
 
 ## Bounded synthesis
@@ -33,4 +35,6 @@ When your prompt says the previous round's verification named blockers, its inpu
 
 ## Synthesize
 
-Write the Bounded synthesis from the reconciled records, organized around the system's operational progression rather than by lens, citing member records rather than restating them. Write the Limitations as the overview type's rows; use `none` only after checking the whole set.
+Write the Bounded synthesis from the reconciled records, organized around the system's operational progression rather than by lens, citing member records rather than restating them. Code also publishes it, with the Limitations, as the body of the public review, so it must read on its own: a reader has the cited IDs and links, not the members' context. Write the Limitations as the overview type's rows; use `none` only after checking the whole set.
+
+Under Description write one sentence of 50 to 250 characters that describes the system's mechanism and its limits for retrieval. Code uses it as the `description` of the overview and of the public review.

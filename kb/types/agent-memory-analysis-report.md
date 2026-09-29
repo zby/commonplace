@@ -8,8 +8,8 @@ schema: ./agent-memory-analysis-report.schema.yaml
 # Agent memory analysis report
 
 The memory specialist's source-grounded findings, their comparison
-classifications, and their integration questions for one run, bound to
-the frozen commission it answers. The last report the run accepts is the
+classifications, and their integration questions for one run, at the
+run's frozen boundary. The last report the run accepts is the
 set's memory member byte for byte: it declares its records under their
 `MEM-` IDs, and no step rewrites it. Corrections to its records are
 amendments in the overview's Reconciliation. Its comparison profile is
@@ -26,15 +26,12 @@ the [overview](./agentic-system-analysis-overview.md#the-set).
 | `source-identity` | Yes | Exact repository or capture identity |
 | `reviewed-boundary` | Yes | Full Git commit or capture label |
 | `report-status` | Yes | `complete` or `blocked` |
-| `canonical-register-sha256` | Yes | SHA-256 of the exact commissioned `memory-input.md` |
-| `worker-model` | Yes | Actual worker model identifier, or `unknown` |
-| `method-sha256` | Yes | SHA-256 of the specialist instruction used |
 | `memory-comparison` | Yes | Scope and all fourteen axes, under the contract below |
 
-A blocked report names missing access, changed input, or an unresolved
-scope decision that prevents completing the assigned analysis. It keeps
-all sections; unreached axes use explicit uninspected assessments rather
-than guessed values. A blocked report never becomes a set member.
+A blocked report names missing access or an unresolved scope decision
+that prevents completing the assigned analysis. It keeps all sections;
+unreached axes use explicit uninspected assessments rather than guessed
+values. A blocked report never becomes a set member.
 
 ## Memory comparison fields
 
@@ -147,8 +144,7 @@ evidence records.
 
 Name the subject, frozen source boundary, included and excluded memory
 surfaces, inspected paths and evidence layers, access gaps, and conclusion
-limits. The commissioned register the input supplied is reproduced here
-as provenance; the set's source declarations are the overview's.
+limits. The set's source declarations are the overview's.
 
 ### Core ideas
 
@@ -162,7 +158,7 @@ source code or prose in quote blocks under the set's quotation contract.
 
 Records this report establishes are declared under the six kind headings
 under their `MEM-` IDs, as `#### MEM-OBJ-1 — Label`; the report never
-declares an unprefixed ID. Records the commission supplied as seeds are not re-declared: the report's
+declares an unprefixed ID. Records the runtime member declares are not re-declared: the report's
 memory-specific fields on them are annotations, `#### On OBJ-1 — Label`,
 carrying only those fields and the passages that support them. Records
 distinguish operative parts, raw traces from derived memory, content from

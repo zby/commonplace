@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: an evidence-bounded, route-by-route account of whether and how the analysed system acquires or produces truth-apt content, checks it, grants or withholds reliance on it, retains or integrates it, and lets it affect later behavior, with no system-wide epistemic grade.
 
-`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records and the epistemic scoping record. The output is the set's epistemic member, `<run-id>/output/epistemic.md`, under the [epistemic report type](../types/agentic-system-epistemic-report.md); its Required blocks fix the six blocks, their fields, the controlled values and the terms they use, and the [overview type](../types/agentic-system-analysis-overview.md#the-set) fixes the set-wide conventions. Read both contracts first. The member cites the records the runtime member declares, and declares the records the epistemic lens establishes, with the passages that support them, in its `## Shared records`. No step rewrites it after you write it. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
+`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records. The output is the set's epistemic member, `<run-id>/output/epistemic.md`, under the [epistemic report type](../types/agentic-system-epistemic-report.md); its Required blocks fix the six blocks, their fields, the controlled values and the terms they use, and the [overview type](../types/agentic-system-analysis-overview.md#the-set) fixes the set-wide conventions. Read both contracts first. The member cites the records the runtime member declares, and declares the records the epistemic lens establishes, with the passages that support them, in its `## Shared records`. No step rewrites it after you write it. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
 
 ## Overlay rules
 
@@ -20,7 +20,7 @@ Goal: an evidence-bounded, route-by-route account of whether and how the analyse
 
 ## Steps
 
-1. **Fix the boundary.** Fill block 1 from the overview's scoping record and Source register, citing the register rather than copying it.
+1. **Fix the boundary.** Fill block 1 from the Boundary and evidence and the Source register of `boundary.md`, stating the lens's own scope and citing the register rather than copying it.
 
 2. **Inventory material objects before evaluators.** Fill block 2 for every operative part inside the material-route boundary the type defines. Use system-specific object names and split heterogeneous containers into separate `EPI-` records. Name each target object or proposition and its domain before assessing any evaluator.
 

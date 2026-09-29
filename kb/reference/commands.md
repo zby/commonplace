@@ -89,8 +89,7 @@ with today's method. Replacement saves `incumbent-review.md` and an
 recovery.
 
 `prepare` validates the directory artifact and its members as their
-retained paths, the specialist memory report's pins, and the candidate review,
-and checks the incumbent without changing public artifacts. It does not create
+retained paths and the candidate review, and checks the incumbent without changing public artifacts. It does not create
 a semantic-review job; specialist analysis does not establish independent
 semantic clearance. `publish` rechecks the inputs, validates the prospective
 complete run state, replaces the review, retains `ARTIFACT.yaml` and the four

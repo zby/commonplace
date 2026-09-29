@@ -16,9 +16,6 @@
             "source-identity",
             "reviewed-boundary",
             "report-status",
-            "canonical-register-sha256",
-            "worker-model",
-            "method-sha256",
             "memory-comparison"
           ],
           "properties": {
@@ -46,18 +43,6 @@
                 "complete",
                 "blocked"
               ]
-            },
-            "canonical-register-sha256": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            },
-            "worker-model": {
-              "type": "string",
-              "minLength": 1
-            },
-            "method-sha256": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
             },
             "memory-comparison": {
               "type": "object",

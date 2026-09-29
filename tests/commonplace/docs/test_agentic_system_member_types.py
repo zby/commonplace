@@ -37,16 +37,6 @@ Boundary record.
 
 | SRC-1 | Git | `https://example.invalid/example-system` | `{REVISION}` | implementation | README.md | anchors | none |
 
-## Lens scoping
-
-### Memory/context scope
-
-Scope.
-
-### Epistemic scope
-
-Scope.
-
 ## Reconciliation
 
 None.

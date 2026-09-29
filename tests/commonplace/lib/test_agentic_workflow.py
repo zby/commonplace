@@ -19,10 +19,13 @@ import pytest
 import yaml
 
 from commonplace.lib import agentic_publication, agentic_set, validation
+from commonplace.lib.agentic_set import normalize_source_identity
 from commonplace.lib.agentic_workflow import (
     AnalyseAgenticSystem,
+    blockers_refusals,
     boundary_refusals,
     overview_enums,
+    retarget_links,
 )
 from commonplace.workflow import Blocked, Done, Handout, Launch, Orchestrator
 from tests.commonplace.lib.test_agentic_analysis import (
@@ -42,6 +45,8 @@ from tests.commonplace.workflow.definitions import ScriptedAgent
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
 SYSTEM = "Example System"
+DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
+BLOCKER = "- RTE-1 is cited by the synthesis but never traced."
 REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
 INSTRUCTIONS = (
     "kb/instructions/analyse-agentic-system",
@@ -88,9 +93,10 @@ class Fixture:
         self.run_dir = root / STATE_DIR / RUN_ID
         self.run_dir.mkdir(parents=True)
         self.scratch = root.parent / f"{root.name}-scratch"
+        self.identity = SOURCE
 
     def params(self) -> dict[str, str]:
-        return {"system": SYSTEM, "source-identity": SOURCE, "source": SOURCE}
+        return {"system": SYSTEM, "source-identity": self.identity, "source": SOURCE}
 
     # What each scripted worker writes
 
@@ -137,24 +143,23 @@ class Fixture:
         return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
 
     def memory_report(self, round_: int = 0) -> str:
-        """The fixture's specialist report, bound to the run's memory input and
-        marked with its round."""
-        scratch = self.scratch / "memory"
-        local = memory_report_fixture(scratch, self.revision)
-        return local.read_text(encoding="utf-8").replace(
-            digest(scratch / "memory-input.md"),
-            digest(self.run_dir / agentic_set.LOCAL_INPUT_NAME),
-        ) + f"\nWritten in round {round_}.\n"
+        """The fixture's specialist report, marked with its round."""
+        local = memory_report_fixture(self.scratch / "memory", self.revision)
+        return local.read_text(encoding="utf-8") + f"\nWritten in round {round_}.\n"
 
     @staticmethod
-    def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
+    def reconciliation(
+        *, returned: bool = False, amendment: str = "", synthesis: str = ""
+    ) -> str:
         text = (
+            f"## Description\n\n{DESCRIPTION}\n\n"
             "## Reconciliation\n\n"
             "MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.\n\n"
             + (f"Amendment: {amendment}\n\n" if amendment else "")
             + "## Bounded synthesis\n\n"
             "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.\n\n"
-            "## Limitations\n\nNone.\n"
+            + (f"{synthesis}\n\n" if synthesis else "")
+            + "## Limitations\n\nNone.\n"
         )
         if returned:
             text += (
@@ -164,21 +169,10 @@ class Fixture:
         return text
 
     @staticmethod
-    def verification(blockers: str = "None.") -> str:
+    def verification(blockers: str = "none") -> str:
         return (
             "### Semantic verification\n\nPassed: every claim checked against "
             f"its records.\n\n### Blockers\n\n{blockers}\n"
-        )
-
-    def review_body(self, *, evidence: bool = True) -> str:
-        basis = (
-            f"Evidence basis: `README.md` at `{self.revision}`.\n"
-            if evidence
-            else (f"Built from `README.md` at `{self.revision}`.\n")
-        )
-        return (
-            '---\ndescription: "Generated fixture review of one external agentic system"\n'
-            f"---\n\n# {SYSTEM}\n\n{basis}"
         )
 
     def workers(self, **overrides: Worker) -> dict[str, Worker]:
@@ -192,14 +186,7 @@ class Fixture:
         workers = {
             "boundary": writes(self.boundary),
             "runtime": writes(lambda: runtime_text(self.revision)),
-            "scoping": writes(
-                lambda: (
-                    "### Memory/context scope\n\nBrief fixture scope.\n\n"
-                    "### Epistemic scope\n\nBrief fixture scope.\n"
-                )
-            ),
             "epistemic": writes(lambda: epistemic_text(self.revision)),
-            "review": writes(self.review_body),
         }
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1):
             workers[f"memory-{round_}"] = writes(partial(self.memory_report, round_))
@@ -275,12 +262,10 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert scripted.launched == [
         "boundary",
         "runtime",
-        "scoping",
         "epistemic",
         "memory-0",
         "reconcile-0",
         "verify-0",
-        "review",
     ]
     assert not any(
         name.startswith(("runtime-final", "epistemic-final")) for name in scripted.launched
@@ -469,7 +454,10 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     )
     assert "analysis-cutoff: 2026-09-04\n" in path.read_text(encoding="utf-8")
 
-    assert boundary_refusals(path, enums=overview_enums(fixture.root)) != []
+    assert (
+        boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
+        != []
+    )
 
 
 def test_reconciliation_amending_an_undeclared_record_is_refused(
@@ -503,24 +491,79 @@ def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) 
     assert definition.publications == 1
 
 
-def test_review_body_without_evidence_basis_is_refused(fixture: Fixture) -> None:
-    body = fixture.review_body(evidence=False)
-    scripted, definition = agent(fixture, review=fixture.writes(lambda _: body))
-    drive_to(scripted, "review")
+def test_reconciliation_without_a_description_is_refused(fixture: Fixture) -> None:
+    missing = fixture.reconciliation().replace(f"## Description\n\n{DESCRIPTION}\n\n", "")
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: missing)})
+    drive_to(scripted, "reconcile-0")
 
-    attempt, prompt = prompt_of(scripted.round(), "review")
+    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
 
     assert attempt == 2
-    assert "the body needs one line starting `Evidence basis:`" in prompt
-    assert definition.publications == 0
-    assert not (fixture.root / REVIEW_PATH).exists()
+    assert "missing section `## Description`" in prompt
+
+
+def test_the_description_and_synthesis_become_the_public_review(
+    fixture: Fixture,
+) -> None:
+    linked = fixture.reconciliation(
+        synthesis=(
+            "The route is traced in [the runtime member](./runtime.md#routes), "
+            "summarized in [the overview](overview.md), described at "
+            "[the project](https://example.invalid/example-system), and limited "
+            "under [Limitations](#limitations)."
+        )
+    )
+    scripted, definition = agent(
+        fixture, **{"reconcile-0": fixture.writes(lambda _: linked)}
+    )
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    assert definition.publications == 1
+    overview = fixture.run_dir / "output/overview.md"
+    assert frontmatter(overview)["description"] == DESCRIPTION
+    review_path = fixture.root / REVIEW_PATH
+    assert frontmatter(review_path)["description"] == DESCRIPTION
+    review = review_path.read_text(encoding="utf-8")
+    assert f"\n# {SYSTEM}\n\nEvidence basis: code-grounded analysis of `{SOURCE}` at " in review
+    assert "with an analysis cutoff of 2026-09-04." in review
+    assert "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1." in review
+    assert "## Limitations\n\nNone.\n" in review
+    retained = f"../../reports/retained/agentic-system-analysis/{RUN_ID}"
+    assert f"[the runtime member]({retained}/runtime.md#routes)" in review
+    assert f"[the overview]({retained}/overview.md)" in review
+    assert "[the project](https://example.invalid/example-system)" in review
+    assert "[Limitations](#limitations)" in review
+    # Every rewritten link resolves once the set is retained.
+    assert validation.validate_note(review_path, repo_root=fixture.root).warns == []
+
+
+def test_retarget_links_resolves_set_links_from_the_destination() -> None:
+    text = (
+        "[a](runtime.md) [b](./memory.md#mem-obj-1) "
+        "[d](https://example.invalid/x.md) [e](#blockers) `[f](epistemic.md)`"
+    )
+
+    moved = retarget_links(
+        text,
+        set_dir="kb/reports/retained/agentic-system-analysis/AAS-2026-09-04-x-01",
+        destination="kb/agentic-systems/reviews/x.md",
+    )
+
+    base = "../../reports/retained/agentic-system-analysis/AAS-2026-09-04-x-01"
+    assert moved == (
+        f"[a]({base}/runtime.md) [b]({base}/memory.md#mem-obj-1) "
+        "[d](https://example.invalid/x.md) "
+        "[e](#blockers) `[f](epistemic.md)`"
+    )
 
 
 # 5. A named blocker stops before publication
 
 
 def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -> None:
-    blocked = fixture.verification("RTE-1 is cited by the synthesis but never traced.")
+    blocked = fixture.verification(BLOCKER)
     scripted, definition = agent(
         fixture, **{"verify-0": fixture.writes(lambda _: blocked)}
     )
@@ -531,14 +574,13 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     order = [
         name
         for name in scripted.launched
-        if name.startswith(("reconcile-", "verify-", "review"))
+        if name.startswith(("reconcile-", "verify-"))
     ]
     assert order == [
         "reconcile-0",
         "verify-0",
         "reconcile-1",
         "verify-1",
-        "review",
     ]
     prompt = last_prompt(fixture, "reconcile-1")
     assert "verification-0.md" in prompt and "set-check-0.md" in prompt
@@ -548,8 +590,35 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     assert "never traced" not in overview
 
 
+@pytest.mark.parametrize(
+    ("blockers", "accepted"),
+    [
+        ("none", True),
+        ("- RTE-1 is never traced.", True),
+        ("- RTE-1 is never traced;\n  resolve it from `README.md`.\n- OBJ-1 is thin.", True),
+        ("None.", False),
+        ("None found", False),
+        ("RTE-1 is never traced.", False),
+        ("- RTE-1 is never traced.\nOBJ-1 is thin.", False),
+    ],
+)
+def test_blockers_are_none_or_a_list(blockers: str, accepted: bool) -> None:
+    assert (blockers_refusals(blockers) == []) is accepted
+
+
+def test_a_verification_with_free_text_blockers_is_refused(fixture: Fixture) -> None:
+    free = fixture.verification("None found")
+    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(lambda _: free)})
+    drive_to(scripted, "verify-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "verify-0")
+
+    assert attempt == 2
+    assert "must be exactly `none` or a Markdown list" in prompt
+
+
 def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) -> None:
-    blocked = fixture.verification("RTE-1 is cited by the synthesis but never traced.")
+    blocked = fixture.verification(BLOCKER)
     verifiers = {
         f"verify-{round_}": fixture.writes(lambda _: blocked)
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1)
@@ -563,7 +632,6 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     (block,) = result.blocks
     assert block.subject == "workflow"
     assert "the last round names blockers" in block.reason
-    assert "review" not in scripted.launched
     assert definition.publications == 0
     assert not (fixture.root / REVIEW_PATH).exists()
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
@@ -604,6 +672,59 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
 
     assert attempt == 2
     assert "duplicate set declaration: RTE-1" in prompt
+
+
+# 6. One source identity
+
+
+@pytest.mark.parametrize(
+    ("given", "normalized"),
+    [
+        ("https://github.com/Owner/Repo", "https://github.com/Owner/Repo"),
+        ("  HTTPS://GitHub.com/Owner/Repo.git/ ", "https://github.com/Owner/Repo"),
+        ("https://github.com/owner/repo/", "https://github.com/owner/repo"),
+        ("document bundle", "document bundle"),
+        ("Captures/Bundle.git", "Captures/Bundle"),
+    ],
+)
+def test_the_source_identity_is_normalized_once(given: str, normalized: str) -> None:
+    assert normalize_source_identity(given) == normalized
+    definition = AnalyseAgenticSystem(
+        {"system": "x", "source-identity": given, "source": given}
+    )
+    assert definition.source_identity == normalized
+
+
+def test_the_boundary_is_given_the_normalized_identity(fixture: Fixture) -> None:
+    fixture.identity = "HTTPS://Example.invalid/example-system.git/"
+    scripted, definition = agent(fixture)
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    prompt = last_prompt(fixture, "boundary")
+    assert f"The run's source identity is `{SOURCE}`" in prompt
+    assert frontmatter(fixture.root / REVIEW_PATH)["source-identity"] == SOURCE
+    assert definition.publications == 1
+
+
+def test_a_boundary_with_another_source_identity_is_refused(fixture: Fixture) -> None:
+    other = fixture.boundary(
+        source={
+            "kind": "git",
+            "identity": SOURCE + ".git",
+            "revision": fixture.revision,
+            "path": fixture.source_root.as_posix(),
+            "sha256": None,
+        }
+    )
+    scripted, _ = agent(fixture, boundary=fixture.writes(lambda _: other))
+    drive_to(scripted, "boundary")
+
+    attempt, prompt = prompt_of(scripted.round(), "boundary")
+
+    assert attempt == 2
+    assert f"source.identity must be `{SOURCE}`" in prompt
 
 
 def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:

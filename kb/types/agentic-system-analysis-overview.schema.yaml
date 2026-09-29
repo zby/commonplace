@@ -56,9 +56,9 @@ allOf:
           members: false
         additionalProperties: true
       headings:
-        description: "One H1 followed by the seven ordered overview sections; scoping and verification subheadings remain explicit in every disposition."
+        description: "One H1 followed by the six ordered overview sections; verification subheadings remain explicit in every disposition."
         type: array
-        minItems: 13
+        minItems: 10
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
@@ -66,7 +66,6 @@ allOf:
             - enum:
                 - "## Boundary and evidence"
                 - "## Source register"
-                - "## Lens scoping"
                 - "## Reconciliation"
                 - "## Bounded synthesis"
                 - "## Limitations"
@@ -75,22 +74,17 @@ allOf:
         allOf:
           - {contains: {const: "## Boundary and evidence"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Source register"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Lens scoping"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Reconciliation"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Bounded synthesis"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Limitations"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Verification and blockers"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Memory/context scope"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Epistemic scope"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Semantic verification"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Deterministic validation"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Blockers"}, minContains: 1, maxContains: 1}
       body:
         allOf:
-          - description: "The seven overview sections must appear in their canonical reading order."
-            pattern: '(?ms)^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Lens scoping\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
-          - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."
-            pattern: '(?ms)^## Lens scoping\s*$.*?^### Memory/context scope\s*$.*?^### Epistemic scope\s*$.*?(?=^## Reconciliation\s*$)'
+          - description: "The six overview sections must appear in their canonical reading order."
+            pattern: '(?ms)^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
           - description: "Verification subheadings must appear under Verification and blockers in canonical order."
             pattern: '(?ms)^## Verification and blockers\s*$.*?^### Semantic verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
   - if:

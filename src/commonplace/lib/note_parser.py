@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
@@ -132,6 +132,18 @@ def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
 
 def find_markdown_links(body: str) -> tuple[str, ...]:
     return tuple(match.group(2) for match in _iter_markdown_link_matches(body))
+
+
+def replace_markdown_links(body: str, replace: Callable[[str], str]) -> str:
+    """The body with each link target that `find_markdown_links` finds
+    replaced by ``replace(target)``; everything else unchanged."""
+    pieces: list[str] = []
+    end = 0
+    for match in _iter_markdown_link_matches(body):
+        start, stop = match.span(2)
+        pieces += [body[end:start], replace(body[start:stop])]
+        end = stop
+    return "".join(pieces) + body[end:]
 
 
 def find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]:

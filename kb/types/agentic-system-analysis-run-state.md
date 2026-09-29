@@ -16,10 +16,9 @@ workflow is `kb/instructions/analyse-agentic-system/SKILL.md`.
 This record proves only what later consumers need:
 
 - which run produced the outputs;
-- which frozen source boundary it used;
+- which frozen source boundary it used; and
 - which exact manifest and published review bytes completed the run; the
-  manifest pins every member of the set; and
-- which frozen commission the set's memory member answers.
+  manifest pins every member of the set.
 
 It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
@@ -42,12 +41,11 @@ those copies and the public review's `analysis-artifact` and
 `analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
 follow those public fields without ignored state or a source checkout.
 
-Every complete analysis requires the frozen `memory-input.md` in its run
-directory. The set's `memory.md` is the specialist's last accepted report,
-unchanged. Completion verification checks the manifest, run and boundary
-identity across members, the memory member's complete status and its
-`canonical-register-sha256` pin against `memory-input.md`, and applies the
-shared set checks, including cross-member record resolution.
+The set's `memory.md` is the specialist's last accepted report, unchanged.
+Completion verification checks the manifest, run and boundary identity
+across members, the memory member's complete status and source identity,
+and applies the shared set checks, including cross-member record
+resolution.
 It also checks every member's source and quote anchors.
 These checks establish identity and structure; they do not impose a quote
 minimum, and they do not certify the specialist's semantic judgments.
@@ -76,9 +74,8 @@ after setting the source, before source analysis or delegation.
 
 Each output mapping contains a normalized repository-relative `kb/` path and
 the SHA-256 of its current bytes. Validate candidate bytes as their intended
-destination before publication. The run-state validator rechecks byte,
-workflow, and specialist handoff identity; it does not retain a
-validation receipt.
+destination before publication. The run-state validator rechecks byte and
+workflow identity; it does not retain a validation receipt.
 
 A `failed` run was abandoned or left public state uncertain; it is never
 resumed. Git history is the history

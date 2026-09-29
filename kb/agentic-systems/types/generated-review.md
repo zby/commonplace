@@ -19,7 +19,7 @@ what publication checks, with the pin on the manifest.
 | Field | Required | Use |
 |---|---:|---|
 | `type` | Yes | `agentic-systems/types/generated-review.md` |
-| `description` | Yes | One-sentence retrieval description of the system's mechanism and limits |
+| `description` | Yes | The overview's `description`: the reconciliation's one-sentence retrieval description of the system's mechanism and limits |
 | `generated-by` | Yes | `analyse-agentic-system` |
 | `analysis-run` | Yes | The producing run ID |
 | `source-identity` | Yes | The stable source identity the set's Source register declares |
@@ -29,16 +29,23 @@ what publication checks, with the pin on the manifest.
 
 ## Body
 
-The body opens with one **evidence basis** line: what the analysis is
-grounded in and when the evidence was captured, with the reviewed
-revision. It then gives, in prose organized by the system's operation,
-the discriminating mechanisms, the memory and epistemic findings that
-change how the system should be read, and the limits, citing set records
-by ID and linking the overview. Every claim it makes is present in the
-set; it introduces no finding of its own. Quote blocks, where used, follow
-the set's quotation contract and repeat passages the set holds, since the
-review is a projection, not a member. It gives no product ranking,
-adoption advice, or system-wide grade, and no transfer recommendation.
+Code renders the body from the verified overview; no job writes it. It
+has four parts, in order:
+
+1. `# <System>`, the run's `system` parameter.
+2. One **evidence basis** line, built from the overview's boundary fields:
+   the evidence tier, the source identity, the reviewed revision and the
+   analysis cutoff.
+3. The overview's Bounded synthesis, unchanged except for its links.
+4. `## Limitations` with the overview's Limitations.
+
+Relative links in the overview resolve inside the set directory, so code
+rewrites them to resolve from the review into the retained set under
+`kb/reports/retained/agentic-system-analysis/<run-id>/`. Absolute URLs and
+anchor-only links stay as they are. The review therefore makes no claim
+the set does not make, and the overview's contract for the Bounded
+synthesis (no ranking, adoption advice, system-wide grade or transfer
+recommendation) holds for the review too.
 
 ## Template
 
@@ -56,7 +63,11 @@ analysis-artifact-sha256: "{sha256}"
 
 # {System}
 
-Evidence basis: {sources and capture date} at {revision}.
+Evidence basis: {evidence-tier} analysis of `{source identity}` at `{reviewed-boundary}`, with an analysis cutoff of {analysis-cutoff}.
 
-{Sections as the system's operation warrants.}
+{The overview's Bounded synthesis, with its links rewritten.}
+
+## Limitations
+
+{The overview's Limitations.}
 ```
