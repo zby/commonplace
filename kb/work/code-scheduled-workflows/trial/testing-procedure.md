@@ -81,11 +81,19 @@ These are findings about testing, not orders. Depart from one when your harness 
 - **One run cannot tell a rule from an accident.** The two harnesses differed on resume, on copying or moving a file, and on the route to a block. Mark a finding from a single run as such.
 - **An expectation in the kit can be narrower than the loop text.** When an agent orchestrator departs from the expected course and not from the loop text, the defect is the scenario's.
 
-## Left to you
+## Run cases in parallel
+
+Start independent cases at the same time, not one after another. Each case has its own run directory and its own fresh session, so cases do not share state, and a series run one case at a time takes several times as long for no gain in evidence. In the second series, a tester that started its sessions in batches finished sixteen trials in about ten minutes; one that ran them one at a time needed over half an hour.
+
+- Start each session in the background and write its trace to a file named after the run, then wait for the batch.
+- Keep the sessions of one case in order where the case needs it: the sessions of a resume or a repeated interruption follow each other, but the case as a whole runs beside the others.
+- Set up a `busy` case on its own timing, because its holding `step` must still hold the run when the session starts; start the session at once after the holder.
+- If the harness or the model provider limits concurrent sessions, run in batches that fit, and say so in your file.
+
 
 - **How to get a fresh agent orchestrator that can launch workers.** A sub-agent of your own session may be unable to launch sub-agents. A new session started by the operator, or the harness's command-line mode started by you, are other ways. Choose what the harness allows, and record which you used, because it bounds what the observation shows.
 - How to capture the tool calls of the agent orchestrator and of the workers.
-- The order of cases, and how often to repeat one.
+- How to split the cases into batches, and how often to repeat one.
 - Which further cases to build.
 - When a trial has shown what it can show and may be ended.
 
