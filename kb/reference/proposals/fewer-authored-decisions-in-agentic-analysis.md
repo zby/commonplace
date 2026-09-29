@@ -7,7 +7,9 @@ type: reference/types/design-proposal.md
 
 An agentic-system analysis still asks workers to make decisions whose alternatives change nothing in the result, and then asks later steps to reconcile them. The operator selected five cuts on 2026-09-29 from the workshop's simplification candidates (`kb/work/analysis-offload-to-code/simplification-candidates.md`, Decisions 1, 2, 3, 5 and 6). This proposal states the contract changes they need and the small design choices the decisions left open.
 
-## Current state (as of 2026-09-29, after ADR 096)
+## Current state (as of 2026-09-29)
+
+After [ADR 096](../adr/096-analysis-passes-declare-their-own-records-under-lens-prefixes.md):
 
 - A `scoping` job runs between the runtime pass and the lenses. It chooses `brief` or `full` depth for each lens and names trigger records; no code reads the depth. The overview renders its output as `## Lens scoping`. Both lens members state their scope again: the memory profile's `scope`, and block 1 of the epistemic report.
 - Code writes `memory-input.md` (boundary, source, the scoping record's memory part, and the runtime member). The memory method (`analyse-agent-memory.md`) describes a private handoff: the specialist hashes its input and method by hand, and the member carries `canonical-register-sha256`, `method-sha256` and `worker-model`. `_verify_memory_member` checks only the first, against `memory-input.md`, which is gitignored run state, so no clean checkout can verify it. Nothing checks the other two beyond presence; `inputs-commit` already pins the method.
