@@ -75,7 +75,10 @@ def test_step_refuses_a_directory_that_is_not_a_run(tmp_path, capsys):
 def test_start_refuses_a_name_that_is_not_a_workflow(tmp_path, capsys):
     run_dir = new_run(tmp_path)
 
-    assert main(["start", str(run_dir), "tests.commonplace.workflow.definitions:new_run"]) == 1
+    assert (
+        main(["start", str(run_dir), "tests.commonplace.workflow.definitions:new_run"])
+        == 1
+    )
     assert "workflow" in capsys.readouterr().err
 
 
@@ -83,12 +86,24 @@ def test_report_records_one_observation(tmp_path):
     run_dir = started(tmp_path)
 
     code = main(
-        ["report", str(run_dir), "launch-failed", "--job", "lens-a", "--text", "rate limit"]
+        [
+            "report",
+            str(run_dir),
+            "launch-failed",
+            "--job",
+            "lens-a",
+            "--text",
+            "rate limit",
+        ]
     )
 
     assert code == 0
     (report,) = Orchestrator.open(run_dir).reports()
-    assert (report.event, report.job, report.text) == ("launch-failed", "lens-a", "rate limit")
+    assert (report.event, report.job, report.text) == (
+        "launch-failed",
+        "lens-a",
+        "rate limit",
+    )
 
 
 def test_report_refuses_an_unlisted_event(tmp_path, capsys):
@@ -123,7 +138,9 @@ def test_resolve_takes_only_completed_or_absent(tmp_path, capsys):
 
 def test_a_blocked_outcome_points_to_its_record_and_states_what_is_permitted(tmp_path):
     run_dir = new_run(tmp_path)
-    result = ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_invalid).run()[-1]
+    result = ScriptedAgent(
+        Orchestrator(run_dir, OneJob()), default=write_invalid
+    ).run()[-1]
     assert isinstance(result, Blocked)
 
     lines = render(result).splitlines()

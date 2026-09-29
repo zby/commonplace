@@ -114,7 +114,9 @@ def test_wait_returns_the_accepted_outputs_in_the_order_asked(tmp_path):
 
     class ReadsResults(Workflow):
         def run(self, ctx):
-            second, first = ctx.wait(ctx.agent(lens_job("second")), ctx.agent(lens_job("first")))
+            second, first = ctx.wait(
+                ctx.agent(lens_job("second")), ctx.agent(lens_job("first"))
+            )
             seen.append((second.name, first.name))
 
     run_dir = new_run(tmp_path)
@@ -386,7 +388,9 @@ def test_changing_an_accepted_output_reopens_the_job(tmp_path):
     run_dir = new_run(tmp_path)
     ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
 
-    (run_dir / "only.md").write_text("# written later by someone else\n", encoding="utf-8")
+    (run_dir / "only.md").write_text(
+        "# written later by someone else\n", encoding="utf-8"
+    )
 
     assert names(Orchestrator(run_dir, OneJob()).step()) == ["only"]
     assert not (run_dir / "only.md").exists()
@@ -478,7 +482,9 @@ def test_a_repair_that_puts_a_valid_output_in_place_is_accepted(tmp_path):
             ).wait()
 
     def misnamed(handout):
-        handout.output_path.with_name("wrong-name.md").write_text("# only\n", encoding="utf-8")
+        handout.output_path.with_name("wrong-name.md").write_text(
+            "# only\n", encoding="utf-8"
+        )
 
     agent = ScriptedAgent(Orchestrator(run_dir, Counted()), default=misnamed)
     assert isinstance(agent.run()[-1], Blocked)
@@ -627,14 +633,18 @@ def test_acceptance_resets_the_repair_count(tmp_path):
 
 
 def test_a_missing_output_makes_step_name_the_job_again(tmp_path):
-    agent = ScriptedAgent(Orchestrator(new_run(tmp_path), OneJob()), default=write_nothing)
+    agent = ScriptedAgent(
+        Orchestrator(new_run(tmp_path), OneJob()), default=write_nothing
+    )
     agent.round()
 
     assert names(agent.round()) == ["only"]
 
 
 def test_a_job_whose_output_stays_missing_blocks(tmp_path):
-    agent = ScriptedAgent(Orchestrator(new_run(tmp_path), OneJob()), default=write_nothing)
+    agent = ScriptedAgent(
+        Orchestrator(new_run(tmp_path), OneJob()), default=write_nothing
+    )
 
     block = one_block(agent.run()[-1])
 
@@ -715,12 +725,16 @@ def test_a_report_is_kept_and_shown_in_the_failure_record(tmp_path):
 
     block = one_block(agent.run()[-1])
 
-    assert "harness: rate limit reached" in block.record_path.read_text(encoding="utf-8")
+    assert "harness: rate limit reached" in block.record_path.read_text(
+        encoding="utf-8"
+    )
 
 
 def test_a_report_survives_the_session_that_made_it(tmp_path):
     run_dir = new_run(tmp_path)
-    Orchestrator(run_dir, OneJob()).report("stop", text="handing the run to the operator")
+    Orchestrator(run_dir, OneJob()).report(
+        "stop", text="handing the run to the operator"
+    )
 
     reports = Orchestrator(run_dir, OneJob()).reports()
 
@@ -861,13 +875,17 @@ def test_a_recognizer_is_not_asked_about_an_effect_that_was_recorded(tmp_path):
     assert isinstance(result, Done)
 
 
-def test_an_error_in_an_effect_that_did_not_begin_blocks_and_is_run_after_repair(tmp_path):
+def test_an_error_in_an_effect_that_did_not_begin_blocks_and_is_run_after_repair(
+    tmp_path,
+):
     run_dir = new_run(tmp_path)
     ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).round()
     marker = tmp_path / "marker"
     marker.write_text("error before", encoding="utf-8")
 
-    block = one_block(Orchestrator(run_dir, publisher(tmp_path, marker=str(marker))).step())
+    block = one_block(
+        Orchestrator(run_dir, publisher(tmp_path, marker=str(marker))).step()
+    )
 
     assert block.subject == "workflow"
     assert "publishing failed" in block.record_path.read_text(encoding="utf-8")
@@ -881,7 +899,9 @@ def test_an_error_part_way_through_an_effect_blocks_and_is_then_uncertain(tmp_pa
     marker = tmp_path / "marker"
     marker.write_text("error between", encoding="utf-8")
 
-    block = one_block(Orchestrator(run_dir, publisher(tmp_path, marker=str(marker))).step())
+    block = one_block(
+        Orchestrator(run_dir, publisher(tmp_path, marker=str(marker))).step()
+    )
 
     assert block.subject == "workflow"
     assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Uncertain)
@@ -954,7 +974,9 @@ def uncertain_beside_other_work(tmp_path, other_worker):
     agent.round()
     marker = end_the_process(tmp_path, "between")
     with pytest.raises(Interrupted):
-        Orchestrator(run_dir, PublishesBesideOtherWork({**params, "marker": marker})).step()
+        Orchestrator(
+            run_dir, PublishesBesideOtherWork({**params, "marker": marker})
+        ).step()
     return Orchestrator(run_dir, PublishesBesideOtherWork(params))
 
 
@@ -1002,7 +1024,9 @@ def published_then_changed(tmp_path):
     def second_result(handout):
         handout.output_path.write_text(SECOND_RESULT, encoding="utf-8")
 
-    agent = ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path)), default=second_result)
+    agent = ScriptedAgent(
+        Orchestrator(run_dir, publisher(tmp_path)), default=second_result
+    )
     return run_dir, agent.run()[-1]
 
 
@@ -1013,8 +1037,12 @@ def test_a_completed_effect_whose_inputs_changed_stops_the_run(tmp_path):
     assert block.subject == "effect publish"
     assert block.permitted == "stop"
     assert publications(tmp_path / "published") == 1
-    assert (tmp_path / "published" / "only.md").read_text(encoding="utf-8") == "# only\n"
-    assert one_block(Orchestrator(run_dir, publisher(tmp_path)).step()).permitted == "stop"
+    assert (tmp_path / "published" / "only.md").read_text(
+        encoding="utf-8"
+    ) == "# only\n"
+    assert (
+        one_block(Orchestrator(run_dir, publisher(tmp_path)).step()).permitted == "stop"
+    )
 
 
 def test_the_block_on_an_effect_goes_away_when_its_inputs_are_restored(tmp_path):
@@ -1039,7 +1067,9 @@ def test_the_operator_has_a_changed_effect_run_again(tmp_path):
 
     assert isinstance(orchestrator.step(), Done)
     assert publications(tmp_path / "published") == 2
-    assert (tmp_path / "published" / "only.md").read_text(encoding="utf-8") == SECOND_RESULT
+    assert (tmp_path / "published" / "only.md").read_text(
+        encoding="utf-8"
+    ) == SECOND_RESULT
 
 
 def test_the_operator_records_a_changed_effect_as_completed(tmp_path):
@@ -1157,7 +1187,11 @@ def test_unrelated_failing_steps_each_get_their_repair(tmp_path):
     second = one_block(Orchestrator(run_dir, TwoPlaces()).step())
     third = one_block(Orchestrator(run_dir, TwoPlaces()).step())
 
-    assert (first.permitted, second.permitted, third.permitted) == ("repair", "repair", "stop")
+    assert (first.permitted, second.permitted, third.permitted) == (
+        "repair",
+        "repair",
+        "stop",
+    )
     assert "second.md is missing" in second.record_path.read_text(encoding="utf-8")
 
 
@@ -1264,7 +1298,9 @@ def test_a_path_owned_by_two_jobs_is_a_definition_error(tmp_path, first, second)
     assert handed_out(run_dir) == []
 
 
-@pytest.mark.parametrize("output", ["workflow-state/result.md", "./workflow-state/jobs/a.md"])
+@pytest.mark.parametrize(
+    "output", ["workflow-state/result.md", "./workflow-state/jobs/a.md"]
+)
 def test_an_output_must_not_be_inside_the_state_directory(output):
     with pytest.raises(DefinitionError):
         owns("job", output)
@@ -1288,7 +1324,9 @@ def test_an_output_must_be_inside_the_run_directory(output):
 def test_a_job_without_a_validator_is_accepted_when_its_output_exists(tmp_path):
     class Unchecked(Workflow):
         def run(self, ctx):
-            ctx.agent(Job(name="free", prompt="Write anything.", output="free.md")).wait()
+            ctx.agent(
+                Job(name="free", prompt="Write anything.", output="free.md")
+            ).wait()
 
     results = ScriptedAgent(Orchestrator(new_run(tmp_path), Unchecked())).run()
 

@@ -201,7 +201,9 @@ class Publishes(Workflow):
             "publish",
             partial(self.publish, ctx),
             inputs=("only.md",),
-            recognize=None if self.params.get("recognize") == "none" else self.recognize,
+            recognize=None
+            if self.params.get("recognize") == "none"
+            else self.recognize,
         )
 
 
