@@ -11,15 +11,20 @@ must not tell it the scenario: without a name the run gets a random one. The
 script prints the run directory and the `<shell>` value for the loop text.
 
 `--launch` gives the launch parameters of the `parameters` scenario. `--hold`
-gives the seconds the `busy` scenario holds the run.
+gives the seconds the `busy` scenario holds the run. For `busy`, setup starts
+the holding `step` itself and returns only once that step holds the run, so a
+session started after setup always meets a busy run.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import secrets
+import subprocess
 import sys
+import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -52,6 +57,36 @@ NOTES = """\
 - Two decisions were reversed after review.
 - Nobody owns the log since the reorganisation.
 """
+
+
+def start_holding_step(run_dir: Path) -> subprocess.Popen:
+    """Start a `step` in the background and wait until it holds the run.
+
+    The holding step removes the hold file once it is inside the definition,
+    which runs under the run's lock.
+    """
+    log = beside(run_dir, "hold.log").open("w", encoding="utf-8")
+    env = dict(
+        os.environ,
+        PYTHONPATH=os.pathsep.join(
+            filter(None, [str(HERE), os.environ.get("PYTHONPATH")])
+        ),
+    )
+    process = subprocess.Popen(
+        [sys.executable, "-m", "commonplace.workflow.shell", "step", str(run_dir)],
+        stdout=log,
+        stderr=subprocess.STDOUT,
+        env=env,
+        start_new_session=True,
+    )
+    marker = beside(run_dir, "hold")
+    deadline = time.monotonic() + 30
+    while marker.exists():
+        if process.poll() is not None or time.monotonic() > deadline:
+            process.kill()
+            raise RuntimeError(f"the holding step did not take the run; see {log.name}")
+        time.sleep(0.1)
+    return process
 
 
 def main(argv: list[str]) -> int:
@@ -95,6 +130,10 @@ def main(argv: list[str]) -> int:
     relative = HERE.relative_to(Path.cwd()) if HERE.is_relative_to(Path.cwd()) else HERE
     print(f"run: {run_dir}")
     print(f"shell: PYTHONPATH={relative} uv run python -m commonplace.workflow.shell")
+    if args.scenario == "busy":
+        start_holding_step(run_dir)
+        until = time.strftime("%H:%M:%S", time.localtime(time.time() + args.hold))
+        print(f"held: until about {until}; start the session now")
     return 0
 
 

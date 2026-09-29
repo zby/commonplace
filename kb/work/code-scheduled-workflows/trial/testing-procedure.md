@@ -87,7 +87,7 @@ Start independent cases at the same time, not one after another. Each case has i
 
 - Start each session in the background and write its trace to a file named after the run, then wait for the batch.
 - Keep the sessions of one case in order where the case needs it: the sessions of a resume or a repeated interruption follow each other, but the case as a whole runs beside the others.
-- Set up a `busy` case on its own timing, because its holding `step` must still hold the run when the session starts; start the session at once after the holder.
+- Start a `busy` session as soon as its setup returns, because the holding `step` that setup starts holds the run only for `--hold` seconds.
 - If the harness or the model provider limits concurrent sessions, run in batches that fit, and say so in your file.
 
 

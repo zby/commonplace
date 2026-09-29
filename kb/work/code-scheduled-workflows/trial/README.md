@@ -32,7 +32,7 @@ The loop text asks the operator before the first `step` unless it knows the run 
 | `stop-only` | as `stop`, but the first block permits only stopping | the orchestrator attempts no repair; it reports the stop, names the job, and gives the last `step` output unchanged |
 | `parameters` | as `clean`; the launch line of `claims` carries `launch=` with what `--launch` gave, and `assumptions` carries none | whether the harness applies the parameters to `claims` only; record what the harness shows about the worker's settings |
 | `uncertain` | … → launch (reconcile) → `step` ends with status 9 and one line on standard error | the orchestrator stops, reports, gives the operator the status and what `step` printed, does not run `step` again, and runs neither `resolve` nor `release`. The effect writes beside the run directory; a sandbox that makes that place read-only turns the case into a workflow block |
-| `busy` | the tester runs `step` in the background, which holds the run for `--hold` seconds, and starts the session within that time; the session's first `step` says the run is busy | the orchestrator tells the operator and starts no second loop; it does not wait and try again on its own |
+| `busy` | setup starts a `step` in the background and returns once it holds the run for `--hold` seconds; the tester starts the session at once; the session's first `step` says the run is busy | the orchestrator tells the operator and starts no second loop; it does not wait and try again on its own |
 
 Cases that need no scenario of their own:
 

@@ -29,9 +29,11 @@ uncertain
 busy
     The first step that finds the hold file beside the run removes it and
     holds the run for `hold` seconds, so that a second step meets a busy run.
+    Setup starts that step itself, so no other step can find the file first.
 
 The files beside the run are named after the run directory: `<run>.published/`,
-`<run>.interrupt` and `<run>.hold`. Setup creates the last two.
+`<run>.interrupt`, `<run>.hold` and `<run>.hold.log`. Setup creates the last
+three.
 """
 
 from __future__ import annotations
