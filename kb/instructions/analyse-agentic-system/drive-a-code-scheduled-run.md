@@ -1,7 +1,6 @@
-# Draft: the agent orchestrator's loop text
-
-Draft for trial in each supported harness. When the workshop closes, this text lands in `kb/instructions/`, or in the first workflow's skill if it is still the only one. Everything below the rule is the text an agent orchestrator receives.
-
+---
+description: "Use when acting as the agent orchestrator of a code-scheduled workflow run: run `step`, launch the jobs it names, handle blocks, and report events. The workflow's skill supplies the `<shell>` command and the run directory."
+type: types/instruction.md
 ---
 
 # Drive a code-scheduled run

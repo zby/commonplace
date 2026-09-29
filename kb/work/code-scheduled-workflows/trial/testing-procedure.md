@@ -41,7 +41,7 @@ These questions define the test. Answer each from evidence, and say so when a qu
 
 These bind. Everything not listed here is yours to decide.
 
-- **The agent orchestrator under test sees only the loop text**, below its rule line, with `<shell>` and `<run>` filled in, and the request to drive the run. The request says whether the run is new or resumed, in the words the kit's README gives, and nothing more. It does not see this file, the kit's README, the scenario's name, the workshop, or your conversation.
+- **The agent orchestrator under test sees only the loop text**, below its frontmatter, with `<shell>` and `<run>` filled in, and the request to drive the run. The request says whether the run is new or resumed, in the words the kit's README gives, and nothing more. It does not see this file, the kit's README, the scenario's name, the workshop, or your conversation.
 - **The run path must not name the scenario.** The agent orchestrator sees the path. Pass `setup.py` a name of your own that says nothing about the case.
 - **Keep out what the harness loads by itself.** Project instructions and the user's own instructions and memory are not the loop text. Switch off what you can, and record what still loaded.
 - **Do not help during a trial.** Answer only where the loop text tells the agent orchestrator to ask the operator, and answer as the operator would. Do not correct, hint, or restart a step for it.
