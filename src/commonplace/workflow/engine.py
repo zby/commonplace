@@ -102,7 +102,9 @@ class Blocked:
     After a repair, the next `step` judges the output in place again with the
     same validator. If it is still refused, the job is handed out again with
     a full set of attempts: the retry limit starts over after each blocked
-    outcome. The repair limit does not.
+    outcome. The repair limit does not. A block caused by a problem report
+    leaves nothing in place to judge, because the report and any output
+    beside it were moved into `workflow-state/` when the block was given.
 
     A block that permits only stopping ends what the agent orchestrator may
     do, not the run. Every `step` gives it again until the operator acts, with
@@ -119,8 +121,10 @@ class Uncertain:
 
     Every later `step` gives the same outcome until the operator has
     established what took place and recorded it with `Orchestrator.resolve`.
-    No job is handed out in an uncertain step. `blocks` holds the blocks found
-    in the same step, so that none is lost.
+    An uncertain step changes no job's state: it hands out nothing, moves
+    nothing, and counts no attempt and no repair. `blocks` holds the blocks
+    found in the same step, so that none is lost; they are counted when a
+    later step gives them as Blocked.
     """
 
     effect: str
@@ -167,14 +171,18 @@ class Workflow:
 
     retry_limit
         How many times code hands a job out again after a refused or missing
-        output before it gives a blocked outcome.
+        output before it gives a blocked outcome. The count starts over when
+        the job is accepted and after each blocked outcome.
     repair_limit
         How many blocked outcomes for one subject permit a repair. The next
         one permits only stopping. For a job, its acceptance resets the count.
         For `workflow`, failures are counted by the place in the definition
-        where the error was raised, so two unrelated failing steps each get
-        their repair; a step in which nothing that code executes fails resets
-        these counts.
+        where the error was raised: the innermost frame of the traceback that
+        lies in the file defining the workflow class or one of its base
+        classes. An error raised inside a shared helper or the standard
+        library is therefore counted at the definition's line that called it,
+        so two unrelated failing steps each get their repair. A step in which
+        nothing that code executes fails resets these counts.
     repair_scope
         What the agent orchestrator may change during a repair.
     params
@@ -238,9 +246,12 @@ class Context:
         It holds no absolute path of the run directory, so a run directory
         that is moved keeps its acceptances.
 
-        An output found when the input state differs from the one recorded at
-        hand-out is refused. Such a refusal counts as a failed attempt, as a
-        missing or invalid output does.
+        An output that was never accepted, found when the input state differs
+        from the one recorded at its hand-out, is refused. Such a refusal
+        counts as a failed attempt, as a missing or invalid output does. An
+        accepted output whose inputs change later, or whose bytes someone
+        changes, is not a failed attempt: the job is pending again with a full
+        set of attempts.
 
         A job that is not accepted is handed out at the end of the step,
         whether or not the definition waits on it. At hand-out, whatever is at
@@ -366,11 +377,14 @@ class Orchestrator:
         """Run the definition from the top until no path can continue.
 
         A call of `step` consumes a round: it means every worker launched from
-        the previous step has returned or failed to start. A job handed out
-        before and still without an output counts as a failed attempt, so
-        calling `step` again without worker activity uses up attempts and ends
-        in a blocked outcome. Recovery in a fresh session therefore requires
-        that the earlier session's workers have stopped.
+        the previous step has returned or failed to start. Attempts are
+        counted per hand-out: each hand-out is one attempt, and its result is
+        judged once. A job handed out before and still without an output
+        counts as a failed attempt, so calling `step` again without worker
+        activity uses up attempts and ends in a blocked outcome. A step that
+        gives Uncertain counts nothing and moves nothing. Recovery in a fresh
+        session therefore requires that the earlier session's workers have
+        stopped.
 
         Repeating `step` gives the same outcome only where nothing is left to
         consume: on a finished run, on an uncertain effect, and on a run that
@@ -379,9 +393,12 @@ class Orchestrator:
         A step gives one outcome, the first of these that applies: Uncertain,
         Blocked, Launch, Done.
 
-        One step runs on a run at a time. A second `step` on the same run
-        while one is running raises RunBusy. The lock does not outlive the
-        process that holds it.
+        One step runs on a run at a time. The lock is taken before the
+        definition runs. It is an operating-system lock on a file under
+        `workflow-state/`, so it ends with the process that holds it, and a
+        crashed step leaves nothing to clear. A `step` in another process
+        while one is running raises RunBusy. A second `step` within the same
+        process is not a supported use, and its behaviour is not specified.
         """
         raise NotImplementedError
 

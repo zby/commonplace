@@ -79,7 +79,11 @@ class Job:
         `a.tar.problem.md`.
 
         A problem report is not retried. The step that finds one gives a
-        blocked outcome at once, whatever is at the output path.
+        blocked outcome at once, whatever is at the output path. It moves the
+        report, and any output beside it, into `workflow-state/`, where the
+        failure record points to them. An output the worker flagged with a
+        problem is therefore never accepted, and after the repair the next
+        step finds nothing in place and hands the job out again.
         """
         raise NotImplementedError
 

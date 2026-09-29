@@ -4,8 +4,13 @@ from __future__ import annotations
 
 import subprocess
 import sys
+import time
 from pathlib import Path
 
+import pytest
+
+from commonplace.workflow import Orchestrator, RunBusy
+from commonplace.workflow.shell import main
 from tests.commonplace.workflow.definitions import new_run, on_request, publications
 
 pytestmark = on_request
@@ -107,3 +112,39 @@ def test_the_operator_releases_a_stopped_job_from_the_shell(tmp_path):
     assert shell("step", str(run_dir)).stdout.splitlines()[0] == "launch"
     (run_dir / "only.md").write_text("# only\n", encoding="utf-8")
     assert shell("step", str(run_dir)).stdout.splitlines() == ["done"]
+
+
+def test_a_step_is_refused_while_another_process_runs_one(tmp_path, capsys):
+    run_dir = new_run(tmp_path)
+    holding, finish = tmp_path / "holding", tmp_path / "finish"
+    result = shell(
+        "start",
+        str(run_dir),
+        "tests.commonplace.workflow.definitions:HoldsTheStep",
+        "--param",
+        f"holding={holding}",
+        "--param",
+        f"finish={finish}",
+    )
+    assert result.returncode == 0, result.stderr
+    running = subprocess.Popen(
+        [sys.executable, "-m", "commonplace.workflow.shell", "step", str(run_dir)],
+        cwd=REPOSITORY,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    try:
+        deadline = time.monotonic() + 30
+        while not holding.exists() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        assert holding.exists()
+
+        with pytest.raises(RunBusy):
+            Orchestrator.open(run_dir).step()
+        assert main(["step", str(run_dir)]) == 1
+        assert "busy" in capsys.readouterr().err
+    finally:
+        finish.write_text("", encoding="utf-8")
+        output, _ = running.communicate(timeout=30)
+
+    assert output.splitlines()[0] == "launch"

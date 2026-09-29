@@ -8,6 +8,7 @@ files the way a sub-agent would.
 from __future__ import annotations
 
 import os
+import time
 from collections.abc import Callable, Mapping
 from functools import partial
 from pathlib import Path
@@ -247,3 +248,20 @@ def new_run(tmp_path: Path, source: str = "source text\n") -> Path:
     run_dir.mkdir(parents=True)
     (run_dir / "source.md").write_text(source, encoding="utf-8")
     return run_dir
+
+
+class HoldsTheStep(Workflow):
+    """Keeps its step running until the test lets it finish.
+
+    It writes the file named by the `holding` parameter once it is running,
+    then waits, for at most thirty seconds, until the file named by `finish`
+    exists.
+    """
+
+    def run(self, ctx):
+        Path(self.params["holding"]).write_text("holding\n", encoding="utf-8")
+        finish = Path(self.params["finish"])
+        deadline = time.monotonic() + 30
+        while not finish.exists() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        ctx.agent(lens_job("only")).wait()

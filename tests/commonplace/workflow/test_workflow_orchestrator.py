@@ -16,7 +16,6 @@ from commonplace.workflow import (
     Launch,
     Orchestrator,
     Recognition,
-    RunBusy,
     Uncertain,
     Workflow,
 )
@@ -602,6 +601,17 @@ def test_only_a_stopped_subject_can_be_released(tmp_path):
         Orchestrator(run_dir, OneJob()).release("never-named")
 
 
+def test_a_reopened_job_gets_a_full_set_of_attempts(tmp_path):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
+
+    (run_dir / "source.md").write_text("changed source\n", encoding="utf-8")
+    agent = ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_invalid)
+
+    assert isinstance(agent.run()[-1], Blocked)
+    assert agent.launched == ["only", "only"]
+
+
 def test_acceptance_resets_the_repair_count(tmp_path):
     run_dir = new_run(tmp_path)
     ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_invalid).run()
@@ -651,12 +661,18 @@ def test_a_problem_report_blocks_even_when_an_output_was_written(tmp_path):
         write_valid(handout)
         handout.problem_path.write_text("the result is a guess", encoding="utf-8")
 
-    agent = ScriptedAgent(Orchestrator(new_run(tmp_path), OneJob()), default=both)
+    run_dir = new_run(tmp_path)
+    agent = ScriptedAgent(Orchestrator(run_dir, OneJob()), default=both)
 
     block = one_block(agent.run()[-1])
 
     assert agent.launched == ["only"]
     assert "problem" in block.reason
+    assert not (run_dir / "only.md").exists()
+    assert kept(run_dir, "# only\n")
+    assert kept(run_dir, "the result is a guess")
+    # The flagged output is not accepted after the repair; the job is handed out.
+    assert names(Orchestrator(run_dir, OneJob()).step()) == ["only"]
 
 
 @pytest.mark.parametrize(
@@ -954,6 +970,17 @@ def test_an_uncertain_step_hands_out_nothing(tmp_path):
     assert (handout.name, handout.attempt) == ("other", 2)
 
 
+def test_an_uncertain_step_counts_no_repair(tmp_path):
+    orchestrator = uncertain_beside_other_work(tmp_path, write_problem("cannot do it"))
+
+    assert isinstance(orchestrator.step(), Uncertain)
+    assert isinstance(orchestrator.step(), Uncertain)
+    orchestrator.resolve("publish", Recognition.COMPLETED)
+
+    block = one_block(orchestrator.step())
+    assert (block.subject, block.permitted) == ("other", "repair")
+
+
 def test_an_uncertain_step_keeps_the_blocks_found_with_it(tmp_path):
     orchestrator = uncertain_beside_other_work(tmp_path, write_problem("cannot do it"))
 
@@ -1134,6 +1161,22 @@ def test_unrelated_failing_steps_each_get_their_repair(tmp_path):
     assert "second.md is missing" in second.record_path.read_text(encoding="utf-8")
 
 
+def test_errors_raised_in_a_shared_helper_are_counted_at_the_definitions_line(tmp_path):
+    class TwoReads(Workflow):
+        def run(self, ctx):
+            # Both errors are raised inside pathlib, at the same line there.
+            (ctx.run_dir / "first.md").read_text(encoding="utf-8")
+            (ctx.run_dir / "second.md").read_text(encoding="utf-8")
+
+    run_dir = new_run(tmp_path)
+
+    first = one_block(Orchestrator(run_dir, TwoReads()).step())
+    (run_dir / "first.md").write_text("repaired\n", encoding="utf-8")
+    second = one_block(Orchestrator(run_dir, TwoReads()).step())
+
+    assert (first.permitted, second.permitted) == ("repair", "repair")
+
+
 def test_a_step_without_failures_resets_the_count_of_a_failing_place(tmp_path):
     class Flaky(Workflow):
         def run(self, ctx):
@@ -1176,23 +1219,7 @@ def test_an_error_on_one_path_does_not_hide_a_block_on_another(tmp_path):
     assert sorted(block.subject for block in result.blocks) == ["second", "workflow"]
 
 
-# One step at a time
-
-
-def test_a_second_step_on_a_running_run_is_refused(tmp_path):
-    run_dir = new_run(tmp_path)
-    seen = []
-
-    class StepsWithin(Workflow):
-        def run(self, ctx):
-            try:
-                Orchestrator(run_dir, OneJob()).step()
-            except RunBusy:
-                seen.append("refused")
-            ctx.agent(lens_job("only")).wait()
-
-    assert names(Orchestrator(run_dir, StepsWithin()).step()) == ["only"]
-    assert seen == ["refused"]
+# Runs made through the constructor
 
 
 def test_a_run_driven_through_the_constructor_cannot_be_opened(tmp_path):

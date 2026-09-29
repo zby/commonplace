@@ -115,8 +115,9 @@ def test_release_refuses_a_subject_that_is_not_stopped(tmp_path, capsys):
 def test_resolve_takes_only_completed_or_absent(tmp_path, capsys):
     run_dir = started(tmp_path)
 
-    with pytest.raises(SystemExit):
+    with pytest.raises(SystemExit) as exited:
         main(["resolve", str(run_dir), "publish", "unknown"])
+    assert exited.value.code == 2
     assert "unknown" in capsys.readouterr().err
 
 

@@ -37,7 +37,9 @@ def main(argv: list[str] | None = None) -> int:
     """Run one command. Returns 0, or 1 with a message on standard error.
 
     Every outcome of `step`, including blocked and uncertain, returns 0: an
-    outcome is not a failure of the command.
+    outcome is not a failure of the command. A `step` refused because another
+    is running returns 1 and says the run is busy. Malformed arguments exit
+    through SystemExit with status 2, as argparse does.
     """
     raise NotImplementedError
 
