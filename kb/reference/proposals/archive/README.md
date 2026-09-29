@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Fewer authored decisions in agentic-system analysis](./fewer-authored-decisions-in-agentic-analysis.md) — adopted by ADR 097, 2026-09-29. The pre-adoption scoping job, memory handoff pins, unchecked review prose, uncompared source identities and loose Blockers reading that the cuts removed.
 - [Lens-prefixed canonical record IDs](./lens-prefixed-canonical-record-ids.md) — adopted by ADR 096, 2026-09-29. The pre-adoption record namespace (lens proposals, the mapping table, memory finalization, the `runtime-final` and `epistemic-final` jobs) and the ten undeclared `EPI-` records that stopped the first code-scheduled run.
 - [Quote occurrence location and verification](./quote-occurrence-location-and-verification.md) — adopted by ADR 094, 2026-09-27. Counts of citations, repeated occurrences, emphasis-dependent matches, and recovered range errors before the shared matcher.
 - [Per-artifact write briefs](./per-artifact-write-briefs.md) — adopted by ADR 092, 2026-09-26. The pre-adoption state (seven deleted multistage briefs, an unfilled retained-intent slot), the pilot and drift-study figures behind adoption, and the options not taken: frontmatter intent, mandatory briefs, assembler delivery.
