@@ -11,6 +11,12 @@ def instruction(name: str) -> str:
     )
 
 
+def job(name: str) -> str:
+    return (
+        REPO_ROOT / "kb/instructions/analyse-agentic-system/jobs" / f"{name}.md"
+    ).read_text(encoding="utf-8")
+
+
 def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
     orchestrator = instruction("analyse-agentic-system")
     run_state = (
@@ -20,7 +26,7 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
 
     assert "correctable pre-publication failure" in orchestrator
     assert "only when abandoning the run" in orchestrator
-    assert "Use a new run ID" in orchestrator
+    assert "use a new run ID" in orchestrator
     assert "resume a failed run" in run_state
 
 
@@ -29,27 +35,25 @@ def contract(name: str) -> str:
 
 
 def test_set_has_one_fixed_state_location() -> None:
-    orchestrator = instruction("analyse-agentic-system")
+    from commonplace.lib.agentic_workflow import MANIFEST
+
     overview = contract("agentic-system-analysis-overview")
 
-    assert "`<run-id>/output/ARTIFACT.yaml`" in orchestrator
+    assert MANIFEST == "output/ARTIFACT.yaml"
     assert "reading entry point" in overview
     assert "Run state and compact reviews pin `ARTIFACT.yaml`" in overview
 
 
 def test_repository_sources_remain_commit_addressed() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    source_work = orchestrator[
-        orchestrator.index("### 2. Freeze and inspect sources once") :
-        orchestrator.index("### 3. Use one vocabulary and one record set")
-    ]
+    boundary = job("boundary")
+    rules = job("worker-rules")
 
-    assert "related-systems/<owner>--<repo>/" in source_work
-    assert "git check-ignore -q" in source_work
-    assert "verify an existing checkout's origin" in source_work
-    assert "git --no-replace-objects -C" in source_work
-    assert "never read evidence from the worktree" in source_work
-    assert "compact source allowlist" in source_work
+    assert "related-systems/<owner>--<repo>/" in boundary
+    assert "git check-ignore -q" in boundary
+    assert "verify an existing checkout's origin" in boundary
+    assert "compact source allowlist" in boundary
+    assert "git --no-replace-objects -C" in rules
+    assert "never read evidence from the worktree" in rules
     # The anchor grammar is the overview type's, stated once under Status fields;
     # the searched boundary of an absence is a runtime-report record field.
     assert "one code span containing the full commit-relative path" in contract(
@@ -59,16 +63,12 @@ def test_repository_sources_remain_commit_addressed() -> None:
 
 
 def test_runtime_checks_preflight_before_execution() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    runtime = orchestrator[
-        orchestrator.index("### 4. Run and challenge the runtime baseline") :
-        orchestrator.index("### 5. Run both lenses")
-    ]
+    runtime = job("runtime")
 
     assert "Before any dynamic" in runtime
     assert "execution-preflight" in runtime
     assert "probe evidence capsule" in runtime
-    # Preflight and capsule semantics live in the runtime report type, not the skill.
+    # Preflight and capsule semantics live in the runtime report type, not the job.
     runtime = contract("agentic-system-runtime-report")
     assert "leaves the target check `not run`" in runtime
     assert "supports no negative finding" in runtime
@@ -78,12 +78,9 @@ def test_runtime_checks_preflight_before_execution() -> None:
 
 def test_transfer_scan_runs_after_complete_state() -> None:
     orchestrator = instruction("analyse-agentic-system")
-    publication = orchestrator.index("### 8. Publish validated candidates")
-    transfer = orchestrator.index("### 9. Run an optional transfer scan after completion")
 
-    assert publication < transfer
-    assert "only after the complete run state validates" in orchestrator[transfer:]
-    assert "never edits the analysis" in orchestrator[transfer:]
+    assert "only after the complete run state validates" in orchestrator
+    assert "scan-agentic-system-transfer" in orchestrator
 
 
 def test_candidate_artifact_does_not_establish_phase_observation() -> None:
@@ -104,13 +101,12 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
     assert "Observed candidate state is one of" in contract("agentic-system-epistemic-report")
 
 
-def test_orchestrator_states_the_set_rules_it_depends_on() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    assert "out-of-scope` outcome contains only `overview.md`" in orchestrator
-    assert "commission a\nfresh specialist against the same frozen input" in orchestrator
-    assert "cites only\ncanonical IDs" in orchestrator
-    assert "(../../types/agentic-system-runtime-report.md#shared-records)" in orchestrator
-    assert "`METHOD_PATHS` constant" in orchestrator
+def test_jobs_state_the_set_rules_they_depend_on() -> None:
+    assert "cites only canonical IDs" in job("epistemic-final")
+    assert "(../../../types/agentic-system-runtime-report.md#shared-records)" in job(
+        "judging-norms"
+    )
+    assert "`## Not reached`" in job("boundary")
 
 
 def test_method_paths_exist_in_the_repository() -> None:
