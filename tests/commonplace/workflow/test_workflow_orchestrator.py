@@ -16,6 +16,7 @@ from commonplace.workflow import (
     Launch,
     Orchestrator,
     Recognition,
+    StateError,
     Uncertain,
     Workflow,
 )
@@ -1388,6 +1389,44 @@ def test_an_error_on_one_path_does_not_hide_a_block_on_another(tmp_path):
     assert sorted(block.subject for block in result.blocks) == ["second", "workflow"]
 
 
+# The step's own records
+
+
+def test_a_step_that_ends_before_its_records_are_written_changes_nothing(tmp_path):
+    class EndsAfterJudging(Workflow):
+        def run(self, ctx):
+            ctx.agent(lens_job("only"))
+            raise Interrupted
+
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_invalid).round()
+
+    with pytest.raises(Interrupted):
+        Orchestrator(run_dir, EndsAfterJudging()).step()
+
+    assert (run_dir / "only.md").read_text(encoding="utf-8") == "no heading\n"
+    (handout,) = Orchestrator(run_dir, OneJob()).step().jobs
+    assert handout.attempt == 2
+
+
+@pytest.mark.parametrize("garbage", ["", "not a record\n"])
+def test_unreadable_state_raises_and_repeats_no_effect(tmp_path, garbage):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
+    for path in (run_dir / "workflow-state").rglob("*"):
+        if path.is_file():
+            path.write_text(garbage, encoding="utf-8")
+
+    with pytest.raises(StateError):
+        Orchestrator(run_dir, publisher(tmp_path)).step()
+
+    assert publications(tmp_path / "published") == 1
+
+
+def test_the_default_repair_scope_excludes_the_state_directory():
+    assert "workflow-state/" in Workflow.repair_scope
+
+
 # Runs made through the constructor
 
 
@@ -1439,6 +1478,35 @@ def test_a_path_owned_by_two_jobs_is_a_definition_error(tmp_path, first, second)
 def test_an_output_must_not_be_inside_the_state_directory(output):
     with pytest.raises(DefinitionError):
         owns("job", output)
+
+
+def test_a_job_may_not_read_the_output_of_a_job_not_yet_accepted(tmp_path):
+    class ReadsBeforeWaiting(Workflow):
+        def run(self, ctx):
+            # Named before the job it reads, so the check cannot rely on order.
+            ctx.agent(
+                Job(
+                    name="second",
+                    prompt="Check the first result.",
+                    output="second.md",
+                    inputs=("first.md",),
+                )
+            )
+            ctx.agent(lens_job("first")).wait()
+
+    run_dir = new_run(tmp_path)
+
+    with pytest.raises(DefinitionError, match="first"):
+        Orchestrator(run_dir, ReadsBeforeWaiting()).step()
+    assert not (run_dir / "workflow-state").exists() or not any(
+        path.name == "prompt.md" for path in (run_dir / "workflow-state").rglob("*")
+    )
+
+
+@pytest.mark.parametrize("own", ["job.md", "./job.md", "job.problem.md"])
+def test_a_job_may_not_read_its_own_output(own):
+    with pytest.raises(DefinitionError):
+        Job(name="job", prompt="Task.", output="job.md", inputs=(own,))
 
 
 # Job records

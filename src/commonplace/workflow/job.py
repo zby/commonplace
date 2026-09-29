@@ -40,7 +40,10 @@ class Job:
         The task, in natural language, as the definition gives it. The core
         writes a prompt file from it, adding where to write the result, where
         to write a problem report, and on a retry the validator's messages.
-        The input state uses this text, not the prompt file.
+        The input state uses this text, not the prompt file, so a change to
+        what the core adds, such as a new version of this package, reopens
+        no job. Anything that should reopen a job when it changes belongs in
+        this text or in a declared input.
     output
         Where the result goes: a path inside the run directory. An absolute
         path, one that leaves the run directory, or one inside
@@ -49,6 +52,9 @@ class Job:
         The files whose bytes the result depends on, relative to the run
         directory or absolute. Method files the job depends on are inputs too.
         The prompt is always part of the input state and is not listed here.
+        A job's own output or problem report path among its inputs raises
+        DefinitionError: the worker's write would change the input state and
+        refuse its own result.
     validator
         Judges the output. Without one, an output is valid when it exists.
         It runs whenever the job is judged, which includes every step for an

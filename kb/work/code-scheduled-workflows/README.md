@@ -66,6 +66,10 @@ None of these tests uses a model or the analysis package.
 25. The block on an effect whose inputs changed is judged anew in every step. It goes away when the inputs are restored, or when the operator records the effect as completed or as absent.
 26. An effect stays owed after the definition stops calling it. When the definition runs to its end, a completed effect it did not reach gives a stop-only block and a started one gives the uncertain outcome; a step that ends at a wait checks nothing. The operator lets the effect stand (completed) or withdraws it (absent).
 27. `workflow` is reserved and cannot name a job.
+28. A step that ends before its records are written changes none of them: the next step sees the run as it was. Only an effect's start and completion are written while the definition runs.
+29. State records that are missing, unreadable or of another format version raise an error from `step` and from the shell; they are never read as an ordinary outcome, and no effect is repeated.
+30. A job may not declare as an input the output of a job named in the same step and not accepted, nor its own output or problem report.
+31. The default repair scope forbids changing anything under the state directory.
 
 An effect is a step that code executes and that changes something outside the run directory; the proposal's vocabulary defines it against a job and a mechanical step. The tests on effects use a test effect that publishes files to a directory outside the run. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
 
@@ -76,7 +80,8 @@ The builder chooses these from what the code and tests show, answerable to the g
 - how acceptance, hand-out, failure and report records are laid out in the run directory;
 - what `step` prints per job beyond the prompt path and launch parameters;
 - command and module names. "Job" already means a review job, so names should keep the two apart;
-- how much of a report is fixed form.
+- how much of a report is fixed form;
+- how to test a process ending inside the step's own commit (between prompt files, the rename, and the moves). The tests end a step before its commit; ending one inside it needs fault injection that depends on how the records are written.
 
 ## What "asynchronous" means here
 
@@ -94,7 +99,7 @@ The interface stays open to change until the first analysis definition has used 
 
 ## Constraints
 
-- **One writer per output.** Recovery after a lost session requires the earlier session's workers to have stopped. The core does not support overlapping attempts.
+- **One writer per output.** Recovery after a lost session requires the earlier session's workers to have stopped. The core does not support overlapping attempts. The rule covers declared inputs too: code compares an input at hand-out and at judgment, so a change undone while the worker ran goes unseen.
 - **Method paths.** Publication requires the running package to equal the method commit. New commands join what must be committed before an analysis run opens, so land them between batches.
 - **Tests.** `uv run pytest`, all passing.
 - **No retained compatibility and no unused features.** A gap found during the build is written down here or in the proposal, not implemented ahead of need.
@@ -114,3 +119,4 @@ The interface stays open to change until the first analysis definition has used 
 - 2026-09-29 (operator): a stopped run can be continued. The rule that it cannot was added in the second review's revision without a reason that holds: the repair limit bounds the agent orchestrator, not the run, and ending the run would discard accepted outputs. New in the API: `Orchestrator.release` and the shell's `release`; `resolve` also applies to a completed effect whose inputs changed. 128 tests.
 - 2026-09-29: a third review found six points where docstrings and tests disagreed or the behaviour was loose; all are taken up in the stubs and tests. A problem report and any output beside it are moved when they block. Attempts are counted per hand-out, reset on acceptance, and a reopened job is not charged an attempt. An uncertain step counts nothing. Failures are placed at the definition's own line. The lock test now runs across two processes instead of nesting a step, and the shell's busy and usage exit codes are stated. 131 tests.
 - 2026-09-29: a fourth review (Astra) found three gaps; all are taken up in the stubs and tests. An effect the definition no longer reaches is checked at the definition's end instead of escaping the check. The validator runs whenever a job is judged, so a changed validation policy reopens outputs it refuses; callables are still not compared. `workflow` is a reserved job name. 139 tests.
+- 2026-09-29: the design was checked against the failure modes the review and freshness system has handled, without copying its design. Taken up: the step writes its records in one atomic commit after the definition finishes (effect records excepted); state that cannot be trusted raises `StateError` instead of reading as an ordinary outcome; a job may not read an unaccepted job's output or its own; the repair scope excludes the state directory. Documented as limits: an input changed and restored during a round, and the core's prompt frame outside the input state. 148 tests.

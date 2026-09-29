@@ -166,6 +166,17 @@ class RunBusy(Exception):
     """Another `step` is running on the same run."""
 
 
+class StateError(Exception):
+    """The run's state records cannot be trusted.
+
+    Raised when a record the run requires is missing, does not parse, does
+    not agree with the other records, or was written by a different format
+    version. It is never read as an ordinary outcome such as a missing
+    acceptance or an effect that never started, because that reading could
+    repeat an effect. The run needs the operator.
+    """
+
+
 # The definition's side
 
 
@@ -196,7 +207,8 @@ class Workflow:
     repair_limit = 1
     repair_scope = (
         "repair conditions (the environment, a missing input, a misnamed file) or "
-        "remove a bad output; do not write or edit the content of a job's output"
+        "remove a bad output; do not write or edit the content of a job's output, "
+        "and do not change anything under workflow-state/"
     )
 
     params: Mapping[str, Any]
@@ -263,6 +275,17 @@ class Context:
         `workflow-state/` and kept there; nothing is deleted. This includes a
         refused output, an accepted output that someone changed, and one that
         a changed validator refuses.
+
+        A job to be handed out whose declared inputs include the output of
+        another job named in the same step and not accepted raises
+        DefinitionError: the worker would read a result that does not exist
+        yet. The definition waits on that job first. The check is made when
+        the step ends, so it does not depend on the order of the two calls.
+
+        The input state is compared at hand-out and when the output is
+        judged, not in between. An input changed and changed back while the
+        worker ran goes unseen, so an output made from the passing bytes can
+        be accepted. The one-writer rule for a run covers inputs too.
 
         Naming the same job twice gives the same handle. Each job owns two
         paths, its output and its problem report. One name for two tasks that
@@ -362,6 +385,11 @@ class Orchestrator:
     All state is in the run directory, under `workflow-state/`. Two
     orchestrators made for the same run directory behave as one.
 
+    The state records carry a format version. Records that are missing where
+    the run requires them, do not parse, disagree, or carry another version
+    raise StateError from `step`, `resolve`, `release` and `open`; they are
+    refused, not reshaped.
+
     The constructor takes a definition object and records nothing about it.
     A run driven only through the constructor cannot be opened with `open` or
     by the shell; `create` is what records the definition.
@@ -409,6 +437,21 @@ class Orchestrator:
 
         A step gives one outcome, the first of these that applies: Uncertain,
         Blocked, Launch, Done.
+
+        Two kinds of record are written while the definition runs: an
+        effect's start and completion, each at once and atomically, because
+        the process can end inside the effect. Everything else the step
+        records waits until the definition has finished running. The step
+        then writes the prompt files of its hand-outs; replaces its other
+        state records in one atomic rename; and after that moves
+        files into `workflow-state/` as those records direct. The records
+        name each file to be moved with its bytes' hash. A step that ends
+        before the rename leaves those records as they were, and a prompt file it
+        wrote is written again. A step that ends after the rename leaves
+        moves undone; the next step first moves every such file that is
+        still in place with the recorded hash, then judges. A hand-out whose
+        Launch was never returned counts as a failed attempt, as any
+        hand-out without an output does.
 
         One step runs on a run at a time. The lock is taken before the
         definition runs. It is an operating-system lock on a file under

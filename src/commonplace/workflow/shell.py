@@ -38,7 +38,8 @@ def main(argv: list[str] | None = None) -> int:
 
     Every outcome of `step`, including blocked and uncertain, returns 0: an
     outcome is not a failure of the command. A `step` refused because another
-    is running returns 1 and says the run is busy. Malformed arguments exit
+    is running returns 1 and says the run is busy. State that cannot be
+    trusted (StateError) returns 1 and says so. Malformed arguments exit
     through SystemExit with status 2, as argparse does.
     """
     raise NotImplementedError

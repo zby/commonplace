@@ -72,6 +72,17 @@ def test_step_refuses_a_directory_that_is_not_a_run(tmp_path, capsys):
     assert "not a run" in capsys.readouterr().err
 
 
+def test_step_refuses_a_run_whose_state_cannot_be_read(tmp_path, capsys):
+    run_dir = started(tmp_path)
+    for path in (run_dir / "workflow-state").rglob("*"):
+        if path.is_file():
+            path.write_text("not a record\n", encoding="utf-8")
+    capsys.readouterr()
+
+    assert main(["step", str(run_dir)]) == 1
+    assert "state" in capsys.readouterr().err
+
+
 def test_start_refuses_a_name_that_is_not_a_workflow(tmp_path, capsys):
     run_dir = new_run(tmp_path)
 
