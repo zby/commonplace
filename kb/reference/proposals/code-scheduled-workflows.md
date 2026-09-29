@@ -66,7 +66,7 @@ agent orchestrator:
         done -> tell the operator and stop
         jobs -> launch one worker per job, each told only to read its prompt and follow it
                 wait for all of them
-    at any point: run report when something happens that code cannot see
+    when a listed event happens: run report
 ```
 
 Four invariants define the model:
@@ -77,6 +77,8 @@ Four invariants define the model:
 4. **Acceptance is decided by code, and ties one input state to one output.** Code records the state of a job's inputs when it hands the job out. The inputs include the prompt and the method files the job depends on. An output is accepted only if it passes its validator and the inputs are still in the recorded state, so an output produced from inputs that have since changed is refused. The acceptance names the output's bytes and holds while those bytes and the inputs are unchanged. Otherwise the job is pending again.
 
 **A run is started by a separate command.** `step` takes a run and nothing else, so the run must exist before the first `step`. The agent orchestrator runs one start command with the invocation's arguments, which creates the run directory and returns the run's identity. What the arguments are, and what starting checks, belong to the workflow definition.
+
+**Reports cover listed events.** The loop instruction lists the events to report: a launch that failed, a repair, and a stop. A round in which every launch went through needs no report, because code already has its own record of the jobs it handed out and sees their outputs. The list spares the agent orchestrator from judging what counts as abnormal.
 
 **Calls are asynchronous.** `agent()` names a job and returns; waiting is a separate act. The jobs launched in one round are therefore every job the program has named and not yet seen accepted when it can go no further. Independent paths need no special construct: two paths that each wait on their own job both stop, and both jobs are returned together. This is the form a dynamic-workflow script has, where `agent()` returns a promise.
 
@@ -133,7 +135,7 @@ Under B, C and D, five rules limit what recovery costs and what it can damage:
 1. **The cost is paid on failure.** A round without failure shows the agent orchestrator job prompts and nothing else.
 2. **The outcome points; it does not carry.** Evidence stays in the failure record and the run directory. The agent orchestrator reads what it decides it needs.
 3. **The agent repairs; code judges again.** After a repair the same validator runs. The agent orchestrator cannot mark an output accepted, so recovery cannot weaken invariant 4.
-4. **The repair scope is declared.** The definition states what the agent orchestrator may change. For the analysis workflow the prior-analysis exposure rule suggests a scope of repairing conditions — environment, missing inputs, a misnamed file — and removing a bad output so that its job runs again, but not writing a job's output.
+4. **The repair scope is declared.** The definition states what the agent orchestrator may change. For the analysis workflow the scope is conditions: the environment, a missing input, a misnamed file. The agent orchestrator may also remove a bad output so that its job runs again. It does not write or edit the content of a job's output. Analytical content then comes from workers only. The agent orchestrator is not guarded against prior-analysis exposure, so content it wrote could carry that exposure into the analysis.
 5. **Attempts are counted by code.** At the limit, the one permitted action is to stop and report to the operator.
 
 Two further points hold under every option:
@@ -166,7 +168,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - **Unprompted noticing is lost.** A coordinator that reads every output can notice a problem no validator checks. In this model an output is read by an LLM only when a job is assigned to read it. Open choice 1 restores recovery from failures code detects, not detection of failures code misses. The substitute is deliberate: a review job assigned to read the set as a whole.
 - **Counting attempts needs a record.** A retry limit requires failure records on disk, and reports add an event record. The current skill forbids a retry log and forbids resuming a failed run. Adoption replaces both rules; the records are written by code, not kept by the coordinator.
 - **A report is written by an LLM.** It can be missing, wrong or late. Code therefore derives every transition from what it can check — outputs, validators, declared inputs, its own record of jobs handed out — and uses reports for diagnosis and audit. A report that code had to trust would return part of the schedule to the conversation.
-- **Reporting costs the agent orchestrator attention.** A report required every round is one more thing to get right every round. A report required only when something abnormal happened keeps a round without failure at one command, but leaves the agent orchestrator to judge what counts as abnormal.
+- **Reporting costs the agent orchestrator attention.** A report required every round would be one more thing to get right every round, for information code already has. Reporting listed events keeps a round without failure at one command. An event outside the list is recorded only if the agent orchestrator chooses to report it.
 - **Two commands versus one.** Carrying the report on the `step` call would keep the core at one command. It would also make `step` take free text, record a report twice when the call is repeated, hold each observation in the conversation until the round ends, and leave no way to record the observation made when stopping. A separate `report` costs one more call in a round that has something to report.
 - **The agent orchestrator is still an LLM loop.** Each round costs a parent turn. Because state lives on disk, a fresh agent orchestrator can take over; this is the externalisation recovery named in [LLM-mediated schedulers](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md), with the transition logic factored into code and only the launch left in the conversation.
 - **Launch fidelity cannot be checked by code.** Code detects a skipped job, because the output is missing. It cannot detect an agent orchestrator that paraphrased a prompt or did a job in its own context. A fixed launch instruction reduces the risk and does not remove it.
@@ -188,7 +190,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - What `step` prints per job beyond the prompt path and launch parameters.
 - The retry limit, and whether a retry's prompt carries the validator's message.
 - How `step` treats a job it has handed out whose output is still missing. Under the shared barrier, the next `step` means the round is over, so the job is named again. After the agent orchestrator's session is lost, that is correct only once the earlier workers have stopped.
-- Which events a report may carry, and how much of a report is fixed form rather than free text.
+- Whether the list of reported events grows beyond the first three, and how much of a report is fixed form rather than free text.
 
 ## Operativity and warrant
 

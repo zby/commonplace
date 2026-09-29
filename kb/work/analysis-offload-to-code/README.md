@@ -5,6 +5,7 @@
 - **Decision 2026-09-29 (operator):** fix all of the issues first, then rerun once. The rerun is therefore one bundled method change, not a sequence of separately comparable ones. The operator wants to compare its results with the batch 01 rerun, so the comparison will not isolate which change caused which difference. Freeze the method commit before opening the rerun.
 - **Decision 2026-09-29 (operator), second:** build the code orchestrator first and hang the remaining items on it. The design is `kb/reference/proposals/code-scheduled-workflows.md`. This takes option A of that proposal's choice 3: the rerun tests the code orchestrator together with the backlog. See "Build on the code orchestrator" below.
 - **Decision 2026-09-29 (operator), third:** the code orchestrator is a module separate from the analysis code, so that it can be tested on its own. This takes option A of the proposal's choice 2.
+- **Decision 2026-09-29 (operator), fourth:** three points of the proposal are settled. Error recovery takes option B of choice 1: one retry by code that carries the validator's message, then a blocked outcome that the agent orchestrator repairs. The repair scope is conditions and removal of a bad output; the agent orchestrator does not write or edit the content of a job's output. The agent orchestrator reports listed events only: a failed launch, a repair, a stop.
 - **Closes when:** each item below is implemented, or explicitly dropped, and one analysis run completes through the code orchestrator, with `kb/instructions/analyse-agentic-system/SKILL.md` reduced to the agent orchestrator's loop and the judgment content moved into job prompts. Then extract any durable decisions to `kb/reference/` and delete this workshop.
 
 ## Goal
@@ -94,7 +95,7 @@ The job split has not been designed. It needs a reading of skill steps 2 to 7 fo
 
 Main risk: today one coordinator context carries its reading of the sources from step 2 to step 7. Fresh workers do not share that reading. Each job either reads the sources again or receives what it needs as files, so token cost rises and analysis quality may change. The rerun comparison cannot separate this effect from the others.
 
-Open before the build starts, from the proposal: how much error recovery the agent orchestrator keeps (choice 1), whether the agent orchestrator reports every round or only abnormal events, and what it may change during a repair. Choice 2 is decided above.
+The proposal's choices 1, 2 and 3 are decided above. Its free choices are left to the build.
 
 ## Evidence from real runs
 
