@@ -17,7 +17,7 @@ import json
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis import load_run_state
+from commonplace.lib.agentic_analysis import load_run_state, run_state_repo_root
 from commonplace.lib.library import checks_library
 from commonplace.lib.quote_generation import generate_quote_batch, generate_quotes
 
@@ -46,23 +46,27 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parser.parse_args(argv)
     if args.selections and (args.source_path or args.text_file != "-"):
         parser.error("--selections replaces --source-path and --text-file")
-    repo_root = (cwd or Path.cwd()).resolve()
+    cwd = (cwd or Path.cwd()).resolve()
+    state_path = (cwd / args.run_state).resolve()
+    # An absolute run-state path names its repository; file arguments stay
+    # relative to the working directory.
+    repo_root = run_state_repo_root(state_path) or cwd
     try:
-        state = load_run_state((repo_root / args.run_state).resolve(), repo_root=repo_root)
+        state = load_run_state(state_path, repo_root=repo_root)
         if state.status != "running" or state.source is None:
             raise ValueError(
                 "quotation generation requires a running run with a frozen source"
             )
         if args.selections:
             selections = json.loads(
-                (repo_root / args.selections).read_text(encoding="utf-8")
+                (cwd / args.selections).read_text(encoding="utf-8")
             )
             results = generate_quote_batch(selections, source=state.source)
         else:
             text = (
                 sys.stdin.read()
                 if args.text_file == "-"
-                else (repo_root / args.text_file).read_text(encoding="utf-8")
+                else (cwd / args.text_file).read_text(encoding="utf-8")
             )
             payload = generate_quotes(
                 text, source=state.source, source_path=args.source_path

@@ -208,6 +208,18 @@ def parse_agentic_analysis_run_state(
     )
 
 
+def run_state_repo_root(path: Path) -> Path | None:
+    """The repository whose analysis state directory holds this run state, or
+    None when the path is not in one."""
+    parents = path.parents
+    if len(parents) < 6:
+        return None
+    root = parents[5]
+    if path.parent.parent != root / "kb" / "reports" / "state" / "agentic-system-analysis":
+        return None
+    return root
+
+
 def load_run_state(path: Path, *, repo_root: Path) -> AgenticAnalysisRunState:
     """Validate one run-state record, then return its fields.
 

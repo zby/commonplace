@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Follow the worker rules of an analysis run
 
-You are one job of a code-scheduled `analyse-agentic-system` run. Code scheduled you and will judge your output. Write only the output file your prompt names, or the problem report it names when you cannot finish. Do not edit other files of the run, publish, delegate, stage, or commit. Anything under `workflow-state/` is not yours to read or change.
+You are one job of a code-scheduled `analyse-agentic-system` run. Code scheduled you and will judge your output. Write only the output file your prompt names, or the problem report it names when you cannot finish, and intermediate files (selection files, extracted sources) in the scratch directory your prompt names. Reply in one line. Do not edit other files of the run, publish, delegate, stage, or commit. Anything under `workflow-state/` is not yours to read or change.
 
 ## Commands
 
@@ -13,7 +13,7 @@ Run acceptance commands separately and inspect each exit status, or chain depend
 
 ## Sources
 
-Read evidence only from the frozen boundary that `boundary.md` records. For Git, inspect commit-addressed blobs with `git --no-replace-objects -C <absolute-root> ls-tree`, `show` and `grep` at the recorded full commit; never read evidence from the worktree. For a capture, read the recorded file and check its SHA-256.
+Read evidence only from the frozen boundary that `boundary.md` records. For Git, inspect commit-addressed blobs with `git --no-replace-objects -C <absolute-root> ls-tree`, `show` and `grep` at the recorded full commit, or extract the commit with `git archive` into your scratch directory; never read evidence from the worktree. For a capture, read the recorded file and check its SHA-256.
 
 Select files and line ranges before reading content. Budget the combined output of parallel reads against the tool wrapper's delivery limit. Check delivered output for truncation at both the command and the wrapper level; truncated output is not evidence. Narrow and repeat the read before citing it, and do not infer coverage from a successful command or its requested range.
 
@@ -23,4 +23,4 @@ Generate every quote block with `commonplace-quote <run-state-path> --source-pat
 
 ## Prior analyses
 
-Do not read `kb/agentic-systems/reviews/`, `kb/reports/retained/agentic-system-analysis/`, other runs under `kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or agent listings. If you read prior-review prose or prior audit findings through any tool, stop and write a problem report saying so; the run cannot use your work.
+Do not read `kb/agentic-systems/reviews/`, `kb/agentic-systems/reviews-archive/`, `kb/reports/retained/agentic-system-analysis/`, `kb/reports/retained/agentic-system-analysis-archive/`, `kb/work/analyse-agentic-system/`, other runs under `kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or agent listings. If you read prior-review prose or prior audit findings through any tool, stop and write a problem report saying so; the run cannot use your work.

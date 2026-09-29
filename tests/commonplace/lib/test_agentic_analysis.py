@@ -2169,3 +2169,35 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     write(review, review_text(values["reviewed-boundary"], overview))
     with pytest.raises(ValueError, match="not a complete"):
         systems_matrix.load_results(tmp_path)
+
+
+def test_quote_accepts_an_absolute_run_state_path_from_another_directory(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from commonplace.cli.quote import main as quote_main
+
+    state = valid_run_state(tmp_path)
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+    selection = write(elsewhere / "selection.txt", "# Frozen source\n")
+
+    status = quote_main(
+        [str(state.resolve()), "--text-file", "selection.txt"], cwd=elsewhere
+    )
+
+    # The location check passes; this fixture's state is complete, so the
+    # command stops at the next check instead.
+    assert status == 1
+    assert selection.exists()
+    error = capsys.readouterr().err
+    assert "run-state path" not in error
+    assert "requires a running run" in error
+
+
+def test_run_state_repo_root_is_the_repository(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_analysis import run_state_repo_root
+
+    state = tmp_path / STATE_DIR / RUN_ID / "run-state.md"
+
+    assert run_state_repo_root(state) == tmp_path
+    assert run_state_repo_root(tmp_path / "elsewhere" / "run-state.md") is None

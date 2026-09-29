@@ -134,12 +134,7 @@ class Fixture:
             f"| SRC-1 | git | `{SOURCE}` | `{self.revision}` | implementation "
             "| README.md | `README.md` | none |\n" + not_reached
         )
-        return (
-            "---\n"
-            + yaml.safe_dump(fields, sort_keys=False)
-            + "---\n\n"
-            + body
-        )
+        return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
 
     def memory_report(self) -> str:
         """The fixture's specialist report, bound to the run's memory input."""
@@ -179,8 +174,10 @@ class Fixture:
         )
 
     def review_body(self, *, evidence: bool = True) -> str:
-        basis = f"Evidence basis: `README.md` at `{self.revision}`.\n" if evidence else (
-            f"Built from `README.md` at `{self.revision}`.\n"
+        basis = (
+            f"Evidence basis: `README.md` at `{self.revision}`.\n"
+            if evidence
+            else (f"Built from `README.md` at `{self.revision}`.\n")
         )
         return (
             '---\ndescription: "Generated fixture review of one external agentic system"\n'
@@ -199,18 +196,24 @@ class Fixture:
             "boundary": writes(self.boundary),
             "runtime": writes(lambda: runtime_text(self.revision)),
             "scoping": writes(
-                lambda: "### Memory/context scope\n\nBrief fixture scope.\n\n"
-                "### Epistemic scope\n\nBrief fixture scope.\n"
+                lambda: (
+                    "### Memory/context scope\n\nBrief fixture scope.\n\n"
+                    "### Epistemic scope\n\nBrief fixture scope.\n"
+                )
             ),
             "epistemic": writes(lambda: "# Epistemic draft\n\nOBJ-1 and RTE-1.\n"),
-            "runtime-final": writes(lambda: runtime_text(self.revision)),
-            "epistemic-final": writes(lambda: epistemic_text(self.revision)),
-            "verify": writes(self.verification),
             "review": writes(self.review_body),
         }
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1):
             workers[f"memory-{round_}"] = writes(self.memory_report)
             workers[f"reconcile-{round_}"] = writes(self.reconciliation)
+            workers[f"runtime-final-{round_}"] = writes(
+                lambda: runtime_text(self.revision)
+            )
+            workers[f"epistemic-final-{round_}"] = writes(
+                lambda: epistemic_text(self.revision)
+            )
+            workers[f"verify-{round_}"] = writes(self.verification)
         workers.update(overrides)
         return workers
 
@@ -241,10 +244,14 @@ def fixture(tmp_path: Path) -> Fixture:
     return Fixture(tmp_path)
 
 
-def agent(fixture: Fixture, **workers: Worker) -> tuple[ScriptedAgent, CountsPublication]:
+def agent(
+    fixture: Fixture, **workers: Worker
+) -> tuple[ScriptedAgent, CountsPublication]:
     definition = CountsPublication(fixture.params())
     orchestrator = Orchestrator(fixture.run_dir, definition)
-    return ScriptedAgent(orchestrator, fixture.workers(**workers), default=_unscripted), definition
+    return ScriptedAgent(
+        orchestrator, fixture.workers(**workers), default=_unscripted
+    ), definition
 
 
 def _unscripted(handout: Handout) -> None:
@@ -281,9 +288,9 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         "epistemic",
         "memory-0",
         "reconcile-0",
-        "runtime-final",
-        "epistemic-final",
-        "verify",
+        "runtime-final-0",
+        "epistemic-final-0",
+        "verify-0",
         "review",
     ]
     assert definition.publications == 1
@@ -321,7 +328,9 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
 # 2. An out-of-scope boundary
 
 
-def test_out_of_scope_boundary_closes_with_an_overview_only_set(fixture: Fixture) -> None:
+def test_out_of_scope_boundary_closes_with_an_overview_only_set(
+    fixture: Fixture,
+) -> None:
     scripted, definition = agent(
         fixture,
         boundary=fixture.writes(lambda _: fixture.boundary("out-of-scope")),
@@ -333,7 +342,10 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(fixture: Fixture
     assert scripted.launched == ["boundary"]
     assert definition.publications == 0
     output = fixture.run_dir / "output"
-    assert sorted(path.name for path in output.iterdir()) == ["ARTIFACT.yaml", "overview.md"]
+    assert sorted(path.name for path in output.iterdir()) == [
+        "ARTIFACT.yaml",
+        "overview.md",
+    ]
     state_path = fixture.run_dir / "run-state.md"
     state = frontmatter(state_path)
     assert state["run-status"] == "complete"
@@ -350,7 +362,9 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(fixture: Fixture
 # 3. The correction cycle
 
 
-def test_returned_findings_run_correction_rounds_until_the_last(fixture: Fixture) -> None:
+def test_returned_findings_run_correction_rounds_until_the_last(
+    fixture: Fixture,
+) -> None:
     last = f"reconcile-{AnalyseAgenticSystem.correction_rounds}"
 
     def reconcile(returned_on_first_attempt: bool) -> Worker:
@@ -369,7 +383,9 @@ def test_returned_findings_run_correction_rounds_until_the_last(fixture: Fixture
     scripted, definition = agent(fixture, **returning, **{last: reconcile(True)})
 
     result = None
-    while not (isinstance(result, Launch) and any(job.name == last for job in result.jobs)):
+    while not (
+        isinstance(result, Launch) and any(job.name == last for job in result.jobs)
+    ):
         result = scripted.round()
         assert isinstance(result, Launch), result
     # The last round returned findings on its first attempt; it is refused.
@@ -383,7 +399,9 @@ def test_returned_findings_run_correction_rounds_until_the_last(fixture: Fixture
 
     assert isinstance(results[-1], Done), results[-1]
     rounds = AnalyseAgenticSystem.correction_rounds
-    order = [name for name in scripted.launched if name.startswith(("memory-", "reconcile-"))]
+    order = [
+        name for name in scripted.launched if name.startswith(("memory-", "reconcile-"))
+    ]
     expected = ["memory-0", "reconcile-0"]
     for round_ in range(1, rounds + 1):
         expected += [f"memory-{round_}", f"reconcile-{round_}"]
@@ -435,7 +453,9 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     path = fixture.scratch / "boundary.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        fixture.boundary().replace("analysis-cutoff: '2026-09-04'", "analysis-cutoff: 2026-09-04"),
+        fixture.boundary().replace(
+            "analysis-cutoff: '2026-09-04'", "analysis-cutoff: 2026-09-04"
+        ),
         encoding="utf-8",
     )
     assert "analysis-cutoff: 2026-09-04\n" in path.read_text(encoding="utf-8")
@@ -443,7 +463,9 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     assert boundary_refusals(path, enums=overview_enums(fixture.root)) != []
 
 
-def test_reconciliation_leaving_a_proposal_unmapped_is_refused(fixture: Fixture) -> None:
+def test_reconciliation_leaving_a_proposal_unmapped_is_refused(
+    fixture: Fixture,
+) -> None:
     unmapped = fixture.reconciliation(table={"MEM-OBJ-9": CANONICAL})
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: unmapped)})
     drive_to(scripted, "reconcile-0")
@@ -471,9 +493,44 @@ def test_review_body_without_evidence_basis_is_refused(fixture: Fixture) -> None
 # 5. A named blocker stops before publication
 
 
-def test_a_named_blocker_blocks_the_workflow_before_publication(fixture: Fixture) -> None:
+def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -> None:
     blocked = fixture.verification("RTE-1 is cited by the synthesis but never traced.")
-    scripted, definition = agent(fixture, verify=fixture.writes(lambda _: blocked))
+    scripted, definition = agent(
+        fixture, **{"verify-0": fixture.writes(lambda _: blocked)}
+    )
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    order = [
+        name
+        for name in scripted.launched
+        if name.startswith(("reconcile-", "runtime-final-", "verify-", "review"))
+    ]
+    assert order == [
+        "reconcile-0",
+        "runtime-final-0",
+        "verify-0",
+        "reconcile-1",
+        "runtime-final-1",
+        "verify-1",
+        "review",
+    ]
+    prompt = last_prompt(fixture, "reconcile-1")
+    assert "verification-0.md" in prompt and "set-check-0.md" in prompt
+    assert "named blockers" in prompt
+    assert definition.publications == 1
+    overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
+    assert "never traced" not in overview
+
+
+def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) -> None:
+    blocked = fixture.verification("RTE-1 is cited by the synthesis but never traced.")
+    verifiers = {
+        f"verify-{round_}": fixture.writes(lambda _: blocked)
+        for round_ in range(AnalyseAgenticSystem.correction_rounds + 1)
+    }
+    scripted, definition = agent(fixture, **verifiers)
 
     results = scripted.run()
 
@@ -481,7 +538,7 @@ def test_a_named_blocker_blocks_the_workflow_before_publication(fixture: Fixture
     assert isinstance(result, Blocked), result
     (block,) = result.blocks
     assert block.subject == "workflow"
-    assert "the semantic verification names blockers" in block.reason
+    assert "the last round names blockers" in block.reason
     assert "review" not in scripted.launched
     assert definition.publications == 0
     assert not (fixture.root / REVIEW_PATH).exists()
@@ -498,9 +555,9 @@ def test_runtime_member_leaving_a_cited_record_undeclared_is_refused(
         )
 
     scripted, _ = agent(fixture, epistemic=epistemic_citing_a_new_record)
-    drive_to(scripted, "runtime-final")
+    drive_to(scripted, "runtime-final-0")
 
-    attempt, prompt = prompt_of(scripted.round(), "runtime-final")
+    attempt, prompt = prompt_of(scripted.round(), "runtime-final-0")
 
     assert attempt == 2
     assert "unresolved record OBJ-99" in prompt
