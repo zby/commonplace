@@ -108,6 +108,7 @@ def test_a_handout_names_a_prompt_file_that_carries_the_whole_task(tmp_path):
     assert "Apply only to the source." in prompt
     assert str(handout.output_path) in prompt
     assert str(handout.problem_path) in prompt
+    assert str(tmp_path / "run" / "source.md") in prompt
     assert handout.output_path == tmp_path / "run" / "only.md"
 
 

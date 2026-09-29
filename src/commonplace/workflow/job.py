@@ -46,8 +46,9 @@ class Job:
         executes, and raises DefinitionError too.
     prompt
         The task, in natural language, as the definition gives it. The core
-        writes a prompt file from it, adding where to write the result, where
-        to write a problem report, and on a retry the validator's messages.
+        writes a prompt file from it, adding the declared inputs' absolute
+        paths, where to write the result, where to write a problem report, and
+        on a retry the validator's messages.
         The input state uses this text, not the prompt file, so a change to
         what the core adds, such as a new version of this package, reopens
         no job. Anything that should reopen a job when it changes belongs in

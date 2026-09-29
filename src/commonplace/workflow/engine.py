@@ -1255,9 +1255,15 @@ class _Step:
     # What a step writes for the agent orchestrator and the operator
 
     def prompt(self, job: Job, record: dict[str, Any]) -> str:
-        lines = [
-            job.prompt.rstrip(),
-            "",
+        lines = [job.prompt.rstrip(), ""]
+        if job.inputs:
+            lines += ["## Inputs", ""]
+            lines += [
+                f"- `{_resolve_path(self.run_dir, declared)}`"
+                for declared in job.inputs
+            ]
+            lines.append("")
+        lines += [
             "## Where to write",
             "",
             f"Write the result to `{job.output_path(self.run_dir)}`.",
