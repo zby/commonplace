@@ -22,7 +22,7 @@ Software factories in the Greenfield sense: configured, family-specific software
 - [Broad software demands create pressure for agentic factory development](../notes/broad-software-demands-create-pressure-for-agentic-factory-development.md) — why predefining every family's machinery is implausible
 - [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — prior recursive constructors were handed the knowledge that determined their factories
 - [An addressable theory can coordinate heterogeneous factory development](../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md) — natural-language project theory as the coordinating layer
-- [An open-domain theory builder becomes a software house when new domains require production-machinery changes](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md) — where the Commonplace arrangement crosses into software-house territory
+- [An open-domain theory builder becomes a software house when new domains require production-machinery changes](../notes/new-domains-can-turn-theory-builders-into-software-houses.md) — where the Commonplace arrangement crosses into software-house territory
 
 ## Factory learning
 

@@ -9,11 +9,11 @@ source_notes:
   - kb/notes/definitions/representational-form.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
-  - kb/notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md
+  - kb/notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
-  - kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md
+  - kb/notes/new-domains-can-turn-theory-builders-into-software-houses.md
 ---
 
 # An Automated Software House as a Second Test of a Theory Builder
@@ -90,7 +90,7 @@ executing criteria formulated in advance. A fixed LLM runs by defined operations
 but nobody supplied it a rule for each judgment; it can apply a stated
 commitment to a case the commitment does not mention. How well is an
 empirical question. His
-[compiler case](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md),
+[compiler case](../notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md),
 in which program text, annotations, design notes, and personal advice did not
 transfer the theory to a successor team, tested one historically bounded way
 of writing and reading documentation, not every possible one.
@@ -180,5 +180,5 @@ states the knowledge-base protocol and how evidence reaches a builder. The
 [software-house definition](../notes/definitions/software-house.md) gives the
 role boundary in its general form. Whether an automated theory builder
 working across open domains must itself
-[become a software house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
+[become a software house](../notes/new-domains-can-turn-theory-builders-into-software-houses.md)
 is a separate, conditional conjecture this article does not rely on.

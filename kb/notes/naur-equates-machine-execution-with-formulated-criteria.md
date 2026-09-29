@@ -85,7 +85,7 @@ changes the original group regarded as damaging patches, where the original
 group could propose changes within the existing structure.
 
 The negative result concerns that [documentation-and-consumption
-system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
+system](./naurs-compiler-case-tests-one-documentation-and-consumption-system.md).
 It does not show that all possible records or interpreters must fail. It also
 does not show that the supplied records were sufficient and merely needed
 better retrieval. Missing premises, missing application skill, and failure to
@@ -134,7 +134,7 @@ not settle every philosophical claim about knowledge or rule-following.
 Relevant Notes:
 
 - [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies Naur's rule-following discussion, human-binding statements, capabilities, and transfer cases; the reconstructed bridge is this note's interpretation
-- [Naur's compiler case tests one historically bounded documentation-and-consumption system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) — extends: separates the failed transfer from a universal impossibility claim
+- [Naur's compiler case tests one historically bounded documentation-and-consumption system](./naurs-compiler-case-tests-one-documentation-and-consumption-system.md) — extends: separates the failed transfer from a universal impossibility claim
 - [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: identifies when retained project-specific information is necessary
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops the longitudinal capacity test
 - [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: separates application, retention, and correction on a computational path
