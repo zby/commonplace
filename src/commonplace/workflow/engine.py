@@ -12,8 +12,9 @@ it stopped at before. No asynchronous library is involved.
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 from typing import Any
 
@@ -63,8 +64,9 @@ class Done:
 class Block:
     """Something code cannot get past.
 
-    `subject` is a job name, or `workflow` when a step that code executes
-    failed. `reason` is one short line. `record_path` is a file with the
+    `subject` is a job name, `workflow` when a step that code executes
+    failed, or `effect <name>` when a completed effect no longer matches its
+    inputs. `reason` is one short line. `record_path` is a file with the
     details: attempts, validator messages, the worker's problem report, the
     error, and the agent orchestrator's reports. `permitted` is `repair` or
     `stop`. `scope` is what a repair may change, as the definition declares it.
@@ -111,6 +113,19 @@ class Report:
     job: str | None
     text: str
     recorded_at: str
+
+
+class Recognition(Enum):
+    """What can be established about an effect from the effect itself.
+
+    COMPLETED: the effect took place in full. ABSENT: nothing of it took
+    place, so running it is safe. UNKNOWN: neither can be established, for
+    example because part of it took place.
+    """
+
+    COMPLETED = "completed"
+    ABSENT = "absent"
+    UNKNOWN = "unknown"
 
 
 # The definition's side
@@ -181,12 +196,18 @@ class Context:
 
         The job is judged here. It is accepted when its output passed its
         validator for the input state recorded at hand-out, and neither the
-        inputs nor the output's bytes have changed since.
+        input state nor the output's bytes have changed since. The input state
+        is the prompt, the declared inputs' bytes and the launch parameters.
 
         A job that is not accepted is handed out at the end of the step,
         whether or not the definition waits on it. Naming the same job twice
-        gives the same handle. One name for two different tasks, or one output
-        for two jobs, raises DefinitionError.
+        gives the same handle.
+
+        Each job owns two paths, its output and its problem report. One name
+        for two different tasks, or a path owned by two jobs, raises
+        DefinitionError. Paths are compared after normalization, so `a.md` and
+        `./a.md` are the same path. A DefinitionError leaves the step without
+        a result, so no job is handed out in a step that raises one.
         """
         raise NotImplementedError
 
@@ -213,15 +234,26 @@ class Context:
         self,
         name: str,
         do: Callable[[], None],
-        happened: Callable[[], bool] | None = None,
+        *,
+        inputs: Sequence[str] = (),
+        recognize: Callable[[], Recognition] | None = None,
     ) -> None:
         """Run a step that has an effect outside the run directory, once.
 
+        `inputs` are the files the effect is made from, as a job's inputs are.
+        Their state is recorded before `do` runs.
+
+        An effect is not repeated and not undone. When it is completed and its
+        inputs have changed since, what is outside no longer matches the run:
+        the step gives a blocked outcome on `effect <name>` that permits only
+        stopping, and the run never reports Done. A new run is needed.
+
         A process can complete the effect and end before recording it. When a
-        started effect has no completion record, `happened` establishes from
-        the effect itself whether it took place: if it did, the effect is
-        recorded and not repeated; if it did not, `do` runs. Without
-        `happened` the step gives the Uncertain outcome and does not run `do`.
+        started effect has no completion record, `recognize` establishes from
+        the effect itself what took place. COMPLETED: the effect is recorded
+        and `do` does not run. ABSENT: `do` runs. UNKNOWN, an error raised by
+        `recognize`, or no `recognize` at all: the step gives the Uncertain
+        outcome and `do` does not run.
         """
         raise NotImplementedError
 
@@ -271,10 +303,16 @@ class Orchestrator:
     def step(self) -> StepResult:
         """Run the definition from the top until no path can continue.
 
-        A call of `step` means the last round is over: every worker launched
-        from the previous step has returned or failed to start. Recovery in a
-        fresh session therefore requires that the earlier session's workers
-        have stopped.
+        A call of `step` consumes a round: it means every worker launched from
+        the previous step has returned or failed to start. A job handed out
+        before and still without an output counts as a failed attempt, so
+        calling `step` again without worker activity uses up attempts and ends
+        in a blocked outcome. Recovery in a fresh session therefore requires
+        that the earlier session's workers have stopped.
+
+        Repeating `step` gives the same outcome only where nothing is left to
+        consume: on a finished run, on an uncertain effect, and on a run that
+        may only be stopped.
         """
         raise NotImplementedError
 

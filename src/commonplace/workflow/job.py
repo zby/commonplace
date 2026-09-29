@@ -36,7 +36,8 @@ class Job:
         and where to write a problem report.
     output
         Where the result goes: a path inside the run directory. An absolute
-        path or one that leaves the run directory raises DefinitionError.
+        path, one that leaves the run directory, or one inside
+        `workflow-state/` raises DefinitionError.
     inputs
         The files whose bytes the result depends on, relative to the run
         directory or absolute. Method files the job depends on are inputs too.
@@ -45,8 +46,10 @@ class Job:
         Judges the output. Without one, an output is valid when it exists.
     launch
         Passed to the agent orchestrator as data, for example a model or a
-        tool scope. The core does not interpret it, and it is not part of the
-        input state.
+        tool scope. The core does not interpret it, but it is part of the
+        input state: a result produced under one tool scope is not reused
+        under another. It must be serializable as JSON; anything else raises
+        DefinitionError.
     """
 
     name: str

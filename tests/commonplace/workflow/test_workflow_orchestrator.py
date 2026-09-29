@@ -19,8 +19,10 @@ from commonplace.workflow import (
     Workflow,
 )
 from tests.commonplace.workflow.definitions import (
+    Interrupted,
     NamedBeforeWaited,
     OneJob,
+    Publishes,
     ScriptedAgent,
     TwoLenses,
     TwoLensesReversed,
@@ -29,6 +31,7 @@ from tests.commonplace.workflow.definitions import (
     lens_job,
     new_run,
     on_request,
+    publications,
     write_invalid,
     write_nothing,
     write_problem,
@@ -166,10 +169,17 @@ def test_step_on_a_finished_run_reports_done_again(tmp_path):
     assert isinstance(Orchestrator(run_dir, TwoLenses()).step(), Done)
 
 
-def test_step_repeated_without_workers_names_the_same_jobs(tmp_path):
+def test_step_without_worker_activity_consumes_a_round(tmp_path):
     orchestrator = Orchestrator(new_run(tmp_path), TwoLenses())
 
-    assert names(orchestrator.step()) == names(orchestrator.step())
+    first = orchestrator.step()
+    second = orchestrator.step()
+    third = orchestrator.step()
+
+    assert names(first) == names(second)
+    assert [job.attempt for job in first.jobs] == [1, 1]
+    assert [job.attempt for job in second.jobs] == [2, 2]
+    assert sorted(block.subject for block in third.blocks) == ["lens-a", "lens-b"]
 
 
 # 3. Job identity
@@ -532,98 +542,138 @@ def test_a_report_does_not_advance_the_run(tmp_path):
 # 12. Steps with effects outside the run directory
 
 
-class Interrupted(BaseException):
-    """Stands for the process ending: nothing after it runs, nothing is recorded."""
+def publisher(tmp_path, **params):
+    return Publishes({"target": str(tmp_path / "published"), **params})
 
 
-class Publishes(Workflow):
-    """Publishes once the job is accepted."""
+def end_the_process(tmp_path, when):
+    marker = tmp_path / "marker"
+    marker.write_text(f"raise {when}", encoding="utf-8")
+    return str(marker)
 
-    def __init__(self, published, *, interrupt=False, recognizable=True):
-        super().__init__()
-        self.published = published
-        self.interrupt = interrupt
-        self.recognizable = recognizable
 
-    def publish(self):
-        self.published.append("published")
-        if self.interrupt:
-            raise Interrupted
-
-    def was_published(self):
-        return bool(self.published)
-
-    def run(self, ctx):
-        ctx.agent(lens_job("only")).wait()
-        ctx.effect(
-            "publish",
-            self.publish,
-            happened=self.was_published if self.recognizable else None,
-        )
+def interrupted_publication(tmp_path, when, **params):
+    """A run whose process ended while publishing. Returns the run directory."""
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).round()
+    params["marker"] = end_the_process(tmp_path, when)
+    with pytest.raises(Interrupted):
+        Orchestrator(run_dir, publisher(tmp_path, **params)).step()
+    return run_dir
 
 
 def test_an_effect_runs_once_across_replays(tmp_path):
     run_dir = new_run(tmp_path)
-    published = []
 
-    ScriptedAgent(Orchestrator(run_dir, Publishes(published))).run()
-    assert isinstance(Orchestrator(run_dir, Publishes(published)).step(), Done)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
+    assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Done)
 
-    assert published == ["published"]
+    assert publications(tmp_path / "published") == 1
 
 
 def test_an_effect_does_not_run_before_the_job_it_follows_is_accepted(tmp_path):
-    published = []
+    Orchestrator(new_run(tmp_path), publisher(tmp_path)).step()
 
-    Orchestrator(new_run(tmp_path), Publishes(published)).step()
-
-    assert published == []
+    assert publications(tmp_path / "published") == 0
 
 
-def test_an_interrupted_effect_is_recognized_and_not_repeated(tmp_path):
-    run_dir = new_run(tmp_path)
-    published = []
-    ScriptedAgent(Orchestrator(run_dir, Publishes(published))).round()
-    with pytest.raises(Interrupted):
-        Orchestrator(run_dir, Publishes(published, interrupt=True)).step()
+def test_an_effect_completed_before_the_process_ended_is_not_repeated(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "after")
 
-    result = Orchestrator(run_dir, Publishes(published)).step()
+    result = Orchestrator(run_dir, publisher(tmp_path)).step()
 
     assert isinstance(result, Done)
-    assert published == ["published"]
+    assert publications(tmp_path / "published") == 1
 
 
-def test_an_interrupted_effect_that_did_not_happen_is_run(tmp_path):
-    run_dir = new_run(tmp_path)
-    published = []
-    ScriptedAgent(Orchestrator(run_dir, Publishes(published))).round()
-    with pytest.raises(Interrupted):
-        Orchestrator(run_dir, Publishes(published, interrupt=True)).step()
-    published.clear()  # the process ended before the effect, not after it
+def test_an_effect_that_did_not_begin_before_the_process_ended_is_run(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "before")
 
-    result = Orchestrator(run_dir, Publishes(published)).step()
+    result = Orchestrator(run_dir, publisher(tmp_path)).step()
 
     assert isinstance(result, Done)
-    assert published == ["published"]
+    assert publications(tmp_path / "published") == 1
 
 
-def test_an_interrupted_effect_that_cannot_be_recognized_is_uncertain(tmp_path):
-    run_dir = new_run(tmp_path)
-    published = []
-    ScriptedAgent(Orchestrator(run_dir, Publishes(published, recognizable=False))).round()
-    with pytest.raises(Interrupted):
-        Orchestrator(
-            run_dir, Publishes(published, interrupt=True, recognizable=False)
-        ).step()
+def test_an_effect_that_took_place_in_part_is_uncertain(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "between")
 
-    result = Orchestrator(run_dir, Publishes(published, recognizable=False)).step()
+    result = Orchestrator(run_dir, publisher(tmp_path)).step()
 
     assert isinstance(result, Uncertain)
     assert result.effect == "publish"
-    assert published == ["published"]
-    assert isinstance(
-        Orchestrator(run_dir, Publishes(published, recognizable=False)).step(), Uncertain
-    )
+    assert publications(tmp_path / "published") == 1
+    assert not (tmp_path / "published" / "index.md").exists()
+
+
+def test_an_effect_without_a_recognizer_is_uncertain(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "after", recognize="none")
+
+    result = Orchestrator(run_dir, publisher(tmp_path, recognize="none")).step()
+
+    assert isinstance(result, Uncertain)
+    assert publications(tmp_path / "published") == 1
+
+
+def test_a_recognizer_that_fails_gives_uncertain(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "after")
+
+    result = Orchestrator(run_dir, publisher(tmp_path, recognize="raises")).step()
+
+    assert isinstance(result, Uncertain)
+    assert "the published directory cannot be read" in result.detail
+    assert publications(tmp_path / "published") == 1
+
+
+def test_an_uncertain_effect_stays_uncertain(tmp_path):
+    run_dir = interrupted_publication(tmp_path, "between")
+
+    Orchestrator(run_dir, publisher(tmp_path)).step()
+
+    assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Uncertain)
+    assert publications(tmp_path / "published") == 1
+
+
+def test_a_recognizer_is_not_asked_about_an_effect_that_was_recorded(tmp_path):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
+
+    result = Orchestrator(run_dir, publisher(tmp_path, recognize="raises")).step()
+
+    assert isinstance(result, Done)
+
+
+def test_a_completed_effect_whose_inputs_changed_stops_the_run(tmp_path):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
+
+    # The source changes after publication, and the job gives a new result.
+    (run_dir / "source.md").write_text("changed source\n", encoding="utf-8")
+
+    def second_result(handout):
+        handout.output_path.write_text("# only, from the changed source\n", encoding="utf-8")
+
+    agent = ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path)), default=second_result)
+    result = agent.run()[-1]
+
+    block = one_block(result)
+    assert block.subject == "effect publish"
+    assert block.permitted == "stop"
+    assert publications(tmp_path / "published") == 1
+    assert (tmp_path / "published" / "only.md").read_text(encoding="utf-8") == "# only\n"
+    assert one_block(Orchestrator(run_dir, publisher(tmp_path)).step()).permitted == "stop"
+
+
+def test_a_completed_effect_whose_inputs_came_out_the_same_is_kept(tmp_path):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
+
+    # The job runs again and gives the same bytes as before.
+    (run_dir / "source.md").write_text("changed source\n", encoding="utf-8")
+    result = ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()[-1]
+
+    assert isinstance(result, Done)
+    assert publications(tmp_path / "published") == 1
 
 
 # Mechanical steps
@@ -700,6 +750,46 @@ def test_an_error_on_one_path_does_not_hide_a_block_on_another(tmp_path):
     assert sorted(block.subject for block in result.blocks) == ["second", "workflow"]
 
 
+# File ownership
+
+
+def owns(name, output):
+    return Job(name=name, prompt=f"Task {name}.", output=output)
+
+
+def handed_out(run_dir):
+    return sorted(path.name for path in run_dir.rglob("prompt.md"))
+
+
+@pytest.mark.parametrize(
+    ("first", "second"),
+    [
+        ("lens.md", "lens.md"),
+        ("lens.md", "./lens.md"),
+        ("lens.md", "lens.problem.md"),
+        ("lens.problem.md", "lens.md"),
+        ("lens.problem.md", "lens.problem.problem.md"),
+    ],
+)
+def test_a_path_owned_by_two_jobs_is_a_definition_error(tmp_path, first, second):
+    class Collides(Workflow):
+        def run(self, ctx):
+            ctx.agent(owns("first", first))
+            ctx.agent(owns("second", second))
+
+    run_dir = new_run(tmp_path)
+
+    with pytest.raises(DefinitionError):
+        Orchestrator(run_dir, Collides()).step()
+    assert handed_out(run_dir) == []
+
+
+@pytest.mark.parametrize("output", ["workflow-state/result.md", "./workflow-state/jobs/a.md"])
+def test_an_output_must_not_be_inside_the_state_directory(output):
+    with pytest.raises(DefinitionError):
+        owns("job", output)
+
+
 # Job records
 
 
@@ -740,3 +830,30 @@ def test_launch_parameters_are_passed_through_as_data(tmp_path):
     (handout,) = Orchestrator(new_run(tmp_path), WithParameters()).step().jobs
 
     assert handout.launch == {"model": "small", "read": ["source.md"]}
+
+
+def test_changing_the_launch_parameters_reopens_an_accepted_job(tmp_path):
+    class Scoped(Workflow):
+        def run(self, ctx):
+            ctx.agent(
+                Job(
+                    name="scoped",
+                    prompt="Task.",
+                    output="scoped.md",
+                    launch={"read": self.params["read"]},
+                )
+            ).wait()
+
+    run_dir = new_run(tmp_path)
+    wide = Scoped({"read": ["source.md", "earlier-analysis.md"]})
+    ScriptedAgent(Orchestrator(run_dir, wide)).run()
+
+    narrow = Scoped({"read": ["source.md"]})
+
+    assert isinstance(Orchestrator(run_dir, wide).step(), Done)
+    assert names(Orchestrator(run_dir, narrow).step()) == ["scoped"]
+
+
+def test_launch_parameters_must_be_serializable(tmp_path):
+    with pytest.raises(DefinitionError):
+        Job(name="job", prompt="Task.", output="out.md", launch={"scope": object()})

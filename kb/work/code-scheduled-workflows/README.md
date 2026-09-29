@@ -40,7 +40,7 @@ Out of scope:
 None of these tests uses a model or the analysis package.
 
 1. Pending jobs on two independent paths are returned in one round.
-2. A wait on an accepted output continues at replay. A second `step` on an unchanged run returns the same result as the first.
+2. A wait on an accepted output continues at replay. A second `step` on a finished run reports it finished again. `step` without worker activity consumes a round: attempts increase and the job ends blocked.
 3. A job's identity does not depend on the order in which paths run.
 4. Changing a declared input's bytes makes an accepted job pending again.
 5. An output is refused when an input changed between hand-out and completion.
@@ -48,11 +48,15 @@ None of these tests uses a model or the analysis package.
 7. An output that fails its validator is not accepted. The job is handed out once more with the validator's message, and a second failure gives a blocked outcome.
 8. At the attempt limit the blocked outcome permits only stopping.
 9. A missing output makes `step` name the job again.
-10. A problem report written where the output would go is read by `step`.
+10. A problem report, written to a path beside the output, is read by `step`.
 11. A report is stored and appears in the failure record. No report causes an acceptance. A run completes when every report is omitted.
-12. When the process ends after a step's outside effect and before the effect is recorded, the next `step` recognizes the effect or stops with the uncertain-state outcome. It does not repeat the effect.
+12. When the process ends after a step's outside effect and before the effect is recorded, the next `step` establishes what took place. An effect that took place in full is not repeated, one that did not begin is run, and one that took place in part gives the uncertain-state outcome. A missing or failing recognizer also gives that outcome.
+13. A completed effect whose inputs have changed stops the run. It is not repeated, and the run does not report itself finished.
+14. Changing a job's launch parameters makes an accepted job pending again.
+15. A path owned by two jobs is refused before any job is handed out. Each job owns its output and its problem report; no job may write into the state directory.
+16. Tests 12 and a whole run are repeated with every step in its own interpreter, with a file-backed effect and an abrupt exit.
 
-Test 12 uses a test step with an outside effect. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
+Tests 12, 13 and 16 use a test step with an outside effect. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
 
 ## Left to the build
 
@@ -94,3 +98,4 @@ The interface stays open to change until the first analysis definition has used 
 
 - 2026-09-29: workshop opened. Nothing built.
 - 2026-09-29: the API is drafted as stubs in `src/commonplace/workflow/` (`job.py`, `engine.py`, `shell.py`), with docstrings that state the behaviour and no implementation. 69 tests in `tests/commonplace/workflow/` state the guarantees against that API, with a scripted agent orchestrator in `definitions.py`. The tests are skipped by default and run with `COMMONPLACE_WORKFLOW_TESTS=1 uv run pytest tests/commonplace/workflow`; all but the import check fail until the core is implemented. Next: operator review of the API and tests, then implementation.
+- 2026-09-29: a review of the API found six gaps; all are taken up in the stubs and tests, with no implementation. Effects are tied to their inputs and stop the run when those change. Recognition has three outcomes (completed, absent, unknown). Launch parameters are part of a job's input state. Each job owns its output and problem report paths. `step` is documented as consuming a round. Three tests run every step in its own interpreter. 87 tests, all skipped by default.

@@ -34,3 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     outcome is not a failure of the command.
     """
     raise NotImplementedError
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

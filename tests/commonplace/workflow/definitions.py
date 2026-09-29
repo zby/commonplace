@@ -19,6 +19,7 @@ from commonplace.workflow import (
     Job,
     Launch,
     Orchestrator,
+    Recognition,
     StepResult,
     Workflow,
 )
@@ -126,6 +127,84 @@ class NamedBeforeWaited(Workflow):
         second = ctx.agent(lens_job("second"))
         first.wait()
         second.wait()
+
+
+class Interrupted(BaseException):
+    """Stands for the process ending: nothing after it runs, nothing is recorded."""
+
+
+class Publishes(Workflow):
+    """Publishes the accepted output to a directory outside the run.
+
+    Everything it leaves behind is in files, so a test can end the process and
+    look at the result from another one. Parameters:
+
+    target
+        The directory published to. `publications.log` there gets one line
+        each time publishing begins.
+    recognize
+        `files` looks at the published files, `none` gives no recognizer,
+        `raises` gives one that fails.
+    marker
+        A file that tells the process to end, by `raise` or by `exit`, at one
+        of three points: `before` anything is written, `between` the two
+        published files, or `after` both. The marker is removed first, so the
+        next process runs through.
+    """
+
+    FILES = ("only.md", "index.md")
+
+    @property
+    def target(self) -> Path:
+        return Path(self.params["target"])
+
+    def _end_here(self, point: str) -> None:
+        marker = Path(self.params.get("marker", "") or "/nonexistent")
+        if not marker.is_file():
+            return
+        how, when = marker.read_text(encoding="utf-8").split()
+        if when != point:
+            return
+        marker.unlink()
+        if how == "exit":
+            os._exit(9)
+        raise Interrupted
+
+    def publish(self, ctx) -> None:
+        self._end_here("before")
+        self.target.mkdir(parents=True, exist_ok=True)
+        with (self.target / "publications.log").open("a", encoding="utf-8") as log:
+            log.write("publishing\n")
+        result = (ctx.run_dir / "only.md").read_text(encoding="utf-8")
+        (self.target / "only.md").write_text(result, encoding="utf-8")
+        self._end_here("between")
+        (self.target / "index.md").write_text("- only.md\n", encoding="utf-8")
+        self._end_here("after")
+
+    def recognize(self) -> Recognition:
+        if self.params.get("recognize") == "raises":
+            raise OSError("the published directory cannot be read")
+        present = [(self.target / name).is_file() for name in self.FILES]
+        if all(present):
+            return Recognition.COMPLETED
+        if not any(present):
+            return Recognition.ABSENT
+        return Recognition.UNKNOWN
+
+    def run(self, ctx):
+        ctx.agent(lens_job("only")).wait()
+        ctx.effect(
+            "publish",
+            partial(self.publish, ctx),
+            inputs=("only.md",),
+            recognize=None if self.params.get("recognize") == "none" else self.recognize,
+        )
+
+
+def publications(target: Path) -> int:
+    """How many times publishing began."""
+    log = target / "publications.log"
+    return len(log.read_text(encoding="utf-8").splitlines()) if log.is_file() else 0
 
 
 class ScriptedAgent:
