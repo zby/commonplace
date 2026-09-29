@@ -346,26 +346,19 @@ four members, each under its type:
 1. `<run-id>/output/runtime.md` under the runtime report type: the runtime account,
    probe evidence, the records the runtime pass declared, and its annotations
    on records the memory member declares.
-2. `<run-id>/output/memory.md` under the memory report type, authored from the local
-   `memory-report.md` and nothing else, by these mechanical edits:
-   - Replace proposal IDs by exact-token mapping from the overview's
-     Reconciliation table.
-   - Under `## Shared records`, rewrite each heading that would otherwise
-     declare a record another member declares to an `On <ID>` annotation
-     heading. This covers a seeded record the specialist re-declared and a
-     proposal merged into a record another member declares. The set allows
-     one declaration per ID.
-   - Remove a rejected proposal's heading and body. Its only record is its
-     row in the overview's Reconciliation table, with disposition
-     `rejected`. If other findings in the report depend on the rejected
-     proposal, the removal is not mechanical: return the report to the
-     specialist.
-   - Set `finalized-from` to the SHA-256 of `memory-report.md` and append
-     `## Amendments`.
-
-   Code checks the hash pins, not the derivation; keeping the member to
-   those mechanical edits is your responsibility, and a substantive change
-   goes back to the specialist.
+2. `<run-id>/output/memory.md` under the memory report type, written from the
+   local `memory-report.md` and nothing else. Write the overview's
+   Reconciliation table and `runtime.md` first, then run
+   `commonplace-agentic-analysis-finalize memory <run-state-path>`. It maps
+   proposal IDs by exact token from the table, converts a declaration of a
+   record `runtime.md` declares to an `On <ID>` annotation heading, removes
+   rejected proposals (disposition `rejected`), sets `finalized-from` and
+   appends `## Amendments`. It refuses an unmapped proposal, a rejected
+   proposal other findings still reference (return the report to the
+   specialist), and a table row that disagrees with the declarations. It
+   prints the edits it made; list them in the overview's Reconciliation.
+   Publication checks the hash pins, not the derivation. Any change beyond
+   the command's edits is substantive and goes back to the specialist.
 3. `<run-id>/output/epistemic.md` under the epistemic report type, from step 5.
 4. `<run-id>/output/overview.md` under the overview type, with `inputs-commit`
    from step 1. Its Reconciliation names the local report by path and SHA-256
@@ -373,13 +366,12 @@ four members, each under its type:
    finalization made. A relative link that leaves the set directory breaks
    once the set is retained, and member validation rejects it.
 
-Write `output/ARTIFACT.yaml` last, under the
-[analysis set type](../../reports/types/agentic-system-analysis-set.md).
-Set `type: reports/types/agentic-system-analysis-set.md` and a `members`
-mapping from each actual report filename to `{sha256: <digest>}`, including
-`overview.md`. Recompute hashes after any member edit. The schema owns
-required members and closed membership; the manifest supplies integrity
-metadata only.
+Write `output/ARTIFACT.yaml` last with
+`commonplace-agentic-analysis-finalize manifest <run-state-path>`, under the
+[analysis set type](../../reports/types/agentic-system-analysis-set.md). It
+pins every set member present in `output/`, including `overview.md`. Rerun it
+after any member edit. The schema owns required members and closed
+membership; the manifest supplies integrity metadata only.
 
 After reconciliation, check the whole set, not just the separate lens
 returns, against the memory report type's Memory comparison fields: scope
