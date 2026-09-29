@@ -8,9 +8,9 @@ From the repository root:
 Scenarios are described in trial_workflow.py. The run goes under `runs/`,
 which git ignores. The agent orchestrator sees the run's path, so the name
 must not tell it the scenario: without a name the run gets a random one. The
-script prints the run directory and the `<shell>` value for the loop text,
-with absolute paths and the interpreter's own path, so the value works from any
-directory and without `uv`.
+script prints the run directory and the command that replaces
+`commonplace-workflow` in the loop text: the installed command with an absolute
+`PYTHONPATH`, so it finds the trial definition from any directory.
 
 `--launch` gives the launch parameters of the `parameters` scenario. `--hold`
 gives the seconds the `busy` scenario holds the run. For `busy`, setup starts
@@ -130,7 +130,7 @@ def main(argv: list[str]) -> int:
         params["hold"] = str(args.hold)
     Orchestrator.create(run_dir, "trial_workflow:Trial", params)
     print(f"run: {run_dir}")
-    print(f"shell: PYTHONPATH={HERE} {sys.executable} -m commonplace.workflow.shell")
+    print(f"command: PYTHONPATH={HERE} commonplace-workflow")
     if args.scenario == "busy":
         start_holding_step(run_dir)
         until = time.strftime("%H:%M:%S", time.localtime(time.time() + args.hold))

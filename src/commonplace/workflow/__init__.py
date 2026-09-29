@@ -4,7 +4,8 @@ A program runs a workflow definition, keeps all run state on disk, executes
 every step it can, and stops only where it needs a sub-agent. This package
 imports nothing from the rest of Commonplace.
 
-The shell is `python -m commonplace.workflow.shell`; see its module docstring.
+The shell is the `commonplace-workflow` command (`commonplace.workflow.shell`);
+see its module docstring.
 """
 
 from commonplace.workflow.engine import (

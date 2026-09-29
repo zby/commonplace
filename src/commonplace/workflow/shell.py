@@ -1,6 +1,7 @@
 """Start a code-scheduled run, advance it, or record an observation about it.
 
-The shell parses arguments and prints. Everything it does is a call on an
+The shell is installed as the `commonplace-workflow` command. It parses
+arguments and prints. Everything it does is a call on an
 Orchestrator.
 
     start <run> <package.module:ClassName> [--param KEY=VALUE ...]
@@ -92,7 +93,7 @@ def _parameter(text: str) -> tuple[str, str]:
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="python -m commonplace.workflow.shell",
+        prog="commonplace-workflow",
         description="Start, advance, or record an observation about a code-scheduled run.",
     )
     commands = parser.add_subparsers(dest="command", required=True)

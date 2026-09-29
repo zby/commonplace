@@ -227,6 +227,18 @@ Capture an X/Twitter post, thread, or article under the ignored
 is reported rather than replaced; `--reobserve` captures it again as a new
 observation under a basename ending in the capture date.
 
+## Workflows
+
+### commonplace-workflow
+
+Run a code-scheduled workflow. `start <run> <package.module:ClassName>` creates
+a run; `step <run>` advances it and prints the outcome (`launch`, `done`,
+`blocked` or `uncertain`); `report <run> <event>` records a failed launch, a
+repair or a stop. `resolve` and `release` are the operator's commands after an
+uncertain outcome or a stop-only block. The agent orchestrator's side is
+`kb/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
+design is still a proposal: `kb/reference/proposals/code-scheduled-workflows.md`.
+
 ## Review system
 
 Review execution composes selection, job creation, an external worker, and

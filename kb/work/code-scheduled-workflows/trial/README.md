@@ -12,9 +12,9 @@ From the repository root:
 uv run python kb/work/code-scheduled-workflows/trial/setup.py <scenario> [name] [--launch KEY=VALUE ...] [--hold SECONDS]
 ```
 
-It prints the run directory and the `<shell>` value. The agent orchestrator sees the run's path, so a name must not contain a scenario's name; without a name the run gets a random one. Runs live under `runs/`, which git ignores.
+It prints the run directory and the command for the loop text. The agent orchestrator sees the run's path, so a name must not contain a scenario's name; without a name the run gets a random one. Runs live under `runs/`, which git ignores.
 
-Start a fresh session in the harness and give it the text of [the loop instruction](../../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) below its frontmatter, with `<shell>` and `<run>` filled in, and one request:
+Start a fresh session in the harness and give it the text of [the loop instruction](../../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) below its frontmatter, with `<run>` filled in and `commonplace-workflow` replaced by the printed command, and one request:
 
 - for a new run: "Drive the run `<run>`. It is new: no step has run on it."
 - for a resumed run: "Resume driving the run `<run>`."
