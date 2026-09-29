@@ -146,8 +146,9 @@ class Publishes(Workflow):
         `files` looks at the published files, `none` gives no recognizer,
         `raises` gives one that fails.
     marker
-        A file that tells the process to end, by `raise` or by `exit`, at one
-        of three points: `before` anything is written, `between` the two
+        A file that tells publishing to end at one of three points, by
+        `raise` or `exit`, which stand for the process ending, or by `error`,
+        an ordinary exception. The points: `before` anything is written, `between` the two
         published files, or `after` both. The marker is removed first, so the
         next process runs through.
     """
@@ -168,6 +169,8 @@ class Publishes(Workflow):
         marker.unlink()
         if how == "exit":
             os._exit(9)
+        if how == "error":
+            raise RuntimeError("publishing failed")
         raise Interrupted
 
     def publish(self, ctx) -> None:

@@ -55,6 +55,15 @@ None of these tests uses a model or the analysis package.
 14. Changing a job's launch parameters makes an accepted job pending again.
 15. A path owned by two jobs is refused before any job is handed out. Each job owns its output and its problem report; no job may write into the state directory.
 16. Tests 12 and a whole run are repeated with every step in its own interpreter, with a file-backed effect and an abrupt exit.
+17. The operator resolves an uncertain effect as completed or as absent, and the run continues. A step gives one outcome, the first that applies of uncertain, blocked, launch, done; an uncertain outcome carries the blocks found with it.
+18. A file that is refused, or an accepted output that someone changed, is moved into the state directory and kept.
+19. Two jobs are the same task when prompt, output, inputs and launch parameters agree. The validator is not compared and is not part of the input state. The input state uses the prompt as the definition gives it, and holds no absolute path of the run directory.
+20. The retry limit starts over after a blocked outcome. A refusal for a changed input counts as a failed attempt.
+21. An error raised by an effect blocks on `workflow`; the next step asks the recognizer what took place.
+22. Failures of steps that code executes are counted by the place where the error was raised, so two unrelated failing steps each get their repair.
+23. A second `step` on a run where one is running is refused.
+24. A block that permits only stopping ends what the agent orchestrator may do, not the run. The operator releases a stopped job or the stopped `workflow`; it is tried again with its attempts and repairs starting over, and accepted outputs of other jobs are untouched.
+25. The block on an effect whose inputs changed is judged anew in every step. It goes away when the inputs are restored, or when the operator records the effect as completed or as absent.
 
 Tests 12, 13 and 16 use a test step with an outside effect. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
 
@@ -99,3 +108,5 @@ The interface stays open to change until the first analysis definition has used 
 - 2026-09-29: workshop opened. Nothing built.
 - 2026-09-29: the API is drafted as stubs in `src/commonplace/workflow/` (`job.py`, `engine.py`, `shell.py`), with docstrings that state the behaviour and no implementation. 69 tests in `tests/commonplace/workflow/` state the guarantees against that API, with a scripted agent orchestrator in `definitions.py`. The tests are skipped by default and run with `COMMONPLACE_WORKFLOW_TESTS=1 uv run pytest tests/commonplace/workflow`; all but the import check fail until the core is implemented. Next: operator review of the API and tests, then implementation.
 - 2026-09-29: a review of the API found six gaps; all are taken up in the stubs and tests, with no implementation. Effects are tied to their inputs and stop the run when those change. Recognition has three outcomes (completed, absent, unknown). Launch parameters are part of a job's input state. Each job owns its output and problem report paths. `step` is documented as consuming a round. Three tests run every step in its own interpreter. 87 tests, all skipped by default.
+- 2026-09-29: a second review found ten points where behaviour was unstated or stated only in tests; all are taken up in the stubs and tests. New in the API: `Orchestrator.resolve` and the shell's `resolve` for the operator, `Uncertain.blocks`, `Job.same_task_as`, `RunBusy`. `Context.params` is removed; parameters are on the definition. 117 tests, all skipped by default. The tests added since the implementation was removed have never run against an implementation, so they may hold errors of their own.
+- 2026-09-29 (operator): a stopped run can be continued. The rule that it cannot was added in the second review's revision without a reason that holds: the repair limit bounds the agent orchestrator, not the run, and ending the run would discard accepted outputs. New in the API: `Orchestrator.release` and the shell's `release`; `resolve` also applies to a completed effect whose inputs changed. 128 tests.

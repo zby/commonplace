@@ -23,17 +23,22 @@ class DefinitionError(Exception):
     """
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, eq=False)
 class Job:
     """What one worker is asked to do, and how its result is judged.
+
+    A job is compared and hashed by identity. Whether two jobs are the same
+    task is asked with `same_task_as`.
 
     name
         Identifies the job within a run. The definition chooses it, so it does
         not depend on the order in which paths run. Lower-case letters, digits
         and hyphens; anything else raises DefinitionError.
     prompt
-        The task, in natural language. The core adds where to write the result
-        and where to write a problem report.
+        The task, in natural language, as the definition gives it. The core
+        writes a prompt file from it, adding where to write the result, where
+        to write a problem report, and on a retry the validator's messages.
+        The input state uses this text, not the prompt file.
     output
         Where the result goes: a path inside the run directory. An absolute
         path, one that leaves the run directory, or one inside
@@ -44,6 +49,8 @@ class Job:
         The prompt is always part of the input state and is not listed here.
     validator
         Judges the output. Without one, an output is valid when it exists.
+        The validator is not part of the input state and is not compared
+        between jobs: a changed validator does not reopen an accepted job.
     launch
         Passed to the agent orchestrator as data, for example a model or a
         tool scope. The core does not interpret it, but it is part of the
@@ -66,7 +73,22 @@ class Job:
     def problem_path(self, run_dir: Path) -> Path:
         """Where a worker that cannot finish writes why.
 
-        Beside the output, named after it: `lens-a.md` gives
-        `lens-a.problem.md`.
+        Beside the output: the output's name without its last extension,
+        followed by `.problem.md`. `lens-a.md` gives `lens-a.problem.md`,
+        `result` gives `result.problem.md`, and `a.tar.gz` gives
+        `a.tar.problem.md`.
+
+        A problem report is not retried. The step that finds one gives a
+        blocked outcome at once, whatever is at the output path.
+        """
+        raise NotImplementedError
+
+    def same_task_as(self, other: Job) -> bool:
+        """Whether both jobs ask for the same task.
+
+        Decided by the fields a worker's result depends on: `prompt`,
+        `output`, `inputs` and `launch`. `name` and `validator` are not
+        compared, so a validator built anew each time the definition runs does
+        not make two jobs differ.
         """
         raise NotImplementedError

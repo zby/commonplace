@@ -8,6 +8,12 @@ Orchestrator.
     start <run> <package.module:ClassName> [--param KEY=VALUE ...]
     step <run>
     report <run> <event> [--job NAME] [--text TEXT]
+    resolve <run> <effect> completed|absent
+    release <run> <subject>
+
+`resolve` and `release` are for the operator: the first after an uncertain
+outcome or an effect out of step with its inputs, the second after a block
+that permits only stopping.
 """
 
 from __future__ import annotations

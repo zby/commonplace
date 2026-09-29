@@ -84,7 +84,14 @@ class Blocked:
     """Code cannot proceed. No job is handed out in a blocked step.
 
     After a repair, the next `step` judges the output in place again with the
-    same validator, and hands the job out again if it is still refused.
+    same validator. If it is still refused, the job is handed out again with
+    a full set of attempts: the retry limit starts over after each blocked
+    outcome. The repair limit does not.
+
+    A block that permits only stopping ends what the agent orchestrator may
+    do, not the run. Every `step` gives it again until the operator acts, with
+    `Orchestrator.release` for a job or `workflow`, or by establishing the
+    state of an effect. The run then continues with its accepted outputs.
     """
 
     blocks: tuple[Block, ...]
@@ -94,11 +101,15 @@ class Blocked:
 class Uncertain:
     """An effect outside the run directory may or may not have happened.
 
-    Every later `step` gives the same outcome until the operator resolves it.
+    Every later `step` gives the same outcome until the operator has
+    established what took place and recorded it with `Orchestrator.resolve`.
+    No job is handed out in an uncertain step. `blocks` holds the blocks found
+    in the same step, so that none is lost.
     """
 
     effect: str
     detail: str
+    blocks: tuple[Block, ...] = ()
 
 
 StepResult = Launch | Done | Blocked | Uncertain
@@ -128,6 +139,10 @@ class Recognition(Enum):
     UNKNOWN = "unknown"
 
 
+class RunBusy(Exception):
+    """Another `step` is running on the same run."""
+
+
 # The definition's side
 
 
@@ -139,7 +154,11 @@ class Workflow:
         output before it gives a blocked outcome.
     repair_limit
         How many blocked outcomes for one subject permit a repair. The next
-        one permits only stopping. An acceptance resets the count.
+        one permits only stopping. For a job, its acceptance resets the count.
+        For `workflow`, failures are counted by the place in the definition
+        where the error was raised, so two unrelated failing steps each get
+        their repair; a step in which nothing that code executes fails resets
+        these counts.
     repair_scope
         What the agent orchestrator may change during a repair.
     params
@@ -186,10 +205,12 @@ class JobHandle:
 
 
 class Context:
-    """What a definition may use while it runs."""
+    """What a definition may use while it runs.
+
+    The run's parameters are on the definition itself, as `self.params`.
+    """
 
     run_dir: Path
-    params: Mapping[str, Any]
 
     def agent(self, job: Job) -> JobHandle:
         """Name a job and return its handle at once.
@@ -197,14 +218,23 @@ class Context:
         The job is judged here. It is accepted when its output passed its
         validator for the input state recorded at hand-out, and neither the
         input state nor the output's bytes have changed since. The input state
-        is the prompt, the declared inputs' bytes and the launch parameters.
+        is `Job.prompt`, the declared inputs' bytes and the launch parameters.
+        It holds no absolute path of the run directory, so a run directory
+        that is moved keeps its acceptances.
+
+        An output found when the input state differs from the one recorded at
+        hand-out is refused. Such a refusal counts as a failed attempt, as a
+        missing or invalid output does.
 
         A job that is not accepted is handed out at the end of the step,
-        whether or not the definition waits on it. Naming the same job twice
-        gives the same handle.
+        whether or not the definition waits on it. At hand-out, whatever is at
+        the job's output and problem report paths is moved into
+        `workflow-state/` and kept there; nothing is deleted. This includes a
+        refused output and an accepted output that someone changed.
 
-        Each job owns two paths, its output and its problem report. One name
-        for two different tasks, or a path owned by two jobs, raises
+        Naming the same job twice gives the same handle. Each job owns two
+        paths, its output and its problem report. One name for two tasks that
+        differ by `Job.same_task_as`, or a path owned by two jobs, raises
         DefinitionError. Paths are compared after normalization, so `a.md` and
         `./a.md` are the same path. A DefinitionError leaves the step without
         a result, so no job is handed out in a step that raises one.
@@ -243,10 +273,13 @@ class Context:
         `inputs` are the files the effect is made from, as a job's inputs are.
         Their state is recorded before `do` runs.
 
-        An effect is not repeated and not undone. When it is completed and its
+        Code does not repeat or undo an effect. When it is completed and its
         inputs have changed since, what is outside no longer matches the run:
         the step gives a blocked outcome on `effect <name>` that permits only
-        stopping, and the run never reports Done. A new run is needed.
+        stopping, and the run does not report Done. The block is judged anew
+        in every step and is not stored. It goes away when the inputs are back
+        in the recorded state, or when the operator records the state of the
+        effect with `Orchestrator.resolve`.
 
         A process can complete the effect and end before recording it. When a
         started effect has no completion record, `recognize` establishes from
@@ -254,6 +287,10 @@ class Context:
         and `do` does not run. ABSENT: `do` runs. UNKNOWN, an error raised by
         `recognize`, or no `recognize` at all: the step gives the Uncertain
         outcome and `do` does not run.
+
+        An error raised by `do` leaves the effect started and not recorded,
+        as a process that ended would. The step gives a block on `workflow`
+        with the error. The next step asks `recognize` what took place.
         """
         raise NotImplementedError
 
@@ -275,6 +312,10 @@ class Orchestrator:
 
     All state is in the run directory, under `workflow-state/`. Two
     orchestrators made for the same run directory behave as one.
+
+    The constructor takes a definition object and records nothing about it.
+    A run driven only through the constructor cannot be opened with `open` or
+    by the shell; `create` is what records the definition.
     """
 
     run_dir: Path
@@ -313,6 +354,40 @@ class Orchestrator:
         Repeating `step` gives the same outcome only where nothing is left to
         consume: on a finished run, on an uncertain effect, and on a run that
         may only be stopped.
+
+        A step gives one outcome, the first of these that applies: Uncertain,
+        Blocked, Launch, Done.
+
+        One step runs on a run at a time. A second `step` on the same run
+        while one is running raises RunBusy. The lock does not outlive the
+        process that holds it.
+        """
+        raise NotImplementedError
+
+    def resolve(self, effect: str, recognition: Recognition) -> None:
+        """Record what the operator established about an effect.
+
+        This is the operator's act; the agent orchestrator may only stop and
+        report. It applies to an effect that is uncertain, and to a completed
+        effect whose inputs have changed.
+
+        COMPLETED records the effect as completed for the inputs as they are
+        now, so the next step goes past it. ABSENT lets the next step run it.
+        Raises ValueError for UNKNOWN, and for an effect that is neither
+        uncertain nor out of step with its inputs.
+        """
+        raise NotImplementedError
+
+    def release(self, subject: str) -> None:
+        """Let a stopped job, or the stopped `workflow`, be tried again.
+
+        This is the operator's act; the agent orchestrator may only stop and
+        report. The next `step` judges the subject again. If it is still not
+        accepted, it is handed out with the retry limit and the repair limit
+        starting over. Accepted outputs of other jobs are untouched.
+
+        Raises ValueError for a subject that is not stopped, and for an
+        effect, whose state is recorded with `resolve`.
         """
         raise NotImplementedError
 

@@ -77,3 +77,33 @@ def test_a_process_that_ends_part_way_through_publishing_leaves_it_uncertain(tmp
     assert shell("step", str(run_dir)).stdout.splitlines()[0] == "uncertain"
     assert shell("step", str(run_dir)).stdout.splitlines()[0] == "uncertain"
     assert publications(tmp_path / "published") == 1
+
+
+def test_the_operator_resolves_an_uncertain_effect_from_the_shell(tmp_path):
+    marker = tmp_path / "marker"
+    run_dir = started(tmp_path, marker)
+    shell("step", str(run_dir))
+    (run_dir / "only.md").write_text("# only\n", encoding="utf-8")
+    marker.write_text("exit between", encoding="utf-8")
+    shell("step", str(run_dir))
+    assert shell("step", str(run_dir)).stdout.splitlines()[0] == "uncertain"
+
+    (tmp_path / "published" / "index.md").write_text("- only.md\n", encoding="utf-8")
+    assert shell("resolve", str(run_dir), "publish", "completed").returncode == 0
+
+    assert shell("step", str(run_dir)).stdout.splitlines() == ["done"]
+    assert publications(tmp_path / "published") == 1
+
+
+def test_the_operator_releases_a_stopped_job_from_the_shell(tmp_path):
+    run_dir = started(tmp_path, tmp_path / "marker")
+    # No worker ever writes: two attempts, a block, two more attempts, a stop.
+    outcomes = [shell("step", str(run_dir)).stdout.splitlines()[0] for _ in range(6)]
+    assert outcomes == ["launch", "launch", "blocked", "launch", "launch", "blocked"]
+    assert "stop and report" in shell("step", str(run_dir)).stdout
+
+    assert shell("release", str(run_dir), "only").returncode == 0
+
+    assert shell("step", str(run_dir)).stdout.splitlines()[0] == "launch"
+    (run_dir / "only.md").write_text("# only\n", encoding="utf-8")
+    assert shell("step", str(run_dir)).stdout.splitlines() == ["done"]
