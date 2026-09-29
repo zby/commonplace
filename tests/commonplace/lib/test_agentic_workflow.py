@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import re
 import shutil
+import subprocess
 from collections.abc import Callable
 from functools import partial
 from hashlib import sha256
@@ -725,6 +726,68 @@ def test_a_boundary_with_another_source_identity_is_refused(fixture: Fixture) ->
 
     assert attempt == 2
     assert f"source.identity must be `{SOURCE}`" in prompt
+
+
+# 7. The frozen source is a checkout of the recorded commit
+
+
+def source_refusals(fixture: Fixture, **source: object) -> list[str]:
+    frozen = {
+        "kind": "git",
+        "identity": SOURCE,
+        "revision": fixture.revision,
+        "path": fixture.source_root.as_posix(),
+        "sha256": None,
+        **source,
+    }
+    path = fixture.scratch / "boundary.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(fixture.boundary(source=frozen), encoding="utf-8")
+    return boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
+
+
+def test_a_checkout_at_the_recorded_commit_is_accepted(fixture: Fixture) -> None:
+    assert source_refusals(fixture) == []
+
+
+def test_a_git_source_without_a_path_is_refused(fixture: Fixture) -> None:
+    assert source_refusals(fixture, path=None) == [
+        "source.path must be the absolute path of the frozen source"
+    ]
+
+
+def test_a_checkout_at_another_commit_is_refused(fixture: Fixture) -> None:
+    (refusal,) = source_refusals(fixture, revision="0" * 40)
+    assert "is not at source.revision" in refusal
+
+
+def test_a_clone_without_checked_out_files_is_refused(fixture: Fixture) -> None:
+    clone = fixture.scratch / "no-checkout"
+    subprocess.run(
+        ["git", "clone", "--quiet", "--no-checkout", str(fixture.source_root), str(clone)],
+        check=True,
+    )
+
+    (refusal,) = source_refusals(fixture, path=clone.as_posix())
+
+    assert "does not hold exactly the commit's files" in refusal
+
+
+# 8. The verification is validated as overview text
+
+
+def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) -> None:
+    ranged = fixture.verification().replace(
+        "Passed:", "Passed at `README.md:1`:"
+    )
+    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(lambda _: ranged)})
+    drive_to(scripted, "verify-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "verify-0")
+
+    assert attempt == 2
+    assert "the overview with this verification does not validate" in prompt
+    assert "carries a line range" in prompt
 
 
 def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:

@@ -15,8 +15,8 @@ Classify an in-scope target with one `target-class` and one `boundary-kind` valu
 
 ## Freeze the sources
 
-1. Before inspection, record a compact source allowlist: the exact repositories, captures, documents, and time boundary that may supply evidence. A supplied repository reference authorizes creating its missing ignored checkout and fetching the objects needed for the selected revision. It does not authorize changing an existing worktree, switching branches, merging, pulling, or resetting.
-2. For GitHub, use `related-systems/<owner>--<repo>/`. Require `git check-ignore -q related-systems` before creating it, verify an existing checkout's origin, and resolve the selected revision to a full commit.
+1. Before inspection, record a compact source allowlist: the exact repositories, captures, documents, and time boundary that may supply evidence.
+2. For GitHub, use `related-systems/<owner>--<repo>/`. Require `git check-ignore -q related-systems` before creating it, clone it with its files when it is missing, verify an existing checkout's origin, and resolve the selected revision to a full commit. Then check that commit out with `git checkout --detach <commit>`, fetching it first if needed, so the directory holds exactly the commit's files: later jobs read and grep them there. A clone made without checkout has no files yet, and `git status` lists them all as deleted; checking out the commit completes it. Never discard local changes: if the checkout has modifications or untracked files, write a problem report instead of merging, pulling, resetting, or cleaning. The output is refused unless the checkout at `source.path` is at `source.revision` and `git status --porcelain` is empty.
 3. Turn every non-Git source set into one immutable capture or bundle with a stable identity, version or capture label, absolute path, and SHA-256. Do not analyse a moving live page as though it were frozen.
 4. Build one `SRC-*` register with the columns and evidence layers the overview type's Source register requires.
 

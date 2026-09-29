@@ -208,10 +208,12 @@ def boundary_refusals(
         refusals.append(
             "source must be null or a mapping of " + ", ".join(SOURCE_FIELDS)
         )
-    elif source is not None and source.get("identity") != identity:
-        refusals.append(
-            f"source.identity must be `{identity}`, the run's source identity"
-        )
+    elif source is not None:
+        if source.get("identity") != identity:
+            refusals.append(
+                f"source.identity must be `{identity}`, the run's source identity"
+            )
+        refusals += frozen_source_refusals(source)
     wanted = ["Boundary and evidence", "Source register"]
     if disposition == "complete":
         missing = [
@@ -223,6 +225,46 @@ def boundary_refusals(
         wanted.append("Not reached")
     refusals += require_sections(body, 2, wanted)
     return refusals
+
+
+def frozen_source_refusals(source: dict[str, Any]) -> list[str]:
+    """The frozen source is what later jobs read: a Git checkout whose files
+    are exactly the recorded commit's, or a capture file with its digest."""
+    path = Path(str(source.get("path") or ""))
+    if not path.is_absolute():
+        return ["source.path must be the absolute path of the frozen source"]
+    if source.get("kind") == "capture":
+        if not path.is_file():
+            return [f"source.path {path} is not a file"]
+        if source.get("sha256") != digest(path):
+            return ["source.sha256 must be the SHA-256 of the capture file"]
+        return []
+    revision = str(source.get("revision") or "")
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        return ["source.revision must be a full 40-hex commit"]
+
+    def git(*args: str) -> str | None:
+        result = subprocess.run(
+            ["git", "-C", str(path), *args],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return result.stdout if result.returncode == 0 else None
+
+    head = git("rev-parse", "HEAD") if path.is_dir() else None
+    if head is None:
+        return [f"source.path {path} is not a Git checkout"]
+    if head.strip() != revision:
+        return [f"the checkout at {path} is not at source.revision; check it out"]
+    if git("status", "--porcelain"):
+        return [
+            (
+                f"the checkout at {path} does not hold exactly the commit's files; "
+                "a clone made without checkout lists them all as deleted"
+            )
+        ]
+    return []
 
 
 def member_refusals(path: Path, *, repo_root: Path) -> list[str]:
@@ -694,10 +736,48 @@ class AnalyseAgenticSystem(Workflow):
                 reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
                 instruction="verify",
                 norms=True,
-                validator=verification_refusals,
+                validator=partial(
+                    self.verified_set_refusals,
+                    run_dir,
+                    opening,
+                    fields,
+                    boundary_body,
+                    reconciliation(round_),
+                    known=set(failures),
+                ),
             )
         ).wait()
         return (run_dir / verification).read_text(encoding="utf-8")
+
+    def verified_set_refusals(
+        self,
+        run_dir: Path,
+        opening: dict[str, Any],
+        fields: dict[str, Any],
+        boundary_body: str,
+        final: str,
+        path: Path,
+        *,
+        known: set[str],
+    ) -> list[str]:
+        """The verification's form, and the set it completes: the overview
+        with this verification must add no failure to those the set check
+        already listed, which the verification reports as blockers."""
+        text = path.read_text(encoding="utf-8")
+        refusals = verification_refusals(path)
+        if refusals:
+            return refusals
+        (run_dir / OVERVIEW).write_text(
+            self.render_overview(run_dir, opening, fields, boundary_body, final, text),
+            encoding="utf-8",
+        )
+        build_manifest(run_dir)
+        failures = validate_note(run_dir / OUTPUT_DIR, repo_root=self.repo).fails
+        return [
+            f"the overview with this verification does not validate: {failure}"
+            for failure in failures
+            if failure not in known
+        ]
 
     # Steps that code executes
 
