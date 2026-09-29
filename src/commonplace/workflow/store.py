@@ -34,7 +34,7 @@ except ImportError:  # pragma: no cover - Windows
     fcntl = None
     import msvcrt
 
-FORMAT = 1
+FORMAT = 2
 
 
 class RunBusy(Exception):
@@ -58,7 +58,7 @@ _OPTIONAL_DICT = (dict, type(None))
 JOB_FIELDS: dict[str, Any] = {
     "handouts": int,
     "failures": int,
-    "repairs": int,
+    "blocks_toward_limit": int,
     "blocks": int,
     "outstanding": _OPTIONAL_STR,
     "last_input": _OPTIONAL_STR,
@@ -73,8 +73,9 @@ handouts
     Hand-outs in the run, shown as the attempt number.
 failures
     Failed attempts since the last acceptance, block or reopening.
-repairs
-    Blocks since the last acceptance or release.
+blocks_toward_limit
+    Blocks since the last acceptance or release, counted against the repair
+    limit. It counts blocks, not repairs that were made.
 blocks
     Blocks in the run; numbers the block records.
 outstanding
@@ -136,7 +137,7 @@ def new_job() -> dict[str, Any]:
     return {
         "handouts": 0,
         "failures": 0,
-        "repairs": 0,
+        "blocks_toward_limit": 0,
         "blocks": 0,
         "outstanding": None,
         "last_input": None,

@@ -698,7 +698,11 @@ class Orchestrator:
                 if record is None or record["stopped"] is None:
                     raise ValueError(f"job {subject} is not stopped")
                 record.update(
-                    stopped=None, failures=0, repairs=0, outstanding=None, history=[]
+                    stopped=None,
+                    failures=0,
+                    blocks_toward_limit=0,
+                    outstanding=None,
+                    history=[],
                 )
             store.save_state(state)
 
@@ -1039,7 +1043,7 @@ class _Step:
         record.update(
             accepted={"input": current, "output": file_sha(output)},
             failures=0,
-            repairs=0,
+            blocks_toward_limit=0,
             outstanding=None,
             last_input=current,
             messages=[],
@@ -1057,9 +1061,13 @@ class _Step:
     ) -> _Judgment:
         details = record["history"]
         record.update(failures=0, history=[])
-        record["repairs"] += 1
+        record["blocks_toward_limit"] += 1
         record["blocks"] += 1
-        permitted = REPAIR if record["repairs"] <= self.workflow.repair_limit else STOP
+        permitted = (
+            REPAIR
+            if record["blocks_toward_limit"] <= self.workflow.repair_limit
+            else STOP
+        )
         path = self.store.job_record_path(job.name, record["blocks"])
         if permitted == STOP:
             record["stopped"] = {"reason": reason, "record": self.store.relative(path)}
@@ -1143,12 +1151,12 @@ class _Step:
         if self.ran_to_end:
             self.check_unreached()
         state = copy.deepcopy(self.state)
-        blocks: list[tuple[Block, str | None]] = []
+        blocks: list[tuple[Block, str | _Judgment | None]] = []
 
         for name in sorted(self.judgments):
             judgment = self.judgments[name]
             if judgment.kind in ("block", "stopped"):
-                text = None if judgment.kind == "stopped" else self.job_record(judgment)
+                text = None if judgment.kind == "stopped" else judgment
                 blocks.append((self.as_block(name, judgment), text))
 
         workflow = state["workflow"]
@@ -1190,15 +1198,7 @@ class _Step:
             )
             blocks.append((block, self.effect_record(name, reason)))
 
-        for block, text in blocks:
-            if text is not None:
-                write_atomic(block.record_path, text)
         found = tuple(block for block, _ in blocks)
-
-        if self.uncertain:
-            effect, detail = self.uncertain[0]
-            return Uncertain(effect, detail, found)
-
         handouts = (
             []
             if found
@@ -1225,9 +1225,11 @@ class _Step:
             state["unreached"] = self.unreached
 
         moves = []
+        targets: dict[Path, Path] = {}
         for name, path in to_keep:
             state["kept"] += 1
             target = self.store.kept_path(name, state["kept"], path)
+            targets[path] = target
             moves.append(
                 {
                     "source": self.store.relative(path),
@@ -1235,6 +1237,16 @@ class _Step:
                     "sha": file_sha(path),
                 }
             )
+
+        for block, text in blocks:
+            if isinstance(text, _Judgment):
+                text = self.job_record(text, targets)
+            if text is not None:
+                write_atomic(block.record_path, text)
+
+        if self.uncertain:
+            effect, detail = self.uncertain[0]
+            return Uncertain(effect, detail, found)
 
         launched = []
         for judgment in sorted(handouts, key=lambda judgment: judgment.job.name):
@@ -1286,7 +1298,12 @@ class _Step:
             "",
             (
                 "If you cannot finish the task, write why to "
-                f"`{job.problem_path(self.run_dir)}` instead, and reply in one line."
+                f"`{job.problem_path(self.run_dir)}` instead."
+            ),
+            "",
+            (
+                "Reply in one line that names the file you wrote. "
+                "Do not repeat or summarize its content."
             ),
         ]
         if record["failures"] and record["messages"]:
@@ -1322,7 +1339,7 @@ class _Step:
             f"- Repair scope: {self.workflow.repair_scope}",
         ]
 
-    def job_record(self, judgment: _Judgment) -> str:
+    def job_record(self, judgment: _Judgment, targets: dict[Path, Path]) -> str:
         name = judgment.job.name
         lines = self.header(name, judgment.reason, judgment.permitted)
         lines += [f"- Hand-outs in the run: {judgment.record['handouts']}"]
@@ -1334,8 +1351,8 @@ class _Step:
         if judgment.to_keep:
             lines += ["", "## Kept", ""]
             lines += [
-                f"- {self.store.relative(path)} is moved under "
-                f"{self.store.relative(self.store.job_dir(name))}/kept/"
+                f"- {self.store.relative(path)} is moved to "
+                f"{self.store.relative(targets[path])}"
                 for path in judgment.to_keep
             ]
         reports = self.reports_about(name)

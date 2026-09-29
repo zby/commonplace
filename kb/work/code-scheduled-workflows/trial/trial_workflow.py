@@ -11,18 +11,40 @@ retry
     validator's message.
 problem
     An extra job summarizes `notes.md`, which setup leaves misplaced at
-    `incoming/notes.md`. The worker should write a problem report; moving the
-    file is a repair within the default scope.
+    `incoming/notes.md`. The worker should write a problem report; moving or
+    copying the file is a repair within the default scope.
 stop
     The second lens's validator cannot be satisfied, so the job blocks, and no
     repair within the scope helps. The agent orchestrator should stop.
+stop-only
+    As `stop`, with a repair limit of zero, so the first block permits only
+    stopping.
+parameters
+    The first lens carries the launch parameters given to setup with
+    `--launch`; the second lens carries none.
+uncertain
+    After the reconciliation, an effect publishes two files beside the run.
+    The first time, the process ends between the two files. The next step
+    finds the effect in part and gives the uncertain outcome.
+busy
+    The first step that finds the hold file beside the run removes it and
+    holds the run for `hold` seconds, so that a second step meets a busy run.
+
+The files beside the run are named after the run directory: `<run>.published/`,
+`<run>.interrupt` and `<run>.hold`. Setup creates the last two.
 """
 
 from __future__ import annotations
 
+import json
+import os
+import sys
+import time
 from pathlib import Path
 
-from commonplace.workflow import Job, Workflow
+from commonplace.workflow import Job, Recognition, Workflow
+
+PUBLISHED = ("reconciled.md", "index.md")
 
 
 def has_heading_and_body(path: Path) -> list[str]:
@@ -46,8 +68,19 @@ def impossible(path: Path) -> list[str]:
     return ["the output must be empty and must also start with a level-one heading"]
 
 
+def beside(run_dir: Path, suffix: str) -> Path:
+    return run_dir.parent / f"{run_dir.name}.{suffix}"
+
+
 class Trial(Workflow):
-    def lens(self, name: str, question: str, validator=has_heading_and_body) -> Job:
+    def __init__(self, params=None):
+        super().__init__(params)
+        if self.params.get("scenario") == "stop-only":
+            self.repair_limit = 0
+
+    def lens(
+        self, name: str, question: str, validator=has_heading_and_body, launch=None
+    ) -> Job:
         return Job(
             name=name,
             prompt=(
@@ -57,17 +90,50 @@ class Trial(Workflow):
             output=f"{name}.md",
             inputs=("source.md",),
             validator=validator,
+            launch=launch or {},
         )
+
+    def hold(self, run_dir: Path) -> None:
+        marker = beside(run_dir, "hold")
+        if marker.is_file():
+            marker.unlink()
+            time.sleep(float(self.params.get("hold", 90)))
+
+    def publish(self, run_dir: Path) -> None:
+        target = beside(run_dir, "published")
+        target.mkdir(exist_ok=True)
+        result = (run_dir / "reconciled.md").read_text(encoding="utf-8")
+        (target / "reconciled.md").write_text(result, encoding="utf-8")
+        marker = beside(run_dir, "interrupt")
+        if marker.is_file():
+            marker.unlink()
+            print("the process ended while publishing", file=sys.stderr, flush=True)
+            os._exit(9)
+        (target / "index.md").write_text("- reconciled.md\n", encoding="utf-8")
+
+    def published(self, run_dir: Path) -> Recognition:
+        target = beside(run_dir, "published")
+        present = [(target / name).is_file() for name in PUBLISHED]
+        if all(present):
+            return Recognition.COMPLETED
+        if not any(present):
+            return Recognition.ABSENT
+        return Recognition.UNKNOWN
 
     def run(self, ctx):
         scenario = self.params.get("scenario", "clean")
-        lens_b_validator = impossible if scenario == "stop" else has_heading_and_body
-        claims = ctx.agent(self.lens("claims", "List the claims the text makes."))
+        if scenario == "busy":
+            self.hold(ctx.run_dir)
+        stops = scenario in ("stop", "stop-only")
+        launch = json.loads(self.params.get("launch", "{}"))
+        claims = ctx.agent(
+            self.lens("claims", "List the claims the text makes.", launch=launch)
+        )
         assumptions = ctx.agent(
             self.lens(
                 "assumptions",
                 "List the assumptions the text relies on without stating them.",
-                lens_b_validator,
+                impossible if stops else has_heading_and_body,
             )
         )
         ctx.wait(claims, assumptions)
@@ -102,3 +168,11 @@ class Trial(Workflow):
                 validator=ends_checked if scenario == "retry" else has_heading_and_body,
             )
         ).wait()
+
+        if scenario == "uncertain":
+            ctx.effect(
+                "publish",
+                lambda: self.publish(ctx.run_dir),
+                inputs=("reconciled.md",),
+                recognize=lambda: self.published(ctx.run_dir),
+            )

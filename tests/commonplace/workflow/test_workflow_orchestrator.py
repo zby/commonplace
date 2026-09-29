@@ -27,6 +27,7 @@ from tests.commonplace.workflow.definitions import (
     Interrupted,
     NamedBeforeWaited,
     OneJob,
+    Pins,
     Publishes,
     PublishesIfDecided,
     ScriptedAgent,
@@ -110,6 +111,16 @@ def test_a_handout_names_a_prompt_file_that_carries_the_whole_task(tmp_path):
     assert str(handout.problem_path) in prompt
     assert str(tmp_path / "run" / "source.md") in prompt
     assert handout.output_path == tmp_path / "run" / "only.md"
+
+
+def test_the_prompt_asks_every_worker_to_reply_in_one_line(tmp_path):
+    orchestrator = Orchestrator(new_run(tmp_path), OneJob())
+
+    (handout,) = orchestrator.step().jobs
+    prompt = handout.prompt_path.read_text(encoding="utf-8")
+
+    assert "Reply in one line" in prompt
+    assert "Do not repeat or summarize" in prompt
 
 
 def test_wait_returns_the_accepted_outputs_in_the_order_asked(tmp_path):
@@ -738,6 +749,19 @@ def test_a_problem_report_blocks_at_once_and_is_shown(tmp_path):
     )
 
 
+def test_the_block_record_names_where_each_kept_file_now_is(tmp_path):
+    run_dir = new_run(tmp_path)
+    agent = ScriptedAgent(
+        Orchestrator(run_dir, OneJob()), default=write_problem("cannot do it")
+    )
+
+    block = one_block(agent.run()[-1])
+
+    (kept,) = (run_dir / "workflow-state").rglob("kept/*")
+    named = kept.relative_to(run_dir).as_posix()
+    assert f"is moved to {named}" in block.record_path.read_text(encoding="utf-8")
+
+
 def test_a_problem_report_blocks_even_when_an_output_was_written(tmp_path):
     def both(handout):
         write_valid(handout)
@@ -843,7 +867,7 @@ def test_a_report_does_not_advance_the_run(tmp_path):
     assert second.attempt == first.attempt + 1
 
 
-# 12. Steps with effects outside the run directory
+# 12. Effects
 
 
 def publisher(tmp_path, **params):
@@ -864,6 +888,38 @@ def interrupted_publication(tmp_path, when, **params):
     with pytest.raises(Interrupted):
         Orchestrator(run_dir, publisher(tmp_path, **params)).step()
     return run_dir
+
+
+def pins(tmp_path, **params):
+    return Pins({"readings": str(tmp_path / "readings"), **params})
+
+
+def test_an_effect_that_writes_only_inside_the_run_runs_once(tmp_path):
+    run_dir = new_run(tmp_path)
+
+    results = ScriptedAgent(Orchestrator(run_dir, pins(tmp_path))).run()
+    assert isinstance(Orchestrator(run_dir, pins(tmp_path)).step(), Done)
+
+    assert isinstance(results[-1], Done)
+    assert (tmp_path / "readings").read_text(encoding="utf-8") == "1"
+    assert (run_dir / "pin.md").read_text(encoding="utf-8") == "reading 1\n"
+
+
+def test_a_value_not_yet_recorded_is_read_again_after_the_process_ended(tmp_path):
+    run_dir = new_run(tmp_path)
+    marker = tmp_path / "marker"
+    marker.write_text("", encoding="utf-8")
+    with pytest.raises(Interrupted):
+        Orchestrator(run_dir, pins(tmp_path, marker=str(marker))).step()
+    assert not (run_dir / "pin.md").exists()
+
+    results = ScriptedAgent(Orchestrator(run_dir, pins(tmp_path))).run()
+
+    # Nothing had used the first reading, so reading again is harmless.
+    assert isinstance(results[-1], Done)
+    assert (run_dir / "pin.md").read_text(encoding="utf-8") == "reading 2\n"
+    assert isinstance(Orchestrator(run_dir, pins(tmp_path)).step(), Done)
+    assert (tmp_path / "readings").read_text(encoding="utf-8") == "2"
 
 
 def test_an_effect_runs_once_across_replays(tmp_path):

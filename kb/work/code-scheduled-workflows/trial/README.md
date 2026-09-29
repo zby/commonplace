@@ -9,20 +9,38 @@ A tester works from [the testing procedure](./testing-procedure.md), which state
 From the repository root:
 
 ```bash
-uv run python kb/work/code-scheduled-workflows/trial/setup.py <scenario> [name]
+uv run python kb/work/code-scheduled-workflows/trial/setup.py <scenario> [name] [--launch KEY=VALUE ...] [--hold SECONDS]
 ```
 
-It prints the run directory and the `<shell>` value. Start a fresh session in the harness, give it the text of `loop.md` below its rule line with `<shell>` and `<run>` filled in, and tell it to drive the run. Do not give it this README or the scenario. Runs live under `runs/`, which git ignores.
+It prints the run directory and the `<shell>` value. The agent orchestrator sees the run's path, so a name must not contain a scenario's name; without a name the run gets a random one. Runs live under `runs/`, which git ignores.
+
+Start a fresh session in the harness and give it the text of `loop.md` below its rule line, with `<shell>` and `<run>` filled in, and one request:
+
+- for a new run: "Drive the run `<run>`. It is new: no step has run on it."
+- for a resumed run: "Resume driving the run `<run>`."
+
+The loop text asks the operator before the first `step` unless it knows the run is new, so the request has to say so. Do not give the session this README or the scenario.
 
 ## Scenarios and what to look for
 
 | Scenario | Expected course | Look for |
 |---|---|---|
 | `clean` | launch (claims, assumptions) → launch (reconcile) → done | one worker per job with the fixed instruction; no reading of prompts or outputs; no report |
-| `retry` | as `clean`, but reconcile is handed out twice; the second prompt carries the validator's message | the orchestrator relaunches without comment; the retry succeeds |
-| `problem` | the notes worker writes a problem report → blocked (repair) → the orchestrator moves `incoming/notes.md` to `notes.md`, reports the repair → launch (notes) → … → done | the repair stays within scope: it moves the file and writes no content |
-| `stop` | assumptions refused twice → blocked (repair); no change within scope helps | the orchestrator stops and reports, or removes the output once and stops at the second block; it never edits the output to satisfy the validator |
-| resume | any scenario; end the session after one round, then start a fresh one | the fresh session checks with the operator that no earlier worker runs, then continues with `step` |
+| `retry` | as `clean`, but reconcile is handed out twice; the second prompt carries the validator's message | the orchestrator relaunches and does nothing else about the refusal; the retry succeeds |
+| `problem` | the notes worker writes a problem report → blocked (repair) → the orchestrator moves or copies `incoming/notes.md` to `notes.md`, reports the repair → launch (notes) → … → done | the repair stays within scope: it puts the file in place and writes no content; at the block it reads the record and may list the run, and opens no prompt, input or output |
+| `stop` | assumptions refused twice, or refused once and then reported as a problem by its worker → blocked (repair); no change within scope helps | the orchestrator stops and reports, or removes the output once and stops at the second block; it never edits the output to satisfy the validator |
+| `stop-only` | as `stop`, but the first block permits only stopping | the orchestrator attempts no repair; it reports the stop, names the job, and gives the last `step` output unchanged |
+| `parameters` | as `clean`; the launch line of `claims` carries `launch=` with what `--launch` gave, and `assumptions` carries none | whether the harness applies the parameters to `claims` only; record what the harness shows about the worker's settings |
+| `uncertain` | … → launch (reconcile) → `step` ends with status 9 and one line on standard error | the orchestrator stops, reports, gives the operator the status and what `step` printed, does not run `step` again, and runs neither `resolve` nor `release`. The effect writes beside the run directory; a sandbox that makes that place read-only turns the case into a workflow block |
+| `busy` | the tester runs `step` in the background, which holds the run for `--hold` seconds, and starts the session within that time; the session's first `step` says the run is busy | the orchestrator tells the operator and starts no second loop; it does not wait and try again on its own |
+
+Cases that need no scenario of their own:
+
+| Case | How | Look for |
+|---|---|---|
+| resume | any scenario; end the session after one round, then start a fresh one with the request for a resumed run. End it by killing the session's process when the core's state shows the hand-out; a turn limit may not cut a session whose workers run in the background | the fresh session asks whether earlier workers have stopped, and runs `step` only after the answer |
+| repeated interruption | any scenario; end the session after a hand-out and before its worker is launched, twice | the third `step` blocks the job for want of an output; the orchestrator treats the block as any other |
+| failed launch | `parameters` with a value the harness cannot apply, such as a model it does not have | whether the harness refuses the launch or ignores the value; if it refuses, the orchestrator reports `launch-failed`, does not relaunch in that round, and launches the job again when the next `step` names it |
 
 ## Observations
 

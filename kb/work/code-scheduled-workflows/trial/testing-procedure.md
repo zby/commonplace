@@ -2,7 +2,7 @@
 
 A commission for one tester, an agent or a person, working in one harness. It fixes the purpose, the result, and the limits. It leaves the method to the tester, because what works differs by harness and shows only during the trials.
 
-Revised after the first series in Claude Code and Codex (2026-09-29). The sections "Limits", "What the first series taught", and "Recording" carry what those series showed about testing itself.
+Revised after the first series in Claude Code and Codex (2026-09-29), and again when the changes that series prompted were applied. The sections "Limits", "What the first series taught", and "Recording" carry what those series showed about testing itself.
 
 ## Purpose
 
@@ -41,7 +41,7 @@ These questions define the test. Answer each from evidence, and say so when a qu
 
 These bind. Everything not listed here is yours to decide.
 
-- **The agent orchestrator under test sees only the loop text**, below its rule line, with `<shell>` and `<run>` filled in, and the request to drive the run. It does not see this file, the kit's README, the scenario's name, the workshop, or your conversation.
+- **The agent orchestrator under test sees only the loop text**, below its rule line, with `<shell>` and `<run>` filled in, and the request to drive the run. The request says whether the run is new or resumed, in the words the kit's README gives, and nothing more. It does not see this file, the kit's README, the scenario's name, the workshop, or your conversation.
 - **The run path must not name the scenario.** The agent orchestrator sees the path. Pass `setup.py` a name of your own that says nothing about the case.
 - **Keep out what the harness loads by itself.** Project instructions and the user's own instructions and memory are not the loop text. Switch off what you can, and record what still loaded.
 - **Do not help during a trial.** Answer only where the loop text tells the agent orchestrator to ask the operator, and answer as the operator would. Do not correct, hint, or restart a step for it.
@@ -58,21 +58,23 @@ These bind. Everything not listed here is yours to decide.
 - The core's records in each run directory under `workflow-state/`, including hand-outs, failures, block records, and reports.
 - The first series: its observations are in the kit's README, and its evidence is under `runs/claude-evidence/` and `runs/codex-20260929-evidence/`.
 
-No case has yet shown any of the following. Build a case for one if you judge the risk worth a trial:
+No trial has yet shown any of the following. The kit has a case for each; none has run with an agent:
 
 - a block that permits only stopping;
 - launch parameters, and whether the harness applies them;
 - a launch that the harness refuses or fails;
-- an uncertain effect;
+- an uncertain effect, and a `step` that ends without an outcome;
 - a second `step` on a busy run;
 - a session interrupted more than once between a hand-out and the launch of its worker.
+
+The first series ran on the loop text before the changes. Its findings on resume, stopping, waiting and commentary are what the changes answer, so the cases of the first series are worth repeating on the changed text.
 
 ## What the first series taught
 
 These are findings about testing, not orders. Depart from one when your harness gives you a reason, and say why in your file.
 
 - **A session that cannot receive an answer cannot show a resume.** Where the loop text tells the agent orchestrator to ask the operator, use a session you can answer: an interactive one, or one you can continue after its question.
-- **Say where a session was cut.** An interruption after a hand-out and before the worker's launch leaves an output missing, and the next `step` counts that as a failed attempt. The point of the cut therefore changes what the resumed run shows.
+- **Say where a session was cut.** An interruption after a hand-out and before the worker's launch leaves an output missing, and the next `step` counts that as a failed attempt. The point of the cut therefore changes what the resumed run shows. A turn limit may not cut where you want, because workers launched in the background let a session finish inside it; killing the session's process when the core's state shows the hand-out does.
 - **Keep the workers' traces, not only the agent orchestrator's.** A harness may store them elsewhere. They show what the workers did, and sometimes the instruction each received.
 - **A harness may hide the instruction a worker received.** If it does, the first question above stays unanswered for that harness. Say so; a correct output does not show that the instruction was unchanged.
 - **Search the traces for failures that were recovered.** After the series, look for tool errors, refused permissions, failed commands and timed-out waits that did not stop the run, and compare the core's records with the traces. A run that ended well can still hold a failure worth knowing.

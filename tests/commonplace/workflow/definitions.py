@@ -248,6 +248,54 @@ def new_run(tmp_path: Path, source: str = "source text\n") -> Path:
     return run_dir
 
 
+class Pins(Workflow):
+    """Records in the run directory a value that cannot be reproduced.
+
+    Stands for resolving a branch to a commit: every reading gives another
+    value. The effect writes only inside the run. Parameters:
+
+    readings
+        A file that counts the readings, so a test can see how often the
+        outside was read.
+    marker
+        A file that tells the process to end after the reading and before the
+        value is recorded. It is removed first.
+    """
+
+    def read_and_record(self, ctx) -> None:
+        readings = Path(self.params["readings"])
+        count = (
+            int(readings.read_text(encoding="utf-8")) + 1 if readings.is_file() else 1
+        )
+        readings.write_text(str(count), encoding="utf-8")
+        marker = Path(self.params.get("marker", "") or "/nonexistent")
+        if marker.is_file():
+            marker.unlink()
+            raise Interrupted
+        (ctx.run_dir / "pin.md").write_text(f"reading {count}\n", encoding="utf-8")
+
+    def recorded(self, ctx) -> Recognition:
+        if (ctx.run_dir / "pin.md").is_file():
+            return Recognition.COMPLETED
+        return Recognition.ABSENT
+
+    def run(self, ctx):
+        ctx.effect(
+            "pin",
+            partial(self.read_and_record, ctx),
+            recognize=partial(self.recorded, ctx),
+        )
+        ctx.agent(
+            Job(
+                name="only",
+                prompt="Apply only to the pinned source.",
+                output="only.md",
+                inputs=("pin.md",),
+                validator=has_heading,
+            )
+        ).wait()
+
+
 class PublishesIfDecided(Publishes):
     """Publishes only while `decision.md` in the run directory says so.
 
