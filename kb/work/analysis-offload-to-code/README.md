@@ -86,7 +86,7 @@ Where each remaining item lands:
 
 Build order, depth-first:
 
-1. The core: `step`, `report`, asynchronous `agent()` with wait, and input-matched acceptance. It is its own module and does not import analysis code. It is built and tested against small test definitions, with a test driver that plays the agent orchestrator by writing scripted outputs. These tests need no model.
+1. The core: `step`, `report`, asynchronous `agent()` with wait, and input-matched acceptance. It is its own module and does not import analysis code. It is built and tested in its own workshop, [code-scheduled-workflows](../code-scheduled-workflows/README.md).
 2. A coarse first analysis definition: `open`, one job per skill step that needs judgment, the shipped commands as mechanical steps, publication last. Each job prompt starts from the skill section it replaces. The definition must include the two lenses as parallel jobs, reconciliation, and a correction cycle, because those are the cases that show how much machinery the runner needs. The goal is one complete run through `step`. The core's interface stays open to change until this definition has used it.
 3. Hang the items above on that run, in the order its failures suggest.
 4. Split coarse jobs only where a run shows that a job's context is too large or its inputs are unclear.
