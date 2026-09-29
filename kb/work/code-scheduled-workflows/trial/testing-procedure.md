@@ -57,17 +57,15 @@ These bind. Everything not listed here is yours to decide.
 - The definition under trial: `trial_workflow.py`.
 - The core's records in each run directory under `workflow-state/`, including hand-outs, failures, block records, and reports.
 - The first series: its observations are in the kit's README, and its evidence is under `runs/claude-evidence/` and `runs/codex-20260929-evidence/`.
+- The second series: one file per harness under `observations/`. Every case of the kit ran in it, in both harnesses, on the loop text with L1 to L6.
 
-No trial has yet shown any of the following. The kit has a case for each; none has run with an agent:
+What is still open, and worth the next series:
 
-- a block that permits only stopping;
-- launch parameters, and whether the harness applies them;
-- a launch that the harness refuses or fails;
-- an uncertain effect, and a `step` that ends without an outcome;
-- a second `step` on a busy run;
-- a session interrupted more than once between a hand-out and the launch of its worker.
-
-The first series ran on the loop text before the changes. Its findings on resume, stopping, waiting and commentary are what the changes answer, so the cases of the first series are worth repeating on the changed text.
+- the loop text with L10 to L12: what may be read at a block, relaunching after a failed launch, and a `step` that ends without an outcome;
+- the block record that names each kept file's path (C6);
+- `busy` with the holding step started by setup (K9); in Codex the case was reached once, on a second attempt;
+- the instruction delivered to workers in Codex (P7), and Codex's context growth per round;
+- any case on a second model, or more than once per harness: the second series ran most cases once.
 
 ## What the first series taught
 
