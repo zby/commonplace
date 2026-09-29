@@ -11,9 +11,7 @@ import pytest
 
 from commonplace.workflow import Orchestrator, RunBusy
 from commonplace.workflow.shell import main
-from tests.commonplace.workflow.definitions import new_run, on_request, publications
-
-pytestmark = on_request
+from tests.commonplace.workflow.definitions import new_run, publications
 
 REPOSITORY = Path(__file__).resolve().parents[3]
 DEFINITION = "tests.commonplace.workflow.definitions:Publishes"

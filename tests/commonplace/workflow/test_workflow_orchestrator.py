@@ -6,6 +6,9 @@ kb/work/code-scheduled-workflows/README.md.
 
 from __future__ import annotations
 
+import hashlib
+import json
+
 import pytest
 
 from commonplace.workflow import (
@@ -33,15 +36,12 @@ from tests.commonplace.workflow.definitions import (
     has_heading,
     lens_job,
     new_run,
-    on_request,
     publications,
     write_invalid,
     write_nothing,
     write_problem,
     write_valid,
 )
-
-pytestmark = on_request
 
 
 def names(result):
@@ -381,6 +381,27 @@ def test_a_moved_run_directory_keeps_its_acceptances(tmp_path):
     moved = run_dir.rename(tmp_path / "moved")
 
     assert isinstance(Orchestrator(moved, TwoLenses()).step(), Done)
+
+
+def test_an_absolute_input_inside_the_run_directory_survives_a_move(tmp_path):
+    class ReadsByAbsolutePath(Workflow):
+        def run(self, ctx):
+            ctx.agent(
+                Job(
+                    name="only",
+                    prompt="Task.",
+                    output="only.md",
+                    inputs=(str(ctx.run_dir / "source.md"),),
+                    validator=has_heading,
+                )
+            ).wait()
+
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, ReadsByAbsolutePath())).run()
+
+    moved = run_dir.rename(tmp_path / "moved")
+
+    assert isinstance(Orchestrator(moved, ReadsByAbsolutePath()).step(), Done)
 
 
 def test_an_output_is_refused_when_an_input_changed_after_hand_out(tmp_path):
@@ -958,6 +979,48 @@ def test_an_error_part_way_through_an_effect_blocks_and_is_then_uncertain(tmp_pa
     assert publications(tmp_path / "published") == 1
 
 
+def test_an_error_in_an_effect_blocks_even_when_the_definition_catches_it(tmp_path):
+    class CatchesBroadly(Publishes):
+        def run(self, ctx):
+            ctx.agent(lens_job("only")).wait()
+            try:
+                self.declare(ctx)
+            except Exception:  # noqa: BLE001, S110 - the broad catch is what the test is about
+                pass
+
+    run_dir = new_run(tmp_path)
+    params = {"target": str(tmp_path / "published")}
+    ScriptedAgent(Orchestrator(run_dir, CatchesBroadly(params))).round()
+    marker = tmp_path / "marker"
+    marker.write_text("error before", encoding="utf-8")
+
+    block = one_block(
+        Orchestrator(run_dir, CatchesBroadly({**params, "marker": str(marker)})).step()
+    )
+
+    assert block.subject == "workflow"
+    assert "publishing failed" in block.record_path.read_text(encoding="utf-8")
+
+
+def test_a_stopped_workflow_with_a_started_effect_is_uncertain(tmp_path):
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).round()
+    marker = tmp_path / "marker"
+    for _ in range(2):
+        marker.write_text("error before", encoding="utf-8")
+        last = one_block(
+            Orchestrator(run_dir, publisher(tmp_path, marker=str(marker))).step()
+        )
+    assert (last.subject, last.permitted) == ("workflow", "stop")
+
+    result = Orchestrator(run_dir, publisher(tmp_path)).step()
+
+    assert isinstance(result, Uncertain)
+    assert result.effect == "publish"
+    assert [block.subject for block in result.blocks] == ["workflow"]
+    assert publications(tmp_path / "published") == 0
+
+
 def test_the_operator_resolves_an_uncertain_effect_as_completed(tmp_path):
     run_dir = interrupted_publication(tmp_path, "between")
     orchestrator = Orchestrator(run_dir, publisher(tmp_path))
@@ -1507,6 +1570,78 @@ def test_a_job_may_not_read_the_output_of_a_job_not_yet_accepted(tmp_path):
 def test_a_job_may_not_read_its_own_output(own):
     with pytest.raises(DefinitionError):
         Job(name="job", prompt="Task.", output="job.md", inputs=(own,))
+
+
+def test_recovery_does_not_move_a_new_output_with_the_same_bytes(tmp_path):
+    run_dir = new_run(tmp_path)
+
+    def slow_worker(handout):
+        (run_dir / "source.md").write_text("changed source\n", encoding="utf-8")
+        write_valid(handout)
+
+    ScriptedAgent(Orchestrator(run_dir, OneJob()), {"only": slow_worker}).round()
+    # The refused output is kept, and the job is handed out again.
+    assert names(Orchestrator(run_dir, OneJob()).step()) == ["only"]
+    (kept_copy,) = (run_dir / "workflow-state").rglob("kept/*")
+    # The process ended after the move and before the move list was cleared.
+    state_path = run_dir / "workflow-state" / "state.json"
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    state["moves"] = [
+        {
+            "source": "only.md",
+            "target": kept_copy.relative_to(run_dir).as_posix(),
+            "sha": hashlib.sha256(b"# only\n").hexdigest(),
+        }
+    ]
+    state_path.write_text(json.dumps(state), encoding="utf-8")
+    # The replacement worker gives the same bytes as the refused output.
+    (run_dir / "only.md").write_text("# only\n", encoding="utf-8")
+
+    assert isinstance(Orchestrator(run_dir, OneJob()).step(), Done)
+    assert (run_dir / "only.md").read_text(encoding="utf-8") == "# only\n"
+
+
+class ConsumerBehindAnotherWait(Workflow):
+    """Names a producer but reaches its consumer through a wait on another job."""
+
+    reached: list[str]
+
+    def run(self, ctx):
+        ctx.agent(lens_job("producer"))
+        ctx.agent(
+            Job(
+                name="gate",
+                prompt="Open the gate.",
+                output="gate.md",
+                validator=has_heading,
+            )
+        ).wait()
+        ctx.agent(
+            Job(
+                name="consumer",
+                prompt="Use the producer's result.",
+                output="consumer.md",
+                inputs=("producer.md",),
+                validator=has_heading,
+            )
+        ).wait()
+        self.reached.append("past the consumer")
+
+
+def test_a_cached_consumer_is_refused_while_its_producer_is_pending(tmp_path):
+    run_dir = new_run(tmp_path)
+    first = ConsumerBehindAnotherWait()
+    first.reached = []
+    assert isinstance(ScriptedAgent(Orchestrator(run_dir, first)).run()[-1], Done)
+
+    # The producer's input changes; its old output is still in place.
+    (run_dir / "source.md").write_text("changed source\n", encoding="utf-8")
+    replay = ConsumerBehindAnotherWait()
+    replay.reached = []
+
+    with pytest.raises(DefinitionError, match="producer"):
+        Orchestrator(run_dir, replay).step()
+    assert replay.reached == []
 
 
 # Job records

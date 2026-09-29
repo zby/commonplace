@@ -13,8 +13,6 @@ from collections.abc import Callable, Mapping
 from functools import partial
 from pathlib import Path
 
-import pytest
-
 from commonplace.workflow import (
     Handout,
     Job,
@@ -23,11 +21,6 @@ from commonplace.workflow import (
     Recognition,
     StepResult,
     Workflow,
-)
-
-on_request = pytest.mark.skipif(
-    not os.environ.get("COMMONPLACE_WORKFLOW_TESTS"),
-    reason="the code orchestrator is not implemented; set COMMONPLACE_WORKFLOW_TESTS=1 to run",
 )
 
 Worker = Callable[[Handout], None]

@@ -14,11 +14,8 @@ from tests.commonplace.workflow.definitions import (
     OneJob,
     ScriptedAgent,
     new_run,
-    on_request,
     write_invalid,
 )
-
-pytestmark = on_request
 
 DEFINITION = "tests.commonplace.workflow.definitions:TwoLenses"
 

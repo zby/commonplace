@@ -1,7 +1,5 @@
 """The code orchestrator.
 
-API definition only. Nothing here is implemented yet.
-
 A workflow definition is ordinary synchronous code. It names jobs with
 `agent()`, which returns a handle at once, and asks for results with `wait()`.
 A wait on a job that is not yet accepted cannot be satisfied inside this
@@ -28,16 +26,63 @@ therefore declared with `Context.effect`, which runs it once.
 
 from __future__ import annotations
 
+import copy
+import importlib
+import inspect
+import os
+import traceback
 from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from commonplace.workflow.job import Job
+from commonplace.workflow.job import (
+    RESERVED,
+    DefinitionError,
+    Job,
+    check_name,
+    normalized,
+)
+from commonplace.workflow.store import (
+    FORMAT,
+    RunBusy,
+    RunStore,
+    StateError,
+    canonical,
+    dump,
+    file_sha,
+    new_job,
+    sha,
+    write_atomic,
+)
+
+__all__ = [
+    "REPORT_EVENTS",
+    "Block",
+    "Blocked",
+    "Context",
+    "Done",
+    "Handout",
+    "JobHandle",
+    "Launch",
+    "Orchestrator",
+    "Recognition",
+    "Report",
+    "RunBusy",
+    "StateError",
+    "StepResult",
+    "Uncertain",
+    "Workflow",
+    "load_definition",
+]
 
 REPORT_EVENTS = ("launch-failed", "repair", "stop")
 """The events the agent orchestrator reports. Any other event is refused."""
+
+REPAIR = "repair"
+STOP = "stop"
 
 
 # Outcomes of a step
@@ -85,10 +130,11 @@ class Block:
     `subject` is a job name, `workflow` when a step that code executes
     failed, or `effect <name>` when a completed effect no longer matches its
     inputs or is no longer reached. No job can be named `workflow`, and a job
-    name has no space, so the three kinds cannot be confused. `reason` is one short line. `record_path` is a file with the
-    details: attempts, validator messages, the worker's problem report, the
-    error, and the agent orchestrator's reports. `permitted` is `repair` or
-    `stop`. `scope` is what a repair may change, as the definition declares it.
+    name has no space, so the three kinds cannot be confused. `reason` is one
+    short line. `record_path` is a file with the details: attempts, validator
+    messages, the worker's problem report, the error, and the agent
+    orchestrator's reports. `permitted` is `repair` or `stop`. `scope` is what
+    a repair may change, as the definition declares it.
     """
 
     subject: str
@@ -162,21 +208,6 @@ class Recognition(Enum):
     UNKNOWN = "unknown"
 
 
-class RunBusy(Exception):
-    """Another `step` is running on the same run."""
-
-
-class StateError(Exception):
-    """The run's state records cannot be trusted.
-
-    Raised when a record the run requires is missing, does not parse, does
-    not agree with the other records, or was written by a different format
-    version. It is never read as an ordinary outcome such as a missing
-    acceptance or an effect that never started, because that reading could
-    repeat an effect. The run needs the operator.
-    """
-
-
 # The definition's side
 
 
@@ -214,12 +245,20 @@ class Workflow:
     params: Mapping[str, Any]
 
     def __init__(self, params: Mapping[str, Any] | None = None) -> None:
-        raise NotImplementedError
+        self.params = dict(params or {})
 
     def run(self, ctx: Context) -> None:
         """The workflow. It must give the same jobs when it is run again on the
         same run directory, and every step in it must be safe to meet again."""
         raise NotImplementedError
+
+
+class _PathEnded(BaseException):
+    """The path cannot continue in this step.
+
+    A BaseException, so that a definition catching `Exception` does not
+    swallow it.
+    """
 
 
 class JobHandle:
@@ -228,10 +267,15 @@ class JobHandle:
     job: Job
     path: Path
 
+    def __init__(self, job: Job, path: Path, accepted: bool) -> None:
+        self.job = job
+        self.path = path
+        self._accepted = accepted
+
     @property
     def accepted(self) -> bool:
         """Whether the job's output is accepted in this step."""
-        raise NotImplementedError
+        return self._accepted
 
     def wait(self) -> Path:
         """The path of the accepted output.
@@ -240,7 +284,9 @@ class JobHandle:
         `wait` ends here for this step. A definition that catches `Exception`
         does not catch this.
         """
-        raise NotImplementedError
+        if not self._accepted:
+            raise _PathEnded
+        return self.path
 
 
 class Context:
@@ -251,16 +297,20 @@ class Context:
 
     run_dir: Path
 
+    def __init__(self, step: _Step) -> None:
+        self._step = step
+        self.run_dir = step.run_dir
+
     def agent(self, job: Job) -> JobHandle:
         """Name a job and return its handle at once.
 
         The job is judged here. It is accepted when its output passes the
         job's current validator, the input state is the one recorded at
         hand-out, and the output's bytes are those accepted before, if it was
-        accepted before. The input state
-        is `Job.prompt`, the declared inputs' bytes and the launch parameters.
-        It holds no absolute path of the run directory, so a run directory
-        that is moved keeps its acceptances.
+        accepted before. The input state is `Job.prompt`, the declared
+        inputs' bytes and the launch parameters. It holds no absolute path of
+        the run directory, so a run directory that is moved keeps its
+        acceptances.
 
         An output that was never accepted, found when the input state differs
         from the one recorded at its hand-out, is refused. Such a refusal
@@ -276,11 +326,16 @@ class Context:
         refused output, an accepted output that someone changed, and one that
         a changed validator refuses.
 
-        A job to be handed out whose declared inputs include the output of
-        another job named in the same step and not accepted raises
-        DefinitionError: the worker would read a result that does not exist
-        yet. The definition waits on that job first. The check is made when
-        the step ends, so it does not depend on the order of the two calls.
+        A job whose declared inputs include the output of another job named
+        in the same step and not accepted raises DefinitionError: a worker
+        would read a result that does not exist yet, or an accepted result
+        would be used while the output it was made from is being replaced.
+        This holds for an accepted job too, so that its `wait` cannot pass
+        while its producer is pending. The definition waits on the producer
+        first. The check is made when the second of the two jobs is named, so
+        it does not depend on the order of the two calls. When an accepted
+        consumer is named and waited on before its producer, what the
+        definition does between the two calls runs before the check.
 
         The input state is compared at hand-out and when the output is
         judged, not in between. An input changed and changed back while the
@@ -294,7 +349,7 @@ class Context:
         `./a.md` are the same path. A DefinitionError leaves the step without
         a result, so no job is handed out in a step that raises one.
         """
-        raise NotImplementedError
+        return self._step.agent(job)
 
     def wait(self, *handles: JobHandle) -> list[Path]:
         """The accepted outputs, in the order asked.
@@ -302,7 +357,9 @@ class Context:
         When any of the jobs is not accepted, the calling path ends here for
         this step.
         """
-        raise NotImplementedError
+        if not all(handle.accepted for handle in handles):
+            raise _PathEnded
+        return [handle.path for handle in handles]
 
     def parallel(self, *paths: Callable[[], Any]) -> list[Any]:
         """Run independent paths and return what each returned, in order.
@@ -313,7 +370,21 @@ class Context:
         wait, the calling path ends here too. An error on one path does not
         keep the others from running; it becomes a block on `workflow`.
         """
-        raise NotImplementedError
+        results: list[Any] = []
+        ended = False
+        for path in paths:
+            try:
+                results.append(path())
+            except _PathEnded:
+                ended = True
+            except DefinitionError:
+                raise
+            except Exception as error:  # noqa: BLE001 - becomes a block on `workflow`
+                self._step.errors.append(error)
+                ended = True
+        if ended:
+            raise _PathEnded
+        return results
 
     def effect(
         self,
@@ -364,7 +435,7 @@ class Context:
         settles an effect that is no longer reached with
         `Orchestrator.resolve`.
         """
-        raise NotImplementedError
+        self._step.effect(name, do, [str(path) for path in inputs], recognize)
 
 
 # The orchestrator
@@ -376,7 +447,24 @@ def load_definition(reference: str) -> type[Workflow]:
     Raises ValueError when the reference cannot be loaded or does not name a
     workflow definition.
     """
-    raise NotImplementedError
+    module_name, colon, attribute = reference.partition(":")
+    if not colon or not module_name or not attribute:
+        raise ValueError(
+            f"{reference!r} is not a workflow reference of the form "
+            "package.module:ClassName"
+        )
+    try:
+        module = importlib.import_module(module_name)
+    except ImportError as error:
+        raise ValueError(f"cannot import {module_name}: {error}") from None
+    found = getattr(module, attribute, None)
+    if not (
+        isinstance(found, type)
+        and issubclass(found, Workflow)
+        and found is not Workflow
+    ):
+        raise ValueError(f"{reference} does not name a workflow definition")
+    return found
 
 
 class Orchestrator:
@@ -399,7 +487,9 @@ class Orchestrator:
     workflow: Workflow
 
     def __init__(self, run_dir: Path, workflow: Workflow) -> None:
-        raise NotImplementedError
+        self.run_dir = Path(run_dir).absolute()
+        self.workflow = workflow
+        self._store = RunStore(self.run_dir)
 
     @classmethod
     def create(
@@ -410,13 +500,39 @@ class Orchestrator:
         `definition` is a reference as `load_definition` takes it. Raises
         ValueError when the directory already holds a started run.
         """
-        raise NotImplementedError
+        run_dir = Path(run_dir).absolute()
+        store = RunStore(run_dir)
+        if store.run_file.exists():
+            raise ValueError(f"{run_dir} already holds a started run")
+        workflow = load_definition(definition)(params)
+        record = {"format": FORMAT, "definition": definition, "params": workflow.params}
+        try:
+            text = dump(record)
+        except (TypeError, ValueError) as error:
+            raise ValueError(
+                f"the parameters are not serializable as JSON: {error}"
+            ) from None
+        write_atomic(store.run_file, text)
+        return cls(run_dir, workflow)
 
     @classmethod
     def open(cls, run_dir: Path) -> Orchestrator:
         """The orchestrator of a started run. Raises ValueError when the
         directory is not a run."""
-        raise NotImplementedError
+        run_dir = Path(run_dir).absolute()
+        store = RunStore(run_dir)
+        if not store.run_file.exists():
+            raise ValueError(
+                f"{run_dir} is not a run: it has no {store.relative(store.run_file)}"
+            )
+        record = store.read_json(store.run_file)
+        if (
+            set(record) != {"format", "definition", "params"}
+            or not isinstance(record["definition"], str)
+            or not isinstance(record["params"], dict)
+        ):
+            raise StateError(f"{store.run_file} does not have the expected fields")
+        return cls(run_dir, load_definition(record["definition"])(record["params"]))
 
     def step(self) -> StepResult:
         """Run the definition from the top until no path can continue.
@@ -449,7 +565,8 @@ class Orchestrator:
         before the rename leaves those records as they were, and a prompt file it
         wrote is written again. A step that ends after the rename leaves
         moves undone; the next step first moves every such file that is
-        still in place with the recorded hash, then judges. A hand-out whose
+        still in place with the recorded hash and whose kept copy does not
+        exist yet, then judges. A hand-out whose
         Launch was never returned counts as a failed attempt, as any
         hand-out without an output does.
 
@@ -460,7 +577,33 @@ class Orchestrator:
         while one is running raises RunBusy. A second `step` within the same
         process is not a supported use, and its behaviour is not specified.
         """
-        raise NotImplementedError
+        store = self._store
+        with store.locked():
+            state = store.load_state()
+            effects = store.load_effects()
+            if not store.state_file.exists():
+                store.save_state(state)
+            if state["moves"]:
+                store.move(state["moves"])
+                state["moves"] = []
+                store.save_state(state)
+            stopped = state["workflow"]["stopped"]
+            if stopped is not None:
+                # The definition does not run, so no recognizer is at hand: a
+                # started effect is uncertain, as one no longer reached is.
+                block = self._stopped_block(RESERVED, stopped)
+                for name, record in sorted(effects.items()):
+                    if record["status"] == "started":
+                        return Uncertain(
+                            name,
+                            "the effect started and its completion was not "
+                            "recorded; the definition is stopped",
+                            (block,),
+                        )
+                return Blocked((block,))
+            step = _Step(self, store, state, effects)
+            step.run()
+            return step.finish()
 
     def resolve(self, effect: str, recognition: Recognition) -> None:
         """Record what the operator established about an effect.
@@ -477,7 +620,38 @@ class Orchestrator:
         definition reaches it, and otherwise owes nothing. Raises ValueError
         for UNKNOWN, and for an effect in none of these states.
         """
-        raise NotImplementedError
+        if recognition is Recognition.UNKNOWN:
+            raise ValueError(
+                "an effect cannot be resolved as unknown; establish whether it "
+                "took place (completed) or not (absent)"
+            )
+        store = self._store
+        with store.locked():
+            state = store.load_state()
+            record = store.load_effects().get(effect)
+            if record is None:
+                raise ValueError(f"no effect named {effect} is recorded in this run")
+            current = _files_state(self.run_dir, record["inputs"])
+            unreached = effect in state["unreached"]
+            if not (
+                record["status"] == "started" or record["state"] != current or unreached
+            ):
+                raise ValueError(
+                    f"effect {effect} is completed and matches its inputs; "
+                    "there is nothing to resolve"
+                )
+            if recognition is Recognition.ABSENT:
+                store.drop_effect(effect)
+            else:
+                record.update(
+                    status="completed",
+                    state=current,
+                    required=record["required"] and not unreached,
+                )
+                store.save_effect(record)
+            if unreached:
+                state["unreached"].remove(effect)
+                store.save_state(state)
 
     def release(self, subject: str) -> None:
         """Let a stopped job, or the stopped `workflow`, be tried again.
@@ -490,7 +664,27 @@ class Orchestrator:
         Raises ValueError for a subject that is not stopped, and for an
         effect, whose state is recorded with `resolve`.
         """
-        raise NotImplementedError
+        if subject.startswith("effect "):
+            raise ValueError(
+                f"{subject} is not released; the operator records its state "
+                "with resolve"
+            )
+        store = self._store
+        with store.locked():
+            state = store.load_state()
+            if subject == RESERVED:
+                workflow = state["workflow"]
+                if workflow["stopped"] is None:
+                    raise ValueError(f"{RESERVED} is not stopped")
+                workflow.update(stopped=None, places={})
+            else:
+                record = state["jobs"].get(subject)
+                if record is None or record["stopped"] is None:
+                    raise ValueError(f"job {subject} is not stopped")
+                record.update(
+                    stopped=None, failures=0, repairs=0, outstanding=None, history=[]
+                )
+            store.save_state(state)
 
     def report(self, event: str, job: str | None = None, text: str = "") -> Report:
         """Record one observation of the agent orchestrator.
@@ -498,8 +692,663 @@ class Orchestrator:
         The run does not advance, and no report causes an acceptance. Raises
         ValueError for an event that is not in REPORT_EVENTS.
         """
-        raise NotImplementedError
+        if event not in REPORT_EVENTS:
+            raise ValueError(
+                f"event {event!r} is not reported; the events are "
+                f"{', '.join(REPORT_EVENTS)}"
+            )
+        report = Report(
+            number=len(self._store.read_reports()) + 1,
+            event=event,
+            job=job,
+            text=text,
+            recorded_at=datetime.now(UTC).isoformat(timespec="seconds"),
+        )
+        self._store.append_report({"format": FORMAT, **report.__dict__})
+        return report
 
     def reports(self) -> list[Report]:
         """Every report recorded for the run, oldest first."""
-        raise NotImplementedError
+        return [
+            Report(**{key: value for key, value in record.items() if key != "format"})
+            for record in self._store.read_reports()
+        ]
+
+    def _stopped_block(self, subject: str, stopped: Mapping[str, str]) -> Block:
+        return Block(
+            subject=subject,
+            reason=stopped["reason"],
+            record_path=self.run_dir / stopped["record"],
+            permitted=STOP,
+            scope=self.workflow.repair_scope,
+        )
+
+
+# One step
+
+
+def _resolve_path(run_dir: Path, declared: str) -> Path:
+    path = Path(declared)
+    return path if path.is_absolute() else run_dir / path
+
+
+def _input_key(run_dir: Path, declared: str) -> str:
+    """A declared path in one spelling, relative when it is inside the run
+    directory, so that no absolute path of the run directory is recorded."""
+    path = Path(declared)
+    if path.is_absolute():
+        try:
+            return normalized(str(path.relative_to(run_dir)))
+        except ValueError:
+            pass
+    return normalized(declared)
+
+
+def _files_state(run_dir: Path, declared: Sequence[str]) -> str:
+    """The hash of the declared files' bytes, keyed by their declared paths."""
+    files = []
+    for path in declared:
+        resolved = _resolve_path(run_dir, path)
+        if resolved.is_dir():
+            raise DefinitionError(f"input {path} is a directory; declare its files")
+        files.append([_input_key(run_dir, path), file_sha(resolved)])
+    return sha(canonical(files))
+
+
+@dataclass
+class _Judgment:
+    """What judging one job in this step found.
+
+    `record` is the job's record after the judgment and without a hand-out;
+    `handout_record` adds the hand-out.
+    """
+
+    job: Job
+    kind: str  # accepted, handout, block or stopped
+    record: dict[str, Any]
+    input_state: str = ""
+    reopened: bool = False
+    reason: str = ""
+    permitted: str = ""
+    record_path: Path | None = None
+    details: list[str] = field(default_factory=list)
+    problem: str | None = None
+    to_keep: list[Path] = field(default_factory=list)
+
+    def handout_record(self) -> dict[str, Any]:
+        record = copy.deepcopy(self.record)
+        if self.reopened:
+            record.update(accepted=None, failures=0, messages=[], history=[])
+        record["handouts"] += 1
+        record["outstanding"] = self.input_state
+        record["last_input"] = self.input_state
+        return record
+
+
+class _Step:
+    """One run of the definition, and what it leaves behind."""
+
+    def __init__(
+        self,
+        orchestrator: Orchestrator,
+        store: RunStore,
+        state: dict[str, Any],
+        effects: dict[str, dict[str, Any]],
+    ) -> None:
+        self.orchestrator = orchestrator
+        self.workflow = orchestrator.workflow
+        self.run_dir = orchestrator.run_dir
+        self.store = store
+        self.state = state
+        self.effects = effects
+        self.handles: dict[str, JobHandle] = {}
+        self.judgments: dict[str, _Judgment] = {}
+        self.owners: dict[str, str] = {}
+        self.errors: list[Exception] = []
+        self.definition_error: DefinitionError | None = None
+        self.uncertain: list[tuple[str, str]] = []
+        self.reached: set[str] = set()
+        self.effect_blocks: dict[str, str] = {}
+        self.unreached: list[str] = []
+        self.ran_to_end = False
+
+    # Running the definition
+
+    def run(self) -> None:
+        try:
+            self.workflow.run(Context(self))
+            self.ran_to_end = True
+        except _PathEnded:
+            pass
+        except DefinitionError as error:
+            self.definition_error = self.definition_error or error
+        except Exception as error:  # noqa: BLE001 - becomes a block on `workflow`
+            self.errors.append(error)
+        if self.definition_error is not None:
+            raise self.definition_error
+
+    def refuse(self, message: str) -> None:
+        """Raise a DefinitionError that a broad catch in the definition cannot
+        hide: it is raised again when the definition returns."""
+        error = DefinitionError(message)
+        self.definition_error = self.definition_error or error
+        raise error
+
+    def agent(self, job: Job) -> JobHandle:
+        existing = self.handles.get(job.name)
+        if existing is not None:
+            if not existing.job.same_task_as(job):
+                self.refuse(f"job {job.name} is named for two different tasks")
+            return existing
+        for path in (job.owned_output, job.owned_problem):
+            owner = self.owners.get(path)
+            if owner is not None:
+                self.refuse(f"path {path} is owned by job {owner} and job {job.name}")
+        for path in (job.owned_output, job.owned_problem):
+            self.owners[path] = job.name
+        judgment = self.judge(job)
+        self.check_reads(job, judgment)
+        handle = JobHandle(
+            job, job.output_path(self.run_dir), judgment.kind == "accepted"
+        )
+        self.handles[job.name] = handle
+        self.judgments[job.name] = judgment
+        return handle
+
+    def effect(
+        self,
+        name: str,
+        do: Callable[[], None],
+        inputs: list[str],
+        recognize: Callable[[], Recognition] | None,
+    ) -> None:
+        try:
+            check_name(name, "effect")
+        except DefinitionError as error:
+            self.refuse(str(error))
+        if name in self.reached:
+            self.refuse(f"effect {name} is declared twice in one step")
+        self.reached.add(name)
+        current = _files_state(self.run_dir, inputs)
+        record = self.effects.get(name)
+        if record is not None and record["status"] == "started":
+            recognition, detail = self.recognize(recognize)
+            if recognition is Recognition.COMPLETED:
+                record = {**record, "status": "completed"}
+                self.save_effect(record)
+            elif recognition is Recognition.ABSENT:
+                record = None
+            else:
+                self.uncertain.append((name, detail))
+                raise _PathEnded
+        if record is None:
+            record = {
+                "format": FORMAT,
+                "name": name,
+                "status": "started",
+                "inputs": inputs,
+                "state": current,
+                "required": True,
+            }
+            self.save_effect(record)
+            try:
+                do()
+            except Exception as error:
+                # Ending the path keeps a broad catch in the definition from
+                # hiding the error.
+                self.errors.append(error)
+                raise _PathEnded from error
+            record = {**record, "status": "completed"}
+            self.save_effect(record)
+            return
+        if record["state"] != current:
+            self.effect_blocks[name] = (
+                "the effect is completed and its inputs have changed since"
+            )
+
+    def recognize(
+        self, recognize: Callable[[], Recognition] | None
+    ) -> tuple[Recognition, str]:
+        started = "the effect started and its completion was not recorded"
+        if recognize is None:
+            return Recognition.UNKNOWN, f"{started}; the definition gives no recognizer"
+        try:
+            recognition = recognize()
+        except Exception as error:  # noqa: BLE001 - an uncertain outcome, not a block
+            return Recognition.UNKNOWN, f"{started}; the recognizer failed: {error}"
+        if not isinstance(recognition, Recognition):
+            return (
+                Recognition.UNKNOWN,
+                f"{started}; the recognizer gave {recognition!r}",
+            )
+        return recognition, (
+            f"{started}; the recognizer could not establish whether it took place"
+        )
+
+    def save_effect(self, record: dict[str, Any]) -> None:
+        self.store.save_effect(record)
+        self.effects[record["name"]] = record
+
+    # Judging a job
+
+    def input_state(self, job: Job) -> str:
+        return sha(
+            canonical(
+                {
+                    "prompt": job.prompt,
+                    "inputs": _files_state(self.run_dir, job.inputs),
+                    "launch": job.launch_data(),
+                }
+            )
+        )
+
+    def refusals(self, job: Job, output: Path) -> list[str]:
+        if job.validator is None:
+            return []
+        return [str(reason) for reason in job.validator(output)]
+
+    def judge(self, job: Job) -> _Judgment:
+        record = copy.deepcopy(self.state["jobs"].get(job.name) or new_job())
+        if record["stopped"] is not None:
+            return _Judgment(
+                job,
+                "stopped",
+                record,
+                reason=record["stopped"]["reason"],
+                permitted=STOP,
+                record_path=self.run_dir / record["stopped"]["record"],
+            )
+        current = self.input_state(job)
+        output = job.output_path(self.run_dir)
+        problem = job.problem_path(self.run_dir)
+
+        if problem.exists():
+            record["outstanding"] = None
+            return self.block(
+                job,
+                record,
+                "the worker wrote a problem report",
+                problem=problem.read_text(encoding="utf-8", errors="replace"),
+                to_keep=[path for path in (problem, output) if path.is_file()],
+            )
+
+        accepted = record["accepted"]
+        if accepted is not None:
+            if (
+                file_sha(output) == accepted["output"]
+                and current == accepted["input"]
+                and not self.refusals(job, output)
+            ):
+                return _Judgment(job, "accepted", record)
+            return _Judgment(job, "handout", record, current, reopened=True)
+
+        if record["outstanding"] is not None:
+            refusals: list[str] = []
+            if not output.exists():
+                failure = "no output"
+            elif current != record["outstanding"]:
+                failure = "an input changed after hand-out"
+            else:
+                refusals = self.refusals(job, output)
+                if not refusals:
+                    return self.accept(job, record, current, output)
+                failure = "the output was refused by its validator"
+            record["outstanding"] = None
+            record["failures"] += 1
+            record["messages"] = refusals or [failure]
+            record["history"].append(
+                f"attempt {record['handouts']}: {failure}"
+                + "".join(f"\n  - {message}" for message in refusals)
+            )
+            if record["failures"] > self.workflow.retry_limit:
+                return self.block(
+                    job,
+                    record,
+                    f"{failure}, attempt {record['failures']} of "
+                    f"{self.workflow.retry_limit + 1}",
+                )
+            return _Judgment(job, "handout", record, current)
+
+        if (
+            output.exists()
+            and record["last_input"] == current
+            and not self.refusals(job, output)
+        ):
+            return self.accept(job, record, current, output)
+        return _Judgment(job, "handout", record, current)
+
+    def accept(
+        self, job: Job, record: dict[str, Any], current: str, output: Path
+    ) -> _Judgment:
+        record.update(
+            accepted={"input": current, "output": file_sha(output)},
+            failures=0,
+            repairs=0,
+            outstanding=None,
+            last_input=current,
+            messages=[],
+            history=[],
+        )
+        return _Judgment(job, "accepted", record)
+
+    def block(
+        self,
+        job: Job,
+        record: dict[str, Any],
+        reason: str,
+        problem: str | None = None,
+        to_keep: list[Path] | None = None,
+    ) -> _Judgment:
+        details = record["history"]
+        record.update(failures=0, history=[])
+        record["repairs"] += 1
+        record["blocks"] += 1
+        permitted = REPAIR if record["repairs"] <= self.workflow.repair_limit else STOP
+        path = self.store.job_record_path(job.name, record["blocks"])
+        if permitted == STOP:
+            record["stopped"] = {"reason": reason, "record": self.store.relative(path)}
+        return _Judgment(
+            job,
+            "block",
+            record,
+            reason=reason,
+            permitted=permitted,
+            record_path=path,
+            details=details,
+            problem=problem,
+            to_keep=to_keep or [],
+        )
+
+    # After the definition
+
+    def check_reads(self, job: Job, judgment: _Judgment) -> None:
+        """Refuse a job that reads the output of a job named in this step and
+        not accepted, whichever of the two is named second."""
+        for declared in job.inputs:
+            key = _input_key(self.run_dir, declared)
+            for name, other in self.judgments.items():
+                if other.job.owned_output == key and other.kind != "accepted":
+                    self.refuse_read(job.name, declared, name)
+        if judgment.kind == "accepted":
+            return
+        for name, other in self.judgments.items():
+            for declared in other.job.inputs:
+                if _input_key(self.run_dir, declared) == job.owned_output:
+                    self.refuse_read(name, declared, job.name)
+
+    def refuse_read(self, consumer: str, declared: str, producer: str) -> None:
+        self.refuse(
+            f"job {consumer} reads {declared}, the output of job {producer}, "
+            f"which is not accepted; wait on {producer} before naming {consumer}"
+        )
+
+    def check_unreached(self) -> None:
+        for name, record in sorted(self.effects.items()):
+            if name in self.reached:
+                continue
+            if record["status"] == "started":
+                self.uncertain.append(
+                    (
+                        name,
+                        (
+                            "the effect started, its completion was not recorded, "
+                            "and the definition no longer reaches it"
+                        ),
+                    )
+                )
+            elif record["required"]:
+                self.effect_blocks[name] = (
+                    "the effect is completed and the definition no longer reaches it"
+                )
+                self.unreached.append(name)
+
+    def place(self, error: BaseException) -> str:
+        """Where in the definition's own files the error was raised."""
+        files = set()
+        for cls in type(self.workflow).__mro__:
+            if cls in (Workflow, object):
+                continue
+            try:
+                files.add(os.path.normcase(os.path.abspath(inspect.getfile(cls))))
+            except TypeError:
+                continue
+        place = f"outside the definition: {type(error).__name__}"
+        frame = error.__traceback__
+        while frame is not None:
+            filename = os.path.normcase(
+                os.path.abspath(frame.tb_frame.f_code.co_filename)
+            )
+            if filename in files:
+                place = f"{filename}:{frame.tb_lineno}"
+            frame = frame.tb_next
+        return place
+
+    def finish(self) -> StepResult:
+        if self.ran_to_end:
+            self.check_unreached()
+        state = copy.deepcopy(self.state)
+        blocks: list[tuple[Block, str | None]] = []
+
+        for name in sorted(self.judgments):
+            judgment = self.judgments[name]
+            if judgment.kind in ("block", "stopped"):
+                text = None if judgment.kind == "stopped" else self.job_record(judgment)
+                blocks.append((self.as_block(name, judgment), text))
+
+        workflow = state["workflow"]
+        if self.errors:
+            places = dict(workflow["places"])
+            failing = {self.place(error) for error in self.errors}
+            for place in failing:
+                places[place] = places.get(place, 0) + 1
+            workflow["places"] = places
+            workflow["blocks"] += 1
+            limit = self.workflow.repair_limit
+            permitted = (
+                STOP if any(places[place] > limit for place in failing) else REPAIR
+            )
+            path = self.store.workflow_record_path(workflow["blocks"])
+            first = self.errors[0]
+            reason = f"{type(first).__name__}: {first}".splitlines()[0]
+            if permitted == STOP:
+                workflow["stopped"] = {
+                    "reason": reason,
+                    "record": self.store.relative(path),
+                }
+            blocks.append(
+                (
+                    Block(
+                        RESERVED, reason, path, permitted, self.workflow.repair_scope
+                    ),
+                    self.workflow_record(reason, permitted),
+                )
+            )
+        else:
+            workflow["places"] = {}
+
+        for name in sorted(self.effect_blocks):
+            reason = self.effect_blocks[name]
+            path = self.store.effect_record_path(name)
+            block = Block(
+                f"effect {name}", reason, path, STOP, self.workflow.repair_scope
+            )
+            blocks.append((block, self.effect_record(name, reason)))
+
+        for block, text in blocks:
+            if text is not None:
+                write_atomic(block.record_path, text)
+        found = tuple(block for block, _ in blocks)
+
+        if self.uncertain:
+            effect, detail = self.uncertain[0]
+            return Uncertain(effect, detail, found)
+
+        handouts = (
+            []
+            if found
+            else [
+                judgment
+                for judgment in self.judgments.values()
+                if judgment.kind == "handout"
+            ]
+        )
+        handed_out = {judgment.job.name for judgment in handouts}
+        to_keep: list[tuple[str, Path]] = []
+        for name, judgment in self.judgments.items():
+            if name in handed_out:
+                state["jobs"][name] = judgment.handout_record()
+                output = judgment.job.output_path(self.run_dir)
+                problem = judgment.job.problem_path(self.run_dir)
+                to_keep += [
+                    (name, path) for path in (output, problem) if path.is_file()
+                ]
+            else:
+                state["jobs"][name] = judgment.record
+                to_keep += [(name, path) for path in judgment.to_keep]
+        if self.ran_to_end:
+            state["unreached"] = self.unreached
+
+        moves = []
+        for name, path in to_keep:
+            state["kept"] += 1
+            target = self.store.kept_path(name, state["kept"], path)
+            moves.append(
+                {
+                    "source": self.store.relative(path),
+                    "target": self.store.relative(target),
+                    "sha": file_sha(path),
+                }
+            )
+
+        launched = []
+        for judgment in sorted(handouts, key=lambda judgment: judgment.job.name):
+            job = judgment.job
+            record = state["jobs"][job.name]
+            prompt_path = self.store.prompt_path(job.name)
+            write_atomic(prompt_path, self.prompt(job, record))
+            launched.append(
+                Handout(
+                    name=job.name,
+                    attempt=record["handouts"],
+                    prompt_path=prompt_path,
+                    output_path=job.output_path(self.run_dir),
+                    problem_path=job.problem_path(self.run_dir),
+                    launch=job.launch,
+                )
+            )
+
+        state["moves"] = moves
+        self.store.save_state(state)
+        if moves:
+            self.store.move(moves)
+            state["moves"] = []
+            self.store.save_state(state)
+
+        if found:
+            return Blocked(found)
+        if launched:
+            return Launch(tuple(launched))
+        if self.ran_to_end:
+            return Done()
+        raise RuntimeError("the definition stopped with nothing to launch or report")
+
+    # What a step writes for the agent orchestrator and the operator
+
+    def prompt(self, job: Job, record: dict[str, Any]) -> str:
+        lines = [
+            job.prompt.rstrip(),
+            "",
+            "## Where to write",
+            "",
+            f"Write the result to `{job.output_path(self.run_dir)}`.",
+            "",
+            (
+                "If you cannot finish the task, write why to "
+                f"`{job.problem_path(self.run_dir)}` instead, and reply in one line."
+            ),
+        ]
+        if record["failures"] and record["messages"]:
+            lines += ["", "## Why the previous attempt was refused", ""]
+            lines += [f"- {message}" for message in record["messages"]]
+        return "\n".join(lines) + "\n"
+
+    def as_block(self, name: str, judgment: _Judgment) -> Block:
+        assert judgment.record_path is not None
+        return Block(
+            subject=name,
+            reason=judgment.reason,
+            record_path=judgment.record_path,
+            permitted=judgment.permitted,
+            scope=self.workflow.repair_scope,
+        )
+
+    def reports_about(self, subject: str) -> list[str]:
+        return [
+            f"- report {report['number']}, {report['recorded_at']}, "
+            f"{report['event']}{'' if report['job'] is None else ' on ' + report['job']}: "
+            f"{report['text']}"
+            for report in self.store.read_reports()
+            if report["job"] in (None, subject)
+        ]
+
+    def header(self, subject: str, reason: str, permitted: str) -> list[str]:
+        return [
+            f"# Block on {subject}",
+            "",
+            f"- Reason: {reason}",
+            f"- Permitted: {permitted}",
+            f"- Repair scope: {self.workflow.repair_scope}",
+        ]
+
+    def job_record(self, judgment: _Judgment) -> str:
+        name = judgment.job.name
+        lines = self.header(name, judgment.reason, judgment.permitted)
+        lines += [f"- Hand-outs in the run: {judgment.record['handouts']}"]
+        if judgment.details:
+            lines += ["", "## Attempts", ""]
+            lines += [f"- {detail}" for detail in judgment.details]
+        if judgment.problem is not None:
+            lines += ["", "## Problem report", "", judgment.problem.rstrip()]
+        if judgment.to_keep:
+            lines += ["", "## Kept", ""]
+            lines += [
+                f"- {self.store.relative(path)} is moved under "
+                f"{self.store.relative(self.store.job_dir(name))}/kept/"
+                for path in judgment.to_keep
+            ]
+        reports = self.reports_about(name)
+        if reports:
+            lines += ["", "## Reports", "", *reports]
+        return "\n".join(lines) + "\n"
+
+    def workflow_record(self, reason: str, permitted: str) -> str:
+        lines = self.header(RESERVED, reason, permitted)
+        for error in self.errors:
+            lines += [
+                "",
+                f"## Error at {self.place(error)}",
+                "",
+                "```",
+                "".join(traceback.format_exception(error)).rstrip(),
+                "```",
+            ]
+        reports = self.reports_about(RESERVED)
+        if reports:
+            lines += ["", "## Reports", "", *reports]
+        return "\n".join(lines) + "\n"
+
+    def effect_record(self, name: str, reason: str) -> str:
+        record = self.effects[name]
+        lines = self.header(f"effect {name}", reason, STOP)
+        lines += [
+            f"- Inputs: {', '.join(record['inputs']) or 'none'}",
+            "",
+            (
+                "The operator establishes what is outside and records it with "
+                f"resolve {name} completed or resolve {name} absent."
+            ),
+        ]
+        reports = self.reports_about(f"effect {name}")
+        if reports:
+            lines += ["", "## Reports", "", *reports]
+        return "\n".join(lines) + "\n"

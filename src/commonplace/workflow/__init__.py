@@ -4,9 +4,7 @@ A program runs a workflow definition, keeps all run state on disk, executes
 every step it can, and stops only where it needs a sub-agent. This package
 imports nothing from the rest of Commonplace.
 
-The package currently defines the API only. Its tests run on request:
-
-    COMMONPLACE_WORKFLOW_TESTS=1 uv run pytest tests/commonplace/workflow
+The shell is `python -m commonplace.workflow.shell`; see its module docstring.
 """
 
 from commonplace.workflow.engine import (
