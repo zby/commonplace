@@ -50,7 +50,7 @@ None of these tests uses a model or the analysis package.
 9. A missing output makes `step` name the job again.
 10. A problem report, written to a path beside the output, is read by `step`.
 11. A report is stored and appears in the failure record. No report causes an acceptance. A run completes when every report is omitted.
-12. When the process ends after a step's outside effect and before the effect is recorded, the next `step` establishes what took place. An effect that took place in full is not repeated, one that did not begin is run, and one that took place in part gives the uncertain-state outcome. A missing or failing recognizer also gives that outcome.
+12. When the process ends after an effect and before the effect is recorded, the next `step` establishes what took place. An effect that took place in full is not repeated, one that did not begin is run, and one that took place in part gives the uncertain-state outcome. A missing or failing recognizer also gives that outcome.
 13. A completed effect whose inputs have changed stops the run. It is not repeated, and the run does not report itself finished.
 14. Changing a job's launch parameters makes an accepted job pending again.
 15. A path owned by two jobs is refused before any job is handed out. Each job owns its output and its problem report; no job may write into the state directory.
@@ -65,7 +65,7 @@ None of these tests uses a model or the analysis package.
 24. A block that permits only stopping ends what the agent orchestrator may do, not the run. The operator releases a stopped job or the stopped `workflow`; it is tried again with its attempts and repairs starting over, and accepted outputs of other jobs are untouched.
 25. The block on an effect whose inputs changed is judged anew in every step. It goes away when the inputs are restored, or when the operator records the effect as completed or as absent.
 
-Tests 12, 13 and 16 use a test step with an outside effect. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
+An effect is a step that code executes and that changes something outside the run directory; the proposal's vocabulary defines it against a job and a mechanical step. The tests on effects use a test effect that publishes files to a directory outside the run. Making the real publisher recognizable after an interruption is a change to analysis code and belongs to the offload workshop.
 
 ## Left to the build
 

@@ -8,6 +8,22 @@ A wait on a job that is not yet accepted cannot be satisfied inside this
 process, so it ends the path it is on. Nothing is resumed: the next `step`
 runs the definition from the top, and accepted outputs let it pass the waits
 it stopped at before. No asynchronous library is involved.
+
+A definition has three kinds of step.
+
+A job is executed by a worker, a sub-agent. Its result is a file in the run
+directory, judged by code.
+
+A mechanical step is executed by code and reads or changes only the run
+directory. It is ordinary code in the definition, with no call into this
+package. It runs again at every replay, so it must give the same result
+whenever it runs on the same files.
+
+An effect is executed by code and changes something outside the run
+directory, such as publishing a result to its destination. The run directory
+cannot show whether it took place, running it again is not harmless, and
+what it produced stays outside when the run's files later change. It is
+therefore declared with `Context.effect`, which runs it once.
 """
 
 from __future__ import annotations
@@ -99,7 +115,7 @@ class Blocked:
 
 @dataclass(frozen=True)
 class Uncertain:
-    """An effect outside the run directory may or may not have happened.
+    """An effect may or may not have taken place.
 
     Every later `step` gives the same outcome until the operator has
     established what took place and recorded it with `Orchestrator.resolve`.
@@ -268,10 +284,15 @@ class Context:
         inputs: Sequence[str] = (),
         recognize: Callable[[], Recognition] | None = None,
     ) -> None:
-        """Run a step that has an effect outside the run directory, once.
+        """Run an effect, once.
 
-        `inputs` are the files the effect is made from, as a job's inputs are.
-        Their state is recorded before `do` runs.
+        An effect is a step that code executes and that changes something
+        outside the run directory. `name` identifies it within the run. `do`
+        performs it. `inputs` are the files the effect is made from, as a
+        job's inputs are; their state is recorded before `do` runs.
+
+        A step that changes only the run directory is not an effect and is
+        not declared here.
 
         Code does not repeat or undo an effect. When it is completed and its
         inputs have changed since, what is outside no longer matches the run:
