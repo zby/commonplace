@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_records import annotated_ids, declared_ids
+from commonplace.lib.agentic_records import annotated_ids, declared_ids, is_absence
 from commonplace.lib.agentic_set import (
     REVIEWS_ROOT,
     is_review_path,
@@ -116,9 +116,7 @@ def _strings(value: object, label: str) -> list[str]:
     return value
 
 
-def validate_comparison(
-    profile: object, *, known_ids: set[str], memory_report: bool = False
-) -> dict:
+def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
     """Validate authored assessments and references, without classifying prose.
 
     ``known_ids`` are the record IDs the profile may cite.
@@ -157,8 +155,7 @@ def validate_comparison(
         if not isinstance(entry["note"], str) or not entry["note"].strip():
             raise ValueError(f"{name}: missing rationale or conclusion prevented")
         if not set(records) <= ids:
-            label = "shared or proposed" if memory_report else "canonical"
-            raise ValueError(f"{name}: unresolved {label} records")
+            raise ValueError(f"{name}: unresolved records")
         if not set(values) <= vocabulary:
             raise ValueError(f"{name}: off-vocabulary values")
         evidence = entry["evidence"]
@@ -182,8 +179,7 @@ def validate_comparison(
                 raise ValueError(f"{name}.{value}: invalid evidence basis")
             refs = _strings(support["records"], f"{name}.{value}.records")
             if not refs or not set(refs) <= ids:
-                label = "shared or proposed" if memory_report else "canonical"
-                raise ValueError(f"{name}.{value}: unresolved {label} records")
+                raise ValueError(f"{name}.{value}: unresolved records")
             if not isinstance(support["note"], str) or not support["note"].strip():
                 raise ValueError(f"{name}.{value}: missing evidence rationale")
         if (
@@ -192,10 +188,7 @@ def validate_comparison(
             and values == ["no"]
         ):
             raise ValueError(f"{name}: partial coverage cannot establish no")
-        if entry["assessment"] == "absent" and not any(
-            r.startswith("ABS-") or (memory_report and r.startswith("MEM-ABS-"))
-            for r in records
-        ):
+        if entry["assessment"] == "absent" and not any(is_absence(r) for r in records):
             raise ValueError(f"{name}: absence requires an evidenced-absence record")
         if name in {"trace_learning", "faithfulness_tested"} and len(values) > 1:
             raise ValueError(f"{name}: yes and no cannot be combined")
@@ -235,15 +228,11 @@ def memory_member_comparison(metadata: dict, body: str) -> dict:
     """Validate a memory report's own ``memory-comparison`` and return it.
 
     The one profile check shared by the memory type's validation rule and
-    the comparison loader. Either regime cites seeded records through its
-    ``On <ID>`` annotations; the local report also declares proposals, the
-    finalized member declares their canonical records.
+    the comparison loader. The profile cites records the report declares and
+    seeded records it annotates with ``On <ID>`` headings.
     """
-    finalized = isinstance(metadata.get("finalized-from"), str)
-    known = annotated_ids(body) | set(declared_ids(body, proposals=not finalized))
-    return validate_comparison(
-        metadata.get("memory-comparison"), known_ids=known, memory_report=not finalized
-    )
+    known = annotated_ids(body) | set(declared_ids(body))
+    return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
 
 
 @dataclass(frozen=True)

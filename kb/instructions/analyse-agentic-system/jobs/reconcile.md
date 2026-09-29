@@ -17,13 +17,11 @@ Write the output your prompt names, with exactly these sections, which go into t
 
 ## Reconcile
 
-Resolve proposed records into canonical IDs. Map exact identifier tokens rather than substrings, and check that every mapped target is declared and unique. The specialist proposal mapping is the table the overview type fixes, `specialist proposal | canonical record | disposition`, with one row for every proposal ID in the memory report; `rejected` removes a proposal. Epistemic `EPI-` proposals are mapped in the same way in a second table, `epistemic proposal | canonical record | disposition`.
+Every pass has declared its own records: unprefixed IDs in `output/runtime.md`, `MEM-` IDs in the memory report your prompt names, `EPI-` IDs in `output/epistemic.md`. No member is rewritten after the pass that wrote it, and nothing is renamed. Your Reconciliation is where the set's judgments about those records live.
 
-State each correction to a canonical record as an `Amendment:` entry naming the record, preserve anchored conflicts, and report independent convergence only when the lenses reached it independently. Recheck shared-route ownership. Attach the admission fields of memory routes from the specialist's findings rather than tracing those mechanisms twice. The specialist's `memory-comparison` profile stays in the memory member with its scope, per-value evidence bases and records, coverage assessments, uncertainties, and rationale preserved; check it against the records of the whole set. Each specialist quote stays in the memory member beside the record it supports; a runtime record cites that record rather than repeating the passage. Do not draft a second memory analysis, and do not silently strengthen the specialist's findings.
+Look for records two passes established for the same thing, and supersede one with the evidence for the identity: `Amendment: MEM-RTE-3 is superseded by RTE-7`, citing the anchors that show both trace the same thing. Both records stay declared. State each correction to any pass's record as an `Amendment:` paragraph naming the record by full ID, with the superseded value, replacement value, evidence anchor and affected findings. Preserve anchored conflicts, and report independent convergence only when the lenses reached it independently. Recheck shared-route ownership. Attach the admission fields of memory routes from the specialist's findings rather than tracing those mechanisms twice. The specialist's `memory-comparison` profile stays in the memory member with its scope, per-value evidence bases and records, coverage assessments, uncertainties, and rationale preserved; check it against the records of the whole set. Do not draft a second memory analysis, and do not silently strengthen the specialist's findings.
 
-Every record you register from an `EPI-` proposal, every amendment to a record the runtime draft declares, and every passage the epistemic draft asks to retain for such a record is written into the runtime member by a later job, from what you state here; give each new record its canonical ID, kind and identity in the epistemic table's row or under it. A passage for a record the memory report declares is a return to the specialist; in the last round, name it under Limitations as not retained instead.
-
-Code finalizes the memory member from your table and appends to your Reconciliation the local report's path, its SHA-256, and the mechanical edits finalization made. Do not write those yourself. If the table leaves a proposal unmapped, or rejects one that other findings still reference, your output is refused with the reason.
+Every ID you cite, in amendments too, must resolve in the set your output makes: the Source register, the runtime member, the memory report and the epistemic member. Your output is refused with the unresolved IDs otherwise.
 
 ## Return findings to the specialist
 
@@ -31,7 +29,7 @@ When a substantive conflict needs the specialist, add a fourth section, `## Retu
 
 ## Resolve a verification's blockers
 
-When your prompt says the previous round's verification named blockers, its inputs include that verification, the set check, and the previous round's runtime and epistemic members. Resolve each blocker in what you write: correct the reconciliation, the synthesis, or the limitations; register or amend what the members lack, so the next round's member jobs write it; or return it to the specialist when the memory report is at fault. The previous reconciliation is an input too: carry over what still holds.
+When your prompt says the previous round's verification named blockers, its inputs include that verification and the set check. Resolve each blocker in what you write: correct the reconciliation, the synthesis or the limitations; amend or supersede a record through an `Amendment:` paragraph; or return it to the specialist when the memory report is at fault. The runtime and epistemic members are not rewritten; a blocker in one of them that no amendment resolves stays a limitation. The previous reconciliation is an input too: carry over what still holds.
 
 ## Synthesize
 

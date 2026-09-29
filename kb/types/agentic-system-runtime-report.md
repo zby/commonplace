@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: agentic-system-runtime-report
-description: "Runtime member of an analysis set: runtime account, probe evidence, the canonical records the runtime pass declares, and its annotations on memory records"
+description: "Runtime member of an analysis set: runtime account, probe evidence, the canonical records the runtime pass declares, and its annotations on other members' records"
 schema: ./agentic-system-runtime-report.schema.yaml
 ---
 
@@ -9,9 +9,9 @@ schema: ./agentic-system-runtime-report.schema.yaml
 
 The member of a run's retained set that carries the runtime baseline: the
 traced invocation and its alternate and forcing routes, the execution
-preflight and probe evidence, and the canonical records the coordinator's
-runtime pass established. It annotates records the memory report declares
-with the runtime pass's own classifications. Set-wide conventions, the
+preflight and probe evidence, and the records the runtime pass
+established, under unprefixed IDs. The runtime pass runs before the lenses
+and its member is not rewritten afterwards. Set-wide conventions, the
 namespace, the declaration grammar, status fields, source anchors and the
 quotation contract, are those of the
 [overview](./agentic-system-analysis-overview.md#the-set).
@@ -190,19 +190,17 @@ channel, force, and horizon.
 
 ### Annotations
 
-`## Annotations` holds the runtime pass's fields on records the memory
-report declares, each as `#### On RTE-10 — Short label` followed by only
-the lens-specific fields: the admitting-route and theory-route fields
+`## Annotations` holds the runtime pass's fields on records another
+member declares, each as `#### On MEM-RTE-10 — Short label` followed by
+only the lens-specific fields: the admitting-route and theory-route fields
 above, decision roles, operating mode, answer oracle, and links to
 runtime-declared records. It repeats no generic identity, evidence
 passage or memory finding. State `none` when the runtime pass annotated no
-memory-declared record.
-
-### Amendments
-
-An optional `## Amendments` section, last in the report, holds
-corrections to records this report declares, under the set's
-[amendment grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar).
+record another member declares. Because the runtime member is written
+before the lenses declare their records, it ordinarily states `none`; the
+overview's Reconciliation attaches runtime-pass fields to a lens-declared
+route. Corrections to this member's records are amendments in the
+overview's Reconciliation.
 
 ## Template
 

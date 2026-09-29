@@ -102,45 +102,37 @@ def test_rejects_duplicate_declarations() -> None:
     assert any("duplicate declarations: OBJ-1" in error for error in record_reference_errors(content))
 
 
-def test_report_can_reference_commissioned_ids() -> None:
-    assert record_reference_errors("Uses OBJ-40 and MEM-OBJ-2.", memory_report=True) == []
+def test_member_can_reference_ids_other_members_declare() -> None:
+    assert record_reference_errors("Uses OBJ-40 and MEM-OBJ-2.") == []
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-"])
-def test_local_report_rejects_duplicate_declarations(prefix: str) -> None:
+@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+def test_rejects_duplicate_declarations_of_every_prefix(prefix: str) -> None:
     body = f"""## Shared records
 
 #### {prefix}OBJ-1 — First object
 
 #### {prefix}OBJ-1 — Different object
 """
-    assert record_reference_errors(body, memory_report=True) == [
+    assert record_reference_errors(body) == [
         f"record references: duplicate declarations: {prefix}OBJ-1"
     ]
 
 
-def test_proposal_and_final_record_have_the_same_declaration_grammar() -> None:
-    local = """## Shared records
+def test_lens_prefix_is_part_of_the_declared_id() -> None:
+    body = """## Shared records
 
 #### MEM-RTE-1 — S3 invocation
 
-MEM-RTE-1 reads the bucket.
+#### EPI-RTE-1 — Admission check
+
+#### RTE-1 — Ordinary invocation
+
+MEM-RTE-1 and EPI-RTE-1 read the bucket RTE-1 writes.
 """
-    finalized = local.replace("MEM-RTE-1", "RTE-1")
-    assert declared_ids(local, proposals=True) == ["MEM-RTE-1"]
-    assert declared_ids(local) == []
-    assert declared_ids(finalized) == ["RTE-1"]
-    assert record_reference_errors(local, memory_report=True) == []
-    assert record_reference_errors(finalized) == []
-
-
-def test_result_rejects_unintegrated_proposal_records() -> None:
-    assert any("unintegrated proposal" in error
-               for error in record_reference_errors(BASE + "See MEM-OBJ-1 and EPI-OBJ-2."))
-
-
-def test_result_allows_explicit_proposal_mapping_in_reconciliation() -> None:
-    assert record_reference_errors(BASE + "## Reconciliation\n\nMEM-OBJ-1 maps to OBJ-1.\n") == []
+    assert declared_ids(body) == ["MEM-RTE-1", "EPI-RTE-1", "RTE-1"]
+    assert record_reference_errors(body) == []
+    assert set_record_errors({"overview.md": body})[1] == []
 
 
 RUNTIME = """# Runtime
@@ -155,9 +147,9 @@ Record citing SRC-1.
 
 ## Annotations
 
-#### On RTE-10 — Benchmark import
+#### On MEM-RTE-10 — Benchmark import
 
-Theory-route overlay on the memory route RTE-10.
+Theory-route overlay on the memory route MEM-RTE-10.
 """
 
 MEMORY = """# Memory
@@ -170,26 +162,69 @@ MEMORY = """# Memory
 
 Memory fields on the seeded route.
 
-#### RTE-10 — Benchmark import
+#### MEM-RTE-10 — Benchmark import
 
-Record citing SRC-2 and OBJ-1.
+Record citing SRC-2 and MEM-OBJ-1.
+"""
+
+EPISTEMIC = """# Epistemic
+
+## Authority-route ledger
+
+EPI-RTE-1 checks what MEM-RTE-10 imports before RTE-1 uses it.
+
+## Shared records
+
+### Routes
+
+#### EPI-RTE-1 — Import check
+
+Record citing SRC-1.
 """
 
 
 def test_annotation_headings_are_not_declarations() -> None:
-    assert declared_ids(MEMORY) == ["RTE-10"]
+    assert declared_ids(MEMORY) == ["MEM-RTE-10"]
     assert annotated_ids(MEMORY) == {"RTE-1"}
+    assert annotated_ids(RUNTIME) == {"MEM-RTE-10"}
     assert declared_ids(RUNTIME) == ["RTE-1"]
 
 
-def test_set_resolves_cross_member_references_and_annotations() -> None:
-    overview = "## Source register\n\n| SRC-1 | Runtime source |\n| SRC-2 | Memory source |\n"
-    memory = MEMORY + "\n#### OBJ-1 — Stored object\n"
+OVERVIEW = "## Source register\n\n| SRC-1 | Runtime source |\n| SRC-2 | Memory source |\n"
+
+
+def test_set_resolves_lens_prefixed_records_across_members() -> None:
+    memory = MEMORY + "\n#### MEM-OBJ-1 — Stored object\n"
     known, errors = set_record_errors({
-        "overview.md": overview, "runtime.md": RUNTIME, "memory.md": memory,
+        "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory,
+        "epistemic.md": EPISTEMIC,
     })
-    assert known == {"SRC-1", "SRC-2", "RTE-1", "RTE-10", "OBJ-1"}
+    assert known == {"SRC-1", "SRC-2", "RTE-1", "MEM-RTE-10", "MEM-OBJ-1", "EPI-RTE-1"}
     assert errors == []
+
+
+def test_set_rejects_a_lens_record_declared_by_two_members() -> None:
+    memory = MEMORY + "\n#### MEM-OBJ-1 — Stored object\n"
+    epistemic = EPISTEMIC + "\n#### MEM-OBJ-1 — The same object again\n"
+    _, errors = set_record_errors({
+        "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory,
+        "epistemic.md": epistemic,
+    })
+    assert errors == ["duplicate set declaration: MEM-OBJ-1"]
+
+
+def test_an_amendment_in_the_reconciliation_resolves_against_the_set() -> None:
+    memory = MEMORY + "\n#### MEM-OBJ-1 — Stored object\n"
+    supersession = (
+        "\n## Reconciliation\n\nAmendment: MEM-RTE-10 is superseded by RTE-1; both "
+        "trace the same call at SRC-1.\n"
+    )
+    bodies = {"runtime.md": RUNTIME, "memory.md": memory, "epistemic.md": EPISTEMIC}
+    assert set_record_errors({"overview.md": OVERVIEW + supersession, **bodies})[1] == []
+
+    undeclared = supersession.replace("RTE-1;", "RTE-7;")
+    _, errors = set_record_errors({"overview.md": OVERVIEW + undeclared, **bodies})
+    assert errors == ["overview.md: unresolved record RTE-7"]
 
 
 def test_set_rejects_duplicate_record_across_members() -> None:

@@ -11,6 +11,7 @@ from __future__ import annotations
 import re
 import shutil
 from collections.abc import Callable
+from functools import partial
 from hashlib import sha256
 from pathlib import Path
 
@@ -25,7 +26,6 @@ from commonplace.lib.agentic_workflow import (
 )
 from commonplace.workflow import Blocked, Done, Handout, Launch, Orchestrator
 from tests.commonplace.lib.test_agentic_analysis import (
-    MAPPING,
     REPO_ROOT,
     RUN_ID,
     SOURCE,
@@ -48,7 +48,6 @@ INSTRUCTIONS = (
     "kb/instructions/analyse-agent-memory.md",
     "kb/instructions/analyse-external-system-epistemic-architecture.md",
 )
-((PROPOSAL, CANONICAL),) = MAPPING.items()
 
 Worker = Callable[[Handout], None]
 
@@ -137,33 +136,30 @@ class Fixture:
         )
         return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
 
-    def memory_report(self) -> str:
-        """The fixture's specialist report, bound to the run's memory input."""
+    def memory_report(self, round_: int = 0) -> str:
+        """The fixture's specialist report, bound to the run's memory input and
+        marked with its round."""
         scratch = self.scratch / "memory"
         local = memory_report_fixture(scratch, self.revision)
         return local.read_text(encoding="utf-8").replace(
             digest(scratch / "memory-input.md"),
             digest(self.run_dir / agentic_set.LOCAL_INPUT_NAME),
-        )
+        ) + f"\nWritten in round {round_}.\n"
 
     @staticmethod
-    def reconciliation(*, returned: bool = False, table: dict | None = None) -> str:
-        rows = "".join(
-            f"| {proposal} | {canonical} | registered |\n"
-            for proposal, canonical in (table or MAPPING).items()
-        )
+    def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
         text = (
             "## Reconciliation\n\n"
-            "| specialist proposal | canonical record | disposition |\n"
-            "|---|---|---|\n" + rows + "\n"
-            "## Bounded synthesis\n\n"
-            f"Fixture synthesis over OBJ-1, {CANONICAL} and RTE-1.\n\n"
+            "MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.\n\n"
+            + (f"Amendment: {amendment}\n\n" if amendment else "")
+            + "## Bounded synthesis\n\n"
+            "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.\n\n"
             "## Limitations\n\nNone.\n"
         )
         if returned:
             text += (
                 "\n## Returned to the specialist\n\n"
-                f"- {PROPOSAL}: the write-side anchor does not resolve at `README.md`.\n"
+                "- MEM-OBJ-1: the write-side anchor does not resolve at `README.md`.\n"
             )
         return text
 
@@ -202,18 +198,12 @@ class Fixture:
                     "### Epistemic scope\n\nBrief fixture scope.\n"
                 )
             ),
-            "epistemic": writes(lambda: "# Epistemic draft\n\nOBJ-1 and RTE-1.\n"),
+            "epistemic": writes(lambda: epistemic_text(self.revision)),
             "review": writes(self.review_body),
         }
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1):
-            workers[f"memory-{round_}"] = writes(self.memory_report)
+            workers[f"memory-{round_}"] = writes(partial(self.memory_report, round_))
             workers[f"reconcile-{round_}"] = writes(self.reconciliation)
-            workers[f"runtime-final-{round_}"] = writes(
-                lambda: runtime_text(self.revision)
-            )
-            workers[f"epistemic-final-{round_}"] = writes(
-                lambda: epistemic_text(self.revision)
-            )
             workers[f"verify-{round_}"] = writes(self.verification)
         workers.update(overrides)
         return workers
@@ -289,12 +279,26 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         "epistemic",
         "memory-0",
         "reconcile-0",
-        "runtime-final-0",
-        "epistemic-final-0",
         "verify-0",
         "review",
     ]
+    assert not any(
+        name.startswith(("runtime-final", "epistemic-final")) for name in scripted.launched
+    )
     assert definition.publications == 1
+    # Each pass wrote its member once: the lenses and the runtime pass into
+    # output/, the memory member is the accepted report byte for byte.
+    output = fixture.run_dir / "output"
+    assert (output / "memory.md").read_bytes() == (
+        fixture.run_dir / "memory-report-0.md"
+    ).read_bytes()
+    assert (output / "runtime.md").read_text(encoding="utf-8") == runtime_text(
+        fixture.revision
+    )
+    assert (output / "epistemic.md").read_text(encoding="utf-8") == epistemic_text(
+        fixture.revision
+    )
+    assert not (fixture.run_dir / "memory-report.md").exists()
 
     state_path = fixture.run_dir / "run-state.md"
     state = frontmatter(state_path)
@@ -411,6 +415,10 @@ def test_returned_findings_run_correction_rounds_until_the_last(
     prompt = last_prompt(fixture, "memory-1")
     assert "memory-report-0.md" in prompt and "reconcile-0.md" in prompt
     assert definition.publications == 1
+    # The memory member is the last accepted round's report, unchanged.
+    member = (fixture.run_dir / "output/memory.md").read_bytes()
+    assert member == (fixture.run_dir / f"memory-report-{rounds}.md").read_bytes()
+    assert f"Written in round {rounds}." in member.decode()
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
     assert "Returned to the specialist" not in overview
 
@@ -464,18 +472,35 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     assert boundary_refusals(path, enums=overview_enums(fixture.root)) != []
 
 
-def test_reconciliation_leaving_a_proposal_unmapped_is_refused(
+def test_reconciliation_amending_an_undeclared_record_is_refused(
     fixture: Fixture,
 ) -> None:
-    unmapped = fixture.reconciliation(table={"MEM-OBJ-9": CANONICAL})
-    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: unmapped)})
+    dangling = fixture.reconciliation(
+        amendment="MEM-OBJ-9 is superseded by OBJ-1; both name `README.md`."
+    )
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: dangling)})
     drive_to(scripted, "reconcile-0")
 
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
 
     assert attempt == 2
-    assert "the memory report cannot be finalized from this reconciliation" in prompt
-    assert f"proposals missing from the Reconciliation table: {PROPOSAL}" in prompt
+    assert "overview.md: unresolved record MEM-OBJ-9" in prompt
+
+
+def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
+    supersedes = fixture.reconciliation(
+        amendment="EPI-OBJ-1 is superseded by OBJ-1; both name `README.md` at SRC-1."
+    )
+    scripted, definition = agent(
+        fixture, **{"reconcile-0": fixture.writes(lambda _: supersedes)}
+    )
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
+    assert "Amendment: EPI-OBJ-1 is superseded by OBJ-1" in overview
+    assert definition.publications == 1
 
 
 def test_review_body_without_evidence_basis_is_refused(fixture: Fixture) -> None:
@@ -506,14 +531,12 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     order = [
         name
         for name in scripted.launched
-        if name.startswith(("reconcile-", "runtime-final-", "verify-", "review"))
+        if name.startswith(("reconcile-", "verify-", "review"))
     ]
     assert order == [
         "reconcile-0",
-        "runtime-final-0",
         "verify-0",
         "reconcile-1",
-        "runtime-final-1",
         "verify-1",
         "review",
     ]
@@ -546,22 +569,41 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
 
 
-def test_runtime_member_leaving_a_cited_record_undeclared_is_refused(
+def test_epistemic_member_citing_an_undeclared_record_is_refused(
     fixture: Fixture,
 ) -> None:
-    def epistemic_citing_a_new_record(handout: Handout) -> None:
+    def epistemic_citing_an_undeclared_record(handout: Handout) -> None:
         handout.output_path.write_text(
-            "# Epistemic draft\n\nOBJ-1, RTE-1 and the registered OBJ-99.\n",
+            epistemic_text(fixture.revision).replace(
+                "RTE-1: no content change.", "RTE-1 and OBJ-99: no content change."
+            ),
             encoding="utf-8",
         )
 
-    scripted, _ = agent(fixture, epistemic=epistemic_citing_a_new_record)
-    drive_to(scripted, "runtime-final-0")
+    scripted, _ = agent(fixture, epistemic=epistemic_citing_an_undeclared_record)
+    drive_to(scripted, "epistemic")
 
-    attempt, prompt = prompt_of(scripted.round(), "runtime-final-0")
+    attempt, prompt = prompt_of(scripted.round(), "epistemic")
 
     assert attempt == 2
-    assert "unresolved record OBJ-99" in prompt
+    assert "epistemic.md: unresolved record OBJ-99" in prompt
+
+
+def test_memory_report_re_declaring_a_runtime_record_is_refused(
+    fixture: Fixture,
+) -> None:
+    def redeclared(_: Handout) -> str:
+        return fixture.memory_report().replace(
+            "#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"
+        )
+
+    scripted, _ = agent(fixture, **{"memory-0": fixture.writes(redeclared)})
+    drive_to(scripted, "memory-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "memory-0")
+
+    assert attempt == 2
+    assert "duplicate set declaration: RTE-1" in prompt
 
 
 def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:

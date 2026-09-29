@@ -6,8 +6,8 @@ type: types/instruction.md
 # Analyse agent memory
 
 Goal: a source-grounded account of the system's memory mechanisms and their
-proposed comparison classifications, returned as one typed report the parent
-can integrate into the main agentic-system analysis.
+comparison classifications, returned as one typed report that becomes the
+memory member of the main agentic-system analysis.
 
 ## Commission and boundary
 
@@ -18,22 +18,21 @@ capture digest and access root, relevant canonical records, requested memory
 scope and depth, exclusions, and any specific question. Its records are
 provisional findings to check against sources, not accepted conclusions.
 
-Write only the commissioned `memory-report.md` under the
+Write only the commissioned report under the
 [`agent-memory-analysis-report`](../types/agent-memory-analysis-report.md)
 type. Read that contract, including its Memory comparison fields, and the
 set-wide conventions of the
 [overview type](../types/agentic-system-analysis-overview.md#the-set):
 canonical identity, the declaration and annotation grammar, status fields
 and the Source register's quotation contract. Together they fix every
-section, field and controlled value the report uses. The parent finalizes
-your report as the set's memory member, `memory.md`: it maps your proposal
-IDs to canonical IDs by exact token, turns a seeded record you re-declared
-into an `On <ID>` annotation, and appends amendments; your report stays in
-the run directory as provenance, pinned by the member's `finalized-from`.
-Write it so those mechanical edits are the only ones needed.
+section, field and controlled value the report uses. The parent's last
+accepted report becomes the set's memory member, `memory.md`, byte for
+byte: nothing is mapped, merged or appended afterwards, and the parent's
+corrections to your records are amendments in the overview. Write it as
+the member.
 Do not load the legacy review type, prior system reviews, surveys, matrix
-outputs, or style exemplars. The parent owns canonical IDs, integration,
-publication and completion. Do not publish, modify the parent's input or
+outputs, or style exemplars. The parent owns the unprefixed IDs,
+integration, publication and completion. Do not publish, modify the parent's input or
 set, delegate, or stage and commit.
 
 Do not call agent listings for status: their payloads may include prior
@@ -91,12 +90,13 @@ supporting analysis, under the report type's per-value evidence contract. Do
 not weaken a wired value because another value is
 merely afforded. Distinguish missing evidence from a negative finding. Every record the
 profile cites is declared or annotated (`On <ID>`) in your report; annotate
-any seeded record the profile cites. Use
-local proposal IDs where the parent has not yet registered a discovered
-object or route; the parent maps exact tokens.
+any seeded record the profile cites. Declare each object, route or other
+record you establish under a `MEM-` ID, such as `MEM-RTE-1`; the ID is
+final. Annotate a seeded record rather than re-declaring it, and name a
+record of yours that may duplicate a seeded one under Integration issues.
 
-Record corrections, proposed records, unresolved questions and limitations
-inside the report. Validate it with `commonplace-validate --full
+Record corrections, possible duplicates, unresolved questions and
+limitations inside the report. Validate it with `commonplace-validate --full
 <report-path>` and correct structural errors. Inspect exit status and stderr,
 not only stdout. Run dependent commands separately or with `&&` (and
 `set -o pipefail` for pipelines); later validation or hashing cannot clear an

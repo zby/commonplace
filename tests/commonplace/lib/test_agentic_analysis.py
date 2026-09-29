@@ -26,7 +26,6 @@ from commonplace.lib.agentic_publication import (
     prepare_publication,
     publish_publication,
 )
-from commonplace.lib.agentic_records import declared_ids
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -41,8 +40,6 @@ RUN_ID = "AAS-2026-09-04-example-system-01"
 SOURCE = "https://example.invalid/example-system"
 STATE_DIR = Path("kb/reports/state/agentic-system-analysis")
 REVIEW_PATH = "kb/agentic-systems/reviews/example-system.md"
-# The fixture set's Reconciliation mapping: the specialist's one proposal.
-MAPPING = {"MEM-OBJ-1": "OBJ-2"}
 # A placeholder method commit for fixtures that never publish; publication
 # fixtures pin the fixture repository's real HEAD.
 INPUTS_COMMIT = "f" * 40
@@ -161,7 +158,8 @@ def uninspected_profile(scope: str) -> dict:
 
 
 def memory_report_fixture(run_dir: Path, revision: str) -> Path:
-    """The specialist's local report: one proposal, one re-declared seed, one quote."""
+    """The specialist's report, which is the memory member unchanged: one
+    `MEM-` record, one annotated seed, one quote."""
     handoff = write(
         run_dir / "memory-input.md",
         "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n",
@@ -183,7 +181,6 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "canonical-register-sha256": digest(handoff),
         "worker-model": "fixture-model",
         "method-sha256": "a" * 64,
-        "finalized-from": None,
         "memory-comparison": profile,
     }
     body = f"""# Fixture memory analysis
@@ -209,11 +206,11 @@ none proposed.
 
 #### MEM-OBJ-1 — Fixture memory store
 
-Proposed store, from SRC-1.
+Store the specialist established, from SRC-1.
 
 ### Routes
 
-#### RTE-1 — Fixture route
+#### On RTE-1 — Fixture route
 
 Seeded route with the specialist's memory fields.
 
@@ -250,27 +247,8 @@ none
 Fixture evidence.
 """
     return write(
-        run_dir / "memory-report.md",
+        run_dir / "output/memory.md",
         "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n" + body,
-    )
-
-
-def finalized_member_text(local: Path, mapping: dict[str, str] = MAPPING) -> str:
-    """The coordinator's finalization, written out by hand for the fixture.
-
-    Exact-token mapping of proposal IDs, the re-declared seed turned into an
-    annotation heading, ``finalized-from`` set, and an Amendments section.
-    """
-    text = local.read_text(encoding="utf-8")
-    for proposal, canonical in mapping.items():
-        text = re.sub(rf"(?<![\w-]){re.escape(proposal)}(?![\w-])", canonical, text)
-    text = text.replace("#### RTE-1 — Fixture route", "#### On RTE-1 — Fixture route")
-    document, error = validation.parse_document(text)
-    assert error is None and document is not None and document.frontmatter is not None
-    values = {**document.frontmatter, "finalized-from": digest(local)}
-    return (
-        "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n"
-        + document.body.rstrip("\n") + "\n\n## Amendments\n\nnone\n"
     )
 
 
@@ -350,7 +328,7 @@ Boundary from the overview's Source register.
 
 ## Epistemic-object inventory
 
-OBJ-1 and OBJ-2 carry no candidate truth-apt content.
+OBJ-1 and EPI-OBJ-1 carry no candidate truth-apt content.
 
 ## Authority-route ledger
 
@@ -367,6 +345,14 @@ CLM-1 is compared with RTE-1.
 ## Bounded conclusion
 
 Conclusion.
+
+## Shared records
+
+### Operative objects
+
+#### EPI-OBJ-1 — Fixture checked object
+
+Object the epistemic lens established. Evidence: SRC-1.
 """
 
 
@@ -410,15 +396,11 @@ Brief fixture scope.
 
 ## Reconciliation
 
-| specialist proposal | canonical record | disposition |
-|---|---|---|
-| MEM-OBJ-1 | OBJ-2 | registered |
-
-Finalized from `memory-report.md`; no mechanical edits beyond the mapping.
+MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record; the memory member is `memory-report-0.md` unchanged.
 
 ## Bounded synthesis
 
-Fixture synthesis over OBJ-1, OBJ-2 and RTE-1.
+Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.
 
 ## Limitations
 
@@ -475,12 +457,6 @@ def repin(directory: Path) -> None:
     write(directory / "ARTIFACT.yaml", yaml.safe_dump(manifest, sort_keys=False))
 
 
-def refinalize(run_dir: Path) -> None:
-    """Rebuild memory.md from the local report and re-pin the overview manifest."""
-    write(run_dir / "output/memory.md", finalized_member_text(run_dir / "memory-report.md"))
-    repin(run_dir / "output")
-
-
 def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
     for name, retained in agentic_set.retained_set_paths(run_id).items():
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
@@ -488,11 +464,10 @@ def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
 
 
 def write_set(run_dir: Path, revision: str) -> Path:
-    """Write the local report, the members and the overview pinning them."""
-    local = memory_report_fixture(run_dir, revision)
+    """Write the members, the memory input and the overview pinning them."""
     members = {
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
-        "memory.md": write(run_dir / "output/memory.md", finalized_member_text(local)),
+        "memory.md": memory_report_fixture(run_dir, revision),
         "epistemic.md": write(run_dir / "output/epistemic.md", epistemic_text(revision)),
     }
     overview = write(run_dir / "output/overview.md", overview_text(revision, members))
@@ -545,18 +520,18 @@ def valid_run_state(tmp_path: Path) -> Path:
 
 
 def sync_set(tmp_path: Path, values: dict) -> None:
-    """Re-derive the member, manifest, retained copies and pins after an edit.
+    """Re-derive the manifest, retained copies and pins after an edit.
 
-    The local report follows the state's source identity and boundary, as the
-    specialist's handoff would; the review's pin follows the overview.
+    The memory member follows the state's source identity and boundary, as the
+    specialist's report would; the review's pin follows the overview.
     """
     run_dir = tmp_path / Path(values["artifact"]["path"]).parent.parent
-    report = run_dir / "memory-report.md"
+    report = run_dir / "output/memory.md"
     report_values = frontmatter(report)
     report_values.update({"source-identity": values["source"]["identity"],
                           "reviewed-boundary": values["source"]["revision"]})
     replace_frontmatter(report, report_values)
-    refinalize(run_dir)
+    repin(run_dir / "output")
     retain_set(tmp_path, run_dir)
     values["artifact"]["sha256"] = digest(run_dir / "output/ARTIFACT.yaml")
     generated = tmp_path / values["generated-review"]["path"]
@@ -567,9 +542,9 @@ def sync_set(tmp_path: Path, values: dict) -> None:
 
 
 def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
-    """Move every set document, the local report and the review to another boundary."""
+    """Move every set document and the review to another boundary."""
     for path in (*(output_path(run_dir, name) for name in ("overview.md", *MEMBER_TYPES)),
-                 run_dir / "memory-report.md", tmp_path / REVIEW_PATH):
+                 tmp_path / REVIEW_PATH):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
 
@@ -862,19 +837,19 @@ def test_member_pass_needs_every_member_named(tmp_path: Path) -> None:
     assert any("properties" in item for item in results.fails), results.fails
 
 
-@pytest.mark.parametrize("mutation", ["stale-finalized-from", "runtime-run-id"])
+@pytest.mark.parametrize("mutation", ["stale-memory-input", "runtime-run-id"])
 def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, mutation: str) -> None:
     state = valid_run_state(tmp_path)
     run_dir = state.parent
     values = frontmatter(state)
     sync_set(tmp_path, values)
     expected = {
-        "stale-finalized-from": "finalized-from does not match memory-report.md bytes",
+        "stale-memory-input": "canonical-register-sha256 does not match memory-input.md bytes",
         "runtime-run-id": "runtime.md: run-id does not match the overview",
     }[mutation]
-    if mutation == "stale-finalized-from":
-        report = run_dir / "memory-report.md"
-        report.write_text(report.read_text() + "\nLater specialist edit.\n")
+    if mutation == "stale-memory-input":
+        commission = run_dir / "memory-input.md"
+        commission.write_text(commission.read_text() + "\nLater commission edit.\n")
     else:
         path = run_dir / "output/runtime.md"
         replace_frontmatter(path, {**frontmatter(path), "run-id": RUN_ID[:-2] + "09"})
@@ -906,7 +881,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
     }
     old_revision = frontmatter(state.parent / "output/overview.md")["reviewed-boundary"]
     rewrite_boundary(tmp_path, state.parent, old_revision, "capture-2026-09-04")
-    report = state.parent / "memory-report.md"
+    report = state.parent / "output/memory.md"
     report.write_text(report.read_text().replace(
         "`README.md` @ `capture-2026-09-04`",
         f"`{capture.as_posix()}` @ `sha256:{digest(capture)}`",
@@ -1107,7 +1082,7 @@ def test_handoff_command_renders_a_valid_run(
 
 @pytest.mark.parametrize("mutation", ["valid", "annotated-seed", "empty", "outside"])
 def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: str) -> None:
-    report = member_fixture(tmp_path) / "memory-report.md"
+    report = member_fixture(tmp_path) / "output/memory.md"
     body = report.read_text().replace(
         "### Evidenced absences\n\nnone proposed.\n",
         "### Evidenced absences\n\n#### MEM-ABS-1 — Inspected absence\n\nSearched.\n",
@@ -1126,7 +1101,6 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
     }
     expected_error = None
     if mutation == "annotated-seed":
-        report.write_text(report.read_text().replace("#### RTE-1 — Fixture route", "#### On RTE-1 — Fixture route"))
         axes["read_back_direction"] = {
             "assessment": "known", "values": ["pull"],
             "evidence": {"pull": {"basis": "wired", "records": ["RTE-1"], "note": "Seeded route."}},
@@ -1140,26 +1114,20 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
         report.write_text(report.read_text().replace(
             "#### MEM-OBJ-1 — Fixture memory store\n", "",
         ) + "\nMEM-OBJ-1 outside the register.\n")
-        expected_error = "unresolved shared or proposed"
+        expected_error = "storage_substrate: unresolved records"
     replace_frontmatter(report, metadata)
     checked = validation.validate_note(report, repo_root=tmp_path)
     if expected_error:
         assert any(expected_error in error for error in checked.fails)
     else:
         assert checked.fails == []
-        assert any("shared or proposed references resolve" in message for message in checked.passes)
-        document, error = validation.parse_document(report.read_text())
-        assert error is None
-        with pytest.raises(ValueError, match="unresolved canonical"):
-            systems_matrix.validate_comparison(
-                metadata["memory-comparison"], known_ids=set(declared_ids(document.body))
-            )
+        assert any("declared or annotated references resolve" in message for message in checked.passes)
 
 
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     for name in (
-        "memory-report.md", "memory-input.md", "incumbent-review.md",
+        "memory-input.md", "incumbent-review.md",
         "overview.md", "runtime.md", "memory.md", "epistemic.md",
         "incumbent-overview.md", "incumbent-memory.md",
     ):
@@ -1198,7 +1166,7 @@ def test_prepare_rejects_a_locally_deleted_review(
 @pytest.mark.parametrize("mutation", ["bytes", "input", "run", "source", "boundary", "blocked"])
 def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mutation: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    report = state.parent / "memory-report.md"
+    report = state.parent / "output/memory.md"
     if mutation == "bytes":
         report.write_text(report.read_text() + "\nChanged.\n")
     elif mutation == "input":
@@ -1208,18 +1176,17 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
         field = {"run": "run-id", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
         values[field] = "blocked" if mutation == "blocked" else "different"
         replace_frontmatter(report, values)
-        refinalize(state.parent)
+        repin(state.parent / "output")
     with pytest.raises(ValueError, match="memory"):
         publish_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
 
-@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md"])
-def test_publication_fails_when_a_memory_provenance_file_is_missing(tmp_path: Path, name: str) -> None:
+def test_publication_fails_when_the_memory_input_is_missing(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    (state.parent / name).unlink()
-    with pytest.raises(ValueError, match=f"memory member: {name} is missing from the run directory"):
+    (state.parent / "memory-input.md").unlink()
+    with pytest.raises(ValueError, match="memory member: memory-input.md is missing from the run directory"):
         prepare_publication(spec)
     assert frontmatter(state)["run-status"] == "running"
 
@@ -1400,18 +1367,13 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
 
 @pytest.mark.parametrize("mutation, error", [
     ("none", None),
-    ("section-after-amendments", "last level-two section"),
-    ("no-finalized-from", "finalized-from"),
+    ("finalized-from", "finalized-from"),
 ])
 def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None) -> None:
-    """Amendments close the member; finalized-from is a required field."""
+    """The member is the specialist's report; it has no finalization field."""
     memory = member_fixture(tmp_path) / "output/memory.md"
-    values = frontmatter(memory)
-    if mutation == "section-after-amendments":
-        memory.write_text(memory.read_text() + "\n## Stray\n\nText.\n")
-    elif mutation == "no-finalized-from":
-        values.pop("finalized-from")
-        replace_frontmatter(memory, values)
+    if mutation == "finalized-from":
+        replace_frontmatter(memory, {**frontmatter(memory), "finalized-from": "a" * 64})
     fails = validation.validate_note(memory, repo_root=tmp_path).fails
     if error is None:
         assert fails == []
@@ -1419,67 +1381,47 @@ def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None
         assert any(error in failure for failure in fails), fails
 
 
-@pytest.mark.parametrize("disposition", ["merged", "rejected"])
-@pytest.mark.parametrize("finalized", [True, False])
-def test_finalization_of_merged_and_rejected_proposals(
-    tmp_path: Path, disposition: str, finalized: bool
+@pytest.mark.parametrize("declared, amendment, error", [
+    ("CMP-1", None, "duplicate set declaration: CMP-1"),
+    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-1", None),
+    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-9", "overview.md: unresolved record CMP-9"),
+])
+def test_a_duplicate_record_is_superseded_in_the_reconciliation(
+    tmp_path: Path, declared: str, amendment: str | None, error: str | None
 ) -> None:
-    """The skill's mechanical edits for merged and rejected proposals yield a valid set."""
+    """A lens record for a thing the runtime pass declared stays declared
+    under its own ID; the overview's Reconciliation supersedes it."""
     run_dir = member_fixture(tmp_path)
-    local = run_dir / "memory-report.md"
-    kind, proposal, canonical, label = {
-        "merged": ("Components", "MEM-CMP-1", "CMP-1", "Memory view of the component"),
-        "rejected": ("Claims", "MEM-CLM-1", "none", "Unsupported memory claim"),
-    }[disposition]
-    block = f"#### {proposal} — {label}\n\nSpecialist proposal body.\n"
-    text = local.read_text()
-    assert f"### {kind}\n\nnone proposed.\n" in text
-    local.write_text(text.replace(f"### {kind}\n\nnone proposed.\n", f"### {kind}\n\n{block}"))
-    member = finalized_member_text(local, {**MAPPING, proposal: canonical} if disposition == "merged" else MAPPING)
-    if finalized and disposition == "merged":
-        member = member.replace(f"#### {canonical} — {label}", f"#### On {canonical} — {label}")
-    elif finalized:
-        member = member.replace(block, "none proposed.\n")
-    write(run_dir / "output/memory.md", member)
-    overview = run_dir / "output/overview.md"
-    overview.write_text(overview.read_text().replace(
-        "| MEM-OBJ-1 | OBJ-2 | registered |\n",
-        f"| MEM-OBJ-1 | OBJ-2 | registered |\n| {proposal} | {canonical} | {disposition} |\n",
+    memory = run_dir / "output/memory.md"
+    memory.write_text(memory.read_text().replace(
+        "### Components\n\nnone proposed.\n",
+        f"### Components\n\n#### {declared} — Memory view of the component\n\nFrom SRC-1.\n",
     ))
+    overview = run_dir / "output/overview.md"
+    if amendment is not None:
+        overview.write_text(overview.read_text().replace(
+            "## Bounded synthesis",
+            f"Amendment: {amendment}; both trace `README.md` at SRC-1.\n\n## Bounded synthesis",
+        ))
     repin(overview.parent)
 
     fails = validation.ValidationRun(tmp_path, ()).validate(overview.parent).fails
 
-    if finalized:
+    if error is None:
         assert fails == []
-    elif disposition == "merged":
-        assert any("duplicate set declaration: CMP-1" in error for error in fails), fails
     else:
-        assert any("unintegrated proposal IDs outside Reconciliation: MEM-CLM-1" in error
-                   for error in fails), fails
-
-
-def test_set_validation_requires_a_finalized_memory_member(tmp_path: Path) -> None:
-    """A memory member still carrying the local report's null finalized-from fails the set."""
-    run_dir = member_fixture(tmp_path)
-    memory = run_dir / "output/memory.md"
-    replace_frontmatter(memory, {**frontmatter(memory), "finalized-from": None})
-    repin(memory.parent)
-    run = validation.ValidationRun(tmp_path, ())
-    assert run.validate(memory).fails == []
-    fails = run.validate(memory.parent).fails
-    assert any("finalized-from" in error for error in fails), fails
+        assert any(error in failure for failure in fails), fails
 
 
 @pytest.mark.parametrize("link, error", [
-    ("[local report](../memory-report.md)", "set member link: ../memory-report.md leaves the set directory"),
+    ("[memory report](../memory-report-0.md)", "set member link: ../memory-report-0.md leaves the set directory"),
     ("[runtime member](runtime.md)", None),
 ])
 def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: str, error: str | None) -> None:
     """A link out of output/ resolves in the run directory but breaks once retained."""
     overview = member_fixture(tmp_path) / "output/overview.md"
     overview.write_text(overview.read_text().replace(
-        "Finalized from `memory-report.md`;", f"Finalized from {link};"
+        "is `memory-report-0.md` unchanged", f"is {link} unchanged"
     ))
     fails = validation.validate_note(overview, repo_root=tmp_path).fails
     if error is None:
@@ -1604,10 +1546,10 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     shutil.copytree(state.parent, new_dir)
     for path in new_dir.rglob("*.md"):
         path.write_text(path.read_text().replace(RUN_ID, next_id))
-    report = new_dir / "memory-report.md"
+    report = new_dir / "output/memory.md"
     replace_frontmatter(report, {**frontmatter(report),
         "canonical-register-sha256": digest(new_dir / "memory-input.md")})
-    refinalize(new_dir)
+    repin(new_dir / "output")
     next_state = new_dir / "run-state.md"
     values = frontmatter(next_state)
     values.update({"run-status": "running", "result-disposition": None,
@@ -1950,7 +1892,7 @@ def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
 
 def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
-    for name in ("overview.md", "memory-report.md", *MEMBER_TYPES):
+    for name in ("overview.md", *MEMBER_TYPES):
         (output_path(state.parent, name)).unlink()
     spec.generated_candidate_path.unlink()
     text = write(tmp_path / "selection.txt", "Frozen source")
@@ -2061,7 +2003,7 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
             assert [entry["start_line"] for entry in payload["occurrences"]] == [5, 6]
         citation = payload if isinstance(payload, str) else payload["occurrences"][-1]["citation"]
         runtime.write_text(runtime.read_text() + "\n" + citation)
-    refinalize(state.parent)
+    repin(state.parent / "output")
     replace_frontmatter(spec.generated_candidate_path, {
         **frontmatter(spec.generated_candidate_path),
         "analysis-artifact-sha256": digest(state.parent / "output/ARTIFACT.yaml"),
@@ -2081,10 +2023,10 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
 ])
 def test_publication_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
     state, spec, _ = publication_fixture(tmp_path)
-    artifact = state.parent / "memory-report.md"
+    artifact = state.parent / "output/memory.md"
     revision = frontmatter(state)["source"]["revision"]
     artifact.write_text(artifact.read_text() + addition.format(revision=revision))
-    refinalize(state.parent)
+    repin(state.parent / "output")
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
     with pytest.raises(ValueError, match=diagnostic):
         prepare_publication(spec)
@@ -2094,9 +2036,9 @@ def test_publication_validator_rejects_bad_evidence_without_writes(tmp_path, add
 
 def test_source_failure_makes_prepare_exit_nonzero(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
-    artifact = state.parent / "memory-report.md"
+    artifact = state.parent / "output/memory.md"
     artifact.write_text(artifact.read_text() + "\nBad range: `README.md:999`.\n")
-    refinalize(state.parent)
+    repin(state.parent / "output")
     status = agentic_analysis_publication.main([
         "prepare", str(state), "--generated-candidate", str(spec.generated_candidate_path),
         "--generated-destination", spec.generated_destination,

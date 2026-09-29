@@ -1,8 +1,8 @@
 ---
-description: "Job of an analyse-agentic-system run: the epistemic lens, written as a draft with proposal IDs"
+description: "Job of an analyse-agentic-system run: the epistemic lens, written as the set's epistemic member"
 type: types/instruction.md
 ---
 
 # Trace the epistemic routes
 
-Follow [Analyse an external system's epistemic architecture](../../analyse-external-system-epistemic-architecture.md) with `boundary.md`, `runtime-draft.md` and the epistemic record of `scoping.md` as the canonical records and scoping record. Write the result to `epistemic-draft.md`, not to `output/epistemic.md`: new records keep their `EPI-` proposal IDs, and a later job maps them to canonical IDs after reconciliation. Put targeted-read requests and corrections to canonical facts in a final section, `## Returns to the coordinator`.
+Follow [Analyse an external system's epistemic architecture](../../analyse-external-system-epistemic-architecture.md) with `boundary.md`, `output/runtime.md` and the epistemic record of `scoping.md` as the records and scoping record. Write the set's epistemic member, `output/epistemic.md`; no job rewrites it afterwards. Declare each record the lens establishes under an `EPI-` ID in its `## Shared records`, with the passages that support it. The memory specialist runs in parallel, so cite only records `output/runtime.md`, the Source register of `boundary.md`, or your member declares; your output is refused while it cites another. State a correction to a runtime record beside the finding it affects, and a possible duplicate of a runtime record in your record's own fields, each with its evidence anchor; the reconciliation amends or supersedes.

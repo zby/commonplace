@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: agentic-system-epistemic-report
-description: "Epistemic member of an analysis set: the six-block sparse overlay tracing the system's truth-apt routes over the set's canonical records"
+description: "Epistemic member of an analysis set: the six-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic lens establishes"
 schema: ./agentic-system-epistemic-report.schema.yaml
 ---
 
@@ -11,9 +11,10 @@ The member of a run's retained set that carries the epistemic lens: a
 sparse overlay on the set's canonical records tracing whether and how the
 system acquires or produces truth-apt content, checks it, grants or
 withholds reliance, retains or integrates it, and lets it affect later
-behavior. It declares no records and holds no evidence passages; it cites
-them. Set-wide conventions are those of the
-[overview](./agentic-system-analysis-overview.md#the-set).
+behavior. It cites the records other members declare, and it declares
+the records the epistemic lens establishes under their `EPI-` IDs, with
+the evidence passages that support them. Set-wide conventions are those
+of the [overview](./agentic-system-analysis-overview.md#the-set).
 
 ## Frontmatter
 
@@ -62,9 +63,10 @@ acceptance has integration `not reached`.
 ## Required blocks
 
 The body contains six level-two sections in order, as readable Markdown
-tables or compact records. Each cites canonical IDs and repeats at most
-the ID, one source-native short label, and one local evidence anchor; a
-field the canonical record owns says `see <canonical ID>`. Architectural
+tables or compact records, followed by `## Shared records`. Each block
+cites record IDs and repeats at most the ID, one source-native short
+label, and one local evidence anchor; a field the declaring record owns
+says `see <ID>`. Architectural
 status and observed candidate state are this report's own fields and are
 never concatenated with one another or translated into the set's
 conclusion-status vocabulary; `implemented and observed` is not a value in
@@ -167,6 +169,19 @@ without a truth-apt route; and which claims remain unsupported because
 implementation, run, or causal evidence is missing. It gives the system no
 single epistemic score, oracle, status, or unqualified verdict.
 
+## Shared records
+
+`## Shared records` declares each record the epistemic lens established,
+under the set's
+[declaration grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar):
+grouped under the kind headings of the kinds it declares, as `#### EPI-OBJ-1
+— Label`, with the identity and fields the
+[runtime report type](./agentic-system-runtime-report.md#shared-records)
+requires of a record of that kind, its source anchors, and the minimum
+verbatim passages its load-bearing findings need. An `EPI-ABS-*` record
+states its searched boundary. State `none declared in this member` when
+the lens established no record.
+
 ## Template
 
 ```markdown
@@ -190,4 +205,6 @@ reviewed-boundary: "{immutable revision or capture identity}"
 ## System-claim versus route comparison
 
 ## Bounded conclusion
+
+## Shared records
 ```

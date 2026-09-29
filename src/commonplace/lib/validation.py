@@ -1044,16 +1044,10 @@ def _agentic_evidence_and_references_rule(
 ) -> None:
     from commonplace.lib.agentic_records import record_reference_errors
 
-    metadata = parsed.document.frontmatter or {}
-    is_report = metadata.get("type") == "types/agent-memory-analysis-report.md"
-    finalized = is_report and isinstance(metadata.get("finalized-from"), str)
     # A member validated alone cannot resolve references the set declares
     # elsewhere; the analysis set's directory rule resolves them across the
-    # members. The specialist's local report keeps its own rule: it may cite
-    # commissioned IDs it does not declare.
-    errors = record_reference_errors(
-        parsed.document.body, memory_report=is_report and not finalized
-    )
+    # members.
+    errors = record_reference_errors(parsed.document.body)
     results.fails.extend(errors)
     if not errors:
         results.passes.append("record references: explicit IDs and declarations checked")
@@ -1116,7 +1110,7 @@ def _memory_report_comparison_rule(
         results.fails.append(f"memory comparison: {exc}")
     else:
         results.passes.append(
-            "memory comparison: assessments and shared or proposed references resolve"
+            "memory comparison: assessments and declared or annotated references resolve"
         )
 
 

@@ -5,16 +5,19 @@ from __future__ import annotations
 import re
 from collections import Counter
 
-_RECORD_ID = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
+# A record ID carries the prefix of the pass that established it, for the life
+# of the set: none for the runtime pass, `MEM-` for the memory lens, `EPI-` for
+# the epistemic lens.
+_RECORD_ID = r"(?:(?:MEM|EPI)-)?(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
 _ID = rf"(?:SRC-\d+|{_RECORD_ID})"
 _DECLARATION = re.compile(
-    rf"(?m)^####[ \t]+((?:MEM-)?{_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
+    rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
 _ANNOTATION = re.compile(
     rf"(?m)^####[ \t]+On[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
-_PROPOSAL = re.compile(rf"(?<![\w-])(?:MEM|EPI)-{_RECORD_ID}(?![\w-])")
+_REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
 
 
 def _analysis_prose(body: str) -> str:
@@ -42,18 +45,12 @@ def section(body: str, title: str) -> str:
     return match[1] if match else ""
 
 
-def declared_ids(body: str, *, proposals: bool = False) -> list[str]:
+def declared_ids(body: str) -> list[str]:
     """IDs declared under Shared records, in order, with repeats kept.
 
-    ``proposals`` also counts the ``MEM-`` proposal IDs a specialist's local
-    memory report declares. An annotation heading (`#### On OBJ-1 — label`) is
-    not a declaration.
+    An annotation heading (`#### On OBJ-1 — label`) is not a declaration.
     """
-    return [
-        identifier
-        for identifier in _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
-        if proposals or not identifier.startswith("MEM-")
-    ]
+    return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
 
 def annotated_ids(body: str) -> set[str]:
@@ -61,34 +58,31 @@ def annotated_ids(body: str) -> set[str]:
     return set(_ANNOTATION.findall(_analysis_prose(body)))
 
 
-def record_reference_errors(body: str, *, memory_report: bool = False) -> list[str]:
-    """Check one document's record syntax and declarations.
+def is_absence(identifier: str) -> bool:
+    """Whether a record ID names an evidenced absence, whichever pass declared it."""
+    return re.fullmatch(r"(?:(?:MEM|EPI)-)?ABS-\d+", identifier) is not None
 
-    ``memory_report`` is the specialist's local report: it may reference
-    commissioned IDs it does not declare. A member of a retained set is
-    validated alone, so references it makes to records other members declare
-    are not resolved here.
+
+def record_reference_errors(body: str) -> list[str]:
+    """Check one document's declarations.
+
+    A member of a set is validated alone, so references it makes to records
+    other members declare are not resolved here.
     """
-    errors = []
-    if not memory_report:
-        outside_reconciliation = re.sub(
-            r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", _analysis_prose(body)
-        )
-        local_records = sorted(set(_PROPOSAL.findall(outside_reconciliation)))
-        if local_records:
-            errors.append(
-                "record references: unintegrated proposal IDs outside Reconciliation: "
-                + ", ".join(local_records)
-            )
-    declarations = declared_ids(body, proposals=memory_report)
-    repeated = sorted(key for key, count in Counter(declarations).items() if count > 1)
+    repeated = sorted(
+        key for key, count in Counter(declared_ids(body)).items() if count > 1
+    )
     if repeated:
-        errors.append("record references: duplicate declarations: " + ", ".join(repeated))
-    return errors
+        return ["record references: duplicate declarations: " + ", ".join(repeated)]
+    return []
 
 
 def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
-    """Resolve references against the set's declarations, excluding source excerpts."""
+    """Resolve references against the set's declarations, excluding source excerpts.
+
+    ``bodies`` maps set names to bodies and includes ``overview.md``, whose
+    Source register declares the ``SRC-*`` records.
+    """
     declarations = []
     for body in bodies.values():
         declarations.extend(declared_ids(body))
@@ -103,8 +97,7 @@ def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
         for identifier, count in Counter(declarations).items() if count > 1
     ]
     for name, body in bodies.items():
-        prose = _PROPOSAL.sub("", _analysis_prose(body))
-        references = set(re.findall(rf"(?<![\w-]){_ID}(?![\w-])", prose))
+        references = set(_REFERENCE.findall(_analysis_prose(body)))
         for identifier in sorted(references - known):
             errors.append(f"{name}: unresolved record {identifier}")
     return known, errors

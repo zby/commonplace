@@ -35,11 +35,7 @@ from urllib.parse import urlsplit
 
 import yaml
 
-from commonplace.lib.agentic_finalize import (
-    build_manifest,
-    finalize_memory_report,
-    render_finalization_summary,
-)
+from commonplace.lib.agentic_finalize import build_manifest
 from commonplace.lib.agentic_publication import (
     PublicationSpec,
     inspect_destination,
@@ -50,7 +46,6 @@ from commonplace.lib.agentic_publication import (
 from commonplace.lib.agentic_records import section, set_record_errors
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
-    LOCAL_REPORT_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
@@ -70,11 +65,9 @@ RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
 OPENING = "opening.json"
 BOUNDARY = "boundary.md"
 SCOPING = "scoping.md"
-EPISTEMIC_DRAFT = "epistemic-draft.md"
 REVIEW_BODY = "review-body.md"
 CANDIDATE = "review-candidate.md"
 RUN_STATE = "run-state.md"
-RUNTIME_DRAFT = "runtime-draft.md"
 RUNTIME = f"{OUTPUT_DIR}/runtime.md"
 MEMORY = f"{OUTPUT_DIR}/memory.md"
 EPISTEMIC = f"{OUTPUT_DIR}/epistemic.md"
@@ -102,9 +95,8 @@ def reconciliation(round_: int) -> str:
 
 
 def round_file(kind: str, round_: int) -> str:
-    """A file one reconciliation round's closing writes: `runtime-final`,
-    `memory-final`, `epistemic-final`, `overview-draft`, `set-check` or
-    `verification`."""
+    """A file one reconciliation round's closing writes: `overview-draft`,
+    `set-check` or `verification`."""
     return f"{kind}-{round_}.md"
 
 
@@ -229,9 +221,57 @@ def member_refusals(path: Path, *, repo_root: Path) -> list[str]:
     return list(validate_note(path, repo_root=repo_root).fails)
 
 
-def reconcile_refusals(
-    path: Path, *, report: Path, runtime: Path, may_return: bool
+def set_bodies(
+    *, boundary: Path, reconciled: Path | None = None, **members: Path
+) -> dict[str, str]:
+    """The bodies of the set these files make, by set name.
+
+    The overview is the boundary's Boundary and evidence and Source register
+    followed by the reconciliation's sections; each member keyword names a
+    set member without its `.md`. ValueError when a file does not parse.
+    """
+    _, boundary_body = split(boundary.read_text(encoding="utf-8"))
+    overview = boundary_body
+    if reconciled is not None:
+        overview += "\n" + reconciled.read_text(encoding="utf-8")
+    bodies = {OVERVIEW_NAME: overview}
+    for name, path in members.items():
+        bodies[f"{name}.md"] = split(path.read_text(encoding="utf-8"))[1]
+    return bodies
+
+
+def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
+    """Every record the bodies cite is declared once among them."""
+    try:
+        found = bodies()
+    except ValueError as error:
+        return [f"a set document does not parse: {error}"]
+    _, errors = set_record_errors(found)
+    return errors
+
+
+def pass_refusals(
+    path: Path, *, repo_root: Path, bodies: Callable[[Path], dict[str, str]]
 ) -> list[str]:
+    """The output of a pass that declares records: a valid member whose
+    citations resolve against the set so far, which ``bodies`` assembles
+    around it."""
+    return member_refusals(path, repo_root=repo_root) or reference_refusals(
+        partial(bodies, path)
+    )
+
+
+def reconcile_refusals(
+    path: Path,
+    *,
+    boundary: Path,
+    runtime: Path,
+    report: Path,
+    epistemic: Path,
+    may_return: bool,
+) -> list[str]:
+    """The reconciliation's sections, the last-round rule, and every record it
+    cites, amendments included, declared in the set it will make."""
     body = path.read_text(encoding="utf-8")
     refusals = require_sections(
         body, 2, ["Reconciliation", "Bounded synthesis", "Limitations"]
@@ -244,91 +284,16 @@ def reconcile_refusals(
         )
     if refusals or returned:
         return refusals
-    try:
-        _, runtime_body = split(runtime.read_text(encoding="utf-8"))
-        finalize_memory_report(
-            report.read_text(encoding="utf-8"),
-            overview_body=body,
-            runtime_body=runtime_body,
+    return reference_refusals(
+        partial(
+            set_bodies,
+            boundary=boundary,
+            reconciled=path,
+            runtime=runtime,
+            memory=report,
+            epistemic=epistemic,
         )
-    except ValueError as error:
-        return [
-            f"the memory report cannot be finalized from this reconciliation: {error}"
-        ]
-    return []
-
-
-def runtime_final_refusals(
-    path: Path,
-    *,
-    repo_root: Path,
-    boundary: Path,
-    reconciled: Path,
-    report: Path,
-    epistemic: Path,
-) -> list[str]:
-    """The runtime member, and every record the set will reference declared.
-
-    The references are resolved as the assembled set will resolve them: the
-    overview's Source register and reconciled sections, this member, the memory
-    member finalized against it, and the epistemic draft's canonical IDs.
-    """
-    refusals = member_refusals(path, repo_root=repo_root)
-    if refusals:
-        return refusals
-    try:
-        _, runtime_body = split(path.read_text(encoding="utf-8"))
-        _, boundary_body = split(boundary.read_text(encoding="utf-8"))
-        reconciled_body = reconciled.read_text(encoding="utf-8")
-        memory = finalize_memory_report(
-            report.read_text(encoding="utf-8"),
-            overview_body=reconciled_body,
-            runtime_body=runtime_body,
-        )
-        _, memory_body = split(memory.text)
-    except ValueError as error:
-        return [f"the memory report cannot be finalized against this member: {error}"]
-    returns = "## Returns to the coordinator"
-    epistemic_body = epistemic.read_text(encoding="utf-8").split(returns)[0]
-    _, errors = set_record_errors(
-        {
-            "overview.md": f"{boundary_body}\n{reconciled_body}",
-            "runtime.md": runtime_body,
-            "memory.md": memory_body,
-            "epistemic.md": epistemic_body,
-        }
     )
-    return errors
-
-
-def reference_refusals(
-    path: Path,
-    *,
-    repo_root: Path,
-    boundary: Path,
-    reconciled: Path,
-    runtime: Path,
-    memory: Path,
-) -> list[str]:
-    """The epistemic member, and every record it cites declared in the set."""
-    refusals = member_refusals(path, repo_root=repo_root)
-    if refusals:
-        return refusals
-    try:
-        bodies = {
-            name: split(file.read_text(encoding="utf-8"))[1]
-            for name, file in (
-                ("runtime.md", runtime),
-                ("memory.md", memory),
-                ("epistemic.md", path),
-            )
-        }
-        _, boundary_body = split(boundary.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return [f"a set member does not parse: {error}"]
-    bodies["overview.md"] = f"{boundary_body}\n{reconciled.read_text(encoding='utf-8')}"
-    _, errors = set_record_errors(bodies)
-    return errors
 
 
 def review_body_refusals(path: Path) -> list[str]:
@@ -424,21 +389,27 @@ class AnalyseAgenticSystem(Workflow):
             self.close_without_analysis(run_dir, opening, fields, boundary_body)
             return
 
-        member = partial(member_refusals, repo_root=repo_root)
+        (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
         ctx.agent(
             self.job(
                 "runtime",
-                RUNTIME_DRAFT,
+                RUNTIME,
                 reads=(BOUNDARY,),
                 norms=True,
-                validator=member,
+                validator=partial(
+                    pass_refusals,
+                    repo_root=repo_root,
+                    bodies=lambda path: set_bodies(
+                        boundary=run_dir / BOUNDARY, runtime=path
+                    ),
+                ),
             )
         ).wait()
         ctx.agent(
             self.job(
                 "scoping",
                 SCOPING,
-                reads=(BOUNDARY, RUNTIME_DRAFT),
+                reads=(BOUNDARY, RUNTIME),
                 validator=lambda path: require_sections(
                     path.read_text(encoding="utf-8"),
                     3,
@@ -449,14 +420,23 @@ class AnalyseAgenticSystem(Workflow):
         self.write_memory_input(run_dir, fields, boundary_body)
 
         ctx.parallel(
-            lambda: ctx.agent(self.memory_job(0, 0, member)).wait(),
+            lambda: ctx.agent(self.memory_job(run_dir, 0, 0)).wait(),
             lambda: ctx.agent(
                 self.job(
                     "epistemic",
-                    EPISTEMIC_DRAFT,
-                    reads=(BOUNDARY, RUNTIME_DRAFT, SCOPING),
+                    EPISTEMIC,
+                    reads=(BOUNDARY, RUNTIME, SCOPING),
                     norms=True,
                     extra=("../../analyse-external-system-epistemic-architecture.md",),
+                    validator=partial(
+                        pass_refusals,
+                        repo_root=repo_root,
+                        bodies=lambda path: set_bodies(
+                            boundary=run_dir / BOUNDARY,
+                            runtime=run_dir / RUNTIME,
+                            epistemic=path,
+                        ),
+                    ),
                 )
             ).wait(),
         )
@@ -472,7 +452,7 @@ class AnalyseAgenticSystem(Workflow):
             text = (run_dir / reconciliation(reconcile)).read_text(encoding="utf-8")
             if RETURNED in headings(text, 2):
                 memory += 1
-                ctx.agent(self.memory_job(memory, reconcile, member)).wait()
+                ctx.agent(self.memory_job(run_dir, memory, reconcile)).wait()
                 reconcile += 1
                 reason = "returned"
                 continue
@@ -490,9 +470,7 @@ class AnalyseAgenticSystem(Workflow):
             reconcile += 1
             reason = "blockers"
 
-        self.assemble(
-            run_dir, opening, fields, boundary_body, reconcile, memory, verification
-        )
+        self.assemble(run_dir, opening, fields, boundary_body, reconcile, verification)
         self.validate_set(run_dir)
 
         ctx.agent(
@@ -557,11 +535,13 @@ class AnalyseAgenticSystem(Workflow):
             validator=validator,
         )
 
-    def memory_job(
-        self, round_: int, returned_by: int, member: Callable[[Path], list[str]]
-    ) -> Job:
+    def memory_job(self, run_dir: Path, round_: int, returned_by: int) -> Job:
+        """One round of the memory specialist. Its report cites the boundary's
+        sources, the runtime member and its own records; a correction round,
+        which runs after the epistemic member exists, may cite that member too."""
         reads: tuple[str, ...] = (LOCAL_INPUT_NAME,)
         note = "This is the first pass."
+        cited = {"runtime": run_dir / RUNTIME}
         if round_ > 0:
             reads += (memory_report(round_ - 1), reconciliation(returned_by))
             note = (
@@ -569,6 +549,7 @@ class AnalyseAgenticSystem(Workflow):
                 f"`{memory_report(round_ - 1)}` and the reconciliation that returned "
                 f"findings is `{reconciliation(returned_by)}`."
             )
+            cited["epistemic"] = run_dir / EPISTEMIC
         return self.job(
             f"memory-{round_}",
             memory_report(round_),
@@ -576,7 +557,13 @@ class AnalyseAgenticSystem(Workflow):
             instruction="memory",
             extra=("../../analyse-agent-memory.md",),
             note=note,
-            validator=member,
+            validator=partial(
+                pass_refusals,
+                repo_root=self.repo,
+                bodies=lambda path: set_bodies(
+                    boundary=run_dir / BOUNDARY, memory=path, **cited
+                ),
+            ),
         )
 
     def reconcile_job(
@@ -591,9 +578,9 @@ class AnalyseAgenticSystem(Workflow):
         reads: tuple[str, ...] = (
             BOUNDARY,
             SCOPING,
-            RUNTIME_DRAFT,
+            RUNTIME,
             report,
-            EPISTEMIC_DRAFT,
+            EPISTEMIC,
         )
         note = (
             f"This is reconciliation round {round_}. The memory report is `{report}`."
@@ -604,13 +591,7 @@ class AnalyseAgenticSystem(Workflow):
         if reason == "blockers":
             previous = round_ - 1
             reads += tuple(
-                round_file(kind, previous)
-                for kind in (
-                    "verification",
-                    "set-check",
-                    "runtime-final",
-                    "epistemic-final",
-                )
+                round_file(kind, previous) for kind in ("verification", "set-check")
             )
             note += (
                 f" The verification of round {previous} named blockers: resolve each "
@@ -630,8 +611,10 @@ class AnalyseAgenticSystem(Workflow):
             note=note,
             validator=partial(
                 reconcile_refusals,
+                boundary=run_dir / BOUNDARY,
+                runtime=run_dir / RUNTIME,
                 report=run_dir / report,
-                runtime=run_dir / RUNTIME_DRAFT,
+                epistemic=run_dir / EPISTEMIC,
                 may_return=may_return,
             ),
         )
@@ -646,68 +629,23 @@ class AnalyseAgenticSystem(Workflow):
         round_: int,
         memory: int,
     ) -> str:
-        """Write the members of one reconciliation round, check the set they
-        make, and verify it. Returns the verification."""
-        reconciled = reconciliation(round_)
-        report = memory_report(memory)
-        runtime = round_file("runtime-final", round_)
-        memory_final = round_file("memory-final", round_)
-        epistemic = round_file("epistemic-final", round_)
+        """Assemble the set one reconciliation round makes, check it, and
+        verify it. Returns the verification.
+
+        The runtime and epistemic members are already in `output/`; the
+        round's memory report goes there byte for byte as the memory member.
+        """
         draft = round_file("overview-draft", round_)
         check = round_file("set-check", round_)
         verification = round_file("verification", round_)
-        references = partial(
-            reference_refusals,
-            repo_root=self.repo,
-            boundary=run_dir / BOUNDARY,
-            reconciled=run_dir / reconciled,
-        )
 
-        ctx.agent(
-            self.job(
-                f"runtime-final-{round_}",
-                runtime,
-                reads=(BOUNDARY, RUNTIME_DRAFT, reconciled, report, EPISTEMIC_DRAFT),
-                instruction="runtime-final",
-                norms=True,
-                validator=partial(
-                    runtime_final_refusals,
-                    repo_root=self.repo,
-                    boundary=run_dir / BOUNDARY,
-                    reconciled=run_dir / reconciled,
-                    report=run_dir / report,
-                    epistemic=run_dir / EPISTEMIC_DRAFT,
-                ),
-            )
-        ).wait()
-        summary = self.finalize(run_dir, memory, round_)
-        ctx.agent(
-            self.job(
-                f"epistemic-final-{round_}",
-                epistemic,
-                reads=(EPISTEMIC_DRAFT, reconciled, runtime, memory_final),
-                instruction="epistemic-final",
-                validator=partial(
-                    references,
-                    runtime=run_dir / runtime,
-                    memory=run_dir / memory_final,
-                ),
-            )
-        ).wait()
-
+        output = run_dir / OUTPUT_DIR
+        (run_dir / MEMORY).write_bytes((run_dir / memory_report(memory)).read_bytes())
         overview = self.render_overview(
-            run_dir, opening, fields, boundary_body, reconciled, summary, None
+            run_dir, opening, fields, boundary_body, reconciliation(round_), None
         )
         (run_dir / draft).write_text(overview, encoding="utf-8")
-        output = run_dir / OUTPUT_DIR
-        output.mkdir(exist_ok=True)
-        for source, target in (
-            (runtime, RUNTIME),
-            (memory_final, MEMORY),
-            (epistemic, EPISTEMIC),
-            (draft, OVERVIEW),
-        ):
-            (run_dir / target).write_bytes((run_dir / source).read_bytes())
+        (run_dir / OVERVIEW).write_text(overview, encoding="utf-8")
         build_manifest(run_dir)
         failures = validate_note(output, repo_root=self.repo).fails
         (run_dir / check).write_text(
@@ -721,7 +659,7 @@ class AnalyseAgenticSystem(Workflow):
             self.job(
                 f"verify-{round_}",
                 verification,
-                reads=(draft, runtime, memory_final, epistemic, check),
+                reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
                 instruction="verify",
                 norms=True,
                 validator=lambda path: require_sections(
@@ -838,7 +776,7 @@ class AnalyseAgenticSystem(Workflow):
     def write_memory_input(
         self, run_dir: Path, fields: dict[str, Any], boundary_body: str
     ) -> None:
-        _, runtime_body = split((run_dir / RUNTIME_DRAFT).read_text(encoding="utf-8"))
+        _, runtime_body = split((run_dir / RUNTIME).read_text(encoding="utf-8"))
         scope = subsection(
             (run_dir / SCOPING).read_text(encoding="utf-8"), "Memory/context scope"
         )
@@ -859,23 +797,6 @@ class AnalyseAgenticSystem(Workflow):
         )
         (run_dir / LOCAL_INPUT_NAME).write_text(text, encoding="utf-8")
 
-    def finalize(self, run_dir: Path, memory: int, round_: int) -> str:
-        """Copy the memory report into place and write the round's memory member."""
-        report = run_dir / LOCAL_REPORT_NAME
-        report.write_bytes((run_dir / memory_report(memory)).read_bytes())
-        body = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
-        runtime = run_dir / round_file("runtime-final", round_)
-        _, runtime_body = split(runtime.read_text(encoding="utf-8"))
-        result = finalize_memory_report(
-            report.read_text(encoding="utf-8"),
-            overview_body=body,
-            runtime_body=runtime_body,
-        )
-        (run_dir / round_file("memory-final", round_)).write_text(
-            result.text, encoding="utf-8"
-        )
-        return render_finalization_summary(result)
-
     def assemble(
         self,
         run_dir: Path,
@@ -883,19 +804,12 @@ class AnalyseAgenticSystem(Workflow):
         fields: dict[str, Any],
         boundary_body: str,
         round_: int,
-        memory: int,
         verification: str,
     ) -> None:
-        """Put the accepted round's members and the verified overview in `output/`."""
-        summary = self.finalize(run_dir, memory, round_)
-        for kind, target in (
-            ("runtime-final", RUNTIME),
-            ("memory-final", MEMORY),
-            ("epistemic-final", EPISTEMIC),
-        ):
-            (run_dir / target).write_bytes(
-                (run_dir / round_file(kind, round_)).read_bytes()
-            )
+        """Complete the accepted round's set with the verified overview.
+
+        The members are in `output/` from the round's closing, which copied
+        its memory report there."""
         (run_dir / OVERVIEW).write_text(
             self.render_overview(
                 run_dir,
@@ -903,7 +817,6 @@ class AnalyseAgenticSystem(Workflow):
                 fields,
                 boundary_body,
                 reconciliation(round_),
-                summary,
                 verification,
             ),
             encoding="utf-8",
@@ -951,7 +864,6 @@ class AnalyseAgenticSystem(Workflow):
         fields: dict[str, Any],
         boundary_body: str,
         final: str,
-        summary: str,
         verification: str | None,
     ) -> str:
         scoping = (run_dir / SCOPING).read_text(encoding="utf-8")
@@ -970,7 +882,7 @@ class AnalyseAgenticSystem(Workflow):
             "## Lens scoping\n\n"
             f"### Memory/context scope\n\n{subsection(scoping, 'Memory/context scope')}\n\n"
             f"### Epistemic scope\n\n{subsection(scoping, 'Epistemic scope')}\n\n"
-            f"## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n\n{summary}\n\n"
+            f"## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n\n"
             f"## Bounded synthesis\n\n{section(reconciled, 'Bounded synthesis').strip()}\n\n"
             f"## Limitations\n\n{section(reconciled, 'Limitations').strip()}\n\n"
             "## Verification and blockers\n\n"

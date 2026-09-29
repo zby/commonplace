@@ -17,9 +17,9 @@ allOf:
             minLength: 1
         additionalProperties: true
       headings:
-        description: "One H1 followed by the six epistemic blocks in order."
+        description: "One H1 followed by the six epistemic blocks in order, then Shared records."
         type: array
-        minItems: 7
+        minItems: 8
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
@@ -31,6 +31,7 @@ allOf:
                 - "## Per-object lifecycle disposition"
                 - "## System-claim versus route comparison"
                 - "## Bounded conclusion"
+                - "## Shared records"
             - pattern: '^#{3,6} .+$'
         allOf:
           - {contains: {const: "## Source-and-claim boundary"}, minContains: 1, maxContains: 1}
@@ -39,5 +40,6 @@ allOf:
           - {contains: {const: "## Per-object lifecycle disposition"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## System-claim versus route comparison"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Bounded conclusion"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Shared records"}, minContains: 1, maxContains: 1}
       body:
-        pattern: '(?ms)^## Source-and-claim boundary\s*$.*?^## Epistemic-object inventory\s*$.*?^## Authority-route ledger\s*$.*?^## Per-object lifecycle disposition\s*$.*?^## System-claim versus route comparison\s*$.*?^## Bounded conclusion\s*$'
+        pattern: '(?ms)^## Source-and-claim boundary\s*$.*?^## Epistemic-object inventory\s*$.*?^## Authority-route ledger\s*$.*?^## Per-object lifecycle disposition\s*$.*?^## System-claim versus route comparison\s*$.*?^## Bounded conclusion\s*$.*?^## Shared records\s*$'

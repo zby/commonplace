@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Verify the set
 
-Read the round's assembled set, as your prompt's inputs name it: the overview draft (the overview without its verification), the runtime, memory and epistemic members, and the set check, which lists what structural validation of the set found. Write the output your prompt names with exactly these sections, which go into the overview's Verification and blockers:
+Read the round's assembled set, as your prompt's inputs name it: the overview draft (the overview without its verification), the runtime member, the memory report that is the round's memory member byte for byte, the epistemic member, and the set check, which lists what structural validation of the set found. Write the output your prompt names with exactly these sections, which go into the overview's Verification and blockers:
 
 ```markdown
 ### Semantic verification
@@ -13,6 +13,6 @@ Read the round's assembled set, as your prompt's inputs name it: the overview dr
 ### Blockers
 ```
 
-Check the whole set, not the separate lens returns, against the memory report type's Memory comparison fields: scope agreement with the canonical records across members, every scoped trace-fed write including compaction, each push signal's consumer and selector, and amendments and annotations on the same canonical IDs.
+Check the whole set, not the separate lens returns, against the memory report type's Memory comparison fields: scope agreement with the canonical records across members, every scoped trace-fed write including compaction, each push signal's consumer and selector, and the Reconciliation's amendments and supersessions against the records they name.
 
 Record the checked routes and material dispositions, and the check of every source anchor, canonical ID, evidence status, boundary, member, limitation and blocker. A known assessment unsupported by its records is a blocker; properly scoped explicit uncertainty is not. Structural validation does not perform this check, but every failure the set check lists is a blocker too. Under Blockers write `none`, or each blocker with the member and IDs it affects and what would resolve it. A blocker starts another reconciliation round, which gets your verification; in the last round it stops the run.

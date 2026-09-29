@@ -39,17 +39,9 @@ running commands.
 
 ### commonplace-agentic-analysis-finalize
 
-Finalize the mechanical parts of one `running` agentic-system analysis set.
-`memory <run-state>` writes `output/memory.md` from the specialist's local
-`memory-report.md` and the overview's Reconciliation table: exact-token
-proposal mapping, `On <ID>` conversion of declarations of records `runtime.md`
-declares, removal of rejected proposals, `finalized-from` set to the local
-report's SHA-256, and an appended `## Amendments` section of `none`. It prints
-the mechanical edits for the overview's Reconciliation and refuses an unmapped
-proposal, a rejected proposal other findings still reference, or a merged row
-that disagrees with the declarations. `manifest <run-state>` writes
-`output/ARTIFACT.yaml` pinning the set members present in `output/`; rerun it
-after any member edit.
+Build the manifest of one `running` agentic-system analysis set.
+`manifest <run-state>` writes `output/ARTIFACT.yaml` pinning the set members
+present in `output/`; rerun it after any member edit.
 
 ### commonplace-agentic-analysis-handoff
 

@@ -159,6 +159,14 @@ None found.
 ## Bounded conclusion
 
 Conclusion.
+
+## Shared records
+
+### Routes
+
+#### EPI-RTE-1 — Admission check
+
+Record. Evidence: SRC-1.
 '''
 
 REVIEW_TEXT = f'''---
@@ -234,14 +242,9 @@ def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Pat
     assert any("Claims" in failure for failure in results.fails)
 
 
-def test_runtime_report_accepts_amendments_only_as_its_last_section(tmp_path: Path) -> None:
+def test_runtime_report_has_no_amendments_section(tmp_path: Path) -> None:
     amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: OBJ-1 label changed.\n"
-    assert validate(tmp_path, "runtime.md", amended).fails == []
-    misplaced = RUNTIME_TEXT.replace(
-        "## Annotations", "## Amendments\n\nAmendment: OBJ-1 label changed.\n\n## Annotations"
-    )
-    results = validate(tmp_path, "runtime.md", misplaced)
-    assert any("last level-two section" in failure for failure in results.fails)
+    assert validate(tmp_path, "runtime.md", amended).fails != []
 
 
 def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
@@ -250,6 +253,16 @@ def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
     swapped = swapped.replace("## Epistemic-object inventory", "## Authority-route ledger", 1)
     swapped = swapped.replace("## TEMP", "## Epistemic-object inventory", 1)
     assert validate(tmp_path, "epistemic.md", swapped).fails != []
+
+
+def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Path) -> None:
+    missing = EPISTEMIC_TEXT[: EPISTEMIC_TEXT.index("## Shared records")]
+    assert validate(tmp_path, "epistemic.md", missing).fails != []
+    duplicate = EPISTEMIC_TEXT + "\n#### EPI-RTE-1 — The same check again\n"
+    assert any(
+        "duplicate declarations: EPI-RTE-1" in failure
+        for failure in validate(tmp_path, "epistemic.md", duplicate).fails
+    )
 
 
 def test_generated_review_validates_and_pins_the_manifest(tmp_path: Path) -> None:

@@ -1,23 +1,20 @@
 ---
 type: types/type-spec.md
 name: agent-memory-analysis-report
-description: "Memory specialist's source-grounded findings, comparison profile and integration questions for one analysis run, as local handoff or finalized set member"
+description: "Memory specialist's source-grounded findings, comparison profile and integration questions for one analysis run; the report is the set's memory member unchanged"
 schema: ./agent-memory-analysis-report.schema.yaml
 ---
 
 # Agent memory analysis report
 
-The memory specialist's source-grounded findings, their proposed
-comparison classifications, and their integration questions for one run.
-It has two regimes with one shape. The **local report** is the
-specialist's handoff, written under proposal IDs and bound to the frozen
-commission it answers. The **finalized member** is that report after the
-coordinator's reconciliation: proposal IDs replaced by canonical IDs by
-exact-token mapping, deltas appended as amendments, and the comparison
-profile authoritative for downstream consumers. The finalized member is
-the set's memory member; the local report stays in the run directory as
-provenance. Set-wide conventions are those of the
-[overview](./agentic-system-analysis-overview.md#the-set).
+The memory specialist's source-grounded findings, their comparison
+classifications, and their integration questions for one run, bound to
+the frozen commission it answers. The last report the run accepts is the
+set's memory member byte for byte: it declares its records under their
+`MEM-` IDs, and no step rewrites it. Corrections to its records are
+amendments in the overview's Reconciliation. Its comparison profile is
+authoritative for downstream consumers. Set-wide conventions are those of
+the [overview](./agentic-system-analysis-overview.md#the-set).
 
 ## Frontmatter
 
@@ -32,13 +29,12 @@ provenance. Set-wide conventions are those of the
 | `canonical-register-sha256` | Yes | SHA-256 of the exact commissioned `memory-input.md` |
 | `worker-model` | Yes | Actual worker model identifier, or `unknown` |
 | `method-sha256` | Yes | SHA-256 of the specialist instruction used |
-| `finalized-from` | Yes | `null` in the local report; in the finalized member, the SHA-256 of the local report it was derived from |
 | `memory-comparison` | Yes | Scope and all fourteen axes, under the contract below |
 
 A blocked report names missing access, changed input, or an unresolved
 scope decision that prevents completing the assigned analysis. It keeps
 all sections; unreached axes use explicit uninspected assessments rather
-than guessed values. A blocked report is never finalized.
+than guessed values. A blocked report never becomes a set member.
 
 ## Memory comparison fields
 
@@ -88,7 +84,8 @@ Every record the profile references is declared or annotated
 seeded record its profile cites, so the profile validates without the
 other members. Other
 assessments require `values: []` and `evidence: {}`. `absent` requires an
-`ABS-*` record establishing bounded absence. Every assessment and value
+evidenced-absence record, `MEM-ABS-*` or a seeded `ABS-*`, establishing
+bounded absence. Every assessment and value
 has a nonempty explanatory note. An opaque included branch prevents
 complete coverage, not independently supported positive findings. A
 partial boolean assessment cannot assert `"no"`. Boolean axes have one
@@ -164,9 +161,8 @@ source code or prose in quote blocks under the set's quotation contract.
 ### Shared records
 
 Records this report establishes are declared under the six kind headings
-as `#### MEM-OBJ-1 — Label` in the local report and under their canonical
-IDs in the finalized member; a proposal never reassigns a canonical ID.
-Records the commission supplied as seeds are not re-declared: the report's
+under their `MEM-` IDs, as `#### MEM-OBJ-1 — Label`; the report never
+declares an unprefixed ID. Records the commission supplied as seeds are not re-declared: the report's
 memory-specific fields on them are annotations, `#### On OBJ-1 — Label`,
 carrying only those fields and the passages that support them. Records
 distinguish operative parts, raw traces from derived memory, content from
@@ -175,7 +171,7 @@ and give storage, representational form, lineage, consumers, authority at
 the actual consumer, and limits. A route identifies trigger, producer or
 selector, retained input, persistence, delivery, later consumer and
 status. Only `MEM-CMP-*`, `MEM-OBJ-*`, `MEM-RTE-*`, `MEM-CLM-*`,
-`MEM-ABS-*` or `MEM-BAP-*` are proposal kinds; evidence does not create a
+`MEM-ABS-*` or `MEM-BAP-*` are record kinds; evidence does not create a
 separate kind.
 
 ### Write side
@@ -212,12 +208,12 @@ permitted.
 
 ### Integration issues
 
-List every proposed record, correction to a supplied fact, and unresolved
-question with its evidence and analytical consequence. Identify the
-proposed record kind and referenced IDs so the coordinator can assign
-canonical IDs without rediscovering its meaning. State `none` when no
-issues remain. A complete report may contain supported correction
-proposals and justified unknown classifications; an unresolved question
+List every correction to a supplied fact, every record of this report
+that may duplicate a seeded record, and every unresolved question, with
+its evidence, analytical consequence and the full IDs it concerns, so the
+reconciliation can amend or supersede without rediscovering its meaning.
+State `none` when no issues remain. A complete report may contain
+supported corrections and justified unknown classifications; an unresolved question
 that prevents integration sets `report-status: blocked`. Side-channel
 messages never substitute for this section.
 
@@ -227,14 +223,3 @@ Name prevented conclusions, source and method identity rechecks, and the
 deterministic validation result. A self-check does not attest independence
 or correctness of the final integrated analysis. Do not omit weaknesses to
 make the report appear ready for integration.
-
-### Amendments
-
-Present only in the finalized member, as its last section. `## Amendments`
-holds the deltas reconciliation applied, as `Amendment:` entries keyed by
-record ID under the set's
-[amendment grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar):
-a changed token with its superseded value, an added field, an added link.
-It carries no re-narration of a declared record and no coordinator
-classification; those are annotations in the runtime report. State `none`
-when finalization changed nothing beyond ID mapping.

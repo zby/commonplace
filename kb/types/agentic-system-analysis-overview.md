@@ -53,8 +53,12 @@ or supply comparison rows. Correct retained output through a new run.
 
 The run has one namespace: `SRC-*` sources, `CMP-*` components, `OBJ-*`
 operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced
-absences, and `BAP-*` behavioral-authority paths. IDs are unique across
-the set and resolve within it. Write each ID in full, including lists,
+absences, and `BAP-*` behavioral-authority paths. A record ID other than
+`SRC-*` carries the prefix of the pass that established it: none for the
+runtime pass (`OBJ-1`), `MEM-` for the memory lens (`MEM-OBJ-1`), `EPI-`
+for the epistemic lens (`EPI-OBJ-1`). The prefix is part of the ID for
+the life of the set; no step renames a record. IDs are unique across the
+set and resolve within it. Write each ID in full, including lists,
 using commas or words between referenced IDs. The validator resolves
 complete IDs; it does not infer references from abbreviated suffixes or
 ranges. Source quotations and fenced excerpts are excluded from identifier
@@ -62,15 +66,17 @@ checks.
 
 `SRC-*` records are declared only in the first cell of a table row in this
 overview's Source register, as `| SRC-1 | ... |`.
-Every other record is declared exactly once, in the member that
-established it: the runtime report for records the coordinator's runtime
-pass registered, the memory report for records registered from the memory
-specialist's proposals. A cross-member reference is the bare ID.
+Every other record is declared exactly once, in the member of the pass
+that established it: unprefixed IDs in the runtime report, `MEM-` IDs in
+the memory report, `EPI-` IDs in the epistemic report. A cross-member
+reference is the full ID.
 
-Canonical identity applies from allocation and sharing, not only final
-acceptance. A split gives the new parts fresh IDs and marks the combined
-record superseded; its ID does not change referent. Provisional labels
-are local tags.
+Canonical identity applies from declaration, not only final acceptance.
+When two passes established the same thing, both records stay declared,
+and the Reconciliation supersedes one with an amendment. A split gives the
+new parts fresh IDs and marks the combined record superseded; its ID does
+not change referent. A superseded ID stays declared, so references to it
+still resolve. Provisional labels are local tags.
 
 ### Declaration, annotation and amendment grammar
 
@@ -78,26 +84,22 @@ Within a member's `## Shared records`, records are grouped under the six
 level-three kind headings and declared once each as a level-four heading,
 `#### OBJ-1 — Short label`. The ID precedes the em dash; the rest is the
 title. Prose, lists and table rows never declare these records. The same
-grammar and duplicate checks apply to local `MEM-` proposals and finalized
-records. A level-four heading of the form
+grammar and duplicate checks apply to every prefix. A level-four heading of the form
 `#### On OBJ-1 — Short label` is an **annotation**: another member's
 lens-specific fields on a record it does not declare. It never redefines
 generic identity, and a member never annotates a record it declares.
 Annotations sit in the section the member's type names: `## Annotations`
 in the runtime report, under `## Shared records` in the memory report.
 
-An **amendment** corrects a declared fact. Amendments live in one place:
-an `## Amendments` section at the end of the declaring member, holding one
-paragraph per amendment that opens `Amendment:` followed by the amended
-record's ID and gives the superseded value, replacement value, evidence
-anchor, and affected findings. An anchored conflict is an amendment
-carrying both values. Finalization of a member appends deltas, never a
-second version of a record; a relabelling from proposal to registered is
-carried by the overview's Reconciliation mapping and is not an amendment.
-
-The epistemic specialist proposes new records under `EPI-` IDs and
-declares none. The coordinator registers an accepted `EPI-` proposal in
-the runtime report, under a canonical ID the epistemic member then cites.
+An **amendment** corrects a declared fact of any pass's record. Amendments
+live in one place: this overview's `## Reconciliation`, as paragraphs
+that open `Amendment:` followed by the amended record's full ID and give
+the superseded value, replacement value, evidence anchor, and affected
+findings. An anchored conflict is an amendment carrying both values. A
+supersession is an amendment of the form `Amendment: MEM-RTE-3 is
+superseded by RTE-7`, with the evidence for the identity. No member is
+rewritten after the pass that wrote it; a member never carries a second
+version of a record or an amendment section.
 
 ### Status fields
 
@@ -187,24 +189,17 @@ records exist even when their evidence warrants only a brief lens pass.
 
 ### Reconciliation
 
-`## Reconciliation` records merged proposals, amendments, anchored
-conflicts, independent convergence, cross-lens ownership checks, and
-integration-issue dispositions. It names affected IDs and states how each
-discrepancy was disposed without selecting the strongest-sounding status.
-The specialist proposal mapping is one table:
+`## Reconciliation` records supersessions of duplicate records, the set's
+amendments, anchored conflicts, independent convergence, cross-lens
+ownership checks, and integration-issue dispositions. It names affected
+IDs in full and states how each discrepancy was disposed without
+selecting the strongest-sounding status. Every ID it cites, amendments
+included, resolves in the set. A lens record found to duplicate another
+pass's record is superseded here, never removed from its member.
 
-`specialist proposal | canonical record | disposition`
-
-A proposal merged into a record another member declares appears in the
-memory member only as an `On <ID>` annotation of that record. A rejected
-proposal, with disposition `rejected`, is removed from the memory member
-and recorded only in this table.
-
-It also names the local specialist report the memory member was finalized
-from, by path and SHA-256, and every mechanical edit finalization made.
-The path and digest are code spans, never a Markdown link. Every member's
-relative links stay inside the set directory, because the set moves when
-it is retained; member validation rejects a link that leaves it.
+Every member's relative links stay inside the set directory, because the
+set moves when it is retained; member validation rejects a link that
+leaves it.
 
 ### Bounded synthesis
 

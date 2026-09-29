@@ -19,8 +19,7 @@ This record proves only what later consumers need:
 - which frozen source boundary it used;
 - which exact manifest and published review bytes completed the run; the
   manifest pins every member of the set; and
-- which typed memory specialist report the set's memory member was finalized
-  from.
+- which frozen commission the set's memory member answers.
 
 It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
@@ -43,19 +42,15 @@ those copies and the public review's `analysis-artifact` and
 `analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
 follow those public fields without ignored state or a source checkout.
 
-Every complete analysis requires the typed `memory-report.md` and frozen
-`memory-input.md` in its run directory. The coordinator finalizes that report
-as `memory.md`: proposal IDs mapped to canonical IDs by exact token, seeded
-records the specialist re-declared and proposals merged into another member's
-record turned into `On <ID>` annotations, rejected proposals removed, and an
-`## Amendments` section appended; the member's `finalized-from` is the local
-report's SHA-256. Completion verification checks the manifest, run and
-boundary identity across members, the memory member's complete status and
-its `finalized-from` and `canonical-register-sha256` pins against the local
-files, and applies the shared set checks, including cross-member record resolution.
+Every complete analysis requires the frozen `memory-input.md` in its run
+directory. The set's `memory.md` is the specialist's last accepted report,
+unchanged. Completion verification checks the manifest, run and boundary
+identity across members, the memory member's complete status and its
+`canonical-register-sha256` pin against `memory-input.md`, and applies the
+shared set checks, including cross-member record resolution.
 It also checks every member's source and quote anchors.
-These checks establish identity and structure; they do not check the
-derivation of the memory member or impose a quote minimum, and they do not certify the specialist's semantic judgments.
+These checks establish identity and structure; they do not impose a quote
+minimum, and they do not certify the specialist's semantic judgments.
 
 `source` is either a Git commit or an immutable capture. A Git source records
 the stable repository identity, full commit ID, and absolute checkout path. A

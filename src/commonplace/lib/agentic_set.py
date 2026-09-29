@@ -23,7 +23,6 @@ OUTPUT_DIR = "output"
 OVERVIEW_NAME = "overview.md"
 MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md")
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
-LOCAL_REPORT_NAME = "memory-report.md"
 LOCAL_INPUT_NAME = "memory-input.md"
 
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")

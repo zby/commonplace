@@ -14,9 +14,8 @@ are members; this type uses closed membership.
 A complete outcome requires `overview.md`, `runtime.md`, `memory.md` and
 `epistemic.md`. A blocked or out-of-scope outcome requires only `overview.md`.
 The overview's `result-disposition` selects the schema branch. The memory
-member must be finalized: `report-status: complete` and a SHA-256
-`finalized-from`. Each report keeps its own type and passes ordinary file
-validation independently.
+member must have `report-status: complete`. Each report keeps its own type
+and passes ordinary file validation independently.
 
 The set rule checks run and boundary agreement, duplicate declarations,
 cross-member record references and comparison-profile references against

@@ -11,7 +11,6 @@ from typing import Any
 
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
-    LOCAL_REPORT_NAME,
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
@@ -573,34 +572,27 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
 def _verify_memory_member(
     state: AgenticAnalysisRunState, member_set: MemberSet
 ) -> tuple[list[str], list[str]]:
-    """Check the memory member's provenance pins, not its derivation.
+    """Check the memory member's provenance pin, not its content.
 
-    The coordinator authors the finalized member from the specialist's local
-    report; this checks only that it is complete, that ``finalized-from``
-    names the local report's bytes and ``canonical-register-sha256`` the
-    frozen input's. Both files must be present in the run directory.
+    The memory member is the specialist's report unchanged; this checks only
+    that ``canonical-register-sha256`` names the bytes of the frozen input
+    in the run directory.
     """
     member = member_set.memory
     if member is None:
         return [], ["memory member: the manifest names no memory report"]
-    failures: list[str] = []
-    values = member.frontmatter
-    for name, field in ((LOCAL_REPORT_NAME, "finalized-from"),
-                        (LOCAL_INPUT_NAME, "canonical-register-sha256")):
-        path = state.run_dir / name
-        if not path.exists():
-            failures.append(f"memory member: {name} is missing from the run directory")
-            continue
-        try:
-            actual = sha256(path.read_bytes()).hexdigest()
-        except OSError as exc:
-            failures.append(f"memory member: cannot read {name}: {exc}")
-            continue
-        if values.get(field) != actual:
-            failures.append(f"memory member: {field} does not match {name} bytes")
-    if failures:
-        return [], failures
-    return ["memory member: complete and pinned to the local report and input"], []
+    path = state.run_dir / LOCAL_INPUT_NAME
+    if not path.exists():
+        return [], [f"memory member: {LOCAL_INPUT_NAME} is missing from the run directory"]
+    try:
+        actual = sha256(path.read_bytes()).hexdigest()
+    except OSError as exc:
+        return [], [f"memory member: cannot read {LOCAL_INPUT_NAME}: {exc}"]
+    if member.frontmatter.get("canonical-register-sha256") != actual:
+        return [], [
+            f"memory member: canonical-register-sha256 does not match {LOCAL_INPUT_NAME} bytes"
+        ]
+    return ["memory member: complete and pinned to the frozen input"], []
 
 
 def verify_agentic_analysis_run_state(

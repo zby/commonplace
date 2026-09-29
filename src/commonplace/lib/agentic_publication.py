@@ -17,7 +17,6 @@ from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_state
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
-    LOCAL_REPORT_NAME,
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
@@ -74,7 +73,6 @@ RESERVED_CANDIDATE_NAMES = frozenset(
     {
         *SET_NAMES,
         LOCAL_INPUT_NAME,
-        LOCAL_REPORT_NAME,
         INCUMBENT_REVIEW_NAME,
         *(incumbent_copy_name(name) for name in SET_NAMES),
     }
