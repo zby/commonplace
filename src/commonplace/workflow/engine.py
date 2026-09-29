@@ -12,16 +12,21 @@ A definition has three kinds of step.
 A job is executed by a worker, a sub-agent. Its result is a file in the run
 directory, judged by code.
 
-A mechanical step is executed by code and reads or changes only the run
-directory. It is ordinary code in the definition, with no call into this
-package. It runs again at every replay, so it must give the same result
-whenever it runs on the same files.
+A mechanical step is executed by code and can be replayed: run again on the
+same files, it gives the same result and changes nothing further. It is
+ordinary code in the definition, with no call into this package, and it runs
+again at every replay.
 
-An effect is executed by code and changes something outside the run
-directory, such as publishing a result to its destination. The run directory
-cannot show whether it took place, running it again is not harmless, and
-what it produced stays outside when the run's files later change. It is
-therefore declared with `Context.effect`, which runs it once.
+An effect is executed by code and must run once, for one of two reasons. It
+changes the world outside the run, as publishing a result does. Or its result
+cannot be reproduced, as with resolving a branch to a commit, fetching a web
+page, or reading the clock. Where a step writes is not the test: a snapshot
+written into the run directory is an effect. An effect is declared with
+`Context.effect`, which runs it once.
+
+Where only part of a step must run once, split it. Resolving a revision to a
+commit is an effect; fetching the objects of the recorded commit is a
+mechanical step.
 """
 
 from __future__ import annotations
@@ -396,13 +401,16 @@ class Context:
     ) -> None:
         """Run an effect, once.
 
-        An effect is a step that code executes and that changes something
-        outside the run directory. `name` identifies it within the run. `do`
-        performs it. `inputs` are the files the effect is made from, as a
-        job's inputs are; their state is recorded before `do` runs.
+        An effect is a step that code executes and that must run once,
+        because it changes the world outside the run or because its result
+        cannot be reproduced. `name` identifies it within the run. `do`
+        performs it and returns nothing: an effect that produces a value
+        writes it to a file in the run directory, where later steps read it.
+        `inputs` are the files the effect is made from, as a job's inputs
+        are; their state is recorded before `do` runs.
 
-        A step that changes only the run directory is not an effect and is
-        not declared here.
+        A step that can be replayed is not an effect and is not declared
+        here, wherever it writes.
 
         Code does not repeat or undo an effect. When it is completed and its
         inputs have changed since, what is outside no longer matches the run:
@@ -418,6 +426,14 @@ class Context:
         and `do` does not run. ABSENT: `do` runs. UNKNOWN, an error raised by
         `recognize`, or no `recognize` at all: the step gives the Uncertain
         outcome and `do` does not run.
+
+        What `recognize` has to do depends on why the effect must run once.
+        An effect that changes the world outside may have taken place in
+        part, so `recognize` inspects the state outside. An effect whose
+        result cannot be reproduced is harmless to run again before its
+        result is recorded, so its `recognize` gives COMPLETED when the file
+        it writes exists and ABSENT otherwise. Leaving `recognize` out of
+        such an effect stops the run as uncertain for no reason.
 
         An error raised by `do` leaves the effect started and not recorded,
         as a process that ended would. The step gives a block on `workflow`
