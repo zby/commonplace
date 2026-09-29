@@ -58,20 +58,15 @@ These bind. Everything not listed here is yours to decide.
 - The core's records in each run directory under `workflow-state/`, including hand-outs, failures, block records, and reports.
 - The first series: its observations are in the kit's README, and its evidence is under `runs/claude-evidence/` and `runs/codex-20260929-evidence/`.
 - The second series: one file per harness under `observations/`. Every case of the kit ran in it, in both harnesses, on the loop text with L1 to L6.
+- The third series (`claude-code-c`, `codex-open-a`): every case on the loop text with L10 to L12, in both harnesses and on two Claude models.
 
-What is still open, and worth the next series:
-
-- the loop text with L10 to L12: what may be read at a block, relaunching after a failed launch, and a `step` that ends without an outcome;
-- the block record that names each kept file's path (C6);
-- `busy` with the holding step started by setup (K9); in Codex the case was reached once, on a second attempt;
-- the instruction delivered to workers in Codex (P7), and Codex's context growth per round;
-- any case on a second model, or more than once per harness: the second series ran most cases once.
+Still open after the third series: L13 and L14, applied after it; the instruction delivered to workers in Codex (P7); models and effort settings beyond those tried.
 
 ## What the first series taught
 
 These are findings about testing, not orders. Depart from one when your harness gives you a reason, and say why in your file.
 
-- **A session that cannot receive an answer cannot show a resume.** Where the loop text tells the agent orchestrator to ask the operator, use a session you can answer: an interactive one, or one you can continue after its question.
+- **A session that cannot receive an answer cannot show a resume.** Where the loop text tells the agent orchestrator to ask the operator, use a session you can answer: an interactive one, or one you can continue after its question. When you continue a session, set its model and effort again: Codex's `exec resume` fell back to another model when they were left out.
 - **Say where a session was cut.** An interruption after a hand-out and before the worker's launch leaves an output missing, and the next `step` counts that as a failed attempt. The point of the cut therefore changes what the resumed run shows. A turn limit may not cut where you want, because workers launched in the background let a session finish inside it; killing the session's process when the core's state shows the hand-out does.
 - **Keep the workers' traces, not only the agent orchestrator's.** A harness may store them elsewhere. They show what the workers did, and sometimes the instruction each received.
 - **A harness may hide the instruction a worker received.** If it does, the first question above stays unanswered for that harness. Say so; a correct output does not show that the instruction was unchanged.

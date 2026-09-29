@@ -24,6 +24,8 @@ Sources: the two series and their follow-up audits in [the kit's README](./READM
 | L10 | When `step` ends in a way the loop text does not name, stop: report the stop and give the operator the exit status and what `step` printed. Do not run `step` again. | Second series, both harnesses: at status 9 each stopped and did not run `step` again, which is safe; Codex's final message gave only the standard-error line. A `step` that crashed should reach the operator before it is run again. | Accept. | Applied. |
 | L11 | Blocks: at a block, read the record and find the cause; the run directory may be listed; do not open prompt files, inputs, or outputs. A problem report is already quoted in the record. | Claude second series (P-new-1): at repair blocks the orchestrator also read the prompt, the source, and once an output. Codex read only the record and listed the run, leaving out outputs and `workflow-state/`. | Accept the narrow rule; Codex shows it can be followed. | Applied (operator, 2026-09-29). |
 | L12 | Failed launch: "Do not relaunch in this round; when the next `step` names the job again, launch it then." | Claude second series (P-new-2), cb-07: it read "do not relaunch" as never, and reported a failed launch it had not tried. Codex relaunched as intended. | Accept. | Applied. |
+| L13 | Launch parameters are binding: if the harness cannot apply one, treat the launch as failed; never launch the job without it. | Claude third series (N1), cc-24: after a refused model it launched `claims` without the parameter, and the core's records do not show it. For a tool scope that would remove a restriction the definition set. | Accept. | Applied (operator, 2026-09-29). |
+| L14 | L10's wording: stop as the Stopping section says (with `report stop`), and give the exit status too. | Claude third series (N2), cc-18: after status 9 it gave the status but made no stop report; cc-08 and cc-23 made one. | Accept. | Applied. |
 
 ## Core
 
@@ -49,6 +51,8 @@ Sources: the two series and their follow-up audits in [the kit's README](./READM
 | K7 | Add cases for a failed launch, an uncertain effect, a second `step` on a busy run, and a session interrupted more than once before a worker's launch. | Both series list these as not tested. | Accept, in the order the second series finds most useful. | Applied: scenarios `uncertain` and `busy`; a failed launch and a repeated interruption are cases of the tester's making, described in the kit's README. |
 | K8 | Expectations: `uncertain` stops at the status 9 (L10); `problem` reads only the record at the block (L11); a failed launch is relaunched when the next `step` names the job (L12); cut a session for a resume by killing its process, not by a turn limit. | Claude second series (P-new-3, cb-11); the Codex retest's traces. | Accept. | Applied. |
 | K9 | `busy`: setup starts the holding `step` itself and returns only once it holds the run. | Codex retest: the session's own first `step` found the hold file before the tester's background `step` did, held the run itself, and the case was not reached. | Accept. | Applied. |
+| K10 | Failed launch: expect the whole course, ending in a block at attempt 2 of 2 and a stop, and never a launch without the parameter. | Claude third series (N3). | Accept. | Applied. |
+| K11 | `setup.py` prints the `<shell>` value with absolute paths and the interpreter's own path, not a relative `PYTHONPATH` and `uv run`. | Codex third series: `r-a-01` failed on the relative path from the run directory; `r-a-11` failed because `uv` could not run in the default sandbox. | Accept. | Applied. |
 
 ## Testing
 
@@ -67,6 +71,7 @@ All entries here are applied in the revision of [the testing procedure](./testin
 | P9 | Record the hashes of the loop text, the core and the trial definition before and after a series. | Codex did so. |
 | P10 | Read the change list before testing, and mark each proposal as new or as support for a listed entry. | The two series proposed overlapping changes. |
 | P11 | Cut a session by killing its process when the core's state shows the hand-out; a turn limit may not cut a session whose workers run in the background. | Claude second series, cb-11. |
+| P12 | When continuing a session with the operator's answer, set its model and effort again. | Codex third series: `exec resume` fell back to `gpt-6-luna`, which bounds the last action of its repeated interruption. |
 
 ## Not yet shown by any trial
 

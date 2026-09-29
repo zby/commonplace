@@ -40,7 +40,7 @@ Cases that need no scenario of their own:
 |---|---|---|
 | resume | any scenario; end the session after one round, then start a fresh one with the request for a resumed run. End it by killing the session's process when the core's state shows the hand-out; a turn limit may not cut a session whose workers run in the background | the fresh session asks whether earlier workers have stopped, and runs `step` only after the answer |
 | repeated interruption | any scenario; end the session after a hand-out and before its worker is launched, twice | the third `step` blocks the job for want of an output; the orchestrator treats the block as any other |
-| failed launch | `parameters` with a value the harness cannot apply, such as a model it does not have | whether the harness refuses the launch or ignores the value; if it refuses, the orchestrator reports `launch-failed`, does not relaunch in that round, and launches the job again when the next `step` names it |
+| failed launch | `parameters` with a value the harness cannot apply, such as a model it does not have | whether the harness refuses the launch or ignores the value. If it refuses: `launch-failed` → relaunch with the same parameter when the next `step` names the job → `launch-failed` again → blocked at attempt 2 of 2 (repair) → no repair within scope helps, so the orchestrator stops. It never launches the job without the parameter |
 
 ## Observations
 

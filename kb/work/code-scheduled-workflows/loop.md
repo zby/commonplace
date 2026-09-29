@@ -16,7 +16,7 @@ Run `<shell> step <run>`. The first line of its output is the outcome.
 
 **`launch`**: each following line names one job and its prompt file between backticks, sometimes followed by `launch=` and parameters.
 
-1. For each job, launch one fresh sub-agent whose whole instruction is: ``Read `<prompt file>` and follow it.`` Apply the launch parameters the harness can apply, such as model or tool scope. Do not change the instruction, add context, or do a job yourself.
+1. For each job, launch one fresh sub-agent whose whole instruction is: ``Read `<prompt file>` and follow it.`` Apply every launch parameter, such as model or tool scope. If the harness cannot apply one, treat the launch as failed (step 3); never launch the job without it. Do not change the instruction, add context, or do a job yourself.
 2. Launch all jobs of the round at once. Do not run `step` again until every worker of the round has finished or failed to start, however the harness tells you that.
 3. If the harness refuses or fails a launch, run `<shell> report <run> launch-failed --job <name> --text "<what the harness said>"`. Do not relaunch in this round; when the next `step` names the job again, launch it then.
 4. Run `step` again.
@@ -51,7 +51,7 @@ Then give the operator the output of the last `step` exactly as it was printed, 
 - **the run is busy**: another `step` is running on this run. Do not start a second loop; tell the operator.
 - **the run's state cannot be trusted**, or **not a run**: tell the operator. Do not repair anything under `workflow-state/`.
 
-If `step` ends any other way, with another status or without an outcome line, stop. Do not run `step` again. Give the operator the exit status and everything `step` printed.
+If `step` ends any other way, with another status or without an outcome line, do not run `step` again. Stop as the Stopping section says, and give the operator the exit status with everything `step` printed.
 
 ## Resuming
 
