@@ -1,6 +1,6 @@
 # Harness trials of the loop text
 
-Tries [the loop text](../loop.md) with real sub-agents, in each supported harness, before it lands in `kb/instructions/`. The trials answer whether an agent that has read only the loop text drives a run correctly: whether it launches exactly what `step` names and does no job itself, keeps within a repair scope, stops when it should, and whether a fresh session resumes a run.
+Tries [the loop text](../../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) with real sub-agents, in each supported harness, before it lands in `kb/instructions/`. The trials answer whether an agent that has read only the loop text drives a run correctly: whether it launches exactly what `step` names and does no job itself, keeps within a repair scope, stops when it should, and whether a fresh session resumes a run.
 
 A tester works from [the testing procedure](./testing-procedure.md), which states the purpose, the result, and the limits of a test series. This file describes the kit. The changes proposed from the trials, and the decision on each, are in [the change list](./changes.md).
 

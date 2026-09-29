@@ -399,6 +399,7 @@ plugins:
         'tags/methodology-README.md': 'tags/method-guided-action-README.md'
         'tags/tool-loop-README.md': 'tags/computational-model-README.md'
         'types/agentic-system-analysis-result.md': 'types/agentic-system-analysis-overview.md'
+        'work/code-scheduled-workflows/loop.md': 'instructions/analyse-agentic-system/drive-a-code-scheduled-run.md'
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
