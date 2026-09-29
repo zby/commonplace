@@ -140,6 +140,8 @@ The audit's other proposals (separating report content from execution accounting
 
 ## Constraints and risks
 
+Further candidates are mapped in [Simplifications beyond mechanical offloading](./simplification-candidates.md), recorded at the operator's request on 2026-09-29. They are proposals for consideration, not adopted implementation work or additional closure requirements.
+
 - **Contract drift.** Tools that embed section headings or the `METHOD_PATHS` list can drift from the type specs. Generate from the schemas and the existing constant instead of copying them.
 - **Method paths.** Every new command widens what must be committed before a run opens, because publication requires the package source to equal `inputs-commit`. Land these changes between batches, not during one.
 - **YAGNI.** If an item turns out not to be needed, drop it here; write a design proposal in `kb/reference/proposals/` for any item that changes a shipped contract before implementing it.
