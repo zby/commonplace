@@ -257,6 +257,17 @@ class Workflow:
         same run directory, and every step in it must be safe to meet again."""
         raise NotImplementedError
 
+    def run_location(self) -> tuple[str, str] | None:
+        """Where `Orchestrator.start` puts a new run of this definition.
+
+        Returns the directory that holds the runs, relative to the directory
+        `start` is given, and the stem of the new run's name; `start` appends
+        `-01`, `-02` and so on and takes the first name not in use. It is asked
+        once, when the run starts, so it may use the date or the parameters.
+        None, the default, means the caller names the run directory.
+        """
+        return None
+
 
 class _PathEnded(BaseException):
     """The path cannot continue in this step.
@@ -530,6 +541,39 @@ class Orchestrator:
             ) from None
         write_atomic(store.run_file, text)
         return cls(run_dir, workflow)
+
+    @classmethod
+    def start(
+        cls,
+        definition: str,
+        params: Mapping[str, Any] | None = None,
+        *,
+        base: Path,
+    ) -> Orchestrator:
+        """Start a run in a directory the definition's `run_location` names.
+
+        The run's directory is created with the first free number after the
+        stem, so two runs started at once get different names. Raises
+        ValueError when the definition names no location, or when the numbers
+        up to 99 are all in use.
+        """
+        workflow = load_definition(definition)(params)
+        location = workflow.run_location()
+        if location is None:
+            raise ValueError(
+                f"{definition} does not say where its runs go; give the run directory"
+            )
+        parent, stem = location
+        runs = Path(base) / parent
+        runs.mkdir(parents=True, exist_ok=True)
+        for number in range(1, 100):
+            run_dir = runs / f"{stem}-{number:02d}"
+            try:
+                run_dir.mkdir()
+            except FileExistsError:
+                continue
+            return cls.create(run_dir, definition, params)
+        raise ValueError(f"every run name from {stem}-01 to {stem}-99 is in use")
 
     @classmethod
     def open(cls, run_dir: Path) -> Orchestrator:

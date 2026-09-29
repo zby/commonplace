@@ -31,8 +31,9 @@ def started(tmp_path: Path, marker: Path) -> Path:
     run_dir = new_run(tmp_path)
     result = shell(
         "start",
-        str(run_dir),
         DEFINITION,
+        "--run",
+        str(run_dir),
         "--param",
         f"target={tmp_path / 'published'}",
         "--param",
@@ -117,8 +118,9 @@ def test_a_step_is_refused_while_another_process_runs_one(tmp_path, capsys):
     holding, finish = tmp_path / "holding", tmp_path / "finish"
     result = shell(
         "start",
-        str(run_dir),
         "tests.commonplace.workflow.definitions:HoldsTheStep",
+        "--run",
+        str(run_dir),
         "--param",
         f"holding={holding}",
         "--param",

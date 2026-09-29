@@ -17,28 +17,26 @@ Invocation authorizes the run directory under `kb/reports/state/agentic-system-a
 ## 1. Open the run
 
 1. Commit any pending method change first: the run pins the method commit when it opens, and publication requires it unchanged.
-2. Choose the run ID `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`, where `<nn>` is the next number not used by a directory under `kb/reports/state/agentic-system-analysis/` for that date and slug.
-3. From the repository root, start the run:
+2. From the repository root, start the run:
 
    ```bash
-   commonplace-workflow start kb/reports/state/agentic-system-analysis/<run-id> \
-     commonplace.lib.agentic_workflow:AnalyseAgenticSystem \
+   commonplace-workflow start commonplace.lib.agentic_workflow:AnalyseAgenticSystem \
      --param system="<source-native system name>" \
      --param source-identity="<stable source identity, e.g. https://github.com/owner/repo>" \
      --param source="<the caller's source input, as given>"
    ```
 
-   Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`.
+   Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/reports/state/agentic-system-analysis/<run-id>`.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/reports/retained/agentic-system-analysis/` at any point; the jobs analyse from sources only.
 
 ## 2. Drive the run
 
-Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = `kb/reports/state/agentic-system-analysis/<run-id>`. The run is new: you started it in this session.
+Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = the directory `start` printed. The run is new: you started it in this session.
 
 ## 3. Report
 
-When `step` gives `done`, run `commonplace-agentic-analysis-handoff kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` and include its output unchanged in your final response. After a published review, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
+When `step` gives `done`, run `commonplace-agentic-analysis-handoff <run>/run-state.md` and include its output unchanged in your final response. After a published review, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
 
 When the run stopped, the loop's stop report is your final response; do not run the handoff. A correctable pre-publication failure keeps the run `running`: the operator repairs the condition and a later session resumes the loop. Set `run-status: failed` with one concise reason only when abandoning the run or when publication left public state uncertain. Never resume a failed run; use a new run ID.
 

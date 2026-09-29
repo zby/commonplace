@@ -231,8 +231,9 @@ observation under a basename ending in the capture date.
 
 ### commonplace-workflow
 
-Run a code-scheduled workflow. `start <run> <package.module:ClassName>` creates
-a run; `step <run>` advances it and prints the outcome (`launch`, `done`,
+Run a code-scheduled workflow. `start <package.module:ClassName>` creates a
+run where the definition says its runs go, allocating a free name, and prints
+its directory; `--run <dir>` names the directory instead; `step <run>` advances it and prints the outcome (`launch`, `done`,
 `blocked` or `uncertain`); `report <run> <event>` records a failed launch, a
 repair or a stop. `resolve` and `release` are the operator's commands after an
 uncertain outcome or a stop-only block. The agent orchestrator's side is

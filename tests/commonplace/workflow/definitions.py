@@ -61,6 +61,16 @@ def lens_job(name: str) -> Job:
     )
 
 
+class Located(Workflow):
+    """A definition that names where its runs go."""
+
+    def run_location(self):
+        return "runs", self.params["name"]
+
+    def run(self, ctx):
+        ctx.agent(lens_job("only")).wait()
+
+
 class OneJob(Workflow):
     def run(self, ctx):
         ctx.agent(lens_job("only")).wait()

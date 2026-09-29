@@ -22,7 +22,7 @@ DEFINITION = "tests.commonplace.workflow.definitions:TwoLenses"
 
 def started(tmp_path: Path) -> Path:
     run_dir = new_run(tmp_path)
-    assert main(["start", str(run_dir), DEFINITION]) == 0
+    assert main(["start", DEFINITION, "--run", str(run_dir)]) == 0
     return run_dir
 
 
@@ -52,7 +52,10 @@ def test_step_prints_done_when_the_run_is_finished(tmp_path, capsys):
 def test_start_keeps_the_parameters_for_the_definition(tmp_path):
     run_dir = new_run(tmp_path)
 
-    assert main(["start", str(run_dir), DEFINITION, "--param", "system=example"]) == 0
+    assert (
+        main(["start", DEFINITION, "--run", str(run_dir), "--param", "system=example"])
+        == 0
+    )
 
     assert Orchestrator.open(run_dir).workflow.params == {"system": "example"}
 
@@ -60,8 +63,50 @@ def test_start_keeps_the_parameters_for_the_definition(tmp_path):
 def test_start_refuses_a_run_that_already_started(tmp_path, capsys):
     run_dir = started(tmp_path)
 
-    assert main(["start", str(run_dir), DEFINITION]) == 1
+    assert main(["start", DEFINITION, "--run", str(run_dir)]) == 1
     assert "already" in capsys.readouterr().err
+
+
+def test_start_names_the_run_where_the_definition_says(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    located = "tests.commonplace.workflow.definitions:Located"
+
+    assert main(["start", located, "--param", "name=example"]) == 0
+    first = Path(capsys.readouterr().out.strip())
+    assert main(["start", located, "--param", "name=example"]) == 0
+    second = Path(capsys.readouterr().out.strip())
+
+    assert first == tmp_path / "runs" / "example-01"
+    assert second == tmp_path / "runs" / "example-02"
+    assert Orchestrator.open(second).workflow.params == {"name": "example"}
+
+
+def test_start_skips_a_name_already_in_use(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "runs" / "example-01").mkdir(parents=True)
+
+    assert (
+        main(
+            [
+                "start",
+                "tests.commonplace.workflow.definitions:Located",
+                "--param",
+                "name=example",
+            ]
+        )
+        == 0
+    )
+
+    assert capsys.readouterr().out.strip().endswith("example-02")
+
+
+def test_start_without_a_location_needs_the_run_directory(
+    tmp_path, monkeypatch, capsys
+):
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["start", DEFINITION]) == 1
+    assert "give the run directory" in capsys.readouterr().err
 
 
 def test_step_refuses_a_directory_that_is_not_a_run(tmp_path, capsys):
@@ -84,7 +129,14 @@ def test_start_refuses_a_name_that_is_not_a_workflow(tmp_path, capsys):
     run_dir = new_run(tmp_path)
 
     assert (
-        main(["start", str(run_dir), "tests.commonplace.workflow.definitions:new_run"])
+        main(
+            [
+                "start",
+                "tests.commonplace.workflow.definitions:new_run",
+                "--run",
+                str(run_dir),
+            ]
+        )
         == 1
     )
     assert "workflow" in capsys.readouterr().err

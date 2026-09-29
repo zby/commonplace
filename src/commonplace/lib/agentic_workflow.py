@@ -2,12 +2,13 @@
 
 Start a run with
 
-    commonplace-workflow start kb/reports/state/agentic-system-analysis/<run-id> \\
-        commonplace.lib.agentic_workflow:AnalyseAgenticSystem \\
+    commonplace-workflow start commonplace.lib.agentic_workflow:AnalyseAgenticSystem \\
         --param system=<name> --param source-identity=<identity> \\
         --param source=<the caller's source input> [--param review-path=<path>]
 
-The run directory is the analysis run directory; the run ID is its name. Each
+from the repository root. `start` allocates the run ID, AAS-<date>-<system
+slug>-<nn>, creates the run directory under kb/reports/state/agentic-system-
+analysis/, and prints it; the run ID is the directory's name. Each
 job's task is an instruction file under `kb/instructions/analyse-agentic-system/
 jobs/`, declared as an input, so a change to it reopens the job. The job split
 is recorded in `kb/work/analysis-offload-to-code/README.md`.
@@ -368,7 +369,16 @@ class AnalyseAgenticSystem(Workflow):
     """
 
     correction_rounds = 2
-    """How many times a reconciliation may return findings to the specialist."""
+    """How many reconciliation rounds may follow the first, whether a round
+    returned findings to the specialist or its verification named blockers."""
+
+    def run_location(self) -> tuple[str, str]:
+        """`AAS-<today>-<system-slug>` under the analysis state directory."""
+        slug = re.sub(r"[^a-z0-9]+", "-", str(self.params["system"]).lower()).strip("-")
+        if not slug:
+            raise ValueError("the system parameter gives no name for the run ID")
+        today = datetime.datetime.now(datetime.UTC).date().isoformat()
+        return STATE_ROOT.as_posix(), f"AAS-{today}-{slug}"
 
     def run(self, ctx) -> None:
         run_dir = ctx.run_dir

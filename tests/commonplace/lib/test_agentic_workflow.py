@@ -8,6 +8,7 @@ publishes, built from the fixtures of `test_agentic_analysis.py`.
 
 from __future__ import annotations
 
+import re
 import shutil
 from collections.abc import Callable
 from hashlib import sha256
@@ -561,3 +562,18 @@ def test_runtime_member_leaving_a_cited_record_undeclared_is_refused(
 
     assert attempt == 2
     assert "unresolved record OBJ-99" in prompt
+
+
+def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:
+    from commonplace.workflow import Orchestrator as Runs
+
+    params = {"system": "Example System", "source-identity": "x", "source": "x"}
+    reference = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
+
+    first = Runs.start(reference, params, base=tmp_path).run_dir
+    second = Runs.start(reference, params, base=tmp_path).run_dir
+
+    assert first.parent == tmp_path / "kb/reports/state/agentic-system-analysis"
+    assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-example-system-01", first.name)
+    assert second.name == first.name[:-2] + "02"
+    assert AnalyseAgenticSystem.repo_root(first) == tmp_path

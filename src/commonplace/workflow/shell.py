@@ -4,7 +4,7 @@ The shell is installed as the `commonplace-workflow` command. It parses
 arguments and prints. Everything it does is a call on an
 Orchestrator.
 
-    start <run> <package.module:ClassName> [--param KEY=VALUE ...]
+    start <package.module:ClassName> [--run <run>] [--param KEY=VALUE ...]
     step <run>
     report <run> <event> [--job NAME] [--text TEXT]
     resolve <run> <effect> completed|absent
@@ -98,9 +98,15 @@ def _parser() -> argparse.ArgumentParser:
     )
     commands = parser.add_subparsers(dest="command", required=True)
 
-    start = commands.add_parser("start", help="start a run")
-    start.add_argument("run", type=Path)
+    start = commands.add_parser(
+        "start",
+        help=(
+            "start a run and print its directory; without --run the definition "
+            "names where it goes"
+        ),
+    )
     start.add_argument("definition", help="package.module:ClassName")
+    start.add_argument("--run", type=Path)
     start.add_argument(
         "--param", type=_parameter, action="append", default=[], metavar="KEY=VALUE"
     )
@@ -142,9 +148,14 @@ def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
         if arguments.command == "start":
-            orchestrator = Orchestrator.create(
-                arguments.run, arguments.definition, dict(arguments.param)
-            )
+            if arguments.run is None:
+                orchestrator = Orchestrator.start(
+                    arguments.definition, dict(arguments.param), base=Path.cwd()
+                )
+            else:
+                orchestrator = Orchestrator.create(
+                    arguments.run, arguments.definition, dict(arguments.param)
+                )
             print(orchestrator.run_dir)
         elif arguments.command == "step":
             print(render(Orchestrator.open(arguments.run).step()))
