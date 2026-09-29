@@ -1,0 +1,1 @@
+Frozen replay record: every file is an exact, digest-pinned copy. The replay result names the analysis result type as it stood when written (retired 2026-09-28), so collection-wide validation does not apply current type specs to these bytes.
