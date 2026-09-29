@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [self-improving-systems, learning-theory, software-factory]
 ---
 
-# An open-domain theory builder becomes a software house when new domains require production-machinery changes
+# A theory builder becomes a software house when new domains require production-machinery changes
 
 Consider a persistent automated system that builds, tests, and revises natural-language theories for external users across domains not fixed in advance. Language models currently supply the broadly applicable semantic operations: interpreting claims, comparing explanations, proposing counterexamples, and revising scope. Software outside model interpretation supplies the corpus, exact state transitions, scheduling, checks, indexes, and rollback.
 
