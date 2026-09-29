@@ -24,6 +24,7 @@ from tests.commonplace.workflow.definitions import (
     NamedBeforeWaited,
     OneJob,
     Publishes,
+    PublishesIfDecided,
     ScriptedAgent,
     TwoLenses,
     TwoLensesReversed,
@@ -304,7 +305,7 @@ def test_changing_the_prompt_reopens_an_accepted_job(tmp_path):
     assert names(Orchestrator(run_dir, Reworded()).step()) == ["only"]
 
 
-def test_a_changed_validator_does_not_reopen_an_accepted_job(tmp_path):
+def test_a_changed_validator_reopens_an_accepted_job(tmp_path):
     class Stricter(Workflow):
         def run(self, ctx):
             job = lens_job("only")
@@ -321,7 +322,55 @@ def test_a_changed_validator_does_not_reopen_an_accepted_job(tmp_path):
     run_dir = new_run(tmp_path)
     ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
 
-    assert isinstance(Orchestrator(run_dir, Stricter()).step(), Done)
+    (handout,) = Orchestrator(run_dir, Stricter()).step().jobs
+
+    assert (handout.name, handout.attempt) == ("only", 2)
+    assert not (run_dir / "only.md").exists()
+    assert kept(run_dir, "# only\n")
+
+
+def test_a_changed_validator_gives_a_full_set_of_attempts(tmp_path):
+    class Stricter(Workflow):
+        def run(self, ctx):
+            job = lens_job("only")
+            ctx.agent(
+                Job(
+                    job.name,
+                    job.prompt,
+                    job.output,
+                    job.inputs,
+                    validator=lambda path: ["nothing is good enough"],
+                )
+            ).wait()
+
+    run_dir = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
+    agent = ScriptedAgent(Orchestrator(run_dir, Stricter()))
+
+    assert isinstance(agent.run()[-1], Blocked)
+    assert agent.launched == ["only", "only"]
+
+
+def test_the_first_declaration_of_a_job_supplies_its_validator(tmp_path):
+    class TwoValidators(Workflow):
+        def run(self, ctx):
+            first = ctx.agent(lens_job("same"))
+            job = lens_job("same")
+            second = ctx.agent(
+                Job(
+                    job.name,
+                    job.prompt,
+                    job.output,
+                    job.inputs,
+                    validator=lambda path: ["nothing is good enough"],
+                )
+            )
+            assert first is second
+            first.wait()
+
+    results = ScriptedAgent(Orchestrator(new_run(tmp_path), TwoValidators())).run()
+
+    assert isinstance(results[-1], Done)
 
 
 def test_a_moved_run_directory_keeps_its_acceptances(tmp_path):
@@ -1092,6 +1141,92 @@ def test_an_effect_is_not_released_but_resolved(tmp_path):
         Orchestrator(run_dir, publisher(tmp_path)).release("effect publish")
 
 
+def decided(tmp_path, **params):
+    return PublishesIfDecided({"target": str(tmp_path / "published"), **params})
+
+
+def decide(run_dir, decision):
+    (run_dir / "decision.md").write_text(f"{decision}\n", encoding="utf-8")
+
+
+def published_then_withdrawn(tmp_path):
+    """A run that published, whose decision then stopped reaching the effect."""
+    run_dir = new_run(tmp_path)
+    decide(run_dir, "publish")
+    assert isinstance(
+        ScriptedAgent(Orchestrator(run_dir, decided(tmp_path))).run()[-1], Done
+    )
+    decide(run_dir, "hold")
+    return run_dir
+
+
+def test_a_completed_effect_no_longer_reached_stops_the_run(tmp_path):
+    run_dir = published_then_withdrawn(tmp_path)
+
+    block = one_block(Orchestrator(run_dir, decided(tmp_path)).step())
+
+    assert (block.subject, block.permitted) == ("effect publish", "stop")
+    assert (
+        one_block(Orchestrator(run_dir, decided(tmp_path)).step()).permitted == "stop"
+    )
+    assert publications(tmp_path / "published") == 1
+
+
+def test_an_effect_no_longer_reached_is_checked_only_at_the_definitions_end(tmp_path):
+    run_dir = published_then_withdrawn(tmp_path)
+    decide(run_dir, "review")
+
+    assert names(Orchestrator(run_dir, decided(tmp_path)).step()) == ["review"]
+
+
+def test_the_operator_lets_an_effect_no_longer_reached_stand(tmp_path):
+    run_dir = published_then_withdrawn(tmp_path)
+    orchestrator = Orchestrator(run_dir, decided(tmp_path))
+    orchestrator.step()
+
+    orchestrator.resolve("publish", Recognition.COMPLETED)
+
+    assert isinstance(Orchestrator(run_dir, decided(tmp_path)).step(), Done)
+    assert publications(tmp_path / "published") == 1
+
+
+def test_the_operator_withdraws_an_effect_no_longer_reached(tmp_path):
+    run_dir = published_then_withdrawn(tmp_path)
+    orchestrator = Orchestrator(run_dir, decided(tmp_path))
+    orchestrator.step()
+
+    # The operator removed the publication, and says so.
+    for name in Publishes.FILES:
+        (tmp_path / "published" / name).unlink()
+    orchestrator.resolve("publish", Recognition.ABSENT)
+
+    assert isinstance(Orchestrator(run_dir, decided(tmp_path)).step(), Done)
+    # Reached again later, the effect runs once more.
+    decide(run_dir, "publish")
+    assert isinstance(Orchestrator(run_dir, decided(tmp_path)).step(), Done)
+    assert publications(tmp_path / "published") == 2
+
+
+def test_an_interrupted_effect_no_longer_reached_is_uncertain(tmp_path):
+    run_dir = new_run(tmp_path)
+    decide(run_dir, "publish")
+    ScriptedAgent(Orchestrator(run_dir, decided(tmp_path))).round()
+    marker = end_the_process(tmp_path, "between")
+    with pytest.raises(Interrupted):
+        Orchestrator(run_dir, decided(tmp_path, marker=marker)).step()
+    decide(run_dir, "hold")
+
+    result = Orchestrator(run_dir, decided(tmp_path)).step()
+
+    assert isinstance(result, Uncertain)
+    assert result.effect == "publish"
+    assert publications(tmp_path / "published") == 1
+    # The operator removed what was published in part, and says so.
+    (tmp_path / "published" / "only.md").unlink()
+    Orchestrator(run_dir, decided(tmp_path)).resolve("publish", Recognition.ABSENT)
+    assert isinstance(Orchestrator(run_dir, decided(tmp_path)).step(), Done)
+
+
 def test_a_completed_effect_whose_inputs_came_out_the_same_is_kept(tmp_path):
     run_dir = new_run(tmp_path)
     ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
@@ -1309,7 +1444,9 @@ def test_an_output_must_not_be_inside_the_state_directory(output):
 # Job records
 
 
-@pytest.mark.parametrize("name", ["", "Upper", "has space", "../escape", "a/b"])
+@pytest.mark.parametrize(
+    "name", ["", "Upper", "has space", "../escape", "a/b", "workflow"]
+)
 def test_a_job_name_must_be_a_plain_identifier(name):
     with pytest.raises(DefinitionError):
         Job(name=name, prompt="Task.", output="out.md")

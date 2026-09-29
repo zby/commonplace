@@ -33,7 +33,9 @@ class Job:
     name
         Identifies the job within a run. The definition chooses it, so it does
         not depend on the order in which paths run. Lower-case letters, digits
-        and hyphens; anything else raises DefinitionError.
+        and hyphens; anything else raises DefinitionError. `workflow` is
+        reserved, because a block uses it for failures of steps that code
+        executes, and raises DefinitionError too.
     prompt
         The task, in natural language, as the definition gives it. The core
         writes a prompt file from it, adding where to write the result, where
@@ -49,8 +51,13 @@ class Job:
         The prompt is always part of the input state and is not listed here.
     validator
         Judges the output. Without one, an output is valid when it exists.
-        The validator is not part of the input state and is not compared
-        between jobs: a changed validator does not reopen an accepted job.
+        It runs whenever the job is judged, which includes every step for an
+        accepted output, so a changed validator applies to outputs accepted
+        before the change. It is not part of the input state and is not
+        compared between jobs, so a validator built anew each time the
+        definition runs does not make two jobs differ. Within one step, the
+        first declaration of a job supplies the validator; a later
+        declaration of the same task is judged by it, not by its own.
     launch
         Passed to the agent orchestrator as data, for example a model or a
         tool scope. The core does not interpret it, but it is part of the

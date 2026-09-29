@@ -197,6 +197,9 @@ class Publishes(Workflow):
 
     def run(self, ctx):
         ctx.agent(lens_job("only")).wait()
+        self.declare(ctx)
+
+    def declare(self, ctx):
         ctx.effect(
             "publish",
             partial(self.publish, ctx),
@@ -250,6 +253,23 @@ def new_run(tmp_path: Path, source: str = "source text\n") -> Path:
     run_dir.mkdir(parents=True)
     (run_dir / "source.md").write_text(source, encoding="utf-8")
     return run_dir
+
+
+class PublishesIfDecided(Publishes):
+    """Publishes only while `decision.md` in the run directory says so.
+
+    `publish` declares the effect. `review` names a review job and waits on
+    it, so the step ends before the definition's end. Anything else ends the
+    definition without the effect.
+    """
+
+    def run(self, ctx):
+        ctx.agent(lens_job("only")).wait()
+        decision = (ctx.run_dir / "decision.md").read_text(encoding="utf-8").strip()
+        if decision == "publish":
+            self.declare(ctx)
+        elif decision == "review":
+            ctx.agent(lens_job("review")).wait()
 
 
 class HoldsTheStep(Workflow):

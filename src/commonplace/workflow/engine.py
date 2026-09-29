@@ -73,7 +73,9 @@ class Launch:
 
 @dataclass(frozen=True)
 class Done:
-    """The definition ran to its end and every job it named is accepted."""
+    """The definition ran to its end, every job it named is accepted, and
+    every effect recorded in the run was reached in this step or its state
+    was recorded by the operator."""
 
 
 @dataclass(frozen=True)
@@ -82,7 +84,8 @@ class Block:
 
     `subject` is a job name, `workflow` when a step that code executes
     failed, or `effect <name>` when a completed effect no longer matches its
-    inputs. `reason` is one short line. `record_path` is a file with the
+    inputs or is no longer reached. No job can be named `workflow`, and a job
+    name has no space, so the three kinds cannot be confused. `reason` is one short line. `record_path` is a file with the
     details: attempts, validator messages, the worker's problem report, the
     error, and the agent orchestrator's reports. `permitted` is `repair` or
     `stop`. `scope` is what a repair may change, as the definition declares it.
@@ -239,9 +242,10 @@ class Context:
     def agent(self, job: Job) -> JobHandle:
         """Name a job and return its handle at once.
 
-        The job is judged here. It is accepted when its output passed its
-        validator for the input state recorded at hand-out, and neither the
-        input state nor the output's bytes have changed since. The input state
+        The job is judged here. It is accepted when its output passes the
+        job's current validator, the input state is the one recorded at
+        hand-out, and the output's bytes are those accepted before, if it was
+        accepted before. The input state
         is `Job.prompt`, the declared inputs' bytes and the launch parameters.
         It holds no absolute path of the run directory, so a run directory
         that is moved keeps its acceptances.
@@ -249,15 +253,16 @@ class Context:
         An output that was never accepted, found when the input state differs
         from the one recorded at its hand-out, is refused. Such a refusal
         counts as a failed attempt, as a missing or invalid output does. An
-        accepted output whose inputs change later, or whose bytes someone
-        changes, is not a failed attempt: the job is pending again with a full
-        set of attempts.
+        accepted output whose inputs change later, whose bytes someone
+        changes, or that a changed validator now refuses, is not a failed
+        attempt: the job is pending again with a full set of attempts.
 
         A job that is not accepted is handed out at the end of the step,
         whether or not the definition waits on it. At hand-out, whatever is at
         the job's output and problem report paths is moved into
         `workflow-state/` and kept there; nothing is deleted. This includes a
-        refused output and an accepted output that someone changed.
+        refused output, an accepted output that someone changed, and one that
+        a changed validator refuses.
 
         Naming the same job twice gives the same handle. Each job owns two
         paths, its output and its problem report. One name for two tasks that
@@ -323,6 +328,18 @@ class Context:
         An error raised by `do` leaves the effect started and not recorded,
         as a process that ended would. The step gives a block on `workflow`
         with the error. The next step asks `recognize` what took place.
+
+        An effect stays owed after the definition stops calling it, for
+        example because a later job's result changed a branch. When the
+        definition runs to its end, every effect recorded in the run must have
+        been reached in that step. One that was not is checked there: a
+        completed effect gives a block on `effect <name>` that permits only
+        stopping, and a started effect without a completion record gives the
+        Uncertain outcome, because its `recognize` is supplied only at the
+        call. A step that ends at a wait before reaching the end checks
+        nothing, since the definition may still reach the call. The operator
+        settles an effect that is no longer reached with
+        `Orchestrator.resolve`.
         """
         raise NotImplementedError
 
@@ -406,13 +423,16 @@ class Orchestrator:
         """Record what the operator established about an effect.
 
         This is the operator's act; the agent orchestrator may only stop and
-        report. It applies to an effect that is uncertain, and to a completed
-        effect whose inputs have changed.
+        report. It applies to an effect that is uncertain, to a completed
+        effect whose inputs have changed, and to an effect the definition no
+        longer reaches.
 
         COMPLETED records the effect as completed for the inputs as they are
-        now, so the next step goes past it. ABSENT lets the next step run it.
-        Raises ValueError for UNKNOWN, and for an effect that is neither
-        uncertain nor out of step with its inputs.
+        now, so the next step goes past it; for an effect no longer reached,
+        it means the effect stands and is no longer required to be reached.
+        ABSENT clears the record: the next step runs the effect if the
+        definition reaches it, and otherwise owes nothing. Raises ValueError
+        for UNKNOWN, and for an effect in none of these states.
         """
         raise NotImplementedError
 
