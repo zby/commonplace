@@ -203,6 +203,7 @@ class Fixture:
                 "### Epistemic scope\n\nBrief fixture scope.\n"
             ),
             "epistemic": writes(lambda: "# Epistemic draft\n\nOBJ-1 and RTE-1.\n"),
+            "runtime-final": writes(lambda: runtime_text(self.revision)),
             "epistemic-final": writes(lambda: epistemic_text(self.revision)),
             "verify": writes(self.verification),
             "review": writes(self.review_body),
@@ -280,6 +281,7 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         "epistemic",
         "memory-0",
         "reconcile-0",
+        "runtime-final",
         "epistemic-final",
         "verify",
         "review",
@@ -484,3 +486,21 @@ def test_a_named_blocker_blocks_the_workflow_before_publication(fixture: Fixture
     assert definition.publications == 0
     assert not (fixture.root / REVIEW_PATH).exists()
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
+
+
+def test_runtime_member_leaving_a_cited_record_undeclared_is_refused(
+    fixture: Fixture,
+) -> None:
+    def epistemic_citing_a_new_record(handout: Handout) -> None:
+        handout.output_path.write_text(
+            "# Epistemic draft\n\nOBJ-1, RTE-1 and the registered OBJ-99.\n",
+            encoding="utf-8",
+        )
+
+    scripted, _ = agent(fixture, epistemic=epistemic_citing_a_new_record)
+    drive_to(scripted, "runtime-final")
+
+    attempt, prompt = prompt_of(scripted.round(), "runtime-final")
+
+    assert attempt == 2
+    assert "unresolved record OBJ-99" in prompt

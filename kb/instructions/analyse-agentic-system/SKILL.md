@@ -5,7 +5,6 @@ type: types/instruction.md
 user-invocable: true
 argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents) and optional public review path"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
-context: fork
 model: opus
 ---
 
