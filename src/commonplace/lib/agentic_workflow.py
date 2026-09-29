@@ -7,7 +7,8 @@ Start a run with
         --param source=<the caller's source input> [--param review-path=<path>]
 
 from the repository root. `start` allocates the run ID, AAS-<date>-<system
-slug>-<nn>, creates the run directory under kb/reports/state/agentic-system-
+slug>-<nn> (the slug from the source identity's last path segment, or
+the system name), creates the run directory under kb/reports/state/agentic-system-
 analysis/, and prints it; the run ID is the directory's name. Each
 job's task is an instruction file under `kb/instructions/analyse-agentic-system/
 jobs/`, declared as an input, so a change to it reopens the job. The job split
@@ -30,6 +31,7 @@ from functools import partial
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 import yaml
 
@@ -373,10 +375,20 @@ class AnalyseAgenticSystem(Workflow):
     returned findings to the specialist or its verification named blockers."""
 
     def run_location(self) -> tuple[str, str]:
-        """`AAS-<today>-<system-slug>` under the analysis state directory."""
-        slug = re.sub(r"[^a-z0-9]+", "-", str(self.params["system"]).lower()).strip("-")
+        """`AAS-<today>-<slug>` under the analysis state directory.
+
+        The slug is the last path segment of the source identity when it is a
+        URL, such as the repository name of a GitHub URL, so reruns of a system
+        keep one review path whatever the system is called; otherwise it is the
+        system parameter.
+        """
+        identity = urlsplit(str(self.params["source-identity"]))
+        segment = identity.path.rstrip("/").rsplit("/", 1)[-1].removesuffix(".git")
+        name = segment if identity.scheme and identity.netloc and segment else ""
+        name = name or str(self.params["system"])
+        slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
         if not slug:
-            raise ValueError("the system parameter gives no name for the run ID")
+            raise ValueError("neither the source identity nor the system names the run")
         today = datetime.datetime.now(datetime.UTC).date().isoformat()
         return STATE_ROOT.as_posix(), f"AAS-{today}-{slug}"
 

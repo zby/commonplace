@@ -577,3 +577,18 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
     assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-example-system-01", first.name)
     assert second.name == first.name[:-2] + "02"
     assert AnalyseAgenticSystem.repo_root(first) == tmp_path
+
+
+def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> None:
+    from commonplace.workflow import Orchestrator as Runs
+
+    params = {
+        "system": "mem",
+        "source-identity": "https://github.com/jasonkneen/instinctual-memory.git",
+        "source": "x",
+    }
+    run_dir = Runs.start(
+        "commonplace.lib.agentic_workflow:AnalyseAgenticSystem", params, base=tmp_path
+    ).run_dir
+
+    assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-instinctual-memory-01", run_dir.name)
