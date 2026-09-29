@@ -91,7 +91,34 @@ Build order, depth-first:
 3. Hang the items above on that run, in the order its failures suggest.
 4. Split coarse jobs only where a run shows that a job's context is too large or its inputs are unclear.
 
-The job split has not been designed. It needs a reading of skill steps 2 to 7 for what each step reads and what it hands to the next.
+### Job split of the first definition (2026-09-29)
+
+The definition is `commonplace.lib.agentic_workflow:AnalyseAgenticSystem`. The run directory is the analysis run directory, `kb/reports/state/agentic-system-analysis/<run-id>/`; the core keeps its state in `workflow-state/` inside it, and the run ID is the directory's name. Each job's task is an instruction file in `kb/instructions/analyse-agentic-system/jobs/`, cut from the skill section it replaces; the file is a declared input, so a method change reopens the jobs that follow it. Every file below is relative to the run directory.
+
+| Order | Name | Kind | Reads | Writes | Replaces |
+|---|---|---|---|---|---|
+| 1 | `open` | effect | parameters | `opening.json` (method commit, run date, review path, incumbent digest), `run-state.md` | step 1.1–1.3 |
+| 2 | `boundary` | job | `opening.json` | `boundary.md`: disposition, target class, boundary kind, reviewed boundary, cutoff, evidence tier and source in frontmatter; the Boundary and evidence and Source register sections | steps 1.4–1.5, 2 |
+| 3 | run-state source | mechanical | `boundary.md` | `run-state.md` | step 2.4 |
+| 4 | `runtime` | job | `boundary.md` | `output/runtime.md` | steps 3, 4 |
+| 5 | `scoping` | job | `boundary.md`, `output/runtime.md` | `scoping.md`: both lens scoping records | step 5, first paragraph |
+| 6 | memory input | mechanical | the above | `memory-input.md` (item 12) | step 5, frozen input |
+| 7 | `memory` and `epistemic` | two jobs in parallel | `memory-input.md`; boundary, runtime and scoping | `memory-report-0.md`; `epistemic-draft.md` | step 5 |
+| 8 | `reconcile-<n>` | job | the lens results of round `n` | `reconcile-<n>.md`: Reconciliation, Bounded synthesis, Limitations, and any return to the specialist | step 6 |
+| 9 | `memory-<n>` | job, only after a return | `memory-input.md`, the last report, the return | `memory-report-<n>.md` | step 6, correction |
+| 10 | `epistemic-final` | job | `epistemic-draft.md`, the last reconciliation | `output/epistemic.md` with canonical IDs | step 5, remap |
+| 11 | set assembly | mechanical | all of the above | `memory-report.md` (the last round), `output/overview.md` without semantic verification, `output/memory.md` (finalize) | step 7.1–7.4 |
+| 12 | `verify` | job | the assembled set | `verification.md` | step 7, Semantic verification |
+| 13 | final assembly | mechanical | `verification.md` | `output/overview.md`, `output/ARTIFACT.yaml`; `--full` validation | step 7 |
+| 14 | `review` | job | the set | `review-body.md` | step 8.1, body |
+| 15 | review candidate | mechanical | `review-body.md`, `ARTIFACT.yaml` | `review-candidate.md` with its frontmatter (item 5) | step 8.1, frontmatter |
+| 16 | `publish` | effect | the candidate and the set | the public review, the retained set, the complete run state | step 8.2–8.3 |
+
+- A `blocked` or `out-of-scope` boundary skips 4 to 15: code assembles an overview-only set from `boundary.md`, with the sections that were not reached saying so, and completes the run state without publication.
+- The correction cycle: a reconciliation that returns findings to the specialist hands out `memory-<n+1>` and then `reconcile-<n+1>`. After two returns the run goes on with the last report and the reconciliation records the unresolved conflict as uncertainty.
+- Validators carry the checks that were prose: the member type's validation for each member, the finalization of the memory report against the reconciliation's table (a refusal is a retry of the reconciliation that carries the refusal), and the frontmatter values of `boundary.md` against the overview schema's enumerations.
+- The judging norms of step 3 are one shared file, `jobs/judging-norms.md`, declared as an input of every job that judges evidence.
+- Not in the definition: the transfer scan (step 9) and the handoff (step 10), which the skill runs after `done`.
 
 Main risk: today one coordinator context carries its reading of the sources from step 2 to step 7. Fresh workers do not share that reading. Each job either reads the sources again or receives what it needs as files, so token cost rises and analysis quality may change. The rerun comparison cannot separate this effect from the others.
 
