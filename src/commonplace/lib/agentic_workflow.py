@@ -39,6 +39,7 @@ import yaml
 from commonplace.lib.agentic_finalize import build_manifest
 from commonplace.lib.agentic_publication import (
     PublicationSpec,
+    atomic_write,
     inspect_destination,
     publish_publication,
     require_publishable_worktree,
@@ -400,6 +401,12 @@ def retarget_links(text: str, *, set_dir: str, destination: str) -> str:
     return replace_markdown_links(text, retarget)
 
 
+def write_file(path: Path, text: str) -> None:
+    """Replace a file whole, so an interrupted write leaves the old bytes or
+    none, never a fragment a later replay would parse."""
+    atomic_write(path, text.encode("utf-8"))
+
+
 def dump_frontmatter(fields: dict[str, Any], body: str) -> str:
     serialized = yaml.safe_dump(fields, sort_keys=False, allow_unicode=True, width=1000)
     return f"---\n{serialized}---\n\n{body.strip()}\n"
@@ -623,7 +630,7 @@ class AnalyseAgenticSystem(Workflow):
         note = "This is the first pass."
         cited = {"runtime": run_dir / RUNTIME}
         if round_ > 0:
-            reads += (memory_report(round_ - 1), reconciliation(returned_by))
+            reads += (EPISTEMIC, memory_report(round_ - 1), reconciliation(returned_by))
             note = (
                 f"This is correction round {round_}: the previous report is "
                 f"`{memory_report(round_ - 1)}` and the reconciliation that returned "
@@ -714,19 +721,19 @@ class AnalyseAgenticSystem(Workflow):
         verification = round_file("verification", round_)
 
         output = run_dir / OUTPUT_DIR
-        (run_dir / MEMORY).write_bytes((run_dir / memory_report(memory)).read_bytes())
+        atomic_write(run_dir / MEMORY, (run_dir / memory_report(memory)).read_bytes())
         overview = self.render_overview(
             run_dir, opening, fields, boundary_body, reconciliation(round_), None
         )
-        (run_dir / draft).write_text(overview, encoding="utf-8")
-        (run_dir / OVERVIEW).write_text(overview, encoding="utf-8")
+        write_file(run_dir / draft, overview)
+        write_file(run_dir / OVERVIEW, overview)
         build_manifest(run_dir)
         failures = validate_note(output, repo_root=self.repo).fails
-        (run_dir / check).write_text(
+        write_file(
+            run_dir / check,
             "# Set check\n\n"
             + ("\n".join(f"- {failure}" for failure in failures) or "none")
             + "\n",
-            encoding="utf-8",
         )
 
         ctx.agent(
@@ -767,9 +774,9 @@ class AnalyseAgenticSystem(Workflow):
         refusals = verification_refusals(path)
         if refusals:
             return refusals
-        (run_dir / OVERVIEW).write_text(
+        write_file(
+            run_dir / OVERVIEW,
             self.render_overview(run_dir, opening, fields, boundary_body, final, text),
-            encoding="utf-8",
         )
         build_manifest(run_dir)
         failures = validate_note(run_dir / OUTPUT_DIR, repo_root=self.repo).fails
@@ -829,9 +836,7 @@ class AnalyseAgenticSystem(Workflow):
             "review-path": destination,
             "expected-incumbent-sha256": self.inspect(destination),
         }
-        (run_dir / OPENING).write_text(
-            json.dumps(record, indent=2) + "\n", encoding="utf-8"
-        )
+        write_file(run_dir / OPENING, json.dumps(record, indent=2) + "\n")
 
     @staticmethod
     def recognize_file(path: Path) -> Recognition:
@@ -879,7 +884,7 @@ class AnalyseAgenticSystem(Workflow):
             f" at {source.get('revision', 'no revision')}. Expected incumbent digest: "
             f"`{opening['expected-incumbent-sha256']}`.\n\n## Outcome\n\n{outcome}"
         )
-        path.write_text(dump_frontmatter(frontmatter, body), encoding="utf-8")
+        write_file(path, dump_frontmatter(frontmatter, body))
 
     def assemble(
         self,
@@ -894,7 +899,8 @@ class AnalyseAgenticSystem(Workflow):
 
         The members are in `output/` from the round's closing, which copied
         its memory report there."""
-        (run_dir / OVERVIEW).write_text(
+        write_file(
+            run_dir / OVERVIEW,
             self.render_overview(
                 run_dir,
                 opening,
@@ -903,7 +909,6 @@ class AnalyseAgenticSystem(Workflow):
                 reconciliation(round_),
                 verification,
             ),
-            encoding="utf-8",
         )
         build_manifest(run_dir)
 
@@ -1003,12 +1008,12 @@ class AnalyseAgenticSystem(Workflow):
             f"### Blockers\n\n{reason}\n"
         )
         (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
-        (run_dir / OVERVIEW).write_text(
+        write_file(
+            run_dir / OVERVIEW,
             dump_frontmatter(
                 self.overview_frontmatter(opening, fields),
                 self.overview_body(boundary_body, rest),
             ),
-            encoding="utf-8",
         )
         build_manifest(run_dir)
         self.validate_set(run_dir)
@@ -1060,7 +1065,8 @@ class AnalyseAgenticSystem(Workflow):
             "analysis-artifact": (retained / "ARTIFACT.yaml").as_posix(),
             "analysis-artifact-sha256": digest(run_dir / MANIFEST),
         }
-        (run_dir / CANDIDATE).write_text(
+        write_file(
+            run_dir / CANDIDATE,
             dump_frontmatter(
                 frontmatter,
                 retarget_links(
@@ -1069,7 +1075,6 @@ class AnalyseAgenticSystem(Workflow):
                     destination=opening["review-path"],
                 ),
             ),
-            encoding="utf-8",
         )
 
     # Publication
@@ -1085,9 +1090,13 @@ class AnalyseAgenticSystem(Workflow):
             return Recognition.COMPLETED
         destination = spec.repo_root / spec.generated_destination
         current = digest(destination) if destination.is_file() else "absent"
+        # Publication writes the retained set before the review, and an
+        # interrupted one leaves part of it: that is not "nothing happened".
+        retained = spec.repo_root / RETAINED_ROOT / self.run_id
         if (
             state.get("run-status") == "running"
             and current == spec.expected_incumbent_sha256
+            and not retained.exists()
         ):
             return Recognition.ABSENT
         return Recognition.UNKNOWN

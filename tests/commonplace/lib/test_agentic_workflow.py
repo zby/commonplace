@@ -28,7 +28,14 @@ from commonplace.lib.agentic_workflow import (
     overview_enums,
     retarget_links,
 )
-from commonplace.workflow import Blocked, Done, Handout, Launch, Orchestrator
+from commonplace.workflow import (
+    Blocked,
+    Done,
+    Handout,
+    Launch,
+    Orchestrator,
+    Recognition,
+)
 from tests.commonplace.lib.test_agentic_analysis import (
     REPO_ROOT,
     RUN_ID,
@@ -400,6 +407,8 @@ def test_returned_findings_run_correction_rounds_until_the_last(
     assert order == expected
     prompt = last_prompt(fixture, "memory-1")
     assert "memory-report-0.md" in prompt and "reconcile-0.md" in prompt
+    # A correction round may cite the epistemic member, so it is an input.
+    assert "output/epistemic.md" in prompt
     assert definition.publications == 1
     # The memory member is the last accepted round's report, unchanged.
     member = (fixture.run_dir / "output/memory.md").read_bytes()
@@ -818,3 +827,31 @@ def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> No
     ).run_dir
 
     assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-instinctual-memory-01", run_dir.name)
+
+
+# 9. Publication interrupted after the retained set began
+
+
+def test_a_partly_written_retained_set_is_not_an_absent_publication(
+    fixture: Fixture,
+) -> None:
+    definition = AnalyseAgenticSystem(fixture.params())
+    definition.run_id = RUN_ID
+    state = fixture.run_dir / "run-state.md"
+    state.write_text("---\nrun-status: running\n---\n\n# Run\n", encoding="utf-8")
+    candidate = fixture.run_dir / "review-candidate.md"
+    candidate.write_text("# Candidate\n", encoding="utf-8")
+    spec = agentic_publication.PublicationSpec(
+        repo_root=fixture.root,
+        run_state_path=state,
+        generated_candidate_path=candidate,
+        generated_destination=REVIEW_PATH,
+        expected_incumbent_sha256="absent",
+    )
+    assert definition.recognize_publication(spec) is Recognition.ABSENT
+
+    retained = fixture.root / agentic_set.RETAINED_ROOT / RUN_ID
+    retained.mkdir(parents=True)
+    (retained / "ARTIFACT.yaml").write_text("partial", encoding="utf-8")
+
+    assert definition.recognize_publication(spec) is Recognition.UNKNOWN
