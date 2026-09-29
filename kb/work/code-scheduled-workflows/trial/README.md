@@ -2,7 +2,7 @@
 
 Tries [the loop text](../loop.md) with real sub-agents, in each supported harness, before it lands in `kb/instructions/`. The trials answer whether an agent that has read only the loop text drives a run correctly: whether it launches exactly what `step` names and does no job itself, keeps within a repair scope, stops when it should, and whether a fresh session resumes a run.
 
-A tester works from [the testing procedure](./testing-procedure.md), which states the purpose, the result, and the limits of a test series. This file describes the kit.
+A tester works from [the testing procedure](./testing-procedure.md), which states the purpose, the result, and the limits of a test series. This file describes the kit. The changes proposed from the trials, and the decision on each, are in [the change list](./changes.md).
 
 ## Running one
 
@@ -26,7 +26,7 @@ It prints the run directory and the `<shell>` value. Start a fresh session in th
 
 ## Observations
 
-Record each trial: harness, scenario, outcome, and any departure from the loop text, with the run directory kept until the observation is written.
+This section holds the first series, of 2026-09-29, and is closed. A later series is recorded in a file of its own under `observations/`, as the testing procedure says.
 
 - 2026-09-29, Claude Code, `clean`, smoke trial driven by the session that built the core (not a fresh session; checks the mechanics only): three rounds as expected (claims and assumptions together, then reconcile, then `done`); a repeated `step` gave `done` again. Each worker read its prompt file and inputs from the paths in the prompt, and wrote only its output. Two of three workers replied with a summary of their output, not one line. The prompt asks for one line only when the worker cannot finish, so this is not a departure, but the replies grow the orchestrator's context, which is what the design sets out to avoid. Candidate change: the core's prompt frame asks every worker to reply in one line.
 

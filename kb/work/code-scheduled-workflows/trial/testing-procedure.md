@@ -2,6 +2,8 @@
 
 A commission for one tester, an agent or a person, working in one harness. It fixes the purpose, the result, and the limits. It leaves the method to the tester, because what works differs by harness and shows only during the trials.
 
+Revised after the first series in Claude Code and Codex (2026-09-29). The sections "Limits", "What the first series taught", and "Recording" carry what those series showed about testing itself.
+
 ## Purpose
 
 Two decisions wait on this test:
@@ -15,12 +17,12 @@ Serve these decisions. A trial that goes wrong in an informative way is a good r
 
 For the harness you test, the operator receives:
 
-- an observation for each scenario of the kit and for a resumed run, each from an agent orchestrator that started with the loop text and nothing else;
+- an observation for each case you ran, each from an agent orchestrator that started with the loop text and nothing else;
 - for each departure from the loop text, its kind: a defect of the loop text, a defect of the core, a limit of the harness, or a defect of the scenario;
 - the changes you propose, each tied to the observation that prompted it;
 - one recommendation for the harness: usable as is, usable after the named changes, or not usable, with the reason.
 
-The operator decides. You recommend.
+The operator decides. You recommend. Changes already proposed, and the operator's decision on each, are in [the change list](./changes.md). Read it first, so that you test what is still open and do not propose again what is already listed.
 
 ## What to find out
 
@@ -40,32 +42,63 @@ These questions define the test. Answer each from evidence, and say so when a qu
 These bind. Everything not listed here is yours to decide.
 
 - **The agent orchestrator under test sees only the loop text**, below its rule line, with `<shell>` and `<run>` filled in, and the request to drive the run. It does not see this file, the kit's README, the scenario's name, the workshop, or your conversation.
+- **The run path must not name the scenario.** The agent orchestrator sees the path. Pass `setup.py` a name of your own that says nothing about the case.
+- **Keep out what the harness loads by itself.** Project instructions and the user's own instructions and memory are not the loop text. Switch off what you can, and record what still loaded.
 - **Do not help during a trial.** Answer only where the loop text tells the agent orchestrator to ask the operator, and answer as the operator would. Do not correct, hint, or restart a step for it.
 - **Evidence is the record, not the account.** Judge what the agent orchestrator did from its tool calls and from the run directory. Its own summary of what it did is not evidence.
-- **Change nothing under test during a series.** The loop text, the core, and the trial definition stay as they are from the first trial in a harness to the last. Write proposed changes down; do not apply them.
+- **Change nothing under test during a series.** The loop text, the core, and the trial definition stay as they are from the first trial in a harness to the last. Record their hashes before the first trial and compare after the last. Write proposed changes down; do not apply them.
 - **`resolve` and `release` are the operator's.** Use them only when you act as the operator after a trial has stopped, never to move a trial along.
-- **Write only** under `runs/`, in the Observations section of [the kit's README](./README.md), and in scratch space of your own. Do not commit.
+- **Write only** under `runs/`, in your own file under `observations/`, and in scratch space of your own. Do not edit the kit's README, the change list, or another tester's file. Do not commit unless the operator asks.
 - **Keep each run directory** until its observation is written.
 
 ## What you have
 
-- The kit: `setup.py` creates a run for a scenario and prints the run directory and the shell command. The scenarios, their expected course, and what to look for are in [the kit's README](./README.md).
+- The kit: `setup.py` creates a run for a scenario and prints the run directory and the shell command. The scenarios and their expected course are in [the kit's README](./README.md).
 - The definition under trial: `trial_workflow.py`.
 - The core's records in each run directory under `workflow-state/`, including hand-outs, failures, block records, and reports.
+- The first series: its observations are in the kit's README, and its evidence is under `runs/claude-evidence/` and `runs/codex-20260929-evidence/`.
 
-The kit does not cover a failed launch, an uncertain effect, or a second `step` on a busy run. Build a case for any of these if you judge the risk worth a trial.
+No case has yet shown any of the following. Build a case for one if you judge the risk worth a trial:
+
+- a block that permits only stopping;
+- launch parameters, and whether the harness applies them;
+- a launch that the harness refuses or fails;
+- an uncertain effect;
+- a second `step` on a busy run;
+- a session interrupted more than once between a hand-out and the launch of its worker.
+
+## What the first series taught
+
+These are findings about testing, not orders. Depart from one when your harness gives you a reason, and say why in your file.
+
+- **A session that cannot receive an answer cannot show a resume.** Where the loop text tells the agent orchestrator to ask the operator, use a session you can answer: an interactive one, or one you can continue after its question.
+- **Say where a session was cut.** An interruption after a hand-out and before the worker's launch leaves an output missing, and the next `step` counts that as a failed attempt. The point of the cut therefore changes what the resumed run shows.
+- **Keep the workers' traces, not only the agent orchestrator's.** A harness may store them elsewhere. They show what the workers did, and sometimes the instruction each received.
+- **A harness may hide the instruction a worker received.** If it does, the first question above stays unanswered for that harness. Say so; a correct output does not show that the instruction was unchanged.
+- **Search the traces for failures that were recovered.** After the series, look for tool errors, refused permissions, failed commands and timed-out waits that did not stop the run, and compare the core's records with the traces. A run that ended well can still hold a failure worth knowing.
+- **One run cannot tell a rule from an accident.** The two harnesses differed on resume, on copying or moving a file, and on the route to a block. Mark a finding from a single run as such.
+- **An expectation in the kit can be narrower than the loop text.** When an agent orchestrator departs from the expected course and not from the loop text, the defect is the scenario's.
 
 ## Left to you
 
 - **How to get a fresh agent orchestrator that can launch workers.** A sub-agent of your own session may be unable to launch sub-agents. A new session started by the operator, or the harness's command-line mode started by you, are other ways. Choose what the harness allows, and record which you used, because it bounds what the observation shows.
-- How to capture the agent orchestrator's tool calls.
-- The order of scenarios, and how often to repeat one. Repeat a scenario when one run cannot tell a rule from an accident.
+- How to capture the tool calls of the agent orchestrator and of the workers.
+- The order of cases, and how often to repeat one.
 - Which further cases to build.
 - When a trial has shown what it can show and may be ended.
 
 ## Recording
 
-Add each observation to the Observations section of the kit's README. State the date, the harness and its version, the model, how the fresh session was obtained, the scenario, the course expected, the course observed, each departure with its kind, and where the evidence is.
+Write your findings to a file of your own: `observations/<date>-<harness>-<label>.md`, where the label tells your series from another tester's on the same day. Give your run directories and your evidence directory the same label. Several testers work at once, and a shared file makes them edit around each other.
+
+The file holds:
+
+- **the setting**: the date, the harness and its version, the model and its effort setting, how each fresh session was obtained, which tools it was allowed, which instructions loaded besides the loop text, and the hashes of the loop text, the core and the trial definition;
+- **one observation per trial**: the case, the course expected, the course observed, each departure with its kind, and where the evidence is;
+- **the answers** to the questions above, with what bounds each answer;
+- **the search for recovered failures** and what it found;
+- **the proposed changes**, each tied to an observation, and each marked as new or as support for an entry of the change list;
+- **the recommendation**.
 
 ## Stop and return to the operator
 
