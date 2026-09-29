@@ -26,7 +26,7 @@ type: reference/types/design-proposal.md
 
 The design assumes that harnesses will adopt code scheduling of their own, in the manner of dynamic workflows. This is the operator's expectation, not an observed fact. Under it, this design is a bridge, and two requirements follow:
 
-- The workflow definition should read like a native workflow script, so that moving to a native scheduler changes how sub-agents are launched and nothing else.
+- The workflow definition should read like a native workflow script, so that moving to a native scheduler changes how sub-agents are launched and, where that scheduler can run the definition's language and its mechanical steps, nothing else.
 - Machinery that exists only because code cannot launch sub-agents should be as small as possible, because it is the part expected to be discarded.
 
 ## Vocabulary
@@ -60,6 +60,7 @@ step(run directory):
 
 ```
 agent orchestrator:
+    start the run
     repeat:
         run step
         done -> tell the operator and stop
@@ -70,18 +71,20 @@ agent orchestrator:
 
 Four invariants define the model:
 
-1. **All run state is on disk, and code writes it.** The code orchestrator keeps nothing between invocations. It records the jobs it hands out when it returns them. What the agent orchestrator alone observes reaches disk through `report`, not through files the agent writes itself. The agent orchestrator keeps only the run's identity, so a fresh session resumes a run by running `step`.
+1. **All run state is on disk, and code writes it.** The code orchestrator keeps nothing between invocations. It records the jobs it hands out when it returns them. What the agent orchestrator alone observes reaches disk through `report`, not through files the agent writes itself. The agent orchestrator keeps only the run's identity, so a fresh session resumes a run by running `step`, once the earlier session's workers have stopped.
 2. **No job result passes through the agent orchestrator.** Results go from worker to disk to code. The agent orchestrator receives job prompts. It returns only reports, and a report states an observation: code stores it and may show it later, but never accepts an output because of it.
 3. **Control changes hands only at a wait.** Calling `agent()` does not stop the program. A path stops when it waits on a pending job, and `step` returns only when no path can continue or the definition has finished. Mechanical steps are not shown to the agent orchestrator.
-4. **Acceptance is decided by code.** An output is accepted when it passes its validator, and the acceptance holds only while the job's declared inputs are unchanged. A missing, invalid or stale output makes the job pending again.
+4. **Acceptance is decided by code, and ties one input state to one output.** Code records the state of a job's inputs when it hands the job out. The inputs include the prompt and the method files the job depends on. An output is accepted only if it passes its validator and the inputs are still in the recorded state, so an output produced from inputs that have since changed is refused. The acceptance names the output's bytes and holds while those bytes and the inputs are unchanged. Otherwise the job is pending again.
+
+**A run is started by a separate command.** `step` takes a run and nothing else, so the run must exist before the first `step`. The agent orchestrator runs one start command with the invocation's arguments, which creates the run directory and returns the run's identity. What the arguments are, and what starting checks, belong to the workflow definition.
 
 **Calls are asynchronous.** `agent()` names a job and returns; waiting is a separate act. The jobs launched in one round are therefore every job the program has named and not yet seen accepted when it can go no further. Independent paths need no special construct: two paths that each wait on their own job both stop, and both jobs are returned together. This is the form a dynamic-workflow script has, where `agent()` returns a promise.
 
-**Acceptance is memoization.** Asynchronous calls decide when the program stops; they do not carry it across the stop. A stopped program cannot be kept when its process exits, so each invocation replays the definition from the top. A wait on a job whose output is already accepted continues at once, so replay reaches the first unfinished waits. The definition needs no separate readiness function. Replay requires that the definition be deterministic between invocations, that a job's identity not depend on the order in which paths happen to run, and that a mechanical step with side effects, such as opening the run, be idempotent or recorded on disk.
+**Acceptance is memoization.** Asynchronous calls decide when the program stops; they do not carry it across the stop. A stopped program cannot be kept when its process exits, so each invocation replays the definition from the top. A wait on a job whose output is already accepted continues at once, so replay reaches the first unfinished waits. The definition needs no separate readiness function. Replay requires that the definition be deterministic between invocations, that a job's identity not depend on the order in which paths happen to run, and that every mechanical step be safe to meet again. Recording that a step ran is not enough for a step with effects outside the run directory: a process can publish and end before it records the publication. Such a step must establish from the effect itself whether it has happened. Where it cannot, `step` stops with an outcome stating that the state is uncertain.
 
-**State is on disk because the process cannot wait.** [The practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) lets live variables hold `K` while one process holds the whole run. Here the process must exit at every `agent()` call, which is the lifetime mismatch that note names as forcing `K` into external storage.
+**State is on disk because the process cannot wait.** [The practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) lets live variables hold `K` while one process holds the whole run. Here the process exits whenever no path can continue, and the run goes on after it. That is the lifetime mismatch that note names as forcing `K` into external storage.
 
-**Migration.** The model differs from a native code scheduler in one place: how a wait on a pending job is satisfied. Here the process exits and a later invocation replays. Where a harness lets code launch sub-agents, the wait is satisfied inside the running process, and the agent orchestrator loop is not needed. The definition is unchanged.
+**Migration.** The model differs from a native code scheduler in one place: how a wait on a pending job is satisfied. Here the process exits and a later invocation replays. Where a harness lets code launch sub-agents, the wait is satisfied inside the running process, and the agent orchestrator loop is not needed. The definition is unchanged only if that runtime also runs the definition's language and lets it perform its mechanical steps. The Claude Code sandbox does neither today, so replacing the launch mechanism is the goal of migration and may not be all of it.
 
 **Judgment steps are jobs.** Scope classification, reconciliation, synthesis and semantic verification currently run in the coordinator's context. Invariant 2 rules that out, so each becomes a job with a generated prompt. The agent orchestrator then holds no analysis state or source content, and prior-analysis exposure in it cannot contaminate the analysis. The cost is that each judgment step needs its inputs declared, which the current skill leaves implicit.
 
@@ -95,7 +98,7 @@ The shared core contains only what every code-scheduled workflow needs. An eleme
 | **`report`** | The command that records one observation by the agent orchestrator. It does not advance the run | Launching is the one operation code does not perform, so its failures are the one kind of event code cannot see. Without a report they stay in a conversation that a fresh session does not have. |
 | **`agent()` and wait** | The asynchronous call by which a definition names a job, and the wait by which it asks for the result | Naming a job and needing its result are different moments in any workflow with independent work. Keeping them apart lets `step` return every pending job at once without the core knowing the dependency structure. |
 | **Job record** | Prompt, output path, declared inputs, validator | The worker receives its whole task in one file, as in ADR 067; code must know where the result lands and how to accept or refuse it. The validator's content is workflow-specific. |
-| **Input-matched acceptance** | The record that an output passed its validator for a given state of its declared inputs | Without it a changed input leaves a stale output counted as done. With it, resuming means running `step`. |
+| **Input-matched acceptance** | Two records: the state of a job's inputs when it was handed out, and the output bytes that passed the validator for that state | Without the first, an output produced from old inputs is accepted against new ones. Without the second, a later write to the output goes unnoticed. With both, resuming means running `step`. |
 | **Loop instruction** | The agent orchestrator's text | Every workflow is driven this way. With one workflow the text lives in that workflow's skill; a shared snippet becomes worth it when a second workflow repeats it. |
 
 ## Particular to `analyse-agentic-system`
@@ -106,7 +109,8 @@ These go in its workflow definition, or stay in the commands and skill text it a
 - prompt templates and input assembly, such as `memory-input.md`;
 - validators, mostly the existing type schemas and `commonplace-validate --full` checks;
 - per-job tool scope — what a worker may read, write and run — including the prior-analysis exposure rule and the offload workshop's deny-hook item, stated in each prompt and emitted by `step` as launch parameters for the agent orchestrator to apply where the harness can enforce them;
-- the open, finalize and publish endpoints (`open` from its own proposal, `commonplace-agentic-analysis-finalize`, `commonplace-agentic-analysis-publication`), called by the definition as mechanical steps;
+- the start command, which is `open` from its own proposal;
+- the finalize and publish endpoints (`commonplace-agentic-analysis-finalize`, `commonplace-agentic-analysis-publication`), called by the definition as mechanical steps;
 - what the agent orchestrator may touch during a repair, under open choice 1.
 
 The analysis workflow has no operator sign-off step today: invocation authorizes publication. A human-executed step is therefore not in its definition and not in the core.
@@ -141,8 +145,8 @@ Two further points hold under every option:
 
 ### 2. Where the core lives before a second workflow
 
-- **A. Separate core module now.** `step`, `agent()` and the job record are written as shared code from the start, and the analysis definition uses them.
-- **B. Inside the analysis code, extracted later.** The same protocol is written within the analysis package and moved out when a second workflow adopts it. Less code up front; the extraction is later work and the minimal-core boundary is enforced only by review until then. The expected end state favours this option: shared machinery that a native scheduler would replace is cheaper to discard when less of it exists.
+- **A. Separate core module now.** `step`, `report`, `agent()` and the job record are written as their own module from the start, and the analysis definition uses them. The core can then be tested without the analysis workflow and without a model: small test definitions exercise it, and a test driver plays the agent orchestrator by writing scripted outputs. The module boundary also enforces the minimal-core constraint, because the core cannot import analysis code. The cost is an interface fixed before a real definition has used it.
+- **B. Inside the analysis code, extracted later.** The same protocol is written within the analysis package and moved out when a second workflow adopts it. Less code up front; the extraction is later work and the minimal-core boundary is enforced only by review until then. The expected end state favours this option: shared machinery that a native scheduler would replace is cheaper to discard when less of it exists. It also lets the interface be tested before it is fixed: one representative analysis definition, with parallel lenses, reconciliation and a correction cycle, shows whether the core stays as small as the table above claims.
 
 ### 3. Timing against the frozen rerun
 
@@ -159,7 +163,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 ## Forces
 
 - **Recovery versus a clean orchestrator context.** Every failure shown to the agent orchestrator adds to its context and invites it to act as coordinator again. Every failure hidden from it must be handled by code that anticipated it, by a repair job, or by the operator.
-- **Unprompted noticing is lost.** A coordinator that reads every output can notice a problem no validator checks. In this model an output is read by an LLM only when a job is assigned to read it. Open choice 1 restores recovery from failures code detects, not detection of failures code misses.
+- **Unprompted noticing is lost.** A coordinator that reads every output can notice a problem no validator checks. In this model an output is read by an LLM only when a job is assigned to read it. Open choice 1 restores recovery from failures code detects, not detection of failures code misses. The substitute is deliberate: a review job assigned to read the set as a whole.
 - **Counting attempts needs a record.** A retry limit requires failure records on disk, and reports add an event record. The current skill forbids a retry log and forbids resuming a failed run. Adoption replaces both rules; the records are written by code, not kept by the coordinator.
 - **A report is written by an LLM.** It can be missing, wrong or late. Code therefore derives every transition from what it can check — outputs, validators, declared inputs, its own record of jobs handed out — and uses reports for diagnosis and audit. A report that code had to trust would return part of the schedule to the conversation.
 - **Reporting costs the agent orchestrator attention.** A report required every round is one more thing to get right every round. A report required only when something abnormal happened keeps a round without failure at one command, but leaves the agent orchestrator to judge what counts as abnormal.
@@ -168,6 +172,8 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - **Launch fidelity cannot be checked by code.** Code detects a skipped job, because the output is missing. It cannot detect an agent orchestrator that paraphrased a prompt or did a job in its own context. A fixed launch instruction reduces the risk and does not remove it.
 - **Acceptance by validator is only as strong as the validator.** Most analysis validators check structure. A structurally valid report may still need correction, as the trace audit showed; semantic acceptance is a judgment job.
 - **Input matching needs declared inputs.** A worker that reads an undeclared file makes the match incomplete, so a change to that file does not reopen the job. Declaring inputs per job is also what problem 1 asks for, but it is new authoring work in the definition.
+- **Replay moves complexity from the definition to the runner.** The definition's author writes sequential code. The runner must find every path that cannot continue, keep job identities stable, count retries, and handle steps whose effects may already have happened. This machinery is the part whose size is not yet known.
+- **One writer per output.** Losing the agent orchestrator's session does not show that its workers stopped. A worker from the earlier session can write to an output path after its replacement starts, and the current skill already forbids a second writer while the first one's ownership is unresolved. The smallest contract is that recovery requires the earlier workers to have stopped. Recovery that tolerates overlap needs a separate output per attempt and a rule for which attempt may be accepted.
 - **Replay needs discipline.** A definition that branches on the clock, or a mechanical step that is not safe to repeat, behaves differently on the second invocation than on the first. Asynchronous paths add one case: a job identified by the order of calls changes identity when paths run in a different order.
 - **Eager launch.** A job is launched once it is named, whether or not the program has waited on it yet. This saves rounds. It also means a job named on a path that a later result makes unnecessary is still run.
 - **Shared barrier versus staggered progress.** The agent orchestrator waits for every worker in a round before running `step`. A path whose job finished early does not advance until the slowest job in the round finishes. Advancing it sooner needs the outstanding mark listed under free choices and a more complex loop; the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) assumes the shared barrier.
@@ -181,7 +187,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - Whether the definition uses the host language's own asynchronous constructs or explicit handles with a wait call. The first needs a driver that detects when no path can continue.
 - What `step` prints per job beyond the prompt path and launch parameters.
 - The retry limit, and whether a retry's prompt carries the validator's message.
-- How `step` treats a job it has handed out whose output is still missing. Under the shared barrier, the next `step` means the round is over, so the job is named again. That is also correct after the agent orchestrator's session is lost.
+- How `step` treats a job it has handed out whose output is still missing. Under the shared barrier, the next `step` means the round is over, so the job is named again. After the agent orchestrator's session is lost, that is correct only once the earlier workers have stopped.
 - Which events a report may carry, and how much of a report is fixed form rather than free text.
 
 ## Operativity and warrant
@@ -195,9 +201,12 @@ The added automated evaluation is the validator run inside `step`. For the analy
 - The operator chooses among the options for choices 1–3, naming the timing against the frozen rerun.
 - Each core element still has a universal reason when the analysis definition is written; any element needed only by the analysis workflow has moved into its definition.
 - One complete analysis run executes through `step` in each supported harness. On a round without failure the agent orchestrator receives job prompts and launch parameters and nothing else.
-- An agent orchestrator started in a fresh session resumes a partly finished run by running `step`, with no hand-written recovery notes. What the earlier session reported is readable from the run directory.
+- An agent orchestrator started in a fresh session, after the earlier session's workers have stopped, resumes a partly finished run by running `step`, with no hand-written recovery notes. What the earlier session reported is readable from the run directory.
+- Before the core's interface is treated as settled, one analysis definition with parallel lenses, reconciliation and a correction cycle has been written against it.
+- If choice 2 is A: the core's tests run without the analysis package and without a model.
 - A run completes correctly when the agent orchestrator omits every report.
-- Tests show that changing a declared input's bytes makes the job pending again, that an output failing its validator is not accepted, that a second `step` on an unchanged run directory returns the same result as the first, and that pending jobs on two independent paths are returned in one round.
+- Tests show that changing a declared input's bytes makes the job pending again, that an output is refused when an input changed between hand-out and completion, that changing an accepted output's bytes makes the job pending again, that an output failing its validator is not accepted, that a second `step` on an unchanged run directory returns the same result as the first, and that pending jobs on two independent paths are returned in one round.
+- A test ends the process after publication succeeds and before it is recorded. The next `step` either recognizes the publication or stops with the uncertain-state outcome; it does not publish again.
 - If choice 1 is B, C or D: an induced failure that code did not anticipate is repaired without operator help, and the repaired output is accepted by the same validator that a first attempt would face.
 
 ---
@@ -209,4 +218,4 @@ Relevant Notes:
 - [scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — rests-on: why moving exact schedule state from the coordinator's context into code is expected to remove a class of errors
 - [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the definition is host-language code, and run state is reified on disk because the run outlives each process
 - [067-Review workers read one prompt and write one output](../adr/067-review-workers-read-one-prompt-and-write-one-output.md) — see-also: the worker contract every job record reuses
-- [Open an analysis run in code](./open-an-analysis-run-in-code.md) — see-also: an endpoint the analysis definition would call as its first step
+- [Open an analysis run in code](./open-an-analysis-run-in-code.md) — see-also: the command that would start an analysis run

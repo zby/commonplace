@@ -3,7 +3,9 @@
 - **Posed:** 2026-09-28, by the operator's direction after a review of the skill.
 - **Start condition:** met on 2026-09-29, when the operator reported the batch finished.
 - **Decision 2026-09-29 (operator):** fix all of the issues first, then rerun once. The rerun is therefore one bundled method change, not a sequence of separately comparable ones. The operator wants to compare its results with the batch 01 rerun, so the comparison will not isolate which change caused which difference. Freeze the method commit before opening the rerun.
-- **Closes when:** each item below is implemented, or explicitly dropped, and `kb/instructions/analyse-agentic-system/SKILL.md` has been trimmed to the judgment core plus command calls. Then extract any durable decisions to `kb/reference/` and delete this workshop.
+- **Decision 2026-09-29 (operator), second:** build the code orchestrator first and hang the remaining items on it. The design is `kb/reference/proposals/code-scheduled-workflows.md`. This takes option A of that proposal's choice 3: the rerun tests the code orchestrator together with the backlog. See "Build on the code orchestrator" below.
+- **Decision 2026-09-29 (operator), third:** the code orchestrator is a module separate from the analysis code, so that it can be tested on its own. This takes option A of the proposal's choice 2.
+- **Closes when:** each item below is implemented, or explicitly dropped, and one analysis run completes through the code orchestrator, with `kb/instructions/analyse-agentic-system/SKILL.md` reduced to the agent orchestrator's loop and the judgment content moved into job prompts. Then extract any durable decisions to `kb/reference/` and delete this workshop.
 
 ## Goal
 
@@ -62,6 +64,37 @@ A read-only survey by a subagent compared the backlog with the code. I have not 
 - **Item 13: `publish` already runs the full prepare check.** Drop that half. A `status` command is optional.
 - **Item 14: dropped.** `kb/agentic-systems/comparisons/` holds only a README, and the matrix is rebuilt from all reviews, so any review change makes all of it stale. One sentence in the skill covers it.
 - **Items 7, 8, 10a, 11, 12: absent.** Genuinely new; nothing to reuse except the existing hash check for item 12.
+
+## Build on the code orchestrator (2026-09-29)
+
+In the proposal's model a program runs the workflow, keeps run state on disk, and stops only where it needs a sub-agent. The agent orchestrator runs `step`, launches the jobs it names, and runs `step` again. A job is one delegation to a sub-agent; a mechanical step is executed by code inside `step`.
+
+Where each remaining item lands:
+
+| Item | Lands as | What changes |
+|---|---|---|
+| 1 `open` | The command that starts a run. The agent orchestrator runs it once with the invocation's arguments; `step` takes the run from there | Becomes the entry point of the workflow |
+| 2, 3 finalize, manifest (shipped) | Mechanical steps the definition calls | The agent no longer calls them |
+| 5 review renderer | Mechanical step for the frontmatter and evidence-basis stub; the body is a job | — |
+| 6 read command, 7 probe runner, 10a fail-fast wrapper | Tools that workers use inside jobs, named in job prompts | Independent of the code orchestrator. 10a is not needed for mechanical steps, which run as Python and raise; it is still needed where a worker runs shell commands |
+| 8 deny hook | Per-job tool scope, emitted by `step` as launch parameters and enforced by the hook | The agent orchestrator holds no analysis content, so the guard is needed for workers only |
+| 9 route-field completeness, 10 cross-member checks | Validators that `step` runs when it accepts an output | A failed check becomes a retry that carries the validator's message, not a correction turn |
+| 11 seed scanners | Mechanical steps whose outputs are declared inputs of jobs | Priority unchanged |
+| 12 `memory-input.md` generator | Input assembly for the memory specialist job | Moves from tier 3 to required. Every judgment job needs the same: a generated prompt and declared inputs |
+| 13 `status` | Subsumed: `step` derives the next action from files | Dropped as a separate item |
+
+Build order, depth-first:
+
+1. The core: `step`, `report`, asynchronous `agent()` with wait, and input-matched acceptance. It is its own module and does not import analysis code. It is built and tested against small test definitions, with a test driver that plays the agent orchestrator by writing scripted outputs. These tests need no model.
+2. A coarse first analysis definition: `open`, one job per skill step that needs judgment, the shipped commands as mechanical steps, publication last. Each job prompt starts from the skill section it replaces. The definition must include the two lenses as parallel jobs, reconciliation, and a correction cycle, because those are the cases that show how much machinery the runner needs. The goal is one complete run through `step`. The core's interface stays open to change until this definition has used it.
+3. Hang the items above on that run, in the order its failures suggest.
+4. Split coarse jobs only where a run shows that a job's context is too large or its inputs are unclear.
+
+The job split has not been designed. It needs a reading of skill steps 2 to 7 for what each step reads and what it hands to the next.
+
+Main risk: today one coordinator context carries its reading of the sources from step 2 to step 7. Fresh workers do not share that reading. Each job either reads the sources again or receives what it needs as files, so token cost rises and analysis quality may change. The rerun comparison cannot separate this effect from the others.
+
+Open before the build starts, from the proposal: how much error recovery the agent orchestrator keeps (choice 1), whether the agent orchestrator reports every round or only abnormal events, and what it may change during a repair. Choice 2 is decided above.
 
 ## Evidence from real runs
 
