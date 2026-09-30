@@ -515,46 +515,10 @@ class AnalyseAgenticSystem(Workflow):
             return
 
         (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
-        ctx.agent(
-            self.job(
-                "runtime",
-                RUNTIME,
-                reads=(BOUNDARY,),
-                norms=True,
-                extra=(RUNTIME_CONTRACT,),
-                validator=partial(
-                    pass_refusals,
-                    repo_root=repo_root,
-                    bodies=lambda path: set_bodies(
-                        boundary=run_dir / BOUNDARY, runtime=path
-                    ),
-                ),
-            )
-        ).wait()
+        ctx.agent(self.runtime_job(run_dir)).wait()
         ctx.parallel(
             lambda: ctx.agent(self.memory_job(run_dir, 0, 0)).wait(),
-            lambda: ctx.agent(
-                self.job(
-                    "epistemic",
-                    EPISTEMIC,
-                    reads=(BOUNDARY, RUNTIME),
-                    norms=True,
-                    extra=(
-                        "../../analyse-external-system-epistemic-architecture.md",
-                        EPISTEMIC_CONTRACT,
-                        RUNTIME_CONTRACT,
-                    ),
-                    validator=partial(
-                        pass_refusals,
-                        repo_root=repo_root,
-                        bodies=lambda path: set_bodies(
-                            boundary=run_dir / BOUNDARY,
-                            runtime=run_dir / RUNTIME,
-                            epistemic=path,
-                        ),
-                    ),
-                )
-            ).wait(),
+            lambda: ctx.agent(self.epistemic_job(run_dir)).wait(),
         )
 
         reconcile = 0
@@ -640,6 +604,49 @@ class AnalyseAgenticSystem(Workflow):
             output=output,
             inputs=(*reads, *method_paths),
             validator=validator,
+        )
+
+    def runtime_job(self, run_dir: Path) -> Job:
+        """The runtime analyst. Its member cites the boundary's sources and its
+        own records."""
+        return self.job(
+            "runtime",
+            RUNTIME,
+            reads=(BOUNDARY,),
+            norms=True,
+            extra=(RUNTIME_CONTRACT,),
+            validator=partial(
+                pass_refusals,
+                repo_root=self.repo,
+                bodies=lambda path: set_bodies(
+                    boundary=run_dir / BOUNDARY, runtime=path
+                ),
+            ),
+        )
+
+    def epistemic_job(self, run_dir: Path) -> Job:
+        """The epistemic analyst. It runs beside the memory analyst, so its
+        member cites the boundary's sources, the runtime member and its own
+        records."""
+        return self.job(
+            "epistemic",
+            EPISTEMIC,
+            reads=(BOUNDARY, RUNTIME),
+            norms=True,
+            extra=(
+                "../../analyse-external-system-epistemic-architecture.md",
+                EPISTEMIC_CONTRACT,
+                RUNTIME_CONTRACT,
+            ),
+            validator=partial(
+                pass_refusals,
+                repo_root=self.repo,
+                bodies=lambda path: set_bodies(
+                    boundary=run_dir / BOUNDARY,
+                    runtime=run_dir / RUNTIME,
+                    epistemic=path,
+                ),
+            ),
         )
 
     def memory_job(self, run_dir: Path, round_: int, returned_by: int) -> Job:

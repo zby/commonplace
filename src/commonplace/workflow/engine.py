@@ -502,6 +502,36 @@ def load_definition(reference: str) -> type[Workflow]:
     return found
 
 
+def render_prompt(job: Job, run_dir: Path, messages: Sequence[str] = ()) -> str:
+    """The prompt a job's worker reads: the job's text, its inputs resolved
+    against the run directory, where to write, and why the previous attempt
+    was refused when ``messages`` says so."""
+    lines = [job.prompt.rstrip(), ""]
+    if job.inputs:
+        lines += ["## Inputs", ""]
+        lines += [f"- `{_resolve_path(run_dir, declared)}`" for declared in job.inputs]
+        lines.append("")
+    lines += [
+        "## Where to write",
+        "",
+        f"Write the result to `{job.output_path(run_dir)}`.",
+        "",
+        (
+            "If you cannot finish the task, write why to "
+            f"`{job.problem_path(run_dir)}` instead."
+        ),
+        "",
+        (
+            "Reply in one line that names the file you wrote. "
+            "Do not repeat or summarize its content."
+        ),
+    ]
+    if messages:
+        lines += ["", "## Why the previous attempt was refused", ""]
+        lines += [f"- {message}" for message in messages]
+    return "\n".join(lines) + "\n"
+
+
 class Orchestrator:
     """Advances one run. It keeps nothing between two calls of `step`.
 
@@ -1338,33 +1368,8 @@ class _Step:
     # What a step writes for the agent orchestrator and the operator
 
     def prompt(self, job: Job, record: dict[str, Any]) -> str:
-        lines = [job.prompt.rstrip(), ""]
-        if job.inputs:
-            lines += ["## Inputs", ""]
-            lines += [
-                f"- `{_resolve_path(self.run_dir, declared)}`"
-                for declared in job.inputs
-            ]
-            lines.append("")
-        lines += [
-            "## Where to write",
-            "",
-            f"Write the result to `{job.output_path(self.run_dir)}`.",
-            "",
-            (
-                "If you cannot finish the task, write why to "
-                f"`{job.problem_path(self.run_dir)}` instead."
-            ),
-            "",
-            (
-                "Reply in one line that names the file you wrote. "
-                "Do not repeat or summarize its content."
-            ),
-        ]
-        if record["failures"] and record["messages"]:
-            lines += ["", "## Why the previous attempt was refused", ""]
-            lines += [f"- {message}" for message in record["messages"]]
-        return "\n".join(lines) + "\n"
+        messages = record["messages"] if record["failures"] else ()
+        return render_prompt(job, self.run_dir, messages)
 
     def as_block(self, name: str, judgment: _Judgment) -> Block:
         assert judgment.record_path is not None

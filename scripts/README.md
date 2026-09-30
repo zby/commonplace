@@ -40,6 +40,30 @@ Two mechanical helpers support it:
 Each helper has `--help`. Neither helper assigns scenario verdicts or advances
 the test sequence.
 
+## Analyst trials
+
+Rerun one analyst of a recorded analysis run (the runtime, memory or
+epistemic analyst) on that run's frozen inputs, to test a change to its
+instructions or to compare models:
+
+```bash
+uv run python scripts/analyst_trial.py prepare \
+  kb/reports/state/agentic-system-analysis/<recorded-run> memory --label luna
+```
+
+It creates `kb/reports/state/agentic-system-analysis/AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>/`
+(named like a run because the run-state schema requires one), copies the
+recorded run's `boundary.md`, `opening.json`, `run-state.md` (set back to
+running) and, for the memory and epistemic analysts, `output/runtime.md`,
+and writes `prompt.md` from the current workflow code. Launch the analyst in
+any harness with "Read `<prompt.md>` and follow it."; the instruction files
+it lists are read from the working tree, so edits need no commit.
+`trial.json` records the recorded run and the SHA-256 of every input. The
+script launches nothing and judges nothing: check the output with the
+analyst's validator or by reading it. Trials read the recorded run's source
+checkout, so do not run trials pinned to different commits of one
+repository at the same time.
+
 ## X likes reading inbox
 
 Run from this checkout:
