@@ -166,9 +166,12 @@ evidence capsule in the runtime report.
 
 Quotations across the set follow one contract. Members retain minimum
 verbatim source excerpts for load-bearing findings: disputed mechanisms,
-comparison classifications and assessments. Each passage occurs once
-across the set, in the member whose finding it supports; a record in
-another member cites that record instead of repeating the passage. A
+comparison classifications and assessments. When a supplied input member
+already retains the needed passage, cite its record instead of repeating it.
+Analysts writing in parallel may independently retain the same passage;
+they do not read each other's reports to deduplicate it. The reconciliation
+identifies overlapping support through the records; it does not rewrite the
+members to remove passages. A
 quotation block carries the excerpt, range and attribution that
 [`commonplace-quote`](../reference/commands.md#commonplace-quote)
 emits for the run's frozen source, ending with a `> ---` attribution: for

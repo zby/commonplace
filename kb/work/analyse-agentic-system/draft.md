@@ -107,7 +107,7 @@ Analyse accumulated-from-use mechanisms; this is not a memory-review publication
 
 ### 7. Invoke the epistemic procedure conditionally (when applicable)
 
-1. Invoke [Analyse an external system's epistemic architecture](../../instructions/analyse-external-system-epistemic-architecture.md) — invokes: run the accepted route-analysis method inside this run's boundary. Do not copy or restate its object-inventory, route-ledger, transformation, lifecycle, claim-comparison, or authority method.
+1. Invoke [Analyse an external system's epistemic architecture](../../instructions/analyse-agentic-system/jobs/epistemic.md) — invokes: run the accepted route-analysis method inside this run's boundary. Do not copy or restate its object-inventory, route-ledger, transformation, lifecycle, claim-comparison, or authority method.
 2. Pass to the invocation: a bounded epistemic subquestion, the run and system boundary, the frozen revision, the `SRC-*` register and evidence packet, the existing canonical records, and the trigger evidence from step 5.
 3. Enforce the wrapper rules: no source reacquisition, no boundary widening, no revision change, no silent evidence upgrade, no parallel ID namespace, no independent publication decision, no system-wide epistemic grade.
 4. Require linked returns: material objects, routes, and claims by canonical ID; transformation class and route function; architectural status and episode status; checking, acceptance, and retention/integration findings; the three authority records kept separate; and missing evidence paired with the conclusions it prevents. Any new record or targeted-evidence request returns to the orchestrator for registration, and affected work is rerun.

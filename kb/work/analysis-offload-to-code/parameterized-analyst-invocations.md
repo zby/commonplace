@@ -26,7 +26,7 @@ For scale: a memory analyst's required instruction and contract text is about 53
 Give each job one parameterized main instruction under `kb/instructions/analyse-agentic-system/jobs/`.
 
 - Merge `analyse-agentic-system/jobs/memory.md` into `jobs/memory.md`, preserving correction-round behavior and record ownership rules.
-- Merge `analyse-external-system-epistemic-architecture.md` into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
+- Merge `analyse-agentic-system/jobs/epistemic.md` into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
 - Keep boundary, runtime, reconciliation, and verification methods in their existing job instructions.
 - Each main instruction declares its parameters. Code supplies complete input, output, problem-report, run-state, and scratch paths as named parameters, and the paths of the shared worker rules, judging norms, and report contracts the job must read.
 - Remove the two superseded method files after updating their callers and links. Do not leave forwarding stubs. Retire them through [retire an artifact](../../instructions/retire-artifact.md): as of 2026-09-30 they are linked from `kb/agent-memory-systems/README.md`, `kb/agent-memory-systems/types/agent-memory-system-review.md` and `kb/reference/proposals/code-scheduled-workflows.md`, besides the workflow code, publication's `METHOD_PATHS`, tests and workshop files. They are published pages, so each gets a `properdocs.yml` redirect to its merged job instruction. Workshop files are repointed by path only.

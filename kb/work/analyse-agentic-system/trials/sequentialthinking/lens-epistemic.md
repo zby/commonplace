@@ -1,7 +1,7 @@
 # Epistemic-architecture lens — RUN `AGS-20260821-sequentialthinking`
 
 Logical record 7. Produced by executing
-`kb/instructions/analyse-external-system-epistemic-architecture.md` inside this run's frozen
+`kb/instructions/analyse-agentic-system/jobs/epistemic.md` inside this run's frozen
 boundary, under the step-7.3 wrapper rules.
 
 **Wrapper compliance.** No source was reacquired, refreshed, or widened; `/home/zby/llm/servers`

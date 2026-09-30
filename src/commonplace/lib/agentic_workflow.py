@@ -654,7 +654,6 @@ class AnalyseAgenticSystem(Workflow):
             reads={"boundary": BOUNDARY, "runtime": RUNTIME},
             norms=True,
             extra=(
-                "../../analyse-external-system-epistemic-architecture.md",
                 OVERVIEW_CONTRACT,
                 EPISTEMIC_CONTRACT,
                 RUNTIME_CONTRACT,

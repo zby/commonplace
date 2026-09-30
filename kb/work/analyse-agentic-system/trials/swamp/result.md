@@ -300,7 +300,7 @@ deletion and formatting operations only.
 
 ## 7B. Epistemic lens — invoked procedure
 
-Invoked `kb/instructions/analyse-external-system-epistemic-architecture.md` and
+Invoked `kb/instructions/analyse-agentic-system/jobs/epistemic.md` and
 executed its accepted route-analysis method inside this run's boundary. Executed
 sequentially in the orchestrator context after the fresh lens worker was
 terminated (`trial-notes.md`, friction 4). No source reacquisition, no boundary

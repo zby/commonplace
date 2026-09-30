@@ -86,10 +86,7 @@ def test_transfer_scan_runs_after_complete_state() -> None:
 
 
 def test_candidate_artifact_does_not_establish_phase_observation() -> None:
-    epistemic = (
-        REPO_ROOT
-        / "kb/instructions/analyse-external-system-epistemic-architecture.md"
-    ).read_text(encoding="utf-8")
+    epistemic = job("epistemic")
     dispose = epistemic[
         epistemic.index("**Dispose every object.**") :
         epistemic.index("**Bound each check's licenses.**")

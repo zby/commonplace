@@ -90,7 +90,7 @@ No lens may rename or independently inventory a registered object or route. New 
 
 **Work:** reuse the accepted method without giving it a second source or publication lifecycle.
 
-- Invoke `kb/instructions/analyse-external-system-epistemic-architecture.md`; do not copy its object, route, transformation, lifecycle, claim-comparison, or authority method. **Basis:** R1.3/R3.5; DB.
+- Invoke `kb/instructions/analyse-agentic-system/jobs/epistemic.md`; do not copy its object, route, transformation, lifecycle, claim-comparison, or authority method. **Basis:** R1.3/R3.5; DB.
 - Pass a bounded epistemic subquestion, run/system boundary, frozen revision, `SRC-*` register/evidence packet, existing canonical records, and trigger evidence. Wrapper rules: no reacquisition, widening, revision change, silent evidence upgrade, parallel ID namespace, independent publication, or system-wide grade. **Basis:** B fixed architecture; R2/R3.5; DB.
 - Require linked returns for material objects/routes/claims; transformation and route function; architectural and episode status; checking, acceptance, retention/integration; three authority records; and missing evidence/prevented conclusions. New records or targeted evidence requests return to the orchestrator for registration and affected-work rerun. **Basis:** R1.3/R2; R6.4/R6.12; DB.
 - Fresh workers may consume only the prepared packet and frozen read-only boundary. If unavailable, execute sequentially. If neither path can run an applicable lens, stop with a capacity/dependency blocker; never relabel it inapplicable. **Basis:** B operativity; R6.12; DA.

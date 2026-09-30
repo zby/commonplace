@@ -86,7 +86,7 @@ Inputs: `jobs/memory.md`, worker rules, judging norms, `analyse-agentic-system/j
 
 ## Epistemic analyst
 
-Inputs: `jobs/epistemic.md`, worker rules, judging norms, `analyse-external-system-epistemic-architecture.md`, epistemic report type, runtime report type (and the overview type).
+Inputs: `jobs/epistemic.md`, worker rules, judging norms, `analyse-agentic-system/jobs/epistemic.md`, epistemic report type, runtime report type (and the overview type).
 
 **Undefined core concepts:**
 
@@ -146,3 +146,24 @@ Retirement checks found no freshness baselines for the deleted memory method.
 Redirect validation also exposed a pre-existing redirect for the restored live
 `agentic-systems/reviews/instinctual-memory.md` page; the shadowing key was
 removed so its live URL remains the destination.
+
+
+## Epistemic merge resolutions (2026-09-30)
+
+The parameterized epistemic job now holds the whole method, including the
+wrapper's parallel-worker citation limit and its correction/duplicate rules.
+
+| Conflict | Reading kept |
+|---|---|
+| First-fit relation assignment makes indeterminate unreachable | Operator decision 3: the list is a checking order; assign the first established test. Ampliation needs positive evidence of non-entailment; otherwise unresolved entailment uses indeterminate. The type now states this too. |
+| Method splits supplied containers into new EPI records; shared rules reserve splitting to reconciliation | Inventory heterogeneous parts in separate rows. Declare distinct newly established objects, but flag a needed split of a supplied record beside the finding; reconciliation alone splits it. |
+| Type locates the Source register in an overview that does not exist yet | Correct the type: use the supplied boundary register, which code later copies into the overview. |
+| Method's no-route and global no-candidate wording differs from the type | Use `no route found within boundary` and the type's exact global no-candidate statement. |
+| Passage must occur once across the set, but memory is written in parallel and reports are never rewritten | Correct the overview contract: cite a record when a supplied member already retains its passage. Independent parallel discoveries may retain the same passage; reconciliation identifies overlapping support without rewriting the members. |
+| Every EPI route must carry read-back and theory fields regardless of applicability | The type now makes scope explicit: read-back fields record inapplicability when neither retention nor read-back occurs; admission fields apply to admitting routes and theory fields to routes involving formulated theories. Inapplicability does not establish a missing epistemic phase. |
+
+The substantive six-block method and its misuse guards remain. Shared evidence
+and register-ownership rules are not restated. The old method's public page
+redirects directly to the job; workflow dependencies, pinned method paths and
+the composition test use the consolidated instruction. Workshop paths alone
+are repointed; frozen copies and historical observations remain preserved.

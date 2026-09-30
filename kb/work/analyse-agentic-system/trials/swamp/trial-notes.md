@@ -153,7 +153,7 @@ ledger as non-truth-apt policy updates.
   per step 9 the result is retained under the staging identity and the publication
   blocker is recorded as result record 11.
 - **Did not read** any `kb/` file other than the candidate instruction and, once
-  step 7 became applicable, `kb/instructions/analyse-external-system-epistemic-architecture.md`.
+  step 7 became applicable, `kb/instructions/analyse-agentic-system/jobs/epistemic.md`.
   No `kb/agentic-systems/`, `kb/agent-memory-systems/`, `kb/notes/`, or
   `kb/sources/` file was opened at any point, by me or by any worker (each worker
   prompt carried the prohibition explicitly). The checkout was never mutated and

@@ -4,7 +4,7 @@
 |---|---|
 | run ID | `AGS-2026-08-21-SEQTHINK` |
 | lens | epistemic architecture |
-| method executed | `kb/instructions/analyse-external-system-epistemic-architecture.md`, all six output blocks, in order |
+| method executed | `kb/instructions/analyse-agentic-system/jobs/epistemic.md`, all six output blocks, in order |
 | depth | **full pass** (per `SCOPE-EPI`) |
 | subquestion | Within the declared boundary (`sequentialthinking` at `2ecb382a`; MCP SDK, host client, and model declared external), what truth-apt content does the artifact acquire, transform, check, dispose, retain, or integrate; what epistemic and operational authority does any route grant; and how do the artifact's knowledge-production and warrant claims — especially `CLM-1` — compare with the routes actually found? |
 | early branch taken | **Branch 2** (knowledge-production claim present, no implemented or observed route found), extended over implemented non-claimed routes. Resolution reasoning below. |

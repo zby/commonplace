@@ -127,6 +127,7 @@ plugins:
         'articles/when-systems-learn-theories-about-themselves.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
         'instructions/analyse-agent-memory.md': 'instructions/analyse-agentic-system/jobs/memory.md'
         'instructions/analyse-agent-memory/SKILL.md': 'instructions/analyse-agentic-system/jobs/memory.md'
+        'instructions/analyse-external-system-epistemic-architecture.md': 'instructions/analyse-agentic-system/jobs/epistemic.md'
         'instructions/ground-source-dependent-claims.md': 'instructions/cp-skill-ground/SKILL.md'
         'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'

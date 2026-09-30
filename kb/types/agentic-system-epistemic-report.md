@@ -76,7 +76,8 @@ any field.
 the analysis question, assessed and unassessed route families, each
 missing item of evidence with the conclusion it prevents, and the
 system's knowledge-production or warrant claims by `CLM-*` ID, or `none
-found`. It cites the overview's Source register and does not copy it.
+found`. It cites the Source register supplied in the boundary input and does
+not copy it; code later copies that register into the overview.
 
 **2. Epistemic-object inventory.** One row per operative part within the
 material-route boundary, split where parts differ in content, form,
@@ -120,6 +121,10 @@ transformation: indeterminate` (semantic preservation or entailment cannot
 be established, with the remaining classifications and the evidence needed
 to decide); `non-truth-apt policy/content update: <description>`; or `no
 content change`.
+
+The list supplies a checking order: assign the first value whose test is
+established. Ampliative conjecture requires evidence of non-entailment;
+failure to prove entailment alone leaves the relation indeterminate.
 
 **4. Per-object lifecycle disposition.** For every ampliative candidate,
 one record keyed to its object ID, giving for each phase the route's
@@ -178,7 +183,12 @@ grouped under the kind headings of the kinds it declares, as `#### EPI-OBJ-1
 — Label`, with the identity and fields the
 [runtime report type](./agentic-system-runtime-report.md#shared-records)
 requires of a record of that kind, its source anchors, and the minimum
-verbatim passages its load-bearing findings need. An `EPI-ABS-*` record
+verbatim passages its load-bearing findings need. Apply the runtime type's
+route fields according to their scope: read-back fields state `inapplicable`
+with a reason when the route neither retains nor reads retained material;
+admitting-route fields apply to routes that admit changes; theory-route
+fields apply only to routes involving formulated theories. A field outside
+its scope is not evidence of an absent epistemic phase. An `EPI-ABS-*` record
 states its searched boundary. State `none declared in this member` when
 the epistemic analyst established no record.
 

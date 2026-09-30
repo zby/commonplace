@@ -70,7 +70,7 @@ direct_adaptation_exception_applied_to: >
   route (e.g. cache reuse changing what evidence a `think` call sees), the epistemic lens was asked
   to include it in its invoked method rather than re-adjudicate applicability.
 action: >
-  Invoke kb/instructions/analyse-external-system-epistemic-architecture.md in a fresh worker
+  Invoke kb/instructions/analyse-agentic-system/jobs/epistemic.md in a fresh worker
   context, bounded by this run's boundary, revision, and source register; wrapper rules enforced
   (no reacquisition, no boundary widening, no parallel ID namespace, no independent publication,
   no system-wide epistemic grade).

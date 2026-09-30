@@ -6,7 +6,7 @@
 > recovered verbatim from the worker's returned report. No content was added, and no finding was
 > altered. Formatting may differ in trivial ways from the worker's original file layout.
 
-**Scope note (wrapper):** the invoked instruction `kb/instructions/analyse-external-system-epistemic-architecture.md` was run inside the packet's boundary. Its links to further `kb/` files were treated as unavailable per wrapper rule — **limitation L-0: the invoked instruction may reference definitions or sub-procedures that could not be read; any conclusion depending on those is unbounded here.** No system-wide epistemic grade is given (wrapper override; the instruction also forbids it).
+**Scope note (wrapper):** the invoked instruction `kb/instructions/analyse-agentic-system/jobs/epistemic.md` was run inside the packet's boundary. Its links to further `kb/` files were treated as unavailable per wrapper rule — **limitation L-0: the invoked instruction may reference definitions or sub-procedures that could not be read; any conclusion depending on those is unbounded here.** No system-wide epistemic grade is given (wrapper override; the instruction also forbids it).
 
 ---
 

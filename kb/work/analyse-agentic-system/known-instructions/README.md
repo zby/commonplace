@@ -10,7 +10,7 @@ These files are byte-for-byte copies. Edit the source artifact, not the copy, if
 | --- | --- | --- |
 | `current-memory-review-skill.md` | `kb/instructions/write-agent-memory-system-review/SKILL.md` | Prepares a GitHub checkout, delegates a code-grounded memory review, runs QA, and validates the result. |
 | `current-memory-analysis-contract.md` | `kb/agent-memory-systems/types/agent-memory-system-review.md` | Defines the current review content, memory axes, controlled values, and output structure. |
-| `current-epistemic-analysis.md` | `kb/instructions/analyse-external-system-epistemic-architecture.md` | Analyses truth-apt transformations, warrant, acceptance, integration, and authority routes; accepted after cold ARC and GBrain trials. |
+| `current-epistemic-analysis.md` | `kb/instructions/analyse-agentic-system/jobs/epistemic.md` | Analyses truth-apt transformations, warrant, acceptance, integration, and authority routes; accepted after cold ARC and GBrain trials. |
 | `current-agentic-comparison-instruction.md` | `kb/work/pi-agent-zerostack-comparison/review-instruction.md` | A bounded whole-system comparison procedure that produced a substantive comparison; evidence that the runtime axes are usable, not a general contract. |
 
 ## Modular workshop extractions

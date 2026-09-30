@@ -1,6 +1,6 @@
 # Epistemic-architecture lens — run `AAS-20260820-CCDW-01`
 
-Invoked procedure: `kb/instructions/analyse-external-system-epistemic-architecture.md`,
+Invoked procedure: `kb/instructions/analyse-agentic-system/jobs/epistemic.md`,
 called conditionally at step 7 of `analyse-agentic-system`. This lens does **not** own the
 boundary, the sources, the revision, the evidence tier, or any publication decision.
 It annotates the orchestrator's canonical records (`CMP-*`, `OBJ-*`, `RTE-*`, `BAP-*`,

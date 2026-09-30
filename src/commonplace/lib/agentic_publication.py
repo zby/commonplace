@@ -37,7 +37,6 @@ INCUMBENT_REVIEW_NAME = "incumbent-review.md"
 METHOD_PATHS: tuple[str, ...] = (
     "src/commonplace/",
     "kb/instructions/analyse-agentic-system/",
-    "kb/instructions/analyse-external-system-epistemic-architecture.md",
     "kb/reports/types/agentic-system-analysis-set.md",
     "kb/reports/types/agentic-system-analysis-set.schema.yaml",
     "kb/types/agentic-system-analysis-overview.md",

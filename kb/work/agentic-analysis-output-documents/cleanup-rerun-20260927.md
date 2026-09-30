@@ -35,7 +35,7 @@ explicitly requests the available baseline worker model.
 | File | SHA-256 at start | End check |
 |---|---|---|
 | `kb/instructions/analyse-agentic-system/SKILL.md` | `a0d4d795649445b4b4221e1c0c3187864f86ef69bd702d94551de5625dbc748b` | Identical |
-| `kb/instructions/analyse-external-system-epistemic-architecture.md` | `e16916806f997b39f03395cc58d6f816c8179c6df19834dd3cb300c124978d17` | Identical |
+| `kb/instructions/analyse-agentic-system/jobs/epistemic.md` | `e16916806f997b39f03395cc58d6f816c8179c6df19834dd3cb300c124978d17` | Identical |
 | `kb/instructions/analyse-agentic-system/jobs/memory.md` | `2548e5d5c37106c075a6f29bfc9dcc734f76d0e2e13a97ebd4cdddbc6486db42` | Identical |
 | `kb/types/agentic-system-analysis-result.md` | `644e1afdb3711c45ac7d8548dfd90a1723ecae9e95b6bbef4d236c73725590ba` | Identical |
 | `kb/types/agent-memory-analysis-report.md` | `646eb26b712752e2a1477094e20f261a25a7f1f6201e3d3bd2d8f1f5a3711857` | Identical |

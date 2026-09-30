@@ -59,7 +59,6 @@ BLOCKER = "- RTE-1 is cited by the synthesis but never traced."
 REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
 INSTRUCTIONS = (
     "kb/instructions/analyse-agentic-system",
-    "kb/instructions/analyse-external-system-epistemic-architecture.md",
 )
 
 Worker = Callable[[Handout], None]

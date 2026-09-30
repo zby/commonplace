@@ -84,9 +84,9 @@ Resolution: kept; link texts corrected to the notes' actual titles under finding
 
 ### 3.2 Epistemic invocation consistent with the invoked instruction
 Status: resolved
-Anchor: step 7.1–7.4; path `kb/instructions/analyse-external-system-epistemic-architecture.md`.
+Anchor: step 7.1–7.4; path `kb/instructions/analyse-agentic-system/jobs/epistemic.md`.
 The path exists. The invoked instruction's "Scope and prerequisites" asks for exactly what step 7.2 passes (system and revision, declared scope, analysis question, source identities, claims, gaps), so the pass-list is sufficient to start it. Its scope branch ("general review with no knowledge-production question, stop") is satisfied because the wrapper passes a bounded epistemic subquestion. Step 7.3's "no system-wide epistemic grade" matches its output-6 rule; step 7.4's "three authority records kept separate" matches its ledger fields (epistemic authority, operational authority, behavioral-authority path). Its unnamed source-ID scheme admits adopting the orchestrator's `SRC-*` IDs, so "no parallel ID namespace" is enforceable.
-Recommendation: keep — basis: inspected `kb/instructions/analyse-external-system-epistemic-architecture.md`; skeleton §7.
+Recommendation: keep — basis: inspected `kb/instructions/analyse-agentic-system/jobs/epistemic.md`; skeleton §7.
 Resolution: kept unchanged in the candidate on the cited basis.
 
 ### 3.3 "episode status" is not the invoked method's vocabulary
@@ -148,7 +148,7 @@ Resolution: candidate opening now states "The agent executing this skill is the 
 
 ### 6.1 Inline `— invokes:` mixes footer label grammar into an inline link
 Status: resolved
-Anchor: step 7.1, "Invoke [Analyse an external system's epistemic architecture](kb/instructions/analyse-external-system-epistemic-architecture.md) — invokes: run the accepted route-analysis method inside this run's boundary."
+Anchor: step 7.1, "Invoke [Analyse an external system's epistemic architecture](kb/instructions/analyse-agentic-system/jobs/epistemic.md) — invokes: run the accepted route-analysis method inside this run's boundary."
 COLLECTION.md authorizes two link forms: inline "with a connective word that fits" and footer "`- [title](path) — label: context phrase`". "Invoke [title](path)" is already the authorized inline form carrying the `invokes` relation (and the link is a permitted context-transfer case); the appended "— invokes: ..." grafts footer grammar into a sentence and restates the verb.
 Recommendation: clarify — drop the "— invokes: ..." tag; keep the imperative inline link and fold any needed context into the sentence.
 Resolution: candidate step 7.1 drops the tag and folds the context in: "Invoke [title](path) to run the accepted route-analysis method inside this run's boundary."

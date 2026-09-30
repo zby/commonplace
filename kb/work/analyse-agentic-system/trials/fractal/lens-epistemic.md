@@ -2,7 +2,7 @@
 
 - **Run/result ID:** `AAS-2026-08-20-fractal-01`
 - **Lens:** epistemic architecture (knowledge production, checking, warrant, authority)
-- **Invoked method:** `kb/instructions/analyse-external-system-epistemic-architecture.md` (six required output blocks, steps 1–9)
+- **Invoked method:** `kb/instructions/analyse-agentic-system/jobs/epistemic.md` (six required output blocks, steps 1–9)
 - **System:** Fractal — `github.com/Trampoline-AI/fractal`, PyPI `fractal-rlm`
 - **Frozen revision:** `5954a07d464feeaf6c311a9fa5ca2e54200a6794` (authored 2026-06-23); analysis cutoff 2026-08-20
 - **Source register:** this lens cites the shared `SRC-*` register defined in the run's evidence packet (`trials/fractal/evidence-packet.md` §2). No source was reacquired, refreshed, or widened. All reads were targeted reads inside the already-declared boundary.
