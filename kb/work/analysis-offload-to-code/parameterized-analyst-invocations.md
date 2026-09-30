@@ -4,9 +4,9 @@
 - **Revised:** 2026-09-30, at the operator's direction to minimize analysts' symbolic manipulation: code supplies full paths and resolves round-dependent selections.
 - **Revised:** 2026-09-30, after a check against the goal of a simpler process and easier analyst work, with the operator's decisions on delivery: code writes the invocation into the prompt file, the orchestrator reads that file and sends its content as the worker's message, and this holds for every code-scheduled workflow. Code also lists the required reads, the merge deletes restated shared rules, and the round kind is a parameter.
 - **Revised:** 2026-09-30, after a readiness check against the code: workers keep the repository root as working directory, because `commonplace-validate` takes the root from it; `run-state` is classified; the engine change is one flag; the work is ordered.
-- **Status:** operator endorsed the direction and requested this workshop proposal; implementation is pending.
+- **Status:** implemented and verified on 2026-09-30; the operator also commissioned the two Luna analyst trials recorded below.
 - **Purpose:** give each analyst one instruction to follow, with code-resolved paths for everything it reads and writes, delivered as its launch message.
-- **Scope:** all six job types of `analyse-agentic-system`, the engine's prompt rendering, and the generic driver instruction. `step`'s output does not change. This proposal does not commission a new analysis run or change analytical criteria, scheduling, correction limits, or publication behavior.
+- **Scope:** all six job types of `analyse-agentic-system`, the engine's prompt rendering, and the generic driver instruction. `step`'s output does not change. The implementation changes no analytical criteria, scheduling, correction limits, or publication behavior. The later trial commission reruns two analysts on copied inputs; it does not publish a new analysis set.
 
 ## Problem
 
@@ -25,8 +25,8 @@ For scale: a memory analyst's required instruction and contract text is about 53
 
 Give each job one parameterized main instruction under `kb/instructions/analyse-agentic-system/jobs/`.
 
-- Merge `analyse-agentic-system/jobs/memory.md` into `jobs/memory.md`, preserving correction-round behavior and record ownership rules.
-- Merge `analyse-agentic-system/jobs/epistemic.md` into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
+- Fold the separate memory method into `jobs/memory.md`, preserving correction-round behavior and record ownership rules.
+- Fold the separate epistemic method into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
 - Keep boundary, runtime, reconciliation, and verification methods in their existing job instructions.
 - Each main instruction declares its parameters. Code supplies complete input, output, problem-report, run-state, and scratch paths as named parameters, and the paths of the shared worker rules, judging norms, and report contracts the job must read.
 - Remove the two superseded method files after updating their callers and links. Do not leave forwarding stubs. Retire them through [retire an artifact](../../instructions/retire-artifact.md): as of 2026-09-30 they are linked from `kb/agent-memory-systems/README.md`, `kb/agent-memory-systems/types/agent-memory-system-review.md` and `kb/reference/proposals/code-scheduled-workflows.md`, besides the workflow code, publication's `METHOD_PATHS`, tests and workshop files. They are published pages, so each gets a `properdocs.yml` redirect to its merged job instruction. Workshop files are repointed by path only.
@@ -176,3 +176,35 @@ Each step leaves a working system, so the work can stop after any of them.
 10. Run the full required Python test suite and relevant KB validation after implementation. Record any lack of a real-worker trial explicitly; opening such a run requires a separate commission and a committed method.
 
 This proposal is complete when the implementation and checks above are recorded, or when a discovered dependency requires returning a specific design choice to the operator. Preserve this proposal until its outcome is extracted when the workshop closes.
+
+
+## Implementation and verification (2026-09-30)
+
+All acceptance conditions above are met. The implementation landed in five commits:
+
+| Commit | Change |
+|---|---|
+| `eeeb60af` | Driver delivers the saved prompt as the worker's complete message. |
+| `2ec03cf7` | Engine complete-message flag, all six parameterized job constructors, named absolute paths, declared read-first dependencies, and constructor/retry/invalidation tests. |
+| `29c25639` | Memory method consolidated into its job, contract conflicts resolved, old method retired with inbound links and redirects updated. |
+| `cb43a187` | Epistemic method consolidated into its job, contract conflicts resolved, old method retired with inbound links and redirects updated. |
+| `4e4f4013` | Trial preparation hashes declared job dependencies and fails on missing or unreadable files, with tests independent of prompt formatting. |
+
+The [instruction audit](./analyst-instruction-audit.md) records each merge conflict and its resolution. No unresolved alternative requirement remains in either merged job. Shared rules retain source, quotation, and prior-analysis requirements. Publication method paths and fixtures follow the consolidated jobs. Neither retired method had a freshness baseline requiring disposition.
+
+`uv run pytest` passed all **1,181 tests**. Relevant instruction, type, navigation, and redirect validation passed. `uv run ruff check src scripts tests hatch_build.py` passed. Repository-wide Ruff still reports two import-order errors in the unchanged, frozen `kb/reports/retained/agentic-analysis-reliability-20260927/trial-bundle/` source capture; that capture was preserved.
+
+### Commissioned Luna trials
+
+At the operator's request, two fresh `gpt-6-luna` sub-agents received their generated invocations unchanged as their whole task messages. Inputs came from `AAS-2026-09-30-instinctual-memory-02`, copied under `/tmp/commonplace-parameterized-luna-yrskqzv5`. Each trial received the copied boundary and runtime; no earlier memory or epistemic report was copied. Trial run-state IDs were adjusted by `scripts/analyst_trial.py`. Instruction/type paths resolved to the checkout at method commit `4e4f40132779bf1f46cb60448c4b17d5066ff891`.
+
+The frozen source was Instinctual Memory (`https://github.com/jasonkneen/instinctual-memory`) at `6acb13dc35765bf5ccfc87e445dd09c480f1c28a`. Its checkout remained clean at that revision.
+
+| Trial run ID | Result | Verified output quotations |
+|---|---|---|
+| `AAS-2026-09-30-trial-memory-luna-instinctual-memory-01` | First output accepted by the workflow's memory validator; no problem report. | 5, no failures |
+| `AAS-2026-09-30-trial-epistemic-luna-instinctual-memory-01` | First output accepted by the workflow's epistemic validator; no problem report. | 2, no failures |
+
+Each trial's eight declared input hashes and prompt hash remained unchanged. The six retained quotations in the shared runtime input also verified against the pinned source. Each trial directory contains `trial.json`, `prompt.md`, its report, and `validation.json`; the temporary root holds `verification.json` with output hashes and all check results. Outputs are `memory-report-0.md` and `output/epistemic.md` in the respective trial directories.
+
+These trials exercise direct invocation delivery and report production on one recorded input per analyst. Structural acceptance and quotation checks do not establish semantic completeness or comparative model quality. No reconciliation, full-set verification, or publication was commissioned. The broader workshop remains open.

@@ -9,10 +9,10 @@ The quality goal is **fidelity + economy**: faithful to what the system actually
 Memory and knowledge are lenses of the whole-system analysis. The separate
 `kb/agent-memory-systems/` collection is the legacy review corpus; new comparison
 procedures consume the main analysis and its memory/context findings directly.
-The `analyse-agent-memory` sub-agent returns a typed specialist report within
-the parent run. The parent finalizes it as the set's memory member, which
-carries the comparison profile; the local specialist report does not supply
-comparison inputs or independent semantic clearance.
+The memory analyst of `analyse-agentic-system` returns a typed report within
+the run. Code copies the accepted report unchanged into the set's memory
+member, which carries the comparison profile. Downstream comparison reads
+that retained member; a trial report supplies no independent semantic clearance.
 
 ## Structure
 

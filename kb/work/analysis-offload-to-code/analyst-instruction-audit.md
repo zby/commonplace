@@ -1,7 +1,7 @@
 # Analyst instruction audit
 
 - **Recorded:** 2026-09-30, at the operator's request, to hold the findings until work on the analysts' inputs resumes.
-- **Status:** partly taken over by [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md), which lands first. That proposal resolves four findings below and handles the memory and epistemic contradictions during its merge, recording each resolution here. Part of the runtime findings is fixed (commit `ae70fe59`). The rest — undefined concepts, the runtime analyst's open items, trials — waits until the proposal lands.
+- **Status:** [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md) is implemented and tested, including two commissioned Luna trials. It resolves the delivery and parameter findings and the memory and epistemic merge contradictions recorded below. Part of the runtime findings is fixed (commit `ae70fe59`). Undefined concepts and the runtime analyst's other open items remain pending.
 - **Terms:** the three **analysts** are the runtime, memory and epistemic jobs (commit `85de9049`). A **trial** reruns one analyst on a recorded run's frozen inputs with `scripts/analyst_trial.py prepare` (commit `3ac5361f`).
 
 ## Operator decisions (2026-09-30)
@@ -167,3 +167,10 @@ and register-ownership rules are not restated. The old method's public page
 redirects directly to the job; workflow dependencies, pinned method paths and
 the composition test use the consolidated instruction. Workshop paths alone
 are repointed; frozen copies and historical observations remain preserved.
+
+
+## Parameterized invocation trials (2026-09-30)
+
+After the merge and trial-preparation changes were committed at `4e4f4013`, the operator commissioned memory and epistemic trials with fresh `gpt-6-luna` sub-agents. Both used copied boundary and runtime inputs from `AAS-2026-09-30-instinctual-memory-02`. The [implementation record](./parameterized-analyst-invocations.md#commissioned-luna-trials) records source revision, trial IDs, temporary output location, and checks.
+
+Both analysts wrote their expected report on the first attempt, with no problem report. Their actual workflow validators returned no errors. Quote-anchor checks verified five passages in the memory output and two in the epistemic output, with no failures. All eight declared dependencies per trial and both prompt hashes remained unchanged. This is evidence that the parameterized instructions work for these two jobs on this input; it does not resolve the earlier runtime coverage question or establish semantic completeness.
