@@ -5,7 +5,24 @@ type: types/instruction.md
 
 # Run and challenge the runtime baseline
 
-Write the set's runtime member, `output/runtime.md`, under the [runtime report type](../../../types/agentic-system-runtime-report.md): the runtime account, probe evidence, and the records the runtime analyst declares, with IDs of the form `OBJ-1` or `RTE-1`: no `MEM-` or `EPI-` prefix, which belong to the memory and epistemic analysts. The memory and epistemic analysts start from it, and no job rewrites it afterwards. Work within the boundary and source register of `boundary.md`.
+Read every file under `read-first` in your invocation before any other step.
+
+## Parameters
+
+| Name | Meaning | Present |
+|---|---|---|
+| `system` | The source-native system name. | Always |
+| `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input. | Always |
+| `output` | Absolute path of your result. | Always |
+| `problem` | Absolute path for the reason you cannot finish. | Always |
+| `scratch` | Absolute directory for intermediate files. | Always |
+| `boundary` | Absolute path of the frozen boundary and Source register. | Always |
+
+Use the supplied paths unchanged. If a required parameter is missing, write `problem`; do not reconstruct it. Retry refusal feedback applies to the same job and does not change its analytical round.
+
+## Task
+
+Write the set's runtime member to `output`, under the [runtime report type](../../../types/agentic-system-runtime-report.md): the runtime account, probe evidence, and the records the runtime analyst declares, with IDs of the form `OBJ-1` or `RTE-1`: no `MEM-` or `EPI-` prefix, which belong to the memory and epistemic analysts. The memory and epistemic analysts start from it, and no job rewrites it afterwards. Work within the boundary and source register of `boundary`.
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one ordinary invocation end to end and record it with the fields the type's Runtime account requires.
 2. Enumerate materially equivalent alternate paths before judging a guarantee: direct model calls, provider-native tools, host callbacks, shell access, extension code, subprocesses or remote workers, manual graph control, and durable variants where present. A guarantee covers only the paths its enforcement point covers.
@@ -16,4 +33,4 @@ Write the set's runtime member, `output/runtime.md`, under the [runtime report t
 7. Inventory the distributed-parametric components used by the inspected runtime routes (LLMs, embedding models, parametric routers, critics, and adapters) as `CMP-*` records. Each states, with its own evidence status, whether the component's parameters can change while the system runs, whether it is pinned to an exact version, and whether its name can resolve to a different model later.
 8. Inspect materially distinct mechanisms that admit changes to the product, retained knowledge or instructions, capabilities, or production machinery. Record each on its admitting `RTE-*` record with the admission, decision-role, answer-oracle, operating-mode, and guidance fields the type requires. Leave memory revisions to the memory analyst; the reconciliation attaches them.
 
-Your output is refused while it is not a valid member or cites a record that neither it nor the Source register of `boundary.md` declares. The memory and epistemic analysts declare their own records; corrections to your records are amendments in the overview's Reconciliation, not edits of this member.
+Your output is refused while it is not a valid member or cites a record that neither it nor the Source register of `boundary` declares. The memory and epistemic analysts declare their own records; corrections to your records are amendments in the overview's Reconciliation, not edits of this member.

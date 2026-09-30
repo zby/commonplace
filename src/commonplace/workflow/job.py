@@ -46,13 +46,16 @@ class Job:
         executes, and raises DefinitionError too.
     prompt
         The task, in natural language, as the definition gives it. The core
-        writes a prompt file from it, adding the declared inputs' absolute
+        writes a prompt file from it, normally adding the declared inputs' absolute
         paths, where to write the result, where to write a problem report, a
         request to reply in one line, and on a retry the validator's messages.
         The input state uses this text, not the prompt file, so a change to
         what the core adds, such as a new version of this package, reopens
         no job. Anything that should reopen a job when it changes belongs in
         this text or in a declared input.
+    prompt_is_complete
+        When true, `prompt` is the worker's whole message. The core writes
+        it unchanged and appends only the refusal section on a retry.
     output
         Where the result goes: a path inside the run directory. An absolute
         path, one that leaves the run directory, or one inside
@@ -87,6 +90,7 @@ class Job:
     inputs: tuple[str, ...] = ()
     validator: Validator | None = None
     launch: Mapping[str, Any] = field(default_factory=dict)
+    prompt_is_complete: bool = False
 
     def __post_init__(self) -> None:
         check_name(self.name, "job")
@@ -153,12 +157,13 @@ class Job:
         """Whether both jobs ask for the same task.
 
         Decided by the fields a worker's result depends on: `prompt`,
-        `output`, `inputs` and `launch`. `name` and `validator` are not
+        `prompt_is_complete`, `output`, `inputs` and `launch`. `name` and `validator` are not
         compared, so a validator built anew each time the definition runs does
         not make two jobs differ.
         """
         return (
             self.prompt == other.prompt
+            and self.prompt_is_complete == other.prompt_is_complete
             and self.owned_output == other.owned_output
             and tuple(map(normalized, self.inputs))
             == tuple(map(normalized, other.inputs))

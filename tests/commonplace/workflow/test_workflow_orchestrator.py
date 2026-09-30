@@ -266,6 +266,7 @@ def test_a_validator_built_anew_does_not_make_a_job_differ(tmp_path):
         {"output": "other.md"},
         {"inputs": ("other-source.md",)},
         {"launch": {"model": "large"}},
+        {"prompt_is_complete": True},
     ],
 )
 def test_a_job_differs_by_what_its_result_depends_on(changed):
@@ -316,6 +317,53 @@ def test_changing_the_prompt_reopens_an_accepted_job(tmp_path):
     ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
 
     assert names(Orchestrator(run_dir, Reworded()).step()) == ["only"]
+
+
+def test_complete_message_is_written_unchanged_and_only_refusal_is_appended(tmp_path):
+    message = "Follow /methods/check.md with:\noutput = /result.md\n\nread-first:\n- /rules.md\n"
+
+    class Complete(Workflow):
+        def run(self, ctx):
+            ctx.agent(Job(
+                name="only", prompt=message, output="only.md", inputs=("source.md",),
+                prompt_is_complete=True, validator=has_heading,
+            )).wait()
+
+    run = new_run(tmp_path)
+    orchestrator = Orchestrator(run, Complete())
+    (first,) = orchestrator.step().jobs
+    assert first.prompt_path.read_text(encoding="utf-8") == message
+    first.output_path.write_text("invalid", encoding="utf-8")
+    (retry,) = orchestrator.step().jobs
+    assert retry.prompt_path.read_text(encoding="utf-8") == (
+        message + "\n## Why the previous attempt was refused\n\n"
+        "- output must start with a level-one heading\n"
+    )
+
+
+def test_changing_message_rendering_mode_reopens_an_accepted_job(tmp_path):
+    from dataclasses import replace
+
+    class Complete(Workflow):
+        def run(self, ctx):
+            ctx.agent(replace(lens_job("only"), prompt_is_complete=True)).wait()
+
+    run = new_run(tmp_path)
+    ScriptedAgent(Orchestrator(run, OneJob())).run()
+    assert names(Orchestrator(run, Complete()).step()) == ["only"]
+
+
+def test_generic_prompt_rendering_is_unchanged(tmp_path):
+    from commonplace.workflow.engine import render_prompt
+
+    job = Job("only", "Task.\n", "only.md", ("source.md",))
+    assert render_prompt(job, tmp_path, ("refused",)) == (
+        f"Task.\n\n## Inputs\n\n- `{tmp_path / 'source.md'}`\n\n"
+        f"## Where to write\n\nWrite the result to `{tmp_path / 'only.md'}`.\n\n"
+        f"If you cannot finish the task, write why to `{tmp_path / 'only.problem.md'}` instead.\n\n"
+        "Reply in one line that names the file you wrote. Do not repeat or summarize its content.\n"
+        "\n## Why the previous attempt was refused\n\n- refused\n"
+    )
 
 
 def test_a_changed_validator_reopens_an_accepted_job(tmp_path):

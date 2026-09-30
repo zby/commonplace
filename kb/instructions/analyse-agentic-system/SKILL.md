@@ -14,6 +14,8 @@ Analyse one external agentic system at one frozen evidence boundary and publish 
 
 Invocation authorizes the run directory under `kb/reports/state/agentic-system-analysis/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/reports/retained/agentic-system-analysis/<run-id>/`; code writes all of them. It does not authorize changes to source worktrees, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
+Run the orchestrator from the repository root and keep that working directory throughout the run. Workers must inherit it: `commonplace-validate` discovers the root there, and the boundary job uses `related-systems/`.
+
 ## 1. Open the run
 
 1. Commit any pending method change first: the run pins the method commit when it opens, and publication requires it unchanged.

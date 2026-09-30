@@ -503,9 +503,18 @@ def load_definition(reference: str) -> type[Workflow]:
 
 
 def render_prompt(job: Job, run_dir: Path, messages: Sequence[str] = ()) -> str:
-    """The prompt a job's worker reads: the job's text, its inputs resolved
+    """The message delivered to a job's worker: the job's text, its inputs resolved
     against the run directory, where to write, and why the previous attempt
     was refused when ``messages`` says so."""
+    if job.prompt_is_complete:
+        if not messages:
+            return job.prompt
+        return (
+            job.prompt
+            + ("\n" if job.prompt.endswith("\n") else "\n\n")
+            + "## Why the previous attempt was refused\n\n"
+            + "".join(f"- {message}\n" for message in messages)
+        )
     lines = [job.prompt.rstrip(), ""]
     if job.inputs:
         lines += ["## Inputs", ""]
@@ -1038,6 +1047,7 @@ class _Step:
             canonical(
                 {
                     "prompt": job.prompt,
+                    "prompt_is_complete": job.prompt_is_complete,
                     "inputs": _files_state(self.run_dir, job.inputs),
                     "launch": job.launch_data(),
                 }

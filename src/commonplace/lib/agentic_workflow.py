@@ -27,7 +27,8 @@ import json
 import posixpath
 import re
 import subprocess
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import replace
 from functools import partial
 from hashlib import sha256
 from pathlib import Path
@@ -493,22 +494,7 @@ class AnalyseAgenticSystem(Workflow):
         self.write_run_state(run_dir, opening, {})
 
         enums = overview_enums(repo_root)
-        ctx.agent(
-            self.job(
-                "boundary",
-                BOUNDARY,
-                reads=(OPENING,),
-                extra=(OVERVIEW_CONTRACT,),
-                validator=partial(
-                    boundary_refusals, enums=enums, identity=self.source_identity
-                ),
-                note=(
-                    f"The caller's source input: {self.params['source']}\n\n"
-                    f"The run's source identity is `{self.source_identity}`. When "
-                    "you freeze a source, write exactly this as `source.identity`."
-                ),
-            )
-        ).wait()
+        ctx.agent(self.boundary_job(run_dir, enums)).wait()
         fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
@@ -574,47 +560,78 @@ class AnalyseAgenticSystem(Workflow):
 
     def job(
         self,
+        run_dir: Path,
         name: str,
         output: str,
         *,
-        reads: Sequence[str] = (),
+        reads: Mapping[str, str],
         norms: bool = False,
         instruction: str | None = None,
         extra: Sequence[str] = (),
-        note: str = "",
+        parameters: Mapping[str, str] | None = None,
+        source: str | None = None,
         validator: Callable[[Path], Sequence[str]] | None = None,
     ) -> Job:
+        """Build the invocation from the same paths declared to the engine.
+
+        Named reads are resolved once for both parameters and dependencies.
+        Run state is a mutable command argument, not a file dependency.
+        """
+        run_dir = run_dir.resolve()
         instruction = instruction or name
         method = [f"{instruction}.md", "worker-rules.md"]
         if norms:
             method.append("judging-norms.md")
-        method_paths = [str(self.jobs_dir / file) for file in method]
-        method_paths += [str((self.jobs_dir / path).resolve()) for path in extra]
-        prompt = (
-            f"You are the `{name}` job of the analyse-agentic-system run {self.run_id} "
-            f"for the system {self.params['system']}. Follow `{JOBS}/{instruction}.md` "
-            "and the other instruction files listed under Inputs; the remaining inputs "
-            "are what you work from. The run's state is `run-state.md` in the run "
-            f"directory. Your scratch directory is `scratch/{name}/` in the run "
-            "directory; write intermediate files there and nowhere else."
-        )
-        if note:
-            prompt += f"\n\n{note}"
-        return Job(
+        method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
+        input_paths = {key: str((run_dir / path).resolve()) for key, path in reads.items()}
+        job = Job(
             name=name,
-            prompt=prompt,
+            prompt="",
             output=output,
-            inputs=(*reads, *method_paths),
+            inputs=(*input_paths.values(), *method_paths),
             validator=validator,
+            prompt_is_complete=True,
+        )
+        values = {
+            "system": one_line(str(self.params["system"])),
+            **(parameters or {}),
+            "run-state": str(run_dir / RUN_STATE),
+            **input_paths,
+            "output": str(job.output_path(run_dir)),
+            "problem": str(job.problem_path(run_dir)),
+            "scratch": str(run_dir / "scratch" / name) + "/",
+        }
+        lines = [f"Follow {method_paths[0]} with:"]
+        lines += [f"{key} = {value}" for key, value in values.items()]
+        lines += ["", "read-first:", *(f"- {path}" for path in method_paths[1:])]
+        if source is not None:
+            # Caller text stays data even when it contains fences or parameters.
+            fence = "`" * max(3, 1 + max((len(run) for run in re.findall(r"`+", source)), default=0))
+            lines += ["", "source:", fence, source, fence]
+        return replace(job, prompt="\n".join(lines) + "\n")
+
+    def boundary_job(self, run_dir: Path, enums: dict[str, list[Any]]) -> Job:
+        return self.job(
+            run_dir,
+            "boundary",
+            BOUNDARY,
+            reads={"opening": OPENING},
+            extra=(OVERVIEW_CONTRACT,),
+            parameters={"source-identity": one_line(self.source_identity)},
+            source=str(self.params["source"]),
+            validator=partial(
+                boundary_refusals, enums=enums, identity=self.source_identity
+            ),
         )
 
     def runtime_job(self, run_dir: Path) -> Job:
         """The runtime analyst. Its member cites the boundary's sources and its
         own records."""
         return self.job(
+            run_dir,
             "runtime",
             RUNTIME,
-            reads=(BOUNDARY,),
+            reads={"boundary": BOUNDARY},
             norms=True,
             extra=(OVERVIEW_CONTRACT, RUNTIME_CONTRACT),
             validator=partial(
@@ -631,9 +648,10 @@ class AnalyseAgenticSystem(Workflow):
         member cites the boundary's sources, the runtime member and its own
         records."""
         return self.job(
+            run_dir,
             "epistemic",
             EPISTEMIC,
-            reads=(BOUNDARY, RUNTIME),
+            reads={"boundary": BOUNDARY, "runtime": RUNTIME},
             norms=True,
             extra=(
                 "../../analyse-external-system-epistemic-architecture.md",
@@ -656,18 +674,17 @@ class AnalyseAgenticSystem(Workflow):
         """One round of the memory analyst. Its report cites the boundary's
         sources, the runtime member and its own records; a correction round,
         which runs after the epistemic member exists, may cite that member too."""
-        reads: tuple[str, ...] = (BOUNDARY, RUNTIME)
-        note = "This is the first round."
+        reads = {"boundary": BOUNDARY, "runtime": RUNTIME}
         cited = {"runtime": run_dir / RUNTIME}
         if round_ > 0:
-            reads += (EPISTEMIC, memory_report(round_ - 1), reconciliation(returned_by))
-            note = (
-                f"This is correction round {round_}: the previous report is "
-                f"`{memory_report(round_ - 1)}` and the reconciliation that returned "
-                f"findings is `{reconciliation(returned_by)}`."
-            )
+            reads.update({
+                "previous-memory": memory_report(round_ - 1),
+                "returned-findings": reconciliation(returned_by),
+                "epistemic": EPISTEMIC,
+            })
             cited["epistemic"] = run_dir / EPISTEMIC
         return self.job(
+            run_dir,
             f"memory-{round_}",
             memory_report(round_),
             reads=reads,
@@ -679,7 +696,7 @@ class AnalyseAgenticSystem(Workflow):
                 MEMORY_CONTRACT,
                 RUNTIME_CONTRACT,
             ),
-            note=note,
+            parameters={"round": "correction" if round_ > 0 else "first"},
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
@@ -698,35 +715,23 @@ class AnalyseAgenticSystem(Workflow):
         may_return: bool,
     ) -> Job:
         report = memory_report(memory)
-        reads: tuple[str, ...] = (BOUNDARY, RUNTIME, report, EPISTEMIC)
-        note = (
-            f"This is reconciliation round {round_}. The memory report is `{report}`."
-        )
+        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": report, "epistemic": EPISTEMIC}
         if round_ > 0:
-            reads += (reconciliation(round_ - 1),)
-            note += f" The previous reconciliation is `{reconciliation(round_ - 1)}`."
+            reads["previous-reconciliation"] = reconciliation(round_ - 1)
         if reason == "blockers":
-            previous = round_ - 1
-            reads += tuple(
-                round_file(kind, previous) for kind in ("verification", "set-check")
-            )
-            note += (
-                f" The verification of round {previous} named blockers: resolve each "
-                f"one stated in `{round_file('verification', previous)}`."
-            )
-        note += (
-            " This round may return findings to the memory analyst."
-            if may_return
-            else " This is the last round: it may not return findings."
+            reads.update({kind: round_file(kind, round_ - 1) for kind in ("verification", "set-check")})
+        round_kind = "first" if round_ == 0 else (
+            "after-blockers" if reason == "blockers" else "after-correction"
         )
         return self.job(
+            run_dir,
             f"reconcile-{round_}",
             reconciliation(round_),
             reads=reads,
             instruction="reconcile",
             extra=SET_CONTRACTS,
             norms=True,
-            note=note,
+            parameters={"round": round_kind, "may-return": "yes" if may_return else "no"},
             validator=partial(
                 reconcile_refusals,
                 boundary=run_dir / BOUNDARY,
@@ -774,13 +779,8 @@ class AnalyseAgenticSystem(Workflow):
         )
 
         ctx.agent(
-            self.job(
-                f"verify-{round_}",
-                verification,
-                reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
-                instruction="verify",
-                extra=SET_CONTRACTS,
-                norms=True,
+            self.verification_job(
+                run_dir, round_, memory,
                 validator=partial(
                     self.verified_set_refusals,
                     run_dir,
@@ -793,6 +793,27 @@ class AnalyseAgenticSystem(Workflow):
             )
         ).wait()
         return (run_dir / verification).read_text(encoding="utf-8")
+
+    def verification_job(
+        self, run_dir: Path, round_: int, memory: int,
+        *, validator: Callable[[Path], Sequence[str]] | None = None,
+    ) -> Job:
+        return self.job(
+            run_dir,
+            f"verify-{round_}",
+            round_file("verification", round_),
+            reads={
+                "overview-draft": round_file("overview-draft", round_),
+                "runtime": RUNTIME,
+                "memory": memory_report(memory),
+                "epistemic": EPISTEMIC,
+                "set-check": round_file("set-check", round_),
+            },
+            instruction="verify",
+            extra=SET_CONTRACTS,
+            norms=True,
+            validator=validator,
+        )
 
     def verified_set_refusals(
         self,
