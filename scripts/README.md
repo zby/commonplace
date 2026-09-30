@@ -55,10 +55,13 @@ It creates `kb/reports/state/agentic-system-analysis/AAS-<today>-trial-<analyst>
 (named like a run because the run-state schema requires one), copies the
 recorded run's `boundary.md`, `opening.json`, `run-state.md` (set back to
 running) and, for the memory and epistemic analysts, `output/runtime.md`,
-and writes `prompt.md` from the current workflow code. Launch the analyst in
-any harness with "Read `<prompt.md>` and follow it."; the instruction files
-it lists are read from the working tree, so edits need no commit.
-`trial.json` records the recorded run and the SHA-256 of every input. The
+and writes `prompt.md` from the current workflow code. Read `prompt.md` and send its
+content unchanged as the analyst's whole message, with the repository root
+as working directory. Instruction files are read from the working tree,
+so edits need no commit. `trial.json` records the recorded run and the
+SHA-256 of every declared file dependency, independently of prompt formatting.
+A missing or unreadable dependency fails preparation. This record is not a
+snapshot of the worker's complete runtime context. The
 script launches nothing and judges nothing: check the output with the
 analyst's validator or by reading it. Trials read the recorded run's source
 checkout, so do not run trials pinned to different commits of one

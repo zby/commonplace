@@ -12,11 +12,13 @@ and output/runtime.md for the memory and epistemic analysts), and writes
 prompt.md: the analyst's prompt as the current workflow code builds it, with
 every path pointing into the trial directory. It prints the prompt path.
 
-Launch the analyst with the loop's instruction, "Read `<prompt.md>` and follow
-it.", in whatever harness and model the trial is for. The instruction files
-the prompt lists are read from the working tree, so an edited instruction
+Read prompt.md and send its content unchanged as the analyst's whole message,
+in whatever harness and model the trial is for, with the repository root as
+working directory. The instruction files are read from the working tree, so an edited instruction
 takes effect in the next trial without a commit. trial.json records the
-recorded run, the analyst, and the SHA-256 of every input the prompt lists.
+recorded run, the analyst, and the SHA-256 of every declared file dependency.
+Missing or unreadable dependencies fail preparation. The saved invocation and
+these hashes are not a snapshot of the worker's complete runtime context.
 
 The command only prepares. It launches nothing and judges nothing.
 """
@@ -122,18 +124,23 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
         "epistemic": lambda: definition.epistemic_job(trial),
     }[analyst]()
     prompt = render_prompt(job, trial)
-    (trial / "prompt.md").write_text(prompt, encoding="utf-8")
-
-    inputs = re.findall(r"(?m)^- `(/[^`]+)`$", prompt)
+    inputs = {}
+    for declared in job.inputs:
+        path = trial / declared
+        try:
+            inputs[str(path)] = sha256(path)
+        except OSError as error:
+            raise ValueError(f"cannot read declared dependency {path}: {error}") from error
     record = {
         "recorded-run": recorded.name,
         "analyst": analyst,
         "label": label,
         "prepared": datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds"),
         "output": job.output,
-        "inputs": {path: sha256(Path(path)) for path in inputs},
+        "inputs": inputs,
     }
     (trial / "trial.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    (trial / "prompt.md").write_text(prompt, encoding="utf-8")
     return trial / "prompt.md"
 
 
