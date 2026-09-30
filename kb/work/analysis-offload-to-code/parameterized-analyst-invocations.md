@@ -4,7 +4,7 @@
 - **Revised:** 2026-09-30, at the operator's direction to minimize analysts' symbolic manipulation: code supplies full paths and resolves round-dependent selections.
 - **Revised:** 2026-09-30, after a check against the goal of a simpler process and easier analyst work, with the operator's decisions on delivery: code writes the invocation into the prompt file, the orchestrator reads that file and sends its content as the worker's message, and this holds for every code-scheduled workflow. Code also lists the required reads, the merge deletes restated shared rules, and the round kind is a parameter.
 - **Revised:** 2026-09-30, after a readiness check against the code: workers keep the repository root as working directory, because `commonplace-validate` takes the root from it; `run-state` is classified; the engine change is one flag; the work is ordered.
-- **Status:** implemented and verified on 2026-09-30; the operator also commissioned the two Luna analyst trials recorded below.
+- **Status:** implemented and checked on 2026-09-30; the two commissioned Luna trials passed structural and quotation checks. A later [trace audit](./parameterized-luna-trace-audit.md) found execution and report defects that those checks do not cover.
 - **Purpose:** give each analyst one instruction to follow, with code-resolved paths for everything it reads and writes, delivered as its launch message.
 - **Scope:** all six job types of `analyse-agentic-system`, the engine's prompt rendering, and the generic driver instruction. `step`'s output does not change. The implementation changes no analytical criteria, scheduling, correction limits, or publication behavior. The later trial commission reruns two analysts on copied inputs; it does not publish a new analysis set.
 
@@ -202,9 +202,11 @@ The frozen source was Instinctual Memory (`https://github.com/jasonkneen/instinc
 
 | Trial run ID | Result | Verified output quotations |
 |---|---|---|
-| `AAS-2026-09-30-trial-memory-luna-instinctual-memory-01` | First output accepted by the workflow's memory validator; no problem report. | 5, no failures |
+| `AAS-2026-09-30-trial-memory-luna-instinctual-memory-01` | First final submission accepted after internal schema repair; no problem report. | 5, no failures |
 | `AAS-2026-09-30-trial-epistemic-luna-instinctual-memory-01` | First output accepted by the workflow's epistemic validator; no problem report. | 2, no failures |
 
 Each trial's eight declared input hashes and prompt hash remained unchanged. The six retained quotations in the shared runtime input also verified against the pinned source. Each trial directory contains `trial.json`, `prompt.md`, its report, and `validation.json`; the temporary root holds `verification.json` with output hashes and all check results. Outputs are `memory-report-0.md` and `output/epistemic.md` in the respective trial directories.
 
 These trials exercise direct invocation delivery and report production on one recorded input per analyst. Structural acceptance and quotation checks do not establish semantic completeness or comparative model quality. No reconciliation, full-set verification, or publication was commissioned. The broader workshop remains open.
+
+The later [trace audit](./parameterized-luna-trace-audit.md), separately commissioned by the operator, found recovered command/schema failures, unrecovered truncated reads, stale check reporting, unflagged record overlaps, missing tidy coverage, and epistemic ledger defects. It preserves the accepted reports and records follow-up work; the automated implementation checks above remain valid.
