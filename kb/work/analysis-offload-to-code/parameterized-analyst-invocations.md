@@ -25,7 +25,7 @@ For scale: a memory analyst's required instruction and contract text is about 53
 
 Give each job one parameterized main instruction under `kb/instructions/analyse-agentic-system/jobs/`.
 
-- Merge `analyse-agent-memory.md` into `jobs/memory.md`, preserving correction-round behavior and record ownership rules.
+- Merge `analyse-agentic-system/jobs/memory.md` into `jobs/memory.md`, preserving correction-round behavior and record ownership rules.
 - Merge `analyse-external-system-epistemic-architecture.md` into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
 - Keep boundary, runtime, reconciliation, and verification methods in their existing job instructions.
 - Each main instruction declares its parameters. Code supplies complete input, output, problem-report, run-state, and scratch paths as named parameters, and the paths of the shared worker rules, judging norms, and report contracts the job must read.
@@ -43,7 +43,7 @@ A job's declared file dependencies are then exactly three groups, each visible i
 
 ### The merge
 
-The merge does two things. It folds the wrapper's rules into the method. It deletes the method's restatements of the shared worker rules: `analyse-agent-memory.md` restates the source-reading, quotation and prior-analysis rules, with a different placeholder (`<sibling-run-state-path>`), and after the merge those rules are in `worker-rules.md` only.
+The merge does two things. It folds the wrapper's rules into the method. It deletes the method's restatements of the shared worker rules: `analyse-agentic-system/jobs/memory.md` restates the source-reading, quotation and prior-analysis rules, with a different placeholder (`<sibling-run-state-path>`), and after the merge those rules are in `worker-rules.md` only.
 
 The merge will bring contradictions between the job wrapper, the method and the report types into one text. That is intended: surfacing them early makes them easier to remove. Handle each one as follows:
 

@@ -171,7 +171,7 @@ Each specialist also ran `commonplace-quote --help` once before its first genera
 
 | Artifact | SHA-256 |
 |---|---|
-| `kb/instructions/analyse-agent-memory.md` | `7fad98f7ef579e82729c556bdfe9f8b0d0061887d64932db71bf2dabf73c273f` |
+| `kb/instructions/analyse-agentic-system/jobs/memory.md` | `7fad98f7ef579e82729c556bdfe9f8b0d0061887d64932db71bf2dabf73c273f` |
 | `src/commonplace/cli/quote.py` | `908394ebf6c1e27475e658785b4b4cd5c516ee05171f5087d0a93544b8a181a3` |
 | `src/commonplace/lib/quote_generation.py` | `e499ceb5e9c0a551aa42de1b3c1b84cf5804ea67402f12720dc21c261c39ae12` |
 | `kb/reports/state/agentic-system-analysis/AAS-2026-09-28-dynamic-cheatsheet-quote-trial-01/memory-input.md` | `e1b8ac079ee6b055d43e8bf3ba08d9577e89071c8b8f07cf3104e7abc229d203` |

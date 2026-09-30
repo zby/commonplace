@@ -382,7 +382,7 @@ rather than declaring the reorganization complete.
   change its evidence baseline.
 - Start from the [main skill](../../instructions/analyse-agentic-system/SKILL.md),
   [epistemic instruction](../../instructions/analyse-external-system-epistemic-architecture.md),
-  [memory instruction](../../instructions/analyse-agent-memory.md),
+  [memory instruction](../../instructions/analyse-agentic-system/jobs/memory.md),
   [result type](../../types/agentic-system-analysis-result.md),
   [memory report type](../../types/agent-memory-analysis-report.md), and live
   publication and comparison code under `src/commonplace/`. The three retained

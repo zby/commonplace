@@ -105,7 +105,7 @@ Owned: `src/commonplace/**`, `tests/**`, `scripts/build_systems_matrix.py`,
 and its schema, `kb/types/agentic-system-analysis-result.md` and its
 schema (deleted), `kb/types/README.md`, the five type specs where a test
 forces a wording fix, `kb/instructions/analyse-agentic-system/SKILL.md`,
-`kb/instructions/analyse-agent-memory.md`,
+`kb/instructions/analyse-agentic-system/jobs/memory.md`,
 `kb/instructions/analyse-external-system-epistemic-architecture.md`,
 `kb/instructions/scan-agentic-system-transfer/SKILL.md`,
 `kb/instructions/synthesize-agent-memory-landscape/SKILL.md`,

@@ -31,7 +31,10 @@ the [overview](./agentic-system-analysis-overview.md#the-set).
 A blocked report names missing access or an unresolved scope decision
 that prevents completing the assigned analysis. It keeps all sections;
 unreached axes use explicit uninspected assessments rather than guessed
-values. A blocked report never becomes a set member.
+values. A blocked report never becomes a set member. In a code-scheduled analysis job,
+use the supplied problem-report destination when these conditions prevent
+completion; do not submit a blocked report as the job output. A justified
+unknown that only limits a conclusion may remain in a complete report.
 
 ## Memory comparison fields
 
@@ -165,11 +168,12 @@ source code or prose in quote blocks under the set's quotation contract.
 
 ### Shared records
 
-Records this report establishes are declared under the six kind headings
-under their `MEM-` IDs, as `#### MEM-OBJ-1 — Label`; the report never
-declares an unprefixed ID. Records the runtime member declares are not re-declared: the report's
-memory-specific fields on them are annotations, `#### On OBJ-1 — Label`,
-carrying only those fields and the passages that support them. Records
+Records this report establishes are declared under `### Components`,
+`### Operative objects`, `### Routes`, `### Claims`, `### Evidenced absences`,
+and `### Behavioral-authority paths`, under their `MEM-` IDs, as
+`#### MEM-OBJ-1 — Label`; the report never declares an unprefixed ID.
+An empty kind says `none declared in this member`. Records declared elsewhere
+are annotated under Annotations rather than re-declared. Records
 distinguish operative parts, raw traces from derived memory, content from
 access metadata, opaque payloads from their readable display summaries,
 and give storage, representational form, lineage, consumers, authority at
@@ -178,6 +182,19 @@ selector, retained input, persistence, delivery, later consumer and
 status. Only `MEM-CMP-*`, `MEM-OBJ-*`, `MEM-RTE-*`, `MEM-CLM-*`,
 `MEM-ABS-*` or `MEM-BAP-*` are record kinds; evidence does not create a
 separate kind.
+
+### Annotations
+
+`## Annotations` holds only `#### On <ID> — Label` entries on records declared
+elsewhere, including every such record the comparison profile cites.
+An entry carries only memory-specific fields and their supporting passages:
+storage substrate, representational form, lineage, memory consumers and their
+behavioral authority; raw versus derived material; write agency, curation,
+trace source, learning scope and timing, distilled form and faithfulness;
+and read-back trigger, selector inputs, selected retained parts, budget,
+persistence, delivery, later consumer, status and limits. It does not copy the
+record's generic identity or route progression. Omit the section when there
+are no annotations.
 
 ### Write side
 
@@ -218,7 +235,9 @@ its evidence, analytical consequence and the full IDs it concerns, so the
 reconciliation can amend or supersede without rediscovering its meaning.
 State `none` when no issues remain. A complete report may contain
 supported corrections and justified unknown classifications; an unresolved question
-that prevents integration sets `report-status: blocked`. Side-channel
+that prevents completing the assigned analysis requires the workflow job's
+problem report; a blocked report retained outside job submission uses
+`report-status: blocked`. Side-channel
 messages never substitute for this section.
 
 ### Limitations and checks
@@ -227,3 +246,58 @@ Name prevented conclusions, source and method identity rechecks, and the
 deterministic validation result. A self-check does not attest independence
 or correctness of the final integrated analysis. Do not omit weaknesses to
 make the report appear ready for integration.
+
+
+## Template
+
+```markdown
+---
+type: types/agent-memory-analysis-report.md
+description: "Memory mechanisms of {system} within {memory boundary}"
+run-id: AAS-YYYY-MM-DD-system-slug-nn
+source-identity: "{repository or capture identity}"
+reviewed-boundary: "{immutable revision or capture identity}"
+report-status: complete
+memory-comparison:
+  scope: "{included and excluded memory surfaces}"
+  axes:
+    # Fill all fourteen axes under Memory comparison fields.
+---
+
+# {System} memory report
+
+## Boundary and evidence
+
+## Core ideas
+
+## Shared records
+
+### Components
+
+### Operative objects
+
+### Routes
+
+### Claims
+
+### Evidenced absences
+
+### Behavioral-authority paths
+
+## Annotations
+
+## Write side
+
+## Read-back
+
+## Comparison rationale
+
+## Integration issues
+
+## Limitations and checks
+```
+
+Omit Annotations when empty; otherwise use only annotation headings there.
+Keep a surviving record's ID and referent across correction rounds. Allocate
+new records monotonically and never reuse a dropped record's number. Only the
+accepted report enters the set, so dropped records need no withdrawal marker.

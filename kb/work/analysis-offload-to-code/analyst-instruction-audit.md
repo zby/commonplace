@@ -63,7 +63,7 @@ Inputs: `jobs/runtime.md`, worker rules, judging norms, runtime report type (and
 
 ## Memory analyst
 
-Inputs: `jobs/memory.md`, worker rules, judging norms, `analyse-agent-memory.md`, memory report type, runtime report type (and the overview type).
+Inputs: `jobs/memory.md`, worker rules, judging norms, `analyse-agentic-system/jobs/memory.md`, memory report type, runtime report type (and the overview type).
 
 **Undefined controlled values**, the largest gap:
 
@@ -76,7 +76,7 @@ Inputs: `jobs/memory.md`, worker rules, judging norms, `analyse-agent-memory.md`
 
 **Contradictions** (handled by the proposal's merge, which follows the type or shared rule unless the job cannot follow it; resolutions are to be recorded here):
 
-- the method puts corrections to supplied facts under Core ideas (`analyse-agent-memory.md:55`); the type puts them under Integration issues (type:216);
+- the method puts corrections to supplied facts under Core ideas (`analyse-agentic-system/jobs/memory.md:55`); the type puts them under Integration issues (type:216);
 - the method's section order ("core ideas, shared records, write side, read-back") does not match the type's;
 - three ways to stop — a `blocked` report, the worker rules' problem report, and "refused while not a valid member" — with no rule for which applies; "needed scope expansion" does not say beyond what;
 - the job allows citing records the Source register declares; the type requires every cited record to be declared or annotated in the report itself;
@@ -116,3 +116,33 @@ Inputs: `jobs/epistemic.md`, worker rules, judging norms, `analyse-external-syst
 2. Draft a glossary per analyst type for the operator's review, since each definition is a decision: runtime (route first — an operation from trigger to effect, with interfaces as entry points into routes; then operative object, guarantee, material, forcing case, the evidence ladder); memory (evidence bases, assessments, axis values, an example profile); epistemic (epistemic object, consequential, warrant, candidate, the two senses of claim and check, the authority fields).
 3. Rerun the luna and Sonnet runtime trials on the revised text, a few samples per cell, and compare route splits and tidy coverage.
 4. Consider templates with labelled fields for the symbolic parts (record fields, placement rules), leaving the definitions as the semantic content the analysts need.
+
+
+## Memory merge resolutions (2026-09-30)
+
+The parameterized memory job now owns the complete method; its invocation
+supplies `boundary`, `runtime`, and the correction inputs. These resolutions
+follow the report contract and worker rules unless an operator decision below
+supplies the choice.
+
+| Conflict | Reading kept |
+|---|---|
+| Corrections under Core ideas versus Integration issues | Integration issues owns every correction to a supplied fact, as the report type requires. Core ideas explains the distinguishing mechanisms. |
+| Incomplete method section order | Follow the type's full order, including Boundary and evidence, Comparison rationale, Integration issues, and Limitations and checks. The type now has a section template and names all six record-kind headings. |
+| Blocked report, problem report, or validator refusal | A job that cannot complete because access is missing or scope must expand writes `problem`, under worker rules. The type now distinguishes that job protocol from a retained blocked report. Justified unknowns that only limit conclusions remain in a complete report. Code refusals handle malformed submissions. |
+| Job permits cross-member citations; profile requires local declarations or annotations | The local requirement applies to profile references. Other prose may cite the supplied runtime and boundary records, and supplied epistemic records in a correction. |
+| Annotation heading and placement | Operator decision 1: `## Annotations` contains only `#### On <ID> — Label` entries. The type now lists allowed memory-specific fields; it does not repeat generic identity or route progression. |
+| Correction rounds and final IDs | Operator decision 2: surviving records keep their ID and referent, new records use new numbers, dropped numbers are never reused, and no withdrawal marker is needed. |
+| Method duplicates source, quotation and prior-analysis rules | Worker rules retain those rules alone, including the agent-listing and style-exemplar prohibitions. The method keeps only the memory-specific validation and publication checks. |
+
+The old memory method's live links now target the merged job, including the
+navigation link in the dated recovery probe; that probe's narrative is
+unchanged. Frozen trial-bundle copies and historical plain-text mentions are
+preserved as observations, not active callers. Workshop paths are repointed
+without rewriting their narratives. Both the old page and its older skill URL
+redirect directly to the job, without a redirect chain.
+
+Retirement checks found no freshness baselines for the deleted memory method.
+Redirect validation also exposed a pre-existing redirect for the restored live
+`agentic-systems/reviews/instinctual-memory.md` page; the shadowing key was
+removed so its live URL remains the destination.

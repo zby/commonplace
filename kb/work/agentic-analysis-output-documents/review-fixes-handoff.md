@@ -40,7 +40,7 @@ publication, set validation deferred to `kb/work/directory-artifacts`.
      (`On <ID>`) in the report itself; say so where it now says "declared
      somewhere in the set", and say the specialist annotates any seeded
      record its profile cites. Add the same one-line rule to
-     `kb/instructions/analyse-agent-memory.md`.
+     `kb/instructions/analyse-agentic-system/jobs/memory.md`.
    - One placement for amendments: an `## Amendments` section at the end of
      the declaring member, holding `Amendment:` entries keyed by ID. State it
      once, in the overview's grammar section; the memory type points to it;

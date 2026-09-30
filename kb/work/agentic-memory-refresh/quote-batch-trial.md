@@ -47,7 +47,7 @@ with only the run ID replaced. They are local, git-ignored state.
 | `AAS-2026-09-28-mem0-quote-trial-01` | `AAS-2026-09-27-mem0-04` | `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` | `AAS-2026-09-27-mem0-04/memory-report.md`, 23 quotes | `gpt-6-astra`, medium |
 | `AAS-2026-09-28-napkin-quote-trial-01` | `AAS-2026-09-27-napkin-05` | `7582d6a46f5a11995956e60a59c41a5b242109f1` | `AAS-2026-09-27-napkin-05/memory-report.md`, 35 quotes | `gpt-6-astra`, high |
 
-At startup record HEAD, the SHA-256 of `kb/instructions/analyse-agent-memory.md`,
+At startup record HEAD, the SHA-256 of `kb/instructions/analyse-agentic-system/jobs/memory.md`,
 of each run's `memory-input.md`, and of the installed `commonplace-quote`
 source (`src/commonplace/cli/quote.py`, `src/commonplace/lib/quote_generation.py`).
 Confirm `commonplace-quote --help` shows `--selections`; if it does not, the
@@ -59,7 +59,7 @@ that the commit object exists. Do not change source worktrees.
 Launch one fresh specialist per run, one at a time, with the baseline model
 and effort. Create each with fresh context (for the collaboration tool,
 `fork_turns="none"`). Supply only: the instruction path
-`kb/instructions/analyse-agent-memory.md`, the run ID, the input path, the
+`kb/instructions/analyse-agentic-system/jobs/memory.md`, the run ID, the input path, the
 report destination `<run-dir>/memory-report.md`, the permitted source access
 root from the run state, and the statement that the parent has commissioned
 a fresh source-only memory analysis. Explicitly supply repository doctrine if

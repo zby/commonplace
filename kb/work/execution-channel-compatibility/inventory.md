@@ -83,7 +83,7 @@ Two patterns recur. The selector-to-jobs pipe (`… | commonplace-create-review-
 
 ### Shell-neutral (single argv calls; tool prerequisites only)
 
-`analyse-agent-memory.md` (validate, `git show`), `asd-ste100-inspired-rewrite.md`, `change-a-contract-that-several-consumers-read.md` (repo-internal `commonplace-init --root` probe), `draft-ingest-report.md`, `extract-adopted-part-of-a-proposal.md`, `FIX-SYSTEM.md`, `fix-warnings/fix-review-warnings.md`, `publish-an-article.md` (partly repo-internal), `refresh-a-proposal-current-state.md` (`git log --since`), `resolve-full-pass-disposition.md`, `revise-note.md`, `re-ingest.md` (`rg`), `simplification-passes/place-external-systems.md`, `simplification-passes/revise-an-article-or-note.md`, `ingest-paper-with-code.md` (Git clone/fetch/merge in `related-systems/`), `cp-skill-write-multistage/references/promotion.md`, and the repo-local skills `analyse-agentic-system`, `scan-agentic-system-transfer`, `roughdraft-review` (external GUI/CLI).
+`analyse-agentic-system/jobs/memory.md` (validate, `git show`), `asd-ste100-inspired-rewrite.md`, `change-a-contract-that-several-consumers-read.md` (repo-internal `commonplace-init --root` probe), `draft-ingest-report.md`, `extract-adopted-part-of-a-proposal.md`, `FIX-SYSTEM.md`, `fix-warnings/fix-review-warnings.md`, `publish-an-article.md` (partly repo-internal), `refresh-a-proposal-current-state.md` (`git log --since`), `resolve-full-pass-disposition.md`, `revise-note.md`, `re-ingest.md` (`rg`), `simplification-passes/place-external-systems.md`, `simplification-passes/revise-an-article-or-note.md`, `ingest-paper-with-code.md` (Git clone/fetch/merge in `related-systems/`), `cp-skill-write-multistage/references/promotion.md`, and the repo-local skills `analyse-agentic-system`, `scan-agentic-system-transfer`, `roughdraft-review` (external GUI/CLI).
 
 ### Prose only
 
@@ -98,7 +98,7 @@ This is a library-reachability defect rather than a shell one, but it has the sa
 | Kind of path | Files (line numbers) |
 |---|---|
 | `kb/instructions/…` | `FIX-SYSTEM.md` (17, 60, 73, 83, 89); `fix-warnings/fix-review-warnings.md` (31, 55); `fix-warnings/fix-review-warnings-sweep.md` (38, 64); `run-compression-bundle-on-note.md` (10, 21–26, 61); `compression-bundle/README.md` (3); `run-full-improvement-pass-on-note.md` (8); `simplification-passes/revise-an-article-or-note.md` (71) |
-| `kb/types/…` | `maintain-curated-indexes.md` (10, 61); `analyse-agent-memory.md` (23) |
+| `kb/types/…` | `maintain-curated-indexes.md` (10, 61); `analyse-agentic-system/jobs/memory.md` (23) |
 | `kb/reference/…` | `evaluate-log-entry-for-note-creation.md` (32) |
 | Ambiguous (project's collection or the library's) | `review-gates/semantic/grounding-alignment.md` (26–27); `extract-adopted-part-of-a-proposal.md` (22); `refresh-a-proposal-current-state.md` (19) |
 

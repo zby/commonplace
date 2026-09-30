@@ -6,7 +6,7 @@ The acceptance question is whether each fixture has a safe explicit next step th
 
 ## Boundary and instruction identity
 
-The probe read only `AGENTS.md`, `kb/work/COLLECTION.md`, [Analyse an Agentic System](../../../instructions/analyse-agentic-system/SKILL.md), and [Analyse agent memory](../../../instructions/analyse-agent-memory.md). It did not inspect the reliability workshop, audits, or prior analyses. The probe report itself is the sole owned output.
+The probe read only `AGENTS.md`, `kb/work/COLLECTION.md`, [Analyse an Agentic System](../../../instructions/analyse-agentic-system/SKILL.md), and [Analyse memory and context as the memory analyst](../../../instructions/analyse-agentic-system/jobs/memory.md). It did not inspect the reliability workshop, audits, or prior analyses. The probe report itself is the sole owned output.
 
 Instruction SHA-256 values at inspection:
 

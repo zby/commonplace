@@ -691,7 +691,6 @@ class AnalyseAgenticSystem(Workflow):
             instruction="memory",
             norms=True,
             extra=(
-                "../../analyse-agent-memory.md",
                 OVERVIEW_CONTRACT,
                 MEMORY_CONTRACT,
                 RUNTIME_CONTRACT,
