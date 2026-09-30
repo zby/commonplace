@@ -24,14 +24,14 @@ Give each job one parameterized main instruction under `kb/instructions/analyse-
 
 Shared rules and report contracts remain separate because they supply common definitions used by multiple jobs and validators. This proposal removes forwarding layers, not every document read.
 
-Each main instruction opens with a mandatory **Read first** list naming every shared rule and report contract the job must load, by absolute or repository-relative path, before any other step. A dependency named only as a link in prose is not a read requirement: fresh-eyes audits on 2026-09-30 found analysts working without the overview type because it was reachable only through a link ([Analyst instruction audit](./analyst-instruction-audit.md)). A test parses each Read first list and compares it with the job's declared dependencies; they must be equal.
+Each main instruction opens with a mandatory **Read first** list naming every shared rule and report contract the job must load before any other step, by paths relative to the instruction file itself, so they resolve wherever the worker started. Committed instructions hold no absolute paths; only the code-generated invocation does. A dependency named only as a link in prose is not a read requirement: fresh-eyes audits on 2026-09-30 found analysts working without the overview type because it was reachable only through a link ([Analyst instruction audit](./analyst-instruction-audit.md)). A test parses each Read first list and compares it with the job's declared dependencies; they must be equal.
 
 Merging a method file into its job instruction will bring contradictions between the job wrapper, the method and the report types into one text. That is intended: surfacing them early makes them easier to remove. The merge resolves each known contradiction listed in the [Analyst instruction audit](./analyst-instruction-audit.md) when the resolution needs no operator decision, and otherwise states it in the merged text as an open conflict with both readings, so it is visible to reviewers rather than hidden by the merge. Contradictions found during the merge are added to the audit file.
 
 The saved prompt becomes the invocation itself. For example:
 
 ```text
-Follow kb/instructions/analyse-agentic-system/jobs/memory.md with:
+Follow /home/zby/llm/commonplace/kb/instructions/analyse-agentic-system/jobs/memory.md with:
 system = Instinctual Memory
 run-state = /home/zby/llm/commonplace/kb/reports/state/agentic-system-analysis/AAS-2026-09-30-instinctual-memory-03/run-state.md
 boundary = /home/zby/llm/commonplace/kb/reports/state/agentic-system-analysis/AAS-2026-09-30-instinctual-memory-03/boundary.md
@@ -41,7 +41,7 @@ problem = /home/zby/llm/commonplace/kb/reports/state/agentic-system-analysis/AAS
 scratch = /home/zby/llm/commonplace/kb/reports/state/agentic-system-analysis/AAS-2026-09-30-instinctual-memory-03/scratch/memory-0/
 ```
 
-The worker receives that exact text as its launch message. All run-specific paths are absolute and usable unchanged; the repository root remains the launch working directory for fixed instruction references. Code supplies the system name rather than requiring an extra read solely to discover it.
+The worker receives that exact text as its launch message. Every path in the invocation is absolute, including the main instruction's, so the worker does not depend on starting in the repository root. Code supplies the system name rather than requiring an extra read solely to discover it.
 
 ## Parameter design principle
 
