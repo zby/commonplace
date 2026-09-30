@@ -856,3 +856,16 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     (retained / "ARTIFACT.yaml").write_text("partial", encoding="utf-8")
 
     assert definition.recognize_publication(spec) is Recognition.UNKNOWN
+
+
+# 10. Every job that judges the memory profile loads its definitions
+
+
+def test_profile_jobs_declare_the_memory_report_type(fixture: Fixture) -> None:
+    scripted, _ = agent(fixture)
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    for name in ("memory-0", "reconcile-0", "verify-0"):
+        assert "kb/types/agent-memory-analysis-report.md" in last_prompt(fixture, name)
+    assert "agent-memory-analysis-report.md" not in last_prompt(fixture, "runtime")

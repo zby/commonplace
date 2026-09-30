@@ -63,6 +63,9 @@ JOBS = "kb/instructions/analyse-agentic-system/jobs"
 STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
 OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
+MEMORY_TYPE = "../../../types/agent-memory-analysis-report.md"
+"""The memory report type, relative to the job instructions: every job that
+writes or judges the memory profile loads its definitions."""
 
 OPENING = "opening.json"
 BOUNDARY = "boundary.md"
@@ -642,7 +645,7 @@ class AnalyseAgenticSystem(Workflow):
             memory_report(round_),
             reads=reads,
             instruction="memory",
-            extra=("../../analyse-agent-memory.md",),
+            extra=("../../analyse-agent-memory.md", MEMORY_TYPE),
             note=note,
             validator=partial(
                 pass_refusals,
@@ -688,6 +691,7 @@ class AnalyseAgenticSystem(Workflow):
             reconciliation(round_),
             reads=reads,
             instruction="reconcile",
+            extra=(MEMORY_TYPE,),
             norms=True,
             note=note,
             validator=partial(
@@ -742,6 +746,7 @@ class AnalyseAgenticSystem(Workflow):
                 verification,
                 reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
                 instruction="verify",
+                extra=(MEMORY_TYPE,),
                 norms=True,
                 validator=partial(
                     self.verified_set_refusals,
