@@ -3,6 +3,7 @@
 - **Recorded:** 2026-09-30, at the operator's request after inspecting recent generated analyst prompts.
 - **Revised:** 2026-09-30, at the operator's direction to minimize analysts' symbolic manipulation: code supplies full paths and resolves round-dependent selections.
 - **Revised:** 2026-09-30, after a check against the goal of a simpler process and easier analyst work, with the operator's decisions on delivery: code writes the invocation into the prompt file, the orchestrator reads that file and sends its content as the worker's message, and this holds for every code-scheduled workflow. Code also lists the required reads, the merge deletes restated shared rules, and the round kind is a parameter.
+- **Revised:** 2026-09-30, after a readiness check against the code: workers keep the repository root as working directory, because `commonplace-validate` takes the root from it; `run-state` is classified; the engine change is one flag; the work is ordered.
 - **Status:** operator endorsed the direction and requested this workshop proposal; implementation is pending.
 - **Purpose:** give each analyst one instruction to follow, with code-resolved paths for everything it reads and writes, delivered as its launch message.
 - **Scope:** all six job types of `analyse-agentic-system`, the engine's prompt rendering, and the generic driver instruction. `step`'s output does not change. This proposal does not commission a new analysis run or change analytical criteria, scheduling, correction limits, or publication behavior.
@@ -18,7 +19,7 @@ Four things in this give the analyst work that the orchestrator or code could do
 - The Inputs list mixes instruction files with work inputs and gives no input a role. The round note names files by bare name (`memory-report-0.md`), which the worker matches against the list.
 - The run state and the scratch directory are given relative to "the run directory", which the worker derives from other paths.
 
-For scale: a memory analyst's required instruction and contract text is about 53 KB, of which the three type specs are 41 KB. The prompt file and the wrapper are about 2.5 KB of it. This proposal removes steps and symbolic work; it does not reduce that reading.
+For scale: a memory analyst's required instruction and contract text is about 53 KB, of which the three type specs are 41 KB. The prompt file and the wrapper add about 2.5 KB. This proposal removes steps and symbolic work; it does not reduce that reading.
 
 ## Proposed instruction structure
 
@@ -38,7 +39,7 @@ The invocation lists, under `read-first`, the absolute path of every shared rule
 
 The list has one source, so the instruction and the code cannot disagree, and no test has to parse an instruction and compare two lists. The worker resolves no relative path. Committed instructions hold no absolute paths; links in their prose stay as documentation. A dependency named only as a link in prose is not a read requirement: fresh-eyes audits on 2026-09-30 found analysts working without the overview type because it was reachable only through a link ([Analyst instruction audit](./analyst-instruction-audit.md)).
 
-A job's declared file dependencies are then exactly three groups, each visible in its invocation: the main instruction on the first line, the files under `read-first`, and the run-specific input files supplied as parameters. Output, problem-report, and scratch paths are destinations, and values such as `system` and `may-return` are not files; neither is a dependency.
+A job's declared file dependencies are then exactly three groups, each visible in its invocation: the main instruction on the first line, the files under `read-first`, and the run-specific input files supplied as parameters. Output, problem-report, and scratch paths are destinations, and values such as `system` and `may-return` are not files; neither is a dependency. `run-state` is a file the worker passes to `commonplace-quote`, and it is not a dependency either: code rewrites it during the run, so declaring it would reopen accepted jobs.
 
 ### The merge
 
@@ -77,13 +78,13 @@ read-first:
 
 The worker receives that exact text as its launch message. Code supplies the system name rather than requiring an extra read solely to discover it.
 
-The form is: the first line, then single-line `name = value` parameters, then labelled blocks. `read-first` is always present. Two more blocks appear only when they apply: `source` (the boundary job's caller input) and `feedback` (a retry's refusal messages). Both hold text that code did not write, so code puts each inside a fence longer than any backtick run in its content; nothing in them can then be read as a parameter or an instruction line.
+The form is: the first line, then single-line `name = value` parameters, then the `read-first` block. The boundary job's invocation adds a `source` block holding the caller's input. That text is not code's, so code puts it inside a fence longer than any backtick run in its content; nothing in it can then be read as a parameter or an instruction line. On a retry the engine appends its existing section, `## Why the previous attempt was refused`, with the refusal messages.
 
-### No job depends on the working directory
+### Workers run in the repository root
 
-Every path in the invocation is absolute, including the main instruction's. That covers reads and writes, but not every operation: the boundary job uses the repository-relative `related-systems/` directory and runs `git check-ignore -q related-systems`, which works only inside the repository.
+Every path in the invocation is absolute, including the main instruction's, so no read or write depends on the working directory. Two operations still do. `commonplace-validate`, which the memory analyst runs on its report, takes the repository root from the working directory. The boundary job uses the repository-relative `related-systems/` directory and runs `git check-ignore -q related-systems`.
 
-Remove that dependency rather than require a working directory. Code supplies the boundary job the absolute `related-systems` directory as a parameter, and code runs the ignore check itself before it launches the job. A required working directory would have to be a launch parameter the orchestrator applies, and the Claude Code sub-agent launch takes none; every launch there would fail or rely on the orchestrator's own directory. Resolving invocation paths must not depend on the directory from which the operator called `step`.
+Keep the working directory as it is today: the orchestrator runs in the repository root and its workers inherit that directory. State this as a precondition in the workflow's skill, which already tells the orchestrator where the run is. Do not make it a launch parameter: the Claude Code sub-agent launch takes no working directory, so a required one could not be applied and every launch would count as failed. Building an invocation must not depend on the directory from which the operator called `step`.
 
 ## Parameter design principle
 
@@ -97,7 +98,7 @@ Every job receives `system`, `run-state`, `output`, `problem`, and `scratch`. Th
 
 | Job | Inputs and choices supplied by code |
 |---|---|
-| Boundary | Full `opening` path, full `related-systems` directory, normalized `source-identity`, the caller's input in the `source` block |
+| Boundary | Full `opening` path, normalized `source-identity`, the caller's input in the `source` block |
 | Runtime | Full `boundary` path |
 | Memory | `round` (`first` or `correction`); full `boundary` and `runtime` paths; for a correction, full `previous-memory`, `returned-findings`, and `epistemic` paths |
 | Epistemic | Full `boundary` and `runtime` paths |
@@ -110,7 +111,7 @@ Memory and reconciliation counters can diverge: verification may cause another r
 
 The instruction says what each `round` value requires: a memory `correction` answers the findings in `returned-findings`; a reconciliation `after-blockers` resolves the blockers in `verification` and `set-check`. Analysts must not reconstruct a missing parameter. Code builds the parameters itself, so a test on the constructor checks each job's combinations; no separate check runs at launch. Update shared worker rules to use the supplied `run-state`, `output`, `problem`, and `scratch` values directly.
 
-Every job also accepts retry feedback when a previous attempt was refused: the invocation of the retry carries the refusal messages in its `feedback` block. These are not analytical correction rounds: retrying the same job preserves its selected inputs and destinations unless workflow invalidation requires recomputation.
+Every job also accepts retry feedback when a previous attempt was refused: the engine appends the refusal messages to the retry's invocation, as it does to a generic prompt today. These are not analytical correction rounds: retrying the same job preserves its selected inputs and destinations unless workflow invalidation requires recomputation.
 
 ## Delivery: the orchestrator reads the prompt file
 
@@ -131,9 +132,9 @@ Accepted cost, by the operator's decision: the orchestrator is a model, and it c
 
 Keep all consumed instruction files, shared rules, and contracts declared as job dependencies. A shared-rule or contract change must still invalidate the affected job. The `read-first` list is generated from those declarations.
 
-The generic renderer currently appends declared inputs, output paths, and refusal prose to the job's text. Let a job supply its whole message, so that for these jobs the engine adds only a retry's feedback. Construct path parameters from the same resolved job inputs and destinations the engine uses, rather than maintaining a second set of filename formulas in the prompt renderer. Keep the mechanism limited to the required message contract rather than adding a template framework.
+The generic renderer currently appends declared inputs, output paths, a reply rule, and refusal prose to the job's text. Add one flag to the job record: a job may declare that its prompt is the complete message. The engine then writes that prompt unchanged and appends only a retry's refusal section. The analysis workflow builds each invocation as its job's prompt and sets the flag; the reply rule the engine no longer appends is already in the worker rules. Construct path parameters from the same resolved job inputs and destinations the engine uses, rather than maintaining a second set of filename formulas in the prompt renderer. Keep the mechanism limited to the required message contract rather than adding a template framework.
 
-The input state must stay independent of the checkout's location. Today it hashes the job's prompt text, which holds no absolute path, and keys inputs by run-relative path. An invocation with absolute paths therefore cannot become that hashed text as it is; hash the parameters in a location-independent form and resolve them to absolute paths when the file is written.
+The prompt is part of a job's input state, so the invocation's absolute paths enter it. That adds no new dependence on the checkout's location: declared method files are already keyed by absolute path.
 
 As of 2026-09-30 the engine's only consumers are `AnalyseAgenticSystem` and the definitions in `tests/commonplace/workflow/definitions.py`, which keep the generic rendering.
 
@@ -150,15 +151,25 @@ Relevant implementation points:
 - [Driver instruction](../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md): the launch step.
 - [Worker rules](../../instructions/analyse-agentic-system/jobs/worker-rules.md): references to the prompt's output, problem, scratch and run-state paths, and the prompt-file exception.
 - [Publication checks](../../../src/commonplace/lib/agentic_publication.py): pinned method paths.
+- Texts that describe the old launch or prompt: the `prompt` field's description in `src/commonplace/workflow/job.py`, `scripts/README.md`, the loop sketch in [code-scheduled workflows](../../reference/proposals/code-scheduled-workflows.md), and the prompt-prose assertions in `tests/commonplace/lib/test_agentic_workflow.py` and `tests/commonplace/workflow/test_workflow_orchestrator.py`.
+
+## Order of work
+
+Each step leaves a working system, so the work can stop after any of them.
+
+1. **Delivery.** Change the driver instruction and the worker rules' prompt-file exception. The generic prompts are complete messages, so this works before anything else changes.
+2. **Invocations.** Add the engine flag, build the invocations, and give the six job instructions their read-first rule and parameter table. Until a method file is merged it stays a declared dependency, so it appears under `read-first` and its wrapper still forwards to it.
+3. **Merges.** Merge each method into its job instruction and retire the method file, one analyst per commit. A merge that waits on an operator decision delays only itself.
+4. **Trial script.**
 
 ## Acceptance and verification
 
 1. All six jobs use a single parameterized main instruction. Memory and epistemic startup no longer forwards through a wrapper to a separate method, and the merged instructions do not restate the shared worker rules.
-2. `step`'s output is unchanged. The prompt file holds the invocation: first line, parameters, `read-first`, and the `source` or `feedback` block when it applies.
+2. `step`'s output is unchanged. The prompt file holds the invocation: first line, parameters, `read-first`, the `source` block for the boundary job, and the refusal section on a retry.
 3. The driver instruction has the orchestrator send each prompt file's content as the worker's whole message. No worker needs to read a prompt file, and the worker rules grant no access to `workflow-state/`.
 4. Tests exercise first rounds, memory corrections, verification-driven reconciliation with different memory and reconciliation counters, the last round's return prohibition, and validator retries.
-5. Tests verify that fixed dependencies still invalidate affected jobs, that supplied paths equal the engine's selected inputs and destinations, and that each job's parameter combinations match its `round`. For each job and each correction or retry case, the declared file dependencies equal the main instruction, the `read-first` files, and the input-file parameters of its invocation. Every path in an invocation is absolute; no job instruction requires filename construction, relative-path resolution, extension replacement, round arithmetic, or latest-file discovery.
-6. Moving a run's checkout does not change any job's input state, and an invocation built from outside the repository root equals one built inside it.
+5. Tests verify that fixed dependencies still invalidate affected jobs, that supplied paths equal the engine's selected inputs and destinations, and that each job's parameter combinations match its `round`. For each job and each correction or retry case, the declared file dependencies equal the main instruction, the `read-first` files, and the input-file parameters of its invocation; `run-state` and the destinations are outside that set. Every path in an invocation is absolute; no job instruction requires filename construction, relative-path resolution, extension replacement, round arithmetic, or latest-file discovery.
+6. An invocation built from outside the repository root equals one built inside it. Generic workflow definitions, which do not set the flag, render as before.
 7. A trial prepared with `scripts/analyst_trial.py` produces an invocation built by the workflow's constructor and records hashes of every declared file dependency without parsing the prompt.
 8. Existing scripted workflow tests retain their publication and failure behavior. Update assertions about old generated prose to check the new invocation contract.
 9. Before promoting each merged instruction, resolve its known contradictions with shared rules and report types. Operator decisions still needed remain in the audit and block promotion of that instruction; active instructions contain no unresolved alternative requirements.
