@@ -33,8 +33,8 @@ accepted report becomes the set's memory member, `memory.md`, byte for
 byte: nothing is mapped, merged or appended afterwards, and the reconciliation's
 corrections to your records are amendments in the overview. Write it as
 the member.
-Do not load the legacy review type, prior system reviews, surveys, matrix
-outputs, or style exemplars. The runtime analyst owns the unprefixed IDs; the
+Do not read prior analyses (the worker rules list where they are) or style
+exemplars. The runtime analyst owns the unprefixed IDs; the
 reconciliation owns integration. Do not call agent listings for status: their
 payloads may include prior analyses, even with a path filter.
 

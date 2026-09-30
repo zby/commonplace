@@ -208,8 +208,7 @@ targeting inputs, budgets and authority where they affect a conclusion.
 Explain non-obvious mappings and unions in `memory-comparison`. Every
 known value references supporting records; limitations prevent
 unsupported complete sets. The same memory boundary applies across the
-report and profile. No legacy token-line encoding or matrix fallback is
-permitted.
+report and profile.
 
 ### Integration issues
 

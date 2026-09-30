@@ -138,7 +138,6 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/tags/` | Writing or maintaining a tag head: what a tag gathers and its selective picks; the participating-collection declaration. |
 | `kb/reference/` | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
 | `kb/instructions/` | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
-| `kb/agent-memory-systems/` | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
 | `kb/agentic-systems/` | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
 | `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
 | `kb/reports/` | Storing report outputs under an explicit retention policy: replaceable `cache/`, local load-bearing `state/`, or durable `retained/`. |
@@ -187,7 +186,7 @@ For the full model, read `kb/reference/navigation.md`. In short: use `rg` for ch
 Entry points:
 
 - `kb/tags/README.md` — top-level navigation hub: tag heads (learning-theory, self-improving-systems, links, and the rest), gaps
-- `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
+- `kb/agent-memory-systems/README.md` — historical index of earlier agent-memory system reviews (frozen; new analyses go through `analyse-agentic-system`)
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reports/README.md` — report retention policies and durable report records
 - `kb/reference/adr/` — architecture outcome records for the shipped Commonplace system

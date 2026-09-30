@@ -17,12 +17,11 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 Reviews record each external mechanism absolutely, even when it resembles Commonplace. The shared ontology chooses the distinctions and names comparable solutions; it does not turn the review into a Commonplace delta. Closed controlled fields feed the matrix. Open-ended mechanisms and ontology boundary cases support qualitative synthesis but no prevalence claim until the full corpus has been assayed for that concept.
 
 Per-system reviews under `reviews/` and `lightweight/` are historical records.
-The current workflow does not produce or replace files there. New analysis
-enters through `analyse-agentic-system`, whose `analyse-agent-memory` sub-agent
-returns a typed specialist report for integration into the main result.
-The parent publishes the exact main result and one compact review under
-`kb/agentic-systems/reviews/`. Existing reviews remain citable at their recorded
-boundaries; they are not automatically converted or redirected to new results.
+The collection is frozen. No workflow writes or reads it: new analysis goes
+through `analyse-agentic-system`, whose memory analyst writes the memory
+member of each analysis set, and its analysts are forbidden to read this
+collection. Existing reviews remain citable at their recorded boundaries;
+they are not converted or redirected to new results.
 
 The matrix and table in this collection are historical snapshots. Active
 comparison scripts now read retained main-analysis results and write under
