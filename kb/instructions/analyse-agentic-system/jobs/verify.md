@@ -13,6 +13,8 @@ Read the round's assembled set, as your prompt's inputs name it: the overview dr
 ### Blockers
 ```
 
+Read each input in its own read call, and check each delivery for truncation before relying on it.
+
 Both sections become overview text, so the overview type's source-anchor rules apply to them: cite a source path without a line range, or quote the passage. Your output is refused while the overview with your verification adds a validation failure to those the set check lists.
 
 Check the whole set, not the separate lens returns, against the memory report type's Memory comparison fields: scope agreement with the canonical records across members, every scoped trace-fed write including compaction, each push signal's consumer and selector, and the Reconciliation's amendments and supersessions against the records they name.

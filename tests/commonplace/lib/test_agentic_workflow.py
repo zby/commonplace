@@ -642,6 +642,7 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     (block,) = result.blocks
     assert block.subject == "workflow"
     assert "the last round names blockers" in block.reason
+    assert block.permitted == "stop"
     assert definition.publications == 0
     assert not (fixture.root / REVIEW_PATH).exists()
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"

@@ -40,10 +40,9 @@ payloads may include prior analyses, even with a path filter.
 
 ## Inspect and explain
 
-Use the frozen primary sources. For Git, inspect commit-addressed blobs
-through `git --no-replace-objects -C <source-root> show <full-commit>:<path>`
-and scoped `grep` or `ls-tree`; the worktree and current HEAD are not
-evidence. For captures, verify the supplied digest before reading. Select
+Use the frozen primary sources. For Git, read and grep the files of the
+checkout at `source.path`, which the boundary job checked out at the
+recorded commit with an empty `git status`; do not modify it. For captures, verify the supplied digest before reading. Select
 paths and ranges before reading; truncated output supplies no evidence until
 the needed range is delivered in a bounded read. Budget combined tool output
 as well as individual reads, inspect the delivered output for truncation, and

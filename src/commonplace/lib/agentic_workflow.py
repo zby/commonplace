@@ -57,7 +57,7 @@ from commonplace.lib.agentic_set import (
 )
 from commonplace.lib.note_parser import parse_document, replace_markdown_links
 from commonplace.lib.validation import validate_note
-from commonplace.workflow import Job, Recognition, Workflow
+from commonplace.workflow import Job, Recognition, StopRun, Workflow
 
 JOBS = "kb/instructions/analyse-agentic-system/jobs"
 STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
@@ -559,7 +559,7 @@ class AnalyseAgenticSystem(Workflow):
             if blockers == "none":
                 break
             if last:
-                raise ValueError(
+                raise StopRun(
                     "the semantic verification of the last round names blockers: "
                     + blockers
                 )

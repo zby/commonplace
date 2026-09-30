@@ -44,7 +44,7 @@ def test_set_has_one_fixed_state_location() -> None:
     assert "Run state and compact reviews pin `ARTIFACT.yaml`" in overview
 
 
-def test_repository_sources_remain_commit_addressed() -> None:
+def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     boundary = job("boundary")
     rules = job("worker-rules")
 
@@ -52,8 +52,10 @@ def test_repository_sources_remain_commit_addressed() -> None:
     assert "git check-ignore -q" in boundary
     assert "verify an existing checkout's origin" in boundary
     assert "compact source allowlist" in boundary
-    assert "git --no-replace-objects -C" in rules
-    assert "never read evidence from the worktree" in rules
+    assert "git checkout --detach <commit>" in boundary
+    # The boundary validator guarantees the checkout, so jobs read it directly.
+    assert "read and grep the files of the checkout at `source.path`" in rules
+    assert "do not extract another copy of the source" in rules
     # The anchor grammar is the overview type's, stated once under Status fields;
     # the searched boundary of an absence is a runtime-report record field.
     assert "one code span containing the full commit-relative path" in contract(

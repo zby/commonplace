@@ -216,6 +216,14 @@ class Recognition(Enum):
 # The definition's side
 
 
+class StopRun(Exception):
+    """Raised by a definition when no repair within the repair scope can let
+    the run continue, such as a judgment that only a job's output could
+    change and no job remains to change it. Its block permits only stopping.
+    """
+
+
+
 class Workflow:
     """Base class of workflow definitions. A definition overrides `run`.
 
@@ -1213,7 +1221,10 @@ class _Step:
             workflow["blocks"] += 1
             limit = self.workflow.repair_limit
             permitted = (
-                STOP if any(places[place] > limit for place in failing) else REPAIR
+                STOP
+                if any(isinstance(error, StopRun) for error in self.errors)
+                or any(places[place] > limit for place in failing)
+                else REPAIR
             )
             path = self.store.workflow_record_path(workflow["blocks"])
             first = self.errors[0]
