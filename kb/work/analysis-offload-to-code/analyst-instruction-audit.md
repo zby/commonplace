@@ -1,7 +1,7 @@
 # Analyst instruction audit
 
 - **Recorded:** 2026-09-30, at the operator's request, to hold the findings until work on the analysts' inputs resumes.
-- **Status:** parked. Reducing command redirection comes first; the analysts' inputs are considered after that. Part of the runtime findings is already fixed (commit `ae70fe59`); everything else here is open.
+- **Status:** partly taken over by [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md), which lands first. That proposal resolves four findings below and handles the memory and epistemic contradictions during its merge, recording each resolution here. Part of the runtime findings is fixed (commit `ae70fe59`). The rest — undefined concepts, the runtime analyst's open items, trials — waits until the proposal lands.
 - **Terms:** the three **analysts** are the runtime, memory and epistemic jobs (commit `85de9049`). A **trial** reruns one analyst on a recorded run's frozen inputs with `scripts/analyst_trial.py prepare` (commit `3ac5361f`).
 
 ## Method
@@ -31,7 +31,8 @@ Observation for the testing method: a weaker model exposes instruction gaps that
 - **References to things an analyst never sees:** "the reconciliation" (used both as a section and as an actor), "the set", other analysts' members, "Commonplace ontology".
 - **Judging-norm rules of unclear scope:** the theory-builder conditions, learning, reflection and autonomy are phrased as rules for every judge; the memory and epistemic analysts cannot tell whether they apply to them. "Reach" is undefined everywhere.
 - **The evidence ladder** in the judging norms (context presence → activation, claim → affordance → wiring → observation → causality, curation → warrant) has no test for any rung; only activation is defined, in the runtime type.
-- **Run machinery** in the worker rules — "acceptance commands", "problem report", `<run-state-path>` — is undefined; the memory method uses a different placeholder (`<sibling-run-state-path>`).
+- **Run machinery** in the worker rules — "acceptance commands", "problem report", `<run-state-path>` — is undefined; the memory method uses a different placeholder (`<sibling-run-state-path>`). **Resolved by the proposal:** `run-state`, `problem` and `scratch` become supplied parameters, and the merge deletes the method's restated rules with their placeholder. "Acceptance commands" stays open.
+- **Resolved by the proposal:** the linked-but-not-read gap in general, since code generates each job's `read-first` list from its declared dependencies; the epistemic member cited in memory correction rounds without being an input (it becomes the `epistemic` parameter); and the prompt-file exception in the worker rules (no worker reads a prompt file).
 
 ## Runtime analyst
 
@@ -64,7 +65,7 @@ Inputs: `jobs/memory.md`, worker rules, judging norms, `analyse-agent-memory.md`
 
 **Undefined or thin concepts:** the memory boundary ("retained objects accumulated or changed through use": "retained", "use", "accumulated" in narrow senses; whether a user-maintained memory file is in scope); "seeded record" and "supplied fact" (presumably the runtime member's); "trace" and "trace-fed write"; "load-bearing". A 2026-09-29 PageIndex trace audit had already found the specialist settling the ingestion-only scope question by reading validator code, and using `wired` as filler for a searched-for negative.
 
-**Contradictions:**
+**Contradictions** (handled by the proposal's merge, which follows the type or shared rule unless the job cannot follow it; resolutions are to be recorded here):
 
 - the method puts corrections to supplied facts under Core ideas (`analyse-agent-memory.md:55`); the type puts them under Integration issues (type:216);
 - the method's section order ("core ideas, shared records, write side, read-back") does not match the type's;
@@ -91,7 +92,7 @@ Inputs: `jobs/epistemic.md`, worker rules, judging norms, `analyse-external-syst
 
 **Overloaded words:** "claim" is both a system's claim (`CLM-*`) and a truth-apt proposition; "check" is an evaluation of content here and a probe in the runtime type.
 
-**Contradictions:**
+**Contradictions** (handled by the proposal's merge, as for the memory analyst). Two are errors on the type's side, which the merge rule does not resolve in the type's favour: the Source register placed in the overview, and "each passage occurs once across the set". One is between the method and a shared rule (splitting containers), which the shared rule settles.
 
 - the content/update relation values are to be tested "in the order listed"; read as first-fit, `ampliative conjecture` wins whenever entailment is merely unproven and `indeterminate` is never reached;
 - method step 2 splits heterogeneous containers into new `EPI-` records, while the judging norms say only the reconciliation splits a record and records are never re-declared;
@@ -102,7 +103,7 @@ Inputs: `jobs/epistemic.md`, worker rules, judging norms, `analyse-external-syst
 
 ## Proposed next steps, when this resumes
 
-1. Fix the contradictions — wording only, no design choices; one commit per analyst.
+1. Fix the runtime analyst's open items — wording only, no design choices. The memory and epistemic contradictions are handled by the proposal's merge.
 2. Draft a glossary per analyst type for the operator's review, since each definition is a decision: runtime (route first — an operation from trigger to effect, with interfaces as entry points into routes; then operative object, guarantee, material, forcing case, the evidence ladder); memory (evidence bases, assessments, axis values, an example profile); epistemic (epistemic object, consequential, warrant, candidate, the two senses of claim and check, the authority fields).
 3. Rerun the luna and Sonnet runtime trials on the revised text, a few samples per cell, and compare route splits and tidy coverage.
 4. Consider templates with labelled fields for the symbolic parts (record fields, placement rules), leaving the definitions as the semantic content the analysts need.
