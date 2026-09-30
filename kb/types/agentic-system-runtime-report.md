@@ -104,9 +104,10 @@ effects, applicable status fields, and evidence. Each route also records
 immediate return, later read-back, delegated visibility, selection
 predicate, invalidation or expiry, activation or effect, and evidence
 limits, with an explicit inapplicable or uninspected reason instead of an
-empty field. Memory read-back means material accumulated or changed
-through use affects a later consumer invocation; static shipped material
-and ordinary current-run state are not read-back. Activation requires
+empty field. Memory read-back is defined once, by the
+[memory report type](./agent-memory-analysis-report.md#memory-comparison-fields):
+material accumulated or changed through use that reaches a later consumer
+invocation, not static shipped material or ordinary current-run state. Activation requires
 evidence that delivered material changed behavior. For materially distinct
 mechanisms admitting changes to the product, retained knowledge or
 instructions, capabilities, or production machinery, record trigger,

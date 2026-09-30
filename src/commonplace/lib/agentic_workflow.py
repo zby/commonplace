@@ -63,9 +63,20 @@ JOBS = "kb/instructions/analyse-agentic-system/jobs"
 STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
 OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
-MEMORY_TYPE = "../../../types/agent-memory-analysis-report.md"
-"""The memory report type, relative to the job instructions: every job that
-writes or judges the memory profile loads its definitions."""
+# The set's contracts, relative to the job instructions. A job gets as
+# declared inputs the type of every member it writes or judges, so the jobs
+# that produce and judge the same content load the same definitions.
+TYPES = "../../../types"
+OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
+RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
+MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
+EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
+SET_CONTRACTS = (
+    OVERVIEW_CONTRACT,
+    RUNTIME_CONTRACT,
+    MEMORY_CONTRACT,
+    EPISTEMIC_CONTRACT,
+)
 
 OPENING = "opening.json"
 BOUNDARY = "boundary.md"
@@ -485,6 +496,7 @@ class AnalyseAgenticSystem(Workflow):
                 "boundary",
                 BOUNDARY,
                 reads=(OPENING,),
+                extra=(OVERVIEW_CONTRACT,),
                 validator=partial(
                     boundary_refusals, enums=enums, identity=self.source_identity
                 ),
@@ -509,6 +521,7 @@ class AnalyseAgenticSystem(Workflow):
                 RUNTIME,
                 reads=(BOUNDARY,),
                 norms=True,
+                extra=(RUNTIME_CONTRACT,),
                 validator=partial(
                     pass_refusals,
                     repo_root=repo_root,
@@ -526,7 +539,11 @@ class AnalyseAgenticSystem(Workflow):
                     EPISTEMIC,
                     reads=(BOUNDARY, RUNTIME),
                     norms=True,
-                    extra=("../../analyse-external-system-epistemic-architecture.md",),
+                    extra=(
+                        "../../analyse-external-system-epistemic-architecture.md",
+                        EPISTEMIC_CONTRACT,
+                        RUNTIME_CONTRACT,
+                    ),
                     validator=partial(
                         pass_refusals,
                         repo_root=repo_root,
@@ -645,7 +662,8 @@ class AnalyseAgenticSystem(Workflow):
             memory_report(round_),
             reads=reads,
             instruction="memory",
-            extra=("../../analyse-agent-memory.md", MEMORY_TYPE),
+            norms=True,
+            extra=("../../analyse-agent-memory.md", MEMORY_CONTRACT, RUNTIME_CONTRACT),
             note=note,
             validator=partial(
                 pass_refusals,
@@ -691,7 +709,7 @@ class AnalyseAgenticSystem(Workflow):
             reconciliation(round_),
             reads=reads,
             instruction="reconcile",
-            extra=(MEMORY_TYPE,),
+            extra=SET_CONTRACTS,
             norms=True,
             note=note,
             validator=partial(
@@ -746,7 +764,7 @@ class AnalyseAgenticSystem(Workflow):
                 verification,
                 reads=(draft, RUNTIME, memory_report(memory), EPISTEMIC, check),
                 instruction="verify",
-                extra=(MEMORY_TYPE,),
+                extra=SET_CONTRACTS,
                 norms=True,
                 validator=partial(
                     self.verified_set_refusals,

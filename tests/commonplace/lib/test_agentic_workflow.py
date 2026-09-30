@@ -858,14 +858,29 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     assert definition.recognize_publication(spec) is Recognition.UNKNOWN
 
 
-# 10. Every job that judges the memory profile loads its definitions
+# 10. A job loads the type of every member it writes or judges
 
 
-def test_profile_jobs_declare_the_memory_report_type(fixture: Fixture) -> None:
+def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -> None:
     scripted, _ = agent(fixture)
 
     assert isinstance(scripted.run()[-1], Done)
 
-    for name in ("memory-0", "reconcile-0", "verify-0"):
-        assert "kb/types/agent-memory-analysis-report.md" in last_prompt(fixture, name)
-    assert "agent-memory-analysis-report.md" not in last_prompt(fixture, "runtime")
+    types = {
+        "overview": "kb/types/agentic-system-analysis-overview.md",
+        "runtime": "kb/types/agentic-system-runtime-report.md",
+        "memory": "kb/types/agent-memory-analysis-report.md",
+        "epistemic": "kb/types/agentic-system-epistemic-report.md",
+    }
+    expected = {
+        "boundary": {"overview"},
+        "runtime": {"runtime"},
+        "memory-0": {"memory", "runtime"},
+        "epistemic": {"epistemic", "runtime"},
+        "reconcile-0": set(types),
+        "verify-0": set(types),
+    }
+    for job, wanted in expected.items():
+        prompt = last_prompt(fixture, job)
+        assert {name for name, path in types.items() if path in prompt} == wanted, job
+    assert "judging-norms.md" in last_prompt(fixture, "memory-0")

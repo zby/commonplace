@@ -111,7 +111,12 @@ along the way, such as extraction that drops a negation, is not a
 curation value: record it as a finding on the route's faithfulness, and
 classify the route by the operation it performs.
 
-Read-back concerns accumulated memory, not static routing instructions.
+Read-back concerns accumulated memory, not static routing instructions:
+material accumulated or changed through use that reaches a later consumer
+invocation. Static shipped material and ordinary current-run state, the
+working context a run carries, are not read-back. A generated summary that
+compacts or replaces that state is retained memory, within one run or
+across runs, when a later invocation receives it.
 Use both `pull` and `push` when both routes exist. Read-back signal
 characterizes push selection and is inapplicable for a known pull-only
 boundary. Fulfilling a consumer's request for retained material is pull;

@@ -12,7 +12,7 @@ Load the [overview type](../../../types/agentic-system-analysis-overview.md) bef
 - Never upgrade context presence to activation, a claim to an affordance, an affordance to wiring, wiring to observation, observation to causality, or curation to warrant.
 - Give each theory-builder condition, and learning, reflection and autonomy, its own conclusion status from its own evidence, under the [Shared records](../../../types/agentic-system-runtime-report.md#shared-records) rules for theory routes.
 - When describing revision selection, write that it prefers reach among revisions that fit the evidence, not "reach rather than fit". This applies whether or not the route is reflective.
-- Describe every external mechanism in source-native terms before mapping it to Commonplace ontology. Explain the fit and mark partial or unresolved mappings. Do not turn omission of an open-ended mechanism into evidence of absence. An `uninspected` gap or a casual search miss is a limitation, not an `ABS-*` record; record the searched boundary only for a load-bearing absence claim.
+- Describe every external mechanism in source-native terms before mapping it to Commonplace ontology. Explain the fit and mark partial or unresolved mappings. Do not turn omission of an open-ended mechanism into evidence of absence. An `uninspected` gap or a casual search miss is a limitation, not an `ABS-*` record. Create an `ABS-*` record only for a load-bearing absence claim; it always states its searched boundary.
 
 ## Register ownership
 
