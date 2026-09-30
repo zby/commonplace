@@ -4,6 +4,15 @@
 - **Status:** partly taken over by [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md), which lands first. That proposal resolves four findings below and handles the memory and epistemic contradictions during its merge, recording each resolution here. Part of the runtime findings is fixed (commit `ae70fe59`). The rest — undefined concepts, the runtime analyst's open items, trials — waits until the proposal lands.
 - **Terms:** the three **analysts** are the runtime, memory and epistemic jobs (commit `85de9049`). A **trial** reruns one analyst on a recorded run's frozen inputs with `scripts/analyst_trial.py prepare` (commit `3ac5361f`).
 
+## Operator decisions (2026-09-30)
+
+These settle the contradictions that the proposal's merge rule could not settle from a type or shared rule, so the memory and epistemic merges are not blocked on them.
+
+1. **Memory annotations go in an `## Annotations` section,** as in the runtime type. It holds only `#### On <ID> — label` headings on records declared elsewhere, carrying the memory-specific fields the memory type lists. The validator finds annotation headings anywhere; the rule is for one placement across the types.
+2. **IDs across memory correction rounds:** a record that survives a correction round keeps its ID with the same referent; a new record gets a new number; a number is never reused, including one whose record was dropped. No withdrawal marker is needed: only the accepted round's report enters the set, and the only citations of an earlier round's IDs are the reconciliation's returned findings, which stay valid when numbers are not reused.
+3. **Epistemic content/update relation values are a checking order, not first-fit.** Assign the first value whose test is established. `ampliative conjecture` requires positive evidence that the content does not follow from its inputs; when neither entailment nor non-entailment is shown, the value is `indeterminate`.
+4. **Retiring the two merged method files:** approving the proposal approves the inbound-reference dispositions it lists — retarget each link to the merged job instruction, add a `properdocs.yml` redirect for each published page, and repoint workshop files by path only.
+
 ## Method
 
 Two probes, both on the instructions as committed at `85de9049`–`ae70fe59`:
