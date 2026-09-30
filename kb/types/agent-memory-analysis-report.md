@@ -105,7 +105,11 @@ near duplicates; `evolve` revises an existing entry; `synthesize` creates
 a claim absent from the inputs; `invalidate` withdraws current reliance
 while retaining history; `decay` forgets or downweights; `promote` raises
 tier or salience. Index rebuilds, acquisition and primary-key collision
-checks alone establish none of these.
+checks alone establish none of these. A curation value names an
+operation a route is built to perform. A defect that distorts content
+along the way, such as extraction that drops a negation, is not a
+curation value: record it as a finding on the route's faithfulness, and
+classify the route by the operation it performs.
 
 Read-back concerns accumulated memory, not static routing instructions.
 Use both `pull` and `push` when both routes exist. Read-back signal
