@@ -874,9 +874,9 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     }
     expected = {
         "boundary": {"overview"},
-        "runtime": {"runtime"},
-        "memory-0": {"memory", "runtime"},
-        "epistemic": {"epistemic", "runtime"},
+        "runtime": {"overview", "runtime"},
+        "memory-0": {"overview", "memory", "runtime"},
+        "epistemic": {"overview", "epistemic", "runtime"},
         "reconcile-0": set(types),
         "verify-0": set(types),
     }

@@ -64,8 +64,10 @@ STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
 OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
 # The set's contracts, relative to the job instructions. A job gets as
-# declared inputs the type of every member it writes or judges, so the jobs
-# that produce and judge the same content load the same definitions.
+# declared inputs the type of every member it writes or judges, plus the
+# overview type, which defines the conventions every member uses (record
+# IDs, conclusion statuses, the set), so the jobs that produce and judge the
+# same content load the same definitions.
 TYPES = "../../../types"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
@@ -614,7 +616,7 @@ class AnalyseAgenticSystem(Workflow):
             RUNTIME,
             reads=(BOUNDARY,),
             norms=True,
-            extra=(RUNTIME_CONTRACT,),
+            extra=(OVERVIEW_CONTRACT, RUNTIME_CONTRACT),
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
@@ -635,6 +637,7 @@ class AnalyseAgenticSystem(Workflow):
             norms=True,
             extra=(
                 "../../analyse-external-system-epistemic-architecture.md",
+                OVERVIEW_CONTRACT,
                 EPISTEMIC_CONTRACT,
                 RUNTIME_CONTRACT,
             ),
@@ -670,7 +673,12 @@ class AnalyseAgenticSystem(Workflow):
             reads=reads,
             instruction="memory",
             norms=True,
-            extra=("../../analyse-agent-memory.md", MEMORY_CONTRACT, RUNTIME_CONTRACT),
+            extra=(
+                "../../analyse-agent-memory.md",
+                OVERVIEW_CONTRACT,
+                MEMORY_CONTRACT,
+                RUNTIME_CONTRACT,
+            ),
             note=note,
             validator=partial(
                 pass_refusals,

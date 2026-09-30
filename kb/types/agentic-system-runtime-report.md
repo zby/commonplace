@@ -30,7 +30,7 @@ quotation contract, are those of the
 ### Runtime account
 
 `## Runtime account` traces the ordinary shipped invocation and every
-material alternate or forcing route selected by the producing skill. For
+material alternate or forcing route the runtime analyst selects. For
 each material loop it identifies the trigger and principal, identities,
 next-step owner, decision policy and representational form, context,
 state, executor and effect boundary, runtime-client controls, persistence,
@@ -40,7 +40,8 @@ covered and alternate paths, required external contract, and separate
 conclusion-status fields.
 
 For material diagnosis, candidate comparison, admission and successor
-selection, identify who proposes, decides, and can veto. Describe
+selection, identify who proposes, decides, and can veto, on the `RTE-*`
+record of the route where the step happens. Describe
 computational and human contributions separately when they share a step.
 Record answer-oracle access independently: a supplied expected answer or
 reference outcome, its provider, and how it governs judgment. Model
@@ -49,10 +50,12 @@ triggers and the evidenced operating modes (open requests, bounded
 experiments or curricula, or multiple modes), attaching oracle use to the
 relevant mode. Give explicit `uninspected` or `inapplicable` reasons where
 coverage stops. These are descriptive findings, not an autonomy grade.
-Component fixity belongs on `CMP-*` records and revision admission on the
-admitting `RTE-*` records.
+Record whether a model component can change while the system runs on that
+component's `CMP-*` record. Record who admits a change to the system, and
+how the change can be rejected or rolled back, on the `RTE-*` record of the
+route that makes the change.
 
-For every focused test or probe selected by the producing skill, the
+For every focused test or probe the runtime analyst selects, the
 account contains one execution-preflight record:
 
 `check ID | intended conclusion | command, test, or script identity | required dependencies and authority | availability evidence | execution disposition: ran or not run | execution outcome or non-execution reason | conclusion prevented`
@@ -87,9 +90,7 @@ bytes may identify missing output but cannot by itself support an
 `## Shared records` contains the six kind headings `### Components`,
 `### Operative objects`, `### Routes`, `### Claims`, `### Evidenced
 absences`, and `### Behavioral-authority paths`, each holding the records
-of that kind this member declares, or `none declared in this member`; a
-kind that is empty across the whole set says `none found within
-<boundary>` here.
+of that kind this member declares, or `none declared in this member`.
 
 Component and operative-object records preserve source-native identity,
 representational form, storage substrate, and evidence. For
