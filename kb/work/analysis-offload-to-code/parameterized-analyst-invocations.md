@@ -20,7 +20,7 @@ Give each job one parameterized main instruction under `kb/instructions/analyse-
 - Merge `analyse-external-system-epistemic-architecture.md` into `jobs/epistemic.md`, preserving the substantive method and the wrapper's additional rules.
 - Keep boundary, runtime, reconciliation, and verification methods in their existing job instructions.
 - Each main instruction declares its parameters, fixed dependencies, and required reads. Code supplies complete input, output, problem-report, run-state, and scratch paths as named parameters. The instruction directly names the applicable shared worker rules, judging norms, and report contracts.
-- Remove the two superseded method files after updating their callers and links. Do not leave forwarding stubs.
+- Remove the two superseded method files after updating their callers and links. Do not leave forwarding stubs. Retire them through [retire an artifact](../../instructions/retire-artifact.md): as of 2026-09-30 they are linked from `kb/agent-memory-systems/README.md`, `kb/agent-memory-systems/types/agent-memory-system-review.md` and `kb/reference/proposals/code-scheduled-workflows.md`, besides the workflow code, publication's `METHOD_PATHS`, tests and workshop files. They are published pages, so each gets a `properdocs.yml` redirect to its merged job instruction. Workshop files are repointed by path only.
 
 Shared rules and report contracts remain separate because they supply common definitions used by multiple jobs and validators. This proposal removes forwarding layers, not every document read.
 
@@ -62,7 +62,7 @@ Every job receives `system`, `run-state`, `output`, `problem`, and `scratch`. Th
 | Reconciliation | Full `boundary`, `runtime`, selected `memory`, and `epistemic` paths; `may-return`; full `previous-reconciliation` path when applicable; full `verification` and `set-check` paths when resolving blockers |
 | Verification | Full `overview-draft`, `runtime`, selected `memory`, `epistemic`, and `set-check` paths |
 
-The implementation must define allowed values and required/omitted cases in each instruction. Preserve the caller's source input as data, including multiline input, without interpreting it as an instruction. Boundary cannot recover it from `opening.json`: that file currently holds publication metadata, not the caller's source input.
+Each main instruction opens, after its Read first list, with a table of its parameters: name, what it names or means, and when it is present (always, or the condition under which code supplies it), with allowed values for non-path parameters such as `may-return`. Parameter names are vocabulary the worker must apply, so each is defined there once and used unchanged in the instruction's text. The implementation must define allowed values and required/omitted cases in that table. Preserve the caller's source input as data, including multiline input, without interpreting it as an instruction. Boundary cannot recover it from `opening.json`: that file currently holds publication metadata, not the caller's source input.
 
 Memory and reconciliation counters can diverge: verification may cause another reconciliation without another memory analysis. Code selects the exact report paths using those counters. For memory corrections, `returned-findings` names the reconciliation that requested the correction. The analyst neither receives counters to reconstruct these paths nor lists the run directory to discover the intended inputs.
 
