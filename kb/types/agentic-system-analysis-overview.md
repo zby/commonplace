@@ -53,10 +53,13 @@ or supply comparison rows. Correct retained output through a new run.
 
 The run has one namespace: `SRC-*` sources, `CMP-*` components, `OBJ-*`
 operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced
-absences, and `BAP-*` behavioral-authority paths. A record ID other than
-`SRC-*` carries the prefix of the pass that established it: none for the
-runtime pass (`OBJ-1`), `MEM-` for the memory lens (`MEM-OBJ-1`), `EPI-`
-for the epistemic lens (`EPI-OBJ-1`). The prefix is part of the ID for
+absences, and `BAP-*` behavioral-authority paths. The run's three
+**analysts** are the jobs that inspect the source and each write one
+member: the runtime analyst, the memory analyst and the epistemic analyst.
+A record ID other than `SRC-*` carries the prefix of the analyst that
+established it: none for the runtime analyst (`OBJ-1`), `MEM-` for the
+memory analyst (`MEM-OBJ-1`), `EPI-` for the epistemic analyst
+(`EPI-OBJ-1`). The prefix is part of the ID for
 the life of the set; no step renames a record. IDs are unique across the
 set and resolve within it. Write each ID in full, including lists,
 using commas or words between referenced IDs. The validator resolves
@@ -66,13 +69,13 @@ checks.
 
 `SRC-*` records are declared only in the first cell of a table row in this
 overview's Source register, as `| SRC-1 | ... |`.
-Every other record is declared exactly once, in the member of the pass
+Every other record is declared exactly once, in the member of the analyst
 that established it: unprefixed IDs in the runtime report, `MEM-` IDs in
 the memory report, `EPI-` IDs in the epistemic report. A cross-member
 reference is the full ID.
 
 Canonical identity applies from declaration, not only final acceptance.
-When two passes established the same thing, both records stay declared,
+When two analysts established the same thing, both records stay declared,
 and the Reconciliation supersedes one with an amendment. A split gives the
 new parts fresh IDs and marks the combined record superseded; its ID does
 not change referent. A superseded ID stays declared, so references to it
@@ -86,19 +89,19 @@ level-three kind headings and declared once each as a level-four heading,
 title. Prose, lists and table rows never declare these records. The same
 grammar and duplicate checks apply to every prefix. A level-four heading of the form
 `#### On OBJ-1 — Short label` is an **annotation**: another member's
-lens-specific fields on a record it does not declare. It never redefines
+analyst-specific fields on a record it does not declare. It never redefines
 generic identity, and a member never annotates a record it declares.
 Annotations sit in the section the member's type names: `## Annotations`
 in the runtime report, under `## Shared records` in the memory report.
 
-An **amendment** corrects a declared fact of any pass's record. Amendments
+An **amendment** corrects a declared fact of any analyst's record. Amendments
 live in one place: this overview's `## Reconciliation`, as paragraphs
 that open `Amendment:` followed by the amended record's full ID and give
 the superseded value, replacement value, evidence anchor, and affected
 findings. An anchored conflict is an amendment carrying both values. A
 supersession is an amendment of the form `Amendment: MEM-RTE-3 is
 superseded by RTE-7`, with the evidence for the identity. No member is
-rewritten after the pass that wrote it; a member never carries a second
+rewritten after the job that wrote it; a member never carries a second
 version of a record or an amendment section.
 
 ### Status fields
@@ -183,12 +186,12 @@ of semantic verification.
 ### Reconciliation
 
 `## Reconciliation` records supersessions of duplicate records, the set's
-amendments, anchored conflicts, independent convergence, cross-lens
-ownership checks, and integration-issue dispositions. It names affected
+amendments, anchored conflicts, independent convergence, ownership checks
+across the analysts, and integration-issue dispositions. It names affected
 IDs in full and states how each discrepancy was disposed without
 selecting the strongest-sounding status. Every ID it cites, amendments
-included, resolves in the set. A lens record found to duplicate another
-pass's record is superseded here, never removed from its member.
+included, resolves in the set. A record of the memory or epistemic analyst
+found to duplicate another analyst's record is superseded here, never removed from its member.
 
 Every member's relative links stay inside the set directory, because the
 set moves when it is retained; member validation rejects a link that
@@ -206,7 +209,7 @@ of a consumed theory improved the system's capacity for future action,
 whether the system is reflective or autonomous, and whether it is
 [self-improving](../notes/definitions/self-improving-system.md) at the declared boundary, each at its own evidence status;
 these are independent properties, not a grade or a ladder. It is organized
-around the system's operational progression, not as concatenated lens
+around the system's operational progression, not as concatenated analyst
 reports, and cites member records rather than restating them. It gives no
 product ranking, generic adoption advice, system-wide epistemic grade,
 Commonplace delta, or transfer recommendation. For learning and

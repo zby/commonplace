@@ -1,13 +1,13 @@
 ---
 type: types/type-spec.md
 name: agent-memory-analysis-report
-description: "Memory specialist's source-grounded findings, comparison profile and integration questions for one analysis run; the report is the set's memory member unchanged"
+description: "Memory analyst's source-grounded findings, comparison profile and integration questions for one analysis run; the report is the set's memory member unchanged"
 schema: ./agent-memory-analysis-report.schema.yaml
 ---
 
 # Agent memory analysis report
 
-The memory specialist's source-grounded findings, their comparison
+The memory analyst's source-grounded findings, their comparison
 classifications, and their integration questions for one run, at the
 run's frozen boundary. The last report the run accepts is the
 set's memory member byte for byte: it declares its records under their
@@ -77,7 +77,7 @@ their limits retained in the records. A wired witness does not upgrade
 another route or value. A value counts once per system even if several
 routes support it. Axis-level `records` support the coverage assessment.
 Every record the profile references is declared or annotated
-(`#### On <ID>`) in this report itself; the specialist annotates any
+(`#### On <ID>`) in this report itself; the memory analyst annotates any
 seeded record its profile cites, so the profile validates without the
 other members. Other
 assessments require `values: []` and `evidence: {}`. `absent` requires an

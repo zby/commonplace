@@ -34,7 +34,7 @@ byte: nothing is mapped, merged or appended afterwards, and the reconciliation's
 corrections to your records are amendments in the overview. Write it as
 the member.
 Do not load the legacy review type, prior system reviews, surveys, matrix
-outputs, or style exemplars. The runtime pass owns the unprefixed IDs; the
+outputs, or style exemplars. The runtime analyst owns the unprefixed IDs; the
 reconciliation owns integration. Do not call agent listings for status: their
 payloads may include prior analyses, even with a path filter.
 

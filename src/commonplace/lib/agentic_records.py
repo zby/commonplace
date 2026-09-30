@@ -5,9 +5,9 @@ from __future__ import annotations
 import re
 from collections import Counter
 
-# A record ID carries the prefix of the pass that established it, for the life
-# of the set: none for the runtime pass, `MEM-` for the memory lens, `EPI-` for
-# the epistemic lens.
+# A record ID carries the prefix of the analyst that established it, for the
+# life of the set: none for the runtime analyst, `MEM-` for the memory analyst,
+# `EPI-` for the epistemic analyst.
 _RECORD_ID = r"(?:(?:MEM|EPI)-)?(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
 _ID = rf"(?:SRC-\d+|{_RECORD_ID})"
 _DECLARATION = re.compile(
@@ -59,7 +59,7 @@ def annotated_ids(body: str) -> set[str]:
 
 
 def is_absence(identifier: str) -> bool:
-    """Whether a record ID names an evidenced absence, whichever pass declared it."""
+    """Whether a record ID names an evidenced absence, whichever analyst declared it."""
     return re.fullmatch(r"(?:(?:MEM|EPI)-)?ABS-\d+", identifier) is not None
 
 

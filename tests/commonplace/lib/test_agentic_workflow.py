@@ -171,7 +171,7 @@ class Fixture:
         )
         if returned:
             text += (
-                "\n## Returned to the specialist\n\n"
+                "\n## Returned to the memory analyst\n\n"
                 "- MEM-OBJ-1: the write-side anchor does not resolve at `README.md`.\n"
             )
         return text
@@ -390,7 +390,7 @@ def test_returned_findings_run_correction_rounds_until_the_last(
     refused = scripted.round()
     attempt, prompt = prompt_of(refused, last)
     assert attempt == 2
-    assert "this is the last round: remove `## Returned to the specialist`" in prompt
+    assert "this is the last round: remove `## Returned to the memory analyst`" in prompt
     assert "This is the last round: it may not return findings." in prompt
 
     results = scripted.run()
@@ -415,7 +415,7 @@ def test_returned_findings_run_correction_rounds_until_the_last(
     assert member == (fixture.run_dir / f"memory-report-{rounds}.md").read_bytes()
     assert f"Written in round {rounds}." in member.decode()
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
-    assert "Returned to the specialist" not in overview
+    assert "Returned to the memory analyst" not in overview
 
 
 def last_prompt(fixture: Fixture, name: str) -> str:

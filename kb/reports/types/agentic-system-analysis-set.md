@@ -20,7 +20,7 @@ and passes ordinary file validation independently.
 The set rule checks run and boundary agreement, duplicate declarations,
 cross-member record references and comparison-profile references against
 the union of declarations. It requires no run-state file or frozen checkout.
-Source anchors and specialist provenance remain workflow checks.
+Source anchors and the memory analyst's provenance remain workflow checks.
 
 Run-state and generated reviews pin the manifest bytes. Published sets are
 frozen; corrections require a new run. Working inputs and run state live

@@ -41,14 +41,14 @@ those copies and the public review's `analysis-artifact` and
 `analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
 follow those public fields without ignored state or a source checkout.
 
-The set's `memory.md` is the specialist's last accepted report, unchanged.
+The set's `memory.md` is the memory analyst's last accepted report, unchanged.
 Completion verification checks the manifest, run and boundary identity
 across members, the memory member's complete status and source identity,
 and applies the shared set checks, including cross-member record
 resolution.
 It also checks every member's source and quote anchors.
 These checks establish identity and structure; they do not impose a quote
-minimum, and they do not certify the specialist's semantic judgments.
+minimum, and they do not certify the memory analyst's semantic judgments.
 
 `source` is either a Git commit or an immutable capture. A Git source records
 the stable repository identity, full commit ID, and absolute checkout path. A

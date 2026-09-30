@@ -1,5 +1,5 @@
 ---
-description: Invoked by analyse-agentic-system in every run to trace the analysed system's epistemic routes over the run's records and write the set's epistemic member as a sparse overlay that declares the records the lens establishes.
+description: Invoked by analyse-agentic-system in every run to trace the analysed system's epistemic routes over the run's records and write the set's epistemic member as a sparse overlay that declares the records the epistemic analyst establishes.
 type: types/instruction.md
 ---
 
@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: an evidence-bounded, route-by-route account of whether and how the analysed system acquires or produces truth-apt content, checks it, grants or withholds reliance on it, retains or integrates it, and lets it affect later behavior, with no system-wide epistemic grade.
 
-`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records. The output is the set's epistemic member, `<run-id>/output/epistemic.md`, under the [epistemic report type](../types/agentic-system-epistemic-report.md); its Required blocks fix the six blocks, their fields, the controlled values and the terms they use, and the [overview type](../types/agentic-system-analysis-overview.md#the-set) fixes the set-wide conventions. Read both contracts first. The member cites the records the runtime member declares, and declares the records the epistemic lens establishes, with the passages that support them, in its `## Shared records`. No step rewrites it after you write it. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
+`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records. The output is the set's epistemic member, `<run-id>/output/epistemic.md`, under the [epistemic report type](../types/agentic-system-epistemic-report.md); its Required blocks fix the six blocks, their fields, the controlled values and the terms they use, and the [overview type](../types/agentic-system-analysis-overview.md#the-set) fixes the set-wide conventions. Read both contracts first. The member cites the records the runtime member declares, and declares the records the epistemic analyst establishes, with the passages that support them, in its `## Shared records`. No step rewrites it after you write it. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
 
 ## Overlay rules
 
@@ -20,13 +20,13 @@ Goal: an evidence-bounded, route-by-route account of whether and how the analyse
 
 ## Steps
 
-1. **Fix the boundary.** Fill block 1 from the Boundary and evidence and the Source register of `boundary.md`, stating the lens's own scope and citing the register rather than copying it.
+1. **Fix the boundary.** Fill block 1 from the Boundary and evidence and the Source register of `boundary.md`, stating the epistemic analyst's own scope and citing the register rather than copying it.
 
 2. **Inventory material objects before evaluators.** Fill block 2 for every operative part inside the material-route boundary the type defines. Use system-specific object names and split heterogeneous containers into separate `EPI-` records. Name each target object or proposition and its domain before assessing any evaluator.
 
 3. **Apply the early branch.**
 
-   - If the inventory shows only storage, retrieval, serving, or direct use, with no relevant transformation and no knowledge-production claim, add a ledger row for each material evidenced function or an explicit `no relevant route found`, record no relevant check or epistemic authority within the boundary together with any operational and behavioral authority, write the global no-candidate statement, an explicit no-claim comparison, and a bounded negative conclusion. The lens output is then complete.
+   - If the inventory shows only storage, retrieval, serving, or direct use, with no relevant transformation and no knowledge-production claim, add a ledger row for each material evidenced function or an explicit `no relevant route found`, record no relevant check or epistemic authority within the boundary together with any operational and behavioral authority, write the global no-candidate statement, an explicit no-claim comparison, and a bounded negative conclusion. The epistemic member is then complete.
    - If the system makes a knowledge-production claim but no implemented or observed route supporting it was found, inventory the claimed object and first classify its claimed transformation. If the claim evidence establishes ampliation, use the lifecycle record: declared phases `doctrine only`, unclaimed phases as the scoped evidence permits, every unobserved candidate phase `no instance observed`. Otherwise use the non-ampliative or indeterminate disposition. Add ledger rows for the claimed functions and compare the claim with the absent supporting implementation or operation. Continue with any remaining implemented or observed routes; never let this branch discard them.
    - Otherwise continue. Never expand a scoped absence into a claim that no informal or unobserved route exists.
 

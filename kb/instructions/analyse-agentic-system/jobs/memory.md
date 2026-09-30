@@ -1,9 +1,9 @@
 ---
-description: "Job of an analyse-agentic-system run: the memory specialist, first pass or correction round"
+description: "Job of an analyse-agentic-system run: the memory analyst, first round or correction round"
 type: types/instruction.md
 ---
 
-# Analyse memory and context as the specialist
+# Analyse memory and context as the memory analyst
 
 Follow [Analyse agent memory](../../analyse-agent-memory.md) with `boundary.md` and `output/runtime.md`. Your report goes to the output path your prompt names; code copies the round the reconciliation accepts to `output/memory.md` byte for byte, as the set's memory member. The parent it names is this run's reconciliation. Your output is refused while it is not a valid member or cites a record that neither it, `output/runtime.md` nor the Source register declares; a correction round may also cite records `output/epistemic.md` declares.
 

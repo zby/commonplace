@@ -97,7 +97,7 @@ BOUNDARY_FIELDS = (
     "evidence-tier",
 )
 SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
-RETURNED = "Returned to the specialist"
+RETURNED = "Returned to the memory analyst"
 DESCRIPTION_LENGTH = (50, 250)
 """The length the note schema expects of a description; the reconciliation's
 description becomes the overview's and the review's."""
@@ -318,7 +318,7 @@ def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
 def pass_refusals(
     path: Path, *, repo_root: Path, bodies: Callable[[Path], dict[str, str]]
 ) -> list[str]:
-    """The output of a pass that declares records: a valid member whose
+    """The output of an analyst, which declares records: a valid member whose
     citations resolve against the set so far, which ``bodies`` assembles
     around it."""
     return member_refusals(path, repo_root=repo_root) or reference_refusals(
@@ -440,14 +440,14 @@ class AnalyseAgenticSystem(Workflow):
     stable identity of the source), `source` (the caller's source input, as
     given), and optionally `review-path`.
 
-    Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` lenses;
+    Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
     then rounds of `reconcile-<n>` and `verify-<n>`. Code renders the
     overview and the public review.
     """
 
     correction_rounds = 2
     """How many reconciliation rounds may follow the first, whether a round
-    returned findings to the specialist or its verification named blockers."""
+    returned findings to the memory analyst or its verification named blockers."""
 
     def __init__(self, params=None) -> None:
         super().__init__(params)
@@ -643,11 +643,11 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def memory_job(self, run_dir: Path, round_: int, returned_by: int) -> Job:
-        """One round of the memory specialist. Its report cites the boundary's
+        """One round of the memory analyst. Its report cites the boundary's
         sources, the runtime member and its own records; a correction round,
         which runs after the epistemic member exists, may cite that member too."""
         reads: tuple[str, ...] = (BOUNDARY, RUNTIME)
-        note = "This is the first pass."
+        note = "This is the first round."
         cited = {"runtime": run_dir / RUNTIME}
         if round_ > 0:
             reads += (EPISTEMIC, memory_report(round_ - 1), reconciliation(returned_by))
@@ -700,7 +700,7 @@ class AnalyseAgenticSystem(Workflow):
                 f"one stated in `{round_file('verification', previous)}`."
             )
         note += (
-            " This round may return findings to the specialist."
+            " This round may return findings to the memory analyst."
             if may_return
             else " This is the last round: it may not return findings."
         )

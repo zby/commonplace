@@ -1,18 +1,18 @@
 ---
 type: types/type-spec.md
 name: agentic-system-epistemic-report
-description: "Epistemic member of an analysis set: the six-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic lens establishes"
+description: "Epistemic member of an analysis set: the six-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic analyst establishes"
 schema: ./agentic-system-epistemic-report.schema.yaml
 ---
 
 # Agentic system epistemic report
 
-The member of a run's retained set that carries the epistemic lens: a
-sparse overlay on the set's canonical records tracing whether and how the
+The member of a run's retained set that carries the epistemic analyst's findings:
+a sparse overlay on the set's canonical records tracing whether and how the
 system acquires or produces truth-apt content, checks it, grants or
 withholds reliance, retains or integrates it, and lets it affect later
 behavior. It cites the records other members declare, and it declares
-the records the epistemic lens establishes under their `EPI-` IDs, with
+the records the epistemic analyst establishes under their `EPI-` IDs, with
 the evidence passages that support them. Set-wide conventions are those
 of the [overview](./agentic-system-analysis-overview.md#the-set).
 
@@ -31,7 +31,7 @@ An **epistemic architecture** is the set of routes by which a system
 acquires or produces truth-apt content, checks it, grants or withholds
 reliance, retains or integrates it, and lets it affect later behavior.
 **Truth-apt content** is content whose truth or falsity can be stated over
-a named scope. A route is **material**, and inside the lens boundary, when
+a named scope. A route is **material**, and inside the epistemic analyst's scope, when
 it produces or changes truth-apt content; checks or disposes a candidate;
 grants, withholds, or changes epistemic or operational authority; retains
 or integrates a candidate for later reliance; directly adapts behavior or
@@ -171,7 +171,7 @@ single epistemic score, oracle, status, or unqualified verdict.
 
 ## Shared records
 
-`## Shared records` declares each record the epistemic lens established,
+`## Shared records` declares each record the epistemic analyst established,
 under the set's
 [declaration grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar):
 grouped under the kind headings of the kinds it declares, as `#### EPI-OBJ-1
@@ -180,7 +180,7 @@ grouped under the kind headings of the kinds it declares, as `#### EPI-OBJ-1
 requires of a record of that kind, its source anchors, and the minimum
 verbatim passages its load-bearing findings need. An `EPI-ABS-*` record
 states its searched boundary. State `none declared in this member` when
-the lens established no record.
+the epistemic analyst established no record.
 
 ## Template
 

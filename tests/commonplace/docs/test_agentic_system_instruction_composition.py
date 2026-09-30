@@ -104,7 +104,7 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
 
 
 def test_jobs_state_the_set_rules_they_depend_on() -> None:
-    assert "Declare each record the lens establishes under an `EPI-` ID" in job("epistemic")
+    assert "Declare each record you establish under an `EPI-` ID" in job("epistemic")
     assert "no job rewrites it afterwards" in job("runtime")
     assert "(../../../types/agentic-system-runtime-report.md#shared-records)" in job(
         "judging-norms"
