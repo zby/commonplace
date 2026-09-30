@@ -10,6 +10,8 @@
 
 ## Goal
 
+Pending proposal: [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md) (2026-09-30) removes forwarding layers, retains saved invocations, and makes `step` deliver the exact worker message.
+
 `SKILL.md` is about 526 lines. Much of that length is protocol mechanics written as prose for the agent to carry out by hand (allocate IDs, record HEAD, map IDs, recompute hashes, check truncation, keep exit statuses) and prose guards for failure modes. Move the mechanical and checkable parts into `commonplace-*` commands, validators, and hooks. The agent keeps the judgment work: boundary and target classification, forcing-case selection, route and guarantee judgments, conclusion-status assignment, semantic verification, and synthesis.
 
 ## Not verified yet
