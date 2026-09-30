@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Follow the worker rules of an analysis run
 
-You are one job of a code-scheduled `analyse-agentic-system` run. Code scheduled you and will judge your output. Write only the output file your prompt names, or the problem report it names when you cannot finish, and intermediate files (selection files, extracted sources) in the scratch directory your prompt names. When you finish, reply in one line, and send no other message while you work. Do not edit other files of the run, publish, delegate, stage, or commit. Anything under `workflow-state/` is not yours to read or change, except the prompt file your instruction names.
+You are one job of a code-scheduled `analyse-agentic-system` run. Code scheduled you and will judge your output. Write only the output file your prompt names, or the problem report it names when you cannot finish, and intermediate files (selection files, extracted sources) in the scratch directory your prompt names. When you finish, reply in one line, and send no other message while you work. Do not edit other files of the run, publish, delegate, stage, or commit. Anything under `workflow-state/` is not yours to read or change.
 
 ## Commands
 

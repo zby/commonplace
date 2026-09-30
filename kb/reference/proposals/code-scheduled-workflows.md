@@ -67,7 +67,7 @@ agent orchestrator:
     repeat:
         run step
         done -> tell the operator and stop
-        jobs -> launch one worker per job, each told only to read its prompt and follow it
+        jobs -> read each prompt file and send its unchanged content as one fresh worker's whole message
                 wait for all of them
     when a listed event happens: run report
 ```
