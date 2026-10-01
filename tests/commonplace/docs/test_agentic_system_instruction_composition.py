@@ -69,18 +69,17 @@ def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     assert "searched roots or files" in shared_contract("records")
 
 
-def test_runtime_checks_preflight_before_execution() -> None:
-    runtime = job("runtime")
-
-    assert "Before any dynamic" in runtime
-    assert "execution-preflight" in runtime
-    assert "probe evidence capsule" in runtime
-    # Preflight and capsule semantics live in the runtime report type, not the job.
+def test_analysis_uses_sources_and_supplied_execution_evidence() -> None:
+    rules = job("worker-rules")
+    assert "Do not execute the target, its tests or examples" in rules
+    assert "Source-reading, quotation and Commonplace validation commands" in rules
+    assert "supplied execution evidence" in job("runtime")
+    assert "supplied execution evidence" in job("epistemic")
     runtime = contract("agentic-system-runtime-report")
-    assert "leaves the target check `not run`" in runtime
-    assert "supports no negative finding" in runtime
-    assert "actual intervention and comparison" in runtime
-    assert "checks considered" in runtime
+    assert "Missing execution evidence does" in runtime
+    assert "not establish absent behavior" in runtime
+    assert "execution-preflight" not in runtime
+    assert "Probe evidence" not in runtime
 
 
 def test_transfer_scan_runs_after_complete_state() -> None:

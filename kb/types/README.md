@@ -10,7 +10,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Review gate](./review-gate.md) — one judgment-based quality criterion
 - [Tag README](./tag-readme.md) — a tag's curated landing page at `kb/tags/<tag>-README.md`, with optional validated marks
 - [Agentic system analysis overview](./agentic-system-analysis-overview.md) — entry member: identity, boundary, source register, reconciliation and public synthesis
-- [Agentic system runtime report](./agentic-system-runtime-report.md) — runtime member: runtime account, probe evidence, runtime-declared records
+- [Agentic system runtime report](./agentic-system-runtime-report.md) — runtime member: source-grounded runtime account and runtime-declared records
 - [Agentic system epistemic report](./agentic-system-epistemic-report.md) — epistemic member: the six-block overlay on the set's records
 - [Agent memory analysis report](./agent-memory-analysis-report.md) — memory member: the specialist's accepted findings and comparison profile, unchanged
 

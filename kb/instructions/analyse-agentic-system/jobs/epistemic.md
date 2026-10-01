@@ -43,9 +43,10 @@ memory report. Acceptance requires a valid member with resolved citations.
    Separate heterogeneous parts into inventory rows and flag any needed
    canonical split or defective supplied fact beside its affected finding,
    with evidence. Name the target and domain before judging its evaluator.
-   Read natural-language content, test symbolic artifacts within their
-   semantics, and use available probes for distributed-parametric state.
-   If probes cannot individuate truth-apt content, record `not determinable`.
+   Inspect natural-language content and symbolic artifacts within their
+   semantics. Assess distributed-parametric state only from accessible
+   sources and supplied execution evidence. If that evidence cannot
+   individuate truth-apt content, record `not determinable`.
 
 3. **Apply the early branch.**
 

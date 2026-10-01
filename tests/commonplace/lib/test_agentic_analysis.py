@@ -261,11 +261,7 @@ reviewed-boundary: {revision}
 
 ## Runtime account
 
-No dynamic check planned; static evidence at `README.md` sufficed.
-
-## Probe evidence
-
-none
+Implementation inspected at `README.md`; operation is unobserved.
 
 ## Shared records
 

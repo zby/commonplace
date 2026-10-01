@@ -42,8 +42,9 @@ identity. Source IDs belong to this register alone. A Git row identifies
 the canonical repository, full reviewed commit, inspected commit-relative
 paths and commit-pinned anchors. An access root such as
 `related-systems/<owner>--<repo>/` may also appear; its mutable worktree or
-current HEAD is not the durable evidence identity. A probe row resolves to
-one capsule in the runtime member.
+current HEAD is not the durable evidence identity. Supplied execution
+traces and experimental results use frozen source identities and anchors
+like other evidence; their scope and conditions bound the findings.
 
 | Evidence layer | What it supports |
 |---|---|

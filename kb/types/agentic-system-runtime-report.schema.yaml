@@ -17,22 +17,22 @@ allOf:
             minLength: 1
         additionalProperties: true
       headings:
-        description: "One H1, the four runtime sections in order, and the six record kinds under Shared records."
+        description: "One H1, the three runtime sections in order, and the six record kinds under Shared records."
         type: array
-        minItems: 11
+        minItems: 10
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
           anyOf:
             - enum:
                 - "## Runtime account"
+                # BACKCOMPAT: pinned retained analyses contain this section - remove after migration or retirement.
                 - "## Probe evidence"
                 - "## Shared records"
                 - "## Annotations"
             - pattern: '^#{3,6} .+$'
         allOf:
           - {contains: {const: "## Runtime account"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Probe evidence"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Shared records"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Annotations"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Components"}, minContains: 1, maxContains: 1}
@@ -44,6 +44,6 @@ allOf:
       body:
         allOf:
           - description: "The runtime sections must appear in their canonical reading order."
-            pattern: '(?ms)^## Runtime account\s*$.*?^## Probe evidence\s*$.*?^## Shared records\s*$.*?^## Annotations\s*$'
+            pattern: '(?ms)^## Runtime account\s*$.*?^## Shared records\s*$.*?^## Annotations\s*$'
           - description: "Shared-record subheadings must appear under Shared records in canonical order."
             pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Annotations\s*$)'

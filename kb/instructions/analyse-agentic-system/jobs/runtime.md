@@ -3,7 +3,7 @@ description: "Job of an analyse-agentic-system run: trace and challenge the runt
 type: types/instruction.md
 ---
 
-# Run and challenge the runtime baseline
+# Trace and challenge the runtime baseline
 
 Read every file under `read-first` in your invocation before any other step.
 
@@ -23,12 +23,11 @@ No job rewrites it afterwards.
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one ordinary invocation end to end and record it with the fields the type's Runtime account requires.
 2. Enumerate materially equivalent alternate paths before judging a guarantee: direct model calls, provider-native tools, host callbacks, shell access, extension code, subprocesses or remote workers, manual graph control, and durable variants where present. A guarantee covers only the paths its enforcement point covers.
-3. Trace the smallest warranted set of forcing cases, ordinarily two to four for a full code-grounded analysis. Prefer static inspection. Before any dynamic check, write its execution-preflight record and verify tools, packages, services, credentials, configuration, and authority.
-4. Record an executed check as a `SRC-*` probe evidence capsule.
-5. Record material routes under the shared record contract and load-bearing guarantees under the runtime type. Audit each route's read-back fields and applicability reasons before submitting.
-6. Distinguish the capability surface, current grant set, and deployed isolation envelope. Inspect permissions, approval, delegation, dynamic extension, reliability, observability, providers, packaging, and performance only where they change claimed work, a control path, evidence strength, or a result of the memory or epistemic analyst.
-7. Inventory the distributed-parametric components used by inspected routes (LLMs, embedding models, parametric routers, critics and adapters) as `CMP-*` records with the shared component fields.
-8. Inspect materially distinct mechanisms that admit changes to the product, retained knowledge or instructions, capabilities, or production machinery. Record each on its admitting `RTE-*` record with the conditional fields the shared record contract requires. Leave memory revisions to the memory analyst; the reconciliation attaches them.
+3. Inspect the smallest warranted set of forcing cases in the source, ordinarily two to four for a full code-grounded analysis. Use supplied execution evidence when available; state what remains unobserved.
+4. Record material routes under the shared record contract and load-bearing guarantees under the runtime type. Audit each route's read-back fields and applicability reasons before submitting.
+5. Distinguish the capability surface, current grant set, and deployed isolation envelope. Inspect permissions, approval, delegation, dynamic extension, reliability, observability, providers, packaging, and performance only where they change claimed work, a control path, evidence strength, or a result of the memory or epistemic analyst.
+6. Inventory the distributed-parametric components used by inspected routes (LLMs, embedding models, parametric routers, critics and adapters) as `CMP-*` records with the shared component fields.
+7. Inspect materially distinct mechanisms that admit changes to the product, retained knowledge or instructions, capabilities, or production machinery. Record each on its admitting `RTE-*` record with the conditional fields the shared record contract requires. Leave memory revisions to the memory analyst; the reconciliation attaches them.
 
 Acceptance requires a valid member whose citations resolve against its
 own declarations and the Source register of `boundary`.

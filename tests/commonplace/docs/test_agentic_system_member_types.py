@@ -78,10 +78,6 @@ reviewed-boundary: "{REVISION}"
 
 Trace.
 
-## Probe evidence
-
-none
-
 ## Shared records
 
 ### Components
@@ -227,6 +223,13 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     results = validate(tmp_path, "runtime.md", RUNTIME_TEXT)
     assert results.fails == []
     assert results.note_type == "agentic-system-runtime-report"
+
+
+def test_runtime_report_accepts_a_retained_probe_evidence_section(tmp_path: Path) -> None:
+    content = RUNTIME_TEXT.replace(
+        "## Shared records", "## Probe evidence\n\nnone\n\n## Shared records", 1
+    )
+    assert validate(tmp_path, "runtime.md", content).fails == []
 
 
 def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Path) -> None:
