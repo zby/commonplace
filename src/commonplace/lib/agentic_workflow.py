@@ -569,7 +569,7 @@ class AnalyseAgenticSystem(Workflow):
                 break
             if last:
                 raise StopRun(
-                    "the semantic verification of the last round names blockers: "
+                    "the record verification of the last round names blockers: "
                     + blockers
                 )
             reconcile += 1
@@ -838,6 +838,8 @@ class AnalyseAgenticSystem(Workflow):
                    "runtime": RUNTIME, "memory": memory_report(memory),
                    "epistemic": EPISTEMIC, "set-check": round_file("set-check", round_)},
             instruction="verify", extra=RECORD_CONTRACTS, validator=validator,
+            # The round its blockers would start is the one that may return.
+            parameters={"memory-return": "yes" if round_ + 1 < self.correction_rounds else "no"},
         )
 
     def record_verification_refusals(self, run_dir: Path, path: Path, *, failures: Sequence[str]) -> list[str]:

@@ -1022,9 +1022,15 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
             "round": "after-blockers", "may-return": "no", "previous-reconciliation": "reconcile-1.md",
             "verification": "verification-1.md", "set-check": "set-check-1.md",
         }),
+        ("verify", 0, 0, None, {
+            "boundary": "boundary.md", "reconciliation": "output/reconciliation.md", "runtime": "output/runtime.md",
+            "memory": "memory-report-0.md", "epistemic": "output/epistemic.md", "set-check": "set-check-0.md",
+            "memory-return": "yes",
+        }),
         ("verify", 2, 0, None, {
             "boundary": "boundary.md", "reconciliation": "output/reconciliation.md", "runtime": "output/runtime.md",
             "memory": "memory-report-0.md", "epistemic": "output/epistemic.md", "set-check": "set-check-2.md",
+            "memory-return": "no",
         }),
         ("synthesize", 0, 0, None, {
             "round": "first", "boundary": "boundary.md", "runtime": "output/runtime.md",
@@ -1088,12 +1094,12 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             "problem": str(job.problem_path(run)),
             "scratch": str(run / "scratch" / job.name) + "/",
             **({"source-identity": SOURCE} if kind == "boundary" else {}),
-            **{key: (value if key in {"round", "may-return"} else str(run / value)) for key, value in expected.items()},
+            **{key: (value if key in {"round", "may-return", "memory-return"} else str(run / value)) for key, value in expected.items()},
         }
         path_values = [value for key, value in values.items()
-                       if key not in {"system", "round", "may-return", "source-identity"}]
+                       if key not in {"system", "round", "may-return", "memory-return", "source-identity"}]
         assert all(Path(path).is_absolute() for path in [method, *first_reads, *path_values])
-        files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return"}}
+        files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return", "memory-return"}}
         assert set(job.inputs) == {method, *first_reads, *files}
         assert not set(job.inputs) & {values[key] for key in ("run-state", "output", "problem", "scratch")}
 
