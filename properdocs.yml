@@ -390,6 +390,7 @@ plugins:
         'reference/proposals/review-link-budget-prices-reviewer-attention.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/revise-behavioral-authority-decomposition.md': 'notes/proposals/revise-behavioral-authority-decomposition.md'
         'reference/proposals/semantic-contract-for-tags-and-tag-heads.md': 'reference/proposals/archive/semantic-contract-for-tags-and-tag-heads.md'
+        'reference/proposals/separate-analysis-reconciliation-from-synthesis.md': 'reference/adr/098-separate-analysis-reconciliation-from-synthesis.md'
         'reference/proposals/source-claim-grounding-skill-and-evidence-retention.md': 'reference/proposals/archive/source-claim-grounding-skill-and-evidence-retention.md'
         'reference/proposals/source-genre-is-one-open-field-on-the-snapshot.md': 'reference/proposals/archive/source-genre-is-one-open-field-on-the-snapshot.md'
         'reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md': 'reference/proposals/archive/tag-scope-is-declared-where-membership-claims-are-made.md'

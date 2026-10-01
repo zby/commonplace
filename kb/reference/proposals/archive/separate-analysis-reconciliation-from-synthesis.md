@@ -5,6 +5,7 @@ description: "Proposal (adopted): dated analysis-workflow state and section-size
 
 # Separate analysis reconciliation from synthesis
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 098](../../adr/098-separate-analysis-reconciliation-from-synthesis.md), which carries the selected design and alternatives. The pre-adoption workflow and one run's section-size observations remain here — design texture only.
 
 ## Current state (as of 2026-10-01)
 

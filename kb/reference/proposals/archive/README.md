@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Separate analysis reconciliation from synthesis](./separate-analysis-reconciliation-from-synthesis.md) — adopted by ADR 098, 2026-10-01. The pre-adoption combined writing job and one local run's reconciliation/synthesis section-size observations.
 - [Fewer authored decisions in agentic-system analysis](./fewer-authored-decisions-in-agentic-analysis.md) — adopted by ADR 097, 2026-09-29. The pre-adoption scoping job, memory handoff pins, unchecked review prose, uncompared source identities and loose Blockers reading that the cuts removed.
 - [Lens-prefixed canonical record IDs](./lens-prefixed-canonical-record-ids.md) — adopted by ADR 096, 2026-09-29. The pre-adoption record namespace (lens proposals, the mapping table, memory finalization, the `runtime-final` and `epistemic-final` jobs) and the ten undeclared `EPI-` records that stopped the first code-scheduled run.
 - [Quote occurrence location and verification](./quote-occurrence-location-and-verification.md) — adopted by ADR 094, 2026-09-27. Counts of citations, repeated occurrences, emphasis-dependent matches, and recovered range errors before the shared matcher.
