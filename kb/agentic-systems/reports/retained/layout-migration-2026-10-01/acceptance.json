@@ -1,6 +1,6 @@
 {
   "python_tests": {
-    "passed": 1230,
+    "passed": 1232,
     "failed": 0
   },
   "ruff": "passed",
@@ -113,7 +113,24 @@
     {
       "path": "/tmp/commonplace-agentic-localization-build-accepted.log",
       "sha256": "3a25f122f3f4009fe9d6932ac866f98bea84ab3943986926bf883170541901ed"
+    },
+    {
+      "path": "/tmp/commonplace-pinned-source-full-tests.log",
+      "sha256": "a52da09ec25e1cdf0f8e319186c82e7242b2dcb06852cd9efe5502e995458a75"
+    },
+    {
+      "path": "/tmp/commonplace-pinned-source-localized-tests.log",
+      "sha256": "30505a79d8f178c45177baaa01e2fc1a9e8e379f05656873cde59ac1a0a6eb0d"
     }
   ],
-  "cutover": "deferred while separate Luna run remains active; main checkout and shared tool unchanged"
+  "cutover": "operator authorized integration into main; historical runs retain their opening method and require an isolated tool at that method or a fresh run under the merged method",
+  "pinned_source_acquisition": {
+    "main_method_commit": "c40c0343",
+    "main_python_tests_passed": 1228,
+    "localized_python_tests_passed": 1232,
+    "missing_source_parent_ignored": true,
+    "requested_commit_differs_from_clone_head": true,
+    "source_checkout_clean_and_detached_at_requested_commit": true,
+    "publication_retains_requested_commit": true
+  }
 }

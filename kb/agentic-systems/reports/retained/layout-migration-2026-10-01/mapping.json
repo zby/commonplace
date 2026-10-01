@@ -29,8 +29,8 @@
       "old_path": "kb/instructions/analyse-agentic-system/SKILL.md",
       "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md",
       "old_sha256": "6a49af64bceef22d16a93d2745c788459ca2b0afc2162367d9c1d5855b9fff00",
-      "new_sha256": "1ef9691bcf909a2aa467d9d0778f1167bc5e530a796c56f477bdb7162d6cc0f6",
-      "transformation": "relocation and consumer contract adaptation"
+      "new_sha256": "ced2dedc37388cf8ac15edf6b0f20d85bac92649800b2d32a2f28a5234d91891",
+      "transformation": "relocation and consumer contract adaptation; pinned-source acquisition correction"
     },
     {
       "old_path": "kb/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
@@ -43,8 +43,8 @@
       "old_path": "kb/instructions/analyse-agentic-system/jobs/boundary.md",
       "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md",
       "old_sha256": "602c72208f944865ae0e414476073ffbbcf9d60b78f6e2bbc2add798d828c9b0",
-      "new_sha256": "602c72208f944865ae0e414476073ffbbcf9d60b78f6e2bbc2add798d828c9b0",
-      "transformation": "relocation and consumer contract adaptation"
+      "new_sha256": "54fcddd9cf10d6bf561adb1020bebab9cca292112fe383891f00c7f4fb7c5d68",
+      "transformation": "relocation and consumer contract adaptation; pinned-source acquisition correction"
     },
     {
       "old_path": "kb/instructions/analyse-agentic-system/jobs/epistemic.md",

@@ -12,7 +12,7 @@ model: opus
 
 Analyse one external agentic system at one frozen evidence boundary and publish its retained set and compact generated review. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the run directory under `kb/agentic-systems/reports/state/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/agentic-systems/reports/retained/<run-id>/`; code writes all of them. It does not authorize changes to source worktrees, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the run directory under `kb/agentic-systems/reports/state/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/agentic-systems/reports/retained/<run-id>/`; code writes all of them. The boundary job may acquire and freeze source checkouts under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
 Run the orchestrator from the repository root and keep that working directory throughout the run. Workers must inherit it: `commonplace-validate` discovers the root there, and the boundary job uses `related-systems/`.
 
@@ -30,13 +30,14 @@ Run the orchestrator from the repository root and keep that working directory th
 
    Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/agentic-systems/reports/state/<run-id>`.
 
-   To reuse a Git checkout without refreshing it, add
-   `--param source-revision=<full 40-hex commit>` when the caller requests
-   that revision or asks to keep the existing checkout's commit. For the
-   latter, read `git -C <checkout> rev-parse HEAD` and pass that full commit.
-   The checkout must already exist, be clean and match the requested commit.
-   The boundary worker must not clone, fetch, pull or check out another
-   revision; a missing, dirty or mismatched checkout requires `problem`.
+   Add `--param source-revision=<full 40-hex commit>` when the caller
+   requests that revision or asks to keep the existing checkout's commit.
+   For the latter, read `git -C <checkout> rev-parse HEAD` and pass that full
+   commit. If the checkout is missing, the boundary worker clones the
+   repository and checks out the requested commit, fetching it if needed.
+   An existing checkout must be clean and already match the requested
+   commit; the worker inspects it without refreshing or changing it.
+   A dirty or mismatched checkout, or an unavailable commit, requires `problem`.
    Code refuses a boundary that reports another source kind or revision.
    Omit this option to let the boundary job acquire and freeze a source
    under its normal rules.

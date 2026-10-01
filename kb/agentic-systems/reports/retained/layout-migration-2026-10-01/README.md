@@ -53,12 +53,17 @@ is not deleted by this migration.
 
 Implementation and checks use the `localize-agentic-analysis` branch in
 `/home/zby/llm/commonplace-agentic-localization`, with a separate editable uv tool
-under `/tmp/commonplace-agentic-localization-tools/`. The shared tool continues
-to import `/home/zby/llm/commonplace/src/commonplace/` so the concurrent Luna run
-in `/home/zby/.codex/worktrees/b9ad/commonplace` remains on its opening method.
-Integrating this branch into the shared checkout is deferred until that run
-finishes. If its outputs are adopted, inventory and migrate those outputs under
-the same bounded transformation before cutover; never rewrite its method commit.
+under `/tmp/commonplace-agentic-localization-tools/`. The shared tool imports
+`/home/zby/llm/commonplace/src/commonplace/` even from another worktree; a Git
+worktree does not isolate that implementation. The concurrent Luna run in
+`/home/zby/.codex/worktrees/b9ad/commonplace` was blocked before analysis because
+its pinned-source checkout was missing. The corrected acquisition method must
+be committed in the invoking worktree before opening a fresh run. A historical
+run must retain its opening method and use an isolated tool at that method.
+The operator authorized collection-layout cutover into the shared checkout.
+If additional outputs are adopted, inventory and migrate them
+under the same bounded transformation before cutover; never rewrite their
+method commits.
 
 ## Consumer change packet
 
@@ -128,7 +133,8 @@ consumer searches and the explicit historical dispositions.
 - Focused workflow/publication checks: 201 passed before final drift guards.
 - Instruction composition, runtime projections, package boundaries and site
   publication checks: 17 passed. Type-contract integrity checks: 10 passed.
-- Full Python suite: 1,230 passed.
+- Full Python suite: 1,232 passed, including acquisition of a missing checkout
+  at a requested commit older than the clone's default HEAD.
 - `uv run ruff check .`: passed. Retained source captures are excluded from
   linting rather than edited; two frozen import-order findings remain exact.
 - `commonplace-validate kb/agentic-systems`: passed without warnings or failures;
