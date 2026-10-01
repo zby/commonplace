@@ -40,6 +40,6 @@ Automatic continuation, feedback, measured input/output records and retrieval st
 
 Findings describe implementation at the pinned source boundary. They do not validate the surrogate as real-world science, hidden provider reasoning, external studies or every scenario. Candidate-linked hypothesis/test/revision traces, matched learning comparisons and recalled-content interventions with replanning would support stronger conclusions.
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md) — see-also: canonical records, quotations, both lenses and comparison fields.
+- [Exact analysis result](../reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md) — see-also: canonical records, quotations, both lenses and comparison fields.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger theory-and-criticism claim kept separate from retained feedback.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the two-way self-representation route used here.

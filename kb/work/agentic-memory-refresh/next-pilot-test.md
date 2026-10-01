@@ -54,7 +54,7 @@ the execution date. Do not reuse or overwrite any earlier run.
 
 ## Execution and isolation
 
-Follow the current [analysis skill](../../instructions/analyse-agentic-system/SKILL.md)
+Follow the current [analysis skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
 and its contracts. Run one coordinator plus its memory specialist at a time,
 reserving capacity for the specialist. Both lenses remain mandatory. Preserve
 the previous worker model/configuration where available and record differences;

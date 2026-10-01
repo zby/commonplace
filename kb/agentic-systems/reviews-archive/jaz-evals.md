@@ -48,5 +48,5 @@ The code wires a substantive path from task evidence to retained future solver g
 
 ---
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-evals-01/result.md) — see-also: complete routes, source quotations, comparison fields and evidential limits
+- [Exact analysis result](../reports/retained-archive/AAS-2026-09-26-jaz-evals-01/result.md) — see-also: complete routes, source quotations, comparison fields and evidential limits
 - [Pinned evaluation source](https://github.com/jaz-lang/jaz-evals/tree/83dc51ebbd02c9299890b6db93ddc773f07b74b9) — evidenced-by: frozen implementation and reported results

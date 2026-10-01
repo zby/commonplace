@@ -13,7 +13,7 @@ analysis-result-sha256: 18a90d3619d9357c200ad80b41ade5b654875d9a7ca0b7b1c5203581
 
 Evidence basis: Python source, shipped prompts and two historical result rows at commit `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`, inspected on 2026-09-27. No fresh benchmark or provider call was run. Historical rows do not identify their producing revision.
 
-Dynamic Cheatsheet maintains guidance between model calls. Its benchmark supplies each problem, invokes a generator and sometimes a curator, saves outputs, and carries the current cheatsheet into later work. The strongest supported contribution is automatic retention and delivery of derived guidance. Improved performance caused by that guidance, or by criticism of its content, remains unestablished in this analysis. The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md) retains the route records and evidence distinctions.
+Dynamic Cheatsheet maintains guidance between model calls. Its benchmark supplies each problem, invokes a generator and sometimes a curator, saves outputs, and carries the current cheatsheet into later work. The strongest supported contribution is automatic retention and delivery of derived guidance. Improved performance caused by that guidance, or by criticism of its content, remains unestablished in this analysis. The [exact result](../reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md) retains the route records and evidence distinctions.
 
 ## Runtime and memory
 

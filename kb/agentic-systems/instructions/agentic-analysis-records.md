@@ -119,7 +119,7 @@ scope conditions and parts, not its storage label. Missing rationale does
 not establish absent formulated criticism. Retained rationale names its
 later reader, if any.
 
-Each [theory-builder](../notes/definitions/theory-builder.md) condition has
+Each [theory-builder](../../notes/definitions/theory-builder.md) condition has
 its own conclusion status and evidence under the label
 `theory-builder conditions 1–4`:
 
@@ -137,14 +137,14 @@ separately:
 
 | Property | Required finding |
 |---|---|
-| [Addressability](../notes/definitions/addressable-theory.md) | Degree to which assumptions, scope conditions and parts are individually inspectable and revisable, and the assessment boundary; finer grades exceed condition 1's minimum |
+| [Addressability](../../notes/definitions/addressable-theory.md) | Degree to which assumptions, scope conditions and parts are individually inspectable and revisable, and the assessment boundary; finer grades exceed condition 1's minimum |
 | Persistence | What persists, later consumer and attained horizon: reasoning episode, rounds of one run, runs on one task, or problems/sessions |
 | Learning | Under `learning`: improved capacity for future action, assessment boundary, improvement evidence and attribution evidence. Membership, revision, persistence or connected steps alone do not establish it; capacity need not have been exercised. Later capacity traces persistence to that time; later/recurrent use also traces the retained result and consumer. The memory axis `trace_learning` has its own write-route meaning. |
-| [Reflection](../notes/definitions/reflective-system.md) | Selected aspects within the boundary, their self-representation and both causal directions: aspect changes can update the representation; representation-mediated operations can affect later behavior. Subject matter alone is insufficient; direct machinery modification is unnecessary. |
+| [Reflection](../../notes/definitions/reflective-system.md) | Selected aspects within the boundary, their self-representation and both causal directions: aspect changes can update the representation; representation-mediated operations can affect later behavior. Subject matter alone is insufficient; direct machinery modification is unnecessary. |
 | Reflective theory builder | Its method texts meet conditions 1–4 and are criticized against records of its own operation |
 | Autonomous theory builder | Role-by-role evidence that computation performs every internal operation; users supplying problems and judging products are outside the boundary. Autonomy does not establish reliability. |
 
 Learning, reflection and autonomy remain independent claims. Revision
 selection prefers
-[explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+[explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence; it does not trade fit away for reach.

@@ -201,4 +201,4 @@ migration evidence and durable contracts are complete.
 - [Instruction placement decision](../../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md) — the lifecycle instruction placement rule needs amendment.
 - [Global report types decision](../../reference/adr/087-source-and-report-types-are-global-library-types.md) — the analysis types' current global status needs a scoped amendment.
 - [Analysis collection contract](../../agentic-systems/COLLECTION.md) — current publication, retention and regeneration rules.
-- [Published set contract](../../reports/types/agentic-system-analysis-set.md) — closed membership and member hashing.
+- [Published set contract](../../agentic-systems/types/agentic-system-analysis-set.md) — closed membership and member hashing.

@@ -24,4 +24,4 @@ Memory operates across attempts through workspace persistence and generated cont
 
 The strongest supported contribution is an outcome-gated opportunity to revise artifacts under an external test. Narrow scheduler reflection is wired through phase/time/termination state; conjectural learning and self-improvement remain uninspected. No model, container or benchmark was run. Candidate-linked traces, controlled feedback-dependence checks and provider-specific exposure tests would resolve different remaining questions.
 
-The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-lhtb-01/result.md) retains the runtime map, evidence quotes, memory profile, epistemic analysis and limitations.
+The [exact analysis](../reports/retained-archive/AAS-2026-09-25-lhtb-01/result.md) retains the runtime map, evidence quotes, memory profile, epistemic analysis and limitations.

@@ -24,6 +24,6 @@ Notes accept authored text, whole-file replacement and append; legacy import pre
 
 The extension supports continuity and narrow context-budget reflection: usage changes the representation that drives reminders and rollover policy. It does not establish improved task capacity, conjectural learning, or self-improvement. Retention and delivery do not validate saved assertions about progress. Static tests describe content and persistence contracts with faux responses; no retained execution establishes faithful downstream dependence on recalled content. Pinned host inspection and controlled continuation runs would change those limits.
 
-- [Exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-pi-posthorse-01/result.md) — see-also: canonical records, supporting quotations and fourteen-axis comparison profile.
+- [Exact analysis](../reports/retained-archive/AAS-2026-09-25-pi-posthorse-01/result.md) — see-also: canonical records, supporting quotations and fourteen-axis comparison profile.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the narrow self-representation mapping used here.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger learning claim not established by context continuity.

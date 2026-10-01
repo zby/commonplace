@@ -37,4 +37,4 @@ The strongest learning finding is an afforded feedback-and-reuse route. Criticis
 
 Relevant Notes:
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-prove2me-01/result.md) — see-also: canonical records, quotations, documentation conflicts, both lenses and normalized comparison fields.
+- [Exact analysis result](../reports/retained-archive/AAS-2026-09-25-prove2me-01/result.md) — see-also: canonical records, quotations, documentation conflicts, both lenses and normalized comparison fields.

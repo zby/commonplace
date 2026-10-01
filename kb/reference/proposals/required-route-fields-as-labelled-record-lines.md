@@ -78,6 +78,6 @@ Under C or D, the additional consumer would be the review pipeline applying the 
 
 ## Related
 
-- [Runtime report type](../../types/agentic-system-runtime-report.md) — currently states the route fields this proposal would make checkable.
-- [Memory report type](../../types/agent-memory-analysis-report.md) — currently supplies a shorter route field list; would reference the common contract.
-- [Analysis overview type](../../types/agentic-system-analysis-overview.md) — owns the shared record grammar and would own the common route-field contract.
+- [Runtime report type](../../agentic-systems/types/agentic-system-runtime-report.md) — currently states the route fields this proposal would make checkable.
+- [Memory report type](../../agentic-systems/types/agent-memory-analysis-report.md) — currently supplies a shorter route field list; would reference the common contract.
+- [Analysis overview type](../../agentic-systems/types/agentic-system-analysis-overview.md) — owns the shared record grammar and would own the common route-field contract.

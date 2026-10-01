@@ -11,8 +11,8 @@ The retained reconciliation of the runtime, memory and epistemic members.
 It settles records before public synthesis. Code writes its identity and
 copies the accepted job's Reconciliation section; returned memory findings
 remain working inputs and never enter this member. The [record
-contract](../reference/agentic-analysis-records.md) governs amendments and
-supersessions; the [source contract](../reference/agentic-analysis-sources.md)
+contract](../instructions/agentic-analysis-records.md) governs amendments and
+supersessions; the [source contract](../instructions/agentic-analysis-sources.md)
 governs evidence. The member declares no analyst records of its own.
 
 ## Frontmatter

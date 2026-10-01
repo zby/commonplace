@@ -39,7 +39,7 @@ Reflection is **wired** in a limited operational sense: the official manager rec
 
 ## Scope
 
-The sampled library content establishes artifact shape, not population-wide correctness. Provider/dependency internals, live execution, crash recovery and downstream scientific outcomes are uninspected. Candidate-linked construction records, skill-dependent tests and controlled comparisons would strengthen the empirical conclusions. Full source quotations, route audits, specialist reconciliation and limits are in the [retained exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-arex-skill-01/result.md) — see-also.
+The sampled library content establishes artifact shape, not population-wide correctness. Provider/dependency internals, live execution, crash recovery and downstream scientific outcomes are uninspected. Candidate-linked construction records, skill-dependent tests and controlled comparisons would strengthen the empirical conclusions. Full source quotations, route audits, specialist reconciliation and limits are in the [retained exact analysis](../reports/retained-archive/AAS-2026-09-25-arex-skill-01/result.md) — see-also.
 
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the separate requirement for criticism to improve future capacity.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the connected self-representation used for the bounded manager finding.

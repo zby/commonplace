@@ -14,8 +14,8 @@ or withholds reliance, retains or integrates it, and lets it affect later
 behavior. It cites the records other members declare, and it declares the
 records the epistemic analyst establishes under their `EPI-` IDs, with the
 evidence passages that support them. The
-[source contract](../reference/agentic-analysis-sources.md) governs
-evidence; the [record contract](../reference/agentic-analysis-records.md)
+[source contract](../instructions/agentic-analysis-sources.md) governs
+evidence; the [record contract](../instructions/agentic-analysis-records.md)
 governs identity, common fields and statuses.
 
 ## Frontmatter

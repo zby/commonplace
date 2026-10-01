@@ -65,7 +65,7 @@ helper output agree. The error first appears in the replacement patch.
 The evidence establishes transcription drift; it does not establish the
 model's internal reason for adding the word.
 
-The [memory job](../../instructions/analyse-agentic-system/jobs/memory.md)
+The [memory job](../../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md)
 requires a whole-report rewrite in a correction round. The returned findings
 concerned record references and object mappings, not this quotation. Rewriting
 the whole report exposed already-correct evidence to another transcription.
@@ -81,7 +81,7 @@ derived line range. The [CLI](../../../src/commonplace/cli/quote.py) returns
 the citation on stdout; it does not insert or verify the completed document.
 The worker constructs a new report patch containing the quote text.
 
-[Worker rules](../../instructions/analyse-agentic-system/jobs/worker-rules.md)
+[Worker rules](../../agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md)
 require unchanged insertion. However,
 [standing validation](../../../src/commonplace/lib/validation.py) checks only
 the shape of these analysis citations. The memory job explicitly defers

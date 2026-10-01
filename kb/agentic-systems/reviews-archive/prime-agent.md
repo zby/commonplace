@@ -37,4 +37,4 @@ One evidential distinction is easy to lose: the refiner's expectedOutcome is sto
 
 This is a bounded whole-system code analysis, not an exhaustive inspection of every adapter, extension, UI or installer path. Remote provider internals, deployed grants, actual recalled-content dependence, measured improvement and causal effects remain uninspected. The selected checkout revision was not verified as the latest upstream commit. Candidate-linked runs and controlled comparisons would be needed to strengthen the assessment.
 
-The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md) retains the canonical records, both lenses, comparison profile, source boundaries and limitations.
+The [exact result](../reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md) retains the canonical records, both lenses, comparison profile, source boundaries and limitations.

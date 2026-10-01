@@ -6,7 +6,7 @@ The preceding production pilot and publication fix are committed in
 
 ## Consumption and correction boundary
 
-The [revised procedure](../../instructions/refresh-agent-memory-review-taxonomy.md)
+The [revised procedure](../../agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md)
 reads complete retained main results through the existing strict reader, then
 checks whether classifications preserve the recorded mechanisms. It returns a
 diagnosis with input and method identities. It no longer patches legacy review
@@ -31,7 +31,7 @@ routing; they did not execute a production correction or source refresh.
 
 The explicit population is one system: [Apache Maka's public main
 review](../../agentic-systems/reviews-archive/apache-maka.md) and its [exact retained
-result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md).
+result](../../agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md).
 Run: `AAS-2026-09-05-apache-maka-01`. Source: `https://github.com/apache/maka`.
 Recorded revision: `ece69ab3e7a1629a6073831005711d8aa7160ca4`.
 Cutoff: 2026-09-05. Evidence tier: `code-grounded`.

@@ -34,7 +34,7 @@ Candidate-linked code, rationale and criticism records, matched sampling budgets
 - [Evolutionary orchestrator](https://github.com/minnesotanlp/meta-n/blob/b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8/meta_n/core/evolutionary_orchestrator.py) — evidenced-by: candidate generation, admission, archive selection and repair.
 - [MetaLayer](https://github.com/minnesotanlp/meta-n/blob/b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8/meta_n/core/meta_layer.py) — evidenced-by: native injected execution and frozen task dispatch.
 - [Agentic solver](https://github.com/minnesotanlp/meta-n/blob/b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8/meta_n/core/agentic_solver.py) — evidenced-by: execution feedback and continuation summaries.
-- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-meta-n-01/result.md) — see-also: canonical records and evidence limitations.
+- [Exact analysis result](../reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md) — see-also: canonical records and evidence limitations.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: criticism and improved capacity are separate from retained output.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: self-representation must mediate later behavior.
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have separate evidential requirements.

@@ -24,4 +24,4 @@ The source commit fixes orchestration code, while model/tokenizer and dataset ca
 
 The supported contribution is inspectable measurement across a specified configuration grid. Its correctness and fragility labels depend on supplied gold, parser interpretation and chosen cells; they do not by themselves establish model uncertainty or explain a ranking. Narrow operational reflection is wired through completion-file state affecting later scheduling. Conjectural learning, self-improvement and empirical effects remain uninspected. No model calls or benchmarks were run; controlled asset-pinned executions with complete provenance would resolve different questions from this source analysis.
 
-The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-fragility-grid-01/result.md) contains the full route inventory, source quotes, memory comparison, epistemic analysis and limitations.
+The [exact analysis](../reports/retained-archive/AAS-2026-09-25-fragility-grid-01/result.md) contains the full route inventory, source quotes, memory comparison, epistemic analysis and limitations.

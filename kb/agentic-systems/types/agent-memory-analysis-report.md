@@ -13,8 +13,8 @@ frozen boundary. The last report the run accepts is the set's memory member
 byte for byte: it declares its records under their `MEM-` IDs, and no step
 rewrites it. Corrections to its records are amendments in the reconciliation
 member. Its comparison profile is authoritative for downstream consumers.
-The [source contract](../reference/agentic-analysis-sources.md) governs
-evidence; the [record contract](../reference/agentic-analysis-records.md)
+The [source contract](../instructions/agentic-analysis-sources.md) governs
+evidence; the [record contract](../instructions/agentic-analysis-records.md)
 governs identity, common fields and statuses.
 
 ## Frontmatter
@@ -99,7 +99,7 @@ extraction remains automatic write agency.
 
 ### Behavioral authority
 
-[Behavioral authority](../notes/definitions/behavioral-authority.md) names
+[Behavioral authority](../../notes/definitions/behavioral-authority.md) names
 the force a retained part has at its actual consumer. The profile names
 the consumed part, consumer and effect supporting each value:
 

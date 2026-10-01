@@ -33,4 +33,4 @@ This review characterizes a frozen architecture, not factual performance or depl
 
 Relevant Notes:
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-dualgraph-01/result.md) — see-also: canonical records, retained quotations, both lenses and normalized comparison fields.
+- [Exact analysis result](../reports/retained-archive/AAS-2026-09-25-dualgraph-01/result.md) — see-also: canonical records, retained quotations, both lenses and normalized comparison fields.

@@ -12,7 +12,7 @@ current contract; only the legacy `agentic-system-analysis-archive/` is
 excluded, because its historical contracts differ. Publication and these
 readers also validate each selected set explicitly. They do not require
 local run state, source checkouts, legacy reviews, or a prior CSV. The
-[memory report contract](../../types/agent-memory-analysis-report.md#memory-comparison-fields)
+[memory report contract](../types/agent-memory-analysis-report.md#memory-comparison-fields)
 defines the scoped comparison fields and evidence assessments.
 
 Run from the repository root:

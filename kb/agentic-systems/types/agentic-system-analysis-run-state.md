@@ -31,7 +31,7 @@ run when a review is replaced; they are not disposable candidate files.
 
 The artifact manifest lives at
 `kb/reports/state/agentic-system-analysis/<run-id>/output/ARTIFACT.yaml`.
-Its [set type](../reports/types/agentic-system-analysis-set.md) selects
+Its [set type](./agentic-system-analysis-set.md) selects
 membership from the overview's disposition. The overview's `inputs-commit`
 names the method commit. A complete set publishes a generated review;
 a blocked or out-of-scope set has only the overview and no generated review.

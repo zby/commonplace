@@ -7,7 +7,7 @@ are implemented; Git history records their commit boundary.
 
 ## Deployed behavior and interfaces
 
-The canonical [producer skill](../../instructions/analyse-agentic-system/SKILL.md)
+The canonical [producer skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
 is loaded through the existing skill projections. Its input/output paths,
 authority, lens interfaces and publication commands are unchanged. Its final
 integrated check now requires scope agreement, coverage of every qualifying
@@ -20,7 +20,7 @@ The [result contract](../../types/agentic-system-analysis-result.md) now makes
 the relevant distinctions explicit: local/display material versus opaque
 payloads, generated continuation summaries versus raw logs, actual selection
 versus names on requested objects, and canonical identity before final
-acceptance. The [C10 audit](../../instructions/refresh-agent-memory-review-taxonomy.md)
+acceptance. The [C10 audit](../../agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md)
 applies the same questions to published results. The producer performs its
 check on the unfinished exact result; it does not call C10's published-input
 reader before publication.

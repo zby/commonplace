@@ -133,7 +133,7 @@ annotation establish this distinction. Run 07's verifier accepts the narrower
 definition without addressing it.
 
 **06 omits consolidation despite describing its mechanism.** The
-[memory type](../../types/agent-memory-analysis-report.md) defines
+[memory type](../../agentic-systems/types/agent-memory-analysis-report.md) defines
 `consolidate` as reducing retained content without new claims. The same
 run describes journal windows becoming selected durable facts, and its
 reconciliation correctly says an accidental polarity defect is not a new
@@ -276,7 +276,7 @@ not a statistical model ranking.
 ## Definition repair — 2026-10-01
 
 The operator authorized fixing the definitions after this audit. The
-[memory report type](../../types/agent-memory-analysis-report.md) now
+[memory report type](../../agentic-systems/types/agent-memory-analysis-report.md) now
 defines every authority value by its consumed retained part and effect.
 Ranking includes retained content scored by a fixed algorithm; checkpoint
 input selection is routing; an admission blocklist can supply both

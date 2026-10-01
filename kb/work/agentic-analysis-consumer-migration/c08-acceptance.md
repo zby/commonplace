@@ -3,7 +3,7 @@
 Executed locally on 2026-09-05. The changed consumer is
 [`scan-agentic-system-transfer`](../../instructions/scan-agentic-system-transfer/SKILL.md),
 called by step 9 of
-[`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md).
+[`analyse-agentic-system`](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md).
 The runtime projections resolve to these canonical instruction files.
 
 ## Bounded positive replay

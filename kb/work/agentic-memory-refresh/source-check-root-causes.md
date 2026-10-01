@@ -54,11 +54,11 @@ all five failures quote-matcher failures would misdiagnose that case.
 **Established contract-delivery gap; likely contribution to author behavior.**
 
 Commit `6374109c` added the unique-occurrence requirement to the main
-[analysis skill](../../instructions/analyse-agentic-system/SKILL.md) and the
+[analysis skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) and the
 quotation section of the [result type](../../types/agentic-system-analysis-result.md).
 It did not update the standalone
-[memory instruction](../../instructions/analyse-agentic-system/jobs/memory.md) or
-[memory-report type](../../types/agent-memory-analysis-report.md).
+[memory instruction](../../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md) or
+[memory-report type](../../agentic-systems/types/agent-memory-analysis-report.md).
 Those still explain that publication finds the text in the source, without
 stating that exactly one occurrence is required.
 

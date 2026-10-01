@@ -11,7 +11,7 @@ The reading entry point of one `analyse-agentic-system` run's retained set.
 It holds identity, evidence boundary, source register, an amendment index,
 synthesis, limitations and both verifications. Runtime, memory, epistemic
 and reconciliation findings live in their respective members. The sibling
-`ARTIFACT.yaml` selects the [analysis set type](../reports/types/agentic-system-analysis-set.md)
+`ARTIFACT.yaml` selects the [analysis set type](./agentic-system-analysis-set.md)
 and pins every member, including this overview.
 
 ## Frontmatter
@@ -37,10 +37,10 @@ was not reached, why, and which conclusion that prevents.
 
 ## Shared contracts
 
-The [boundary contract](../reference/agentic-analysis-boundary.md) defines
+The [boundary contract](../instructions/agentic-analysis-boundary.md) defines
 boundary classifications and source declarations. The
-[source contract](../reference/agentic-analysis-sources.md) defines
-evidence layers, anchors and quotations. The [record contract](../reference/agentic-analysis-records.md)
+[source contract](../instructions/agentic-analysis-sources.md) defines
+evidence layers, anchors and quotations. The [record contract](../instructions/agentic-analysis-records.md)
 defines the namespace, declarations, annotations, amendments, fields and
 status meanings for all members.
 
@@ -51,7 +51,7 @@ Working output lives under
 retains it under `kb/reports/retained/agentic-system-analysis/<run-id>/`.
 Run state and compact reviews pin `ARTIFACT.yaml`. The manifest pins the
 reports, and `inputs-commit` identifies the method's committed inputs.
-The [set type](../reports/types/agentic-system-analysis-set.md) owns membership
+The [set type](./agentic-system-analysis-set.md) owns membership
 and set checks. File validation checks this overview independently;
 directory validation checks the whole set. Only complete sets may publish
 or supply comparison rows. Correct retained output through a new run.
@@ -81,7 +81,7 @@ runtime report supports it, the synthesis states separately whether the
 system meets theory-builder conditions 1–4, whether criticism of a consumed
 theory improved the system's capacity for future action, whether the system
 is reflective or autonomous, and whether it is
-[self-improving](../notes/definitions/self-improving-system.md) at the
+[self-improving](../../notes/definitions/self-improving-system.md) at the
 declared boundary, each at its own evidence status; these are independent
 properties, not a grade or a ladder. It is organized around the system's
 operational progression, not as concatenated analyst reports, and cites
@@ -94,7 +94,7 @@ performed.
 
 The Bounded synthesis has a second reader. Code publishes it, after an
 evidence-basis line and before the Limitations, as the body of the public
-[generated review](../agentic-systems/types/generated-review.md). It must
+[generated review](./generated-review.md). It must
 therefore read without the members' context: a public reader has the IDs
 it cites and its links, which code rewrites to point into the retained
 set, but not the members' prose.

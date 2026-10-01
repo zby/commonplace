@@ -5,7 +5,7 @@ type: reference/types/design-proposal.md
 
 # Open an analysis run in code
 
-Opening a run for [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md) is prose the agent carries out by hand: pick a run ID, write run-state from the template, record the method commit, and run destination inspection before reading sources. The agent copies inspection's `expected_incumbent_sha256` into the run's `## Run` prose so two publication commands can be given the same value. Inspection already checks the worktree, but the running package is first checked against the method commit at prepare or publish. This proposal records the option space for moving run opening into code and, in particular, for where the method commit and incumbent digest should live. Publication-time checks remain necessary because the worktree, method and destination can change during analysis.
+Opening a run for [`analyse-agentic-system`](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) is prose the agent carries out by hand: pick a run ID, write run-state from the template, record the method commit, and run destination inspection before reading sources. The agent copies inspection's `expected_incumbent_sha256` into the run's `## Run` prose so two publication commands can be given the same value. Inspection already checks the worktree, but the running package is first checked against the method commit at prepare or publish. This proposal records the option space for moving run opening into code and, in particular, for where the method commit and incumbent digest should live. Publication-time checks remain necessary because the worktree, method and destination can change during analysis.
 
 ## Current state (as of 2026-09-29)
 
@@ -79,4 +79,4 @@ Under A, publication reads the incumbent expectation from structured state; unde
 
 ## Related
 
-- [Run-state type](../../types/agentic-system-analysis-run-state.md) — the contract this proposal would extend under option A.
+- [Run-state type](../../agentic-systems/types/agentic-system-analysis-run-state.md) — the contract this proposal would extend under option A.

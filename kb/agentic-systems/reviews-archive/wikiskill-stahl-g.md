@@ -44,7 +44,7 @@ This review establishes implemented and afforded routes, not observed improvemen
 
 Wiki/skill rules can form a revisable theory, but source-level delivery, edits and score feedback do not establish complete reflective theory refinement. Candidate-linked diagnosis, distinguishing tests and later behavioral traces would be needed. The score gate supports bounded operational adoption, not general truth or transfer guarantees.
 
-The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md) retains source quotations, runtime forcing cases, memory comparison fields, both lenses and their limitations.
+The [exact analysis](../reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md) retains source quotations, runtime forcing cases, memory comparison fields, both lenses and their limitations.
 
 ---
 

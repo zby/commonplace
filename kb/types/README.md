@@ -9,11 +9,11 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Definition](./definition.md) — operational vocabulary definitions
 - [Review gate](./review-gate.md) — one judgment-based quality criterion
 - [Tag README](./tag-readme.md) — a tag's curated landing page at `kb/tags/<tag>-README.md`, with optional validated marks
-- [Agentic system analysis overview](./agentic-system-analysis-overview.md) — entry member: identity, boundary, source register, reconciliation and public synthesis
-- [Agentic system runtime report](./agentic-system-runtime-report.md) — runtime member: source-grounded runtime account and runtime-declared records
-- [Agentic system epistemic report](./agentic-system-epistemic-report.md) — epistemic member: the five-block overlay on the set's records
-- [Agentic system reconciliation report](./agentic-system-reconciliation-report.md) — amendments, supersessions and unresolved conflicts settled before synthesis
-- [Agent memory analysis report](./agent-memory-analysis-report.md) — memory member: the specialist's accepted findings and comparison profile, unchanged
+- [Agentic system analysis overview](../agentic-systems/types/agentic-system-analysis-overview.md) — entry member: identity, boundary, source register, reconciliation and public synthesis
+- [Agentic system runtime report](../agentic-systems/types/agentic-system-runtime-report.md) — runtime member: source-grounded runtime account and runtime-declared records
+- [Agentic system epistemic report](../agentic-systems/types/agentic-system-epistemic-report.md) — epistemic member: the five-block overlay on the set's records
+- [Agentic system reconciliation report](../agentic-systems/types/agentic-system-reconciliation-report.md) — amendments, supersessions and unresolved conflicts settled before synthesis
+- [Agent memory analysis report](../agentic-systems/types/agent-memory-analysis-report.md) — memory member: the specialist's accepted findings and comparison profile, unchanged
 
 ## Type-system contracts
 
@@ -23,8 +23,8 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 
 Collection-specific types live under their owning collection's `types/` directory. See [Collections and types](../reference/collections-and-types.md) for how artifacts use global and collection-local specs and how their paths resolve.
 
-The analysis member types share the [source](../reference/agentic-analysis-sources.md)
-and [record](../reference/agentic-analysis-records.md) contracts. Worker
+The analysis member types share the [source](../agentic-systems/instructions/agentic-analysis-sources.md)
+and [record](../agentic-systems/instructions/agentic-analysis-records.md) contracts. Worker
 invocations supply those files alongside the member types each job needs.
 The boundary job alone also receives the
-[boundary contract](../reference/agentic-analysis-boundary.md).
+[boundary contract](../agentic-systems/instructions/agentic-analysis-boundary.md).

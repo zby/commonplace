@@ -10,8 +10,8 @@ schema: ./agentic-system-runtime-report.schema.yaml
 The runtime baseline: source-grounded invocations and alternate/forcing
 routes, and records under unprefixed IDs. It is
 written before the two specialist members and remains unchanged afterward.
-The [source contract](../reference/agentic-analysis-sources.md) governs
-evidence; the [record contract](../reference/agentic-analysis-records.md)
+The [source contract](../instructions/agentic-analysis-sources.md) governs
+evidence; the [record contract](../instructions/agentic-analysis-records.md)
 governs identity, fields, statuses and theory assessments.
 
 ## Frontmatter

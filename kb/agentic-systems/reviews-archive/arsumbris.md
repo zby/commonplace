@@ -12,7 +12,7 @@ analysis-result-sha256: d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d
 
 # arsumbris
 
-Evidence basis: code and documentation from the entry repository plus all 21 component repositories pinned to release `0.0.1-alpha`, captured 2026-09-23. Static inspection only; no application, agent session or trial was run. The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-arsumbris-02/result.md) retains every component commit, source excerpt, runtime route and comparison field.
+Evidence basis: code and documentation from the entry repository plus all 21 component repositories pinned to release `0.0.1-alpha`, captured 2026-09-23. Static inspection only; no application, agent session or trial was run. The [exact analysis](../reports/retained-archive/AAS-2026-09-23-arsumbris-02/result.md) retains every component commit, source excerpt, runtime route and comparison field.
 
 arsumbris is a typed-knowledge IDE and agent operating layer. Its Rust engine builds a graph over repository files; its Electron host supplies views and launch control; its MCP kernel exposes plugin tools, hooks and context to Claude Code or Codex. Those external harnesses own model turns and delegation. Knowledge, schemas, rules, skills and extension metadata share an editable substrate, so a file can serve as advisory knowledge or become instruction through a selected profile. This is a whole-system review of the release components, with external harness/provider internals excluded.
 
