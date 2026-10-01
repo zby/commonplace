@@ -12,12 +12,13 @@ def prose(path: Path) -> str:
 
 
 def instruction(name: str) -> str:
-    return prose(REPO_ROOT / "kb" / "instructions" / name / "SKILL.md")
+    collection = "kb/agentic-systems" if name in ("analyse-agentic-system", "synthesize-agent-memory-landscape") else "kb"
+    return prose(REPO_ROOT / collection / "instructions" / name / "SKILL.md")
 
 
 def job(name: str) -> str:
     return prose(
-        REPO_ROOT / "kb/instructions/analyse-agentic-system/jobs" / f"{name}.md"
+        REPO_ROOT / "kb/agentic-systems/instructions/analyse-agentic-system/jobs" / f"{name}.md"
     )
 
 
@@ -25,7 +26,7 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
     orchestrator = instruction("analyse-agentic-system")
     run_state = (
         REPO_ROOT
-        / "kb/types/agentic-system-analysis-run-state.md"
+        / "kb/agentic-systems/types/agentic-system-analysis-run-state.md"
     ).read_text(encoding="utf-8")
 
     assert "correctable pre-publication failure" in orchestrator
@@ -35,11 +36,11 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
 
 
 def contract(name: str) -> str:
-    return prose(REPO_ROOT / "kb/types" / f"{name}.md")
+    return prose(REPO_ROOT / "kb/agentic-systems/types" / f"{name}.md")
 
 
 def shared_contract(name: str) -> str:
-    return prose(REPO_ROOT / "kb/reference" / f"agentic-analysis-{name}.md")
+    return prose(REPO_ROOT / "kb/agentic-systems/instructions" / f"agentic-analysis-{name}.md")
 
 
 def test_set_has_one_fixed_state_location() -> None:
@@ -128,3 +129,32 @@ def test_method_paths_exist_in_the_repository() -> None:
     from commonplace.lib.agentic_publication import METHOD_PATHS
 
     assert [path for path in METHOD_PATHS if not (REPO_ROOT / path).exists()] == []
+
+
+def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs() -> None:
+    from commonplace.lib.agentic_publication import METHOD_PATHS
+    from commonplace.lib.agentic_workflow import JOBS, STATE_ROOT
+
+    declared = [REPO_ROOT / value for value in METHOD_PATHS]
+
+    def pinned(path: Path) -> bool:
+        return any(path == item or (item.is_dir() and path.is_relative_to(item)) for item in declared)
+
+    collection = REPO_ROOT / "kb/agentic-systems"
+    contracts = [collection / "COLLECTION.md"]
+    contracts.extend((collection / "types").iterdir())
+    contracts.extend((collection / "instructions").glob("agentic-analysis-*.md"))
+    contracts.extend((REPO_ROOT / JOBS).glob("*.md"))
+    assert contracts and all(pinned(path) for path in contracts)
+    assert all(path.exists() for path in declared)
+    for area in ("reports/state", "reports/retained", "reports/retained-archive", "reviews", "comparisons"):
+        assert not pinned(collection / area / "example.md")
+    assert REPO_ROOT / STATE_ROOT == collection / "reports/state"
+
+
+def test_relocated_skills_keep_both_runtime_projections() -> None:
+    for runtime in (".agents", ".claude"):
+        for name in ("analyse-agentic-system", "synthesize-agent-memory-landscape"):
+            projection = REPO_ROOT / runtime / "skills" / name
+            assert projection.is_symlink()
+            assert projection.resolve() == REPO_ROOT / "kb/agentic-systems/instructions" / name

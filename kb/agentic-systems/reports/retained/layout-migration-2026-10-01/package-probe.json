@@ -1,0 +1,137 @@
+[
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/fresh"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/fresh",
+    "exit_code": 0,
+    "stdout": "Initialized Commonplace project at /tmp/commonplace-agentic-package-probe-accepted/fresh\nCreated:\n- kb/notes\n- kb/notes/types\n- kb/reference\n- kb/reference/types\n- kb/instructions\n- kb/tags\n- kb/sources\n- kb/sources/types\n- kb/tasks/backlog\n- kb/tasks/active\n- kb/tasks/completed\n- kb/work\n- kb/reports\n- kb/reports/cache\n- kb/reports/cache/connect\n- kb/reports/state\n- kb/reports/retained\n- kb/reports/types\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n- .claude/skills/cp-skill-write/SKILL.md\n- .claude/skills/cp-skill-validate/SKILL.md\n- .claude/skills/cp-skill-connect/SKILL.md\n- .claude/skills/cp-skill-convert/SKILL.md\n- .claude/skills/cp-skill-health-check/SKILL.md\n- .claude/skills/cp-skill-ingest/SKILL.md\n- .claude/skills/cp-skill-snapshot-web/SKILL.md\n- .claude/skills/cp-skill-revise-autoreason/SKILL.md\n- .claude/skills/cp-skill-write-multistage/SKILL.md\n- .claude/skills/cp-skill-ground/SKILL.md\n- .claude/skills/cp-skill-library/SKILL.md\n- .agents/skills/cp-skill-write/SKILL.md\n- .agents/skills/cp-skill-validate/SKILL.md\n- .agents/skills/cp-skill-connect/SKILL.md\n- .agents/skills/cp-skill-convert/SKILL.md\n- .agents/skills/cp-skill-health-check/SKILL.md\n- .agents/skills/cp-skill-ingest/SKILL.md\n- .agents/skills/cp-skill-snapshot-web/SKILL.md\n- .agents/skills/cp-skill-revise-autoreason/SKILL.md\n- .agents/skills/cp-skill-write-multistage/SKILL.md\n- .agents/skills/cp-skill-ground/SKILL.md\n- .agents/skills/cp-skill-library/SKILL.md\n- .commonplace/library.md\n- .gitignore\nRefreshed pointers into the installed library:\n- .claude/settings.local.json\n\nCommand installation diagnostics:\n- These commands resolve outside uv's tool executable directory (/home/zby/.local/bin): commonplace-ack-review (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-review), commonplace-ack-trivial-note-changes (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-trivial-note-changes), commonplace-agentic-analysis-finalize (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-finalize), commonplace-agentic-analysis-handoff (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-handoff), commonplace-agentic-analysis-publication (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-publication), commonplace-create-review-jobs (/tmp/commonplace-agentic-wheel-bin/commonplace-create-review-jobs), commonplace-finalize-review-job (/tmp/commonplace-agentic-wheel-bin/commonplace-finalize-review-job), commonplace-freshness-ack (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-ack), commonplace-freshness-retire (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-retire), commonplace-freshness-status (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-status), commonplace-github-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-github-snapshot), commonplace-guard-full-pass-report (/tmp/commonplace-agentic-wheel-bin/commonplace-guard-full-pass-report), commonplace-init (/tmp/commonplace-agentic-wheel-bin/commonplace-init), commonplace-promotion-candidates (/tmp/commonplace-agentic-wheel-bin/commonplace-promotion-candidates), commonplace-quote (/tmp/commonplace-agentic-wheel-bin/commonplace-quote), commonplace-relocate-directory (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-directory), commonplace-relocate-note (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-note), commonplace-resolve-criteria (/tmp/commonplace-agentic-wheel-bin/commonplace-resolve-criteria), commonplace-review-job-list (/tmp/commonplace-agentic-wheel-bin/commonplace-review-job-list), commonplace-review-target-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-review-target-selector), commonplace-source (/tmp/commonplace-agentic-wheel-bin/commonplace-source), commonplace-status (/tmp/commonplace-agentic-wheel-bin/commonplace-status), commonplace-store-healthcheck (/tmp/commonplace-agentic-wheel-bin/commonplace-store-healthcheck), commonplace-validate (/tmp/commonplace-agentic-wheel-bin/commonplace-validate), commonplace-verify-quotes (/tmp/commonplace-agentic-wheel-bin/commonplace-verify-quotes), commonplace-warn-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-warn-selector), commonplace-workflow (/tmp/commonplace-agentic-wheel-bin/commonplace-workflow), commonplace-x-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-x-snapshot). Remove or reorder the shadowing PATH entry; do not use uv tool install --force as the default repair.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--check",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/fresh"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/fresh",
+    "exit_code": 0,
+    "stdout": "ok: .claude/skills/cp-skill-write\nok: .claude/skills/cp-skill-validate\nok: .claude/skills/cp-skill-connect\nok: .claude/skills/cp-skill-convert\nok: .claude/skills/cp-skill-health-check\nok: .claude/skills/cp-skill-ingest\nok: .claude/skills/cp-skill-snapshot-web\nok: .claude/skills/cp-skill-revise-autoreason\nok: .claude/skills/cp-skill-write-multistage\nok: .claude/skills/cp-skill-ground\nok: .claude/skills/cp-skill-library\nok: .agents/skills/cp-skill-write\nok: .agents/skills/cp-skill-validate\nok: .agents/skills/cp-skill-connect\nok: .agents/skills/cp-skill-convert\nok: .agents/skills/cp-skill-health-check\nok: .agents/skills/cp-skill-ingest\nok: .agents/skills/cp-skill-snapshot-web\nok: .agents/skills/cp-skill-revise-autoreason\nok: .agents/skills/cp-skill-write-multistage\nok: .agents/skills/cp-skill-ground\nok: .agents/skills/cp-skill-library\nok: .commonplace/library.md\nok: .claude/settings.local.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "landings"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/fresh",
+    "exit_code": 0,
+    "stdout": "VALIDATION SUCCESS\nTarget: landings\nScope: landings\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full landings\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "kb/notes/package-probe.md"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/fresh",
+    "exit_code": 0,
+    "stdout": "VALIDATION SUCCESS\nTarget: kb/notes/package-probe.md\nScope: kb/notes/package-probe.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/notes/package-probe.md\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/fresh"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/fresh",
+    "exit_code": 0,
+    "stdout": "Initialized Commonplace project at /tmp/commonplace-agentic-package-probe-accepted/fresh\nPreserved existing files already matching scaffold:\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n\nCommand installation diagnostics:\n- These commands resolve outside uv's tool executable directory (/home/zby/.local/bin): commonplace-ack-review (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-review), commonplace-ack-trivial-note-changes (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-trivial-note-changes), commonplace-agentic-analysis-finalize (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-finalize), commonplace-agentic-analysis-handoff (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-handoff), commonplace-agentic-analysis-publication (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-publication), commonplace-create-review-jobs (/tmp/commonplace-agentic-wheel-bin/commonplace-create-review-jobs), commonplace-finalize-review-job (/tmp/commonplace-agentic-wheel-bin/commonplace-finalize-review-job), commonplace-freshness-ack (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-ack), commonplace-freshness-retire (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-retire), commonplace-freshness-status (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-status), commonplace-github-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-github-snapshot), commonplace-guard-full-pass-report (/tmp/commonplace-agentic-wheel-bin/commonplace-guard-full-pass-report), commonplace-init (/tmp/commonplace-agentic-wheel-bin/commonplace-init), commonplace-promotion-candidates (/tmp/commonplace-agentic-wheel-bin/commonplace-promotion-candidates), commonplace-quote (/tmp/commonplace-agentic-wheel-bin/commonplace-quote), commonplace-relocate-directory (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-directory), commonplace-relocate-note (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-note), commonplace-resolve-criteria (/tmp/commonplace-agentic-wheel-bin/commonplace-resolve-criteria), commonplace-review-job-list (/tmp/commonplace-agentic-wheel-bin/commonplace-review-job-list), commonplace-review-target-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-review-target-selector), commonplace-source (/tmp/commonplace-agentic-wheel-bin/commonplace-source), commonplace-status (/tmp/commonplace-agentic-wheel-bin/commonplace-status), commonplace-store-healthcheck (/tmp/commonplace-agentic-wheel-bin/commonplace-store-healthcheck), commonplace-validate (/tmp/commonplace-agentic-wheel-bin/commonplace-validate), commonplace-verify-quotes (/tmp/commonplace-agentic-wheel-bin/commonplace-verify-quotes), commonplace-warn-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-warn-selector), commonplace-workflow (/tmp/commonplace-agentic-wheel-bin/commonplace-workflow), commonplace-x-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-x-snapshot). Remove or reorder the shadowing PATH entry; do not use uv tool install --force as the default repair.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/existing"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 0,
+    "stdout": "Initialized Commonplace project at /tmp/commonplace-agentic-package-probe-accepted/existing\nCreated:\n- kb/notes\n- kb/notes/types\n- kb/reference\n- kb/reference/types\n- kb/instructions\n- kb/tags\n- kb/sources\n- kb/sources/types\n- kb/tasks/backlog\n- kb/tasks/active\n- kb/tasks/completed\n- kb/work\n- kb/reports/cache\n- kb/reports/cache/connect\n- kb/reports/retained\n- kb/reports/types\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n- .claude/skills/cp-skill-write/SKILL.md\n- .claude/skills/cp-skill-validate/SKILL.md\n- .claude/skills/cp-skill-connect/SKILL.md\n- .claude/skills/cp-skill-convert/SKILL.md\n- .claude/skills/cp-skill-health-check/SKILL.md\n- .claude/skills/cp-skill-ingest/SKILL.md\n- .claude/skills/cp-skill-snapshot-web/SKILL.md\n- .claude/skills/cp-skill-revise-autoreason/SKILL.md\n- .claude/skills/cp-skill-write-multistage/SKILL.md\n- .claude/skills/cp-skill-ground/SKILL.md\n- .claude/skills/cp-skill-library/SKILL.md\n- .agents/skills/cp-skill-write/SKILL.md\n- .agents/skills/cp-skill-validate/SKILL.md\n- .agents/skills/cp-skill-connect/SKILL.md\n- .agents/skills/cp-skill-convert/SKILL.md\n- .agents/skills/cp-skill-health-check/SKILL.md\n- .agents/skills/cp-skill-ingest/SKILL.md\n- .agents/skills/cp-skill-snapshot-web/SKILL.md\n- .agents/skills/cp-skill-revise-autoreason/SKILL.md\n- .agents/skills/cp-skill-write-multistage/SKILL.md\n- .agents/skills/cp-skill-ground/SKILL.md\n- .agents/skills/cp-skill-library/SKILL.md\n- .commonplace/library.md\n- .gitignore\nRefreshed pointers into the installed library:\n- .claude/settings.local.json\n\nCommand installation diagnostics:\n- These commands resolve outside uv's tool executable directory (/home/zby/.local/bin): commonplace-ack-review (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-review), commonplace-ack-trivial-note-changes (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-trivial-note-changes), commonplace-agentic-analysis-finalize (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-finalize), commonplace-agentic-analysis-handoff (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-handoff), commonplace-agentic-analysis-publication (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-publication), commonplace-create-review-jobs (/tmp/commonplace-agentic-wheel-bin/commonplace-create-review-jobs), commonplace-finalize-review-job (/tmp/commonplace-agentic-wheel-bin/commonplace-finalize-review-job), commonplace-freshness-ack (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-ack), commonplace-freshness-retire (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-retire), commonplace-freshness-status (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-status), commonplace-github-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-github-snapshot), commonplace-guard-full-pass-report (/tmp/commonplace-agentic-wheel-bin/commonplace-guard-full-pass-report), commonplace-init (/tmp/commonplace-agentic-wheel-bin/commonplace-init), commonplace-promotion-candidates (/tmp/commonplace-agentic-wheel-bin/commonplace-promotion-candidates), commonplace-quote (/tmp/commonplace-agentic-wheel-bin/commonplace-quote), commonplace-relocate-directory (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-directory), commonplace-relocate-note (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-note), commonplace-resolve-criteria (/tmp/commonplace-agentic-wheel-bin/commonplace-resolve-criteria), commonplace-review-job-list (/tmp/commonplace-agentic-wheel-bin/commonplace-review-job-list), commonplace-review-target-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-review-target-selector), commonplace-source (/tmp/commonplace-agentic-wheel-bin/commonplace-source), commonplace-status (/tmp/commonplace-agentic-wheel-bin/commonplace-status), commonplace-store-healthcheck (/tmp/commonplace-agentic-wheel-bin/commonplace-store-healthcheck), commonplace-validate (/tmp/commonplace-agentic-wheel-bin/commonplace-validate), commonplace-verify-quotes (/tmp/commonplace-agentic-wheel-bin/commonplace-verify-quotes), commonplace-warn-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-warn-selector), commonplace-workflow (/tmp/commonplace-agentic-wheel-bin/commonplace-workflow), commonplace-x-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-x-snapshot). Remove or reorder the shadowing PATH entry; do not use uv tool install --force as the default repair.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--check",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/existing"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 0,
+    "stdout": "ok: .claude/skills/cp-skill-write\nok: .claude/skills/cp-skill-validate\nok: .claude/skills/cp-skill-connect\nok: .claude/skills/cp-skill-convert\nok: .claude/skills/cp-skill-health-check\nok: .claude/skills/cp-skill-ingest\nok: .claude/skills/cp-skill-snapshot-web\nok: .claude/skills/cp-skill-revise-autoreason\nok: .claude/skills/cp-skill-write-multistage\nok: .claude/skills/cp-skill-ground\nok: .claude/skills/cp-skill-library\nok: .agents/skills/cp-skill-write\nok: .agents/skills/cp-skill-validate\nok: .agents/skills/cp-skill-connect\nok: .agents/skills/cp-skill-convert\nok: .agents/skills/cp-skill-health-check\nok: .agents/skills/cp-skill-ingest\nok: .agents/skills/cp-skill-snapshot-web\nok: .agents/skills/cp-skill-revise-autoreason\nok: .agents/skills/cp-skill-write-multistage\nok: .agents/skills/cp-skill-ground\nok: .agents/skills/cp-skill-library\nok: .commonplace/library.md\nok: .claude/settings.local.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "landings"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 0,
+    "stdout": "VALIDATION SUCCESS\nTarget: landings\nScope: landings\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full landings\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "kb/notes/package-probe.md"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 0,
+    "stdout": "VALIDATION SUCCESS\nTarget: kb/notes/package-probe.md\nScope: kb/notes/package-probe.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/notes/package-probe.md\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-agentic-package-probe-accepted/existing"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 0,
+    "stdout": "Initialized Commonplace project at /tmp/commonplace-agentic-package-probe-accepted/existing\nPreserved existing files already matching scaffold:\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n\nCommand installation diagnostics:\n- These commands resolve outside uv's tool executable directory (/home/zby/.local/bin): commonplace-ack-review (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-review), commonplace-ack-trivial-note-changes (/tmp/commonplace-agentic-wheel-bin/commonplace-ack-trivial-note-changes), commonplace-agentic-analysis-finalize (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-finalize), commonplace-agentic-analysis-handoff (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-handoff), commonplace-agentic-analysis-publication (/tmp/commonplace-agentic-wheel-bin/commonplace-agentic-analysis-publication), commonplace-create-review-jobs (/tmp/commonplace-agentic-wheel-bin/commonplace-create-review-jobs), commonplace-finalize-review-job (/tmp/commonplace-agentic-wheel-bin/commonplace-finalize-review-job), commonplace-freshness-ack (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-ack), commonplace-freshness-retire (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-retire), commonplace-freshness-status (/tmp/commonplace-agentic-wheel-bin/commonplace-freshness-status), commonplace-github-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-github-snapshot), commonplace-guard-full-pass-report (/tmp/commonplace-agentic-wheel-bin/commonplace-guard-full-pass-report), commonplace-init (/tmp/commonplace-agentic-wheel-bin/commonplace-init), commonplace-promotion-candidates (/tmp/commonplace-agentic-wheel-bin/commonplace-promotion-candidates), commonplace-quote (/tmp/commonplace-agentic-wheel-bin/commonplace-quote), commonplace-relocate-directory (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-directory), commonplace-relocate-note (/tmp/commonplace-agentic-wheel-bin/commonplace-relocate-note), commonplace-resolve-criteria (/tmp/commonplace-agentic-wheel-bin/commonplace-resolve-criteria), commonplace-review-job-list (/tmp/commonplace-agentic-wheel-bin/commonplace-review-job-list), commonplace-review-target-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-review-target-selector), commonplace-source (/tmp/commonplace-agentic-wheel-bin/commonplace-source), commonplace-status (/tmp/commonplace-agentic-wheel-bin/commonplace-status), commonplace-store-healthcheck (/tmp/commonplace-agentic-wheel-bin/commonplace-store-healthcheck), commonplace-validate (/tmp/commonplace-agentic-wheel-bin/commonplace-validate), commonplace-verify-quotes (/tmp/commonplace-agentic-wheel-bin/commonplace-verify-quotes), commonplace-warn-selector (/tmp/commonplace-agentic-wheel-bin/commonplace-warn-selector), commonplace-workflow (/tmp/commonplace-agentic-wheel-bin/commonplace-workflow), commonplace-x-snapshot (/tmp/commonplace-agentic-wheel-bin/commonplace-x-snapshot). Remove or reorder the shadowing PATH entry; do not use uv tool install --force as the default repair.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "/tmp/commonplace-agentic-package-probe-accepted/existing/kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md"
+    ],
+    "cwd": "/tmp/commonplace-agentic-package-probe-accepted/existing",
+    "exit_code": 1,
+    "stdout": "VALIDATION FAILED\nTarget: /tmp/commonplace-agentic-package-probe-accepted/existing/kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md\nScope: /tmp/commonplace-agentic-package-probe-accepted/existing/kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 1 failures across 1 subjects; 0 warnings across 0 subjects\n\nFAILURES:\n- validation.base.frontmatter-type-points-to-a-missing-type-spec | kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md | [base] frontmatter.type points to a missing type spec: types/agentic-system-analysis-run-state.md\n\nDetails: commonplace-validate --full /tmp/commonplace-agentic-package-probe-accepted/existing/kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md\n",
+    "stderr": ""
+  },
+  {
+    "idempotence": "both projects byte-identical after second init",
+    "legacy_disposition": "old ignored run-state preserved; explicit validation reports retired type, requiring separate migration",
+    "generic_skill": "cp-skill-write available; analysis and landscape skills absent"
+  },
+  {
+    "package": "llm_commonplace-0.2.0-py3-none-any.whl",
+    "members": 931,
+    "analysis_docs": "excluded",
+    "generic_types": "included"
+  },
+  {
+    "package": "llm_commonplace-0.2.0.tar.gz",
+    "members": 1036,
+    "analysis_docs": "excluded",
+    "generic_types": "included"
+  }
+]

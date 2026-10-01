@@ -9,8 +9,11 @@ directory is its retention contract.
 | [`cache/`](./cache/README.md) | Ignored outputs that are safe to delete and regenerate. |
 | [`state/`](./state/README.md) | Ignored operational evidence and state whose owning workflow controls cleanup. |
 | [`retained/`](./retained/README.md) | Durable report records kept with the project. |
-| [`types/`](./types/) | Collection-local report type contracts. |
 
 The collection is excluded from the published site and its generated directory
 indexes. Retained reports remain available in the repository and can be cited
 when another artifact needs their exact record.
+
+Agentic analysis method, local types, working runs and retained sets belong to
+`kb/agentic-systems/`. This reports collection keeps general operational state
+and separately retained research evidence.

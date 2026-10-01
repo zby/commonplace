@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-23-gbrain-01
 source-identity: https://github.com/garrytan/gbrain
 reviewed-revision: "6040075c6cb95be5881cc2e1b76ef7d71f4e5d29"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md
 analysis-result-sha256: e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f1885f2b1
 ---
 

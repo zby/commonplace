@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-23-arsumbris-02
 source-identity: https://github.com/arsumbris/arsumbris
 reviewed-revision: arsumbris-0.0.1-alpha-release-bundle-2026-09-23
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-arsumbris-02/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-arsumbris-02/result.md
 analysis-result-sha256: d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d79c80d82
 ---
 

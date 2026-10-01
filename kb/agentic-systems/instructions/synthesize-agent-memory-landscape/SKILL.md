@@ -22,7 +22,7 @@ in the response. Load the output collection's contract before writing there.
 The evidence inputs are generated reviews under `kb/agentic-systems/reviews/`
 and the retained sets their `analysis-artifact` paths and
 `analysis-artifact-sha256` values pin under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`. Each set is five
+`kb/agentic-systems/reports/retained/<run-id>/`. Each set is five
 members: the overview holds the boundary, source register, amendment index,
 synthesis and limitations; `runtime.md` the runtime account and the records
 the runtime pass declared; `memory.md` the memory findings, memory-declared
@@ -32,10 +32,10 @@ conflicts. Validate the artifact directory before reading its members. The compa
 supplies publication identity and navigation. It cannot replace a missing
 member or comparison assessment.
 
-Use `kb/types/agent-memory-analysis-report.md` for the `memory-comparison`
-contract, `kb/reference/agentic-analysis-sources.md` and
-`kb/reference/agentic-analysis-records.md` for shared evidence and record
-conventions, and `kb/types/agentic-system-analysis-overview.md` for overview
+Use `kb/agentic-systems/types/agent-memory-analysis-report.md` for the `memory-comparison`
+contract, `kb/agentic-systems/instructions/agentic-analysis-sources.md` and
+`kb/agentic-systems/instructions/agentic-analysis-records.md` for shared evidence and record
+conventions, and `kb/agentic-systems/types/agentic-system-analysis-overview.md` for overview
 content. Each matrix row preserves its source revision, run,
 analysis cutoff, evidence tier, compared memory boundary, and per-axis
 coverage assessment, values, per-value evidence, and canonical records. No

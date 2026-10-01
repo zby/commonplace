@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-17-wikiskill-stahl-g-01
 source-identity: https://github.com/Stahl-G/wikiskill
 reviewed-revision: "9df975b2145a0e924f344f2a3d116e11d3f025ac"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md
 analysis-result-sha256: 740c450f3edefc8d13f81300e3cd05596fbf59278bf886a3576e51686314f2a8
 ---
 

@@ -6,7 +6,7 @@
   "analysis-run": "AAS-2026-09-24-rsiagent-01",
   "source-identity": "https://github.com/AetherLabsAI/RSIAgent",
   "reviewed-revision": "a9e56263f6deaa493496ad6b155fe24bf131bc12",
-  "analysis-result": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md",
+  "analysis-result": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-rsiagent-01/result.md",
   "analysis-result-sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966"
 }
 ---

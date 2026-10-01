@@ -1,0 +1,1876 @@
+{
+  "base_commit": "7ee3521c3456c4675f02a0b896469da58566ba9f",
+  "path_map": {
+    "kb/instructions/analyse-agentic-system": "kb/agentic-systems/instructions/analyse-agentic-system",
+    "kb/instructions/synthesize-agent-memory-landscape": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape",
+    "kb/instructions/refresh-agent-memory-review-taxonomy.md": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+    "kb/reports/retained/agentic-system-analysis": "kb/agentic-systems/reports/retained",
+    "kb/reports/retained/agentic-system-analysis-archive": "kb/agentic-systems/reports/retained-archive",
+    "kb/reference/agentic-analysis-boundary.md": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+    "kb/reference/agentic-analysis-sources.md": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+    "kb/reference/agentic-analysis-records.md": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+    "kb/types/agentic-system-epistemic-report.md": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+    "kb/types/agentic-system-epistemic-report.schema.yaml": "kb/agentic-systems/types/agentic-system-epistemic-report.schema.yaml",
+    "kb/types/agent-memory-analysis-report.md": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+    "kb/types/agent-memory-analysis-report.schema.yaml": "kb/agentic-systems/types/agent-memory-analysis-report.schema.yaml",
+    "kb/types/agentic-system-analysis-run-state.md": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+    "kb/types/agentic-system-analysis-run-state.schema.yaml": "kb/agentic-systems/types/agentic-system-analysis-run-state.schema.yaml",
+    "kb/types/agentic-system-runtime-report.md": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+    "kb/types/agentic-system-runtime-report.schema.yaml": "kb/agentic-systems/types/agentic-system-runtime-report.schema.yaml",
+    "kb/types/agentic-system-analysis-overview.md": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+    "kb/types/agentic-system-analysis-overview.schema.yaml": "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml",
+    "kb/types/agentic-system-reconciliation-report.md": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+    "kb/types/agentic-system-reconciliation-report.schema.yaml": "kb/agentic-systems/types/agentic-system-reconciliation-report.schema.yaml",
+    "kb/reports/types/agentic-system-analysis-set.md": "kb/agentic-systems/types/agentic-system-analysis-set.md",
+    "kb/reports/types/agentic-system-analysis-set.schema.yaml": "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml"
+  },
+  "files": [
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/SKILL.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md",
+      "old_sha256": "6a49af64bceef22d16a93d2745c788459ca2b0afc2162367d9c1d5855b9fff00",
+      "new_sha256": "1ef9691bcf909a2aa467d9d0778f1167bc5e530a796c56f477bdb7162d6cc0f6",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+      "old_sha256": "709eacb4a086a27b1e9c79461f26f9c8930d54d725d9ac805f799bec3a441318",
+      "new_sha256": "709eacb4a086a27b1e9c79461f26f9c8930d54d725d9ac805f799bec3a441318",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/boundary.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md",
+      "old_sha256": "602c72208f944865ae0e414476073ffbbcf9d60b78f6e2bbc2add798d828c9b0",
+      "new_sha256": "602c72208f944865ae0e414476073ffbbcf9d60b78f6e2bbc2add798d828c9b0",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/epistemic.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md",
+      "old_sha256": "c2f46632b3fbead9e0cca83d8d254f6363961b42c8c402f5970df821e877fc1f",
+      "new_sha256": "c2f46632b3fbead9e0cca83d8d254f6363961b42c8c402f5970df821e877fc1f",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/memory.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+      "old_sha256": "143967f21a6fbbc67be9b950a0ad9bb5c2ab5c73bc0e0467bb8b03d37153b7b0",
+      "new_sha256": "143967f21a6fbbc67be9b950a0ad9bb5c2ab5c73bc0e0467bb8b03d37153b7b0",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/reconcile.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+      "old_sha256": "e83b7a58b02366cc687efb10b6d687c636a3584cc2310a7f2e97d4875a1b2a86",
+      "new_sha256": "e83b7a58b02366cc687efb10b6d687c636a3584cc2310a7f2e97d4875a1b2a86",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/runtime.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/runtime.md",
+      "old_sha256": "93b139398d8afb74ca37e7a9d8dd232d5b5f001df5e957e7f154f35383d0cb0f",
+      "new_sha256": "93b139398d8afb74ca37e7a9d8dd232d5b5f001df5e957e7f154f35383d0cb0f",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/synthesize.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md",
+      "old_sha256": "113758bd5a87a8cd89ad58f29d388eda3e9acdfa0adccf607736268921121f75",
+      "new_sha256": "113758bd5a87a8cd89ad58f29d388eda3e9acdfa0adccf607736268921121f75",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+      "old_sha256": "e7f6a4b80597f95bcf5d28d17689dbafb864ddaa62444010f21e107a1ad7ddc3",
+      "new_sha256": "e7f6a4b80597f95bcf5d28d17689dbafb864ddaa62444010f21e107a1ad7ddc3",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/verify.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify.md",
+      "old_sha256": "e6550fbf82aefd512629686caab5ae55ecec83c89a4267eac5e1b44e22cd4574",
+      "new_sha256": "e6550fbf82aefd512629686caab5ae55ecec83c89a4267eac5e1b44e22cd4574",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/analyse-agentic-system/jobs/worker-rules.md",
+      "new_path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+      "old_sha256": "7f6726a288956303e7cb9c9dab85c5fbe86ab222ffdab2c39b3d1c0ddaf7b884",
+      "new_sha256": "e8df0f4357a948a04eba0141b89750e877b8639504bc85297888b7e6e95f78e7",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/synthesize-agent-memory-landscape/SKILL.md",
+      "new_path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+      "old_sha256": "a553fba1d7fad386809429026bdd09102bf24967193b0f04a23a4dddea2483eb",
+      "new_sha256": "8ef2d4b62797e2c96bb1ad9b881974e84675c18b48f320918a1d3be7baba9a07",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/instructions/refresh-agent-memory-review-taxonomy.md",
+      "new_path": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+      "old_sha256": "81fc0c684b0504ed89074ebdc1dd586c5e8c09f832fcd72a81a4dbf194bad67b",
+      "new_sha256": "f98a01278a01378a2c21b5852b471c4136bdb73e8c7d4e6f6caa10ced6e1b57d",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/ARTIFACT.yaml",
+      "old_sha256": "427ebd1b22d0c598080d1b8cd78a9fd37b2462b196100ba6b64bd038d48cadb7",
+      "new_sha256": "e409b30ce075f68a71fbdf29719dd9d2816e639d687a8d0bfc0fc7a164bade8e",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/epistemic.md",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/epistemic.md",
+      "old_sha256": "3595f0cc6c7e5f139b1ad6277312dc950c8e267b7adae37bc6ac43b1c59cb232",
+      "new_sha256": "7b60078ec2d7f19be9282c4918829b9aa57d591e58c9898701ad14087b89b016",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/memory.md",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/memory.md",
+      "old_sha256": "549e3a2e107ea773c384077840425ca5b5a2c5c822ff93ff94afc1eb0e310994",
+      "new_sha256": "270b72ee653061c7f18d88af28faae717660038686466728f6e0187f2c5133ed",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/overview.md",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/overview.md",
+      "old_sha256": "db730d2cb0a011b0ed136e4aa72dc7aaee10875e4804c7352552ac3b0fc016f4",
+      "new_sha256": "87e0b11026cb62b08d9261299893c86806b4ff309b68a9615a1ca745f4a012c7",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/reconciliation.md",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/reconciliation.md",
+      "old_sha256": "9320241b2d9023d0962930c8e534b2c57939123e6411fcb405900df29cfda841",
+      "new_sha256": "abf7e1c9e270474b8a0863c4bab6691453ca50878fd89b31c375145a3273c3d5",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/runtime.md",
+      "new_path": "kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/runtime.md",
+      "old_sha256": "c5460817e5fcff0936a64d8f64dca81a299fa884a5d009ed672cd3319271ff89",
+      "new_sha256": "319250e7662ac40cbc9fc9858f451145e486b024445be4bf5f877d3c518a7d77",
+      "transformation": "type identity and relocation-required relative links; derived member hashes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/.commonplace-validation-ignore",
+      "new_path": "kb/agentic-systems/reports/retained-archive/.commonplace-validation-ignore",
+      "old_sha256": "d3343b31b3d71c271c641bb8217ef2a379d73ec31618e998470e67c66fb54210",
+      "new_sha256": "d3343b31b3d71c271c641bb8217ef2a379d73ec31618e998470e67c66fb54210",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md",
+      "old_sha256": "9beba2abfd2ea5079e4f436a386bffd978f50192b9860bf40d784389e838b455",
+      "new_sha256": "9beba2abfd2ea5079e4f436a386bffd978f50192b9860bf40d784389e838b455",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-06/result.md",
+      "old_sha256": "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8",
+      "new_sha256": "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-oh-my-pi-01/result.md",
+      "old_sha256": "1522dc6e1e95ac7e1b631ae5f475207bf20fde7179b9c18d07e75775ba76c569",
+      "new_sha256": "1522dc6e1e95ac7e1b631ae5f475207bf20fde7179b9c18d07e75775ba76c569",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-oh-my-pi-02/result.md",
+      "old_sha256": "2f01cc27ddbe020b66c41e843fc7887271282f90e95fa446dd02d0f8bcaa2d45",
+      "new_sha256": "2f01cc27ddbe020b66c41e843fc7887271282f90e95fa446dd02d0f8bcaa2d45",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md",
+      "old_sha256": "e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2",
+      "new_sha256": "e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md",
+      "old_sha256": "740c450f3edefc8d13f81300e3cd05596fbf59278bf886a3576e51686314f2a8",
+      "new_sha256": "740c450f3edefc8d13f81300e3cd05596fbf59278bf886a3576e51686314f2a8",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-21-supermemory-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-21-supermemory-01/result.md",
+      "old_sha256": "441dca8f6dd913eb6021ffa749b4e0f8157de412b5cbfbc36cf14122eeebb10c",
+      "new_sha256": "441dca8f6dd913eb6021ffa749b4e0f8157de412b5cbfbc36cf14122eeebb10c",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-arsumbris-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-arsumbris-02/result.md",
+      "old_sha256": "d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d79c80d82",
+      "new_sha256": "d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d79c80d82",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md",
+      "old_sha256": "e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f1885f2b1",
+      "new_sha256": "e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f1885f2b1",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-meta-n-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md",
+      "old_sha256": "9650f608684b43bd44da354dd055f4cbeba5eab3a38f285f3ea351f6d73ec17e",
+      "new_sha256": "9650f608684b43bd44da354dd055f4cbeba5eab3a38f285f3ea351f6d73ec17e",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-rsiagent-01/result.md",
+      "old_sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966",
+      "new_sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-sol-pi-01/result.md",
+      "old_sha256": "aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16",
+      "new_sha256": "aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-aide2-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-aide2-01/result.md",
+      "old_sha256": "b11a5d87ebcf47058e11499fe94a24a130dc2a1ebe1c3a98aa7cfb7b5c927689",
+      "new_sha256": "b11a5d87ebcf47058e11499fe94a24a130dc2a1ebe1c3a98aa7cfb7b5c927689",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-arex-skill-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-arex-skill-01/result.md",
+      "old_sha256": "973dc7c3679aaadff574cb9b4cc9d40602a8a9c120190430fa48bf8fdd356d47",
+      "new_sha256": "973dc7c3679aaadff574cb9b4cc9d40602a8a9c120190430fa48bf8fdd356d47",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-contextpilot-01/result.md",
+      "old_sha256": "8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3",
+      "new_sha256": "8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-dualgraph-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-dualgraph-01/result.md",
+      "old_sha256": "e0a7c8fbc42d2c877c8d4fd2c7ae6b0fddde46d867ebe8baf61a9fda4cd021d8",
+      "new_sha256": "e0a7c8fbc42d2c877c8d4fd2c7ae6b0fddde46d867ebe8baf61a9fda4cd021d8",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md",
+      "old_sha256": "45eefb6b58e89b14c890e3e60c5e4d19b07365002409cca493b1554ef48cc097",
+      "new_sha256": "45eefb6b58e89b14c890e3e60c5e4d19b07365002409cca493b1554ef48cc097",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-ecdysis-01/result.md",
+      "old_sha256": "fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533",
+      "new_sha256": "fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-enoch-01/result.md",
+      "old_sha256": "00798b76561a0249d41b723e62d503d7d5464c8c92bf17b8dc6cd36d08807df3",
+      "new_sha256": "00798b76561a0249d41b723e62d503d7d5464c8c92bf17b8dc6cd36d08807df3",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-evoontology-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-evoontology-01/result.md",
+      "old_sha256": "aa9766294d0d76b819168cc4d430077f219929da7689d5b5effeedb374ce105d",
+      "new_sha256": "aa9766294d0d76b819168cc4d430077f219929da7689d5b5effeedb374ce105d",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-fragility-grid-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-fragility-grid-01/result.md",
+      "old_sha256": "70d8208bdae0dedbb7f16efd1e23d0c699c5f3e3ec5d5bbad313553daf88ec9f",
+      "new_sha256": "70d8208bdae0dedbb7f16efd1e23d0c699c5f3e3ec5d5bbad313553daf88ec9f",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-instinctual-memory-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-instinctual-memory-01/result.md",
+      "old_sha256": "bce3cf2b188d9e155481ac02d7711d018598ab6876ced5a8fdca8c81c94dcb06",
+      "new_sha256": "bce3cf2b188d9e155481ac02d7711d018598ab6876ced5a8fdca8c81c94dcb06",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-jepa-anything-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-jepa-anything-01/result.md",
+      "old_sha256": "61c8f37fd062024ef63441a578523566765fafc22a0fb6dbf968ea76e5df11b0",
+      "new_sha256": "61c8f37fd062024ef63441a578523566765fafc22a0fb6dbf968ea76e5df11b0",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-lhtb-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-lhtb-01/result.md",
+      "old_sha256": "615b32ab30f9072f535b674f92b9fd95609cb3f0a9d893c6abc3c7ba51a58af9",
+      "new_sha256": "615b32ab30f9072f535b674f92b9fd95609cb3f0a9d893c6abc3c7ba51a58af9",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-merchantbench-01/result.md",
+      "old_sha256": "87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def",
+      "new_sha256": "87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-modularrsi-01/result.md",
+      "old_sha256": "237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f45b9cd4b3",
+      "new_sha256": "237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f45b9cd4b3",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-openviking-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-openviking-01/result.md",
+      "old_sha256": "1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189993a63af",
+      "new_sha256": "1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189993a63af",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-pi-posthorse-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-pi-posthorse-01/result.md",
+      "old_sha256": "19d203c7135f34278b17016d93a90c7637adee2484ca1f2d7810f59a0a2a0782",
+      "new_sha256": "19d203c7135f34278b17016d93a90c7637adee2484ca1f2d7810f59a0a2a0782",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-primescientist-01/result.md",
+      "old_sha256": "b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b",
+      "new_sha256": "b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-prove2me-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-prove2me-01/result.md",
+      "old_sha256": "20273c57e7ee775353a5afafc1a6e601182f5d84624f97641fe8b7845e54ecd8",
+      "new_sha256": "20273c57e7ee775353a5afafc1a6e601182f5d84624f97641fe8b7845e54ecd8",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-reflexion-02/result.md",
+      "old_sha256": "5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772",
+      "new_sha256": "5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-skilllift-01/result.md",
+      "old_sha256": "5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4",
+      "new_sha256": "5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-supermemory-02/result.md",
+      "old_sha256": "e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408",
+      "new_sha256": "e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md",
+      "old_sha256": "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf",
+      "new_sha256": "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md",
+      "old_sha256": "a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802",
+      "new_sha256": "a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-wikiskill-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-wikiskill-01/result.md",
+      "old_sha256": "b95421f94915a868aade71c3084eb2ecdc2ebff87fd69b263a6d66e2b93da269",
+      "new_sha256": "b95421f94915a868aade71c3084eb2ecdc2ebff87fd69b263a6d66e2b93da269",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md",
+      "old_sha256": "ea4ff6d13ceaf4d60d13e9b00f9caab088f307721d1ada8668792d223aedf13a",
+      "new_sha256": "ea4ff6d13ceaf4d60d13e9b00f9caab088f307721d1ada8668792d223aedf13a",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-01/result.md",
+      "old_sha256": "29a349e828a7c17d301d85c872f644f86f530f6af9c0bdf4ff625277e2288c04",
+      "new_sha256": "29a349e828a7c17d301d85c872f644f86f530f6af9c0bdf4ff625277e2288c04",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md",
+      "old_sha256": "69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa",
+      "new_sha256": "69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-01/result.md",
+      "old_sha256": "1acb504890b03a78fe1dd17dff9d73a522ee543259631821cec4a65a1d25c932",
+      "new_sha256": "1acb504890b03a78fe1dd17dff9d73a522ee543259631821cec4a65a1d25c932",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-evals-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-evals-01/result.md",
+      "old_sha256": "335469e47ab7a2a92c21755fca3d6b1160146dc53e730978502c42dd054332e3",
+      "new_sha256": "335469e47ab7a2a92c21755fca3d6b1160146dc53e730978502c42dd054332e3",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-01/result.md",
+      "old_sha256": "1a540770af76846d221f95d02670989e2d41cb28003fd15358d345c5f9aad20a",
+      "new_sha256": "1a540770af76846d221f95d02670989e2d41cb28003fd15358d345c5f9aad20a",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-02/result.md",
+      "old_sha256": "b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1",
+      "new_sha256": "b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-01/result.md",
+      "old_sha256": "c6be0f355181f46e0a53e1783145a0715b2bc136c8a0709661db74c2bb272c01",
+      "new_sha256": "c6be0f355181f46e0a53e1783145a0715b2bc136c8a0709661db74c2bb272c01",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-03/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-03/result.md",
+      "old_sha256": "1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53",
+      "new_sha256": "1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-oh-my-pi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-oh-my-pi-01/result.md",
+      "old_sha256": "8fbc0efeeebf2ac41b15a843ef3533bed2e28067a76e96a4df751fafe18b43e0",
+      "new_sha256": "8fbc0efeeebf2ac41b15a843ef3533bed2e28067a76e96a4df751fafe18b43e0",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-openrsi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-openrsi-01/result.md",
+      "old_sha256": "4c4a30190d73f0632d21c5c8e3b79247e2c4fdbf7fbd75f4f952de80a57d2d79",
+      "new_sha256": "4c4a30190d73f0632d21c5c8e3b79247e2c4fdbf7fbd75f4f952de80a57d2d79",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-01/result.md",
+      "old_sha256": "cdc161af1be5a6408d83b7421fb090fb4246f8639726f5b9010648023b594860",
+      "new_sha256": "cdc161af1be5a6408d83b7421fb090fb4246f8639726f5b9010648023b594860",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-02/result.md",
+      "old_sha256": "fe61854d8a9074abc2c1d2c9c4dad3eec781417384967f708b61d027c6825078",
+      "new_sha256": "fe61854d8a9074abc2c1d2c9c4dad3eec781417384967f708b61d027c6825078",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-03/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-03/result.md",
+      "old_sha256": "7a8ebe9a5316b00937ba088177b0dd4890fff697c1bc2700342331095f967d57",
+      "new_sha256": "7a8ebe9a5316b00937ba088177b0dd4890fff697c1bc2700342331095f967d57",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md",
+      "old_sha256": "18a90d3619d9357c200ad80b41ade5b654875d9a7ca0b7b1c5203581a17ef5a4",
+      "new_sha256": "18a90d3619d9357c200ad80b41ade5b654875d9a7ca0b7b1c5203581a17ef5a4",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-01/result.md",
+      "old_sha256": "dabc4a3475ab8964c4f25dc4bb4e9e104cc8948b25f661e88801a291d29e542d",
+      "new_sha256": "dabc4a3475ab8964c4f25dc4bb4e9e104cc8948b25f661e88801a291d29e542d",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-02/result.md",
+      "old_sha256": "7682f25dfbbe2c166a45217536f38219db73c73d0e705c22d186f77fed5c7217",
+      "new_sha256": "7682f25dfbbe2c166a45217536f38219db73c73d0e705c22d186f77fed5c7217",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-03/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-03/result.md",
+      "old_sha256": "c018cb9aad519e006e5ccb4ed7e9f457372bed5dc0c1e993046668982b7aaefa",
+      "new_sha256": "c018cb9aad519e006e5ccb4ed7e9f457372bed5dc0c1e993046668982b7aaefa",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-04/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-04/result.md",
+      "old_sha256": "7144b0d8a19d74d7722c7986648a23b7a5977287962a863d7d0d3cdcefb89ca2",
+      "new_sha256": "7144b0d8a19d74d7722c7986648a23b7a5977287962a863d7d0d3cdcefb89ca2",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-01/result.md",
+      "old_sha256": "8484f622335c134237968326c9971d8fbb1e71f97128e411f96b8d46ccba41db",
+      "new_sha256": "8484f622335c134237968326c9971d8fbb1e71f97128e411f96b8d46ccba41db",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-02/result.md",
+      "old_sha256": "c73351449c9a391e615839fa2aebb44b24894ed34a671e9778d625fbb410f4d1",
+      "new_sha256": "c73351449c9a391e615839fa2aebb44b24894ed34a671e9778d625fbb410f4d1",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-03/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-03/result.md",
+      "old_sha256": "f4cb51d4e840f86184231a96eaa839074719cfd77764a3ed2fc2844e1c1dff93",
+      "new_sha256": "f4cb51d4e840f86184231a96eaa839074719cfd77764a3ed2fc2844e1c1dff93",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-04/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-04/result.md",
+      "old_sha256": "db2d565c46c319a1ecce235c0e12b167acc646d2567848f0170be7769a73360b",
+      "new_sha256": "db2d565c46c319a1ecce235c0e12b167acc646d2567848f0170be7769a73360b",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-05/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-05/result.md",
+      "old_sha256": "548c7be0916b0d9985a139877b699736e3ac2f699a2ceb291e7e1792d525e1b0",
+      "new_sha256": "548c7be0916b0d9985a139877b699736e3ac2f699a2ceb291e7e1792d525e1b0",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/ARTIFACT.yaml",
+      "old_sha256": "00ea73d3aa5542f99afa16380e709d207a027a58ea83bfa17b70f0b4d7d1be66",
+      "new_sha256": "00ea73d3aa5542f99afa16380e709d207a027a58ea83bfa17b70f0b4d7d1be66",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/epistemic.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/epistemic.md",
+      "old_sha256": "b932b30f779c690a6cdf47a3f79f25feac25db7f780b532dde609e0f66f95520",
+      "new_sha256": "b932b30f779c690a6cdf47a3f79f25feac25db7f780b532dde609e0f66f95520",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/memory.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/memory.md",
+      "old_sha256": "6bd03521c589433b8b014a5f6a547d65411575c5d5c3e351cb120ddab5a9ab5b",
+      "new_sha256": "6bd03521c589433b8b014a5f6a547d65411575c5d5c3e351cb120ddab5a9ab5b",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/overview.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/overview.md",
+      "old_sha256": "a6ae1b22335291812daa2ce3676d90f2d9c40cf4c58bb9b44c70837a6f667fd6",
+      "new_sha256": "a6ae1b22335291812daa2ce3676d90f2d9c40cf4c58bb9b44c70837a6f667fd6",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/runtime.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/runtime.md",
+      "old_sha256": "7d7ecfdbb84a8fca2fb4edb117dd2fc0f7c4e92174f851965ab857a86ae2b25e",
+      "new_sha256": "7d7ecfdbb84a8fca2fb4edb117dd2fc0f7c4e92174f851965ab857a86ae2b25e",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/ARTIFACT.yaml",
+      "old_sha256": "b7a273548a14914b7eca548ff6d622b5fcf9ddeaf72b8b118fe0ae40a8c2d50e",
+      "new_sha256": "b7a273548a14914b7eca548ff6d622b5fcf9ddeaf72b8b118fe0ae40a8c2d50e",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/epistemic.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/epistemic.md",
+      "old_sha256": "190f975a5efe88efa0ae935d2316d6007d5f638f8060ce7cb0afc0befdb09ec5",
+      "new_sha256": "190f975a5efe88efa0ae935d2316d6007d5f638f8060ce7cb0afc0befdb09ec5",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/memory.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/memory.md",
+      "old_sha256": "54019a9353f8b3045ae99fc9c693f61137a58860f3b470ab656eab69bdec9bc1",
+      "new_sha256": "54019a9353f8b3045ae99fc9c693f61137a58860f3b470ab656eab69bdec9bc1",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/overview.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/overview.md",
+      "old_sha256": "a3bfaeff1d032eb59a10375e6f46dc5a3d46932e00021561977c52306c20d47b",
+      "new_sha256": "a3bfaeff1d032eb59a10375e6f46dc5a3d46932e00021561977c52306c20d47b",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/runtime.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/runtime.md",
+      "old_sha256": "83f57ac2ea000c71dbbda2fbb4afbbcd057f71b42e6afc685d0841ccae1928d1",
+      "new_sha256": "83f57ac2ea000c71dbbda2fbb4afbbcd057f71b42e6afc685d0841ccae1928d1",
+      "transformation": "preserve exact historical bytes"
+    },
+    {
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/README.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/README.md",
+      "old_sha256": "91bcaff855daad5f01ecd41d6b1dd0abbab832999167ac3e9cdcb4c72e7ae919",
+      "new_sha256": "630e8a0c70550cfab9332fb5a755cfa2e8742c6d5aa0fcd7693d79db0c358f14",
+      "transformation": "archive navigation and historical policy adaptation; payloads unchanged"
+    },
+    {
+      "old_path": "kb/reference/agentic-analysis-boundary.md",
+      "new_path": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+      "old_sha256": "23610c48641c57b850b763324e9b295085348cb4536c4bca9e5600876958950f",
+      "new_sha256": "23610c48641c57b850b763324e9b295085348cb4536c4bca9e5600876958950f",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/reference/agentic-analysis-sources.md",
+      "new_path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+      "old_sha256": "60808f6f1df845191b84fdfabcf4d406749b98eb5357b6fc6012d8cc1ee2baf0",
+      "new_sha256": "60808f6f1df845191b84fdfabcf4d406749b98eb5357b6fc6012d8cc1ee2baf0",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/reference/agentic-analysis-records.md",
+      "new_path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+      "old_sha256": "b87aeb61771fd265a09095a6270bb72e15901f11d03835de4248815d0ff30caf",
+      "new_sha256": "630b53141f5b4694bf919cad234135220fd64f1983239cbac381327c96eb7681",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-epistemic-report.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+      "old_sha256": "83d9fdeabdebd55a7bf0d83f6bf34fd79865484b91823de2eda3c7720846d502",
+      "new_sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-epistemic-report.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-epistemic-report.schema.yaml",
+      "old_sha256": "c61f9920e687cf99d28320662f14aabf52664346405f69fef20c013079d4058b",
+      "new_sha256": "d9d133e3a8ef5e0d9ca5576012c6c958a73e5fb7091f2b0cc14d22725322ecfc",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agent-memory-analysis-report.md",
+      "new_path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+      "old_sha256": "62aa2b265529f0e84a33c8de4adb28c03e67c5cd716547248c2803a5325090fe",
+      "new_sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agent-memory-analysis-report.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agent-memory-analysis-report.schema.yaml",
+      "old_sha256": "797495812e66175cc24457dace0da5eff57083a65f0c1938282d5d54e8b5a2f8",
+      "new_sha256": "41c8e6f5d65c0ba373a50b52fd743b185abf1fb013c8d90fb18fed21d6ee660b",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-analysis-run-state.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+      "old_sha256": "161e2c503b13898f3e183dcb13f568e15a8ec9133b06caa6568f8241fa192236",
+      "new_sha256": "62c20ebbdade1aec266d88bbdf284c3d1b2d7762567c9fe1ecb6a6bb7a4c9127",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-analysis-run-state.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-run-state.schema.yaml",
+      "old_sha256": "29d8f11e853d583a17fe16ac68c35a5ac633ab3878a8143da0ad64d98c425b11",
+      "new_sha256": "1ac335a28c7f119e0b97d4820a3c27a771ad4fedf70056d28fc079ccac971462",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-runtime-report.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+      "old_sha256": "d8799fe3ab41611c74cb3f05fa24a3252a66e05153b9799246ead33f720a058c",
+      "new_sha256": "853b910743d64c93134b7378f45e6cb0bcb5efb0ffefe5e4807b96dbd44f3878",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-runtime-report.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-runtime-report.schema.yaml",
+      "old_sha256": "9c9e4e209472f20cd191084a0a257f65b521b09b59a2ecb325bd125d4fd2223e",
+      "new_sha256": "5bb5702c5aa7a75d481b16f418379c8e1b2ebbb88b9810d9e1ad52c1df971c73",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-analysis-overview.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+      "old_sha256": "b612d02301a5d7c3ce55e0373426dd77885caedba027d47ed2066a25b4846e4e",
+      "new_sha256": "2e3165b42fa560ae16e5e7afdd24087ae99fd1bd8ad29b4d81d9bb004ea24170",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-analysis-overview.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml",
+      "old_sha256": "2e6ad07c0e047f35fc82d9f8e6b69e4a7a97e2b5c5efba5731537d68f4c61d82",
+      "new_sha256": "1cfae4a286de46a9c6a54a7588cca407870ead288c90eec13edb01f00bd36a78",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-reconciliation-report.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+      "old_sha256": "2e185e0a68a855a3323d07515bd5c577a786acf127b0e5d4b40db83c955c534a",
+      "new_sha256": "767aef09b327e1a6d92b858cbf3e0453cee940a0cae5ba691f8504bd89701918",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/types/agentic-system-reconciliation-report.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-reconciliation-report.schema.yaml",
+      "old_sha256": "9982eedbb682e9e3710afaa075dec2e5c5eb99aec61d9e89aa2ae154b7f34d63",
+      "new_sha256": "4cb72bc846bb40707e575a000b35ed8d9f08af0410ab6753ac5a05b5e10aaa7b",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/reports/types/agentic-system-analysis-set.md",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-set.md",
+      "old_sha256": "6445d4ad12ca492476c3163472efcf93cab993555a358db0e1625008d7723782",
+      "new_sha256": "011d6e2d61145353353d81406b81ea72db098f01dc7d57ae9a2aa85997657bb1",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/reports/types/agentic-system-analysis-set.schema.yaml",
+      "new_path": "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml",
+      "old_sha256": "b353b95165a9481aa8a6ca81a13bbf933300f9f937be7526e34bd48cfdda2364",
+      "new_sha256": "fedc1d65ee213fe3efad2192ceee289c3c3445ced31bc61ae81b172598df3606",
+      "transformation": "relocation and consumer contract adaptation"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews/instinctual-memory.md",
+      "new_path": "kb/agentic-systems/reviews/instinctual-memory.md",
+      "old_sha256": "a17ec22a0c2c47e3b065a329598e52c3eebbb044ee6bf616dfdd5fd6c10c2436",
+      "new_sha256": "bb540d6365706776bba6a7cab676a089e477014c3e3dcd4a56e840b471ebec2f",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/ARTIFACT.yaml",
+      "old_sha256": "427ebd1b22d0c598080d1b8cd78a9fd37b2462b196100ba6b64bd038d48cadb7",
+      "new_sha256": "e409b30ce075f68a71fbdf29719dd9d2816e639d687a8d0bfc0fc7a164bade8e",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/overview.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/overview.md",
+      "old_sha256": "db730d2cb0a011b0ed136e4aa72dc7aaee10875e4804c7352552ac3b0fc016f4",
+      "new_sha256": "87e0b11026cb62b08d9261299893c86806b4ff309b68a9615a1ca745f4a012c7",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/runtime.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/runtime.md",
+      "old_sha256": "c5460817e5fcff0936a64d8f64dca81a299fa884a5d009ed672cd3319271ff89",
+      "new_sha256": "319250e7662ac40cbc9fc9858f451145e486b024445be4bf5f877d3c518a7d77",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/memory.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/memory.md",
+      "old_sha256": "549e3a2e107ea773c384077840425ca5b5a2c5c822ff93ff94afc1eb0e310994",
+      "new_sha256": "270b72ee653061c7f18d88af28faae717660038686466728f6e0187f2c5133ed",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/epistemic.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/epistemic.md",
+      "old_sha256": "3595f0cc6c7e5f139b1ad6277312dc950c8e267b7adae37bc6ac43b1c59cb232",
+      "new_sha256": "7b60078ec2d7f19be9282c4918829b9aa57d591e58c9898701ad14087b89b016",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/output/reconciliation.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/output/reconciliation.md",
+      "old_sha256": "9320241b2d9023d0962930c8e534b2c57939123e6411fcb405900df29cfda841",
+      "new_sha256": "abf7e1c9e270474b8a0863c4bab6691453ca50878fd89b31c375145a3273c3d5",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/reports/state/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/run-state.md",
+      "new_path": "kb/agentic-systems/reports/state/AAS-2026-10-01-instinctual-memory-07/run-state.md",
+      "old_sha256": "b051442b684dfb9d9317c45e122cd78648d97e4b3b0e4e767728a3a1003b18dc",
+      "new_sha256": "a650dbf8dcf288a28a39ee7e31c7c02e943e50750832f6e2fd6382f2ca0355a4",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/skilllift.md",
+      "new_path": "kb/agentic-systems/reviews-archive/skilllift.md",
+      "old_sha256": "34b08524be8fc2678d1684ae0063cd763e6b7f77502d0e65005075ff4cd293b5",
+      "new_sha256": "63a03f85a5998339737c36b2a2ed35ec65e22d0ff09874dfb707950f1028b17c",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/oh-my-pi.md",
+      "new_path": "kb/agentic-systems/reviews-archive/oh-my-pi.md",
+      "old_sha256": "540db9b8f9f611d020684a99a7c25ddac731713cab7aae949779bfa0ff419758",
+      "new_sha256": "1dd2b0b64caa1145520ec80873dbff5261c5a6fda9d99b58b1923e4bc7f3319b",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/arex-skill.md",
+      "new_path": "kb/agentic-systems/reviews-archive/arex-skill.md",
+      "old_sha256": "dc842a766a6fc6a91b698bfc213de77d490f22932ff42cfc8f56472aff59874b",
+      "new_sha256": "40074d3b64314068ac784b9a60b4fa2cae393ba473ee1449281f7a4b8b76d001",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/company-brain.md",
+      "new_path": "kb/agentic-systems/reviews-archive/company-brain.md",
+      "old_sha256": "1486af688ed1304027bc1cf07cc7d80087ef8b52a5377bbee1b0e2142a01b828",
+      "new_sha256": "c9432a2b80368c342211b3c910bb10ba7433d68c532c8b2f6f5e94866c7c2d74",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/mem0.md",
+      "new_path": "kb/agentic-systems/reviews-archive/mem0.md",
+      "old_sha256": "787b3bcc7fe094489c01074af3d9f214e4fd16a3f5bed79d10a52823020e925b",
+      "new_sha256": "c1245819af844f872f32ebe7ed354f838c7250a483681d4939d0d400309aaa61",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+      "new_path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+      "old_sha256": "f3f40b230c984dd92fbadedeeba9e88de477308870f87ead4d8c53af540398f9",
+      "new_sha256": "0a954fcd24320764d99c0467099c10f9e3c30c2156103e364472ab61e55ed162",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/rsiagent.md",
+      "new_path": "kb/agentic-systems/reviews-archive/rsiagent.md",
+      "old_sha256": "d3c453b2c8b1808d28d19615d487b999a64926b649143c59771d0389f2dd0e25",
+      "new_sha256": "bc1d201841cf77dcdd9a4c61a5f4fd5fb6b3dd42fe959076d35655f7cdc72816",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/napkin.md",
+      "new_path": "kb/agentic-systems/reviews-archive/napkin.md",
+      "old_sha256": "a1f4e9229d99c60d7f06f9315128fe745e92274f1d3ad7e3156bff8d50b73460",
+      "new_sha256": "154ba3f67f1592f7e00ae5bde0f2ce7dd81c9d69755c661248fe3752f4dbb914",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/swarmworld.md",
+      "new_path": "kb/agentic-systems/reviews-archive/swarmworld.md",
+      "old_sha256": "7bf6b750314f90ff932078e0eb24e49cb38f287e30683ca55726558b4dfb045e",
+      "new_sha256": "f89a7751cf6582abc5eb69673841a58f2f09d4d3dfa9792899c24f0ee99c37c1",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/contextpilot.md",
+      "new_path": "kb/agentic-systems/reviews-archive/contextpilot.md",
+      "old_sha256": "cd308a3d6d7dad9712b526649b5b8eae245eb671fb2ccf592c127a6647dea883",
+      "new_sha256": "3813cab6ab4e667b7591774019924de186bf240c21211dad514f4d5989663716",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/modularrsi.md",
+      "new_path": "kb/agentic-systems/reviews-archive/modularrsi.md",
+      "old_sha256": "bf64934cc8d64b16e8dc20c2958f7290e6f026da9b2969a9412a1c6cf4591e5d",
+      "new_sha256": "44738a7fbbcf4335726f4c4a20917e6ebc47d4128e1228c1dd8c4e1428186191",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/primescientist.md",
+      "new_path": "kb/agentic-systems/reviews-archive/primescientist.md",
+      "old_sha256": "8a3c53e88b03fb7867d9014f63042c34775c93f8594cb035e3ac64b966dbfdb8",
+      "new_sha256": "e7ebff18a6ca7047078da099a0aa1e7d5859b64da5af11309679a0284a04eabc",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/jepa-anything.md",
+      "new_path": "kb/agentic-systems/reviews-archive/jepa-anything.md",
+      "old_sha256": "2a80580a3b007b199be62eae27e38bb0a8a752cf49d0dcbe45d24e58145b8e8a",
+      "new_sha256": "617405e2c015077680e747c034944c83f0a34fb858582a833de82c76f51ca1f6",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/merchantbench.md",
+      "new_path": "kb/agentic-systems/reviews-archive/merchantbench.md",
+      "old_sha256": "a3bf05d1a58872cfe6434f40ceea2fc98973943bcd9f6e5800f1c8d26f98886d",
+      "new_sha256": "652a72db0eb509ca290486495c14d6a8c6916561946a4e108f317c016605c480",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/eal-bench.md",
+      "new_path": "kb/agentic-systems/reviews-archive/eal-bench.md",
+      "old_sha256": "a9a3e90c7ae4aeda9d79fd2b2cbfb9a89f1a3bdff7e8da0f1514204270dbeb08",
+      "new_sha256": "6d229d391f7aaaa7c63ca5f72bdd83c896bbb9b62a32aa41a416104b451a34c3",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/openviking.md",
+      "new_path": "kb/agentic-systems/reviews-archive/openviking.md",
+      "old_sha256": "8fb6116ed3558daf10fe225ab2fcf17af75948b6bb0bd6e0eda07aea2c705d2c",
+      "new_sha256": "486786c7073edac4d87b0f6ae2ada58f5cd8ffaa9f16c1d8adfdd7ab2dc9c95f",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/arsumbris.md",
+      "new_path": "kb/agentic-systems/reviews-archive/arsumbris.md",
+      "old_sha256": "125c87176b50bff25d3b1db6e34e187a18432b2b11aff55a3d5774dfa4333b3f",
+      "new_sha256": "c4b1e33b4253b19433b97f684d325581af89a335d1044cd071c28952c5451367",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/supermemory.md",
+      "new_path": "kb/agentic-systems/reviews-archive/supermemory.md",
+      "old_sha256": "bf9f8bb52ded634eaed7a5e039790288dfe827571c613ea4f07c86faf5972824",
+      "new_sha256": "7b629db060ad74498727b87e13f670b69ed89a0d1dc666eab747f6b1f8b8b1e4",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/prime-agent.md",
+      "new_path": "kb/agentic-systems/reviews-archive/prime-agent.md",
+      "old_sha256": "2808f473d535635558dbfdca8e8d45fe39eccd7c0eb16920b4a53cd08de4b551",
+      "new_sha256": "454dd5d5119b24542a70c03da5bff0710700e5a5edadc8afad21f9364a6ff757",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/enoch.md",
+      "new_path": "kb/agentic-systems/reviews-archive/enoch.md",
+      "old_sha256": "d6cb35876bb3be6b5cbf92d6090f4ef9e86b4ec062c3bc0df4286ad7adddb69e",
+      "new_sha256": "4ecc5255136d6d861f9659c06e5506ca8c83eb0716ae9ce304331f1cc46798d6",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/fragility-grid.md",
+      "new_path": "kb/agentic-systems/reviews-archive/fragility-grid.md",
+      "old_sha256": "cb0634382e87aa0be05419b9f3c016134d83b1d6a907ba114121f33a1f289e9f",
+      "new_sha256": "12edf4e7b6764b5ad6f270a737643b30dc44b37ee4fb7bf8f21982cc5d46ba77",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/openrsi.md",
+      "new_path": "kb/agentic-systems/reviews-archive/openrsi.md",
+      "old_sha256": "0b505fe6768478b6a9905ad5ee60c00e6775298fe98db453e7f20fa41c05ac8c",
+      "new_sha256": "ad702d036a9247151b1fcb3e7c3610450c7ae7ee33556eb0bab4af43e828b832",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/meta-n.md",
+      "new_path": "kb/agentic-systems/reviews-archive/meta-n.md",
+      "old_sha256": "eceae11012ae5d1a9fe9810e398b5e1ccc5ebca104e8e72ec154ae988c1098b5",
+      "new_sha256": "5a318a8cbd03b6d14785b863e796a5067f6f212c281e88a3cd6254e8e1061a8c",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/apache-maka.md",
+      "new_path": "kb/agentic-systems/reviews-archive/apache-maka.md",
+      "old_sha256": "ca7df4bddd50c2292d03167700f76c92356f1beec6b783d86ac6f18568d8880a",
+      "new_sha256": "94dd751bf200d67e530bd3ae87bb6a18e5633d894e92c102fbe5e03b596fc648",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/wikiskill-stahl-g.md",
+      "new_path": "kb/agentic-systems/reviews-archive/wikiskill-stahl-g.md",
+      "old_sha256": "0130a2ca08de89ebcc27b7f513942e14d2547888abad1d1e68ec4d8becefbb3c",
+      "new_sha256": "e7934394f734fc88caf0968b1bd9f8dfaa3bd1be442f804f53e6115cfa03f4f9",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/prove2me.md",
+      "new_path": "kb/agentic-systems/reviews-archive/prove2me.md",
+      "old_sha256": "b4ed61f8005cfa9be126f2ed73503683ea26b93cde85de3f61f7f969e545b121",
+      "new_sha256": "3e8e78b5dc1a907d05450c80b52d08965b9e1e79941a035a0d1fd6ed55307a8c",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/tardigrade.md",
+      "new_path": "kb/agentic-systems/reviews-archive/tardigrade.md",
+      "old_sha256": "35f92589375f47c0582373953f016c6497f925f70ec84624c019514912b67637",
+      "new_sha256": "ad4af3c23fee20485c5126a1a880e03cf758a0bed335e05bc9cecc7699ef0f55",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/ecdysis.md",
+      "new_path": "kb/agentic-systems/reviews-archive/ecdysis.md",
+      "old_sha256": "6aa3bacc503a2ec23aaa7f3fe215652f5721dd1ca4601da94b8ea41737a1ae90",
+      "new_sha256": "b4123b854436007cbffc1fb6b6268e08134e7072ff3dfb2c14e7c536c8ebe215",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/instinctual-memory.md",
+      "new_path": "kb/agentic-systems/reviews-archive/instinctual-memory.md",
+      "old_sha256": "fc1eb289aeb5b94cc39e3234ac444abe9e1a5136fd2f941d55f5d90a2394b465",
+      "new_sha256": "863604beac9713508744c9bd1e0f22a58eb13d8b211c8d9c26571b7593408762",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/reflexion.md",
+      "new_path": "kb/agentic-systems/reviews-archive/reflexion.md",
+      "old_sha256": "1e5a5f316a72ebc7eeab1fb289721b7a3f85f836f9d5ad085a71624d33674ebc",
+      "new_sha256": "12131c6703ed41aaf951609fc983feb460b519b910c463cd19c265e242360600",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/dualgraph.md",
+      "new_path": "kb/agentic-systems/reviews-archive/dualgraph.md",
+      "old_sha256": "85c426f67964850c847564a1615b4e99eaed124467763254ac5bac5f7bc63206",
+      "new_sha256": "54acbcf321cb775123919bc5bb9acb52de33d14e9aa90bf9c57a13fac18b29a1",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/aide2.md",
+      "new_path": "kb/agentic-systems/reviews-archive/aide2.md",
+      "old_sha256": "cfb2e87a7c75c471af0ea724665251f25d93aced38a9854c4af79a99c1970b45",
+      "new_sha256": "e006380041731a20c5305065e8b9a740ff48a3486eb10962ab2afe0305620e61",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/jaz.md",
+      "new_path": "kb/agentic-systems/reviews-archive/jaz.md",
+      "old_sha256": "759d5ae70e62956832c7df978373017c6310236592e04c92e0b2382402879ef1",
+      "new_sha256": "3a1dc457121b328dd104b17619bb3d33842ceb14188378eaa9834cc6dfbe9989",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/lhtb.md",
+      "new_path": "kb/agentic-systems/reviews-archive/lhtb.md",
+      "old_sha256": "683b3075d797d5621d54ab299764b21e3944e9cd141ced679537fc12fbd280f2",
+      "new_sha256": "9ff11f1e6b56b0a71a8138ba5422866ddb2afc0754893f8ddb5a6907e8ed8a0f",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/sol-pi.md",
+      "new_path": "kb/agentic-systems/reviews-archive/sol-pi.md",
+      "old_sha256": "52214c41995005bb50923c1334e06a28f1ff5a9ba1a56c6969ce4117b162588e",
+      "new_sha256": "36e690457cdd71016a8ff65f6aa5183e9c1a9e0dbb65202d3374971b01783325",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/evoontology.md",
+      "new_path": "kb/agentic-systems/reviews-archive/evoontology.md",
+      "old_sha256": "ec484b02d315eb210636be3afad0339ef7a773edadbc9f4fc74f95882adf950b",
+      "new_sha256": "273c583c27622779d19df3e938599dab9241dade2439bfda519d4458504ef042",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/gbrain-garrytan.md",
+      "new_path": "kb/agentic-systems/reviews-archive/gbrain-garrytan.md",
+      "old_sha256": "a0f6fb2c167f76976d32dc66a235b4a810619f8424aecf5b9b016762c2407704",
+      "new_sha256": "16ddde3dbbaf5c5cfb83dd505298b7b553fbc7df9c7b1c1727a80a35656ec7f3",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/jaz-evals.md",
+      "new_path": "kb/agentic-systems/reviews-archive/jaz-evals.md",
+      "old_sha256": "573a4f503d71fd5f66adc4db76bef046e3b2460aaf4e6d75838a125cefe2bd7e",
+      "new_sha256": "2656d22a4bdb50cda5468077d2e94d037edbd4b2033b945aa9e06790a49f8986",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/wikiskill.md",
+      "new_path": "kb/agentic-systems/reviews-archive/wikiskill.md",
+      "old_sha256": "bffcec18383165e9b0d3641543a4e2c74b8cf4c0c61147d033021cfb960b4b67",
+      "new_sha256": "08696dd32fd988c53fa9212750cddee602966377cdc83518ea1034d5195aa8c6",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/dynamic-cheatsheet.md",
+      "new_path": "kb/agentic-systems/reviews-archive/dynamic-cheatsheet.md",
+      "old_sha256": "d77e6df5a2dd5d6faebd25fa20581c0a82c7d0a673855ba56bbeb8bb0b1fe10d",
+      "new_sha256": "31c1508877b8cc0fba5ffe53aca8623701ce9a5d61e4499cde9836b4508d3d0b",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/pi-posthorse.md",
+      "new_path": "kb/agentic-systems/reviews-archive/pi-posthorse.md",
+      "old_sha256": "b3a580d1fb8507159aa77dc7b2fb1fc509013e125563d29d883aa04d5f352307",
+      "new_sha256": "cdee84f5197212786ac845b7817b358c4dc7b1f9e408f728ac56a3710ce514d4",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    },
+    {
+      "old_path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+      "new_path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+      "old_sha256": "676abbd1c4a65918ce486b79d8aaa5888f2f16ff42e33fce6b005d99faf842ff",
+      "new_sha256": "5a4ee90426265411f5845bab56c54494e85401517947232a8163d2c0ad6e3544",
+      "transformation": "declared type/path identity, derived pins, relocation-required links"
+    }
+  ],
+  "historical_review_pins": [
+    {
+      "review": "kb/agentic-systems/reviews-archive/skilllift.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-skilllift-01/result.md",
+      "sha256": "5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/oh-my-pi.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-oh-my-pi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-oh-my-pi-01/result.md",
+      "sha256": "8fbc0efeeebf2ac41b15a843ef3533bed2e28067a76e96a4df751fafe18b43e0"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/arex-skill.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-arex-skill-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-arex-skill-01/result.md",
+      "sha256": "973dc7c3679aaadff574cb9b4cc9d40602a8a9c120190430fa48bf8fdd356d47"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/company-brain.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md",
+      "sha256": "ea4ff6d13ceaf4d60d13e9b00f9caab088f307721d1ada8668792d223aedf13a"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/mem0.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-04/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-04/result.md",
+      "sha256": "7144b0d8a19d74d7722c7986648a23b7a5977287962a863d7d0d3cdcefb89ca2"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/ARTIFACT.yaml",
+      "sha256": "b7a273548a14914b7eca548ff6d622b5fcf9ddeaf72b8b118fe0ae40a8c2d50e"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/rsiagent.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-rsiagent-01/result.md",
+      "sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/napkin.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-05/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-05/result.md",
+      "sha256": "548c7be0916b0d9985a139877b699736e3ac2f699a2ceb291e7e1792d525e1b0"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/swarmworld.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md",
+      "sha256": "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/contextpilot.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-contextpilot-01/result.md",
+      "sha256": "8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/modularrsi.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-modularrsi-01/result.md",
+      "sha256": "237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f45b9cd4b3"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/primescientist.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-primescientist-01/result.md",
+      "sha256": "b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jepa-anything.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-jepa-anything-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-jepa-anything-01/result.md",
+      "sha256": "61c8f37fd062024ef63441a578523566765fafc22a0fb6dbf968ea76e5df11b0"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/merchantbench.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-merchantbench-01/result.md",
+      "sha256": "87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/eal-bench.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md",
+      "sha256": "45eefb6b58e89b14c890e3e60c5e4d19b07365002409cca493b1554ef48cc097"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/openviking.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-openviking-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-openviking-01/result.md",
+      "sha256": "1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189993a63af"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/arsumbris.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-arsumbris-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-arsumbris-02/result.md",
+      "sha256": "d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d79c80d82"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/supermemory.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-supermemory-02/result.md",
+      "sha256": "e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/prime-agent.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md",
+      "sha256": "e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/enoch.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-enoch-01/result.md",
+      "sha256": "00798b76561a0249d41b723e62d503d7d5464c8c92bf17b8dc6cd36d08807df3"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/fragility-grid.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-fragility-grid-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-fragility-grid-01/result.md",
+      "sha256": "70d8208bdae0dedbb7f16efd1e23d0c699c5f3e3ec5d5bbad313553daf88ec9f"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/openrsi.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-openrsi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-openrsi-01/result.md",
+      "sha256": "4c4a30190d73f0632d21c5c8e3b79247e2c4fdbf7fbd75f4f952de80a57d2d79"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/meta-n.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-meta-n-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md",
+      "sha256": "9650f608684b43bd44da354dd055f4cbeba5eab3a38f285f3ea351f6d73ec17e"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/apache-maka.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-06/result.md",
+      "sha256": "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/wikiskill-stahl-g.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md",
+      "sha256": "740c450f3edefc8d13f81300e3cd05596fbf59278bf886a3576e51686314f2a8"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/prove2me.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-prove2me-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-prove2me-01/result.md",
+      "sha256": "20273c57e7ee775353a5afafc1a6e601182f5d84624f97641fe8b7845e54ecd8"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/tardigrade.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md",
+      "sha256": "a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/ecdysis.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-ecdysis-01/result.md",
+      "sha256": "fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/instinctual-memory.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-instinctual-memory-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-instinctual-memory-01/result.md",
+      "sha256": "bce3cf2b188d9e155481ac02d7711d018598ab6876ced5a8fdca8c81c94dcb06"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/reflexion.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-reflexion-02/result.md",
+      "sha256": "5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/dualgraph.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-dualgraph-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-dualgraph-01/result.md",
+      "sha256": "e0a7c8fbc42d2c877c8d4fd2c7ae6b0fddde46d867ebe8baf61a9fda4cd021d8"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/aide2.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-aide2-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-aide2-01/result.md",
+      "sha256": "b11a5d87ebcf47058e11499fe94a24a130dc2a1ebe1c3a98aa7cfb7b5c927689"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jaz.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-01/result.md",
+      "sha256": "1acb504890b03a78fe1dd17dff9d73a522ee543259631821cec4a65a1d25c932"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/lhtb.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-lhtb-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-lhtb-01/result.md",
+      "sha256": "615b32ab30f9072f535b674f92b9fd95609cb3f0a9d893c6abc3c7ba51a58af9"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/sol-pi.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-sol-pi-01/result.md",
+      "sha256": "aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/evoontology.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-evoontology-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-evoontology-01/result.md",
+      "sha256": "aa9766294d0d76b819168cc4d430077f219929da7689d5b5effeedb374ce105d"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/gbrain-garrytan.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md",
+      "sha256": "e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f1885f2b1"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jaz-evals.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-evals-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-evals-01/result.md",
+      "sha256": "335469e47ab7a2a92c21755fca3d6b1160146dc53e730978502c42dd054332e3"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/wikiskill.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-wikiskill-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-wikiskill-01/result.md",
+      "sha256": "b95421f94915a868aade71c3084eb2ecdc2ebff87fd69b263a6d66e2b93da269"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/dynamic-cheatsheet.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md",
+      "sha256": "18a90d3619d9357c200ad80b41ade5b654875d9a7ca0b7b1c5203581a17ef5a4"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/pi-posthorse.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-pi-posthorse-01/result.md",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-pi-posthorse-01/result.md",
+      "sha256": "19d203c7135f34278b17016d93a90c7637adee2484ca1f2d7810f59a0a2a0782"
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+      "old_path": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/ARTIFACT.yaml",
+      "new_path": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/ARTIFACT.yaml",
+      "sha256": "00ea73d3aa5542f99afa16380e709d207a027a58ea83bfa17b70f0b4d7d1be66"
+    }
+  ],
+  "ignored_state_inventory": [
+    {
+      "run_id": "AAS-2026-09-03-academic-research-skills-02",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-03-apache-maka-01",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-03-cohub-01",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-04-apache-maka-01",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-04-apache-maka-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-04-pond-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-02",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-03",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-04",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-05",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-apache-maka-06",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-oh-my-pi-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-oh-my-pi-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-05-prime-agent-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-17-wikiskill-stahl-g-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-21-supermemory-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-23-arsumbris-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-23-arsumbris-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-23-gbrain-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-24-meta-n-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-24-rsiagent-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-24-sol-pi-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-aide2-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-arex-skill-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-contextpilot-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-dfm-plans-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-dualgraph-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-eal-bench-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-ecdysis-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-enoch-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-evoontology-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-fragility-grid-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-instinctual-memory-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-jepa-anything-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-lhtb-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-llm-confidence-biases-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-merchantbench-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-modularrsi-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-openviking-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-pi-posthorse-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-primescientist-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-prove2me-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-reflexion-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-reflexion-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-self-modeling-neural-systems-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-skilllift-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-supermemory-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-supermemory-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-swarmworld-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-tardigrade-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-25-wikiskill-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-company-brain-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-dynamic-cheatsheet-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-dynamic-cheatsheet-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-jaz-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-jaz-evals-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-mem0-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-mem0-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-napkin-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-napkin-02",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-napkin-03",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-oh-my-pi-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-26-openrsi-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-dynamic-cheatsheet-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-dynamic-cheatsheet-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-dynamic-cheatsheet-03",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-dynamic-cheatsheet-04",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-mem0-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-mem0-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-mem0-03",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-mem0-04",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-napkin-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-napkin-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-napkin-03",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-napkin-04",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-27-napkin-05",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-28-pageindex-01",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-29-instinctual-memory-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-29-instinctual-memory-02",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-29-instinctual-memory-03",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-29-pageindex-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-29-pageindex-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-30-instinctual-memory-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-30-instinctual-memory-02",
+      "status": "complete",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-30-instinctual-memory-03",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-30-trial-runtime-luna-instinctual-memory-01",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-09-30-trial-runtime-sonnet-instinctual-memory-01",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-02",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-03",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-04",
+      "status": null,
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-05",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-06",
+      "status": "running",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    },
+    {
+      "run_id": "AAS-2026-10-01-instinctual-memory-07",
+      "status": "complete",
+      "disposition": "migrate complete published working copy"
+    },
+    {
+      "run_id": "AAS-2026-10-01-pageindex-01",
+      "status": "failed",
+      "disposition": "preserve original ignored bytes; no resume under new method"
+    }
+  ],
+  "dry_run": "all proposed bytes materialized in disposable copies before application",
+  "current_set_invariants": "same analytical bodies after link target normalization; same frontmatter except type; same run IDs, source identity/revision, record IDs, comparison fields and method commit",
+  "working_state_disposition": "copy complete published run; preserve all intermediate receipts unchanged; do not resume old method runs",
+  "verified_exact_archived_files": 71,
+  "verified_byte_equal_current_member_bodies": 5
+}

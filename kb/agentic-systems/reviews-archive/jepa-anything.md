@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-jepa-anything-01
 source-identity: https://github.com/Gen-Verse/JEPA-Anything
 reviewed-revision: c6e6c88f3ef75a4ce7acd660d6fa5779d995512c
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-jepa-anything-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-jepa-anything-01/result.md
 analysis-result-sha256: 61c8f37fd062024ef63441a578523566765fafc22a0fb6dbf968ea76e5df11b0
 ---
 

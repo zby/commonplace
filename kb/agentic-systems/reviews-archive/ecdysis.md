@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-ecdysis-01
 source-identity: https://github.com/cuiyu-ai/Ecdysis
 reviewed-revision: cf93866d545b0974dbb0bc83b39c31fbbdeeecb8
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-ecdysis-01/result.md
 analysis-result-sha256: fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533
 ---
 

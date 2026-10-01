@@ -22,7 +22,7 @@ governs identity, common fields and statuses.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `types/agentic-system-epistemic-report.md` |
+| `type` | Yes | `agentic-systems/types/agentic-system-epistemic-report.md` |
 | `description` | Yes | Retrieval description naming the system and the analysis question |
 | `run-id` | Yes | The set's run ID |
 | `reviewed-boundary` | Yes | The set's frozen revision or capture identity |
@@ -208,7 +208,7 @@ occurs.
 
 ```markdown
 ---
-type: types/agentic-system-epistemic-report.md
+type: agentic-systems/types/agentic-system-epistemic-report.md
 description: "Epistemic routes of {system} at {boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 reviewed-boundary: "{immutable revision or capture identity}"

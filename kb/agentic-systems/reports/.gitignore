@@ -1,0 +1,5 @@
+# Working analyses are local. Policy surfaces remain tracked.
+state/**
+!state/
+!state/README.md
+!state/.commonplace-validation-ignore

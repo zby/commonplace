@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-24-sol-pi-01
 source-identity: https://github.com/NVlabs/SoL-Pi
 reviewed-revision: 1559b5cb12c72da4a485bc50fe326586b216fb19
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-sol-pi-01/result.md
 analysis-result-sha256: aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16
 ---
 

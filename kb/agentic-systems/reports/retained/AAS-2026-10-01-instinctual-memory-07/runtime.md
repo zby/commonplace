@@ -1,5 +1,5 @@
 ---
-type: types/agentic-system-runtime-report.md
+type: agentic-systems/types/agentic-system-runtime-report.md
 description: "instinctual-memory runtime: store resolution, retrieval, consolidation, host delivery and controlled writes at the pinned commit"
 run-id: AAS-2026-10-01-instinctual-memory-07
 reviewed-boundary: "6acb13dc35765bf5ccfc87e445dd09c480f1c28a"

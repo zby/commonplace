@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-skilllift-01
 source-identity: https://github.com/WalteR-MittY-pro/SkillLift
 reviewed-revision: "599358b4d4c4a27c0e004df8228ab93026600653"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-skilllift-01/result.md
 analysis-result-sha256: 5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4
 ---
 

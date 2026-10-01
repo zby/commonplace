@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-swarmworld-01
 source-identity: https://github.com/lamm-mit/SwarmWorld
 reviewed-revision: "6af7ae9fa36d98b07b0492cf139658e8af1f6eab"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md
 analysis-result-sha256: "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf"
 ---
 

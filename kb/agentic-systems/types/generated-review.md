@@ -24,7 +24,7 @@ what publication checks, with the pin on the manifest.
 | `analysis-run` | Yes | The producing run ID |
 | `source-identity` | Yes | The stable source identity the set's Source register declares |
 | `reviewed-revision` | Yes | The set's `reviewed-boundary` |
-| `analysis-artifact` | Yes | `kb/reports/retained/agentic-system-analysis/<run-id>/ARTIFACT.yaml` |
+| `analysis-artifact` | Yes | `kb/agentic-systems/reports/retained/<run-id>/ARTIFACT.yaml` |
 | `analysis-artifact-sha256` | Yes | SHA-256 of the retained manifest's bytes |
 
 ## Body
@@ -41,7 +41,7 @@ has four parts, in order:
 
 Relative links in the overview resolve inside the set directory, so code
 rewrites them to resolve from the review into the retained set under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`. Absolute URLs and
+`kb/agentic-systems/reports/retained/<run-id>/`. Absolute URLs and
 anchor-only links stay as they are. The review therefore makes no claim
 the set does not make, and the overview's contract for the Bounded
 synthesis (no ranking, adoption advice, system-wide grade or transfer
@@ -57,7 +57,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-YYYY-MM-DD-system-slug-nn
 source-identity: {stable identity}
 reviewed-revision: "{revision or capture label}"
-analysis-artifact: kb/reports/retained/agentic-system-analysis/{run-id}/ARTIFACT.yaml
+analysis-artifact: kb/agentic-systems/reports/retained/{run-id}/ARTIFACT.yaml
 analysis-artifact-sha256: "{sha256}"
 ---
 

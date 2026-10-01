@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-fragility-grid-01
 source-identity: https://github.com/NikolaTesla-007/fragility-grid
 reviewed-revision: 3f51444ead009d8351de1b6b19bf901c4da3d420
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-fragility-grid-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-fragility-grid-01/result.md
 analysis-result-sha256: 70d8208bdae0dedbb7f16efd1e23d0c699c5f3e3ec5d5bbad313553daf88ec9f
 ---
 

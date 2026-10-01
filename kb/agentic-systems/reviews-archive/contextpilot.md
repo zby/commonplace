@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-contextpilot-01
 source-identity: https://github.com/Tencent/ContextPilot
 reviewed-revision: 782cbb6611fb610c4cf6fafda6022b7e89cae191
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-contextpilot-01/result.md
 analysis-result-sha256: 8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3
 ---
 

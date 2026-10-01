@@ -6,7 +6,7 @@
   "analysis-run": "AAS-2026-09-25-dualgraph-01",
   "source-identity": "https://github.com/microsoft/DKI_LLM",
   "reviewed-revision": "c090b7d57e3996c8900e86fecd16085b27e07f29",
-  "analysis-result": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-dualgraph-01/result.md",
+  "analysis-result": "kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-dualgraph-01/result.md",
   "analysis-result-sha256": "e0a7c8fbc42d2c877c8d4fd2c7ae6b0fddde46d867ebe8baf61a9fda4cd021d8"
 }
 ---

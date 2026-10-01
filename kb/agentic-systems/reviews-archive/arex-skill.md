@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-arex-skill-01
 source-identity: https://github.com/VectorSpaceLab/AREX-Skill
 reviewed-revision: ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-arex-skill-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-arex-skill-01/result.md
 analysis-result-sha256: 973dc7c3679aaadff574cb9b4cc9d40602a8a9c120190430fa48bf8fdd356d47
 ---
 

@@ -18,7 +18,7 @@ and pins every member, including this overview.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `types/agentic-system-analysis-overview.md` |
+| `type` | Yes | `agentic-systems/types/agentic-system-analysis-overview.md` |
 | `description` | Yes | For a `complete` run, the synthesizer's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
 | `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
@@ -47,8 +47,8 @@ status meanings for all members.
 ### Identity and completion
 
 Working output lives under
-`kb/reports/state/agentic-system-analysis/<run-id>/output/`; publication
-retains it under `kb/reports/retained/agentic-system-analysis/<run-id>/`.
+`kb/agentic-systems/reports/state/<run-id>/output/`; publication
+retains it under `kb/agentic-systems/reports/retained/<run-id>/`.
 Run state and compact reviews pin `ARTIFACT.yaml`. The manifest pins the
 reports, and `inputs-commit` identifies the method's committed inputs.
 The [set type](./agentic-system-analysis-set.md) owns membership
@@ -132,7 +132,7 @@ inside its own bytes.
 
 ```markdown
 ---
-type: types/agentic-system-analysis-overview.md
+type: agentic-systems/types/agentic-system-analysis-overview.md
 description: "{one sentence on the system's mechanism and limits}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "{source-native system name}"

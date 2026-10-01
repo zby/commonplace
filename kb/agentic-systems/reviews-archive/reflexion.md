@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-reflexion-02
 source-identity: https://github.com/noahshinn/reflexion
 reviewed-revision: 218cf0ef1df84b05ce379dd4a8e47f17766733a0
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-reflexion-02/result.md
 analysis-result-sha256: 5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772
 ---
 

@@ -18,7 +18,7 @@ governs identity, fields, statuses and theory assessments.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `types/agentic-system-runtime-report.md` |
+| `type` | Yes | `agentic-systems/types/agentic-system-runtime-report.md` |
 | `description` | Yes | Retrieval description naming the system and the runtime boundary traced |
 | `run-id` | Yes | The set's run ID |
 | `reviewed-boundary` | Yes | The set's frozen revision or capture identity |
@@ -67,7 +67,7 @@ any later-needed runtime fields and amends this member's findings.
 
 ```markdown
 ---
-type: types/agentic-system-runtime-report.md
+type: agentic-systems/types/agentic-system-runtime-report.md
 description: "Runtime baseline of {system} at {boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 reviewed-boundary: "{immutable revision or capture identity}"

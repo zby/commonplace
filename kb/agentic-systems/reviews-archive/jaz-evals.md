@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-jaz-evals-01
 source-identity: https://github.com/jaz-lang/jaz-evals
 reviewed-revision: 83dc51ebbd02c9299890b6db93ddc773f07b74b9
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-evals-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-evals-01/result.md
 analysis-result-sha256: 335469e47ab7a2a92c21755fca3d6b1160146dc53e730978502c42dd054332e3
 ---
 

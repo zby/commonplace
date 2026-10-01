@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-wikiskill-01
 source-identity: https://arxiv.org/abs/2608.27454
 reviewed-revision: "sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-wikiskill-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-wikiskill-01/result.md
 analysis-result-sha256: b95421f94915a868aade71c3084eb2ecdc2ebff87fd69b263a6d66e2b93da269
 ---
 

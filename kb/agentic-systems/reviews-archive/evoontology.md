@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-evoontology-01
 source-identity: https://github.com/ruc-datalab/EvoOntology
 reviewed-revision: ddbb1c991de5a33e27eb32bc86a4212a7537e01e
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-evoontology-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-evoontology-01/result.md
 analysis-result-sha256: aa9766294d0d76b819168cc4d430077f219929da7689d5b5effeedb374ce105d
 ---
 

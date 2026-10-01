@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-prime-agent-01
 source-identity: https://github.com/PrimeIntellect-ai/prime-agent
 reviewed-revision: 514633727bf26d74f39f3119c2b0e31a5ceb2a9d
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md
 analysis-result-sha256: e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2
 ---
 

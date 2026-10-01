@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-pi-posthorse-01
 source-identity: https://github.com/fitchmultz/pi-posthorse
 reviewed-revision: 5bdba3536e186a7be845844d0398c3485a7f8e2b
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-pi-posthorse-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-pi-posthorse-01/result.md
 analysis-result-sha256: 19d203c7135f34278b17016d93a90c7637adee2484ca1f2d7810f59a0a2a0782
 ---
 

@@ -12,7 +12,7 @@ model: opus
 
 Analyse one external agentic system at one frozen evidence boundary and publish its retained set and compact generated review. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the run directory under `kb/reports/state/agentic-system-analysis/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/reports/retained/agentic-system-analysis/<run-id>/`; code writes all of them. It does not authorize changes to source worktrees, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the run directory under `kb/agentic-systems/reports/state/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/agentic-systems/reports/retained/<run-id>/`; code writes all of them. It does not authorize changes to source worktrees, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
 Run the orchestrator from the repository root and keep that working directory throughout the run. Workers must inherit it: `commonplace-validate` discovers the root there, and the boundary job uses `related-systems/`.
 
@@ -28,7 +28,7 @@ Run the orchestrator from the repository root and keep that working directory th
      --param source="<the caller's source input, as given>"
    ```
 
-   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/reports/state/agentic-system-analysis/<run-id>`.
+   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/agentic-systems/reports/state/<run-id>`.
 
    To reuse a Git checkout without refreshing it, add
    `--param source-revision=<full 40-hex commit>` when the caller requests
@@ -41,7 +41,7 @@ Run the orchestrator from the repository root and keep that working directory th
    Omit this option to let the boundary job acquire and freeze a source
    under its normal rules.
 
-Do not read `kb/agentic-systems/reviews/` or `kb/reports/retained/agentic-system-analysis/` at any point; the jobs analyse from sources only.
+Do not read `kb/agentic-systems/reviews/` or `kb/agentic-systems/reports/retained/` at any point; the jobs analyse from sources only.
 
 ## 2. Drive the run
 

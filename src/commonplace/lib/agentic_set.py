@@ -18,14 +18,14 @@ from commonplace.lib.note_parser import ParsedDocument
 
 REVIEW_TYPE = "agentic-systems/types/generated-review.md"
 
-SET_TYPE = "reports/types/agentic-system-analysis-set.md"
+SET_TYPE = "agentic-systems/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
 OVERVIEW_NAME = "overview.md"
 MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
 
-RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
+RETAINED_ROOT = Path("kb/agentic-systems/reports/retained")
 REVIEWS_ROOT = PurePosixPath("kb/agentic-systems/reviews")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
 

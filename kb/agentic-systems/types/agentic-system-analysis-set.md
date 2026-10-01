@@ -7,7 +7,8 @@ schema: ./agentic-system-analysis-set.schema.yaml
 
 # Agentic system analysis set
 
-A directory artifact in the reports collection. `ARTIFACT.yaml` selects this
+A directory artifact in the agentic-systems collection's `reports/retained/`
+area, or its local working `reports/state/<run-id>/output/` directory. `ARTIFACT.yaml` selects this
 type and records a SHA-256 for every member. All direct Markdown children
 are members; this type uses closed membership.
 

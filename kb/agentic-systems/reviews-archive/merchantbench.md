@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-merchantbench-01
 source-identity: https://github.com/KhanCold/merchantbench
 reviewed-revision: f44ce969aeccfd65d1eef6afe50f69868e510946
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-merchantbench-01/result.md
 analysis-result-sha256: 87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def
 ---
 

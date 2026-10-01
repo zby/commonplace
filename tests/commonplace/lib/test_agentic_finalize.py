@@ -20,7 +20,7 @@ def test_manifest_pins_the_members_present(tmp_path: Path) -> None:
 
     manifest = yaml.safe_load((output / "ARTIFACT.yaml").read_text(encoding="utf-8"))
     assert manifest == yaml.safe_load(text)
-    assert manifest["type"] == "reports/types/agentic-system-analysis-set.md"
+    assert manifest["type"] == "agentic-systems/types/agentic-system-analysis-set.md"
     assert list(manifest["members"]) == ["overview.md", "runtime.md"]
     assert manifest["members"]["runtime.md"] == {"sha256": sha256(b"runtime").hexdigest()}
 

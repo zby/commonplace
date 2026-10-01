@@ -11,7 +11,7 @@ properties:
     - members
     properties:
       type:
-        const: reports/types/agentic-system-analysis-set.md
+        const: agentic-systems/types/agentic-system-analysis-set.md
       members:
         type: object
         required:
@@ -48,7 +48,7 @@ properties:
             - type
             properties:
               type:
-                const: types/agentic-system-analysis-overview.md
+                const: agentic-systems/types/agentic-system-analysis-overview.md
       runtime.md:
         type: object
         required:
@@ -60,7 +60,7 @@ properties:
             - type
             properties:
               type:
-                const: types/agentic-system-runtime-report.md
+                const: agentic-systems/types/agentic-system-runtime-report.md
       memory.md:
         type: object
         required:
@@ -73,7 +73,7 @@ properties:
             - report-status
             properties:
               type:
-                const: types/agent-memory-analysis-report.md
+                const: agentic-systems/types/agent-memory-analysis-report.md
               report-status:
                 const: complete
       epistemic.md:
@@ -87,7 +87,7 @@ properties:
             - type
             properties:
               type:
-                const: types/agentic-system-epistemic-report.md
+                const: agentic-systems/types/agentic-system-epistemic-report.md
       reconciliation.md:
         type: object
         required: [frontmatter]
@@ -97,7 +97,7 @@ properties:
             required: [type]
             properties:
               type:
-                const: types/agentic-system-reconciliation-report.md
+                const: agentic-systems/types/agentic-system-reconciliation-report.md
     additionalProperties: false
 allOf:
 - if:

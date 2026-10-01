@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-modularrsi-01
 source-identity: https://github.com/IQuestLab/ModularRSI
 reviewed-revision: b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-modularrsi-01/result.md
 analysis-result-sha256: 237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f45b9cd4b3
 ---
 

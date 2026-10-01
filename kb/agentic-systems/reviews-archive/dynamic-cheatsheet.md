@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-27-dynamic-cheatsheet-04
 source-identity: https://github.com/suzgunmirac/dynamic-cheatsheet
 reviewed-revision: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md
 analysis-result-sha256: 18a90d3619d9357c200ad80b41ade5b654875d9a7ca0b7b1c5203581a17ef5a4
 ---
 

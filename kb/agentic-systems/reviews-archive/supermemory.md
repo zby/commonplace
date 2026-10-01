@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-supermemory-02
 source-identity: https://github.com/supermemoryai/supermemory
 reviewed-revision: 0e12f0b3a65af1cf7b03f48561f20ddf4369bc3f
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-supermemory-02/result.md
 analysis-result-sha256: e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408
 ---
 

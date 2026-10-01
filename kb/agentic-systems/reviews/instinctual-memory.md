@@ -5,8 +5,8 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-10-01-instinctual-memory-07
 source-identity: https://github.com/jasonkneen/instinctual-memory
 reviewed-revision: 6acb13dc35765bf5ccfc87e445dd09c480f1c28a
-analysis-artifact: kb/reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/ARTIFACT.yaml
-analysis-artifact-sha256: 427ebd1b22d0c598080d1b8cd78a9fd37b2462b196100ba6b64bd038d48cadb7
+analysis-artifact: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/ARTIFACT.yaml
+analysis-artifact-sha256: e409b30ce075f68a71fbdf29719dd9d2816e639d687a8d0bfc0fc7a164bade8e
 ---
 
 # instinctual-memory

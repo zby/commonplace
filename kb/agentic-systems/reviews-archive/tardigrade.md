@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-tardigrade-01
 source-identity: https://github.com/clavia-labs/tardigrade
 reviewed-revision: 1c4f4efaab2aaeec0bc482bc38e8ddf3be6f8267
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md
 analysis-result-sha256: a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802
 ---
 

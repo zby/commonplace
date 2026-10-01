@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-eal-bench-01
 source-identity: https://github.com/tommasocerruti/eal-bench
 reviewed-revision: 51648690bc52d7a9c7ac080a2c67a784fe9d56cb
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md
 analysis-result-sha256: 45eefb6b58e89b14c890e3e60c5e4d19b07365002409cca493b1554ef48cc097
 ---
 

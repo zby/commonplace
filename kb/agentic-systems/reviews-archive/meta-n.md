@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-24-meta-n-01
 source-identity: https://github.com/minnesotanlp/meta-n
 reviewed-revision: b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-meta-n-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md
 analysis-result-sha256: 9650f608684b43bd44da354dd055f4cbeba5eab3a38f285f3ea351f6d73ec17e
 ---
 

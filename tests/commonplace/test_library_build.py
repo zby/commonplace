@@ -68,3 +68,18 @@ def test_a_link_that_resolves_to_nothing_fails_the_build(tmp_path: Path) -> None
 
     with pytest.raises(RuntimeError, match="unresolved link ./gone.md"):
         hook.prepare_library(repo, tmp_path / "out")
+
+
+def test_shipped_library_excludes_collection_owned_analysis(tmp_path: Path) -> None:
+    hook = _load_hook_module()
+    out = tmp_path / "library"
+    hook.prepare_library(REPO_ROOT, out)
+
+    assert (out / "instructions/cp-skill-write/SKILL.md").is_file()
+    assert (out / "types/instruction.md").is_file()
+    assert (out / "types/note.schema.yaml").is_file()
+    assert not (out / "agentic-systems").exists()
+    for spec in (REPO_ROOT / "kb/agentic-systems/types").glob("*.md"):
+        assert not (out / "types" / spec.name).exists()
+    for name in ("analyse-agentic-system", "synthesize-agent-memory-landscape"):
+        assert not (out / "instructions" / name).exists()

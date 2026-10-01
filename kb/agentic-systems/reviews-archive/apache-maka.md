@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-apache-maka-06
 source-identity: https://github.com/apache/maka
 reviewed-revision: "02f97c16d76e644d5b565889701958293ff7b5fb"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-06/result.md
 analysis-result-sha256: "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8"
 ---
 

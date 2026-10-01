@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-company-brain-01
 source-identity: https://github.com/supermemoryai/company-brain
 reviewed-revision: 0071d6164991ce5dccddbd645bcac631ee477572
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md
 analysis-result-sha256: ea4ff6d13ceaf4d60d13e9b00f9caab088f307721d1ada8668792d223aedf13a
 ---
 

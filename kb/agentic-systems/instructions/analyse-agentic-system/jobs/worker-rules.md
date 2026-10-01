@@ -107,10 +107,10 @@ Do not call agent listings for status; their payloads may include prior
 analyses even with a path filter. Do not read style exemplars or
 `kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`,
 `kb/agentic-systems/reviews-archive/`,
-`kb/reports/retained/agentic-system-analysis/`,
-`kb/reports/retained/agentic-system-analysis-archive/`,
+`kb/agentic-systems/reports/retained/`,
+`kb/agentic-systems/reports/retained-archive/`,
 `kb/work/analyse-agentic-system/`, other runs under
-`kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or
+`kb/agentic-systems/reports/state/`, surveys, comparison outputs, or
 agent listings. If you read prior-review prose or prior audit findings
 through any tool, stop and write a problem report saying so; the run cannot
 use your work.

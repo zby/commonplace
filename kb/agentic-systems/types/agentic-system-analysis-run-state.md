@@ -10,8 +10,8 @@ schema: ./agentic-system-analysis-run-state.schema.yaml
 ## Authoring Instructions
 
 Use this type only for
-`kb/reports/state/agentic-system-analysis/<run-id>/run-state.md`. The owning
-workflow is `kb/instructions/analyse-agentic-system/SKILL.md`.
+`kb/agentic-systems/reports/state/<run-id>/run-state.md`. The owning
+workflow is `kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md`.
 
 This record proves only what later consumers need:
 
@@ -30,13 +30,13 @@ digest (or `absent`). Recovery copies `incumbent-review.md` and
 run when a review is replaced; they are not disposable candidate files.
 
 The artifact manifest lives at
-`kb/reports/state/agentic-system-analysis/<run-id>/output/ARTIFACT.yaml`.
+`kb/agentic-systems/reports/state/<run-id>/output/ARTIFACT.yaml`.
 Its [set type](./agentic-system-analysis-set.md) selects
 membership from the overview's disposition. The overview's `inputs-commit`
 names the method commit. A complete set publishes a generated review;
 a blocked or out-of-scope set has only the overview and no generated review.
 Publication retains the manifest and members byte for byte under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`. Completion checks
+`kb/agentic-systems/reports/retained/<run-id>/`. Completion checks
 those copies and the public review's `analysis-artifact` and
 `analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
 follow those public fields without ignored state or a source checkout.
@@ -86,7 +86,7 @@ commit.
 
 ```markdown
 ---
-type: types/agentic-system-analysis-run-state.md
+type: agentic-systems/types/agentic-system-analysis-run-state.md
 description: "Minimal completion state for AAS-YYYY-MM-DD-system-slug-nn"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "Source-native system name"

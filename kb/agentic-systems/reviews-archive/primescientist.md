@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-primescientist-01
 source-identity: https://github.com/Henri-XYu02/PrimeScientist
 reviewed-revision: 29971beac6f4f4b41309b1326762e1b83ceece98
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-primescientist-01/result.md
 analysis-result-sha256: b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b
 ---
 

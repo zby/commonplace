@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-lhtb-01
 source-identity: https://github.com/zli12321/LHTB
 reviewed-revision: d78f5eb52ad754c5ee9154741af73130a85a65b8
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-lhtb-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-lhtb-01/result.md
 analysis-result-sha256: 615b32ab30f9072f535b674f92b9fd95609cb3f0a9d893c6abc3c7ba51a58af9
 ---
 

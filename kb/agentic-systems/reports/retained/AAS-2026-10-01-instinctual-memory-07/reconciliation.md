@@ -1,5 +1,5 @@
 ---
-type: types/agentic-system-reconciliation-report.md
+type: agentic-systems/types/agentic-system-reconciliation-report.md
 description: Reconciliation of instinctual-memory records at 6acb13dc35765bf5ccfc87e445dd09c480f1c28a
 run-id: AAS-2026-10-01-instinctual-memory-07
 reviewed-boundary: 6acb13dc35765bf5ccfc87e445dd09c480f1c28a

@@ -1,5 +1,5 @@
 ---
-type: "types/agent-memory-analysis-report.md"
+type: "agentic-systems/types/agent-memory-analysis-report.md"
 description: "Memory mechanisms of instinctual-memory: journal-to-fact extraction, Git controls, requested retrieval, host hooks and instruction writeback"
 run-id: "AAS-2026-10-01-instinctual-memory-07"
 source-identity: "https://github.com/jasonkneen/instinctual-memory"

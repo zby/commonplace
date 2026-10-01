@@ -21,7 +21,7 @@ governs identity, common fields and statuses.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `types/agent-memory-analysis-report.md` |
+| `type` | Yes | `agentic-systems/types/agent-memory-analysis-report.md` |
 | `description` | Yes | Subject and discriminating memory boundary |
 | `run-id` | Yes | The set's run ID |
 | `source-identity` | Yes | Exact repository or capture identity |
@@ -286,7 +286,7 @@ independently attest acceptance.
 
 ```markdown
 ---
-type: types/agent-memory-analysis-report.md
+type: agentic-systems/types/agent-memory-analysis-report.md
 description: "Memory mechanisms of {system} within {memory boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 source-identity: "{repository or capture identity}"

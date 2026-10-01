@@ -1,5 +1,5 @@
 ---
-type: types/agentic-system-epistemic-report.md
+type: agentic-systems/types/agentic-system-epistemic-report.md
 description: "instinctual-memory epistemic routes: source occurrence, durability judgments, operational admission and bounded retrieval evaluation"
 run-id: AAS-2026-10-01-instinctual-memory-07
 reviewed-boundary: "6acb13dc35765bf5ccfc87e445dd09c480f1c28a"
