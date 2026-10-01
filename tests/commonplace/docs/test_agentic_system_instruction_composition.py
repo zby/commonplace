@@ -34,6 +34,12 @@ def contract(name: str) -> str:
     return (REPO_ROOT / "kb/types" / f"{name}.md").read_text(encoding="utf-8")
 
 
+def shared_contract(name: str) -> str:
+    return (REPO_ROOT / "kb/reference" / f"agentic-analysis-{name}.md").read_text(
+        encoding="utf-8"
+    )
+
+
 def test_set_has_one_fixed_state_location() -> None:
     from commonplace.lib.agentic_workflow import MANIFEST
 
@@ -56,12 +62,11 @@ def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     # The boundary validator guarantees the checkout, so jobs read it directly.
     assert "read and grep the files of the checkout at `source.path`" in rules
     assert "do not extract another copy of the source" in rules
-    # The anchor grammar is the overview type's, stated once under Status fields;
-    # the searched boundary of an absence is a runtime-report record field.
-    assert "one code span containing the full commit-relative path" in contract(
-        "agentic-system-analysis-overview"
+    # Every analytical worker receives the source and record contracts.
+    assert "one code span containing the full commit-relative path" in shared_contract(
+        "sources"
     )
-    assert "searched boundary" in contract("agentic-system-runtime-report")
+    assert "searched roots or files" in shared_contract("records")
 
 
 def test_runtime_checks_preflight_before_execution() -> None:
@@ -86,14 +91,12 @@ def test_transfer_scan_runs_after_complete_state() -> None:
 
 
 def test_candidate_artifact_does_not_establish_phase_observation() -> None:
-    epistemic = job("epistemic")
-    dispose = epistemic[
-        epistemic.index("**Dispose every object.**") :
-        epistemic.index("**Bound each check's licenses.**")
-    ]
+    epistemic = contract("agentic-system-epistemic-report")
+    dispose = epistemic[epistemic.index("## Assessment limits") : epistemic.index("## Required blocks")]
+    dispose = " ".join(dispose.split())
 
     assert "persisted candidate artifact" in dispose
-    assert "no provenance or trace links it" in dispose
+    assert "no provenance or trace links to" in dispose
     assert "only that a candidate instance is available" in dispose
     assert "observed candidate state" in dispose
     assert "`not determinable`, not `phase evidenced` or `accepted`" in dispose
@@ -101,11 +104,8 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
 
 
 def test_jobs_state_the_set_rules_they_depend_on() -> None:
-    assert "Declare each record you establish under an `EPI-` ID" in job("epistemic")
-    assert "no job rewrites it afterwards" in job("runtime")
-    assert "(../../../types/agentic-system-runtime-report.md#shared-records)" in job(
-        "judging-norms"
-    )
+    assert "epistemic has `EPI-`" in shared_contract("records")
+    assert "No job rewrites it afterwards" in job("runtime")
     assert "`## Not reached`" in job("boundary")
 
 

@@ -7,22 +7,17 @@ type: types/instruction.md
 
 Read every file under `read-first` in your invocation before any other step.
 
-## Parameters
+## Job parameters
+
+Common parameters are defined in the supplied worker rules.
 
 | Name | Meaning | Present |
 |---|---|---|
-| `system` | The source-native system name. | Always |
-| `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input. | Always |
-| `output` | Absolute path of your result. | Always |
-| `problem` | Absolute path for the reason you cannot finish. | Always |
-| `scratch` | Absolute directory for intermediate files. | Always |
 | `overview-draft` | Absolute path of the overview without this verification. | Always |
 | `runtime` | Absolute path of the runtime member. | Always |
 | `memory` | Absolute path of the selected memory report, copied unchanged into the set. | Always |
 | `epistemic` | Absolute path of the epistemic member. | Always |
 | `set-check` | Absolute path of the structural check of the assembled set. | Always |
-
-Use the supplied paths unchanged. If a required parameter is missing, write `problem`; do not reconstruct it. Retry refusal feedback applies to the same job and does not change its analytical round.
 
 ## Task
 
@@ -34,9 +29,8 @@ Read the assembled set from `overview-draft`, `runtime`, `memory`, and `epistemi
 ### Blockers
 ```
 
-Read each input in its own read call, and check each delivery for truncation before relying on it.
-
-Both sections become overview text, so the overview type's source-anchor rules apply to them: cite a source path without a line range, or quote the passage. Your output is refused while the overview with your verification adds a validation failure to those the set check lists.
+Acceptance requires that the overview with your verification adds no
+validation failures to those the set check already lists.
 
 Check the whole set, not the separate returns of the memory and epistemic analysts, against the Memory comparison fields of the [memory report type](../../../types/agent-memory-analysis-report.md), whose definitions govern every profile value: scope agreement with the canonical records across members, every scoped trace-fed write including compaction, each push signal's consumer and selector, and the Reconciliation's amendments and supersessions against the records they name.
 

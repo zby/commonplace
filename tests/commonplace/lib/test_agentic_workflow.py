@@ -857,7 +857,7 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     assert definition.recognize_publication(spec) is Recognition.UNKNOWN
 
 
-# 10. A job loads the type of every member it writes or judges
+# 10. A job loads shared definitions and the member types it writes or judges
 
 
 def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -> None:
@@ -866,23 +866,24 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     assert isinstance(scripted.run()[-1], Done)
 
     types = {
+        "sources": "kb/reference/agentic-analysis-sources.md",
+        "records": "kb/reference/agentic-analysis-records.md",
         "overview": "kb/types/agentic-system-analysis-overview.md",
         "runtime": "kb/types/agentic-system-runtime-report.md",
         "memory": "kb/types/agent-memory-analysis-report.md",
         "epistemic": "kb/types/agentic-system-epistemic-report.md",
     }
     expected = {
-        "boundary": {"overview"},
-        "runtime": {"overview", "runtime"},
-        "memory-0": {"overview", "memory", "runtime"},
-        "epistemic": {"overview", "epistemic", "runtime"},
+        "boundary": {"sources"},
+        "runtime": {"sources", "records", "runtime"},
+        "memory-0": {"sources", "records", "memory"},
+        "epistemic": {"sources", "records", "epistemic"},
         "reconcile-0": set(types),
         "verify-0": set(types),
     }
     for job, wanted in expected.items():
         prompt = last_prompt(fixture, job)
         assert {name for name, path in types.items() if path in prompt} == wanted, job
-    assert "judging-norms.md" in last_prompt(fixture, "memory-0")
 
 
 def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
@@ -990,7 +991,8 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
 
 @pytest.mark.parametrize("dependency", [
     "kb/instructions/analyse-agentic-system/jobs/memory.md",
-    "kb/instructions/analyse-agentic-system/jobs/judging-norms.md",
+    "kb/reference/agentic-analysis-sources.md",
+    "kb/reference/agentic-analysis-records.md",
     "kb/types/agent-memory-analysis-report.md",
 ])
 def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, dependency: str) -> None:

@@ -28,9 +28,12 @@ within that request's scope; do not request authorization again.
 
 1. **Load the memory report contract.** Read
    `kb/types/agent-memory-analysis-report.md`, including `memory-comparison`,
-   and `kb/types/agentic-system-analysis-overview.md` for the set's identity.
+   and the shared `kb/reference/agentic-analysis-sources.md` and
+   `kb/reference/agentic-analysis-records.md` contracts for evidence and
+   record identity. Read `kb/types/agentic-system-analysis-overview.md`
+   for overview content.
    Record the procedure, contract, schema and reader identities used for the
-   audit: this instruction, those types and their `.schema.yaml` files,
+   audit: this instruction, the shared contracts, those types and their `.schema.yaml` files,
    `src/commonplace/lib/systems_matrix.py`, and the producing
    `kb/instructions/analyse-agentic-system/SKILL.md`. Record hashes for any
    additional ontology definition actually used.

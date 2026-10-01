@@ -13,8 +13,9 @@ system acquires or produces truth-apt content, checks it, grants or
 withholds reliance, retains or integrates it, and lets it affect later
 behavior. It cites the records other members declare, and it declares
 the records the epistemic analyst establishes under their `EPI-` IDs, with
-the evidence passages that support them. Set-wide conventions are those
-of the [overview](./agentic-system-analysis-overview.md#the-set).
+the evidence passages that support them. The [source contract](../reference/agentic-analysis-sources.md) governs
+evidence; the [record contract](../reference/agentic-analysis-records.md)
+governs identity, common fields and statuses.
 
 ## Frontmatter
 
@@ -60,6 +61,41 @@ organization or use; retention or operational use before acceptance is a
 separate ledger function, and a candidate retained or used without
 acceptance has integration `not reached`.
 
+## Assessment limits
+
+Each content edge is assessed separately. Entailed derivation carries
+warrant only from warranted premises through a checked interpretation or
+formal domain. Novelty, fluency and plausibility establish candidate
+generation only. A produced accepted ampliative claim requires an
+evidence-consuming acceptance decision naming criterion, intended use and
+scope; retention, retrieval, reshaping or operational use alone does not
+establish it. Imported content is acquired, not produced. Acceptance does
+not establish infallibility, and integration does not establish acceptance.
+
+Architectural status is separate from activation conditions and observed
+candidate state. Implementation or doctrine does not establish an observed
+phase. A persisted candidate artifact with no provenance or trace links to
+the routes establishes only that a candidate instance is available; its
+phases are `not determinable`, not `phase evidenced` or `accepted`. A
+recorded result without a consequential consumer has no implemented force.
+An evidenced absence does not require an invented evaluator.
+
+A check's license is bounded by target, contrast, domain, horizon and
+route. Outcome success does not establish the producing process,
+explanation, replay safety, transfer or component effect. A reconstructed
+route does not prove it produced the observed outcome. Consequence fit
+does not warrant the proposed mechanism or its transfer. Formal validity
+does not establish source truth, encoding fidelity, omitted premises or
+claims beyond the checked domain. Freshness does not establish endorsement;
+operational continuation does not establish epistemic warrant. Causal
+attribution follows the shared source contract's comparison limits.
+
+An intentionally operational or lab-tracking scope is not product failure;
+broader knowledge-production claims still require comparison with the
+routes. The assessment imposes no natural-language claim format, proposal
+loop, Commonplace storage model or universal ontology. Heterogeneous routes
+retain separate evaluators, statuses and authorities.
+
 ## Required blocks
 
 The body contains six level-two sections in order, as readable Markdown
@@ -78,6 +114,11 @@ missing item of evidence with the conclusion it prevents, and the
 system's knowledge-production or warrant claims by `CLM-*` ID, or `none
 found`. It cites the Source register supplied in the boundary input and does
 not copy it; code later copies that register into the overview.
+
+Retain a compact coverage table: entry point or operation, source path,
+covering supplied or new IDs, or exclusion/uninspected reason and conclusion
+prevented. Distinguish direct source reads from supplied runtime findings;
+an unassessed relevant operation prevents a system-complete negative.
 
 **2. Epistemic-object inventory.** One row per operative part within the
 material-route boundary, split where parts differ in content, form,
@@ -176,21 +217,13 @@ single epistemic score, oracle, status, or unqualified verdict.
 
 ## Shared records
 
-`## Shared records` declares each record the epistemic analyst established,
-under the set's
-[declaration grammar](./agentic-system-analysis-overview.md#declaration-annotation-and-amendment-grammar):
-grouped under the kind headings of the kinds it declares, as `#### EPI-OBJ-1
-— Label`, with the identity and fields the
-[runtime report type](./agentic-system-runtime-report.md#shared-records)
-requires of a record of that kind, its source anchors, and the minimum
-verbatim passages its load-bearing findings need. Apply the runtime type's
-route fields according to their scope: read-back fields state `inapplicable`
-with a reason when the route neither retains nor reads retained material;
-admitting-route fields apply to routes that admit changes; theory-route
-fields apply only to routes involving formulated theories. A field outside
-its scope is not evidence of an absent epistemic phase. An `EPI-ABS-*` record
-states its searched boundary. State `none declared in this member` when
-the epistemic analyst established no record.
+This section declares records the epistemic analyst establishes, with
+`EPI-` IDs, under the shared record contract. Include the kind headings
+for declared kinds, source anchors and minimum load-bearing passages;
+state `none declared in this member` when there are no declarations.
+Apply conditional route fields only within their stated scope. Read-back
+fields give an inapplicable reason when neither retention nor read-back
+occurs; inapplicability establishes no missing epistemic phase.
 
 ## Template
 

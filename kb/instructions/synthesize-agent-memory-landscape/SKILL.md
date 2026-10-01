@@ -32,8 +32,10 @@ supplies publication identity and navigation. It cannot replace a missing
 member or comparison assessment.
 
 Use `kb/types/agent-memory-analysis-report.md` for the `memory-comparison`
-contract and `kb/types/agentic-system-analysis-overview.md` for the set's
-identity and conventions. Each matrix row preserves its source revision, run,
+contract, `kb/reference/agentic-analysis-sources.md` and
+`kb/reference/agentic-analysis-records.md` for shared evidence and record
+conventions, and `kb/types/agentic-system-analysis-overview.md` for overview
+content. Each matrix row preserves its source revision, run,
 analysis cutoff, evidence tier, compared memory boundary, and per-axis
 coverage assessment, values, per-value evidence, and canonical records. No
 legacy review, old CSV, transfer scan, or newly acquired source may supply or

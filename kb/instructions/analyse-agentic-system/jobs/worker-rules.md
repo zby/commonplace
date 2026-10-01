@@ -5,17 +5,67 @@ type: types/instruction.md
 
 # Follow the worker rules of an analysis run
 
-You are one job of a code-scheduled `analyse-agentic-system` run. Code scheduled you and will judge your output. Write only `output`, or `problem` when you cannot finish, and intermediate files (selection files, extracted sources) in `scratch`. When you finish, reply in one line naming the file you wrote without repeating or summarizing its content, and send no other message while you work. The boundary job may create and freeze source checkouts or captures as its instruction permits. Do not edit other files of the run, publish, delegate, stage, or commit. Anything under `workflow-state/` is not yours to read or change.
+Produce the result of one code-scheduled analysis job within its assigned
+evidence and write scope. Code schedules the job and judges its output.
+
+## Invocation and authority
+
+Every job uses these parameters; its instruction defines additional ones:
+
+| Parameter | Meaning |
+|---|---|
+| `system` | Source-native system name |
+| `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input |
+| `output` | Absolute path for the completed result |
+| `problem` | Absolute path for the reason the job cannot finish |
+| `scratch` | Absolute directory for intermediate files, including selections and extracts |
+
+Use supplied paths unchanged. Read every `read-first` dependency before
+the task. Missing required parameters, unavailable required inputs,
+source access or scope decisions that prevent completion, and needed
+expansion beyond the frozen boundary require `problem`; do not reconstruct
+paths, expand scope or submit a blocked member. A justified unknown that
+only limits a conclusion remains in `output`, naming that conclusion.
+Retry refusal feedback applies to the same job and does not change its
+analytical round.
+
+Write only `output` or `problem`, plus intermediate files in `scratch`.
+The boundary job may create and freeze sources as its instruction permits.
+Do not edit other run files, publish, delegate, stage or commit, or read or
+change `workflow-state/`. When finished, reply in one line naming the file
+written, without summarizing it. Follow higher-priority runtime requirements
+for progress messages.
 
 ## Commands
 
 Run acceptance commands separately and inspect each exit status, or chain dependent commands with `&&`. Shell pipelines need `set -o pipefail`. When wrapping tool calls, retain status and stderr as well as stdout; a later successful command does not clear an earlier failure. State a check's result in your output only after you have run the check.
 
+With standard Codex tools, return the complete command result, not just
+`result.output`. For example, one bounded read through `functions.exec` is:
+
+```javascript
+const result = await tools.exec_command({
+  cmd: "sed -n '1,100p' /absolute/path/from/the/invocation.md",
+  max_output_tokens: 3000
+});
+text(result);
+```
+
+Replace the example path with the supplied path. Read each instruction,
+contract, and input separately, in successive bounded ranges until its
+end; do not concatenate them into one command. The range is a starting
+budget, not a guarantee: long lines can still overflow it. Inspect the
+complete returned object for `exit_code`, errors, and truncation. A running
+command has no final exit status yet; wait for its completion. If either
+the command or outer tool delivery is truncated, repeat that range with a
+smaller range before advancing. Raising only the inner token limit does
+not raise the outer delivery limit. Apply the same pattern to source
+searches and reads. Use one command per call for file preparation and
+acceptance checks, or `&&` when they must share a shell invocation.
+
 ## Sources
 
 After the boundary job freezes the sources, read evidence only within that frozen boundary: use `boundary` when supplied, or the Boundary and evidence and Source register in `overview-draft` for verification. For Git, read and grep the files of the checkout at `source.path`: the boundary job checked it out at the recorded commit, and code refused the boundary unless its `git status` was empty. Do not modify, check out or fetch in that checkout, and do not extract another copy of the source. For a capture, read the recorded file and check its SHA-256.
-
-Select files and line ranges before reading content. Budget the combined output of parallel reads against the tool wrapper's delivery limit. Check delivered output for truncation at both the command and the wrapper level; truncated output is not evidence. Narrow and repeat the read before citing it, and do not infer coverage from a successful command or its requested range.
 
 ## Quotation
 

@@ -69,9 +69,11 @@ def test_trial_hash_discovery_does_not_parse_rendered_prompt(tmp_path, monkeypat
     record = json.loads((prompt_path.parent / "trial.json").read_text())
 
     assert prompt_path.read_text() == "An opaque message.\n"
-    assert len(record["inputs"]) == 8
-    assert any(path.endswith("jobs/memory.md") for path in record["inputs"])
-    assert any(path.endswith("output/runtime.md") for path in record["inputs"])
+    assert {Path(path).name for path in record["inputs"]} == {
+        "boundary.md", "runtime.md", "memory.md", "worker-rules.md",
+        "agentic-analysis-sources.md", "agentic-analysis-records.md",
+        "agent-memory-analysis-report.md",
+    }
 
 
 @pytest.mark.parametrize("failure", ["missing", "unreadable"])

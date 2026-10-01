@@ -37,6 +37,8 @@ INCUMBENT_REVIEW_NAME = "incumbent-review.md"
 METHOD_PATHS: tuple[str, ...] = (
     "src/commonplace/",
     "kb/instructions/analyse-agentic-system/",
+    "kb/reference/agentic-analysis-sources.md",
+    "kb/reference/agentic-analysis-records.md",
     "kb/reports/types/agentic-system-analysis-set.md",
     "kb/reports/types/agentic-system-analysis-set.schema.yaml",
     "kb/types/agentic-system-analysis-overview.md",
@@ -580,4 +582,3 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
         retained_path=checked.retained_paths[MANIFEST_NAME].relative_to(repo_root).as_posix(),
         cleanup_warnings=tuple(cleanup_warnings),
     )
-

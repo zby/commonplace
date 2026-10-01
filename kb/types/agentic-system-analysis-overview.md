@@ -24,18 +24,24 @@ and pins every member, including this overview.
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
 | `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
-| `target-class` | Yes | `enclosing runtime`, `embedded inner runtime`, `runtime client`, `returning computation`, `workflow`, `extension or tool mechanism`, `builder or improvement plane`, `host integration`, `memory/knowledge/context-engineering system`, or another defined class; `null` when the run stopped before classification |
-| `boundary-kind` | Yes | `whole-system`, `subsystem-only`, `complete artifact, partial loop`, or `null` before a boundary could be established |
+| `target-class` | Yes | Target role under the source contract; `null` before classification |
+| `boundary-kind` | Yes | Extent of the selected target under the source contract; `null` before establishment |
 | `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
-| `inputs-commit` | Yes | The full commit of this repository whose tree supplied the run's method: the analysis instructions, the set's type specs and schemas, and the package code. The coordinator writes HEAD here when the run opens; publication requires HEAD to descend from it with the method paths, the `METHOD_PATHS` constant in `src/commonplace/lib/agentic_publication.py`, unchanged |
+| `inputs-commit` | Yes | Full repository commit supplying the instructions, contracts, schemas and package code; publication requires the method unchanged |
 
 For a `complete` run, the five boundary fields are non-null. A `blocked`
 or `out-of-scope` overview retains every required section and states what
 was not reached, why, and which conclusion that prevents.
 
-## The set
+## Shared contracts
+
+The [source contract](../reference/agentic-analysis-sources.md) defines
+boundary classifications, source declarations, evidence layers, anchors
+and quotations. The [record contract](../reference/agentic-analysis-records.md)
+defines the namespace, declarations, annotations, amendments, fields and
+status meanings for all members.
 
 ### Identity and completion
 
@@ -49,156 +55,27 @@ and set checks. File validation checks this overview independently;
 directory validation checks the whole set. Only complete sets may publish
 or supply comparison rows. Correct retained output through a new run.
 
-### Canonical identity across members
-
-The run has one namespace: `SRC-*` sources, `CMP-*` components, `OBJ-*`
-operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced
-absences, and `BAP-*` behavioral-authority paths. The run's three
-**analysts** are the jobs that inspect the source and each write one
-member: the runtime analyst, the memory analyst and the epistemic analyst.
-A record ID other than `SRC-*` carries the prefix of the analyst that
-established it: none for the runtime analyst (`OBJ-1`), `MEM-` for the
-memory analyst (`MEM-OBJ-1`), `EPI-` for the epistemic analyst
-(`EPI-OBJ-1`). The prefix is part of the ID for
-the life of the set; no step renames a record. IDs are unique across the
-set and resolve within it. Write each ID in full, including lists,
-using commas or words between referenced IDs. The validator resolves
-complete IDs; it does not infer references from abbreviated suffixes or
-ranges. Source quotations and fenced excerpts are excluded from identifier
-checks.
-
-`SRC-*` records are declared only in the first cell of a table row in this
-overview's Source register, as `| SRC-1 | ... |`.
-Every other record is declared exactly once, in the member of the analyst
-that established it: unprefixed IDs in the runtime report, `MEM-` IDs in
-the memory report, `EPI-` IDs in the epistemic report. A cross-member
-reference is the full ID.
-
-Canonical identity applies from declaration, not only final acceptance.
-When two analysts established the same thing, both records stay declared,
-and the Reconciliation supersedes one with an amendment. A split gives the
-new parts fresh IDs and marks the combined record superseded; its ID does
-not change referent. A superseded ID stays declared, so references to it
-still resolve. Provisional labels are local tags.
-
-### Declaration, annotation and amendment grammar
-
-Within a member's `## Shared records`, records are grouped under the six
-level-three kind headings and declared once each as a level-four heading,
-`#### OBJ-1 — Short label`. The ID precedes the em dash; the rest is the
-title. Prose, lists and table rows never declare these records. The same
-grammar and duplicate checks apply to every prefix. A level-four heading of the form
-`#### On OBJ-1 — Short label` is an **annotation**: another member's
-analyst-specific fields on a record it does not declare. It never redefines
-generic identity, and a member never annotates a record it declares.
-Annotations sit in the section the member's type names: `## Annotations`
-in the runtime report, under `## Shared records` in the memory report.
-
-An **amendment** corrects a declared fact of any analyst's record. Amendments
-live in one place: this overview's `## Reconciliation`, as paragraphs
-that open `Amendment:` followed by the amended record's full ID and give
-the superseded value, replacement value, evidence anchor, and affected
-findings. An anchored conflict is an amendment carrying both values. A
-supersession is an amendment of the form `Amendment: MEM-RTE-3 is
-superseded by RTE-7`, with the evidence for the identity. No member is
-rewritten after the job that wrote it; a member never carries a second
-version of a record or an amendment section.
-
-### Status fields
-
-A conclusion-status field contains exactly one of `absent`,
-`inapplicable`, `uninspected`, `claimed`, `afforded`, `wired`, `observed`,
-or `causally supported`. Simultaneous claims at different layers go in
-separately labelled fields; a route can carry `implementation conclusion
-status: wired` and `operation conclusion status: observed`, never one
-value such as `wired; observed`. Guarantee strength is its own field,
-separate from evidence status: `invariant`, `protocol`, `policy`, `best
-effort`, `deployment guarantee`, or `no claimed guarantee`. The epistemic
-report's architectural status and observed candidate state are its own
-fields and are never translated into this vocabulary.
-
-Every negative, thin, conflicting, or uncertain finding names its
-inspected boundary and the exact conclusion it prevents. Every
-source-dependent record cites a `SRC-*` ID plus a local anchor: for a Git
-source, one code span containing the full commit-relative path, such as
-`packages/runtime/src/agent-run.ts`, or a GitHub blob link at the reviewed
-commit; a basename denotes a repository-root file. A cited path must exist
-at the reviewed commit and may be a binary file. Only quote attributions
-carry line ranges. A ranged anchor or ranged GitHub link in prose fails
-validation: cite the path without a range, or quote the passage. Commonplace ontology may annotate a source-native mechanism, but it
-never replaces the operational account.
-
 ## Required sections
 
 ### Boundary and evidence
 
-`## Boundary and evidence` states the intended use, target classification,
-functional inclusions and exclusions, external dependencies, boundary
-kind, frozen revision or capture, analysis cutoff, and overall evidence
-tier. Each excluded participant is paired with the conclusion its
-exclusion prevents.
+`## Boundary and evidence` contains the boundary account defined by the
+source contract, copied from the boundary job.
 
 ### Source register
 
-`## Source register` contains one row per `SRC-*` record:
-
-`source ID | kind | identity/location | revision or capture | evidence layer | inspected scope | citation anchors | access gaps and conclusion prevented`
-
-Put each stable source identity in a code span so direct consumers can
-match it exactly, including non-URL capture identities. The evidence layer
-is one of `implementation` (inspected executable behavior),
-`doctrine/design` (declared intent or contract), `reported operation` (an
-attributed report without inspectable run evidence), `observed run` (an
-inspectable execution trace or artifact), or `causal experiment` (an
-observed interventional comparison plus evidence about its design; a
-contrast is necessary but not sufficient for causal identification, and
-the record states design and confounding limits and attributes no more
-finely than the actual treatment and comparison). A source with several
-evidence layers uses separate rows or clearly separated scopes.
-
-For a Git repository, the row identifies the canonical repository, full
-reviewed commit, inspected commit-relative paths, and commit-pinned
-citation anchors. A local `related-systems/<owner>--<repo>/` checkout may
-be recorded as the operational access root, but its worktree and current
-HEAD are not evidence and never the sole durable source identity. For a
-focused test or probe, the row's citation anchor resolves to one probe
-evidence capsule in the runtime report.
-
-Quotations across the set follow one contract. Members retain minimum
-verbatim source excerpts for load-bearing findings: disputed mechanisms,
-comparison classifications and assessments. When a supplied input member
-already retains the needed passage, cite its record instead of repeating it.
-Analysts writing in parallel may independently retain the same passage;
-they do not read each other's reports to deduplicate it. The reconciliation
-identifies overlapping support through the records; it does not rewrite the
-members to remove passages. A
-quotation block carries the excerpt, range and attribution that
-[`commonplace-quote`](../reference/commands.md#commonplace-quote)
-emits for the run's frozen source, ending with a `> ---` attribution: for
-Git, a full-commit GitHub blob URL matching the registered repository or
-`` `commit-relative/path` @ `full-commit` ``; for a capture,
-`` `capture/path[:start-end]` @ `sha256:<checksum>` `` with the registered
-checksum, or the exact registered source URL. Under whitespace
-normalization each quote occurs exactly once in the Git blob at the
-recorded commit or in the immutable capture, or exactly once within a
-supplied line range that contains the entire quote. Display line numbers,
-invented ellipses and formatting fences are not part of the quoted text;
-discontiguous passages use separate blocks. Semantic support remains part
-of semantic verification.
+`## Source register` contains that job's `SRC-*` rows under the source
+contract. Source identity and evidence scopes remain stable across members.
 
 ### Reconciliation
 
-`## Reconciliation` records supersessions of duplicate records, the set's
-amendments, anchored conflicts, independent convergence, ownership checks
-across the analysts, and integration-issue dispositions. It names affected
-IDs in full and states how each discrepancy was disposed without
-selecting the strongest-sounding status. Every ID it cites, amendments
-included, resolves in the set. A record of the memory or epistemic analyst
-found to duplicate another analyst's record is superseded here, never removed from its member.
-
-Every member's relative links stay inside the set directory, because the
-set moves when it is retained; member validation rejects a link that
-leaves it.
+`## Reconciliation` records amendments and duplicate supersessions under
+the record contract, anchored conflicts, independent convergence,
+analyst ownership checks and integration-issue dispositions. It names
+full IDs and resolves discrepancies without selecting the strongest-sounding
+status. All references resolve in the set; duplicate declarations stay
+in their members. Member-relative links stay within the set directory,
+because publication moves it.
 
 ### Bounded synthesis
 

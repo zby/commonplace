@@ -64,17 +64,19 @@ JOBS = "kb/instructions/analyse-agentic-system/jobs"
 STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
 OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
-# The set's contracts, relative to the job instructions. A job gets as
-# declared inputs the type of every member it writes or judges, plus the
-# overview type, which defines the conventions every member uses (record
-# IDs, conclusion statuses, the set), so the jobs that produce and judge the
-# same content load the same definitions.
+# Shared contracts and member types, relative to the job instructions.
+# Analysts load shared definitions plus their own member type. Only jobs
+# judging the assembled set need all four member types.
 TYPES = "../../../types"
+SOURCES_CONTRACT = "../../../reference/agentic-analysis-sources.md"
+RECORDS_CONTRACT = "../../../reference/agentic-analysis-records.md"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
 EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
 SET_CONTRACTS = (
+    SOURCES_CONTRACT,
+    RECORDS_CONTRACT,
     OVERVIEW_CONTRACT,
     RUNTIME_CONTRACT,
     MEMORY_CONTRACT,
@@ -565,7 +567,6 @@ class AnalyseAgenticSystem(Workflow):
         output: str,
         *,
         reads: Mapping[str, str],
-        norms: bool = False,
         instruction: str | None = None,
         extra: Sequence[str] = (),
         parameters: Mapping[str, str] | None = None,
@@ -580,8 +581,6 @@ class AnalyseAgenticSystem(Workflow):
         run_dir = run_dir.resolve()
         instruction = instruction or name
         method = [f"{instruction}.md", "worker-rules.md"]
-        if norms:
-            method.append("judging-norms.md")
         method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
         input_paths = {key: str((run_dir / path).resolve()) for key, path in reads.items()}
         job = Job(
@@ -616,7 +615,7 @@ class AnalyseAgenticSystem(Workflow):
             "boundary",
             BOUNDARY,
             reads={"opening": OPENING},
-            extra=(OVERVIEW_CONTRACT,),
+            extra=(SOURCES_CONTRACT,),
             parameters={"source-identity": one_line(self.source_identity)},
             source=str(self.params["source"]),
             validator=partial(
@@ -632,8 +631,7 @@ class AnalyseAgenticSystem(Workflow):
             "runtime",
             RUNTIME,
             reads={"boundary": BOUNDARY},
-            norms=True,
-            extra=(OVERVIEW_CONTRACT, RUNTIME_CONTRACT),
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, RUNTIME_CONTRACT),
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
@@ -652,11 +650,10 @@ class AnalyseAgenticSystem(Workflow):
             "epistemic",
             EPISTEMIC,
             reads={"boundary": BOUNDARY, "runtime": RUNTIME},
-            norms=True,
             extra=(
-                OVERVIEW_CONTRACT,
+                SOURCES_CONTRACT,
+                RECORDS_CONTRACT,
                 EPISTEMIC_CONTRACT,
-                RUNTIME_CONTRACT,
             ),
             validator=partial(
                 pass_refusals,
@@ -688,11 +685,10 @@ class AnalyseAgenticSystem(Workflow):
             memory_report(round_),
             reads=reads,
             instruction="memory",
-            norms=True,
             extra=(
-                OVERVIEW_CONTRACT,
+                SOURCES_CONTRACT,
+                RECORDS_CONTRACT,
                 MEMORY_CONTRACT,
-                RUNTIME_CONTRACT,
             ),
             parameters={"round": "correction" if round_ > 0 else "first"},
             validator=partial(
@@ -728,7 +724,6 @@ class AnalyseAgenticSystem(Workflow):
             reads=reads,
             instruction="reconcile",
             extra=SET_CONTRACTS,
-            norms=True,
             parameters={"round": round_kind, "may-return": "yes" if may_return else "no"},
             validator=partial(
                 reconcile_refusals,
@@ -809,7 +804,6 @@ class AnalyseAgenticSystem(Workflow):
             },
             instruction="verify",
             extra=SET_CONTRACTS,
-            norms=True,
             validator=validator,
         )
 

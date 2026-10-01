@@ -10,6 +10,9 @@
 
 ## Goal
 
+The [worker information map](./worker-information-map.md) owns the
+2026-10-01 reorganization of shared contracts and required worker reads.
+
 Implemented: [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md) (2026-09-30) removes forwarding layers, has code write every path a worker needs into its saved invocation, and has the orchestrator send that invocation as the worker's message. Its acceptance checks and two commissioned Luna trials are complete; the broader backlog below remains open.
 
 `SKILL.md` is about 526 lines. Much of that length is protocol mechanics written as prose for the agent to carry out by hand (allocate IDs, record HEAD, map IDs, recompute hashes, check truncation, keep exit statuses) and prose guards for failure modes. Move the mechanical and checkable parts into `commonplace-*` commands, validators, and hooks. The agent keeps the judgment work: boundary and target classification, forcing-case selection, route and guarantee judgments, conclusion-status assignment, semantic verification, and synthesis.

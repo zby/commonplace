@@ -13,8 +13,9 @@ run's frozen boundary. The last report the run accepts is the
 set's memory member byte for byte: it declares its records under their
 `MEM-` IDs, and no step rewrites it. Corrections to its records are
 amendments in the overview's Reconciliation. Its comparison profile is
-authoritative for downstream consumers. Set-wide conventions are those of
-the [overview](./agentic-system-analysis-overview.md#the-set).
+authoritative for downstream consumers. The [source contract](../reference/agentic-analysis-sources.md) governs
+evidence; the [record contract](../reference/agentic-analysis-records.md)
+governs identity, common fields and statuses.
 
 ## Frontmatter
 
@@ -31,10 +32,8 @@ the [overview](./agentic-system-analysis-overview.md#the-set).
 A blocked report names missing access or an unresolved scope decision
 that prevents completing the assigned analysis. It keeps all sections;
 unreached axes use explicit uninspected assessments rather than guessed
-values. A blocked report never becomes a set member. In a code-scheduled analysis job,
-use the supplied problem-report destination when these conditions prevent
-completion; do not submit a blocked report as the job output. A justified
-unknown that only limits a conclusion may remain in a complete report.
+values. A blocked report never becomes a set member. A justified unknown that
+only limits a conclusion may remain in a complete report.
 
 ## Memory comparison fields
 
@@ -114,13 +113,8 @@ along the way, such as extraction that drops a negation, is not a
 curation value: record it as a finding on the route's faithfulness, and
 classify the route by the operation it performs.
 
-Read-back concerns accumulated memory, not static routing instructions:
-material accumulated or changed through use that reaches a later consumer
-invocation. Static shipped material and ordinary current-run state, the
-working context a run carries, are not read-back. A generated summary that
-compacts or replaces that state is retained memory, within one run or
-across runs, when a later invocation receives it.
-Use both `pull` and `push` when both routes exist. Read-back signal
+Read-back uses the shared record contract's definition of accumulated
+memory and later consumption. Use both `pull` and `push` when both routes exist. Read-back signal
 characterizes push selection and is inapplicable for a known pull-only
 boundary. Fulfilling a consumer's request for retained material is pull;
 an automatic selector supplying retained material without that request is
@@ -158,20 +152,21 @@ Name the subject, frozen source boundary, included and excluded memory
 surfaces, inspected paths and evidence layers, access gaps, and conclusion
 limits. The set's source declarations are the overview's.
 
+Retain a compact coverage table: entry point or memory operation, source
+path, covering supplied or new IDs, or exclusion/uninspected reason and
+conclusion prevented. Distinguish direct source reads from supplied
+runtime findings.
+
 ### Core ideas
 
 Describe the few mechanisms that distinguish how retained material
 affects later work, including context selection and budget, source trust,
-and material editing/adoption surfaces. Findings carry primary-source
-anchors and evidence status. Load-bearing findings retain minimal verbatim
-source code or prose in quote blocks under the set's quotation contract.
+and material editing/adoption surfaces. Findings follow the shared source and status contracts.
 
 ### Shared records
 
-Records this report establishes are declared under `### Components`,
-`### Operative objects`, `### Routes`, `### Claims`, `### Evidenced absences`,
-and `### Behavioral-authority paths`, under their `MEM-` IDs, as
-`#### MEM-OBJ-1 — Label`; the report never declares an unprefixed ID.
+`## Shared records` contains declarations under the six kind headings in
+the template, following the shared record contract with `MEM-` IDs.
 An empty kind says `none declared in this member`. Records declared elsewhere
 are annotated under Annotations rather than re-declared. Records
 distinguish operative parts, raw traces from derived memory, content from
@@ -179,9 +174,7 @@ access metadata, opaque payloads from their readable display summaries,
 and give storage, representational form, lineage, consumers, authority at
 the actual consumer, and limits. A route identifies trigger, producer or
 selector, retained input, persistence, delivery, later consumer and
-status. Only `MEM-CMP-*`, `MEM-OBJ-*`, `MEM-RTE-*`, `MEM-CLM-*`,
-`MEM-ABS-*` or `MEM-BAP-*` are record kinds; evidence does not create a
-separate kind.
+status. Evidence does not create a separate record kind.
 
 ### Annotations
 
@@ -222,10 +215,8 @@ targeting inputs, budgets and authority where they affect a conclusion.
 
 ### Comparison rationale
 
-Explain non-obvious mappings and unions in `memory-comparison`. Every
-known value references supporting records; limitations prevent
-unsupported complete sets. The same memory boundary applies across the
-report and profile.
+Explain non-obvious mappings and unions in `memory-comparison`. The field contract above governs scope and support; do not repeat record
+classifications here.
 
 ### Integration issues
 
@@ -233,12 +224,8 @@ List every correction to a supplied fact, every record of this report
 that may duplicate a seeded record, and every unresolved question, with
 its evidence, analytical consequence and the full IDs it concerns, so the
 reconciliation can amend or supersede without rediscovering its meaning.
-State `none` when no issues remain. A complete report may contain
-supported corrections and justified unknown classifications; an unresolved question
-that prevents completing the assigned analysis requires the workflow job's
-problem report; a blocked report retained outside job submission uses
-`report-status: blocked`. Side-channel
-messages never substitute for this section.
+State `none` when no issues remain. Supported corrections and justified unknowns can remain in a complete
+report; side-channel messages do not substitute for this section.
 
 ### Limitations and checks
 
@@ -246,6 +233,10 @@ Name prevented conclusions, source and method identity rechecks, and the
 deterministic validation result. A self-check does not attest independence
 or correctness of the final integrated analysis. Do not omit weaknesses to
 make the report appear ready for integration.
+
+A complete report retains no `Validation: pending` line. Code's acceptance
+record is authoritative for structural acceptance; the report does not
+independently attest acceptance.
 
 
 ## Template
@@ -298,6 +289,3 @@ memory-comparison:
 ```
 
 Omit Annotations when empty; otherwise use only annotation headings there.
-Keep a surviving record's ID and referent across correction rounds. Allocate
-new records monotonically and never reuse a dropped record's number. Only the
-accepted report enters the set, so dropped records need no withdrawal marker.

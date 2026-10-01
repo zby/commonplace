@@ -7,15 +7,12 @@ type: types/instruction.md
 
 Read every file under `read-first` in your invocation before any other step.
 
-## Parameters
+## Job parameters
+
+Common parameters are defined in the supplied worker rules.
 
 | Name | Meaning | Present |
 |---|---|---|
-| `system` | The source-native system name. | Always |
-| `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input. | Always |
-| `output` | Absolute path of your result. | Always |
-| `problem` | Absolute path for the reason you cannot finish. | Always |
-| `scratch` | Absolute directory for intermediate files. | Always |
 | `round` | `first`, `after-correction`, or `after-blockers`. | Always |
 | `may-return` | `yes` permits returning findings; `no` prohibits it. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
@@ -25,8 +22,6 @@ Read every file under `read-first` in your invocation before any other step.
 | `previous-reconciliation` | Absolute path of the previous reconciliation. | `after-correction` or `after-blockers` |
 | `verification` | Absolute path of the verification whose blockers you must resolve. | `after-blockers` |
 | `set-check` | Absolute path of the structural check for that verification. | `after-blockers` |
-
-Use the supplied paths unchanged. If a required parameter is missing, write `problem`; do not reconstruct it. Retry refusal feedback applies to the same job and does not change its analytical round.
 
 ## Task
 
@@ -44,17 +39,17 @@ Write `output`, with exactly these sections. The last three go into the overview
 
 ## Reconcile
 
-Read each member, and the memory report, in its own read call, and check each delivery for truncation before relying on it; a combined read that the wrapper cuts short silently drops the rest. Write every section from the members as they are; when `round` is `after-correction` or `after-blockers`, read `previous-reconciliation` and recheck anything you carry over from it rather than copying its text.
+Write every section from the members as they are; when `round` is `after-correction` or `after-blockers`, read `previous-reconciliation` and recheck anything you carry over from it rather than copying its text.
 
-Every analyst has declared its own records: unprefixed IDs in `runtime`, `MEM-` IDs in `memory`, `EPI-` IDs in `epistemic`. No member is rewritten after the analyst that wrote it, and nothing is renamed. Your Reconciliation is where the set's judgments about those records live.
-
-Look for records two analysts established for the same thing, and supersede one with the evidence for the identity: `Amendment: MEM-RTE-3 is superseded by RTE-7`, citing the anchors that show both trace the same thing. Both records stay declared. State each correction to any analyst's record as an `Amendment:` paragraph naming the record by full ID, with the superseded value, replacement value, evidence anchor and affected findings. Preserve anchored conflicts, and report independent convergence only when the analysts reached it independently. Recheck shared-route ownership. Attach the admission fields of memory routes from the memory analyst's findings rather than tracing those mechanisms twice. The memory analyst's `memory-comparison` profile stays in the memory member with its scope, per-value evidence bases and records, coverage assessments, uncertainties, and rationale preserved; check it axis by axis, under the definitions of the [memory report type](../../../types/agent-memory-analysis-report.md)'s Memory comparison fields, against the records of the whole set, including every `EPI-` record of a transformation of retained content. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's findings.
+Resolve duplicates, corrections and anchored conflicts under the shared
+record contract's amendment grammar. Report independent convergence only
+when the analysts reached it independently. Recheck shared-route ownership. Attach the admission fields of memory routes from the memory analyst's findings rather than tracing those mechanisms twice. The memory analyst's `memory-comparison` profile stays in the memory member with its scope, per-value evidence bases and records, coverage assessments, uncertainties, and rationale preserved; check it axis by axis, under the definitions of the [memory report type](../../../types/agent-memory-analysis-report.md)'s Memory comparison fields, against the records of the whole set, including every `EPI-` record of a transformation of retained content. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's findings.
 
 Every ID you cite, in amendments too, must resolve in the set your output makes: the Source register, the runtime member, the memory report and the epistemic member. Your output is refused with the unresolved IDs otherwise.
 
 ## Return findings to the memory analyst
 
-When a substantive conflict needs the memory analyst, add a fourth section, `## Returned to the memory analyst`, listing each returned finding with its IDs and evidence anchor. Code then runs a correction round of the memory analyst and gives you its report in the next reconciliation. Return findings only when `may-return = yes`. When `may-return = no`, retain each unresolved conflict as explicit uncertainty in the Reconciliation and the Limitations. A malformed citation in the memory analyst's report is also a return, not something you fix.
+When a substantive conflict needs the memory analyst, add the section `## Returned to the memory analyst`, listing each returned finding with its IDs and evidence anchor. Code then runs a correction round of the memory analyst and gives you its report in the next reconciliation. Return findings only when `may-return = yes`. When `may-return = no`, retain each unresolved conflict as explicit uncertainty in the Reconciliation and the Limitations. A malformed citation in the memory analyst's report is also a return, not something you fix.
 
 ## Resolve a verification's blockers
 
@@ -62,6 +57,8 @@ When `round = after-blockers`, read `verification` and `set-check`. Resolve each
 
 ## Synthesize
 
-Write the Bounded synthesis from the reconciled records, organized around the system's operational progression rather than by analyst, citing member records rather than restating them. Code also publishes it, with the Limitations, as the body of the public review, so it must read on its own: a reader has the cited IDs and links, not the members' context. Write the Limitations as the overview type's rows; use `none` only after checking the whole set.
+Write the Bounded synthesis and Limitations under the overview contract
+from the reconciled records. They become public review text unchanged.
+Check that they read without the members' context.
 
 Under Description write one sentence of 50 to 250 characters that describes the system's mechanism and its limits for retrieval. Code uses it as the `description` of the overview and of the public review.
