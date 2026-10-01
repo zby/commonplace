@@ -44,7 +44,7 @@ contest a claim, open an issue at https://github.com/zby/commonplace/issues.
 
 Either way, if you vendored under a directory name other than `commonplace/`, adjust the paths in the block to match.
 
-That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The one tool the KB's navigation leans on is ripgrep (`rg`), which most agent runtimes bundle. The vendored repo's own `AGENTS.md` tells agents that wander into it to treat it as read-only.
+That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The one tool the KB's navigation leans on is ripgrep (`rg`), which most agent runtimes bundle. The routing block above declares the read-only boundary in the consuming project.
 
 ### Check the reader install
 

@@ -2,12 +2,6 @@
 
 `CLAUDE.md` is a symlink to this file. Edit `AGENTS.md` directly.
 
-**Vendored reader:** if this checkout is a read-only KB inside another project
-(submodule or gitignored clone), navigate from `kb/tags/README.md`, quote and
-cite, but do not create, edit or commit here. See [Reader install](./INSTALL.md#reader-install-the-kb-as-a-vendored-reference).
-Contest claims through <https://github.com/zby/commonplace/issues>.
-The rules below apply when Commonplace itself is the working project.
-
 ## Repository Overview
 
 Commonplace is a framework for agent-operated knowledge bases: methodology,
@@ -63,18 +57,15 @@ First-mention glossing and linking in authored artifacts is governed by
 |---|---|
 | Actionable | [Operator-relative methodology](./kb/notes/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
 | Addressable theory | [Addressable theory](./kb/notes/definitions/addressable-theory.md) |
-| Assay, criterion, gate, outcome, result kind | [Review concepts](./kb/reference/README-REVIEW-SYSTEM.md#concepts) |
 | Codification | [Codification](./kb/notes/definitions/codification.md) |
 | Collection, text contract | [Collection](./kb/reference/definitions/collection.md) |
 | Commonplace | This KB and framework. |
 | Commonplace doctrine | [Commonplace doctrine](./kb/reference/definitions/commonplace-doctrine.md) |
-| Commonplace store | [Freshness architecture](./kb/reference/freshness-architecture.md) |
 | Constraining | [Constraining](./kb/notes/definitions/constraining.md) |
 | Context engineering | [Context engineering](./kb/notes/definitions/context-engineering.md) |
 | Discovery lifecycle | [Discovery lifecycle](./kb/notes/definitions/discovery-lifecycle.md) |
 | Explanatory-reach | [Explanatory-reach](./kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
 | Frontloading | [Frontloading](./kb/notes/frontloading-spares-execution-context.md) |
-| Freshness baseline | [Review concepts](./kb/reference/README-REVIEW-SYSTEM.md#concepts) and [freshness architecture](./kb/reference/freshness-architecture.md) |
 | Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
 | Representational form | [Representational form](./kb/notes/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
 | System-definition artifact | [System-definition artifact](./kb/notes/definitions/system-definition-artifact.md) |
