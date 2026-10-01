@@ -185,3 +185,8 @@ inventory bears on tidy coverage. Duplicate identification, operative-part
 separation, vocabulary, and retained check results need review beyond current
 structural acceptance. Preserve these trial outputs as the evidence for that
 follow-up rather than repairing their content after acceptance.
+
+The operator-approved native-tool guidance, structural checks and fresh
+trials are recorded in the [2026-10-01 follow-up](./parameterized-luna-followup.md).
+Both new final reports pass, but the traces show only partial recovery of
+reading, status handling and coverage.
