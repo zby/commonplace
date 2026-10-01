@@ -80,7 +80,8 @@ No boundary or analyst output was repaired by the parent.
 ## Trace audit
 
 The 24 launch traces identify `gpt-6-luna`; one interrupted launch had no tool
-calls. The other 23 workers used only `exec_command` and `apply_patch`.
+calls. The other 23 workers used `exec_command` and `apply_patch` for their work;
+two also sent status messages to the parent.
 Inspection covered 465 literal shell commands and the patch calls. No source
 execution, previous retained-analysis/review reads, nested delegation, Git
 staging/commits or worker publication was found. Both source worktrees remained

@@ -9,6 +9,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-09-29
 
+**Amended 2026-10-01:** [ADR 098](./098-separate-analysis-reconciliation-from-synthesis.md) moves amendments to a separate reconciliation member and separates public synthesis from record reconciliation. Lens-prefixed identities and immutable analyst members remain in force; the location and combined-writing descriptions below record the prior decision.
+
 ## Context
 
 An agentic-system analysis set has one record namespace, and three passes

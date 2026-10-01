@@ -17,4 +17,15 @@
 
 ## Progress
 
-The proposal, archival prerequisite, contracts and job instructions are committed. The scheduler implements direct record checks, two independent judgments and one synthesis correction. All 1,211 Python tests pass; changed code passes lint. Fresh init and repeated init under `/tmp/commonplace-split-install-5ucuew7o/project` succeed, `--check` reports current pointers, and a reconciliation report resolves and validates through the installed editable library. New source-first Luna runs follow the method commit.
+The proposal, archival prerequisite, contracts and job instructions are committed. The scheduler implements direct record checks, two independent judgments and one synthesis correction. All 1,211 Python tests pass; changed code passes lint. Fresh init and repeated init under `/tmp/commonplace-split-install-5ucuew7o/project` succeed, `--check` reports current pointers, and a reconciliation report resolves and validates through the installed editable library. Both fresh source-first Luna runs stopped at final record verification before synthesis; their failed states validate. No retained set or review was published, so full publication acceptance remains pending. See [trial observations](./split-luna-trials.md).
+
+## Final consumer sweep
+
+The post-implementation search covered source, tests, shared types, set types,
+analysis/transfer/landscape instructions and the changed reference/collection
+contracts. `Semantic verification` and `overview-draft` each have zero hits.
+`overview.{0,80}(Reconciliation|amend)` has five hits, all describing or testing
+the current amendment index. `MEMBER_NAMES|SET_NAMES` has fifteen hits, all
+consuming the shared five-member registry. Historical ADR 096 retains its prior
+wording behind a dated amendment; ignored old run state and archived sets are
+historical witnesses, not current-format emitters or inputs.
