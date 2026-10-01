@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-openrsi-01
 source-identity: https://github.com/FrontisAI/OpenRSI
 reviewed-revision: "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-openrsi-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-openrsi-01/result.md
 analysis-result-sha256: 4c4a30190d73f0632d21c5c8e3b79247e2c4fdbf7fbd75f4f952de80a57d2d79
 ---
 
@@ -35,4 +35,4 @@ Debug and Improve explicitly request criticism of the preceding program and carr
 
 The repository reports MLE-Bench Lite Medal Average rising from 39.39% to 60.61% when substituting Frontis-MA1-35B for its base model with Evo fixed. It separately reports 71.21% for Evo-Max, which changes the search system. These are model/harness comparisons, not isolated evidence that memory or formulated criticism caused the improvement. [Reported results and protocol](https://github.com/FrontisAI/OpenRSI/blob/71ae803a035d5e3b78c19fa49ed9f67d0550cbaa/docs/results.md).
 
-The review covers the released OpenMLE stack, excluding Horizon, external model/data payloads, external RL optimizer and NatureBench evaluator internals, and deployed services. Pinned external artifacts, candidate-linked criticism traces, and controlled memory/criticism interventions would strengthen the assessment. The complete memory profile, both lenses, quotations, branch qualifications and verification are in the [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-openrsi-01/result.md).
+The review covers the released OpenMLE stack, excluding Horizon, external model/data payloads, external RL optimizer and NatureBench evaluator internals, and deployed services. Pinned external artifacts, candidate-linked criticism traces, and controlled memory/criticism interventions would strengthen the assessment. The complete memory profile, both lenses, quotations, branch qualifications and verification are in the [exact analysis](../reports/retained-archive/AAS-2026-09-26-openrsi-01/result.md).

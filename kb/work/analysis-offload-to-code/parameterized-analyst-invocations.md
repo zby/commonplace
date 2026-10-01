@@ -117,7 +117,7 @@ Every job also accepts retry feedback when a previous attempt was refused: the e
 
 `step` continues to write `workflow-state/jobs/<job>/prompt.md` and print its path with the job's launch parameters. Its output does not change, and no prompt text passes through the command's output.
 
-The orchestrator reads each named prompt file and launches one fresh worker whose whole message is the file's content, unchanged. This is a rule of the library, not of this workflow: update [drive a code-scheduled run](../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md), which every code-scheduled workflow's orchestrator follows. The generic prompts the engine renders are already complete messages, so other workflows need no other change.
+The orchestrator reads each named prompt file and launches one fresh worker whose whole message is the file's content, unchanged. This is a rule of the library, not of this workflow: update [drive a code-scheduled run](../../agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md), which every code-scheduled workflow's orchestrator follows. The generic prompts the engine renders are already complete messages, so other workflows need no other change.
 
 The driver instruction then says:
 
@@ -148,8 +148,8 @@ Relevant implementation points:
 
 - [Analysis workflow](../../../src/commonplace/lib/agentic_workflow.py): job construction, dependencies, and round-specific inputs.
 - [Workflow engine](../../../src/commonplace/workflow/engine.py): prompt rendering, saved prompts, and retries.
-- [Driver instruction](../../instructions/analyse-agentic-system/drive-a-code-scheduled-run.md): the launch step.
-- [Worker rules](../../instructions/analyse-agentic-system/jobs/worker-rules.md): references to the prompt's output, problem, scratch and run-state paths, and the prompt-file exception.
+- [Driver instruction](../../agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md): the launch step.
+- [Worker rules](../../agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md): references to the prompt's output, problem, scratch and run-state paths, and the prompt-file exception.
 - [Publication checks](../../../src/commonplace/lib/agentic_publication.py): pinned method paths.
 - Texts that describe the old launch or prompt: the `prompt` field's description in `src/commonplace/workflow/job.py`, `scripts/README.md`, the loop sketch in [code-scheduled workflows](../../reference/proposals/code-scheduled-workflows.md), and the prompt-prose assertions in `tests/commonplace/lib/test_agentic_workflow.py` and `tests/commonplace/workflow/test_workflow_orchestrator.py`.
 

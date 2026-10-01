@@ -10,9 +10,9 @@ The full retained results identify every example below; each linked directory na
 
 | Result | Reviewed source revision | Result SHA-256 |
 |---|---|---|
-| [AAS-2026-09-26-dynamic-cheatsheet-02](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md) | `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9` | `69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa` |
-| [AAS-2026-09-26-mem0-02](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-02/result.md) | `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` | `b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1` |
-| [AAS-2026-09-26-napkin-03](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-03/result.md) | `7582d6a46f5a11995956e60a59c41a5b242109f1` | `1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53` |
+| [AAS-2026-09-26-dynamic-cheatsheet-02](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md) | `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9` | `69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa` |
+| [AAS-2026-09-26-mem0-02](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-02/result.md) | `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` | `b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1` |
+| [AAS-2026-09-26-napkin-03](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-03/result.md) | `7582d6a46f5a11995956e60a59c41a5b242109f1` | `1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53` |
 
 The [query ledger](./per-value-query-ledger.md) counts each system once per query, accepting code-grounded per-value evidence at wired, observed or causally supported strength. Automatic write membership is **3/3 selected systems**. Trace-derived writing and push each have positive witnesses in **2/3**: Dynamic Cheatsheet and Mem0. Dynamic Cheatsheet has partial coverage on these axes; Mem0 has known coverage. Napkin’s trace extraction is afforded, and its known package read-back profile is pull-only. Its push signal is inapplicable. These dispositions are not observed negatives about excluded hosts. No relevant row is uninspected.
 

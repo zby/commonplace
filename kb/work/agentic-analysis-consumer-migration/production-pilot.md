@@ -12,7 +12,7 @@ historical legacy corpus are excluded pending source regeneration.
   `ece69ab3e7a1629a6073831005711d8aa7160ca4`; analysis cutoff `2026-09-05`.
 - [Public review](../../agentic-systems/reviews-archive/apache-maka.md), SHA-256
   `cf2f80113c2c21074cdc07e149b9a9cb3a764f0ff5b6fb39728deee633eac76c`.
-- [Exact retained result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md), SHA-256
+- [Exact retained result](../../agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md), SHA-256
   `fcd16d145d4ee6730eedab994478c8a320fd98f79123dd2df145c3cb6b8d3c18`.
 - Temporary frozen bundle:
   `/tmp/commonplace-maka-production-pilot-20260905`.
@@ -104,7 +104,7 @@ than the count: file-backed local memory is injected into the task prompt,
 while atomic SQLite memory is written without a production recall caller found
 within the recorded search boundary. RTE-8, RTE-11 and ABS-1 prevent combining
 those into an extraction-to-prompt loop. Checkpoint replay is a third consumer
-path, RTE-12/RTE-13. See the [full memory lens and reconciliation](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md#lens-outputs).
+path, RTE-12/RTE-13. See the [full memory lens and reconciliation](../../agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md#lens-outputs).
 
 The aggregate read-back surface contains wired push and storage-API pull at
 only afforded basis. The strong-evidence pull query therefore has **zero

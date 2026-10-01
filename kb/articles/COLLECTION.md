@@ -59,9 +59,11 @@ Author each link from the external reader's need at its source. Search these des
 - **→ `kb/instructions/` and `kb/tasks/`** — when the reader has a concrete operational next step. Relationship: `procedure`.
 
 Articles may cite exact main-analysis results at
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. Those immutable
-records are published and provide the full evidence behind cross-system claims;
-identify their run and hash when binding an article to a comparison snapshot.
+`kb/agentic-systems/reports/retained/<run-id>/<member>.md`. The manifest
+`ARTIFACT.yaml` identifies and hashes each immutable member. These records
+provide the evidence behind cross-system claims; identify their run and manifest
+hash when binding an article to a comparison snapshot. Historical records under
+`kb/agentic-systems/reports/retained-archive/` retain their producing contracts.
 Other report paths and `kb/work/` remain unavailable as onward links for an
 external article reader.
 

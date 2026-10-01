@@ -72,6 +72,8 @@ exclude-newer = "7 days"
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]
+# Retained source captures preserve their producing bytes; they are not live code.
+extend-exclude = ["kb/reports/retained/**", "kb/agentic-systems/reports/**"]
 
 [project.optional-dependencies]
 docs = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]

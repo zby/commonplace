@@ -12,8 +12,8 @@ We track these systems to make a shared design space inspectable. Commonplace su
 
 ## How we review
 
-Current analysis uses [`analyse-agentic-system`](../instructions/analyse-agentic-system/SKILL.md),
-which delegates memory findings to the [memory analyst](../instructions/analyse-agentic-system/jobs/memory.md)
+Current analysis uses [`analyse-agentic-system`](../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
+which delegates memory findings to the [memory analyst](../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md)
 and integrates its typed report into the main result. New runs publish under
 `kb/agentic-systems/`; the reviews in this collection remain historical records.
 
@@ -74,7 +74,7 @@ under `kb/agentic-systems/comparisons/`; see the
 [new comparison input contract and commands](../agentic-systems/comparisons/README.md).
 They no longer rebuild these legacy files or preserve hand-classified columns.
 
-The [landscape procedure](../instructions/synthesize-agent-memory-landscape/SKILL.md)
+The [landscape procedure](../agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md)
 now reads retained main results and derives a matching matrix in one frozen
 bundle. The legacy snapshots here remain outside that population. Historical
 reproduction of these old comparisons requires their matching reviews,

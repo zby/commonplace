@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-prime-agent-01
 source-identity: https://github.com/PrimeIntellect-ai/prime-agent
 reviewed-revision: 514633727bf26d74f39f3119c2b0e31a5ceb2a9d
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md
 analysis-result-sha256: e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2
 ---
 
@@ -37,4 +37,4 @@ One evidential distinction is easy to lose: the refiner's expectedOutcome is sto
 
 This is a bounded whole-system code analysis, not an exhaustive inspection of every adapter, extension, UI or installer path. Remote provider internals, deployed grants, actual recalled-content dependence, measured improvement and causal effects remain uninspected. The selected checkout revision was not verified as the latest upstream commit. Candidate-linked runs and controlled comparisons would be needed to strengthen the assessment.
 
-The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md) retains the canonical records, both lenses, comparison profile, source boundaries and limitations.
+The [exact result](../reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md) retains the canonical records, both lenses, comparison profile, source boundaries and limitations.

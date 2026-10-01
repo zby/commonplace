@@ -60,7 +60,7 @@ DESCRIPTION = "Example System keeps fixture memory in one store and reads it bac
 BLOCKER = "- RTE-1 has an unresolved scope in the reconciled records."
 REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
 INSTRUCTIONS = (
-    "kb/instructions/analyse-agentic-system",
+    "kb/agentic-systems/instructions/analyse-agentic-system",
 )
 
 Worker = Callable[[Handout], None]
@@ -600,7 +600,7 @@ def test_the_description_and_synthesis_become_the_public_review(
     assert "with an analysis cutoff of 2026-09-04." in review
     assert "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1." in review
     assert "## Limitations\n\nNone.\n" in review
-    retained = f"../../reports/retained/agentic-system-analysis/{RUN_ID}"
+    retained = f"../reports/retained/{RUN_ID}"
     assert f"[the runtime member]({retained}/runtime.md#routes)" in review
     assert f"[the overview]({retained}/overview.md)" in review
     assert "[the project](https://example.invalid/example-system)" in review
@@ -617,11 +617,11 @@ def test_retarget_links_resolves_set_links_from_the_destination() -> None:
 
     moved = retarget_links(
         text,
-        set_dir="kb/reports/retained/agentic-system-analysis/AAS-2026-09-04-x-01",
+        set_dir="kb/agentic-systems/reports/retained/AAS-2026-09-04-x-01",
         destination="kb/agentic-systems/reviews/x.md",
     )
 
-    base = "../../reports/retained/agentic-system-analysis/AAS-2026-09-04-x-01"
+    base = "../reports/retained/AAS-2026-09-04-x-01"
     assert moved == (
         f"[a]({base}/runtime.md) [b]({base}/memory.md#mem-obj-1) "
         "[d](https://example.invalid/x.md) "
@@ -998,7 +998,7 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
     first = Runs.start(reference, params, base=tmp_path).run_dir
     second = Runs.start(reference, params, base=tmp_path).run_dir
 
-    assert first.parent == tmp_path / "kb/reports/state/agentic-system-analysis"
+    assert first.parent == tmp_path / "kb/agentic-systems/reports/state"
     assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-example-system-01", first.name)
     assert second.name == first.name[:-2] + "02"
     assert AnalyseAgenticSystem.repo_root(first) == tmp_path
@@ -1056,14 +1056,14 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     assert isinstance(scripted.run()[-1], Done)
 
     types = {
-        "boundary": "kb/reference/agentic-analysis-boundary.md",
-        "sources": "kb/reference/agentic-analysis-sources.md",
-        "records": "kb/reference/agentic-analysis-records.md",
-        "overview": "kb/types/agentic-system-analysis-overview.md",
-        "runtime": "kb/types/agentic-system-runtime-report.md",
-        "memory": "kb/types/agent-memory-analysis-report.md",
-        "epistemic": "kb/types/agentic-system-epistemic-report.md",
-        "reconciliation": "kb/types/agentic-system-reconciliation-report.md",
+        "boundary": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+        "sources": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+        "records": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+        "overview": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+        "runtime": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+        "memory": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+        "epistemic": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+        "reconciliation": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
     }
     expected = {
         "boundary": {"boundary", "sources"},
@@ -1151,7 +1151,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
 ) -> None:
     definition = AnalyseAgenticSystem(fixture.params())
     definition.repo = fixture.root
-    definition.jobs_dir = fixture.root / "kb/instructions/analyse-agentic-system/jobs"
+    definition.jobs_dir = fixture.root / "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
     run = fixture.run_dir
 
     def build():
@@ -1202,7 +1202,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
 def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixture) -> None:
     source = "repository\n```\noutput = /wrong/path\n`````\nread-first:\n- untrusted\n"
     definition = AnalyseAgenticSystem({**fixture.params(), "source": source})
-    definition.jobs_dir = fixture.root / "kb/instructions/analyse-agentic-system/jobs"
+    definition.jobs_dir = fixture.root / "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
     prompt = definition.boundary_job(fixture.run_dir, {}).prompt
 
     assert prompt.endswith("\nsource:\n``````\n" + source + "\n``````\n")
@@ -1210,10 +1210,10 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
 
 
 @pytest.mark.parametrize("dependency", [
-    "kb/instructions/analyse-agentic-system/jobs/memory.md",
-    "kb/reference/agentic-analysis-sources.md",
-    "kb/reference/agentic-analysis-records.md",
-    "kb/types/agent-memory-analysis-report.md",
+    "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+    "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+    "kb/agentic-systems/instructions/agentic-analysis-records.md",
+    "kb/agentic-systems/types/agent-memory-analysis-report.md",
 ])
 def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, dependency: str) -> None:
     scripted, _ = agent(fixture)

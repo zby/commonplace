@@ -1,0 +1,50 @@
+[
+  {
+    "literal": "kb/instructions/analyse-agentic-system",
+    "tracked_matching_lines_before": 136,
+    "ignored_state_matching_files_before": 126,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "kb/instructions/synthesize-agent-memory-landscape",
+    "tracked_matching_lines_before": 6,
+    "ignored_state_matching_files_before": 0,
+    "ignored_state_search_returncode": 1
+  },
+  {
+    "literal": "kb/reference/agentic-analysis-",
+    "tracked_matching_lines_before": 20,
+    "ignored_state_matching_files_before": 46,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "types/agentic-system-",
+    "tracked_matching_lines_before": 226,
+    "ignored_state_matching_files_before": 320,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "types/agent-memory-analysis-report",
+    "tracked_matching_lines_before": 53,
+    "ignored_state_matching_files_before": 139,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "reports/types/agentic-system-analysis-set",
+    "tracked_matching_lines_before": 22,
+    "ignored_state_matching_files_before": 10,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "kb/reports/retained/agentic-system-analysis",
+    "tracked_matching_lines_before": 344,
+    "ignored_state_matching_files_before": 31,
+    "ignored_state_search_returncode": 0
+  },
+  {
+    "literal": "kb/reports/state/agentic-system-analysis",
+    "tracked_matching_lines_before": 1168,
+    "ignored_state_matching_files_before": 442,
+    "ignored_state_search_returncode": 0
+  }
+]

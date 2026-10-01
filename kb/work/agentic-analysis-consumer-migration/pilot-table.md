@@ -15,7 +15,7 @@ population, not the historical memory-review corpus.
 
 | System | Compared boundary | Storage | Read-back | Push selection | Trace learning | Authority | Evidence |
 |---|---|---|---|---|---|---|---|
-| [Apache Maka (Incubating)](../../agentic-systems/reviews-archive/apache-maka.md) | Built-in retained RuntimeEvents and compaction checkpoints, local MEMORY.md/PENDING.md, atomic MemoryItems and their keys/provenance/extraction bookkeeping. Excludes goal/skill control material, offloaded tool artifacts, arbitrary project files, external extensions and transient replay arrays. | files, sqlite [wired] | pull, push [afforded] | coarse, identifier [wired] | yes [wired] | enforcement, knowledge, routing, validation [wired] | [AAS-2026-09-05-apache-maka-01](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md) |
+| [Apache Maka (Incubating)](../../agentic-systems/reviews-archive/apache-maka.md) | Built-in retained RuntimeEvents and compaction checkpoints, local MEMORY.md/PENDING.md, atomic MemoryItems and their keys/provenance/extraction bookkeeping. Excludes goal/skill control material, offloaded tool artifacts, arbitrary project files, external extensions and transient replay arrays. | files, sqlite [wired] | pull, push [afforded] | coarse, identifier [wired] | yes [wired] | enforcement, knowledge, routing, validation [wired] | [AAS-2026-09-05-apache-maka-01](../../agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md) |
 
 ## doc-grounded (0)
 

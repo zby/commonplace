@@ -1,0 +1,45 @@
+{
+  "searches": [
+    {
+      "literal": "kb/instructions/analyse-agentic-system",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/instructions/synthesize-agent-memory-landscape",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/reference/agentic-analysis-",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/types/agentic-system-",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/types/agent-memory-analysis-report",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "reports/types/agentic-system-analysis-set",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/reports/retained/agentic-system-analysis",
+      "live_consumer_matches": 0
+    },
+    {
+      "literal": "kb/reports/state/agentic-system-analysis",
+      "live_consumer_matches": 0
+    }
+  ],
+  "historical_witnesses": [
+    "archive producing contracts and quotation attributions",
+    "ignored old-method recovery state",
+    "retained analysis verification receipts",
+    "dated proposal observations and workshops",
+    "amended ADR 083",
+    "redirect sources and migration mapping"
+  ],
+  "direct_contracts": "article and legacy-collection citation rules updated"
+}

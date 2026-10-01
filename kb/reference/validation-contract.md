@@ -82,7 +82,7 @@ shared boundary directly; it does not require a provisional overview.
 
 See [ADR 095](./adr/095-directory-artifacts-add-shared-set-validation.md)
 for the boundary and alternatives, and the
-[analysis set type](../reports/types/agentic-system-analysis-set.md) for the
+[analysis set type](../agentic-systems/types/agentic-system-analysis-set.md) for the
 first production contract.
 
 ## Scope: this is the deterministic half only

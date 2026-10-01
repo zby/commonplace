@@ -259,3 +259,5 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - Use `kb/instructions/` for imperative procedures and operator-facing process details.
 
 Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the Commonplace source repository or methodology library.
+
+- [ADR-099: collection-owned agentic analysis](./adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md) — the research method and its local report types share the analysis collection

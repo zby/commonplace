@@ -3,21 +3,21 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 exclude_docs: |
   reports/**
-  !reports/types/agentic-system-analysis-set.md
-  !reports/types/agentic-system-analysis-set.schema.yaml
-  !reports/retained/agentic-system-analysis/**/ARTIFACT.yaml
-  !reports/retained/agentic-system-analysis/**/overview.md
-  !reports/retained/agentic-system-analysis/**/runtime.md
-  !reports/retained/agentic-system-analysis/**/memory.md
-  !reports/retained/agentic-system-analysis/**/epistemic.md
-  !reports/retained/agentic-system-analysis/**/reconciliation.md
-  !reports/retained/agentic-system-analysis-archive/**/result.md
-  !reports/retained/agentic-system-analysis-archive/**/ARTIFACT.yaml
-  !reports/retained/agentic-system-analysis-archive/**/overview.md
-  !reports/retained/agentic-system-analysis-archive/**/runtime.md
-  !reports/retained/agentic-system-analysis-archive/**/memory.md
-  !reports/retained/agentic-system-analysis-archive/**/epistemic.md
-  !reports/retained/agentic-system-analysis-archive/**/reconciliation.md
+  agentic-systems/reports/**
+  !agentic-systems/reports/retained/AAS-*/ARTIFACT.yaml
+  !agentic-systems/reports/retained/AAS-*/overview.md
+  !agentic-systems/reports/retained/AAS-*/runtime.md
+  !agentic-systems/reports/retained/AAS-*/memory.md
+  !agentic-systems/reports/retained/AAS-*/epistemic.md
+  !agentic-systems/reports/retained/AAS-*/reconciliation.md
+  !agentic-systems/reports/retained-archive/**/result.md
+  !agentic-systems/reports/retained-archive/**/ARTIFACT.yaml
+  !agentic-systems/reports/retained-archive/**/overview.md
+  !agentic-systems/reports/retained-archive/**/runtime.md
+  !agentic-systems/reports/retained-archive/**/memory.md
+  !agentic-systems/reports/retained-archive/**/epistemic.md
+  !agentic-systems/reports/retained-archive/**/reconciliation.md
+  !agentic-systems/reports/retained/layout-migration-2026-10-01/**
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md
@@ -70,7 +70,6 @@ plugins:
         'agentic-systems/reviews/fragility-grid.md': 'agentic-systems/reviews-archive/fragility-grid.md'
         'agentic-systems/reviews/gbrain-garrytan.md': 'agentic-systems/reviews-archive/gbrain-garrytan.md'
         'agentic-systems/reviews/gbrain.md': 'agentic-systems/reviews-archive/gbrain-garrytan.md'
-        'agentic-systems/reviews/instinctual-memory.md': 'agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md'
         'agentic-systems/reviews/jaz-evals.md': 'agentic-systems/reviews-archive/jaz-evals.md'
         'agentic-systems/reviews/jaz.md': 'agentic-systems/reviews-archive/jaz.md'
         'agentic-systems/reviews/jepa-anything.md': 'agentic-systems/reviews-archive/jepa-anything.md'
@@ -134,15 +133,28 @@ plugins:
         'articles/what-makes-a-system-self-improving.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
         'articles/what-makes-human-inclusive-self-revision-non-trivial.md': 'articles/bootstrapping-an-autonomous-theory-builder.md'
         'articles/when-systems-learn-theories-about-themselves.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
-        'instructions/analyse-agent-memory.md': 'instructions/analyse-agentic-system/jobs/memory.md'
-        'instructions/analyse-agent-memory/SKILL.md': 'instructions/analyse-agentic-system/jobs/memory.md'
-        'instructions/analyse-external-system-epistemic-architecture.md': 'instructions/analyse-agentic-system/jobs/epistemic.md'
+        'instructions/analyse-agent-memory.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/memory.md'
+        'instructions/analyse-agent-memory/SKILL.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/memory.md'
+        'instructions/analyse-agentic-system/drive-a-code-scheduled-run.md': 'agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md'
+        'instructions/analyse-agentic-system/jobs/boundary.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md'
+        'instructions/analyse-agentic-system/jobs/epistemic.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md'
+        'instructions/analyse-agentic-system/jobs/memory.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/memory.md'
+        'instructions/analyse-agentic-system/jobs/reconcile.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md'
+        'instructions/analyse-agentic-system/jobs/runtime.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/runtime.md'
+        'instructions/analyse-agentic-system/jobs/synthesize.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md'
+        'instructions/analyse-agentic-system/jobs/verify-synthesis.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md'
+        'instructions/analyse-agentic-system/jobs/verify.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/verify.md'
+        'instructions/analyse-agentic-system/jobs/worker-rules.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md'
+        'instructions/analyse-agentic-system/SKILL.md': 'agentic-systems/instructions/analyse-agentic-system/SKILL.md'
+        'instructions/analyse-external-system-epistemic-architecture.md': 'agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md'
         'instructions/ground-source-dependent-claims.md': 'instructions/cp-skill-ground/SKILL.md'
+        'instructions/refresh-agent-memory-review-taxonomy.md': 'agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md'
         'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'instructions/simplification-passes/figurative-phrasing.md': 'instructions/simplification-passes/plain-wording.md'
         'instructions/simplify-prose-without-weakening-claims.md': 'instructions/simplify-prose-sentence-by-sentence.md'
-        'instructions/verify-review-quote-grounding.md': 'instructions/analyse-agentic-system/SKILL.md'
+        'instructions/synthesize-agent-memory-landscape/SKILL.md': 'agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md'
+        'instructions/verify-review-quote-grounding.md': 'agentic-systems/instructions/analyse-agentic-system/SKILL.md'
         'notes/a-capable-agent-needs-methodology-selection-not-just-relevant-knowledge.md': 'notes/capable-agents-need-methodology-selection.md'
         'notes/a-closed-factory-learning-transition-produces-a-successor-factory.md': 'notes/factory-learning-is-experience-responsive-retention-that-improves.md'
         'notes/a-declared-mark-is-an-accelerator-never-a-load-bearing-wall.md': 'reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md'
@@ -362,6 +374,9 @@ plugins:
         'reference/adr/021-shipping-model-path-audit-option-e.md': 'reference/adr/021-ship-library-content-under-kb-commonplace.md'
         'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md': 'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md'
         'reference/adr/075-source-claim-grounding-is-a-promoted-skill.md': 'reference/adr/076-source-claim-grounding-is-a-promoted-skill.md'
+        'reference/agentic-analysis-boundary.md': 'agentic-systems/instructions/agentic-analysis-boundary.md'
+        'reference/agentic-analysis-records.md': 'agentic-systems/instructions/agentic-analysis-records.md'
+        'reference/agentic-analysis-sources.md': 'agentic-systems/instructions/agentic-analysis-sources.md'
         'reference/available-types.md': 'reference/collections-and-types.md'
         'reference/commonplace-as-a-reflective-system.md': 'notes/evidence/commonplace-as-a-reflective-system.md'
         'reference/freshness-schemas.md': 'reference/freshness-architecture.md'
@@ -400,8 +415,82 @@ plugins:
         'reference/tag-readme-trace-observed-causal-connection.md': 'notes/evidence/tag-readme-trace-observed-causal-connection.md'
         'reference/text-contract-profiles.md': 'reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md'
         'reference/type-loading.md': 'reference/collections-and-types.md'
-        'reports/types/agent-memory-analysis-report.md': 'types/agent-memory-analysis-report.md'
-        'reports/types/agentic-system-analysis-run-state.md': 'types/agentic-system-analysis-run-state.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-05-apache-maka-06/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-05-oh-my-pi-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-05-oh-my-pi-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-prime-agent-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-05-prime-agent-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-21-supermemory-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-21-supermemory-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-arsumbris-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-23-arsumbris-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-meta-n-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-24-rsiagent-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-24-sol-pi-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-aide2-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-aide2-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-arex-skill-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-arex-skill-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-contextpilot-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-dualgraph-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-dualgraph-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-ecdysis-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-enoch-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-evoontology-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-evoontology-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-fragility-grid-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-fragility-grid-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-instinctual-memory-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-instinctual-memory-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-jepa-anything-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-jepa-anything-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-lhtb-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-lhtb-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-merchantbench-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-modularrsi-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-openviking-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-openviking-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-pi-posthorse-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-pi-posthorse-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-primescientist-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-prove2me-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-prove2me-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-reflexion-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-skilllift-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-supermemory-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-wikiskill-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-25-wikiskill-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-evals-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-jaz-evals-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-03/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-03/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-oh-my-pi-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-oh-my-pi-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-openrsi-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-26-openrsi-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-03/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-03/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-dynamic-cheatsheet-04/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-03/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-03/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-04/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-mem0-04/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-01/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-01/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-02/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-02/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-03/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-03/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-04/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-04/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-05/result.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-05/result.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/epistemic.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/epistemic.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/memory.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/memory.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/overview.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/overview.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-29-pageindex-02/runtime.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-29-pageindex-02/runtime.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/epistemic.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/epistemic.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/memory.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/memory.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/overview.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/overview.md'
+        'reports/retained/agentic-system-analysis-archive/AAS-2026-09-30-instinctual-memory-02/runtime.md': 'agentic-systems/reports/retained-archive/AAS-2026-09-30-instinctual-memory-02/runtime.md'
+        'reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/epistemic.md': 'agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/epistemic.md'
+        'reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/memory.md': 'agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/memory.md'
+        'reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/overview.md': 'agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/overview.md'
+        'reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/reconciliation.md': 'agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/reconciliation.md'
+        'reports/retained/agentic-system-analysis/AAS-2026-10-01-instinctual-memory-07/runtime.md': 'agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-07/runtime.md'
+        'reports/types/agent-memory-analysis-report.md': 'agentic-systems/types/agent-memory-analysis-report.md'
+        'reports/types/agentic-system-analysis-run-state.md': 'agentic-systems/types/agentic-system-analysis-run-state.md'
+        'reports/types/agentic-system-analysis-set.md': 'agentic-systems/types/agentic-system-analysis-set.md'
         'reports/types/connect-report.md': 'types/connect-report.md'
         'reports/types/full-pass-report.md': 'types/full-pass-report.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
@@ -413,8 +502,14 @@ plugins:
         'tags/foundations-README.md': 'tags/README.md'
         'tags/methodology-README.md': 'tags/method-guided-action-README.md'
         'tags/tool-loop-README.md': 'tags/computational-model-README.md'
-        'types/agentic-system-analysis-result.md': 'types/agentic-system-analysis-overview.md'
-        'work/code-scheduled-workflows/loop.md': 'instructions/analyse-agentic-system/drive-a-code-scheduled-run.md'
+        'types/agent-memory-analysis-report.md': 'agentic-systems/types/agent-memory-analysis-report.md'
+        'types/agentic-system-analysis-overview.md': 'agentic-systems/types/agentic-system-analysis-overview.md'
+        'types/agentic-system-analysis-result.md': 'agentic-systems/types/agentic-system-analysis-overview.md'
+        'types/agentic-system-analysis-run-state.md': 'agentic-systems/types/agentic-system-analysis-run-state.md'
+        'types/agentic-system-epistemic-report.md': 'agentic-systems/types/agentic-system-epistemic-report.md'
+        'types/agentic-system-reconciliation-report.md': 'agentic-systems/types/agentic-system-reconciliation-report.md'
+        'types/agentic-system-runtime-report.md': 'agentic-systems/types/agentic-system-runtime-report.md'
+        'work/code-scheduled-workflows/loop.md': 'agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md'
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'

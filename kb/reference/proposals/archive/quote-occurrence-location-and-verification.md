@@ -9,7 +9,7 @@ type: reference/types/design-proposal.md
 
 ## Current state (as of 2026-09-27)
 
-The [agentic-system analysis skill](../../../instructions/analyse-agentic-system/SKILL.md)
+The [agentic-system analysis skill](../../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
 requires frozen sources, supporting quotations and a separate judgment that
 the passage supports its attached finding. Line ranges are optional navigation.
 The [source-check command](../../commands.md#commonplace-agentic-analysis-publication)

@@ -182,7 +182,9 @@ links when local context makes them useful. Full model and search recipes:
   Messages grant neither new mutation authority nor an agent launch.
 - For review, triage, ack or sweep, read `kb/reference/README-REVIEW-SYSTEM.md`.
   To fix review warnings, read `kb/instructions/FIX-SYSTEM.md`.
-- Skills live under `kb/instructions/`, projected through `.agents/skills/` and
+- Generic skills live under `kb/instructions/`; agentic analysis and landscape
+synthesis live under `kb/agentic-systems/instructions/`. Both are projected
+through `.agents/skills/` and
   `.claude/skills/` symlinks here; installed projects receive stubs pointing into
   the package. Edit the canonical instruction. `operator-brief` and
   `roughdraft-review` are repo-local, not promoted framework skills.

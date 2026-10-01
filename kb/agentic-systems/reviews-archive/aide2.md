@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-aide2-01
 source-identity: https://arxiv.org/abs/2609.26457
 reviewed-revision: "sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-aide2-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-aide2-01/result.md
 analysis-result-sha256: b11a5d87ebcf47058e11499fe94a24a130dc2a1ebe1c3a98aa7cfb7b5c927689
 ---
 
@@ -21,4 +21,4 @@ Several distinctions constrain interpretation. A robustness penalty reportedly n
 
 ## Scope
 
-The [exact retained analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-aide2-01/result.md) contains source anchors, route and authority records, both mandatory lenses and all fourteen memory-comparison axes. Self-improvement and reflection are claimed at the described harness-lineage boundary. Criticism-specific conjectural learning, exact model fixation, implementation enforcement and independently confirmed component effects remain unestablished. The reported outcomes support a bounded improvement finding; they do not establish accelerating self-improvement or a general guarantee against metric exploitation.
+The [exact retained analysis](../reports/retained-archive/AAS-2026-09-25-aide2-01/result.md) contains source anchors, route and authority records, both mandatory lenses and all fourteen memory-comparison axes. Self-improvement and reflection are claimed at the described harness-lineage boundary. Criticism-specific conjectural learning, exact model fixation, implementation enforcement and independently confirmed component effects remain unestablished. The reported outcomes support a bounded improvement finding; they do not establish accelerating self-improvement or a general guarantee against metric exploitation.

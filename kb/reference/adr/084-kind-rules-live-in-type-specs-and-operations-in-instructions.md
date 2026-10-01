@@ -12,6 +12,8 @@ status: accepted
 **Amends:** [ADR 028](./028-design-proposals-live-in-reference-proposals.md) (where the proposal contract lives), [ADR 056](./056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) (which documents carry the archiving rules)
 **Extends:** [ADR 071](./071-text-contract-is-part-of-the-collection-definition.md)
 
+**Collection ownership amendment:** [ADR 099](./099-agentic-analysis-method-and-reports-belong-to-the-collection.md) permits collection-specific instructions in their owning collection and makes agentic analysis report types collection-local. General lifecycle operations and the other global source/report types remain as decided here.
+
 ## Context
 
 Some rules bind less than a whole collection. The design-proposal rules bind
@@ -55,7 +57,7 @@ list, explain, and point, but it states no requirement.
 |---|---|---|
 | a kind of artifact, wherever it sits | that kind's type spec, collection-local when the kind exists in one collection | the type-conformance review and the type's schema |
 | what may live where | the collection's `COLLECTION.md` | the collection-conformance review and the validator |
-| how to carry out a lifecycle operation | an instruction in `kb/instructions/` | the executor that invokes it |
+| how to carry out a lifecycle operation | an instruction in `kb/instructions/`, or the owning collection's `instructions/` for a collection-specific operation | the executor that invokes it |
 
 The type spec states the invariant (what must hold of the artifact in each
 lifecycle state) and names the instructions for its lifecycle operations. The

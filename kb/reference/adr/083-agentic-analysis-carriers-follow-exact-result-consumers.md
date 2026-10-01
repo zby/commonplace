@@ -10,6 +10,11 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-09-04
 
+**Amended by:** [ADR 095](./095-directory-artifacts-add-shared-set-validation.md)
+for manifest-pinned member sets, and [ADR 099](./099-agentic-analysis-method-and-reports-belong-to-the-collection.md)
+for collection-owned method and report paths. The single-file path below records
+the original decision; current run state lives under `kb/agentic-systems/reports/state/`.
+
 ## Context
 
 An agentic-system analysis needs a reproducible source boundary, an exact
@@ -68,5 +73,5 @@ analysis; it does not prescribe retry policy for other workflows.
 
 ---
 
-- [Agentic system analysis run state](../../types/agentic-system-analysis-run-state.md) — implemented-by: the minimal completion record
-- [Analyse an agentic system](../../instructions/analyse-agentic-system/SKILL.md) — implemented-by: the rerun and candidate-publication workflow
+- [Agentic system analysis run state](../../agentic-systems/types/agentic-system-analysis-run-state.md) — implemented-by: the minimal completion record
+- [Analyse an agentic system](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) — implemented-by: the rerun and candidate-publication workflow

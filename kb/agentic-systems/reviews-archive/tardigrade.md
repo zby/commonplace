@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-tardigrade-01
 source-identity: https://github.com/clavia-labs/tardigrade
 reviewed-revision: 1c4f4efaab2aaeec0bc482bc38e8ddf3be6f8267
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md
 analysis-result-sha256: a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802
 ---
 
@@ -26,6 +26,6 @@ The model and runtime consume different retained parts: the model receives selec
 
 Summary and diagnostic/control transformations are wired trace-fed memory writes. They do not establish conjectural learning or self-improvement. Narrow reflection is wired where represented attempt/context state affects subsequent control; a reflective theory builder and improved task capacity are uninspected. Runtime traces, summary-fidelity checks and interventions on recalled content would strengthen those separate claims. Thread and turn boundaries alone do not establish a task horizon.
 
-- [Exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-tardigrade-01/result.md) — see-also: canonical records, quote evidence and comparison fields.
+- [Exact analysis](../reports/retained-archive/AAS-2026-09-25-tardigrade-01/result.md) — see-also: canonical records, quote evidence and comparison fields.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the bounded control-state mapping.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger capacity claim not established by retained corrections.

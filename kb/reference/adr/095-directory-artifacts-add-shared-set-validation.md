@@ -53,7 +53,7 @@ active dependency cycle fails explicitly. This separates the set's contract
 from source-bound and publication-state checks that need external inputs.
 
 The analysis workflow uses the collection-local
-[analysis set type](../../reports/types/agentic-system-analysis-set.md).
+[analysis set type](../../agentic-systems/types/agentic-system-analysis-set.md).
 Its working output has a dedicated `output/` directory, separate from run
 state and specialist inputs. The manifest pins every actual member;
 run state pins the manifest, and a published review pins its retained copy.

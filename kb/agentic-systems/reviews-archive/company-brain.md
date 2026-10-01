@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-company-brain-01
 source-identity: https://github.com/supermemoryai/company-brain
 reviewed-revision: 0071d6164991ce5dccddbd645bcac631ee477572
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md
 analysis-result-sha256: ea4ff6d13ceaf4d60d13e9b00f9caab088f307721d1ada8668792d223aedf13a
 ---
 
@@ -36,7 +36,7 @@ The memory boundary is wider than the company-knowledge store:
 - Approval continuations retain deterministically compacted messages. Thread/principal investigation checkpoints separately retain methods, answer excerpts and bounded tool trajectories, with six-hour idle expiry.
 - Research drafts and sent history inform future planning; reviewed sends promote watch targets. Entity caches support later lookups.
 
-These are application-visible SQLite and service objects carrying natural language and symbolic metadata. Both requested reads and automatic delivery exist. Trace-fed durable derivatives qualify for the comparison profile's `trace_learning: yes`, including approval compaction; this does not mean learning through criticism has improved capacity. Overall task horizon remains uncertain because a thread key does not establish whether a later request is the same task. See the individual memory object and route records in the [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md).
+These are application-visible SQLite and service objects carrying natural language and symbolic metadata. Both requested reads and automatic delivery exist. Trace-fed durable derivatives qualify for the comparison profile's `trace_learning: yes`, including approval compaction; this does not mean learning through criticism has improved capacity. Overall task horizon remains uncertain because a thread key does not establish whether a later request is the same task. See the individual memory object and route records in the [exact result](../reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md).
 
 Several implementation details limit stronger memory claims. `save_memory` first fills a capture buffer; durable submission happens later and can fail or queue. The compatibility adapter accepts options such as `dreaming` and `isFullReplace` but does not forward them to the service. The investigation field named `verifiedEvidence` admits an answer excerpt when any native call succeeded; it does not verify every proposition. External extraction, semantic indexing and model parameters remain uninspected. See CMP-3, RTE-15 and RTE-21.
 
@@ -55,4 +55,4 @@ Under the [theory-builder definition](../../notes/definitions/theory-builder.md)
 
 This review covers the pinned application, not Supermemory internals, model providers, Slack, MCP servers or deployed Cloudflare/Daytona isolation. Dedicated long-running research is explicitly described as unshipped in the pinned guide. Candidate-linked correction/revision/later-use records would strengthen the theory-builder assessment; controlled later-capacity comparisons would be needed for a learning claim.
 
-The [retained exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-company-brain-01/result.md) contains the source register, canonical mechanisms, specialist reconciliation, comparison profile, retained quotations and validation boundaries.
+The [retained exact result](../reports/retained-archive/AAS-2026-09-26-company-brain-01/result.md) contains the source register, canonical mechanisms, specialist reconciliation, comparison profile, retained quotations and validation boundaries.

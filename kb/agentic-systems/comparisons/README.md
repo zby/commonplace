@@ -4,15 +4,15 @@ The matrix builder, table renderer, and analyzer read the retained sets
 produced by `analyse-agentic-system`. Their common input is each generated
 review under `kb/agentic-systems/reviews/`, its `analysis-artifact` path and
 SHA-256, and the byte-identical set retained under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`: the readers verify
+`kb/agentic-systems/reports/retained/<run-id>/`: the readers verify
 the set's manifest, `ARTIFACT.yaml`, take identity and the source register
 from the overview and the comparison profile from `memory.md`, and validate
 each member. Retained sets take part in collection-wide validation under the
-current contract; only the legacy `agentic-system-analysis-archive/` is
+current contract; only the legacy `reports/retained-archive/` is
 excluded, because its historical contracts differ. Publication and these
 readers also validate each selected set explicitly. They do not require
 local run state, source checkouts, legacy reviews, or a prior CSV. The
-[memory report contract](../../types/agent-memory-analysis-report.md#memory-comparison-fields)
+[memory report contract](../types/agent-memory-analysis-report.md#memory-comparison-fields)
 defines the scoped comparison fields and evidence assessments.
 
 Run from the repository root:

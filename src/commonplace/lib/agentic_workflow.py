@@ -8,10 +8,11 @@ Start a run with
 
 from the repository root. `start` allocates the run ID, AAS-<date>-<system
 slug>-<nn> (the slug from the source identity's last path segment, or
-the system name), creates the run directory under kb/reports/state/agentic-system-
-analysis/, and prints it; the run ID is the directory's name. Each
-job's task is an instruction file under `kb/instructions/analyse-agentic-system/
-jobs/`, declared as an input, so a change to it reopens the job. The job split
+the system name), creates the run directory under
+`kb/agentic-systems/reports/state/`, and prints it; the run ID is the directory's
+name. Each job's task is an instruction file under
+`kb/agentic-systems/instructions/analyse-agentic-system/jobs/`, declared as an
+input, so a change to it reopens the job. The job split
 is recorded in `kb/work/analysis-offload-to-code/README.md`.
 
 Opening and publication are effects: opening records values that cannot be
@@ -63,17 +64,17 @@ from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import validate_note
 from commonplace.workflow import Job, Recognition, StopRun, Workflow
 
-JOBS = "kb/instructions/analyse-agentic-system/jobs"
-STATE_ROOT = Path("kb/reports/state/agentic-system-analysis")
-OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
-RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
+JOBS = "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
+STATE_ROOT = Path("kb/agentic-systems/reports/state")
+OVERVIEW_TYPE = "agentic-systems/types/agentic-system-analysis-overview.md"
+RUN_STATE_TYPE = "agentic-systems/types/agentic-system-analysis-run-state.md"
 # Shared contracts and member types, relative to the job instructions.
 # Analysts load shared definitions plus their own member type. Only jobs
 # judging records need the analyst types and reconciliation type.
 TYPES = "../../../types"
-BOUNDARY_CONTRACT = "../../../reference/agentic-analysis-boundary.md"
-SOURCES_CONTRACT = "../../../reference/agentic-analysis-sources.md"
-RECORDS_CONTRACT = "../../../reference/agentic-analysis-records.md"
+BOUNDARY_CONTRACT = "../../agentic-analysis-boundary.md"
+SOURCES_CONTRACT = "../../agentic-analysis-sources.md"
+RECORDS_CONTRACT = "../../agentic-analysis-records.md"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
@@ -172,7 +173,7 @@ def require_sections(body: str, level: int, wanted: Sequence[str]) -> list[str]:
 def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
     """The allowed values of the boundary fields, from the overview schema."""
     schema = yaml.safe_load(
-        (repo_root / "kb/types/agentic-system-analysis-overview.schema.yaml").read_text(
+        (repo_root / "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml").read_text(
             encoding="utf-8"
         )
     )
@@ -835,7 +836,7 @@ class AnalyseAgenticSystem(Workflow):
         atomic_write(run_dir / MEMORY, (run_dir / memory_report(memory)).read_bytes())
         reconciled = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
         write_file(run_dir / RECONCILIATION, dump_frontmatter({
-            "type": "types/agentic-system-reconciliation-report.md",
+            "type": "agentic-systems/types/agentic-system-reconciliation-report.md",
             "description": f"Reconciliation of {self.params['system']} records at {fields['reviewed-boundary']}",
             "run-id": self.run_id,
             "reviewed-boundary": fields["reviewed-boundary"],

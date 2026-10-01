@@ -70,7 +70,7 @@ for a vacant destination). Destination drift requires a new inspection.
 All three operations require a worktree that is clean outside the workflow's
 output locations: no staged change or modified tracked file, and no untracked
 file under `kb/`, except that `kb/agentic-systems/reviews/` and
-`kb/reports/retained/agentic-system-analysis/` may hold untracked files and
+`kb/agentic-systems/reports/retained/` may hold untracked files and
 unstaged modifications of tracked files, where a sibling run's uncommitted
 publication may sit; ignored paths never count. `prepare` and `publish` also
 require the overview's `inputs-commit` to be an ancestor of or equal to HEAD
@@ -96,7 +96,7 @@ retained paths and the candidate review, and checks the incumbent without changi
 a semantic-review job; specialist analysis does not establish independent
 semantic clearance. `publish` rechecks the inputs, validates the prospective
 complete run state, replaces the review, retains `ARTIFACT.yaml` and the four
-members byte for byte under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and writes
+members byte for byte under `kb/agentic-systems/reports/retained/<run-id>/`, and writes
 the run state last. New publications require `memory-comparison` in the memory
 member and a matching retained manifest path and hash in the public review.
 An existing retained set requires a new run ID. Ordinary in-process failures
@@ -231,7 +231,7 @@ its directory; `--run <dir>` names the directory instead; `step <run>` advances 
 `blocked` or `uncertain`); `report <run> <event>` records a failed launch, a
 repair or a stop. `resolve` and `release` are the operator's commands after an
 uncertain outcome or a stop-only block. The agent orchestrator's side is
-`kb/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
+`kb/agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
 design is still a proposal: `kb/reference/proposals/code-scheduled-workflows.md`.
 
 ## Review system

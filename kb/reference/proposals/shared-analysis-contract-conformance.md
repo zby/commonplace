@@ -12,8 +12,8 @@ contains the whole contract.
 
 ## Current state (as of 2026-10-01)
 
-- Commit `d77388b4` separates the [source contract](../agentic-analysis-sources.md)
-  and [record contract](../agentic-analysis-records.md) from four member
+- Commit `d77388b4` separates the [source contract](../../agentic-systems/instructions/agentic-analysis-sources.md)
+  and [record contract](../../agentic-systems/instructions/agentic-analysis-records.md) from four member
   types. The analysis workflow declares both files to its analysts,
   reconciliation and verification. Changes reopen the affected jobs and
   block publication against an earlier method commit.

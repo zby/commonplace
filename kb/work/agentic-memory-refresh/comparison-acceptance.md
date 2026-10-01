@@ -48,7 +48,7 @@ different source versions or silently counting repeated runs twice.
   Eligible positive counts require code-grounded, known values at wired,
   observed, or causally supported basis. Report exclusions beside denominators.
 - Run summary generation through
-  [`synthesize-agent-memory-landscape`](../../instructions/synthesize-agent-memory-landscape/SKILL.md).
+  [`synthesize-agent-memory-landscape`](../../agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md).
   Preserve the bundle identity and executable query/output ledger. Qualitative
   claims require reading full retained records, not only CSV fields.
 - Test rejection of a missing or ineligible review and preservation of the

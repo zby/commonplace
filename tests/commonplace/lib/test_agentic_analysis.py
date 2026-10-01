@@ -39,16 +39,16 @@ def running_package_is_the_fixture_repository(tmp_path, monkeypatch):
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
 SOURCE = "https://example.invalid/example-system"
-STATE_DIR = Path("kb/reports/state/agentic-system-analysis")
+STATE_DIR = Path("kb/agentic-systems/reports/state")
 REVIEW_PATH = "kb/agentic-systems/reviews/example-system.md"
 # A placeholder method commit for fixtures that never publish; publication
 # fixtures pin the fixture repository's real HEAD.
 INPUTS_COMMIT = "f" * 40
 MEMBER_TYPES = {
-    "runtime.md": "types/agentic-system-runtime-report.md",
-    "memory.md": "types/agent-memory-analysis-report.md",
-    "epistemic.md": "types/agentic-system-epistemic-report.md",
-    "reconciliation.md": "types/agentic-system-reconciliation-report.md",
+    "runtime.md": "agentic-systems/types/agentic-system-runtime-report.md",
+    "memory.md": "agentic-systems/types/agent-memory-analysis-report.md",
+    "epistemic.md": "agentic-systems/types/agentic-system-epistemic-report.md",
+    "reconciliation.md": "agentic-systems/types/agentic-system-reconciliation-report.md",
 }
 
 
@@ -68,9 +68,9 @@ def configure_types(tmp_path: Path) -> None:
         "agentic-analysis-sources.md",
         "agentic-analysis-records.md",
     ):
-        target = tmp_path / "kb/reference" / name
+        target = tmp_path / "kb/agentic-systems/instructions" / name
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(REPO_ROOT / "kb/reference" / name, target)
+        shutil.copy2(REPO_ROOT / "kb/agentic-systems/instructions" / name, target)
     shutil.copytree(REPO_ROOT / "kb/types", tmp_path / "kb/types")
     shutil.copytree(
         REPO_ROOT / "kb/agent-memory-systems/types",
@@ -80,8 +80,8 @@ def configure_types(tmp_path: Path) -> None:
         REPO_ROOT / "kb/agentic-systems/types",
         tmp_path / "kb/agentic-systems/types",
     )
-    shutil.copytree(REPO_ROOT / "kb/reports/types", tmp_path / "kb/reports/types")
     for collection in ("kb/reports", "kb/agentic-systems"):
+        (tmp_path / collection).mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO_ROOT / collection / "COLLECTION.md", tmp_path / collection / "COLLECTION.md")
     shutil.copytree(
         REPO_ROOT / "kb/instructions/review-gates",
@@ -178,7 +178,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "records": ["MEM-OBJ-1"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
-        "type": "types/agent-memory-analysis-report.md",
+        "type": "agentic-systems/types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "run-id": RUN_ID,
         "source-identity": SOURCE,
@@ -257,7 +257,7 @@ Fixture evidence.
 
 def runtime_text(revision: str) -> str:
     return f"""---
-type: types/agentic-system-runtime-report.md
+type: agentic-systems/types/agentic-system-runtime-report.md
 description: "Runtime baseline of Example System at the fixture boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -313,7 +313,7 @@ none
 
 def epistemic_text(revision: str) -> str:
     return f"""---
-type: types/agentic-system-epistemic-report.md
+type: agentic-systems/types/agentic-system-epistemic-report.md
 description: "Epistemic routes of Example System at the fixture boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -358,7 +358,7 @@ def overview_text(
     revision: str, members: dict[str, Path], *, inputs_commit: str = INPUTS_COMMIT
 ) -> str:
     return f"""---
-type: types/agentic-system-analysis-overview.md
+type: agentic-systems/types/agentic-system-analysis-overview.md
 description: "Complete fixture analysis at one frozen source boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -468,7 +468,7 @@ def write_set(run_dir: Path, revision: str) -> Path:
 
 def reconciliation_text(revision: str) -> str:
     return f'''---
-type: types/agentic-system-reconciliation-report.md
+type: agentic-systems/types/agentic-system-reconciliation-report.md
 description: "Reconciled Example System records at the frozen source boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -510,7 +510,7 @@ def valid_run_state(tmp_path: Path) -> Path:
     retain_set(tmp_path, run_dir)
     generated = write(tmp_path / REVIEW_PATH, review_text(revision, overview))
     run_frontmatter: dict[str, object] = {
-        "type": "types/agentic-system-analysis-run-state.md",
+        "type": "agentic-systems/types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -590,7 +590,7 @@ def commit_inputs(tmp_path: Path) -> str:
     The run directory and the source checkout are ignored, as in the real
     repository, so the run's own files never dirty the tree.
     """
-    write(tmp_path / ".gitignore", "kb/reports/state/\nrelated-systems/\n")
+    write(tmp_path / ".gitignore", "kb/agentic-systems/reports/state/\nrelated-systems/\n")
     run_git(tmp_path, "init", "--quiet")
     return commit_paths(tmp_path, "Commit the run's inputs", ".")
 
@@ -662,9 +662,9 @@ def test_generated_review_must_live_in_reviews_directory(tmp_path: Path) -> None
 
 def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
     configure_types(tmp_path)
-    state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
+    state = tmp_path / f"kb/agentic-systems/reports/state/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "types/agentic-system-analysis-run-state.md",
+        "type": "agentic-systems/types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -684,9 +684,9 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
 
 def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
     configure_types(tmp_path)
-    state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
+    state = tmp_path / f"kb/agentic-systems/reports/state/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "types/agentic-system-analysis-run-state.md",
+        "type": "agentic-systems/types/agentic-system-analysis-run-state.md",
         "description": f"Failed run {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -1222,7 +1222,7 @@ def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     candidate = spec.generated_candidate_path
     content = candidate.read_text() + (
-        f"\n[Exact analysis](../../reports/retained/agentic-system-analysis/{RUN_ID}/overview.md)\n"
+        f"\n[Exact analysis](../reports/retained/{RUN_ID}/overview.md)\n"
     )
     candidate.write_text(content)
 
@@ -1313,7 +1313,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 
     state = valid_run_state(tmp_path)
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
-    shutil.rmtree(tmp_path / "kb/reports/state")
+    shutil.rmtree(tmp_path / "kb/agentic-systems/reports/state")
     shutil.rmtree(tmp_path / "kb/agent-memory-systems")
     shutil.rmtree(tmp_path / "related-systems")
     assert not state.exists()
@@ -1446,7 +1446,7 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
 
     member_fixture(tmp_path)
     monkeypatch.chdir(tmp_path)
-    target = f"kb/reports/state/agentic-system-analysis/{RUN_ID}/output"
+    target = f"kb/agentic-systems/reports/state/{RUN_ID}/output"
 
     assert main([target, "--json"]) == 0
     report = json.loads(capsys.readouterr().out)
@@ -1710,7 +1710,7 @@ def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> N
     ("kb/notes/draft.md", False),
     ("kb/notes/zażółć gęślą.md", False),
     ("kb/agentic-systems/reviews/sibling.md", True),
-    ("kb/reports/retained/agentic-system-analysis/AAS-2026-09-04-sibling-01/overview.md", True),
+    ("kb/agentic-systems/reports/retained/AAS-2026-09-04-sibling-01/overview.md", True),
     ("scratch.txt", True),
 ])
 def test_untracked_files_block_publication_only_under_kb_outside_its_outputs(
@@ -1757,12 +1757,13 @@ def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path
 
 
 @pytest.mark.parametrize("method_path", [
-    "kb/reference/agentic-analysis-boundary.md",
-    "kb/reference/agentic-analysis-sources.md",
-    "kb/reference/agentic-analysis-records.md",
-    "kb/types/agentic-system-analysis-overview.md",
-    "kb/reports/types/agentic-system-analysis-set.md",
-    "kb/reports/types/agentic-system-analysis-set.schema.yaml",
+    "kb/agentic-systems/COLLECTION.md",
+    "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+    "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+    "kb/agentic-systems/instructions/agentic-analysis-records.md",
+    "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+    "kb/agentic-systems/types/agentic-system-analysis-set.md",
+    "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml",
 ])
 def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path, method_path: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
@@ -1875,7 +1876,7 @@ def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None
     state, _, _ = publication_fixture(tmp_path)
     values = frontmatter(state)
     actual = values["source"]
-    contract = (REPO_ROOT / "kb/types/agentic-system-analysis-run-state.md").read_text()
+    contract = (REPO_ROOT / "kb/agentic-systems/types/agentic-system-analysis-run-state.md").read_text()
     example = yaml.safe_load(re.search(r"```yaml\n(source:.*?)```", contract, re.DOTALL)[1])["source"]
     example.update({key: actual[key] for key in ("identity", "revision", "path")})
     replace_frontmatter(state, {**values, "source": example})

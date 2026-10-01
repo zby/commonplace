@@ -1,0 +1,136 @@
+{
+  "python_tests": {
+    "passed": 1232,
+    "failed": 0
+  },
+  "ruff": "passed",
+  "collection_validation": {
+    "fails": 0,
+    "warns": 0
+  },
+  "current_completed_run_validation": {
+    "fails": 0,
+    "warns": 0,
+    "verified_quotes": 43
+  },
+  "archived_review_pins": 42,
+  "current_member_bodies_byte_identical": 5,
+  "changed_contract_validation": [
+    {
+      "path": "kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md\nScope: kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md\nScope: kb/reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reference/adr/087-source-and-report-types-are-global-library-types.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/adr/087-source-and-report-types-are-global-library-types.md\nScope: kb/reference/adr/087-source-and-report-types-are-global-library-types.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/adr/087-source-and-report-types-are-global-library-types.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reference/collections-and-types.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/collections-and-types.md\nScope: kb/reference/collections-and-types.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/collections-and-types.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reference/content-routing.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/content-routing.md\nScope: kb/reference/content-routing.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/content-routing.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reference/commands.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reference/commands.md\nScope: kb/reference/commands.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reference/commands.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/instructions/scan-agentic-system-transfer/SKILL.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/instructions/scan-agentic-system-transfer/SKILL.md\nScope: kb/instructions/scan-agentic-system-transfer/SKILL.md\nFiles analysed: 1\nText files: 0\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/instructions/scan-agentic-system-transfer/SKILL.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/agent-memory-systems/COLLECTION.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/agent-memory-systems/COLLECTION.md\nScope: kb/agent-memory-systems/COLLECTION.md\nFiles analysed: 1\nText files: 1\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/agent-memory-systems/COLLECTION.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/articles/COLLECTION.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/articles/COLLECTION.md\nScope: kb/articles/COLLECTION.md\nFiles analysed: 1\nText files: 1\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/articles/COLLECTION.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/agentic-systems/COLLECTION.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/agentic-systems/COLLECTION.md\nScope: kb/agentic-systems/COLLECTION.md\nFiles analysed: 1\nText files: 1\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/agentic-systems/COLLECTION.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/instructions/COLLECTION.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/instructions/COLLECTION.md\nScope: kb/instructions/COLLECTION.md\nFiles analysed: 1\nText files: 1\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/instructions/COLLECTION.md\n",
+      "stderr": ""
+    },
+    {
+      "path": "kb/reports/COLLECTION.md",
+      "exit_code": 0,
+      "stdout": "VALIDATION SUCCESS\nTarget: kb/reports/COLLECTION.md\nScope: kb/reports/COLLECTION.md\nFiles analysed: 1\nText files: 1\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\n\nDetails: commonplace-validate --full kb/reports/COLLECTION.md\n",
+      "stderr": ""
+    }
+  ],
+  "log_receipts": [
+    {
+      "path": "/tmp/commonplace-agentic-localization-full-tests-final.log",
+      "sha256": "75031f676197b64ea0772cd8384f6256a2b87b225223499eaa534d4a5179685a"
+    },
+    {
+      "path": "/tmp/commonplace-agentic-localization-ruff-accepted.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "/tmp/commonplace-agentic-localization-accepted-collection.log",
+      "sha256": "2c379149269d766c88908561b13d83667c63936316f7df520b48f659c14a49c8"
+    },
+    {
+      "path": "/tmp/commonplace-agentic-localization-redirect-final-validation.log",
+      "sha256": "b9cf72385235397360993d739d1b2982bdc958da3f48b29bd4f2f862bc520d58"
+    },
+    {
+      "path": "/tmp/commonplace-agentic-localization-handoff-final.log",
+      "sha256": "8dc17a1ede5f3293b81946e008e47e9972964cf363eb6a91965e5a32cb0c9a0f"
+    },
+    {
+      "path": "/tmp/commonplace-agentic-localization-build-accepted.log",
+      "sha256": "3a25f122f3f4009fe9d6932ac866f98bea84ab3943986926bf883170541901ed"
+    },
+    {
+      "path": "/tmp/commonplace-pinned-source-full-tests.log",
+      "sha256": "a52da09ec25e1cdf0f8e319186c82e7242b2dcb06852cd9efe5502e995458a75"
+    },
+    {
+      "path": "/tmp/commonplace-pinned-source-localized-tests.log",
+      "sha256": "30505a79d8f178c45177baaa01e2fc1a9e8e379f05656873cde59ac1a0a6eb0d"
+    }
+  ],
+  "cutover": "operator authorized integration into main; historical runs retain their opening method and require an isolated tool at that method or a fresh run under the merged method",
+  "pinned_source_acquisition": {
+    "main_method_commit": "c40c0343",
+    "main_python_tests_passed": 1228,
+    "localized_python_tests_passed": 1232,
+    "missing_source_parent_ignored": true,
+    "requested_commit_differs_from_clone_head": true,
+    "source_checkout_clean_and_detached_at_requested_commit": true,
+    "publication_retains_requested_commit": true
+  }
+}

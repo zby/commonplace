@@ -79,7 +79,7 @@ FENCED_EXAMPLE = re.compile(
 
 def _active_kb_markdown_paths() -> tuple[Path, ...]:
     paths: list[Path] = []
-    for path in (REPO_ROOT / "kb").rglob("*.md"):
+    for path in iter_validation_markdown_files(REPO_ROOT / "kb"):
         relative_path = path.relative_to(REPO_ROOT)
         # Workshops and generated reports retain experiments, captured prompts,
         # and immutable pre-migration copies. They are evidence, not current

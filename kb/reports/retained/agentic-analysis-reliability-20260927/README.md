@@ -45,7 +45,7 @@ through publication.
 - System: Napkin, `https://github.com/Michaelliv/napkin` at
   `7582d6a46f5a11995956e60a59c41a5b242109f1`.
 - Run: `AAS-2026-09-27-napkin-01`.
-- [Retained result](../agentic-system-analysis-archive/AAS-2026-09-27-napkin-01/result.md),
+- [Retained result](../../../agentic-systems/reports/retained-archive/AAS-2026-09-27-napkin-01/result.md),
   SHA-256 `8484f622335c134237968326c9971d8fbb1e71f97128e411f96b8d46ccba41db`.
 - Frozen specialist input:
   `5923140a12ae31e626a794d14f365d49f07a8c8e7748394c702fdbb3d7495734`.

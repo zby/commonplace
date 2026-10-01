@@ -12,12 +12,13 @@ Current state includes:
 - [`full-pass/`](./full-pass/README.md) — guarded captures and actionable pass
   dispositions;
 - `fixes/` — warning dispositions;
-- `agentic-system-analysis/<run-id>/` — one exact analysis result, temporary
-  publication candidates, and minimal `running`/`complete`/`failed` state. A
-  failed run is not resumed; a later run repeats it. The analysis workflow owns
-  cleanup after the requesting operator has consumed or disposed the result;
 - `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
 - legacy review stores, backups, and revise-autoreason runs.
 
 Do not delete this subtree as a cache. Follow the owning workflow's completion
 or retirement rule for each payload class.
+
+Agentic analysis now owns working runs under
+`kb/agentic-systems/reports/state/`. Old ignored `agentic-system-analysis/`
+directories remain recovery evidence under their original method; the layout
+migration does not delete them or make unfinished runs resumable.

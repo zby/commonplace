@@ -14,6 +14,8 @@ status: accepted
 
 **Initialization amendment (2026-09-28).** `commonplace-init` only creates missing scaffold files and refreshes its own library pointers. The automatic migration behavior described below records the original adoption and is no longer shipped: init leaves existing library copies, type values, snapshots, ingest checksums, and review baselines unchanged. Snapshot conversion remains available through the explicit source-checkout script.
 
+**Collection ownership amendment:** [ADR 099](./099-agentic-analysis-method-and-reports-belong-to-the-collection.md) permits collection-specific instructions in their owning collection and makes agentic analysis report types collection-local. General lifecycle operations and the other global source/report types remain as decided here.
+
 ## Context
 
 ADR 086 stopped copying the library into projects, but init still copies the
@@ -42,7 +44,7 @@ These types are not tied to their collections by necessity. The sources and
 reports collections are where Commonplace's procedures put these artifacts by
 default. A user may reasonably keep ingested sources, or reports, somewhere
 else (operator, 2026-09-25). The global
-[agentic-system analysis overview](../../types/agentic-system-analysis-overview.md)
+[agentic-system analysis overview](../../agentic-systems/types/agentic-system-analysis-overview.md)
 type (then the single-file analysis result type) is a precedent: a
 procedure-produced type that already lives in the library.
 

@@ -5,13 +5,13 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-oh-my-pi-01
 source-identity: https://github.com/can1357/oh-my-pi
 reviewed-revision: be6cb8217cd4c1dafcc86793ae5d809ea4d7396a
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-oh-my-pi-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-26-oh-my-pi-01/result.md
 analysis-result-sha256: 8fbc0efeeebf2ac41b15a843ef3533bed2e28067a76e96a4df751fafe18b43e0
 ---
 
 # oh-my-pi
 
-**Evidence basis:** source code and shipped doctrine at commit `be6cb8217cd4c1dafcc86793ae5d809ea4d7396a` (2026-09-05; package version 18.1.10), analysed 2026-09-26. No runtime or causal experiment was executed. This is a whole-system runtime analysis with explicit limits, not current-tip coverage. The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-oh-my-pi-01/result.md) retains the evidence, canonical records and bounded memory profile.
+**Evidence basis:** source code and shipped doctrine at commit `be6cb8217cd4c1dafcc86793ae5d809ea4d7396a` (2026-09-05; package version 18.1.10), analysed 2026-09-26. No runtime or causal experiment was executed. This is a whole-system runtime analysis with explicit limits, not current-tip coverage. The [exact analysis](../reports/retained-archive/AAS-2026-09-26-oh-my-pi-01/result.md) retains the evidence, canonical records and bounded memory profile.
 
 ## Runtime and control
 

@@ -52,7 +52,7 @@ specific benefit, not as an automatic reason to pay handoff cost.
 
 Skills and plain instructions can be parts of one operation rather than independent procedures. A composition sibling is a direct caller, callee, conditional instruction loaded by the artifact, or producer or consumer of its named arguments and result protocol.
 
-Before editing an instruction or skill, search `kb/instructions/` for its exact filename, skill name, and any named result literals. Read every direct composition sibling before drafting. If the change affects a trigger, argument, result, mutation authority, stop condition, or path-resolution rule, update the affected siblings in the same change or report the unresolved interface mismatch as a blocker. Do not rewrite artifacts that merely mention the procedure without consuming its interface.
+Before editing an instruction or skill, search `kb/instructions/` and any collection-owned `instructions/` that consumes its interface for its exact filename, skill name, and any named result literals. Read every direct composition sibling before drafting. If the change affects a trigger, argument, result, mutation authority, stop condition, or path-resolution rule, update the affected siblings in the same change or report the unresolved interface mismatch as a blocker. Do not rewrite artifacts that merely mention the procedure without consuming its interface.
 
 An inherited rule is also a composition dependency when a worker packet omits
 the rule because an upstream contract supplies it. Editing that contract
@@ -82,7 +82,7 @@ For a promoted skill, edit its directory under `kb/instructions/`; installed pro
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers, subject to this collection's exceptional-link posture; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits (e.g. `after [title](path)`, `if [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/instructions/`, `kb/notes/`, `kb/reference/`, and `kb/tags/` for link targets. Do not link into `kb/agent-memory-systems/`, `kb/agentic-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
+Scan `kb/instructions/`, `kb/notes/`, `kb/reference/`, and `kb/tags/` for link targets. Collection-specific procedures and their declared input contracts under `kb/agentic-systems/` are permitted when a procedure consumes that interface. Do not link into its research corpus, `kb/agent-memory-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
 
 **Labels:**
 
@@ -143,4 +143,5 @@ A typed artifact in this collection may use a global type, named by its path und
 - Transferable claims about KB methodology → `kb/notes/`
 - Descriptions of how the system works → `kb/reference/`
 - Report outputs and review evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
+- Collection-specific analysis, synthesis and taxonomy procedures → their owning collection's `instructions/`
 - Work in progress → `kb/work/` (workshops)

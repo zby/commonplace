@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-23-gbrain-01
 source-identity: https://github.com/garrytan/gbrain
 reviewed-revision: "6040075c6cb95be5881cc2e1b76ef7d71f4e5d29"
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md
 analysis-result-sha256: e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f1885f2b1
 ---
 
@@ -13,7 +13,7 @@ analysis-result-sha256: e07b4133703a2594672dd77ac8b6906e6d1173f83b658e0165b42f4f
 
 **Evidence basis:** Static code and committed documentation at `6040075c6cb95be5881cc2e1b76ef7d71f4e5d29` (v0.54.1.0), inspected on 2026-09-23. No system was executed. Host harness internals, model providers, the closed-source Memorable CLI, the separate evals repository and the author's deployment were not inspected.
 
-GBrain is a memory and context service for agents that already exist. It stores pages and provenance-carrying facts in PGLite or Postgres, keeps Markdown files canonical for file-backed pages, and serves one operation contract through a CLI and MCP servers. Around that core it adds retrieval and cited synthesis, automatic context push through harness hooks, background maintenance through a nightly cycle and a durable job queue, and a large skill set whose distribution is a product surface in its own right. The host harness keeps the agent loop, so nothing in this review establishes that a host used what GBrain delivered. The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-23-gbrain-01/result.md) retains the source excerpts, route records and fourteen comparison fields.
+GBrain is a memory and context service for agents that already exist. It stores pages and provenance-carrying facts in PGLite or Postgres, keeps Markdown files canonical for file-backed pages, and serves one operation contract through a CLI and MCP servers. Around that core it adds retrieval and cited synthesis, automatic context push through harness hooks, background maintenance through a nightly cycle and a durable job queue, and a large skill set whose distribution is a product surface in its own right. The host harness keeps the agent loop, so nothing in this review establishes that a host used what GBrain delivered. The [exact analysis](../reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md) retains the source excerpts, route records and fourteen comparison fields.
 
 ## How agent-facing parts reach harnesses
 

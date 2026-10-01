@@ -31,7 +31,7 @@ from commonplace.lib.quote_matching import (
     parse_github_blob,
 )
 
-AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
+AGENTIC_ANALYSIS_RUN_TYPE = "agentic-systems/types/agentic-system-analysis-run-state.md"
 
 
 
@@ -147,18 +147,18 @@ def parse_agentic_analysis_run_state(
     repo_root = repo_root.resolve()
     state_path = path.resolve()
     state_root = (
-        repo_root / "kb" / "reports" / "state" / "agentic-system-analysis"
+        repo_root / "kb" / "agentic-systems" / "reports" / "state"
     ).resolve()
     try:
         relative = state_path.relative_to(state_root)
     except ValueError as exc:
         raise ValueError(
-            "run-state path: expected kb/reports/state/agentic-system-analysis/"
+            "run-state path: expected kb/agentic-systems/reports/state/"
             "<run-id>/run-state.md"
         ) from exc
     if len(relative.parts) != 2 or relative.name != "run-state.md":
         raise ValueError(
-            "run-state path: expected kb/reports/state/agentic-system-analysis/"
+            "run-state path: expected kb/agentic-systems/reports/state/"
             "<run-id>/run-state.md"
         )
 
@@ -213,7 +213,7 @@ def run_state_repo_root(path: Path) -> Path | None:
     if len(parents) < 6:
         return None
     root = parents[5]
-    if path.parent.parent != root / "kb" / "reports" / "state" / "agentic-system-analysis":
+    if path.parent.parent != root / "kb" / "agentic-systems" / "reports" / "state":
         return None
     return root
 

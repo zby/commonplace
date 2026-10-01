@@ -16,9 +16,9 @@ the first trial are not a controlled measurement of the schema change alone.
 
 | System | New run | Exact result SHA-256 |
 |---|---|---|
-| [Dynamic Cheatsheet](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md) | `AAS-2026-09-26-dynamic-cheatsheet-02` | `69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa` |
-| [Mem0](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-mem0-02/result.md) | `AAS-2026-09-26-mem0-02` | `b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1` |
-| [Napkin](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-napkin-03/result.md) | `AAS-2026-09-26-napkin-03` | `1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53` |
+| [Dynamic Cheatsheet](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-dynamic-cheatsheet-02/result.md) | `AAS-2026-09-26-dynamic-cheatsheet-02` | `69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa` |
+| [Mem0](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-mem0-02/result.md) | `AAS-2026-09-26-mem0-02` | `b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1` |
+| [Napkin](../../agentic-systems/reports/retained-archive/AAS-2026-09-26-napkin-03/result.md) | `AAS-2026-09-26-napkin-03` | `1c4b625211fa033130d7ea2533c214f5e5e791d07707ad96ec8aa34f9e835c53` |
 
 The temporary trial outputs live under
 `kb/reports/cache/agentic-memory-refresh/2026-09-26-per-value/`: `bundle/`,

@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [agentic-analysis-localization](./agentic-analysis-localization/plan.md) — move focused analysis instructions, types and reports into the agentic-systems collection while preserving published findings and hash references; planning only
 - [code-simplification](./code-simplification/README.md) — backlog of verified-by-review duplication, test clean-up, and design-level simplifications left after the 2026-09-28 dead-code sweep; one commit per item
 - [analysis-offload-to-code](./analysis-offload-to-code/README.md) — backlog for moving the mechanical parts of analyse-agentic-system (run opening, ID mapping, manifest hashing, review rendering, read and probe wrappers, guards) into commands and validators; the remaining items are built on the code orchestrator, as parts of the analysis workflow definition
 - [code-scheduled-workflows](./code-scheduled-workflows/README.md) — building the code orchestrator as a separately tested module: a program that runs a workflow, keeps run state on disk and stops only where it needs a sub-agent, with the parent agent launching the jobs it names; nothing built yet

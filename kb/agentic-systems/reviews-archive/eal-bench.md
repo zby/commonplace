@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-eal-bench-01
 source-identity: https://github.com/tommasocerruti/eal-bench
 reviewed-revision: 51648690bc52d7a9c7ac080a2c67a784fe9d56cb
-analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md
+analysis-result: kb/agentic-systems/reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md
 analysis-result-sha256: 45eefb6b58e89b14c890e3e60c5e4d19b07365002409cca493b1554ef48cc097
 ---
 
@@ -37,7 +37,7 @@ The strongest supported contribution is an executable way to distinguish memory 
 
 The workflow can criticize memory content. Whether that criticism improves future capacity remains **uninspected**: no linked improvement experiment or automatic theory-revision and successor-deployment loop is established at this boundary. Reflection and self-improvement are separately **uninspected**, not inferred from storing profiles or scores. Packaged replay artifacts exist, but their original production and acceptance lifecycle is not determinable from the inspected fixture bytes.
 
-Provider and LangMem internals, excluded studies, other domains' detailed semantics and deployment effects remain outside the evidence boundary. Current-pin paired memory/control runs, audited free-text interpretations and repeated interventions would change the empirical assessment. The full routes, quotations, limitations and specialist reconciliation are in the [retained exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-eal-bench-01/result.md) — see-also.
+Provider and LangMem internals, excluded studies, other domains' detailed semantics and deployment effects remain outside the evidence boundary. Current-pin paired memory/control runs, audited free-text interpretations and repeated interventions would change the empirical assessment. The full routes, quotations, limitations and specialist reconciliation are in the [retained exact analysis](../reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md) — see-also.
 
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the separate requirement for criticism to improve future capacity.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: a connected self-representation, not memory persistence alone.

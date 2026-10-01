@@ -380,11 +380,11 @@ rather than declaring the reorganization complete.
   contract; it does not define a competing matcher. Freeze instruction, tool
   and input versions for each trial so a concurrent migration cannot silently
   change its evidence baseline.
-- Start from the [main skill](../../instructions/analyse-agentic-system/SKILL.md),
-  [epistemic instruction](../../instructions/analyse-agentic-system/jobs/epistemic.md),
-  [memory instruction](../../instructions/analyse-agentic-system/jobs/memory.md),
+- Start from the [main skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
+  [epistemic instruction](../../agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md),
+  [memory instruction](../../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md),
   [result type](../../types/agentic-system-analysis-result.md),
-  [memory report type](../../types/agent-memory-analysis-report.md), and live
+  [memory report type](../../agentic-systems/types/agent-memory-analysis-report.md), and live
   publication and comparison code under `src/commonplace/`. The three retained
   results named above are under `kb/reports/retained/agentic-system-analysis/`.
 
