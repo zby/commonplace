@@ -5,16 +5,20 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
+def prose(path: Path) -> str:
+    """A document's text with whitespace collapsed, so a phrase matches
+    wherever the file wraps its lines."""
+    return " ".join(path.read_text(encoding="utf-8").split())
+
+
 def instruction(name: str) -> str:
-    return (REPO_ROOT / "kb" / "instructions" / name / "SKILL.md").read_text(
-        encoding="utf-8"
-    )
+    return prose(REPO_ROOT / "kb" / "instructions" / name / "SKILL.md")
 
 
 def job(name: str) -> str:
-    return (
+    return prose(
         REPO_ROOT / "kb/instructions/analyse-agentic-system/jobs" / f"{name}.md"
-    ).read_text(encoding="utf-8")
+    )
 
 
 def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
@@ -31,13 +35,11 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
 
 
 def contract(name: str) -> str:
-    return (REPO_ROOT / "kb/types" / f"{name}.md").read_text(encoding="utf-8")
+    return prose(REPO_ROOT / "kb/types" / f"{name}.md")
 
 
 def shared_contract(name: str) -> str:
-    return (REPO_ROOT / "kb/reference" / f"agentic-analysis-{name}.md").read_text(
-        encoding="utf-8"
-    )
+    return prose(REPO_ROOT / "kb/reference" / f"agentic-analysis-{name}.md")
 
 
 def test_set_has_one_fixed_state_location() -> None:
@@ -60,8 +62,8 @@ def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     assert "compact source allowlist" in boundary
     assert "git checkout --detach <commit>" in boundary
     # The boundary validator guarantees the checkout, so jobs read it directly.
-    assert "read and grep the files of the checkout at `source.path`" in rules
-    assert "do not extract another copy of the source" in rules
+    assert "read and grep the files under `source.path`" in rules
+    assert "do not fetch, check out or copy the source elsewhere" in rules
     # Every analytical worker receives the source and record contracts.
     assert "one code span containing the full commit-relative path" in shared_contract(
         "sources"

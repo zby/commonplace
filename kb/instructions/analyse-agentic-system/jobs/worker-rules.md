@@ -38,7 +38,11 @@ for progress messages.
 
 ## Commands
 
-Run acceptance commands separately and inspect each exit status, or chain dependent commands with `&&`. Shell pipelines need `set -o pipefail`. When wrapping tool calls, retain status and stderr as well as stdout; a later successful command does not clear an earlier failure. State a check's result in your output only after you have run the check.
+Run acceptance commands separately and inspect each exit status, or chain
+dependent commands with `&&`. Shell pipelines need `set -o pipefail`. When
+wrapping tool calls, retain status and stderr as well as stdout; a later
+successful command does not clear an earlier failure. State a check's result
+in your output only after you have run the check.
 
 With standard Codex tools, return the complete command result, not just
 `result.output`. For example, one bounded read through `functions.exec` is:
@@ -72,13 +76,26 @@ Source-reading, quotation and Commonplace validation commands remain in
 scope. Missing execution evidence limits conclusions; it does not require
 planning a check or setting up an environment.
 
-After the boundary job freezes the sources, read evidence only within that frozen boundary: use the supplied `boundary` and its Source register. For Git, read and grep the files of the checkout at `source.path`: the boundary job checked it out at the recorded commit, and code refused the boundary unless its `git status` was empty. Do not modify, check out or fetch in that checkout, and do not extract another copy of the source. For a capture, read the recorded file and check its SHA-256.
+Read evidence only from the sources the supplied `boundary` registers. For
+Git, read and grep the files under `source.path`; that directory holds
+exactly the reviewed commit's files. Treat it as read-only: do not fetch,
+check out or copy the source elsewhere. For a capture, read the recorded
+file.
 
 ## Quotation
 
 Use the supplied `run-state` path directly. Keep selection files in `scratch`.
 
-Generate every quote block with `commonplace-quote <run-state> --source-path <commit-relative-path> --text-file <selection-file>`, omitting `--source-path` for the run's capture, or `--selections <json-file>` for many selections. Choose the occurrence whose context supports the finding and insert its citation unchanged. Request discontiguous passages separately. Only a quote attribution carries a line range; cite a source in prose by path only. A failed lookup requires rereading the source and revising the selection; never format a citation or calculate a range by hand. A generated citation proves occurrence, not support; judge support yourself.
+Generate every quote block with
+`commonplace-quote <run-state> --source-path <commit-relative-path> --text-file <selection-file>`,
+omitting `--source-path` for the run's capture, or
+`--selections <json-file>` for many selections. Choose the occurrence whose
+context supports the finding and insert its citation unchanged. Request
+discontiguous passages separately. Only a quote attribution carries a line
+range; cite a source in prose by path only. A failed lookup requires
+rereading the source and revising the selection; never format a citation or
+calculate a range by hand. A generated citation proves occurrence, not
+support; judge support yourself.
 
 Code matches the written runtime, memory and epistemic quotations against the
 frozen source before accepting each output. A mismatch uses the ordinary job
@@ -86,4 +103,14 @@ retry. Repair it by regenerating the citation and inserting it unchanged.
 
 ## Prior analyses
 
-Do not call agent listings for status; their payloads may include prior analyses even with a path filter. Do not read style exemplars or `kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`, `kb/agentic-systems/reviews-archive/`, `kb/reports/retained/agentic-system-analysis/`, `kb/reports/retained/agentic-system-analysis-archive/`, `kb/work/analyse-agentic-system/`, other runs under `kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or agent listings. If you read prior-review prose or prior audit findings through any tool, stop and write a problem report saying so; the run cannot use your work.
+Do not call agent listings for status; their payloads may include prior
+analyses even with a path filter. Do not read style exemplars or
+`kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`,
+`kb/agentic-systems/reviews-archive/`,
+`kb/reports/retained/agentic-system-analysis/`,
+`kb/reports/retained/agentic-system-analysis-archive/`,
+`kb/work/analyse-agentic-system/`, other runs under
+`kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or
+agent listings. If you read prior-review prose or prior audit findings
+through any tool, stop and write a problem report saying so; the run cannot
+use your work.

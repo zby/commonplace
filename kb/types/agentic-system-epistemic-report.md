@@ -7,13 +7,14 @@ schema: ./agentic-system-epistemic-report.schema.yaml
 
 # Agentic system epistemic report
 
-The member of a run's retained set that carries the epistemic analyst's findings:
-a sparse overlay on the set's canonical records tracing whether and how the
-system acquires or produces truth-apt content, checks it, grants or
-withholds reliance, retains or integrates it, and lets it affect later
-behavior. It cites the records other members declare, and it declares
-the records the epistemic analyst establishes under their `EPI-` IDs, with
-the evidence passages that support them. The [source contract](../reference/agentic-analysis-sources.md) governs
+The member of a run's retained set that carries the epistemic analyst's
+findings: a sparse overlay on the set's canonical records tracing whether
+and how the system acquires or produces truth-apt content, checks it, grants
+or withholds reliance, retains or integrates it, and lets it affect later
+behavior. It cites the records other members declare, and it declares the
+records the epistemic analyst establishes under their `EPI-` IDs, with the
+evidence passages that support them. The
+[source contract](../reference/agentic-analysis-sources.md) governs
 evidence; the [record contract](../reference/agentic-analysis-records.md)
 governs identity, common fields and statuses.
 

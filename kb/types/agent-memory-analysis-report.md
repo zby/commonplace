@@ -8,12 +8,12 @@ schema: ./agent-memory-analysis-report.schema.yaml
 # Agent memory analysis report
 
 The memory analyst's source-grounded findings, their comparison
-classifications, and their integration questions for one run, at the
-run's frozen boundary. The last report the run accepts is the
-set's memory member byte for byte: it declares its records under their
-`MEM-` IDs, and no step rewrites it. Corrections to its records are
-amendments in the reconciliation member. Its comparison profile is
-authoritative for downstream consumers. The [source contract](../reference/agentic-analysis-sources.md) governs
+classifications, and their integration questions for one run, at the run's
+frozen boundary. The last report the run accepts is the set's memory member
+byte for byte: it declares its records under their `MEM-` IDs, and no step
+rewrites it. Corrections to its records are amendments in the reconciliation
+member. Its comparison profile is authoritative for downstream consumers.
+The [source contract](../reference/agentic-analysis-sources.md) governs
 evidence; the [record contract](../reference/agentic-analysis-records.md)
 governs identity, common fields and statuses.
 
@@ -204,17 +204,19 @@ targeting inputs, budgets and authority where they affect a conclusion.
 
 ### Comparison rationale
 
-Explain non-obvious mappings and unions in `memory-comparison`. The field contract above governs scope and support; do not repeat record
+Explain non-obvious mappings and unions in `memory-comparison`. The field
+contract above governs scope and support; do not repeat record
 classifications here.
 
 ### Integration issues
 
-List every correction to a supplied fact, every record of this report
-that may duplicate a seeded record, and every unresolved question, with
-its evidence, analytical consequence and the full IDs it concerns, so the
+List every correction to a supplied fact, every record of this report that
+may duplicate a seeded record, and every unresolved question, with its
+evidence, analytical consequence and the full IDs it concerns, so the
 reconciliation can amend or supersede without rediscovering its meaning.
-State `none` when no issues remain. Supported corrections and justified unknowns can remain in a complete
-report; side-channel messages do not substitute for this section.
+State `none` when no issues remain. Supported corrections and justified
+unknowns can remain in a complete report; side-channel messages do not
+substitute for this section.
 
 ### Limitations and checks
 

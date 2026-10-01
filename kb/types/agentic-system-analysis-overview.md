@@ -72,23 +72,24 @@ before relying on an analyst's original wording.
 
 ### Bounded synthesis
 
-`## Bounded synthesis` gives the evidence basis and boundary,
-architectural characterization and claimed work, runtime map, only the
-discriminating mechanisms this target needs, scenario-relative assessment,
-and concrete evidence or system changes that would alter the assessment.
-Where the runtime report supports it, the synthesis states separately
-whether the system meets theory-builder conditions 1–4, whether criticism
-of a consumed theory improved the system's capacity for future action,
-whether the system is reflective or autonomous, and whether it is
-[self-improving](../notes/definitions/self-improving-system.md) at the declared boundary, each at its own evidence status;
-these are independent properties, not a grade or a ladder. It is organized
-around the system's operational progression, not as concatenated analyst
-reports, and cites member records rather than restating them. It gives no
-product ranking, generic adoption advice, system-wide epistemic grade,
-Commonplace delta, or transfer recommendation. For learning and
-self-improvement findings it leads with the strongest supported
-contribution, including partial results, then states the unresolved
-question, at the level of the comparison actually performed.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural
+characterization and claimed work, runtime map, only the discriminating
+mechanisms this target needs, scenario-relative assessment, and concrete
+evidence or system changes that would alter the assessment. Where the
+runtime report supports it, the synthesis states separately whether the
+system meets theory-builder conditions 1–4, whether criticism of a consumed
+theory improved the system's capacity for future action, whether the system
+is reflective or autonomous, and whether it is
+[self-improving](../notes/definitions/self-improving-system.md) at the
+declared boundary, each at its own evidence status; these are independent
+properties, not a grade or a ladder. It is organized around the system's
+operational progression, not as concatenated analyst reports, and cites
+member records rather than restating them. It gives no product ranking,
+generic adoption advice, system-wide epistemic grade, Commonplace delta, or
+transfer recommendation. For learning and self-improvement findings it leads
+with the strongest supported contribution, including partial results, then
+states the unresolved question, at the level of the comparison actually
+performed.
 
 The Bounded synthesis has a second reader. Code publishes it, after an
 evidence-basis line and before the Limitations, as the body of the public

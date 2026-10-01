@@ -145,5 +145,6 @@ separately:
 | Autonomous theory builder | Role-by-role evidence that computation performs every internal operation; users supplying problems and judging products are outside the boundary. Autonomy does not establish reliability. |
 
 Learning, reflection and autonomy remain independent claims. Revision
-selection prefers [explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+selection prefers
+[explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence; it does not trade fit away for reach.

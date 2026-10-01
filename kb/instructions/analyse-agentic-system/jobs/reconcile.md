@@ -31,18 +31,46 @@ section unchanged. Do not write Description, Bounded synthesis or Limitations.
 
 ## Reconcile
 
-Reconcile the members as they are; when `round` is `after-correction` or `after-blockers`, read `previous-reconciliation` and recheck anything you carry over from it rather than copying its text.
+Reconcile the members as they are; when `round` is `after-correction` or
+`after-blockers`, read `previous-reconciliation` and recheck anything you
+carry over from it rather than copying its text.
 
 Resolve duplicates, corrections and anchored conflicts under the shared
 record contract's amendment grammar. Report independent convergence only
-when the analysts reached it independently. Recheck shared-route ownership. Attach the admission fields of memory routes from the memory analyst's findings rather than tracing those mechanisms twice. The memory analyst's `memory-comparison` profile stays in the memory member with its scope, per-value evidence bases and records, coverage assessments, uncertainties, and rationale preserved; check it axis by axis, under the definitions of the [memory report type](../../../types/agent-memory-analysis-report.md)'s Memory comparison fields, against the records of the whole set, including every `EPI-` record of a transformation of retained content. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's findings.
+when the analysts reached it independently. Recheck shared-route ownership.
+Attach the admission fields of memory routes from the memory analyst's
+findings rather than tracing those mechanisms twice. The memory analyst's
+`memory-comparison` profile stays in the memory member with its scope,
+per-value evidence bases and records, coverage assessments, uncertainties,
+and rationale preserved; check it axis by axis, under the definitions of the
+[memory report type](../../../types/agent-memory-analysis-report.md)'s
+Memory comparison fields, against the records of the whole set, including
+every `EPI-` record of a transformation of retained content. Do not draft a
+second memory analysis, and do not silently strengthen the memory analyst's
+findings.
 
-Every ID you cite, in amendments too, must resolve in the set your output makes: the Source register, the runtime member, the memory report and the epistemic member. Your output is refused with the unresolved IDs otherwise.
+Every ID you cite, in amendments too, must resolve in the set your output
+makes: the Source register, the runtime member, the memory report and the
+epistemic member. Your output is refused with the unresolved IDs otherwise.
 
 ## Return findings to the memory analyst
 
-When a substantive conflict needs the memory analyst, add the section `## Returned to the memory analyst`, listing each returned finding with its IDs and evidence anchor. Code then runs a correction round of the memory analyst and gives you its report in the next reconciliation. Return findings only when `may-return = yes`. When `may-return = no`, retain each unresolved conflict in a paragraph starting `Unresolved conflict:`, with its full IDs, evidence and conclusion prevented. The later synthesizer carries these conflicts into Limitations. A malformed citation in the memory analyst's report is also a return, not something you fix.
+When a substantive conflict needs the memory analyst, add the section
+`## Returned to the memory analyst`, listing each returned finding with its
+IDs and evidence anchor. Code then runs a correction round of the memory
+analyst and gives you its report in the next reconciliation. Return findings
+only when `may-return = yes`. When `may-return = no`, retain each unresolved
+conflict in a paragraph starting `Unresolved conflict:`, with its full IDs,
+evidence and conclusion prevented. The later synthesizer carries these
+conflicts into Limitations. A malformed citation in the memory analyst's
+report is also a return, not something you fix.
 
 ## Resolve a verification's blockers
 
-When `round = after-blockers`, read `verification` and `set-check`. Resolve each blocker in what you write: correct the reconciliation; amend or supersede a record through an `Amendment:` paragraph; or return it to the memory analyst when the memory report is at fault. The runtime and epistemic members are not rewritten; a blocker in one of them that no amendment resolves stays an `Unresolved conflict:` with its prevented conclusion. Read `previous-reconciliation` too: carry over what still holds.
+When `round = after-blockers`, read `verification` and `set-check`. Resolve
+each blocker in what you write: correct the reconciliation; amend or
+supersede a record through an `Amendment:` paragraph; or return it to the
+memory analyst when the memory report is at fault. The runtime and epistemic
+members are not rewritten; a blocker in one of them that no amendment
+resolves stays an `Unresolved conflict:` with its prevented conclusion. Read
+`previous-reconciliation` too: carry over what still holds.
