@@ -54,16 +54,13 @@ memory report. Acceptance requires a valid member with resolved citations.
      transformation or knowledge-production claim, record each material
      ledger function or the type's empty-ledger statement. Record any
      operational/behavioral authority and the bounded absence of a relevant
-     check or epistemic authority. Use the type's no-candidate statement,
-     no-claim comparison and bounded conclusion; this completes the member.
+     check or epistemic authority. Use the type's no-claim comparison and
+     bounded conclusion; this completes the member.
    - For a knowledge-production claim with no supporting implemented or
      observed route, inventory its claimed object and classify the claimed
-     transformation first. Established ampliation uses a lifecycle record:
-     declared phases `doctrine only`, unclaimed phases as the scoped
-     evidence permits, unobserved candidate phases `no instance observed`.
-     Otherwise use the non-ampliative or indeterminate disposition. Record
-     claimed functions and compare them with the missing implementation or
-     operation. Continue with remaining evidenced routes.
+     transformation first. Record claimed functions and compare them with
+     the missing implementation or operation. Continue with remaining
+     evidenced routes.
    - Otherwise continue. Scoped absence excludes no informal or unobserved
      route beyond its search boundary.
 
@@ -81,18 +78,13 @@ memory report. Acceptance requires a valid member with resolved citations.
    under Assessment limits. Cite a supplied record's retained passage when
    it suffices; retain newly needed passages beside their findings.
 
-6. **Dispose every object.** Use the type's ampliative, non-ampliative,
-   indeterminate or no-candidate disposition. Keep architectural status
-   separate from observed candidate state and upgrade a phase only from
-   candidate-linked evidence of that phase.
-
-7. **Compare claims and conclude.** Fill the claim comparison and Bounded
+6. **Compare claims and conclude.** Fill the claim comparison and Bounded
    conclusion from the routes, applying the type's assessment limits.
    Include only findings that change the answer to the analysis question.
 
 ## Check
 
-Check coverage, object separation, edge classifications, candidate evidence
+Check coverage, object separation, edge classifications, evidence support
 and bounded licenses against the type. Run
 `commonplace-validate --full <output>` and repair detectable defects before
 submitting; the type defines ledger formatting and controlled values.

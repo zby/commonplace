@@ -72,10 +72,6 @@ def test_multiple_stores_and_distinct_unknown_assessments():
         ),
         (lambda p: p["axes"]["lineage"].update(values=["authored"]), "empty values"),
         (
-            lambda p: p["axes"].update(faithfulness_tested=known(["yes"])),
-            "execution evidence",
-        ),
-        (
             lambda p: p["axes"].update(trace_learning=known(["no"])),
             "must be inapplicable",
         ),
@@ -101,15 +97,19 @@ def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
     data = profile()
     data["axes"]["read_back_direction"] = known(["pull"], ["RTE-1"])
     data["axes"]["trace_learning"] = known(["no"], ["ABS-1"])
-    for axis in (
-        "read_back_signal",
-        "trace_source",
-        "learning_scope",
-        "learning_timing",
-        "distilled_form",
-    ):
+    for axis in ("read_back_signal", "trace_source"):
         data["axes"][axis]["assessment"] = "inapplicable"
     sm.validate_comparison(data, known_ids=KNOWN)
+
+
+@pytest.mark.parametrize(
+    "axis", ["learning_scope", "learning_timing", "distilled_form", "faithfulness_tested"]
+)
+def test_removed_axes_are_rejected(axis):
+    data = profile()
+    data["axes"][axis] = deepcopy(data["axes"]["lineage"])
+    with pytest.raises(ValueError, match="every registered axis"):
+        sm.validate_comparison(data, known_ids=KNOWN)
 
 
 def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives():

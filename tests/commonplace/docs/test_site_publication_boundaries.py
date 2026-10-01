@@ -36,6 +36,8 @@ def test_only_retained_analysis_sets_are_published() -> None:
     assert excluded.match_file("reports/retained/" + run + "run-state.md")
     archive = "agentic-system-analysis-archive/AAS-2026-09-05-example-01/"
     assert not excluded.match_file("reports/retained/" + archive + "result.md")
+    for member in ("ARTIFACT.yaml", "overview.md", "runtime.md", "memory.md", "epistemic.md"):
+        assert not excluded.match_file("reports/retained/" + archive + member)
     assert excluded.match_file("reports/retained/" + archive + "run-state.md")
 
 

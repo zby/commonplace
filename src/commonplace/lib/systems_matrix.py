@@ -70,10 +70,6 @@ AXES = {
     },
     "trace_learning": {"yes", "no"},
     "trace_source": {"session-logs", "tool-traces", "event-streams", "trajectories"},
-    "learning_scope": {"per-task", "per-project", "cross-task"},
-    "learning_timing": {"online", "offline", "staged"},
-    "distilled_form": {"natural-language", "symbolic", "parametric"},
-    "faithfulness_tested": {"yes", "no"},
 }
 ASSESSMENTS = {
     "known",
@@ -184,26 +180,23 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
                 raise ValueError(f"{name}.{value}: missing evidence rationale")
         if (
             entry["assessment"] == "partial"
-            and name in {"trace_learning", "faithfulness_tested"}
+            and name == "trace_learning"
             and values == ["no"]
         ):
             raise ValueError(f"{name}: partial coverage cannot establish no")
         if entry["assessment"] == "absent" and not any(is_absence(r) for r in records):
             raise ValueError(f"{name}: absence requires an evidenced-absence record")
-        if name in {"trace_learning", "faithfulness_tested"} and len(values) > 1:
+        if name == "trace_learning" and len(values) > 1:
             raise ValueError(f"{name}: yes and no cannot be combined")
     trace = axes["trace_learning"]
-    if trace["assessment"] == "known" and trace["values"] == ["no"]:
-        for name in (
-            "trace_source",
-            "learning_scope",
-            "learning_timing",
-            "distilled_form",
-        ):
-            if axes[name]["assessment"] != "inapplicable":
-                raise ValueError(
-                    f"{name}: must be inapplicable when trace learning is no"
-                )
+    if (
+        trace["assessment"] == "known"
+        and trace["values"] == ["no"]
+        and axes["trace_source"]["assessment"] != "inapplicable"
+    ):
+        raise ValueError(
+            "trace_source: must be inapplicable when trace learning is no"
+        )
     direction = axes["read_back_direction"]
     if (
         direction["assessment"] == "known"
@@ -213,14 +206,6 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
         raise ValueError(
             "read_back_signal: must be inapplicable for pull-only read-back"
         )
-    faithfulness = axes["faithfulness_tested"]
-    if faithfulness["values"] == ["yes"] and faithfulness["evidence"]["yes"][
-        "basis"
-    ] not in {
-        "observed",
-        "causally supported",
-    }:
-        raise ValueError("faithfulness_tested: yes requires execution evidence")
     return profile
 
 

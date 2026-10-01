@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: agentic-system-epistemic-report
-description: "Epistemic member of an analysis set: the six-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic analyst establishes"
+description: "Epistemic member of an analysis set: the five-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic analyst establishes"
 schema: ./agentic-system-epistemic-report.schema.yaml
 ---
 
@@ -51,15 +51,12 @@ retention, integration, rollback, use, ranking, or continuation.
 **operational authority** is the behavior a result permits, blocks, or
 changes before another check; the **behavioral-authority path** is the
 consumer, channel, force (advisory, ranking, permissive, or enforcing),
-and horizon through which a result affects behavior. The **discovery
-lifecycle** comprises observation or anomaly, conjecture, consequence
-derivation, test or evidence, acceptance, and integration. **Acceptance**
+and horizon through which a result affects behavior. **Acceptance**
 is a recorded, evidence-consuming decision against a named criterion for
 an intended use and scope. **Lifecycle integration** occurs only after
 acceptance, when the accepted claim is connected to evidence or changes
 organization or use; retention or operational use before acceptance is a
-separate ledger function, and a candidate retained or used without
-acceptance has integration `not reached`.
+separate ledger function.
 
 ## Assessment limits
 
@@ -72,11 +69,11 @@ scope; retention, retrieval, reshaping or operational use alone does not
 establish it. Imported content is acquired, not produced. Acceptance does
 not establish infallibility, and integration does not establish acceptance.
 
-Architectural status is separate from activation conditions and observed
-candidate state. Implementation or doctrine does not establish an observed
-phase. A persisted candidate artifact with no provenance or trace links to
-the routes establishes only that a candidate instance is available; its
-phases are `not determinable`, not `phase evidenced` or `accepted`. A
+Architectural status is separate from activation conditions and evidence
+that a route operated. Implementation or doctrine does not establish observed
+operation. A persisted candidate artifact with no provenance or trace links to
+the routes establishes only that a candidate instance is available; it does
+not establish which routes produced, checked or accepted it. A
 recorded result without a consequential consumer has no implemented force.
 An evidenced absence does not require an invented evaluator.
 
@@ -98,15 +95,12 @@ retain separate evaluators, statuses and authorities.
 
 ## Required blocks
 
-The body contains six level-two sections in order, as readable Markdown
+The body contains five level-two sections in order, as readable Markdown
 tables or compact records, followed by `## Shared records`. Each block
 cites record IDs and repeats at most the ID, one source-native short
 label, and one local evidence anchor; a field the declaring record owns
-says `see <ID>`. Architectural
-status and observed candidate state are this report's own fields and are
-never concatenated with one another or translated into the set's
-conclusion-status vocabulary; `implemented and observed` is not a value in
-any field.
+says `see <ID>`. Architectural status is this report's own field;
+use its controlled values rather than the set's conclusion-status vocabulary.
 
 **1. Source-and-claim boundary.** Declared scope and excluded components,
 the analysis question, assessed and unassessed route families, each
@@ -182,43 +176,12 @@ The list supplies a checking order: assign the first value whose test is
 established. Ampliative conjecture requires evidence of non-entailment;
 failure to prove entailment alone leaves the relation indeterminate.
 
-**4. Per-object lifecycle disposition.** For every ampliative candidate,
-one record keyed to its object ID, giving for each phase the route's
-architectural status separately from the observed candidate state:
-
-`candidate object ID | relevant route IDs | transformation: ampliative conjecture | observation/anomaly: route IDs + architectural status + observed candidate state + evidence | conjecture: route IDs + architectural status + observed candidate state + evidence | derived consequence: route IDs + architectural status + observed candidate state + evidence | test/evidence: route IDs + architectural status + observed candidate state + evidence | acceptance: route IDs + evaluator + criterion + intended use + architectural status + observed candidate state + accepted scope + evidence | lifecycle integration: route IDs + post-acceptance change/consumer + architectural status + observed candidate state + evidence | missing phase/evidence`
-
-Observed candidate state is one of `no instance observed` (no candidate
-artifact or trace is available within the evidence boundary); `not
-reached` (an observed candidate exists and evidence shows that it did not
-reach this phase); `phase evidenced` (an observed candidate traversed this
-phase); `accepted`, `rejected`, `revised`, `failed`, `suspended`, or
-`integrated` (an observed disposition supports that specific state,
-`suspended` only for a candidate deliberately held pending, not a disabled
-route); or `not determinable` (candidate evidence exists but does not
-determine the state).
-
-For non-ampliative truth-apt content:
-
-`candidate object ID | relevant route IDs | transformation | discovery lifecycle: not applicable | applicable acquisition, lineage, derivation, or update route and warrant | missing evidence/limit`
-
-When preservation, entailment, or ampliation cannot be decided:
-
-`candidate object ID | relevant route IDs | transformation: indeterminate | classifications still possible | preserved lineage | implemented checks, retention, or use | current warrant limit | evidence needed to decide preservation, entailment, or ampliation`
-
-For an object with no candidate truth-apt output: `No lifecycle record for
-<object ID>: no candidate truth-apt output for this object; relevant
-direct-adaptation or update routes: <route IDs or none>.` Only when the
-entire inventory contains no candidate truth-apt output, additionally: `No
-candidate lifecycle records: no candidate truth-apt output found within
-the source boundary.`
-
-**5. System-claim versus route comparison.** One row per consequential
+**4. System-claim versus route comparison.** One row per consequential
 public or design claim, or an explicit statement that none was found:
 
 `claim ID | claimed operation or warrant | claim source ID/anchor and evidence layer | doctrine/design support | implemented route IDs | observed-run support | causal support and design limits | supported conclusion | mismatch/unknown`
 
-**6. Bounded conclusion.** Only findings that change the answer to the
+**5. Bounded conclusion.** Only findings that change the answer to the
 analysis question, grouping homogeneous IDs whose warrant and force are
 the same: what the system retains, retrieves, reshapes, or uses; what it
 acquires and whether source warrant is preserved, degraded, or unknown;
@@ -238,7 +201,7 @@ for declared kinds, source anchors and minimum load-bearing passages;
 state `none declared in this member` when there are no declarations.
 Apply conditional route fields only within their stated scope. Read-back
 fields give an inapplicable reason when neither retention nor read-back
-occurs; inapplicability establishes no missing epistemic phase.
+occurs.
 
 ## Template
 
@@ -257,8 +220,6 @@ reviewed-boundary: "{immutable revision or capture identity}"
 ## Epistemic-object inventory
 
 ## Authority-route ledger
-
-## Per-object lifecycle disposition
 
 ## System-claim versus route comparison
 

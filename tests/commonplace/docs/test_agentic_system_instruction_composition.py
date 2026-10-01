@@ -89,7 +89,7 @@ def test_transfer_scan_runs_after_complete_state() -> None:
     assert "scan-agentic-system-transfer" in orchestrator
 
 
-def test_candidate_artifact_does_not_establish_phase_observation() -> None:
+def test_candidate_artifact_does_not_establish_a_route_operated() -> None:
     epistemic = contract("agentic-system-epistemic-report")
     dispose = epistemic[epistemic.index("## Assessment limits") : epistemic.index("## Required blocks")]
     dispose = " ".join(dispose.split())
@@ -97,9 +97,10 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
     assert "persisted candidate artifact" in dispose
     assert "no provenance or trace links to" in dispose
     assert "only that a candidate instance is available" in dispose
-    assert "observed candidate state" in dispose
-    assert "`not determinable`, not `phase evidenced` or `accepted`" in dispose
-    assert "Observed candidate state is one of" in contract("agentic-system-epistemic-report")
+    assert "does not establish observed operation" in dispose
+    assert "not establish which routes produced, checked or accepted it" in dispose
+    assert "Per-object lifecycle disposition" not in epistemic
+    assert "observed candidate state" not in job("epistemic")
 
 
 def test_jobs_state_the_set_rules_they_depend_on() -> None:

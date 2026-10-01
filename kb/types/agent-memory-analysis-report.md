@@ -27,7 +27,7 @@ governs identity, common fields and statuses.
 | `source-identity` | Yes | Exact repository or capture identity |
 | `reviewed-boundary` | Yes | Full Git commit or capture label |
 | `report-status` | Yes | `complete` or `blocked` |
-| `memory-comparison` | Yes | Scope and all fourteen axes, under the contract below |
+| `memory-comparison` | Yes | Scope and all ten axes, under the contract below |
 
 A blocked report names missing access or an unresolved scope decision
 that prevents completing the assigned analysis. It keeps all sections;
@@ -56,10 +56,6 @@ occurs exactly once in `axes`:
 | `read_back_signal` | `coarse`, `identifier`, `inferred-embedding`, `inferred-judgment`, `inferred-lexical` |
 | `trace_learning` | `no`, `yes` |
 | `trace_source` | `event-streams`, `session-logs`, `tool-traces`, `trajectories` |
-| `learning_scope` | `cross-task`, `per-project`, `per-task` |
-| `learning_timing` | `offline`, `online`, `staged` |
-| `distilled_form` | `natural-language`, `parametric`, `symbolic` |
-| `faithfulness_tested` | `no`, `yes` |
 
 Each axis has exactly the fields `assessment`, `values`, `evidence`,
 `records` and `note`. `assessment` is `known`, `partial`, `absent`,
@@ -87,7 +83,7 @@ evidenced-absence record, `MEM-ABS-*` or a seeded `ABS-*`, establishing
 bounded absence. Every assessment and value
 has a nonempty explanatory note. An opaque included branch prevents
 complete coverage, not independently supported positive findings. A
-partial boolean assessment cannot assert `"no"`. Boolean axes have one
+partial trace-learning assessment cannot assert `"no"`. Trace learning has one
 value only; quote `"yes"` and `"no"` in YAML so they remain strings.
 
 The scope agrees across the profile, the declared and annotated records
@@ -129,20 +125,14 @@ separate from targeted selection.
 
 Trace learning requires automatic trace-fed writes producing durable
 behavior-shaping artifacts or learned parameters; storing raw logs alone
-does not qualify. Its source, scope, timing, and distilled form describe
-that learning route and are explicitly inapplicable when trace learning is
-known not to occur. A generated continuation summary qualifies when traces
+does not qualify. Its source describes that learning route and is
+explicitly inapplicable when trace learning is known not to occur.
+A generated continuation summary qualifies when traces
 feed its automatic production, it is retained, and a later consumer
 receives it as context or guidance; calling the transformation reshaping
 does not exclude it. Neither new knowledge nor observed improvement is
-required for a wired classification. Every qualifying scoped route's
-source, scope, timing and distilled form is assessed before aggregating,
-and the task horizon comes from that route; a session identifier alone
-does not decide `per-task` versus `cross-task`. Faithfulness tested means
-retained execution evidence tests dependence on recalled content; test
-code or a proposed experiment alone cannot support yes, which requires an
-observed or causally supported basis with the set's probe or retained
-evidence records.
+required for a wired classification. Assess every qualifying scoped route's
+trace source before aggregating.
 
 ## Report sections
 
@@ -183,7 +173,7 @@ elsewhere, including every such record the comparison profile cites.
 An entry carries only memory-specific fields and their supporting passages:
 storage substrate, representational form, lineage, memory consumers and their
 behavioral authority; raw versus derived material; write agency, curation,
-trace source, learning scope and timing, distilled form and faithfulness;
+trace learning and source;
 and read-back trigger, selector inputs, selected retained parts, budget,
 persistence, delivery, later consumer, status and limits. It does not copy the
 record's generic identity or route progression. Omit the section when there
@@ -196,8 +186,7 @@ rejection and withdrawal, separating manual authoring, automatic
 acquisition, and automatic operations over already retained material. For
 trace-fed transformations, including compaction, show the
 raw-to-derived-to-later-consumer chain, including alternative checkpoint
-forms. Give task/project horizons and timing only when established by that
-route. State whether derived behavior-shaping material retains its reasons
+forms. State whether derived behavior-shaping material retains its reasons
 and whether a later route reads them. Link to the records rather than
 repeating their full artifact classifications.
 
@@ -252,7 +241,7 @@ report-status: complete
 memory-comparison:
   scope: "{included and excluded memory surfaces}"
   axes:
-    # Fill all fourteen axes under Memory comparison fields.
+    # Fill all ten axes under Memory comparison fields.
 ---
 
 # {System} memory report

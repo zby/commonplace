@@ -330,10 +330,6 @@ Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
 
-## Per-object lifecycle disposition
-
-No candidate lifecycle records: no candidate truth-apt output found within the source boundary.
-
 ## System-claim versus route comparison
 
 CLM-1 is compared with RTE-1.

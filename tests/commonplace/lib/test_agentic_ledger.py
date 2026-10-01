@@ -76,7 +76,7 @@ def test_standing_validation_rejects_ledger_defects(tmp_path: Path) -> None:
     report = member_fixture(tmp_path) / "output/epistemic.md"
     text = report.read_text()
     start = text.index("## Authority-route ledger")
-    end = text.index("## Per-object lifecycle disposition")
+    end = text.index("## System-claim versus route comparison")
     report.write_text(text[:start] + "## Authority-route ledger\n\n" + HEADER
                       + ROW.replace("content transformation", "truth-apt transformation")
                       + '\n> evidence\n\n' + ROW + '\n' + text[end:])

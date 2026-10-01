@@ -67,14 +67,10 @@
                     "read_back_direction",
                     "read_back_signal",
                     "trace_learning",
-                    "trace_source",
-                    "learning_scope",
-                    "learning_timing",
-                    "distilled_form",
-                    "faithfulness_tested"
+                    "trace_source"
                   ],
-                  "minProperties": 14,
-                  "maxProperties": 14,
+                  "minProperties": 10,
+                  "maxProperties": 10,
                   "additionalProperties": {
                     "type": "object",
                     "required": [

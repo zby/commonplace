@@ -137,10 +137,6 @@ Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
 
-## Per-object lifecycle disposition
-
-Disposition.
-
 ## System-claim versus route comparison
 
 None found.
@@ -225,11 +221,11 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     assert results.note_type == "agentic-system-runtime-report"
 
 
-def test_runtime_report_accepts_a_retained_probe_evidence_section(tmp_path: Path) -> None:
+def test_runtime_report_rejects_the_removed_probe_evidence_section(tmp_path: Path) -> None:
     content = RUNTIME_TEXT.replace(
         "## Shared records", "## Probe evidence\n\nnone\n\n## Shared records", 1
     )
-    assert validate(tmp_path, "runtime.md", content).fails == []
+    assert validate(tmp_path, "runtime.md", content).fails
 
 
 def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Path) -> None:
@@ -249,6 +245,16 @@ def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
     swapped = swapped.replace("## Epistemic-object inventory", "## Authority-route ledger", 1)
     swapped = swapped.replace("## TEMP", "## Epistemic-object inventory", 1)
     assert validate(tmp_path, "epistemic.md", swapped).fails != []
+
+
+def test_epistemic_report_rejects_the_removed_lifecycle_section(tmp_path: Path) -> None:
+    content = EPISTEMIC_TEXT.replace(
+        "## System-claim versus route comparison",
+        "## Per-object lifecycle disposition\n\nDisposition.\n\n"
+        "## System-claim versus route comparison",
+        1,
+    )
+    assert validate(tmp_path, "epistemic.md", content).fails
 
 
 def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Path) -> None:

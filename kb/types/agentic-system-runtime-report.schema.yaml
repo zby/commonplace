@@ -26,8 +26,6 @@ allOf:
           anyOf:
             - enum:
                 - "## Runtime account"
-                # BACKCOMPAT: pinned retained analyses contain this section - remove after migration or retirement.
-                - "## Probe evidence"
                 - "## Shared records"
                 - "## Annotations"
             - pattern: '^#{3,6} .+$'
