@@ -97,4 +97,6 @@ implementation, passed all 1,184 tests. Ruff passed for `src`, `tests` and
 `scripts`; repository-wide Ruff found two existing import-order defects
 inside the frozen retained reliability trial bundle.
 
-Post-commit simplification checks follow the reorganization commit.
+The [post-commit simplification check](./post-commit-simplification-check.md)
+records the remaining delivery gap and the larger changes that would be
+needed for further cuts.
