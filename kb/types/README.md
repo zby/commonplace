@@ -26,3 +26,5 @@ Collection-specific types live under their owning collection's `types/` director
 The analysis member types share the [source](../reference/agentic-analysis-sources.md)
 and [record](../reference/agentic-analysis-records.md) contracts. Worker
 invocations supply those files alongside the member types each job needs.
+The boundary job alone also receives the
+[boundary contract](../reference/agentic-analysis-boundary.md).

@@ -71,6 +71,7 @@ RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
 # Analysts load shared definitions plus their own member type. Only jobs
 # judging records need the analyst types and reconciliation type.
 TYPES = "../../../types"
+BOUNDARY_CONTRACT = "../../../reference/agentic-analysis-boundary.md"
 SOURCES_CONTRACT = "../../../reference/agentic-analysis-sources.md"
 RECORDS_CONTRACT = "../../../reference/agentic-analysis-records.md"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
@@ -661,7 +662,7 @@ class AnalyseAgenticSystem(Workflow):
             "boundary",
             BOUNDARY,
             reads={"opening": OPENING},
-            extra=(SOURCES_CONTRACT,),
+            extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT),
             parameters={"source-identity": one_line(self.source_identity)},
             source=str(self.params["source"]),
             validator=partial(

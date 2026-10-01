@@ -39,7 +39,7 @@ These dispositions are valid boundary results. Use `problem` when you cannot
 produce the assigned boundary result, including a dirty source checkout.
 
 Classify an in-scope target with one `target-class` and one `boundary-kind`
-value from the supplied source contract, and state functional inclusions,
+value from the supplied boundary contract, and state functional inclusions,
 exclusions, and external dependencies. Do not assign responsibilities owned
 by an excluded host to the selected target.
 
@@ -64,7 +64,8 @@ by an excluded host to the selected target.
 3. Turn every non-Git source set into one immutable capture or bundle with a
    stable identity, version or capture label, absolute path, and SHA-256. Do
    not analyse a moving live page as though it were frozen.
-4. Build one `SRC-*` register with the columns and evidence layers the source contract requires.
+4. Build one `SRC-*` register with the columns the boundary contract
+   requires and the evidence layers of the source contract.
 
 The source pin is an evidence boundary. If it changes or cannot be verified, write a problem report.
 
@@ -96,7 +97,7 @@ source:                             # null when no source was frozen
 When you freeze a source, `source.identity` is exactly the
 `source-identity`; the output is refused otherwise. If the source you can
 freeze has another identity, you cannot finish: write the problem report.
-The two sections follow the source contract; they go into the overview
+The two sections follow the boundary contract; they go into the overview
 unchanged. A `blocked` or `out-of-scope` disposition adds a third section,
 `## Not reached`, saying what was not reached, why, and which conclusion
 that prevents.

@@ -1,50 +1,27 @@
 ---
 type: types/note.md
-description: "Shared evidence contract for agentic analyses: target and source boundaries, evidence layers, Source register, citation anchors and retained quotations"
+description: "Shared evidence contract for agentic analyses: evidence layers, reading the Source register, citation anchors and retained quotations"
 ---
 
 # Agentic analysis sources
 
 This contract defines the frozen evidence used by every worker of an
 `analyse-agentic-system` run. The boundary job writes Boundary and evidence
-and the Source register; code copies them into the overview. Job invocations
-declare this file as a required read.
+and the Source register under the
+[boundary contract](./agentic-analysis-boundary.md); code copies them into
+the overview. Job invocations declare this file as a required read.
 
-## Boundary and classification
-
-Boundary and evidence states intended use, functional inclusions and
-exclusions, external dependencies, target class, boundary kind, frozen
-revision or capture, analysis cutoff and overall evidence tier. Each
-exclusion or access gap names the conclusion it prevents. An excluded
-host's responsibilities are not attributed to the selected target.
-
-| Field | Meaning and values |
-|---|---|
-| `target-class` | `enclosing runtime`, `embedded inner runtime`, `runtime client`, `returning computation`, `workflow`, `extension or tool mechanism`, `builder or improvement plane`, `host integration`, `memory/knowledge/context-engineering system`, or another explicitly defined class |
-| `boundary-kind` | `whole-system`, `subsystem-only`, or `complete artifact, partial loop` |
-| `reviewed-boundary` | Immutable revision or capture identity shared by the run |
-| `analysis-cutoff` | Applicability cutoff for the frozen evidence |
-| `evidence-tier` | `code-grounded` or `doc-grounded` |
-
-These five boundary fields are non-null for a complete run. A field
-remains null when the work stopped before establishing it. A blocked or
-out-of-scope boundary names what was not reached, why, and the conclusion
-that prevents.
+An excluded host's responsibilities are not attributed to the selected
+target.
 
 ## Source register
 
-One row declares each `SRC-*` ID in its first cell, as `| SRC-1 | ... |`:
-
-`source ID | kind | identity/location | revision or capture | evidence layer | inspected scope | citation anchors | access gaps and conclusion prevented`
-
-Each stable source identity is in a code span, including a non-URL capture
-identity. Source IDs belong to this register alone. A Git row identifies
-the canonical repository, full reviewed commit, inspected commit-relative
-paths and commit-pinned anchors. An access root such as
-`related-systems/<owner>--<repo>/` may also appear; its mutable worktree or
-current HEAD is not the durable evidence identity. Supplied execution
-traces and experimental results use frozen source identities and anchors
-like other evidence; their scope and conditions bound the findings.
+The register declares each `SRC-*` ID in one row. Source IDs belong to this
+register alone. A source's durable evidence identity is its registered
+repository and reviewed commit, or its capture; a worktree path is only the
+access root. Supplied execution traces and experimental results use frozen
+source identities and anchors like other evidence; their scope and
+conditions bound the findings.
 
 | Evidence layer | What it supports |
 |---|---|

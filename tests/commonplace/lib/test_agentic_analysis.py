@@ -63,7 +63,11 @@ def digest(path: Path) -> str:
 
 
 def configure_types(tmp_path: Path) -> None:
-    for name in ("agentic-analysis-sources.md", "agentic-analysis-records.md"):
+    for name in (
+        "agentic-analysis-boundary.md",
+        "agentic-analysis-sources.md",
+        "agentic-analysis-records.md",
+    ):
         target = tmp_path / "kb/reference" / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO_ROOT / "kb/reference" / name, target)
@@ -1753,6 +1757,7 @@ def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path
 
 
 @pytest.mark.parametrize("method_path", [
+    "kb/reference/agentic-analysis-boundary.md",
     "kb/reference/agentic-analysis-sources.md",
     "kb/reference/agentic-analysis-records.md",
     "kb/types/agentic-system-analysis-overview.md",

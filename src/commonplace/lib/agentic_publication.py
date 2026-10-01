@@ -37,6 +37,7 @@ INCUMBENT_REVIEW_NAME = "incumbent-review.md"
 METHOD_PATHS: tuple[str, ...] = (
     "src/commonplace/",
     "kb/instructions/analyse-agentic-system/",
+    "kb/reference/agentic-analysis-boundary.md",
     "kb/reference/agentic-analysis-sources.md",
     "kb/reference/agentic-analysis-records.md",
     "kb/reports/types/agentic-system-analysis-set.md",

@@ -24,8 +24,8 @@ and pins every member, including this overview.
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
 | `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
-| `target-class` | Yes | Target role under the source contract; `null` before classification |
-| `boundary-kind` | Yes | Extent of the selected target under the source contract; `null` before establishment |
+| `target-class` | Yes | Target role under the boundary contract; `null` before classification |
+| `boundary-kind` | Yes | Extent of the selected target under the boundary contract; `null` before establishment |
 | `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
@@ -37,9 +37,10 @@ was not reached, why, and which conclusion that prevents.
 
 ## Shared contracts
 
-The [source contract](../reference/agentic-analysis-sources.md) defines
-boundary classifications, source declarations, evidence layers, anchors
-and quotations. The [record contract](../reference/agentic-analysis-records.md)
+The [boundary contract](../reference/agentic-analysis-boundary.md) defines
+boundary classifications and source declarations. The
+[source contract](../reference/agentic-analysis-sources.md) defines
+evidence layers, anchors and quotations. The [record contract](../reference/agentic-analysis-records.md)
 defines the namespace, declarations, annotations, amendments, fields and
 status meanings for all members.
 
@@ -60,11 +61,11 @@ or supply comparison rows. Correct retained output through a new run.
 ### Boundary and evidence
 
 `## Boundary and evidence` contains the boundary account defined by the
-source contract, copied from the boundary job.
+boundary contract, copied from the boundary job.
 
 ### Source register
 
-`## Source register` contains that job's `SRC-*` rows under the source
+`## Source register` contains that job's `SRC-*` rows under the boundary
 contract. Source identity and evidence scopes remain stable across members.
 For a complete run, code appends `Amended or superseded records: <IDs or none>`
 and a link to `reconciliation.md`. Resolve these IDs through that member

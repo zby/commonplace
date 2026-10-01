@@ -962,6 +962,7 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     assert isinstance(scripted.run()[-1], Done)
 
     types = {
+        "boundary": "kb/reference/agentic-analysis-boundary.md",
         "sources": "kb/reference/agentic-analysis-sources.md",
         "records": "kb/reference/agentic-analysis-records.md",
         "overview": "kb/types/agentic-system-analysis-overview.md",
@@ -971,12 +972,12 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "reconciliation": "kb/types/agentic-system-reconciliation-report.md",
     }
     expected = {
-        "boundary": {"sources"},
+        "boundary": {"boundary", "sources"},
         "runtime": {"sources", "records", "runtime"},
         "memory-0": {"sources", "records", "memory"},
         "epistemic": {"sources", "records", "epistemic"},
-        "reconcile-0": set(types) - {"overview"},
-        "verify-0": set(types) - {"overview"},
+        "reconcile-0": set(types) - {"overview", "boundary"},
+        "verify-0": set(types) - {"overview", "boundary"},
         "synthesize": {"sources", "records", "overview"},
         "verify-synthesis": {"sources", "records", "overview"},
     }
