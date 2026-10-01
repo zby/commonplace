@@ -486,8 +486,8 @@ class AnalyseAgenticSystem(Workflow):
     Parameters: `system` (the name the caller gave), `source-identity` (the
     stable identity of the source), `source` (the caller's source input, as
     given), and optionally `review-path` and `source-revision`. The latter
-    requires an existing clean Git checkout already at that full commit;
-    the boundary worker must not refresh or change it.
+    pins a full Git commit: the boundary worker acquires a missing checkout
+    at that commit or reuses a matching clean checkout without changing it.
 
     Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
     then rounds of `reconcile-<n>` and `verify-<n>`, followed by synthesis

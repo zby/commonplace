@@ -43,10 +43,12 @@ from tests.commonplace.lib.test_agentic_analysis import (
     SOURCE,
     STATE_DIR,
     commit_inputs,
+    commit_paths,
     configure_types,
     epistemic_text,
     git_checkout,
     memory_report_fixture,
+    run_git,
     runtime_text,
 )
 from tests.commonplace.workflow.definitions import ScriptedAgent
@@ -846,6 +848,46 @@ def test_boundary_cannot_substitute_another_commit_for_the_requested_pin(fixture
     assert f"must identify the requested Git commit `{requested}`" in prompt
     assert scripted.launched == ["boundary", "boundary"]
     assert definition.publications == 0
+
+
+def test_missing_checkout_can_be_cloned_at_the_requested_older_commit(fixture: Fixture) -> None:
+    source_bytes = (fixture.source_root / "README.md").read_bytes()
+    upstream = fixture.scratch / "upstream"
+    upstream.parent.mkdir(parents=True)
+    shutil.move(fixture.source_root, upstream)
+    fixture.source_root.parent.rmdir()
+    (upstream / "README.md").write_text("# Newer source\n", encoding="utf-8")
+    latest = commit_paths(upstream, "Advance the upstream", "README.md")
+    assert latest != fixture.revision
+
+    def acquire(_handout: Handout) -> str:
+        # This must also succeed before the ignored source parent exists.
+        assert not fixture.source_root.parent.exists()
+        run_git(fixture.root, "check-ignore", "-q", "related-systems/")
+        run_git(fixture.root, "clone", "--quiet", str(upstream), str(fixture.source_root))
+        assert run_git(fixture.source_root, "remote", "get-url", "origin") == str(upstream)
+        assert run_git(fixture.source_root, "rev-parse", "HEAD") == latest
+        run_git(fixture.source_root, "checkout", "--quiet", "--detach", fixture.revision)
+        return fixture.boundary()
+
+    definition = CountsPublication({
+        **fixture.params(), "source": str(upstream), "source-revision": fixture.revision,
+    })
+    scripted = ScriptedAgent(
+        Orchestrator(fixture.run_dir, definition),
+        fixture.workers(boundary=fixture.writes(acquire)), default=_unscripted,
+    )
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    assert definition.publications == 1
+    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
+    assert (fixture.source_root / "README.md").read_bytes() == source_bytes
+    assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
+    assert run_git(fixture.source_root, "status", "--porcelain") == ""
+    assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == "HEAD"
+    assert run_git(upstream, "rev-parse", "HEAD") == latest
 
 
 @pytest.mark.parametrize("revision", ["", "HEAD", "main", "abc123", "a" * 40 + "\n"])
