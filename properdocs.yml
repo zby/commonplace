@@ -11,6 +11,11 @@ exclude_docs: |
   !reports/retained/agentic-system-analysis/**/memory.md
   !reports/retained/agentic-system-analysis/**/epistemic.md
   !reports/retained/agentic-system-analysis-archive/**/result.md
+  !reports/retained/agentic-system-analysis-archive/**/ARTIFACT.yaml
+  !reports/retained/agentic-system-analysis-archive/**/overview.md
+  !reports/retained/agentic-system-analysis-archive/**/runtime.md
+  !reports/retained/agentic-system-analysis-archive/**/memory.md
+  !reports/retained/agentic-system-analysis-archive/**/epistemic.md
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md
@@ -63,6 +68,7 @@ plugins:
         'agentic-systems/reviews/fragility-grid.md': 'agentic-systems/reviews-archive/fragility-grid.md'
         'agentic-systems/reviews/gbrain-garrytan.md': 'agentic-systems/reviews-archive/gbrain-garrytan.md'
         'agentic-systems/reviews/gbrain.md': 'agentic-systems/reviews-archive/gbrain-garrytan.md'
+        'agentic-systems/reviews/instinctual-memory.md': 'agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md'
         'agentic-systems/reviews/jaz-evals.md': 'agentic-systems/reviews-archive/jaz-evals.md'
         'agentic-systems/reviews/jaz.md': 'agentic-systems/reviews-archive/jaz.md'
         'agentic-systems/reviews/jepa-anything.md': 'agentic-systems/reviews-archive/jepa-anything.md'
@@ -75,6 +81,7 @@ plugins:
         'agentic-systems/reviews/oh-my-pi.md': 'agentic-systems/reviews-archive/oh-my-pi.md'
         'agentic-systems/reviews/openrsi.md': 'agentic-systems/reviews-archive/openrsi.md'
         'agentic-systems/reviews/openviking.md': 'agentic-systems/reviews-archive/openviking.md'
+        'agentic-systems/reviews/pageindex.md': 'agentic-systems/reviews-archive/pageindex-2026-09-29-02.md'
         'agentic-systems/reviews/pi-posthorse.md': 'agentic-systems/reviews-archive/pi-posthorse.md'
         'agentic-systems/reviews/pond.md': 'agentic-systems/reviews-archive/pond.md'
         'agentic-systems/reviews/prime-agent.md': 'agentic-systems/reviews-archive/prime-agent.md'
