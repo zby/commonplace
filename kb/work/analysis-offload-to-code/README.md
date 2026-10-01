@@ -16,8 +16,11 @@ The [worker information map](./worker-information-map.md) owns the
 Implemented: [separate reconciliation from synthesis](../../reference/adr/098-separate-analysis-reconciliation-from-synthesis.md)
 (2026-10-01) writes public synthesis after record verification and makes
 reconciliation a fifth set member. The two previous retained sets are archived.
-Both fresh Luna trials stopped before synthesis, so full publication acceptance
-remains pending; see [trial observations](./split-luna-trials.md).
+Both fresh Luna trials stopped before synthesis; see
+[trial observations](./split-luna-trials.md). Three subsequent Sol medium
+runs reached verified synthesis and one published. Their
+[results and trace audit](./three-run-audit-2026-10-01.md) retain the shared
+publication collision and remaining semantic comparison defects.
 
 Planned, not started: [role-specific contract packets and code-owned form](./role-specific-packets-and-code-owned-form.md)
 (2026-10-01) delivers each job only the contract sections its role needs
