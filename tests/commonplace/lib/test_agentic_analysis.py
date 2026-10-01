@@ -486,6 +486,16 @@ def member_fixture(tmp_path: Path) -> Path:
     return run_dir
 
 
+def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> None:
+    run = member_fixture(tmp_path)
+    reconciliation = run / "output/reconciliation.md"
+    reconciliation.write_text(reconciliation.read_text() +
+        "\nAmendment: EPI-OBJ-1 is superseded by OBJ-1; identity evidence at SRC-1.\n")
+    repin(reconciliation.parent)
+    failures = validation.validate_note(reconciliation.parent, repo_root=tmp_path).fails
+    assert any("amendment index does not match" in failure for failure in failures)
+
+
 def valid_run_state(tmp_path: Path) -> Path:
     configure_types(tmp_path)
     run_dir = run_dir_of(tmp_path)

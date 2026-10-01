@@ -46,8 +46,9 @@ from commonplace.lib.agentic_publication import (
     require_publishable_worktree,
     require_running_package_unchanged,
 )
-from commonplace.lib.agentic_records import section, set_record_errors
+from commonplace.lib.agentic_records import amendment_index, section, set_record_errors
 from commonplace.lib.agentic_set import (
+    MEMBER_NAMES,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
@@ -57,6 +58,7 @@ from commonplace.lib.agentic_set import (
     normalize_source_identity,
 )
 from commonplace.lib.note_parser import parse_document, replace_markdown_links
+from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import validate_note
 from commonplace.workflow import Job, Recognition, StopRun, Workflow
 
@@ -66,7 +68,7 @@ OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUN_STATE_TYPE = "types/agentic-system-analysis-run-state.md"
 # Shared contracts and member types, relative to the job instructions.
 # Analysts load shared definitions plus their own member type. Only jobs
-# judging the assembled set need all four member types.
+# judging records need the analyst types and reconciliation type.
 TYPES = "../../../types"
 SOURCES_CONTRACT = "../../../reference/agentic-analysis-sources.md"
 RECORDS_CONTRACT = "../../../reference/agentic-analysis-records.md"
@@ -74,14 +76,16 @@ OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
 EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
-SET_CONTRACTS = (
+RECONCILIATION_CONTRACT = f"{TYPES}/agentic-system-reconciliation-report.md"
+RECORD_CONTRACTS = (
     SOURCES_CONTRACT,
     RECORDS_CONTRACT,
-    OVERVIEW_CONTRACT,
     RUNTIME_CONTRACT,
     MEMORY_CONTRACT,
     EPISTEMIC_CONTRACT,
+    RECONCILIATION_CONTRACT,
 )
+SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT)
 
 OPENING = "opening.json"
 BOUNDARY = "boundary.md"
@@ -90,6 +94,7 @@ RUN_STATE = "run-state.md"
 RUNTIME = f"{OUTPUT_DIR}/runtime.md"
 MEMORY = f"{OUTPUT_DIR}/memory.md"
 EPISTEMIC = f"{OUTPUT_DIR}/epistemic.md"
+RECONCILIATION = f"{OUTPUT_DIR}/reconciliation.md"
 OVERVIEW = f"{OUTPUT_DIR}/{OVERVIEW_NAME}"
 MANIFEST = f"{OUTPUT_DIR}/ARTIFACT.yaml"
 
@@ -104,7 +109,7 @@ BOUNDARY_FIELDS = (
 SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
 RETURNED = "Returned to the memory analyst"
 DESCRIPTION_LENGTH = (50, 250)
-"""The length the note schema expects of a description; the reconciliation's
+"""The length the note schema expects of a description; the synthesizer's
 description becomes the overview's and the review's."""
 
 
@@ -117,8 +122,7 @@ def reconciliation(round_: int) -> str:
 
 
 def round_file(kind: str, round_: int) -> str:
-    """A file one reconciliation round's closing writes: `overview-draft`,
-    `set-check` or `verification`."""
+    """One round's check, verification or synthesis output."""
     return f"{kind}-{round_}.md"
 
 
@@ -296,15 +300,13 @@ def set_bodies(
 ) -> dict[str, str]:
     """The bodies of the set these files make, by set name.
 
-    The overview is the boundary's Boundary and evidence and Source register
-    followed by the reconciliation's sections; each member keyword names a
-    set member without its `.md`. ValueError when a file does not parse.
+    The boundary supplies the overview's Source register, without requiring
+    a rendered overview. Each member keyword names a file without its `.md`.
     """
     _, boundary_body = split(boundary.read_text(encoding="utf-8"))
-    overview = boundary_body
+    bodies = {OVERVIEW_NAME: boundary_body}
     if reconciled is not None:
-        overview += "\n" + reconciled.read_text(encoding="utf-8")
-    bodies = {OVERVIEW_NAME: overview}
+        bodies["reconciliation.md"] = split(reconciled.read_text(encoding="utf-8"))[1]
     for name, path in members.items():
         bodies[f"{name}.md"] = split(path.read_text(encoding="utf-8"))[1]
     return bodies
@@ -340,21 +342,15 @@ def reconcile_refusals(
     epistemic: Path,
     may_return: bool,
 ) -> list[str]:
-    """The reconciliation's sections, the description's length, the last-round
+    """The reconciliation's sections, the last-round
     rule, and every record it cites, amendments included, declared in the set
     it will make."""
     body = path.read_text(encoding="utf-8")
-    refusals = require_sections(
-        body, 2, ["Description", "Reconciliation", "Bounded synthesis", "Limitations"]
-    )
-    description = one_line(section(body, "Description"))
-    shortest, longest = DESCRIPTION_LENGTH
-    if description and not shortest <= len(description) <= longest:
-        refusals.append(
-            f"the `## Description` sentence has {len(description)} characters; "
-            f"write {shortest} to {longest}"
-        )
     returned = RETURNED in headings(body, 2)
+    wanted = ["Reconciliation", *([RETURNED] if returned else [])]
+    refusals = require_sections(body, 2, wanted)
+    if headings(body, 2) != wanted:
+        refusals.append("write only Reconciliation and any permitted memory return")
     if returned and not may_return:
         refusals.append(
             f"this is the last round: remove `## {RETURNED}` and retain the conflicts "
@@ -392,11 +388,36 @@ def blockers_refusals(blockers: str) -> list[str]:
     ]
 
 
-def verification_refusals(path: Path) -> list[str]:
+def source_anchor_refusals(text: str) -> list[str]:
+    return [
+        f"source anchor at line {line}: {anchor} carries a line range; cite the path"
+        for line, anchor in ranged_prose_anchors(text)
+    ]
+
+
+def synthesis_refusals(path: Path, *, bodies: Callable[[Path], dict[str, str]]) -> list[str]:
     text = path.read_text(encoding="utf-8")
-    return require_sections(
-        text, 3, ["Semantic verification", "Blockers"]
-    ) or blockers_refusals(subsection(text, "Blockers"))
+    wanted = ["Description", "Bounded synthesis", "Limitations"]
+    refusals = require_sections(text, 2, wanted)
+    if headings(text, 2) != wanted:
+        refusals.append("write exactly Description, Bounded synthesis and Limitations")
+    description = one_line(section(text, "Description"))
+    shortest, longest = DESCRIPTION_LENGTH
+    if description and not shortest <= len(description) <= longest:
+        refusals.append(
+            f"the `## Description` sentence has {len(description)} characters; "
+            f"write {shortest} to {longest}"
+        )
+    return refusals or source_anchor_refusals(text) or reference_refusals(partial(bodies, path))
+
+
+def verification_refusals(path: Path, *, title: str = "Record verification") -> list[str]:
+    text = path.read_text(encoding="utf-8")
+    wanted = [title, "Blockers"]
+    refusals = require_sections(text, 3, wanted)
+    if headings(text, 2) or headings(text, 3) != wanted:
+        refusals.append(f"write exactly ### {title} and ### Blockers")
+    return refusals or blockers_refusals(subsection(text, "Blockers")) or source_anchor_refusals(text)
 
 
 def one_line(text: str) -> str:
@@ -446,13 +467,15 @@ class AnalyseAgenticSystem(Workflow):
     given), and optionally `review-path`.
 
     Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
-    then rounds of `reconcile-<n>` and `verify-<n>`. Code renders the
+    then rounds of `reconcile-<n>` and `verify-<n>`, followed by synthesis
+    and independent synthesis verification. Code renders the
     overview and the public review.
     """
 
     correction_rounds = 2
     """How many reconciliation rounds may follow the first, whether a round
     returned findings to the memory analyst or its verification named blockers."""
+    synthesis_correction_rounds = 1
 
     def __init__(self, params=None) -> None:
         super().__init__(params)
@@ -527,7 +550,7 @@ class AnalyseAgenticSystem(Workflow):
                 reason = "returned"
                 continue
             verification = self.close_round(
-                ctx, run_dir, opening, fields, boundary_body, reconcile, memory
+                ctx, run_dir, fields, reconcile, memory
             )
             blockers = subsection(verification, "Blockers")
             if blockers == "none":
@@ -540,7 +563,18 @@ class AnalyseAgenticSystem(Workflow):
             reconcile += 1
             reason = "blockers"
 
-        self.assemble(run_dir, opening, fields, boundary_body, reconcile, verification)
+        for synthesis_round in range(self.synthesis_correction_rounds + 1):
+            ctx.agent(self.synthesis_job(run_dir, synthesis_round)).wait()
+            ctx.agent(self.synthesis_verification_job(run_dir, synthesis_round)).wait()
+            synthesis_verification = (run_dir / round_file("synthesis-verification", synthesis_round)).read_text(encoding="utf-8")
+            blockers = subsection(synthesis_verification, "Blockers")
+            if blockers == "none":
+                break
+            if synthesis_round == self.synthesis_correction_rounds:
+                raise StopRun("the synthesis verification of the last round names blockers: " + blockers)
+
+        self.assemble(run_dir, opening, fields, boundary_body, synthesis_round,
+                      verification, synthesis_verification)
         self.validate_set(run_dir)
         self.write_candidate(run_dir, opening, fields)
 
@@ -723,7 +757,7 @@ class AnalyseAgenticSystem(Workflow):
             reconciliation(round_),
             reads=reads,
             instruction="reconcile",
-            extra=SET_CONTRACTS,
+            extra=RECORD_CONTRACTS,
             parameters={"round": round_kind, "may-return": "yes" if may_return else "no"},
             validator=partial(
                 reconcile_refusals,
@@ -735,107 +769,98 @@ class AnalyseAgenticSystem(Workflow):
             ),
         )
 
+    def record_bodies(self, run_dir: Path, **extra: Path) -> dict[str, str]:
+        return set_bodies(
+            boundary=run_dir / BOUNDARY,
+            reconciled=run_dir / RECONCILIATION,
+            runtime=run_dir / RUNTIME,
+            memory=run_dir / MEMORY,
+            epistemic=run_dir / EPISTEMIC,
+            **extra,
+        )
+
+    def record_check(self, run_dir: Path, fields: dict[str, Any]) -> list[str]:
+        """Check records directly, before any public synthesis or overview exists."""
+        failures = []
+        for name in MEMBER_NAMES:
+            path = run_dir / OUTPUT_DIR / name
+            failures.extend(f"{name}: {failure}" for failure in member_refusals(path, repo_root=self.repo))
+            metadata, _ = split(path.read_text(encoding="utf-8"))
+            for field, expected in (("run-id", self.run_id), ("reviewed-boundary", fields["reviewed-boundary"])):
+                if metadata.get(field) != expected:
+                    failures.append(f"{name}: {field} does not match the boundary")
+        failures.extend(reference_refusals(partial(self.record_bodies, run_dir)))
+        return failures
+
     def close_round(
-        self,
-        ctx,
-        run_dir: Path,
-        opening: dict[str, Any],
-        fields: dict[str, Any],
-        boundary_body: str,
-        round_: int,
-        memory: int,
+        self, ctx, run_dir: Path, fields: dict[str, Any], round_: int, memory: int,
     ) -> str:
-        """Assemble the set one reconciliation round makes, check it, and
-        verify it. Returns the verification.
-
-        The runtime and epistemic members are already in `output/`; the
-        round's memory report goes there byte for byte as the memory member.
-        """
-        draft = round_file("overview-draft", round_)
-        check = round_file("set-check", round_)
-        verification = round_file("verification", round_)
-
-        output = run_dir / OUTPUT_DIR
+        """Render reconciliation, check the records, and independently judge them."""
         atomic_write(run_dir / MEMORY, (run_dir / memory_report(memory)).read_bytes())
-        overview = self.render_overview(
-            run_dir, opening, fields, boundary_body, reconciliation(round_), None
-        )
-        write_file(run_dir / draft, overview)
-        write_file(run_dir / OVERVIEW, overview)
-        build_manifest(run_dir)
-        failures = validate_note(output, repo_root=self.repo).fails
-        write_file(
-            run_dir / check,
-            "# Set check\n\n"
-            + ("\n".join(f"- {failure}" for failure in failures) or "none")
-            + "\n",
-        )
-
-        ctx.agent(
-            self.verification_job(
-                run_dir, round_, memory,
-                validator=partial(
-                    self.verified_set_refusals,
-                    run_dir,
-                    opening,
-                    fields,
-                    boundary_body,
-                    reconciliation(round_),
-                    known=set(failures),
-                ),
-            )
-        ).wait()
-        return (run_dir / verification).read_text(encoding="utf-8")
+        reconciled = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
+        write_file(run_dir / RECONCILIATION, dump_frontmatter({
+            "type": "types/agentic-system-reconciliation-report.md",
+            "description": f"Reconciliation of {self.params['system']} records at {fields['reviewed-boundary']}",
+            "run-id": self.run_id,
+            "reviewed-boundary": fields["reviewed-boundary"],
+        }, f"# {self.params['system']} reconciliation\n\n## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n"))
+        failures = self.record_check(run_dir, fields)
+        write_file(run_dir / round_file("set-check", round_),
+                   "# Record set check\n\n" + ("\n".join(f"- {failure}" for failure in failures) or "none") + "\n")
+        ctx.agent(self.verification_job(
+            run_dir, round_, memory,
+            validator=partial(self.record_verification_refusals, run_dir, failures=failures),
+        )).wait()
+        return (run_dir / round_file("verification", round_)).read_text(encoding="utf-8")
 
     def verification_job(
         self, run_dir: Path, round_: int, memory: int,
         *, validator: Callable[[Path], Sequence[str]] | None = None,
     ) -> Job:
         return self.job(
-            run_dir,
-            f"verify-{round_}",
-            round_file("verification", round_),
-            reads={
-                "overview-draft": round_file("overview-draft", round_),
-                "runtime": RUNTIME,
-                "memory": memory_report(memory),
-                "epistemic": EPISTEMIC,
-                "set-check": round_file("set-check", round_),
-            },
-            instruction="verify",
-            extra=SET_CONTRACTS,
-            validator=validator,
+            run_dir, f"verify-{round_}", round_file("verification", round_),
+            reads={"boundary": BOUNDARY, "reconciliation": RECONCILIATION,
+                   "runtime": RUNTIME, "memory": memory_report(memory),
+                   "epistemic": EPISTEMIC, "set-check": round_file("set-check", round_)},
+            instruction="verify", extra=RECORD_CONTRACTS, validator=validator,
         )
 
-    def verified_set_refusals(
-        self,
-        run_dir: Path,
-        opening: dict[str, Any],
-        fields: dict[str, Any],
-        boundary_body: str,
-        final: str,
-        path: Path,
-        *,
-        known: set[str],
-    ) -> list[str]:
-        """The verification's form, and the set it completes: the overview
-        with this verification must add no failure to those the set check
-        already listed, which the verification reports as blockers."""
-        text = path.read_text(encoding="utf-8")
+    def record_verification_refusals(self, run_dir: Path, path: Path, *, failures: Sequence[str]) -> list[str]:
         refusals = verification_refusals(path)
-        if refusals:
-            return refusals
-        write_file(
-            run_dir / OVERVIEW,
-            self.render_overview(run_dir, opening, fields, boundary_body, final, text),
+        if failures and subsection(path.read_text(encoding="utf-8"), "Blockers") == "none":
+            refusals.append("structural failures require explicit blockers")
+        return refusals or reference_refusals(partial(self.record_bodies, run_dir, verification=path))
+
+    def synthesis_job(self, run_dir: Path, round_: int) -> Job:
+        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
+                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION}
+        if round_:
+            reads.update({"previous-synthesis": round_file("synthesis", round_ - 1),
+                          "verification": round_file("synthesis-verification", round_ - 1)})
+        return self.job(
+            run_dir, "synthesize" if round_ == 0 else f"synthesize-{round_}",
+            round_file("synthesis", round_), reads=reads, instruction="synthesize",
+            extra=SYNTHESIS_CONTRACTS,
+            parameters={"round": "after-blockers" if round_ else "first"},
+            validator=partial(synthesis_refusals,
+                              bodies=lambda path: self.record_bodies(run_dir, synthesis=path)),
         )
-        build_manifest(run_dir)
-        failures = validate_note(run_dir / OUTPUT_DIR, repo_root=self.repo).fails
-        return [
-            f"the overview with this verification does not validate: {failure}"
-            for failure in failures
-            if failure not in known
-        ]
+
+    def synthesis_verification_job(self, run_dir: Path, round_: int) -> Job:
+        return self.job(
+            run_dir, "verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}",
+            round_file("synthesis-verification", round_),
+            reads={"synthesis": round_file("synthesis", round_), "boundary": BOUNDARY,
+                   "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
+                   "reconciliation": RECONCILIATION},
+            instruction="verify-synthesis", extra=SYNTHESIS_CONTRACTS,
+            validator=partial(self.synthesis_verification_refusals, run_dir, round_),
+        )
+
+    def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
+        return verification_refusals(path, title="Synthesis verification") or reference_refusals(
+            partial(self.record_bodies, run_dir,
+                    synthesis=run_dir / round_file("synthesis", round_), verification=path))
 
     # Steps that code executes
 
@@ -938,29 +963,15 @@ class AnalyseAgenticSystem(Workflow):
         write_file(path, dump_frontmatter(frontmatter, body))
 
     def assemble(
-        self,
-        run_dir: Path,
-        opening: dict[str, Any],
-        fields: dict[str, Any],
-        boundary_body: str,
-        round_: int,
-        verification: str,
+        self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
+        boundary_body: str, round_: int, record_verification: str,
+        synthesis_verification: str,
     ) -> None:
-        """Complete the accepted round's set with the verified overview.
-
-        The members are in `output/` from the round's closing, which copied
-        its memory report there."""
-        write_file(
-            run_dir / OVERVIEW,
-            self.render_overview(
-                run_dir,
-                opening,
-                fields,
-                boundary_body,
-                reconciliation(round_),
-                verification,
-            ),
-        )
+        """Render the final overview after both independent checks pass."""
+        write_file(run_dir / OVERVIEW, self.render_overview(
+            run_dir, opening, fields, boundary_body, round_,
+            record_verification, synthesis_verification,
+        ))
         build_manifest(run_dir)
 
     def overview_frontmatter(
@@ -970,7 +981,7 @@ class AnalyseAgenticSystem(Workflow):
         description: str | None = None,
     ) -> dict[str, Any]:
         """The overview's frontmatter. A complete run's description is the
-        reconciliation's; code writes the others."""
+        synthesizer's; code writes the others."""
         disposition = fields["result-disposition"]
         boundary = fields.get("reviewed-boundary") or "no established boundary"
         return {
@@ -1004,39 +1015,27 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def render_overview(
-        self,
-        run_dir: Path,
-        opening: dict[str, Any],
-        fields: dict[str, Any],
-        boundary_body: str,
-        final: str,
-        verification: str | None,
+        self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
+        boundary_body: str, round_: int, record_verification: str,
+        synthesis_verification: str,
     ) -> str:
-        reconciled = (run_dir / final).read_text(encoding="utf-8")
-        semantic = (
-            subsection(verification, "Semantic verification")
-            if verification is not None
-            else "Written after this draft is checked."
-        )
-        blockers = (
-            subsection(verification, "Blockers")
-            if verification is not None
-            else "Not checked yet."
-        )
+        synthesis = (run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8")
+        index = amendment_index((run_dir / RECONCILIATION).read_text(encoding="utf-8"))
         rest = (
-            f"## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n\n"
-            f"## Bounded synthesis\n\n{section(reconciled, 'Bounded synthesis').strip()}\n\n"
-            f"## Limitations\n\n{section(reconciled, 'Limitations').strip()}\n\n"
+            f"## Bounded synthesis\n\n{section(synthesis, 'Bounded synthesis').strip()}\n\n"
+            f"## Limitations\n\n{section(synthesis, 'Limitations').strip()}\n\n"
             "## Verification and blockers\n\n"
-            f"### Semantic verification\n\n{semantic}\n\n"
+            f"### Record verification\n\n{subsection(record_verification, 'Record verification')}\n\n"
+            f"### Synthesis verification\n\n{subsection(synthesis_verification, 'Synthesis verification')}\n\n"
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
-            f"### Blockers\n\n{blockers}\n"
+            "### Blockers\n\nnone\n"
         )
+        # The source register stays the boundary job's bytes; the navigation
+        # line follows it without becoming public synthesis text.
+        boundary_with_index = boundary_body.rstrip() + "\n\n" + index + "\n"
         return dump_frontmatter(
-            self.overview_frontmatter(
-                opening, fields, one_line(section(reconciled, "Description"))
-            ),
-            self.overview_body(boundary_body, rest),
+            self.overview_frontmatter(opening, fields, one_line(section(synthesis, "Description"))),
+            self.overview_body(boundary_with_index, rest),
         )
 
     def close_without_analysis(
@@ -1050,11 +1049,11 @@ class AnalyseAgenticSystem(Workflow):
         reason = section(boundary_body, "Not reached").strip()
         not_reached = f"Not reached. {reason}"
         rest = (
-            f"## Reconciliation\n\n{not_reached}\n\n"
             f"## Bounded synthesis\n\n{not_reached}\n\n"
             f"## Limitations\n\n{reason}\n\n"
             "## Verification and blockers\n\n"
-            f"### Semantic verification\n\n{not_reached}\n\n"
+            f"### Record verification\n\n{not_reached}\n\n"
+            f"### Synthesis verification\n\n{not_reached}\n\n"
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             f"### Blockers\n\n{reason}\n"
         )

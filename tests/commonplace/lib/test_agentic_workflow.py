@@ -55,7 +55,7 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 SYSTEM = "Example System"
 DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
-BLOCKER = "- RTE-1 is cited by the synthesis but never traced."
+BLOCKER = "- RTE-1 has an unresolved scope in the reconciled records."
 REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
 INSTRUCTIONS = (
     "kb/instructions/analyse-agentic-system",
@@ -155,32 +155,27 @@ class Fixture:
         return local.read_text(encoding="utf-8") + f"\nWritten in round {round_}.\n"
 
     @staticmethod
-    def reconciliation(
-        *, returned: bool = False, amendment: str = "", synthesis: str = ""
-    ) -> str:
-        text = (
-            f"## Description\n\n{DESCRIPTION}\n\n"
-            "## Reconciliation\n\n"
-            "MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.\n\n"
-            + (f"Amendment: {amendment}\n\n" if amendment else "")
-            + "## Bounded synthesis\n\n"
-            "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.\n\n"
-            + (f"{synthesis}\n\n" if synthesis else "")
-            + "## Limitations\n\nNone.\n"
-        )
+    def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
+        text = ("## Reconciliation\n\n"
+                "MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.\n\n"
+                + (f"Amendment: {amendment}\n\n" if amendment else ""))
         if returned:
-            text += (
-                "\n## Returned to the memory analyst\n\n"
-                "- MEM-OBJ-1: the write-side anchor does not resolve at `README.md`.\n"
-            )
+            text += ("\n## Returned to the memory analyst\n\n"
+                     "- MEM-OBJ-1: the write-side anchor does not resolve at `README.md`.\n")
         return text
 
     @staticmethod
-    def verification(blockers: str = "none") -> str:
-        return (
-            "### Semantic verification\n\nPassed: every claim checked against "
-            f"its records.\n\n### Blockers\n\n{blockers}\n"
-        )
+    def synthesis(*, synthesis: str = "", limitations: str = "None.") -> str:
+        return (f"## Description\n\n{DESCRIPTION}\n\n"
+                "## Bounded synthesis\n\n"
+                "Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.\n\n"
+                + (f"{synthesis}\n\n" if synthesis else "")
+                + f"## Limitations\n\n{limitations}\n")
+
+    @staticmethod
+    def verification(blockers: str = "none", *, title: str = "Record verification") -> str:
+        return (f"### {title}\n\nPassed: every claim checked against "
+                f"its records.\n\n### Blockers\n\n{blockers}\n")
 
     def workers(self, **overrides: Worker) -> dict[str, Worker]:
         def writes(text: Callable[[], str]) -> Worker:
@@ -199,6 +194,10 @@ class Fixture:
             workers[f"memory-{round_}"] = writes(partial(self.memory_report, round_))
             workers[f"reconcile-{round_}"] = writes(self.reconciliation)
             workers[f"verify-{round_}"] = writes(self.verification)
+        for round_ in range(AnalyseAgenticSystem.synthesis_correction_rounds + 1):
+            workers["synthesize" if round_ == 0 else f"synthesize-{round_}"] = writes(self.synthesis)
+            workers["verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}"] = writes(
+                lambda: self.verification(title="Synthesis verification"))
         workers.update(overrides)
         return workers
 
@@ -273,6 +272,8 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         "memory-0",
         "reconcile-0",
         "verify-0",
+        "synthesize",
+        "verify-synthesis",
     ]
     assert not any(
         name.startswith(("runtime-final", "epistemic-final")) for name in scripted.launched
@@ -354,6 +355,61 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     assert not (fixture.root / agentic_set.RETAINED_ROOT).exists()
 
     assert isinstance(scripted.orchestrator.step(), Done)
+
+
+def test_records_are_checked_without_an_overview_or_synthesis(fixture: Fixture) -> None:
+    def verify(handout: Handout) -> None:
+        assert not (fixture.run_dir / "output/overview.md").exists()
+        assert not (fixture.run_dir / "synthesis-0.md").exists()
+        assert (fixture.run_dir / "output/reconciliation.md").exists()
+        assert (fixture.run_dir / "set-check-0.md").read_text().strip().endswith("none")
+        handout.output_path.write_text(fixture.verification())
+
+    scripted, _ = agent(fixture, **{"verify-0": verify})
+    assert isinstance(scripted.run()[-1], Done)
+
+
+def test_synthesis_blockers_correct_public_text_without_reopening_records(fixture: Fixture) -> None:
+    blocked = fixture.verification(
+        "- MEM-OBJ-1 has a record scope gap; state its prevented conclusion in Limitations.",
+        title="Synthesis verification",
+    )
+    corrected = fixture.synthesis(limitations="MEM-OBJ-1 has a scope gap; its deployment use is unknown.")
+    scripted, _ = agent(fixture, **{
+        "verify-synthesis": fixture.writes(lambda _: blocked),
+        "synthesize-1": fixture.writes(lambda _: corrected),
+    })
+    assert isinstance(scripted.run()[-1], Done)
+    assert [name for name in scripted.launched if name.startswith("reconcile-")] == ["reconcile-0"]
+    assert [name for name in scripted.launched if name.startswith("synthesize")] == ["synthesize", "synthesize-1"]
+    prompt = last_prompt(fixture, "synthesize-1")
+    assert "previous-synthesis =" in prompt and "synthesis-verification-0.md" in prompt
+    assert "MEM-OBJ-1 has a scope gap" in (fixture.root / REVIEW_PATH).read_text()
+    assert "### Record verification" in (fixture.run_dir / "output/overview.md").read_text()
+    assert "### Synthesis verification" in (fixture.run_dir / "output/overview.md").read_text()
+
+
+def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> None:
+    blocked = fixture.verification("- OBJ-1 is overstated in the synthesis.", title="Synthesis verification")
+    scripted, definition = agent(fixture, **{
+        "verify-synthesis": fixture.writes(lambda _: blocked),
+        "verify-synthesis-1": fixture.writes(lambda _: blocked),
+    })
+    outcome = scripted.run()[-1]
+    assert isinstance(outcome, Blocked)
+    assert "synthesis verification of the last round names blockers" in outcome.blocks[0].reason
+    assert definition.publications == 0
+    assert not (fixture.root / REVIEW_PATH).exists()
+    assert not (fixture.run_dir / "output/overview.md").exists()
+
+
+def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> None:
+    bad = fixture.synthesis(synthesis="OBJ-99 proves this result.")
+    scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: bad))
+    drive_to(scripted, "synthesize")
+    attempt, prompt = prompt_of(scripted.round(), "synthesize")
+    assert attempt == 2
+    assert "synthesis.md: unresolved record OBJ-99" in prompt
 
 
 # 3. The correction cycle
@@ -481,7 +537,7 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
 
     assert attempt == 2
-    assert "overview.md: unresolved record MEM-OBJ-9" in prompt
+    assert "reconciliation.md: unresolved record MEM-OBJ-9" in prompt
 
 
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
@@ -496,16 +552,19 @@ def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) 
 
     assert isinstance(results[-1], Done), results[-1]
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
-    assert "Amendment: EPI-OBJ-1 is superseded by OBJ-1" in overview
+    assert "Amendment:" not in overview
+    assert "Amended or superseded records: EPI-OBJ-1" in overview
+    assert "Amendment: EPI-OBJ-1 is superseded by OBJ-1" in (
+        fixture.run_dir / "output/reconciliation.md").read_text()
     assert definition.publications == 1
 
 
-def test_reconciliation_without_a_description_is_refused(fixture: Fixture) -> None:
-    missing = fixture.reconciliation().replace(f"## Description\n\n{DESCRIPTION}\n\n", "")
-    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: missing)})
-    drive_to(scripted, "reconcile-0")
+def test_synthesis_without_a_description_is_refused(fixture: Fixture) -> None:
+    missing = fixture.synthesis().replace(f"## Description\n\n{DESCRIPTION}\n\n", "")
+    scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: missing))
+    drive_to(scripted, "synthesize")
 
-    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
+    attempt, prompt = prompt_of(scripted.round(), "synthesize")
 
     assert attempt == 2
     assert "missing section `## Description`" in prompt
@@ -514,7 +573,7 @@ def test_reconciliation_without_a_description_is_refused(fixture: Fixture) -> No
 def test_the_description_and_synthesis_become_the_public_review(
     fixture: Fixture,
 ) -> None:
-    linked = fixture.reconciliation(
+    linked = fixture.synthesis(
         synthesis=(
             "The route is traced in [the runtime member](./runtime.md#routes), "
             "summarized in [the overview](overview.md), described at "
@@ -523,7 +582,7 @@ def test_the_description_and_synthesis_become_the_public_review(
         )
     )
     scripted, definition = agent(
-        fixture, **{"reconcile-0": fixture.writes(lambda _: linked)}
+        fixture, synthesize=fixture.writes(lambda _: linked)
     )
 
     results = scripted.run()
@@ -583,7 +642,7 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     order = [
         name
         for name in scripted.launched
-        if name.startswith(("reconcile-", "verify-"))
+        if name.startswith(("reconcile-", "verify-")) and not name.startswith("verify-synthesis")
     ]
     assert order == [
         "reconcile-0",
@@ -795,7 +854,7 @@ def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) ->
     attempt, prompt = prompt_of(scripted.round(), "verify-0")
 
     assert attempt == 2
-    assert "the overview with this verification does not validate" in prompt
+    assert "source anchor" in prompt
     assert "carries a line range" in prompt
 
 
@@ -872,14 +931,17 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "runtime": "kb/types/agentic-system-runtime-report.md",
         "memory": "kb/types/agent-memory-analysis-report.md",
         "epistemic": "kb/types/agentic-system-epistemic-report.md",
+        "reconciliation": "kb/types/agentic-system-reconciliation-report.md",
     }
     expected = {
         "boundary": {"sources"},
         "runtime": {"sources", "records", "runtime"},
         "memory-0": {"sources", "records", "memory"},
         "epistemic": {"sources", "records", "epistemic"},
-        "reconcile-0": set(types),
-        "verify-0": set(types),
+        "reconcile-0": set(types) - {"overview"},
+        "verify-0": set(types) - {"overview"},
+        "synthesize": {"sources", "records", "overview"},
+        "verify-synthesis": {"sources", "records", "overview"},
     }
     for job, wanted in expected.items():
         prompt = last_prompt(fixture, job)
@@ -924,8 +986,24 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
             "verification": "verification-1.md", "set-check": "set-check-1.md",
         }),
         ("verify", 2, 0, None, {
-            "overview-draft": "overview-draft-2.md", "runtime": "output/runtime.md",
+            "boundary": "boundary.md", "reconciliation": "output/reconciliation.md", "runtime": "output/runtime.md",
             "memory": "memory-report-0.md", "epistemic": "output/epistemic.md", "set-check": "set-check-2.md",
+        }),
+        ("synthesize", 0, 0, None, {
+            "round": "first", "boundary": "boundary.md", "runtime": "output/runtime.md",
+            "memory": "output/memory.md", "epistemic": "output/epistemic.md",
+            "reconciliation": "output/reconciliation.md",
+        }),
+        ("synthesize", 1, 0, None, {
+            "round": "after-blockers", "boundary": "boundary.md", "runtime": "output/runtime.md",
+            "memory": "output/memory.md", "epistemic": "output/epistemic.md",
+            "reconciliation": "output/reconciliation.md", "previous-synthesis": "synthesis-0.md",
+            "verification": "synthesis-verification-0.md",
+        }),
+        ("verify-synthesis", 0, 0, None, {
+            "synthesis": "synthesis-0.md", "boundary": "boundary.md", "runtime": "output/runtime.md",
+            "memory": "output/memory.md", "epistemic": "output/epistemic.md",
+            "reconciliation": "output/reconciliation.md",
         }),
     ],
 )
@@ -947,6 +1025,10 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             return definition.reconcile_job(run, round_, memory, reason, round_ < 2)
         if kind == "verify":
             return definition.verification_job(run, round_, memory)
+        if kind == "synthesize":
+            return definition.synthesis_job(run, round_)
+        if kind == "verify-synthesis":
+            return definition.synthesis_verification_job(run, round_)
         return getattr(definition, f"{kind}_job")(run)
 
     if kind == "reconcile":

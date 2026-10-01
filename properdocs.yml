@@ -10,12 +10,14 @@ exclude_docs: |
   !reports/retained/agentic-system-analysis/**/runtime.md
   !reports/retained/agentic-system-analysis/**/memory.md
   !reports/retained/agentic-system-analysis/**/epistemic.md
+  !reports/retained/agentic-system-analysis/**/reconciliation.md
   !reports/retained/agentic-system-analysis-archive/**/result.md
   !reports/retained/agentic-system-analysis-archive/**/ARTIFACT.yaml
   !reports/retained/agentic-system-analysis-archive/**/overview.md
   !reports/retained/agentic-system-analysis-archive/**/runtime.md
   !reports/retained/agentic-system-analysis-archive/**/memory.md
   !reports/retained/agentic-system-analysis-archive/**/epistemic.md
+  !reports/retained/agentic-system-analysis-archive/**/reconciliation.md
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md

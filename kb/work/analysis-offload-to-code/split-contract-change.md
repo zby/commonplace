@@ -17,4 +17,4 @@
 
 ## Progress
 
-The proposal and archival prerequisite are committed. Types, schemas, reference rules and fixtures are being updated; jobs and scheduler follow in separate commits. Final scans and probe outcomes will be recorded below.
+The proposal, archival prerequisite, contracts and job instructions are committed. The scheduler implements direct record checks, two independent judgments and one synthesis correction. All 1,211 Python tests pass; changed code passes lint. Fresh init and repeated init under `/tmp/commonplace-split-install-5ucuew7o/project` succeed, `--check` reports current pointers, and a reconciliation report resolves and validates through the installed editable library. New source-first Luna runs follow the method commit.
