@@ -814,6 +814,58 @@ def test_the_boundary_is_given_the_normalized_identity(fixture: Fixture) -> None
     assert definition.publications == 1
 
 
+def test_pinned_source_revision_reaches_the_boundary_and_publication(fixture: Fixture) -> None:
+    definition = CountsPublication({**fixture.params(), "source-revision": fixture.revision})
+    scripted = ScriptedAgent(
+        Orchestrator(fixture.run_dir, definition), fixture.workers(), default=_unscripted,
+    )
+    source_bytes = (fixture.source_root / "README.md").read_bytes()
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    assert f"source-revision = {fixture.revision}\n" in last_prompt(fixture, "boundary")
+    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
+    assert (fixture.source_root / "README.md").read_bytes() == source_bytes
+    assert subprocess.run(
+        ["git", "-C", str(fixture.source_root), "rev-parse", "HEAD"],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip() == fixture.revision
+
+
+def test_boundary_cannot_substitute_another_commit_for_the_requested_pin(fixture: Fixture) -> None:
+    requested = "0" * 40
+    definition = CountsPublication({**fixture.params(), "source-revision": requested})
+    scripted = ScriptedAgent(
+        Orchestrator(fixture.run_dir, definition), fixture.workers(), default=_unscripted,
+    )
+    drive_to(scripted, "boundary")
+
+    attempt, prompt = prompt_of(scripted.round(), "boundary")
+
+    assert attempt == 2
+    assert f"must identify the requested Git commit `{requested}`" in prompt
+    assert scripted.launched == ["boundary", "boundary"]
+    assert definition.publications == 0
+
+
+@pytest.mark.parametrize("revision", ["", "HEAD", "main", "abc123", "a" * 40 + "\n"])
+def test_source_revision_requires_a_full_commit(revision: str) -> None:
+    with pytest.raises(ValueError, match="source-revision must be a full 40-hex Git commit"):
+        AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": revision})
+
+
+def test_pinned_boundary_requires_matching_reviewed_boundary(fixture: Fixture) -> None:
+    path = fixture.run_dir / "boundary.md"
+    path.write_text(fixture.boundary(**{"reviewed-boundary": "0" * 40}), encoding="utf-8")
+
+    refusals = boundary_refusals(
+        path, enums=overview_enums(fixture.root), identity=SOURCE,
+        source_revision=fixture.revision,
+    )
+
+    assert any("must identify the requested Git commit" in refusal for refusal in refusals)
+
+
 def test_a_boundary_with_another_source_identity_is_refused(fixture: Fixture) -> None:
     other = fixture.boundary(
         source={

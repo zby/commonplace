@@ -200,7 +200,8 @@ def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
 
 
 def boundary_refusals(
-    path: Path, *, enums: dict[str, list[Any]], identity: str
+    path: Path, *, enums: dict[str, list[Any]], identity: str,
+    source_revision: str | None = None,
 ) -> list[str]:
     try:
         fields, body = split(path.read_text(encoding="utf-8"))
@@ -238,6 +239,13 @@ def boundary_refusals(
         if source.get("identity") != identity:
             refusals.append(
                 f"source.identity must be `{identity}`, the run's source identity"
+            )
+        if source_revision is not None and (
+            source.get("kind") != "git" or source.get("revision") != source_revision
+            or fields.get("reviewed-boundary") != source_revision
+        ):
+            refusals.append(
+                f"source and reviewed-boundary must identify the requested Git commit `{source_revision}`"
             )
         refusals += frozen_source_refusals(source)
     wanted = ["Boundary and evidence", "Source register"]
@@ -282,7 +290,7 @@ def frozen_source_refusals(source: dict[str, Any]) -> list[str]:
     if head is None:
         return [f"source.path {path} is not a Git checkout"]
     if head.strip() != revision:
-        return [f"the checkout at {path} is not at source.revision; check it out"]
+        return [f"the checkout at {path} is not at source.revision"]
     if git("status", "--porcelain"):
         return [
             (
@@ -477,7 +485,9 @@ class AnalyseAgenticSystem(Workflow):
 
     Parameters: `system` (the name the caller gave), `source-identity` (the
     stable identity of the source), `source` (the caller's source input, as
-    given), and optionally `review-path`.
+    given), and optionally `review-path` and `source-revision`. The latter
+    requires an existing clean Git checkout already at that full commit;
+    the boundary worker must not refresh or change it.
 
     Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
     then rounds of `reconcile-<n>` and `verify-<n>`, followed by synthesis
@@ -497,6 +507,12 @@ class AnalyseAgenticSystem(Workflow):
         self.source_identity = normalize_source_identity(
             str(self.params["source-identity"])
         )
+        self.source_revision = self.params.get("source-revision")
+        if self.source_revision is not None and (
+            not isinstance(self.source_revision, str)
+            or re.fullmatch(r"[0-9a-f]{40}", self.source_revision) is None
+        ):
+            raise ValueError("source-revision must be a full 40-hex Git commit")
 
     def run_location(self) -> tuple[str, str]:
         """`AAS-<today>-<slug>` under the analysis state directory.
@@ -663,10 +679,14 @@ class AnalyseAgenticSystem(Workflow):
             BOUNDARY,
             reads={"opening": OPENING},
             extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT),
-            parameters={"source-identity": one_line(self.source_identity)},
+            parameters={
+                "source-identity": one_line(self.source_identity),
+                **({"source-revision": self.source_revision} if self.source_revision is not None else {}),
+            },
             source=str(self.params["source"]),
             validator=partial(
-                boundary_refusals, enums=enums, identity=self.source_identity
+                boundary_refusals, enums=enums, identity=self.source_identity,
+                source_revision=self.source_revision,
             ),
         )
 

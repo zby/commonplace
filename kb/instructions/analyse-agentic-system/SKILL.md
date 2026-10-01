@@ -3,7 +3,7 @@ name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agent runtime, orchestration system, agent operating layer, agent memory/knowledge/context-engineering system, or narrower model-dependent operational mechanism from inspectable sources."
 type: types/instruction.md
 user-invocable: true
-argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents) and optional public review path"
+argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents), optional Git commit and public review path"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 model: opus
 ---
@@ -29,6 +29,17 @@ Run the orchestrator from the repository root and keep that working directory th
    ```
 
    Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/reports/state/agentic-system-analysis/<run-id>`.
+
+   To reuse a Git checkout without refreshing it, add
+   `--param source-revision=<full 40-hex commit>` when the caller requests
+   that revision or asks to keep the existing checkout's commit. For the
+   latter, read `git -C <checkout> rev-parse HEAD` and pass that full commit.
+   The checkout must already exist, be clean and match the requested commit.
+   The boundary worker must not clone, fetch, pull or check out another
+   revision; a missing, dirty or mismatched checkout requires `problem`.
+   Code refuses a boundary that reports another source kind or revision.
+   Omit this option to let the boundary job acquire and freeze a source
+   under its normal rules.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/reports/retained/agentic-system-analysis/` at any point; the jobs analyse from sources only.
 

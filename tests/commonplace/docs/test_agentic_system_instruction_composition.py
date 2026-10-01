@@ -84,6 +84,19 @@ def test_analysis_uses_sources_and_supplied_execution_evidence() -> None:
     assert "Probe evidence" not in runtime
 
 
+def test_pinned_source_reuses_the_checkout_without_refresh() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    boundary = job("boundary")
+
+    assert "--param source-revision=<full 40-hex commit>" in orchestrator
+    assert "git -C <checkout> rev-parse HEAD" in orchestrator
+    assert "When `source-revision` is supplied" in boundary
+    assert "`git rev-parse HEAD` to equal `source-revision`" in boundary
+    assert "do not clone, fetch, pull or check out any revision" in boundary
+    assert "write `problem`; never substitute another revision or source" in boundary
+    assert "When `source-revision` is absent" in boundary
+
+
 def test_transfer_scan_runs_after_complete_state() -> None:
     orchestrator = instruction("analyse-agentic-system")
 
