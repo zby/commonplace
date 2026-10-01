@@ -13,6 +13,22 @@
 The [worker information map](./worker-information-map.md) owns the
 2026-10-01 reorganization of shared contracts and required worker reads.
 
+Implemented: [separate reconciliation from synthesis](../../reference/adr/098-separate-analysis-reconciliation-from-synthesis.md)
+(2026-10-01) writes public synthesis after record verification and makes
+reconciliation a fifth set member. The two previous retained sets are archived.
+Both fresh Luna trials stopped before synthesis, so full publication acceptance
+remains pending; see [trial observations](./split-luna-trials.md).
+
+Planned, not started: [role-specific contract packets and code-owned form](./role-specific-packets-and-code-owned-form.md)
+(2026-10-01) delivers each job only the contract sections its role needs
+and moves output form into a filled skeleton and validator messages. Its
+skeleton step reopens the scaffold item under "Decided against" and waits
+for the operator's confirmation.
+
+Draft for review: [analyst intent paragraphs](./analyst-intent-paragraphs.md)
+state each analyst's purpose and consequential errors. They are proposed
+additions to the balanced compaction candidates; live instructions are unchanged.
+
 Implemented: [Parameterized analyst instructions and direct launch delivery](./parameterized-analyst-invocations.md) (2026-09-30) removes forwarding layers, has code write every path a worker needs into its saved invocation, and has the orchestrator send that invocation as the worker's message. Its acceptance checks and two commissioned Luna trials are complete; the broader backlog below remains open.
 
 `SKILL.md` is about 526 lines. Much of that length is protocol mechanics written as prose for the agent to carry out by hand (allocate IDs, record HEAD, map IDs, recompute hashes, check truncation, keep exit statuses) and prose guards for failure modes. Move the mechanical and checkable parts into `commonplace-*` commands, validators, and hooks. The agent keeps the judgment work: boundary and target classification, forcing-case selection, route and guarantee judgments, conclusion-status assignment, semantic verification, and synthesis.
