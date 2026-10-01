@@ -1,7 +1,7 @@
 # Plan: separate reconciliation from synthesis, and make reconciliation a set member
 
 - **Commissioned:** 2026-10-01, by the operator, after a discussion of how to reduce what each analysis worker reads and writes. The operator also decided that the retained sets are replaced by new runs under the changed method; the present sets are not migrated.
-- **Status:** method implemented; fresh Luna runs pending. The archive prerequisite landed in `b2b0fb04`, contracts in `5154fac6`, and job instructions in `0165fb18`.
+- **Status:** method implemented in `0ad34f5d`; both fresh Luna runs stopped at final record verification, before synthesis. Publication acceptance remains pending. See [trial observations](./split-luna-trials.md). The archive prerequisite landed in `b2b0fb04`, contracts in `5154fac6`, and job instructions in `0165fb18`.
 - **Purpose:** the public synthesis is written once, on records that have already been reconciled and verified, by a job that reads only what a synthesis needs. Reconciliation becomes its own report, so each job reads and writes one type.
 - **Not in scope:** field removal, conditional lenses, record indexes, the [contract packets plan](./role-specific-packets-and-code-owned-form.md), and any change to the runtime, memory and epistemic jobs beyond wording that names where amendments live.
 
