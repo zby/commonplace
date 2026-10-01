@@ -136,7 +136,10 @@ Inventory.
 
 ## Authority-route ledger
 
-Ledger.
+Route ID: RTE-1
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+Content/update relation: no content change.
 
 ## Per-object lifecycle disposition
 

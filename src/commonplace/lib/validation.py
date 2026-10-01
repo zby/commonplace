@@ -1099,6 +1099,32 @@ def _agentic_set_member_link_rule(
 
 
 @type_rule("types/agent-memory-analysis-report.md")
+def _memory_report_pending_check_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.agentic_records import section
+    from commonplace.lib.note_parser import blank_fenced_code_blocks
+
+    if (parsed.document.frontmatter or {}).get("report-status") != "complete":
+        return
+    checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
+    if re.search(r"(?im)^[ \t]*(?:\*\*)?Validation(?:\*\*)?:[ \t]*(?:`|\*\*)?pending\b", checks):
+        results.fails.append("memory checks: a complete report cannot retain 'Validation: pending'")
+
+
+@type_rule("types/agentic-system-epistemic-report.md")
+def _epistemic_ledger_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.agentic_ledger import epistemic_ledger_errors
+
+    errors = epistemic_ledger_errors(parsed.document.body)
+    results.fails.extend(errors)
+    if not errors:
+        results.passes.append("epistemic ledger: table/record syntax and controlled function/status checked")
+
+
+@type_rule("types/agent-memory-analysis-report.md")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

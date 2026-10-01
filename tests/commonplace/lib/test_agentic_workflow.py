@@ -653,7 +653,7 @@ def test_epistemic_member_citing_an_undeclared_record_is_refused(
     def epistemic_citing_an_undeclared_record(handout: Handout) -> None:
         handout.output_path.write_text(
             epistemic_text(fixture.revision).replace(
-                "RTE-1: no content change.", "RTE-1 and OBJ-99: no content change."
+                "Route ID: RTE-1", "Route ID: RTE-1 and OBJ-99"
             ),
             encoding="utf-8",
         )

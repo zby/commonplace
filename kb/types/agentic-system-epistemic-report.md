@@ -140,6 +140,21 @@ integration`, `operational admission/selection/consumption`,
 describe`. Checking is never merged with disposition, nor retention with
 lifecycle integration.
 
+Table rows stay contiguous with their header and Markdown separator. Put
+supporting quotations after the table, or repeat the header and separator
+before resuming rows. Escape a literal pipe inside a cell as `\|`, including
+inside an inline code span. Structural validation rejects orphan rows,
+unequal cell counts, and invalid route-function or architectural-status
+values; it does not establish coverage or evidence support.
+
+In compact records, start each record with `Route ID: <full ID or IDs>`
+on its own line. Use `Route function: <value>` and
+`Architectural status: <value>` once each on their own lines, followed by
+the other named ledger fields and evidence. These labels are literal;
+the values may use inline code formatting. For an empty ledger use exactly
+`no route found within boundary`, with its searched scope elsewhere in
+the report.
+
 Architectural status is one of `implemented` (inspected implementation
 supports the route); `observed, implementation uninspected` (run evidence
 shows the route operated, but its implementation was not inspected);

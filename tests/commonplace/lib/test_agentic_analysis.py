@@ -329,7 +329,10 @@ OBJ-1 and EPI-OBJ-1 carry no candidate truth-apt content.
 
 ## Authority-route ledger
 
-RTE-1: no content change.
+Route ID: RTE-1
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+Content/update relation: no content change.
 
 ## Per-object lifecycle disposition
 
