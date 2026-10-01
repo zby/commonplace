@@ -22,7 +22,7 @@ Common parameters are defined in the supplied worker rules.
 
 ## Task
 
-Produce a source-grounded account of `system`'s memory mechanisms and comparison classifications as one typed report at `output`. Code copies the accepted report unchanged into the set's memory member. The reconciliation owns integration and records its corrections as amendments in the overview.
+Produce a source-grounded account of `system`'s memory mechanisms and comparison classifications as one typed report at `output`. Code copies the accepted report unchanged into the set's memory member. The reconciliation owns integration and records its corrections as amendments in the reconciliation member.
 
 Work from `boundary` and `runtime`. Treat the runtime member's records as provisional findings to check against sources. Choose the memory scope from those routes and state its inclusions and exclusions in the profile's `scope` and the report's Boundary and evidence. The supplied memory type fixes the report content and comparison profile;
 the shared contracts fix evidence and record conventions.

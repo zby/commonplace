@@ -1,9 +1,9 @@
 ---
-description: "Job of an analyse-agentic-system run: reconcile the members of the three analysts, and write the overview's reconciliation, synthesis and limitations"
+description: "Job of an analyse-agentic-system run: settle the three analysts' records through amendments, supersessions and explicit unresolved conflicts"
 type: types/instruction.md
 ---
 
-# Reconcile the analysts' members and write the synthesis
+# Reconcile the analysts' records
 
 Read every file under `read-first` in your invocation before any other step.
 
@@ -25,21 +25,13 @@ Common parameters are defined in the supplied worker rules.
 
 ## Task
 
-Write `output`, with exactly these sections. The last three go into the overview unchanged; the [overview type](../../../types/agentic-system-analysis-overview.md) fixes what each holds:
-
-```markdown
-## Description
-
-## Reconciliation
-
-## Bounded synthesis
-
-## Limitations
-```
+Write `output` with `## Reconciliation`, under the supplied reconciliation
+report type. Code writes the retained member's identity and copies this
+section unchanged. Do not write Description, Bounded synthesis or Limitations.
 
 ## Reconcile
 
-Write every section from the members as they are; when `round` is `after-correction` or `after-blockers`, read `previous-reconciliation` and recheck anything you carry over from it rather than copying its text.
+Reconcile the members as they are; when `round` is `after-correction` or `after-blockers`, read `previous-reconciliation` and recheck anything you carry over from it rather than copying its text.
 
 Resolve duplicates, corrections and anchored conflicts under the shared
 record contract's amendment grammar. Report independent convergence only
@@ -49,16 +41,8 @@ Every ID you cite, in amendments too, must resolve in the set your output makes:
 
 ## Return findings to the memory analyst
 
-When a substantive conflict needs the memory analyst, add the section `## Returned to the memory analyst`, listing each returned finding with its IDs and evidence anchor. Code then runs a correction round of the memory analyst and gives you its report in the next reconciliation. Return findings only when `may-return = yes`. When `may-return = no`, retain each unresolved conflict as explicit uncertainty in the Reconciliation and the Limitations. A malformed citation in the memory analyst's report is also a return, not something you fix.
+When a substantive conflict needs the memory analyst, add the section `## Returned to the memory analyst`, listing each returned finding with its IDs and evidence anchor. Code then runs a correction round of the memory analyst and gives you its report in the next reconciliation. Return findings only when `may-return = yes`. When `may-return = no`, retain each unresolved conflict in a paragraph starting `Unresolved conflict:`, with its full IDs, evidence and conclusion prevented. The later synthesizer carries these conflicts into Limitations. A malformed citation in the memory analyst's report is also a return, not something you fix.
 
 ## Resolve a verification's blockers
 
-When `round = after-blockers`, read `verification` and `set-check`. Resolve each blocker in what you write: correct the reconciliation, the synthesis or the limitations; amend or supersede a record through an `Amendment:` paragraph; or return it to the memory analyst when the memory report is at fault. The runtime and epistemic members are not rewritten; a blocker in one of them that no amendment resolves stays a limitation. Read `previous-reconciliation` too: carry over what still holds.
-
-## Synthesize
-
-Write the Bounded synthesis and Limitations under the overview contract
-from the reconciled records. They become public review text unchanged.
-Check that they read without the members' context.
-
-Under Description write one sentence of 50 to 250 characters that describes the system's mechanism and its limits for retrieval. Code uses it as the `description` of the overview and of the public review.
+When `round = after-blockers`, read `verification` and `set-check`. Resolve each blocker in what you write: correct the reconciliation; amend or supersede a record through an `Amendment:` paragraph; or return it to the memory analyst when the memory report is at fault. The runtime and epistemic members are not rewritten; a blocker in one of them that no amendment resolves stays an `Unresolved conflict:` with its prevented conclusion. Read `previous-reconciliation` too: carry over what still holds.

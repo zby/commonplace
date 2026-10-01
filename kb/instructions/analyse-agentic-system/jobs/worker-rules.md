@@ -72,7 +72,7 @@ Source-reading, quotation and Commonplace validation commands remain in
 scope. Missing execution evidence limits conclusions; it does not require
 planning a check or setting up an environment.
 
-After the boundary job freezes the sources, read evidence only within that frozen boundary: use `boundary` when supplied, or the Boundary and evidence and Source register in `overview-draft` for verification. For Git, read and grep the files of the checkout at `source.path`: the boundary job checked it out at the recorded commit, and code refused the boundary unless its `git status` was empty. Do not modify, check out or fetch in that checkout, and do not extract another copy of the source. For a capture, read the recorded file and check its SHA-256.
+After the boundary job freezes the sources, read evidence only within that frozen boundary: use the supplied `boundary` and its Source register. For Git, read and grep the files of the checkout at `source.path`: the boundary job checked it out at the recorded commit, and code refused the boundary unless its `git status` was empty. Do not modify, check out or fetch in that checkout, and do not extract another copy of the source. For a capture, read the recorded file and check its SHA-256.
 
 ## Quotation
 
