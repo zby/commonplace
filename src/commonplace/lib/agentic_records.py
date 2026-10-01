@@ -63,6 +63,18 @@ def is_absence(identifier: str) -> bool:
     return re.fullmatch(r"(?:(?:MEM|EPI)-)?ABS-\d+", identifier) is not None
 
 
+def amendment_index(body: str) -> str:
+    """The overview's navigation line for records changed by reconciliation."""
+    identifiers = sorted(set(re.findall(
+        rf"(?m)^Amendment:[ \t]+`?({_RECORD_ID})(?![\w-])",
+        _analysis_prose(body),
+    )))
+    return (
+        "Amended or superseded records: " + (", ".join(identifiers) or "none")
+        + "; [reconciliation](reconciliation.md)."
+    )
+
+
 def record_reference_errors(body: str) -> list[str]:
     """Check one document's declarations.
 

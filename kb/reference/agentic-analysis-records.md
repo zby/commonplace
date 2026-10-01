@@ -35,7 +35,7 @@ fields on a record declared elsewhere. It does not repeat generic identity
 or redefine the referent, and never annotates a record the member declares.
 Its location and permitted fields come from the annotating member's type.
 
-Only the overview's Reconciliation amends records. An `Amendment:`
+Only the reconciliation member amends records. An `Amendment:`
 paragraph gives the full ID, superseded value, replacement, evidence anchor
 and affected findings. An anchored conflict retains both values. A
 supersession uses `Amendment: MEM-RTE-3 is superseded by RTE-7`, with

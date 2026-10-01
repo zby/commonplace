@@ -51,7 +51,8 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
    manifest; then read the overview and every member it pins: the evidence
    boundary and limitations in the overview, the relevant shared records in
    the runtime and memory members, and the lens findings in the memory and
-   epistemic members. Any validation, identity, or completion failure stops
+   epistemic members, with amendments and unresolved conflicts in the
+   reconciliation member. Any validation, identity, or completion failure stops
    the scan without findings; report the failure to the caller for correction
    through the main review workflow.
 1. **Fix the three substantive inputs and production provenance.** Copy the

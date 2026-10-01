@@ -12,6 +12,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Agentic system analysis overview](./agentic-system-analysis-overview.md) — entry member: identity, boundary, source register, reconciliation and public synthesis
 - [Agentic system runtime report](./agentic-system-runtime-report.md) — runtime member: source-grounded runtime account and runtime-declared records
 - [Agentic system epistemic report](./agentic-system-epistemic-report.md) — epistemic member: the five-block overlay on the set's records
+- [Agentic system reconciliation report](./agentic-system-reconciliation-report.md) — amendments, supersessions and unresolved conflicts settled before synthesis
 - [Agent memory analysis report](./agent-memory-analysis-report.md) — memory member: the specialist's accepted findings and comparison profile, unchanged
 
 ## Type-system contracts

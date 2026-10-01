@@ -46,10 +46,11 @@ Unmarked per-system and per-feature analyses remain ordinary authored artifacts.
 Publication retains the run's set byte for byte under
 `kb/reports/retained/agentic-system-analysis/<run-id>/`: the manifest
 `ARTIFACT.yaml`, `overview.md`
-(identity, boundary, source register, reconciliation, synthesis,
+(identity, boundary, source register, amendment index, synthesis,
 limitations), `runtime.md` (runtime account, runtime-declared
 records), `memory.md` (memory findings, memory-declared records, comparison
-profile) and `epistemic.md` (the five epistemic blocks). The public review
+profile), `epistemic.md` (the five epistemic blocks), and `reconciliation.md`
+(record amendments, supersessions and unresolved conflicts). The public review
 pins ARTIFACT.yaml, which pins every member; comparison
 readers need neither ignored run state nor the legacy corpus to reproduce
 their fields. Correct or enrich the analysis through a new run, never by

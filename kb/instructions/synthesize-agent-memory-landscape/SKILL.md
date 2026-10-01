@@ -22,12 +22,13 @@ in the response. Load the output collection's contract before writing there.
 The evidence inputs are generated reviews under `kb/agentic-systems/reviews/`
 and the retained sets their `analysis-artifact` paths and
 `analysis-artifact-sha256` values pin under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`. Each set is four
-members: the overview holds the boundary, source register, reconciliation,
+`kb/reports/retained/agentic-system-analysis/<run-id>/`. Each set is five
+members: the overview holds the boundary, source register, amendment index,
 synthesis and limitations; `runtime.md` the runtime account and the records
 the runtime pass declared; `memory.md` the memory findings, memory-declared
 records and the `memory-comparison` profile; `epistemic.md` the epistemic
-blocks. Validate the artifact directory before reading its members. The compact review
+blocks; `reconciliation.md` holds amendments, supersessions and unresolved
+conflicts. Validate the artifact directory before reading its members. The compact review
 supplies publication identity and navigation. It cannot replace a missing
 member or comparison assessment.
 

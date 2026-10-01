@@ -12,7 +12,7 @@ classifications, and their integration questions for one run, at the
 run's frozen boundary. The last report the run accepts is the
 set's memory member byte for byte: it declares its records under their
 `MEM-` IDs, and no step rewrites it. Corrections to its records are
-amendments in the overview's Reconciliation. Its comparison profile is
+amendments in the reconciliation member. Its comparison profile is
 authoritative for downstream consumers. The [source contract](../reference/agentic-analysis-sources.md) governs
 evidence; the [record contract](../reference/agentic-analysis-records.md)
 governs identity, common fields and statuses.

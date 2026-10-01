@@ -1,16 +1,16 @@
 ---
 type: types/type-spec.md
 name: agentic-system-analysis-overview
-description: "Entry member of one agentic-system analysis run's retained set: identity, boundary, source register, reconciliation, synthesis, limitations and verification"
+description: "Entry member of one agentic-system analysis run's retained set: identity, boundary, source register, amendment index, synthesis, limitations and both verifications"
 schema: ./agentic-system-analysis-overview.schema.yaml
 ---
 
 # Agentic system analysis overview
 
 The reading entry point of one `analyse-agentic-system` run's retained set.
-It holds identity, evidence boundary, source register, reconciliation,
-synthesis, limitations and verification. Runtime, memory
-and epistemic findings live in their respective members. The sibling
+It holds identity, evidence boundary, source register, an amendment index,
+synthesis, limitations and both verifications. Runtime, memory, epistemic
+and reconciliation findings live in their respective members. The sibling
 `ARTIFACT.yaml` selects the [analysis set type](../reports/types/agentic-system-analysis-set.md)
 and pins every member, including this overview.
 
@@ -19,7 +19,7 @@ and pins every member, including this overview.
 | Field | Required | Use |
 |---|---:|---|
 | `type` | Yes | `types/agentic-system-analysis-overview.md` |
-| `description` | Yes | For a `complete` run, the reconciliation's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
+| `description` | Yes | For a `complete` run, the synthesizer's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
 | `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
@@ -66,16 +66,9 @@ source contract, copied from the boundary job.
 
 `## Source register` contains that job's `SRC-*` rows under the source
 contract. Source identity and evidence scopes remain stable across members.
-
-### Reconciliation
-
-`## Reconciliation` records amendments and duplicate supersessions under
-the record contract, anchored conflicts, independent convergence,
-analyst ownership checks and integration-issue dispositions. It names
-full IDs and resolves discrepancies without selecting the strongest-sounding
-status. All references resolve in the set; duplicate declarations stay
-in their members. Member-relative links stay within the set directory,
-because publication moves it.
+For a complete run, code appends `Amended or superseded records: <IDs or none>`
+and a link to `reconciliation.md`. Resolve these IDs through that member
+before relying on an analyst's original wording.
 
 ### Bounded synthesis
 
@@ -110,16 +103,23 @@ set, but not the members' prose.
 
 `limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it`
 
+Carry every `Unresolved conflict:` in the reconciliation into this section.
+A record fault found during synthesis verification is stated here with its
+prevented conclusion; it does not reopen reconciliation. If representing it
+as a limitation would make the synthesis misleading, stop the run.
 Use `none` only after checking the whole set. A blocker is also
 represented under Verification and blockers; this section still states
 its analytical consequence.
 
 ### Verification and blockers
 
-`## Verification and blockers` contains `### Semantic verification`,
-`### Deterministic validation`, and `### Blockers`. Record checks of the
-analysis content across the set, including the profile-against-records
-check of every known comparison value, the exact deterministic validation
+`## Verification and blockers` contains `### Record verification`,
+`### Synthesis verification`, `### Deterministic validation`, and
+`### Blockers`. The two independent checks remain separate: record
+verification covers the memory profile, amendments, supersessions and scope;
+synthesis verification covers support for public statements, readability
+without the members' context, and unresolved conflicts in Limitations.
+Record the exact deterministic validation
 targets and results for every member, and every unresolved blocker. Do
 not record projection review jobs, publication attempts, or cleanup here.
 A complete run says `none` under blockers; a blocked or out-of-scope run
@@ -150,15 +150,15 @@ inputs-commit: "{full commit of this repository at run start}"
 
 ## Source register
 
-## Reconciliation
-
 ## Bounded synthesis
 
 ## Limitations
 
 ## Verification and blockers
 
-### Semantic verification
+### Record verification
+
+### Synthesis verification
 
 ### Deterministic validation
 

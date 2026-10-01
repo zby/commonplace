@@ -37,10 +37,6 @@ Boundary record.
 
 | SRC-1 | Git | `https://example.invalid/example-system` | `{REVISION}` | implementation | README.md | anchors | none |
 
-## Reconciliation
-
-None.
-
 ## Bounded synthesis
 
 Synthesis.
@@ -51,7 +47,11 @@ None.
 
 ## Verification and blockers
 
-### Semantic verification
+### Record verification
+
+Passed.
+
+### Synthesis verification
 
 Passed.
 
@@ -172,6 +172,20 @@ Evidence basis: source at `{REVISION}`, inspected 2026-09-28.
 Body.
 '''
 
+RECONCILIATION_TEXT = f'''---
+type: types/agentic-system-reconciliation-report.md
+description: "Reconciled Example System records at the frozen source boundary"
+run-id: {RUN_ID}
+reviewed-boundary: "{REVISION}"
+---
+
+# Example System reconciliation
+
+## Reconciliation
+
+Amendment: EPI-OBJ-1 is superseded by OBJ-1; both name the same store at SRC-1.
+'''
+
 
 def validate(tmp_path: Path, name: str, content: str) -> validation.CheckResults:
     path = tmp_path / name
@@ -265,6 +279,12 @@ def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Pa
         "duplicate declarations: EPI-RTE-1" in failure
         for failure in validate(tmp_path, "epistemic.md", duplicate).fails
     )
+
+
+def test_reconciliation_report_validates_and_excludes_working_returns(tmp_path: Path) -> None:
+    assert validate(tmp_path, "reconciliation.md", RECONCILIATION_TEXT).fails == []
+    returned = RECONCILIATION_TEXT + "\n## Returned to the memory analyst\n\nMEM-OBJ-1 needs correction.\n"
+    assert validate(tmp_path, "reconciliation.md", returned).fails
 
 
 def test_generated_review_validates_and_pins_the_manifest(tmp_path: Path) -> None:

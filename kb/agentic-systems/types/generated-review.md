@@ -19,7 +19,7 @@ what publication checks, with the pin on the manifest.
 | Field | Required | Use |
 |---|---:|---|
 | `type` | Yes | `agentic-systems/types/generated-review.md` |
-| `description` | Yes | The overview's `description`: the reconciliation's one-sentence retrieval description of the system's mechanism and limits |
+| `description` | Yes | The overview's `description`: the synthesizer's one-sentence retrieval description of the system's mechanism and limits |
 | `generated-by` | Yes | `analyse-agentic-system` |
 | `analysis-run` | Yes | The producing run ID |
 | `source-identity` | Yes | The stable source identity the set's Source register declares |

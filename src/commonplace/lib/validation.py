@@ -1039,6 +1039,7 @@ def _quote_citation_rule(
 @type_rule("types/agent-memory-analysis-report.md")
 @type_rule("types/agentic-system-runtime-report.md")
 @type_rule("types/agentic-system-epistemic-report.md")
+@type_rule("types/agentic-system-reconciliation-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1059,6 +1060,7 @@ def _agentic_evidence_and_references_rule(
 @type_rule("types/agent-memory-analysis-report.md")
 @type_rule("types/agentic-system-epistemic-report.md")
 @type_rule("agentic-systems/types/generated-review.md")
+@type_rule("types/agentic-system-reconciliation-report.md")
 def _agentic_plain_source_anchor_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1078,6 +1080,7 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("types/agentic-system-runtime-report.md")
 @type_rule("types/agent-memory-analysis-report.md")
 @type_rule("types/agentic-system-epistemic-report.md")
+@type_rule("types/agentic-system-reconciliation-report.md")
 def _agentic_set_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1951,7 +1954,7 @@ def run_validation(
 
 @directory_type_rule("reports/types/agentic-system-analysis-set.md")
 def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *, run: ValidationRun) -> None:
-    from commonplace.lib.agentic_records import set_record_errors
+    from commonplace.lib.agentic_records import amendment_index, set_record_errors
     from commonplace.lib.agentic_set import from_artifact, set_identity_errors
     from commonplace.lib.systems_matrix import validate_comparison
 
@@ -1959,6 +1962,9 @@ def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *,
     results.fails.extend(set_identity_errors(member_set))
     known, errors = set_record_errors({document.name: document.body for document in member_set.documents})
     results.fails.extend(errors)
+    reconciliation = member_set.members.get("reconciliation.md")
+    if reconciliation is not None and amendment_index(reconciliation.body) not in member_set.overview.body.splitlines():
+        results.fails.append("overview amendment index does not match reconciliation")
     if member_set.memory is not None:
         try:
             validate_comparison(member_set.memory.frontmatter["memory-comparison"], known_ids=known)

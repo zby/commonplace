@@ -1,0 +1,33 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required: [type, description, run-id, reviewed-boundary]
+        properties:
+          type:
+            const: types/agentic-system-reconciliation-report.md
+          description:
+            type: string
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          reviewed-boundary:
+            type: string
+            minLength: 1
+        additionalProperties: false
+      headings:
+        type: array
+        minItems: 2
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - const: "## Reconciliation"
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Reconciliation"}, minContains: 1, maxContains: 1}
+      body:
+        pattern: '(?ms)^## Reconciliation\s*\n\s*\S'

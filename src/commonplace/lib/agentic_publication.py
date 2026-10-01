@@ -43,6 +43,8 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/reports/types/agentic-system-analysis-set.schema.yaml",
     "kb/types/agentic-system-analysis-overview.md",
     "kb/types/agentic-system-analysis-overview.schema.yaml",
+    "kb/types/agentic-system-reconciliation-report.md",
+    "kb/types/agentic-system-reconciliation-report.schema.yaml",
     "kb/types/agentic-system-runtime-report.md",
     "kb/types/agentic-system-runtime-report.schema.yaml",
     "kb/types/agentic-system-epistemic-report.md",

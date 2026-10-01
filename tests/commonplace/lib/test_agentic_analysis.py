@@ -26,6 +26,7 @@ from commonplace.lib.agentic_publication import (
     prepare_publication,
     publish_publication,
 )
+from commonplace.lib.agentic_records import amendment_index
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -47,6 +48,7 @@ MEMBER_TYPES = {
     "runtime.md": "types/agentic-system-runtime-report.md",
     "memory.md": "types/agent-memory-analysis-report.md",
     "epistemic.md": "types/agentic-system-epistemic-report.md",
+    "reconciliation.md": "types/agentic-system-reconciliation-report.md",
 }
 
 
@@ -376,9 +378,7 @@ Fixture boundary at `{revision}`.
 
 | SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md` | none |
 
-## Reconciliation
-
-MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record; the memory member is `memory-report-0.md` unchanged.
+{amendment_index(members['reconciliation.md'].read_text())}
 
 ## Bounded synthesis
 
@@ -390,7 +390,11 @@ None.
 
 ## Verification and blockers
 
-### Semantic verification
+### Record verification
+
+Passed.
+
+### Synthesis verification
 
 Passed.
 
@@ -451,10 +455,27 @@ def write_set(run_dir: Path, revision: str) -> Path:
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
         "epistemic.md": write(run_dir / "output/epistemic.md", epistemic_text(revision)),
+        "reconciliation.md": write(run_dir / "output/reconciliation.md", reconciliation_text(revision)),
     }
     overview = write(run_dir / "output/overview.md", overview_text(revision, members))
     repin(run_dir / "output")
     return overview
+
+
+def reconciliation_text(revision: str) -> str:
+    return f'''---
+type: types/agentic-system-reconciliation-report.md
+description: "Reconciled Example System records at the frozen source boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+---
+
+# Example System reconciliation
+
+## Reconciliation
+
+MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.
+'''
 
 
 def member_fixture(tmp_path: Path) -> Path:
@@ -773,7 +794,8 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
     })
     for name in MEMBER_TYPES:
         (output_path(state.parent, name)).unlink()
-    overview.write_text(re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text()))
+    overview.write_text(re.sub(r"(?m)^Amended or superseded records:.*\n", "",
+        re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text())))
     repin(overview.parent)
     values.update(
         {
@@ -1010,7 +1032,7 @@ def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> Non
 
     assert RUN_ID in rendered
     assert "**Artifact:**" in rendered
-    assert "**Members:** overview.md, runtime.md, memory.md, epistemic.md (pinned" in rendered
+    assert "**Members:** overview.md, runtime.md, memory.md, epistemic.md, reconciliation.md (pinned" in rendered
     assert "**Frozen source:**" in rendered
     assert (
         "**Generated system review:** "
@@ -1356,13 +1378,13 @@ def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None
 @pytest.mark.parametrize("declared, amendment, error", [
     ("CMP-1", None, "duplicate set declaration: CMP-1"),
     ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-1", None),
-    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-9", "overview.md: unresolved record CMP-9"),
+    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-9", "reconciliation.md: unresolved record CMP-9"),
 ])
 def test_a_duplicate_record_is_superseded_in_the_reconciliation(
     tmp_path: Path, declared: str, amendment: str | None, error: str | None
 ) -> None:
     """A lens record for a thing the runtime pass declared stays declared
-    under its own ID; the overview's Reconciliation supersedes it."""
+    under its own ID; the reconciliation member supersedes it."""
     run_dir = member_fixture(tmp_path)
     memory = run_dir / "output/memory.md"
     memory.write_text(memory.read_text().replace(
@@ -1371,9 +1393,11 @@ def test_a_duplicate_record_is_superseded_in_the_reconciliation(
     ))
     overview = run_dir / "output/overview.md"
     if amendment is not None:
+        reconciliation = run_dir / "output/reconciliation.md"
+        reconciliation.write_text(reconciliation.read_text() +
+            f"\nAmendment: {amendment}; both trace `README.md` at SRC-1.\n")
         overview.write_text(overview.read_text().replace(
-            "## Bounded synthesis",
-            f"Amendment: {amendment}; both trace `README.md` at SRC-1.\n\n## Bounded synthesis",
+            amendment_index(""), amendment_index(reconciliation.read_text()),
         ))
     repin(overview.parent)
 
@@ -1393,7 +1417,7 @@ def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: st
     """A link out of output/ resolves in the run directory but breaks once retained."""
     overview = member_fixture(tmp_path) / "output/overview.md"
     overview.write_text(overview.read_text().replace(
-        "is `memory-report-0.md` unchanged", f"is {link} unchanged"
+        "Fixture synthesis over", f"Read {link}. Fixture synthesis over"
     ))
     fails = validation.validate_note(overview, repo_root=tmp_path).fails
     if error is None:
@@ -2069,7 +2093,8 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     values = frontmatter(overview)
     values["result-disposition"] = disposition
     replace_frontmatter(overview, values)
-    overview.write_text(re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text()))
+    overview.write_text(re.sub(r"(?m)^Amended or superseded records:.*\n", "",
+        re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text())))
     for name in MEMBER_TYPES:
         (directory / name).unlink()
     repin(directory)

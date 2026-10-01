@@ -220,11 +220,11 @@ def test_an_amendment_in_the_reconciliation_resolves_against_the_set() -> None:
         "trace the same call at SRC-1.\n"
     )
     bodies = {"runtime.md": RUNTIME, "memory.md": memory, "epistemic.md": EPISTEMIC}
-    assert set_record_errors({"overview.md": OVERVIEW + supersession, **bodies})[1] == []
+    assert set_record_errors({"overview.md": OVERVIEW, "reconciliation.md": supersession, **bodies})[1] == []
 
     undeclared = supersession.replace("RTE-1;", "RTE-7;")
-    _, errors = set_record_errors({"overview.md": OVERVIEW + undeclared, **bodies})
-    assert errors == ["overview.md: unresolved record RTE-7"]
+    _, errors = set_record_errors({"overview.md": OVERVIEW, "reconciliation.md": undeclared, **bodies})
+    assert errors == ["reconciliation.md: unresolved record RTE-7"]
 
 
 def test_set_rejects_duplicate_record_across_members() -> None:

@@ -22,7 +22,7 @@ SET_TYPE = "reports/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
 OVERVIEW_NAME = "overview.md"
-MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md")
+MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
 
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
@@ -149,4 +149,3 @@ def set_identity_errors(
         if values.get("reviewed-boundary") != boundary:
             errors.append(f"{name}: reviewed-boundary does not match the overview")
     return errors
-

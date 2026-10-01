@@ -11,8 +11,9 @@ A directory artifact in the reports collection. `ARTIFACT.yaml` selects this
 type and records a SHA-256 for every member. All direct Markdown children
 are members; this type uses closed membership.
 
-A complete outcome requires `overview.md`, `runtime.md`, `memory.md` and
-`epistemic.md`. A blocked or out-of-scope outcome requires only `overview.md`.
+A complete outcome requires `overview.md`, `runtime.md`, `memory.md`,
+`epistemic.md` and `reconciliation.md`. A blocked or out-of-scope outcome
+requires only `overview.md`.
 The overview's `result-disposition` selects the schema branch. The memory
 member must have `report-status: complete`. Each report keeps its own type
 and passes ordinary file validation independently.

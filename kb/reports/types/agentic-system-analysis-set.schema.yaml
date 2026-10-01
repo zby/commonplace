@@ -29,6 +29,7 @@ properties:
           runtime.md: *id001
           memory.md: *id001
           epistemic.md: *id001
+          reconciliation.md: *id001
         additionalProperties: false
     additionalProperties: false
   members:
@@ -87,6 +88,16 @@ properties:
             properties:
               type:
                 const: types/agentic-system-epistemic-report.md
+      reconciliation.md:
+        type: object
+        required: [frontmatter]
+        properties:
+          frontmatter:
+            type: object
+            required: [type]
+            properties:
+              type:
+                const: types/agentic-system-reconciliation-report.md
     additionalProperties: false
 allOf:
 - if:
@@ -109,6 +120,7 @@ allOf:
         - runtime.md
         - memory.md
         - epistemic.md
+        - reconciliation.md
       manifest:
         properties:
           members:
@@ -117,6 +129,7 @@ allOf:
             - runtime.md
             - memory.md
             - epistemic.md
+            - reconciliation.md
   else:
     properties:
       members:
