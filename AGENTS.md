@@ -1,219 +1,197 @@
 # Commonplace
 
-`CLAUDE.md` is a symlink to this file (`AGENTS.md`). Edit `AGENTS.md` directly.
+`CLAUDE.md` is a symlink to this file. Edit `AGENTS.md` directly.
 
-> **Vendored?** If this repository sits inside another project as a read-only knowledge base (a submodule or gitignored clone — see `INSTALL.md`, "Reader install"), you are a reader here, not an operator: navigate from `kb/tags/README.md`, quote and cite freely, and do not create, edit, or commit anything under this directory. Everything below applies only when Commonplace itself is the working project. To contest a claim, open an issue at <https://github.com/zby/commonplace/issues>.
+**Vendored reader:** if this checkout is a read-only KB inside another project
+(submodule or gitignored clone), navigate from `kb/tags/README.md`, quote and
+cite, but do not create, edit or commit here. See [Reader install](./INSTALL.md#reader-install-the-kb-as-a-vendored-reference).
+Contest claims through <https://github.com/zby/commonplace/issues>.
+The rules below apply when Commonplace itself is the working project.
 
 ## Repository Overview
 
-A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.
-
-The Commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
-
-Develop Commonplace by using it. Practical demands expose limits in its theories and machinery; reflective revision turns them into retained improvements; recorded episodes become evidence for the research program.
+Commonplace is a framework for agent-operated knowledge bases: methodology,
+types, instructions, skills and Python commands. This repository is itself a
+KB; its methodology is its content. Develop it through use: retain observed
+limits, revise the methods and record episodes as research evidence.
 
 ## KB Goals and Scope
 
 ### Purpose
 
-Support decisions about KB architecture, type systems, writing quality, context engineering, and knowledge organization — made by agents and maintainers working on Commonplace or on KBs built with it.
+Support agents and maintainers deciding KB architecture, types, writing,
+context engineering and knowledge organization in Commonplace and consuming KBs.
 
 ### Scope
 
-Agent-operated knowledge base methodology: how to structure, write, connect, validate, review, and maintain knowledge artifacts for consumption by LLM agents.
+In scope: agent-operated KB methodology — structure, writing, linking,
+validation, review, maintenance, context engineering and comparisons with
+external knowledge systems.
 
-In scope:
-
-- Design decisions about KB methodology (type systems, linking, indexing, review)
-- Context engineering theory (constraining, codification, knowledge reshaping)
-- Operational patterns (writing workflows, validation, maintenance)
-- Evaluations and comparisons with external knowledge systems
-
-Out of scope:
-
-- Application-specific KB content (belongs in consuming projects)
-- General software engineering, learning theory, or cognitive science unless it directly informs KB design decisions
-- Raw logs without analysis (use `kb/log.md`)
+Out of scope: application-specific content (belongs in consuming projects);
+general software engineering, learning theory or cognitive science unless it
+directly informs KB design; raw logs without analysis (use `kb/log.md`).
 
 ### Quality bar
 
-A design insight is worth a note when it changes how someone would build or operate a KB. Observations about what works are worth a log entry on first occurrence and a note when the mechanism is understood. Pure pattern-recording without explanation belongs in a log entry, not a note.
+A design insight earns a note when it changes how someone builds or operates
+a KB. Record a first observation in the log; write a note when its mechanism
+is understood. Pattern recording without explanation stays in the log.
 
-**Simple writing (best effort).** Use the simplest wording that preserves the claim and its necessary qualifications. Prefer literal wording when a metaphor would mainly add flourish, reading effort, or unintended connotations. Keep metaphors that are conventional and precise or that clarify the explanation. Aim for one main point per sentence. Prefer short, direct sentences. State definitions directly, put conditions and qualifiers next to the claims they limit, and make causal or contrastive relationships explicit. The KB graph already supplies complexity through connections among notes; do not add avoidable complexity inside a sentence.
+Best effort:
 
-**One term per concept (best effort).** Use the same word for the same thing throughout an artifact, and the KB's registered term where one exists. Literary style varies words to avoid repetition; technical prose does not, because a new word reads as a new referent. Do not swap in a synonym for variety.
-
-**Substantive specificity (best effort).** Include a paragraph only when it changes what the reader understands, infers, or can do; do not restate or praise a point merely to make the text sound complete. In load-bearing claims, resolve ambiguity that would change the claim's truth conditions, evidential support, or implications; when relevant, name the mechanism, comparison basis, or scope. Use available specifics, but never invent precision: narrow the claim, state uncertainty, or flag the unresolved choice.
-
-**Operator communication (best effort).** Shape messages around what the operator needs to understand or decide. Lead with the practical outcome, consequence, or decision needed, and keep important conditions and uncertainty next to the claim they limit. Use the simplest wording that preserves meaning, and make the opening understandable without first loading the implementation. Ordinary domain language and project terms with canonical definitions are fine, but expand or define terms coined for the task and terms inherited from artifacts that have no canonical definition; introduce code identifiers only after stating what they represent. Put deeper mechanism afterward. When a technical finding carries the evidence, point to that finding instead of reproducing its evidence. When a consequential explanation still depends on several concepts or a long causal chain, use the `operator-brief` skill.
+- Use short, literal sentences with one main point. Keep necessary conditions
+  next to their claims; make causal relationships explicit. Keep metaphors
+  only when conventional and precise or when they clarify.
+- Use one term per concept, including the registered term where one exists.
+- Keep a paragraph only when it changes what the reader understands, infers
+  or can do. Resolve ambiguity that affects truth, evidence or implications.
+  Name mechanisms, comparison bases and scope when relevant; never invent precision.
+- Lead operator messages with the outcome or decision. Define unfamiliar
+  task terms before code identifiers, keep uncertainty beside the claim, and
+  point to evidence rather than reproducing it. For consequential explanations
+  with several concepts or a long causal chain, use `operator-brief`.
 
 ## Vocabulary
 
-Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
+These are this KB's active terms. Read the linked definition when using or
+assessing its technical meaning; the term list is not a substitute for it.
+First-mention glossing and linking in authored artifacts is governed by
+`cp-skill-write`. Capitalize Commonplace in prose; lowercase only in identifiers.
 
-- **Actionable** — an operator-relative relation: a methodology is actionable only for an operator that can use its mapping through available operations on a target in a stated setting. Use this technical sense only in a clause that links the definition; unlinked *actionable* remains ordinary English. See `kb/notes/definitions/actionable-methodology.md`.
-- **Addressable theory** — a theory formulated in language whose assumptions, scope conditions, and parts can be inspected and revised individually, so criticism can name a part and a revision can keep the rest. A structural property that comes in degrees, separate from tentative status. A theory builder requires only its minimum, localized content; finer grades are Commonplace's design commitment, and that they pay is conjectured. See `kb/notes/definitions/addressable-theory.md`.
-- **Assay** — any snapshot-anchored LLM evaluation executed through the review job pipeline. Closed-ended assays ask a fixed question; open-ended assays sample a space of possible findings. This question shape is distinct from the persisted `verdict`/`report` result kind. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **Codification** — the symbolic region of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics or, more generally, a unique operational semantics. See `kb/notes/definitions/codification.md`.
-- **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
-- **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `commonplace:` library identities).
-- **Commonplace doctrine** — the standing instruction a worker inherits with binding force when its runtime loads it: this file, plus the collection contracts, type specs, and skill its runtime supplies. A handoff is a delta from it. The compound is the technical term; bare *doctrine* stays ordinary English and may abbreviate it where nothing else (such as the source-side military doctrine in the planning reports) could be meant. See `kb/reference/definitions/commonplace-doctrine.md`.
-- **Criterion** — the instruction text applied to a note in an assay. It occupies the persisted `criterion_path` side of a review pair; a gate is a closed-ended, verdict-kind criterion, while critique is an open-ended, report-kind criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. See `kb/notes/definitions/constraining.md`.
-- **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
-- **Discovery lifecycle** — the ideal-type staged path by which an ampliative conjecture earns acceptance: observe, conjecture, derive consequences, test, accept, integrate. The compound is the technical term; bare "discovery" stays ordinary English. See `kb/notes/definitions/discovery-lifecycle.md`.
-- **Explanatory-reach** — the property that a claim keeps working beyond the cases that produced it because it captures why the pattern works; the quality goal of `kb/notes/` and the property reach-assessment judges. The compound is the technical term (adapted from Deutsch's "reach"); bare "reach" stays ordinary English. See `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md`.
-- **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
-- **Freshness baseline** — the current snapshot-pinned applicability boundary for one registered target. In v1 review targets are `review-pair` keys `(note, criterion, model partition)` with `note` and `criterion` `file-text` inputs; a baseline preserves an evidence review pair while tracking the latest accepted input snapshots — it is not endorsement or global approval. See `kb/reference/README-REVIEW-SYSTEM.md#concepts` and `kb/reference/freshness-architecture.md`.
-- **Commonplace store** — the operational SQLite database (`kb/reports/state/commonplace-store.sqlite`; `COMMONPLACE_STORE`) holding artifact snapshots, freshness baselines, and review execution state. See `kb/reference/freshness-architecture.md`.
-- **Gate** — a closed-ended, verdict-kind assay criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **Mark** — a frontmatter field that caches a value recomputable from ground truth recorded elsewhere, validated by code, and read by agents to spare an expensive in-context recompute (`complete` on tag heads). Recomputable, so never load-bearing; enforced-or-omitted, because a stale trusted cache is a trap. See `kb/types/tag-readme.md`.
-- **Outcome** — the substantive `pass`, `warn`, or `fail` value produced by a completed verdict pair. Report pairs complete without an outcome; `ERROR` fails the job and is not an outcome. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **Representational form** — how retained content is encoded and consumed: natural-language, symbolic (code, schemas, grammars), distributed-parametric (model weights), or mixed. Codification is the natural-language→symbolic crossing on this axis, and form sets the default review method: read natural-language content, test symbolic artifacts, probe parametric ones. **Prompt** is a consumption-path shorthand for material supplied or assembled as model input, not a fourth form or a synonym for every natural-language artifact. See `kb/notes/definitions/representational-form.md`.
-- **Result kind** — the persisted pair protocol: `verdict` completes with an outcome; `report` completes without one. `REPORT` is a completion marker, not a fourth outcome. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
-- **Tentative theory** — Popper's term, borrowed as is: a theory put forward as a solution to a problem and held open to criticism and revision however well it has survived; the status of every theory the KB retains, which licenses no particular use. See `kb/notes/definitions/tentative-theory.md`.
-- **Text contract** — the binding requirement a collection's `COLLECTION.md` declares: purpose and scope, quality goal, title/description conventions, attribution requirements, maintenance semantics, and link grammar. See `kb/reference/definitions/collection.md#text-contract`.
-- **Theory builder** — a system that applies Popper's method of conjecture and refutation under four conditions: its theories are stated in localized units (natural or formal language), guide what it does through what they say, meet a working process of criticism aimed at what those units say, and iterate: the result of criticism shapes the next round, either as a revised theory or, after a surviving test, as a changed testing record that later work uses (keeping the record of criticism and rebuilding from it counts). No success condition: whether a builder learns, in the sense of improved capacity for future action, is the hypothesis under test. Criticism of stated content is what separates it from gradient descent. Addressability and persistence are graded design commitments above the minimums that conditions 1 and 4 set; Commonplace builds for the high end of both, and that this pays is conjectured. *Reflective* (its method texts meet the same conditions) and *autonomous* (computation performs every internal operation) are independent qualifiers. Commonplace producing a KB for consuming projects is the arrangement the research program tests under external assessment. Replaced *conjectural learning* and the reflective, autonomous, and externally tested builder definitions on 2026-09-25. See `kb/notes/definitions/theory-builder.md`.
-- **Workshop** — a named workspace for work-in-flight documents under `kb/work/`. Workflow-owned runs may be grouped one level deeper, such as `kb/work/multistage/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
+| Term | Definition |
+|---|---|
+| Actionable | [Operator-relative methodology](./kb/notes/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
+| Addressable theory | [Addressable theory](./kb/notes/definitions/addressable-theory.md) |
+| Assay, criterion, gate, outcome, result kind | [Review concepts](./kb/reference/README-REVIEW-SYSTEM.md#concepts) |
+| Codification | [Codification](./kb/notes/definitions/codification.md) |
+| Collection, text contract | [Collection](./kb/reference/definitions/collection.md) |
+| Commonplace | This KB and framework. |
+| Commonplace doctrine | [Commonplace doctrine](./kb/reference/definitions/commonplace-doctrine.md) |
+| Commonplace store | [Freshness architecture](./kb/reference/freshness-architecture.md) |
+| Constraining | [Constraining](./kb/notes/definitions/constraining.md) |
+| Context engineering | [Context engineering](./kb/notes/definitions/context-engineering.md) |
+| Discovery lifecycle | [Discovery lifecycle](./kb/notes/definitions/discovery-lifecycle.md) |
+| Explanatory-reach | [Explanatory-reach](./kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
+| Frontloading | [Frontloading](./kb/notes/frontloading-spares-execution-context.md) |
+| Freshness baseline | [Review concepts](./kb/reference/README-REVIEW-SYSTEM.md#concepts) and [freshness architecture](./kb/reference/freshness-architecture.md) |
+| Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
+| Representational form | [Representational form](./kb/notes/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
+| System-definition artifact | [System-definition artifact](./kb/notes/definitions/system-definition-artifact.md) |
+| Tentative theory | [Tentative theory](./kb/notes/definitions/tentative-theory.md) |
+| Theory builder | [Theory builder](./kb/notes/definitions/theory-builder.md) |
+| Workshop | [Workshop layer](./kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) |
 
-### Prose and registered identifiers
-
-Use ordinary spaced phrases in prose (`adapted from`, `derived from`). Registered hyphenated identifiers (`adapted-from`, `operationalized-from`, `derived-from`, `abstracted-from`) name formal relations when used in a declared position such as a collection-authorized link label; they may also be mentioned as vocabulary names in documentation. Formal semantics attach to the identifier in the declared slot; the spaced phrase remains ordinary prose and does not itself assert a formal edge. See [link vocabulary](./kb/reference/link-vocabulary.md).
+Compound technical terms keep their registered meaning; bare words such as
+discovery, reach and doctrine may be ordinary language where unambiguous.
+Use spaced relation phrases in prose (`adapted from`). Hyphenated identifiers
+(`adapted-from`, `derived-from`, etc.) assert formal relations only in declared
+slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
 
 ## Development
 
-- **Use `python3`** for stdlib-only throwaway tooling; if the code is expected to be reused, save it to `scripts/` instead of discarding it (see `scripts/README.md`) — genuinely one-shot code stays a heredoc. Commonplace runtime code lives in the Python package as `commonplace-*` commands.
-- **curl downloads**: order arguments as `curl -fsSL -o <destination> [additional options] '<URL>'` so they match the preapproved `["curl", "-fsSL", "-o"]` command prefix. Put options such as `-A 'Mozilla/5.0'` after the output path; `S` and `L` are uppercase. Single-quote literal URLs: even an unquoted `~` inside a URL can make Codex's shell parser decline prefix matching. Run each download as a standalone shell-tool call with literal paths; run local setup and extraction separately. Loops, variable expansion, and redirections can make the approval matcher treat a script as one shell invocation, so an approved curl prefix does not approve that script. If sandbox networking fails, escalate only the standalone download, not the surrounding processing script.
-- **Package documentation**: inspect `src/commonplace/lib/` for exact internal API behavior; [freshness-architecture.md](./kb/reference/freshness-architecture.md) describes the general freshness store and transitions; [review-architecture.md](./kb/reference/review-architecture.md) describes the review adapter and execution.
-- **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, write it down instead of implementing it: a system feature or design gap becomes a design proposal in `kb/reference/proposals/` (see the [design-proposal type](./kb/reference/types/design-proposal.md) for the contract); a transferable insight becomes a note in `kb/notes/`; finished theory the KB has not decided to import into its vocabulary (a framework, a distinction, new terms, a change to an adopted definition) becomes a theory proposal in `kb/notes/proposals/` (see the [theory-proposal type](./kb/notes/types/theory-proposal.md) for the contract).
-- **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
-- **Tests**: `uv run pytest` — when pytest is required, all tests must pass. Do not run pytest for changes confined to Markdown KB artifacts that are data and are not test fixtures or test inputs; run the relevant `commonplace-validate` checks instead.
-
-### Source checkout command installation
-
-This repository is operated directly from its checkout; do not run `commonplace-init` here. Install its commands once as an editable user-level uv tool from the repository root:
-
-```bash
-uv tool install --python ">=3.11" --editable .
-uv tool update-shell
-```
-
-Close and restart every shell, IDE, or agent runtime that must see the updated `PATH`. Ordinary source edits are visible through the editable installation. After dependency, entry-point, build-metadata, or scaffold-package changes, rerun the install with `uv tool install --reinstall --python ">=3.11" --editable .`. This is one active Commonplace command version per OS user; switching this checkout to editable changes the commands seen by other projects for that user.
-
-Development-only executables remain project dependencies and run through uv:
-
-```bash
-uv run pytest
-uv run ruff check .
-```
-
-On native Windows the same `uv tool` commands work in PowerShell. Use `Get-Command commonplace-validate` after restarting the consuming process to verify discovery. If a sandboxed Windows session cannot write `.pytest_cache`, add `-p no:cacheprovider` to `uv run pytest`; do not treat that cache-only warning as a test failure.
-
-The source checkout's `.agents/skills/` and `.claude/skills/` projections are committed relative symlinks. A Windows checkout without symlink support may materialize them as plain files. If a `cp-skill-*` skill is not discoverable, read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly; do not run `commonplace-init` to repair a source checkout.
+- Use `python3` for one-shot stdlib tooling. Save reusable tooling in `scripts/`
+  (see `scripts/README.md`); runtime commands belong in `src/commonplace/`.
+- For exact APIs, inspect `src/commonplace/lib/`. For architectural boundaries,
+  read [freshness](./kb/reference/freshness-architecture.md) or
+  [review architecture](./kb/reference/review-architecture.md).
+- YAGNI: record unneeded features or gaps instead of implementing them.
+  System designs go in `kb/reference/proposals/`, transferable insights in
+  `kb/notes/`, and finished but unadopted theory in `kb/notes/proposals/`.
+  Read the destination's proposal type before writing.
+- No backwards compatibility without a consumer need. Mark any required shim
+  `# BACKCOMPAT: <reason> - remove after <condition>`.
+- Call `commonplace-*` by bare name from the editable user-level uv tool;
+  never use project-venv paths or `uv run` for these commands. If unavailable,
+  use `cp-skill-health-check`. CLI reference: [commands](./kb/reference/commands.md).
+- Run development dependencies through uv: `uv run pytest`, `uv run ruff check .`.
+  All required tests must pass. Markdown KB data changes need relevant
+  `commonplace-validate` checks, not pytest, unless they affect test inputs or fixtures.
+- Do not run `commonplace-init` in this checkout. For initial command installation
+  or dependency, entry-point, build-metadata or scaffold-package changes, follow
+  [editable installation](./INSTALL.md#2-install-commonplace-as-a-user-level-tool).
+  For checkout skill discovery problems, follow
+  [skill setup](./INSTALL.md#5-check-the-skills-for-every-agent-that-will-work-on-the-project).
+- Downloads: use `curl -fsSL -o <destination> [options] '<URL>'` in a standalone
+  shell call with literal paths; keep setup and extraction separate. If sandbox
+  networking blocks it, request escalation for the download alone when available.
 
 ## Git
 
-- **Never `git add -A`** — review `git status` and stage specific files.
-- **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
-- **If sandboxing blocks `git add` or `git commit`, retry the whole atomic command with escalation** — do not fall back to separate `git add` followed by a later `git commit`. Use explicit file paths in the atomic command, for example `git add path/one.md path/two.md && git commit -m "..."`.
-- **Prefer atomic artifact commits over temporary navigation consistency** — do not partially stage shared README/index/navigation files just to make a new artifact immediately discoverable. Generated indexes and curated navigation can lag and be refreshed in a separate commit unless that navigation file is the primary target or can be staged wholly without sweeping unrelated work.
-- **Commit messages** (ADR 074, ADR 075) — git is the change-history layer of this checkout. Subject: one imperative sentence under ~72 characters saying what changed; no `feat:`-style prefixes. Body: open with what the change is meant to make true when the subject and the diff do not show it — the diff records what changed, not what for, and the commit is the cheapest place to capture that. A commit that performs a sweep, migration, retirement, or relocation states what moved, how many, and what was kept, cut, or deferred — that narrative lives here, not in ADRs or reference docs. Trailers, each only when it applies: `Decision: ADR 0NN` when the commit implements, amends, or revises that ADR; `Workshop: kb/work/<name>` when it advances a workshop; `Model: <model id>` when an agent made the commit.
-- **State the justification when more than one could apply** — a change is justified by product use, by reflective learning (a change to Commonplace's own methods prompted by evidence from product work), or by research evidence; when a commit could carry more than one, its body says which. A research-evidence commit cites the protocol record it feeds.
-- **Relocation commits are pure** — commit a `commonplace-relocate-*` result alone, with no content edits, so `git log --follow` survives the rename.
-- **Check `git diff` before committing.**
-- **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
+- Review status and diff. Stage explicit files; never `git add -A`.
+- Prefer atomic stage and commit: `git add <files> && git commit ...`.
+  If sandboxing blocks either, retry the whole operation with escalation when
+  available; do not leave staging for a later commit.
+- Prefer complete artifact commits. Do not partially stage shared indexes or
+  navigation just to expose an artifact; refresh them separately unless they
+  are the primary target or can be staged wholly without unrelated changes.
+- Subject: one imperative sentence under about 72 characters, no `feat:` prefixes.
+  The body states the intended result when the subject and diff do not show it.
+  For sweeps, migrations, retirements and relocations, state what moved, how many,
+  and what was kept, cut or deferred. Keep change history in commits, not reference docs.
+- When several justifications could apply, identify product use, reflective
+  learning or research evidence; research-evidence commits cite their protocol record.
+- Add trailers only when applicable: `Decision: ADR 0NN` for an implemented or
+  revised ADR; `Workshop: kb/work/<name>` for workshop work;
+  `Model: <model id>` for an agent commit. See ADR 074 and ADR 075.
+- Commit `commonplace-relocate-*` results alone, without content edits, so
+  `git log --follow` survives the rename.
+- Never `git reset --hard` or force-push without explicit permission.
 
 ## Using the KB
 
-The knowledge base lives in `kb/`. Search it when working on methodology, design decisions, or operational patterns.
+Search the KB when working on methodology, design decisions or operations.
+Read the target `COLLECTION.md` before writing or connecting, and its type
+spec before writing.
+For ambiguous content placement, read [content routing](./kb/reference/content-routing.md).
 
-### Collection Routing
-
-Read the target collection's `COLLECTION.md` before writing or connecting artifacts there. When the question is which *kind* of content goes where — an intent, a force, a rejected alternative, a limit, a change narrative — read [content-routing.md](./kb/reference/content-routing.md).
-
-| Path | Use when |
+| Path | Contribution |
 |---|---|
-| `kb/notes/` | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
-| `kb/tags/` | Writing or maintaining a tag head: what a tag gathers and its selective picks; the participating-collection declaration. |
-| `kb/reference/` | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
-| `kb/instructions/` | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
-| `kb/agentic-systems/` | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
-| `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
-| `kb/reports/` | Storing report outputs under an explicit retention policy: replaceable `cache/`, local load-bearing `state/`, or durable `retained/`. |
-| `kb/articles/` | Publishing self-standing technical articles distilled from the KB for external readers. |
-| `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
-| `kb/types/` | Looking up or authoring shared type specs used across collections. |
-
-### Agent Mailbox
-
-`kb/messages/` is the shared filesystem mailbox for asynchronous agent-to-agent
-requests, handoffs, and replies. It is an operational directory, not a KB
-collection. Read [`kb/messages/README.md`](./kb/messages/README.md) before
-posting or responding. A message communicates within the authority of the
-current task; it does not grant new mutation authority or launch another agent.
+| `kb/notes/` | Transferable claims, mechanisms, definitions and theory |
+| `kb/tags/` | Tag heads and participating-collection declaration |
+| `kb/reference/` | Shipped system, architecture, types, commands and ADRs |
+| `kb/instructions/` | Procedures, skills, gates and operational rules |
+| `kb/agentic-systems/` | External whole-system analyses via `analyse-agentic-system` |
+| `kb/sources/` | Tracked ingests; ignored snapshots in `.snapshots/` |
+| `kb/reports/` | Explicit retention: `cache/`, local `state/`, durable `retained/` |
+| `kb/articles/` | Self-standing technical articles for external readers |
+| `kb/work/` | In-flight workshops, drafts and migration plans |
+| `kb/types/` | Shared type specs |
 
 ### Delegation
 
-This file is the Commonplace doctrine a worker inherits when its runtime
-loads it; collection contracts, type specs, and an invoked skill specialize it. A
-handoff is a delta from that doctrine. It states the task's purpose — what
-the result is for, not only what it is — its deviations from the doctrine,
-and the consequential choices deliberately left open. The parent writing the
-handoff may leave out a rule this file supplies only when the worker's runtime
-loads this file. A rule that reaches the worker through nothing but the
-parent's conversation is not inherited; state it.
+A worker inherits this file, collection/type contracts and skills only when
+its runtime loads them with binding force. A parent may omit a supplied rule
+from the handoff only after verifying delivery; conversation-only rules must
+be stated. A handoff gives the purpose, deviations and consequential choices
+left open, plus task-specific acceptance, constraints, write scope, inputs,
+coordination, verification and stop/escalation conditions.
 
-Delegation does not expand task authority. Whatever the doctrine supplies, a
-consequential handoff still fixes what it cannot: the intended result and its
-acceptance, non-negotiable constraints, owned outputs or write scope,
-accessible inputs, coordination boundary, verification or feedback, and stop
-or escalation condition. The parent retains scheduling, integration, and
-recovery; parallel writers need disjoint ownership or an explicit
-coordination rule. Nested delegation is permitted within the worker's existing
-task authority and coordination boundary.
+Delegation does not expand authority. The parent retains scheduling,
+integration and recovery. Parallel writers need disjoint ownership or explicit
+coordination; nested delegation stays within existing authority and coordination.
+For an unstated choice: follow an inherited default; exercise deliberately
+delegated judgment from authorized evidence; choose freely if irrelevant to
+acceptance; otherwise return or escalate the gap.
 
-For a choice the handoff leaves unstated, a worker asks which case applies:
-governed by an inherited default — follow it; deliberately delegated — choose
-from execution evidence, answerable to the stated purpose and constraints;
-irrelevant to acceptance — any choice serves; or none of these — a gap, so
-return or escalate rather than fill it.
+### Navigation and task-specific reads
 
-### Navigation
+Use `rg` first. Scan scoped titles and descriptions before full files; follow
+links when local context makes them useful. Full model and search recipes:
+[navigation](./kb/reference/navigation.md).
 
-For the full model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
-
-Entry points:
-
-- `kb/tags/README.md` — top-level navigation hub: tag heads (learning-theory, self-improving-systems, links, and the rest), gaps
-- `kb/agent-memory-systems/README.md` — historical index of earlier agent-memory system reviews (frozen; new analyses go through `analyse-agentic-system`)
-- `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
-- `kb/reports/README.md` — report retention policies and durable report records
-- `kb/reference/adr/` — architecture outcome records for the shipped Commonplace system
-
-Each tag's curated head is `kb/tags/<tag>-README.md` (type `types/tag-readme.md`), small by type contract; tag membership ranges over the collections listed in `kb/tags/COLLECTION.md`. It may declare one validator-enforced frontmatter mark, `complete: true`: every artifact carrying the tag is linked from the head or carries a tag whose head is linked from it, so the head reaches every member in one hop and a reader can skip the by-tag `rg` sweep. Maintenance of the mark lives in `kb/types/tag-readme.md` (ADR 026, ADR 089, ADR 090).
-
-Before assigning a tag, read `kb/tags/<tag>-README.md` and check its inclusion condition and boundaries. The artifact must substantively address the stated subject, question, or mechanism; mention or background use is insufficient. Clarify an ambiguous condition before assigning.
-
-```bash
-# Find notes by description
-rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
-
-# Find notes by type (the value is the type spec's path under a KB root)
-rg "^type: types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
-rg "^type: reference/types/adr.md" kb/reference/ --glob "*.md"
-
-# Find notes by tag
-rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob "*.md"
-```
-
-### Skills
-
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) lives in `kb/instructions/`. In this checkout `.claude/skills/` and `.agents/skills/` hold committed relative symlinks to it, and the harness loads them automatically; installed projects instead receive stubs from `commonplace-init` that point to the same skills in the installed package. Repo-local skills (`operator-brief`, `roughdraft-review`) are symlinked the same way but are not promoted framework skills.
-
-### Commands
-
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system — reference in [commands.md](./kb/reference/commands.md). Call them by bare name from the editable user-level uv tool installation; never prepend project-venv paths or wrap Commonplace commands in `uv run`. Run development dependencies such as `pytest` and `ruff` through `uv run`. If a command is unavailable, use `cp-skill-health-check`.
-
-For review work (single-note review, triage, ack, or sweep), read `kb/reference/README-REVIEW-SYSTEM.md`.
-For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
+- Start at `kb/tags/README.md` for topics, `kb/reference/README.md` for the system,
+  `kb/reports/README.md` for retained reports, or `kb/reference/adr/` for decisions.
+  `kb/agent-memory-systems/README.md` is historical and frozen.
+- Before assigning a tag, read `kb/tags/<tag>-README.md` and check its inclusion
+  condition and boundaries. Substantive treatment is required, not mention;
+  clarify ambiguous conditions. For membership and `complete: true` maintenance,
+  read `kb/tags/COLLECTION.md` and `kb/types/tag-readme.md`.
+- Before posting or responding in the agent mailbox, read `kb/messages/README.md`.
+  Messages grant neither new mutation authority nor an agent launch.
+- For review, triage, ack or sweep, read `kb/reference/README-REVIEW-SYSTEM.md`.
+  To fix review warnings, read `kb/instructions/FIX-SYSTEM.md`.
+- Skills live under `kb/instructions/`, projected through `.agents/skills/` and
+  `.claude/skills/` symlinks here; installed projects receive stubs pointing into
+  the package. Edit the canonical instruction. `operator-brief` and
+  `roughdraft-review` are repo-local, not promoted framework skills.

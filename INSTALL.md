@@ -260,6 +260,18 @@ An agent whose runtime reads neither of those two skill directories, or has no s
 
 The Commonplace source checkout does not run `commonplace-init`. It is where the library is authored, and its committed `.claude/skills/` and `.agents/skills/` symlinks cover all its skills.
 
+On a Windows checkout without symlink support, Git may materialize these
+relative symlinks as plain files. If a `cp-skill-*` skill is undiscoverable,
+read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly.
+Do not run `commonplace-init` to repair the source checkout.
+
+Development dependencies run through uv: `uv run pytest` and
+`uv run ruff check .`. If a sandboxed Windows session cannot write
+`.pytest_cache`, use `uv run pytest -p no:cacheprovider`; a cache-only warning
+is not a test failure. The editable tool installation commands above work
+in PowerShell too; after restarting the consuming process, use
+`Get-Command commonplace-validate` to check discovery.
+
 ## 6. Start the runtime
 
 Fully restart the agent runtime after `uv tool update-shell`, then confirm inside the agent that `commonplace-validate --help` resolves. Shell activation is not part of the contract. If the command works in a new terminal but not in the agent, diagnose how that runtime receives the user environment rather than reinstalling the package repeatedly.
