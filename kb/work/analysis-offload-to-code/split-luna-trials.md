@@ -51,10 +51,13 @@ These differ from the semantic correction rounds in the table.
 ## Record findings
 
 PageIndex's runtime findings cited paths without the required source IDs.
-The memory report's reading-workflow quote inserted a second `call` before
-`get_page_content()`. Both memory workers had obtained the correct citation
-from `commonplace-quote`; the added word entered while copying it into the
-report. The final judge also repeated the epistemic source assignment as a
+The corrected memory report's reading-workflow quote inserted a second `call`
+before `get_page_content()`. Both memory workers had obtained the correct
+citation from `commonplace-quote`; the initial report retained it correctly,
+and the added word entered in the correction worker's replacement patch.
+The [quote investigation](./quote-error-investigation.md) traces that change
+and separates it from rejected selections and premature helper calls.
+The final judge also repeated the epistemic source assignment as a
 blocker even though reconciliation formally amended `RTE-3` from `SRC-3` to
 `SRC-2`. That blocker overlooks amendment precedence under the shared record
 contract. The other two defects remain independently evidenced.
