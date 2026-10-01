@@ -743,6 +743,43 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     assert "duplicate set declaration: RTE-1" in prompt
 
 
+@pytest.mark.parametrize("job", ["runtime", "epistemic", "memory-0", "memory-1"])
+def test_altered_analyst_quote_is_repaired_before_reconciliation(
+    fixture: Fixture, job: str,
+) -> None:
+    citation = f"> # Frozen source\n> --- `README.md:1-1` @ `{fixture.revision}`\n"
+    reports = {
+        "runtime": lambda: runtime_text(fixture.revision),
+        "epistemic": lambda: epistemic_text(fixture.revision),
+        "memory-0": fixture.memory_report,
+        "memory-1": lambda: fixture.memory_report(1),
+    }
+
+    def analyst(handout: Handout) -> None:
+        quote = citation.replace("Frozen source", "Frozen call source") if handout.attempt == 1 else citation
+        handout.output_path.write_text(reports[job]() + "\n" + quote, encoding="utf-8")
+        # The observed failure passed standing structural validation.
+        assert validation.validate_note(handout.output_path, repo_root=fixture.root).fails == []
+
+    workers = {job: analyst}
+    if job == "memory-1":
+        workers["reconcile-0"] = fixture.writes(lambda _: fixture.reconciliation(returned=True))
+    scripted, definition = agent(fixture, **workers)
+    drive_to(scripted, job)
+
+    attempt, prompt = prompt_of(scripted.round(), job)
+
+    assert attempt == 2
+    assert "quote does not occur in the cited line range" in prompt
+    assert "README.md at the recorded commit" in prompt
+    assert isinstance(scripted.run()[-1], Done)
+    assert scripted.launched.count(job) == 2
+    assert [name for name in scripted.launched if name.startswith("reconcile-")] == (
+        ["reconcile-0", "reconcile-1"] if job == "memory-1" else ["reconcile-0"]
+    )
+    assert definition.publications == 1
+
+
 # 6. One source identity
 
 

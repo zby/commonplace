@@ -58,6 +58,6 @@ A surviving record keeps its ID and referent. A new record gets a new number; ne
 
 ## Check
 
-Validate `output` with `commonplace-validate --full <output>` and correct structural errors. Publication checks the assembled set's quotations; run no separate quote check. Retain the validation result and prevented conclusions under Limitations and checks.
+Validate `output` with `commonplace-validate --full <output>` and correct structural errors. Code checks the written quotations before accepting the report, and publication checks them again; run no separate quote check. Retain the validation result and prevented conclusions under Limitations and checks.
 
 After repair, update the check result and validate the final report again.

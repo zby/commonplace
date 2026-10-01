@@ -80,6 +80,10 @@ Use the supplied `run-state` path directly. Keep selection files in `scratch`.
 
 Generate every quote block with `commonplace-quote <run-state> --source-path <commit-relative-path> --text-file <selection-file>`, omitting `--source-path` for the run's capture, or `--selections <json-file>` for many selections. Choose the occurrence whose context supports the finding and insert its citation unchanged. Request discontiguous passages separately. Only a quote attribution carries a line range; cite a source in prose by path only. A failed lookup requires rereading the source and revising the selection; never format a citation or calculate a range by hand. A generated citation proves occurrence, not support; judge support yourself.
 
+Code matches the written runtime, memory and epistemic quotations against the
+frozen source before accepting each output. A mismatch uses the ordinary job
+retry. Repair it by regenerating the citation and inserting it unchanged.
+
 ## Prior analyses
 
 Do not call agent listings for status; their payloads may include prior analyses even with a path filter. Do not read style exemplars or `kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`, `kb/agentic-systems/reviews-archive/`, `kb/reports/retained/agentic-system-analysis/`, `kb/reports/retained/agentic-system-analysis-archive/`, `kb/work/analyse-agentic-system/`, other runs under `kb/reports/state/agentic-system-analysis/`, surveys, comparison outputs, or agent listings. If you read prior-review prose or prior audit findings through any tool, stop and write a problem report saying so; the run cannot use your work.

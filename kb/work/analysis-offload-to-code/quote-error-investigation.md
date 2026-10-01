@@ -72,6 +72,9 @@ the whole report exposed already-correct evidence to another transcription.
 
 ## Why grounding did not prevent it
 
+This section describes the trial implementation, before the analyst acceptance
+repair below.
+
 [Quote generation](../../../src/commonplace/lib/quote_generation.py) locates
 selected text in the frozen source and renders the source's own bytes and
 derived line range. The [CLI](../../../src/commonplace/cli/quote.py) returns
@@ -123,17 +126,27 @@ No observed helper error demonstrates incorrect quote generation. Failed
 selections and premature calls are distinct from a successful citation
 modified during document assembly.
 
-## Proposed repair
+## Repair
 
-Run the existing source matcher inside analyst output acceptance, against the
-registered frozen source. A malformed quote should trigger the ordinary job
-repair before reconciliation or model judging. This requires no target
-execution, additional quote-generation command or new quote representation.
+Implemented on 2026-10-01 following the operator's decision: the existing
+source matcher now runs inside runtime, memory and epistemic output acceptance,
+against the registered frozen source. A mismatching quotation triggers the
+ordinary job retry before reconciliation or model judging. Memory correction
+reports receive the same check. This requires no target execution, additional
+quote-generation command or new quote representation. Worker rules and the
+memory job's check instruction describe this acceptance step.
 
-For the boundary job, require prose source anchors without quote blocks.
+The workflow regression tests cover all three analysts and a memory correction:
+a structurally valid report with an added quote word is refused, the retry
+receives the source mismatch, and the repaired report proceeds to publication
+without an extra reconciliation round. All 65 workflow tests and all 1,215
+tests in the full suite pass. Read-only
+replay of the saved PageIndex memory outputs through the new job validator
+accepts `memory-report-0.md` and rejects `memory-report-1.md` at output line 272.
+
+Still proposed: for the boundary job, require prose source anchors without quote blocks.
 That job establishes the source identity; later analysts can quote it once
 code has registered it. This removes the unusable grounding step from that
 role without adding another source-registration phase.
 
-These are proposed repairs only. This investigation changes neither the
-workflow nor worker instructions.
+The boundary instruction is unchanged by the analyst acceptance repair.

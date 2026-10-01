@@ -37,6 +37,7 @@ from urllib.parse import urlsplit
 
 import yaml
 
+from commonplace.lib.agentic_analysis import load_run_state, verify_quote_anchors
 from commonplace.lib.agentic_finalize import build_manifest
 from commonplace.lib.agentic_publication import (
     PublicationSpec,
@@ -323,14 +324,25 @@ def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
 
 
 def pass_refusals(
-    path: Path, *, repo_root: Path, bodies: Callable[[Path], dict[str, str]]
+    path: Path, *, repo_root: Path, run_state: Path,
+    bodies: Callable[[Path], dict[str, str]],
 ) -> list[str]:
     """The output of an analyst, which declares records: a valid member whose
-    citations resolve against the set so far, which ``bodies`` assembles
-    around it."""
-    return member_refusals(path, repo_root=repo_root) or reference_refusals(
+    record references resolve against the set so far and whose quotations
+    resolve against the frozen source."""
+    refusals = member_refusals(path, repo_root=repo_root) or reference_refusals(
         partial(bodies, path)
     )
+    if refusals:
+        return refusals
+    try:
+        source = load_run_state(run_state, repo_root=repo_root).source
+    except ValueError as error:
+        return [str(error)]
+    if source is None:
+        return ["quotation checks require a registered frozen source"]
+    _, failures = verify_quote_anchors(path.read_text(encoding="utf-8"), source=source)
+    return failures
 
 
 def reconcile_refusals(
@@ -669,6 +681,7 @@ class AnalyseAgenticSystem(Workflow):
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
+                run_state=run_dir / RUN_STATE,
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, runtime=path
                 ),
@@ -692,6 +705,7 @@ class AnalyseAgenticSystem(Workflow):
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
+                run_state=run_dir / RUN_STATE,
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY,
                     runtime=run_dir / RUNTIME,
@@ -728,6 +742,7 @@ class AnalyseAgenticSystem(Workflow):
             validator=partial(
                 pass_refusals,
                 repo_root=self.repo,
+                run_state=run_dir / RUN_STATE,
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, memory=path, **cited
                 ),
