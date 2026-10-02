@@ -287,6 +287,14 @@ Record. Evidence: SRC-1.
 
 #### RTE-1 — Fixture route
 
+- Immediate return: The fixture invocation returns the stored object.
+- Later read-back: A later invocation reads OBJ-1.
+- Delegated visibility: inapplicable — the fixture has no delegated workers.
+- Selection predicate: The caller requests the fixture object.
+- Invalidation or expiry: inapplicable — the fixture has no expiry mechanism.
+- Activation or effect: uninspected — no behavioral execution was observed.
+- Evidence limits: Static fixture evidence at SRC-1; operation was not exercised.
+
 Record. Evidence: SRC-1.
 
 ### Claims
@@ -1463,7 +1471,12 @@ def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     # The memory member re-declares a record the runtime member declares.
     text = memory.read_text()
     assert "#### On RTE-1 — Fixture route" in text
-    memory.write_text(text.replace("#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"))
+    route = (run_dir / "output/runtime.md").read_text().split(
+        "#### RTE-1 — Fixture route\n\n", 1
+    )[1].split("\n### Claims", 1)[0]
+    memory.write_text(text.replace(
+        "#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"
+    ).replace("Seeded route with the specialist's memory fields.", route))
     overview = run_dir / "output/overview.md"
     repin(overview.parent)
     retain_set(tmp_path, run_dir)

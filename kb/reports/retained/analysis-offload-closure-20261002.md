@@ -124,3 +124,25 @@ The [shared-contract conformance proposal](../../reference/proposals/shared-anal
 remains separate: generic type reviewers need complete shared criteria and
 freshness dependencies. The code-scheduled-workflows workshop retains ownership
 of the generic engine and its proposal; this closure does not close that work.
+
+## Closure verification
+
+The implemented route-field rule passed the full development suite: 1,257
+tests. A workflow regression shows a missing field refused at runtime-member
+acceptance, a preserved output supplied for amendment, and publication after
+repair without another reconciliation round. Parser cases cover all analyst
+prefixes, omissions, empty and duplicate fields, uncertainty reasons, record
+boundaries, annotations and source excerpts. A contract test compares the
+seven delivered labels with the validator vocabulary.
+
+Ruff passed for `src`, `tests` and `scripts`. A fresh temporary user-level
+installation probe accepted a complete member without warnings and rejected
+the same member missing its selection predicate. Repeated initialization
+preserved project content and passed the pointer check. The method remains
+collection-owned; it is not added to generic project scaffolds.
+
+After retirement, collection validation and the touched document checks
+passed without warnings. Redirect validation and 17 site tests passed.
+Retired output URLs point to the published route-field decision rather than
+the excluded report area. No redirect is created for the deleted workshop.
+No freshness baseline required retirement for the deleted paths.

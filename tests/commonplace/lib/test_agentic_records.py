@@ -6,8 +6,79 @@ from commonplace.lib.agentic_records import (
     annotated_ids,
     declared_ids,
     record_reference_errors,
+    route_field_errors,
     set_record_errors,
 )
+
+ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
+- Later read-back: The next invocation reads the retained preference.
+- Delegated visibility: inapplicable — this route does not delegate.
+- Selection predicate: The caller's key selects the preference.
+- Invalidation or expiry: inapplicable — no expiry is implemented.
+- Activation or effect: uninspected — model behavior was not observed.
+- Evidence limits: Static inspection; no execution trace.
+"""
+
+
+def route_body(identifier: str = "RTE-1", answers: str = ROUTE_ANSWERS) -> str:
+    return f"## Shared records\n\n### Routes\n\n#### {identifier} — Recall\n\n{answers}"
+
+
+@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
+    assert route_field_errors(route_body(prefix + "RTE-1")) == []
+    errors = route_field_errors(route_body(prefix + "RTE-1", ""))
+    assert len(errors) == 7
+    assert all(prefix + "RTE-1" in error for error in errors)
+
+
+@pytest.mark.parametrize(("replacement", "diagnostic"), [
+    ("", "missing field"),
+    ("- Later read-back:   \n", "empty field"),
+    ("- Later read-back: one\n- Later read-back: two\n", "duplicate field"),
+    ("- Later read-back: uninspected\n", "reason"),
+    ("- Later read-back: inapplicable — \n", "reason"),
+    ("- Later read-back: uninspected because no trace\n", "reason"),
+])
+def test_route_field_failures(replacement: str, diagnostic: str) -> None:
+    answers = ROUTE_ANSWERS.replace(
+        "- Later read-back: The next invocation reads the retained preference.\n", replacement
+    )
+    errors = route_field_errors(route_body(answers=answers))
+    assert len(errors) == 1
+    assert "Later read-back" in errors[0] and diagnostic in errors[0]
+
+
+def test_other_records_and_annotations_cannot_supply_missing_fields() -> None:
+    for heading in ("#### MEM-RTE-2 — Another route", "#### On RTE-1 — Overlay",
+                    "### Claims", "## Discussion"):
+        errors = route_field_errors(route_body(answers="") + f"\n{heading}\n\n{ROUTE_ANSWERS}")
+        assert sum("RTE-1:" in error for error in errors) == 7
+
+
+def test_source_excerpts_cannot_supply_fields_or_declare_routes() -> None:
+    quoted = "\n".join("> " + line for line in ROUTE_ANSWERS.splitlines())
+    for fenced in (f"```markdown\n{ROUTE_ANSWERS}```\n", quoted):
+        assert len(route_field_errors(route_body(answers=fenced))) == 7
+    excerpt = "\n```markdown\n#### RTE-99 — Source example\n```\n"
+    assert route_field_errors(route_body() + excerpt) == []
+
+
+def test_annotation_fields_are_not_required() -> None:
+    assert route_field_errors("## Shared records\n\n#### On RTE-1 — Overlay\n") == []
+
+
+def test_route_field_labels_match_the_delivered_contract() -> None:
+    from pathlib import Path
+
+    from commonplace.lib.agentic_records import ROUTE_FIELDS
+
+    contract = (Path(__file__).resolve().parents[3] / "kb/agentic-systems/instructions/"
+                "agentic-analysis-records.md").read_text()
+    import re
+
+    labels = re.findall(r"(?m)^- ([^:\n]+): \.\.\.$", contract)
+    assert tuple(labels) == ROUTE_FIELDS
 
 BASE = """# Example
 

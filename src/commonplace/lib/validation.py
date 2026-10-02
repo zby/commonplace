@@ -1043,7 +1043,10 @@ def _quote_citation_rule(
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_records import record_reference_errors
+    from commonplace.lib.agentic_records import (
+        record_reference_errors,
+        route_field_errors,
+    )
 
     # A member validated alone cannot resolve references the set declares
     # elsewhere; the analysis set's directory rule resolves them across the
@@ -1052,6 +1055,10 @@ def _agentic_evidence_and_references_rule(
     results.fails.extend(errors)
     if not errors:
         results.passes.append("record references: explicit IDs and declarations checked")
+    field_errors = route_field_errors(parsed.document.body)
+    results.fails.extend(field_errors)
+    if not field_errors:
+        results.passes.append("route fields: required labels and non-empty answers checked")
     validate_quote_citations(results, parsed.content)
 
 

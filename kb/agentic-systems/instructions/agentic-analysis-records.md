@@ -91,6 +91,33 @@ state are excluded. A summary that compacts or replaces current-run state
 is retained memory when a later invocation receives it, within or across
 runs. Activation requires evidence that delivered material changed behavior.
 
+### Route field syntax
+
+Within each route declaration, write each of these exact labels once as an
+unindented bullet, with a non-empty answer on the same line:
+
+```markdown
+- Immediate return: ...
+- Later read-back: ...
+- Delegated visibility: ...
+- Selection predicate: ...
+- Invalidation or expiry: ...
+- Activation or effect: ...
+- Evidence limits: ...
+```
+
+Replace every `...` with the finding. When a field is inapplicable or
+uninspected, use exactly `inapplicable — reason` or `uninspected — reason`,
+replacing `reason` with the explanation. Supporting prose, tables and
+quotations may follow. Another record or an annotation cannot supply these
+fields for the declaration.
+
+Local member validation and set validation reject missing, empty or duplicate
+fields and uncertainty values without reasons. They check presence and form;
+semantic verification judges the answers and their evidence. Component fixity,
+status vocabularies and conditional route fields retain their existing
+requirements without new presence checks.
+
 ## Conditional route fields
 
 These requirements apply to the named route classes. Inapplicability is

@@ -12,7 +12,10 @@ type: reference/types/design-proposal.md
 - The analysis skill is 518 lines. Its schedule is prose: open the run, freeze sources, runtime baseline, scoping, memory specialist, epistemic lens, reconciliation, set writing, publication. The skill runs in one forked coordinator context (`context: fork`).
 - The memory specialist is the one mandatory fresh worker. The coordinator writes `memory-input.md`, hashes it, and launches a worker under [Analyse memory and context as the memory analyst](../../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md) with `memory-report.md` as its sole output. The epistemic lens may run locally or in a worker.
 - Error recovery is the coordinator's. The skill's failure rule tells it to keep a correctable failure in `running` state, fix the candidate or member, and repeat the failed check. The skill forbids a phase ledger, packet, correction log, retry log or validation receipt. A failed run is not resumed; a new run ID replaces it.
-- Mechanical steps are moving into commands: `commonplace-agentic-analysis-finalize memory` and `manifest` ship; [opening a run in code](./open-an-analysis-run-in-code.md) and [labelled route fields](./required-route-fields-as-labelled-record-lines.md) are live proposals.
+- At this dated anchor, mechanical steps were moving into commands. Opening
+  and required route fields were separate proposals; their implemented choices
+  are now [workflow-owned opening](../adr/101-open-analysis-runs-through-workflow-start.md)
+  and [route-field acceptance](../adr/100-check-required-route-fields-at-member-acceptance.md).
 - Review jobs already use the worker contract this proposal reuses: code generates each job's `prompt.md`, and the worker reads only that prompt and writes one output ([ADR 067](../adr/067-review-workers-read-one-prompt-and-write-one-output.md)). The parent dispatches through [run review batches](../../instructions/run-review-batches.md), which needs only the ability to launch a sub-agent with a prompt.
 - Claude Code dynamic workflows exist only in Claude Code. The script sandbox has no filesystem or shell, the resume journal is session-local, and a run takes no mid-run user input.
 
@@ -234,4 +237,4 @@ Relevant Notes:
 - [scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — rests-on: why moving exact schedule state from the coordinator's context into code is expected to remove a class of errors
 - [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the definition is host-language code, and run state is reified on disk because the run outlives each process
 - [067-Review workers read one prompt and write one output](../adr/067-review-workers-read-one-prompt-and-write-one-output.md) — see-also: the worker contract every job record reuses
-- [Open an analysis run in code](./open-an-analysis-run-in-code.md) — see-also: the command that would start an analysis run
+- [Open analysis runs through workflow start](../adr/101-open-analysis-runs-through-workflow-start.md) — see-also: the analysis definition's implemented opening operation

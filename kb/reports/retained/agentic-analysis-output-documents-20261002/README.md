@@ -96,17 +96,19 @@ and `analyze_matrix.py`. All exited zero, producing one code-grounded row and
 no doc-grounded rows. The profile had ten known axes; all listed value bases
 were wired. This is a one-row reader trial, not a corpus distribution.
 
-The bounded numerical summary is reproducible from the same memory member:
+The recorded reader trial produced this bounded numerical summary:
 `write_agency` retains both automatic and manual values, and
 `read_back_direction` retains both pull and push values. Each is counted once
 within one selected row, rather than as another system. The former cites
 MEM-RTE-1, RTE-3, RTE-4, RTE-5, RTE-8 and RTE-9; the latter cites RTE-1,
 RTE-2, RTE-5 and RTE-8. These are profile classifications, not measured
-behavioral benefit. The evidence-bearing records and reconciliation remain
-readable in the retained set. The
+behavioral benefit. The evidence-bearing set and review were later retired during
+[analysis-offload closure](../analysis-offload-closure-20261002.md); this
+compressed reader observation remains, and Git retains the original records. The
 [comparison procedure](../../../agentic-systems/comparisons/README.md) and
 [landscape synthesis skill](../../../agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md)
-both consume that same manifest-pinned evidence.
+both require manifest-pinned evidence of this form. The retired trial set is
+no longer selected as a live input.
 
 The [transfer scan](../../../instructions/scan-agentic-system-transfer/SKILL.md)
 checks complete run state, complete substantive disposition, manifest identity

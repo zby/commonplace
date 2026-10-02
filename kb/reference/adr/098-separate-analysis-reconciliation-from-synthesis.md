@@ -81,8 +81,11 @@ remain model assessments, not an independent experimental oracle. Tests cover
 both bounded loops and failure before publication. Both fresh Luna trials stopped at final record verification, before synthesis,
 on source-traceability judgments, an altered quotation and lost reconciliation
 markers. They exercise the bounded stop path; they do not test the synthesis
-contract selection or establish reduced total work. The publication adoption
-criterion remains unmet.
+contract selection or establish reduced total work. Subsequent Sol medium
+runs reached verified synthesis, and one published on 2026-10-01. Separate
+Luna medium and Sol medium runs both published on 2026-10-02. These establish
+the bounded publication path, without a matched estimate of reduced work or
+improved analytical quality.
 
 This ADR adopts the design proposal *Separate analysis reconciliation from
 synthesis* and amends ADR 096's reconciliation location and public-writing role.

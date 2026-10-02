@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import validation
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -94,6 +96,14 @@ none declared in this member.
 
 #### RTE-1 — Ordinary invocation
 
+- Immediate return: The checked object is returned to the caller.
+- Later read-back: uninspected — no later consumer was inspected.
+- Delegated visibility: inapplicable — there is no delegation in this fixture.
+- Selection predicate: The caller selects the object.
+- Invalidation or expiry: inapplicable — no expiry is implemented here.
+- Activation or effect: uninspected — operation was not observed.
+- Evidence limits: Static fixture evidence at SRC-1.
+
 Record. Evidence: SRC-1.
 
 ### Claims
@@ -150,6 +160,14 @@ Conclusion.
 ### Routes
 
 #### EPI-RTE-1 — Admission check
+
+- Immediate return: The checked object is returned to the caller.
+- Later read-back: uninspected — no later consumer was inspected.
+- Delegated visibility: inapplicable — there is no delegation in this fixture.
+- Selection predicate: The caller selects the object.
+- Invalidation or expiry: inapplicable — no expiry is implemented here.
+- Activation or effect: uninspected — operation was not observed.
+- Evidence limits: Static fixture evidence at SRC-1.
 
 Record. Evidence: SRC-1.
 '''
@@ -233,6 +251,15 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     results = validate(tmp_path, "runtime.md", RUNTIME_TEXT)
     assert results.fails == []
     assert results.note_type == "agentic-system-runtime-report"
+
+
+@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+def test_member_validation_rejects_missing_route_answers(tmp_path: Path, prefix: str) -> None:
+    content = RUNTIME_TEXT.replace("#### RTE-1 —", f"#### {prefix}RTE-1 —").replace(
+        "- Selection predicate: The caller selects the object.\n", ""
+    )
+    failures = validate(tmp_path, "runtime.md", content).fails
+    assert any(f"{prefix}RTE-1: Selection predicate: missing field" in error for error in failures)
 
 
 def test_runtime_report_rejects_the_removed_probe_evidence_section(tmp_path: Path) -> None:

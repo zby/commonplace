@@ -89,7 +89,7 @@ and reading costs are separate: summaries need not reduce retained volume.
 ## Evaluation boundary
 
 Examine concrete cases before selecting machinery. The analysis-offload
-[repair and batching trial](../analysis-offload-to-code/repair-and-batching-trial-2026-10-02.md)
+[analysis-offload closure evidence](../../reports/retained/analysis-offload-closure-20261002.md)
 is an available candidate, not a prescribed first target. Keep its measured
 results separate from explanations of differences between runs.
 

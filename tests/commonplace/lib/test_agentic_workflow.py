@@ -788,8 +788,12 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     fixture: Fixture,
 ) -> None:
     def redeclared(_: Handout) -> str:
+        route = runtime_text(fixture.revision).split("#### RTE-1 — Fixture route\n\n", 1)[1]
+        route = route.split("\n### Claims", 1)[0]
         return fixture.memory_report().replace(
             "#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"
+        ).replace(
+            "Seeded route with the specialist's memory fields.", route
         )
 
     scripted, _ = agent(fixture, **{"memory-0": fixture.writes(redeclared)})
@@ -841,6 +845,30 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
     assert [name for name in scripted.launched if name.startswith("reconcile-")] == (
         ["reconcile-0", "reconcile-1"] if job == "memory-1" else ["reconcile-0"]
     )
+    assert definition.publications == 1
+
+
+def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) -> None:
+    def runtime(handout: Handout) -> None:
+        if handout.attempt == 1:
+            text = runtime_text(fixture.revision).replace(
+                "- Later read-back: A later invocation reads OBJ-1.\n", ""
+            )
+        else:
+            prompt = handout.prompt_path.read_text(encoding="utf-8")
+            preserved = Path(re.search(r"^previous-output = (.+)$", prompt, re.MULTILINE)[1])
+            assert "- Later read-back:" not in preserved.read_text(encoding="utf-8")
+            text = runtime_text(fixture.revision)
+        handout.output_path.write_text(text, encoding="utf-8")
+
+    scripted, definition = agent(fixture, runtime=runtime)
+    drive_to(scripted, "runtime")
+    attempt, prompt = prompt_of(scripted.round(), "runtime")
+    assert attempt == 2
+    assert "RTE-1: Later read-back: missing field" in prompt
+    assert isinstance(scripted.run()[-1], Done)
+    assert scripted.launched.count("runtime") == 2
+    assert scripted.launched.count("reconcile-0") == 1
     assert definition.publications == 1
 
 

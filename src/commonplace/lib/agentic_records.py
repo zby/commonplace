@@ -18,6 +18,15 @@ _ANNOTATION = re.compile(
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
 _REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
+ROUTE_FIELDS = (
+    "Immediate return",
+    "Later read-back",
+    "Delegated visibility",
+    "Selection predicate",
+    "Invalidation or expiry",
+    "Activation or effect",
+    "Evidence limits",
+)
 
 
 def _analysis_prose(body: str) -> str:
@@ -87,6 +96,41 @@ def record_reference_errors(body: str) -> list[str]:
     if repeated:
         return ["record references: duplicate declarations: " + ", ".join(repeated)]
     return []
+
+
+def route_field_errors(body: str) -> list[str]:
+    """Check unconditional route fields, without judging their answers.
+
+    Each declaration owns its fields. An adjacent annotation, another record,
+    source quotation or fenced excerpt cannot supply a missing answer.
+    """
+    prose = section(_analysis_prose(body), "Shared records")
+    headings = list(re.finditer(r"(?m)^#{3,6}[ \t]+[^\n]+$", prose))
+    errors = []
+    for index, heading in enumerate(headings):
+        declaration = _DECLARATION.fullmatch(heading[0])
+        if declaration is None or not re.fullmatch(
+            r"(?:(?:MEM|EPI)-)?RTE-\d+", declaration[1]
+        ):
+            continue
+        end = headings[index + 1].start() if index + 1 < len(headings) else len(prose)
+        record = prose[heading.end():end]
+        for label in ROUTE_FIELDS:
+            values = re.findall(
+                rf"(?m)^- {re.escape(label)}:[ \t]*([^\n]*)$", record
+            )
+            prefix = f"route fields: {declaration[1]}: {label}"
+            if not values:
+                errors.append(f"{prefix}: missing field")
+            elif len(values) != 1:
+                errors.append(f"{prefix}: duplicate field")
+            elif not values[0].strip():
+                errors.append(f"{prefix}: empty field")
+            elif re.match(r"(?i)^(inapplicable|uninspected)\b", values[0]) and not re.fullmatch(
+                r"(inapplicable|uninspected) — \S.*", values[0].strip()
+            ):
+                errors.append(f"{prefix}: use 'inapplicable — reason' or 'uninspected — reason'")
+    return errors
 
 
 def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
