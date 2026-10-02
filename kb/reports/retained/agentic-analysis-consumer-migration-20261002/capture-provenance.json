@@ -1,0 +1,104 @@
+[
+  {
+    "capture": "captures/c01-c03-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c01-c03-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "4c8393a8f97567a1e6b484cdda39697f3107d6c9c43af00291e02c3fdb539587"
+  },
+  {
+    "capture": "captures/c04-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c04-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "87783939fc3e42ee836d0ca7576c5839a66df3f0edc4e3931d8faec95725a395"
+  },
+  {
+    "capture": "captures/c04-trial.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c04-trial.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "7f560850a4678c38f5f4cfa2e92992ade88bd753c4b57fbe569fae214bad1abc"
+  },
+  {
+    "capture": "captures/c08-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c08-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "5cafb7ad23dcc403bcee74026761849702000309841ccb857a22769ef891ea81"
+  },
+  {
+    "capture": "captures/c09-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c09-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "69127241349df2f1db16445fb4f8d9d960478ce320c43cb2226724dd1afd49a9"
+  },
+  {
+    "capture": "captures/c10-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c10-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "659834031fcc83b7fe4f6d7a5de421f8a6a6946c22c6beda066767b2663ff856"
+  },
+  {
+    "capture": "captures/c10-oh-my-pi-audit.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c10-oh-my-pi-audit.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "81b2a83b57d5d2ac3d2f3fe71a9bb0fb7d22fc9145e75b1867df173d60ce7bb8"
+  },
+  {
+    "capture": "captures/c11-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/c11-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "2dbc4fc7b6f346945b33d14cfdbabd4b228a332ef36241bd495b0e7e8f664c25"
+  },
+  {
+    "capture": "captures/memory-specialist-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/memory-specialist-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "68c4e8fbe2cd2563046efe1c334a6a0fc1205d3831297e5ed2551f3d7df1b02f"
+  },
+  {
+    "capture": "captures/memory-specialist-integration.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/memory-specialist-integration.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "7803f91154384ccf703fe587ad887f3ef3efcb2c25eb9a7a128e2c468ea2747d"
+  },
+  {
+    "capture": "captures/pilot-matrix.csv",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/pilot-matrix.csv",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "eaa7c7aca2d5218dff5f517a33e13fe2cc8514ec7ddfba75214c8957b8b35aa7"
+  },
+  {
+    "capture": "captures/pilot-query-output.json",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/pilot-query-output.json",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "e9b79fc0ef11514d7d93ac82adcdef06cf6f2fb1dba8523ce740a3401ed9df85"
+  },
+  {
+    "capture": "captures/pilot-table.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/pilot-table.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "6eb9e77d7decf645aba1351783c5c7af706c911127c7d6cf0337d6f16a4ec47a"
+  },
+  {
+    "capture": "captures/prime-agent-followup-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/prime-agent-followup-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "b6536c2ffcbd506cb26d85dab5cb7392f94204d93cda9141350f9b6edb8737e2"
+  },
+  {
+    "capture": "captures/producer-check-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/producer-check-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "ab15cb5fdaa98450471c9ad0e188268370df6c33339c8a86338dcb7afa416adf"
+  },
+  {
+    "capture": "captures/production-pilot.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/production-pilot.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "7f509e23f03edddab110737ade8948387ae8b40d8650b4406a2fbf9d8fbed2d3"
+  },
+  {
+    "capture": "captures/rerun-acceptance.md",
+    "original_path": "kb/work/agentic-analysis-consumer-migration/rerun-acceptance.md",
+    "source_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+    "sha256": "36467b01070aa9165d780745ee508af392b146e33c160e6a617d524e88c877df"
+  }
+]

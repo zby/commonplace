@@ -1,0 +1,1886 @@
+{
+  "inspected_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+  "purpose": "Inventory the retained historical citation boundary, not semantic re-verification.",
+  "artifacts": [
+    {
+      "artifact": "kb/notes/README.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/sparks.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/theafh--ai-modules.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/abstract-an-experience-only-when-you-can-state-the-boundary.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/active-work-state-is-not-retrospective-memory-or-chat-history.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-workstream-kit.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-workstream-kit.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/activate-behavior-changing-memory.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/synapptic.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/import-external-knowledge.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/sift-kg.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/keep-compiled-views-aligned.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/synapptic.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/make-authority-explicit.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/wuphf.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/cq.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/sage.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hindsight.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/preserve-evidence-without-loading-history.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/wuphf.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/retire-redact-supersede-relax.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/serve-multiple-consumers.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/cludebot.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/lightweight/agemem.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hindsight.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/cludebot.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-orchestration-needs-coordination-guarantees-not-just.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/tracecraft.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/tracecraft.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/alexander-patterns-and-knowledge-system-design.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/always-loaded-context-mechanisms-in-agent-harnesses.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/synapptic.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/automated-synthesis-is-missing-good-oracles.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/lightweight/trajectory-informed-memory-generation.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/automating-kb-learning-is-an-open-problem.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/pi-self-learning.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/cludebot.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/pi-self-learning.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/axes-of-artifact-analysis.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/cognee.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/cognee.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/autocontext.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/cheap-adoption-and-weak-retirement-accumulate-cost.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/Self-Training-LLM.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/Self-Training-LLM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/context-operation-interface-bounds-context-policy.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/scroll.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/virtual-context.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/designing-agent-memory-systems.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/byterover-cli.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hindsight.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/deterministic-validation-should-be-a-script.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/diagnostic-richness-constrains-outer-loop-learning-quality.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/halo.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/false-positive-generation-is-filtered-before-retention.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/index-completeness-does-not-determine-editorial-orientation.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/knowledge-storage-does-not-imply-contextual-activation.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/link-strength-is-encoded-in-position-and-prose.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/memory-management-policy-is-learnable-but-oracle-dependent.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/AgentFly.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/open-domain-memory-retention-needs-a-declared-output-spec.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/parametric-reproduction-cannot-replace-an-authoritative-record.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-r.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/KBLaM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/prompt-ablation-converts-human-insight-to-deployable-framing.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/tendril.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/rule-based-context-selection-needs-a-pre-existing-signal.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/session-history-should-not-be-the-default-next-context.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/structure-inference-needs-capture-at-the-decision-surface.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/lightweight/trajectory-informed-memory-generation.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/title-as-claim-enables-traversal-as-reasoning.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/treat-continual-learning-as-representational-form-coevolution.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/notes/underspecification-and-indeterminism-complicate-programming-for.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/thalo.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/dynamic-cheatsheet.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/a-mem-agentic-memory-for-llm-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/lightweight/agemem.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/virtual-context.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/agent-workflow-memory.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/tracecraft.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/arrmlet-tracecraft.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/asi-bench-at-the-dawn-of-artificial-superintelligence.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/autonomous-agent-context-memory-2088234998654472340.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/avo-agentic-variation-operators-autonomous-evolutionary-search.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/building-a-repo-centric-modular-agent-stack-2085784422339768686.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/echel.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/echel.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/building-self-correcting-memory-in-openwiki-2092280107033616451.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/openwiki.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/openwiki.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/chunking-in-soar-general-learning-mechanism.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/claude-obsidian-second-brain-guide-2068306794116501544.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-obsidian.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-obsidian.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/MehmetGoekce--llm-wiki.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/napkin.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/coding-agents-are-effective-long-context-processors.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/openviking.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/cognee-knowledge-engine.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/sift-kg.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/sift-kg.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/sift-kg.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/context-as-an-environment.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/virtual-context.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/tendril.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/tendril.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/databricks-memory-scaling-ai-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/xMemory.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/SkillX.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/effective-harnesses-for-long-running-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-context-guard.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/claude-workstream-kit.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/autocontext.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/autocontext.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/autocontext.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/everything-you-need-to-know-about-llm-memory.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/externalization-in-llm-agents-unified-review.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/from-harness-lock-in-to-portable-context-layer.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/llm-wiki.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/okf-harness.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/llm-wiki.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/okf-harness.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/from-human-memory-to-ai-memory-survey-llm-memory-mechanisms.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/goedel-machines-schmidhuber.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/lightweight/incremental-self-improvement.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/graphiti-temporal-knowledge-graph.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/graphiti.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/graphiti.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/kgai.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/graphiti.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/harness-engineering-for-self-improvement.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/harness-handbook-making-evolving-agent-harnesses-readable.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/harnesscompass-guiding-automatic-harness-evolution.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/how-warp-builds-self-improving-agents-on-claude.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/how-we-built-our-knowledge-base-2077822555159945507.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/cocoindex.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/cocoindex.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/auto-harness.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/CORAL.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/hyperagents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/intern-s2-mobius-arxiv-v1.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/KBLaM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/intern-s2-mobius-decoupled-knowledge-and-reasoning.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/KBLaM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/koylanai-personal-brain-os.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/letta-memgpt-stateful-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/dynamic-cheatsheet.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/napkin.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/machine-studying.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/dynamic-cheatsheet.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/mem0-memory-layer.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/memory-intelligence-agent.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hyperagents.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/multi-agent-memory-computer-architecture-perspective.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/sage.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/hindsight.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/next-generation-agentic-reinforcement-learning-systems.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/on-the-fragility-of-self-improving-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/reasoning-bank.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/palantir-ontology-vs-decision-traces.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/graphiti.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/pilot-live-self-improvement-long-horizon-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/position-bias.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/psychology-solves-ai-memory-identity-construction-2025307030651.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/purdue-owl-toulmin-argument.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/reason-wide-not-deep-distilled-skills.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/recursive-self-improvement.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/KBLaM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/synapptic.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/Self-Training-LLM.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/Self-Training-LLM.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/simon-willison-karpathy-claws.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/clawvault.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/getsentry-skills.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/skillrl-evolving-agents-recursive-skill-augmented-rl.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/SkillWeaver.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/amazon-science--SAGE.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/slate-moving-beyond-react-and-rlm.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/spacedriveapp-spacebot-ai-agent.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/spacebot.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/voyager.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/the-geometry-of-forgetting.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/the-price-of-meaning-why-every-semantic-memory-system-forgets.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/three-dimensions-agent-memory-store-2054246434506199529.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/toward-measuring-recursive-self-improvement-2090411367819809047.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/meta-harness.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/we-should-take-text-optimization-more-seriously.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/systems-table.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/reference/adr/023-quote-anchored-citations-for-code-grounded-reviews.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/reference/source-adoption-policy.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/thalo.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/thalo.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/arscontexta.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/agentic-systems/README.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/README.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/exo.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/agentic-systems/reviews/agno-agentos.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/pal.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/pal.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/agentic-systems/reviews/exo.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/exo.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/exo.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/exo.md",
+          "exists": true
+        },
+        {
+          "target": "kb/agent-memory-systems/reviews/exo.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    },
+    {
+      "artifact": "kb/agentic-systems/reviews/swamp.md",
+      "links": [
+        {
+          "target": "kb/agent-memory-systems/reviews/swamp.md",
+          "exists": true
+        }
+      ],
+      "disposition": "Retain original historical target; no replacement support or current source freshness is asserted."
+    }
+  ]
+}

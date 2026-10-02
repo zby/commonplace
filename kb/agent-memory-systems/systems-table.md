@@ -7,6 +7,8 @@ tags: [agent-memory, learning-theory]
 
 # Agent memory systems comparison table
 
+**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-systems/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
+
 A scannable view of the code-reviewed systems in this collection, generated from
 [`systems.csv`](./systems.csv). Lightweight (doc-only) reviews are excluded — a
 comparison table is for *choosing* a system, and that calls for code-grounded

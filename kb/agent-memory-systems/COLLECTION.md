@@ -10,14 +10,18 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **`reviews/`** — individual system reviews, one file per system, typed as `agent-memory-systems/types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
-**`lightweight/`** — doc-grounded coverage for systems known from papers, READMEs, or articles when no inspectable implementation supports a code-grounded review. These are ordinary `agent-memory-system-review` notes carrying `source-tier: doc-grounded`; they hold the **same ontology-normalized comparison elements** as code-grounded reviews (four-field record, write side, and read-back direction) at a lower evidence tier — claim-level. The tier is about authority, not scope. Flip `source-tier` to `code-grounded` when inspectable implementation source supports the material findings. The review spec's instructions are tier-neutral (evidence-stance, source-metadata, and citation rules cover both); see the `source-tier` field in `types/agent-memory-system-review.md`.
+**`lightweight/`** — historical doc-grounded coverage for systems known from
+papers, READMEs or articles. These records carry `source-tier: doc-grounded`
+and the legacy comparison elements. Newly available implementation evidence
+requires a fresh main-analysis run, not a tier change in a frozen review.
 
 **Collection root** — navigation (`README.md` plus build-time directory listings), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
 
 Reviews record each external mechanism absolutely, even when it resembles Commonplace. The shared ontology chooses the distinctions and names comparable solutions; it does not turn the review into a Commonplace delta. Closed controlled fields feed the matrix. Open-ended mechanisms and ontology boundary cases support qualitative synthesis but no prevalence claim until the full corpus has been assayed for that concept.
 
 Per-system reviews under `reviews/` and `lightweight/` are historical records.
-The collection is frozen. No workflow writes or reads it: new analysis goes
+The collection is frozen. New analysis and comparison workflows do not write
+or use its reviews as current inputs: new analysis goes
 through `analyse-agentic-system`, whose memory analyst writes the memory
 member of each analysis set, and its analysts are forbidden to read this
 collection. Existing reviews remain citable at their recorded boundaries;
@@ -27,9 +31,9 @@ The matrix and table in this collection are historical snapshots. Active
 comparison scripts now read retained main-analysis results and write under
 `kb/agentic-systems/comparisons/`. They do not update the legacy pair. Historical
 synthesis requires matching legacy reviews, contracts, and parser from one
-reconstructable revision. Current synthesis reads main results directly,
-bundles their exact bytes and comparison contracts, and derives its CSV from
-that same selected population.
+reconstructable revision. Current synthesis reads retained main-analysis sets
+directly and records the commit holding the reviews, sets, contracts and
+reader code. Its CSV uses that same selected population.
 
 Selective Commonplace implications are living transfer scans under `kb/reports/state/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Historical `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections remain evidence of the earlier review boundary, not current transfer advice.
 

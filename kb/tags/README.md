@@ -36,7 +36,7 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Curation](./curation-README.md) — indexes and tag heads, quality signals, hygiene, capacity, retirement
 - [Method-guided action](./method-guided-action-README.md) — how an agent selects or acquires a method, brings it into use, and lets it guide decisions
 - [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
-- [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
+- [Related systems](../agentic-systems/README.md) — current external-system analyses and memory comparisons; the legacy memory survey remains historical
 
 ## Workshop Layer
 

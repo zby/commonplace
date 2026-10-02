@@ -13,7 +13,7 @@ These reviews serve two readers. For someone **surveying or choosing** a system,
 
 **Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
 
-Normal production goes through the [`write-agent-memory-system-review`](../../../instructions/write-agent-memory-system-review/SKILL.md) skill, which owns source preparation, delegation, QA, validation, and reporting. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
+The historical, now retired `write-agent-memory-system-review` skill owned source preparation, delegation, QA, validation, and reporting. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
 
 The section specs below distill [designing-agent-memory-systems](../../../notes/designing-agent-memory-systems.md) and its requirements inventory into a review-time contract — don't load that note during ordinary review writing.
 
@@ -51,7 +51,7 @@ The quoted text is the anchor; the attribution pins where it came from. Do not r
 This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — under the then-current `verify-review-quote-grounding` instruction — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
 
 This preserved baseline records the earlier contract. The downstream migration
-[retired that instruction into main-review publication](../../agentic-analysis-consumer-migration/c11-acceptance.md).
+[retired that instruction into main-review publication](../../../reports/retained/agentic-analysis-consumer-migration-20261002/captures/c11-acceptance.md).
 
 ## Opening and source metadata
 

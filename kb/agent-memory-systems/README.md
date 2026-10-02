@@ -1,5 +1,10 @@
 # Agent Memory Systems
-A survey of external **agent memory systems** — how AI agents store, retrieve, and maintain knowledge across sessions and tasks. We track knowledge bases, context-engineering layers, structured note-taking tools, and trajectory-learning loops, reading their source code wherever it is available.
+
+This is the frozen historical survey of external agent memory systems.
+For current analyses and their comparison procedure, start at
+[Agentic Systems](../agentic-systems/README.md). Reviews, surveys and tables
+here retain their recorded source boundaries; their counts and Commonplace
+comparisons are historical evidence.
 
 **Historical comparison:** Scan the [comparison table](./systems-table.md) — one
 row per system, a plain-English description plus the handful of fields that
@@ -14,7 +19,7 @@ We track these systems to make a shared design space inspectable. Commonplace su
 
 Current analysis uses [`analyse-agentic-system`](../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
 which delegates memory findings to the [memory analyst](../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md)
-and integrates its typed report into the main result. New runs publish under
+and retains its typed report as a member of the main analysis set. New runs publish under
 `kb/agentic-systems/`; the reviews in this collection remain historical records.
 
 The historical reviews classify a system's retained behavior-shaping artifacts in **one
@@ -75,8 +80,8 @@ under `kb/agentic-systems/comparisons/`; see the
 They no longer rebuild these legacy files or preserve hand-classified columns.
 
 The [landscape procedure](../agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md)
-now reads retained main results and derives a matching matrix in one frozen
-bundle. The legacy snapshots here remain outside that population. Historical
+now reads retained main-analysis sets and derives a matching matrix from
+one committed population. The legacy snapshots here remain outside that population. Historical
 reproduction of these old comparisons requires their matching reviews,
 contracts, parser, and matrix at one reconstructable revision.
 

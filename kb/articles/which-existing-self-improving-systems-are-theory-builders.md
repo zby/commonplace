@@ -18,6 +18,8 @@ source_notes:
 > Comments, corrections, and additional candidates are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
+**Historical draft snapshot.** The eighteen-system comparison is retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`, with its original reviews and source ingests. Its counts and classifications are not a current survey. A future comparison must be rebuilt from a declared population through the [main-analysis synthesis procedure](../agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md).
+
 Existing self-improving systems already report gains from retained knowledge
 and revised skills. They also supply mechanisms for diagnosis, criticism,
 revision, and reuse. [Our program](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md)

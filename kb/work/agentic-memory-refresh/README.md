@@ -51,8 +51,9 @@ Use one active coordinator plus its specialist until capacity is demonstrated.
 The parent reconciles workshop status from validated completion,
 not from an agent's statement that a draft is finished.
 
-The existing [consumer migration workshop](../agentic-analysis-consumer-migration/README.md)
-owns migration of downstream procedures. The
+The [consumer migration closure](../../reports/retained/agentic-analysis-consumer-migration-20261002/README.md)
+records acceptance of active readers and preservation of historical publications.
+Current downstream contracts belong to their producing procedures. The
 [analysis-method workshop](../analyse-agentic-system/README.md) owns method
 construction. This workshop owns corpus refresh and acceptance observations;
 record a discovered shared-method or consumer defect here and coordinate its

@@ -1,0 +1,87 @@
+{
+  "inputs_commit": "3c5590c2a0e8ce65a6da46257469a33c70961287",
+  "method": "Export committed kb, scripts and src; import exported code with PYTHONPATH; run each reader on one current review and separately on legacy and missing inputs.",
+  "checks": [
+    {
+      "script": "build_systems_matrix.py",
+      "case": "current",
+      "review": "kb/agentic-systems/reviews/instinctual-memory.md",
+      "exit_code": 0,
+      "existing_output_preserved": null,
+      "stdout": "rows written: 1; code-grounded: 1; doc-grounded: 0\nwrote /tmp/commonplace-migration-closure-zcfhsq3_/checks/rejection-build_systems_matrix.py.out\n",
+      "stderr": ""
+    },
+    {
+      "script": "build_systems_matrix.py",
+      "case": "legacy",
+      "review": "kb/agent-memory-systems/reviews/napkin.md",
+      "exit_code": 1,
+      "existing_output_preserved": true,
+      "stdout": "",
+      "stderr": "matrix not written: not a main-review path: kb/agent-memory-systems/reviews/napkin.md\n"
+    },
+    {
+      "script": "build_systems_matrix.py",
+      "case": "missing",
+      "review": "kb/agentic-systems/reviews/absent-migration-test.md",
+      "exit_code": 1,
+      "existing_output_preserved": true,
+      "stdout": "",
+      "stderr": "matrix not written: [Errno 2] No such file or directory: '/tmp/commonplace-migration-closure-zcfhsq3_/kb/agentic-systems/reviews/absent-migration-test.md'\n"
+    },
+    {
+      "script": "render_systems_table.py",
+      "case": "current",
+      "review": "kb/agentic-systems/reviews/instinctual-memory.md",
+      "exit_code": 0,
+      "existing_output_preserved": null,
+      "stdout": "wrote /tmp/commonplace-migration-closure-zcfhsq3_/checks/rejection-render_systems_table.py.out (1 rows, evidence tiers separated)\n",
+      "stderr": ""
+    },
+    {
+      "script": "render_systems_table.py",
+      "case": "legacy",
+      "review": "kb/agent-memory-systems/reviews/napkin.md",
+      "exit_code": 1,
+      "existing_output_preserved": true,
+      "stdout": "",
+      "stderr": "table not written: not a main-review path: kb/agent-memory-systems/reviews/napkin.md\n"
+    },
+    {
+      "script": "render_systems_table.py",
+      "case": "missing",
+      "review": "kb/agentic-systems/reviews/absent-migration-test.md",
+      "exit_code": 1,
+      "existing_output_preserved": true,
+      "stdout": "",
+      "stderr": "table not written: [Errno 2] No such file or directory: '/tmp/commonplace-migration-closure-zcfhsq3_/kb/agentic-systems/reviews/absent-migration-test.md'\n"
+    },
+    {
+      "script": "analyze_matrix.py",
+      "case": "current",
+      "review": "kb/agentic-systems/reviews/instinctual-memory.md",
+      "exit_code": 0,
+      "existing_output_preserved": null,
+      "stdout": "selected: 1; doc-grounded excluded from statistics: 0\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/ARTIFACT.yaml sha256=e0a8f22b2f6c1a0676f8180b31cac70d265d1208eeb015971215f82ebcaa3552\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/epistemic.md sha256=be1086bc624eb619acecddcb3e347d94af6ae77451074a677e5fe1881d8c6def\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/memory.md sha256=783e48509c375c232a7c50ddc7160676fddafd376deab5e631af512c6fa56d98\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/overview.md sha256=e21e42dca1f64997919b8d4b012730a316ef27a9a08f53037b84a2e478fb92d5\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/reconciliation.md sha256=ebba9bfd94a8e596b60b6b3e420ca40380417e3d36e06efc26da634a6da968a7\ninput: kb/agentic-systems/reports/retained/AAS-2026-10-01-instinctual-memory-01/runtime.md sha256=e50269b38a57316964217c4756aa948eaf830e039840708e838f0f322104ccb2\ninput: kb/agentic-systems/reviews/instinctual-memory.md sha256=fcd1d1c2bd332423165387d64e4f91f07321b030ac844c06393f9c8a417b0eb2\ncode-grounded rows: 1\nassessment storage_substrate: {'known': 1}; value bases: {'known:wired': 2}\nsupported storage_substrate: {'files': 1, 'repo': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete storage_substrate: 1 of 1 rows have a complete strong profile; profiles: {'files,repo': 1}\nassessment representational_form: {'known': 1}; value bases: {'known:wired': 2}\nsupported representational_form: {'natural-language': 1, 'symbolic': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete representational_form: 1 of 1 rows have a complete strong profile; profiles: {'natural-language,symbolic': 1}\nassessment lineage: {'known': 1}; value bases: {'known:wired': 4}\nsupported lineage: {'authored': 1, 'imported': 1, 'other-compiled': 1, 'trace-extracted': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete lineage: 1 of 1 rows have a complete strong profile; profiles: {'authored,imported,other-compiled,trace-extracted': 1}\nassessment behavioral_authority: {'known': 1}; value bases: {'known:wired': 7}\nsupported behavioral_authority: {'enforcement': 1, 'instruction': 1, 'knowledge': 1, 'learning': 1, 'ranking': 1, 'routing': 1, 'validation': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete behavioral_authority: 1 of 1 rows have a complete strong profile; profiles: {'enforcement,instruction,knowledge,learning,ranking,routing,validation': 1}\nassessment write_agency: {'known': 1}; value bases: {'known:wired': 2}\nsupported write_agency: {'automatic': 1, 'manual': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete write_agency: 1 of 1 rows have a complete strong profile; profiles: {'automatic,manual': 1}\nassessment curation_operations: {'known': 1}; value bases: {'known:wired': 4}\nsupported curation_operations: {'consolidate': 1, 'dedup': 1, 'evolve': 1, 'invalidate': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete curation_operations: 1 of 1 rows have a complete strong profile; profiles: {'consolidate,dedup,evolve,invalidate': 1}\nassessment read_back_direction: {'known': 1}; value bases: {'known:wired': 2}\nsupported read_back_direction: {'pull': 1, 'push': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete read_back_direction: 1 of 1 rows have a complete strong profile; profiles: {'pull,push': 1}\nassessment read_back_signal: {'known': 1}; value bases: {'known:wired': 2}\nsupported read_back_signal: {'coarse': 1, 'inferred-lexical': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete read_back_signal: 1 of 1 rows have a complete strong profile; profiles: {'coarse,inferred-lexical': 1}\nassessment trace_learning: {'known': 1}; value bases: {'known:wired': 1}\nsupported trace_learning: {'yes': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete trace_learning: 1 of 1 rows have a complete strong profile; profiles: {'yes': 1}\nassessment trace_source: {'known': 1}; value bases: {'known:wired': 1}\nsupported trace_source: {'session-logs': 1} / 1 selected code-grounded systems (positive evidence only; remainder is not absence)\ncomplete trace_source: 1 of 1 rows have a complete strong profile; profiles: {'session-logs': 1}\n",
+      "stderr": ""
+    },
+    {
+      "script": "analyze_matrix.py",
+      "case": "legacy",
+      "review": "kb/agent-memory-systems/reviews/napkin.md",
+      "exit_code": 1,
+      "existing_output_preserved": null,
+      "stdout": "",
+      "stderr": "analysis not produced: not a main-review path: kb/agent-memory-systems/reviews/napkin.md\n"
+    },
+    {
+      "script": "analyze_matrix.py",
+      "case": "missing",
+      "review": "kb/agentic-systems/reviews/absent-migration-test.md",
+      "exit_code": 1,
+      "existing_output_preserved": null,
+      "stdout": "",
+      "stderr": "analysis not produced: [Errno 2] No such file or directory: '/tmp/commonplace-migration-closure-zcfhsq3_/kb/agentic-systems/reviews/absent-migration-test.md'\n"
+    }
+  ]
+}
