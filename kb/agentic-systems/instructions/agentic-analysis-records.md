@@ -21,8 +21,9 @@ member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-1`), memory has
 `MEM-` (`MEM-OBJ-1`), epistemic has `EPI-` (`EPI-OBJ-1`).
 The prefix identifies the declaring analyst, not the member discussing the
 record. Keep a supplied ID unchanged in references, annotations and amendments.
-Frozen sets from earlier methods retain their bare runtime IDs; readers
-accept those exact IDs without treating them as aliases for `RT-` IDs.
+Archived results from earlier methods keep their bare runtime IDs as
+written; they are frozen evidence outside this grammar, not aliases for
+`RT-` IDs.
 
 Within `## Shared records`, kind headings group declarations:
 `### Components`, `### Operative objects`, `### Routes`, `### Claims`,

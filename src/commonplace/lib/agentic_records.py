@@ -6,10 +6,9 @@ import re
 from collections import Counter
 
 # A record ID carries the prefix of the analyst that established it, for the
-# life of the set: `RT-`, `MEM-`, or `EPI-`.
-# BACKCOMPAT: frozen sets declare bare runtime IDs - remove after those sets
-# no longer need current validation and comparison readers.
-_PREFIX = r"(?:(?:RT|MEM|EPI)-)?"
+# life of the set: `RT-`, `MEM-`, or `EPI-`. Archived results written with
+# bare runtime IDs are not read by current code.
+_PREFIX = r"(?:RT|MEM|EPI)-"
 _RECORD_ID = rf"{_PREFIX}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
 _ID = rf"(?:SRC-\d+|{_RECORD_ID})"
 _DECLARATION = re.compile(
@@ -17,6 +16,9 @@ _DECLARATION = re.compile(
 )
 _ANNOTATION = re.compile(
     rf"(?m)^####[ \t]+On[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
+)
+_UNPREFIXED_DECLARATION = re.compile(
+    r"(?m)^####[ \t]+((?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)[ \t]+—[ \t]+\S[^\n]*$"
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
 _REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
@@ -99,6 +101,13 @@ def record_reference_errors(body: str) -> list[str]:
     A member of a set is validated alone, so references it makes to records
     other members declare are not resolved here.
     """
+    records = section(_analysis_prose(body), "Shared records")
+    unprefixed = _UNPREFIXED_DECLARATION.findall(records)
+    if unprefixed:
+        return [
+            "record references: declarations without an analyst prefix: "
+            + ", ".join(unprefixed) + "; use RT-, MEM- or EPI-"
+        ]
     repeated = sorted(
         key for key, count in Counter(declared_ids(body)).items() if count > 1
     )

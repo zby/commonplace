@@ -22,11 +22,11 @@ ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
 """
 
 
-def route_body(identifier: str = "RTE-1", answers: str = ROUTE_ANSWERS) -> str:
+def route_body(identifier: str = "RT-RTE-1", answers: str = ROUTE_ANSWERS) -> str:
     return f"## Shared records\n\n### Routes\n\n#### {identifier} — Recall\n\n{answers}"
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
 def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
     assert route_field_errors(route_body(prefix + "RTE-1")) == []
     errors = route_field_errors(route_body(prefix + "RTE-1", ""))
@@ -52,22 +52,22 @@ def test_route_field_failures(replacement: str, diagnostic: str) -> None:
 
 
 def test_other_records_and_annotations_cannot_supply_missing_fields() -> None:
-    for heading in ("#### MEM-RTE-2 — Another route", "#### On RTE-1 — Overlay",
+    for heading in ("#### MEM-RTE-2 — Another route", "#### On RT-RTE-1 — Overlay",
                     "### Claims", "## Discussion"):
         errors = route_field_errors(route_body(answers="") + f"\n{heading}\n\n{ROUTE_ANSWERS}")
-        assert sum("RTE-1:" in error for error in errors) == 7
+        assert sum("RT-RTE-1:" in error for error in errors) == 7
 
 
 def test_source_excerpts_cannot_supply_fields_or_declare_routes() -> None:
     quoted = "\n".join("> " + line for line in ROUTE_ANSWERS.splitlines())
     for fenced in (f"```markdown\n{ROUTE_ANSWERS}```\n", quoted):
         assert len(route_field_errors(route_body(answers=fenced))) == 7
-    excerpt = "\n```markdown\n#### RTE-99 — Source example\n```\n"
+    excerpt = "\n```markdown\n#### RT-RTE-99 — Source example\n```\n"
     assert route_field_errors(route_body() + excerpt) == []
 
 
 def test_annotation_fields_are_not_required() -> None:
-    assert route_field_errors("## Shared records\n\n#### On RTE-1 — Overlay\n") == []
+    assert route_field_errors("## Shared records\n\n#### On RT-RTE-1 — Overlay\n") == []
 
 
 def test_route_field_labels_match_the_delivered_contract() -> None:
@@ -94,19 +94,19 @@ BASE = """# Example
 
 ### Operative objects
 
-#### OBJ-1 — First object
+#### RT-OBJ-1 — First object
 
 Evidence: SRC-1.
 
-#### OBJ-2 — Second object
+#### RT-OBJ-2 — Second object
 
-#### OBJ-15 — Third object
+#### RT-OBJ-15 — Third object
 
 ### Routes
 
-#### RTE-1 — S3 invocation
+#### RT-RTE-1 — S3 invocation
 
-#### RTE-20 — Another route
+#### RT-RTE-20 — Another route
 
 ## Lens outputs
 
@@ -118,68 +118,76 @@ def test_heading_title_is_not_inferred_to_be_shorthand() -> None:
     assert set_record_errors({"overview.md": BASE})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["OBJ-1/O2", "RTE-20–R9", "OBJ-1, O2"])
+@pytest.mark.parametrize("reference", ["RT-OBJ-1/O2", "RT-RTE-20–R9", "RT-OBJ-1, O2"])
 def test_only_complete_references_are_recognized(reference: str) -> None:
     assert record_reference_errors(BASE + reference) == []
     assert set_record_errors({"overview.md": BASE + reference})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["OBJ-1/OBJ-99", "OBJ-1–OBJ-99"])
+@pytest.mark.parametrize("reference", ["RT-OBJ-1/RT-OBJ-99", "RT-OBJ-1–RT-OBJ-99"])
 def test_complete_unresolved_references_still_fail(reference: str) -> None:
     _, errors = set_record_errors({"overview.md": BASE + reference})
-    assert errors == ["overview.md: unresolved record OBJ-99"]
+    assert errors == ["overview.md: unresolved record RT-OBJ-99"]
 
 
 def test_accepts_complete_lists_and_ignores_source_code() -> None:
-    content = BASE + """OBJ-1, OBJ-2; `RTE-1`/`RTE-20`.
+    content = BASE + """RT-OBJ-1, RT-OBJ-2; `RT-RTE-1`/`RT-RTE-20`.
 
-> Source example OBJ-999/O2.
+> Source example RT-OBJ-999/O2.
 
 ```python
-print("RTE-999–R9")
+print("RT-RTE-999–R9")
 ```
 
-See OBJ-15 and SRC-1.
+See RT-OBJ-15 and SRC-1.
 """
     assert record_reference_errors(content) == []
     assert set_record_errors({"overview.md": content})[1] == []
 
 
 def test_prose_lists_and_tables_are_references_not_declarations() -> None:
-    content = BASE.replace("### Routes", """OBJ-1 is retained. Evidence: SRC-1.
-- OBJ-1 is consumed later.
-| OBJ-1 | Cross-reference |
+    content = BASE.replace("### Routes", """RT-OBJ-1 is retained. Evidence: SRC-1.
+- RT-OBJ-1 is consumed later.
+| RT-OBJ-1 | Cross-reference |
 SRC-1 supplies the evidence.
 | SRC-1 | Source cross-reference |
 
 ### Routes""")
-    assert declared_ids(content) == ["OBJ-1", "OBJ-2", "OBJ-15", "RTE-1", "RTE-20"]
+    assert declared_ids(content) == ["RT-OBJ-1", "RT-OBJ-2", "RT-OBJ-15", "RT-RTE-1", "RT-RTE-20"]
     assert record_reference_errors(content) == []
     assert set_record_errors({"overview.md": content})[1] == []
 
 
 @pytest.mark.parametrize("heading", [
-    "### OBJ-99 — Wrong level", "##### OBJ-99 — Wrong level",
-    "#### OBJ-99", "#### OBJ-99 - Wrong separator", "#### SRC-99 — Source",
+    "### RT-OBJ-99 — Wrong level", "##### RT-OBJ-99 — Wrong level",
+    "#### RT-OBJ-99", "#### RT-OBJ-99 - Wrong separator", "#### SRC-99 — Source",
 ])
 def test_only_prescribed_record_headings_declare(heading: str) -> None:
     assert declared_ids("## Shared records\n\n" + heading + "\n") == []
 
 
 def test_record_headings_outside_shared_records_do_not_declare() -> None:
-    assert declared_ids("## Discussion\n\n#### OBJ-99 — Example\n") == []
+    assert declared_ids("## Discussion\n\n#### RT-OBJ-99 — Example\n") == []
 
 
 def test_rejects_duplicate_declarations() -> None:
-    content = BASE.replace("#### OBJ-2 — Second object", "#### OBJ-1 — Second object")
-    assert any("duplicate declarations: OBJ-1" in error for error in record_reference_errors(content))
+    content = BASE.replace("#### RT-OBJ-2 — Second object", "#### RT-OBJ-1 — Second object")
+    assert any("duplicate declarations: RT-OBJ-1" in error for error in record_reference_errors(content))
+
+
+def test_rejects_declarations_without_an_analyst_prefix() -> None:
+    body = "## Shared records\n\n#### OBJ-1 — Bare heading\n\n#### RT-OBJ-2 — Prefixed\n"
+    assert record_reference_errors(body) == [
+        "record references: declarations without an analyst prefix: OBJ-1; use RT-, MEM- or EPI-"
+    ]
+    assert record_reference_errors("## Discussion\n\n#### OBJ-1 — Not a declaration\n") == []
 
 
 def test_member_can_reference_ids_other_members_declare() -> None:
-    assert record_reference_errors("Uses OBJ-40 and MEM-OBJ-2.") == []
+    assert record_reference_errors("Uses RT-OBJ-40 and MEM-OBJ-2.") == []
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
 def test_rejects_duplicate_declarations_of_every_prefix(prefix: str) -> None:
     body = f"""## Shared records
 
@@ -192,26 +200,24 @@ def test_rejects_duplicate_declarations_of_every_prefix(prefix: str) -> None:
     ]
 
 
-def test_lens_prefix_is_part_of_the_declared_id() -> None:
+def test_analyst_prefix_is_part_of_the_declared_id() -> None:
     body = """## Shared records
 
 #### MEM-RTE-1 — S3 invocation
 
 #### EPI-RTE-1 — Admission check
 
-#### RTE-1 — Ordinary invocation
-
-#### RT-RTE-1 — Prefixed runtime invocation
+#### RT-RTE-1 — Ordinary invocation
 
 MEM-RTE-1 and EPI-RTE-1 read the bucket RT-RTE-1 writes.
 """
-    assert declared_ids(body) == ["MEM-RTE-1", "EPI-RTE-1", "RTE-1", "RT-RTE-1"]
+    assert declared_ids(body) == ["MEM-RTE-1", "EPI-RTE-1", "RT-RTE-1"]
     assert record_reference_errors(body) == []
     assert set_record_errors({"overview.md": body})[1] == []
 
 
 @pytest.mark.parametrize("kind", ["CMP", "OBJ", "RTE", "CLM", "ABS", "BAP"])
-def test_runtime_prefix_resolves_without_aliasing_historical_ids(kind: str) -> None:
+def test_bare_kind_tokens_are_neither_declarations_nor_references(kind: str) -> None:
     identifier = f"RT-{kind}-1"
     bodies = {
         "overview.md": "## Source register\n\n| SRC-1 | Source |\n",
@@ -225,10 +231,11 @@ def test_runtime_prefix_resolves_without_aliasing_historical_ids(kind: str) -> N
     assert annotated_ids(bodies["memory.md"]) == {identifier}
     assert identifier in amendment_index(bodies["reconciliation.md"])
     bodies["epistemic.md"] = f"Assessment of {kind}-1."
-    assert set_record_errors(bodies)[1] == [f"epistemic.md: unresolved record {kind}-1"]
+    bodies["runtime.md"] += f"\n#### {kind}-2 — Unprefixed heading\n"
+    assert set_record_errors(bodies) == ({identifier, "SRC-1"}, [])
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
 def test_absence_classification_preserves_analyst_prefixes(prefix: str) -> None:
     assert is_absence(prefix + "ABS-1")
     assert not is_absence(prefix + "OBJ-1")
@@ -240,7 +247,7 @@ RUNTIME = """# Runtime
 
 ### Routes
 
-#### RTE-1 — Ordinary invocation
+#### RT-RTE-1 — Ordinary invocation
 
 Record citing SRC-1.
 
@@ -257,7 +264,7 @@ MEMORY = """# Memory
 
 ### Routes
 
-#### On RTE-1 — Ordinary invocation
+#### On RT-RTE-1 — Ordinary invocation
 
 Memory fields on the seeded route.
 
@@ -270,7 +277,7 @@ EPISTEMIC = """# Epistemic
 
 ## Authority-route ledger
 
-EPI-RTE-1 checks what MEM-RTE-10 imports before RTE-1 uses it.
+EPI-RTE-1 checks what MEM-RTE-10 imports before RT-RTE-1 uses it.
 
 ## Shared records
 
@@ -284,9 +291,9 @@ Record citing SRC-1.
 
 def test_annotation_headings_are_not_declarations() -> None:
     assert declared_ids(MEMORY) == ["MEM-RTE-10"]
-    assert annotated_ids(MEMORY) == {"RTE-1"}
+    assert annotated_ids(MEMORY) == {"RT-RTE-1"}
     assert annotated_ids(RUNTIME) == {"MEM-RTE-10"}
-    assert declared_ids(RUNTIME) == ["RTE-1"]
+    assert declared_ids(RUNTIME) == ["RT-RTE-1"]
 
 
 OVERVIEW = "## Source register\n\n| SRC-1 | Runtime source |\n| SRC-2 | Memory source |\n"
@@ -298,7 +305,7 @@ def test_set_resolves_lens_prefixed_records_across_members() -> None:
         "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory,
         "epistemic.md": EPISTEMIC,
     })
-    assert known == {"SRC-1", "SRC-2", "RTE-1", "MEM-RTE-10", "MEM-OBJ-1", "EPI-RTE-1"}
+    assert known == {"SRC-1", "SRC-2", "RT-RTE-1", "MEM-RTE-10", "MEM-OBJ-1", "EPI-RTE-1"}
     assert errors == []
 
 
@@ -315,20 +322,20 @@ def test_set_rejects_a_lens_record_declared_by_two_members() -> None:
 def test_an_amendment_in_the_reconciliation_resolves_against_the_set() -> None:
     memory = MEMORY + "\n#### MEM-OBJ-1 — Stored object\n"
     supersession = (
-        "\n## Reconciliation\n\nAmendment: MEM-RTE-10 is superseded by RTE-1; both "
+        "\n## Reconciliation\n\nAmendment: MEM-RTE-10 is superseded by RT-RTE-1; both "
         "trace the same call at SRC-1.\n"
     )
     bodies = {"runtime.md": RUNTIME, "memory.md": memory, "epistemic.md": EPISTEMIC}
     assert set_record_errors({"overview.md": OVERVIEW, "reconciliation.md": supersession, **bodies})[1] == []
 
-    undeclared = supersession.replace("RTE-1;", "RTE-7;")
+    undeclared = supersession.replace("RT-RTE-1;", "RT-RTE-7;")
     _, errors = set_record_errors({"overview.md": OVERVIEW, "reconciliation.md": undeclared, **bodies})
-    assert errors == ["reconciliation.md: unresolved record RTE-7"]
+    assert errors == ["reconciliation.md: unresolved record RT-RTE-7"]
 
 
 def test_set_rejects_duplicate_record_across_members() -> None:
     _, errors = set_record_errors({"overview.md": BASE, "runtime.md": RUNTIME})
-    assert "duplicate set declaration: RTE-1" in errors
+    assert "duplicate set declaration: RT-RTE-1" in errors
 
 
 def test_set_rejects_duplicate_source_rows() -> None:

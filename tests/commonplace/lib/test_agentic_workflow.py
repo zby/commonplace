@@ -893,7 +893,11 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
     drive_to(scripted, "runtime")
     attempt, prompt = prompt_of(scripted.round(), "runtime")
     assert attempt == 2
-    assert "record declarations: this analyst must use RT-:" in prompt
+    expected = (
+        "declarations without an analyst prefix" if prefix == ""
+        else "record declarations: this analyst must use RT-:"
+    )
+    assert expected in prompt
     assert isinstance(scripted.run()[-1], Done)
     assert scripted.launched.count("runtime") == 2
     assert scripted.launched.count("epistemic") == 1

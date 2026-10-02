@@ -500,14 +500,9 @@ def member_fixture(tmp_path: Path) -> Path:
     return run_dir
 
 
-@pytest.mark.parametrize("prefix", ["RT-", ""])
-def test_member_set_readers_preserve_current_and_historical_runtime_ids(
-    tmp_path: Path, prefix: str,
-) -> None:
+def test_member_set_readers_preserve_runtime_ids(tmp_path: Path) -> None:
+    prefix = "RT-"
     directory = member_fixture(tmp_path) / "output"
-    for path in directory.glob("*.md"):
-        path.write_text(path.read_text().replace("RT-", prefix))
-    repin(directory)
     member_set = agentic_set.load_member_set(
         directory, run=validation.ValidationRun(tmp_path, ()),
     )

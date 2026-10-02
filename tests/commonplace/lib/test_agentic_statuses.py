@@ -31,7 +31,7 @@ def test_accepts_each_controlled_status(status: str) -> None:
     assert conclusion_status_errors(route(f"- implementation conclusion status: {status}")) == []
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
 def test_unlabelled_route_statuses_do_not_satisfy_the_contract(prefix: str) -> None:
     errors = conclusion_status_errors(route("The route is wired; operation unobserved.", prefix))
     assert len(errors) == 1
@@ -57,7 +57,7 @@ def test_layers_remain_separate_and_ordinary_unobserved_prose_is_allowed() -> No
 @pytest.mark.parametrize("other", [
     "> - implementation conclusion status: wired\n",
     "```markdown\n- implementation conclusion status: wired\n```\n",
-    "#### On RTE-1 — Annotation\n- implementation conclusion status: wired\n",
+    "#### On RT-RTE-1 — Annotation\n- implementation conclusion status: wired\n",
     "#### MEM-RTE-2 — Another route\n- implementation conclusion status: wired\n",
 ])
 def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> None:

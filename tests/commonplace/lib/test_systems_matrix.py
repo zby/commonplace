@@ -93,9 +93,8 @@ def test_cross_reference_is_not_a_record_declaration():
         sm.memory_member_comparison({"memory-comparison": data}, body)
 
 
-@pytest.mark.parametrize("prefix", ["RT-", ""])
-def test_comparison_resolves_annotations_on_current_and_historical_runtime_ids(prefix):
-    identifier = prefix + "OBJ-1"
+def test_comparison_resolves_annotations_on_runtime_ids():
+    identifier = "RT-OBJ-1"
     data = profile()
     data["axes"]["storage_substrate"] = known(["files"], [identifier])
     body = f"## Shared records\n\n### Operative objects\n\n#### On {identifier} — Store\n"

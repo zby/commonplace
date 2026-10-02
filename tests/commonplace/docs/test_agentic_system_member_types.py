@@ -257,7 +257,7 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     assert results.note_type == "agentic-system-runtime-report"
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
 def test_member_validation_rejects_missing_route_answers(tmp_path: Path, prefix: str) -> None:
     content = RUNTIME_TEXT.replace("#### RT-RTE-1 —", f"#### {prefix}RTE-1 —").replace(
         "- Selection predicate: The caller selects the object.\n", ""
