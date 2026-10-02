@@ -96,6 +96,8 @@ none declared in this member.
 
 #### RTE-1 — Ordinary invocation
 
+- implementation conclusion status: wired
+
 - Immediate return: The checked object is returned to the caller.
 - Later read-back: uninspected — no later consumer was inspected.
 - Delegated visibility: inapplicable — there is no delegation in this fixture.
@@ -160,6 +162,8 @@ Conclusion.
 ### Routes
 
 #### EPI-RTE-1 — Admission check
+
+- implementation conclusion status: wired
 
 - Immediate return: The checked object is returned to the caller.
 - Later read-back: uninspected — no later consumer was inspected.

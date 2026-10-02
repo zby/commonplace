@@ -69,6 +69,9 @@ memory report. Acceptance requires a valid member with resolved citations.
    sequential transformations; state the remaining possibilities and
    needed evidence when classification is indeterminate. Describe
    non-truth-apt updates without forcing them into the truth-apt taxonomy.
+   For deterministic text transformations, trace a concrete input through
+   the inspected code and compare the resulting meaning. Label such findings
+   as source-inspected deductions; they do not require target execution.
    For routes with no content change, still assess their consequential
    function and authority.
 

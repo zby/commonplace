@@ -287,6 +287,8 @@ Record. Evidence: SRC-1.
 
 #### RTE-1 — Fixture route
 
+- implementation conclusion status: wired
+
 - Immediate return: The fixture invocation returns the stored object.
 - Later read-back: A later invocation reads OBJ-1.
 - Delegated visibility: inapplicable — the fixture has no delegated workers.

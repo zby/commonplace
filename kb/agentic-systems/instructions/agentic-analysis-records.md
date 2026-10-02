@@ -65,6 +65,19 @@ conclusion status: wired` and `operation conclusion status: observed`;
 or `no claimed guarantee`. Epistemic architectural status and observed
 candidate state retain their own vocabularies.
 
+Every route declaration has at least one conclusion-status field on its
+own line. For example:
+
+```markdown
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+```
+
+Write one controlled value only; keep its evidence and
+explanation outside the value. A field cannot come from another record,
+annotation or source excerpt. Member acceptance checks presence, duplicate
+layer labels and controlled values; semantic verification judges the choice.
+
 ## Record fields
 
 | Kind | Required content |
@@ -114,9 +127,10 @@ fields for the declaration.
 
 Local member validation and set validation reject missing, empty or duplicate
 fields and uncertainty values without reasons. They check presence and form;
-semantic verification judges the answers and their evidence. Component fixity,
-status vocabularies and conditional route fields retain their existing
-requirements without new presence checks.
+semantic verification judges the answers and their evidence. The separate
+status-field check above enforces conclusion-status form. Component fixity
+and conditional route fields retain their requirements without new presence
+checks.
 
 ## Conditional route fields
 

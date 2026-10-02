@@ -1044,6 +1044,7 @@ def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     from commonplace.lib.agentic_records import (
+        conclusion_status_errors,
         record_reference_errors,
         route_field_errors,
     )
@@ -1059,6 +1060,10 @@ def _agentic_evidence_and_references_rule(
     results.fails.extend(field_errors)
     if not field_errors:
         results.passes.append("route fields: required labels and non-empty answers checked")
+    status_errors = conclusion_status_errors(parsed.document.body)
+    results.fails.extend(status_errors)
+    if not status_errors:
+        results.passes.append("conclusion status: labelled route fields and controlled values checked")
     validate_quote_citations(results, parsed.content)
 
 

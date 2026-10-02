@@ -13,7 +13,7 @@ the system name), creates the run directory under
 name. Each job's task is an instruction file under
 `kb/agentic-systems/instructions/analyse-agentic-system/jobs/`, declared as an
 input, so a change to it reopens the job. The job split
-is recorded in `kb/work/analysis-offload-to-code/README.md`.
+is defined by those job instructions and their declared dependencies.
 
 Opening, acquisition and publication are effects: opening records values
 that cannot be reproduced (the method commit, the run date, the incumbent's
@@ -144,6 +144,23 @@ def reading_batches(paths: Sequence[str]) -> list[list[str]]:
     if batch:
         batches.append(batch)
     return batches
+
+
+def reading_ranges(path: Path) -> list[tuple[int, int]]:
+    """Line ranges fitting the read budget; an oversized line stands alone."""
+    ranges = []
+    start = 1
+    size = 0
+    end = 0
+    with path.open("rb") as source:
+        for end, line in enumerate(source, 1):
+            if size and size + len(line) > READ_BATCH_BYTES:
+                ranges.append((start, end - 1))
+                start, size = end, 0
+            size += len(line)
+    if end:
+        ranges.append((start, end))
+    return ranges
 
 
 def memory_report(round_: int) -> str:
@@ -598,6 +615,7 @@ class AnalyseAgenticSystem(Workflow):
                 recognize=partial(self.recognize_file, run_dir / FROZEN_SOURCE),
             )
             frozen = json.loads((run_dir / FROZEN_SOURCE).read_text(encoding="utf-8"))
+            self.write_run_state(run_dir, opening, {"source": frozen})
 
         enums = overview_enums(repo_root)
         ctx.agent(self.boundary_job(run_dir, enums, frozen)).wait()
@@ -729,6 +747,15 @@ class AnalyseAgenticSystem(Workflow):
             lines += ["", f"{title}:"]
             lines += [f"{number}. " + ", ".join(batch)
                       for number, batch in enumerate(reading_batches(paths), 1)]
+        oversized = [Path(path) for path in (*method_paths[1:], *input_paths.values())
+                     if Path(path).is_file() and Path(path).stat().st_size > READ_BATCH_BYTES]
+        if oversized:
+            lines += ["", "Oversized-file ranges:",
+                      ("Read each range in a separate tool call. A single oversized line "
+                       "still needs a smaller read if delivery is truncated.")]
+            for path in oversized:
+                spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))
+                lines.append(f"- {path}: lines {spans}")
         if source is not None:
             # Caller text stays data even when it contains fences or parameters.
             fence = "`" * max(3, 1 + max((len(run) for run in re.findall(r"`+", source)), default=0))

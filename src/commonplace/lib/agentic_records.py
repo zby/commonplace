@@ -27,6 +27,13 @@ ROUTE_FIELDS = (
     "Activation or effect",
     "Evidence limits",
 )
+CONCLUSION_STATUSES = frozenset({
+    "absent", "inapplicable", "uninspected", "claimed", "afforded", "wired",
+    "observed", "causally supported",
+})
+_STATUS_FIELD = re.compile(
+    r"(?im)^(?:- )?((?:[\w-]+ )*conclusion status):[ \t]*([^\n]*)$"
+)
 
 
 def _analysis_prose(body: str) -> str:
@@ -130,6 +137,39 @@ def route_field_errors(body: str) -> list[str]:
                 r"(inapplicable|uninspected) — \S.*", values[0].strip()
             ):
                 errors.append(f"{prefix}: use 'inapplicable — reason' or 'uninspected — reason'")
+    return errors
+
+
+def conclusion_status_errors(body: str) -> list[str]:
+    """Check labelled conclusion statuses, without inferring them from prose."""
+    prose = _analysis_prose(body)
+    errors = []
+    for label, value in _STATUS_FIELD.findall(prose):
+        if value.strip().strip("`") not in CONCLUSION_STATUSES:
+            errors.append(
+                f"conclusion status: {label}: invalid value {value.strip()!r}; "
+                "use one of " + ", ".join(sorted(CONCLUSION_STATUSES))
+            )
+    records = section(prose, "Shared records")
+    headings = list(re.finditer(r"(?m)^#{3,6}[ \t]+[^\n]+$", records))
+    for index, heading in enumerate(headings):
+        declaration = _DECLARATION.fullmatch(heading[0])
+        if declaration is None or not re.fullmatch(
+            r"(?:(?:MEM|EPI)-)?RTE-\d+", declaration[1]
+        ):
+            continue
+        end = headings[index + 1].start() if index + 1 < len(headings) else len(records)
+        fields = _STATUS_FIELD.findall(records[heading.end():end])
+        if not fields:
+            errors.append(
+                f"conclusion status: {declaration[1]}: missing labelled field; "
+                "write '- implementation conclusion status: <value>' and label "
+                "any other assessed layer separately"
+            )
+        labels = Counter(label.casefold() for label, _ in fields)
+        for label, count in labels.items():
+            if count > 1:
+                errors.append(f"conclusion status: {declaration[1]}: duplicate {label} field")
     return errors
 
 

@@ -66,6 +66,12 @@ by an excluded host to the selected target.
 
 The source pin is an evidence boundary. If it changes or cannot be verified, write a problem report.
 
+For a GitHub source, code has registered the frozen checkout in `run-state`
+before this job, so `commonplace-quote` is available. For a non-Git source,
+this job establishes the capture that code registers after accepting your
+output. Do not call the quotation helper in that case; record source paths
+in the register. Later analysts retain quotations for their findings.
+
 ## Output
 
 `output` has this frontmatter and these sections, and nothing else:

@@ -97,6 +97,8 @@ file.
 ## Quotation
 
 Use the supplied `run-state` path directly. Keep selection files in `scratch`.
+The boundary job's source-registration instructions govern quotation
+availability during that job.
 
 Generate every quote block with
 `commonplace-quote <run-state> --source-path <commit-relative-path> --text-file <selection-file>`,
