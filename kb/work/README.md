@@ -6,10 +6,10 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open
 - [code-simplification](./code-simplification/README.md) — backlog of verified-by-review duplication, test clean-up, and design-level simplifications left after the 2026-09-28 dead-code sweep; one commit per item
 - [analysis-offload-to-code](./analysis-offload-to-code/README.md) — backlog for moving the mechanical parts of analyse-agentic-system (run opening, ID mapping, manifest hashing, review rendering, read and probe wrappers, guards) into commands and validators; the remaining items are built on the code orchestrator, as parts of the analysis workflow definition
 - [code-scheduled-workflows](./code-scheduled-workflows/README.md) — building the code orchestrator as a separately tested module: a program that runs a workflow, keeps run state on disk and stops only where it needs a sub-agent, with the parent agent launching the jobs it names; nothing built yet
-- [agentic-analysis-output-documents](./agentic-analysis-output-documents/README.md) — replace the monolithic exact analysis with smaller authoritative reports; simplify contracts and verify publication and downstream consumers
 - [agentic-memory-refresh](./agentic-memory-refresh/README.md) — 162 legacy memory analyses inventoried; per-value evidence adopted and three fresh pilots verified; 159 refreshes remain
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
 - [decision-lifecycle-evidence](./decision-lifecycle-evidence/README.md) — exploring proposals and ADRs as views of a continuing decision record, separating deliberation, implementation, and outcome evidence; records ADR 089's premature placement as the motivating case
