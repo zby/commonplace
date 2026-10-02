@@ -17,6 +17,9 @@ analysis, or adopt an ID design by opening.
 
 The [shared record contract](../../agentic-systems/instructions/agentic-analysis-records.md)
 puts both analyst and kind in an ID: `RTE-1`, `MEM-RTE-1`, or `EPI-RTE-1`.
+A concurrent change, uncommitted when this workshop opened, adds an `RT-`
+prefix to runtime IDs (`RT-RTE-1`) and keeps bare runtime IDs readable only
+in frozen sets. Judge proposals against that prefixed scheme once it lands.
 Kind is also expressed by the declaration's heading. The contract requires
 full IDs across members, annotations for shared referents, and reconciliation
 of duplicates, corrections, and splits. These rules create several places

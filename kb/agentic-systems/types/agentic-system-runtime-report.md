@@ -8,7 +8,7 @@ schema: ./agentic-system-runtime-report.schema.yaml
 # Agentic system runtime report
 
 The runtime baseline: source-grounded invocations and alternate/forcing
-routes, and records under unprefixed IDs. It is
+routes, and records under `RT-` IDs. It is
 written before the two specialist members and remains unchanged afterward.
 The [source contract](../instructions/agentic-analysis-sources.md) governs
 evidence; the [record contract](../instructions/agentic-analysis-records.md)

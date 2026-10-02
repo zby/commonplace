@@ -17,20 +17,24 @@ The record kinds are components (`CMP-*`), operative objects (`OBJ-*`),
 routes (`RTE-*`), claims (`CLM-*`), evidenced absences (`ABS-*`) and
 behavioral-authority paths (`BAP-*`). `SRC-*` sources belong only to the
 Source register. The analyst that establishes a record declares it in its
-member, with its permanent prefix: runtime has none (`OBJ-1`), memory has
+member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-1`), memory has
 `MEM-` (`MEM-OBJ-1`), epistemic has `EPI-` (`EPI-OBJ-1`).
+The prefix identifies the declaring analyst, not the member discussing the
+record. Keep a supplied ID unchanged in references, annotations and amendments.
+Frozen sets from earlier methods retain their bare runtime IDs; readers
+accept those exact IDs without treating them as aliases for `RT-` IDs.
 
 Within `## Shared records`, kind headings group declarations:
 `### Components`, `### Operative objects`, `### Routes`, `### Claims`,
 `### Evidenced absences`, `### Behavioral-authority paths`. A declaration
-is one level-four heading, `#### OBJ-1 — Short label`. Prose, lists and
+is one level-four heading, `#### RT-OBJ-1 — Short label`. Prose, lists and
 tables do not declare records. Member types specify which empty kind
 headings remain. IDs are unique across the set and resolve within it.
 References use full IDs, separated by commas or words; suffixes and ranges
 are not inferred. Source quotations and fenced excerpts are excluded from
 identifier checks.
 
-An annotation, `#### On OBJ-1 — Short label`, supplies another analyst's
+An annotation, `#### On RT-OBJ-1 — Short label`, supplies another analyst's
 fields on a record declared elsewhere. It does not repeat generic identity
 or redefine the referent, and never annotates a record the member declares.
 Its location and permitted fields come from the annotating member's type.
@@ -38,7 +42,7 @@ Its location and permitted fields come from the annotating member's type.
 Only the reconciliation member amends records. An `Amendment:`
 paragraph gives the full ID, superseded value, replacement, evidence anchor
 and affected findings. An anchored conflict retains both values. A
-supersession uses `Amendment: MEM-RTE-3 is superseded by RTE-7`, with
+supersession uses `Amendment: MEM-RTE-3 is superseded by RT-RTE-7`, with
 identity evidence; both IDs stay declared. A split allocates fresh IDs for
 the parts and supersedes the combined record. No ID changes referent, and
 no step renames IDs or rewrites another analyst's member. Provisional

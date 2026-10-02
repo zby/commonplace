@@ -20,6 +20,8 @@ Common parameters are defined in the supplied worker rules.
 Write the runtime member to `output` under the supplied runtime type,
 within `boundary`. It gives the later specialists their starting account.
 No job rewrites it afterwards.
+Declare every runtime-owned record with `RT-`, such as `RT-OBJ-1` or
+`RT-RTE-1`, under the shared record contract.
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one
    ordinary invocation end to end and record it with the fields the type's
@@ -42,10 +44,10 @@ No job rewrites it afterwards.
    strength, or a result of the memory or epistemic analyst.
 6. Inventory the distributed-parametric components used by inspected routes
    (LLMs, embedding models, parametric routers, critics and adapters) as
-   `CMP-*` records with the shared component fields.
+   `RT-CMP-*` records with the shared component fields.
 7. Inspect materially distinct mechanisms that admit changes to the product,
    retained knowledge or instructions, capabilities, or production
-   machinery. Record each on its admitting `RTE-*` record with the
+   machinery. Record each on its admitting `RT-RTE-*` record with the
    conditional fields the shared record contract requires. Leave memory
    revisions to the memory analyst; the reconciliation attaches them.
 

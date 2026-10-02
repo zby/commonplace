@@ -84,7 +84,7 @@ Trace.
 
 ### Components
 
-#### CMP-1 — Model endpoint
+#### RT-CMP-1 — Model endpoint
 
 Record.
 
@@ -94,7 +94,7 @@ none declared in this member.
 
 ### Routes
 
-#### RTE-1 — Ordinary invocation
+#### RT-RTE-1 — Ordinary invocation
 
 - implementation conclusion status: wired
 
@@ -144,7 +144,7 @@ Inventory.
 
 ## Authority-route ledger
 
-Route ID: RTE-1
+Route ID: RT-RTE-1
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
@@ -205,7 +205,7 @@ reviewed-boundary: "{REVISION}"
 
 ## Reconciliation
 
-Amendment: EPI-OBJ-1 is superseded by OBJ-1; both name the same store at SRC-1.
+Amendment: EPI-OBJ-1 is superseded by RT-OBJ-1; both name the same store at SRC-1.
 '''
 
 
@@ -257,9 +257,9 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     assert results.note_type == "agentic-system-runtime-report"
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
 def test_member_validation_rejects_missing_route_answers(tmp_path: Path, prefix: str) -> None:
-    content = RUNTIME_TEXT.replace("#### RTE-1 —", f"#### {prefix}RTE-1 —").replace(
+    content = RUNTIME_TEXT.replace("#### RT-RTE-1 —", f"#### {prefix}RTE-1 —").replace(
         "- Selection predicate: The caller selects the object.\n", ""
     )
     failures = validate(tmp_path, "runtime.md", content).fails
@@ -280,7 +280,7 @@ def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Pat
 
 
 def test_runtime_report_has_no_amendments_section(tmp_path: Path) -> None:
-    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: OBJ-1 label changed.\n"
+    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: RT-OBJ-1 label changed.\n"
     assert validate(tmp_path, "runtime.md", amended).fails != []
 
 

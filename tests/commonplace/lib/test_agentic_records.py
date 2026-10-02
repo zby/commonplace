@@ -3,8 +3,10 @@ from __future__ import annotations
 import pytest
 
 from commonplace.lib.agentic_records import (
+    amendment_index,
     annotated_ids,
     declared_ids,
+    is_absence,
     record_reference_errors,
     route_field_errors,
     set_record_errors,
@@ -24,7 +26,7 @@ def route_body(identifier: str = "RTE-1", answers: str = ROUTE_ANSWERS) -> str:
     return f"## Shared records\n\n### Routes\n\n#### {identifier} — Recall\n\n{answers}"
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
 def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
     assert route_field_errors(route_body(prefix + "RTE-1")) == []
     errors = route_field_errors(route_body(prefix + "RTE-1", ""))
@@ -177,7 +179,7 @@ def test_member_can_reference_ids_other_members_declare() -> None:
     assert record_reference_errors("Uses OBJ-40 and MEM-OBJ-2.") == []
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
 def test_rejects_duplicate_declarations_of_every_prefix(prefix: str) -> None:
     body = f"""## Shared records
 
@@ -199,11 +201,37 @@ def test_lens_prefix_is_part_of_the_declared_id() -> None:
 
 #### RTE-1 — Ordinary invocation
 
-MEM-RTE-1 and EPI-RTE-1 read the bucket RTE-1 writes.
+#### RT-RTE-1 — Prefixed runtime invocation
+
+MEM-RTE-1 and EPI-RTE-1 read the bucket RT-RTE-1 writes.
 """
-    assert declared_ids(body) == ["MEM-RTE-1", "EPI-RTE-1", "RTE-1"]
+    assert declared_ids(body) == ["MEM-RTE-1", "EPI-RTE-1", "RTE-1", "RT-RTE-1"]
     assert record_reference_errors(body) == []
     assert set_record_errors({"overview.md": body})[1] == []
+
+
+@pytest.mark.parametrize("kind", ["CMP", "OBJ", "RTE", "CLM", "ABS", "BAP"])
+def test_runtime_prefix_resolves_without_aliasing_historical_ids(kind: str) -> None:
+    identifier = f"RT-{kind}-1"
+    bodies = {
+        "overview.md": "## Source register\n\n| SRC-1 | Source |\n",
+        "runtime.md": f"## Shared records\n\n#### {identifier} — Record\nEvidence: SRC-1.\n",
+        "memory.md": f"## Shared records\n\n#### On {identifier} — Finding\n",
+        "epistemic.md": f"Assessment of {identifier} at SRC-1.",
+        "reconciliation.md": f"## Reconciliation\n\nAmendment: {identifier} — correction at SRC-1.\n",
+    }
+    known, errors = set_record_errors(bodies)
+    assert known == {identifier, "SRC-1"} and errors == []
+    assert annotated_ids(bodies["memory.md"]) == {identifier}
+    assert identifier in amendment_index(bodies["reconciliation.md"])
+    bodies["epistemic.md"] = f"Assessment of {kind}-1."
+    assert set_record_errors(bodies)[1] == [f"epistemic.md: unresolved record {kind}-1"]
+
+
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
+def test_absence_classification_preserves_analyst_prefixes(prefix: str) -> None:
+    assert is_absence(prefix + "ABS-1")
+    assert not is_absence(prefix + "OBJ-1")
 
 
 RUNTIME = """# Runtime

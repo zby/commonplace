@@ -22,7 +22,7 @@ from tests.commonplace.lib.test_agentic_workflow import (
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
 
-def route(fields: str, prefix: str = "") -> str:
+def route(fields: str, prefix: str = "RT-") -> str:
     return f"## Shared records\n\n### Routes\n\n#### {prefix}RTE-1 — Recall\n\n{fields}\n"
 
 
@@ -31,7 +31,7 @@ def test_accepts_each_controlled_status(status: str) -> None:
     assert conclusion_status_errors(route(f"- implementation conclusion status: {status}")) == []
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", ""])
 def test_unlabelled_route_statuses_do_not_satisfy_the_contract(prefix: str) -> None:
     errors = conclusion_status_errors(route("The route is wired; operation unobserved.", prefix))
     assert len(errors) == 1

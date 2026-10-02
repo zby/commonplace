@@ -27,6 +27,8 @@ rules. No job rewrites this member afterward.
 The memory analyst runs in parallel. Cite only your own declarations,
 `runtime` records and the Source register in `boundary`; do not inspect the
 memory report. Acceptance requires a valid member with resolved citations.
+Declare new records with `EPI-`. Keep supplied `RT-` IDs unchanged in your
+inventory and ledger when assessing the same referents.
 
 ## Steps
 

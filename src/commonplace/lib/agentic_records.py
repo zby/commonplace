@@ -6,9 +6,11 @@ import re
 from collections import Counter
 
 # A record ID carries the prefix of the analyst that established it, for the
-# life of the set: none for the runtime analyst, `MEM-` for the memory analyst,
-# `EPI-` for the epistemic analyst.
-_RECORD_ID = r"(?:(?:MEM|EPI)-)?(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
+# life of the set: `RT-`, `MEM-`, or `EPI-`.
+# BACKCOMPAT: frozen sets declare bare runtime IDs - remove after those sets
+# no longer need current validation and comparison readers.
+_PREFIX = r"(?:(?:RT|MEM|EPI)-)?"
+_RECORD_ID = rf"{_PREFIX}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
 _ID = rf"(?:SRC-\d+|{_RECORD_ID})"
 _DECLARATION = re.compile(
     rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
@@ -64,7 +66,7 @@ def section(body: str, title: str) -> str:
 def declared_ids(body: str) -> list[str]:
     """IDs declared under Shared records, in order, with repeats kept.
 
-    An annotation heading (`#### On OBJ-1 — label`) is not a declaration.
+    An annotation heading (`#### On RT-OBJ-1 — label`) is not a declaration.
     """
     return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
@@ -76,7 +78,7 @@ def annotated_ids(body: str) -> set[str]:
 
 def is_absence(identifier: str) -> bool:
     """Whether a record ID names an evidenced absence, whichever analyst declared it."""
-    return re.fullmatch(r"(?:(?:MEM|EPI)-)?ABS-\d+", identifier) is not None
+    return re.fullmatch(rf"{_PREFIX}ABS-\d+", identifier) is not None
 
 
 def amendment_index(body: str) -> str:
@@ -117,7 +119,7 @@ def route_field_errors(body: str) -> list[str]:
     for index, heading in enumerate(headings):
         declaration = _DECLARATION.fullmatch(heading[0])
         if declaration is None or not re.fullmatch(
-            r"(?:(?:MEM|EPI)-)?RTE-\d+", declaration[1]
+            rf"{_PREFIX}RTE-\d+", declaration[1]
         ):
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(prose)
@@ -155,7 +157,7 @@ def conclusion_status_errors(body: str) -> list[str]:
     for index, heading in enumerate(headings):
         declaration = _DECLARATION.fullmatch(heading[0])
         if declaration is None or not re.fullmatch(
-            r"(?:(?:MEM|EPI)-)?RTE-\d+", declaration[1]
+            rf"{_PREFIX}RTE-\d+", declaration[1]
         ):
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(records)

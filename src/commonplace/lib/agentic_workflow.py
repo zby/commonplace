@@ -50,7 +50,12 @@ from commonplace.lib.agentic_publication import (
     require_publishable_worktree,
     require_running_package_unchanged,
 )
-from commonplace.lib.agentic_records import amendment_index, section, set_record_errors
+from commonplace.lib.agentic_records import (
+    amendment_index,
+    declared_ids,
+    section,
+    set_record_errors,
+)
 from commonplace.lib.agentic_set import (
     MEMBER_NAMES,
     OUTPUT_DIR,
@@ -382,6 +387,7 @@ def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
 
 def pass_refusals(
     path: Path, *, repo_root: Path, run_state: Path,
+    declaration_prefix: str,
     bodies: Callable[[Path], dict[str, str]],
 ) -> list[str]:
     """The output of an analyst, which declares records: a valid member whose
@@ -392,6 +398,16 @@ def pass_refusals(
     )
     if refusals:
         return refusals
+    wrong_prefix = [
+        identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
+        if not identifier.startswith(declaration_prefix)
+    ]
+    if wrong_prefix:
+        return [
+            f"record declarations: this analyst must use {declaration_prefix}: "
+            + ", ".join(wrong_prefix)
+            + "; keep supplied IDs unchanged in references and annotations"
+        ]
     try:
         source = load_run_state(run_state, repo_root=repo_root).source
     except ValueError as error:
@@ -799,6 +815,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                declaration_prefix="RT-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, runtime=path
                 ),
@@ -823,6 +840,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                declaration_prefix="EPI-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY,
                     runtime=run_dir / RUNTIME,
@@ -860,6 +878,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                declaration_prefix="MEM-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, memory=path, **cited
                 ),

@@ -213,7 +213,7 @@ Store the specialist established, from SRC-1.
 
 ### Routes
 
-#### On RTE-1 — Fixture route
+#### On RT-RTE-1 — Fixture route
 
 Seeded route with the specialist's memory fields.
 
@@ -235,7 +235,7 @@ Fixture evidence on MEM-OBJ-1.
 
 ## Read-back
 
-Fixture evidence on RTE-1.
+Fixture evidence on RT-RTE-1.
 
 ## Comparison rationale
 
@@ -273,24 +273,24 @@ Implementation inspected at `README.md`; operation is unobserved.
 
 ### Components
 
-#### CMP-1 — Fixture component
+#### RT-CMP-1 — Fixture component
 
 Record. Evidence: SRC-1.
 
 ### Operative objects
 
-#### OBJ-1 — Fixture object
+#### RT-OBJ-1 — Fixture object
 
 Record. Evidence: SRC-1.
 
 ### Routes
 
-#### RTE-1 — Fixture route
+#### RT-RTE-1 — Fixture route
 
 - implementation conclusion status: wired
 
 - Immediate return: The fixture invocation returns the stored object.
-- Later read-back: A later invocation reads OBJ-1.
+- Later read-back: A later invocation reads RT-OBJ-1.
 - Delegated visibility: inapplicable — the fixture has no delegated workers.
 - Selection predicate: The caller requests the fixture object.
 - Invalidation or expiry: inapplicable — the fixture has no expiry mechanism.
@@ -301,7 +301,7 @@ Record. Evidence: SRC-1.
 
 ### Claims
 
-#### CLM-1 — Fixture claim
+#### RT-CLM-1 — Fixture claim
 
 Record. Evidence: SRC-1.
 
@@ -311,7 +311,7 @@ none found within the fixture boundary.
 
 ### Behavioral-authority paths
 
-#### BAP-1 — Fixture authority path
+#### RT-BAP-1 — Fixture authority path
 
 Record. Evidence: SRC-1.
 
@@ -337,18 +337,18 @@ Boundary from the overview's Source register.
 
 ## Epistemic-object inventory
 
-OBJ-1 and EPI-OBJ-1 carry no candidate truth-apt content.
+RT-OBJ-1 and EPI-OBJ-1 carry no candidate truth-apt content.
 
 ## Authority-route ledger
 
-Route ID: RTE-1
+Route ID: RT-RTE-1
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
 
 ## System-claim versus route comparison
 
-CLM-1 is compared with RTE-1.
+RT-CLM-1 is compared with RT-RTE-1.
 
 ## Bounded conclusion
 
@@ -396,7 +396,7 @@ Fixture boundary at `{revision}`.
 
 ## Bounded synthesis
 
-Fixture synthesis over OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RTE-1.
+Fixture synthesis over RT-OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RT-RTE-1.
 
 ## Limitations
 
@@ -500,11 +500,31 @@ def member_fixture(tmp_path: Path) -> Path:
     return run_dir
 
 
+@pytest.mark.parametrize("prefix", ["RT-", ""])
+def test_member_set_readers_preserve_current_and_historical_runtime_ids(
+    tmp_path: Path, prefix: str,
+) -> None:
+    directory = member_fixture(tmp_path) / "output"
+    for path in directory.glob("*.md"):
+        path.write_text(path.read_text().replace("RT-", prefix))
+    repin(directory)
+    member_set = agentic_set.load_member_set(
+        directory, run=validation.ValidationRun(tmp_path, ()),
+    )
+    assert f"#### {prefix}RTE-1 — Fixture route" in member_set.members["runtime.md"].body
+    profile = systems_matrix.memory_member_comparison(
+        member_set.members["memory.md"].frontmatter,
+        member_set.members["memory.md"].body,
+    )
+    assert f"#### On {prefix}RTE-1 — Fixture route" in member_set.members["memory.md"].body
+    assert profile["axes"]["storage_substrate"]["records"] == ["MEM-OBJ-1"]
+
+
 def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> None:
     run = member_fixture(tmp_path)
     reconciliation = run / "output/reconciliation.md"
     reconciliation.write_text(reconciliation.read_text() +
-        "\nAmendment: EPI-OBJ-1 is superseded by OBJ-1; identity evidence at SRC-1.\n")
+        "\nAmendment: EPI-OBJ-1 is superseded by RT-OBJ-1; identity evidence at SRC-1.\n")
     repin(reconciliation.parent)
     failures = validation.validate_note(reconciliation.parent, repo_root=tmp_path).fails
     assert any("amendment index does not match" in failure for failure in failures)
@@ -1131,8 +1151,8 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
     if mutation == "annotated-seed":
         axes["read_back_direction"] = {
             "assessment": "known", "values": ["pull"],
-            "evidence": {"pull": {"basis": "wired", "records": ["RTE-1"], "note": "Seeded route."}},
-            "records": ["RTE-1"], "note": "The annotated seed carries the route.",
+            "evidence": {"pull": {"basis": "wired", "records": ["RT-RTE-1"], "note": "Seeded route."}},
+            "records": ["RT-RTE-1"], "note": "The annotated seed carries the route.",
         }
         axes["read_back_signal"]["assessment"] = "inapplicable"
     elif mutation == "empty":
@@ -1400,9 +1420,9 @@ def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None
 
 
 @pytest.mark.parametrize("declared, amendment, error", [
-    ("CMP-1", None, "duplicate set declaration: CMP-1"),
-    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-1", None),
-    ("MEM-CMP-1", "MEM-CMP-1 is superseded by CMP-9", "reconciliation.md: unresolved record CMP-9"),
+    ("RT-CMP-1", None, "duplicate set declaration: RT-CMP-1"),
+    ("MEM-CMP-1", "MEM-CMP-1 is superseded by RT-CMP-1", None),
+    ("MEM-CMP-1", "MEM-CMP-1 is superseded by RT-CMP-9", "reconciliation.md: unresolved record RT-CMP-9"),
 ])
 def test_a_duplicate_record_is_superseded_in_the_reconciliation(
     tmp_path: Path, declared: str, amendment: str | None, error: str | None
@@ -1472,12 +1492,12 @@ def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     memory = run_dir / "output/memory.md"
     # The memory member re-declares a record the runtime member declares.
     text = memory.read_text()
-    assert "#### On RTE-1 — Fixture route" in text
+    assert "#### On RT-RTE-1 — Fixture route" in text
     route = (run_dir / "output/runtime.md").read_text().split(
-        "#### RTE-1 — Fixture route\n\n", 1
+        "#### RT-RTE-1 — Fixture route\n\n", 1
     )[1].split("\n### Claims", 1)[0]
     memory.write_text(text.replace(
-        "#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"
+        "#### On RT-RTE-1 — Fixture route", "#### RT-RTE-1 — Fixture route"
     ).replace("Seeded route with the specialist's memory fields.", route))
     overview = run_dir / "output/overview.md"
     repin(overview.parent)
@@ -1488,9 +1508,9 @@ def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     values["artifact"]["sha256"] = digest(overview.with_name("ARTIFACT.yaml"))
     values["generated-review"]["sha256"] = digest(review)
     replace_frontmatter(state, values)
-    assert any("duplicate set declaration: RTE-1" in error
+    assert any("duplicate set declaration: RT-RTE-1" in error
                for error in validation.validate_note(state, repo_root=tmp_path).fails)
-    with pytest.raises(ValueError, match="duplicate set declaration: RTE-1"):
+    with pytest.raises(ValueError, match="duplicate set declaration: RT-RTE-1"):
         systems_matrix.load_results(tmp_path)
 
 
@@ -1832,8 +1852,8 @@ def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: 
 def test_member_validation_accepts_s3_title_and_prose_references(tmp_path: Path) -> None:
     runtime = member_fixture(tmp_path) / "output/runtime.md"
     runtime.write_text(runtime.read_text().replace(
-        "#### RTE-1 — Fixture route",
-        "#### RTE-1 — S3 invocation\n\nRTE-1 reads the bucket.",
+        "#### RT-RTE-1 — Fixture route",
+        "#### RT-RTE-1 — S3 invocation\n\nRT-RTE-1 reads the bucket.",
     ))
     checked = validation.validate_note(runtime, repo_root=tmp_path)
     assert checked.fails == []
