@@ -36,7 +36,14 @@ Reconcile the members as they are; when `round` is `after-correction` or
 carry over from it rather than copying its text.
 
 Resolve duplicates, corrections and anchored conflicts under the shared
-record contract's amendment grammar. Report independent convergence only
+record contract's amendment grammar. Check `Part of:` relations without
+superseding valid containers. A split supersedes a combined record only by
+parts already declared in analyst members, with identity evidence and
+affected findings; never allocate IDs or declare split parts here. If a
+required part is missing, return it when the memory analyst should declare
+it and `may-return = yes`; otherwise retain an `Unresolved conflict:` naming
+the combined ID, missing part in prose, evidence and prevented conclusion.
+Report independent convergence only
 when the analysts reached it independently. Recheck shared-route ownership.
 Attach the admission fields of memory routes from the memory analyst's
 findings rather than tracing those mechanisms twice. The memory analyst's

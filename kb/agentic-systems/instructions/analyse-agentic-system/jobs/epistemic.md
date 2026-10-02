@@ -42,8 +42,10 @@ inventory and ledger when assessing the same referents.
 2. **Inventory material objects before evaluators.** Use source-native
    names and the type's material-route boundary. Before new declarations,
    compare referents with supplied records under the shared record contract.
-   Separate heterogeneous parts into inventory rows and flag any needed
-   canonical split or defective supplied fact beside its affected finding,
+   Separate heterogeneous parts into inventory rows and declarations. Declare
+   a part of exactly one supplied record with `Part of:` under the shared
+   contract; keep a multi-record grouping's distinct-identity comparison.
+   Flag any needed supersession by declared parts or defective supplied fact beside its affected finding,
    with evidence. Name the target and domain before judging its evaluator.
    Inspect natural-language content and symbolic artifacts within their
    semantics. Assess distributed-parametric state only from accessible

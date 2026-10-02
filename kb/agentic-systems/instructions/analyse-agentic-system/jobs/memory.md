@@ -63,7 +63,10 @@ member with references resolved against those inputs and its own records.
 Before declaring records, compare referents with supplied records under
 the shared record contract. Retain each overlap disposition under
 Integration issues. Separate operative parts with different checks or
-consumers and flag any needed canonical split for reconciliation.
+consumers. Declare a part of exactly one supplied record with `Part of:`
+under the shared contract; a grouping spanning several supplied records
+keeps its distinct-identity comparison. Flag defective supplied findings
+and any needed supersession by declared parts for reconciliation.
 Declare new records with `MEM-`. Keep supplied `RT-` and `EPI-` IDs unchanged
 when referring to or annotating their records.
 

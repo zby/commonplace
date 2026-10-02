@@ -20,10 +20,15 @@ analysis, or adopt an ID design by opening.
   questions to settle.
 - [Fix options](./fix-options.md) — verified workflow context and the
   repairs considered, each judged against the archive evidence, with a
-  current recommendation; nothing adopted.
+  dispositions of the considered repairs; A1 and A4 are adopted.
 - [Split-records proposal](./split-records-proposal.md) — the recommended
   option: a declared `Part of:` relation, splits as supersession by
   already-declared parts, and no ID allocation by reconciliation.
+- [Pre-adoption check](./pre-adoption-check.md) — normalized archive copies,
+  seven declared part relations, negative target checks and three bounded
+  workflow fixtures; also records the limits of scripted acceptance.
+- [Implementation check](./implementation-check.md) — adopted method changes,
+  their consumers, verification and the stopping point before a fresh run.
 - [Skill inconsistencies](./skill-inconsistencies.md) — read-only audit of
   the live skill's job texts, types, schemas, contracts and operator docs
   against the code, with a suggested fix order before the next test run.
@@ -40,40 +45,35 @@ Done:
 - `6fd147f59` (2026-10-02): archive evidence recorded in the
   [problem](./problem.md#observed-evidence); options rejudged; proposal
   rewritten around `Part of:`.
+- 2026-10-02: archive rewrite and bounded fixture updates executed at the
+  operator's request. The copied sets resolve all 53 and 34 declared IDs;
+  seven records become parts and both duplicate supersessions remain. See
+  [pre-adoption evidence](./pre-adoption-check.md) for checks and test results.
+- 2026-10-02: the operator authorized implementation through the point before
+  a new run. A1 refusal hints/range detection and A4 part/split rules are
+  implemented in the checker, shared contract, analyst jobs, reconciliation
+  type and verification job. Reference checks now also run on returning
+  reconciliation rounds. See [implementation checks](./implementation-check.md).
 
 Next, in order:
 
-1. **A1, refusal hints and range detection.** Two separate checks. When
-   an ID is unresolved, name the declared ID that differs only by prefix.
-   Independently, refuse range syntax (`RT-RTE-1 through RT-RTE-4`,
-   `RT-RTE-1–RT-RTE-4`) wherever it appears: a range whose endpoints both
-   resolve passes the reference scan today even when the IDs between them
-   do not exist, so the hint cannot hang off the unresolved case. Code and
-   tests only.
-2. **Pre-adoption check of the proposal**, the three steps under "Check
-   before adoption" in the [proposal](./split-records-proposal.md): the
-   archive rewrite with runtime IDs normalized to `RT-` first and one
-   deliberately missing target; bounded workflow-test fixtures for a split
-   into declared parts, a missing part with memory return, and a missing
-   part retained as an unresolved conflict; then a fresh run.
-3. **Adopt the proposal** if the check holds: edit the record contract, the
-   memory and epistemic job texts, the reconcile job and report type, and
-   the verify job as listed in the proposal; add only the `Part of:` syntax
-   check, since target resolution is already covered.
-4. **First run under the amended method** (step 3 of the check). Collect
+1. **First run under the amended method** (step 3 of the acceptance checks).
+   The implementation is committed before opening a run, which pins that
+   commit. A new run was explicitly outside this implementation commission.
+   Collect
    any refusals with their stage; the identity-paragraph count is a
    secondary measure. This is also the first run under the `RT-` grammar,
    so it tests reservation 3 of the prefix change (forgotten `RT-` on
    citations).
-5. **Close.** Closure evidence is the split fixtures passing and the fresh
+2. **Close.** Closure evidence is the split fixtures passing and the fresh
    run producing no new ID errors; a run that happens to contain no split
    does not by itself show rule 2 and rule 3 work. Record the decision in
    a commit per the closure section below and delete the workshop. Options
-   B, C9 and D10 stay unadopted unless step 4 produces a refusal that
+   B, C9 and D10 stay unadopted unless step 1 produces a refusal that
    points at the grammar, numbering, or parallel-analyst duplicates.
 
 The operator's original error reports are on a machine not currently
-accessible; if they reappear, add them to the problem file before step 3.
+accessible; if they reappear, add them to the problem file before the fresh run.
 
 ## Evaluation boundary
 

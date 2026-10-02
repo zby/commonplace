@@ -441,7 +441,7 @@ def reconcile_refusals(
             f"this is the last round: remove `## {RETURNED}` and retain the conflicts "
             "as explicit uncertainty"
         )
-    if refusals or returned:
+    if refusals:
         return refusals
     return reference_refusals(
         partial(

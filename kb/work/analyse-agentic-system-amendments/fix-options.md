@@ -2,7 +2,9 @@
 
 **Status:** brainstorm, 2026-10-02, revised the same day against the
 [observed evidence](./problem.md#observed-evidence). Agent-proposed options;
-none adopted. Judged against the `RT-` prefixed scheme (commit
+Options A1 and A4 adopted at the operator's direction after the
+[pre-adoption checks](./pre-adoption-check.md); all other options remain
+unadopted. Judged against the `RT-` prefixed scheme (commit
 `4e5b5d9ae`).
 
 ## Verified context
@@ -66,8 +68,8 @@ These facts were read from the live method and
    conflict. This names the relation the archive shows in every lens
    record that touches a runtime record, removes the ownerless "allocates
    fresh IDs" sentence, and needs no new namespace, grammar, or
-   reconciliation declarations. Contract and job-text change; checker
-   change optional.
+   reconciliation declarations. Contract and job-text change; field syntax
+   is now checked locally and across the set.
 
 ## B. Simpler ID grammar
 
@@ -110,10 +112,11 @@ These facts were read from the live method and
     runtime, which the memory analyst had read; no memory-versus-epistemic
     duplicate appears in either member set. Not supported by evidence.
 
-## Current recommendation
+## Current disposition
 
-1. Do A1 now; ranges and invented IDs are observed habits.
-2. Adopt A4 for identity and splits, after the check named in the proposal.
+1. A1 implemented: prefix suggestions and independent range refusal.
+2. A4 adopted and implemented after the recorded archive rewrite and bounded
+   fixtures. The fresh analysis is the remaining acceptance step.
 3. Hold B, C9 and D10 until a refusal from a run under the `RT-` method
    points at the grammar, numbering, or parallel-analyst duplicates. The
    operator's reported errors, with their refusal text and stage, are still

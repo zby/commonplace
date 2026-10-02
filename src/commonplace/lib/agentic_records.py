@@ -22,6 +22,11 @@ _UNPREFIXED_DECLARATION = re.compile(
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
 _REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
+_RANGE = re.compile(
+    rf"(?<![\w-])(?:{_ID}`?[ \t]*(?:through|to|[–—-])[ \t]*`?"
+    rf"(?:{_ID}|(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)"
+    rf"|{_ID}[–-][RO]?\d+)(?![\w-])"
+)
 ROUTE_FIELDS = (
     "Immediate return",
     "Later read-back",
@@ -95,25 +100,58 @@ def amendment_index(body: str) -> str:
     )
 
 
-def record_reference_errors(body: str) -> list[str]:
-    """Check one document's declarations.
+def _record_syntax_errors(body: str) -> list[str]:
+    """Check ranges and part fields without resolving cross-member references."""
+    prose = _analysis_prose(body)
+    errors = [
+        f"record references: ranges are not expanded: {match[0]}; list every full ID"
+        for match in _RANGE.finditer(prose)
+    ]
+    # A Part of field belongs to a declaration, not an annotation or prose section.
+    owner = None
+    in_records = False
+    part_owners = set()
+    for line in prose.splitlines():
+        if line.startswith("## "):
+            in_records = line == "## Shared records"
+            owner = None
+        elif re.match(r"^#{3,6}[ \t]", line):
+            declaration = _DECLARATION.fullmatch(line)
+            owner = declaration[1] if in_records and declaration else None
+        if re.match(r"^[ \t]*(?:-[ \t]+)?Part of:", line):
+            if not line.startswith("Part of:"):
+                errors.append("record references: use an unindented 'Part of: <full record ID>' line")
+                continue
+            target = line.removeprefix("Part of:").strip()
+            if owner is None:
+                errors.append("record references: Part of: must belong to a declared record")
+            else:
+                if owner in part_owners:
+                    errors.append(f"record references: {owner}: duplicate Part of: field")
+                part_owners.add(owner)
+                if re.fullmatch(_RECORD_ID, target) is None:
+                    errors.append(f"record references: {owner}: Part of: requires exactly one full record ID")
+                elif target == owner:
+                    errors.append(f"record references: {owner}: Part of: cannot name itself")
+    return errors
 
-    A member of a set is validated alone, so references it makes to records
-    other members declare are not resolved here.
-    """
+
+def record_reference_errors(body: str) -> list[str]:
+    """Check local syntax and declarations; resolve other members' IDs at set level."""
+    errors = _record_syntax_errors(body)
     records = section(_analysis_prose(body), "Shared records")
     unprefixed = _UNPREFIXED_DECLARATION.findall(records)
     if unprefixed:
-        return [
+        errors.append(
             "record references: declarations without an analyst prefix: "
             + ", ".join(unprefixed) + "; use RT-, MEM- or EPI-"
-        ]
+        )
     repeated = sorted(
         key for key, count in Counter(declared_ids(body)).items() if count > 1
     )
     if repeated:
-        return ["record references: duplicate declarations: " + ", ".join(repeated)]
-    return []
+        errors.append("record references: duplicate declarations: " + ", ".join(repeated))
+    return errors
 
 
 def route_field_errors(body: str) -> list[str]:
@@ -204,7 +242,16 @@ def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
         for identifier, count in Counter(declarations).items() if count > 1
     ]
     for name, body in bodies.items():
+        errors.extend(f"{name}: {error}" for error in _record_syntax_errors(body))
         references = set(_REFERENCE.findall(_analysis_prose(body)))
         for identifier in sorted(references - known):
-            errors.append(f"{name}: unresolved record {identifier}")
+            hint = ""
+            if re.fullmatch(_RECORD_ID, identifier):
+                suffix = identifier.split("-", 1)[1]
+                alternatives = sorted(candidate for candidate in known
+                                      if re.fullmatch(_RECORD_ID, candidate)
+                                      and candidate.split("-", 1)[1] == suffix)
+                if alternatives:
+                    hint = "; declared with another analyst prefix: " + ", ".join(alternatives)
+            errors.append(f"{name}: unresolved record {identifier}{hint}")
     return known, errors

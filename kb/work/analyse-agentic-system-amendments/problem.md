@@ -29,9 +29,14 @@ from the method before member sets, and two member sets, pageindex-02 and
 instinctual-memory-02, produced before the `RT-` prefix. The archive holds
 accepted output only; refusals raised during a run are not retained, so
 the operator's reported errors still need their exact refusal text and
-stage. Both member sets fail validation only because their type paths were
-relocated; the current record checker resolves every reference in both
-(53 and 34 records, no errors). Bare IDs quoted below (`OBJ-1`, `RTE-1`)
+stage. The original check was reported as resolving every reference in both
+sets, but the current checker recognizes only 24 and 16 declarations in the
+unnormalized archive: it ignores bare runtime IDs. The
+[pre-adoption rewrite](./pre-adoption-check.md) prefixes runtime IDs in workshop
+copies, then resolves all 53 and 34 declared IDs including their source
+registers, with no errors. The archive retains historical type paths; these
+reference checks do not establish validation against current member schemas.
+Bare IDs quoted below (`OBJ-1`, `RTE-1`)
 are the archived sets' runtime IDs as written; under the current method
 they would be `RT-OBJ-1` and `RT-RTE-1`.
 
@@ -39,7 +44,8 @@ they would be `RT-OBJ-1` and `RT-RTE-1`.
 In pageindex-02, `EPI-OBJ-1` and `EPI-OBJ-3` are parts of the runtime
 containers `OBJ-1` and `OBJ-3`; `EPI-RTE-1` and `EPI-RTE-2` are steps
 inside `RTE-1`. In instinctual-memory-02, three `EPI-OBJ` records are
-declared as "possible duplicate … subset of `OBJ-2`", and `MEM-RTE-1`
+described as possible duplicates: two fact subsets of `OBJ-2` and one writeback
+rendering within `OBJ-3`. `MEM-RTE-1`
 overlaps two runtime routes without matching either. Analysts file these
 as possible duplicates; reconciliation's identity section then explains,
 record by record, that none is a duplicate.

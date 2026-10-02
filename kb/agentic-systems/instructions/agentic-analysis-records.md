@@ -32,7 +32,8 @@ is one level-four heading, `#### RT-OBJ-1 — Short label`. Prose, lists and
 tables do not declare records. Member types specify which empty kind
 headings remain. IDs are unique across the set and resolve within it.
 References use full IDs, separated by commas or words; suffixes and ranges
-are not inferred. Source quotations and fenced excerpts are excluded from
+are not inferred. Ranges are refused even when both endpoints resolve;
+list every full ID instead. Source quotations and fenced excerpts are excluded from
 identifier checks.
 
 An annotation, `#### On RT-OBJ-1 — Short label`, supplies another analyst's
@@ -44,8 +45,12 @@ Only the reconciliation member amends records. An `Amendment:`
 paragraph gives the full ID, superseded value, replacement, evidence anchor
 and affected findings. An anchored conflict retains both values. A
 supersession uses `Amendment: MEM-RTE-3 is superseded by RT-RTE-7`, with
-identity evidence; both IDs stay declared. A split allocates fresh IDs for
-the parts and supersedes the combined record. No ID changes referent, and
+identity evidence; both IDs stay declared. A split supersedes the combined
+record only by parts already declared in analyst members, for example
+`Amendment: RT-OBJ-3 is superseded by EPI-OBJ-1 and EPI-OBJ-2`, with identity
+evidence and affected findings. Reconciliation never allocates IDs. Supersede
+a combined record only when its findings are wrong once the parts are
+separated; a valid container can remain alongside its parts. No ID changes referent, and
 no step renames IDs or rewrites another analyst's member. Provisional
 labels are local tags. Allocate IDs monotonically within a prefix and
 never reuse dropped numbers; gaps are harmless.
@@ -55,9 +60,26 @@ supplied full IDs and distinct identity, possible-duplicate evidence, or
 no counterpart after comparison. An existing referent receives an
 annotation rather than another declaration; a different prefix or label
 does not establish a distinct referent. Material parts with different
-checks or consumers are assessed separately. Several findings may cite one
-supplied ID while naming the assessed part and needed split; only
-reconciliation changes that canonical inventory.
+checks or consumers are declared and assessed separately. A declaration
+whose referent is a material part of exactly one supplied record writes
+`Part of: RT-OBJ-1` on its own unindented line within that declaration,
+using its parent's full record ID. The field carries exactly one ID,
+without backticks or other text, and cannot name the declaring record itself.
+Local and set checks enforce its syntax; existing set resolution checks its
+target. Explain a parent of a different record kind beside the relation.
+Semantic verification checks containment; matching kinds alone does not prove it.
+
+The part owns its fields and status; the container keeps its identity.
+Containment alone requires neither possible-duplicate evidence nor
+supersession. A record spanning several supplied records without being part
+of exactly one keeps the distinct-identity comparison, naming each overlap.
+
+When a required part is undeclared, reconciliation returns it to the memory
+analyst if that analyst should declare it and returning is permitted.
+Otherwise retain an `Unresolved conflict:` naming the combined ID, missing
+part, evidence and prevented conclusion. Name the undeclared part in prose,
+without inventing an unresolved ID. This adds no runtime or epistemic rewrite
+and no new return round.
 
 ## Status fields
 

@@ -1,8 +1,9 @@
 # Proposal: a part-of relation and a split rule without an allocator
 
-**Status:** proposed for the `analyse-agentic-system` amendments workshop,
-revised 2026-10-02 against the archive evidence in the [problem](./problem.md);
-no live method change is adopted here.
+**Status:** adopted on 2026-10-02 at the operator's direction, after the
+[pre-adoption checks](./pre-adoption-check.md). The live contract, jobs and
+checker now implement these rules; the fresh analysis remains pending. See
+[implementation checks](./implementation-check.md).
 
 ## Problem
 
@@ -75,17 +76,22 @@ integrator owned the inventory and could allocate IDs.
   declared parts, and name the missing-part handling in rule 3.
 - Verify job: a `Part of:` target that does not resolve, or that names a
   record of another kind without explanation, is a blocker.
-- Checker (optional, small): the target of a `Part of:` line already
+- Checker: the target of a `Part of:` line already
   resolves under the existing reference scan, and an undeclared target is
   already an unresolved-reference error, so no resolution check is new. The
   only new check is syntax: the line carries exactly one full ID, and that
-  ID is not the declaring record's own.
+  ID is not the declaring record's own. The implemented check also requires
+  one unindented field within its declaration and refuses duplicate fields.
 
 No new ID namespace, no prefix change, no code path for reconciliation
 declarations. Frozen sets need no reading rule: they contain no `Part of:`
 lines and keep reading as before.
 
-## Check before adoption
+## Acceptance checks
+
+Steps 1 and 2 are pre-adoption checks; their execution is recorded in the
+[pre-adoption report](./pre-adoption-check.md). Step 3 follows implementation
+and committing the amended method, so the fresh run pins the new contract.
 
 1. **Archive rewrite.** Copy the members of pageindex-02 and
    instinctual-memory-02 into the workshop and first prefix every bare
@@ -108,7 +114,8 @@ lines and keep reading as before.
    memory return; and a missing part with `may-return = no`, which must
    produce an `Unresolved conflict:` and still reach publication.
 
-3. **Fresh run.** Run one analysis under the amended contract. The count
+3. **Fresh run after adoption.** Commit the amended method, then run one
+   analysis under that contract. The count
    of identity-section paragraphs reconciliation still writes is a
    secondary measure; the primary evidence is step 2 and any refusals the
    run produces, with their stage.

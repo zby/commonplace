@@ -538,6 +538,108 @@ def last_prompt(fixture: Fixture, name: str) -> str:
     return found.read_text(encoding="utf-8")
 
 
+@pytest.mark.parametrize("case", ["declared-split", "memory-return", "unresolved-part"])
+def test_split_dispositions_preserve_members_and_publish(
+    fixture: Fixture, case: str,
+) -> None:
+    """Scripted findings exercise workflow handling, not analyst judgment."""
+    amendment = (
+        "RT-OBJ-1 is superseded by EPI-OBJ-1 and EPI-OBJ-2; "
+        "the combined finding conflates two parts. Evidence: SRC-1 README.md. "
+        "Affected findings: runtime object identity and epistemic objects."
+    )
+    conflict = (
+        "Unresolved conflict: RT-OBJ-1 combines a store and an undeclared "
+        "access-policy part. Evidence: SRC-1 README.md. The missing policy "
+        "record prevents a separate authority conclusion; the store account remains bounded."
+    )
+    epistemic = epistemic_text(fixture.revision)
+    if case == "declared-split":
+        epistemic = epistemic.replace(
+            "Object the epistemic lens established. Evidence: SRC-1.",
+            "Part of: RT-OBJ-1\n\nStore part. Evidence: SRC-1.\n\n"
+            "#### EPI-OBJ-2 — Access-policy part\n\n"
+            "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
+        )
+
+    def corrected_memory(_: Handout) -> str:
+        return fixture.memory_report(1).replace(
+            "Store the specialist established, from SRC-1.",
+            "Part of: RT-OBJ-1\n\nStore part, from SRC-1.\n\n"
+            "#### MEM-OBJ-2 — Missing access-policy part\n\n"
+            "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
+        )
+
+    workers = {"epistemic": fixture.writes(lambda _: epistemic)}
+    if case == "declared-split":
+        workers["reconcile-0"] = fixture.writes(
+            lambda _: fixture.reconciliation(amendment=amendment)
+        )
+    elif case == "memory-return":
+        workers["reconcile-0"] = fixture.writes(lambda _: (
+            fixture.reconciliation()
+            + "\n## Returned to the memory analyst\n\n"
+            "- RT-OBJ-1: declare the missing access-policy part separately; "
+            "Evidence: SRC-1 README.md. It prevents a separate authority conclusion.\n"
+        ))
+        workers["memory-1"] = fixture.writes(corrected_memory)
+        workers["reconcile-1"] = fixture.writes(lambda _: fixture.reconciliation(
+            amendment=amendment.replace("EPI-OBJ-1 and EPI-OBJ-2", "MEM-OBJ-1 and MEM-OBJ-2")
+        ))
+    else:
+        # Reach the last reconciliation round, where returning is prohibited.
+        for round_ in range(AnalyseAgenticSystem.correction_rounds):
+            workers[f"reconcile-{round_}"] = fixture.writes(
+                lambda _: fixture.reconciliation()
+                + "\n## Returned to the memory analyst\n\n"
+                + "- RT-OBJ-1: the access-policy part remains undeclared; "
+                + "Evidence: SRC-1 README.md. Declare it if the source supports it.\n"
+            )
+        last = f"reconcile-{AnalyseAgenticSystem.correction_rounds}"
+
+        def retain_conflict(handout: Handout) -> str:
+            assert "may-return = no\n" in handout.prompt_path.read_text(encoding="utf-8")
+            return fixture.reconciliation() + "\n" + conflict + "\n"
+
+        workers[last] = fixture.writes(retain_conflict)
+        workers["synthesize"] = fixture.writes(
+            lambda _: fixture.synthesis(limitations=conflict)
+        )
+        workers[f"verify-{AnalyseAgenticSystem.correction_rounds}"] = fixture.writes(
+            lambda _: fixture.verification().replace(
+                "Passed: every claim checked against its records.",
+                "Checked conflict on RT-OBJ-1 at SRC-1: missing access-policy "
+                "part prevents a separate authority conclusion; retained as a limitation.",
+            )
+        )
+
+    scripted, definition = agent(fixture, **workers)
+    results = scripted.run()
+    assert isinstance(results[-1], Done), results[-1]
+    assert definition.publications == 1
+    output = fixture.run_dir / "output"
+    assert (output / "runtime.md").read_text(encoding="utf-8") == runtime_text(fixture.revision)
+    assert (output / "epistemic.md").read_text(encoding="utf-8") == epistemic
+    reconciliation = (output / "reconciliation.md").read_text(encoding="utf-8")
+    if case == "unresolved-part":
+        assert conflict in reconciliation
+        assert conflict in (output / "overview.md").read_text(encoding="utf-8")
+        assert f"memory-{AnalyseAgenticSystem.correction_rounds + 1}" not in scripted.launched
+    else:
+        expected = amendment if case == "declared-split" else amendment.replace(
+            "EPI-OBJ-1 and EPI-OBJ-2", "MEM-OBJ-1 and MEM-OBJ-2"
+        )
+        assert "Amendment: " + expected in reconciliation
+        if case == "memory-return":
+            assert scripted.launched.index("reconcile-0") < scripted.launched.index("memory-1")
+            assert (output / "memory.md").read_bytes() == (fixture.run_dir / "memory-report-1.md").read_bytes()
+            assert "#### MEM-OBJ-2" in (output / "memory.md").read_text(encoding="utf-8")
+        else:
+            assert "memory-1" not in scripted.launched
+    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+        assert (fixture.root / retained).read_bytes() == (output / name).read_bytes()
+
+
 # 4. Validators refuse
 
 
@@ -583,10 +685,12 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     )
 
 
+@pytest.mark.parametrize("returned", [False, True])
 def test_reconciliation_amending_an_undeclared_record_is_refused(
-    fixture: Fixture,
+    fixture: Fixture, returned: bool,
 ) -> None:
     dangling = fixture.reconciliation(
+        returned=returned,
         amendment="MEM-OBJ-9 is superseded by RT-OBJ-1; both name `README.md`."
     )
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: dangling)})
@@ -596,6 +700,15 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
 
     assert attempt == 2
     assert "reconciliation.md: unresolved record MEM-OBJ-9" in prompt
+
+
+def test_returning_reconciliation_refuses_ranges_with_declared_endpoints(fixture: Fixture) -> None:
+    ranged = fixture.reconciliation(returned=True) + "\nRT-OBJ-1 through EPI-OBJ-1.\n"
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: ranged)})
+    drive_to(scripted, "reconcile-0")
+    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
+    assert attempt == 2
+    assert "ranges are not expanded" in prompt
 
 
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:

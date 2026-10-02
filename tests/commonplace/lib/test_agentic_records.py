@@ -118,13 +118,13 @@ def test_heading_title_is_not_inferred_to_be_shorthand() -> None:
     assert set_record_errors({"overview.md": BASE})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["RT-OBJ-1/O2", "RT-RTE-20–R9", "RT-OBJ-1, O2"])
+@pytest.mark.parametrize("reference", ["RT-OBJ-1/O2", "RT-OBJ-1, O2"])
 def test_only_complete_references_are_recognized(reference: str) -> None:
     assert record_reference_errors(BASE + reference) == []
     assert set_record_errors({"overview.md": BASE + reference})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["RT-OBJ-1/RT-OBJ-99", "RT-OBJ-1–RT-OBJ-99"])
+@pytest.mark.parametrize("reference", ["RT-OBJ-1/RT-OBJ-99", "RT-OBJ-1 and RT-OBJ-99"])
 def test_complete_unresolved_references_still_fail(reference: str) -> None:
     _, errors = set_record_errors({"overview.md": BASE + reference})
     assert errors == ["overview.md: unresolved record RT-OBJ-99"]
@@ -364,3 +364,66 @@ SRC-1 is mentioned in prose.
     assert known == {"SRC-5"}
     assert len(errors) == 6
     assert all("unresolved record SRC-" in error for error in errors)
+
+
+@pytest.mark.parametrize("reference", [
+    "RT-OBJ-1 through RT-OBJ-15", "RT-OBJ-1–RT-OBJ-15",
+    "`RT-OBJ-1` to `RT-OBJ-15`", "RT-OBJ-1 - RT-OBJ-15",
+    "RT-RTE-20–R9", "RT-OBJ-1 through OBJ-15", "RT-OBJ-1–15",
+])
+def test_ranges_are_refused_independently_of_endpoint_resolution(reference: str) -> None:
+    body = BASE + reference
+    assert any("ranges are not expanded" in error for error in record_reference_errors(body))
+    assert any("ranges are not expanded" in error
+               for error in set_record_errors({"overview.md": body})[1])
+
+
+def test_unresolved_record_suggests_all_prefix_matches_without_changing_identity() -> None:
+    bodies = {
+        "overview.md": OVERVIEW,
+        "runtime.md": "## Shared records\n\n#### RT-OBJ-3 — Runtime object\n",
+        "epistemic.md": "## Shared records\n\n#### EPI-OBJ-3 — Epistemic object\n",
+        "memory.md": "MEM-OBJ-3 and MEM-OBJ-4 and MEM-RTE-3.",
+    }
+    assert set_record_errors(bodies)[1] == [
+        "memory.md: unresolved record MEM-OBJ-3; declared with another analyst prefix: EPI-OBJ-3, RT-OBJ-3",
+        "memory.md: unresolved record MEM-OBJ-4",
+        "memory.md: unresolved record MEM-RTE-3",
+    ]
+
+
+@pytest.mark.parametrize(("field", "diagnostic"), [
+    ("Part of: RT-OBJ-1", None),
+    ("Part of: RT-OBJ-99", "unresolved record RT-OBJ-99"),
+    ("Part of: MEM-OBJ-1", "cannot name itself"),
+    ("Part of:", "exactly one full record ID"),
+    ("Part of: OBJ-1", "exactly one full record ID"),
+    ("Part of: SRC-1", "exactly one full record ID"),
+    ("Part of: RT-OBJ-1, RT-OBJ-2", "exactly one full record ID"),
+    ("Part of: `RT-OBJ-1`", "exactly one full record ID"),
+    ("- Part of: RT-OBJ-1", "unindented"),
+    ("  Part of: RT-OBJ-1", "unindented"),
+    ("Part of: RT-OBJ-1\nPart of: RT-OBJ-2", "duplicate Part of:"),
+])
+def test_part_field_syntax_and_existing_target_resolution(field: str, diagnostic: str | None) -> None:
+    memory = f"## Shared records\n\n### Operative objects\n\n#### MEM-OBJ-1 — Part\n\n{field}\n"
+    errors = set_record_errors({"overview.md": BASE, "memory.md": memory})[1]
+    if diagnostic is None:
+        assert errors == []
+    else:
+        assert any(diagnostic in error for error in errors)
+    if field == "Part of: RT-OBJ-99":
+        assert record_reference_errors(memory) == []
+
+
+@pytest.mark.parametrize("heading", ["## Discussion", "#### On RT-OBJ-1 — Annotation"])
+def test_part_field_requires_a_declaration_owner(heading: str) -> None:
+    body = BASE + heading + "\n\nPart of: RT-OBJ-2\n"
+    assert "Part of: must belong" in record_reference_errors(body)[0]
+
+
+def test_range_and_part_examples_in_source_excerpts_are_ignored() -> None:
+    body = BASE + "\n> RT-OBJ-1 through RT-OBJ-99\n> Part of: RT-OBJ-99\n"
+    body += "\n```markdown\nRT-OBJ-1–RT-OBJ-99\nPart of: RT-OBJ-99\n```\n"
+    assert record_reference_errors(body) == []
+    assert set_record_errors({"overview.md": body})[1] == []

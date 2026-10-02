@@ -34,6 +34,14 @@ starts `Amendment: <full record ID>` and gives its superseded value,
 replacement, evidence anchor and affected findings. Both supersession IDs
 stay declared in their original members.
 
+A split supersedes a combined record only by parts already declared in the
+analyst members. Reconciliation never allocates IDs or declares parts. A
+valid container stays alongside its declared `Part of:` records; containment
+alone is no reason to supersede it. If a required part is missing, return it
+to the memory analyst when that analyst should declare it and returning is
+permitted. Otherwise retain an `Unresolved conflict:` naming the combined ID,
+the missing part in prose, evidence and prevented conclusion.
+
 Mark every conflict left unresolved with a paragraph starting
 `Unresolved conflict:`, followed by the affected IDs, conflicting findings,
 evidence and conclusion prevented. Record verification checks these markers;

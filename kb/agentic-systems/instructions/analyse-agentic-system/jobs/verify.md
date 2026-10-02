@@ -50,6 +50,16 @@ Record the checked routes and material dispositions, and the check of every
 source anchor, canonical ID, evidence status, boundary, member and unresolved
 conflict. Structural validation does not perform this check.
 
+Check every `Part of:` relation against the records' identities and evidence.
+An unresolved parent, malformed field, self-reference or unexplained parent
+of a different kind is a blocker. A valid part keeps its own fields and
+status; a valid container needs no supersession. For a split supersession,
+check that every replacement part is already declared and that the amendment
+explains why the combined finding fails. A missing part must be returned to
+memory when appropriate and permitted, or retained as an `Unresolved
+conflict:` with evidence and the prevented conclusion. A multi-record
+grouping must retain its comparisons rather than assert unsupported containment.
+
 ## Blockers
 
 A blocker is a defect in the records that another reconciliation round can
