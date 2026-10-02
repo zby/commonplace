@@ -169,7 +169,7 @@ Further candidates are mapped in [Simplifications beyond mechanical offloading](
 - **Contract drift.** Tools that embed section headings or the `METHOD_PATHS` list can drift from the type specs. Generate from the schemas and the existing constant instead of copying them.
 - **Method paths.** Every new command widens what must be committed before a run opens, because publication requires the package source to equal `inputs-commit`. Land these changes between batches, not during one.
 - **YAGNI.** If an item turns out not to be needed, drop it here; write a design proposal in `kb/reference/proposals/` for any item that changes a shipped contract before implementing it.
-- **Related workshops:** [agentic-analysis-output-documents](../agentic-analysis-output-documents/README.md) owns the current set and publication contracts; coordinate before changing them. [analyse-agentic-system](../analyse-agentic-system/README.md) holds the skill's construction history.
+- **Output contracts:** the [analysis set type](../../agentic-systems/types/agentic-system-analysis-set.md) and collection-owned member types govern the current output. The output-documents workshop is closed; its [acceptance record](../../reports/retained/agentic-analysis-output-documents-20261002/README.md) retains the design trials and their limits. [analyse-agentic-system](../analyse-agentic-system/README.md) holds the skill's construction history.
 
 ## Log
 

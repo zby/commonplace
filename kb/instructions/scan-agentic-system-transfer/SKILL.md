@@ -18,10 +18,11 @@ Produce a selective current account of the external mechanisms that matter to a 
   `kb/agentic-systems/reports/state/<run-id>/output/ARTIFACT.yaml`, with its
   run’s `../run-state.md`. Both `run-status` and `result-disposition` must be
   `complete`. The set is the authority for what the external system does: the
-  overview holds the boundary, source register, reconciliation, synthesis and
+  overview holds the boundary, source register, amendment index, synthesis and
   limitations; `runtime.md` the runtime account and the records the runtime
   pass declared; `memory.md` the memory findings, memory-declared records and
-  comparison profile; `epistemic.md` the six epistemic blocks. Do not
+  comparison profile; `epistemic.md` the five epistemic blocks;
+  `reconciliation.md` the amendments, supersessions and unresolved conflicts. Do not
   reacquire or refresh its sources during this scan.
 - An explicit current question, design problem, or priority. A generic request to find every difference is not a valid brief. If the user asks broadly what is interesting, state the bounded standing concern you will use before selecting findings.
 - Read access to the Commonplace artifacts needed to establish the current local analogue.

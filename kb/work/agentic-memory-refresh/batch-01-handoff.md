@@ -60,9 +60,10 @@ confirm all of the following and stop with a report if any fails:
 - `kb/types/agentic-system-analysis-overview.md` exists and
   `kb/instructions/analyse-agentic-system/SKILL.md` step 7 writes
   `overview.md`, `runtime.md`, `memory.md` and `epistemic.md`. If the skill
-  still writes `result.md`, the transition in
-  `kb/work/agentic-analysis-output-documents/transition-plan.md` has not
-  landed; do not run the batch under the old producer.
+  still writes `result.md`, the member-set transition has not landed; do not run the batch under the
+  old producer. This historical handoff is superseded by the batch 01 rerun;
+  the output transition's [closure record](../../reports/retained/agentic-analysis-output-documents-20261002/README.md)
+  retains acceptance and limits.
 - `kb/reports/retained/agentic-system-analysis/` holds no single-file
   results; the archived corpus is under
   `kb/reports/retained/agentic-system-analysis-archive/`.

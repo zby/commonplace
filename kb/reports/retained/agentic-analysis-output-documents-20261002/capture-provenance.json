@@ -1,0 +1,26 @@
+[
+  {
+    "capture": "captures/cleanup-rerun-20260927.md",
+    "original_path": "kb/work/agentic-analysis-output-documents/cleanup-rerun-20260927.md",
+    "source_commit": "1bdd2929650bad5a5ecb9d0fb6b2f23b6f87c00a",
+    "sha256": "9d1795b987c8259f1eaada2f7c19dba686e5571fdc9d4b055ca7c0ae74dd4d92"
+  },
+  {
+    "capture": "captures/fixture-split-20260928.md",
+    "original_path": "kb/work/agentic-analysis-output-documents/fixture-split-20260928.md",
+    "source_commit": "1bdd2929650bad5a5ecb9d0fb6b2f23b6f87c00a",
+    "sha256": "a4fed716ed06f3bcbf9716f276f6e3d37ce81f894e6b2c057ef25dba6b33ad3a"
+  },
+  {
+    "capture": "captures/batch-01-rerun-2026-09-28.md",
+    "original_path": "kb/work/agentic-memory-refresh/batch-01-rerun-2026-09-28.md",
+    "source_commit": "c854800b32b10f61dc7f7c3d91937acd1f495689",
+    "sha256": "2a402a7f4a2c05cddb7af7310c5d92d870baea67ef70320688f9eda62a05f269"
+  },
+  {
+    "capture": "captures/batch-01-rerun-trace-audit-2026-09-28.md",
+    "original_path": "kb/work/agentic-memory-refresh/batch-01-rerun-trace-audit-2026-09-28.md",
+    "source_commit": "c854800b32b10f61dc7f7c3d91937acd1f495689",
+    "sha256": "c14b76cf1dcd217f8bbc09d320d4f1794a077fa2af1715e79168cc7cef85194f"
+  }
+]

@@ -109,7 +109,7 @@ The interface stays open to change until the first analysis definition has used 
 ## Coupling
 
 - [analysis-offload-to-code](../analysis-offload-to-code/README.md) — depends-on: its build order starts from this core, and its first definition is the test of this interface
-- [agentic-analysis-output-documents](../agentic-analysis-output-documents/README.md) — see-also: owns the set and publication contracts that the analysis definition will call
+- [Analysis set contract](../../agentic-systems/types/agentic-system-analysis-set.md) — see-also: governs the set that the analysis definition validates and publishes; the output-documents workshop is closed
 - [runner-execution-profiles](../runner-execution-profiles/README.md) — see-also: defines the model and effort choices that a job's launch parameters would carry; the core emits them as data and does not choose them
 
 ## Log

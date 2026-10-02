@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Agentic analysis output-documents closure](./agentic-analysis-output-documents-20261002/README.md) — fixture sizes, fresh publication and reader acceptance, trace limits, and the adopted set contract.
 - [Archived single-file agentic-system analysis results](../../agentic-systems/reports/retained-archive/README.md) — 60 retained results produced under the retired single-file result type; cited by archived reviews and trial records, read by no loader
 - [Agentic-analysis reliability trial](./agentic-analysis-reliability-20260927/README.md) — eight repair dispositions, fresh analysis, comparison/query replay and recovered-failure audit.
 - [AutoReason compounding trial](./autoreason-compounding-trial-20260925/README.md) — model-preferred revision remained hard to read; experiment closed without application, with autorevision kept experimental.
