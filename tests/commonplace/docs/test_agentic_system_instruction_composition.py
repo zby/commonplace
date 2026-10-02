@@ -57,11 +57,10 @@ def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     boundary = job("boundary")
     rules = job("worker-rules")
 
-    assert "related-systems/<owner>--<repo>/" in boundary
-    assert "git check-ignore -q related-systems/" in boundary
-    assert "verify an existing checkout's origin" in boundary
     assert "compact source allowlist" in boundary
-    assert "git checkout --detach <commit>" in boundary
+    # Code freezes the checkout; the boundary job registers it read-only.
+    assert "code has already frozen the checkout at `source-path`" in boundary
+    assert "do not clone, fetch, pull, check out, reset or clean" in boundary
     # The boundary validator guarantees the checkout, so jobs read it directly.
     assert "read and grep the files under `source.path`" in rules
     assert "do not fetch, check out or copy the source elsewhere" in rules
@@ -85,38 +84,13 @@ def test_analysis_uses_sources_and_supplied_execution_evidence() -> None:
     assert "Probe evidence" not in runtime
 
 
-def test_pinned_source_reuses_the_checkout_without_refresh() -> None:
+def test_orchestrator_pins_a_revision_that_code_freezes() -> None:
     orchestrator = instruction("analyse-agentic-system")
-    boundary = job("boundary")
 
     assert "--param source-revision=<full 40-hex commit>" in orchestrator
     assert "git -C <checkout> rev-parse HEAD" in orchestrator
-    existing = boundary.split("If the checkout path already exists", 1)[1].split(
-        "When `source-revision` is absent", 1
-    )[0]
-    assert "`git rev-parse HEAD` to equal `source-revision`" in existing
-    assert "do not fetch, pull or check out any revision" in existing
-    assert "do not clone over it" in existing
-    assert "write `problem`; never substitute another revision or source" in boundary
-    assert "When `source-revision` is absent" in boundary
-
-
-def test_pinned_source_acquires_a_missing_checkout_at_the_requested_commit() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    boundary = job("boundary")
-    missing = boundary.split("If the checkout path is missing", 1)[1].split(
-        "If the checkout path already exists", 1
-    )[0]
-
-    assert "If the checkout is missing" in orchestrator
-    assert "The boundary job may acquire and freeze source checkouts" in orchestrator
-    assert "git check-ignore -q related-systems/" in missing
-    assert "Clone the repository with its files, verify its origin" in missing
-    assert "git checkout --detach <source-revision>" in missing
-    assert "Fetch that commit from the verified origin if needed" in missing
-    assert "`git rev-parse HEAD` to equal `source-revision`" in missing
-    assert "empty `git status --porcelain`" in missing
-    assert "the requested commit is unavailable" in boundary
+    assert "Code acquires and freezes a GitHub source's checkout" in orchestrator
+    assert "stops the run for the operator" in orchestrator
 
 
 def test_transfer_scan_runs_after_complete_state() -> None:
