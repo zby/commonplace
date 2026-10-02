@@ -33,13 +33,17 @@ integrator owned the inventory and could allocate IDs.
 ## Proposed rules
 
 1. **Part-of is a declared relation.** A declaration whose referent is a
-   material part of a supplied record states `Part of: <full ID>` on its
-   own line, beside the existing closest-supplied-IDs comparison. The
-   container stays declared and keeps its referent; the part owns its own
-   fields and status. A part is not a possible duplicate and needs no
-   supersession. Identity checking reduces to: same referent (annotate),
-   part of a supplied record (declare with `Part of:`), or distinct
-   (declare with comparison).
+   material part of exactly one supplied record states `Part of: <full ID>`
+   on its own line, beside the existing closest-supplied-IDs comparison.
+   The container stays declared and keeps its referent; the part owns its
+   own fields and status. A part is not a possible duplicate and needs no
+   supersession. Identity checking becomes: same referent (annotate), part
+   of one supplied record (declare with `Part of:`), or distinct (declare
+   with comparison). A record that overlaps several supplied records
+   without being a part of any one of them, such as instinctual-memory-02's
+   `MEM-RTE-1` across `RTE-1` and `RTE-4`, stays on the distinct path with
+   its comparison naming each overlapped ID; the rule does not force
+   overlap into containment.
 
 2. **A split is a supersession by declared parts.** Replace "a split
    allocates fresh IDs for the parts" with: reconciliation may supersede a
@@ -71,9 +75,11 @@ integrator owned the inventory and could allocate IDs.
   declared parts, and name the missing-part handling in rule 3.
 - Verify job: a `Part of:` target that does not resolve, or that names a
   record of another kind without explanation, is a blocker.
-- Checker (optional, small): `Part of:` targets resolve in the set like any
-  reference; they already do under the existing reference scan, so the only
-  new check is that the target is a declaration, not an annotation.
+- Checker (optional, small): the target of a `Part of:` line already
+  resolves under the existing reference scan, and an undeclared target is
+  already an unresolved-reference error, so no resolution check is new. The
+  only new check is syntax: the line carries exactly one full ID, and that
+  ID is not the declaring record's own.
 
 No new ID namespace, no prefix change, no code path for reconciliation
 declarations. Frozen sets need no reading rule: they contain no `Part of:`
@@ -81,10 +87,28 @@ lines and keep reading as before.
 
 ## Check before adoption
 
-Rewrite the identity sections of pageindex-02 and instinctual-memory-02
-under rule 1 and confirm that every "possible duplicate" that is a subset
-becomes a `Part of:` line and that the two true duplicates
-(`MEM-RTE-2`/`RTE-1`, `MEM-RTE-4`/`RTE-6`) still read as supersessions.
-Run the current checker on the rewritten members to confirm the targets
-resolve. Then run one fresh analysis under the amended contract and count
-how many identity-section paragraphs reconciliation still needs.
+1. **Archive rewrite.** Copy the members of pageindex-02 and
+   instinctual-memory-02 into the workshop and first prefix every bare
+   runtime ID with `RT-`; under the current grammar the checker does not
+   see bare IDs at all (it finds 24 and 16 IDs in the sets as archived, not
+   53 and 34), so an unnormalized copy would pass without checking any
+   runtime reference. Then rewrite the identity paragraphs under rule 1 and
+   confirm that every "possible duplicate" that is a subset becomes a
+   `Part of:` line, that `MEM-RTE-1` stays on the distinct path, and that
+   the two true duplicates (`MEM-RTE-2`/`RT-RTE-1`, `MEM-RTE-4`/`RT-RTE-6`)
+   still read as supersessions. Run the checker on the rewritten members,
+   then once more with one `Part of:` target deliberately pointed at an
+   undeclared ID, to confirm it is reported.
+
+2. **Split cases.** Neither archived set contains a split; the two cited
+   supersessions are duplicate merges, and one fresh run can avoid splits
+   by chance. Add bounded fixtures to the workflow tests that exercise rule
+   2 and rule 3 directly: a combined record superseded by two declared
+   parts; a missing part with `may-return = yes`, which must produce a
+   memory return; and a missing part with `may-return = no`, which must
+   produce an `Unresolved conflict:` and still reach publication.
+
+3. **Fresh run.** Run one analysis under the amended contract. The count
+   of identity-section paragraphs reconciliation still writes is a
+   secondary measure; the primary evidence is step 2 and any refusals the
+   run produces, with their stage.

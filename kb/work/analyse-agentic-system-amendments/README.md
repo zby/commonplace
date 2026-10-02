@@ -40,24 +40,32 @@ Done:
 
 Next, in order:
 
-1. **A1, refusal hints.** In `set_record_errors`, when an ID is unresolved,
-   name the declared ID that differs only by prefix, and say that ranges
-   (`RT-RTE-1 through RT-RTE-4`) are not expanded. Code and tests only.
-2. **Pre-adoption check of the proposal.** Rewrite the identity paragraphs
-   of the two archived member sets under the `Part of:` rule (in the
-   workshop, not in the archive) and run the checker on the rewritten
-   members; record how many "possible duplicate" entries become parts and
-   whether the two true supersessions still read correctly.
+1. **A1, refusal hints and range detection.** Two separate checks. When
+   an ID is unresolved, name the declared ID that differs only by prefix.
+   Independently, refuse range syntax (`RT-RTE-1 through RT-RTE-4`,
+   `RT-RTE-1–RT-RTE-4`) wherever it appears: a range whose endpoints both
+   resolve passes the reference scan today even when the IDs between them
+   do not exist, so the hint cannot hang off the unresolved case. Code and
+   tests only.
+2. **Pre-adoption check of the proposal**, the three steps under "Check
+   before adoption" in the [proposal](./split-records-proposal.md): the
+   archive rewrite with runtime IDs normalized to `RT-` first and one
+   deliberately missing target; bounded workflow-test fixtures for a split
+   into declared parts, a missing part with memory return, and a missing
+   part retained as an unresolved conflict; then a fresh run.
 3. **Adopt the proposal** if the check holds: edit the record contract, the
    memory and epistemic job texts, the reconcile job and report type, and
-   the verify job as listed in the proposal; add the checker rule that a
-   `Part of:` target is a declaration.
-4. **First run under the amended method.** Count the identity-section
-   paragraphs reconciliation still needs and collect any refusals with
-   their stage. This is also the first run under the `RT-` grammar, so it
-   tests reservation 3 of the prefix change (forgotten `RT-` on citations).
-5. **Close.** If step 4 shows no new ID errors, record the decision in a
-   commit per the closure section below and delete the workshop. Options
+   the verify job as listed in the proposal; add only the `Part of:` syntax
+   check, since target resolution is already covered.
+4. **First run under the amended method** (step 3 of the check). Collect
+   any refusals with their stage; the identity-paragraph count is a
+   secondary measure. This is also the first run under the `RT-` grammar,
+   so it tests reservation 3 of the prefix change (forgotten `RT-` on
+   citations).
+5. **Close.** Closure evidence is the split fixtures passing and the fresh
+   run producing no new ID errors; a run that happens to contain no split
+   does not by itself show rule 2 and rule 3 work. Record the decision in
+   a commit per the closure section below and delete the workshop. Options
    B, C9 and D10 stay unadopted unless step 4 produces a refusal that
    points at the grammar, numbering, or parallel-analyst duplicates.
 

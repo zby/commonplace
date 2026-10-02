@@ -34,11 +34,14 @@ These facts were read from the live method and
 
 ## A. Targeted repairs, ID grammar unchanged
 
-1. **Better refusal messages.** For an unresolved ID, name the nearest
-   declared ID, especially a prefix mismatch: "`RT-OBJ-3` is not declared;
-   `MEM-OBJ-3` is." When the unresolved token sits in a range (`RT-RTE-1
-   through RT-RTE-4`), say that ranges are not expanded. The archive shows
-   ranges in 21 of 60 old results, so this is worth doing regardless.
+1. **Better refusal messages, and range detection.** For an unresolved
+   ID, name the nearest declared ID, especially a prefix mismatch:
+   "`RT-OBJ-3` is not declared; `MEM-OBJ-3` is." Separately, refuse range
+   syntax (`RT-RTE-1 through RT-RTE-4`) outright: the reference scan sees
+   only the two endpoints, so a range whose endpoints exist passes even
+   when the IDs between them do not, and the unresolved case never fires.
+   The archive shows ranges in 21 of 60 old results, so both are worth
+   doing regardless.
 2. **Reconciliation declares records under a `REC-` prefix.** Give the
    reconciliation report a `## Shared records` section for split parts.
    Cost, corrected on review: beyond the prefix pattern and the type, it
