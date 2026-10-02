@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Page not found</h1>
+<p>The address may have changed. Commonplace now uses explicit HTML filenames:
+  <code>topic/</code> has become <code>topic.html</code>.
+  Some pages have also moved or been renamed.</p>
+<p><a href="{{ 'index.html'|url }}">Browse from the homepage</a>
+  or <a href="#properdocs_search_modal" data-bs-toggle="modal"
+    data-bs-target="#properdocs_search_modal">search for the page</a>.</p>
+{% endblock %}

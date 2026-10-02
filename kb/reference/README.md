@@ -7,7 +7,7 @@ This collection answers two kinds of question:
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
 - **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
+Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
 
 ## Mental model
 
@@ -201,7 +201,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 
 ### Authoring and operator procedures
 
-Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
+Imperative how-to procedures live in [kb/instructions/](../instructions/README.md) rather than this collection, but they are part of the shipped surface:
 
 - Each collection's `COLLECTION.md` — collection-specific writing conventions, quality goals, and placement rules
 - [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
