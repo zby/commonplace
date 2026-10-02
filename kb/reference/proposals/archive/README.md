@@ -14,6 +14,9 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Required route fields as labelled record lines](./required-route-fields-as-labelled-record-lines.md) — adopted in narrowed form by ADR 100, 2026-10-02. Historical route-label counts and a specialist correction episode; old-set migration and an additional adequacy assay were declined.
+- [Open an analysis run in code](./open-an-analysis-run-in-code.md) — adopted through workflow start by ADR 101, 2026-10-02. The pre-adoption manual opening, late preflight and copied incumbent-digest path.
+
 - [Separate analysis reconciliation from synthesis](./separate-analysis-reconciliation-from-synthesis.md) — adopted by ADR 098, 2026-10-01. The pre-adoption combined writing job and one local run's reconciliation/synthesis section-size observations.
 - [Fewer authored decisions in agentic-system analysis](./fewer-authored-decisions-in-agentic-analysis.md) — adopted by ADR 097, 2026-09-29. The pre-adoption scoping job, memory handoff pins, unchecked review prose, uncompared source identities and loose Blockers reading that the cuts removed.
 - [Lens-prefixed canonical record IDs](./lens-prefixed-canonical-record-ids.md) — adopted by ADR 096, 2026-09-29. The pre-adoption record namespace (lens proposals, the mapping table, memory finalization, the `runtime-final` and `epistemic-final` jobs) and the ten undeclared `EPI-` records that stopped the first code-scheduled run.
