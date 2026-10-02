@@ -15,13 +15,15 @@ analysis, or adopt an ID design by opening.
 
 ## Files
 
-- [Problem](./problem.md) — the starting problem, including the unowned
-  split declaration, and the questions to settle.
-- [Fix options](./fix-options.md) — verified workflow context and a
-  brainstorm of repairs, with a current recommendation; nothing adopted.
-- [Split-records proposal](./split-records-proposal.md) — one detailed
-  option: settle missing split declarations in the declaring analyst's
-  member before publication.
+- [Problem](./problem.md) — the starting problem, the unowned split
+  declaration, the evidence read from the archived results, and the
+  questions to settle.
+- [Fix options](./fix-options.md) — verified workflow context and the
+  repairs considered, each judged against the archive evidence, with a
+  current recommendation; nothing adopted.
+- [Split-records proposal](./split-records-proposal.md) — the recommended
+  option: a declared `Part of:` relation, splits as supersession by
+  already-declared parts, and no ID allocation by reconciliation.
 
 ## Evaluation boundary
 

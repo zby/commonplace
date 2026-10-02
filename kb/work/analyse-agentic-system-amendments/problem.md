@@ -3,11 +3,10 @@
 ## Starting problem
 
 The [shared record contract](../../agentic-systems/instructions/agentic-analysis-records.md)
-puts both analyst and kind in an ID: `RTE-1`, `MEM-RTE-1`, or `EPI-RTE-1`.
-A concurrent change, uncommitted when this workshop opened, adds an `RT-`
-prefix to runtime IDs (`RT-RTE-1`) and keeps bare runtime IDs readable only
-in frozen sets. Judge proposals against that prefixed scheme once it lands.
-Kind is also expressed by the declaration's heading. The contract requires
+puts both analyst and kind in an ID: `RT-RTE-1`, `MEM-RTE-1`, or
+`EPI-RTE-1`. The `RT-` prefix landed in commit `4e5b5d9ae` on 2026-10-02;
+bare runtime IDs stay readable only in frozen sets. Kind is also expressed
+by the declaration's heading. The contract requires
 full IDs across members, annotations for shared referents, and reconciliation
 of duplicates, corrections, and splits. These rules create several places
 where an analyst must preserve an exact identifier while revising a finding.
@@ -21,6 +20,54 @@ recognizes declarations under `## Shared records` and rejects cited IDs
 that no member declares. The intended owner and declaration path for a split
 therefore need to be settled. This is a contract finding, not a claim that it
 caused the operator's reported errors; collect those errors separately.
+
+## Observed evidence
+
+Read on 2026-10-02 from
+`kb/agentic-systems/reports/retained-archive/`: 60 single-file results
+from the method before member sets, and two member sets, pageindex-02 and
+instinctual-memory-02, produced before the `RT-` prefix. The archive holds
+accepted output only; refusals raised during a run are not retained, so
+the operator's reported errors still need their exact refusal text and
+stage. Both member sets fail validation only because their type paths were
+relocated; the current record checker resolves every reference in both
+(53 and 34 records, no errors). Bare IDs quoted below (`OBJ-1`, `RTE-1`)
+are the archived sets' runtime IDs as written; under the current method
+they would be `RT-OBJ-1` and `RT-RTE-1`.
+
+**Part-of is the common relation, and the contract has no name for it.**
+In pageindex-02, `EPI-OBJ-1` and `EPI-OBJ-3` are parts of the runtime
+containers `OBJ-1` and `OBJ-3`; `EPI-RTE-1` and `EPI-RTE-2` are steps
+inside `RTE-1`. In instinctual-memory-02, three `EPI-OBJ` records are
+declared as "possible duplicate … subset of `OBJ-2`", and `MEM-RTE-1`
+overlaps two runtime routes without matching either. Analysts file these
+as possible duplicates; reconciliation's identity section then explains,
+record by record, that none is a duplicate.
+
+**Splits never ran through reconciliation.** Neither member set supersedes
+a combined record. The epistemic analyst split containers by declaring
+parts under its own prefix and left the container standing. The "allocates
+fresh IDs" sentence comes from the single-file method, where one integrator
+owned the inventory: dynamic-cheatsheet-01 splits `OBJ-6` into `OBJ-12`
+and `OBJ-13` (lines 174, 505); mem0-04 supersedes `OBJ-1` by `OBJ-7` and
+`OBJ-8` (line 1365); napkin-05 returned the split to the specialist that
+declared the record (line 910). The sentence lost its owner when members
+became immutable.
+
+**True duplicates were against runtime, not between the parallel
+analysts.** instinctual-memory-02 has two, `MEM-RTE-2` superseded by
+`RTE-1` and `MEM-RTE-4` by `RTE-6`, both declared after the memory analyst
+had read the runtime member. Neither set has a memory-versus-epistemic
+duplicate.
+
+**ID-form slips in the single-file results** (pattern scan over 60 files,
+quotations excluded; counts are approximate): 25 files rename `MEM-`
+records to canonical IDs (161 arrows such as `MEM-OBJ-1 → OBJ-9`), the
+scheme permanent prefixes replaced; 21 files cite ranges such as `RTE-1
+through RTE-12` (120 hits), which the checker does not expand; 4 files
+invent off-grammar IDs (`EPI-R1`, `MEM-LIM-1`, `EPI-CL-1`; 15 hits).
+Nothing in the archive traces an error to the kind code, to numbering, or
+to reclassification.
 
 ## Questions to settle
 
