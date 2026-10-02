@@ -24,6 +24,9 @@ analysis, or adopt an ID design by opening.
 - [Split-records proposal](./split-records-proposal.md) — the recommended
   option: a declared `Part of:` relation, splits as supersession by
   already-declared parts, and no ID allocation by reconciliation.
+- [Skill inconsistencies](./skill-inconsistencies.md) — read-only audit of
+  the live skill's job texts, types, schemas, contracts and operator docs
+  against the code, with a suggested fix order before the next test run.
 
 ## State and next actions
 
