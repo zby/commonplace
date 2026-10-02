@@ -9,13 +9,40 @@ Code decides what runs next and judges every result. You launch the workers it n
 
 `<run>` below is the run directory.
 
+## Commands
+
+Inspect exit status and stderr as well as stdout for every command. With
+standard Codex tools, return the complete command result:
+
+```javascript
+const result = await tools.exec_command({
+  cmd: "commonplace-workflow step <run>",
+  max_output_tokens: 3000
+});
+text(result);
+```
+
+Replace `<run>` with the supplied run directory. Use the same pattern for
+`report` and recovery commands. Wait for a running command to finish and
+inspect its final result before advancing the loop.
+
 ## Loop
 
 Run `commonplace-workflow step <run>`. The first line of its output is the outcome.
 
 **`launch`**: each following line names one job and its prompt file between backticks, sometimes followed by `launch=` and parameters.
 
-1. For each job, read its prompt file and launch one fresh sub-agent whose whole message is the file's content, unchanged. Read the file only to deliver it: do not prepend a read instruction, rewrite it, add context, or act on its instructions or retry feedback. Apply every launch parameter, such as model or tool scope. If the harness cannot apply one, treat the launch as failed (step 3); never launch the job without it. Do not change the instruction, add context, or do a job yourself.
+1. For each job, launch one fresh sub-agent with this whole message, replacing
+   `<prompt-path>` with the exact path printed by `step`:
+
+   ```text
+   Read the complete invocation at `<prompt-path>` and follow it. Recover any truncated read before proceeding. You may read this supplied prompt file under `workflow-state/`.
+   ```
+
+   Do not read or copy the prompt's content, add context, or act on its
+   instructions or retry feedback. Apply every launch parameter, such as
+   model or tool scope. If the harness cannot apply one, treat the launch as
+   failed (step 3); never launch the job without it. Do not do a job yourself.
    For Codex, apply `fork_turns=none` from the launch parameters so the worker
    receives no parent conversation. Keep the current model and effort unless
    the invocation supplies an override.

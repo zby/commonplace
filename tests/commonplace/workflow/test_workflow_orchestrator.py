@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 
 import pytest
 
@@ -789,6 +790,31 @@ def test_a_job_whose_output_stays_missing_blocks(tmp_path):
 
     assert agent.launched == ["only", "only"]
     assert "no output" in block.reason
+
+
+def test_a_misplaced_output_can_be_repaired_from_the_block_record(tmp_path):
+    run_dir = new_run(tmp_path)
+    misplaced = run_dir / "output" / "only.md"
+    misplaced.parent.mkdir()
+    misplaced.write_text("# only\n", encoding="utf-8")
+    agent = ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_nothing)
+
+    block = one_block(agent.run()[-1])
+    record = block.record_path.read_text(encoding="utf-8")
+    expected = Path(
+        next(
+            line.removeprefix("- Expected output: ")
+            for line in record.splitlines()
+            if line.startswith("- Expected output: ")
+        )
+    )
+
+    assert block.permitted == "repair"
+    assert expected == run_dir / "only.md"
+    assert f"- Expected problem report: {run_dir / 'only.problem.md'}" in record
+    misplaced.rename(expected)
+    assert isinstance(Orchestrator(run_dir, OneJob()).step(), Done)
+    assert expected.read_text(encoding="utf-8") == "# only\n"
 
 
 def test_a_problem_report_blocks_at_once_and_is_shown(tmp_path):

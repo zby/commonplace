@@ -10,6 +10,9 @@ evidence and write scope. Code schedules the job and judges its output.
 
 ## Invocation and authority
 
+Read the supplied invocation prompt completely and recover any truncated
+read before proceeding. Use its job parameters and retry feedback unchanged.
+
 Every job uses these parameters; its instruction defines additional ones:
 
 | Parameter | Meaning |
@@ -40,8 +43,8 @@ analytical round.
 Write only `output` or `problem`, plus intermediate files in `scratch`.
 The boundary job may create and freeze sources as its instruction permits.
 Do not edit other run files, publish, delegate, stage or commit, or change
-`workflow-state/`. The supplied `previous-output` is the only file there you
-may read. When finished, reply in one line naming the file
+`workflow-state/`. Only the supplied invocation prompt and `previous-output`
+may be read there. When finished, reply in one line naming the file
 written, without summarizing it. Follow higher-priority runtime requirements
 for progress messages.
 

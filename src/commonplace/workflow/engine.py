@@ -1433,7 +1433,11 @@ class _Step:
     def job_record(self, judgment: _Judgment, targets: dict[Path, Path]) -> str:
         name = judgment.job.name
         lines = self.header(name, judgment.reason, judgment.permitted)
-        lines += [f"- Hand-outs in the run: {judgment.record['handouts']}"]
+        lines += [
+            f"- Hand-outs in the run: {judgment.record['handouts']}",
+            f"- Expected output: {judgment.job.output_path(self.run_dir)}",
+            f"- Expected problem report: {judgment.job.problem_path(self.run_dir)}",
+        ]
         if judgment.details:
             lines += ["", "## Attempts", ""]
             lines += [f"- {detail}" for detail in judgment.details]
