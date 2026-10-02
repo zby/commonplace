@@ -20,6 +20,14 @@ Every job uses these parameters; its instruction defines additional ones:
 | `problem` | Absolute path for the reason the job cannot finish |
 | `scratch` | Absolute directory for intermediate files, including selections and extracts |
 
+A repair invocation may also supply `previous-output`, the absolute path of
+the preserved report from the refused attempt. Read that file as the baseline.
+Amend the reported failures and any dependent findings, preserving unrelated
+analysis and records. Write the amended report to `output`; do not repeat the
+full analysis. For quote repairs, check whether the corrected passage supports
+the associated claim and carry any change through dependent conclusions. If
+the source cannot support the claim, narrow or withdraw it and update the text.
+
 Use supplied paths unchanged. Read every `read-first` dependency before
 the task. Missing required parameters, unavailable required inputs,
 source access or scope decisions that prevent completion, and needed
@@ -31,8 +39,9 @@ analytical round.
 
 Write only `output` or `problem`, plus intermediate files in `scratch`.
 The boundary job may create and freeze sources as its instruction permits.
-Do not edit other run files, publish, delegate, stage or commit, or read or
-change `workflow-state/`. When finished, reply in one line naming the file
+Do not edit other run files, publish, delegate, stage or commit, or change
+`workflow-state/`. The supplied `previous-output` is the only file there you
+may read. When finished, reply in one line naming the file
 written, without summarizing it. Follow higher-priority runtime requirements
 for progress messages.
 
@@ -55,10 +64,13 @@ const result = await tools.exec_command({
 text(result);
 ```
 
-Replace the example path with the supplied path. Read each instruction,
-contract, and input separately, in successive bounded ranges until its
-end; do not concatenate them into one command. The range is a starting
-budget, not a guarantee: long lines can still overflow it. Inspect the
+Replace the example path with a supplied path or the invocation's batch of
+paths. Follow the Input reading batches in order, completing Read-first before
+Task inputs. Read each batch in one tool call; a batch marked for bounded
+ranges requires successive smaller reads until the file's end. Read files
+outside the batch list, including `previous-output` and source searches, in
+bounded ranges. The suggested grouping is a starting budget, not a guarantee:
+long lines can still overflow it. Inspect the
 complete returned object for `exit_code`, errors, and truncation. A running
 command has no final exit status yet; wait for its completion. If either
 the command or outer tool delivery is truncated, repeat that range with a
@@ -98,8 +110,9 @@ calculate a range by hand. A generated citation proves occurrence, not
 support; judge support yourself.
 
 Code matches the written runtime, memory and epistemic quotations against the
-frozen source before accepting each output. A mismatch uses the ordinary job
-retry. Repair it by regenerating the citation and inserting it unchanged.
+frozen source before accepting each output. A mismatch requests amendment of
+the preserved report. Regenerate the citation, insert it unchanged, and check
+its effect on the report's claims before resubmitting.
 
 ## Prior analyses
 

@@ -319,7 +319,7 @@ def test_changing_the_prompt_reopens_an_accepted_job(tmp_path):
     assert names(Orchestrator(run_dir, Reworded()).step()) == ["only"]
 
 
-def test_complete_message_is_written_unchanged_and_only_refusal_is_appended(tmp_path):
+def test_complete_message_retry_names_its_preserved_output_for_amendment(tmp_path):
     message = "Follow /methods/check.md with:\noutput = /result.md\n\nread-first:\n- /rules.md\n"
 
     class Complete(Workflow):
@@ -335,10 +335,17 @@ def test_complete_message_is_written_unchanged_and_only_refusal_is_appended(tmp_
     assert first.prompt_path.read_text(encoding="utf-8") == message
     first.output_path.write_text("invalid", encoding="utf-8")
     (retry,) = orchestrator.step().jobs
-    assert retry.prompt_path.read_text(encoding="utf-8") == (
+    (preserved,) = (run / "workflow-state").rglob("kept/*")
+    assert preserved.read_text(encoding="utf-8") == "invalid"
+    assert retry.prompt_path.read_text(encoding="utf-8").startswith(
         message + "\n## Why the previous attempt was refused\n\n"
         "- output must start with a level-one heading\n"
     )
+    assert f"previous-output = {preserved}" in retry.prompt_path.read_text(encoding="utf-8")
+    retry.output_path.write_text("# Amended\n", encoding="utf-8")
+    assert isinstance(orchestrator.step(), Done)
+    assert isinstance(Orchestrator(run, Complete()).step(), Done)
+    assert preserved.read_text(encoding="utf-8") == "invalid"
 
 
 def test_changing_message_rendering_mode_reopens_an_accepted_job(tmp_path):
@@ -478,6 +485,7 @@ def test_an_output_is_refused_when_an_input_changed_after_hand_out(tmp_path):
     result = Orchestrator(run_dir, OneJob()).step()
 
     assert names(result) == ["only"]
+    assert "previous-output =" not in result.jobs[0].prompt_path.read_text(encoding="utf-8")
     assert not (run_dir / "only.md").exists()
     assert kept(run_dir, "# only\n")
 

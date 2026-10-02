@@ -502,18 +502,32 @@ def load_definition(reference: str) -> type[Workflow]:
     return found
 
 
-def render_prompt(job: Job, run_dir: Path, messages: Sequence[str] = ()) -> str:
+def render_prompt(
+    job: Job, run_dir: Path, messages: Sequence[str] = (), *,
+    previous_output: Path | None = None,
+) -> str:
     """The message delivered to a job's worker: the job's text, its inputs resolved
     against the run directory, where to write, and why the previous attempt
     was refused when ``messages`` says so."""
-    if job.prompt_is_complete:
-        if not messages:
-            return job.prompt
-        return (
-            job.prompt
-            + ("\n" if job.prompt.endswith("\n") else "\n\n")
-            + "## Why the previous attempt was refused\n\n"
+    feedback = ""
+    if messages:
+        feedback = (
+            "## Why the previous attempt was refused\n\n"
             + "".join(f"- {message}\n" for message in messages)
+        )
+        if previous_output is not None:
+            feedback += (
+                "\n## Amend the previous output\n\n"
+                f"previous-output = {previous_output.resolve()}\n\n"
+                "Read this preserved output as the baseline for the repair. "
+                "Amend the listed failures and any dependent findings; preserve "
+                "unrelated analysis and records. Write the amended result to the "
+                "assigned output path. The preserved file is read-only.\n"
+            )
+    if job.prompt_is_complete:
+        return job.prompt + (
+            ("\n" if job.prompt.endswith("\n") else "\n\n") + feedback
+            if feedback else ""
         )
     lines = [job.prompt.rstrip(), ""]
     if job.inputs:
@@ -535,9 +549,8 @@ def render_prompt(job: Job, run_dir: Path, messages: Sequence[str] = ()) -> str:
             "Do not repeat or summarize its content."
         ),
     ]
-    if messages:
-        lines += ["", "## Why the previous attempt was refused", ""]
-        lines += [f"- {message}" for message in messages]
+    if feedback:
+        lines += ["", feedback.rstrip()]
     return "\n".join(lines) + "\n"
 
 
@@ -1348,7 +1361,13 @@ class _Step:
             job = judgment.job
             record = state["jobs"][job.name]
             prompt_path = self.store.prompt_path(job.name)
-            write_atomic(prompt_path, self.prompt(job, record))
+            previous_output = (
+                targets.get(job.output_path(self.run_dir))
+                if record["failures"]
+                and judgment.record["last_input"] == judgment.input_state
+                else None
+            )
+            write_atomic(prompt_path, self.prompt(job, record, previous_output=previous_output))
             launched.append(
                 Handout(
                     name=job.name,
@@ -1377,9 +1396,11 @@ class _Step:
 
     # What a step writes for the agent orchestrator and the operator
 
-    def prompt(self, job: Job, record: dict[str, Any]) -> str:
+    def prompt(
+        self, job: Job, record: dict[str, Any], *, previous_output: Path | None = None,
+    ) -> str:
         messages = record["messages"] if record["failures"] else ()
-        return render_prompt(job, self.run_dir, messages)
+        return render_prompt(job, self.run_dir, messages, previous_output=previous_output)
 
     def as_block(self, name: str, judgment: _Judgment) -> Block:
         assert judgment.record_path is not None

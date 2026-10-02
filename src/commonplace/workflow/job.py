@@ -55,7 +55,9 @@ class Job:
         this text or in a declared input.
     prompt_is_complete
         When true, `prompt` is the worker's whole message. The core writes
-        it unchanged and appends only the refusal section on a retry.
+        it unchanged and appends refusal feedback on a retry. If the rejected
+        output used unchanged inputs, feedback names its read-only preserved
+        copy as the baseline for amendment.
     output
         Where the result goes: a path inside the run directory. An absolute
         path, one that leaves the run directory, or one inside

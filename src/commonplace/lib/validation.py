@@ -1055,6 +1055,18 @@ def _agentic_evidence_and_references_rule(
     validate_quote_citations(results, parsed.content)
 
 
+def agentic_set_member_link_failures(path: Path, links: tuple[str, ...]) -> list[str]:
+    """Links must survive moving a member into a retained set directory."""
+    directory = path.resolve().parent
+    return [
+        f"set member link: {link} leaves the set directory and breaks once "
+        "retained; name the file by path in a code span"
+        for link in links
+        if (target := _resolve_local_link_target(path, link)) is not None
+        and target.parent != directory
+    ]
+
+
 @type_rule("agentic-systems/types/agentic-system-analysis-overview.md")
 @type_rule("agentic-systems/types/agentic-system-runtime-report.md")
 @type_rule("agentic-systems/types/agent-memory-analysis-report.md")
@@ -1086,18 +1098,9 @@ def _agentic_set_member_link_rule(
 ) -> None:
     """Relative links stay inside the set directory, which moves on retention."""
     del run
-    directory = parsed.path.resolve().parent
-    escaping = [
-        link for link in parsed.document.links
-        if (target := _resolve_local_link_target(parsed.path, link)) is not None
-        and target.parent != directory
-    ]
-    for link in escaping:
-        results.fails.append(
-            f"set member link: {link} leaves the set directory and breaks once "
-            "retained; name the file by path in a code span"
-        )
-    if not escaping:
+    failures = agentic_set_member_link_failures(parsed.path, parsed.document.links)
+    results.fails.extend(failures)
+    if not failures:
         results.passes.append("set member links: relative links stay inside the set directory")
 
 

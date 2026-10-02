@@ -61,7 +61,7 @@ from commonplace.lib.agentic_set import (
 )
 from commonplace.lib.note_parser import parse_document, replace_markdown_links
 from commonplace.lib.quote_matching import ranged_prose_anchors
-from commonplace.lib.validation import validate_note
+from commonplace.lib.validation import agentic_set_member_link_failures, validate_note
 from commonplace.workflow import Job, Recognition, StopRun, Workflow
 
 JOBS = "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
@@ -114,6 +114,33 @@ RETURNED = "Returned to the memory analyst"
 DESCRIPTION_LENGTH = (50, 250)
 """The length the note schema expects of a description; the synthesizer's
 description becomes the overview's and the review's."""
+
+READ_BATCH_BYTES = 6 * 1024
+"""Conservative file grouping budget, leaving room for tool-result wrappers."""
+
+
+def reading_batches(paths: Sequence[str]) -> list[list[str]]:
+    """Suggest bounded reads without copying files or changing dependencies.
+
+    Oversized or not-yet-produced inputs are read separately, in ranges.
+    """
+    batches: list[list[str]] = []
+    batch: list[str] = []
+    size = 0
+    for path in paths:
+        file = Path(path)
+        count = file.stat().st_size if file.is_file() else READ_BATCH_BYTES + 1
+        if batch and size + count > READ_BATCH_BYTES:
+            batches.append(batch)
+            batch, size = [], 0
+        if count > READ_BATCH_BYTES:
+            batches.append([f"{path} — read in bounded ranges"])
+        else:
+            batch.append(path)
+            size += count
+    if batch:
+        batches.append(batch)
+    return batches
 
 
 def memory_report(round_: int) -> str:
@@ -430,6 +457,14 @@ def synthesis_refusals(path: Path, *, bodies: Callable[[Path], dict[str, str]]) 
             f"the `## Description` sentence has {len(description)} characters; "
             f"write {shortest} to {longest}"
         )
+    document, error = parse_document(text)
+    if error:
+        refusals.append(f"synthesis does not parse: {error}")
+    elif document is not None:
+        # Synthesis is written beside output/, then assembled into overview.md.
+        refusals += agentic_set_member_link_failures(
+            path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links,
+        )
     return refusals or source_anchor_refusals(text) or reference_refusals(partial(bodies, path))
 
 
@@ -654,6 +689,7 @@ class AnalyseAgenticSystem(Workflow):
             inputs=(*input_paths.values(), *method_paths),
             validator=validator,
             prompt_is_complete=True,
+            launch={"fork_turns": "none"},
         )
         values = {
             "system": one_line(str(self.params["system"])),
@@ -667,6 +703,16 @@ class AnalyseAgenticSystem(Workflow):
         lines = [f"Follow {method_paths[0]} with:"]
         lines += [f"{key} = {value}" for key, value in values.items()]
         lines += ["", "read-first:", *(f"- {path}" for path in method_paths[1:])]
+        lines += [
+            "", "## Input reading batches", "",
+            ("Load inputs in these batches to avoid truncated reads. Use one tool "
+            "call per batch, return the complete command result, and recover any "
+            "truncation before continuing. Read oversized files in bounded ranges."),
+        ]
+        for title, paths in (("Read-first", method_paths[1:]), ("Task inputs", list(input_paths.values()))):
+            lines += ["", f"{title}:"]
+            lines += [f"{number}. " + ", ".join(batch)
+                      for number, batch in enumerate(reading_batches(paths), 1)]
         if source is not None:
             # Caller text stays data even when it contains fences or parameters.
             fence = "`" * max(3, 1 + max((len(run) for run in re.findall(r"`+", source)), default=0))

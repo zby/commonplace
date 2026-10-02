@@ -22,10 +22,12 @@ import yaml
 from commonplace.lib import agentic_publication, agentic_set, validation
 from commonplace.lib.agentic_set import normalize_source_identity
 from commonplace.lib.agentic_workflow import (
+    READ_BATCH_BYTES,
     AnalyseAgenticSystem,
     blockers_refusals,
     boundary_refusals,
     overview_enums,
+    reading_batches,
     retarget_links,
 )
 from commonplace.workflow import (
@@ -414,6 +416,33 @@ def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> Non
     assert "synthesis.md: unresolved record OBJ-99" in prompt
 
 
+@pytest.mark.parametrize("link", [
+    "../../notes/theory.md", "..%2Fnotes%2Ftheory.md", "nested/theory.md",
+])
+def test_synthesis_links_are_repaired_before_the_verifier(
+    fixture: Fixture, link: str,
+) -> None:
+    def synthesize(handout: Handout) -> None:
+        if handout.attempt == 1:
+            text = fixture.synthesis(synthesis=f"See [theory]({link}).")
+        else:
+            prompt = handout.prompt_path.read_text(encoding="utf-8")
+            preserved = Path(re.search(r"^previous-output = (.+)$", prompt, re.MULTILINE)[1])
+            text = preserved.read_text(encoding="utf-8").replace(
+                f"[theory]({link})", f"`{link}`",
+            )
+        handout.output_path.write_text(text, encoding="utf-8")
+
+    scripted, _ = agent(fixture, synthesize=synthesize)
+    drive_to(scripted, "synthesize")
+    attempt, prompt = prompt_of(scripted.round(), "synthesize")
+    assert attempt == 2
+    assert "set member link:" in prompt
+    assert "verify-synthesis" not in scripted.launched
+    assert isinstance(scripted.run()[-1], Done)
+    assert scripted.launched.count("verify-synthesis") == 1
+
+
 # 3. The correction cycle
 
 
@@ -758,8 +787,14 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
     }
 
     def analyst(handout: Handout) -> None:
-        quote = citation.replace("Frozen source", "Frozen call source") if handout.attempt == 1 else citation
-        handout.output_path.write_text(reports[job]() + "\n" + quote, encoding="utf-8")
+        if handout.attempt == 1:
+            text = reports[job]() + "\n" + citation.replace("Frozen source", "Frozen call source")
+        else:
+            prompt = handout.prompt_path.read_text(encoding="utf-8")
+            preserved = Path(re.search(r"^previous-output = (.+)$", prompt, re.MULTILINE)[1])
+            text = preserved.read_text(encoding="utf-8").replace("Frozen call source", "Frozen source")
+            assert text == reports[job]() + "\n" + citation
+        handout.output_path.write_text(text, encoding="utf-8")
         # The observed failure passed standing structural validation.
         assert validation.validate_note(handout.output_path, repo_root=fixture.root).fails == []
 
@@ -1082,7 +1117,7 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
 
 def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
     """Read just the constructor's invocation header, leaving caller data alone."""
-    header = prompt.split("\nsource:\n", 1)[0]
+    header = prompt.split("\n## Input reading batches", 1)[0]
     values, reads = header.split("\n\nread-first:\n")
     first, *parameters = values.splitlines()
     return (
@@ -1177,6 +1212,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
     monkeypatch.chdir(fixture.root.parent)
     assert build().prompt == job.prompt
     assert job.prompt_is_complete
+    assert job.launch == {"fork_turns": "none"}
     for feedback in ((), ("The previous output was refused.",)):
         prompt = render_prompt(job, run, feedback)
         header = prompt.split("\n## Why the previous attempt was refused", 1)[0].rstrip() + "\n"
@@ -1197,6 +1233,28 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
         files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return", "memory-return"}}
         assert set(job.inputs) == {method, *first_reads, *files}
         assert not set(job.inputs) & {values[key] for key in ("run-state", "output", "problem", "scratch")}
+        hints = job.prompt.split("## Input reading batches", 1)[1].split("\nsource:\n", 1)[0]
+        batches = re.findall(r"^\d+\. (.+)$", hints, re.MULTILINE)
+        hinted = [entry.removesuffix(" — read in bounded ranges")
+                  for batch in batches for entry in batch.split(", ")]
+        assert hinted[:len(first_reads)] == first_reads
+        assert set(hinted[len(first_reads):]) == files
+        assert len(hinted) == len(first_reads) + len(files)
+
+
+def test_reading_batches_cover_every_file_and_bound_small_groups(tmp_path: Path) -> None:
+    paths = []
+    for name, size in (("a", 2000), ("b", 3000), ("large", READ_BATCH_BYTES + 1), ("c", 5000)):
+        path = tmp_path / f"{name}.md"
+        path.write_bytes(b"x" * size)
+        paths.append(str(path))
+    missing = str(tmp_path / "not-yet-written.md")
+    batches = reading_batches([*paths, missing])
+    assert batches == [paths[:2], [paths[2] + " — read in bounded ranges"],
+                       [paths[3]], [missing + " — read in bounded ranges"]]
+    for batch in batches:
+        if not batch[0].endswith(" — read in bounded ranges"):
+            assert sum(Path(path).stat().st_size for path in batch) <= READ_BATCH_BYTES
 
 
 def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixture) -> None:
