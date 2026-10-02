@@ -61,6 +61,8 @@ SYSTEM = "Example System"
 DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
 BLOCKER = "- RTE-1 has an unresolved scope in the reconciled records."
 REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
+# Its checkout is the fixture's related-systems/example--system.
+GITHUB = "https://github.com/example/system"
 INSTRUCTIONS = (
     "kb/agentic-systems/instructions/analyse-agentic-system",
 )
@@ -111,6 +113,20 @@ class Fixture:
 
     # What each scripted worker writes
 
+    def on_github(self) -> None:
+        """Name the source by a GitHub identity whose checkout is a clone of a
+        local upstream, so code freezes it before the boundary job."""
+        self.identity = GITHUB
+        self.upstream = self.scratch / "upstream"
+        self.upstream.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(self.source_root, self.upstream)
+        run_git(self.root, "clone", "--quiet", str(self.upstream), str(self.source_root))
+
+    def advance_upstream(self) -> str:
+        """Commit a new file upstream, leaving the quoted README unchanged."""
+        (self.upstream / "NOTES.md").write_text("Newer notes.\n", encoding="utf-8")
+        return commit_paths(self.upstream, "Advance the upstream", "NOTES.md")
+
     def boundary(self, disposition: str = "complete", **changes) -> str:
         if disposition == "complete":
             fields = {
@@ -122,7 +138,7 @@ class Fixture:
                 "evidence-tier": "code-grounded",
                 "source": {
                     "kind": "git",
-                    "identity": SOURCE,
+                    "identity": normalize_source_identity(self.identity),
                     "revision": self.revision,
                     "path": self.source_root.as_posix(),
                     "sha256": None,
@@ -148,7 +164,7 @@ class Fixture:
             "## Boundary and evidence\n\n"
             f"Fixture boundary at `{self.revision}`.\n\n"
             "## Source register\n\n"
-            f"| SRC-1 | git | `{SOURCE}` | `{self.revision}` | implementation "
+            f"| SRC-1 | git | `{normalize_source_identity(self.identity)}` | `{self.revision}` | implementation "
             "| README.md | `README.md` | none |\n" + not_reached
         )
         return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
@@ -156,7 +172,10 @@ class Fixture:
     def memory_report(self, round_: int = 0) -> str:
         """The fixture's specialist report, marked with its round."""
         local = memory_report_fixture(self.scratch / "memory", self.revision)
-        return local.read_text(encoding="utf-8") + f"\nWritten in round {round_}.\n"
+        text = local.read_text(encoding="utf-8").replace(
+            SOURCE, normalize_source_identity(self.identity)
+        )
+        return text + f"\nWritten in round {round_}.\n"
 
     @staticmethod
     def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
@@ -225,6 +244,14 @@ class CountsPublication(AnalyseAgenticSystem):
     def publish(self, spec) -> None:
         self.publications += 1
         super().publish(spec)
+
+
+class LocalOrigin(CountsPublication):
+    """Clones and checks origins against the local upstream named by the
+    `source` parameter instead of GitHub."""
+
+    def origin(self) -> str:
+        return str(self.params["source"])
 
 
 @pytest.fixture
@@ -851,96 +878,135 @@ def test_the_boundary_is_given_the_normalized_identity(fixture: Fixture) -> None
     assert definition.publications == 1
 
 
-def test_pinned_source_revision_reaches_the_boundary_and_publication(fixture: Fixture) -> None:
-    definition = CountsPublication({**fixture.params(), "source-revision": fixture.revision})
-    scripted = ScriptedAgent(
-        Orchestrator(fixture.run_dir, definition), fixture.workers(), default=_unscripted,
-    )
-    source_bytes = (fixture.source_root / "README.md").read_bytes()
-
-    assert isinstance(scripted.run()[-1], Done)
-
-    assert f"source-revision = {fixture.revision}\n" in last_prompt(fixture, "boundary")
-    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
-    assert (fixture.source_root / "README.md").read_bytes() == source_bytes
-    assert subprocess.run(
-        ["git", "-C", str(fixture.source_root), "rev-parse", "HEAD"],
-        check=True, capture_output=True, text=True,
-    ).stdout.strip() == fixture.revision
+def github_agent(
+    fixture: Fixture, revision: str | None = None, **workers: Worker
+) -> tuple[ScriptedAgent, LocalOrigin]:
+    params = {**fixture.params(), "source": str(fixture.upstream)}
+    if revision is not None:
+        params["source-revision"] = revision
+    definition = LocalOrigin(params)
+    orchestrator = Orchestrator(fixture.run_dir, definition)
+    return ScriptedAgent(
+        orchestrator, fixture.workers(**workers), default=_unscripted
+    ), definition
 
 
-def test_boundary_cannot_substitute_another_commit_for_the_requested_pin(fixture: Fixture) -> None:
-    requested = "0" * 40
-    definition = CountsPublication({**fixture.params(), "source-revision": requested})
-    scripted = ScriptedAgent(
-        Orchestrator(fixture.run_dir, definition), fixture.workers(), default=_unscripted,
-    )
-    drive_to(scripted, "boundary")
-
-    attempt, prompt = prompt_of(scripted.round(), "boundary")
-
-    assert attempt == 2
-    assert f"must identify the requested Git commit `{requested}`" in prompt
-    assert scripted.launched == ["boundary", "boundary"]
-    assert definition.publications == 0
-
-
-def test_missing_checkout_can_be_cloned_at_the_requested_older_commit(fixture: Fixture) -> None:
-    source_bytes = (fixture.source_root / "README.md").read_bytes()
-    upstream = fixture.scratch / "upstream"
-    upstream.parent.mkdir(parents=True)
-    shutil.move(fixture.source_root, upstream)
-    fixture.source_root.parent.rmdir()
-    (upstream / "README.md").write_text("# Newer source\n", encoding="utf-8")
-    latest = commit_paths(upstream, "Advance the upstream", "README.md")
-    assert latest != fixture.revision
-
-    def acquire(_handout: Handout) -> str:
-        # This must also succeed before the ignored source parent exists.
-        assert not fixture.source_root.parent.exists()
-        run_git(fixture.root, "check-ignore", "-q", "related-systems/")
-        run_git(fixture.root, "clone", "--quiet", str(upstream), str(fixture.source_root))
-        assert run_git(fixture.source_root, "remote", "get-url", "origin") == str(upstream)
-        assert run_git(fixture.source_root, "rev-parse", "HEAD") == latest
-        run_git(fixture.source_root, "checkout", "--quiet", "--detach", fixture.revision)
-        return fixture.boundary()
-
-    definition = CountsPublication({
-        **fixture.params(), "source": str(upstream), "source-revision": fixture.revision,
-    })
-    scripted = ScriptedAgent(
-        Orchestrator(fixture.run_dir, definition),
-        fixture.workers(boundary=fixture.writes(acquire)), default=_unscripted,
-    )
+def test_code_freezes_a_github_checkout_at_the_default_tip(fixture: Fixture) -> None:
+    fixture.on_github()
+    fixture.revision = fixture.advance_upstream()
+    scripted, definition = github_agent(fixture)
 
     results = scripted.run()
 
     assert isinstance(results[-1], Done), results[-1]
     assert definition.publications == 1
+    prompt = last_prompt(fixture, "boundary")
+    assert f"source-revision = {fixture.revision}\n" in prompt
+    assert f"source-path = {fixture.source_root.as_posix()}\n" in prompt
+    assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
+    assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == "HEAD"
+    assert run_git(fixture.source_root, "status", "--porcelain") == ""
     assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
-    assert (fixture.source_root / "README.md").read_bytes() == source_bytes
+
+
+def test_pinned_revision_reuses_a_matching_checkout_unchanged(fixture: Fixture) -> None:
+    fixture.on_github()
+    fixture.advance_upstream()
+    branch = run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD")
+    scripted, _ = github_agent(fixture, fixture.revision)
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    assert f"source-revision = {fixture.revision}\n" in last_prompt(fixture, "boundary")
+    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
+    # Neither fetched nor checked out: still on its branch at the pinned commit.
+    assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
+    assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == branch
+
+
+def test_missing_checkout_is_cloned_at_the_requested_older_commit(fixture: Fixture) -> None:
+    fixture.on_github()
+    latest = fixture.advance_upstream()
+    shutil.rmtree(fixture.source_root)
+    fixture.source_root.parent.rmdir()
+    scripted, definition = github_agent(fixture, fixture.revision)
+
+    results = scripted.run()
+
+    assert isinstance(results[-1], Done), results[-1]
+    assert scripted.launched[0] == "boundary"
+    assert definition.publications == 1
     assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
     assert run_git(fixture.source_root, "status", "--porcelain") == ""
     assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == "HEAD"
-    assert run_git(upstream, "rev-parse", "HEAD") == latest
+    assert not (fixture.source_root / "NOTES.md").exists()
+    assert run_git(fixture.upstream, "rev-parse", "HEAD") == latest
+    # Only the checkout is left: the staging clone was renamed into place.
+    assert [path.name for path in fixture.source_root.parent.iterdir()] == ["example--system"]
+
+
+def test_pinned_revision_moves_a_clean_checkout_to_a_commit_it_lacks(fixture: Fixture) -> None:
+    fixture.on_github()
+    fixture.revision = fixture.advance_upstream()
+    scripted, definition = github_agent(fixture, fixture.revision)
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    assert definition.publications == 1
+    assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
+    assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == "HEAD"
+    assert run_git(fixture.source_root, "status", "--porcelain") == ""
+
+
+@pytest.mark.parametrize("condition", ["dirty", "unavailable commit", "foreign origin"])
+def test_a_checkout_code_cannot_freeze_stops_before_the_boundary(
+    fixture: Fixture, condition: str,
+) -> None:
+    fixture.on_github()
+    fixture.advance_upstream()
+    revision = None
+    if condition == "dirty":
+        (fixture.source_root / "local.txt").write_text("keep me\n", encoding="utf-8")
+    elif condition == "unavailable commit":
+        revision = "0" * 40
+    else:
+        run_git(fixture.source_root, "remote", "set-url", "origin", "/elsewhere")
+    scripted, _ = github_agent(fixture, revision)
+
+    result = scripted.run()[-1]
+
+    assert isinstance(result, Blocked), result
+    (block,) = result.blocks
+    assert block.subject == "workflow"
+    assert block.permitted == "stop"
+    assert scripted.launched == []
+    assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
+    if condition == "dirty":
+        assert (fixture.source_root / "local.txt").read_text(encoding="utf-8") == "keep me\n"
+
+
+def test_boundary_cannot_substitute_another_commit_for_the_frozen_one(fixture: Fixture) -> None:
+    fixture.on_github()
+    other = fixture.boundary(**{"reviewed-boundary": "0" * 40})
+    scripted, definition = github_agent(fixture, boundary=fixture.writes(lambda _: other))
+    drive_to(scripted, "boundary")
+
+    attempt, prompt = prompt_of(scripted.round(), "boundary")
+
+    assert attempt == 2
+    assert "source must be exactly the checkout code froze" in prompt
+    assert definition.publications == 0
 
 
 @pytest.mark.parametrize("revision", ["", "HEAD", "main", "abc123", "a" * 40 + "\n"])
 def test_source_revision_requires_a_full_commit(revision: str) -> None:
     with pytest.raises(ValueError, match="source-revision must be a full 40-hex Git commit"):
-        AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": revision})
+        AnalyseAgenticSystem({"source-identity": GITHUB, "source-revision": revision})
 
 
-def test_pinned_boundary_requires_matching_reviewed_boundary(fixture: Fixture) -> None:
-    path = fixture.run_dir / "boundary.md"
-    path.write_text(fixture.boundary(**{"reviewed-boundary": "0" * 40}), encoding="utf-8")
-
-    refusals = boundary_refusals(
-        path, enums=overview_enums(fixture.root), identity=SOURCE,
-        source_revision=fixture.revision,
-    )
-
-    assert any("must identify the requested Git commit" in refusal for refusal in refusals)
+def test_source_revision_requires_a_github_identity() -> None:
+    with pytest.raises(ValueError, match="source-revision requires a GitHub repository identity"):
+        AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": "a" * 40})
 
 
 def test_a_boundary_with_another_source_identity_is_refused(fixture: Fixture) -> None:

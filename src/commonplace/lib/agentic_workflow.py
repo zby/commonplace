@@ -15,8 +15,9 @@ name. Each job's task is an instruction file under
 input, so a change to it reopens the job. The job split
 is recorded in `kb/work/analysis-offload-to-code/README.md`.
 
-Opening and publication are effects: opening records values that cannot be
-reproduced (the method commit, the run date, the incumbent's digest), and
+Opening, acquisition and publication are effects: opening records values
+that cannot be reproduced (the method commit, the run date, the incumbent's
+digest), acquisition freezes a GitHub source's checkout outside the run, and
 publication changes the repository outside the run. Everything else code does
 is replayed from the run's files in every step.
 """
@@ -39,6 +40,7 @@ from urllib.parse import urlsplit
 import yaml
 
 from commonplace.lib.agentic_analysis import load_run_state, verify_quote_anchors
+from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
 from commonplace.lib.agentic_finalize import build_manifest
 from commonplace.lib.agentic_publication import (
     PublicationSpec,
@@ -91,6 +93,7 @@ RECORD_CONTRACTS = (
 SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT)
 
 OPENING = "opening.json"
+FROZEN_SOURCE = "source.json"
 BOUNDARY = "boundary.md"
 CANDIDATE = "review-candidate.md"
 RUN_STATE = "run-state.md"
@@ -229,7 +232,7 @@ def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
 
 def boundary_refusals(
     path: Path, *, enums: dict[str, list[Any]], identity: str,
-    source_revision: str | None = None,
+    frozen: dict[str, Any] | None = None,
 ) -> list[str]:
     try:
         fields, body = split(path.read_text(encoding="utf-8"))
@@ -268,12 +271,12 @@ def boundary_refusals(
             refusals.append(
                 f"source.identity must be `{identity}`, the run's source identity"
             )
-        if source_revision is not None and (
-            source.get("kind") != "git" or source.get("revision") != source_revision
-            or fields.get("reviewed-boundary") != source_revision
+        if frozen is not None and (
+            source != frozen or fields.get("reviewed-boundary") != frozen["revision"]
         ):
             refusals.append(
-                f"source and reviewed-boundary must identify the requested Git commit `{source_revision}`"
+                "source must be exactly the checkout code froze, and reviewed-boundary "
+                f"its commit `{frozen['revision']}`: {json.dumps(frozen)}"
             )
         refusals += frozen_source_refusals(source)
     wanted = ["Boundary and evidence", "Source register"]
@@ -521,9 +524,10 @@ class AnalyseAgenticSystem(Workflow):
 
     Parameters: `system` (the name the caller gave), `source-identity` (the
     stable identity of the source), `source` (the caller's source input, as
-    given), and optionally `review-path` and `source-revision`. The latter
-    pins a full Git commit: the boundary worker acquires a missing checkout
-    at that commit or reuses a matching clean checkout without changing it.
+    given), and optionally `review-path` and `source-revision`. For a GitHub
+    identity, code freezes the checkout before the boundary job: at
+    `source-revision` when given, and otherwise at the tip of the default
+    branch.
 
     Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
     then rounds of `reconcile-<n>` and `verify-<n>`, followed by synthesis
@@ -549,6 +553,9 @@ class AnalyseAgenticSystem(Workflow):
             or re.fullmatch(r"[0-9a-f]{40}", self.source_revision) is None
         ):
             raise ValueError("source-revision must be a full 40-hex Git commit")
+        self.checkout = github_checkout_path(self.source_identity)
+        if self.source_revision is not None and self.checkout is None:
+            raise ValueError("source-revision requires a GitHub repository identity")
 
     def run_location(self) -> tuple[str, str]:
         """`AAS-<today>-<slug>` under the analysis state directory.
@@ -583,8 +590,17 @@ class AnalyseAgenticSystem(Workflow):
         opening = json.loads((run_dir / OPENING).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, {})
 
+        frozen = None
+        if self.checkout is not None:
+            ctx.effect(
+                "acquire",
+                partial(self.acquire, run_dir),
+                recognize=partial(self.recognize_file, run_dir / FROZEN_SOURCE),
+            )
+            frozen = json.loads((run_dir / FROZEN_SOURCE).read_text(encoding="utf-8"))
+
         enums = overview_enums(repo_root)
-        ctx.agent(self.boundary_job(run_dir, enums)).wait()
+        ctx.agent(self.boundary_job(run_dir, enums, frozen)).wait()
         fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
@@ -719,7 +735,13 @@ class AnalyseAgenticSystem(Workflow):
             lines += ["", "source:", fence, source, fence]
         return replace(job, prompt="\n".join(lines) + "\n")
 
-    def boundary_job(self, run_dir: Path, enums: dict[str, list[Any]]) -> Job:
+    def boundary_job(
+        self, run_dir: Path, enums: dict[str, list[Any]],
+        frozen: dict[str, Any] | None = None,
+    ) -> Job:
+        frozen_parameters = {} if frozen is None else {
+            "source-revision": frozen["revision"], "source-path": frozen["path"],
+        }
         return self.job(
             run_dir,
             "boundary",
@@ -728,12 +750,12 @@ class AnalyseAgenticSystem(Workflow):
             extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT),
             parameters={
                 "source-identity": one_line(self.source_identity),
-                **({"source-revision": self.source_revision} if self.source_revision is not None else {}),
+                **frozen_parameters,
             },
             source=str(self.params["source"]),
             validator=partial(
                 boundary_refusals, enums=enums, identity=self.source_identity,
-                source_revision=self.source_revision,
+                frozen=frozen,
             ),
         )
 
@@ -998,6 +1020,19 @@ class AnalyseAgenticSystem(Workflow):
             "expected-incumbent-sha256": self.inspect(destination),
         }
         write_file(run_dir / OPENING, json.dumps(record, indent=2) + "\n")
+
+    def origin(self) -> str:
+        """Where a missing checkout is cloned from, and the origin an existing
+        one must have."""
+        return self.source_identity
+
+    def acquire(self, run_dir: Path) -> None:
+        assert self.checkout is not None
+        frozen = freeze_checkout(
+            self.repo, self.checkout, identity=self.source_identity,
+            origin=self.origin(), revision=self.source_revision,
+        )
+        write_file(run_dir / FROZEN_SOURCE, json.dumps(frozen, indent=2) + "\n")
 
     @staticmethod
     def recognize_file(path: Path) -> Recognition:
