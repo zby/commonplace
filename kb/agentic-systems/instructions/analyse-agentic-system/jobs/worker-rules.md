@@ -18,6 +18,7 @@ Every job uses these parameters; its instruction defines additional ones:
 | Parameter | Meaning |
 |---|---|
 | `system` | Source-native system name |
+| `run-id` | Exact run identity; copy unchanged when the member type requires it |
 | `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input |
 | `output` | Absolute path for the completed result |
 | `problem` | Absolute path for the reason the job cannot finish |
@@ -68,7 +69,8 @@ text(result);
 ```
 
 Replace the example path with a supplied path or the invocation's batch of
-paths. Follow the Input reading batches in order, completing Read-first before
+paths. Read the named job instruction before the Input reading batches.
+Follow those batches in order, completing Read-first before
 Task inputs. Read each batch in one tool call; a batch marked for bounded
 ranges requires successive smaller reads until the file's end. Read files
 outside the batch list, including `previous-output` and source searches, in

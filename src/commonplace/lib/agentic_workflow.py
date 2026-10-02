@@ -386,7 +386,7 @@ def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
 
 
 def pass_refusals(
-    path: Path, *, repo_root: Path, run_state: Path,
+    path: Path, *, repo_root: Path, run_state: Path, boundary: Path,
     declaration_prefix: str,
     bodies: Callable[[Path], dict[str, str]],
 ) -> list[str]:
@@ -398,6 +398,20 @@ def pass_refusals(
     )
     if refusals:
         return refusals
+    try:
+        state = load_run_state(run_state, repo_root=repo_root)
+        metadata, _ = split(path.read_text(encoding="utf-8"))
+        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [str(error)]
+    identities = (("run-id", state.run_id),
+                  ("reviewed-boundary", boundary_fields["reviewed-boundary"]))
+    identity_errors = [
+        f"member identity: {field} {metadata.get(field)!r} does not match {expected!r}"
+        for field, expected in identities if metadata.get(field) != expected
+    ]
+    if identity_errors:
+        return identity_errors
     wrong_prefix = [
         identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
         if not identifier.startswith(declaration_prefix)
@@ -408,10 +422,7 @@ def pass_refusals(
             + ", ".join(wrong_prefix)
             + "; keep supplied IDs unchanged in references and annotations"
         ]
-    try:
-        source = load_run_state(run_state, repo_root=repo_root).source
-    except ValueError as error:
-        return [str(error)]
+    source = state.source
     if source is None:
         return ["quotation checks require a registered frozen source"]
     _, failures = verify_quote_anchors(path.read_text(encoding="utf-8"), source=source)
@@ -435,7 +446,10 @@ def reconcile_refusals(
     wanted = ["Reconciliation", *([RETURNED] if returned else [])]
     refusals = require_sections(body, 2, wanted)
     if headings(body, 2) != wanted:
-        refusals.append("write only Reconciliation and any permitted memory return")
+        refusals.append(
+            "write only Reconciliation followed by any permitted Returned to the memory analyst section"
+        )
+    refusals.extend(source_anchor_refusals(body))
     if returned and not may_return:
         refusals.append(
             f"this is the last round: remove `## {RETURNED}` and retain the conflicts "
@@ -743,6 +757,7 @@ class AnalyseAgenticSystem(Workflow):
         )
         values = {
             "system": one_line(str(self.params["system"])),
+            "run-id": run_dir.name,
             **(parameters or {}),
             "run-state": str(run_dir / RUN_STATE),
             **input_paths,
@@ -755,6 +770,8 @@ class AnalyseAgenticSystem(Workflow):
         lines += ["", "read-first:", *(f"- {path}" for path in method_paths[1:])]
         lines += [
             "", "## Input reading batches", "",
+            f"Read the named job instruction {method_paths[0]} before these reading batches.",
+            "",
             ("Load inputs in these batches to avoid truncated reads. Use one tool "
             "call per batch, return the complete command result, and recover any "
             "truncation before continuing. Read oversized files in bounded ranges."),
@@ -815,6 +832,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                boundary=run_dir / BOUNDARY,
                 declaration_prefix="RT-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, runtime=path
@@ -840,6 +858,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                boundary=run_dir / BOUNDARY,
                 declaration_prefix="EPI-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY,
@@ -878,6 +897,7 @@ class AnalyseAgenticSystem(Workflow):
                 pass_refusals,
                 repo_root=self.repo,
                 run_state=run_dir / RUN_STATE,
+                boundary=run_dir / BOUNDARY,
                 declaration_prefix="MEM-",
                 bodies=lambda path: set_bodies(
                     boundary=run_dir / BOUNDARY, memory=path, **cited
@@ -1196,9 +1216,13 @@ class AnalyseAgenticSystem(Workflow):
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             "### Blockers\n\nnone\n"
         )
-        # The source register stays the boundary job's bytes; the navigation
-        # line follows it without becoming public synthesis text.
-        boundary_with_index = boundary_body.rstrip() + "\n\n" + index + "\n"
+        # Insert within the Source register regardless of the boundary's section order.
+        boundary_with_index = re.sub(
+            r"(?ms)^## Source register[ \t]*\n.*?(?=^## |\Z)",
+            lambda match: match[0].rstrip() + "\n\n" + index + "\n\n",
+            boundary_body,
+            count=1,
+        )
         return dump_frontmatter(
             self.overview_frontmatter(opening, fields, one_line(section(synthesis, "Description"))),
             self.overview_body(boundary_with_index, rest),

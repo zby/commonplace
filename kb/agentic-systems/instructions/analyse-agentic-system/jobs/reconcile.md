@@ -67,7 +67,9 @@ with the epistemic member named under affected findings.
 
 When a substantive conflict needs the memory analyst, add the section
 `## Returned to the memory analyst`, listing each returned finding with its
-IDs and evidence anchor. Code then runs a correction round of the memory
+IDs and evidence anchor. Place it after `## Reconciliation`; the accepted
+heading order is Reconciliation, then the optional memory return.
+Code then runs a correction round of the memory
 analyst and gives you its report in the next reconciliation. Return findings
 only when `may-return = yes`. When `may-return = no`, retain each unresolved
 conflict in a paragraph starting `Unresolved conflict:`, with its full IDs,

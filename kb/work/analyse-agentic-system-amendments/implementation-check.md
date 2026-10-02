@@ -63,3 +63,42 @@ identity to resume it. The fresh run must collect refusals with their stage
 and check analyst use of the part/split rules. The identity-paragraph count
 is a secondary measure. Workshop closure remains conditional on that evidence;
 the workshop stays active at this stopping point.
+
+## Minimal pre-run adoption
+
+The operator separately authorized the README's bounded pre-run plan on
+2026-10-02. All four repairs are implemented within its stated scope:
+
+- Every generated job prompt supplies `run-id`; the common worker rules
+  define it. All three analyst acceptance paths compare member `run-id` to
+  the run state and `reviewed-boundary` to the accepted boundary, before
+  accepting the member. The later whole-set identity check remains.
+- Overview rendering inserts the amendment index inside Source register,
+  after the supplied source content, in either permitted boundary-section
+  order. Boundary ordering and member syntax are unchanged.
+- Reconciliation acceptance applies the existing prose-anchor check to
+  returning and non-returning outputs, preserving its quotation exclusions.
+- The reconcile job and order-refusal message state that Reconciliation
+  precedes the optional memory return. Every generated prompt explicitly
+  requires reading the named job instruction before the existing reading
+  batches; batching and dependency membership are unchanged.
+
+Regression cases separately corrupt each identity field for runtime, memory
+and epistemic jobs, verify refusal before reconciliation and repair to a
+published matching set, and assert the explicit run parameter. Two completed
+fixture runs verify amendment-index placement and source-row preservation
+under both boundary orders. Returning and non-returning reconciliation
+acceptance cases cover prohibited prose anchors and permitted quote
+attributions. The order-refusal case and existing per-job invocation tests
+cover the instruction clarifications.
+
+The final focused run passed all 106 workflow tests in 47.72 seconds.
+`uv run pytest -q` passed all 1,343 tests in 87.85 seconds.
+`uv run ruff check .` passed. Validation of the two changed job instructions
+passed with zero failures or warnings; workshop framing and this report are
+validated separately before committing.
+
+The remaining audit items 8–16 stay deferred under the README's scope; no
+schema, shared parser, stage or report syntax changed. These scripted checks
+verify the workflow repairs, not model behavior in the later full analysis.
+No fresh analysis is opened by this commission.

@@ -354,6 +354,65 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert candidate.read_bytes() == review.read_bytes()
 
 
+@pytest.mark.parametrize("job_name", ["runtime", "memory-0", "epistemic"])
+@pytest.mark.parametrize("field", ["run-id", "reviewed-boundary"])
+def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
+    fixture: Fixture, job_name: str, field: str,
+) -> None:
+    original = {
+        "runtime": lambda: runtime_text(fixture.revision),
+        "memory-0": fixture.memory_report,
+        "epistemic": lambda: epistemic_text(fixture.revision),
+    }[job_name]
+
+    def analyst(handout: Handout) -> str:
+        text = original()
+        if handout.attempt == 1:
+            replacement = "AAS-2026-09-04-wrong-system-01" if field == "run-id" else "0" * 40
+            text = re.sub(rf"(?m)^{field}:.*$", f'{field}: "{replacement}"', text, count=1)
+        return text
+
+    scripted, definition = agent(fixture, **{job_name: fixture.writes(analyst)})
+    drive_to(scripted, job_name)
+    attempt, prompt = prompt_of(scripted.round(), job_name)
+    assert attempt == 2
+    assert f"member identity: {field}" in prompt
+    assert f"run-id = {RUN_ID}\n" in prompt
+    assert "reconcile-0" not in scripted.launched
+    assert isinstance(scripted.run()[-1], Done)
+    assert definition.publications == 1
+    member = fixture.run_dir / "output" / ("memory.md" if job_name == "memory-0" else f"{job_name}.md")
+    assert frontmatter(member)["run-id"] == RUN_ID
+    assert frontmatter(member)["reviewed-boundary"] == fixture.revision
+
+
+@pytest.mark.parametrize("source_first", [False, True])
+def test_amendment_index_is_inside_source_register_in_either_boundary_order(
+    fixture: Fixture, source_first: bool,
+) -> None:
+    boundary = fixture.boundary()
+    source_heading = "## Source register\n"
+    row = next(line for line in boundary.splitlines() if line.startswith("| SRC-1 |"))
+    if source_first:
+        start = boundary.index("## Boundary and evidence\n")
+        middle = boundary.index(source_heading)
+        boundary = boundary[:start] + boundary[middle:].rstrip() + "\n\n" + boundary[start:middle]
+    amendment = "RT-OBJ-1 has a narrower interpretation; replace the broad scope with the fixture scope at SRC-1 README.md. Affected finding: runtime identity."
+    scripted, _ = agent(
+        fixture,
+        boundary=fixture.writes(lambda _: boundary),
+        **{"reconcile-0": fixture.writes(lambda _: fixture.reconciliation(amendment=amendment))},
+    )
+    assert isinstance(scripted.run()[-1], Done)
+    overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
+    match = re.search(r"(?ms)^## Source register\n(.*?)(?=^## |\Z)", overview)
+    assert match is not None
+    index = "Amended or superseded records: RT-OBJ-1; [reconciliation](reconciliation.md)."
+    assert overview.count(index) == 1
+    assert row in match[1]
+    assert match[1].index(row) < match[1].index(index)
+
+
 # 2. An out-of-scope boundary
 
 
@@ -709,6 +768,43 @@ def test_returning_reconciliation_refuses_ranges_with_declared_endpoints(fixture
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
     assert attempt == 2
     assert "ranges are not expanded" in prompt
+
+
+@pytest.mark.parametrize("returned", [False, True])
+def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
+    fixture: Fixture, returned: bool,
+) -> None:
+    text = fixture.reconciliation(returned=returned) + "\nEvidence: `README.md:1-2`.\n"
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
+    drive_to(scripted, "reconcile-0")
+    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
+    assert attempt == 2
+    assert "source anchor" in prompt and "carries a line range" in prompt
+    assert "memory-1" not in scripted.launched
+
+
+@pytest.mark.parametrize("returned", [False, True])
+def test_reconciliation_preserves_permitted_quote_attributions(
+    fixture: Fixture, returned: bool,
+) -> None:
+    # This syntax check preserves quotation exclusions; it does not certify occurrence.
+    quote = f"\n> Source text.\n> --- `README.md:1-2` @ `{fixture.revision}`\n"
+    text = fixture.reconciliation(returned=returned) + quote
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
+    drive_to(scripted, "reconcile-0")
+    result = scripted.round()
+    assert isinstance(result, Launch)
+    assert "reconcile-0" not in [job.name for job in result.jobs]
+    assert "memory-1" in scripted.launched if returned else "verify-0" in scripted.launched
+
+
+def test_reconciliation_heading_order_refusal_names_the_required_order(fixture: Fixture) -> None:
+    text = "## Returned to the memory analyst\n\nMEM-OBJ-1 needs checking.\n\n## Reconciliation\n\nRT-OBJ-1 stays declared.\n"
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
+    drive_to(scripted, "reconcile-0")
+    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
+    assert attempt == 2
+    assert "Reconciliation followed by any permitted Returned to the memory analyst section" in prompt
 
 
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
@@ -1460,6 +1556,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
         method, values, first_reads = invocation(header)
         assert values == {
             "system": SYSTEM,
+            "run-id": RUN_ID,
             "run-state": str(run / "run-state.md"),
             "output": str(job.output_path(run)),
             "problem": str(job.problem_path(run)),
@@ -1468,12 +1565,13 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             **{key: (value if key in {"round", "may-return", "memory-return"} else str(run / value)) for key, value in expected.items()},
         }
         path_values = [value for key, value in values.items()
-                       if key not in {"system", "round", "may-return", "memory-return", "source-identity"}]
+                       if key not in {"system", "run-id", "round", "may-return", "memory-return", "source-identity"}]
         assert all(Path(path).is_absolute() for path in [method, *first_reads, *path_values])
         files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return", "memory-return"}}
         assert set(job.inputs) == {method, *first_reads, *files}
         assert not set(job.inputs) & {values[key] for key in ("run-state", "output", "problem", "scratch")}
         hints = job.prompt.split("## Input reading batches", 1)[1].split("\nsource:\n", 1)[0]
+        assert f"Read the named job instruction {method} before these reading batches." in hints
         batches = re.findall(r"^\d+\. (.+)$", hints, re.MULTILINE)
         hinted = [entry.removesuffix(" — read in bounded ranges")
                   for batch in batches for entry in batch.split(", ")]
