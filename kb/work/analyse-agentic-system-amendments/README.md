@@ -25,6 +25,45 @@ analysis, or adopt an ID design by opening.
   option: a declared `Part of:` relation, splits as supersession by
   already-declared parts, and no ID allocation by reconciliation.
 
+## State and next actions
+
+Done:
+
+- `4e5b5d9ae` (2026-10-02): `RT-` prefix for runtime records. Adopted
+  before the evidence below was collected; kept, not counted as the repair.
+- `931765b02` (2026-10-02): prefix mandatory in the grammar, bare-ID
+  backcompat removed, bare `####` headings under `## Shared records`
+  refused by name.
+- `6fd147f59` (2026-10-02): archive evidence recorded in the
+  [problem](./problem.md#observed-evidence); options rejudged; proposal
+  rewritten around `Part of:`.
+
+Next, in order:
+
+1. **A1, refusal hints.** In `set_record_errors`, when an ID is unresolved,
+   name the declared ID that differs only by prefix, and say that ranges
+   (`RT-RTE-1 through RT-RTE-4`) are not expanded. Code and tests only.
+2. **Pre-adoption check of the proposal.** Rewrite the identity paragraphs
+   of the two archived member sets under the `Part of:` rule (in the
+   workshop, not in the archive) and run the checker on the rewritten
+   members; record how many "possible duplicate" entries become parts and
+   whether the two true supersessions still read correctly.
+3. **Adopt the proposal** if the check holds: edit the record contract, the
+   memory and epistemic job texts, the reconcile job and report type, and
+   the verify job as listed in the proposal; add the checker rule that a
+   `Part of:` target is a declaration.
+4. **First run under the amended method.** Count the identity-section
+   paragraphs reconciliation still needs and collect any refusals with
+   their stage. This is also the first run under the `RT-` grammar, so it
+   tests reservation 3 of the prefix change (forgotten `RT-` on citations).
+5. **Close.** If step 4 shows no new ID errors, record the decision in a
+   commit per the closure section below and delete the workshop. Options
+   B, C9 and D10 stay unadopted unless step 4 produces a refusal that
+   points at the grammar, numbering, or parallel-analyst duplicates.
+
+The operator's original error reports are on a machine not currently
+accessible; if they reappear, add them to the problem file before step 3.
+
 ## Evaluation boundary
 
 Use the live skill, its job instructions, member types, record contract, and
