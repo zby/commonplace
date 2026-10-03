@@ -35,16 +35,16 @@ def running_package_is_the_fixture_repository(tmp_path, monkeypatch):
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
 SOURCE = "https://example.invalid/example-system"
-STATE_DIR = Path("kb/agentic-systems/reports/state")
-REVIEW_PATH = "kb/agentic-systems/reviews/example-system.md"
+STATE_DIR = Path("kb/agentic-system-analyses/state")
+REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
 # A placeholder method commit for fixtures that never publish; publication
 # fixtures pin the fixture repository's real HEAD.
 INPUTS_COMMIT = "f" * 40
 MEMBER_TYPES = {
-    "runtime.md": "agentic-systems/types/agentic-system-runtime-report.md",
-    "memory.md": "agentic-systems/types/agent-memory-analysis-report.md",
-    "epistemic.md": "agentic-systems/types/agentic-system-epistemic-report.md",
-    "reconciliation.md": "agentic-systems/types/agentic-system-reconciliation-report.md",
+    "runtime.md": "agentic-system-analyses/types/agentic-system-runtime-report.md",
+    "memory.md": "agentic-system-analyses/types/agent-memory-analysis-report.md",
+    "epistemic.md": "agentic-system-analyses/types/agentic-system-epistemic-report.md",
+    "reconciliation.md": "agentic-system-analyses/types/agentic-system-reconciliation-report.md",
 }
 
 
@@ -64,19 +64,19 @@ def configure_types(tmp_path: Path) -> None:
         "agentic-analysis-sources.md",
         "agentic-analysis-records.md",
     ):
-        target = tmp_path / "kb/agentic-systems/instructions" / name
+        target = tmp_path / "kb/agentic-system-analyses/instructions" / name
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(REPO_ROOT / "kb/agentic-systems/instructions" / name, target)
+        shutil.copy2(REPO_ROOT / "kb/agentic-system-analyses/instructions" / name, target)
     shutil.copytree(REPO_ROOT / "kb/types", tmp_path / "kb/types")
     shutil.copytree(
         REPO_ROOT / "kb/agent-memory-systems/types",
         tmp_path / "kb/agent-memory-systems/types",
     )
     shutil.copytree(
-        REPO_ROOT / "kb/agentic-systems/types",
-        tmp_path / "kb/agentic-systems/types",
+        REPO_ROOT / "kb/agentic-system-analyses/types",
+        tmp_path / "kb/agentic-system-analyses/types",
     )
-    for collection in ("kb/reports", "kb/agentic-systems"):
+    for collection in ("kb/reports", "kb/agentic-systems", "kb/agentic-system-analyses"):
         (tmp_path / collection).mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO_ROOT / collection / "COLLECTION.md", tmp_path / collection / "COLLECTION.md")
     shutil.copytree(
@@ -168,7 +168,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "records": ["MEM-OBJ-1"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
-        "type": "agentic-systems/types/agent-memory-analysis-report.md",
+        "type": "agentic-system-analyses/types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "run-id": RUN_ID,
         "source-identity": SOURCE,
@@ -247,7 +247,7 @@ Fixture evidence.
 
 def runtime_text(revision: str) -> str:
     return f"""---
-type: agentic-systems/types/agentic-system-runtime-report.md
+type: agentic-system-analyses/types/agentic-system-runtime-report.md
 description: "Runtime baseline of Example System at the fixture boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -313,7 +313,7 @@ none
 
 def epistemic_text(revision: str) -> str:
     return f"""---
-type: agentic-systems/types/agentic-system-epistemic-report.md
+type: agentic-system-analyses/types/agentic-system-epistemic-report.md
 description: "Epistemic routes of Example System at the fixture boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -358,7 +358,7 @@ def overview_text(
     revision: str, members: dict[str, Path], *, inputs_commit: str = INPUTS_COMMIT
 ) -> str:
     return f"""---
-type: agentic-systems/types/agentic-system-analysis-overview.md
+type: agentic-system-analyses/types/agentic-system-analysis-overview.md
 description: "Complete fixture analysis at one frozen source boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -413,21 +413,7 @@ none
 
 
 def review_text(revision: str, overview: Path) -> str:
-    return f"""---
-description: "Generated fixture review of one external agentic system"
-type: agentic-systems/types/generated-review.md
-generated-by: analyse-agentic-system
-analysis-run: {RUN_ID}
-source-identity: {SOURCE}
-reviewed-revision: {revision}
-analysis-artifact: {agentic_set.retained_artifact_path(RUN_ID).as_posix()}
-analysis-artifact-sha256: {digest(overview.with_name("ARTIFACT.yaml"))}
----
-
-# Example System
-
-Evidence basis: `README.md` at `{revision}`.
-"""
+    return overview.read_text()
 
 
 def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
@@ -447,8 +433,15 @@ def repin(directory: Path) -> None:
     write(directory / "ARTIFACT.yaml", yaml.safe_dump(manifest, sort_keys=False))
 
 
+def retained_fixture_paths(run_id: str) -> dict[str, Path]:
+    directory = agentic_set.retained_overview_path(run_id).parent
+    return {name: directory / name for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES)}
+
+
 def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
-    for name, retained in agentic_set.retained_set_paths(run_id).items():
+    directory = agentic_set.retained_overview_path(run_id).parent
+    for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES):
+        retained = directory / name
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / retained).write_bytes((output_path(run_dir, name)).read_bytes())
 
@@ -468,7 +461,7 @@ def write_set(run_dir: Path, revision: str) -> Path:
 
 def reconciliation_text(revision: str) -> str:
     return f'''---
-type: agentic-systems/types/agentic-system-reconciliation-report.md
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 description: "Reconciled Example System records at the frozen source boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
@@ -510,7 +503,7 @@ def valid_run_state(tmp_path: Path) -> Path:
     retain_set(tmp_path, run_dir)
     generated = write(tmp_path / REVIEW_PATH, review_text(revision, overview))
     run_frontmatter: dict[str, object] = {
-        "type": "agentic-systems/types/agentic-system-analysis-run-state.md",
+        "type": "agentic-system-analyses/types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -548,13 +541,18 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     report_values.update({"source-identity": values["source"]["identity"],
                           "reviewed-boundary": values["source"]["revision"]})
     replace_frontmatter(report, report_values)
-    repin(run_dir / "output")
-    retain_set(tmp_path, run_dir)
-    values["artifact"]["sha256"] = digest(run_dir / "output/ARTIFACT.yaml")
     generated = tmp_path / values["generated-review"]["path"]
-    replace_frontmatter(generated, {
-        **frontmatter(generated), "analysis-artifact-sha256": digest(run_dir / "output/ARTIFACT.yaml"),
-    })
+    if generated.exists():
+        (run_dir / "output/overview.md").write_bytes(generated.read_bytes())
+    expected = agentic_set.RETAINED_ROOT / agentic_set.source_slug(values["source"]["identity"], values["system"]) / "overview.md"
+    if generated != tmp_path / expected:
+        generated.parent.rename((tmp_path / expected).parent)
+        generated = tmp_path / expected
+        values["generated-review"]["path"] = expected.as_posix()
+    repin(run_dir / "output")
+    for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES):
+        (generated.parent / name).write_bytes((run_dir / "output" / name).read_bytes())
+    values["artifact"]["sha256"] = digest(run_dir / "output/ARTIFACT.yaml")
     values["generated-review"]["sha256"] = digest(generated)
 
 
@@ -590,7 +588,7 @@ def commit_inputs(tmp_path: Path) -> str:
     The run directory and the source checkout are ignored, as in the real
     repository, so the run's own files never dirty the tree.
     """
-    write(tmp_path / ".gitignore", "kb/agentic-systems/reports/state/\nrelated-systems/\n")
+    write(tmp_path / ".gitignore", "kb/agentic-system-analyses/state/\nrelated-systems/\n")
     run_git(tmp_path, "init", "--quiet")
     return commit_paths(tmp_path, "Commit the run's inputs", ".")
 
@@ -600,10 +598,6 @@ def pin_inputs_commit(run_dir: Path, commit: str, candidate: Path | None = None)
     overview = run_dir / "output/overview.md"
     replace_frontmatter(overview, {**frontmatter(overview), "inputs-commit": commit})
     repin(overview.parent)
-    if candidate is not None:
-        replace_frontmatter(
-            candidate, {**frontmatter(candidate), "analysis-artifact-sha256": digest(overview.with_name("ARTIFACT.yaml"))}
-        )
 
 
 def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
@@ -611,7 +605,7 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     values = frontmatter(state)
     destination = values["generated-review"]["path"]
     public = tmp_path / destination
-    candidate = state.parent / "generated-review.candidate.md"
+    candidate = state.parent / "output/overview.md"
     candidate.write_bytes(public.read_bytes())
     public.unlink()
     shutil.rmtree(tmp_path / agentic_set.retained_overview_path(RUN_ID).parent)
@@ -655,16 +649,16 @@ def test_generated_review_must_live_in_reviews_directory(tmp_path: Path) -> None
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert any(
-        "expected kb/agentic-systems/reviews/<name>.md" in item
+        "expected kb/agentic-system-analyses/retained/<slug>/overview.md" in item
         for item in results.fails
     )
 
 
 def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
     configure_types(tmp_path)
-    state = tmp_path / f"kb/agentic-systems/reports/state/{RUN_ID}/run-state.md"
+    state = tmp_path / f"kb/agentic-system-analyses/state/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "agentic-systems/types/agentic-system-analysis-run-state.md",
+        "type": "agentic-system-analyses/types/agentic-system-analysis-run-state.md",
         "description": f"Failed run {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -743,7 +737,7 @@ def test_complete_state_rejects_generated_review_from_another_source(
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("source-identity" in item for item in results.fails)
+    assert any("exact" in item or "SHA-256" in item for item in results.fails)
 
 
 def test_manifest_hash_must_be_a_digest(tmp_path):
@@ -770,7 +764,6 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path) -> N
     retain_set(tmp_path, run_dir)
     values["artifact"]["sha256"] = digest(overview.with_name("ARTIFACT.yaml"))
     generated = tmp_path / REVIEW_PATH
-    replace_frontmatter(generated, {**frontmatter(generated), "analysis-artifact-sha256": digest(overview.with_name("ARTIFACT.yaml"))})
     values["generated-review"]["sha256"] = digest(generated)
     replace_frontmatter(state, values)
 
@@ -996,11 +989,11 @@ def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: P
     state, spec, _ = publication_fixture(tmp_path)
     for name in (
         "incumbent-review.md",
-        "overview.md", "runtime.md", "memory.md", "epistemic.md",
+        "runtime.md", "memory.md", "epistemic.md",
         "incumbent-overview.md", "incumbent-memory.md",
     ):
         candidate = PublicationSpec(tmp_path, state, output_path(state.parent, name), spec.generated_destination, "absent")
-        with pytest.raises(ValueError, match="reserved"):
+        with pytest.raises(ValueError, match="accepted output/overview.md"):
             prepare_publication(candidate)
 
 
@@ -1056,12 +1049,12 @@ def test_publish_replaces_the_set_and_completes_run_state(tmp_path: Path) -> Non
     published = publish_publication(spec)
 
     assert (tmp_path / spec.generated_destination).read_bytes() == generated_bytes
-    assert not spec.generated_candidate_path.exists()
+    assert spec.generated_candidate_path.exists()
     values = frontmatter(state)
     assert values["run-status"] == "complete"
     assert values["artifact"]["path"].endswith(f"{RUN_ID}/output/ARTIFACT.yaml")
     assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "output/ARTIFACT.yaml").read_bytes()
-    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+    for name, retained in retained_fixture_paths(RUN_ID).items():
         assert (tmp_path / retained).read_bytes() == (output_path(state.parent, name)).read_bytes()
     assert published.cleanup_warnings == ()
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
@@ -1076,20 +1069,23 @@ def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     candidate = spec.generated_candidate_path
     content = candidate.read_text() + (
-        f"\n[Exact analysis](../reports/retained/{RUN_ID}/overview.md)\n"
+        "\n[Exact analysis](overview.md)\n"
     )
     candidate.write_text(content)
+    repin(candidate.parent)
 
     prepare_publication(spec)
     assert not retained.exists()
     assert not (tmp_path / spec.generated_destination).exists()
 
     candidate.write_text(content + "\n[Missing](./not-in-the-set.md)\n")
+    repin(candidate.parent)
     with pytest.raises(ValueError, match="missing target ./not-in-the-set.md"):
         prepare_publication(spec)
     assert not retained.exists()
 
     candidate.write_text(content)
+    repin(candidate.parent)
     prepare_publication(spec)
     publish_publication(spec)
     assert retained.read_bytes() == (state.parent / "output/overview.md").read_bytes()
@@ -1142,7 +1138,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 
     state = valid_run_state(tmp_path)
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
-    shutil.rmtree(tmp_path / "kb/agentic-systems/reports/state")
+    shutil.rmtree(tmp_path / "kb/agentic-system-analyses/state")
     shutil.rmtree(tmp_path / "kb/agent-memory-systems")
     shutil.rmtree(tmp_path / "related-systems")
     assert not state.exists()
@@ -1170,18 +1166,17 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 
 @pytest.mark.parametrize("mutation, error", [
     ("bytes", "SHA-256 mismatch"), ("profile", "memory-comparison"),
-    ("source", "source-identity does not match"), ("revision", "identity mismatch"),
+    ("source", "directory name does not match"), ("revision", "reviewed-boundary"),
     ("missing", "no discovered file"), ("member", "manifest member memory.md: SHA-256 mismatch"),
 ])
 def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
     valid_run_state(tmp_path)
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     memory = retained.with_name("memory.md")
-    review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
 
     def repin_overview() -> None:
         repin(retained.parent)
-        replace_frontmatter(review, {**frontmatter(review), "analysis-artifact-sha256": digest(retained.with_name("ARTIFACT.yaml"))})
+
 
     if mutation == "bytes":
         retained.write_bytes(retained.read_bytes() + b"drift\n")
@@ -1195,9 +1190,11 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
         replace_frontmatter(memory, data)
         repin_overview()
     else:
-        key = "source-identity" if mutation == "source" else "reviewed-revision"
+        key = "source-identity" if mutation == "source" else "reviewed-boundary"
         value = "https://example.invalid/example-system-other" if mutation == "source" else "other"
-        replace_frontmatter(review, {**frontmatter(review), key: value})
+        target = memory if mutation == "source" else retained
+        replace_frontmatter(target, {**frontmatter(target), key: value})
+        repin(retained.parent)
     with pytest.raises((ValueError, OSError), match=error):
         systems_matrix.load_results(tmp_path)
 
@@ -1225,7 +1222,7 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
 
     member_fixture(tmp_path)
     monkeypatch.chdir(tmp_path)
-    target = f"kb/agentic-systems/reports/state/{RUN_ID}/output"
+    target = f"kb/agentic-system-analyses/state/{RUN_ID}/output"
 
     assert main([target, "--json"]) == 0
     report = json.loads(capsys.readouterr().out)
@@ -1236,12 +1233,10 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
 
 def test_comparison_population_must_select_one_review_per_source(tmp_path):
     valid_run_state(tmp_path)
-    review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
-    second = review.with_name("second.md")
-    second.write_bytes(review.read_bytes())
-    with pytest.raises(ValueError, match="multiple selected reviews"):
+    current = tmp_path / agentic_set.retained_overview_path(RUN_ID).parent
+    shutil.copytree(current, current.with_name("twin"))
+    with pytest.raises(ValueError, match="multiple current analyses"):
         systems_matrix.load_results(tmp_path)
-    assert len(systems_matrix.load_results(tmp_path, [review]).rows) == 1
 
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
@@ -1261,7 +1256,7 @@ def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp
         (output_path(state.parent, name)).write_bytes(content)
     repin(state.parent / "output")
     retained = write(tmp_path / agentic_set.retained_overview_path(RUN_ID), "frozen earlier overview\n")
-    with pytest.raises(ValueError, match="already exists"):
+    with pytest.raises(ValueError, match="ARTIFACT.yaml"):
         prepare_publication(spec)
     assert retained.read_text() == "frozen earlier overview\n"
     assert frontmatter(state)["run-status"] == "running"
@@ -1286,9 +1281,9 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     values.update({"run-status": "running", "result-disposition": None,
                    "artifact": None, "generated-review": None})
     replace_frontmatter(next_state, values)
-    candidate = new_dir / "review-candidate.md"
+    candidate = new_dir / "output/overview.md"
     candidate.write_text(old_review.decode().replace(RUN_ID, next_id))
-    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-artifact-sha256": digest(new_dir / "output/ARTIFACT.yaml")})
+    repin(new_dir / "output")
     inspection = inspect_destination(
         repo_root=tmp_path, generated_destination=first.generated_destination,
         source_identity=values["source"]["identity"],
@@ -1310,6 +1305,7 @@ def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsy
     secret = "INCUMBENT-PROSE-MUST-NOT-ENTER-COORDINATOR-CONTEXT"
     candidate = spec.generated_candidate_path
     candidate.write_text(candidate.read_text() + "\n" + secret + "\n")
+    repin(candidate.parent)
     publish_publication(spec)
     assert main(args, cwd=tmp_path) == 0
     output = capsys.readouterr().out
@@ -1325,17 +1321,18 @@ def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path
         commit_incumbent(tmp_path, tmp_path / spec.generated_destination)
     prepare_publication(spec)
     publish_publication(spec)
-    assert (spec.run_state_path.parent / "incumbent-review.md").read_bytes() == old_review
+    archive = tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID
+    assert (archive / "overview.md").read_bytes() == old_review
     for name, content in old_set.items():
-        assert (spec.run_state_path.parent / f"incumbent-{name}").read_bytes() == content
+        assert (archive / name).read_bytes() == content
     assert validation.validate_note(spec.run_state_path, repo_root=tmp_path).fails == []
 
 
 @pytest.mark.parametrize("mutation, error", [
-    ("missing-overview", "cannot read incumbent retained manifest"),
-    ("overview", "manifest hash mismatch"),
+    ("missing-overview", "ARTIFACT.yaml"),
+    ("overview", "invalid ARTIFACT.yaml"),
     ("member", "manifest member runtime.md: SHA-256 mismatch"),
-    ("source", "same source"),
+    ("source", "directory name does not match"),
     ("committed-then-staged", "local changes"),
 ])
 def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str, error: str) -> None:
@@ -1343,8 +1340,7 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str,
     from commonplace.lib.agentic_publication import inspect_destination
     spec, _, _ = rerun_publication_fixture(tmp_path)
     review = tmp_path / spec.generated_destination
-    metadata = frontmatter(review)
-    retained = tmp_path / metadata["analysis-artifact"]
+    retained = review.with_name("ARTIFACT.yaml")
     if mutation == "missing-overview":
         retained.unlink()
     elif mutation == "overview":
@@ -1353,7 +1349,9 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str,
         member = retained.with_name("runtime.md")
         member.write_text(member.read_text() + "\nAltered evidence.\n")
     elif mutation == "source":
-        replace_frontmatter(review, {**metadata, "source-identity": "other"})
+        memory = retained.with_name("memory.md")
+        replace_frontmatter(memory, {**frontmatter(memory), "source-identity": "https://example.invalid/other"})
+        repin(retained.parent)
     else:
         commit_paths(tmp_path, "Record the first publication", review, retained.parent)
         review.write_text(review.read_text() + "\nHuman correction.\n")
@@ -1361,7 +1359,7 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str,
     before = review.read_bytes()
     with pytest.raises(ValueError, match=error):
         inspect_destination(repo_root=tmp_path, generated_destination=spec.generated_destination,
-                            source_identity=metadata["source-identity"])
+                            source_identity=SOURCE)
     if mutation == "source":
         with pytest.raises(ValueError, match=error):
             publish_publication(spec)
@@ -1374,30 +1372,27 @@ def test_publish_rejects_destination_change_after_prepare(tmp_path: Path) -> Non
     path = tmp_path / spec.generated_destination
     path.write_text(path.read_text() + "\nConcurrent edit.\n")
     changed = path.read_bytes()
-    with pytest.raises(ValueError, match="changed since inspection"):
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
         publish_publication(spec)
     assert path.read_bytes() == changed
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
 
 
 def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monkeypatch) -> None:
-    from commonplace.lib import agentic_publication as publication
     spec, _, _ = rerun_publication_fixture(tmp_path)
-    original_write = publication.atomic_write
+    original_check = agentic_publication._check_set
     public = tmp_path / spec.generated_destination
     changed = public.read_bytes() + b"\nConcurrent human edit.\n"
-
-    def edit_after_backup(path, content):
-        original_write(path, content)
-        if path.name == "incumbent-review.md":
-            public.write_bytes(changed)
-
-    monkeypatch.setattr(publication, "atomic_write", edit_after_backup)
-    with pytest.raises(ValueError, match="changed before replacement"):
+    def edit_after_validation(spec):
+        checked = original_check(spec)
+        public.write_bytes(changed)
+        return checked
+    monkeypatch.setattr(agentic_publication, "_check_set", edit_after_validation)
+    with pytest.raises(ValueError, match="changed during validation"):
         publish_publication(spec)
     assert public.read_bytes() == changed
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
-    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).exists()
+    assert not (tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID).exists()
 
 
 def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypatch) -> None:
@@ -1413,18 +1408,18 @@ def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypa
     with pytest.raises(OSError, match="injected completion failure"):
         publish_publication(spec)
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
-    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+    for name, retained in retained_fixture_paths(RUN_ID).items():
         assert (tmp_path / retained).read_bytes() == old_set[name]
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
     assert spec.generated_candidate_path.exists()
-    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).parent.exists()
+    assert not (tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID).exists()
 
 
 def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> None:
     spec, old_review, _ = rerun_publication_fixture(tmp_path)
-    backup = spec.run_state_path.parent / "incumbent-review.md"
-    backup.write_bytes(b"Other recovery evidence.\n")
-    with pytest.raises(ValueError, match="recovery copy already contains different bytes"):
+    backup = tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID / "overview.md"
+    write(backup, "Other recovery evidence.\n")
+    with pytest.raises(ValueError, match="archive destination already exists"):
         publish_publication(spec)
     assert backup.read_bytes() == b"Other recovery evidence.\n"
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
@@ -1433,8 +1428,8 @@ def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> N
 @pytest.mark.parametrize("path, accepted", [
     ("kb/notes/draft.md", False),
     ("kb/notes/zażółć gęślą.md", False),
-    ("kb/agentic-systems/reviews/sibling.md", True),
-    ("kb/agentic-systems/reports/retained/AAS-2026-09-04-sibling-01/overview.md", True),
+    ("kb/agentic-systems/reviews/sibling.md", False),
+    ("kb/agentic-system-analyses/retained/AAS-2026-09-04-sibling-01/overview.md", True),
     ("scratch.txt", True),
 ])
 def test_untracked_files_block_publication_only_under_kb_outside_its_outputs(
@@ -1443,8 +1438,7 @@ def test_untracked_files_block_publication_only_under_kb_outside_its_outputs(
     state, spec, _ = publication_fixture(tmp_path)
     write(tmp_path / path, "A sibling run's publication, or a stray file.\n")
     if accepted:
-        inspect(tmp_path, spec)
-        prepare_publication(spec)
+        agentic_publication.require_publishable_worktree(tmp_path)
         return
     with pytest.raises(ValueError, match="clean worktree") as error:
         inspect(tmp_path, spec)
@@ -1472,7 +1466,7 @@ def test_a_modified_tracked_file_anywhere_blocks_publication(tmp_path: Path, sta
 def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path: Path) -> None:
     """A sibling run that replaced a committed review leaves it modified, not staged."""
     state, spec, _ = publication_fixture(tmp_path)
-    sibling = write(tmp_path / "kb/agentic-systems/reviews/sibling.md", "# Sibling\n")
+    sibling = write(tmp_path / "kb/agentic-system-analyses/retained-archive/sibling/overview.md", "# Sibling\n")
     commit_paths(tmp_path, "Record the sibling's earlier review", sibling)
     sibling.write_text("# Sibling, replaced by a later run\n")
     inspect(tmp_path, spec)
@@ -1481,8 +1475,8 @@ def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path
 
 
 @pytest.mark.parametrize("method_path", [
-    "kb/agentic-systems/instructions/agentic-analysis-records.md",
-    "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml",
+    "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml",
 ])
 def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path, method_path: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
@@ -1567,7 +1561,7 @@ def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
     for name in ("overview.md", *MEMBER_TYPES):
         (output_path(state.parent, name)).unlink()
-    spec.generated_candidate_path.unlink()
+    spec.generated_candidate_path.unlink(missing_ok=True)
     text = write(tmp_path / "selection.txt", "Frozen source")
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
     assert quote.main([
@@ -1647,10 +1641,6 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
         citation = payload if isinstance(payload, str) else payload["occurrences"][-1]["citation"]
         runtime.write_text(runtime.read_text() + "\n" + citation)
     repin(state.parent / "output")
-    replace_frontmatter(spec.generated_candidate_path, {
-        **frontmatter(spec.generated_candidate_path),
-        "analysis-artifact-sha256": digest(state.parent / "output/ARTIFACT.yaml"),
-    })
     prepare_publication(spec)
     published = publish_publication(spec)
     checked = validation.validate_note(state, repo_root=tmp_path)
@@ -1712,7 +1702,7 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     shutil.copytree(directory, retained)
     review = tmp_path / REVIEW_PATH
     write(review, review_text(values["reviewed-boundary"], overview))
-    with pytest.raises(ValueError, match="not a complete"):
+    with pytest.raises(ValueError, match="must be complete"):
         systems_matrix.load_results(tmp_path)
 
 
@@ -1723,3 +1713,79 @@ def test_run_state_repo_root_is_the_repository(tmp_path: Path) -> None:
 
     assert run_state_repo_root(state) == tmp_path
     assert run_state_repo_root(tmp_path / "elsewhere" / "run-state.md") is None
+
+
+@pytest.mark.parametrize("fault", ["before-move", "after-move", "copy"])
+def test_archive_replacement_restores_exact_incumbent_on_failure(tmp_path, monkeypatch, fault):
+    spec, _, old_set = rerun_publication_fixture(tmp_path)
+    current = (tmp_path / spec.generated_destination).parent
+    archive = tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID
+    old_state = spec.run_state_path.read_bytes()
+    rename, mkdir, atomic = Path.rename, Path.mkdir, agentic_publication.atomic_write
+    def injected_rename(path, target):
+        if fault == "before-move" and path == current:
+            raise OSError("injected archive failure")
+        return rename(path, target)
+    def injected_mkdir(path, *args, **kwargs):
+        if fault == "after-move" and path == current and archive.exists():
+            raise OSError("injected archive failure")
+        return mkdir(path, *args, **kwargs)
+    def injected_write(path, content):
+        if fault == "copy" and path.parent == current:
+            raise OSError("injected archive failure")
+        return atomic(path, content)
+    monkeypatch.setattr(Path, "rename", injected_rename)
+    monkeypatch.setattr(Path, "mkdir", injected_mkdir)
+    monkeypatch.setattr(agentic_publication, "atomic_write", injected_write)
+    with pytest.raises(OSError, match="injected archive failure"):
+        publish_publication(spec)
+    assert {p.name: p.read_bytes() for p in current.iterdir()} == old_set
+    assert not archive.exists()
+    assert spec.run_state_path.read_bytes() == old_state
+
+
+def test_publication_refuses_a_wrong_source_slug(tmp_path):
+    from dataclasses import replace
+    _, spec, _ = publication_fixture(tmp_path)
+    wrong = replace(spec, generated_destination="kb/agentic-system-analyses/retained/other/overview.md")
+    with pytest.raises(ValueError, match="directory name does not match"):
+        publish_publication(wrong)
+
+
+def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
+    from urllib.parse import urlsplit
+
+    from commonplace.lib.note_parser import find_markdown_links
+    real = REPO_ROOT / "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02"
+    current = tmp_path / "kb/agentic-system-analyses/retained/dynamic-cheatsheet"
+    archive = tmp_path / "kb/agentic-system-analyses/retained-archive/AAS-2026-10-03-dynamic-cheatsheet-02"
+    shutil.copytree(real, current)
+    old = {p.name: digest(p) for p in current.iterdir()}
+    archive.parent.mkdir(parents=True)
+    current.rename(archive)
+    assert {p.name: digest(p) for p in archive.iterdir()} == old
+    manifest = yaml.safe_load((archive / "ARTIFACT.yaml").read_text())
+    for name, entry in manifest["members"].items():
+        assert digest(archive / name) == entry["sha256"]
+    for member in archive.glob("*.md"):
+        for link in find_markdown_links(member.read_text()):
+            parts = urlsplit(link)
+            if not parts.scheme and parts.path:
+                assert (member.parent / parts.path).is_file(), (member, link)
+
+
+def test_replacement_recognition_distinguishes_incumbent_from_interruption(tmp_path):
+    from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+    from commonplace.workflow import Recognition
+    spec, _, _ = rerun_publication_fixture(tmp_path)
+    definition = AnalyseAgenticSystem({"system": "Example System", "source-identity": SOURCE})
+    definition.run_id = spec.run_state_path.parent.name
+    assert definition.recognize_publication(spec) is Recognition.ABSENT
+    current = (tmp_path / spec.generated_destination).parent
+    archive = tmp_path / agentic_set.ARCHIVE_ROOT / RUN_ID
+    archive.parent.mkdir(parents=True)
+    current.rename(archive)
+    assert definition.recognize_publication(spec) is Recognition.UNKNOWN
+    archive.rename(current)
+    (current / "runtime.md").unlink()
+    assert definition.recognize_publication(spec) is Recognition.UNKNOWN

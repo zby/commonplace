@@ -1,7 +1,7 @@
 """Resolve the quote-anchored citations of Markdown files against a run's frozen source.
 
 Complete-run verification already resolves every citation in every set
-member and the generated review. This script gives the same check to a file inside a run
+member and the public overview. This script gives the same check to a file inside a run
 that has not completed, such as a specialist report produced in a
 specialist-only trial. It prints one line per citation and exits 1 on any
 failure. It changes nothing.

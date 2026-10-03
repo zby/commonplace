@@ -259,3 +259,27 @@ def test_on_page_markdown_keeps_headless_tags_as_text(tmp_path: Path) -> None:
     )
 
     assert "**Tags:** context-engineering, [learning-theory](../tags/learning-theory-README.md)" in result
+
+
+def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_library) -> None:
+    from commonplace.lib.systems_matrix import load_results
+    from tests.commonplace.lib.test_agentic_analysis import valid_run_state
+    valid_run_state(tmp_path)
+    docs_dir = tmp_path / "kb"
+    readme = write(docs_dir / "agentic-system-analyses/README.md", "# Analyses\n")
+    class Config(dict):
+        site_dir = str(tmp_path / "site")
+        use_directory_urls = False
+        plugins = SimpleNamespace(_current_plugin="test")
+    config = Config(docs_dir=str(docs_dir))
+    files = Files([File("agentic-system-analyses/README.md", str(docs_dir), config.site_dir,
+                       False, inclusion=InclusionLevel.INCLUDED)])
+    properdocs_hooks.on_files(files, config)
+    listing = files.get_file_from_path("agentic-system-analyses/current-analyses.md")
+    assert listing is not None
+    row = load_results(tmp_path).rows[0]
+    assert row["analysis_run"] in listing.content_string
+    assert "[Example System](retained/example-system/overview.md)" in listing.content_string
+    assert not (readme.parent / "current-analyses.md").exists()
+    page = SimpleNamespace(meta={}, file=SimpleNamespace(abs_src_path=str(readme)))
+    assert "current-analyses.md" in properdocs_hooks.on_page_markdown("# Analyses\n", page)

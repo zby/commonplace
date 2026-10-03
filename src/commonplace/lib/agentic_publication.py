@@ -1,4 +1,4 @@
-"""Prepare and publish one agentic-analysis set and its review projection."""
+"""Prepare and publish one exact agentic-analysis set at its stable source path."""
 
 from __future__ import annotations
 
@@ -16,47 +16,45 @@ import yaml
 from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_state
 from commonplace.lib.agentic_set import (
+    ARCHIVE_ROOT,
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
-    REVIEWS_ROOT,
-    RUN_ID,
     SET_NAMES,
     MemberSet,
+    current_analyses,
     is_review_path,
     load_member_set,
-    retained_artifact_path,
+    normalize_source_identity,
+    source_slug,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
-
-INCUMBENT_REVIEW_NAME = "incumbent-review.md"
 
 # The files whose tree at ``inputs-commit`` supplied the run's method. A run
 # publishes only while HEAD leaves them unchanged since that commit.
 METHOD_PATHS: tuple[str, ...] = (
     "src/commonplace/",
-    "kb/agentic-systems/COLLECTION.md",
-    "kb/agentic-systems/instructions/analyse-agentic-system/",
-    "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
-    "kb/agentic-systems/instructions/agentic-analysis-sources.md",
-    "kb/agentic-systems/instructions/agentic-analysis-records.md",
-    "kb/agentic-systems/types/agentic-system-analysis-set.md",
-    "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml",
-    "kb/agentic-systems/types/agentic-system-analysis-overview.md",
-    "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml",
-    "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
-    "kb/agentic-systems/types/agentic-system-reconciliation-report.schema.yaml",
-    "kb/agentic-systems/types/agentic-system-runtime-report.md",
-    "kb/agentic-systems/types/agentic-system-runtime-report.schema.yaml",
-    "kb/agentic-systems/types/agentic-system-epistemic-report.md",
-    "kb/agentic-systems/types/agentic-system-epistemic-report.schema.yaml",
-    "kb/agentic-systems/types/agent-memory-analysis-report.md",
-    "kb/agentic-systems/types/agent-memory-analysis-report.schema.yaml",
-    "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
-    "kb/agentic-systems/types/agentic-system-analysis-run-state.schema.yaml",
-    "kb/agentic-systems/types/generated-review.md",
-    "kb/agentic-systems/types/generated-review.schema.yaml",
+    "kb/agentic-system-analyses/COLLECTION.md",
+    "kb/agentic-system-analyses/instructions/publish-analysis.md",
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/",
+    "kb/agentic-system-analyses/instructions/agentic-analysis-boundary.md",
+    "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+    "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-set.md",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-overview.md",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
+    "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+    "kb/agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
+    "kb/agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml",
+    "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+    "kb/agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.md",
+    "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.schema.yaml",
     # Every member schema references these.
     "kb/types/note.schema.yaml",
     "kb/types/note-base.schema.yaml",
@@ -64,21 +62,7 @@ METHOD_PATHS: tuple[str, ...] = (
 
 # Untracked or modified files may sit here while a batch runs: a sibling run's
 # publication that has not been committed yet.
-OUTPUT_LOCATIONS: tuple[str, ...] = (f"{REVIEWS_ROOT}/", f"{RETAINED_ROOT.as_posix()}/")
-
-
-def incumbent_copy_name(name: str) -> str:
-    """The recovery copy of a replaced set document, kept in the new run."""
-    return f"incumbent-{name}"
-
-
-RESERVED_CANDIDATE_NAMES = frozenset(
-    {
-        *SET_NAMES,
-        INCUMBENT_REVIEW_NAME,
-        *(incumbent_copy_name(name) for name in SET_NAMES),
-    }
-)
+OUTPUT_LOCATIONS: tuple[str, ...] = (f"{RETAINED_ROOT.as_posix()}/", f"{ARCHIVE_ROOT.as_posix()}/")
 
 
 @dataclass(frozen=True)
@@ -136,7 +120,7 @@ def _repo_path(repo_root: Path, raw: Path) -> Path:
 def _destination_path(repo_root: Path, raw: str) -> Path:
     if not is_review_path(raw):
         raise ValueError(
-            "publication destination must be kb/agentic-systems/reviews/<name>.md: "
+            "publication destination must be kb/agentic-system-analyses/retained/<slug>/overview.md: "
             f"{raw}"
         )
     path = repo_root / raw
@@ -168,15 +152,6 @@ def _load_running_state(path: Path, *, repo_root: Path) -> tuple[AgenticAnalysis
         raise ValueError("publication requires a frozen source in the run state")
     _, content = _read_utf8(path, label="run state")
     return state, _parse(content, label="run state")
-
-
-def _require_candidate_in_run(candidate: Path, state: AgenticAnalysisRunState) -> None:
-    try:
-        relative = candidate.relative_to(state.run_dir)
-    except ValueError as exc:
-        raise ValueError(f"candidate must be inside {state.run_dir}: {candidate}") from exc
-    if not relative.parts or candidate == state.path or candidate.name in RESERVED_CANDIDATE_NAMES:
-        raise ValueError(f"candidate path is reserved: {candidate}")
 
 
 def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -310,46 +285,22 @@ def require_running_package_unchanged(inputs_commit: str) -> None:
 def _check_incumbent(
     *, path: Path, repo_root: Path, source_identity: str,
 ) -> _Incumbent:
-    """Check replacement provenance and the retained artifact contract."""
-    if path.exists() and not path.is_file():
-        raise ValueError(f"publication destination is not a file: {path}")
-    if not path.exists():
-        return _Incumbent()
-
-    review_bytes, content = _read_utf8(path, label="publication incumbent")
-    metadata = _parse(content, label="publication incumbent").frontmatter or {}
-    if (metadata.get("generated-by") != "analyse-agentic-system"
-            or metadata.get("source-identity") != source_identity):
-        raise ValueError("publication destination is not a generated review of the same source")
-    run_id = metadata.get("analysis-run")
-    if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
-        raise ValueError("incumbent has no valid analysis run identity")
-    retained = retained_artifact_path(run_id)
-    if metadata.get("analysis-artifact") != retained.as_posix():
-        raise ValueError("incumbent must identify its canonical retained manifest")
-    manifest_path = _repo_path(repo_root, retained)
-    run = validation.ValidationRun(repo_root, ())
-    try:
-        manifest_bytes = run.read_bytes(manifest_path)
-    except OSError as exc:
-        raise ValueError(f"cannot read incumbent retained manifest: {exc}") from exc
-    manifest_hash = sha256(manifest_bytes).hexdigest()
-    if metadata.get("analysis-artifact-sha256") != manifest_hash:
-        raise ValueError("incumbent retained manifest hash mismatch")
-    try:
-        member_set = load_member_set(manifest_path.parent, run=run)
-    except ValueError as exc:
-        raise ValueError(f"incumbent retained set: {exc}") from exc
-    overview_metadata = member_set.overview.frontmatter
-    if (overview_metadata.get("run-id") != run_id
-            or overview_metadata.get("reviewed-boundary") != metadata.get("reviewed-revision")
-            or overview_metadata.get("result-disposition") != "complete"):
-        raise ValueError("incumbent retained overview identity mismatch")
-    return _Incumbent(
-        review_bytes,
-        {MANIFEST_NAME: manifest_path, **{document.name: document.path for document in member_set.documents}},
-        {MANIFEST_NAME: member_set.artifact.content, **{document.name: document.content for document in member_set.documents}},
-    )
+    """Validate every current set before choosing a replacement."""
+    source_identity = normalize_source_identity(source_identity)
+    sets = current_analyses(repo_root)
+    for member_set in sets:
+        if member_set.overview.path != path:
+            continue
+        if member_set.memory.frontmatter["source-identity"] != source_identity:
+            raise ValueError("publication destination belongs to another source")
+        return _Incumbent(
+            member_set.overview.content,
+            {MANIFEST_NAME: member_set.artifact.path / MANIFEST_NAME,
+             **{document.name: document.path for document in member_set.documents}},
+            {MANIFEST_NAME: member_set.artifact.content,
+             **{document.name: document.content for document in member_set.documents}},
+        )
+    return _Incumbent()
 
 
 def inspect_destination(
@@ -393,7 +344,7 @@ def _render_final_state(
     )
     body = re.sub(
         r"(?ms)^## Outcome\s*$.*\Z",
-        "## Outcome\n\nPublication completed for the exact member set and declared review projection.\n",
+        "## Outcome\n\nPublication completed for the exact member set and its accepted overview.\n",
         document.body.rstrip() + "\n",
     )
     serialized = yaml.safe_dump(
@@ -415,7 +366,8 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     running_state, state_document = _load_running_state(
         state_path, repo_root=repo_root
     )
-    _require_candidate_in_run(generated_candidate, running_state)
+    if generated_candidate != running_state.run_dir / OUTPUT_DIR / OVERVIEW_NAME:
+        raise ValueError("publication candidate must be the accepted output/overview.md")
     require_publishable_worktree(repo_root)
     run = validation.ValidationRun(repo_root, ())
     try:
@@ -433,11 +385,19 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     )
     if incumbent.digest != spec.expected_incumbent_sha256:
         raise ValueError("publication destination changed since inspection")
-    retained_dir = repo_root / retained_artifact_path(running_state.run_id).parent
+    retained_dir = generated_path.parent
     if retained_dir.resolve() != retained_dir:
         raise ValueError("retained set must use its canonical paths")
-    if retained_dir.exists():
-        raise ValueError(f"retained set already exists; use a new run ID: {retained_dir}")
+    expected_path = RETAINED_ROOT / source_slug(running_state.source.identity, running_state.system) / OVERVIEW_NAME
+    if generated_path.relative_to(repo_root) != expected_path:
+        raise ValueError("publication directory name does not match its source")
+    if incumbent.review_bytes is not None:
+        incumbent_meta = _parse(incumbent.review_bytes.decode("utf-8"), label="incumbent").frontmatter
+        if incumbent_meta["run-id"] == running_state.run_id:
+            raise ValueError("replacement requires a new run ID")
+        archive = repo_root / ARCHIVE_ROOT / incumbent_meta["run-id"]
+        if archive.exists():
+            raise ValueError(f"archive destination already exists: {archive}")
     retained_paths = {name: retained_dir / name for name in (MANIFEST_NAME, *SET_NAMES)}
 
     generated_bytes, _ = _read_utf8(
@@ -450,17 +410,16 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
         generated_bytes=generated_bytes,
         generated_destination=spec.generated_destination,
     )
+    if generated_bytes != member_set.overview.content:
+        raise ValueError("publication overview changed during validation")
     overrides = {generated_path: generated_bytes, retained_paths[MANIFEST_NAME]: member_set.artifact.content}
     overrides.update(
         {retained_paths[document.name]: document.content for document in member_set.documents}
     )
-    # Only previously unread destinations are supplied here; the output set
-    # retains its original byte/parse/result snapshot through completion checks.
+    # Validate the completed state against the future retained bytes in a
+    # fresh context, including when an incumbent occupies those paths.
     overrides[state_path] = final_state_text
-    for path, content in overrides.items():
-        if path in run._bytes:
-            raise ValueError(f"candidate destination already read during validation: {path}")
-        run.content_overrides[path] = content
+    run = validation.ValidationRun(repo_root, (), content_overrides=overrides)
     results = run.validate(state_path)
     diagnostics = [*results.warns, *results.fails]
     if diagnostics:
@@ -483,7 +442,7 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
 
 
 def prepare_publication(spec: PublicationSpec) -> None:
-    """Validate the exact member set and compact publication bytes."""
+    """Validate the exact member set and its public overview."""
     _check_set(spec)
 
 
@@ -502,87 +461,53 @@ def atomic_write(path: Path, content: bytes) -> None:
         raise
 
 
-def _restore(path: Path, content: bytes | None) -> None:
-    if content is None:
-        path.unlink(missing_ok=True)
-    else:
-        atomic_write(path, content)
-
-
 def publish_publication(spec: PublicationSpec) -> PublishedPublication:
-    """Publish a verified set, rolling back ordinary failures."""
+    """Validate before replacing, archive unchanged bytes, and restore on errors."""
     checked = _check_set(spec)
     repo_root = checked.spec.repo_root
-    generated_path = repo_root / checked.spec.generated_destination
     state_path = checked.spec.run_state_path
-    targets: list[tuple[Path, bytes]] = [
-        (checked.retained_paths[MANIFEST_NAME], checked.member_set.artifact.content),
-        *(
-            (checked.retained_paths[document.name], document.content)
-            for document in checked.member_set.documents
-        ),
-        (generated_path, checked.generated_bytes),
-        (state_path, checked.final_state_text.encode("utf-8")),
-    ]
-    if checked.incumbent.review_bytes is not None:
-        backups = [
-            (state_path.parent / INCUMBENT_REVIEW_NAME, checked.incumbent.review_bytes),
-            *(
-                (state_path.parent / incumbent_copy_name(name), content)
-                for name, content in checked.incumbent.set_bytes.items()
-            ),
-        ]
-        for path, content in backups:
-            if path.exists() and path.read_bytes() != content:
-                raise ValueError("incumbent recovery copy already contains different bytes")
-        targets = backups + targets
-    old_bytes = {
-        path: path.read_bytes() if path.exists() else None for path, _ in targets
-    }
-    if old_bytes[generated_path] != checked.incumbent.review_bytes:
-        raise ValueError("publication destination changed during validation")
+    retained_dir = checked.retained_paths[OVERVIEW_NAME].parent
+    archive = None
+    old_state = state_path.read_bytes()
+    moved = False
+    created = False
+    # Recheck exact incumbent bytes after validation and before any mutation.
     for name, path in checked.incumbent.set_paths.items():
         if path.read_bytes() != checked.incumbent.set_bytes[name]:
             raise ValueError("incumbent retained set changed during validation")
-    # _check_set refused an existing retained directory, so any directory
-    # found here on rollback was created by this publication.
-    retained_dir = checked.retained_paths[OVERVIEW_NAME].parent
-    written: list[Path] = []
+    if checked.incumbent.review_bytes is not None:
+        metadata = _parse(checked.incumbent.review_bytes.decode("utf-8"), label="incumbent").frontmatter
+        archive = repo_root / ARCHIVE_ROOT / metadata["run-id"]
+    elif retained_dir.exists():
+        raise ValueError("publication destination appeared during validation")
     try:
-        for path, content in targets:
-            if path == generated_path:
-                current = path.read_bytes() if path.exists() else None
-                if current != checked.incumbent.review_bytes:
-                    raise ValueError("publication destination changed before replacement")
-            atomic_write(path, content)
-            written.append(path)
+        if archive is not None:
+            archive.parent.mkdir(parents=True, exist_ok=True)
+            retained_dir.rename(archive)
+            moved = True
+        retained_dir.mkdir(parents=True, exist_ok=False)
+        created = True
+        for name, content in {
+            MANIFEST_NAME: checked.member_set.artifact.content,
+            **{document.name: document.content for document in checked.member_set.documents},
+        }.items():
+            atomic_write(retained_dir / name, content)
+        atomic_write(state_path, checked.final_state_text.encode("utf-8"))
     except Exception as publication_error:
-        rollback_errors: list[str] = []
-        for path in reversed(written):
-            try:
-                _restore(path, old_bytes[path])
-            except OSError as exc:
-                rollback_errors.append(f"{path}: {exc}")
-        if retained_dir.exists():
-            try:
+        try:
+            if created:
                 shutil.rmtree(retained_dir)
-            except OSError as exc:
-                rollback_errors.append(f"{retained_dir}: {exc}")
-        if rollback_errors:
+            if moved:
+                archive.rename(retained_dir)
+            if state_path.read_bytes() != old_state:
+                atomic_write(state_path, old_state)
+        except OSError as rollback_error:
             raise PublicationUncertainError(
-                f"publication failed ({publication_error}); rollback also failed: "
-                + "; ".join(rollback_errors)
+                f"publication failed ({publication_error}); rollback also failed: {rollback_error}"
             ) from publication_error
         raise
-
-    cleanup_warnings: list[str] = []
-    candidate = checked.spec.generated_candidate_path
-    try:
-        candidate.unlink(missing_ok=True)
-    except OSError as exc:
-        cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
     return PublishedPublication(
         generated_path=checked.spec.generated_destination,
         retained_path=checked.retained_paths[MANIFEST_NAME].relative_to(repo_root).as_posix(),
-        cleanup_warnings=tuple(cleanup_warnings),
+        cleanup_warnings=(),
     )

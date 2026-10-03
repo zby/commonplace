@@ -60,7 +60,7 @@ of path-only source anchors at the frozen commit. Quotation generation
 belongs to `commonplace-quote`; there is no separate authoring-time source-check
 operation in this command.
 
-Inspect a destination, prepare or publish the compact review of one running
+Inspect a destination, prepare or publish the accepted analysis of one running
 agentic-system analysis. `inspect-destination` takes `--generated-destination`
 and `--source-identity`; it returns a replacement decision and incumbent digest
 without emitting prior review prose or descriptions. Both `prepare` and
@@ -69,8 +69,8 @@ for a vacant destination). Destination drift requires a new inspection.
 
 All three operations require a worktree that is clean outside the workflow's
 output locations: no staged change or modified tracked file, and no untracked
-file under `kb/`, except that `kb/agentic-systems/reviews/` and
-`kb/agentic-systems/reports/retained/` may hold untracked files and
+file under `kb/`, except that `kb/agentic-system-analyses/retained-archive/` and
+`kb/agentic-system-analyses/retained/` may hold untracked files and
 unstaged modifications of tracked files, where a sibling run's uncommitted
 publication may sit; ignored paths never count. `prepare` and `publish` also
 require the overview's `inputs-commit` to be an ancestor of or equal to HEAD
@@ -83,25 +83,22 @@ to have no committed, staged, modified or untracked difference under
 `src/commonplace/` from `inputs-commit`. All three errors name the
 offending paths.
 
-An incumbent is checked by bytes: it must be a generated review of the same
-source whose retained manifest and members hash to their pins. It may be
-committed or a sibling's fresh uncommitted publication; no publication receipt
-is read. This checks replacement provenance, not compliance of the old analysis
-with today's method. Replacement saves `incumbent-review.md` and an
-`incumbent-<member>.md` copy of each retained member in the new run for
-recovery.
+An incumbent is a complete current set of the same source. Its manifest pins
+every member. All current sets are checked for duplicate source identities and
+directory names that disagree with their sources before choosing a replacement.
+`prepare` and `publish` take `--generated-candidate` naming the accepted
+`output/overview.md`, `--generated-destination` naming
+`kb/agentic-system-analyses/retained/<system-slug>/overview.md`, and the expected
+incumbent digest. There is no second review projection.
 
-`prepare` validates the directory artifact and its members as their
-retained paths and the candidate review, and checks the incumbent without changing public artifacts. It does not create
-a semantic-review job; specialist analysis does not establish independent
-semantic clearance. `publish` rechecks the inputs, validates the prospective
-complete run state, replaces the review, retains `ARTIFACT.yaml` and the four
-members byte for byte under `kb/agentic-systems/reports/retained/<run-id>/`, and writes
-the run state last. New publications require `memory-comparison` in the memory
-member and a matching retained manifest path and hash in the public review.
-An existing retained set requires a new run ID. Ordinary in-process failures
-roll back written files; crash-level partial writes remain an admitted failure
-mode.
+`prepare` validates the prospective complete run state without public writes.
+`publish` rechecks exact incumbent bytes, moves an existing set unchanged to
+`retained-archive/<its-run-id>/`, copies the accepted manifest and members
+unchanged into the stable directory, and writes run state last. Run state pins
+the working manifest and public overview; the manifest pins every member.
+A replacement requires a new run ID and a vacant archive destination. Ordinary
+I/O failures restore the old set and run state. Abrupt interruptions remain
+detectable partial publications requiring separately authorized recovery.
 
 ### commonplace-status
 
@@ -239,7 +236,7 @@ its directory; `--run <dir>` names the directory instead; `step <run>` advances 
 `blocked` or `uncertain`); `report <run> <event>` records a failed launch, a
 repair or a stop. `resolve` and `release` are the operator's commands after an
 uncertain outcome or a stop-only block. The agent orchestrator's side is
-`kb/agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
+`kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
 design is still a proposal: `kb/reference/proposals/code-scheduled-workflows.md`.
 
 ## Review system

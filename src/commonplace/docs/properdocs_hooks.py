@@ -106,6 +106,26 @@ def on_files(files, config):
             )
             _generated_index_dirs.add(output_path.parent)
 
+    collection = docs_dir / "agentic-system-analyses"
+    if collection.is_dir():
+        from commonplace.lib.agentic_set import current_analyses
+        lines = ["# Current agentic-system analyses", "",
+                 "| System | Description | Boundary | Run | Date | Evidence |", "|---|---|---|---|---|---|"]
+        for member_set in current_analyses(root):
+            data = member_set.overview.frontmatter
+            href = member_set.overview.path.relative_to(collection).as_posix()
+            escape = lambda value: str(value).replace("|", "\\|").replace("\n", " ")
+            values = [f"[{escape(data['system'])}]({href})", *[escape(data[key]) for key in
+                      ("description", "reviewed-boundary", "run-id", "run-date", "evidence-tier")]]
+            lines.append("| " + " | ".join(values) + " |")
+        if len(lines) == 4:
+            lines += ["", "No current analyses. Regeneration is separately commissioned."]
+        current_page = "agentic-system-analyses/current-analyses.md"
+        for existing in list(files):
+            if existing.src_uri == current_page:
+                files.remove(existing)
+        files.append(File.generated(config, current_page,
+                                    content="\n".join(lines) + "\n", inclusion=InclusionLevel.INCLUDED))
     return files
 
 
@@ -178,6 +198,11 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
     if meta:
         markdown = _append_generated_tail(markdown, page, config)
     markdown = _append_full_listing_link(markdown, page)
+    if page.file.abs_src_path is not None:
+        path = Path(page.file.abs_src_path)
+        if path.name == "README.md" and path.parent.name == "agentic-system-analyses":
+            markdown += "\n\n[Current analyses](./current-analyses.md) *(generated at build time)*\n"
+
 
     status = meta.get("status")
     user_verified = meta.get("user-verified") is True

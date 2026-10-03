@@ -34,7 +34,9 @@ the associated claim and carry any change through dependent conclusions. If
 the source cannot support the claim, narrow or withdraw it and update the text.
 
 Use supplied paths unchanged. Read every `read-first` dependency before
-the task. Missing required parameters, unavailable required inputs,
+the task. The supplied analysis contracts carry the operative definitions of
+registered vocabulary for this job. Their linked definition notes are background,
+not additional mandatory inputs. Missing required parameters, unavailable required inputs,
 source access or scope decisions that prevent completion, and needed
 changes to the selected target or frozen source identity require `problem`.
 Do not reconstruct paths, expand scope or submit a blocked member. A justified
@@ -144,10 +146,10 @@ Do not call agent listings for status; their payloads may include prior
 analyses even with a path filter. Do not read style exemplars or
 `kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`,
 `kb/agentic-systems/reviews-archive/`,
-`kb/agentic-systems/reports/retained/`,
-`kb/agentic-systems/reports/retained-archive/`,
+`kb/agentic-systems/reports/`, `kb/agentic-system-analyses/retained/`,
+`kb/agentic-system-analyses/retained-archive/`,
 `kb/work/analyse-agentic-system/`, other runs under
-`kb/agentic-systems/reports/state/`, surveys, comparison outputs, or
+`kb/agentic-system-analyses/state/`, surveys, comparison outputs, or
 agent listings. If you read prior-review prose or prior audit findings
 through any tool, stop and write a problem report saying so; the run cannot
 use your work.

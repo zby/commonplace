@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-split-init-3tjtypq_"
+    ],
+    "returncode": 0,
+    "output": "Initialized Commonplace project at /tmp/commonplace-split-init-3tjtypq_\nCreated:\n- kb/notes\n- kb/notes/types\n- kb/reference\n- kb/reference/types\n- kb/instructions\n- kb/tags\n- kb/sources\n- kb/sources/types\n- kb/tasks/backlog\n- kb/tasks/active\n- kb/tasks/completed\n- kb/work\n- kb/reports\n- kb/reports/cache\n- kb/reports/cache/connect\n- kb/reports/state\n- kb/reports/retained\n- kb/reports/types\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n- .claude/skills/cp-skill-write/SKILL.md\n- .claude/skills/cp-skill-validate/SKILL.md\n- .claude/skills/cp-skill-connect/SKILL.md\n- .claude/skills/cp-skill-convert/SKILL.md\n- .claude/skills/cp-skill-health-check/SKILL.md\n- .claude/skills/cp-skill-ingest/SKILL.md\n- .claude/skills/cp-skill-snapshot-web/SKILL.md\n- .claude/skills/cp-skill-revise-autoreason/SKILL.md\n- .claude/skills/cp-skill-write-multistage/SKILL.md\n- .claude/skills/cp-skill-ground/SKILL.md\n- .claude/skills/cp-skill-library/SKILL.md\n- .agents/skills/cp-skill-write/SKILL.md\n- .agents/skills/cp-skill-validate/SKILL.md\n- .agents/skills/cp-skill-connect/SKILL.md\n- .agents/skills/cp-skill-convert/SKILL.md\n- .agents/skills/cp-skill-health-check/SKILL.md\n- .agents/skills/cp-skill-ingest/SKILL.md\n- .agents/skills/cp-skill-snapshot-web/SKILL.md\n- .agents/skills/cp-skill-revise-autoreason/SKILL.md\n- .agents/skills/cp-skill-write-multistage/SKILL.md\n- .agents/skills/cp-skill-ground/SKILL.md\n- .agents/skills/cp-skill-library/SKILL.md\n- .commonplace/library.md\n- .gitignore\nRefreshed pointers into the installed library:\n- .claude/settings.local.json\n"
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "/tmp/commonplace-split-init-3tjtypq_/kb"
+    ],
+    "returncode": 0,
+    "output": "VALIDATION SUCCESS\nTarget: /tmp/commonplace-split-init-3tjtypq_/kb\nScope: /tmp/commonplace-split-init-3tjtypq_/kb\nFiles analysed: 9\nText files: 9\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\nExcluded subtrees: /tmp/commonplace-split-init-3tjtypq_/kb/reports/cache, /tmp/commonplace-split-init-3tjtypq_/kb/reports/state\n\nDetails: commonplace-validate --full /tmp/commonplace-split-init-3tjtypq_/kb\n"
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-split-init-3tjtypq_"
+    ],
+    "returncode": 0,
+    "output": "Initialized Commonplace project at /tmp/commonplace-split-init-3tjtypq_\nPreserved existing files already matching scaffold:\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n"
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-split-init-3tjtypq_",
+      "--check"
+    ],
+    "returncode": 0,
+    "output": "ok: .claude/skills/cp-skill-write\nok: .claude/skills/cp-skill-validate\nok: .claude/skills/cp-skill-connect\nok: .claude/skills/cp-skill-convert\nok: .claude/skills/cp-skill-health-check\nok: .claude/skills/cp-skill-ingest\nok: .claude/skills/cp-skill-snapshot-web\nok: .claude/skills/cp-skill-revise-autoreason\nok: .claude/skills/cp-skill-write-multistage\nok: .claude/skills/cp-skill-ground\nok: .claude/skills/cp-skill-library\nok: .agents/skills/cp-skill-write\nok: .agents/skills/cp-skill-validate\nok: .agents/skills/cp-skill-connect\nok: .agents/skills/cp-skill-convert\nok: .agents/skills/cp-skill-health-check\nok: .agents/skills/cp-skill-ingest\nok: .agents/skills/cp-skill-snapshot-web\nok: .agents/skills/cp-skill-revise-autoreason\nok: .agents/skills/cp-skill-write-multistage\nok: .agents/skills/cp-skill-ground\nok: .agents/skills/cp-skill-library\nok: .commonplace/library.md\nok: .claude/settings.local.json\n"
+  },
+  {
+    "existing_content": "historical research path witness preserved byte for byte",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "commonplace-init",
+      "--root",
+      "/tmp/commonplace-split-existing-siowy9_q"
+    ],
+    "returncode": 0,
+    "output": "Initialized Commonplace project at /tmp/commonplace-split-existing-siowy9_q\nPreserved existing files already matching scaffold:\n- kb/log.md\n- kb/sources/.gitignore\n- kb/sources/COLLECTION.md\n- kb/sources/README.md\n- kb/notes/COLLECTION.md\n- kb/notes/README.md\n- kb/reference/COLLECTION.md\n- kb/reference/README.md\n- kb/instructions/COLLECTION.md\n- kb/instructions/README.md\n- kb/tags/COLLECTION.md\n- kb/tags/README.md\n- kb/work/COLLECTION.md\n- kb/work/README.md\n- kb/reports/COLLECTION.md\n- kb/reports/README.md\n- kb/reports/cache/README.md\n- kb/reports/state/README.md\n- kb/reports/retained/README.md\n- kb/reports/.gitignore\n- kb/reports/cache/.commonplace-validation-ignore\n- kb/reports/state/.commonplace-validation-ignore\n- AGENTS.md.template\n- CLAUDE.md.template\n"
+  },
+  {
+    "command": [
+      "commonplace-validate",
+      "/tmp/commonplace-split-existing-siowy9_q/kb"
+    ],
+    "returncode": 0,
+    "output": "VALIDATION SUCCESS\nTarget: /tmp/commonplace-split-existing-siowy9_q/kb\nScope: /tmp/commonplace-split-existing-siowy9_q/kb\nFiles analysed: 10\nText files: 10\nDiagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects\nExcluded subtrees: /tmp/commonplace-split-existing-siowy9_q/kb/reports/cache, /tmp/commonplace-split-existing-siowy9_q/kb/reports/state\n\nDetails: commonplace-validate --full /tmp/commonplace-split-existing-siowy9_q/kb\n"
+  },
+  {
+    "repeated_init": "All project file bytes unchanged with existing local historical-path content."
+  }
+]

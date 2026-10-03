@@ -1,19 +1,16 @@
 # Memory comparisons from the main analysis
 
-The matrix builder, table renderer, and analyzer read the retained sets
-produced by `analyse-agentic-system`. Their common input is each generated
-review under `kb/agentic-systems/reviews/`, its `analysis-artifact` path and
-SHA-256, and the byte-identical set retained under
-`kb/agentic-systems/reports/retained/<run-id>/`: the readers verify
-the set's manifest, `ARTIFACT.yaml`, take identity and the source register
-from the overview and the comparison profile from `memory.md`, and validate
-each member. Retained sets take part in collection-wide validation under the
-current contract; only the legacy `reports/retained-archive/` is
-excluded, because its historical contracts differ. Publication and these
-readers also validate each selected set explicitly. They do not require
-local run state, source checkouts, legacy reviews, or a prior CSV. The
+The matrix builder, table renderer and analyzer enumerate current accepted sets
+under `kb/agentic-system-analyses/retained/<system-slug>/` through the same
+library function as the site. The accepted overview supplies the entry point,
+boundary and synthesis. The manifest, `ARTIFACT.yaml`, pins every member.
+Readers validate membership and take the comparison profile from `memory.md`.
+They reject duplicate sources and directory names that disagree with sources.
+Old `agentic-systems/reports/` and the new `retained-archive/` do not participate
+in current validation or comparison. No local run state, source checkout,
+legacy review or prior CSV is required. The
 [memory report contract](../../agentic-system-analyses/types/agent-memory-analysis-report.md#memory-comparison-fields)
-defines the scoped comparison fields and evidence assessments.
+defines the scoped fields and per-value evidence assessments.
 
 Run from the repository root:
 
@@ -25,8 +22,8 @@ uv run python scripts/analyze_matrix.py
 
 The first two commands write `memory-systems.csv` and `memory-systems-table.md`
 in this directory. All three read the retained sets directly; the renderer and
-analyzer do not depend on the CSV being present. Repeat `--review <main-review-path>`
-to select a bounded population. Otherwise every generated main review is
+analyzer do not depend on the CSV being present. Repeat `--review <current-overview-path>`
+to select a bounded population. Otherwise every current accepted analysis is
 selected, and missing or invalid evidence blocks the operation. Select only one
 review per source identity; repeat runs do not count as distinct systems.
 Builder and renderer accept `--output <path>` for an isolated trial.
@@ -36,8 +33,7 @@ hashes of the review and the manifest (`artifact_sha256`). Axis values are JSON 
 separate coverage assessment, JSON per-value evidence maps, and
 canonical-record columns. Each evidence entry retains its basis, supporting
 records and rationale. The members carry the source evidence.
-The table separates code-grounded and doc-grounded sets and links both the
-public review and the overview. Statistics count code-grounded wired, observed,
+The table separates code-grounded and doc-grounded sets and links the accepted overview. Statistics count code-grounded wired, observed,
 or causally supported values, including supported positives under partial
 coverage; the remainder is not inferred absent. Weaker bases and coverage
 assessments are reported separately. Entropy and redundancy require known

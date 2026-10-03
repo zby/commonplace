@@ -13,7 +13,7 @@ INPUTS_COMMIT = "fedcba9876543210fedcba9876543210fedcba98"
 def overview_text(*, disposition: str = "complete") -> str:
     complete = disposition == "complete"
     return f'''---
-type: agentic-systems/types/agentic-system-analysis-overview.md
+type: agentic-system-analyses/types/agentic-system-analysis-overview.md
 description: "Complete analysis of Example System at one frozen boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -66,7 +66,7 @@ None.
 
 
 RUNTIME_TEXT = f'''---
-type: agentic-systems/types/agentic-system-runtime-report.md
+type: agentic-system-analyses/types/agentic-system-runtime-report.md
 description: "Runtime baseline of Example System"
 run-id: {RUN_ID}
 reviewed-boundary: "{REVISION}"
@@ -124,7 +124,7 @@ none
 '''
 
 EPISTEMIC_TEXT = f'''---
-type: agentic-systems/types/agentic-system-epistemic-report.md
+type: agentic-system-analyses/types/agentic-system-epistemic-report.md
 description: "Epistemic routes of Example System"
 run-id: {RUN_ID}
 reviewed-boundary: "{REVISION}"
@@ -175,13 +175,13 @@ Record. Evidence: SRC-1.
 '''
 
 REVIEW_TEXT = f'''---
-type: agentic-systems/types/generated-review.md
+type: agentic-system-analyses/types/generated-review.md
 description: "Example System's mechanism in one sentence."
 generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: https://example.invalid/example-system
 reviewed-revision: "{REVISION}"
-analysis-artifact: kb/agentic-systems/reports/retained/{RUN_ID}/ARTIFACT.yaml
+analysis-artifact: kb/agentic-system-analyses/retained/{RUN_ID}/ARTIFACT.yaml
 analysis-artifact-sha256: "{'b' * 64}"
 ---
 
@@ -193,7 +193,7 @@ Body.
 '''
 
 RECONCILIATION_TEXT = f'''---
-type: agentic-systems/types/agentic-system-reconciliation-report.md
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 description: "Reconciled Example System records at the frozen source boundary"
 run-id: {RUN_ID}
 reviewed-boundary: "{REVISION}"

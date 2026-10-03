@@ -20,7 +20,7 @@
           ],
           "properties": {
             "type": {
-              "const": "agentic-systems/types/agent-memory-analysis-report.md"
+              "const": "agentic-system-analyses/types/agent-memory-analysis-report.md"
             },
             "description": {
               "type": "string",

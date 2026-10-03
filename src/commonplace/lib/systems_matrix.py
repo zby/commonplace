@@ -10,13 +10,7 @@ from hashlib import sha256
 from pathlib import Path
 
 from commonplace.lib.agentic_records import annotated_ids, declared_ids, is_absence
-from commonplace.lib.agentic_set import (
-    REVIEWS_ROOT,
-    is_review_path,
-    load_member_set,
-    retained_artifact_path,
-)
-from commonplace.lib.note_parser import parse_document
+from commonplace.lib.agentic_set import current_analyses
 
 __all__ = [
     "AXES",
@@ -227,68 +221,33 @@ class MatrixInputs:
 
 
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
-    """Select explicit main reviews, or all generated main reviews; fail on gaps.
+    """Select explicit current overviews, or all current analyses; fail on gaps.
 
-    Each review pins the manifest of a validated retained directory artifact.
-    Identity comes from its overview and the comparison profile from memory.md.
+    The shared enumerator validates membership and manifest hashes. Identity
+    comes from the overview and comparison data from the memory member.
     """
     from commonplace.lib.validation import ValidationRun
 
     root = root.resolve()
     run = ValidationRun(root, ())
-    paths = (
-        review_paths
-        if review_paths is not None
-        else sorted((root / REVIEWS_ROOT).glob("*.md"))
-    )
-    rows, hashes, identities = [], {}, set()
-    for raw_path in paths:
-        path = (root / raw_path).resolve()
-        relative = path.relative_to(root)
-        if not is_review_path(relative.as_posix()):
-            raise ValueError(f"not a main-review path: {raw_path}")
-        review_bytes = path.read_bytes()
-        review, error = parse_document(review_bytes.decode("utf-8"))
-        if error or review is None:
-            raise ValueError(f"{relative}: malformed Markdown")
-        meta = review.frontmatter or {}
-        if meta.get("generated-by") != "analyse-agentic-system":
-            if review_paths is not None:
-                raise ValueError(f"not a generated main review: {relative}")
+    sets = current_analyses(root, run=run)
+    selected = None if review_paths is None else {(root / path).resolve() for path in review_paths}
+    available = {member_set.overview.path for member_set in sets}
+    if selected is not None and not selected <= available:
+        raise ValueError("selected path is not a current analysis overview")
+    rows, hashes = [], {}
+    for member_set in sets:
+        path = member_set.overview.path
+        if selected is not None and path not in selected:
             continue
-        retained = retained_artifact_path(meta.get("analysis-run"))
-        if meta.get("analysis-artifact") != retained.as_posix():
-            raise ValueError(
-                f"{relative}: missing or mismatched retained manifest; regenerate the main review"
-            )
-        manifest_path = (root / retained).resolve()
-        if manifest_path.relative_to(root) != retained:
-            raise ValueError(f"retained manifest must use its canonical path: {retained}")
-        manifest_bytes = run.read_bytes(manifest_path)
-        manifest_hash = sha256(manifest_bytes).hexdigest()
-        if meta.get("analysis-artifact-sha256") != manifest_hash:
-            raise ValueError(f"retained manifest SHA-256 mismatch: {retained}")
-        try:
-            member_set = load_member_set(manifest_path.parent, run=run)
-        except ValueError as exc:
-            raise ValueError(f"{retained}: {exc}") from exc
+        relative = path.relative_to(root)
+        review_bytes = member_set.overview.content
+        manifest_path = member_set.artifact.path / "ARTIFACT.yaml"
+        retained = manifest_path.relative_to(root)
+        manifest_hash = sha256(member_set.artifact.content).hexdigest()
         data = member_set.overview.frontmatter
-        if data.get("result-disposition") != "complete":
-            raise ValueError(f"not a complete analysis overview: {retained}")
-        if data.get("run-id") != meta["analysis-run"] or data.get(
-            "reviewed-boundary"
-        ) != meta.get("reviewed-revision"):
-            raise ValueError(f"review/overview identity mismatch: {relative}")
-        source = meta.get("source-identity")
-        if not isinstance(source, str) or not source.strip():
-            raise ValueError(f"missing source identity: {relative}")
-        if member_set.memory is not None and member_set.memory.frontmatter.get("source-identity") != source:
-            raise ValueError(f"{retained}: source-identity does not match review")
-        if source in identities:
-            raise ValueError(
-                f"multiple selected reviews of source {source}; choose one boundary explicitly"
-            )
-        identities.add(source)
+        source = member_set.memory.frontmatter["source-identity"]
+        meta = {**data, "analysis-run": data["run-id"]}
         memory = member_set.memory
         assert memory is not None  # a complete manifest names the memory member
         # The memory member's own validation above already accepted this
@@ -328,7 +287,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         for document in member_set.documents:
             hashes[(retained.parent / document.name).as_posix()] = document.sha256
     if not rows:
-        raise ValueError("no generated main reviews selected")
+        raise ValueError("no current analyses selected")
     return MatrixInputs(
         sorted(
             rows, key=lambda row: (row["system_name"].casefold(), row["analysis_run"])

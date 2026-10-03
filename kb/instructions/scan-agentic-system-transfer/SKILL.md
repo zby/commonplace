@@ -15,7 +15,7 @@ Produce a selective current account of the external mechanisms that matter to a 
 
 - Use the analysis manifest and interest brief supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. If either cannot be identified unambiguously, stop and ask for the missing input.
 - One complete `analyse-agentic-system` set, entered through
-  `kb/agentic-systems/reports/state/<run-id>/output/ARTIFACT.yaml`, with its
+  `kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`, with its
   run’s `../run-state.md`. Both `run-status` and `result-disposition` must be
   `complete`. The set is the authority for what the external system does: the
   overview holds the boundary, source register, amendment index, synthesis and

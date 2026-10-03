@@ -87,7 +87,7 @@ returned findings still refer to the previous report's IDs.
 
 Validate `output` with `commonplace-validate --full <output>` and correct
 structural errors. Code checks the written quotations before accepting the
-report, and publication checks them again; run no separate quote check.
+report; run no separate quote check.
 Retain the validation result and prevented conclusions under Limitations and
 checks.
 

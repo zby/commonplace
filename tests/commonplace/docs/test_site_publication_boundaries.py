@@ -28,14 +28,13 @@ def test_only_retained_analysis_sets_are_published() -> None:
     assert excluded.match_file("reports/cache/connect/example.connect.md")
     assert excluded.match_file("reports/state/reviews/example.md")
     assert excluded.match_file("reports/retained/example.md")
-    run = "AAS-2026-09-05-example-01/"
+    run = "example/"
     for member in ("overview.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md"):
-        assert not excluded.match_file("agentic-systems/reports/retained/" + run + member)
-        assert excluded.match_file("agentic-systems/reports/state/" + run + member)
-    assert excluded.match_file("agentic-systems/reports/retained/" + run + "result.md")
-    assert excluded.match_file("agentic-systems/reports/retained/" + run + "run-state.md")
+        assert not excluded.match_file("agentic-system-analyses/retained/" + run + member)
+        assert excluded.match_file("agentic-system-analyses/state/" + run + member)
+    assert excluded.match_file("agentic-system-analyses/retained/" + run + "result.md")
+    assert excluded.match_file("agentic-system-analyses/retained/" + run + "run-state.md")
     archive = "AAS-2026-09-05-example-01/"
-    assert not excluded.match_file("agentic-systems/reports/retained-archive/" + archive + "result.md")
     for member in ("ARTIFACT.yaml", "overview.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md"):
-        assert not excluded.match_file("agentic-systems/reports/retained-archive/" + archive + member)
-    assert excluded.match_file("agentic-systems/reports/retained-archive/" + archive + "run-state.md")
+        assert excluded.match_file("agentic-system-analyses/retained-archive/" + archive + member)
+    assert not excluded.match_file("agentic-systems/reports/retained/" + archive + "overview.md")

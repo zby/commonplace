@@ -14,17 +14,20 @@ and open the exact analysis from a clean checkout. It is not hand-edited:
 a correction goes through the method and a new run. Its frontmatter is
 what publication checks, with the pin on the manifest.
 
+This is the historical projection format. New runs publish the accepted overview
+and do not author this type.
+
 ## Frontmatter
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `agentic-systems/types/generated-review.md` |
+| `type` | Yes | `agentic-system-analyses/types/generated-review.md` |
 | `description` | Yes | The overview's `description`: the synthesizer's one-sentence retrieval description of the system's mechanism and limits |
 | `generated-by` | Yes | `analyse-agentic-system` |
 | `analysis-run` | Yes | The producing run ID |
 | `source-identity` | Yes | The stable source identity the set's Source register declares |
 | `reviewed-revision` | Yes | The set's `reviewed-boundary` |
-| `analysis-artifact` | Yes | `kb/agentic-systems/reports/retained/<run-id>/ARTIFACT.yaml` |
+| `analysis-artifact` | Yes | `kb/agentic-system-analyses/retained/<run-id>/ARTIFACT.yaml` |
 | `analysis-artifact-sha256` | Yes | SHA-256 of the retained manifest's bytes |
 
 ## Body
@@ -41,7 +44,7 @@ has four parts, in order:
 
 Relative links in the overview resolve inside the set directory, so code
 rewrites them to resolve from the review into the retained set under
-`kb/agentic-systems/reports/retained/<run-id>/`. Absolute URLs and
+`kb/agentic-system-analyses/retained/<run-id>/`. Absolute URLs and
 anchor-only links stay as they are. The review therefore makes no claim
 the set does not make, and the overview's contract for the Bounded
 synthesis (no ranking, adoption advice, system-wide grade or transfer
@@ -51,13 +54,13 @@ recommendation) holds for the review too.
 
 ```markdown
 ---
-type: agentic-systems/types/generated-review.md
+type: agentic-system-analyses/types/generated-review.md
 description: "{one-sentence description}"
 generated-by: analyse-agentic-system
 analysis-run: AAS-YYYY-MM-DD-system-slug-nn
 source-identity: {stable identity}
 reviewed-revision: "{revision or capture label}"
-analysis-artifact: kb/agentic-systems/reports/retained/{run-id}/ARTIFACT.yaml
+analysis-artifact: kb/agentic-system-analyses/retained/{run-id}/ARTIFACT.yaml
 analysis-artifact-sha256: "{sha256}"
 ---
 

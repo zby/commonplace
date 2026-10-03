@@ -7,15 +7,18 @@ Memory comparisons now consume the main analysis's retained results; see
 [agent-memory-systems collection](../agent-memory-systems/README.md) retains
 legacy reviews and historical comparison snapshots.
 
+[Workflow analyses](../agentic-system-analyses/README.md) now have their own collection.
+The current comparison population is empty until regeneration.
+
 ## Method and evidence
 
-- [Analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — analyse one frozen source boundary and publish its set and review
+- [Analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — analyse one frozen source boundary and publish its accepted set
 - [Landscape synthesis](./instructions/synthesize-agent-memory-landscape/SKILL.md) — compare retained memory findings
 - [Taxonomy maintenance](./instructions/refresh-agent-memory-review-taxonomy.md) — refresh shared comparison terms
 - [Report types](../agentic-system-analyses/types/agentic-system-analysis-set.md) — set membership and member contracts
 - [Layout migration evidence](./reports/retained/layout-migration-2026-10-01/README.md) — path/hash map and acceptance checks
 
-## Analyses
+## Authored accounts
 
 - [Academic Research Skills](./reviews/academic-research-skills.md) — Claude Code research pipeline whose prompt-defined stages are supported by narrow executable checks, while orchestration, Passport resume, and terminal gate behavior remain host-dependent or internally conflicted
 - [AI Agents in Depth](./reviews/ai-agent-book.md) — whole-book comparison whose Model–Harness, context, evaluation, continual-evolution, and coordination doctrine largely converges with Commonplace, while memory admission, evaluator policy, authority granularity, and several evidence claims diverge

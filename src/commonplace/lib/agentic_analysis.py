@@ -13,13 +13,11 @@ from commonplace.lib.agentic_set import (
     MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
-    REVIEW_TYPE,
     SET_NAMES,
     is_normalized_relative,
     is_review_path,
     load_member_set,
     normalize_source_identity,
-    retained_set_paths,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
@@ -31,7 +29,7 @@ from commonplace.lib.quote_matching import (
     parse_github_blob,
 )
 
-AGENTIC_ANALYSIS_RUN_TYPE = "agentic-systems/types/agentic-system-analysis-run-state.md"
+AGENTIC_ANALYSIS_RUN_TYPE = "agentic-system-analyses/types/agentic-system-analysis-run-state.md"
 
 
 
@@ -147,18 +145,18 @@ def parse_agentic_analysis_run_state(
     repo_root = repo_root.resolve()
     state_path = path.resolve()
     state_root = (
-        repo_root / "kb" / "agentic-systems" / "reports" / "state"
+        repo_root / "kb" / "agentic-system-analyses" / "state"
     ).resolve()
     try:
         relative = state_path.relative_to(state_root)
     except ValueError as exc:
         raise ValueError(
-            "run-state path: expected kb/agentic-systems/reports/state/"
+            "run-state path: expected kb/agentic-system-analyses/state/"
             "<run-id>/run-state.md"
         ) from exc
     if len(relative.parts) != 2 or relative.name != "run-state.md":
         raise ValueError(
-            "run-state path: expected kb/agentic-systems/reports/state/"
+            "run-state path: expected kb/agentic-system-analyses/state/"
             "<run-id>/run-state.md"
         )
 
@@ -189,7 +187,7 @@ def parse_agentic_analysis_run_state(
     if artifact is not None and artifact.path.resolve() != expected_artifact:
         raise ValueError(f"artifact.path: expected <run-id>/{OUTPUT_DIR}/{MANIFEST_NAME}")
     if generated_review is not None and not is_review_path(generated_review.display_path):
-        raise ValueError("generated-review.path: expected kb/agentic-systems/reviews/<name>.md")
+        raise ValueError("generated-review.path: expected kb/agentic-system-analyses/retained/<slug>/overview.md")
     return AgenticAnalysisRunState(
         path=state_path,
         run_dir=state_path.parent,
@@ -210,10 +208,10 @@ def run_state_repo_root(path: Path) -> Path | None:
     """The repository whose analysis state directory holds this run state, or
     None when the path is not in one."""
     parents = path.parents
-    if len(parents) < 6:
+    if len(parents) < 5:
         return None
-    root = parents[5]
-    if path.parent.parent != root / "kb" / "agentic-systems" / "reports" / "state":
+    root = parents[4]
+    if path.parent.parent != root / "kb" / "agentic-system-analyses" / "state":
         return None
     return root
 
@@ -640,7 +638,8 @@ def verify_agentic_analysis_run_state(
             failures.append("memory.md: source-identity does not match the frozen source")
 
     if state.generated_review is not None:
-        retained_paths = retained_set_paths(state.run_id)
+        retained_dir = Path(state.generated_review.display_path).parent
+        retained_paths = {name: retained_dir / name for name in (MANIFEST_NAME, *SET_NAMES)}
         expected_hashes = {MANIFEST_NAME: state.artifact.expected_sha256,
                            OVERVIEW_NAME: member_set.overview.sha256}
         expected_hashes.update(
@@ -669,32 +668,10 @@ def verify_agentic_analysis_run_state(
                 load_member_set((state.repo_root / retained_paths[MANIFEST_NAME]).parent, run=run)
             except ValueError as exc:
                 failures.append(f"retained artifact: {exc}")
-        generated, error = _parsed_output(state.generated_review, content_overrides)
-        if error is not None or generated is None:
-            failures.append(f"generated review: {error}")
-        else:
-            generated_frontmatter = generated.frontmatter or {}
-            expected = {
-                "type": REVIEW_TYPE,
-                "generated-by": "analyse-agentic-system",
-                "analysis-run": state.run_id,
-                "source-identity": None if state.source is None else state.source.identity,
-                "reviewed-revision": None if state.source is None else state.source.revision,
-                "analysis-artifact": retained_paths[MANIFEST_NAME].as_posix(),
-                "analysis-artifact-sha256": state.artifact.expected_sha256,
-            }
-            mismatches = [
-                field
-                for field, value in expected.items()
-                if generated_frontmatter.get(field) != value
-            ]
-            if mismatches:
-                failures.append(
-                    "generated review: workflow identity mismatch in "
-                    + ", ".join(mismatches)
-                )
-            else:
-                passes.append("generated review: workflow identity matches run state")
+        if state.generated_review.display_path != retained_paths[OVERVIEW_NAME].as_posix():
+            failures.append("published overview: path does not match run identity")
+        if state.generated_review.expected_sha256 != member_set.overview.sha256:
+            failures.append("published overview: must preserve the accepted overview bytes")
 
     if state.source is not None:
         contents = [(document.name, document.text) for document in member_set.documents]

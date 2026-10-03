@@ -10,10 +10,10 @@ through the producing method and source regeneration.
 
 ## Inputs and authority
 
-Use the supplied generated main reviews under `kb/agentic-systems/reviews/`.
-Without an explicit selection, inspect all generated main reviews; do not
-silently drop an input that fails. An input must identify its complete retained
-set through `analysis-artifact` and `analysis-artifact-sha256`; the artifact manifest pins the memory member that carries the profile. A legacy review,
+Use the supplied current overviews under `kb/agentic-system-analyses/retained/`.
+Without an explicit selection, inspect all current analyses; do not
+silently drop an input that fails. An input must belong to a complete current retained set. Its sibling
+`ARTIFACT.yaml` pins every member, including the memory report that carries the profile. A legacy review,
 old CSV, transfer scan or compact summary cannot substitute for that set.
 If the request names only a legacy review, report the main-analysis regeneration
 needed rather than treating its prose as classification evidence.
@@ -27,19 +27,19 @@ within that request's scope; do not request authorization again.
 ## Check and read the inputs
 
 1. **Load the memory report contract.** Read
-   `kb/agentic-systems/types/agent-memory-analysis-report.md`, including `memory-comparison`,
-   and the shared `kb/agentic-systems/instructions/agentic-analysis-sources.md` and
-   `kb/agentic-systems/instructions/agentic-analysis-records.md` contracts for evidence and
-   record identity. Read `kb/agentic-systems/types/agentic-system-analysis-overview.md`
+   `kb/agentic-system-analyses/types/agent-memory-analysis-report.md`, including `memory-comparison`,
+   and the shared `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
+   `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` contracts for evidence and
+   record identity. Read `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md`
    for overview content.
    Record the procedure, contract, schema and reader identities used for the
    audit: this instruction, the shared contracts, those types and their `.schema.yaml` files,
    `src/commonplace/lib/systems_matrix.py`, and the producing
-   `kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md`. Record hashes for any
+   `kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md`. Record hashes for any
    additional ontology definition actually used.
 2. **Check the selected population.** From the repository root, use the existing
    main-result reader. Pass the explicit review paths as arguments to this
-   check; omit them only for the all-generated selection:
+   check; omit them only for the all-current selection:
 
    ```bash
    uv run python - <main-review-path> <<'PY'
@@ -66,8 +66,7 @@ within that request's scope; do not request authorization again.
 3. **Read full sets.** Read each selected retained set at its recorded
    hashes: the overview's source register, reconciliation and limitations;
    the runtime report's and memory report's records; and the memory report's
-   findings and comparison frontmatter. Follow the compact projection
-   only to check whether it preserves those findings. Source revision and cutoff
+   findings and comparison frontmatter. Source revision and cutoff
    bound the evidence; age alone neither invalidates an immutable observation
    nor establishes present upstream behavior. Do not use `last-checked` or a
    rolling age threshold as permission to edit it.

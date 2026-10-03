@@ -18,7 +18,7 @@ and pins every member, including this overview.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `agentic-systems/types/agentic-system-analysis-overview.md` |
+| `type` | Yes | `agentic-system-analyses/types/agentic-system-analysis-overview.md` |
 | `description` | Yes | For a `complete` run, the synthesizer's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
 | `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
@@ -46,15 +46,10 @@ status meanings for all members.
 
 ### Identity and completion
 
-Working output lives under
-`kb/agentic-systems/reports/state/<run-id>/output/`; publication
-retains it under `kb/agentic-systems/reports/retained/<run-id>/`.
-Run state and compact reviews pin `ARTIFACT.yaml`. The manifest pins the
-reports, and `inputs-commit` identifies the method's committed inputs.
-The [set type](./agentic-system-analysis-set.md) owns membership
-and set checks. File validation checks this overview independently;
-directory validation checks the whole set. Only complete sets may publish
-or supply comparison rows. Correct retained output through a new run.
+The [set type](./agentic-system-analysis-set.md) owns membership and set
+checks. File validation checks this overview independently; directory
+validation checks the whole set. The manifest pins every member, and
+`inputs-commit` identifies the method's committed inputs.
 
 ## Required sections
 
@@ -95,12 +90,9 @@ with the strongest supported contribution, including partial results, then
 states the unresolved question, at the level of the comparison actually
 performed.
 
-The Bounded synthesis has a second reader. Code publishes it, after an
-evidence-basis line and before the Limitations, as the body of the public
-[generated review](./generated-review.md). It must
-therefore read without the members' context: a public reader has the IDs
-it cites and its links, which code rewrites to point into the retained
-set, but not the members' prose.
+The Bounded synthesis must read without the members' context. State its
+evidence basis and boundary, and link the member records that support it so
+a reader can inspect the underlying account.
 
 ### Limitations
 
@@ -135,7 +127,7 @@ inside its own bytes.
 
 ```markdown
 ---
-type: agentic-systems/types/agentic-system-analysis-overview.md
+type: agentic-system-analyses/types/agentic-system-analysis-overview.md
 description: "{one sentence on the system's mechanism and limits}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "{source-native system name}"

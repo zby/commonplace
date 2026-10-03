@@ -72,7 +72,7 @@ def test_route_field_labels_match_the_delivered_contract() -> None:
 
     from commonplace.lib.agentic_records import ROUTE_FIELDS
 
-    contract = (Path(__file__).resolve().parents[3] / "kb/agentic-systems/instructions/"
+    contract = (Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/"
                 "agentic-analysis-records.md").read_text()
     import re
 

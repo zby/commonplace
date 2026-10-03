@@ -48,10 +48,10 @@ instructions or to compare models:
 
 ```bash
 uv run python scripts/analyst_trial.py prepare \
-  kb/agentic-systems/reports/state/<recorded-run> memory --label luna
+  kb/agentic-system-analyses/state/<recorded-run> memory --label luna
 ```
 
-It creates `kb/agentic-systems/reports/state/AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>/`
+It creates `kb/agentic-system-analyses/state/AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>/`
 (named like a run because the run-state schema requires one), copies the
 recorded run's `boundary.md`, `opening.json`, `run-state.md` (set back to
 running) and, for the memory and epistemic analysts, `output/runtime.md`,

@@ -21,9 +21,6 @@ member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-1`), memory has
 `MEM-` (`MEM-OBJ-1`), epistemic has `EPI-` (`EPI-OBJ-1`).
 The prefix identifies the declaring analyst, not the member discussing the
 record. Keep a supplied ID unchanged in references, annotations and amendments.
-Archived results from earlier methods keep their bare runtime IDs as
-written; they are frozen evidence outside this grammar, not aliases for
-`RT-` IDs.
 
 Within `## Shared records`, kind headings group declarations:
 `### Components`, `### Operative objects`, `### Routes`, `### Claims`,
@@ -118,6 +115,15 @@ layer labels and controlled values; semantic verification judges the choice.
 | Evidenced absence | `absent` status, searched roots or files, query and revision, evidence, and conclusion supported or prevented |
 | Behavioral-authority path | Consumer, channel, force and horizon |
 
+[Representational form](../../notes/definitions/representational-form.md)
+classifies encoding and consumption, independently of storage. Natural-language
+content receives consequences through model or human interpretation. Symbolic
+content has localized units and fixed consumer rules determining its permitted
+behavior. Distributed-parametric content spreads numerical state across weights
+or dense representations. Split mixed objects by operative part or consumption
+path when their evidence, invalidation or rollback differs. Prompt names model
+input supply, not a fourth form.
+
 Each distributed-parametric component used by inspected routes separately
 states whether parameters change during operation, whether its exact
 version is pinned, and whether a mutable endpoint can resolve to another
@@ -196,7 +202,7 @@ its own conclusion status and evidence under the label
 
 | Condition | Evidence required and limits |
 |---|---|
-| 1. Localized content | A formulated theory; its minimum is one whole unit carrying content. Whole replacement meets this minimum. |
+| 1. Localized content | A theory stated in natural or formal language; its minimum is one whole unit carrying what the theory says. Whole replacement meets this minimum. |
 | 2. Consumption | Decisions depend on what the theory says. Storage, citation and delivery alone do not establish it. |
 | 3. Content-directed criticism | Stated criticism names the challenged claim, result and placement of blame (theory, test, data or auxiliary assumption), and resulting revision or changed reliance. Derivation under an unchanged theory and scores selecting variants do not establish it. A prose contradiction is an interpretation unless codified. A surviving theory can change reliance or test selection without changing text; rejection and replacement count as revision. |
 | 4. Iteration | Criticism's result is kept and shapes a next round, including within one run. Reconstruction from retained criticisms counts; unused critic reports or retained input/outcome records alone do not. A builder ends when another system freezes its product for deployment. |
@@ -219,3 +225,7 @@ Learning, reflection and autonomy remain independent claims. Revision
 selection prefers
 [explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence; it does not trade fit away for reach.
+Explanatory-reach means that a criticizable account of why a pattern works
+continues to apply beyond its originating case because the mechanism persists.
+Vary a load-bearing premise and ask what change the explanation predicts;
+transfer or local success alone does not establish that account.

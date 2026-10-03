@@ -37,7 +37,7 @@ def assessment(row: dict, axis: str) -> str:
 def render(rows: list[dict], output: Path) -> str:
     lines = [
         "---",
-        'description: "Generated memory comparisons from retained main-review evidence"',
+        'description: "Generated memory comparisons from current retained analysis evidence"',
         "type: types/note.md",
         "traits: [has-comparison]",
         "---",

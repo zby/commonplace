@@ -1,0 +1,1816 @@
+{
+  "date": "2026-10-03",
+  "scope": "Checkout including ignored and hidden local state; excludes Git internals, the virtual environment, third-party source clones, site output, and these newly written inventory records. Symlink projections were also inspected with readlink.",
+  "searches": [
+    {
+      "pattern": "agentic-systems/reports",
+      "matching-lines": 902,
+      "files": [
+        {
+          "path": ".pytest_cache/v/cache/nodeids",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/COLLECTION.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/COLLECTION.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/comparisons/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained-archive/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/layout-migration-2026-10-01/mapping.json",
+          "matching-lines": 129
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 9
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 9
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 15
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 17
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-0/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 21
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 11
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-1/prompt.md",
+          "matching-lines": 18
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 16
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 19
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-2/prompt.md",
+          "matching-lines": 21
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 7
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize-1/prompt.md",
+          "matching-lines": 22
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 19
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-2/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis-1/prompt.md",
+          "matching-lines": 21
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 20
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/aide2.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/apache-maka.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/arex-skill.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/arsumbris.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/company-brain.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/contextpilot.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/dualgraph.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/dynamic-cheatsheet.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/eal-bench.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/ecdysis.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/enoch.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/evoontology.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/fragility-grid.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/gbrain-garrytan.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/instinctual-memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/jaz-evals.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/jaz.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/jepa-anything.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/lhtb.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/mem0.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/merchantbench.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/meta-n.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/modularrsi.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/napkin.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/oh-my-pi.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/openrsi.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/openviking.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/pi-posthorse.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/prime-agent.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/primescientist.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/prove2me.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/reflexion.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/rsiagent.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/skilllift.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/sol-pi.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/supermemory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/swarmworld.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/tardigrade.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/wikiskill-stahl-g.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/wikiskill.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/articles/COLLECTION.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/instructions/scan-agentic-system-transfer/SKILL.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/commands.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reference/proposals/archive/memory-comparison-evidence-granularity.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/c10-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/c10-oh-my-pi-audit.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/pilot-table.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/production-pilot.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/reader-acceptance.json",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-output-documents-20261002/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/outputs/trial-table.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/trial-synthesis.md",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/reports/state/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/per-value-acceptance.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/per-value-synthesis-trial.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/synthesis-trial.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/fresh-run-trace-evidence.md",
+          "matching-lines": 24
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/problem.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/second-run-trace-evidence.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/sol-run-follow-up-plan.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analysis-collection-split/collection-design.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/drafts/decision-draft.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/complexity-measurements.json",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/input-measurements.json",
+          "matching-lines": 80
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/motivation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/plan.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/decision-lifecycle-evidence/corpus-scan.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/work/decision-lifecycle-evidence/session-evidence-triggers.md",
+          "matching-lines": 7
+        },
+        {
+          "path": "kb/work/decision-lifecycle-evidence/trace-derived-system-scan.md",
+          "matching-lines": 34
+        },
+        {
+          "path": "properdocs.yml",
+          "matching-lines": 103
+        },
+        {
+          "path": "pyproject.toml",
+          "matching-lines": 1
+        },
+        {
+          "path": "scripts/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/agentic_analysis.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/agentic_set.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "tests/commonplace/docs/test_agentic_system_member_types.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/docs/test_site_publication_boundaries.py",
+          "matching-lines": 7
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 6
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 1
+        }
+      ]
+    },
+    {
+      "pattern": "agentic-systems/types",
+      "matching-lines": 378,
+      "files": [
+        {
+          "path": ".pytest_cache/v/cache/nodeids",
+          "matching-lines": 4
+        },
+        {
+          "path": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/COLLECTION.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/ARTIFACT.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/epistemic.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/reconciliation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-02-dynamic-cheatsheet-01/runtime.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/ARTIFACT.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/epistemic.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/reconciliation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/runtime.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/layout-migration-2026-10-01/mapping.json",
+          "matching-lines": 28
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/memory-report-0.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/ARTIFACT.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/epistemic.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/reconciliation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/output/runtime.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-01/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-ARTIFACT.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-epistemic.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-reconciliation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-runtime.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-0.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/ARTIFACT.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/kept/1-memory-report-0.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-1/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-2/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize-1/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-2/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis-1/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-set.schema.yaml",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-reconciliation-report.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/notes/proposals/revise-behavioral-authority-decomposition.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/087-source-and-report-types-are-global-library-types.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/093-memory-comparisons-keep-evidence-per-value.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/095-directory-artifacts-add-shared-set-validation.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/archive/memory-comparison-evidence-granularity.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/normalized-autonomy-and-revision-comparison-fields.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/validation-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-output-documents-20261002/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/trial-bundle/kb/agentic-systems/COLLECTION.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/source-check-root-causes.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/fresh-run-trace-evidence.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/sol-run-follow-up-plan.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/split-records-proposal.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/collection-design.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/drafts/agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/complexity-measurements.json",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/input-measurements.json",
+          "matching-lines": 41
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/shortened-agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/code-scheduled-workflows/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "properdocs.yml",
+          "matching-lines": 10
+        },
+        {
+          "path": "src/commonplace/lib/agentic_analysis.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 16
+        },
+        {
+          "path": "src/commonplace/lib/agentic_set.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 4
+        },
+        {
+          "path": "src/commonplace/lib/validation.py",
+          "matching-lines": 19
+        },
+        {
+          "path": "tests/commonplace/docs/test_agentic_system_member_types.py",
+          "matching-lines": 5
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 15
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_finalize.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 5
+        },
+        {
+          "path": "tests/commonplace/test_library_build.py",
+          "matching-lines": 1
+        }
+      ]
+    },
+    {
+      "pattern": "agentic-systems/instructions",
+      "matching-lines": 473,
+      "files": [
+        {
+          "path": ".pi/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": ".pytest_cache/v/cache/nodeids",
+          "matching-lines": 6
+        },
+        {
+          "path": "AGENTS.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "INSTALL.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/README.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agent-memory-systems/agentic-memory-systems-comparative-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/lightweight/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/systems-table.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/thalo-type-comparison.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agent-memory-systems/types/agent-memory-system-review.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/layout-migration-2026-10-01/mapping.json",
+          "matching-lines": 22
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 9
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 9
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-2/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-2/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis-1/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 10
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/023-quote-anchored-citations-for-code-grounded-reviews.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/adr/100-check-required-route-fields-at-member-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/commands.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reference/proposals/archive/harness-capture-for-agentic-analysis-diagnostics.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/archive/quote-occurrence-location-and-verification.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/archive/recoverable-replacement-of-an-incumbent-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/checked-inline-blocks-for-shared-instruction-text.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/code-scheduled-workflows.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reference/proposals/normalized-autonomy-and-revision-comparison-fields.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/replaceable-workflow-orchestrators.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/shared-analysis-contract-conformance.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/c08-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/c10-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-consumer-migration-20261002/captures/producer-check-acceptance.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-output-documents-20261002/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/recovery-probe.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/analysis-offload-closure-20261002.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/comparison-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/next-pilot-test.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/quote-rerun-20260927.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/source-check-root-causes.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/implementation-check.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/problem.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/split-records-proposal.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system/draft.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system/trials/sequentialthinking/lens-dispositions.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/drafts/agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/complexity-measurements.json",
+          "matching-lines": 12
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/input-measurements.json",
+          "matching-lines": 88
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/shortened-agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/code-scheduled-workflows/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/code-scheduled-workflows/trial/README.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/code-scheduled-workflows/trial/testing-procedure.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/epistemic-architectures/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "properdocs.yml",
+          "matching-lines": 21
+        },
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 4
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "tests/commonplace/docs/test_instruction_agent_cli_safety.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 3
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_records.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 7
+        }
+      ]
+    },
+    {
+      "pattern": "generated-review",
+      "matching-lines": 70,
+      "files": [
+        {
+          "path": "kb/agentic-systems/reports/retained/layout-migration-2026-10-01/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-01/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/.commonplace-validation-ignore",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.schema.yaml",
+          "matching-lines": 6
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.md",
+          "matching-lines": 4
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.schema.yaml",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/instructions/simplification-passes/place-external-systems.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/trial-bundle/src/commonplace/lib/agentic_analysis.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/agentic-analysis-reliability-20260927/trial-bundle/src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reports/retained/quote-verification-migration/README.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/agentic-memory-refresh/citation-generation-rerun-20260927.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/collection-design.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/complexity-measurements.json",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/contract-coverage-check.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/shortened-agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "scripts/analyst_trial.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_analysis.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 3
+        },
+        {
+          "path": "src/commonplace/lib/agentic_set.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/validation.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/docs/test_agentic_system_member_types.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 21
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 2
+        }
+      ]
+    },
+    {
+      "pattern": "analysis-artifact-sha256",
+      "matching-lines": 25,
+      "files": [
+        {
+          "path": "kb/agentic-systems/COLLECTION.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/incumbent-review.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-run-state.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/generated-review.schema.yaml",
+          "matching-lines": 2
+        },
+        {
+          "path": "src/commonplace/lib/agentic_analysis.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "src/commonplace/lib/systems_matrix.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/docs/test_agentic_system_member_types.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 7
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 1
+        }
+      ]
+    },
+    {
+      "pattern": "retained_artifact_path|retained_overview_path",
+      "matching-lines": 19,
+      "files": [
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 3
+        },
+        {
+          "path": "src/commonplace/lib/agentic_set.py",
+          "matching-lines": 4
+        },
+        {
+          "path": "src/commonplace/lib/systems_matrix.py",
+          "matching-lines": 2
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 10
+        }
+      ]
+    },
+    {
+      "pattern": "agentic-analysis-records|agentic-analysis-sources|agentic-analysis-boundary",
+      "matching-lines": 225,
+      "files": [
+        {
+          "path": ".pytest_cache/v/cache/nodeids",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/reports/retained/layout-migration-2026-10-01/mapping.json",
+          "matching-lines": 9
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 4
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-0/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-02-dynamic-cheatsheet-01/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/boundary/prompt.md",
+          "matching-lines": 4
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/epistemic/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-0/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-2/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/runtime/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-2/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis-1/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis/prompt.md",
+          "matching-lines": 5
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/reference/adr/100-check-required-route-fields-at-member-acceptance.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/reference/proposals/shared-analysis-contract-conformance.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/implementation-check.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/problem.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/skill-inconsistencies.md",
+          "matching-lines": 2
+        },
+        {
+          "path": "kb/work/analyse-agentic-system-amendments/split-records-proposal.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/collection-design.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/drafts/agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/complexity-measurements.json",
+          "matching-lines": 3
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/input-measurements.json",
+          "matching-lines": 44
+        },
+        {
+          "path": "kb/work/analysis-collection-split/evidence/shortened-agentic-systems-contract.md",
+          "matching-lines": 1
+        },
+        {
+          "path": "properdocs.yml",
+          "matching-lines": 3
+        },
+        {
+          "path": "src/commonplace/lib/agentic_publication.py",
+          "matching-lines": 3
+        },
+        {
+          "path": "src/commonplace/lib/agentic_workflow.py",
+          "matching-lines": 3
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_analysis.py",
+          "matching-lines": 4
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_records.py",
+          "matching-lines": 1
+        },
+        {
+          "path": "tests/commonplace/lib/test_agentic_workflow.py",
+          "matching-lines": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1036,10 +1036,10 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
-@type_rule("agentic-systems/types/agent-memory-analysis-report.md")
-@type_rule("agentic-systems/types/agentic-system-runtime-report.md")
-@type_rule("agentic-systems/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-systems/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1079,12 +1079,12 @@ def agentic_set_member_link_failures(path: Path, links: tuple[str, ...]) -> list
     ]
 
 
-@type_rule("agentic-systems/types/agentic-system-analysis-overview.md")
-@type_rule("agentic-systems/types/agentic-system-runtime-report.md")
-@type_rule("agentic-systems/types/agent-memory-analysis-report.md")
-@type_rule("agentic-systems/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-systems/types/generated-review.md")
-@type_rule("agentic-systems/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
+@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/generated-review.md")
+@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 def _agentic_plain_source_anchor_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1100,11 +1100,11 @@ def _agentic_plain_source_anchor_rule(
         results.passes.append("source anchors: prose anchors cite paths without ranges")
 
 
-@type_rule("agentic-systems/types/agentic-system-analysis-overview.md")
-@type_rule("agentic-systems/types/agentic-system-runtime-report.md")
-@type_rule("agentic-systems/types/agent-memory-analysis-report.md")
-@type_rule("agentic-systems/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-systems/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
+@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 def _agentic_set_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1116,7 +1116,7 @@ def _agentic_set_member_link_rule(
         results.passes.append("set member links: relative links stay inside the set directory")
 
 
-@type_rule("agentic-systems/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
 def _memory_report_pending_check_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1130,7 +1130,7 @@ def _memory_report_pending_check_rule(
         results.fails.append("memory checks: a complete report cannot retain 'Validation: pending'")
 
 
-@type_rule("agentic-systems/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 def _epistemic_ledger_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1142,7 +1142,7 @@ def _epistemic_ledger_rule(
         results.passes.append("epistemic ledger: table/record syntax and controlled function/status checked")
 
 
-@type_rule("agentic-systems/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1967,7 +1967,7 @@ def run_validation(
     ).evaluate()
 
 
-@directory_type_rule("agentic-systems/types/agentic-system-analysis-set.md")
+@directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
 def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *, run: ValidationRun) -> None:
     from commonplace.lib.agentic_records import amendment_index, set_record_errors
     from commonplace.lib.agentic_set import from_artifact, set_identity_errors
@@ -1975,6 +1975,16 @@ def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *,
 
     member_set = from_artifact(artifact)
     results.fails.extend(set_identity_errors(member_set))
+    from commonplace.lib.agentic_set import RETAINED_ROOT, source_slug
+    current_root = run.repo_root / RETAINED_ROOT
+    if artifact.path.parent == current_root:
+        if member_set.memory is None:
+            results.fails.append("current analysis must be complete")
+        else:
+            identity = member_set.memory.frontmatter.get("source-identity", "")
+            if artifact.path.name != source_slug(identity, member_set.overview.frontmatter["system"]):
+                results.fails.append("current directory name does not match its source")
+
     known, errors = set_record_errors({document.name: document.body for document in member_set.documents})
     results.fails.extend(errors)
     reconciliation = member_set.members.get("reconciliation.md")

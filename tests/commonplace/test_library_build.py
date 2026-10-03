@@ -79,7 +79,8 @@ def test_shipped_library_excludes_collection_owned_analysis(tmp_path: Path) -> N
     assert (out / "types/instruction.md").is_file()
     assert (out / "types/note.schema.yaml").is_file()
     assert not (out / "agentic-systems").exists()
-    for spec in (REPO_ROOT / "kb/agentic-systems/types").glob("*.md"):
+    assert not (out / "agentic-system-analyses").exists()
+    for spec in (REPO_ROOT / "kb/agentic-system-analyses/types").glob("*.md"):
         assert not (out / "types" / spec.name).exists()
     for name in ("analyse-agentic-system", "synthesize-agent-memory-landscape"):
         assert not (out / "instructions" / name).exists()

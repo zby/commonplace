@@ -145,7 +145,8 @@ For ambiguous content placement, read [content routing](./kb/reference/content-r
 | `kb/tags/` | Tag heads and participating-collection declaration |
 | `kb/reference/` | Shipped system, architecture, types, commands and ADRs |
 | `kb/instructions/` | Procedures, skills, gates and operational rules |
-| `kb/agentic-systems/` | External whole-system analyses via `analyse-agentic-system` |
+| `kb/agentic-systems/` | Authored external-system reviews and comparisons |
+| `kb/agentic-system-analyses/` | Workflow analyses and their method via `analyse-agentic-system` |
 | `kb/sources/` | Tracked ingests; ignored snapshots in `.snapshots/` |
 | `kb/reports/` | Explicit retention: `cache/`, local `state/`, durable `retained/` |
 | `kb/articles/` | Self-standing technical articles for external readers |
@@ -185,8 +186,9 @@ links when local context makes them useful. Full model and search recipes:
   Messages grant neither new mutation authority nor an agent launch.
 - For review, triage, ack or sweep, read `kb/reference/README-REVIEW-SYSTEM.md`.
   To fix review warnings, read `kb/instructions/FIX-SYSTEM.md`.
-- Generic skills live under `kb/instructions/`; agentic analysis and landscape
-synthesis live under `kb/agentic-systems/instructions/`. Both are projected
+- Generic skills live under `kb/instructions/`; agentic analysis lives under
+`kb/agentic-system-analyses/instructions/`; landscape synthesis lives under
+`kb/agentic-systems/instructions/`. Both are projected
 through `.agents/skills/` and
   `.claude/skills/` symlinks here; installed projects receive stubs pointing into
   the package. Edit the canonical instruction. `operator-brief` and

@@ -20,7 +20,7 @@ allOf:
           - inputs-commit
         properties:
           type:
-            const: agentic-systems/types/agentic-system-analysis-overview.md
+            const: agentic-system-analyses/types/agentic-system-analysis-overview.md
           run-id:
             type: string
             pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'

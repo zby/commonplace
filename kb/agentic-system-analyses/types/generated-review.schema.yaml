@@ -16,7 +16,7 @@ allOf:
           - analysis-artifact-sha256
         properties:
           type:
-            const: agentic-systems/types/generated-review.md
+            const: agentic-system-analyses/types/generated-review.md
           generated-by:
             const: analyse-agentic-system
           analysis-run:
@@ -30,7 +30,7 @@ allOf:
             minLength: 1
           analysis-artifact:
             type: string
-            pattern: '^kb/agentic-systems/reports/retained/AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}/ARTIFACT\.yaml$'
+            pattern: '^kb/agentic-system-analyses/retained/AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}/ARTIFACT\.yaml$'
           analysis-artifact-sha256:
             type: string
             pattern: '^[0-9a-f]{64}$'

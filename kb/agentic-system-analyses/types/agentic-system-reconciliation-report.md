@@ -19,7 +19,7 @@ governs evidence. The member declares no analyst records of its own.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `agentic-systems/types/agentic-system-reconciliation-report.md` |
+| `type` | Yes | `agentic-system-analyses/types/agentic-system-reconciliation-report.md` |
 | `description` | Yes | Subject and frozen reconciliation boundary |
 | `run-id` | Yes | The set's run ID |
 | `reviewed-boundary` | Yes | The set's immutable revision or capture identity |
@@ -56,7 +56,7 @@ public synthesis nor verification text, and does not rewrite analyst reports.
 
 ```markdown
 ---
-type: agentic-systems/types/agentic-system-reconciliation-report.md
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 description: "Reconciliation of {system} records at {boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 reviewed-boundary: "{immutable revision or capture identity}"

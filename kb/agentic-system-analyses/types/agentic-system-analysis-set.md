@@ -24,6 +24,6 @@ cross-member record references and comparison-profile references against
 the union of declarations. It requires no run-state file or frozen checkout.
 Source anchors and the memory analyst's provenance remain workflow checks.
 
-Run-state and generated reviews pin the manifest bytes. Published sets are
+Run state pins the manifest bytes. Published sets are
 frozen; corrections require a new run. Working inputs and run state live
 outside the output directory.

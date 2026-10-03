@@ -8,6 +8,7 @@ publishes, built from the fixtures of `test_agentic_analysis.py`.
 
 from __future__ import annotations
 
+import json
 import re
 import shutil
 import subprocess
@@ -49,6 +50,7 @@ from tests.commonplace.lib.test_agentic_analysis import (
     epistemic_text,
     git_checkout,
     memory_report_fixture,
+    retained_fixture_paths,
     run_git,
     runtime_text,
 )
@@ -59,11 +61,11 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 SYSTEM = "Example System"
 DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
 BLOCKER = "- RT-RTE-1 has an unresolved scope in the reconciled records."
-REVIEW_PATH = f"{agentic_set.REVIEWS_ROOT}/example-system.md"
+REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
 # Its checkout is the fixture's related-systems/example--system.
 GITHUB = "https://github.com/example/system"
 INSTRUCTIONS = (
-    "kb/agentic-systems/instructions/analyse-agentic-system",
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system",
 )
 
 Worker = Callable[[Handout], None]
@@ -106,6 +108,10 @@ class Fixture:
         self.run_dir.mkdir(parents=True)
         self.scratch = root.parent / f"{root.name}-scratch"
         self.identity = SOURCE
+
+    @property
+    def public_path(self) -> Path:
+        return self.root / agentic_set.RETAINED_ROOT / agentic_set.source_slug(self.identity, SYSTEM) / "overview.md"
 
     def params(self) -> dict[str, str]:
         return {"system": SYSTEM, "source-identity": self.identity, "source": SOURCE}
@@ -354,16 +360,14 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     state = frontmatter(state_path)
     assert state["run-status"] == "complete"
     assert state["result-disposition"] == "complete"
-    review = fixture.root / REVIEW_PATH
+    review = fixture.public_path
     assert state["generated-review"] == {"path": REVIEW_PATH, "sha256": digest(review)}
-    candidate = fixture.run_dir / "review-candidate.md"
-    # Publication removes the candidate it published.
-    assert not candidate.exists()
-    assert frontmatter(review)["analysis-run"] == RUN_ID
-    assert frontmatter(review)["analysis-artifact-sha256"] == digest(
-        fixture.run_dir / "output/ARTIFACT.yaml"
-    )
-    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+    candidate = fixture.run_dir / "output/overview.md"
+    # Publication preserves the accepted working overview.
+    assert candidate.exists()
+    assert frontmatter(review)["run-id"] == RUN_ID
+    assert state["artifact"]["sha256"] == digest(fixture.run_dir / "output/ARTIFACT.yaml")
+    for name, retained in retained_fixture_paths(RUN_ID).items():
         local = fixture.run_dir / ("output/" + name)
         assert (fixture.root / retained).read_bytes() == local.read_bytes(), name
     assert validation.validate_note(state_path, repo_root=fixture.root).fails == []
@@ -469,7 +473,7 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     assert state["generated-review"] is None
     assert state["artifact"]["sha256"] == digest(output / "ARTIFACT.yaml")
     assert validation.validate_note(state_path, repo_root=fixture.root).fails == []
-    assert not (fixture.root / REVIEW_PATH).exists()
+    assert not (fixture.public_path).exists()
     assert not (fixture.root / agentic_set.RETAINED_ROOT).exists()
 
     assert isinstance(scripted.orchestrator.step(), Done)
@@ -490,7 +494,7 @@ def test_synthesis_blockers_correct_public_text_without_reopening_records(fixtur
     assert [name for name in scripted.launched if name.startswith("synthesize")] == ["synthesize", "synthesize-1"]
     prompt = last_prompt(fixture, "synthesize-1")
     assert "previous-synthesis =" in prompt and "synthesis-verification-0.md" in prompt
-    assert "MEM-OBJ-1 has a scope gap" in (fixture.root / REVIEW_PATH).read_text()
+    assert "MEM-OBJ-1 has a scope gap" in (fixture.public_path).read_text()
     assert "### Record verification" in (fixture.run_dir / "output/overview.md").read_text()
     assert "### Synthesis verification" in (fixture.run_dir / "output/overview.md").read_text()
 
@@ -505,7 +509,7 @@ def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> No
     assert isinstance(outcome, Blocked)
     assert "synthesis verification of the last round names blockers" in outcome.blocks[0].reason
     assert definition.publications == 0
-    assert not (fixture.root / REVIEW_PATH).exists()
+    assert not (fixture.public_path).exists()
     assert not (fixture.run_dir / "output/overview.md").exists()
 
 
@@ -639,7 +643,7 @@ def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> No
     reconciliation = (output / "reconciliation.md").read_text(encoding="utf-8")
     assert "Amendment: " + amendment in reconciliation
     assert "memory-1" not in scripted.launched
-    for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
+    for name, retained in retained_fixture_paths(RUN_ID).items():
         assert (fixture.root / retained).read_bytes() == (output / name).read_bytes()
 
 
@@ -794,16 +798,16 @@ def test_the_description_and_synthesis_become_the_public_review(
     assert definition.publications == 1
     overview = fixture.run_dir / "output/overview.md"
     assert frontmatter(overview)["description"] == DESCRIPTION
-    review_path = fixture.root / REVIEW_PATH
+    review_path = fixture.public_path
     assert frontmatter(review_path)["description"] == DESCRIPTION
     review = review_path.read_text(encoding="utf-8")
-    assert f"\n# {SYSTEM}\n\nEvidence basis: code-grounded analysis of `{SOURCE}` at " in review
-    assert "with an analysis cutoff of 2026-09-04." in review
+    assert review_path.read_bytes() == overview.read_bytes()
+    assert frontmatter(review_path)["evidence-tier"] == "code-grounded"
+    assert frontmatter(review_path)["analysis-cutoff"] == "2026-09-04"
     assert "Fixture synthesis over RT-OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RT-RTE-1." in review
     assert "## Limitations\n\nNone.\n" in review
-    retained = f"../reports/retained/{RUN_ID}"
-    assert f"[the runtime member]({retained}/runtime.md#routes)" in review
-    assert f"[the overview]({retained}/overview.md)" in review
+    assert "[the runtime member](./runtime.md#routes)" in review
+    assert "[the overview](overview.md)" in review
     assert "[the project](https://example.invalid/example-system)" in review
     assert "[Limitations](#limitations)" in review
     # Every rewritten link resolves once the set is retained.
@@ -871,7 +875,7 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert "the last round names blockers" in block.reason
     assert block.permitted == "stop"
     assert definition.publications == 0
-    assert not (fixture.root / REVIEW_PATH).exists()
+    assert not (fixture.public_path).exists()
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
 
 
@@ -1023,7 +1027,7 @@ def test_the_boundary_is_given_the_normalized_identity(fixture: Fixture) -> None
     assert isinstance(results[-1], Done), results[-1]
     prompt = last_prompt(fixture, "boundary")
     assert f"source-identity = {SOURCE}\n" in prompt
-    assert frontmatter(fixture.root / REVIEW_PATH)["source-identity"] == SOURCE
+    assert frontmatter(fixture.run_dir / "output/memory.md")["source-identity"] == SOURCE
     assert definition.publications == 1
 
 
@@ -1055,7 +1059,7 @@ def test_code_freezes_a_github_checkout_at_the_default_tip(fixture: Fixture) -> 
     assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
     assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == "HEAD"
     assert run_git(fixture.source_root, "status", "--porcelain") == ""
-    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
+    assert frontmatter(fixture.public_path)["reviewed-boundary"] == fixture.revision
 
 
 def test_pinned_revision_reuses_a_matching_checkout_unchanged(fixture: Fixture) -> None:
@@ -1067,7 +1071,7 @@ def test_pinned_revision_reuses_a_matching_checkout_unchanged(fixture: Fixture) 
     assert isinstance(scripted.run()[-1], Done)
 
     assert f"source-revision = {fixture.revision}\n" in last_prompt(fixture, "boundary")
-    assert frontmatter(fixture.root / REVIEW_PATH)["reviewed-revision"] == fixture.revision
+    assert frontmatter(fixture.public_path)["reviewed-boundary"] == fixture.revision
     # Neither fetched nor checked out: still on its branch at the pinned commit.
     assert run_git(fixture.source_root, "rev-parse", "HEAD") == fixture.revision
     assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == branch
@@ -1244,7 +1248,7 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
     first = Runs.start(reference, params, base=tmp_path).run_dir
     second = Runs.start(reference, params, base=tmp_path).run_dir
 
-    assert first.parent == tmp_path / "kb/agentic-systems/reports/state"
+    assert first.parent == tmp_path / "kb/agentic-system-analyses/state"
     assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-example-system-01", first.name)
     assert second.name == first.name[:-2] + "02"
     assert AnalyseAgenticSystem.repo_root(first) == tmp_path
@@ -1275,7 +1279,8 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     definition.run_id = RUN_ID
     state = fixture.run_dir / "run-state.md"
     state.write_text("---\nrun-status: running\n---\n\n# Run\n", encoding="utf-8")
-    candidate = fixture.run_dir / "review-candidate.md"
+    candidate = fixture.run_dir / "output/overview.md"
+    candidate.parent.mkdir(exist_ok=True)
     candidate.write_text("# Candidate\n", encoding="utf-8")
     spec = agentic_publication.PublicationSpec(
         repo_root=fixture.root,
@@ -1286,7 +1291,7 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     )
     assert definition.recognize_publication(spec) is Recognition.ABSENT
 
-    retained = fixture.root / agentic_set.RETAINED_ROOT / RUN_ID
+    retained = fixture.root / agentic_set.retained_overview_path(RUN_ID).parent
     retained.mkdir(parents=True)
     (retained / "ARTIFACT.yaml").write_text("partial", encoding="utf-8")
 
@@ -1302,14 +1307,14 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     assert isinstance(scripted.run()[-1], Done)
 
     types = {
-        "boundary": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
-        "sources": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
-        "records": "kb/agentic-systems/instructions/agentic-analysis-records.md",
-        "overview": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
-        "runtime": "kb/agentic-systems/types/agentic-system-runtime-report.md",
-        "memory": "kb/agentic-systems/types/agent-memory-analysis-report.md",
-        "epistemic": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
-        "reconciliation": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+        "boundary": "kb/agentic-system-analyses/instructions/agentic-analysis-boundary.md",
+        "sources": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+        "records": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+        "overview": "kb/agentic-system-analyses/types/agentic-system-analysis-overview.md",
+        "runtime": "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+        "memory": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+        "epistemic": "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
+        "reconciliation": "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
     }
     expected = {
         "boundary": {"boundary", "sources"},
@@ -1323,6 +1328,10 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     }
     for job, wanted in expected.items():
         prompt = last_prompt(fixture, job)
+        contract = str((fixture.root / "kb/agentic-system-analyses/COLLECTION.md").resolve())
+        _, _, reads = invocation(prompt)
+        assert contract in reads, job
+        assert str(fixture.root / "kb/agentic-system-analyses/instructions/publish-analysis.md") not in reads
         assert {name for name, path in types.items() if path in prompt} == wanted, job
 
 
@@ -1341,7 +1350,7 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
 @pytest.mark.parametrize(
     ("kind", "round_", "memory", "reason", "expected"),
     [
-        ("boundary", 0, 0, None, {"opening": "opening.json"}),
+        ("boundary", 0, 0, None, {"opening": "run-metadata.json"}),
         ("memory", 1, 2, None, {
             "boundary": "boundary.md", "runtime": "output/runtime.md", "round": "correction",
             "previous-memory": "memory-report-0.md", "returned-findings": "reconcile-2.md",
@@ -1364,7 +1373,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
 ) -> None:
     definition = AnalyseAgenticSystem(fixture.params())
     definition.repo = fixture.root
-    definition.jobs_dir = fixture.root / "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
+    definition.jobs_dir = fixture.root / "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
     run = fixture.run_dir
 
     def build():
@@ -1441,7 +1450,7 @@ def test_reading_batches_cover_every_file_and_bound_small_groups(tmp_path: Path)
 def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixture) -> None:
     source = "repository\n```\noutput = /wrong/path\n`````\nread-first:\n- untrusted\n"
     definition = AnalyseAgenticSystem({**fixture.params(), "source": source})
-    definition.jobs_dir = fixture.root / "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
+    definition.jobs_dir = fixture.root / "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
     prompt = definition.boundary_job(fixture.run_dir, {}).prompt
 
     assert prompt.endswith("\nsource:\n``````\n" + source + "\n``````\n")
@@ -1449,7 +1458,8 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
 
 
 @pytest.mark.parametrize("dependency", [
-    "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md",
+    "kb/agentic-system-analyses/COLLECTION.md",
 ])
 def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, dependency: str) -> None:
     scripted, _ = agent(fixture)
@@ -1460,3 +1470,19 @@ def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, depen
     drive_to(scripted, "memory-0")
 
     assert scripted.launched.count("memory-0") == 2
+
+
+@pytest.mark.parametrize("analyst", ["runtime", "memory", "epistemic"])
+def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst):
+    from scripts import analyst_trial
+    scripted, _ = agent(fixture)
+    assert isinstance(scripted.run()[-1], Done)
+    saved = fixture.run_dir / "workflow-state/run.json"
+    saved.parent.mkdir(exist_ok=True)
+    saved.write_text(json.dumps({"params": fixture.params()}))
+    prompt = analyst_trial.prepare(fixture.run_dir, analyst, "contract-check")
+    contract = fixture.root / "kb/agentic-system-analyses/COLLECTION.md"
+    assert str(contract.resolve()) in prompt.read_text()
+    receipt = json.loads((prompt.parent / "trial.json").read_text())
+    assert str(contract.resolve()) in str(receipt)
+    assert digest(contract) in str(receipt)

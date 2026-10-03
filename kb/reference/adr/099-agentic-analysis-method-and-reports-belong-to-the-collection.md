@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-10-01
 **Amends:** [ADR 084](./084-kind-rules-live-in-type-specs-and-operations-in-instructions.md) for collection-specific operation placement, and [ADR 087](./087-source-and-report-types-are-global-library-types.md) for agentic analysis report types.
 
+**Amended by:** [ADR 102](./102-separate-the-analysis-collection-and-publish-stable-system-paths.md). Analysis method, types and retention now belong to `kb/agentic-system-analyses/`; the old reports tree is frozen history. The ownership and migration rules below record the original decision.
+
 ## Context
 
 Agentic-system analysis is focused research machinery. Its instructions and

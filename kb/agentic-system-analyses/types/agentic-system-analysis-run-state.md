@@ -10,8 +10,8 @@ schema: ./agentic-system-analysis-run-state.schema.yaml
 ## Authoring Instructions
 
 Use this type only for
-`kb/agentic-systems/reports/state/<run-id>/run-state.md`. The owning
-workflow is `kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md`.
+`kb/agentic-system-analyses/state/<run-id>/run-state.md`. The owning
+workflow is `kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md`.
 
 This record proves only what later consumers need:
 
@@ -25,21 +25,21 @@ resume a failed run or preserve phase, packet, correction, validation-receipt,
 or retry state. Start another run with a new run ID. Temporary candidate files
 inside the run directory are disposable and never appear in this record.
 The `## Run` prose records the destination inspection's expected incumbent
-digest (or `absent`). Recovery copies `incumbent-review.md` and
-`incumbent-<member>.md` for each replaced member are retained with the new
-run when a review is replaced; they are not disposable candidate files.
+digest (or `absent`). The accepted manifest lives at
+`kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`.
+Its [set type](./agentic-system-analysis-set.md) selects membership from the
+overview's disposition. The overview's `inputs-commit` names the method commit.
+A complete set publishes its accepted overview; a blocked or out-of-scope set
+has only its working overview and no public output. The `generated-review`
+output identity records the published overview's path and SHA-256; it does not
+name a separate projection.
 
-The artifact manifest lives at
-`kb/agentic-systems/reports/state/<run-id>/output/ARTIFACT.yaml`.
-Its [set type](./agentic-system-analysis-set.md) selects
-membership from the overview's disposition. The overview's `inputs-commit`
-names the method commit. A complete set publishes a generated review;
-a blocked or out-of-scope set has only the overview and no generated review.
-Publication retains the manifest and members byte for byte under
-`kb/agentic-systems/reports/retained/<run-id>/`. Completion checks
-those copies and the public review's `analysis-artifact` and
-`analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
-follow those public fields without ignored state or a source checkout.
+Publication preserves the manifest and members unchanged under
+`kb/agentic-system-analyses/retained/<system-slug>/`. Completion checks those
+copies against the accepted working set. When replaced, the incumbent set moves
+unchanged to `retained-archive/<its-run-id>/`; its producing run's public-output
+pin is historical after replacement. Comparison readers enumerate current sets
+directly, validate each manifest and every member, and need no run state.
 
 The set's `memory.md` is the memory analyst's last accepted report, unchanged.
 Completion verification checks the manifest, run and boundary identity
@@ -86,7 +86,7 @@ commit.
 
 ```markdown
 ---
-type: agentic-systems/types/agentic-system-analysis-run-state.md
+type: agentic-system-analyses/types/agentic-system-analysis-run-state.md
 description: "Minimal completion state for AAS-YYYY-MM-DD-system-slug-nn"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "Source-native system name"

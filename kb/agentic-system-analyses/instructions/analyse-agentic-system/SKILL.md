@@ -10,9 +10,9 @@ model: opus
 
 # Analyse an Agentic System
 
-Analyse one external agentic system at one frozen evidence boundary and publish its retained set and compact generated review. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
+Analyse one external agentic system at one frozen evidence boundary and publish its accepted set with the overview as the public entry point. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the run directory under `kb/agentic-systems/reports/state/`, one generated review under `kb/agentic-systems/reviews/`, and the retained set under `kb/agentic-systems/reports/retained/<run-id>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the run directory under `kb/agentic-system-analyses/state/`, the retained set under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
 Run the orchestrator from the repository root and keep that working directory throughout the run. Workers must inherit it: `commonplace-validate` discovers the root there, and the boundary job uses `related-systems/`.
 
@@ -97,7 +97,7 @@ authorizes merging the results.
      --param source="<the caller's source input, as given>"
    ```
 
-   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Add `--param review-path=kb/agentic-systems/reviews/<name>.md` only when the caller supplied a review path; it must be directly under `reviews/`. The command allocates the run ID and prints the run directory, `kb/agentic-systems/reports/state/<run-id>`.
+   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Publication uses that source slug as its stable directory; `review-path` is no longer a parameter. The command allocates the run ID and prints the run directory, `kb/agentic-system-analyses/state/<run-id>`.
 
    For a GitHub source, code freezes `related-systems/<owner>--<repo>/`
    before the boundary job. Without a revision it clones a missing checkout,
@@ -110,7 +110,7 @@ authorizes merging the results.
    an unavailable commit stops the run for the operator. The option requires
    a GitHub identity.
 
-Do not read `kb/agentic-systems/reviews/` or `kb/agentic-systems/reports/retained/` at any point; the jobs analyse from sources only.
+Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 
 ## 2. Drive the run
 
@@ -118,7 +118,7 @@ Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>
 
 ## 3. Report
 
-When `step` gives `done`, run `commonplace-agentic-analysis-handoff <run>/run-state.md` and include its output unchanged in your final response. After a published review, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
+When `step` gives `done`, run `commonplace-agentic-analysis-handoff <run>/run-state.md` and include its output unchanged in your final response. After a published analysis, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
 
 When the run stopped, the loop's stop report is your final response; do not run the handoff. A correctable pre-publication failure keeps the run `running`: the operator repairs the condition and a later session resumes the loop. Set `run-status: failed` with one concise reason only when abandoning the run or when publication left public state uncertain. Never resume a failed run; use a new run ID.
 
@@ -137,3 +137,9 @@ A transfer scan is separate: run [`scan-agentic-system-transfer`](../../../instr
 - [A complete theory path does not establish improved capacity](../../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) — rests-on: the separate evidence claims and stronger requirements for later or recurrent use
 - [Reflective system](../../../notes/definitions/reflective-system.md) — rests-on: the causally connected self-representation required for reflection
 - [Self-improving system](../../../notes/definitions/self-improving-system.md) — rests-on: the operative, evidence-responsive change the revision-admission records describe
+
+## Coordinator publication and method edits
+
+Before publication, the coordinator reads [publication](../publish-analysis.md).
+Only coordinators load that instruction; worker packets do not supply it.
+Before editing this method, read [method maintenance](../maintain-analysis-method.md).

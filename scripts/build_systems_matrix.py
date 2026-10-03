@@ -1,11 +1,11 @@
 """Build a memory comparison matrix directly from retained analysis sets.
 
-Each generated review pins its run's retained ARTIFACT.yaml; that manifest
+Each current accepted set has an ARTIFACT.yaml; that manifest
 pins every member, including the memory member that carries the comparison
 profile.
 
-Run: uv run python scripts/build_systems_matrix.py [--review kb/agentic-systems/reviews/name.md]
-Default: every generated main review. Missing evidence or fields fail the build.
+Run: uv run python scripts/build_systems_matrix.py [--review kb/agentic-system-analyses/retained/source/overview.md]
+Default: every current accepted analysis. Missing evidence or fields fail the build.
 """
 
 from __future__ import annotations

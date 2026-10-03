@@ -9,6 +9,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-09-28
 
+**Amended by:** [ADR 102](./102-separate-the-analysis-collection-and-publish-stable-system-paths.md). The accepted overview is now the public entry point; completed run state pins it and the manifest, and the manifest still pins every member.
+
 ## Context
 
 Individually valid documents can form an invalid set. A required member may

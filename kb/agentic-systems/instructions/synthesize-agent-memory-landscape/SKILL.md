@@ -19,23 +19,22 @@ the user request or invoking packet. A request to refresh a named artifact
 supplies its output authority. Without a file destination, return the synthesis
 in the response. Load the output collection's contract before writing there.
 
-The evidence inputs are generated reviews under `kb/agentic-systems/reviews/`
-and the retained sets their `analysis-artifact` paths and
-`analysis-artifact-sha256` values pin under
-`kb/agentic-systems/reports/retained/<run-id>/`. Each set is five
+The evidence inputs are current accepted sets enumerated from
+`kb/agentic-system-analyses/retained/<system-slug>/`. Use the shared current-set
+enumerator through the comparison tools; no separate review metadata selects
+or pins the population. Each set is five
 members: the overview holds the boundary, source register, amendment index,
 synthesis and limitations; `runtime.md` the runtime account and the records
 the runtime pass declared; `memory.md` the memory findings, memory-declared
 records and the `memory-comparison` profile; `epistemic.md` the epistemic
 blocks; `reconciliation.md` holds amendments, supersessions and unresolved
-conflicts. Validate the artifact directory before reading its members. The compact review
-supplies publication identity and navigation. It cannot replace a missing
+conflicts. Validate the artifact directory before reading its members. The accepted overview is the reader entry point. It cannot replace a missing
 member or comparison assessment.
 
-Use `kb/agentic-systems/types/agent-memory-analysis-report.md` for the `memory-comparison`
-contract, `kb/agentic-systems/instructions/agentic-analysis-sources.md` and
-`kb/agentic-systems/instructions/agentic-analysis-records.md` for shared evidence and record
-conventions, and `kb/agentic-systems/types/agentic-system-analysis-overview.md` for overview
+Use `kb/agentic-system-analyses/types/agent-memory-analysis-report.md` for the `memory-comparison`
+contract, `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
+`kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for shared evidence and record
+conventions, and `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md` for overview
 content. Each matrix row preserves its source revision, run,
 analysis cutoff, evidence tier, compared memory boundary, and per-axis
 coverage assessment, values, per-value evidence, and canonical records. No
@@ -47,8 +46,8 @@ hand-patched to make a comparison pass.
 ## Freeze the evidence
 
 1. **Select the population.** Default a refresh to current inputs. Repeat
-   `--review` to select the commissioned main reviews; omit it only when the
-   commission covers all generated main reviews. Record the selection rule and
+   `--review` to select the commissioned current overviews; omit it only when the
+   commission covers all current analyses. Record the selection rule and
    exclusions. Select one review per source identity. A small selected set is
    a bounded comparison, with no implication of historical-corpus coverage.
 2. **Record the inputs commit.** Every selected review and retained set, the
@@ -62,7 +61,7 @@ hand-patched to make a comparison pass.
    comparison files:
 
    ```bash
-   uv run python scripts/build_systems_matrix.py --review <main-review-path> --output <temporary-matrix.csv>
+   uv run python scripts/build_systems_matrix.py --review <current-overview-path> --output <temporary-matrix.csv>
    ```
 
    Repeat `--review` as needed. Require exit status zero and record the
@@ -121,7 +120,7 @@ must remain auditable without ignored local run state.
    findings that the available population supports; do not pad a small pilot
    into a landscape survey. Give denominators beside numbers and scope beside
    comparisons. Link qualitative claims to their retained member paths, using
-   a section anchor where useful; compact reviews may additionally serve
+   a section anchor where useful; overviews additionally serve
    navigation. Do not cite the temporary matrix path. Name withheld
    conclusions and evidence gaps. Commonplace-specific recommendations belong
    in a separately commissioned transfer scan. Replace an incumbent synthesis
@@ -136,8 +135,8 @@ must remain auditable without ignored local run state.
    `git diff --quiet <inputs-commit> HEAD -- <input paths>` succeeds, that
    `git status --porcelain -- <input paths>` prints nothing, and that
    rebuilding the matrix from the same selection reproduces the recorded
-   hash. For an all-generated selection, also confirm that no review was
-   added under `kb/agentic-systems/reviews/` since the inputs commit. On any
+   hash. For an all-current selection, also confirm that no set was
+   added or replaced under `kb/agentic-system-analyses/retained/` since the inputs commit. On any
    failure, withhold the draft and restart from selection. Write the
    commissioned output only after these checks pass; run
    `commonplace-validate` on every changed Markdown artifact. Public

@@ -96,7 +96,7 @@ def _operative_instruction_paths() -> tuple[Path, ...]:
     relative_paths = [Path("AGENTS.md"), Path("AGENTS.md.template")]
     relative_paths.extend(
         path.relative_to(REPO_ROOT)
-        for directory in ("kb/instructions", "kb/agentic-systems/instructions")
+        for directory in ("kb/instructions", "kb/agentic-systems/instructions", "kb/agentic-system-analyses/instructions")
         for path in (REPO_ROOT / directory).rglob("*.md")
     )
     return tuple(sorted(relative_paths))

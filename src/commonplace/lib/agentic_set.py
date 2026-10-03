@@ -16,17 +16,16 @@ if TYPE_CHECKING:
 
 from commonplace.lib.note_parser import ParsedDocument
 
-REVIEW_TYPE = "agentic-systems/types/generated-review.md"
-
-SET_TYPE = "agentic-systems/types/agentic-system-analysis-set.md"
+SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
 OVERVIEW_NAME = "overview.md"
 MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
 
-RETAINED_ROOT = Path("kb/agentic-systems/reports/retained")
-REVIEWS_ROOT = PurePosixPath("kb/agentic-systems/reviews")
+RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
+REVIEWS_ROOT = PurePosixPath(RETAINED_ROOT.as_posix())
+ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
 
 
@@ -39,9 +38,10 @@ def is_normalized_relative(value: str) -> bool:
 
 
 def is_review_path(value: str) -> bool:
-    """Whether ``value`` names a generated review: ``kb/agentic-systems/reviews/<name>.md``."""
+    """Whether ``value`` names a current accepted overview at its stable path."""
     pure = PurePosixPath(value)
-    return is_normalized_relative(value) and pure.parent == REVIEWS_ROOT and pure.suffix == ".md"
+    return (is_normalized_relative(value) and pure.name == OVERVIEW_NAME
+            and pure.parent.parent == REVIEWS_ROOT)
 
 
 def normalize_source_identity(identity: str) -> str:
@@ -62,17 +62,11 @@ def normalize_source_identity(identity: str) -> str:
 def retained_overview_path(run_id: str) -> Path:
     if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
         raise ValueError("invalid analysis run ID")
-    return RETAINED_ROOT / run_id / OVERVIEW_NAME
+    return RETAINED_ROOT / run_id[15:].rsplit("-", 1)[0] / OVERVIEW_NAME
 
 
 def retained_artifact_path(run_id: str) -> Path:
     return retained_overview_path(run_id).with_name(MANIFEST_NAME)
-
-
-def retained_set_paths(run_id: str) -> dict[str, Path]:
-    """Repository-relative retained path of every set document, by name."""
-    directory = retained_overview_path(run_id).parent
-    return {name: directory / name for name in (MANIFEST_NAME, *SET_NAMES)}
 
 
 @dataclass(frozen=True)
@@ -149,3 +143,57 @@ def set_identity_errors(
         if values.get("reviewed-boundary") != boundary:
             errors.append(f"{name}: reviewed-boundary does not match the overview")
     return errors
+
+
+def source_slug(identity: str, system: str) -> str:
+    """Use the workflow's source segment, or its system fallback, as the slug."""
+    parts = urlsplit(normalize_source_identity(identity))
+    segment = parts.path.rsplit("/", 1)[-1]
+    name = segment if parts.scheme and parts.netloc and segment else system
+    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+    if not slug:
+        raise ValueError("neither the source identity nor the system names the run")
+    return slug
+
+
+def current_analyses(repo_root: Path, *, run=None) -> list[MemberSet]:
+    """Enumerate and validate one current set per source at its stable path."""
+    from commonplace.lib.validation import ValidationRun
+
+    root = repo_root.resolve()
+    run = run or ValidationRun(root, ())
+    result = []
+    identities = set()
+    directories = sorted((root / RETAINED_ROOT).iterdir()) if (root / RETAINED_ROOT).exists() else ()
+    # Diagnose duplicates before a misplaced copy's path-name error hides them.
+    from commonplace.lib.note_parser import parse_document
+    for directory in directories:
+        if directory.name.startswith(".") or not (directory / "memory.md").is_file():
+            continue
+        document, error = parse_document(run.read_bytes(directory / "memory.md").decode("utf-8"))
+        identity = (document.frontmatter or {}).get("source-identity") if document is not None and error is None else None
+        if isinstance(identity, str):
+            identity = normalize_source_identity(identity)
+            if identity in identities:
+                raise ValueError(f"multiple current analyses of source {identity}")
+            identities.add(identity)
+    identities.clear()
+    for directory in directories:
+        if directory.name.startswith("."):
+            continue
+        if not directory.is_dir() or directory.is_symlink():
+            raise ValueError(f"current analysis must be a directory: {directory}")
+        member_set = load_member_set(directory, run=run)
+        data = member_set.overview.frontmatter
+        if data.get("result-disposition") != "complete" or member_set.memory is None:
+            raise ValueError(f"current analysis must be complete: {directory}")
+        identity = normalize_source_identity(member_set.memory.frontmatter.get("source-identity", ""))
+        if not identity:
+            raise ValueError(f"current analysis lacks source identity: {directory}")
+        if identity in identities:
+            raise ValueError(f"multiple current analyses of source {identity}")
+        identities.add(identity)
+        if directory.name != source_slug(identity, data["system"]):
+            raise ValueError(f"current directory name does not match its source: {directory}")
+        result.append(member_set)
+    return result

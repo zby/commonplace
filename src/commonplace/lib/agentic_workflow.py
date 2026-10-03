@@ -9,9 +9,9 @@ Start a run with
 from the repository root. `start` allocates the run ID, AAS-<date>-<system
 slug>-<nn> (the slug from the source identity's last path segment, or
 the system name), creates the run directory under
-`kb/agentic-systems/reports/state/`, and prints it; the run ID is the directory's
+`kb/agentic-system-analyses/state/`, and prints it; the run ID is the directory's
 name. Each job's task is an instruction file under
-`kb/agentic-systems/instructions/analyse-agentic-system/jobs/`, declared as an
+`kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/`, declared as an
 input, so a change to it reopens the job. The job split
 is defined by those job instructions and their declared dependencies.
 
@@ -26,7 +26,6 @@ from __future__ import annotations
 
 import datetime
 import json
-import posixpath
 import re
 import subprocess
 from collections.abc import Callable, Mapping, Sequence
@@ -35,7 +34,6 @@ from functools import partial
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
 
 import yaml
 
@@ -61,20 +59,19 @@ from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
-    REVIEW_TYPE,
-    REVIEWS_ROOT,
     RUN_ID,
     normalize_source_identity,
+    source_slug,
 )
-from commonplace.lib.note_parser import parse_document, replace_markdown_links
+from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import agentic_set_member_link_failures, validate_note
 from commonplace.workflow import Job, Recognition, StopRun, Workflow
 
-JOBS = "kb/agentic-systems/instructions/analyse-agentic-system/jobs"
-STATE_ROOT = Path("kb/agentic-systems/reports/state")
-OVERVIEW_TYPE = "agentic-systems/types/agentic-system-analysis-overview.md"
-RUN_STATE_TYPE = "agentic-systems/types/agentic-system-analysis-run-state.md"
+JOBS = "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
+STATE_ROOT = Path("kb/agentic-system-analyses/state")
+OVERVIEW_TYPE = "agentic-system-analyses/types/agentic-system-analysis-overview.md"
+RUN_STATE_TYPE = "agentic-system-analyses/types/agentic-system-analysis-run-state.md"
 # Shared contracts and member types, relative to the job instructions.
 # Analysts load shared definitions plus their own member type. Only jobs
 # judging records need the analyst types and reconciliation type.
@@ -98,9 +95,9 @@ RECORD_CONTRACTS = (
 SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT)
 
 OPENING = "opening.json"
+RUN_METADATA = "run-metadata.json"
 FROZEN_SOURCE = "source.json"
 BOUNDARY = "boundary.md"
-CANDIDATE = "review-candidate.md"
 RUN_STATE = "run-state.md"
 RUNTIME = f"{OUTPUT_DIR}/runtime.md"
 MEMORY = f"{OUTPUT_DIR}/memory.md"
@@ -230,7 +227,7 @@ def require_sections(body: str, level: int, wanted: Sequence[str]) -> list[str]:
 def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
     """The allowed values of the boundary fields, from the overview schema."""
     schema = yaml.safe_load(
-        (repo_root / "kb/agentic-systems/types/agentic-system-analysis-overview.schema.yaml").read_text(
+        (repo_root / "kb/agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml").read_text(
             encoding="utf-8"
         )
     )
@@ -536,22 +533,6 @@ def one_line(text: str) -> str:
     return " ".join(text.split())
 
 
-def retarget_links(text: str, *, set_dir: str, destination: str) -> str:
-    """Rewrite the relative links of set text, which resolve inside the set
-    directory, to resolve from ``destination`` into ``set_dir``. Absolute
-    URLs and anchor-only links stay as they are."""
-    base = posixpath.dirname(destination)
-
-    def retarget(target: str) -> str:
-        parts = urlsplit(target.strip())
-        if parts.scheme or parts.netloc or not parts.path or parts.path.startswith("/"):
-            return target
-        path, rest = re.fullmatch(r"([^?#]*)(.*)", target.strip(), re.DOTALL).groups()
-        joined = posixpath.normpath(posixpath.join(set_dir, path))
-        return posixpath.relpath(joined, base) + rest
-
-    return replace_markdown_links(text, retarget)
-
 
 def write_file(path: Path, text: str) -> None:
     """Replace a file whole, so an interrupted write leaves the old bytes or
@@ -618,13 +599,7 @@ class AnalyseAgenticSystem(Workflow):
         keep one review path whatever the system is called; otherwise it is the
         system parameter.
         """
-        identity = urlsplit(self.source_identity)
-        segment = identity.path.rsplit("/", 1)[-1]
-        name = segment if identity.scheme and identity.netloc and segment else ""
-        name = name or str(self.params["system"])
-        slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-        if not slug:
-            raise ValueError("neither the source identity nor the system names the run")
+        slug = source_slug(self.source_identity, str(self.params["system"]))
         today = datetime.datetime.now(datetime.UTC).date().isoformat()
         return STATE_ROOT.as_posix(), f"AAS-{today}-{slug}"
 
@@ -641,6 +616,7 @@ class AnalyseAgenticSystem(Workflow):
             recognize=partial(self.recognize_file, run_dir / OPENING),
         )
         opening = json.loads((run_dir / OPENING).read_text(encoding="utf-8"))
+        write_file(run_dir / RUN_METADATA, json.dumps({key: opening[key] for key in ("inputs-commit", "run-date")}) + "\n")
         self.write_run_state(run_dir, opening, {})
 
         frozen = None
@@ -711,19 +687,18 @@ class AnalyseAgenticSystem(Workflow):
         self.assemble(run_dir, opening, fields, boundary_body, synthesis_round,
                       verification, synthesis_verification)
         self.validate_set(run_dir)
-        self.write_candidate(run_dir, opening, fields)
 
         spec = PublicationSpec(
             repo_root=repo_root,
             run_state_path=run_dir / RUN_STATE,
-            generated_candidate_path=run_dir / CANDIDATE,
+            generated_candidate_path=run_dir / OVERVIEW,
             generated_destination=opening["review-path"],
             expected_incumbent_sha256=opening["expected-incumbent-sha256"],
         )
         ctx.effect(
             "publish",
             partial(self.publish, spec),
-            inputs=(CANDIDATE, MANIFEST),
+            inputs=(OVERVIEW, MANIFEST),
             recognize=partial(self.recognize_publication, spec),
         )
 
@@ -763,7 +738,7 @@ class AnalyseAgenticSystem(Workflow):
         """
         run_dir = run_dir.resolve()
         instruction = instruction or name
-        method = [f"{instruction}.md", "worker-rules.md"]
+        method = [f"{instruction}.md", "../../../COLLECTION.md", "worker-rules.md"]
         method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
         input_paths = {key: str((run_dir / path).resolve()) for key, path in reads.items()}
         workspace = run_dir / "jobs" / name
@@ -830,7 +805,7 @@ class AnalyseAgenticSystem(Workflow):
             run_dir,
             "boundary",
             BOUNDARY,
-            reads={"opening": OPENING},
+            reads={"opening": RUN_METADATA},
             extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT),
             parameters={
                 "source-identity": one_line(self.source_identity),
@@ -994,7 +969,7 @@ class AnalyseAgenticSystem(Workflow):
         atomic_write(run_dir / MEMORY, (run_dir / memory_report(memory)).read_bytes())
         reconciled = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
         write_file(run_dir / RECONCILIATION, dump_frontmatter({
-            "type": "agentic-systems/types/agentic-system-reconciliation-report.md",
+            "type": "agentic-system-analyses/types/agentic-system-reconciliation-report.md",
             "description": f"Reconciliation of {self.params['system']} records at {fields['reviewed-boundary']}",
             "run-id": self.run_id,
             "reviewed-boundary": fields["reviewed-boundary"],
@@ -1074,9 +1049,8 @@ class AnalyseAgenticSystem(Workflow):
 
     def review_path(self) -> str:
         if "review-path" in self.params:
-            return str(self.params["review-path"])
-        slug = self.run_id[len("AAS-YYYY-MM-DD-") : -len("-nn")]
-        return f"{REVIEWS_ROOT}/{slug}.md"
+            raise ValueError("review-path is no longer a run parameter; publication uses the source slug")
+        return (RETAINED_ROOT / source_slug(self.source_identity, str(self.params["system"])) / OVERVIEW_NAME).as_posix()
 
     def head(self) -> str:
         result = subprocess.run(
@@ -1301,46 +1275,6 @@ class AnalyseAgenticSystem(Workflow):
         if failures:
             raise ValueError("the set does not validate:\n" + "\n".join(failures))
 
-    def write_candidate(
-        self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any]
-    ) -> None:
-        """Render the public review from the verified overview: its
-        description, an evidence-basis line from the boundary, the Bounded
-        synthesis and the Limitations, with the set's relative links pointing
-        into the retained set."""
-        overview, body = split((run_dir / OVERVIEW).read_text(encoding="utf-8"))
-        source = fields["source"]
-        retained = RETAINED_ROOT / self.run_id
-        text = (
-            f"# {self.params['system']}\n\n"
-            f"Evidence basis: {fields['evidence-tier']} analysis of "
-            f"`{source['identity']}` at `{fields['reviewed-boundary']}`, with an "
-            f"analysis cutoff of {fields['analysis-cutoff']}.\n\n"
-            f"{section(body, 'Bounded synthesis').strip()}\n\n"
-            f"## Limitations\n\n{section(body, 'Limitations').strip()}\n"
-        )
-        frontmatter = {
-            "type": REVIEW_TYPE,
-            "description": overview["description"],
-            "generated-by": "analyse-agentic-system",
-            "analysis-run": self.run_id,
-            "source-identity": source["identity"],
-            "reviewed-revision": fields["reviewed-boundary"],
-            "analysis-artifact": (retained / "ARTIFACT.yaml").as_posix(),
-            "analysis-artifact-sha256": digest(run_dir / MANIFEST),
-        }
-        write_file(
-            run_dir / CANDIDATE,
-            dump_frontmatter(
-                frontmatter,
-                retarget_links(
-                    text,
-                    set_dir=retained.as_posix(),
-                    destination=opening["review-path"],
-                ),
-            ),
-        )
-
     # Publication
 
     def publish(self, spec: PublicationSpec) -> None:
@@ -1354,13 +1288,20 @@ class AnalyseAgenticSystem(Workflow):
             return Recognition.COMPLETED
         destination = spec.repo_root / spec.generated_destination
         current = digest(destination) if destination.is_file() else "absent"
-        # Publication writes the retained set before the review, and an
-        # interrupted one leaves part of it: that is not "nothing happened".
-        retained = spec.repo_root / RETAINED_ROOT / self.run_id
+        # A partial accepted set is an uncertain publication, even if its
+        # overview still has the expected incumbent digest.
+        retained = (spec.repo_root / spec.generated_destination).parent
         if (
             state.get("run-status") == "running"
             and current == spec.expected_incumbent_sha256
-            and not retained.exists()
+            and (spec.expected_incumbent_sha256 != "absent" or not retained.exists())
         ):
+            if spec.expected_incumbent_sha256 != "absent":
+                from commonplace.lib.agentic_set import current_analyses
+
+                try:
+                    current_analyses(spec.repo_root)
+                except ValueError:
+                    return Recognition.UNKNOWN
             return Recognition.ABSENT
         return Recognition.UNKNOWN
