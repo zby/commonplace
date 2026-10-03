@@ -33,13 +33,22 @@ def test_read_ranges_preserve_all_lines_and_bound_multiple_line_reads(
         assert sum(len(line) for line in lines[start - 1:end]) <= READ_BATCH_BYTES or start == end
 
 
+def test_read_ranges_keep_a_moderate_input_in_one_call(tmp_path: Path) -> None:
+    path = tmp_path / "input.md"
+    content = b"Contract line\n" * 1000
+    assert 6 * 1024 < len(content) < READ_BATCH_BYTES
+    path.write_bytes(content)
+
+    assert reading_ranges(path) == [(1, 1000)]
+
+
 def test_invocation_names_ranges_for_oversized_method_and_task_inputs(tmp_path: Path) -> None:
     instruction = tmp_path / "runtime.md"
     instruction.write_text("Follow the worker rules.\n")
     rules = tmp_path / "worker-rules.md"
-    rules.write_text("Method\n" * 2000)
+    rules.write_text("Method\n" * (READ_BATCH_BYTES // 7 + 1))
     task = tmp_path / "boundary.md"
-    task.write_text("Input\n" * 3000)
+    task.write_text("Input\n" * (READ_BATCH_BYTES // 6 + 1))
     definition = AnalyseAgenticSystem({
         "system": "Example", "source": "capture", "source-identity": "capture",
     })

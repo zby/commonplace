@@ -123,8 +123,13 @@ DESCRIPTION_LENGTH = (50, 250)
 """The length the note schema expects of a description; the synthesizer's
 description becomes the overview's and the review's."""
 
-READ_BATCH_BYTES = 6 * 1024
-"""Conservative file grouping budget, leaving room for tool-result wrappers."""
+READ_BATCH_BYTES = 24 * 1024
+"""Shared byte budget for input batches and line ranges.
+
+Keep below the harness's tool-result delivery limit, leaving room for wrappers.
+Change this constant to tune both grouping and range hints together. Workers
+must still recover actual truncation; the budget is not a delivery guarantee.
+"""
 
 
 def reading_batches(paths: Sequence[str]) -> list[list[str]]:
