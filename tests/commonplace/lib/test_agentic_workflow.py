@@ -280,6 +280,32 @@ def prompt_of(result, name: str) -> tuple[int, str]:
     return handout.attempt, handout.prompt_path.read_text(encoding="utf-8")
 
 
+def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> None:
+    scripted, _ = agent(fixture, runtime=fixture.writes(lambda _: "invalid runtime\n"))
+
+    first = scripted.round()
+    assert isinstance(first, Launch)
+    boundary = fixture.run_dir / "boundary.md"
+    assert not boundary.exists()
+    worker_boundary = fixture.run_dir / "jobs/boundary/boundary.md"
+    assert worker_boundary.is_file()
+
+    second = scripted.round()
+    assert isinstance(second, Launch)
+    assert boundary.read_bytes() == worker_boundary.read_bytes()
+    original_boundary = boundary.read_bytes()
+    runtime = fixture.run_dir / "output/runtime.md"
+    assert not runtime.exists()
+
+    retry = scripted.round()
+    assert isinstance(retry, Launch)
+    assert [job.name for job in retry.jobs] == ["runtime"]
+    assert not runtime.exists()
+    assert boundary.read_bytes() == original_boundary
+    assert retry.jobs[0].output_path.parent == fixture.run_dir / "jobs/runtime"
+    assert retry.jobs[0].problem_path.parent == fixture.run_dir / "jobs/runtime"
+
+
 # 0. Deriving the repository root
 
 
@@ -306,8 +332,13 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         name.startswith(("runtime-final", "epistemic-final")) for name in scripted.launched
     )
     assert definition.publications == 1
-    # Each pass wrote its member once: the lenses and the runtime pass into
-    # output/, the memory member is the accepted report byte for byte.
+    for name, canonical in definition.job_destinations.items():
+        workspace = fixture.run_dir / "jobs" / name
+        assert (workspace / "scratch").is_dir()
+        assert (workspace / canonical.name).read_bytes() == canonical.read_bytes()
+        assert not canonical.is_relative_to(workspace)
+    # Workers write in private job workspaces. The coordinator copies accepted
+    # bytes to canonical paths; the published memory member is byte-exact.
     output = fixture.run_dir / "output"
     assert (output / "memory.md").read_bytes() == (
         fixture.run_dir / "memory-report-0.md"
@@ -1562,7 +1593,8 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             "run-state": str(run / "run-state.md"),
             "output": str(job.output_path(run)),
             "problem": str(job.problem_path(run)),
-            "scratch": str(run / "scratch" / job.name) + "/",
+            "workspace": str(run / "jobs" / job.name) + "/",
+            "scratch": str(run / "jobs" / job.name / "scratch") + "/",
             **({"source-identity": SOURCE} if kind == "boundary" else {}),
             **{key: (value if key in {"round", "may-return", "memory-return"} else str(run / value)) for key, value in expected.items()},
         }
@@ -1604,7 +1636,7 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
     prompt = definition.boundary_job(fixture.run_dir, {}).prompt
 
     assert prompt.endswith("\nsource:\n``````\n" + source + "\n``````\n")
-    assert invocation(prompt)[1]["output"] == str(fixture.run_dir / "boundary.md")
+    assert invocation(prompt)[1]["output"] == str(fixture.run_dir / "jobs/boundary/boundary.md")
 
 
 @pytest.mark.parametrize("dependency", [

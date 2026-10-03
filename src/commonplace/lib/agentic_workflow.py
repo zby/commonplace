@@ -594,6 +594,7 @@ class AnalyseAgenticSystem(Workflow):
         self.source_identity = normalize_source_identity(
             str(self.params["source-identity"])
         )
+        self.job_destinations: dict[str, Path] = {}
         self.source_revision = self.params.get("source-revision")
         if self.source_revision is not None and (
             not isinstance(self.source_revision, str)
@@ -648,7 +649,7 @@ class AnalyseAgenticSystem(Workflow):
             self.write_run_state(run_dir, opening, {"source": frozen})
 
         enums = overview_enums(repo_root)
-        ctx.agent(self.boundary_job(run_dir, enums, frozen)).wait()
+        self.run_job(ctx, self.boundary_job(run_dir, enums, frozen))
         fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
@@ -657,10 +658,10 @@ class AnalyseAgenticSystem(Workflow):
             return
 
         (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
-        ctx.agent(self.runtime_job(run_dir)).wait()
+        self.run_job(ctx, self.runtime_job(run_dir))
         ctx.parallel(
-            lambda: ctx.agent(self.memory_job(run_dir, 0, 0)).wait(),
-            lambda: ctx.agent(self.epistemic_job(run_dir)).wait(),
+            lambda: self.run_job(ctx, self.memory_job(run_dir, 0, 0)),
+            lambda: self.run_job(ctx, self.epistemic_job(run_dir)),
         )
 
         reconcile = 0
@@ -668,13 +669,13 @@ class AnalyseAgenticSystem(Workflow):
         reason = None
         while True:
             last = reconcile >= self.correction_rounds
-            ctx.agent(
-                self.reconcile_job(run_dir, reconcile, memory, reason, not last)
-            ).wait()
+            self.run_job(
+                ctx, self.reconcile_job(run_dir, reconcile, memory, reason, not last)
+            )
             text = (run_dir / reconciliation(reconcile)).read_text(encoding="utf-8")
             if RETURNED in headings(text, 2):
                 memory += 1
-                ctx.agent(self.memory_job(run_dir, memory, reconcile)).wait()
+                self.run_job(ctx, self.memory_job(run_dir, memory, reconcile))
                 reconcile += 1
                 reason = "returned"
                 continue
@@ -693,8 +694,8 @@ class AnalyseAgenticSystem(Workflow):
             reason = "blockers"
 
         for synthesis_round in range(self.synthesis_correction_rounds + 1):
-            ctx.agent(self.synthesis_job(run_dir, synthesis_round)).wait()
-            ctx.agent(self.synthesis_verification_job(run_dir, synthesis_round)).wait()
+            self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round))
+            self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round))
             synthesis_verification = (run_dir / round_file("synthesis-verification", synthesis_round)).read_text(encoding="utf-8")
             blockers = subsection(synthesis_verification, "Blockers")
             if blockers == "none":
@@ -723,6 +724,18 @@ class AnalyseAgenticSystem(Workflow):
 
     # Jobs
 
+    def run_job(self, ctx, job: Job) -> None:
+        """Expose a worker result to later jobs only after engine acceptance.
+
+        Workers own their job directory; canonical run files and the assembled
+        set remain coordinator-owned. Copying is replay-safe and byte-exact.
+        """
+        ctx.agent(job).wait()
+        destination = self.job_destinations[job.name]
+        content = job.output_path(ctx.run_dir).read_bytes()
+        if not destination.is_file() or destination.read_bytes() != content:
+            atomic_write(destination, content)
+
     def job(
         self,
         run_dir: Path,
@@ -740,16 +753,21 @@ class AnalyseAgenticSystem(Workflow):
 
         Named reads are resolved once for both parameters and dependencies.
         Run state is a mutable command argument, not a file dependency.
+        Worker outputs live in a per-job workspace. The supplied output path
+        names the coordinator-owned accepted copy used by downstream readers.
         """
         run_dir = run_dir.resolve()
         instruction = instruction or name
         method = [f"{instruction}.md", "worker-rules.md"]
         method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
         input_paths = {key: str((run_dir / path).resolve()) for key, path in reads.items()}
+        workspace = run_dir / "jobs" / name
+        (workspace / "scratch").mkdir(parents=True, exist_ok=True)
+        self.job_destinations[name] = run_dir / output
         job = Job(
             name=name,
             prompt="",
-            output=output,
+            output=f"jobs/{name}/{Path(output).name}",
             inputs=(*input_paths.values(), *method_paths),
             validator=validator,
             prompt_is_complete=True,
@@ -763,7 +781,8 @@ class AnalyseAgenticSystem(Workflow):
             **input_paths,
             "output": str(job.output_path(run_dir)),
             "problem": str(job.problem_path(run_dir)),
-            "scratch": str(run_dir / "scratch" / name) + "/",
+            "workspace": str(workspace) + "/",
+            "scratch": str(workspace / "scratch") + "/",
         }
         lines = [f"Follow {method_paths[0]} with:"]
         lines += [f"{key} = {value}" for key, value in values.items()]
@@ -978,10 +997,10 @@ class AnalyseAgenticSystem(Workflow):
         failures = self.record_check(run_dir, fields)
         write_file(run_dir / round_file("set-check", round_),
                    "# Record set check\n\n" + ("\n".join(f"- {failure}" for failure in failures) or "none") + "\n")
-        ctx.agent(self.verification_job(
+        self.run_job(ctx, self.verification_job(
             run_dir, round_, memory,
             validator=partial(self.record_verification_refusals, run_dir, failures=failures),
-        )).wait()
+        ))
         return (run_dir / round_file("verification", round_)).read_text(encoding="utf-8")
 
     def verification_job(

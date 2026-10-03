@@ -22,6 +22,7 @@ Every job uses these parameters; its instruction defines additional ones:
 | `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input |
 | `output` | Absolute path for the completed result |
 | `problem` | Absolute path for the reason the job cannot finish |
+| `workspace` | Absolute per-job writable directory, when supplied by the workflow |
 | `scratch` | Absolute directory for intermediate files, including selections and extracts |
 
 A repair invocation may also supply `previous-output`, the absolute path of
@@ -48,6 +49,11 @@ Retry refusal feedback applies to the same job and does not change its
 analytical round.
 
 Write only `output` or `problem`, plus intermediate files in `scratch`.
+When `workspace` is supplied, all three destinations are inside that job's
+workspace. Supplied inputs outside it are read-only. Do not create other files
+in the workspace or write to another job's workspace. Code copies accepted
+results to coordinator-owned paths for later consumers; do not write those
+copies yourself. This layout expresses authority but is not a filesystem sandbox.
 The boundary job may create and freeze sources as its instruction permits.
 Do not edit other run files, publish, delegate, stage or commit, or change
 `workflow-state/`. Only the supplied invocation prompt and `previous-output`
