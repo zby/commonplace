@@ -26,6 +26,15 @@ Replace `<run>` with the supplied run directory. Use the same pattern for
 `report` and recovery commands. Wait for a running command to finish and
 inspect its final result before advancing the loop.
 
+Source acquisition runs inside `step`. When acquisition requires network
+access unavailable in the sandbox, request network approval for that `step`
+command itself. Do not run a standalone clone or fetch as a repair: it does
+not change the workflow process's network access, and unpinned acquisition
+fetches again. If this restriction is known before the first step, request
+approval then so the predictable failure does not consume a repair attempt.
+After a blocked step, follow its permitted repair or stop disposition before
+advancing; approval does not override a stop-only block.
+
 ## Loop
 
 Run `commonplace-workflow step <run>`. The first line of its output is the outcome.
