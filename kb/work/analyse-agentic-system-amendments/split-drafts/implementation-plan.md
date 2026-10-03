@@ -25,7 +25,11 @@ links still need a disposition. Do not change their bytes to repair links.
 
 ## Documents and type changes
 
-Promote both collection contracts and the new landing. Move all seven current
+Promote both collection contracts and the new landing. Move the analysis
+method to the new collection's `instructions/`: the skill directory, run
+driver, job instructions and the three shared analysis contracts. Update the
+skill projections and the method paths resolved in workflow code. Landscape
+synthesis and taxonomy refresh stay. Move all seven current
 analysis member/set/run-state type specs and schema sidecars together. Replace
 current identities `agentic-systems/types/<name>.md` with
 `agentic-system-analyses/types/<name>.md`; keep generated-review's historical type
@@ -37,7 +41,7 @@ rules out of the old contract only after a verified mandatory loading path exist
 
 Update the parent proposal and Sol-plan item 1 to supply the new contract. Worker
 jobs writing collection artifacts receive it in read-first and dependency hashes.
-Do not make workers load the old contract simply because instructions live there.
+No worker packet names a file in the old collection.
 
 ## Consumer inventory before mutation
 

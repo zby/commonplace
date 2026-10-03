@@ -3,7 +3,7 @@
 ## Purpose and quality
 
 This collection holds workflow-produced analyses of external agentic systems,
-their run state and local types.
+their run state, local types and the analysis method.
 Their contribution is an evidence-grounded account of source-native operation,
 with bounded synthesis and explicit limitations. The quality goal is fidelity
 and economy. Explain the external mechanism before applying Commonplace concepts;
@@ -24,13 +24,13 @@ contracts. Assembly, acceptance, migration and publication are coordinator tasks
 ## Placement and types
 
 `state/` holds working analyses, `retained/` accepted analyses and
-`retained-archive/` historical analyses. Comparative writing and method procedures
-belong in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
+`retained-archive/` historical analyses. `instructions/` holds the analysis
+method. Comparative writing and publication procedures belong in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
 its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
 raw source captures belong in source snapshot storage.
 
 Use global types under `types/` or local types under
-`agentic-system-analyses/types/`. Frontmatter-free Markdown is text. Before changing local types, follow
+`agentic-system-analyses/types/`. Frontmatter-free Markdown is text. Before changing local types or instructions, follow
 [method maintenance](./method-maintenance.md).
 
 ## Outbound links
@@ -40,4 +40,4 @@ Use global types under `types/` or local types under
   web; `evidenced-by`.
 - `kb/notes/`: cite theory used in a mapping; `rests-on`, `defined-in`.
 - Within this collection: point to supporting members or records; `see-also`.
-- `kb/agentic-systems/`: local types link their governing method contracts; `composition`, `see-also`.
+- Local instructions and types: link their governing contracts; `composition`, `see-also`.

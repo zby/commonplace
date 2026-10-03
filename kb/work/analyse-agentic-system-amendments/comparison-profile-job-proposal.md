@@ -134,18 +134,17 @@ no consumer needs a reader for both layouts.
   facts the records lack, the operator chooses between a stricter memory type
   and letting the profile job declare records.
 
+- The profile member, its type and both new job instructions belong to the
+  analysis collection, which is self-contained. The profile is frozen and
+  pinned with the records it cites. Comparison tools in `kb/agentic-systems/`
+  read it from the retained set.
+
 ## Open decisions
 
 1. **Is `verify-profile` a separate job?** Recommended: yes, to keep
    independent review. The alternative is code validation only, which checks
    form and references but not whether a value follows from the records.
-2. **Which collection owns the profile member and type?** Recommended: the
-   analysis set, so the profile is frozen and pinned with the records it
-   cites. The alternative is to treat it as comparison material owned by
-   `kb/agentic-systems/` and produced when a comparison is built; that
-   separates concerns further but moves classification away from run
-   verification.
-3. **Sequencing against the collection split and the Sol plan.** The new type
+2. **Sequencing against the collection split and the Sol plan.** The new type
    belongs wherever member types live at the time. Implementing after the
    relocation avoids touching the same files twice. The Sol plan's item 5
    repairs the `decay` classification inside the memory job; that part moves

@@ -146,61 +146,120 @@ Workers generate the analysis inside this collection. Publication selects an
 accepted report for public discovery by linking to it; it does not generate a
 second compact review that restates the analysis elsewhere.
 
-### Analysis and publication are separately owned
+### The collection owns the whole run, and analysts see only analysis
 
-The analysis collection holds analyses, their run state and their types. It
-focuses on one activity: producing an accepted analysis of one system.
+Operator decisions, 2026-10-03: the new collection is self-contained, and
+publication is a list update.
 
-The publication mechanism stays in `kb/agentic-systems/`. That collection owns
-the publication instruction, the reference type and its schema, public
-selection, navigation, comparison populations and the site exposure rules.
-Publication code copies accepted bytes into the analysis collection's
-`retained/` area, but the rules for doing so are publication rules and live
-with the mechanism.
+The analysis collection holds the analyses, their run state, their types, the
+analysis method and the current accepted sets. A run starts and ends
+inside it. `kb/agentic-systems/` keeps hand-authored reviews, comparisons,
+landscape synthesis and taxonomy maintenance.
 
-The consequence for analysts is the purpose of this separation:
+Self-containment must not put publication into analyst input. The rule is
+about what a worker reads, not about directories:
 
-- The analysis contract states placement and immutability only. It carries no
-  rule about selection, references, navigation or public exposure.
-- No analyst packet supplies the publication instruction or the reference type.
+- The analysis contract states placement and immutability only. It says in
+  one line that `retained/` holds the current analyses, and carries no other
+  rule about selection or public exposure.
+- Publication rules live in the publication instruction. Only the coordinator
+  loads it. No analyst packet supplies it.
 - An analyst's obligations end at an accepted member. A field or section that
   exists only for a publication or comparison consumer is a candidate to move
   to a coordinator step; the complexity check below lists them.
 
 Current analyst inputs are not yet free of publication: the boundary job reads
 `opening`, which its instruction describes as publication metadata, and the
-memory job instruction mentions publication checks. The memory analyst also
-produces the cross-system comparison profile. Each of these needs a
-disposition: keep with a stated analytical reason, reword, or move. Moving the
-comparison profile out of the memory job is a method change. The operator
-decided it on 2026-10-03; its design is the
+memory job instruction mentions publication checks. Each needs a disposition:
+keep with a stated analytical reason, reword, or move. The memory analyst
+also produces the cross-system comparison profile. The operator decided on
+2026-10-03 to move it to a separate job; its design is the
 [comparison-profile job proposal](./comparison-profile-job-proposal.md).
 
-### Publication by reference
+### Publication replaces the system's set in `retained/`, and the list is generated
 
-The analysis collection owns the authored result and its accepted version.
-Publication owns public selection and navigation. A public entry may name the
-system, give a short navigation description, and link to the accepted report.
-For a multi-file analysis set, the link targets its reader-facing overview,
-which exposes the accepted members and reconciliation. Readers must not be
-left to resolve conflicting worker drafts themselves.
+The generated list is an agent proposal on the operator's suggestion to follow
+the generated directory index. The stable directory per system, and links that
+follow the newest analysis, are operator decisions of 2026-10-03.
 
-Working files remain excluded from public site output and navigation until
-acceptance. Validation and independent review still establish acceptance of
-exact report bytes; changing publication does not waive those gates. The
-coordinator controls assembly, retention and the public link. Workers cannot
-publish by writing into a publicly visible location.
+The workflow produces one accepted analysis per run. Its overview is the
+reader-facing review: it gives the synthesis and limitations and links the
+members and reconciliation. The workflow writes no second, compact review.
 
-The link identifies a stable accepted version. A subsequent analysis receives
-its own identity, and publication changes the selected link only after its
-acceptance. Failed or interrupted publication must leave the prior selection
-valid or expose an explicit recovery condition. Retention or relocation within
-the collection may still be needed to freeze the accepted bytes, but publication
-must not require reauthoring them as a separate review.
+**What is current.** The current analysis of a system lives at
+`retained/<system-slug>/`. The slug is the one the run ID already uses,
+derived from the source identity. The path does not contain the run ID, so it
+stays the same when a newer analysis replaces the set. There is one directory
+per system, so the filesystem allows only one current set per source.
 
-No pointer format or navigation location is selected here. Existing pins,
-provenance, comparison readers and freshness checks need a replacement
-consumption path before the generated-review contract can be retired.
+**Links follow the newest analysis.** A link to
+`retained/<system-slug>/overview.md`, from a note, a comparison or another
+site, always reaches the current analysis. It needs no redirect and no rewrite
+when a new run is accepted. Anything that depends on an exact version must
+cite the run ID and the commit, or the set's archive path once superseded.
+The run ID stays in each member's frontmatter and in the manifest.
+
+**Publication** does two things after acceptance, in one commit:
+
+1. If `retained/<system-slug>/` exists, move that set unchanged to
+   `retained-archive/<run-id>/`, under its own run ID.
+2. Copy the accepted bytes unchanged into `retained/<system-slug>/`.
+
+Both areas sit at the same depth, so a moved set's relative links should still
+resolve and its bytes and manifest hashes should not change. This has not been
+tested on a real set.
+
+**The list.** No list file is written or committed. The current-analyses list
+is generated, as directory indexes already are: the site build materializes
+it in memory from the published files (ADR 025). It reads the overview
+frontmatter of each set in `retained/`: system, description, reviewed
+boundary, run ID, run date, evidence tier and the link to the overview. It is
+the reader's entry point. One library function enumerates the current sets;
+the site build and the comparison tools both call it, so they cannot disagree
+about the population.
+
+**Checks.** Validation requires that the directory name equals the slug of
+the set's source identity, and that no two directories in `retained/` hold
+the same source identity. An interrupted publication leaves either the old
+set in place or an empty or partial directory; both are detectable, and
+recovery is to finish the copy or restore the old set from the archive.
+Committing both steps together means no committed state is partial.
+
+What this removes, against the per-system reference file drafted in
+`split-drafts/` and against a committed list file: the reference type and its
+schema, hash pins from a pointer to a manifest, the incumbent-hash check
+before replacement, redirects for current analyses, and the question of
+updating a shared list file atomically. The manifest still pins every member.
+
+Working files stay excluded from site output until acceptance. Validation and
+independent review still establish acceptance of exact bytes. Only the
+coordinator copies into `retained/`; a worker cannot publish by writing a file.
+
+Costs and unsettled points:
+
+- Code and contracts assume today that a retained directory is named by its
+  run ID and that a retained run is never overwritten. Both change: the
+  directory is named by system, and its content is replaced, with the old
+  content preserved in the archive.
+- A link to the current path silently changes target when a new analysis is
+  accepted. That is the chosen behavior. A note whose claim depends on what a
+  specific analysis said must cite the run ID, or its claim can drift from
+  its evidence.
+- `retained-archive/` holds two kinds of set: historical analyses under
+  older contracts, and superseded analyses under the current contract. Both
+  are excluded from current validation and from the comparison population.
+  Operator decision, 2026-10-03: superseded sets go to the archive.
+- Old review addresses need a one-time move as each review is regenerated.
+  About 65 KB files outside the collection link to
+  `kb/agentic-systems/reviews/<slug>.md` today. Use the relocation command so
+  inbound links are rewritten and site redirects are added. Hand-authored
+  reviews that are not regenerated keep their paths.
+
+**Revisit conditions.** The stable path per system, links that follow the
+newest analysis, and the shared archive were chosen without evidence from
+use. Their revisit conditions are `TODO` items in the
+[decision draft](./split-drafts/decision-draft.md), which becomes the ADR, so
+that a search for `TODO` over ADRs finds them after this workshop closes.
 
 ### What moves
 
@@ -210,10 +269,16 @@ consumption path before the generated-review contract can be retired.
 | `reports/retained/` | Moves. |
 | `reports/retained-archive/` | Moves as history. Operator statement, 2026-10-03: the archive serves comparison only and is no procedure's input, so it needs no pin preservation beyond its own bytes. |
 | `types/` member types: overview, runtime report, memory report, epistemic report, reconciliation report, analysis set, run state | Move. Type identities change to the new collection's `types/` path. |
-| `types/generated-review.md` | Retire from new-run publication once its consumers have an accepted-report reference path; preserve historical use as needed. |
-| `reviews/` | No new duplicate generated reviews. Existing generated reviews need migration, replacement by navigation, or explicit retirement; ordinary authored reviews are not automatically affected. |
-| `comparisons/`, `README.md`, `COLLECTION.md` | Stay; navigation and consumers change to reference accepted analyses. |
-| `instructions/` (method, job instructions, shared analysis contracts) | Open; see decisions. |
+| `types/generated-review.md` | Retire from new-run publication once its consumers read the current-analyses list; preserve historical use as needed. |
+| `reviews/` | Hand-authored reviews stay (12 of the 13 files today). No new generated reviews are written there. The one existing generated review is replaced by its list entry or explicitly retired. |
+| `comparisons/`, `README.md`, `COLLECTION.md` | Stay; navigation and comparison tools read the current-analyses list. |
+| `instructions/analyse-agentic-system/` (skill, run driver, job instructions) and the shared contracts `agentic-analysis-boundary.md`, `agentic-analysis-sources.md`, `agentic-analysis-records.md` | Move. Operator decision, 2026-10-03: the new collection is self-contained and owns the analysis method. |
+| `instructions/synthesize-agent-memory-landscape/`, `instructions/refresh-agent-memory-review-taxonomy.md` | Stay. They serve comparison, not analysis. |
+
+The new collection is self-contained: an analysis run needs no method file,
+type or contract from `kb/agentic-systems/`. The one dependency runs the other
+way: comparison tools in `kb/agentic-systems/` read the current-analyses list
+and the retained sets. No worker packet crosses the boundary.
 
 Moving reports and their types together keeps local type eligibility
 without a resolver exception. ADR 099 rejected "move only the types" for
@@ -236,12 +301,19 @@ merely to meet the budget:
 - retained-set immutability: substantive corrections require a new run;
   archives preserve historical evidence;
 - type eligibility for the local types;
+- placement of the method under `instructions/`, with one sentence sending
+  method authors to a separately loaded maintenance instruction;
 - what does not belong: separate comparative essays, comparison tables,
-  transfer scans, method-authoring procedures.
+  transfer scans, publication procedures.
 
-Publication rules are excluded: that the accepted overview is the public
-analysis, and how it is selected, belongs to the publication contract in
-`kb/agentic-systems/`.
+Owning the method must not grow the analyst's contract. Method-authoring
+rules live in the maintenance instruction, which only method authors load.
+The contract carries the pointer and nothing else about authoring. The
+drafted contract and its measurements predate this decision; redraft and
+re-measure bytes and concern counts before adoption.
+
+Publication rules are excluded: how an analysis is selected and listed belongs
+to the publication instruction, which only the coordinator loads.
 
 The agentic-systems contract loses its report-lifecycle section and keeps a
 pointer. Record definitions and the theory-builder conditions stay in the
@@ -263,13 +335,17 @@ Found by search on 2026-10-03; an implementation plan must redo the inventory.
   the collection names `messages` and `reports` as unpublished. A new
   top-level collection is published unless these are updated.
   `tests/commonplace/docs/test_site_publication_boundaries.py` covers this.
-- The analysis skill, job instructions, `worker-rules.md`, landscape
-  synthesis, taxonomy refresh and the transfer scan, which name report paths.
+- The analysis skill, job instructions and `worker-rules.md`, which move and
+  name report paths; landscape synthesis, taxonomy refresh and the transfer
+  scan, which stay and name them.
+- Skill projections: the `analyse-agentic-system` symlinks under
+  `.agents/skills/` and `.claude/skills/`, and the method paths that
+  `agentic_workflow.py` resolves for job packets and method-change guards.
 - `kb/reference/commands.md`, `kb/reference/validation-contract.md` and
   `scripts/README.md`.
 - Generated-review rendering, types, publication checks, navigation and
   downstream consumers that currently discover a set through review metadata.
-  Replace that dependency with accepted-report references before removing it.
+  Replace that dependency with the current-analyses list before removing it.
 - Existing generated reviews and their retained-set pins. The operator's
   intended refresh now produces analyses linked directly, not another layer
   of compact reviews. Future refresh does not authorize broken pins in the
@@ -284,28 +360,19 @@ Commit the `commonplace-relocate-*` result alone, without content edits.
 
 ## Open decisions
 
-1. **Where the method lives.** Recommended: leave `instructions/` in
-   `kb/agentic-systems/` if it continues to govern the broader analysis,
-   review and comparison system. Choose ownership by those consumers, not
-   by directory size: workers do not read every file in a collection.
-   Packets supply the needed method files explicitly. The cost is that
-   instructions in one collection define content for another.
-2. **The two current retained sets and `layout-migration-2026-10-01/`.**
+1. **The two current retained sets and `layout-migration-2026-10-01/`.**
    The new ADR must explicitly authorize any bounded migration and its hash
    map; ADR 099 authorized its own migration, not every future move. Decide
    whether to migrate current sets, keep them until replacement, or retire
    them under separate authority. The migration report describes the earlier
    layout and may itself become history.
-3. **Sequencing against the Sol plan.** Recommended: item 1 of that plan
+2. **Sequencing against the Sol plan.** Recommended: item 1 of that plan
    becomes "supply the new collection's contract" and depends on this split.
    If the split is delayed, keep the current contract rule unless the operator
    separately adopts a scoped exception. Do not silently omit the contract.
-4. **Public selection and reader entry point.** Choose where links to accepted
-   analyses live and how consumers identify the selected version and its
-   provenance. Keep that navigation lightweight. Determine whether the current
-   overview already provides sufficient synthesis and reconciliation access;
-   any required reader-facing improvement belongs in the analysis itself,
-   not in a duplicate review.
+3. **Publication details.** Adopt or change the generated list. Determine
+   whether the current overview already serves a reader as a review; any
+   needed improvement belongs in the overview.
 
 ## Costs and risks
 
@@ -402,5 +469,5 @@ migration obligations, not evidence against input optimization.
 ## What closes this proposal
 
 An accepted ADR revising ADR 099 and the affected publication contracts, plus
-a completed relocation and publication-by-reference transition; or a recorded
+a completed relocation and the change to list-based publication; or a recorded
 rejection with the chosen alternative for item 1 of the Sol plan.

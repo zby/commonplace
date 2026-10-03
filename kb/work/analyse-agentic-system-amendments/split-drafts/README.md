@@ -22,7 +22,7 @@ rewrite them for their destinations. Future paths are literal code spans.
 | [Analysis landing](./analysis-landing.md) | `kb/agentic-system-analyses/README.md` |
 | [Analysis reference type](./analysis-reference-type.md) | `kb/agentic-systems/types/analysis-reference.md` |
 | [Reference schema](./analysis-reference.schema.yaml) | Its schema sidecar |
-| [Method maintenance](./method-maintenance.md) | Collection-owned maintenance instruction; mandatory for method authors only |
+| [Method maintenance](./method-maintenance.md) | Maintenance instruction in the new collection, which owns the method; mandatory for method authors only |
 | [Publication contract](./publication-contract.md) | Collection-owned publication instruction, explicitly loaded by maintainers and reflected in workflow checks |
 | [Decision draft](./decision-draft.md) | Material for an ADR revising ADR 099 after adoption and implementation |
 | [Implementation plan](./implementation-plan.md) | Migration dispositions, consumer changes and acceptance |
@@ -34,6 +34,16 @@ rewrite them for their destinations. Future paths are literal code spans.
 The reference type is new. Existing analysis member types and schemas move with
 mechanical identity/path changes; the implementation plan specifies those changes
 instead of duplicating their full text here. Job packets keep their role contracts.
+
+## Superseded by later decisions
+
+On 2026-10-03 the operator decided that the new collection is self-contained
+and that publication is an update of one current-analyses list; see the parent
+proposal. These drafts predate that and need redrafting before use: the
+analysis reference type and its schema (replaced by the list), the publication
+contract (list update, owned by the new collection), the analysis landing,
+and the existing-collection contract. The decision draft was rewritten to
+these decisions and carries their revisit conditions as `TODO` items.
 
 ## Check result
 

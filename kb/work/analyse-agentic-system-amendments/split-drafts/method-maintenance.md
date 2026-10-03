@@ -3,7 +3,7 @@
 Draft instruction for authors changing analysis instructions, shared contracts,
 local types or worker packets. Preserve executable composition and update all
 consumers of changed rules. Intended destination:
-`kb/agentic-systems/instructions/maintain-analysis-method.md`.
+`kb/agentic-system-analyses/instructions/maintain-analysis-method.md`.
 
 ## Consumption and authority
 
