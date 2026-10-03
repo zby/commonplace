@@ -7,13 +7,33 @@ proposal awaiting adoption. It authorizes no relocation, method edit or run.
 Adoption revises [ADR 099](../../reference/adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md),
 which chose one collection contract on 2026-10-01, so it needs an ADR.
 
-## Problem
+## Motivation
 
-Analysis workers write report members under `kb/agentic-systems/reports/`.
-The root doctrine tells every writer to read the target collection contract.
-The governing contract, `kb/agentic-systems/COLLECTION.md`, is 13.7 KB and
-must stay large: it also governs reviews, comparisons, method authoring,
-publication and outbound linking. A report writer needs almost none of it.
+The split exists to keep analysis worker input small. Worker input size is
+already a problem in analysis runs, and every instruction file a job must
+read is paid for in every job of every run.
+
+Three facts produce the cost:
+
+1. The root doctrine tells every writer to read the target collection
+   contract before writing.
+2. Analysis workers write report members under `kb/agentic-systems/reports/`,
+   so their contract is `kb/agentic-systems/COLLECTION.md`.
+3. That contract is 13.7 KB and must stay large, because it also governs
+   reviews, comparisons, method authoring, publication and outbound linking.
+   A report writer needs almost none of it.
+
+A contract's size follows from everything its collection holds. Shrinking
+what a report writer must read therefore requires a collection that holds
+only reports. With a separate collection, a worker follows the root rule as
+written and reads a contract of 2–3 KB. No exemption from the root rule is
+needed, and the large contract can keep growing for its other readers
+without raising worker input.
+
+The motivation is the standing reading cost per job. It is not the
+frequency of the errors below, which were few and recovered.
+
+## Observation
 
 Observed in the stopped run `AAS-2026-10-03-graphiti-05`: both parallel
 analysts guessed `kb/agentic-systems/reports/COLLECTION.md`, received a
@@ -32,8 +52,9 @@ by exemption.
 
 Create a separate top-level collection for analysis reports, with a minimal
 contract that a report writer can follow as the root rule states.
-The working name here is `kb/agentic-system-reports/`; the name is the
-operator's choice.
+The collection is `kb/agentic-system-analyses/`, named by the operator on
+2026-10-03. The former `reports/` level disappears: `state/`, `retained/`,
+`retained-archive/` and `types/` sit directly under the collection root.
 
 ### What moves
 
@@ -108,7 +129,6 @@ Commit the `commonplace-relocate-*` result alone, without content edits.
    becomes "supply the new collection's contract" and depends on this split.
    If the split is delayed, use the `worker-rules.md` exception as a stopgap
    and remove it when the split lands.
-4. **Collection name.**
 
 ## Costs and risks
 
