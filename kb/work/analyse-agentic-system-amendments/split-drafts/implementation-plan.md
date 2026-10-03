@@ -5,23 +5,22 @@ and [input comparison](./input-coverage.md) before choosing this plan over short
 Implement only after the prototype checks and migration choices are accepted. Isolation landed in `ee81c5586`; recheck current
 status and open runs before editing. Do not resume old runs under a changed method.
 
-## Proposed migration dispositions
+## Dispositions of existing material
 
-| Cohort | Proposed disposition |
+Operator decision, 2026-10-03: nothing is migrated; every analysis is
+regenerated under the new method.
+
+| Cohort | Disposition |
 |---|---|
-| `AAS-2026-10-02-dynamic-cheatsheet-01` | Mechanically migrate and repin; retain as prior accepted evidence, without selecting it by directory scan |
-| `AAS-2026-10-03-dynamic-cheatsheet-02` | Mechanically migrate and repin; convert its current generated review to the selected reference |
-| `layout-migration-2026-10-01/` | Move byte for byte as historical migration evidence; its recorded old paths/hashes remain historical data |
-| `reports/retained-archive/` | Move byte for byte, preserve historical frontmatter and exclusions; redirect old public member URLs |
-| Existing ordinary authored reviews | Keep unchanged |
-| Historical generated reviews | Preserve producing bytes/contracts; repair public routes through redirects, not silent retyping |
-| Ignored state | Inventory; finish under old method or retain stopped recovery evidence under original identity. Never migrate into a resumable new-method run |
+| `reports/retained/` (two Dynamic Cheatsheet sets, `layout-migration-2026-10-01/`) | Stay in place as frozen history. Add the validation exclusion when the member types move. |
+| `reports/retained-archive/` | Stays in place, unchanged. Existing redirects into it stay valid. |
+| The one generated review | Retire when the member types move; regenerate that system first. |
+| Hand-authored reviews | Keep unchanged. |
+| Ignored state | Finish under the old method or keep as stopped evidence under the original identity. Never resume under the new method. |
 
-Check these dispositions against the actual review/pin inventory before adoption.
-The two retained sets belong to the same source; selection stays with the current
-published review, subject to identity/hash verification. Historical archives need
-no procedural pin preservation per the operator's proposal premise, but public
-links still need a disposition. Do not change their bytes to repair links.
+The new collection starts with empty `state/`, `retained/` and
+`retained-archive/`. No hash map, repinning or bounded migration authority is
+needed. The comparison population is empty until analyses are regenerated.
 
 ## Documents and type changes
 
@@ -63,35 +62,38 @@ with undocumented changed meaning. No consumer-demanded compatibility is known.
 
 ## Order and commits
 
-1. Accept contract coverage/measurement results, reference semantics and bounded
-   migration authority. Inventory current consumers and open runs.
+1. Accept contract coverage/measurement results and the publication design.
+   Inventory current consumers and open runs.
 2. Prepare destination/types/consumer changes in an isolated implementation tree.
    Keep the publication gate closed while contracts and readers disagree.
 3. Dry-run relocation and examine its automatic link and pin effects. Use bare
    commonplace relocation commands; inspect their actual APIs before selecting
    one. Commit relocation-command results alone as required by root doctrine.
-4. Commit bounded retyping, hash-map evidence and consumer/publication changes
-   separately, with explicit file staging. Verify unchanged analytical content.
+4. Commit type-identity, consumer and publication changes separately, with
+   explicit file staging. Add the validation exclusion for the old
+   `reports/retained/` and retire the one generated review in the same step.
    Intermediate relocation commits are not publishable product states.
-5. Promote navigation/references and redirects only with valid destination sets.
-   Validate, run required checks, rescan old forms, and record migration acceptance.
+5. Validate, run required checks, rescan old forms and record acceptance.
+   The relocation covers method and type files only; no retained set moves.
 
 ## Acceptance
 
 - Both contracts are sufficient; the complete per-role packet comparison records
   actual savings and compares the shortening alternative.
-- Current migrated sets validate; content/source/record identities are unchanged
-  outside authorized mechanical edits. Every old/new hash is recorded and pins
-  resolve. Archives and the earlier migration evidence retain exact hashes.
+- The old `reports/` tree is byte for byte unchanged and excluded from
+  validation and from the comparison population. The new collection's
+  `retained/` and `retained-archive/` are empty.
 - Overview links expose members and reconciliation without duplicate synthesis.
 - Readers reproduce the selected source, revision, tier, manifest and memory
   fields; prior runs/archives never join current populations by accident.
-- Publication tests cover initial selection, replacement, failures and interruptions
-  from the publication draft. A stale or invalid reference blocks the site build.
+- Publication tests cover first publication of a system, replacement with the
+  move of the superseded set to the archive, failures and interruptions.
+  Two sets of one source in `retained/`, or a directory whose name does not
+  match its set's source, fail validation.
 - Site boundary tests prevent working-state/candidate/recovery leakage; historical
   public URLs resolve to supported targets.
 - Run focused tests, then `uv run pytest -q` and `uv run ruff check .`; run relevant
   bare commonplace-validate checks and site/redirect checks. Probe package/init
   behavior in a temporary consuming project if affected; never init this checkout.
-- Rescan old forms and record remaining historical hits. Record accepted ADR and
-  migration evidence before commissioning any separate live analysis.
+- Rescan old forms and record remaining historical hits. Record the accepted
+  ADR before commissioning any separate live analysis.

@@ -82,28 +82,25 @@ decision rather than claiming verified observation evidence.
 
 ## First implementation scope
 
-### 1. Supply the enclosing collection contract
+### 1. Supply the enclosing collection contract (deferred to the split)
 
 **Observed problem:** both parallel analysts guessed
 `kb/agentic-systems/reports/COLLECTION.md`, which does not exist. The root
 writing rule requires the destination's collection contract, but the invocation
 does not supply its exact path.
 
-**Result required:** every `AnalyseAgenticSystem.job()` packet supplies the
-actual `kb/agentic-systems/COLLECTION.md` as an explicit method input and
-reading prerequisite. This includes boundary, runtime, memory, epistemic,
-reconciliation, verification, synthesis, and synthesis-verification jobs:
-all author collection artifacts. Its bytes participate in job dependencies
-and its read counts against the 24 KiB batch budget. Do not create a nested
-collection contract or ask each worker to rediscover the same path.
+**Disposition, operator decision 2026-10-03:** do not implement this item
+under this plan. Supplying the current 13.7 KB contract to every job would
+make its full reading cost routine. The
+[report-collection split](./report-collection-split-proposal.md) creates a
+small analysis-only contract, and the relocation supplies that contract to
+every job packet as a `read-first` path and job dependency. Until then the
+packets stay as they are. Do not add a worker exemption from the reading rule.
 
-**Consumer:** `AnalyseAgenticSystem.job()` and its generated reading batches.
-`scripts/analyst_trial.py` uses this class's job builders, not an independent
-packet formatter; test that route without assuming a second producer needs
-patching. Tests must establish the correct absolute path, dependency inclusion,
-and complete reading guidance across the listed jobs and trial use.
-
-This is the highest-priority item if work stops early.
+The requirement carries over to the split's implementation:
+`AnalyseAgenticSystem.job()` supplies the contract by absolute path, its bytes
+participate in job dependencies, and tests establish this for every job and
+for the `scripts/analyst_trial.py` route, which uses the same job builders.
 
 ### 2. Make the quotation batch interface explicit
 
@@ -171,9 +168,16 @@ Reconciliation returned two memory findings: `decay` was interpreted as
 requiring time-based policy, and property mechanisms with different updates
 were combined. It also flagged an inaccurate epistemic checkpoint identifier.
 
-Amend only the relevant job checks: classify from the supplied definitions
-without extra conditions; assess parts separately where consumers, admission,
-or update semantics differ; verify exact code identifiers against source.
+The `decay` finding concerns the memory comparison profile. The operator
+decided on 2026-10-03 to move the profile to its own job; see the
+[comparison-profile job proposal](./comparison-profile-job-proposal.md). Do
+not repair profile classification in the memory job under this plan. The rule
+"classify from the supplied definitions without extra conditions" goes into
+the profile job's instruction.
+
+Amend only the remaining job checks: assess parts separately where consumers,
+admission, or update semantics differ; verify exact code identifiers against
+source.
 Inspect the existing type/job requirements first and strengthen their
 application rather than duplicate long contract passages.
 
@@ -197,6 +201,29 @@ The warrant is column-category conformance, not factual truth or relevance.
 If this needs a grammar change or creates false positives, retain the cases
 and return the design choice to the operator. Do not broadly tighten shared
 record parsing under this item.
+
+### 7. Small repairs found by the complexity measurement
+
+Added on 2026-10-03 from the
+[complexity measurements](./split-drafts/complexity-measurements.md). These
+touch neither the collection contract nor the memory profile.
+
+- **No-ranges rule.** The rule against ID ranges is stated once, in the
+  records contract, and restated only in the two verification job files.
+  Range lapses then appeared in reconcile and synthesize. Restate it in those
+  two job files, in the wording the verification files use.
+- **Unsupplied definitions.** Synthesis needs the self-improving-system
+  definition and record verification needs the boundary contract's
+  boundary-kind definitions; neither packet supplies them. Add them as
+  `read-first` inputs, and check the packet size against the read budget.
+- **Link rule against validator.** The measurement reports, from reading
+  code, that the set-member link validator refuses links to `kb/sources/`
+  and `kb/notes/` that the contracts permit. Confirm by test before changing
+  anything, then make the rule and the validator agree.
+
+Not included: whether the root vocabulary rule binds workers. It accounts for
+every remaining model-resolved reference in the measurement and has no
+recommendation yet; return it to the operator.
 
 ## Verification and integration
 
@@ -227,7 +254,7 @@ TypeScript orchestration, and cross-implementation recovery remain separately
 owned or uncommissioned. This plan does not reopen them. It neither resumes
 the stopped run nor authorizes a new analysis.
 
-After items 1–3, reassess whether the evidence justifies all bounded follow-ups.
+After items 2, 3 and 7, reassess whether the evidence justifies all bounded follow-ups.
 Return to the operator before adding workflow stages, changing comparison
 vocabulary, broadening semantic automation, or expanding the implementation
 scope. A partial result must name completed repairs and remaining items.

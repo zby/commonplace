@@ -245,10 +245,10 @@ Costs and unsettled points:
   accepted. That is the chosen behavior. A note whose claim depends on what a
   specific analysis said must cite the run ID, or its claim can drift from
   its evidence.
-- `retained-archive/` holds two kinds of set: historical analyses under
-  older contracts, and superseded analyses under the current contract. Both
-  are excluded from current validation and from the comparison population.
-  Operator decision, 2026-10-03: superseded sets go to the archive.
+- Superseded sets go to `retained-archive/` by operator decision of
+  2026-10-03. They are excluded from current validation and from the
+  comparison population. Because nothing is migrated, the archive holds no
+  old-contract sets.
 - Old review addresses need a one-time move as each review is regenerated.
   About 65 KB files outside the collection link to
   `kb/agentic-systems/reviews/<slug>.md` today. Use the relocation command so
@@ -265,9 +265,7 @@ that a search for `TODO` over ADRs finds them after this workshop closes.
 
 | From `kb/agentic-systems/` | Disposition |
 |---|---|
-| `reports/state/` | Moves. Stays ignored local state, skipped by ordinary validation. |
-| `reports/retained/` | Moves. |
-| `reports/retained-archive/` | Moves as history. Operator statement, 2026-10-03: the archive serves comparison only and is no procedure's input, so it needs no pin preservation beyond its own bytes. |
+| `reports/state/`, `reports/retained/`, `reports/retained-archive/` | Not migrated. Operator decision, 2026-10-03: every analysis is regenerated under the new method. The new collection starts with empty `state/`, `retained/` and `retained-archive/`. The old `reports/` tree stays where it is as frozen history; see below. |
 | `types/` member types: overview, runtime report, memory report, epistemic report, reconciliation report, analysis set, run state | Move. Type identities change to the new collection's `types/` path. |
 | `types/generated-review.md` | Retire from new-run publication once its consumers read the current-analyses list; preserve historical use as needed. |
 | `reviews/` | Hand-authored reviews stay (12 of the 13 files today). No new generated reviews are written there. The one existing generated review is replaced by its list entry or explicitly retired. |
@@ -280,8 +278,28 @@ type or contract from `kb/agentic-systems/`. The one dependency runs the other
 way: comparison tools in `kb/agentic-systems/` read the current-analyses list
 and the retained sets. No worker packet crosses the boundary.
 
-Moving reports and their types together keeps local type eligibility
-without a resolver exception. ADR 099 rejected "move only the types" for
+**Nothing is migrated.** No retained set, archive or run state moves into the
+new collection, so the split needs no hash map, no repinning and no bounded
+migration authority. Consequences for the old tree:
+
+- The two current sets and the earlier migration report name member types
+  under `agentic-systems/types/`, which move. Once the types move, those sets
+  no longer validate as current sets. Put `reports/retained/` under the same
+  validation exclusion the archive already has. The archive's sets already
+  name contracts that are no longer current, so this follows precedent.
+- The one generated review pins one of those sets. Retire it when the types
+  move, and regenerate that system first so the gap is short.
+- The comparison population is empty until analyses are regenerated. The
+  matrix, landscape synthesis and taxonomy refresh have no current input in
+  that interval.
+- The new `retained-archive/` then holds only superseded sets of the current
+  contract. Historical old-contract sets stay in the old tree, so the two
+  kinds are not mixed.
+- Runs open under the old method finish there or stay as stopped evidence.
+  They are not resumed under the new method.
+
+New collection members and their types share one owner, which keeps local
+type eligibility without a resolver exception. ADR 099 rejected "move only the types" for
 that reason; this proposal does not reopen it.
 
 ### The minimal contract
@@ -358,26 +376,55 @@ Found by search on 2026-10-03; an implementation plan must redo the inventory.
 
 Commit the `commonplace-relocate-*` result alone, without content edits.
 
-## Open decisions
+## Decisions
 
-1. **The two current retained sets and `layout-migration-2026-10-01/`.**
-   The new ADR must explicitly authorize any bounded migration and its hash
-   map; ADR 099 authorized its own migration, not every future move. Decide
-   whether to migrate current sets, keep them until replacement, or retire
-   them under separate authority. The migration report describes the earlier
-   layout and may itself become history.
-2. **Sequencing against the Sol plan.** Recommended: item 1 of that plan
-   becomes "supply the new collection's contract" and depends on this split.
-   If the split is delayed, keep the current contract rule unless the operator
-   separately adopts a scoped exception. Do not silently omit the contract.
-3. **Publication details.** Adopt or change the generated list. Determine
-   whether the current overview already serves a reader as a review; any
-   needed improvement belongs in the overview.
+All decisions below are the operator's, 2026-10-03. The last four adopt the
+agent's recommendations.
+
+- Split over shortening; the collection is `kb/agentic-system-analyses/`.
+- The collection is self-contained: it owns the method, types and publication.
+- The comparison profile moves to its own job.
+- Stable path per system; links follow the newest analysis; superseded sets
+  go to the archive. Both carry revisit conditions in the decision draft.
+- Nothing is migrated; every analysis is regenerated.
+- The old `reports/` tree stays in `kb/agentic-systems/` as frozen history,
+  excluded from validation.
+- The list of current analyses is generated at site build, as designed above.
+- The accepted overview serves as the reader-facing review. Check this on the
+  first regenerated analysis; any needed improvement goes into the overview
+  type, not into a second document.
+- Order of work: the relocation first, which supplies the new contract to
+  job packets; then the profile job. The Sol plan is updated after these are
+  implemented, and its remaining repairs follow.
+
+- The profile job lands before regeneration starts, so each system is
+  regenerated once and has the profile member from the start.
+- No trial run precedes the relocation. The first run after the split is the
+  outcome check.
+- When a system is regenerated, its hand-authored review is retired with the
+  relocation command: inbound links are rewritten to the new stable path and
+  a site redirect is added. The two are not kept side by side.
+- The new collection is a public site section. Only retained members are
+  published; run state stays excluded.
+- Two decision records: one for the collection split and publication, one for
+  the profile job.
+- The boundary job's `opening` input, which its instruction calls publication
+  metadata: establish what the job uses from it, then pass only those values
+  as parameters or reword it as run metadata.
+
+Still with the operator: whether the root vocabulary rule binds workers; who
+implements and where; whether to run the profile replay and on which model;
+and the regeneration order.
+
+No other design decision remains open in this proposal. Implementation still needs
+the checks below, the decision record and the operator's explicit commission.
 
 ## Costs and risks
 
-- This is the second layout migration of these reports within a week. ADR 099
-  moved them on 2026-10-01. The new ADR must state why one contract no
+- This is the second change of ownership for the analysis method and types
+  within a week. ADR 099 moved them on 2026-10-01. No report is migrated this
+  time, but method and type paths change again. The new ADR must state why
+  one contract no
   longer fits the selected priority: analyst input reduction now takes
   precedence over keeping all research artifacts under one contract.
 - It overlaps files with uncommitted isolation work (`SKILL.md`,

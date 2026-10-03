@@ -139,16 +139,18 @@ no consumer needs a reader for both layouts.
   pinned with the records it cites. Comparison tools in `kb/agentic-systems/`
   read it from the retained set.
 
-## Open decisions
+- `verify-profile` is a separate job, to keep independent review. Operator
+  decision, 2026-10-03, adopting the agent's recommendation.
+- The profile job is implemented after the collection relocation, so its
+  type and instructions are written once in the new collection. The `decay`
+  repair from the Sol plan's item 5 moves into the profile job's instruction.
 
-1. **Is `verify-profile` a separate job?** Recommended: yes, to keep
-   independent review. The alternative is code validation only, which checks
-   form and references but not whether a value follows from the records.
-2. **Sequencing against the collection split and the Sol plan.** The new type
-   belongs wherever member types live at the time. Implementing after the
-   relocation avoids touching the same files twice. The Sol plan's item 5
-   repairs the `decay` classification inside the memory job; that part moves
-   to the profile job's instruction instead.
+- The profile job lands before regeneration starts, so each system is
+  regenerated once. It gets its own decision record, separate from the
+  collection split's.
+
+No design decision remains open. Implementation still needs the replay
+below, the ADR check and the operator's explicit commission.
 
 ## Costs and risks
 

@@ -33,13 +33,11 @@ in one commit. The list of current analyses is generated at site build from
 the sets in `retained/`; no list file or per-system reference is committed.
 Comparison tools enumerate the current sets through the same function.
 
-Authorize one bounded migration of the current retained sets, their required
-path/type/link changes and dependent pins. Preserve findings, sources, record/run
-identities and historical method/synthesis provenance. Retain a verified hash map.
-Move historical archives byte for byte, keeping historical type identities and
-validation exclusions; preserve URL navigation through explicit redirects.
-Keep the earlier migration report as historical evidence, with its original map
-and hashes. This authority applies only to the inventoried migration cohort.
+Migrate nothing. Every analysis is regenerated under the new method, and the
+new collection starts empty. The old `kb/agentic-systems/reports/` tree stays
+in place as frozen history, excluded from validation and from the comparison
+population. No hash map or repinning is needed. The one generated review that
+pins an old set is retired when the member types move.
 
 ## Considered alternatives
 
@@ -64,9 +62,13 @@ web addresses stable but not Markdown links inside the KB, which target file
 paths. About 65 KB files link to a review by path. Lost for that reason;
 see the first revisit condition.
 
-**A separate `superseded/` area.** Would keep superseded current-contract
-sets apart from historical old-contract sets. Not chosen, to avoid a third
-area without evidence of need; see the second revisit condition.
+**Migrate the retained sets and archive.** Lost because all analyses are
+regenerated; migration would add a hash map and repinning for sets that are
+about to be replaced.
+
+**A separate `superseded/` area.** Not chosen, to avoid a third area without
+evidence of need. Since nothing is migrated, the new archive holds only
+superseded sets of the current contract; see the second revisit condition.
 
 ## Consequences
 
@@ -109,12 +111,10 @@ Count the inbound links to current paths, how many needed a pinned version,
 and how often a replacement changed a cited finding. The alternative to weigh
 is run-ID directories with generated or committed redirects.
 
-**TODO: revisit the shared archive.** Superseded sets share
-`retained-archive/` with historical sets. Check at the same time as the
-condition above, or earlier if one of these is observed:
+**TODO: revisit the archive for superseded sets.** Superseded sets go to
+`retained-archive/`, which is excluded from current validation. Check at the
+same time as the condition above, or earlier if one of these is observed:
 
-- a reader or tool that cannot tell a superseded current-contract set from a
-  historical old-contract set;
 - a need to validate superseded sets under the current schema, which the
   archive's validation exclusion prevents;
 - a comparison of two analyses of one system that is hard to assemble from
