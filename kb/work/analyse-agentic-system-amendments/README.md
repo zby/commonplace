@@ -49,6 +49,9 @@ analysis, or adopt an ID design by opening.
   proposal awaiting adoption: move analysis reports and their member types to
   a separate collection with a minimal contract; revises ADR 099.
 
+- [Split-case drafts](./split-drafts/README.md) — candidate collection contracts,
+  publication references, migration decisions and static input measurements.
+
 ## State and next actions
 
 2026-10-03: the operator commissioned the [Sol run follow-up
