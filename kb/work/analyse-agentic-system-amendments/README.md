@@ -42,8 +42,20 @@ analysis, or adopt an ID design by opening.
   duplicate identity in the published set.
 - [Second-run trace evidence](./second-run-trace-evidence.md) — hashed
   inventory of the second run's parent and 17 workers, with diagnostic excerpts.
+- [Sol run follow-up plan](./sol-run-follow-up-plan.md) — remaining input,
+  quotation, formatting and classification repairs from the stopped Graphiti
+  run, excluding the separately owned isolation work.
+- [Report-collection split proposal](./report-collection-split-proposal.md) —
+  proposal awaiting adoption: move analysis reports and their member types to
+  a separate collection with a minimal contract; revises ADR 099.
 
 ## State and next actions
+
+2026-10-03: the operator commissioned the [Sol run follow-up
+plan](./sol-run-follow-up-plan.md) after stopping the Graphiti analysis.
+Isolation is being developed separately. This commission authorizes the plan,
+not implementation, recovery, or another live run; the earlier Dynamic
+Cheatsheet disposition remains unchanged.
 
 Done:
 
