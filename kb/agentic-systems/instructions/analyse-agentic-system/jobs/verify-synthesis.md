@@ -36,6 +36,8 @@ Description, Bounded synthesis and Limitations meet the supplied overview
 type, read without the members' context, and carry every `Unresolved conflict:`
 into a limitation with its affected IDs and prevented conclusion. Record the
 checked claims and limits. Structural acceptance does not establish support.
+List every referenced ID in full in your output; ranges such as
+`RT-RTE-1 through RT-RTE-5` and `RT-BAP-1–RT-BAP-2` are refused.
 
 Write no correction. Under Blockers write exactly `none`, or a Markdown list
 with one `- ` entry per blocker, its affected statement and IDs, and what

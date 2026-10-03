@@ -22,8 +22,10 @@ _UNPREFIXED_DECLARATION = re.compile(
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
 _REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
+# "to" connects records in ordinary relation prose; it does not enumerate IDs.
+# Keep explicit interval notation, including adjacent and abbreviated endpoints.
 _RANGE = re.compile(
-    rf"(?<![\w-])(?:{_ID}`?[ \t]*(?:through|to|[–—-])[ \t]*`?"
+    rf"(?<![\w-])(?:{_ID}`?[ \t]*(?:through|[–—-])[ \t]*`?"
     rf"(?:{_ID}|(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)"
     rf"|{_ID}[–-][RO]?\d+)(?![\w-])"
 )

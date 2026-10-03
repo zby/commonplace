@@ -156,3 +156,49 @@ adherence test. The later `dynamic-cheatsheet-02` run remains the live test.
 The completed `-01` set and review are unchanged and remain untracked by this
 commission. The range, verification-output and candidate-identity repairs
 are separate pending steps.
+
+## Remaining repairs before the second full run
+
+On 2026-10-03 the operator authorized the remaining fixes. The range checker
+now permits ordinary `to` relations, including the audited
+`EPI-OBJ-8 to RT-OBJ-1` false positive and `from RT-OBJ-1 to RT-OBJ-2`.
+It continues to refuse explicit dash and `through` intervals, including
+adjacent endpoints and shorthand. The proposed numeric-distance rule was
+not adopted: adjacent dash ranges were real refused forms in the traces.
+
+Regression cases reproduce the run's backticked runtime, memory and
+epistemic ranges, shorthand and relation prose. An integrated fixture
+confirms that verification prose comparing two records is accepted and
+published without a verification retry. Both verification jobs now instruct
+workers to list every ID in full, with refused `through` and adjacent dash
+examples. The containment contract also states that a candidate that can
+replace a record's referent is not thereby its part.
+
+The first focused run exposed a mistake in the new fixture: its comparison
+was put under Blockers rather than under the verification result. After that
+fixture was corrected, its individual run passed. The full suite exposed an
+existing instruction-composition test still requiring the old compact
+allowlist; it now checks repository registration, unrestricted same-commit
+inspection and the distinction between initial coverage and reading permission.
+The final full suite passed all 1,362 tests in 91.43 seconds.
+`uv run ruff check .` passed. The three changed method documents, workshop
+README and recovery-history proposal validate with zero failures or warnings;
+this report is validated before committing. `git diff --check` passed.
+
+The published `-01` set and review validate cleanly and were committed
+unchanged in `0f49f426a`, separately from method fixes. The retained manifest's
+member hashes and the review's manifest hash remain unchanged. Its source
+omissions remain evidence; the next run must supersede the review.
+
+[Workflow recovery history](../../reference/proposals/workflow-recovery-history.md)
+records the need for observable recovery evidence, manual audits, a derived
+summary and separate engine-event retention. It names consumers, coverage
+limits and adoption criteria without selecting a storage implementation.
+Worker-side preflight tooling, run-state storage changes and deferred audit
+items 8–16 remain unadopted.
+
+All pre-run fixes are now implemented. No new analysis run was opened. The
+full `dynamic-cheatsheet-02` run must still test model adherence: whole-system
+coverage including shipped prompts and `run_benchmark.py`, verification without
+range retries, and correct candidate-versus-admitted containment. Deterministic
+tests establish the parser and workflow behavior, not those live outcomes.

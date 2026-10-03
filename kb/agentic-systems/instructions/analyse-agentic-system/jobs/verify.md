@@ -49,6 +49,8 @@ amendments and supersessions against the records they name.
 Record the checked routes and material dispositions, and the check of every
 source anchor, canonical ID, evidence status, boundary, member and unresolved
 conflict. Structural validation does not perform this check.
+List every referenced ID in full in your output; ranges such as
+`RT-RTE-1 through RT-RTE-5` and `RT-BAP-1–RT-BAP-2` are refused.
 
 For a Git source, compare the boundary kind and top-level coverage table
 with the frozen repository tree, not just with the listed citation anchors.

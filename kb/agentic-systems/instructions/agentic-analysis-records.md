@@ -32,8 +32,10 @@ is one level-four heading, `#### RT-OBJ-1 — Short label`. Prose, lists and
 tables do not declare records. Member types specify which empty kind
 headings remain. IDs are unique across the set and resolve within it.
 References use full IDs, separated by commas or words; suffixes and ranges
-are not inferred. Ranges are refused even when both endpoints resolve;
-list every full ID instead. Source quotations and fenced excerpts are excluded from
+are not inferred. Explicit `through` and dash ranges are refused even when
+both endpoints resolve, including adjacent endpoints; list every full ID
+instead. Ordinary `to` prose may relate two records but does not enumerate
+intervening IDs. Source quotations and fenced excerpts are excluded from
 identifier checks.
 
 An annotation, `#### On RT-OBJ-1 — Short label`, supplies another analyst's
@@ -68,6 +70,7 @@ without backticks or other text, and cannot name the declaring record itself.
 Local and set checks enforce its syntax; existing set resolution checks its
 target. Explain a parent of a different record kind beside the relation.
 Semantic verification checks containment; matching kinds alone does not prove it.
+A candidate that can replace a record's referent is not thereby a part of it.
 
 The part owns its fields and status; the container keeps its identity.
 Containment alone requires neither possible-duplicate evidence nor

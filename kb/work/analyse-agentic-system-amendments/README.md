@@ -88,19 +88,19 @@ Done:
   responsibilities, and verification rejects a contradicted frozen boundary
   through the existing problem path. See [implementation checks](./implementation-check.md#repository-registration-and-whole-system-coverage).
 
-Next, in order:
+Fix status and remaining run actions:
 
-1. **Narrow the range check** (`_RANGE` in `agentic_records.py`). A range is
-   two IDs with the same prefix and kind whose numbers ascend by at least 2,
-   or the `RT-OBJ-1–4` shorthand. `EPI-OBJ-8 to RT-OBJ-1` and
-   `RT-OBJ-1 to RT-OBJ-2` are then prose, not ranges. Regression cases: the
-   false positive from the run, the three genuine forms the run produced,
-   and a same-kind adjacent pair.
-2. **Say the range rule where verification writes it.** Add one sentence to
-   `verify.md` and `verify-synthesis.md`: list every ID in full; a range
-   such as `RT-RTE-1 through RT-RTE-5` is refused. Three of three
-   verification jobs lost their retry to this; a text fix is tried before any
-   preflight tool, and the next run measures it.
+1. **Implemented: narrow the range check.** Ordinary `to` prose relates
+   records without enumerating intervening IDs. Explicit dash and `through`
+   intervals remain refused, including adjacent endpoints and shorthand.
+   Same-kind adjacent dash ranges were genuine failures in the run, so the
+   earlier proposed numeric-distance rule was not adopted. Regression tests
+   cover the run's false positive and its actual interval forms.
+2. **Implemented: say the range rule where verification writes it.** Both
+   `verify.md` and `verify-synthesis.md` now say to list every ID in full,
+   including examples of refused `through` and adjacent dash ranges. Three
+   verification jobs lost their retry to ranges; the next run measures
+   whether the text fix prevents recurrence.
 3. **Implemented: fix the register's unit and whole-system coverage.** The
    regression's cause (boundary trace, 22:00–22:03 UTC): the worker listed
    the tree, read README and two implementation files, named five files as
@@ -125,18 +125,19 @@ Next, in order:
    frozen source identity. A contradicted whole-system label requires
    `problem`, since reconciliation cannot repair boundary metadata. The next
    model run still needs to test adherence to these instructions.
-4. **One sentence on candidate versus admitted identity** in the record
-   contract's part rule: a candidate that can replace a record is not a
-   part of it. The semantic verifier caught the case; the sentence makes it
-   cheaper to avoid.
-5. **Commit the published set and review as they stand**, then open
+4. **Implemented: candidate versus admitted identity.** The record contract
+   now states that a candidate that can replace a record's referent is not
+   thereby a part of it. The semantic verifier caught this case in `-01`.
+5. **Preserve the published set and review unchanged**, then open
    `dynamic-cheatsheet-02` with the register including `prompts/` and
-   `run_benchmark.py`. That run tests steps 1 to 4 and supersedes the review.
-   The `-01` set stays as frozen evidence for this workshop; do not edit it.
-6. **Write a design proposal, not code, for recovery history**:
-   `engine.accept` resets `failures` and `history`, so within-job repairs
-   survive only in session traces. The proposal states what a reader of the
-   run state needs; YAGNI until then.
+   `run_benchmark.py`. The preserved `-01` outputs are committed separately
+   as frozen evidence. The next run tests steps 1 to 4 and supersedes the
+   review; launching it remains a separate action.
+6. **Implemented: recovery-history design proposal.**
+   [Workflow recovery history](../../reference/proposals/workflow-recovery-history.md)
+   describes manual audits, a derived summary and separate engine event
+   retention, with consumers, coverage limits and adoption criteria. No
+   run-state storage change is adopted.
 7. **Close** after `-02` publishes with no range false positive, no
    verification retry on ranges, and a register that names the shipped
    prompts. Deferred audit items 8 to 16 stay deferred; none was exercised.

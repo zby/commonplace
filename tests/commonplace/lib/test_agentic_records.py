@@ -368,14 +368,33 @@ SRC-1 is mentioned in prose.
 
 @pytest.mark.parametrize("reference", [
     "RT-OBJ-1 through RT-OBJ-15", "RT-OBJ-1–RT-OBJ-15",
-    "`RT-OBJ-1` to `RT-OBJ-15`", "RT-OBJ-1 - RT-OBJ-15",
+    "`RT-OBJ-1` through `RT-OBJ-15`", "RT-OBJ-1 - RT-OBJ-15",
     "RT-RTE-20–R9", "RT-OBJ-1 through OBJ-15", "RT-OBJ-1–15",
+    "`RT-RTE-1`–`RT-RTE-8`", "`RT-BAP-1`–`RT-BAP-2`",
+    "`RT-CMP-1`–`RT-CMP-2`", "`MEM-OBJ-1`–`MEM-OBJ-2`",
+    "RT-CMP-1–2", "RT-OBJ-1–4", "RT-RTE-1–8", "RT-BAP-1–2",
+    "EPI-OBJ-1–8", "EPI-CLM-1–3", "EPI-CLM-1 through EPI-CLM-3",
+    "RT-OBJ-1 through RT-OBJ-2", "SRC-1 through SRC-2",
 ])
 def test_ranges_are_refused_independently_of_endpoint_resolution(reference: str) -> None:
     body = BASE + reference
     assert any("ranges are not expanded" in error for error in record_reference_errors(body))
     assert any("ranges are not expanded" in error
                for error in set_record_errors({"overview.md": body})[1])
+
+
+@pytest.mark.parametrize("reference", [
+    "The inventory compares `EPI-OBJ-8` to `RT-OBJ-1`.",
+    "Move EPI-OBJ-8 to RT-OBJ-1.",
+    "The comparison goes from RT-OBJ-1 to RT-OBJ-2.",
+    "Compare `RT-OBJ-1` to `RT-OBJ-15`.",
+    "RT-OBJ-1, RT-OBJ-2 and RT-OBJ-15.",
+])
+def test_relation_prose_does_not_enumerate_a_record_range(reference: str) -> None:
+    body = BASE + reference
+    epistemic = "## Shared records\n\n#### EPI-OBJ-8 — Candidate\n"
+    assert record_reference_errors(body) == []
+    assert set_record_errors({"overview.md": body, "epistemic.md": epistemic})[1] == []
 
 
 def test_unresolved_record_suggests_all_prefix_matches_without_changing_identity() -> None:

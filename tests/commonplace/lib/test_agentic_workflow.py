@@ -770,6 +770,16 @@ def test_returning_reconciliation_refuses_ranges_with_declared_endpoints(fixture
     assert "ranges are not expanded" in prompt
 
 
+def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixture) -> None:
+    text = fixture.verification().replace(
+        "its records.", "its records. Compared EPI-OBJ-1 to RT-OBJ-1 at SRC-1."
+    )
+    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(lambda _: text)})
+    results = scripted.run()
+    assert isinstance(results[-1], Done), results[-1]
+    assert scripted.launched.count("verify-0") == 1
+
+
 @pytest.mark.parametrize("returned", [False, True])
 def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
     fixture: Fixture, returned: bool,

@@ -57,12 +57,14 @@ def test_repository_sources_are_read_from_the_frozen_checkout() -> None:
     boundary = job("boundary")
     rules = job("worker-rules")
 
-    assert "compact source allowlist" in boundary
+    assert "the registered unit is the repository at the commit" in boundary
+    assert "the paths you list do not restrict later analysts' inspection" in boundary
     # Code freezes the checkout; the boundary job registers it read-only.
     assert "code has already frozen the checkout at `source-path`" in boundary
     assert "do not clone, fetch, pull, check out, reset or clean" in boundary
     # The boundary validator guarantees the checkout, so jobs read it directly.
     assert "read and grep the files under `source.path`" in rules
+    assert "Listed register paths describe initial inspection, not reading permission" in rules
     assert "do not fetch, check out or copy the source elsewhere" in rules
     # Every analytical worker receives the source and record contracts.
     assert "one code span containing the full commit-relative path" in shared_contract(
