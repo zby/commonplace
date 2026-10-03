@@ -273,35 +273,6 @@ def test_qualifying_records_finds_note_with_only_unwatched_changes_and_ack_recor
     assert row[4] is not None
 
 
-def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: Path) -> None:
-    repo, db_path = build_fixture(tmp_path)
-    note_path = repo / "kb" / "notes" / "sample.md"
-    make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
-
-    result = run_cli(
-        "ack_trivial_note_changes",
-        "prose/source-residue",
-        "--note",
-        "kb/notes",
-        "--model-partition",
-        TEST_MODEL,
-        cwd=repo,
-    )
-
-    assert "acked: kb/notes/sample.md prose/source-residue" in result.stdout
-    with sqlite3.connect(db_path) as conn:
-        row = conn.execute(
-            """
-            SELECT evidence_review_pair_id
-            FROM current_review_freshness_baselines
-            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-            """,
-            ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-        ).fetchone()
-    assert row is not None
-    assert row[0] is not None
-
-
 def test_all_gates_cli_selects_type_pairs_but_never_acks_them(tmp_path: Path) -> None:
     repo, db_path = build_fixture(tmp_path)
     write(

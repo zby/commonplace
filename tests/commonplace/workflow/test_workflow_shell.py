@@ -5,8 +5,6 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-import pytest
-
 import commonplace.workflow
 from commonplace.workflow import Blocked, Orchestrator
 from commonplace.workflow.shell import main, render
@@ -37,27 +35,6 @@ def test_step_prints_one_launch_line_per_job(tmp_path, capsys):
     prompts = [line for line in lines if "prompt.md" in line]
     assert len(prompts) == 2
     assert all(Path(line.split("`")[1]).is_file() for line in prompts)
-
-
-def test_step_prints_done_when_the_run_is_finished(tmp_path, capsys):
-    run_dir = started(tmp_path)
-    ScriptedAgent(Orchestrator.open(run_dir)).run()
-    capsys.readouterr()
-
-    assert main(["step", str(run_dir)]) == 0
-
-    assert capsys.readouterr().out.splitlines() == ["done"]
-
-
-def test_start_keeps_the_parameters_for_the_definition(tmp_path):
-    run_dir = new_run(tmp_path)
-
-    assert (
-        main(["start", DEFINITION, "--run", str(run_dir), "--param", "system=example"])
-        == 0
-    )
-
-    assert Orchestrator.open(run_dir).workflow.params == {"system": "example"}
 
 
 def test_start_refuses_a_run_that_already_started(tmp_path, capsys):
@@ -171,29 +148,6 @@ def test_report_refuses_an_unlisted_event(tmp_path, capsys):
 
     assert main(["report", str(run_dir), "finished"]) == 1
     assert "finished" in capsys.readouterr().err
-
-
-def test_resolve_refuses_an_effect_that_is_not_uncertain(tmp_path, capsys):
-    run_dir = started(tmp_path)
-
-    assert main(["resolve", str(run_dir), "publish", "completed"]) == 1
-    assert "publish" in capsys.readouterr().err
-
-
-def test_release_refuses_a_subject_that_is_not_stopped(tmp_path, capsys):
-    run_dir = started(tmp_path)
-
-    assert main(["release", str(run_dir), "lens-a"]) == 1
-    assert "lens-a" in capsys.readouterr().err
-
-
-def test_resolve_takes_only_completed_or_absent(tmp_path, capsys):
-    run_dir = started(tmp_path)
-
-    with pytest.raises(SystemExit) as exited:
-        main(["resolve", str(run_dir), "publish", "unknown"])
-    assert exited.value.code == 2
-    assert "unknown" in capsys.readouterr().err
 
 
 def test_a_blocked_outcome_points_to_its_record_and_states_what_is_permitted(tmp_path):

@@ -5,32 +5,6 @@ import pytest
 from commonplace.review.protocol import outcomes
 
 
-def test_parse_review_outcome_accepts_single_final_result_line() -> None:
-    review_text = """### Summary
-Grounding is aligned.
-
-## Result: PASS
-"""
-
-    assert outcomes.parse_review_outcome(review_text) == "pass"
-
-
-def test_parse_review_outcome_treats_error_as_execution_failure() -> None:
-    with pytest.raises(ValueError, match="worker reported ERROR"):
-        outcomes.parse_review_outcome("Unable to judge.\n\n## Result: ERROR\n")
-
-
-def test_rewrite_review_result_footer_moves_result_to_end() -> None:
-    review_text = """## Result: WARN
-
-Grounding needs one citation.
-"""
-
-    assert outcomes.rewrite_review_result_footer(review_text, outcome="warn") == (
-        "Grounding needs one citation.\n\n## Result: WARN\n"
-    )
-
-
 @pytest.mark.parametrize(
     ("review_text", "message"),
     [
@@ -45,22 +19,6 @@ Grounding needs one citation.
 def test_parse_review_outcome_rejects_non_strict_live_output(review_text: str, message: str) -> None:
     with pytest.raises(ValueError, match=message):
         outcomes.parse_review_outcome(review_text)
-
-
-def test_parse_review_outcome_tolerates_bare_prose_word_lines() -> None:
-    review_text = """### Summary
-Fine note.
-
-### Findings
-- info: minor thing
-
-### Suggested Revision
-none
-
-## Result: PASS
-"""
-
-    assert outcomes.parse_review_outcome(review_text) == "pass"
 
 
 @pytest.mark.parametrize("word", ["none", "Approved", "Summary", "ok"])

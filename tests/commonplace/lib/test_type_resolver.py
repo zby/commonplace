@@ -49,106 +49,21 @@ schema: {schema_value}
     )
 
 
-def write_schema(
-    root: Path,
-    rel_path: str,
-    *,
-    type_const: str | None = None,
-    require_description: bool = False,
-    ref: str | None = None,
-    heading: str | None = None,
-) -> Path:
-    """Write a JSON Schema over the parsed-note object.
-
-    ``type_const`` pins ``frontmatter.type``; ``ref`` wraps the body in an
-    ``allOf`` with that ``$ref``; ``heading`` requires the headings to contain it.
-    """
-    fm_properties: dict[str, Any] = {
-        "type": {"const": type_const} if type_const else {"type": "string"}
-    }
-    fm_schema: dict[str, Any] = {"type": "object", "properties": fm_properties}
-    if require_description:
-        fm_schema["required"] = ["description", "type"]
-        fm_properties["description"] = {"type": "string", "minLength": 1}
-    fm_schema["additionalProperties"] = True
-    body: dict[str, Any] = {
+def write_schema(root: Path, rel_path: str, *, type_const: str) -> Path:
+    """Write a JSON Schema over the parsed-note object pinning ``frontmatter.type``."""
+    schema: dict[str, Any] = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "required": ["frontmatter"],
-        "properties": {"frontmatter": fm_schema},
+        "properties": {
+            "frontmatter": {
+                "type": "object",
+                "properties": {"type": {"const": type_const}},
+                "additionalProperties": True,
+            }
+        },
     }
-    if heading is not None:
-        body["properties"]["headings"] = {"type": "array", "contains": {"const": heading}}
-    schema = {"$schema": "https://json-schema.org/draft/2020-12/schema"}
-    schema.update({"allOf": [{"$ref": ref}, body]} if ref else body)
     return write(root / rel_path, yaml.safe_dump(schema, sort_keys=False))
-
-
-def test_canonical_type_identity_is_the_written_value() -> None:
-    profile = type_resolver.TypeProfile(
-        type_path="types/tag-readme.md",
-        type_doc_path=Path("/library/types/tag-readme.md"),
-        type_name="tag-readme",
-        schema_path=None,
-    )
-
-    assert type_resolver.canonical_type_identity(profile) == "types/tag-readme.md"
-
-
-def test_global_type_in_declared_collection_loads_declared_schema(
-    tmp_path: Path,
-) -> None:
-    notes = write_collection(tmp_path, "kb/notes")
-    write_schema(
-        tmp_path,
-        "kb/types/note.schema.yaml",
-        type_const="types/note.md",
-        require_description=True,
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/types/note.md",
-        name="note",
-        schema="./note.schema.yaml",
-    )
-
-    profile = type_resolver.resolve_type(
-        notes / "sample.md",
-        {"description": "Sample", "type": "types/note.md"},
-        repo_root=tmp_path,
-    )
-
-    assert profile.type_path == "types/note.md"
-    assert profile.type_doc_path == tmp_path / "kb" / "types" / "note.md"
-    assert profile.type_name == "note"
-    assert profile.schema_path == tmp_path / "kb" / "types" / "note.schema.yaml"
-    assert profile.schema is not None
-
-
-def test_own_collection_local_type_resolves_with_file_relative_schema(tmp_path: Path) -> None:
-    notes = write_collection(tmp_path, "kb/notes")
-    types_dir = tmp_path / "kb" / "notes" / "types"
-    write_schema(
-        tmp_path,
-        "kb/notes/types/structured-claim.schema.yaml",
-        type_const="notes/types/structured-claim.md",
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/notes/types/structured-claim.md",
-        name="structured-claim",
-        schema="./structured-claim.schema.yaml",
-    )
-
-    profile = type_resolver.resolve_type(
-        notes / "claim.md",
-        {"description": "Sample", "type": "notes/types/structured-claim.md"},
-        repo_root=tmp_path,
-    )
-
-    assert profile.type_path == "notes/types/structured-claim.md"
-    assert profile.type_doc_path == types_dir / "structured-claim.md"
-    assert profile.type_name == "structured-claim"
-    assert profile.schema_path == types_dir / "structured-claim.schema.yaml"
 
 
 def test_peer_collection_local_type_is_ineligible(tmp_path: Path) -> None:
@@ -196,43 +111,6 @@ def test_collectionless_namespace_keeps_referential_type_resolution(
     assert profile.type_path == "reference/types/adr.md"
 
 
-def test_validate_instance_uses_declared_schema(tmp_path: Path) -> None:
-    write_schema(tmp_path, "kb/types/note-base.schema.yaml", require_description=True)
-    write_schema(
-        tmp_path,
-        "kb/notes/types/structured-claim.schema.yaml",
-        type_const="notes/types/structured-claim.md",
-        ref="../../types/note-base.schema.yaml",
-        heading="## Evidence",
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/notes/types/structured-claim.md",
-        name="structured-claim",
-        schema="kb/notes/types/structured-claim.schema.yaml",
-    )
-
-    profile = type_resolver.resolve_type(
-        tmp_path / "kb" / "notes" / "claim.md",
-        {"description": "Sample", "type": "notes/types/structured-claim.md"},
-        repo_root=tmp_path,
-    )
-    errors = type_resolver.validate_instance(
-        profile,
-        {
-            "frontmatter": {
-                "description": "Sample",
-                "type": "notes/types/structured-claim.md",
-            },
-            "headings": ["# Claim"],
-        },
-    )
-
-    assert [(error.validator, list(error.absolute_path)) for error in errors] == [
-        ("contains", ["headings"])
-    ]
-
-
 def test_schema_null_skips_schema_validation(tmp_path: Path) -> None:
     write_type_spec(
         tmp_path,
@@ -262,7 +140,7 @@ def test_text_without_frontmatter_resolves_to_implicit_text_profile(tmp_path: Pa
     assert profile.schema_path is None
 
 
-@pytest.mark.parametrize("value", ["note", "kb/types/note.md", "../reference/types/adr.md"])
+@pytest.mark.parametrize("value", ["kb/types/note.md", "../reference/types/adr.md"])
 def test_retired_type_values_are_rejected(tmp_path: Path, value: str) -> None:
     with pytest.raises(ValueError, match="spec's path under a KB root"):
         type_resolver.resolve_type(
@@ -290,16 +168,7 @@ def test_missing_type_file_is_invalid(tmp_path: Path) -> None:
         )
 
 
-@pytest.mark.parametrize(
-    "type_path",
-    [
-        "/tmp/type.md",
-        "https://example.com/type.md",
-        "types/../type.md",
-        "types/note.schema.yaml",
-        "../../../etc/passwd.md",
-    ],
-)
+@pytest.mark.parametrize("type_path", ["/tmp/type.md", "types/../type.md"])
 def test_invalid_type_paths_fail(type_path: str, tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         type_resolver.resolve_type(

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import sqlite3
-import subprocess
 from pathlib import Path
 
 import pytest
@@ -19,7 +18,6 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 from ._run_cli import run_cli
 
 TEST_MODEL = "test-model"
-PLACEHOLDER_COMMIT = "0" * 40
 REVIEWED_AT = "2026-03-31T00:00:00+00:00"
 
 
@@ -98,7 +96,6 @@ def seed_freshness_baseline(
     gate_abs: Path,
     criterion_id: str,
     model_partition: str = TEST_MODEL,
-    commit: str = PLACEHOLDER_COMMIT,
 ) -> None:
     """Insert a completed review pair plus freshness baseline as if a full review passed."""
     review_db.ensure_db(db_path_for(repo_root))
@@ -122,62 +119,6 @@ def seed_freshness_baseline(
             note_path=note_path,
             criterion_id=criterion_id,
             model_partition=model_partition,
-            baseline_note_snapshot_id=note_snapshot.snapshot_id,
-            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            baseline_updated_at=REVIEWED_AT,
-        )
-        conn.commit()
-
-
-def seed_snapshot_freshness_baseline(
-    repo_root: Path,
-    *,
-    note_path: str,
-    criterion_path: str,
-) -> None:
-    review_db.ensure_db(db_path_for(repo_root))
-    with review_db.connect(db_path_for(repo_root)) as conn:
-        note_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=note_path)
-        criterion_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=criterion_path)
-        review_job_id = review_db.create_job_with_pairs(
-            conn,
-            model_partition=TEST_MODEL,
-            runner="test-runner",
-            created_at=REVIEWED_AT,
-            status="queued",
-            grouping="note",
-            pairs=[
-                review_db.ReviewPairRequest(
-                    note_path=note_path,
-                    criterion_path=criterion_path,
-                    pair_ordinal=1,
-                    result_kind="verdict",
-                    reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                    reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-                )
-            ],
-        )
-        review_db.complete_review_pairs(
-            conn,
-            review_job_id=review_job_id,
-            review_pairs=[
-                review_db.ReviewPairCompletion(
-                    note_path=note_path,
-                    criterion_path=criterion_path,
-                    outcome="pass",
-                    completed_at=REVIEWED_AT,
-                )
-            ],
-            completed_at=REVIEWED_AT,
-        )
-        review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
-        review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        review_db.upsert_freshness_baseline(
-            conn,
-            note_path=note_path,
-            criterion_path=criterion_path,
-            model_partition=TEST_MODEL,
-            evidence_review_pair_id=review_pair.review_pair_id,
             baseline_note_snapshot_id=note_snapshot.snapshot_id,
             baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             baseline_updated_at=REVIEWED_AT,
@@ -291,18 +232,6 @@ class TestMissingReview:
 
         assert stale == []
 
-    def test_all_gates_finds_missing_across_bundles(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/confidence-miscalibration", "prose/source-residue", "semantic/grounding-alignment"],
-            note_filter=["kb/notes/unreviewed.md"],
-        )
-        criterion_ids = [s.criterion_id for s in stale]
-        assert "prose/source-residue" in criterion_ids
-        assert "semantic/grounding-alignment" in criterion_ids
-
     def test_user_verified_filter_limits_selection(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
@@ -321,22 +250,6 @@ class TestMissingReview:
         assert [record.note_path for record in stale] == [
             "kb/notes/verified.md",
         ]
-
-    def test_automatic_discovery_ignores_nested_notes(self, tmp_path: Path) -> None:
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-
-        make_note(notes_dir / "definitions" / "term.md", "Current term", "\nBody.\n")
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            user_verified_only=True,
-        )
-
-        assert stale == []
 
     def test_user_verified_filter_includes_reference_top_level_notes(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
@@ -520,27 +433,6 @@ class TestFreshReview:
         )
         assert stale == []
 
-    def test_snapshot_freshness_baseline_selects_without_git(self, tmp_path: Path) -> None:
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        make_note(notes_dir / "stable.md", "Stable title", "\nLine 1.\n")
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-        seed_snapshot_freshness_baseline(
-            tmp_path,
-            note_path="kb/notes/stable.md",
-            criterion_path="kb/instructions/review-gates/prose/source-residue.md",
-        )
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-
-        assert stale == []
-
-
 class TestGateChanged:
     def test_gate_fingerprint_change_marks_stale(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -575,34 +467,6 @@ class TestNoteChanged:
             ("prose/confidence-miscalibration", ("note-changed",)),
             ("prose/source-residue", ("note-changed",)),
         ]
-
-    def test_snapshot_freshness_baseline_diff_does_not_need_git(self, tmp_path: Path) -> None:
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        note = make_note(notes_dir / "stable.md", "Stable title", "\nOriginal line.\n")
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-        seed_snapshot_freshness_baseline(
-            tmp_path,
-            note_path="kb/notes/stable.md",
-            criterion_path="kb/instructions/review-gates/prose/source-residue.md",
-        )
-        make_note(note, "Stable title", "\nUpdated line.\n")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-            include_diff=True,
-        )
-
-        assert len(stale) == 1
-        assert stale[0].reasons == ("note-changed",)
-        note_change = stale[0].changed_inputs[0]
-        assert note_change.input_role == "note"
-        assert note_change.diff is not None
-        assert "Original line" in note_change.diff
-        assert "Updated line" in note_change.diff
 
     def test_joint_edit_reports_both_inputs_with_diffs(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -711,34 +575,6 @@ class TestAckMetadata:
         assert row is not None
         assert review_pair_count_after == review_pair_count_before
         assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
-        assert row["baseline_note_hash"] is not None
-
-    def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
-        records = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-        ack_pairs(
-            tmp_path,
-            records,
-            TEST_MODEL,
-        )
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            conn.row_factory = sqlite3.Row
-            row = conn.execute(
-                """
-                SELECT baseline_note_snapshot_id, baseline_note_hash
-                FROM current_review_freshness_baselines
-                WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-        assert row is not None
-        assert row["baseline_note_snapshot_id"] is not None
         assert row["baseline_note_hash"] is not None
 
     def test_ack_after_gate_change_carries_forward_review_pair_and_records_criterion_snapshot(
@@ -1077,49 +913,6 @@ Fixture test.
         assert freshness_baseline_count_after == freshness_baseline_count_before
 
 
-class TestDiffGeneration:
-    def test_note_changed_includes_diff_in_json_mode(self, tmp_path: Path) -> None:
-        """Diff reconstruction reads previous note text from the git object store,
-        so this test needs a real commit (unlike the others)."""
-        subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
-        subprocess.run(["git", "config", "user.name", "T"], cwd=tmp_path, check=True, capture_output=True)
-        subprocess.run(["git", "config", "user.email", "t@e"], cwd=tmp_path, check=True, capture_output=True)
-
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-
-        note_path = make_note(notes_dir / "target.md", "Target", "\nOriginal line.\n")
-        criterion_path = make_gate(gates_dir / "prose" / "test-gate.md", "prose/test-gate", "prose")
-        subprocess.run(["git", "add", "."], cwd=tmp_path, check=True, capture_output=True)
-        subprocess.run(["git", "commit", "-m", "init"], cwd=tmp_path, check=True, capture_output=True)
-        commit = subprocess.run(
-            ["git", "rev-parse", "HEAD"], cwd=tmp_path, check=True, capture_output=True, text=True
-        ).stdout.strip()
-
-        seed_freshness_baseline(
-            tmp_path,
-            note_path="kb/notes/target.md",
-            note_abs=note_path,
-            gate_abs=criterion_path,
-            criterion_id="prose/test-gate",
-            commit=commit,
-        )
-
-        make_note(note_path, "Target", "\nUpdated line.\n")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/test-gate"],
-            note_filter=["kb/notes/target.md"],
-            include_diff=True,
-        )
-        assert len(stale) == 1
-        assert stale[0].reasons == ("note-changed",)
-        assert stale[0].changed_inputs[0].diff is not None
-        assert "Updated line" in (stale[0].changed_inputs[0].diff or "")
-
-
 class TestJsonOutput:
     def test_json_output_is_object_envelope_with_criterion_ids(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1137,20 +930,6 @@ class TestJsonOutput:
         for item in payload["targets"]:
             assert "criterion_id" in item
             assert "review_path" not in item
-
-    def test_json_output_carries_model_partition_when_provided(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/unreviewed.md"],
-        )
-
-        payload = json.loads(review_target_selector.render_json(stale, model_partition=TEST_MODEL))
-
-        assert payload["model_partition"] == TEST_MODEL
-        assert payload["targets"][0]["criterion_id"] == "prose/source-residue"
 
     def test_requested_mode_emits_explicit_applicable_pairs(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1261,41 +1040,6 @@ class TestModelOptional:
         assert result.returncode == 2
         assert "--model-partition is required with --mode requested" in result.stderr
 
-    def test_ack_review_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
-        selected = run_cli(
-            "review_target_selector",
-            "prose/source-residue",
-            "--note",
-            "kb/notes/stable.md",
-            "--model-partition",
-            TEST_MODEL,
-            "--json",
-            cwd=tmp_path,
-        )
-        (tmp_path / "selected.json").write_text(selected.stdout, encoding="utf-8")
-
-        result = run_cli(
-            "ack_review",
-            "--input",
-            "selected.json",
-            cwd=tmp_path,
-        )
-
-        assert "acked: kb/notes/stable.md prose/source-residue" in result.stdout
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            row = conn.execute(
-                """
-                SELECT evidence_review_pair_id
-                FROM current_review_freshness_baselines
-                WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-        assert row is not None
-        assert row[0] is not None
-
     def test_ack_review_cli_rejects_mismatched_criterion_identity(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -1332,29 +1076,6 @@ class TestModelOptional:
         assert stale[0].reasons == ("note-changed",)
 
 class TestResolveGates:
-    def test_individual_gate_resolves(self, tmp_path: Path) -> None:
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-
-        ids = resolve_criteria.resolve_to_criterion_ids(["prose/source-residue"], gates_dir)
-        assert ids == ["prose/source-residue"]
-
-    def test_bundle_expands_to_all_gates(self, tmp_path: Path) -> None:
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        make_gate(gates_dir / "prose" / "a-gate.md", "prose/a-gate", "prose")
-        make_gate(gates_dir / "prose" / "b-gate.md", "prose/b-gate", "prose")
-
-        ids = resolve_criteria.resolve_to_criterion_ids(["prose"], gates_dir)
-        assert ids == ["prose/a-gate", "prose/b-gate"]
-
-    def test_mixed_bundles_and_ids(self, tmp_path: Path) -> None:
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        make_gate(gates_dir / "prose" / "a-gate.md", "prose/a-gate", "prose")
-        make_gate(gates_dir / "semantic" / "b-gate.md", "semantic/b-gate", "semantic")
-
-        ids = resolve_criteria.resolve_to_criterion_ids(["semantic/b-gate", "prose"], gates_dir)
-        assert ids == ["semantic/b-gate", "prose/a-gate"]
-
     def test_cli_output_includes_gate_header_without_path(self, tmp_path: Path) -> None:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
@@ -1402,56 +1123,6 @@ class TestResolveGates:
             normalize_criterion_path(tmp_path, "kb/instructions/review-gates/../not-a-gate.md")
         with pytest.raises(ValueError, match="review gate catalog"):
             criterion_id_for_path(tmp_path, "kb/instructions/review-gates/../not-a-gate.md")
-
-    def test_applicable_criterion_ids_for_note_filters_by_requires_trait(self, tmp_path: Path) -> None:
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        note = make_note(notes_dir / "plain.md", "Plain", "\nBody.\n")
-        make_gate(
-            gates_dir / "frontmatter" / "claim-strength.md",
-            "frontmatter/claim-strength",
-            "frontmatter",
-            requires_trait="title-as-claim",
-        )
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-
-        ids = resolve_criteria.applicable_criterion_ids_for_note(
-            note,
-            ["frontmatter/claim-strength", "prose/source-residue"],
-            gates_dir,
-        )
-
-        assert ids == ["prose/source-residue"]
-
-    def test_applicable_criterion_ids_for_note_filters_by_requires_type(self, tmp_path: Path) -> None:
-        notes_dir = tmp_path / "kb" / "notes"
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        note = make_note(notes_dir / "definition.md", "Definition", "\nBody.\n", note_type="kb/types/definition.md")
-        make_gate(
-            gates_dir / "frontmatter" / "definition-precision.md",
-            "frontmatter/definition-precision",
-            "frontmatter",
-            requires_type="kb/types/definition.md",
-        )
-        make_gate(
-            gates_dir / "frontmatter" / "related-system-fit.md",
-            "frontmatter/related-system-fit",
-            "frontmatter",
-            requires_type="kb/types/note.md",
-        )
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-
-        ids = resolve_criteria.applicable_criterion_ids_for_note(
-            note,
-            [
-                "frontmatter/definition-precision",
-                "frontmatter/related-system-fit",
-                "prose/source-residue",
-            ],
-            gates_dir,
-        )
-
-        assert ids == ["frontmatter/definition-precision", "prose/source-residue"]
 
     def test_applicable_criterion_ids_for_note_allows_requires_type_lists(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"

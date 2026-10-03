@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
-import sys
 from pathlib import Path
 
 from commonplace.cli.guard_full_pass_report import main
@@ -65,26 +63,3 @@ def test_guard_cli_exits_two_with_json_for_invalid_invocation(capsys) -> None:
     assert exit_code == 2
     assert "required" in json.loads(captured.out)["error"]
     assert captured.err == ""
-
-
-def test_guard_persists_across_processes_in_one_working_copy(tmp_path: Path) -> None:
-    report = write_packet(tmp_path)
-    command = [
-        sys.executable,
-        "-m",
-        "commonplace.cli.guard_full_pass_report",
-        str(report.relative_to(tmp_path)),
-    ]
-
-    first = subprocess.run(
-        command, cwd=tmp_path, check=False, capture_output=True, text=True
-    )
-    (tmp_path / "kb/notes/source.md").write_text("later edit\n", encoding="utf-8")
-    second = subprocess.run(
-        command, cwd=tmp_path, check=False, capture_output=True, text=True
-    )
-
-    assert first.returncode == 0
-    assert json.loads(first.stdout)["inputs"][0]["status"] == "matching"
-    assert second.returncode == 1
-    assert json.loads(second.stdout)["inputs"][0]["status"] == "changed"

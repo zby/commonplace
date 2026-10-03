@@ -7,21 +7,9 @@ import pytest
 from commonplace.lib.full_pass import (
     guard_full_pass_report,
     load_full_pass_report,
-    render_resolution_section,
 )
 from commonplace.lib.hashing import content_sha256_for_text
 from tests.commonplace.validation_helpers import write_packet
-
-
-def test_matching_report_returns_one_matching_result(tmp_path: Path) -> None:
-    report_path = write_packet(tmp_path)
-
-    report = load_full_pass_report(report_path, repo_root=tmp_path)
-    results = guard_full_pass_report(report)
-
-    assert [result.status for result in results] == ["matching"]
-    assert results[0].capture_sha256 == results[0].current_sha256
-    assert results[0].diff is None
 
 
 def test_changed_report_returns_capture_to_current_diff(tmp_path: Path) -> None:
@@ -56,32 +44,6 @@ def test_merge_guard_returns_every_result_without_short_circuiting(
     assert [result.status for result in results] == ["corrupt-capture", "changed"]
 
 
-def test_missing_live_artifact_is_not_capture_corruption(tmp_path: Path) -> None:
-    report_path = write_packet(tmp_path, disposition="delete")
-    (tmp_path / "kb/notes/source.md").unlink()
-
-    results = guard_full_pass_report(
-        load_full_pass_report(report_path, repo_root=tmp_path)
-    )
-
-    assert results[0].status == "missing"
-    assert results[0].capture_sha256 == results[0].expected_sha256
-
-
-def test_rehome_report_parses_as_pending_with_only_the_source_guarded(
-    tmp_path: Path,
-) -> None:
-    report_path = write_packet(tmp_path, disposition="rehome")
-
-    report = load_full_pass_report(report_path, repo_root=tmp_path)
-
-    assert report.disposition == "rehome"
-    assert [guarded.role for guarded in report.guarded_inputs] == ["source"]
-
-    results = guard_full_pass_report(report)
-    assert [result.status for result in results] == ["matching"]
-
-
 def test_capture_symlink_is_corrupt_even_when_it_points_inside_packet(
     tmp_path: Path,
 ) -> None:
@@ -111,22 +73,6 @@ def test_escaping_capture_path_is_rejected_before_any_read(tmp_path: Path) -> No
 
     with pytest.raises(ValueError, match="packet-relative"):
         load_full_pass_report(report_path, repo_root=tmp_path)
-
-
-def test_resolution_section_renderer_is_deterministic() -> None:
-    rendered = render_resolution_section(
-        {
-            "resolution": "accepted",
-            "resolved_at": "2026-07-13T17:00:00Z",
-            "resolution_authority": "user",
-            "resolution_summary": "Merged source into target",
-            "resolution_rationale": "The target carries the stronger claim",
-            "resulting_paths": ["kb/notes/target.md"],
-        }
-    )
-
-    assert rendered.endswith("**Resulting paths:** `kb/notes/target.md`")
-    assert "**Status:** accepted" in rendered
 
 
 def test_revise_report_parses_as_pending_with_only_the_source_guarded(

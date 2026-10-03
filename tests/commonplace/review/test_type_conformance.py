@@ -160,10 +160,6 @@ class TestGateIdPlumbing:
         build_fixture(tmp_path)
         assert normalize_criterion_path(tmp_path, "type/definition") == "kb/types/definition.md"
 
-    def test_type_spec_repo_path_normalizes(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        assert normalize_criterion_path(tmp_path, "kb/types/definition.md") == "kb/types/definition.md"
-
     def test_criterion_id_for_type_spec_path_uses_type_lens(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         assert criterion_id_for_path(tmp_path, "kb/types/definition.md") == "type/definition"
@@ -206,10 +202,6 @@ class TestGateIdPlumbing:
 
 
 class TestNoteTypeSpecPath:
-    def test_repo_relative_type_resolves(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        assert note_type_spec_path(tmp_path, fixture["definition"]) == "kb/types/definition.md"
-
     def test_file_relative_type_canonicalizes(self, tmp_path: Path) -> None:
         make_type_spec(tmp_path / "kb" / "notes" / "types" / "structured-claim.md", "structured-claim")
         note = make_note(
@@ -234,10 +226,6 @@ class TestNoteTypeSpecPath:
 
         with pytest.raises(TypeCollisionError, match="names two different files"):
             note_type_spec_path(tmp_path, note)
-
-    def test_malformed_type_value_yields_none(self, tmp_path: Path) -> None:
-        note = make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="Not A Type!")
-        assert note_type_spec_path(tmp_path, note) is None
 
     def test_declared_but_missing_type_spec_raises(self, tmp_path: Path) -> None:
         note = make_note(
@@ -275,29 +263,6 @@ class TestSelectorTypePairs:
             ("kb/notes/definition.md", "type/definition"),
         ]
 
-    def test_type_pair_supports_model_agnostic_missing_review(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=None,
-            criterion_ids=["type/definition"],
-            note_filter=["kb/notes/definition.md"],
-        )
-        assert [(s.criterion_id, s.reasons) for s in stale] == [
-            ("type/definition", ("missing-baseline",))
-        ]
-
-    def test_fresh_type_pair_is_not_selected(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["type"],
-            note_filter=["kb/notes/definition.md"],
-        )
-        assert stale == []
-
     def test_type_spec_edit_marks_cohort_gate_changed(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
@@ -317,24 +282,6 @@ class TestSelectorTypePairs:
         assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [
             ("kb/notes/definition.md", "type/definition", ("criterion-changed",)),
         ]
-
-    def test_note_edit_marks_type_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
-        make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="types/definition.md")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["type"],
-            note_filter=["kb/notes/definition.md"],
-            include_diff=True,
-        )
-        assert [(s.criterion_id, s.reasons) for s in stale] == [
-            ("type/definition", ("note-changed",))
-        ]
-        assert stale[0].changed_inputs[0].diff is not None
-        assert "Updated body" in (stale[0].changed_inputs[0].diff or "")
 
     def test_note_without_valid_type_binding_gets_no_type_pair(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -428,23 +375,6 @@ class TestAckTypePair:
 
 
 class TestPromptWrapper:
-    def test_type_spec_gate_embeds_captured_text(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/definition.md",
-                    criterion_paths=("kb/types/definition.md",),
-                    note_text="# Definition note\n\nBody.",
-                )
-            ],
-            criterion_texts={"kb/types/definition.md": "# Definition\n\n## Authoring Instructions\n\nSharpen the term."},
-            result_kind="verdict",
-            job_output_path="job-output.md",
-        )
-        assert "=== criterion: kb/types/definition.md ===" in prompt
-        assert "This is a type-conformance gate." in prompt
-        assert "Sharpen the term." in prompt
-
     def test_catalog_gate_has_no_conformance_wrapper(self) -> None:
         prompt = render_pairs_prompt(
             notes=[

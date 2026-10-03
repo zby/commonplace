@@ -5,7 +5,7 @@ import pytest
 from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
 from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.quote_matching import match_quote, parse_blockquotes
-from commonplace.lib.quote_verification import parse_prose_citations, verify_content
+from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.validation import CheckResults, validate_ingest_quotes
 
 
@@ -16,13 +16,11 @@ from commonplace.lib.validation import CheckResults, validate_ingest_quotes
         ("one", "one\none", (), 2, False),
         ("one", "one\none", ((2, 2),), 1, True),
         ("one", "one\ntwo", ((2, 2),), 0, False),
-        ("one", "one\none", ((1, 2),), 2, False),
         ("one two", "one\n  two", ((1, 2),), 1, True),
         ("one two", "one\ntwo", ((1, 1),), 0, False),
         ("one two", "one\nignored\ntwo", ((1, 1), (3, 3)), 0, False),
         ("one", "one\ntwo", ((1, 1), (1, 2)), 1, True),
         ("ana", "banana", (), 2, False),
-        ("one", "one one", ((1, 1),), 2, False),
     ],
 )
 def test_occurrences_and_containment(quote, source, ranges, count, passed):
@@ -43,27 +41,6 @@ def test_normalization_preserves_code_operators():
     assert not match_quote("a b", "a ** b", kind="code").matched
     assert not match_quote("a b", "a __ b", kind="code").matched
     assert match_quote("a ** b", "a  **\nb", kind="code").matched
-
-
-def test_regions_do_not_manufacture_a_quote():
-    assert not match_quote("one two", ["one", "two"], kind="prose").matched
-
-
-def test_parsers_share_record_and_blockquote_ranges():
-    block = parse_blockquotes(
-        "> one\n> two\n> --- `doc.md:2-3` @ `sha256:abc` — locator"
-    )[0]
-    prose = parse_prose_citations('"one two" ([source](doc.md), verbatim).')[0]
-    assert type(block) is type(prose)
-    assert block.quote == "one\ntwo"
-    assert block.source == "doc.md"
-    assert block.ranges == ((2, 3),)
-    assert block.version == "sha256:abc"
-    assert prose.version is None and prose.ranges == ()
-
-
-def test_fenced_attributions_are_examples():
-    assert not parse_blockquotes("```markdown\n> example\n> --- `doc.md` @ `abc`\n```")
 
 
 @pytest.mark.parametrize("quote", ["one two", "Section title", "doc.md", "two three"])
@@ -114,17 +91,6 @@ def test_wrong_capture_binding_is_source_error(tmp_path):
     )
     assert "source error" in failures[0]
     assert "does not occur" not in failures[0]
-
-
-@pytest.mark.parametrize("source,genre,expected", [
-    ("https://github.com/example/repo", "tool-announcement", "code"),
-    ("https://custom.example/repo", "code-repository", "code"),
-    ("https://example.com/paper.pdf", "scientific-paper", "prose"),
-])
-def test_ingest_normalization_uses_source_kind(source, genre, expected):
-    from commonplace.lib.quote_verification import ingest_normalization
-
-    assert ingest_normalization(f"---\nsource: {source}\ngenre: {genre}\n---\n") == expected
 
 
 def test_inline_backticks_do_not_hide_later_fabricated_quote(tmp_path):

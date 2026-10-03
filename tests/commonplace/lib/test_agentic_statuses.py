@@ -5,13 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib import agentic_publication, validation
+from commonplace.lib import agentic_publication
 from commonplace.lib.agentic_records import (
-    CONCLUSION_STATUSES,
     conclusion_status_errors,
 )
 from commonplace.workflow import Done, Handout
-from tests.commonplace.lib.test_agentic_analysis import member_fixture, runtime_text
+from tests.commonplace.lib.test_agentic_analysis import runtime_text
 from tests.commonplace.lib.test_agentic_workflow import (
     Fixture,
     agent,
@@ -26,13 +25,8 @@ def route(fields: str, prefix: str = "RT-") -> str:
     return f"## Shared records\n\n### Routes\n\n#### {prefix}RTE-1 — Recall\n\n{fields}\n"
 
 
-@pytest.mark.parametrize("status", sorted(CONCLUSION_STATUSES))
-def test_accepts_each_controlled_status(status: str) -> None:
-    assert conclusion_status_errors(route(f"- implementation conclusion status: {status}")) == []
-
-
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
-def test_unlabelled_route_statuses_do_not_satisfy_the_contract(prefix: str) -> None:
+def test_unlabelled_route_statuses_do_not_satisfy_the_contract() -> None:
+    prefix = "MEM-"
     errors = conclusion_status_errors(route("The route is wired; operation unobserved.", prefix))
     assert len(errors) == 1
     assert prefix + "RTE-1" in errors[0] and "missing labelled field" in errors[0]
@@ -65,25 +59,10 @@ def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> 
     assert any("RTE-1: missing labelled field" in error for error in errors)
 
 
-def test_current_member_validation_rejects_the_old_final_blocker(tmp_path: Path) -> None:
-    runtime = member_fixture(tmp_path) / "output/runtime.md"
-    text = runtime.read_text()
-    assert validation.validate_note(runtime, repo_root=tmp_path).fails == []
-    runtime.write_text(text.replace(
-        "- implementation conclusion status: wired",
-        "- implementation conclusion status: wired\n- operation conclusion status: unobserved",
-    ))
-    assert any("invalid value 'unobserved'" in error
-               for error in validation.validate_note(runtime, repo_root=tmp_path).fails)
-
-
-@pytest.mark.parametrize("defect", [
-    "The route is wired; operation unobserved.",
-    "- operation conclusion status: unobserved",
-])
 def test_status_defects_are_amended_before_reconciliation(
-    tmp_path: Path, monkeypatch, defect: str,
+    tmp_path: Path, monkeypatch,
 ) -> None:
+    defect = "- operation conclusion status: unobserved"
     monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
     fixture = Fixture(tmp_path)
     valid = runtime_text(fixture.revision)

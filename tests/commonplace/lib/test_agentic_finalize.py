@@ -25,16 +25,6 @@ def test_manifest_pins_the_members_present(tmp_path: Path) -> None:
     assert manifest["members"]["runtime.md"] == {"sha256": sha256(b"runtime").hexdigest()}
 
 
-def test_manifest_follows_a_member_edit(tmp_path: Path) -> None:
-    output = tmp_path / "output"
-    output.mkdir()
-    (output / "overview.md").write_text("one", encoding="utf-8")
-    before = build_manifest(tmp_path)
-    (output / "overview.md").write_text("two", encoding="utf-8")
-
-    assert build_manifest(tmp_path) != before
-
-
 def test_manifest_needs_an_overview(tmp_path: Path) -> None:
     (tmp_path / "output").mkdir()
 

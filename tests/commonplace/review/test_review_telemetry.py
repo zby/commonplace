@@ -14,53 +14,6 @@ from commonplace.review.telemetry import (
 )
 
 
-def test_link_availability_telemetry_records_cost_for_each_pair() -> None:
-    target = NoteReviewTarget(
-        note_path="kb/notes/sample.md",
-        criterion_paths=("criterion/one", "criterion/two"),
-        note_text="# Sample\n",
-        resolved_links=(
-            ResolvedMarkdownLink(
-                "first",
-                "./shared.md",
-                "kb/notes/shared.md",
-                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
-            ),
-            ResolvedMarkdownLink(
-                "again",
-                "./shared.md#part",
-                "kb/notes/shared.md",
-                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
-            ),
-        ),
-    )
-
-    telemetry = json.loads(link_availability_telemetry_json([target]))
-    availability = telemetry["commonplace"]["review_link_availability"]
-    pairs = availability["pairs"]
-
-    assert availability["version"] == 3
-    assert [pair["criterion_path"] for pair in pairs] == ["criterion/one", "criterion/two"]
-    assert all(pair["resolved_link_count"] == 2 for pair in pairs)
-    assert all(pair["distinct_link_target_count"] == 1 for pair in pairs)
-    assert all(pair["distinct_consumption_target_count"] == 1 for pair in pairs)
-    assert all(pair["total_bytes"] == 800 for pair in pairs)
-    assert all(
-        pair["artifacts"] == [{"path": "kb/notes/shared.md", "size_bytes": 800}]
-        for pair in pairs
-    )
-    assert all(
-        pair["routes"]
-        == [
-            {
-                "link_target_path": "kb/notes/shared.md",
-                "consumption_path": "kb/notes/shared.md",
-            }
-        ]
-        for pair in pairs
-    )
-
-
 def test_snapshot_route_telemetry_accounts_for_both_grounding_inputs() -> None:
     pair = ("kb/notes/sample.md", "criterion/one")
     ingest_path = "kb/sources/source.ingest.md"

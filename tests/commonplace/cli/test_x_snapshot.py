@@ -2,15 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 import pytest
 import yaml
-
-SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import x_snapshot
 from commonplace.lib.naming import MAX_INGEST_SNAPSHOT_SLUG_LENGTH

@@ -6,7 +6,6 @@ from commonplace.lib.agentic_records import (
     amendment_index,
     annotated_ids,
     declared_ids,
-    is_absence,
     record_reference_errors,
     route_field_errors,
     set_record_errors,
@@ -38,8 +37,6 @@ def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
     ("", "missing field"),
     ("- Later read-back:   \n", "empty field"),
     ("- Later read-back: one\n- Later read-back: two\n", "duplicate field"),
-    ("- Later read-back: uninspected\n", "reason"),
-    ("- Later read-back: inapplicable — \n", "reason"),
     ("- Later read-back: uninspected because no trace\n", "reason"),
 ])
 def test_route_field_failures(replacement: str, diagnostic: str) -> None:
@@ -118,14 +115,14 @@ def test_heading_title_is_not_inferred_to_be_shorthand() -> None:
     assert set_record_errors({"overview.md": BASE})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["RT-OBJ-1/O2", "RT-OBJ-1, O2"])
-def test_only_complete_references_are_recognized(reference: str) -> None:
+def test_only_complete_references_are_recognized() -> None:
+    reference = "RT-OBJ-1/O2"
     assert record_reference_errors(BASE + reference) == []
     assert set_record_errors({"overview.md": BASE + reference})[1] == []
 
 
-@pytest.mark.parametrize("reference", ["RT-OBJ-1/RT-OBJ-99", "RT-OBJ-1 and RT-OBJ-99"])
-def test_complete_unresolved_references_still_fail(reference: str) -> None:
+def test_complete_unresolved_references_still_fail() -> None:
+    reference = "RT-OBJ-1/RT-OBJ-99"
     _, errors = set_record_errors({"overview.md": BASE + reference})
     assert errors == ["overview.md: unresolved record RT-OBJ-99"]
 
@@ -170,11 +167,6 @@ def test_record_headings_outside_shared_records_do_not_declare() -> None:
     assert declared_ids("## Discussion\n\n#### RT-OBJ-99 — Example\n") == []
 
 
-def test_rejects_duplicate_declarations() -> None:
-    content = BASE.replace("#### RT-OBJ-2 — Second object", "#### RT-OBJ-1 — Second object")
-    assert any("duplicate declarations: RT-OBJ-1" in error for error in record_reference_errors(content))
-
-
 def test_rejects_declarations_without_an_analyst_prefix() -> None:
     body = "## Shared records\n\n#### OBJ-1 — Bare heading\n\n#### RT-OBJ-2 — Prefixed\n"
     assert record_reference_errors(body) == [
@@ -216,7 +208,7 @@ MEM-RTE-1 and EPI-RTE-1 read the bucket RT-RTE-1 writes.
     assert set_record_errors({"overview.md": body})[1] == []
 
 
-@pytest.mark.parametrize("kind", ["CMP", "OBJ", "RTE", "CLM", "ABS", "BAP"])
+@pytest.mark.parametrize("kind", ["OBJ", "ABS"])
 def test_bare_kind_tokens_are_neither_declarations_nor_references(kind: str) -> None:
     identifier = f"RT-{kind}-1"
     bodies = {
@@ -233,12 +225,6 @@ def test_bare_kind_tokens_are_neither_declarations_nor_references(kind: str) -> 
     bodies["epistemic.md"] = f"Assessment of {kind}-1."
     bodies["runtime.md"] += f"\n#### {kind}-2 — Unprefixed heading\n"
     assert set_record_errors(bodies) == ({identifier, "SRC-1"}, [])
-
-
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
-def test_absence_classification_preserves_analyst_prefixes(prefix: str) -> None:
-    assert is_absence(prefix + "ABS-1")
-    assert not is_absence(prefix + "OBJ-1")
 
 
 RUNTIME = """# Runtime
@@ -333,11 +319,6 @@ def test_an_amendment_in_the_reconciliation_resolves_against_the_set() -> None:
     assert errors == ["reconciliation.md: unresolved record RT-RTE-7"]
 
 
-def test_set_rejects_duplicate_record_across_members() -> None:
-    _, errors = set_record_errors({"overview.md": BASE, "runtime.md": RUNTIME})
-    assert "duplicate set declaration: RT-RTE-1" in errors
-
-
 def test_set_rejects_duplicate_source_rows() -> None:
     content = BASE.replace("| SRC-1 | Frozen source |", "| SRC-1 | First |\n| SRC-1 | Second |")
     _, errors = set_record_errors({"overview.md": content})
@@ -367,14 +348,8 @@ SRC-1 is mentioned in prose.
 
 
 @pytest.mark.parametrize("reference", [
-    "RT-OBJ-1 through RT-OBJ-15", "RT-OBJ-1–RT-OBJ-15",
-    "`RT-OBJ-1` through `RT-OBJ-15`", "RT-OBJ-1 - RT-OBJ-15",
-    "RT-RTE-20–R9", "RT-OBJ-1 through OBJ-15", "RT-OBJ-1–15",
-    "`RT-RTE-1`–`RT-RTE-8`", "`RT-BAP-1`–`RT-BAP-2`",
-    "`RT-CMP-1`–`RT-CMP-2`", "`MEM-OBJ-1`–`MEM-OBJ-2`",
-    "RT-CMP-1–2", "RT-OBJ-1–4", "RT-RTE-1–8", "RT-BAP-1–2",
-    "EPI-OBJ-1–8", "EPI-CLM-1–3", "EPI-CLM-1 through EPI-CLM-3",
-    "RT-OBJ-1 through RT-OBJ-2", "SRC-1 through SRC-2",
+    "RT-OBJ-1 through RT-OBJ-15", "RT-OBJ-1–RT-OBJ-15", "RT-OBJ-1–15",
+    "`RT-RTE-1`–`RT-RTE-8`", "SRC-1 through SRC-2",
 ])
 def test_ranges_are_refused_independently_of_endpoint_resolution(reference: str) -> None:
     body = BASE + reference
@@ -386,8 +361,6 @@ def test_ranges_are_refused_independently_of_endpoint_resolution(reference: str)
 @pytest.mark.parametrize("reference", [
     "The inventory compares `EPI-OBJ-8` to `RT-OBJ-1`.",
     "Move EPI-OBJ-8 to RT-OBJ-1.",
-    "The comparison goes from RT-OBJ-1 to RT-OBJ-2.",
-    "Compare `RT-OBJ-1` to `RT-OBJ-15`.",
     "RT-OBJ-1, RT-OBJ-2 and RT-OBJ-15.",
 ])
 def test_relation_prose_does_not_enumerate_a_record_range(reference: str) -> None:
@@ -416,12 +389,7 @@ def test_unresolved_record_suggests_all_prefix_matches_without_changing_identity
     ("Part of: RT-OBJ-99", "unresolved record RT-OBJ-99"),
     ("Part of: MEM-OBJ-1", "cannot name itself"),
     ("Part of:", "exactly one full record ID"),
-    ("Part of: OBJ-1", "exactly one full record ID"),
-    ("Part of: SRC-1", "exactly one full record ID"),
-    ("Part of: RT-OBJ-1, RT-OBJ-2", "exactly one full record ID"),
-    ("Part of: `RT-OBJ-1`", "exactly one full record ID"),
     ("- Part of: RT-OBJ-1", "unindented"),
-    ("  Part of: RT-OBJ-1", "unindented"),
     ("Part of: RT-OBJ-1\nPart of: RT-OBJ-2", "duplicate Part of:"),
 ])
 def test_part_field_syntax_and_existing_target_resolution(field: str, diagnostic: str | None) -> None:

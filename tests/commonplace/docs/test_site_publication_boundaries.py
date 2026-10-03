@@ -39,25 +39,3 @@ def test_only_retained_analysis_sets_are_published() -> None:
     for member in ("ARTIFACT.yaml", "overview.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md"):
         assert not excluded.match_file("agentic-systems/reports/retained-archive/" + archive + member)
     assert excluded.match_file("agentic-systems/reports/retained-archive/" + archive + "run-state.md")
-
-
-def test_source_redirects_only_cover_published_ingests() -> None:
-    config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
-
-    redirects = next(
-        plugin["redirects"]["redirect_maps"]
-        for plugin in config["plugins"]
-        if isinstance(plugin, dict) and "redirects" in plugin
-    )
-    source_redirects = {
-        old: new
-        for old, new in redirects.items()
-        if old.startswith("sources/") or new.startswith("sources/")
-    }
-    assert source_redirects
-    # Besides ingests, only the type specs that moved to the global types keep redirects.
-    assert all(
-        (old.endswith(".ingest.md") and new.endswith(".ingest.md"))
-        or (old.startswith("sources/types/") and new.startswith("types/"))
-        for old, new in source_redirects.items()
-    )

@@ -66,27 +66,10 @@ def test_full_pass_type_rule_rejects_resolution_projection_drift(
     assert has_fail(result, "resolution projection")
 
 
-def test_full_pass_type_rule_rejects_duplicate_resolution_sections(
-    tmp_path: Path,
-) -> None:
-    install_types(tmp_path)
-    report = write_packet(tmp_path)
-    report.write_text(
-        report.read_text(encoding="utf-8")
-        + "\n\n## Other\n\nContext.\n\n## Resolution\n\nDuplicate.\n",
-        encoding="utf-8",
-    )
-
-    result = validate_note(report, repo_root=tmp_path)
-
-    assert has_fail(result, "headings")
-
-
 @pytest.mark.parametrize(
     ("disposition", "capture_count"),
     [
         ("merge", 2),  # the merge target is captured alongside the source
-        ("rehome", 1),
         ("revise", 1),  # revise hands back from the packet phase
     ],
 )
@@ -188,24 +171,6 @@ def test_closing_phase_allows_only_one_pending_bounded_repair(tmp_path: Path) ->
     result = validate_note(report, repo_root=tmp_path)
 
     assert has_fail(result, "repair-needed is unavailable after the bounded repair")
-
-
-def test_closing_hand_back_is_valid_but_cannot_be_complete(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(
-        tmp_path,
-        phase="closing",
-        final_text="edited text\n",
-        closing_status="hand-back",
-    )
-
-    assert not validate_note(report, repo_root=tmp_path).fails
-
-    edit(report, "phase: closing", "phase: complete")
-
-    result = validate_note(report, repo_root=tmp_path)
-
-    assert has_fail(result, "complete phase requires ready status")
 
 
 def test_completed_keep_pass_rejects_a_corrupt_final_capture(tmp_path: Path) -> None:

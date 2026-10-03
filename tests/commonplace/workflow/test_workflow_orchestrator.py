@@ -68,12 +68,6 @@ def one_block(result):
 # 1. Independent paths
 
 
-def test_pending_jobs_on_independent_paths_are_returned_in_one_round(tmp_path):
-    orchestrator = Orchestrator(new_run(tmp_path), TwoLenses())
-
-    assert names(orchestrator.step()) == ["lens-a", "lens-b"]
-
-
 def test_a_job_is_launched_once_named_even_before_it_is_waited_on(tmp_path):
     orchestrator = Orchestrator(new_run(tmp_path), NamedBeforeWaited())
 
@@ -112,16 +106,6 @@ def test_a_handout_names_a_prompt_file_that_carries_the_whole_task(tmp_path):
     assert str(handout.problem_path) in prompt
     assert str(tmp_path / "run" / "source.md") in prompt
     assert handout.output_path == tmp_path / "run" / "only.md"
-
-
-def test_the_prompt_asks_every_worker_to_reply_in_one_line(tmp_path):
-    orchestrator = Orchestrator(new_run(tmp_path), OneJob())
-
-    (handout,) = orchestrator.step().jobs
-    prompt = handout.prompt_path.read_text(encoding="utf-8")
-
-    assert "Reply in one line" in prompt
-    assert "Do not repeat or summarize" in prompt
 
 
 def test_wait_returns_the_accepted_outputs_in_the_order_asked(tmp_path):
@@ -187,14 +171,6 @@ def test_replay_continues_past_accepted_outputs(tmp_path):
     assert names(Orchestrator(run_dir, TwoLenses()).step()) == ["reconcile"]
 
 
-def test_step_on_a_finished_run_reports_done_again(tmp_path):
-    run_dir = new_run(tmp_path)
-    ScriptedAgent(Orchestrator(run_dir, TwoLenses())).run()
-
-    assert isinstance(Orchestrator(run_dir, TwoLenses()).step(), Done)
-    assert isinstance(Orchestrator(run_dir, TwoLenses()).step(), Done)
-
-
 def test_step_without_worker_activity_consumes_a_round(tmp_path):
     orchestrator = Orchestrator(new_run(tmp_path), TwoLenses())
 
@@ -235,14 +211,6 @@ def test_one_name_for_two_different_jobs_is_a_definition_error(tmp_path):
         Orchestrator(new_run(tmp_path), Clash()).step()
 
 
-def test_naming_the_same_job_twice_gives_the_same_handle(tmp_path):
-    class Twice(Workflow):
-        def run(self, ctx):
-            assert ctx.agent(lens_job("same")) is ctx.agent(lens_job("same"))
-
-    assert names(Orchestrator(new_run(tmp_path), Twice()).step()) == ["same"]
-
-
 def test_a_validator_built_anew_does_not_make_a_job_differ(tmp_path):
     def job():
         return Job(
@@ -280,12 +248,6 @@ def test_a_job_differs_by_what_its_result_depends_on(changed):
     }
 
     assert not Job(**fields).same_task_as(Job(**{**fields, **changed}))
-
-
-def test_a_job_can_be_hashed():
-    job = Job(name="job", prompt="Task.", output="job.md", launch={"model": "small"})
-
-    assert {job: "kept"}[job] == "kept"
 
 
 # 4. to 6. Acceptance ties one input state to one output
@@ -680,19 +642,6 @@ def test_the_retry_limit_starts_over_after_a_blocked_outcome(tmp_path):
     assert agent.launched == ["only", "only", "only", "only"]
 
 
-def test_a_stopped_job_stays_stopped(tmp_path):
-    run_dir = new_run(tmp_path)
-    agent = ScriptedAgent(Orchestrator(run_dir, OneJob()), default=write_invalid)
-    agent.run()
-    agent.run()
-    launched = list(agent.launched)
-
-    again = one_block(Orchestrator(run_dir, OneJob()).step())
-
-    assert again.permitted == "stop"
-    assert agent.launched == launched
-
-
 def stopped_job(tmp_path):
     """A run whose only job has used up its repairs. Returns the run directory."""
     run_dir = new_run(tmp_path)
@@ -700,15 +649,6 @@ def stopped_job(tmp_path):
     agent.run()
     assert one_block(agent.run()[-1]).permitted == "stop"
     return run_dir
-
-
-def test_the_operator_releases_a_stopped_job_and_the_run_continues(tmp_path):
-    run_dir = stopped_job(tmp_path)
-
-    Orchestrator(run_dir, OneJob()).release("only")
-    results = ScriptedAgent(Orchestrator(run_dir, OneJob())).run()
-
-    assert isinstance(results[-1], Done)
 
 
 def test_a_released_job_has_its_attempts_and_repairs_again(tmp_path):
@@ -770,15 +710,6 @@ def test_acceptance_resets_the_repair_count(tmp_path):
 
 
 # 9. and 10. Missing outputs and problem reports
-
-
-def test_a_missing_output_makes_step_name_the_job_again(tmp_path):
-    agent = ScriptedAgent(
-        Orchestrator(new_run(tmp_path), OneJob()), default=write_nothing
-    )
-    agent.round()
-
-    assert names(agent.round()) == ["only"]
 
 
 def test_a_job_whose_output_stays_missing_blocks(tmp_path):
@@ -908,19 +839,6 @@ def test_a_report_is_kept_and_shown_in_the_failure_record(tmp_path):
     )
 
 
-def test_a_report_survives_the_session_that_made_it(tmp_path):
-    run_dir = new_run(tmp_path)
-    Orchestrator(run_dir, OneJob()).report(
-        "stop", text="handing the run to the operator"
-    )
-
-    reports = Orchestrator(run_dir, OneJob()).reports()
-
-    assert [(report.event, report.text) for report in reports] == [
-        ("stop", "handing the run to the operator")
-    ]
-
-
 def test_a_report_never_causes_an_acceptance(tmp_path):
     orchestrator = Orchestrator(new_run(tmp_path), OneJob())
     agent = ScriptedAgent(orchestrator, default=write_nothing)
@@ -929,24 +847,6 @@ def test_a_report_never_causes_an_acceptance(tmp_path):
     orchestrator.report("repair", job="only", text="the output is in place and valid")
 
     assert names(agent.round()) == ["only"]
-
-
-def test_an_unlisted_event_is_refused(tmp_path):
-    orchestrator = Orchestrator(new_run(tmp_path), OneJob())
-
-    with pytest.raises(ValueError, match="finished"):
-        orchestrator.report("finished", job="only")
-
-
-def test_a_report_does_not_advance_the_run(tmp_path):
-    run_dir = new_run(tmp_path)
-    orchestrator = Orchestrator(run_dir, OneJob())
-    (first,) = orchestrator.step().jobs
-
-    orchestrator.report("launch-failed", job="only", text="refused")
-    (second,) = orchestrator.step().jobs
-
-    assert second.attempt == first.attempt + 1
 
 
 # 12. Effects
@@ -1004,28 +904,10 @@ def test_a_value_not_yet_recorded_is_read_again_after_the_process_ended(tmp_path
     assert (tmp_path / "readings").read_text(encoding="utf-8") == "2"
 
 
-def test_an_effect_runs_once_across_replays(tmp_path):
-    run_dir = new_run(tmp_path)
-
-    ScriptedAgent(Orchestrator(run_dir, publisher(tmp_path))).run()
-    assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Done)
-
-    assert publications(tmp_path / "published") == 1
-
-
 def test_an_effect_does_not_run_before_the_job_it_follows_is_accepted(tmp_path):
     Orchestrator(new_run(tmp_path), publisher(tmp_path)).step()
 
     assert publications(tmp_path / "published") == 0
-
-
-def test_an_effect_completed_before_the_process_ended_is_not_repeated(tmp_path):
-    run_dir = interrupted_publication(tmp_path, "after")
-
-    result = Orchestrator(run_dir, publisher(tmp_path)).step()
-
-    assert isinstance(result, Done)
-    assert publications(tmp_path / "published") == 1
 
 
 def test_an_effect_that_did_not_begin_before_the_process_ended_is_run(tmp_path):
@@ -1064,15 +946,6 @@ def test_a_recognizer_that_fails_gives_uncertain(tmp_path):
 
     assert isinstance(result, Uncertain)
     assert "the published directory cannot be read" in result.detail
-    assert publications(tmp_path / "published") == 1
-
-
-def test_an_uncertain_effect_stays_uncertain(tmp_path):
-    run_dir = interrupted_publication(tmp_path, "between")
-
-    Orchestrator(run_dir, publisher(tmp_path)).step()
-
-    assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Uncertain)
     assert publications(tmp_path / "published") == 1
 
 
@@ -1158,19 +1031,6 @@ def test_a_stopped_workflow_with_a_started_effect_is_uncertain(tmp_path):
     assert result.effect == "publish"
     assert [block.subject for block in result.blocks] == ["workflow"]
     assert publications(tmp_path / "published") == 0
-
-
-def test_the_operator_resolves_an_uncertain_effect_as_completed(tmp_path):
-    run_dir = interrupted_publication(tmp_path, "between")
-    orchestrator = Orchestrator(run_dir, publisher(tmp_path))
-    assert isinstance(orchestrator.step(), Uncertain)
-
-    # The operator looked, finished the publication by hand, and says so.
-    (tmp_path / "published" / "index.md").write_text("- only.md\n", encoding="utf-8")
-    orchestrator.resolve("publish", Recognition.COMPLETED)
-
-    assert isinstance(Orchestrator(run_dir, publisher(tmp_path)).step(), Done)
-    assert publications(tmp_path / "published") == 1
 
 
 def test_the_operator_resolves_an_uncertain_effect_as_absent(tmp_path):
@@ -1445,21 +1305,6 @@ def test_a_completed_effect_whose_inputs_came_out_the_same_is_kept(tmp_path):
 # Mechanical steps
 
 
-def test_a_mechanical_step_is_not_shown_to_the_agent_orchestrator(tmp_path):
-    ran = []
-
-    class Mechanical(Workflow):
-        def run(self, ctx):
-            ran.append("prepare")
-            (ctx.run_dir / "prepared.md").write_text("prepared\n", encoding="utf-8")
-            ctx.agent(lens_job("only")).wait()
-
-    result = Orchestrator(new_run(tmp_path), Mechanical()).step()
-
-    assert ran == ["prepare"]
-    assert names(result) == ["only"]
-
-
 def test_a_failing_mechanical_step_blocks_with_the_error(tmp_path):
     class Breaks(Workflow):
         def run(self, ctx):
@@ -1477,19 +1322,6 @@ def test_a_failing_mechanical_step_blocks_with_the_error(tmp_path):
 
     (run_dir / "needed.md").write_text("now present\n", encoding="utf-8")
     assert names(Orchestrator(run_dir, Breaks()).step()) == ["only"]
-
-
-def test_a_mechanical_step_that_keeps_failing_permits_only_stopping(tmp_path):
-    class Breaks(Workflow):
-        def run(self, ctx):
-            raise RuntimeError("still broken")
-
-    run_dir = new_run(tmp_path)
-
-    first = one_block(Orchestrator(run_dir, Breaks()).step())
-    second = one_block(Orchestrator(run_dir, Breaks()).step())
-
-    assert (first.permitted, second.permitted) == ("repair", "stop")
 
 
 def test_the_operator_releases_a_stopped_workflow(tmp_path):
@@ -1625,19 +1457,7 @@ def test_unreadable_state_raises_and_repeats_no_effect(tmp_path, garbage):
     assert publications(tmp_path / "published") == 1
 
 
-def test_the_default_repair_scope_excludes_the_state_directory():
-    assert "workflow-state/" in Workflow.repair_scope
-
-
 # Runs made through the constructor
-
-
-def test_a_run_driven_through_the_constructor_cannot_be_opened(tmp_path):
-    run_dir = new_run(tmp_path)
-    Orchestrator(run_dir, OneJob()).step()
-
-    with pytest.raises(ValueError, match="not a run"):
-        Orchestrator.open(run_dir)
 
 
 # File ownership

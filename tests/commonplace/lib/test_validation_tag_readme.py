@@ -135,6 +135,7 @@ def test_membership_ignores_undeclared_collections_and_the_proposal_archive(
     write(tmp_path / "kb" / "work" / "COLLECTION.md", "# Work collection\n")
     note(tmp_path / "kb" / "work" / "draft.md", ["kb-design"])
     note(tmp_path / "kb" / "reference" / "proposals" / "archive" / "old.md", ["kb-design"])
+    note(tmp_path / "kb" / "notes" / "member.replaced.1.md", ["kb-design"])
     note(tmp_path / "kb" / "notes" / "member.md", ["kb-design"])
     readme = tag_readme(
         tags / "kb-design-README.md",
@@ -242,31 +243,3 @@ def test_complete_mark_counts_members_reached_through_a_linked_head(tmp_path: Pa
     assert any("complete mark" in f and "stray-note.md" in f for f in results.fails)
     assert not any("child-note.md" in f for f in results.fails)
     assert not any("direct-note.md" in f for f in results.fails)
-
-
-def test_complete_mark_passes_for_the_mixed_shape(tmp_path: Path) -> None:
-    tags = setup_repo(tmp_path)
-    notes = tmp_path / "kb" / "notes"
-    note(notes / "fundamental.md", ["parent"])
-    note(notes / "child-note.md", ["parent", "child-a"])
-    tag_readme(tags / "child-a-README.md", "child-a")
-    readme = tag_readme(
-        tags / "parent-README.md",
-        "parent",
-        marks="complete: true\n",
-        body="\n- [child-a](./child-a-README.md) — the child area\n- [fundamental](../notes/fundamental.md) — carries only the parent\n",
-    )
-
-    results = validate_note(readme, repo_root=tmp_path)
-
-    assert not results.fails
-    assert any("all 2 members linked or reached through 1 linked heads" in p for p in results.passes)
-
-
-def test_covered_by_is_rejected_by_the_schema(tmp_path: Path) -> None:
-    tags = setup_repo(tmp_path)
-    readme = tag_readme(tags / "parent-README.md", "parent", marks="covered_by: [child-a]\n")
-
-    results = validate_note(readme, repo_root=tmp_path)
-
-    assert any("covered_by" in f for f in results.fails)

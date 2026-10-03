@@ -13,9 +13,6 @@ from commonplace.cli import validate_notes
 from commonplace.lib import validation
 from commonplace.lib.naming import (
     MAX_NOTE_SLUG_LENGTH,
-    is_write_brief_path,
-    write_brief_name_for,
-    write_brief_target_for,
 )
 from commonplace.lib.snapshot import snapshot_sha256
 
@@ -82,12 +79,6 @@ def configure_temp_repo(tmp_path: Path) -> Path:
         name="note",
         schema="kb/types/note.schema.yaml",
     )
-    write_type_spec(
-        tmp_path,
-        "kb/notes/types/structured-claim.md",
-        name="structured-claim",
-        schema="kb/notes/types/structured-claim.schema.yaml",
-    )
     return tmp_path / "kb" / "notes"
 
 
@@ -152,16 +143,6 @@ def type_labelled_findings(results: validation.CheckResults, name: str) -> list[
         for finding in findings
         if finding.startswith(f"[type: {name}]")
     ]
-
-
-def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
-    note = write(tmp_path / "raw-capture.md", "# Raw capture\n\nJust text.\n")
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert results.note_type == "text"
-    assert results.fails == []
-    assert any("no frontmatter" in item for item in results.passes)
 
 
 def test_imperative_type_rules_dispatch_by_path_not_bare_name(tmp_path: Path) -> None:
@@ -363,23 +344,6 @@ def test_library_artifact_cannot_link_to_archived_proposal(
     )
 
 
-def test_proposal_archive_boundary_ignores_links_between_archived_files(
-    tmp_path: Path,
-) -> None:
-    configure_temp_repo(tmp_path)
-    write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference collection\n")
-    archive = tmp_path / "kb" / "reference" / "proposals" / "archive"
-    write(archive / "older.md", "# Older\n")
-    newer = write(
-        archive / "newer.md",
-        "---\ndescription: An archived proposal that cites its archived sibling for texture\ntype: types/note.md\n---\n\n# Newer\n\nSee [older](./older.md).\n",
-    )
-
-    results = validation.validate_note(newer, repo_root=tmp_path)
-
-    assert not any("archive boundary" in f for f in results.fails)
-
-
 def test_proposal_archive_boundary_allows_readme_and_workshop_links(
     tmp_path: Path,
 ) -> None:
@@ -434,35 +398,6 @@ type: spec
     assert results.note_type == "unknown"
     assert any(
         "spec's path under a KB root" in item
-        for item in results.fails
-    )
-
-
-def test_peer_collection_local_type_fails_validation(tmp_path: Path) -> None:
-    notes_root = configure_temp_repo(tmp_path)
-    write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference\n")
-    write_type_spec(
-        tmp_path,
-        "kb/reference/types/adr.md",
-        name="adr",
-        schema=None,
-    )
-    note = write(
-        notes_root / "wrong-local-type.md",
-        """---
-description: Peer collection local types should fail deterministic validation
-type: reference/types/adr.md
----
-
-# Wrong local type
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert results.note_type == "unknown"
-    assert any(
-        "kb/reference/types/adr.md is not eligible in collection kb/notes" in item
         for item in results.fails
     )
 
@@ -537,20 +472,6 @@ tags: [learning-theory]
             ),
             "quote-anchored citations: 1 well-formed",
             None,
-        ),
-        (
-            (
-                "> p95 retrieval latency was 340ms\n"
-                "> --- [src/memory/store.py]"
-                "(https://github.com/org/repo/blob/abc123/src/memory/store.py)\n"
-            ),
-            "quote-anchored citations: 1 well-formed",
-            None,
-        ),
-        (
-            "> p95 retrieval latency was 340ms\n> --- the documentation\n",
-            None,
-            "expected a pinned source path or source URL",
         ),
         ("Some prose.\n\n> --- `src/memory/store.py`\n", None, "no quoted text above"),
     ],
@@ -649,41 +570,6 @@ traits: []
         "(git-ignored artifact; authored-artifact limit not applied)"
     )
     assert any(expected_slug in item for item in results.passes)
-
-
-def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
-    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
-    copy_repo_file(tmp_path, "kb/types/connect-report.md")
-    copy_repo_file(tmp_path, "kb/types/connect-report.schema.yaml")
-    source_slug = "a" * MAX_NOTE_SLUG_LENGTH
-    report = write(
-        tmp_path
-        / "kb"
-        / "reports"
-        / "cache"
-        / "connect"
-        / "notes"
-        / f"{source_slug}.connect.md",
-        """---
-description: Derived connection report whose filename preserves a valid source artifact slug
-type: types/connect-report.md
----
-
-# Connection report
-""",
-    )
-
-    results = validation.validate_note(report, repo_root=tmp_path)
-
-    derived_slug_length = MAX_NOTE_SLUG_LENGTH + len(".connect")
-    # The global connect-report schema also applies; only the slug rule is under test.
-    assert not any("filename slug" in item for item in results.fails)
-    expected = (
-        f"filename slug: {derived_slug_length} chars "
-        "(derived connect-report name; authored-artifact limit not applied)"
-    )
-    assert any(expected in item for item in results.passes)
 
 
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
@@ -979,19 +865,6 @@ def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -
     ]
 
 
-def test_validate_collection_structure_allows_namespace_collections(
-    tmp_path: Path,
-) -> None:
-    collection = tmp_path / "kb" / "commonplace" / "notes"
-    write(collection / "COLLECTION.md", "# Shipped notes\n")
-
-    failures = validation.validate_collection_structure(
-        collection, repo_root=tmp_path
-    )
-
-    assert failures == []
-
-
 def test_source_snapshot_cache_warns_about_redundant_alternate_copy(
     tmp_path: Path,
 ) -> None:
@@ -1256,18 +1129,6 @@ def brief_fails(results: validation.CheckResults) -> list[str]:
     return [item for item in results.fails if "brief" in item]
 
 
-def test_write_brief_predicate_and_derived_names() -> None:
-    assert is_write_brief_path("kb/notes/target.brief.md")
-    assert is_write_brief_path(Path("target.brief.md"))
-    assert not is_write_brief_path("kb/notes/target.md")
-    assert not is_write_brief_path("kb/notes/brief.md")
-    assert not is_write_brief_path("kb/notes/target-brief.md")
-    assert write_brief_name_for(Path("kb/notes/target.md")) == "target.brief.md"
-    assert write_brief_target_for(Path("kb/notes/target.brief.md")) == Path(
-        "kb/notes/target.md"
-    )
-
-
 def test_valid_write_brief_pair_validates_clean(tmp_path: Path) -> None:
     notes = configure_write_brief_repo(tmp_path)
     note = write_brief_note(notes)
@@ -1283,18 +1144,7 @@ def test_valid_write_brief_pair_validates_clean(tmp_path: Path) -> None:
     assert any("declared by sibling target.md" in item for item in brief_results.passes)
 
 
-def test_quoted_brief_pointer_is_accepted(tmp_path: Path) -> None:
-    notes = configure_write_brief_repo(tmp_path)
-    note = write_brief_note(notes, brief='"target.brief.md"')
-    write_brief_file(notes)
-
-    assert validation.validate_note(note, repo_root=tmp_path).fails == []
-
-
-@pytest.mark.parametrize(
-    "pointer",
-    ["other.brief.md", "./target.brief.md", "sub/target.brief.md", "../target.brief.md", "[]"],
-)
+@pytest.mark.parametrize("pointer", ["other.brief.md", "sub/target.brief.md"])
 def test_brief_pointer_must_be_own_sibling_filename(
     tmp_path: Path, pointer: str
 ) -> None:

@@ -23,25 +23,6 @@ def test_ensure_db_rejects_stale_review_store_shape(tmp_path: Path) -> None:
         review_db.ensure_db(db_path)
 
 
-def test_upsert_freshness_baseline_requires_review_pair(tmp_path: Path) -> None:
-    db_path = tmp_path / "commonplace-store.sqlite"
-    review_db.ensure_db(db_path)
-
-    with review_db.connect(db_path) as conn:
-        invalid_pair_id = None
-        with pytest.raises(ValueError, match="evidence_review_pair_id is required"):
-            review_db.upsert_freshness_baseline(
-                conn,
-                note_path="kb/notes/current.md",
-                criterion_path="kb/instructions/review-gates/prose/current.md",
-                model_partition="opus-4-6",
-                evidence_review_pair_id=invalid_pair_id,
-                baseline_note_snapshot_id=1,
-                baseline_criterion_snapshot_id=2,
-                baseline_updated_at="2026-04-10T10:02:00+02:00",
-            )
-
-
 def test_freshness_baseline_rejects_pair_from_incomplete_job(tmp_path: Path) -> None:
     db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)

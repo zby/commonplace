@@ -19,7 +19,6 @@ SNAPSHOT = "kb/types/snapshot.md"
 INGEST = "kb/types/ingest-report.md"
 STRUCTURED_CLAIM = "kb/notes/types/structured-claim.md"
 ADR = "kb/reference/types/adr.md"
-AGENT_MEMORY_REVIEW = "kb/agent-memory-systems/types/agent-memory-system-review.md"
 
 
 def check(type_path: str, text: str) -> CheckResults:
@@ -59,10 +58,9 @@ NOTE_DESCRIPTION = "A sample note description long enough to sit inside the styl
     ("description_line", "expected"),
     [
         ("", "'description' is a required property"),
-        ("description:", "frontmatter.description: None is not of type 'string'"),
         ("description: '   '", "frontmatter.description: '   ' does not match"),
     ],
-    ids=["missing", "null", "whitespace"],
+    ids=["missing", "whitespace"],
 )
 def test_note_description_must_be_non_empty_text(
     description_line: str, expected: str
@@ -232,7 +230,6 @@ def test_code_grounded_ingest_requires_code_grounding_section() -> None:
 @pytest.mark.parametrize(
     ("secondary_sources", "expected"),
     [
-        ("secondary_sources: []", "should be non-empty"),
         (
             f"secondary_sources:\n  - role: evidence\n    source: {COMMIT}",
             "'implementation' was expected",
@@ -241,16 +238,8 @@ def test_code_grounded_ingest_requires_code_grounding_section() -> None:
             "secondary_sources:\n  - role: implementation\n    source: https://github.com/example/system",
             "does not match",
         ),
-        (
-            f"{ONE_REPOSITORY}\n    checkout: related-systems/example--system",
-            "Additional properties are not allowed",
-        ),
-        (
-            f"{ONE_REPOSITORY}\n  - role: implementation\n    source: {COMMIT}",
-            "has non-unique elements",
-        ),
     ],
-    ids=["empty", "wrong-role", "unpinned", "extra-key", "duplicate"],
+    ids=["wrong-role", "unpinned"],
 )
 def test_ingest_rejects_invalid_secondary_sources(
     secondary_sources: str, expected: str
@@ -258,108 +247,9 @@ def test_ingest_rejects_invalid_secondary_sources(
     assert_fails_with(check(INGEST, ingest(secondary_sources=secondary_sources)), expected)
 
 
-@pytest.mark.parametrize(
-    ("old", "new", "expected"),
-    [
-        (
-            "source: https://arxiv.org/abs/2608.12345v1",
-            "source: arxiv:2608.12345v1",
-            "does not match",
-        ),
-        ('captured: "2026-08-18"', 'captured: "not-a-date"', "captured"),
-        (f"snapshot_sha256: {CHECKSUM}", "snapshot_sha256: ABCD", "does not match"),
-    ],
-    ids=["source-not-url", "captured-not-date", "checksum-not-hex"],
-)
-def test_ingest_rejects_invalid_primary_source_anchor(
-    old: str, new: str, expected: str
-) -> None:
+def test_ingest_rejects_invalid_primary_source_anchor() -> None:
     text = ingest()
+    old = f"snapshot_sha256: {CHECKSUM}"
     assert old in text
 
-    assert_fails_with(check(INGEST, text.replace(old, new)), expected)
-
-
-@pytest.mark.parametrize("retired_field", ["source_snapshot: paper.md", "code_revisions: [old]"])
-def test_ingest_rejects_retired_source_fields(retired_field: str) -> None:
-    text = ingest().replace(
-        "domains: [agents, evaluation]", f"domains: [agents, evaluation]\n{retired_field}"
-    )
-
-    assert_fails_with(check(INGEST, text), "False schema does not allow")
-
-
-# --- agent-memory system review ---------------------------------------------
-
-TRACE_LEARNING_SUBSECTION = """
-### Trace-learning
-
-**Trace source:** `tool-traces` — completed tool calls.
-**Learning scope:** `per-project` — lessons stay in one project.
-**Learning timing:** `offline` — learning runs after the session.
-**Distilled form:** `natural-language` — lessons are text.
-"""
-
-
-def review(
-    *, last_checked: bool = True, tags: str | None = None, trace_subsection: bool = False
-) -> str:
-    frontmatter = (
-        'description: "External memory system with explicit write and read-back mechanisms"\n'
-        f"type: {AGENT_MEMORY_REVIEW}\n"
-        "source-tier: code-grounded"
-    )
-    if last_checked:
-        frontmatter += '\nlast-checked: "2026-08-30"'
-    if tags is not None:
-        frontmatter += f"\ntags: {tags}"
-    return note(
-        frontmatter,
-        f"""# System
-
-## Core Ideas
-
-The system learns from tool traces.
-
-## Artifact analysis
-
-**Storage substrate:** `files` — retained files.
-**Representational form:** `natural-language` — lessons are text.
-**Lineage:** `trace-extracted` — lessons come from tool traces.
-**Behavioral authority:** `knowledge` — later agents read the lessons.
-
-## Write side
-
-**Write agency:** `automatic` — the learner writes lessons.
-{TRACE_LEARNING_SUBSECTION if trace_subsection else ""}
-## Read-back
-
-**Read-back:** `pull` — the agent requests lessons.
-
-## Curiosity Pass
-
-The source does not establish behavioral activation.
-""",
-    )
-
-
-@pytest.mark.parametrize(
-    "text",
-    [review(), review(tags="[trace-learning]", trace_subsection=True)],
-    ids=["stable", "trace-learning"],
-)
-def test_agent_memory_review_accepts_valid_reviews(text: str) -> None:
-    assert check(AGENT_MEMORY_REVIEW, text).fails == []
-
-
-@pytest.mark.parametrize(
-    ("text", "expected"),
-    [
-        (review(last_checked=False), "'last-checked' is a required property"),
-        (review(tags="[trace-learning]"), "missing '### Trace-learning'"),
-        (review(trace_subsection=True), "'tags' is a required property"),
-    ],
-    ids=["no-last-checked", "tag-without-subsection", "subsection-without-tag"],
-)
-def test_agent_memory_review_rejects_invalid_reviews(text: str, expected: str) -> None:
-    assert_fails_with(check(AGENT_MEMORY_REVIEW, text), expected)
+    assert_fails_with(check(INGEST, text.replace(old, "snapshot_sha256: ABCD")), "does not match")

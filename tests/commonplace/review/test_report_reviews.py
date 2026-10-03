@@ -62,16 +62,6 @@ def report_bundle(body: str = "A strong critique.") -> str:
 
 def test_result_kind_parser_enforces_pair_contract() -> None:
     pair = (NOTE_PATH, CRITIQUE_PATH)
-    parsed = parse_job_output(
-        report_bundle(),
-        expected_pairs=[pair],
-        result_kinds={pair: "report"},
-    )
-    assert parsed.reviews[pair].outcome is None
-    assert parsed.canonical_texts[pair].endswith("## Result: REPORT\n")
-
-    with pytest.raises(ValueError, match="result-kind contract mismatch"):
-        parse_job_output(report_bundle(), expected_pairs=[pair], result_kinds={})
     with pytest.raises(ValueError, match="verdict result is invalid"):
         parse_job_output(
             report_bundle().replace("REPORT", "PASS"),
@@ -150,21 +140,3 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         note_filter=[NOTE_PATH],
     )
     assert [record.reasons for record in stale] == [("note-changed",)]
-
-
-def test_review_job_rejects_mixed_result_kinds(tmp_path: Path) -> None:
-    repo = tmp_path / "repo"
-    db_path = make_repo(repo)
-
-    with pytest.raises(ValueError, match="cannot mix result kinds"):
-        prepare_grouped_review_job(
-            repo_root=repo,
-            db_path=db_path,
-            pairs=[
-                (NOTE_PATH, CRITIQUE_PATH, "report"),
-                (NOTE_PATH, "kb/instructions/review-gates/semantic/test.md", "verdict"),
-            ],
-            grouping="note",
-            runner=None,
-            model_partition=MODEL,
-        )

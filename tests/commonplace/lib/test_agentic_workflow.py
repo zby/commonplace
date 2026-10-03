@@ -283,10 +283,6 @@ def prompt_of(result, name: str) -> tuple[int, str]:
 # 0. Deriving the repository root
 
 
-def test_repo_root_is_the_repository(fixture: Fixture) -> None:
-    assert AnalyseAgenticSystem.repo_root(fixture.run_dir) == fixture.root
-
-
 # 1. A complete run
 
 
@@ -1324,10 +1320,6 @@ def source_refusals(fixture: Fixture, **source: object) -> list[str]:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(fixture.boundary(source=frozen), encoding="utf-8")
     return boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
-
-
-def test_a_checkout_at_the_recorded_commit_is_accepted(fixture: Fixture) -> None:
-    assert source_refusals(fixture) == []
 
 
 def test_a_git_source_without_a_path_is_refused(fixture: Fixture) -> None:

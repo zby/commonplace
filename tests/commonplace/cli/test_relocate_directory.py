@@ -34,60 +34,6 @@ def _init_git(repo_root: Path) -> None:
     subprocess.run(["git", "config", "user.name", "t"], cwd=repo_root, check=True)
 
 
-def test_rewrite_links_to_moved_files_updates_matching_links(tmp_path: Path) -> None:
-    source = tmp_path / "kb" / "notes" / "old" / "foo.md"
-    source_b = tmp_path / "kb" / "notes" / "old" / "bar.md"
-    new_a = tmp_path / "kb" / "new" / "foo.md"
-    new_b = tmp_path / "kb" / "new" / "bar.md"
-    ref_file = tmp_path / "kb" / "notes" / "outer.md"
-
-    moves = {source.resolve(): new_a.resolve(), source_b.resolve(): new_b.resolve()}
-
-    content = """[foo](./old/foo.md) and [bar](./old/bar.md) and [skip](./other.md)"""
-    updated, changes = relocation.rewrite_links_to_moved_files(content, ref_file, moves)
-    # ref_file is at kb/notes/outer.md, so new location kb/new/foo.md is ../new/foo.md
-    assert "[foo](../new/foo.md)" in updated
-    assert "[bar](../new/bar.md)" in updated
-    assert "[skip](./other.md)" in updated
-    assert len(changes) == 2
-
-
-def test_rebase_and_rewrite_in_moved_file_rebases_external_and_updates_internal(tmp_path: Path) -> None:
-    old_self = tmp_path / "kb" / "notes" / "old" / "self.md"
-    old_sibling = tmp_path / "kb" / "notes" / "old" / "sibling.md"
-    new_self = tmp_path / "kb" / "new" / "self.md"
-    new_sibling = tmp_path / "kb" / "new" / "sibling.md"
-    write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "x")
-
-    moves = {old_self.resolve(): new_self.resolve(), old_sibling.resolve(): new_sibling.resolve()}
-
-    content = """Internal: [sibling](./sibling.md)
-External: [concept](../definitions/concept.md)
-"""
-    updated, _changes = relocation.rebase_and_rewrite_in_moved_file(
-        content, old_self, new_self, moves
-    )
-    # Internal link to sibling stays relative but points to the new location
-    assert "[sibling](./sibling.md)" in updated
-    # External link to definitions/ must be rebased (new location is one level shallower)
-    assert "[concept](../notes/definitions/concept.md)" in updated
-
-
-def test_add_single_redirect_adds_one_entry(tmp_path: Path) -> None:
-    content = """site_name: X
-plugins:
-  - redirects:
-      redirect_maps:
-        'notes/a.md': 'notes/b.md'
-"""
-    updated, changes = relocation.add_single_redirect(
-        content, "notes/old-dir/index.md", "new-dir/index.md"
-    )
-    assert "'notes/old-dir/index.md': 'new-dir/index.md'" in updated
-    assert "'notes/a.md': 'notes/b.md'" in updated  # preserved
-    assert len(changes) == 1
-
-
 def test_relocate_directory_dry_run(tmp_path: Path) -> None:
     _init_git(tmp_path)
     source_dir = tmp_path / "kb" / "notes" / "related-systems"

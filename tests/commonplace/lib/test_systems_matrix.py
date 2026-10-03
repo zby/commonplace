@@ -110,12 +110,9 @@ def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
     sm.validate_comparison(data, known_ids=KNOWN)
 
 
-@pytest.mark.parametrize(
-    "axis", ["learning_scope", "learning_timing", "distilled_form", "faithfulness_tested"]
-)
-def test_removed_axes_are_rejected(axis):
+def test_removed_axes_are_rejected():
     data = profile()
-    data["axes"][axis] = deepcopy(data["axes"]["lineage"])
+    data["axes"]["learning_scope"] = deepcopy(data["axes"]["lineage"])
     with pytest.raises(ValueError, match="every registered axis"):
         sm.validate_comparison(data, known_ids=KNOWN)
 

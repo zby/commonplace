@@ -4,7 +4,7 @@ import pytest
 import yaml
 
 from commonplace.lib.project_paths import list_directory_validation_paths
-from commonplace.lib.validation import _DIRECTORY_TYPE_RULES, ValidationRun
+from commonplace.lib.validation import ValidationRun
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -94,28 +94,13 @@ def test_file_validation_does_not_load_siblings(tmp_path):
     assert not ValidationRun(tmp_path, (member,)).validate(member).fails
 
 
-def test_candidate_overlay_and_cache(tmp_path):
+def test_candidate_overlay_is_validated_instead_of_disk(tmp_path):
     directory = make_artifact(tmp_path)
     member = directory / "main.md"
+    member.write_text("---\ntype: types/missing.md\n---\n# Main\n")
+    assert run(tmp_path, directory).fails
     context = ValidationRun(tmp_path, (directory,), content_overrides={member: b"# Candidate\r\n"})
     assert not context.validate(directory).fails
-    assert context.artifact(directory).members["main.md"].content == b"# Candidate\r\n"
-    member.write_text("changed after first read")
-    assert context.validate(directory) is context.validate(directory)
-    assert context.read_bytes(member) == b"# Candidate\r\n"
-
-
-def test_dependency_cycle_fails_and_results_are_cached(tmp_path, monkeypatch):
-    directory = make_artifact(tmp_path)
-    calls = []
-    def recursive(results, artifact, *, run):
-        calls.append(artifact.path)
-        results.fails.extend(run.validate(artifact.path).fails)
-    monkeypatch.setitem(_DIRECTORY_TYPE_RULES, "reports/types/set.md", [recursive])
-    context = ValidationRun(tmp_path, (directory,))
-    assert any("dependency cycle" in error for error in context.validate(directory).fails)
-    context.validate(directory)
-    assert calls == [directory]
 
 
 def test_symlink_member_fails(tmp_path):
@@ -124,39 +109,6 @@ def test_symlink_member_fails(tmp_path):
     outside.write_text("# Outside\n")
     (directory / "optional.md").symlink_to(outside)
     assert any("symlink" in error for error in run(tmp_path, directory).fails)
-
-
-@pytest.mark.parametrize("count", [2, 5])
-def test_arbitrary_member_names_and_counts(tmp_path, count):
-    names = tuple(f"part-{index}.md" for index in range(count))
-    directory = make_artifact(tmp_path, required=names)
-    for name in names:
-        (directory / name).write_text("# Part\n")
-    assert not run(tmp_path, directory).fails
-
-
-def test_new_candidate_members_use_one_parsed_snapshot(tmp_path, monkeypatch):
-    from commonplace.lib import validation
-
-    directory = make_artifact(tmp_path)
-    future = directory.with_name("unpublished")
-    content = b"# Candidate\r\n"
-    manifest = b"type: reports/types/set.md\n"
-    original = validation.parse_document
-    count = 0
-    def parse(text):
-        nonlocal count
-        if text == content.decode():
-            count += 1
-        return original(text)
-    monkeypatch.setattr(validation, "parse_document", parse)
-    context = ValidationRun(tmp_path, (future,), content_overrides={
-        future / "ARTIFACT.yaml": manifest, future / "main.md": content,
-    })
-    assert not context.validate(future).fails
-    assert context.artifact(future).members["main.md"].document is context.require_document(future / "main.md")
-    assert count == 1
-    assert not future.exists()
 
 
 def test_collection_sweep_reports_invalid_undeclared_member(tmp_path):

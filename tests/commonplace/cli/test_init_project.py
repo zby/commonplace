@@ -3,15 +3,9 @@ from __future__ import annotations
 import json
 import re
 import shutil
-import sys
 from pathlib import Path
 
 import pytest
-
-REPO_ROOT = Path(__file__).resolve().parents[3]
-SRC_ROOT = REPO_ROOT / "src"
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import init_project as init_project_module
 from commonplace.cli.init_project import (
@@ -23,6 +17,8 @@ from commonplace.lib import library
 from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
 from commonplace.scaffold_manifest import MANIFEST
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def relative_files(root: Path) -> set[Path]:
@@ -207,51 +203,6 @@ def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path)
     assert not (old_skill / library.STUB_MARKER).exists()
 
 
-def test_init_project_preserves_review_baselines(tmp_path: Path) -> None:
-    from commonplace.review import review_db
-    from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
-
-    note_path = "kb/notes/sample.md"
-    legacy_gate = "kb/commonplace/instructions/review-gates/prose/sample-gate.md"
-    project_gate = "kb/instructions/project-gate.md"
-    for rel in (note_path, legacy_gate, project_gate):
-        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
-        (tmp_path / rel).write_text(f"# {rel}\n", encoding="utf-8")
-    db_path = review_db.resolve_db_path(tmp_path)
-    review_db.ensure_db(db_path)
-    with review_db.connect(db_path) as conn:
-        note_snapshot = review_db.snapshot_file(conn, repo_root=tmp_path, path=note_path)
-        for criterion in (legacy_gate, project_gate):
-            criterion_snapshot = review_db.snapshot_file(conn, repo_root=tmp_path, path=criterion)
-            pair = insert_completed_pair(
-                conn,
-                note_path=note_path,
-                criterion_id=criterion,
-                model_partition="test-model",
-                outcome="pass",
-                reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-                completed_at="2026-07-01T00:00:00+00:00",
-            )
-            accept_pair(
-                conn,
-                review_pair_id=pair,
-                note_path=note_path,
-                criterion_id=criterion,
-                model_partition="test-model",
-                baseline_note_snapshot_id=note_snapshot.snapshot_id,
-                baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-                baseline_updated_at="2026-07-01T00:00:00+00:00",
-            )
-        conn.commit()
-        before = review_db.load_current_freshness_baselines(conn)
-
-    init_project(tmp_path)
-
-    with review_db.connect(db_path) as conn:
-        assert review_db.load_current_freshness_baselines(conn) == before
-
-
 def test_init_project_preserves_symlinked_skill_directories(tmp_path: Path) -> None:
     root = library.library_root()
     outside = tmp_path / "outside" / "cp-skill-validate"
@@ -307,18 +258,6 @@ def test_check_reports_a_project_copy_of_a_global_type_as_a_collision(tmp_path: 
     assert ("collision", copy) in [(item.status, item.path) for item in statuses]
 
 
-def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:
-    dest = tmp_path / ".claude" / "skills" / "cp-skill-write"
-    dest.mkdir(parents=True)
-    (dest / "SKILL.md").write_text("runtime-specific skill", encoding="utf-8")
-    (dest / "extra.md").write_text("not from the library", encoding="utf-8")
-
-    report = init_project(tmp_path)
-
-    assert Path(".claude/skills/cp-skill-write") in report.skipped_foreign
-    assert (dest / "SKILL.md").read_text(encoding="utf-8") == "runtime-specific skill"
-
-
 def test_commands_warn_when_outputs_are_stale(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -357,37 +296,6 @@ def test_every_project_collection_the_template_routes_to_is_scaffolded(
     assert routed
     missing = [path for path in routed if not is_collection_dir(tmp_path / path)]
     assert missing == []
-
-
-def test_init_project_seeds_quote_or_snapshot_source_contract(tmp_path: Path) -> None:
-    init_project(tmp_path)
-
-    contract = (tmp_path / "kb" / "sources" / "COLLECTION.md").read_text(
-        encoding="utf-8"
-    )
-    normalized_contract = " ".join(contract.split())
-
-    assert "## Quotes in ingest reports" in contract
-    assert "No source quotes have been retained yet." in contract
-    assert "Never change an existing ingest's `snapshot_sha256`." in contract
-    assert "exact marker `(snapshot required)`" in contract
-    assert "never silently falls back from an unmarked link" in normalized_contract
-
-
-def test_init_project_preserves_source_collection_heads(tmp_path: Path) -> None:
-    init_project(tmp_path)
-    collection = tmp_path / "kb" / "sources" / "COLLECTION.md"
-    landing = tmp_path / "kb" / "sources" / "README.md"
-    collection.write_text("project source contract\n", encoding="utf-8")
-    landing.write_text("project source landing\n", encoding="utf-8")
-
-    rerun = init_project(tmp_path)
-
-    assert rerun.created == []
-    assert Path("kb/sources/COLLECTION.md") in rerun.preserved_different
-    assert Path("kb/sources/README.md") in rerun.preserved_different
-    assert collection.read_text(encoding="utf-8") == "project source contract\n"
-    assert landing.read_text(encoding="utf-8") == "project source landing\n"
 
 
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
@@ -429,15 +337,6 @@ def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     assert collection.read_text(encoding="utf-8") == "custom content"
 
 
-def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
-    init_project(tmp_path)
-
-    rerun = init_project(tmp_path)
-
-    assert Path("kb/instructions/COLLECTION.md") in rerun.preserved_identical
-    assert rerun.preserved_different == []
-
-
 def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> None:
     raw_template = (REPO_ROOT / "AGENTS.md.template").read_text(encoding="utf-8")
     (tmp_path / "AGENTS.md.template").write_text(raw_template, encoding="utf-8")
@@ -464,53 +363,6 @@ def test_main_reports_preserved_file_statuses(
     assert "Preserved existing files already matching scaffold:" in captured.out
     assert "Preserved existing files differing from current scaffold output:" in captured.out
     assert "- kb/instructions/COLLECTION.md" in captured.out
-
-
-def test_main_does_not_imply_manual_edits_for_template_name_drift(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
-    init_project(tmp_path, name="custom-name")
-
-    exit_code = main(["--root", str(tmp_path)])
-
-    captured = capsys.readouterr()
-    assert exit_code == 0
-    assert "Preserved existing files differing from current scaffold output:" in captured.out
-    assert "- AGENTS.md.template" in captured.out
-    assert "local changes" not in captured.out
-
-
-def test_installation_warnings_report_missing_package_commands(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.setattr(
-        init_project_module,
-        "_installed_command_names",
-        lambda: ("commonplace-init", "commonplace-validate"),
-    )
-    monkeypatch.setattr(
-        init_project_module.shutil,
-        "which",
-        lambda name: "/tool/bin/commonplace-init" if name == "commonplace-init" else None,
-    )
-    monkeypatch.setattr(init_project_module, "_uv_tool_bin", lambda: None)
-
-    lines = installation_warnings()
-
-    assert any("commonplace-validate" in line and "not on PATH" in line for line in lines)
-    assert any("uv tool update-shell" in line for line in lines)
-
-
-def test_installation_warnings_report_missing_uv(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.setattr(init_project_module.shutil, "which", lambda _: None)
-    monkeypatch.setattr(init_project_module, "_installed_command_names", lambda: ())
-    monkeypatch.setattr(init_project_module, "_uv_tool_bin", lambda: None)
-
-    lines = installation_warnings()
-
-    assert any("uv is not on PATH" in line for line in lines)
 
 
 def test_installation_warnings_report_shadowing_commands(

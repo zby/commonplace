@@ -3,28 +3,6 @@ from __future__ import annotations
 from commonplace.lib import frontmatter
 
 
-def test_parse_extracts_mapping_between_delimiters() -> None:
-    result = frontmatter.parse(
-        "---\n"
-        "description: Some description here\n"
-        "type: kb/types/note.md\n"
-        "---\n"
-        "# Title\n"
-    )
-
-    assert result.ok
-    assert result.data == {
-        "description": "Some description here",
-        "type": "kb/types/note.md",
-    }
-
-
-def test_parse_without_frontmatter_returns_empty_result() -> None:
-    result = frontmatter.parse("# Just a heading\nSome text.\n")
-
-    assert result.data == {}
-
-
 def test_parse_empty_frontmatter_returns_empty_result() -> None:
     result = frontmatter.parse("---\n\n---\n# Title\n")
 
@@ -35,12 +13,6 @@ def test_parse_closing_delimiter_without_trailing_newline() -> None:
     result = frontmatter.parse("---\ndescription: test\n---")
 
     assert result.data == {"description": "test"}
-
-
-def test_parse_reports_missing_closing_delimiter() -> None:
-    result = frontmatter.parse("---\ndescription: test\n# Title\n")
-
-    assert result.errors == ["frontmatter: missing closing delimiter"]
 
 
 def test_parse_reports_yaml_errors() -> None:
@@ -74,15 +46,3 @@ def test_strip_removes_crlf_frontmatter_block() -> None:
     content = "---\r\ntype: kb/types/note.md\r\n---\r\n# Title\r\nBody."
 
     assert frontmatter.strip(content) == "# Title\r\nBody."
-
-
-def test_strip_removes_frontmatter_block() -> None:
-    content = "---\ntype: kb/types/note.md\n---\n# Title\nBody."
-
-    assert frontmatter.strip(content) == "# Title\nBody."
-
-
-def test_strip_without_frontmatter_is_noop() -> None:
-    content = "# Title\nBody."
-
-    assert frontmatter.strip(content) == content

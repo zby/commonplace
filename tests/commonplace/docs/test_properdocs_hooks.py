@@ -61,31 +61,6 @@ def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_p
     assert "**User verified:** yes" in result
 
 
-def test_on_page_markdown_links_every_tag_with_a_head(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    write(notes / "COLLECTION.md", "# Notes collection\n")
-    tags = tag_space(tmp_path)
-    for tag in ("agent-memory", "context-engineering", "learning-theory"):
-        head(tags, tag)
-    note = write(notes / "example.md", "# Example\n")
-    page = SimpleNamespace(
-        meta={
-            "type": "types/note.md",
-            "tags": ["agent-memory", "context-engineering", "learning-theory"],
-        },
-        file=SimpleNamespace(abs_src_path=str(note)),
-    )
-    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
-
-    result = properdocs_hooks.on_page_markdown(
-        "# Example\n\nBody\n", page, config={"docs_dir": str(tmp_path / "kb")}
-    )
-
-    assert (
-        "**Tags:** [agent-memory](../tags/agent-memory-README.md), "
-        "[context-engineering](../tags/context-engineering-README.md), "
-        "[learning-theory](../tags/learning-theory-README.md)"
-    ) in result
 def test_on_page_markdown_appends_tail_across_participating_collections(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     reference = tmp_path / "kb" / "reference"

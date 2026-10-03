@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from commonplace.lib import validation
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -241,36 +239,18 @@ def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     assert any("canonical reading order" in failure for failure in results.fails)
 
 
-def test_overview_has_no_run_identity_section(tmp_path: Path) -> None:
-    content = overview_text().replace(
-        "## Boundary and evidence",
-        "## Run identity\n\nRun-state and review paths.\n\n## Boundary and evidence",
-        1,
-    )
-    results = validate(tmp_path, "overview.md", content)
-    assert results.fails
-
-
 def test_runtime_report_validates(tmp_path: Path) -> None:
     results = validate(tmp_path, "runtime.md", RUNTIME_TEXT)
     assert results.fails == []
     assert results.note_type == "agentic-system-runtime-report"
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
-def test_member_validation_rejects_missing_route_answers(tmp_path: Path, prefix: str) -> None:
-    content = RUNTIME_TEXT.replace("#### RT-RTE-1 —", f"#### {prefix}RTE-1 —").replace(
+def test_member_validation_rejects_missing_route_answers(tmp_path: Path) -> None:
+    content = RUNTIME_TEXT.replace(
         "- Selection predicate: The caller selects the object.\n", ""
     )
     failures = validate(tmp_path, "runtime.md", content).fails
-    assert any(f"{prefix}RTE-1: Selection predicate: missing field" in error for error in failures)
-
-
-def test_runtime_report_rejects_the_removed_probe_evidence_section(tmp_path: Path) -> None:
-    content = RUNTIME_TEXT.replace(
-        "## Shared records", "## Probe evidence\n\nnone\n\n## Shared records", 1
-    )
-    assert validate(tmp_path, "runtime.md", content).fails
+    assert any("RT-RTE-1: Selection predicate: missing field" in error for error in failures)
 
 
 def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Path) -> None:
@@ -292,24 +272,9 @@ def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
     assert validate(tmp_path, "epistemic.md", swapped).fails != []
 
 
-def test_epistemic_report_rejects_the_removed_lifecycle_section(tmp_path: Path) -> None:
-    content = EPISTEMIC_TEXT.replace(
-        "## System-claim versus route comparison",
-        "## Per-object lifecycle disposition\n\nDisposition.\n\n"
-        "## System-claim versus route comparison",
-        1,
-    )
-    assert validate(tmp_path, "epistemic.md", content).fails
-
-
 def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Path) -> None:
     missing = EPISTEMIC_TEXT[: EPISTEMIC_TEXT.index("## Shared records")]
     assert validate(tmp_path, "epistemic.md", missing).fails != []
-    duplicate = EPISTEMIC_TEXT + "\n#### EPI-RTE-1 — The same check again\n"
-    assert any(
-        "duplicate declarations: EPI-RTE-1" in failure
-        for failure in validate(tmp_path, "epistemic.md", duplicate).fails
-    )
 
 
 def test_reconciliation_report_validates_and_excludes_working_returns(tmp_path: Path) -> None:

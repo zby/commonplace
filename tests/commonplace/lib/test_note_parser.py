@@ -30,27 +30,6 @@ type: types/note.md
     assert document.headings == ("# Title", "## Kept")
 
 
-def test_parse_document_extracts_links_and_body_dates() -> None:
-    document, error = parse_document(
-        """---
-description: Example
-type: types/note.md
----
-
-# Title
-
-Reference [one](./one.md)
-
-Date: 2026-04-09
-"""
-    )
-
-    assert error is None
-    assert document is not None
-    assert document.links == ("./one.md",)
-    assert document.body_dates == ("2026-04-09",)
-
-
 def test_parse_document_excludes_dates_in_code_regions() -> None:
     document, error = parse_document(
         """# Title

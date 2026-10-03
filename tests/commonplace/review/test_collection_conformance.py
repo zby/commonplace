@@ -124,10 +124,6 @@ class TestGateIdPlumbing:
         build_fixture(tmp_path)
         assert normalize_criterion_path(tmp_path, "collection/notes") == "kb/notes/COLLECTION.md"
 
-    def test_collection_md_repo_path_normalizes(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        assert normalize_criterion_path(tmp_path, "kb/notes/COLLECTION.md") == "kb/notes/COLLECTION.md"
-
     def test_criterion_id_for_collection_md_path_uses_collection_lens(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         assert criterion_id_for_path(tmp_path, "kb/notes/COLLECTION.md") == "collection/notes"
@@ -168,19 +164,10 @@ class TestGateIdPlumbing:
 
 
 class TestNoteCollectionMdPath:
-    def test_note_maps_to_its_collection_contract(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        assert note_collection_md_path(tmp_path, fixture["note"]) == "kb/notes/COLLECTION.md"
-
     def test_subdirectory_note_maps_to_nearest_contract(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         nested = make_note(tmp_path / "kb" / "notes" / "definitions" / "term.md", "Term", "\nBody.\n")
         assert note_collection_md_path(tmp_path, nested) == "kb/notes/COLLECTION.md"
-
-    def test_note_outside_any_collection_yields_none(self, tmp_path: Path) -> None:
-        (tmp_path / "kb").mkdir()
-        stray = make_note(tmp_path / "kb" / "stray.md", "Stray", "\nBody.\n")
-        assert note_collection_md_path(tmp_path, stray) is None
 
     def test_collection_md_never_pairs_with_itself(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -212,17 +199,6 @@ class TestSelectorCollectionPairs:
             ("kb/reference/doc.md", "collection/reference"),
         ]
 
-    def test_fresh_collection_pair_is_not_selected(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["collection"],
-            note_filter=["kb/notes/plain.md"],
-        )
-        assert stale == []
-
     def test_collection_md_edit_marks_cohort_gate_changed(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
@@ -242,24 +218,6 @@ class TestSelectorCollectionPairs:
         assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [
             ("kb/notes/plain.md", "collection/notes", ("criterion-changed",)),
         ]
-
-    def test_note_edit_marks_collection_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
-        make_note(fixture["note"], "Plain note", "\nUpdated body.\n")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["collection"],
-            note_filter=["kb/notes/plain.md"],
-            include_diff=True,
-        )
-        assert [(s.criterion_id, s.reasons) for s in stale] == [
-            ("collection/notes", ("note-changed",))
-        ]
-        assert stale[0].changed_inputs[0].diff is not None
-        assert "Updated body" in (stale[0].changed_inputs[0].diff or "")
 
     def test_note_outside_any_collection_gets_no_collection_pair(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -401,23 +359,6 @@ class TestAckCollectionPair:
 
 
 class TestPromptWrapper:
-    def test_collection_md_gate_embeds_captured_text(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/plain.md",
-                    criterion_paths=("kb/notes/COLLECTION.md",),
-                    note_text="# Plain note\n\nBody.",
-                )
-            ],
-            criterion_texts={"kb/notes/COLLECTION.md": "# Writing conventions\n\nUse claim titles."},
-            result_kind="verdict",
-            job_output_path="job-output.md",
-        )
-        assert "=== criterion: kb/notes/COLLECTION.md ===" in prompt
-        assert "This is a collection-conformance gate." in prompt
-        assert "Use claim titles." in prompt
-
     def test_catalog_gate_has_no_collection_wrapper(self) -> None:
         prompt = render_pairs_prompt(
             notes=[

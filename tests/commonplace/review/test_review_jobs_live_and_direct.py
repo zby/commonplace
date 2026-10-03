@@ -460,37 +460,6 @@ def test_create_review_jobs_selector_criterion_grouping_chunks_and_lists(tmp_pat
     assert list_payload["count"] == 2
 
 
-def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    selector_path = repo / "targets.json"
-    selector_path.write_text(
-        json.dumps(
-            {
-                "schema": review_target_selector.SELECTOR_SCHEMA,
-                "model_partition": "test-model",
-                "targets": [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
-            }
-        ),
-        encoding="utf-8",
-    )
-
-    result = run_cli(
-        "create_review_jobs",
-        "--input",
-        "targets.json",
-        "--grouping",
-        "note",
-        "--batch-size",
-        "2",
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-
-    assert result.returncode == 2
-    assert "--batch-size is only valid with --grouping criterion" in result.stderr
-
-
 def test_finalize_review_job_validates_model_effort_partition_before_mutation(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(

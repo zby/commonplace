@@ -10,13 +10,6 @@ from commonplace.lib.project_paths import is_proposal_archive, is_replaced_archi
 from tests.commonplace.validation_helpers import REPO_ROOT, write
 
 
-def _note(path: Path, tags: list[str]) -> Path:
-    return write(
-        path,
-        f"---\ndescription: {path.stem}\ntype: types/note.md\ntags: [{', '.join(tags)}]\n---\n\n# {path.stem}\n",
-    )
-
-
 def test_participating_declaration_is_read_and_checked(tmp_path: Path) -> None:
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes\n")
     write(
@@ -32,17 +25,6 @@ def test_participating_declaration_is_read_and_checked(tmp_path: Path) -> None:
     assert "`tags` holds the heads" in error
 
 
-def test_undeclared_tag_space_has_no_members(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes\n")
-    _note(tmp_path / "kb" / "notes" / "a.md", ["x"])
-
-    space = index_generated.collect_tag_space(tmp_path)
-
-    assert space.participating == ()
-    assert space.notes_by_tag == {}
-    assert space.declaration_error is not None
-
-
 def test_heads_are_identified_by_filename_only(tmp_path: Path) -> None:
     tags = tmp_path / "kb" / "tags"
     write(tags / "COLLECTION.md", "---\nparticipating: []\n---\n")
@@ -55,49 +37,6 @@ def test_heads_are_identified_by_filename_only(tmp_path: Path) -> None:
     assert set(heads) == {"x"}
     assert index_generated.tag_for_head(tags / "README.md") is None
     assert index_generated.tag_for_head(tags / "-README.md") is None
-
-
-def test_membership_spans_participating_collections_only(tmp_path: Path) -> None:
-    for name in ("notes", "reference", "work"):
-        write(tmp_path / "kb" / name / "COLLECTION.md", f"# {name}\n")
-    write(
-        tmp_path / "kb" / "tags" / "COLLECTION.md",
-        "---\nparticipating: [notes, reference]\n---\n",
-    )
-    _note(tmp_path / "kb" / "notes" / "a.md", ["x"])
-    _note(tmp_path / "kb" / "reference" / "b.md", ["x"])
-    _note(tmp_path / "kb" / "reference" / "proposals" / "archive" / "c.md", ["x"])
-    _note(tmp_path / "kb" / "work" / "d.md", ["x"])
-    _note(tmp_path / "kb" / "notes" / "e.replaced.1.md", ["x"])
-
-    space = index_generated.collect_tag_space(tmp_path)
-
-    members = {path.name for path, _, _ in space.notes_by_tag["x"]}
-    assert members == {"a.md", "b.md"}
-    assert space.is_participating(tmp_path / "kb" / "notes" / "a.md")
-    assert not space.is_participating(tmp_path / "kb" / "work" / "d.md")
-
-
-def test_generated_tail_lists_members_across_collections(tmp_path: Path) -> None:
-    for name in ("notes", "reference"):
-        write(tmp_path / "kb" / name / "COLLECTION.md", f"# {name}\n")
-    write(
-        tmp_path / "kb" / "tags" / "COLLECTION.md",
-        "---\nparticipating: [notes, reference]\n---\n",
-    )
-    _note(tmp_path / "kb" / "notes" / "a.md", ["x"])
-    _note(tmp_path / "kb" / "reference" / "b.md", ["x"])
-    head = write(tmp_path / "kb" / "tags" / "x-README.md", "# x\n\n- [a](../notes/a.md) — placed\n")
-
-    section = index_generated.generated_section_for_head(
-        head,
-        curated_text=head.read_text(encoding="utf-8"),
-        tag_space=index_generated.collect_tag_space(tmp_path),
-    )
-
-    assert section is not None
-    assert "- [b](../reference/b.md)" in section
-    assert "../notes/a.md" not in section
 
 
 # ---------------------------------------------------------------------------

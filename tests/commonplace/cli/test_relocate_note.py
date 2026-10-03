@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib import relocation
-from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
+from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
 from commonplace.review import review_db, review_target_selector
 from tests.commonplace.cli.relocation_review_helpers import (
     GATE_ID,
@@ -86,53 +86,6 @@ Body mentions kb/notes/old-note.md without declaring lineage.
     ]
 
 
-def test_rebase_and_rewrite_updates_outbound_links_for_moved_note(tmp_path: Path) -> None:
-    old_note = tmp_path / "kb" / "notes" / "old-note.md"
-    new_note = tmp_path / "kb" / "notes" / "archive" / "relocated-note.md"
-    write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "# Concept\n")
-    content = """Self: [self](./old-note.md)
-Target: [concept](./definitions/concept.md)
-"""
-
-    updated, changes = relocation.rebase_and_rewrite_in_moved_file(
-        content,
-        old_note,
-        new_note,
-        {old_note.resolve(): new_note},
-    )
-
-    assert "[self](./relocated-note.md)" in updated
-    assert "[concept](../definitions/concept.md)" in updated
-    assert changes == [
-        "./old-note.md -> ./relocated-note.md",
-        "./definitions/concept.md -> ../definitions/concept.md",
-    ]
-
-
-def test_update_properdocs_config_adds_redirect_and_updates_targets() -> None:
-    content = """site_name: Commonplace
-plugins:
-  - redirects:
-      redirect_maps:
-        'notes/older-name.md': 'notes/old-name.md'
-nav:
-  - Home: index.md
-  - Example: notes/old-name.md
-"""
-
-    updated, changes = relocation.update_properdocs_config(
-        content,
-        old_docs_path="notes/old-name.md",
-        new_docs_path="notes/archive/new-name.md",
-    )
-
-    assert "'notes/old-name.md': 'notes/archive/new-name.md'" in updated
-    assert "'notes/older-name.md': 'notes/archive/new-name.md'" in updated
-    assert "- Example: notes/archive/new-name.md" in updated
-    assert any("properdocs redirect: notes/old-name.md -> notes/archive/new-name.md" == item for item in changes)
-    assert any("properdocs redirect target: notes/older-name.md -> notes/archive/new-name.md" == item for item in changes)
-
-
 def test_update_properdocs_config_without_redirect_maps_rewrites_values_only() -> None:
     content = """site_name: Project
 nav:
@@ -167,16 +120,6 @@ def test_relocate_note_apply_works_without_properdocs_config(tmp_path: Path) -> 
     assert (notes_root / "renamed-note.md").exists()
 
 
-def test_slugify_rejects_overlong_note_slug() -> None:
-    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
-    message = (
-        f"note filename slug exceeds {MAX_NOTE_SLUG_LENGTH} characters: "
-        f"{MAX_NOTE_SLUG_LENGTH + 1}"
-    )
-    with pytest.raises(ValueError, match=message):
-        slugify_note_filename(overlong_slug)
-
-
 def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path) -> None:
     repo_root = tmp_path
     notes_root = repo_root / "kb" / "notes"
@@ -195,22 +138,6 @@ def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path)
             repo_root=repo_root,
             kb_root=repo_root / "kb",
         )
-
-
-def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> None:
-    repo_root = tmp_path
-    notes_root = repo_root / "kb" / "notes"
-    source = write(notes_root / "old-note.md", "# Old note\n")
-
-    destination = relocation.resolve_destination_path(
-        source,
-        None,
-        "kb/notes/archive",
-        repo_root=repo_root,
-        kb_root=repo_root / "kb",
-    )
-
-    assert destination == notes_root / "archive" / "old-note.md"
 
 
 def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derived(

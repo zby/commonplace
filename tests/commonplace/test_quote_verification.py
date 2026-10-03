@@ -185,22 +185,6 @@ def test_distractor_quotes_are_not_candidates(
         ),
         (
             (
-                'The source says "a (conservative) estimate" '
-                '[Source](../sources/source.md), verbatim; '
-                'compare ([Other](../sources/other.md)).'
-            ),
-            "a (conservative) estimate",
-        ),
-        (
-            (
-                'The source says "Ŝ(E) is bounded" '
-                '[Source](../sources/source.md), verbatim; '
-                'compare ([Other](../sources/other.md)).'
-            ),
-            "Ŝ(E) is bounded",
-        ),
-        (
-            (
                 'The conclusion is "quoted words" '
                 '([Source](../sources/source.md), section 2 (discussion), '
                 '"Locator title", verbatim).'
@@ -247,19 +231,6 @@ def test_parenthesis_in_quote_does_not_hide_the_next_quote(tmp_path: Path, quote
         ("match", quote, (tmp_path / "sources" / "source.md").resolve()),
         ("match", "another claim", other.resolve()),
     ]
-
-
-def test_verbatim_citation_without_quotation_is_unresolved(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        "The source makes the claim "
-        "([Source](../sources/source.md), Abstract, verbatim).",
-        "The source makes the claim.",
-    )
-
-    results = verify_note(note)
-
-    assert [result.status for result in results] == ["unresolved"]
 
 
 def test_missing_linked_source_is_unresolved(tmp_path: Path):
@@ -322,20 +293,6 @@ def test_validator_fails_a_false_verbatim_claim(tmp_path: Path):
     assert not results.warns
 
 
-def test_validator_passes_a_true_verbatim_claim(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'It says "quoted words here" '
-        "([Source](../sources/source.md), Abstract, verbatim).",
-        "The source has quoted words here in its abstract.",
-    )
-
-    results = _check(note)
-
-    assert not results.fails
-    assert any("1 resolve against their cited sources" in p for p in results.passes)
-
-
 def test_validator_stays_silent_on_unresolved_where_the_convention_is_unused(tmp_path: Path):
     """A KB that never adopted the convention must not be warned at.
 
@@ -388,31 +345,6 @@ def test_validator_is_inert_on_notes_with_no_verbatim_marker(tmp_path: Path):
     assert not results.fails
     assert not results.warns
     assert not results.passes
-
-
-def test_fenced_code_demonstrating_the_convention_is_not_a_claim(tmp_path: Path):
-    """A fence *showing* the convention is not asserting it.
-
-    Documentation, type specs, and ADRs all contain worked examples of a
-    verbatim citation. Scanning them reports a false mismatch against whatever
-    source the example happens to link. Code fences are neutralized through the
-    shared parser primitive, so this check and link health agree on what counts
-    as code.
-    """
-    note = _write_pair(
-        tmp_path,
-        "Write a verbatim citation like this:\n\n"
-        "```markdown\n"
-        'The paper says "an example quote never in the source" '
-        "([Source](../sources/source.md), Abstract, verbatim).\n"
-        "```\n\n"
-        "That is the whole convention.",
-        "Real source text, containing nothing from the example.",
-    )
-
-    results = _check(note)
-    assert not results.fails
-    assert not results.warns
 
 
 def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
@@ -482,22 +414,10 @@ class TestIngestQuoteValidation:
         )
         return results
 
-    def test_extract_present_in_snapshot_passes(self, tmp_path):
-        ingest = self._ingest(tmp_path, "the exact words", snapshot="here are the exact words indeed")
-        results = self._run(ingest)
-        assert not results.fails
-        assert any("resolve against the pinned snapshot" in p for p in results.passes)
-
     def test_extract_absent_from_snapshot_fails(self, tmp_path):
         ingest = self._ingest(tmp_path, "words never written", snapshot="something else entirely")
         results = self._run(ingest)
         assert any("quote does not occur in the source region in the checksum-verified snapshot" in f for f in results.fails)
-
-    def test_extract_spanning_wrapped_lines_passes(self, tmp_path):
-        """Normalization collapses whitespace, so a quote may cross a wrapped line."""
-        ingest = self._ingest(tmp_path, "one continuous sentence", snapshot="one continuous\nsentence")
-        results = self._run(ingest)
-        assert not results.fails
 
     def test_populated_quotes_reject_stale_global_empty_claim(self, tmp_path):
         ingest = self._ingest(

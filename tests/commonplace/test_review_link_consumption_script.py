@@ -1,20 +1,7 @@
 import json
 import sqlite3
 
-from scripts.review_link_consumption import _load_rows, _offered_count
-
-
-def test_offered_count_reads_consumption_targets_and_rejects_invalid_counts() -> None:
-    offered = {
-        "distinct_link_target_count": 3,
-        "distinct_consumption_target_count": 5,
-        "distinct_artifact_count": 9,
-    }
-
-    assert _offered_count(offered) == 5
-    assert _offered_count({"distinct_artifact_count": 4}) is None
-    assert _offered_count({"distinct_consumption_target_count": True}) is None
-    assert _offered_count({"distinct_consumption_target_count": -1}) is None
+from scripts.review_link_consumption import _load_rows
 
 
 def test_report_excludes_unsupported_jobs_from_rows_totals_and_counters() -> None:

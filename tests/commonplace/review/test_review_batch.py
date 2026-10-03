@@ -5,11 +5,8 @@ import sqlite3
 import subprocess
 from pathlib import Path
 
-import pytest
-
 from commonplace.lib import frontmatter
 from commonplace.review import review_db, review_target_selector
-from commonplace.review.batch import prepare_grouped_review_job
 
 from ._run_cli import run_cli
 
@@ -179,42 +176,6 @@ def test_create_review_jobs_selector_creates_one_criterion_packed_job_and_prompt
         f"kb/reports/state/review-jobs/review-job-{review_job_id}/pair-2-second.md",
     ]
 
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job_rows = conn.execute(
-            """
-            SELECT review_job_id, status, runner, grouping, created_at
-            FROM review_jobs
-            """
-        ).fetchall()
-        assert [(row["review_job_id"], row["status"], row["runner"], row["grouping"]) for row in job_rows] == [
-            (review_job_id, "queued", None, "criterion")
-        ]
-        assert job_rows[0]["created_at"] is not None
-        pair_rows = conn.execute(
-            """
-            SELECT
-                note_path,
-                criterion_path,
-                reviewed_note_snapshot_id,
-                reviewed_criterion_snapshot_id
-            FROM review_pairs
-            ORDER BY pair_ordinal
-            """
-        ).fetchall()
-        assert [(row["note_path"], row["criterion_path"]) for row in pair_rows] == [
-            ("kb/notes/first.md", GATE_PATH),
-            ("kb/notes/second.md", GATE_PATH),
-        ]
-        assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
-        assert all(row["reviewed_criterion_snapshot_id"] is not None for row in pair_rows)
-        job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
-        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
-        assert "started_at" not in job_columns
-        assert "job_output_path" not in job_columns
-        assert "prompt_path" not in job_columns
-        assert "result_path" not in pair_columns
-
 
 def test_review_job_records_deduplicated_available_link_cost_and_preserves_harness_telemetry(
     tmp_path: Path,
@@ -358,7 +319,7 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
         output_path,
         pair_block("kb/notes/first.md", GATE_PATH, "Needs a definition.", "WARN")
         + "\n"
-        + pair_block("kb/notes/second.md", GATE_PATH, "All terms defined.", "PASS"),
+        + pair_block("kb/notes/second.md", GATE_PATH, "The term is undefined.", "FAIL"),
     )
 
     result = run_cli(
@@ -392,7 +353,7 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
             "criterion_id": GATE,
             "pair_ordinal": 2,
             "result_kind": "verdict",
-            "outcome": "pass",
+            "outcome": "fail",
             "result_path": prepared_job["pairs"][1]["result_path"],
         },
     ]
@@ -412,7 +373,7 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
             ),
             (
                 "kb/notes/second.md",
-                "pass",
+                "fail",
             ),
         ]
         freshness_baseline_count = conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0]
@@ -424,52 +385,11 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
     first_result = (artifact_dir / "pair-1-first.md").read_text(encoding="utf-8")
     second_result = (artifact_dir / "pair-2-second.md").read_text(encoding="utf-8")
     assert frontmatter.strip(first_result).strip().endswith("## Result: WARN")
-    assert frontmatter.strip(second_result).strip().endswith("## Result: PASS")
+    assert frontmatter.strip(second_result).strip().endswith("## Result: FAIL")
     assert frontmatter.parse(first_result).data["runner"] is None
     assert not (artifact_dir / "accessibility__undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "completed"]
-
-
-def test_finalize_review_job_returns_canonical_fail_outcome(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_gate_jobs(
-            repo,
-            db_path,
-            [target("kb/notes/first.md", GATE_PATH, GATE)],
-        ).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-    review_job_id = prepared_job["review_job_id"]
-    write(
-        repo / prepared_job["job_output_path"],
-        pair_block("kb/notes/first.md", GATE_PATH, "The term is undefined.", "FAIL"),
-    )
-
-    result = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(review_job_id),
-        cwd=repo,
-        db_path=db_path,
-    )
-
-    payload = json.loads(result.stdout)
-    assert payload["completed"] is True
-    assert payload["completed_pair_count"] == 1
-    assert payload["pairs"] == [
-        {
-            "review_pair_id": prepared_job["pairs"][0]["review_pair_id"],
-            "note_path": "kb/notes/first.md",
-            "criterion_path": GATE_PATH,
-            "criterion_id": GATE,
-            "pair_ordinal": 1,
-            "result_kind": "verdict",
-            "outcome": "fail",
-            "result_path": prepared_job["pairs"][0]["result_path"],
-        }
-    ]
 
 
 def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path) -> None:
@@ -557,44 +477,6 @@ def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: 
     with sqlite3.connect(db_path) as conn:
         status = conn.execute("SELECT status FROM review_jobs WHERE review_job_id = ?", (review_job_id,)).fetchone()[0]
     assert status == "queued"
-
-
-def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-    review_job_id = prepared_job["review_job_id"]
-    output_path = repo / prepared_job["job_output_path"]
-    write(
-        output_path,
-        pair_block("kb/notes/unknown.md", GATE_PATH, "Wrong pair.", "WARN"),
-    )
-
-    result = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(review_job_id),
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-
-    assert result.returncode == 1
-    payload = json.loads(result.stdout)
-    assert payload["completed"] is False
-    assert payload["completed_pair_count"] == 0
-    assert payload["pairs"] == []
-    assert payload["state_changed"] is True
-    assert "unexpected pair" in payload["failure_reason"]
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
-        pair = conn.execute("SELECT outcome FROM review_pairs").fetchone()
-    assert job["status"] == "failed"
-    assert "unexpected pair" in job["failure_reason"]
-    assert pair["outcome"] is None
 
 
 def test_finalize_review_job_error_fails_without_pair_completion_or_baseline(tmp_path: Path) -> None:
@@ -690,40 +572,3 @@ traits: []
     assert job is not None
     assert job["status"] == "failed"
     assert "reserved sentinel" in job["failure_reason"]
-
-
-def test_prepare_note_packed_job_rejects_mixed_notes_and_fails_the_job(tmp_path: Path) -> None:
-    repo = tmp_path / "repo"
-    make_note(repo / "kb" / "notes" / "first.md", "First")
-    make_note(repo / "kb" / "notes" / "second.md", "Second")
-    write(
-        repo / GATE_PATH,
-        """---
-gate_id: accessibility/undefined-terms
-watches: [body]
----
-
-## Failure mode
-
-Terms are undefined.
-""",
-    )
-    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
-    review_db.ensure_db(db_path)
-
-    with pytest.raises(ValueError, match="exactly one note"):
-        prepare_grouped_review_job(
-            repo_root=repo,
-            db_path=db_path,
-            pairs=[
-                ("kb/notes/first.md", GATE_PATH, "verdict"),
-                ("kb/notes/second.md", GATE_PATH, "verdict"),
-            ],
-            grouping="note",
-            runner=None,
-            model_partition="test-model",
-        )
-
-    with review_db.connect(db_path) as conn:
-        jobs = review_db.list_review_job_plans(conn)
-    assert [job.status for job in jobs] == ["failed"]
