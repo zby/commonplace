@@ -12,7 +12,15 @@ import uuid
 from hashlib import sha256
 from pathlib import Path
 
-STARTUP_DIRECTORIES = (".agents", ".claude", ".codex", ".pi", ".cursor")
+STARTUP_DIRECTORIES = (
+    ".agents/skills", ".claude/skills", ".claude/agents", ".claude/hooks",
+    ".codex/skills", ".codex/agents", ".pi/skills", ".pi/agents",
+    ".pi/extensions", ".pi/prompts", ".cursor/rules",
+)
+STARTUP_FILES = {
+    ".claude/settings.json", ".claude/settings.local.json", ".codex/config.toml",
+    ".pi/settings.json", ".pi/SYSTEM.md", ".pi/APPEND_SYSTEM.md",
+}
 STARTUP_FILENAMES = {
     "AGENTS.md", "AGENTS.MD", "AGENTS.override.md", "CLAUDE.md", "CLAUDE.MD",
     "GEMINI.md", ".cursorrules",
@@ -35,10 +43,10 @@ def require_committed_startup(origin: Path, commit: str) -> None:
     plus untracked and ignored startup files. Skill links also protect their
     repository-local targets, where the actual instruction bytes live.
     """
-    protected = {origin / directory for directory in STARTUP_DIRECTORIES}
+    protected = {origin / path for path in (*STARTUP_DIRECTORIES, *STARTUP_FILES)}
     for directory in STARTUP_DIRECTORIES:
-        skills = origin / directory / "skills"
-        if skills.is_dir():
+        skills = origin / directory
+        if skills.name == "skills" and skills.is_dir():
             for skill in skills.iterdir():
                 if skill.is_symlink():
                     target = skill.resolve()

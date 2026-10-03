@@ -115,6 +115,15 @@ def test_selected_revision_must_match_the_origins_startup_instructions(origin: P
         aw.prepare_analysis(origin, name="example", revision=old, allow_dirty_origin=True)
 
 
+def test_harness_runtime_state_and_readmes_are_not_startup_inputs(origin: Path) -> None:
+    for name in (".claude/scheduled_tasks.lock", ".pi/README.md", ".codex/state.sqlite"):
+        path = origin / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("Local runtime state or documentation\n")
+    prepared = aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
+    assert prepared["status"] == "ready"
+
+
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:
     destination = tmp_path / "existing"
     destination.mkdir()

@@ -36,11 +36,13 @@ record for diagnosis; they do not open an analysis or launch a harness.
 By default, uncommitted changes stop preparation. `--allow-dirty-origin` permits
 unrelated changes in the originating checkout and excludes them from the new
 worktree. It never permits changed startup instructions or configuration:
-instruction files such as `AGENTS.md`, harness directories (`.agents/`,
-`.claude/`, `.codex/`, `.pi/`, `.cursor/`), and repository-local targets of skill
-symlinks must match the selected commit. Staged, unstaged, untracked and ignored
-startup files are checked; this conservative boundary includes documentation
-inside harness directories. Source and publication checks remain unchanged.
+instruction files such as `AGENTS.md`, project harness settings and system
+prompts, skill and agent directories, extensions, hooks and prompt resources,
+and repository-local targets of skill symlinks must match the selected commit.
+Staged, unstaged, untracked and ignored startup files are checked. Runtime
+locks, caches and top-level harness README files are not startup inputs; files
+inside protected resource directories remain conservatively covered. Source
+and publication checks remain unchanged.
 The Git comparison covers repository files, not user-wide harness settings.
 
 To prepare and launch a fresh harness in one command, append its executable
