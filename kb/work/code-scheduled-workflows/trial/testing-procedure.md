@@ -8,7 +8,7 @@ Revised after the first series in Claude Code and Codex (2026-09-29), and again 
 
 Two decisions wait on this test:
 
-1. Whether [the loop text](../../../agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) can land in `kb/instructions/` as it is, with changes, or not at all.
+1. Whether [the loop text](../../../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) can land in `kb/instructions/` as it is, with changes, or not at all.
 2. Whether the first analysis definition can rely on an agent orchestrator that only launches and reports. If an agent given the loop text still reads outputs, does jobs itself, or repairs beyond its scope, the design needs a guard that code enforces, and that must be known before the definition is written.
 
 Serve these decisions. A trial that goes wrong in an informative way is a good result; a trial that was helped to succeed is a lost one.

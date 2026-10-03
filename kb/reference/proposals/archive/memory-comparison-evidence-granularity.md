@@ -10,7 +10,7 @@ considered alternatives live in the ADR.
 
 ## Current state (as of 2026-09-26)
 
-The [memory report contract](../../../agentic-systems/types/agent-memory-analysis-report.md#memory-comparison-fields)
+The [memory report contract](../../../agentic-system-analyses/types/agent-memory-analysis-report.md#memory-comparison-fields)
 requires the union of scoped values and the weakest evidence basis supporting
 that union. The numerical analyzer admits known values at wired, observed, or
 causally supported basis. It correctly excludes a complete set whose basis is

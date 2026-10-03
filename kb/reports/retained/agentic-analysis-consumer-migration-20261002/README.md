@@ -39,7 +39,7 @@ It does not establish replacement findings for the historical populations.
 
 ## Current contract and navigation
 
-The [analysis set type](../../../agentic-systems/types/agentic-system-analysis-set.md)
+The [analysis set type](../../../agentic-system-analyses/types/agentic-system-analysis-set.md)
 requires overview, runtime, memory, epistemic and reconciliation reports for
 a complete outcome. The generated review pins `ARTIFACT.yaml`, which pins
 each report. The comparison readers validate the set without ignored run

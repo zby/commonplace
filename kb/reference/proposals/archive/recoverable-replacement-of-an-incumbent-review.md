@@ -13,7 +13,7 @@ tags: [architecture, lifecycle-management]
 > and the restore-obligation forces remain here as design texture only.
 
 The legacy writer discussed below has been retired. Its links name the frozen
-historical implementation. The current [main analysis](../../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
+historical implementation. The current [main analysis](../../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
 uses a memory specialist report and validates a candidate before replacement;
 it does not invoke the archived-first writer. The remaining design questions
 below require reassessment against that current workflow.

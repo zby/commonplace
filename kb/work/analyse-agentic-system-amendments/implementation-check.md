@@ -19,7 +19,7 @@ fresh-run requirement explicit.
   This closes audit finding 2 in [the separate audit](./skill-inconsistencies.md),
   which directly affected the commissioned checks. Other audit findings
   remain follow-ups.
-- The [shared record contract](../../agentic-systems/instructions/agentic-analysis-records.md)
+- The [shared record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md)
   is consumed through declared dependencies by analysts, reconciliation and
   verification. It now distinguishes identity, single-parent containment and
   overlapping groupings. Splits supersede only by already-declared parts;

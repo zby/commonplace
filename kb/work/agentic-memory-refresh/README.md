@@ -4,7 +4,7 @@
 
 The operator commissioned this workshop on 2026-09-26 to rerun all existing
 agent-memory-system analyses through
-[`analyse-agentic-system`](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
+[`analyse-agentic-system`](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md),
 refreshing their sources and checking that the resulting corpus still supports
 statistics and summaries. The first execution is a small pilot; expansion
 returns to planning after its analysis and downstream checks are recorded.

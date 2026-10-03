@@ -17,8 +17,8 @@ We track these systems to make a shared design space inspectable. Commonplace su
 
 ## How we review
 
-Current analysis uses [`analyse-agentic-system`](../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
-which delegates memory findings to the [memory analyst](../agentic-systems/instructions/analyse-agentic-system/jobs/memory.md)
+Current analysis uses [`analyse-agentic-system`](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md),
+which delegates memory findings to the [memory analyst](../agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md)
 and retains its typed report as a member of the main analysis set. New runs publish under
 `kb/agentic-systems/`; the reviews in this collection remain historical records.
 

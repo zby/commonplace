@@ -121,4 +121,4 @@ version.
 Relevant Notes:
 
 - [Trajectory-aware evaluation of transforming agent workflows](../trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: the broader proposal for using intermediate execution evidence to diagnose agent workflows
-- [Analyse an agentic system](../../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) — procedure: the shipped rerun-on-failure workflow
+- [Analyse an agentic system](../../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — procedure: the shipped rerun-on-failure workflow

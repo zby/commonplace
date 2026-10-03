@@ -133,7 +133,7 @@ within that request's scope; do not request authorization again.
 8. **Route commissioned corrections.** When corrections are in scope, fix the
    shared method/contract if it is defective; when the existing method already
    covers the issue, keep it and rerun its application. Invoke
-   [analyse-agentic-system](./analyse-agentic-system/SKILL.md) with the source
+   [analyse-agentic-system](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) with the source
    identity, recorded revision or capture, target boundary, affected canonical
    findings, and the diagnosis. Use a new run ID and the producer's normal
    source inspection, validation and publication. The old result supplies the

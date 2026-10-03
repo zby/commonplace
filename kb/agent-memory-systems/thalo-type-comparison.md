@@ -6,7 +6,7 @@ traits: [has-comparison]
 
 # Thalo entity types compared to commonplace document types
 
-**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-systems/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
+**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
 
 Both systems define types with structural expectations. Thalo commits to types upfront via a grammar; we [discover ours through practice](../notes/document-types-should-be-verifiable.md). This comparison is a reference for borrowing — when we encounter a recurring note shape, we can check whether Thalo already has a useful structure for it.
 

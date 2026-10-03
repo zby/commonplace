@@ -1,7 +1,7 @@
 # Lightweight agent memory systems
 
 Historical coverage in the frozen legacy collection. New doc-grounded or
-code-grounded analyses use the [main analysis method](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
+code-grounded analyses use the [main analysis method](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
 and publish under `kb/agentic-systems/`.
 
 Paper-, article-, product-, or spec-grounded systems that are useful for the agent-memory-systems landscape but have no inspectable implementation that supports a code-grounded review in `../reviews/`.

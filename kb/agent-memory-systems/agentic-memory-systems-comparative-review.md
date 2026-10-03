@@ -7,7 +7,7 @@ tags: [agent-memory, learning-theory]
 
 # What the matrix shows across 148 agent memory systems
 
-**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-systems/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
+**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
 
 Across 148 code-grounded reviews, each system is classified on the same axes: [storage substrate](../notes/definitions/storage-substrate.md) (where memory lives), [lineage](../notes/definitions/lineage.md) (how retained state was derived), [behavioral authority](../notes/definitions/behavioral-authority.md) (what force memory has), and how memory [reaches the next action](../notes/knowledge-storage-does-not-imply-contextual-activation.md). The classifications live in [`systems.csv`](./systems.csv) and the [comparison table](./systems-table.md). Read together, they show that what divides the collection is less the storage substrate than how memory is activated and verified. Four findings stand out.
 

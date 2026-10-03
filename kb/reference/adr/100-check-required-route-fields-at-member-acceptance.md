@@ -23,7 +23,7 @@ answer for immediate return, later read-back, delegated visibility, selection
 predicate, invalidation or expiry, activation or effect, and evidence limits.
 An inapplicable or uninspected answer uses the corresponding exact value,
 an em dash, and a non-empty reason. The
-[shared record contract](../../agentic-systems/instructions/agentic-analysis-records.md)
+[shared record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md)
 owns the authoring syntax.
 
 Check each route declaration under Shared records in every analyst member,

@@ -231,7 +231,7 @@ commit and excludes uncommitted origin changes only with `--allow-dirty-origin`;
 changed startup instructions and configuration always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
 directory and environment. It does not open or advance an analysis. See
-[isolated run setup](../agentic-systems/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
+[isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
 Run a code-scheduled workflow. `start <package.module:ClassName>` creates a
 run where the definition says its runs go, allocating a free name, and prints

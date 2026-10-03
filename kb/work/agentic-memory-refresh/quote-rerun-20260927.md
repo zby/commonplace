@@ -120,7 +120,7 @@ check passed; a further check after finalizing the result also passed. Prepare,
 publish and independently repeated handoff all succeeded.
 
 The six URL diagnostics expose a remaining contract inconsistency. The
-[producer skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) and
+[producer skill](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) and
 [result type](../../types/agentic-system-analysis-result.md) say a full-commit
 GitHub blob URL is sufficient. `quote_matching._attributed_citation` accepts
 that URL, but `validation.validate_quote_citations` additionally requires a

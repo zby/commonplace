@@ -3,7 +3,7 @@
 ## Commission
 
 Opened on 2026-10-02 at the operator's request. Examine amendments to the
-live [`analyse-agentic-system` skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md),
+live [`analyse-agentic-system` skill](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md),
 starting with its shared record ID system. The operator has encountered ID
 errors and wants the scheme simplified. This workshop investigates the errors
 and chooses a repair before changing the live method.

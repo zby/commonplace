@@ -37,7 +37,7 @@ its authored account here is retired with the relocation command.
 Ordinary authored accounts remain author-maintained.
 
 Before assessing theory pathways in ordinary authored accounts, read the Theory
-account in the [shared record contract](../../../agentic-systems/instructions/agentic-analysis-records.md).
+account in the [shared record contract](../../../agentic-system-analyses/instructions/agentic-analysis-records.md).
 It supplies the independent conditions and separately evidenced properties.
 
 ## Scope and titles

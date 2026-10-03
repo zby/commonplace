@@ -2,7 +2,7 @@
 
 ## Starting problem
 
-The [shared record contract](../../agentic-systems/instructions/agentic-analysis-records.md)
+The [shared record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md)
 puts both analyst and kind in an ID: `RT-RTE-1`, `MEM-RTE-1`, or
 `EPI-RTE-1`. The `RT-` prefix landed in commit `4e5b5d9ae` on 2026-10-02;
 bare runtime IDs stay readable only in frozen sets. Kind is also expressed
@@ -13,7 +13,7 @@ where an analyst must preserve an exact identifier while revising a finding.
 
 One inconsistency is visible without a run: the contract says a split
 allocates fresh IDs for its parts, but the
-[reconciliation job](../../agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md)
+[reconciliation job](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md)
 only writes reconciliation text. The
 [record checker](../../../src/commonplace/lib/agentic_records.py)
 recognizes declarations under `## Shared records` and rejects cited IDs

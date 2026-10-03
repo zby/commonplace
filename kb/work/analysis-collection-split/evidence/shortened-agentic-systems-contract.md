@@ -50,7 +50,7 @@ and scope. Worker fragments keep the job's headings. Instructions use imperative
 titles and trigger descriptions; their quality goal is executability and precision.
 
 Before assessing theory pathways, read the Theory account in the
-[shared record contract](../../../agentic-systems/instructions/agentic-analysis-records.md).
+[shared record contract](../../../agentic-system-analyses/instructions/agentic-analysis-records.md).
 It supplies independently evidenced conditions and separate learning,
 persistence, addressability and reflection assessments; analytical jobs already
 receive it. Before editing instructions, shared contracts or local types, follow

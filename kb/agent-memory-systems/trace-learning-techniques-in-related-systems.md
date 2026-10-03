@@ -7,7 +7,7 @@ tags: [learning-theory, observability, trace-learning]
 
 # Trace-learning techniques in related systems
 
-**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-systems/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
+**Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
 
 Trace-learning systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, natural-language, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 

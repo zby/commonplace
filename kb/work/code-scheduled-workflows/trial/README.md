@@ -1,6 +1,6 @@
 # Harness trials of the loop text
 
-Tries [the loop text](../../../agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) with real sub-agents, in each supported harness, before it lands in `kb/instructions/`. The trials answer whether an agent that has read only the loop text drives a run correctly: whether it launches exactly what `step` names and does no job itself, keeps within a repair scope, stops when it should, and whether a fresh session resumes a run.
+Tries [the loop text](../../../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) with real sub-agents, in each supported harness, before it lands in `kb/instructions/`. The trials answer whether an agent that has read only the loop text drives a run correctly: whether it launches exactly what `step` names and does no job itself, keeps within a repair scope, stops when it should, and whether a fresh session resumes a run.
 
 A tester works from [the testing procedure](./testing-procedure.md), which states the purpose, the result, and the limits of a test series. This file describes the kit. The changes proposed from the trials, and the decision on each, are in [the change list](./changes.md).
 
@@ -14,7 +14,7 @@ uv run python kb/work/code-scheduled-workflows/trial/setup.py <scenario> [name] 
 
 It prints the run directory and the command for the loop text. The agent orchestrator sees the run's path, so a name must not contain a scenario's name; without a name the run gets a random one. Runs live under `runs/`, which git ignores.
 
-Start a fresh session in the harness and give it the text of [the loop instruction](../../../agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) below its frontmatter, with `<run>` filled in and `commonplace-workflow` replaced by the printed command, and one request:
+Start a fresh session in the harness and give it the text of [the loop instruction](../../../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) below its frontmatter, with `<run>` filled in and `commonplace-workflow` replaced by the printed command, and one request:
 
 - for a new run: "Drive the run `<run>`. It is new: no step has run on it."
 - for a resumed run: "Resume driving the run `<run>`."

@@ -14,7 +14,7 @@ quality or full-corpus refresh completion.
 
 ## Adopted design
 
-The [analysis set contract](../../../agentic-systems/types/agentic-system-analysis-set.md)
+The [analysis set contract](../../../agentic-system-analyses/types/agentic-system-analysis-set.md)
 owns directory membership and shared consistency checks. Each member has its
 own type. The current complete set contains overview, runtime, memory,
 epistemic and reconciliation reports. Blocked and out-of-scope sets contain

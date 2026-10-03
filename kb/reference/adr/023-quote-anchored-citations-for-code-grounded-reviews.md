@@ -91,5 +91,5 @@ support remains a semantic check.
 - [ADR-019: collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — foundation: the source collection owns outbound authorization
 - [ADR-059: external is a reserved outbound destination](./059-external-is-a-reserved-outbound-destination.md) — amendment: external authorization is collection-owned while citation shape remains type-owned
 - [agent-memory-system-review type spec](../../agent-memory-systems/types/agent-memory-system-review.md) — where the convention is defined
-- [analyse-agentic-system](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md) — the producer and publication procedure that owns resolution against the frozen source
+- [analyse-agentic-system](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — the producer and publication procedure that owns resolution against the frozen source
 - [grounding-alignment review gate](../../instructions/review-gates/semantic/grounding-alignment.md) — see-also: the semantic complement — this ADR's structural check narrows the question the gate's judgment then answers

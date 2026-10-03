@@ -23,7 +23,7 @@ older frozen archives are left untouched.
 
 The workflow module is `src/commonplace/lib/agentic_workflow.py`; the separately
 tested scheduling engine is `src/commonplace/workflow/`. The
-[analysis skill](../../agentic-systems/instructions/analyse-agentic-system/SKILL.md)
+[analysis skill](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
 loads the driver loop and job-specific prompts. It is 70 lines at closure,
 compared with approximately 526 at workshop opening. This measures instruction
 placement, not total worker reading or token savings.
