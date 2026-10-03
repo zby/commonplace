@@ -1,88 +1,111 @@
-# Check split contract inputs
+# Compare contract input costs
 
-## Measurement boundary
+## Result
 
-Measured on 2026-10-03 from current role instructions, worker rules, shared
-contracts and member types. The source of job dependency lists is
-`src/commonplace/lib/agentic_workflow.py`. These totals count UTF-8 file bytes,
-not tokens, delivered tool output or observed reads. They exclude runtime
-prompts, root doctrine, source content, produced reports and retry feedback.
+The split report contract is **2,249 bytes**; shortening the existing
+contract produces **4,939 bytes**, against **13,727 bytes**
+currently. Shortening saves **8,788 bytes** per mandatory collection read;
+the split saves a further **2,690 bytes**. Shortening captures
+**76.6%** of the split's collection-byte reduction.
 
-The current packet does not explicitly supply COLLECTION.md; the root writer
-rule nevertheless requires it for collection artifacts. The before column adds
-that required read. The after column models supplying only the new contract,
-with existing role files unchanged. Relocation-required path edits are not yet
-measured. This is a static comparison of mandatory method-file inputs, not the
-complete live packet experiment required before adoption.
+The split's additional reduction is **3.7–9.3%** of the
+shortened method-file packet, depending on role. In the saved-packet comparison
+below it is **1.5–8.5%**. The smaller ownership boundary remains a
+separate advantage; the coverage audit also counts 12 unrelated rule groups in
+shortening versus three in the split draft. Neither has a literal zero count; these measurements do not establish better analysis.
 
-Current collection contract: **13,727 bytes**. New analysis contract draft:
-**1,749 bytes**. Reduced existing collection contract draft:
-**4,062 bytes**. The modelled saving is
-**11,978 bytes per contract-reading job**. Boundary writes working state in
-the collection and therefore also receives its contract under this draft;
-verify/verify-synthesis similarly write collection outputs. Recheck each actual
-output path after implementation; a job producing no collection artifact needs
-no contract solely because it reads the method.
+## Measurement and provenance
 
-| Role | Existing role files | With current contract | With new draft |
+See [coverage check](./contract-coverage-check.md) for clause dispositions and
+[input measurements](./input-measurements.json) for paths, UTF-8 bytes and SHA-256s.
+Measured against current files at the recorded input commit plus workshop drafts.
+Each distinct required file is counted once per packet. No moved rule is placed
+in another always-loaded worker file: shared role contracts are held unchanged.
+
+These are file-byte costs, not tokens or observed read calls. Common root/harness
+context, conditionally followed definitions, source inspection, tool results and
+future retries are excluded. The collection contract is mandatory under root
+writer doctrine, although current code does not supply it. Every alternative
+requires repairing that delivery gap; omission is not counted as a valid saving.
+
+The earlier **1,749-byte** split draft had scope/title/link/loading gaps. The
+coverage check explains the repairs reflected in the new size. The split
+existing-owner contract is **4,443 bytes**;
+workers do not load it just because their method instructions live there.
+Maintenance and publication drafts are coordinator/author inputs, not worker
+read-first inputs.
+
+## Per-role mandatory method reads
+
+Sources: `AnalyseAgenticSystem` role constructors and `job` in
+`src/commonplace/lib/agentic_workflow.py`. Counts include the job instruction,
+worker rules, explicitly supplied shared contracts and member types. All eight
+roles write collection working artifacts, including fragments, and need the
+collection contract. Role-specific repair/return stages reuse these method files.
+
+| Role | Existing role files | Current contract | Shortening | Split |
+|---|---:|---:|---:|---:|
+| boundary | 24,117 | 37,844 | 29,056 | 26,366 |
+| runtime | 33,203 | 46,930 | 38,142 | 35,452 |
+| memory | 47,993 | 61,720 | 52,932 | 50,242 |
+| epistemic | 44,544 | 58,271 | 49,483 | 46,793 |
+| reconcile | 67,254 | 80,981 | 72,193 | 69,503 |
+| verify | 68,664 | 82,391 | 73,603 | 70,913 |
+| synthesize | 37,724 | 51,451 | 42,663 | 39,973 |
+| verify-synthesis | 37,314 | 51,041 | 42,253 | 39,563 |
+
+## Saved-packet replay
+
+Local state still retains the latest prompt for 14 job names from
+`AAS-2026-10-03-dynamic-cheatsheet-02`. These include correction stages and repair
+prompts with explicit `previous-output` reads. For each, count the saved prompt,
+its named instruction/read-first files, named task reads and explicit repair
+baseline, using their current bytes. Add each candidate collection contract.
+All named files exist. This counts the complete finite file-read list found in
+that saved invocation, including task material, rather than method files alone.
+
+This is a controlled replay of declared inputs, not the exact historical worker
+context: prompts can have been overwritten by retries, dependencies can reflect
+later accepted outputs, and current method files differ from the run's method.
+The run originally had more attempts than the 14 retained prompts. Do not sum
+these rows as its historical consumption. No source checkout is read or run.
+Relocated path lengths, new prompt batching and publication-specific changes to
+member types are not projected; those require measurements after implementation.
+Holding them constant isolates the collection-contract contribution.
+
+| Saved job | Current contract | Shortening | Split |
 |---|---:|---:|---:|
-| boundary | 24,117 | 37,844 | 25,866 |
-| runtime | 33,203 | 46,930 | 34,952 |
-| memory | 47,993 | 61,720 | 49,742 |
-| epistemic | 44,544 | 58,271 | 46,293 |
-| reconcile | 67,254 | 80,981 | 69,003 |
-| verify | 68,664 | 82,391 | 70,413 |
-| synthesize | 37,724 | 51,451 | 39,473 |
-| verify-synthesis | 37,314 | 51,041 | 39,063 |
+| boundary | 40,585 | 31,797 | 29,107 |
+| epistemic | 93,845 | 85,057 | 82,367 |
+| memory-0 | 136,025 | 127,237 | 124,547 |
+| memory-1 | 157,803 | 149,015 | 146,325 |
+| reconcile-0 | 175,307 | 166,519 | 163,829 |
+| reconcile-1 | 184,849 | 176,061 | 173,371 |
+| reconcile-2 | 186,560 | 177,772 | 175,082 |
+| runtime | 56,373 | 47,585 | 44,895 |
+| synthesize | 159,037 | 150,249 | 147,559 |
+| synthesize-1 | 161,997 | 153,209 | 150,519 |
+| verify-1 | 184,749 | 175,961 | 173,271 |
+| verify-2 | 184,749 | 175,961 | 173,271 |
+| verify-synthesis | 158,320 | 149,532 | 146,842 |
+| verify-synthesis-1 | 159,498 | 150,710 | 148,020 |
 
-## Rule coverage and consumption
+## What is established
 
-| Collection rule | Proposed consumption path |
-|---|---|
-| Scope, fidelity/economy, source-native account, evidence boundary | New collection contract, plus role evidence/boundary contracts |
-| Working/retained/archive placement and frozen-set maintenance | New collection contract; operations remain coordinator inputs |
-| Opening method identity, validation exclusions and migration/hash rules | Coordinator skill, publication contract and migration plan; excluded from worker collection read |
-| Assigned working output; coordinator assembly/publication | New collection contract; existing worker rules give exact authority and repair procedure |
-| Report fields and closed set membership | Role member types; set type loaded by assembly/validation |
-| Record IDs, evidence assessments, theory conditions | Existing shared records contract, explicitly supplied to analytical and judging roles |
-| Source register and quotation rules | Existing sources contract and worker rules |
-| Synthesis and reconciliation exposure | Overview type and synthesis/verification jobs; publication adds link usability checks |
-| Public selection and reference pins | Old collection contract, reference type and publication instruction; coordinator/readers only |
-| Instruction-authoring and maintenance | Instruction type plus explicitly loaded maintenance path; exclude from analyst packets |
-| Titles/descriptions, type eligibility and outbound links | New collection contract; type/schema checks where applicable |
-| Comparison populations and evidence tiers | Comparison readers and synthesis instruction; source fields remain in member types |
-| Transfer separation and content routing | New collection contract |
+The coverage audit shows how shared authoring rules and removed operational
+rules reach their appropriate consumers. Both candidate contracts supply explicit
+conditional maintenance loading; only the shortening/split existing-owner author
+needs the additional theory-account rule for ordinary authored analyses.
+Analytical jobs already receive that record contract.
 
-## Compaction boundary
+Shortening avoids the report/type/pin/redirect migration while obtaining most of
+the measured reduction. Prefer it if that reduction meets the operator's goal.
+Choose the split if the smaller per-role input and separation from unrelated rule
+growth justify its migration and cross-collection method dependencies.
 
-The [collection definition](../../../reference/definitions/collection.md) requires
-local purpose, contribution, quality, title/description conventions, evidentiality,
-maintenance semantics and outbound-link grammar. The revised draft states those
-without teaching every worker the coordinator's lifecycle operations. Brief area
-roles and the frozen-output rule remain authoring boundaries; validation markers,
-method recovery, migration hashes and public selection stay in coordinator inputs.
-
-Link permission is deliberately narrower: source citations, theory dependencies
-and supporting analysis members. Cross-system comparisons, Commonplace analogues,
-procedure mappings and theory promotion are not link-discovery tasks for these
-workers. This changes the proposed local grammar; check actual required analyst
-citations before adoption. An additional necessary destination needs an explicit
-contract amendment, not implicit permission inherited from agentic-systems.
-
-## Outstanding proof
-
-The draft is a proposed complete contract, not established semantic coverage.
-Check every unique clause of the incumbent against these consumers, especially
-ordinary authored analyses and method authors. Do not delete a unique rule until
-its replacement is loaded with binding force by every applicable role. Job hashes
-must include the supplied contract; changing it must invalidate dependent work.
-
-The draft existing contract still requires a maintenance path for unique method
-editing rules. Its reduction cannot be counted as a finished deployment until
-that path is supplied. No live input measurement or quality improvement is claimed.
-
-The shortening alternative still needs its own sufficient contract candidate:
-combine the retained collection-wide scope/link/placement rules without moving
-reports, then measure role packets with it. Do not compare the split against the
-unshortened incumbent alone. If equivalent savings suffice, choose shortening
-unless the separate ownership boundary justifies the migration cost.
+Neither alternative is ready to deploy by copying one file: promote maintenance
+routes and add the chosen contract to job read-first/hashed inputs. The split
+also needs publication/type/consumer changes and bounded migration adoption.
+Publication by reference remains a separate choice, available in either layout.
+A live evaluation, source-reading cost and actual quality outcomes remain outside
+this authorized check.

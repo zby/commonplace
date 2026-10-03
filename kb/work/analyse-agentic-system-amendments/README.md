@@ -48,6 +48,9 @@ analysis, or adopt an ID design by opening.
 - [Report-collection split proposal](./report-collection-split-proposal.md) —
   proposal awaiting adoption: move analysis reports and their member types to
   a separate collection with a minimal contract; revises ADR 099.
+- [Comparison-profile job proposal](./comparison-profile-job-proposal.md) —
+  design for producing the memory comparison profile in a separate job after
+  record verification; the separation is decided, the design awaits adoption.
 
 - [Split-case drafts](./split-drafts/README.md) — candidate collection contracts,
   publication references, migration decisions and static input measurements.

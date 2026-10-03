@@ -26,11 +26,24 @@ rewrite them for their destinations. Future paths are literal code spans.
 | [Publication contract](./publication-contract.md) | Collection-owned publication instruction, explicitly loaded by maintainers and reflected in workflow checks |
 | [Decision draft](./decision-draft.md) | Material for an ADR revising ADR 099 after adoption and implementation |
 | [Implementation plan](./implementation-plan.md) | Migration dispositions, consumer changes and acceptance |
-| [Input coverage](./input-coverage.md) | Contract coverage, byte measurements and unresolved checks |
+| [Coverage check](./contract-coverage-check.md) | Clause audit, repairs and verified/proposed loading paths |
+| [Shortening alternative](./shortened-agentic-systems-contract.md) | Reduced existing contract without relocation or publication changes |
+| [Input comparison](./input-coverage.md) | Same-role and saved-packet comparison of both alternatives |
+| [Measurement data](./input-measurements.json) | Exact file paths, byte counts and hashes |
 
 The reference type is new. Existing analysis member types and schemas move with
 mechanical identity/path changes; the implementation plan specifies those changes
 instead of duplicating their full text here. Job packets keep their role contracts.
+
+## Check result
+
+The operator commissioned coverage and shortening checks after the first draft.
+The [audit](./contract-coverage-check.md) repairs scope, title, link and loading
+gaps. The [comparison](./input-coverage.md) shows that shortening obtains most
+of the measured reduction. Both candidates still require promoting their
+conditional authoring routes and supplying the collection contract as a job
+dependency. Choose the ownership boundary before implementation; publication
+by reference is a separate decision. No live method has changed.
 
 ## Closure
 

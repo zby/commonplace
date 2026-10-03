@@ -7,38 +7,101 @@ proposal awaiting adoption. It authorizes no relocation, method edit or run.
 Adoption revises [ADR 099](../../reference/adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md),
 which chose one collection contract on 2026-10-01, so it needs an ADR.
 
+2026-10-03: the operator chose the split over shortening after reading the
+[complexity measurements](./split-drafts/complexity-measurements.md). The
+split removes five to seven unrelated concerns per analyst role; shortening
+removes one. This records the choice between alternatives. Relocation still
+needs the ADR and an accepted implementation plan.
+
 ## Motivation
 
-The split is intended to make a difficult analytical workflow feasible through
-aggressive, role-specific input reduction. Analysts must trace source behavior,
-apply several distinctions, preserve evidence, and produce mutually consistent
-records. Mandatory material unrelated to their assigned work adds reading and
-context cost without helping them perform those tasks.
+Analysis workers fail parts of their jobs. The audited runs show refused
+submissions, retries, rules read and not applied, wrong-path reads and
+classifications returned by reconciliation; see the
+[fresh-run audit](./fresh-run-audit.md), the
+[second-run audit](./second-run-audit.md) and the
+[Sol run follow-up plan](./sol-run-follow-up-plan.md). The operator's response
+is to simplify the analyst's job. The split serves that goal: an analyst should
+hold only the analysis. Fewer bytes are one part of the simplification. The
+larger part is complexity: how many concerns an analyst must hold, how many
+references it must resolve, and how many instructions it must reconcile.
 
-The design objective is the smallest complete instruction set for each role.
-Every additional mandatory input needs a task-specific reason. This is an
-operator-selected optimization priority, not a claim that this run proves a
-particular context limit or that fewer bytes necessarily improve analysis.
+The system must also be coherent: the instructions a worker receives must agree
+with the doctrine that binds it. Today the root doctrine requires every writer
+to read the collection contract, and the job packets omit it. No observed job
+resolved that contradiction cleanly. A contradiction is a complexity cost by
+itself, and it is sufficient reason to change the structure. The context
+argument below explains why the repair should be a small analysis-only
+contract and not the full shared one.
 
-Three facts produce the cost:
+The operator's working hypothesis is that analysis jobs are context bound.
+The binding limit is not the provider window. It is the
+[soft degradation boundary](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md):
+the point at which a worker misses instructions or leaves context unused while
+its output stays fluent. That note names three pressures that move the
+boundary: volume, interference and complexity. Analysts already carry a heavy
+load of all three from the task itself. They trace source behavior, apply
+several distinctions, preserve evidence and produce mutually consistent
+records. The design objective is therefore to remove every mandatory input
+that does not serve the assigned job, and to try each available reduction.
 
-1. The root doctrine tells every writer to read the target collection
-   contract before writing.
-2. Analysis workers write report members under `kb/agentic-systems/reports/`,
-   so their contract is `kb/agentic-systems/COLLECTION.md`.
-3. That contract is 13.7 KB and also governs reviews, comparisons, method
-   authoring, publication and outbound linking. An analyst needs a subset of
-   those rules; the per-job coverage check below must establish which subset.
+The current collection contract adds to each pressure:
 
-A separate collection would give report authors a small, independently
-maintained contract while preserving the root reading rule. The target is
-2–3 KB, not a measured result yet. Unrelated changes to review, comparison or
-method-authoring rules would no longer automatically enlarge analyst input.
+| Pressure | Current cost | Effect of the split |
+|---|---|---|
+| Volume | Every writer of a collection member must read the 13.7 KB contract of `kb/agentic-systems/`. | The draft analysis contract is 2.2 KB. The modelled saving is 11.5 KB per job, 14–30% of the mandatory method files, by role. |
+| Interference | That contract also governs reviews, comparisons, method authoring, publication and outbound linking. An analyst must hold those rules and rule them out. | The analyst's contract contains only rules for analysis members. Rules for other artifact classes cannot enter it later. |
+| Complexity | The root doctrine tells writers to read the target collection contract, but packets do not supply it. Each worker must [resolve the reference itself](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) and decide whether the root rule or the packet's reading list governs. The contract then mixes analysis rules with publication, review and comparison rules that the worker must separate. | Each packet supplies the contract as a literal `read-first` path, so the root rule and the packet agree. The contract addresses one concern, analysis. Publication stays in `kb/agentic-systems/`. |
 
-The motivation is the standing per-job reading cost and control over its future
-growth. The two recovered path errors below are secondary delivery evidence,
-not the reason to split or proof that the large contract caused analytical
-mistakes.
+Interference is the argument for a separate collection. Shortening the shared
+contract can recover much of the volume, and a packet entry removes the lookup
+without any relocation. But a contract shared by several artifact classes must
+keep rules for each of them, so only separate ownership leaves the analyst with
+no rules for other classes. The volume saving is real but modest, and it is not
+the reason to prefer the split over shortening.
+
+The contract is a small share of an analyst's mandatory input, so the split
+alone removes a small share of the job's complexity. Its lasting effect is the
+boundary: the analysis collection and the analyst packets address analysis
+only, and publication, comparison and method authoring cannot add rules to
+them later. Whether that reduction is real must be measured on the analyst
+jobs themselves, not on the contract's size; see the check below.
+
+The retained records show the current structure failing in every observed
+job. The root doctrine requires the contract read, and each job packet gives an
+explicit reading list that omits the contract. The two instructions
+contradict each other, and workers resolved the contradiction differently:
+
+- In the two Dynamic Cheatsheet runs, all 30 worker sessions had the root rule
+  in context and none read the contract. Both accepted sets were written
+  outside the required write path, and no check detected it.
+- In the stopped Graphiti run, both parallel analysts tried to follow the
+  rule, guessed a wrong path, and then read the whole contract.
+
+No observed job produced a clean read. A general rule that a specific packet
+silently contradicts is itself an interference cost: the worker must decide
+which authority governs, and the system cannot tell which choice it made. The
+root delegation rule already forbids this: a parent may omit a supplied rule
+only after verifying delivery. The repair is to make the packet and the
+doctrine agree, and a small contract makes agreement cheap enough to keep the
+reading rule without an exception.
+
+The records do not support a volume explanation. Peak worker context in the
+Dynamic Cheatsheet runs was 18–44% of the provider window. Refused submissions
+did not concentrate in the largest contexts, and retries passed at about the
+same size. The recurring lapse was a rule read and not applied when writing,
+such as the prohibition on record ranges in the
+[fresh-run audit](./fresh-run-audit.md). It stopped in verification jobs once
+their packets stated the rule conspicuously, and it then appeared in
+reconciliation and synthesis, whose packets did not. This supports the
+interference and complexity pressures, in two runs of one source on one model.
+It does not establish that the contract's content caused any analytical error,
+because no worker in those runs loaded it.
+
+The collection contract is the smallest mandatory method input. Role files are
+24–69 KB per job in the [input coverage draft](./split-drafts/input-coverage.md).
+The same three-pressure check applies to them and is likely to yield more. That
+work is separate from this proposal and does not depend on it.
 
 ## Observation
 
@@ -82,6 +145,36 @@ The collection is `kb/agentic-system-analyses/`, named by the operator on
 Workers generate the analysis inside this collection. Publication selects an
 accepted report for public discovery by linking to it; it does not generate a
 second compact review that restates the analysis elsewhere.
+
+### Analysis and publication are separately owned
+
+The analysis collection holds analyses, their run state and their types. It
+focuses on one activity: producing an accepted analysis of one system.
+
+The publication mechanism stays in `kb/agentic-systems/`. That collection owns
+the publication instruction, the reference type and its schema, public
+selection, navigation, comparison populations and the site exposure rules.
+Publication code copies accepted bytes into the analysis collection's
+`retained/` area, but the rules for doing so are publication rules and live
+with the mechanism.
+
+The consequence for analysts is the purpose of this separation:
+
+- The analysis contract states placement and immutability only. It carries no
+  rule about selection, references, navigation or public exposure.
+- No analyst packet supplies the publication instruction or the reference type.
+- An analyst's obligations end at an accepted member. A field or section that
+  exists only for a publication or comparison consumer is a candidate to move
+  to a coordinator step; the complexity check below lists them.
+
+Current analyst inputs are not yet free of publication: the boundary job reads
+`opening`, which its instruction describes as publication metadata, and the
+memory job instruction mentions publication checks. The memory analyst also
+produces the cross-system comparison profile. Each of these needs a
+disposition: keep with a stated analytical reason, reword, or move. Moving the
+comparison profile out of the memory job is a method change. The operator
+decided it on 2026-10-03; its design is the
+[comparison-profile job proposal](./comparison-profile-job-proposal.md).
 
 ### Publication by reference
 
@@ -143,10 +236,12 @@ merely to meet the budget:
 - retained-set immutability: substantive corrections require a new run;
   archives preserve historical evidence;
 - type eligibility for the local types;
-- the accepted report or set overview is the public analysis, not input to a
-  duplicate generated review;
 - what does not belong: separate comparative essays, comparison tables,
   transfer scans, method-authoring procedures.
+
+Publication rules are excluded: that the accepted overview is the public
+analysis, and how it is selected, belongs to the publication contract in
+`kb/agentic-systems/`.
 
 The agentic-systems contract loses its report-lifecycle section and keeps a
 pointer. Record definitions and the theory-builder conditions stay in the
@@ -222,26 +317,79 @@ Commit the `commonplace-relocate-*` result alone, without content edits.
   `drive-a-code-scheduled-run.md`) and with the Sol repairs. It should start
   after isolation lands, and no run may be open across the relocation: a run
   keeps its opening method commit.
-- The evidence is one run and two recovered errors. The split is justified by
-  the standing per-job reading cost, not by error frequency.
+- The evidence is two audited runs and a hypothesis about soft degradation.
+  No run has measured the effect of the contract on analysis quality. The
+  split is justified by simplifying the analyst's job: fewer concerns,
+  references and conflicting instructions. It is not justified by the byte
+  saving alone. If the complexity check shows no reduction for analyst jobs,
+  this justification fails and the remaining case is coherence.
 - Removing generated reviews changes the public discovery and consumer
   interface, not merely paths. A link to an unreviewed draft, stale selection,
   or unreconciled member is not equivalent to publishing an accepted analysis.
 
 ## Check before adoption
 
-Draft the minimal contract first and measure it. For each job, list the
-collection-level rules its output depends on and their consumption paths.
-Confirm each rule is in the draft contract or a supplied role/type instruction.
-Use this check to remove irrelevant mandatory input, not to justify loading
-everything defensively. Measure the complete mandatory packet before and after,
-so moving text into another always-loaded file cannot masquerade as a saving.
+The soft boundary is not directly observable and is not one stable number, so
+no byte count shows that it was relieved. Check each pressure separately, then
+check outcomes in a live run.
 
-Compare the resulting packet against shortening the existing contract. Prefer
-the split if it supplies a sufficient small contract and a clearer boundary
-against unrelated input growth. If the draft cannot stay near 3 KB, first test
-whether specialist rules belong elsewhere; return unresolved sufficiency or
-budget trade-offs to the operator before relocation.
+**Volume.** Measure the complete mandatory packet for each role before and
+after, so that moving text into another always-loaded file cannot count as a
+saving. Draft the shortened single contract and measure the same packets with
+it. Do not compare the split against the unshortened incumbent alone. The
+[input coverage draft](./split-drafts/input-coverage.md) holds both
+measurements.
+
+**Interference.** For each clause a worker must read, name the decision in that
+worker's output that the clause governs. A clause with no such decision moves
+to a type, a role instruction or a coordinator input. Run the same check on
+the shortened candidate and count the clauses that address other artifact
+classes and cannot be removed. Prefer the split if that count stays above
+zero. Do not omit a binding rule to pass this check: confirm that each removed
+clause is loaded with binding force by every role that needs it.
+
+**Complexity.** Measure the analyst jobs, not the contract. For each analyst
+role (boundary, runtime, memory, epistemic) take the complete mandatory packet
+and count, for the incumbent, the shortened candidate and the split:
+
+| Measure | What is counted | Target |
+|---|---|---|
+| Concerns | Activities other than the role's own analysis that the mandatory input gives rules for: publication, public selection, review authoring, comparison writing, method authoring, migration. | Zero |
+| Model-resolved references | References the worker must resolve to act: a rule naming a file the packet does not supply, a path the worker must derive, a definition reachable only by following a link. | Zero |
+| Authority conflicts | Pairs of loaded instructions that give different answers, so the worker must choose which governs. The root reading rule against the packet's reading list is one. | Zero |
+| Output obligations | Required sections, fields, record kinds, controlled classifications and cross-record constraints in the role's output, each with the consumer it serves. | Record; flag every obligation whose only consumer is publication or comparison |
+| Composition depth | For each output obligation, the number of separate files the worker must combine to satisfy it. Report the maximum and the count above two. | Record |
+
+These counts are judgments. Retain the itemized list behind each count, so a
+second reader can dispute an item, and apply one counting rule to all three
+candidates. Run the same measures on reconcile, verify and synthesis packets
+as a secondary result.
+
+The first three measures are what the split can change. The last two describe
+the complexity of the analysis task itself, which the split does not change.
+Record them anyway: they show where the remaining complexity sits and give the
+baseline for simplifying role files. Report the result per role as "before,
+after shortening, after split". If the first three measures are equal for
+shortening and the split, the split has no measured complexity advantage for
+analysts.
+
+**Outcome.** Run one analysis with the reduced inputs and compare it with the
+audited runs. Count failed reads of supplied or derived paths, validation
+failures before acceptance, refused submissions and retries, and verifier
+rejections, alongside coverage and acceptance. Record them per job, with the rule or
+obligation each failure concerns, so that failures can be matched to the
+complexity measures of that role. Count separately the lapses in which a
+worker read a rule and did not apply it. One run cannot attribute a
+difference to the contract, so record the result as an observation. The run
+needs separate commission. The operator decides whether a trial run with the
+draft contract supplied in the packet precedes relocation, or whether the
+first run after the split serves as this check. A trial before relocation is a
+scoped exception to the root reading rule and must be authorized as one.
+
+If the shortened contract reaches the same concern, reference and conflict
+counts for analyst roles as the split, choose shortening. If the split's
+counts are lower, state the difference per role in the decision. If sufficiency and
+reduction conflict, return the trade-off to the operator before relocation.
 
 Settle current-set/review pins, archive navigation, and sequencing after the
 isolation changes are committed. Demonstrate that an accepted analysis is
@@ -250,10 +398,6 @@ comparison consumers can resolve the selected set and provenance; and that
 unaccepted work remains unpublished. Check initial publication, replacement,
 and interrupted link updates without changing accepted bytes. These are
 migration obligations, not evidence against input optimization.
-
-A separately commissioned live run should measure
-input size and read calls alongside coverage, acceptance and repair outcomes.
-Reduced bytes alone do not demonstrate improved analytical quality.
 
 ## What closes this proposal
 

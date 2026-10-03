@@ -2,20 +2,22 @@
 
 ## Purpose and quality
 
-This collection holds workflow-produced analyses of external agentic systems.
+This collection holds workflow-produced analyses of external agentic systems,
+their run state and local types.
 Their contribution is an evidence-grounded account of source-native operation,
 with bounded synthesis and explicit limitations. The quality goal is fidelity
 and economy. Explain the external mechanism before applying Commonplace concepts;
-qualify mappings and keep evidence limits beside claims.
+qualify mappings and keep evidence limits beside claims. The source account
+must remain intelligible when a reader rejects the mapping.
 
 ## Authoring
 
-Name the system and the report's role in its title. Descriptions identify the
-mechanism and limits within the selected type's format. State the evidence basis
-and capture boundary; attribution and record formats belong to the member type
-and supplied role contracts.
+For titled reports, name the system and report role. Use the type's title and
+description conventions for run state and local types; worker fragments keep
+their job's exact headings. State the evidence basis and capture boundary in the
+member's format; attribution and record formats belong to its supplied contracts.
 
-Write only assigned working outputs. Retained analyses are frozen: substantive
+Analysis workers write only assigned working outputs. Retained analyses are frozen: substantive
 corrections require a new run. Preserve historical archives under their producing
 contracts. Assembly, acceptance, migration and publication are coordinator tasks.
 
@@ -24,14 +26,18 @@ contracts. Assembly, acceptance, migration and publication are coordinator tasks
 `state/` holds working analyses, `retained/` accepted analyses and
 `retained-archive/` historical analyses. Comparative writing and method procedures
 belong in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
-its separately commissioned transfer scan. Neither belongs in an analysis.
+its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
+raw source captures belong in source snapshot storage.
 
 Use global types under `types/` or local types under
-`agentic-system-analyses/types/`. Frontmatter-free Markdown is text.
+`agentic-system-analyses/types/`. Frontmatter-free Markdown is text. Before changing local types, follow
+[method maintenance](./method-maintenance.md).
 
 ## Outbound links
 
 - `kb/sources/`: cite tracked ingests, never snapshots; `evidenced-by`.
-- External: cite evidence used, preferably version-pinned; `evidenced-by`.
+- External: cite evidence used, preferably version-pinned; do not prospect the open
+  web; `evidenced-by`.
 - `kb/notes/`: cite theory used in a mapping; `rests-on`, `defined-in`.
 - Within this collection: point to supporting members or records; `see-also`.
+- `kb/agentic-systems/`: local types link their governing method contracts; `composition`, `see-also`.

@@ -20,8 +20,9 @@ contracts, landscape synthesis, taxonomy maintenance and publication procedure.
 collection contracts. Research skill projections point to canonical instructions;
 these skills are not promoted to every initialized KB.
 
-Use the instruction type's executability and composition rules when authoring
-procedures. Supply each worker's required role/type inputs explicitly. Instruction
+Before editing instructions, shared contracts or local types, follow
+[method maintenance](./method-maintenance.md). Use the instruction type's
+executability and composition rules when authoring procedures. Supply each worker's required role/type inputs explicitly. Instruction
 edits require checking direct callers, callees, conditional loads and result
 consumers; update affected interfaces together. Method-maintenance guidance must
 be loaded through an explicit instruction-authoring path, not by analyst packets.
@@ -39,6 +40,10 @@ References are workflow-owned. Corrections to findings require a new analysis;
 selection changes require verified publication. Historical generated reviews
 keep their producing contract until explicitly migrated or retired. Ordinary
 unmarked authored accounts remain author-maintained.
+
+Before assessing theory pathways in ordinary authored accounts, read the Theory
+account in the [shared record contract](../../../agentic-systems/instructions/agentic-analysis-records.md).
+It supplies the independent conditions and separately evidenced properties.
 
 ## Scope and titles
 

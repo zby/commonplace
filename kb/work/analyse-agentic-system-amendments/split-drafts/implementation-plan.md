@@ -1,7 +1,8 @@
 # Implement the report collection split
 
-Draft plan awaiting adoption. Implement only after the prototype checks and
-migration choices are accepted. Isolation landed in `ee81c5586`; recheck current
+Draft plan awaiting adoption. Read the [coverage audit](./contract-coverage-check.md)
+and [input comparison](./input-coverage.md) before choosing this plan over shortening.
+Implement only after the prototype checks and migration choices are accepted. Isolation landed in `ee81c5586`; recheck current
 status and open runs before editing. Do not resume old runs under a changed method.
 
 ## Proposed migration dispositions

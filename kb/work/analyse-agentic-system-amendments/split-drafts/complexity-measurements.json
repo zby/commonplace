@@ -1,0 +1,4848 @@
+{
+ "read_at": "2026-10-03T20:53+02:00 (see complexity-measurements.md for input hashes)",
+ "files": {
+  "J:boundary": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md",
+  "J:runtime": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/runtime.md",
+  "J:memory": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+  "J:epistemic": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md",
+  "J:reconcile": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+  "J:verify": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify.md",
+  "J:synthesize": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md",
+  "J:verify-synthesis": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+  "W": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+  "B": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+  "S": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+  "R": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+  "RT": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+  "MT": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+  "ET": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+  "CT": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+  "OT": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+  "C:incumbent": "kb/agentic-systems/COLLECTION.md",
+  "C:shortening": "kb/work/analyse-agentic-system-amendments/split-drafts/shortened-agentic-systems-contract.md",
+  "C:split": "kb/work/analyse-agentic-system-amendments/split-drafts/analysis-collection-contract.md",
+  "A": "AGENTS.md",
+  "D:TB": "kb/notes/definitions/theory-builder.md",
+  "D:AT": "kb/notes/definitions/addressable-theory.md",
+  "D:RF": "kb/notes/definitions/representational-form.md",
+  "D:ER": "kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md",
+  "D:SI": "kb/notes/definitions/self-improving-system.md",
+  "LV": "kb/reference/link-vocabulary.md"
+ },
+ "activities": {
+  "A1": "publication (generated review, retention copy, pins)",
+  "A2": "public selection / comparison reading (populations, pin checks, trial clearance)",
+  "A3": "review and ordinary-account authoring",
+  "A4": "comparison writing",
+  "A5": "method authoring (instructions, skills, shared contracts, local types)",
+  "A6": "layout migration",
+  "A7": "retained-set and archive maintenance",
+  "A8": "transfer-scan state management",
+  "A9": "run lifecycle operations (cleanup, validation markers, run-state authoring, resume commit)",
+  "A10": "note authoring (promotion of transferable claims)"
+ },
+ "contract_concerns": {
+  "incumbent": {
+   "A1": [
+    "C:incumbent L99-118",
+    "C:incumbent L120-131",
+    "C:incumbent L89-90"
+   ],
+   "A2": [
+    "C:incumbent L9-15",
+    "C:incumbent L89-90",
+    "C:incumbent L128-130",
+    "C:incumbent L135"
+   ],
+   "A3": [
+    "C:incumbent L22-23",
+    "C:incumbent L106-108",
+    "C:incumbent L117-118",
+    "C:incumbent L163-164",
+    "C:incumbent L173",
+    "C:incumbent L175-177"
+   ],
+   "A4": [
+    "C:incumbent L23-24",
+    "C:incumbent L174"
+   ],
+   "A5": [
+    "C:incumbent L19-21",
+    "C:incumbent L26-74"
+   ],
+   "A6": [
+    "C:incumbent L92-97"
+   ],
+   "A7": [
+    "C:incumbent L85-90"
+   ],
+   "A8": [
+    "C:incumbent L159 (second half)"
+   ],
+   "A9": [
+    "C:incumbent L78-83"
+   ],
+   "A10": [
+    "C:incumbent L172 (promote a novel transferable claim to kb/notes/)"
+   ]
+  },
+  "shortening": {
+   "A1": [
+    "C:shortening L35-38"
+   ],
+   "A2": [
+    "C:shortening L39-41"
+   ],
+   "A3": [
+    "C:shortening L15",
+    "C:shortening L36-37",
+    "C:shortening L45",
+    "C:shortening L46-49",
+    "C:shortening L75",
+    "C:shortening L77-79"
+   ],
+   "A4": [
+    "C:shortening L15-16"
+   ],
+   "A5": [
+    "C:shortening L14",
+    "C:shortening L16-20",
+    "C:shortening L49-50",
+    "C:shortening L56-57",
+    "C:shortening L80"
+   ],
+   "A6": [
+    "C:shortening L30-33"
+   ],
+   "A7": [
+    "C:shortening L27-30"
+   ],
+   "A8": [
+    "C:shortening L61-62"
+   ],
+   "A9": [
+    "C:shortening L22-25 (except the worker write-scope sentence)"
+   ]
+  },
+  "split": {
+   "A5": [
+    "C:split L16 (local-type conventions)",
+    "C:split L32-34",
+    "C:split L43"
+   ],
+   "A7": [
+    "C:split L20-22 (retained frozen; archives preserved)"
+   ],
+   "A9": [
+    "C:split L15-16 (run-state title/description conventions; run state is code-written)"
+   ]
+  }
+ },
+ "role_concerns": {
+  "boundary": {
+   "A1": [
+    "J:boundary L16, L25 (read `opening` for publication metadata; contents are review-path, expected-incumbent-sha256, inputs-commit, run-date per agentic_workflow.py open())"
+   ]
+  },
+  "runtime": {
+   "A7": [
+    "R L24-26 (archived results keep bare IDs)"
+   ]
+  },
+  "memory": {
+   "A7": [
+    "R L24-26"
+   ]
+  },
+  "epistemic": {
+   "A7": [
+    "R L24-26"
+   ]
+  },
+  "reconcile": {
+   "A7": [
+    "R L24-26"
+   ]
+  },
+  "verify": {
+   "A7": [
+    "R L24-26"
+   ]
+  },
+  "synthesize": {
+   "A7": [
+    "R L24-26"
+   ],
+   "A1": [
+    "OT L52 (run state and compact reviews pin ARTIFACT.yaml)",
+    "OT L56-57 (only complete sets may publish)"
+   ],
+   "A2": [
+    "OT L56-57 (only complete sets may supply comparison rows)"
+   ]
+  },
+  "verify-synthesis": {
+   "A7": [
+    "R L24-26"
+   ],
+   "A1": [
+    "OT L52",
+    "OT L56-57"
+   ],
+   "A2": [
+    "OT L56-57"
+   ]
+  }
+ },
+ "mentions_not_counted": {
+  "boundary": [
+   "J:boundary L119-120 boundary sections go into the overview unchanged (assembly mention)"
+  ],
+  "memory": [
+   "J:memory L89-90 'publication checks them again' (governs the analyst's own checking: run no separate quote check)",
+   "MT L15 'comparison profile is authoritative for downstream consumers' (statement of authority)",
+   "J:memory L44-45 'no comparison to other systems is needed' (exclusion)"
+  ],
+  "epistemic": [
+   "ET L110-111 code copies the register into the overview (assembly mention)"
+  ],
+  "verify": [
+   "J:verify L29-30 sections go into the overview (assembly mention)"
+  ],
+  "synthesize": [
+   "J:synthesize L44-46 description and text become public (governs own output; see obligations)",
+   "OT L98-103 generated-review second reader (governs own output; see obligations)"
+  ],
+  "verify-synthesis": [
+   "OT L98-103 (governs judged output)"
+  ]
+ },
+ "root_doctrine_concerns_constant": {
+  "code development and tests": "A L82-103",
+  "installation and health check": "A L95-97, L104-108",
+  "downloads": "A L109-111",
+  "staging and commits": "A L113-133",
+  "design proposals and note writing (YAGNI routing)": "A L89-92",
+  "tag assignment": "A L180-183",
+  "agent mailbox": "A L184-185",
+  "review, triage and fix system": "A L186-187",
+  "skill and instruction editing": "A L188-193",
+  "delegation as parent": "A L157-169"
+ },
+ "model_resolved_references": [
+  {
+   "id": "REF-COLL",
+   "roles": [
+    "boundary",
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "text": "Root rule requires the target COLLECTION.md; the packet does not supply it, so the worker derives the path from its output location (observed wrong guess: kb/agentic-systems/reports/COLLECTION.md).",
+   "where": "A L138; packet built by AnalyseAgenticSystem.job() (agentic_workflow.py L744-820)"
+  },
+  {
+   "id": "REF-TB",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Registered term used technically; root vocabulary rule requires reading its linked definition (kb/notes/definitions/theory-builder.md), which no packet supplies.",
+   "where": "R L193-195; A L73; A L51-52"
+  },
+  {
+   "id": "REF-AT",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Registered term used technically; root vocabulary rule requires reading its linked definition (kb/notes/definitions/addressable-theory.md), which no packet supplies.",
+   "where": "R L211; A L59; A L51-52"
+  },
+  {
+   "id": "REF-RF",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Registered term used technically; root vocabulary rule requires reading its linked definition (kb/notes/definitions/representational-form.md), which no packet supplies.",
+   "where": "R L115 (component/object field); A L70; A L51-52"
+  },
+  {
+   "id": "REF-ER",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Registered term used technically; root vocabulary rule requires reading its linked definition (kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md), which no packet supplies.",
+   "where": "R L218-221; A L67; A L51-52"
+  },
+  {
+   "id": "REF-SI",
+   "roles": [
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "OT requires a self-improving assessment and gives no inline definition; the definition is reachable only by link.",
+   "where": "OT L85-89 (link at L87)"
+  },
+  {
+   "id": "REF-BK",
+   "roles": [
+    "verify"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Verify must judge `whole-system` and the coverage table; their definitions are in the boundary contract, which the verify packet does not supply (verify.md restates part of them).",
+   "where": "J:verify L55-72; B L40-57 not in packet"
+  },
+  {
+   "id": "REF-SETLINK",
+   "roles": [
+    "synthesize"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "text": "Member links must resolve from the future retained set directory; the worker derives sibling link targets for a directory that does not yet exist.",
+   "where": "J:synthesize L48-49; validator agentic_set_member_link_failures (validation.py L1070-1079)"
+  },
+  {
+   "id": "REF-INC-LINKNOTES",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "synthesize"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "text": "Theory pathways must link the defining notes; the worker derives relative paths from its output location to kb/notes/.",
+   "where": "C:incumbent L157"
+  },
+  {
+   "id": "REF-INC-SEARCHNOTES",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "synthesize"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "text": "Search kb/notes/ when the analysis maps a system onto theory.",
+   "where": "C:incumbent L172"
+  },
+  {
+   "id": "REF-INC-SCANREF",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "synthesize"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "text": "Scan kb/reference/ for a direct Commonplace analogue.",
+   "where": "C:incumbent L176"
+  },
+  {
+   "id": "REF-INC-LV",
+   "roles": [
+    "runtime",
+    "memory",
+    "epistemic",
+    "synthesize"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "text": "Link labels are defined in link-vocabulary.md, reachable only by link; required because L157 makes the links mandatory.",
+   "where": "C:incumbent L168"
+  }
+ ],
+ "excluded_references": [
+  "Links from types and job files to supplied shared contracts or types (e.g. RT L13-15, J:reconcile L53): the file is already in the packet as a literal path.",
+  "Conditional method-maintenance route (C:shortening L56-57, C:split L33-34): condition never arises for a worker.",
+  "C:incumbent L164 'following kb/notes/COLLECTION.md conventions': applies to argumentative accounts, not typed members.",
+  "C:incumbent L159 transfer-state path: only 'when separately requested'.",
+  "Inline-linked definitions with a usable inline definition: behavioral authority (MT L100-121), reflective system (R L214).",
+  "Run-state path, output, problem, scratch, task inputs: supplied literally as parameters.",
+  "Link vocabulary under shortening and split: their link grammars are permissive, so no link is required."
+ ],
+ "authority_conflicts": [
+  {
+   "id": "CF-READ",
+   "roles": [
+    "boundary",
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "instruction_a": "A L138: read the target COLLECTION.md before writing",
+   "instruction_b": "Packet read-first list without it, plus W L36-40: use supplied paths unchanged, do not reconstruct paths",
+   "question": "Must I locate and read a contract the packet omits?",
+   "note": "A L157-158 (a worker inherits collection contracts only when its runtime loads them with binding force) offers a third reading. Observed: 30 Dynamic Cheatsheet sessions skipped it; 2 Graphiti analysts guessed a wrong path."
+  },
+  {
+   "id": "CF-PRIOR",
+   "roles": [
+    "boundary",
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening"
+   ],
+   "instruction_a": "Incumbent C L173-174 / shortening C L75-76: link related subsystem accounts in kb/agent-memory-systems/ and retained analyses",
+   "instruction_b": "W L141-153: do not read kb/agent-memory-systems/ or reports/retained/",
+   "question": "May I consult those areas to decide whether a link applies?",
+   "note": "Permissive link grammar against a prohibition. If permissive grammar is not counted, this conflict disappears for shortening."
+  },
+  {
+   "id": "CF-PROMOTE",
+   "roles": [
+    "boundary",
+    "runtime",
+    "memory",
+    "epistemic",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "instruction_a": "C:incumbent L172: promote a novel transferable claim to kb/notes/",
+   "instruction_b": "W L51-60: write only output or problem",
+   "question": "Where does a novel transferable claim go?",
+   "note": ""
+  },
+  {
+   "id": "CF-EVLINE",
+   "roles": [
+    "boundary",
+    "reconcile",
+    "verify",
+    "synthesize",
+    "verify-synthesis"
+   ],
+   "candidates": [
+    "incumbent"
+   ],
+   "instruction_a": "C:incumbent L135: open each analysis with a one-line evidence basis",
+   "instruction_b": "Job output grammars: boundary 'these sections, and nothing else' (J:boundary L93); reconcile only ## Reconciliation (J:reconcile L28-30); verify/verify-synthesis/synthesize 'exactly these sections'",
+   "question": "Do I add an evidence-basis line to a fragment whose grammar forbids it?",
+   "note": "Typed analyst members can add the line without violating their types, so not counted for runtime, memory, epistemic."
+  },
+  {
+   "id": "CF-SETLINK",
+   "roles": [
+    "reconcile"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "instruction_a": "Collection link grammar to kb/notes/ (C:incumbent L157, L172; C:shortening L74; C:split L41)",
+   "instruction_b": "CT L51-52: member-relative links stay inside the set directory",
+   "question": "May the reconciliation member link a defining note?",
+   "note": "Arises only if the reconciler writes a theory mapping. For runtime, memory, epistemic and synthesis the same restriction exists only in the validator (validation.py L1070-1079), not in a loaded instruction, so it is a hidden constraint, not a counted conflict."
+  },
+  {
+   "id": "CF-BLOCKED",
+   "roles": [
+    "memory"
+   ],
+   "candidates": [
+    "incumbent",
+    "shortening",
+    "split"
+   ],
+   "instruction_a": "MT L29-36: report-status `blocked` report that keeps all sections",
+   "instruction_b": "W L36-41: blocking conditions require `problem`; do not submit a blocked member",
+   "question": "When blocked, do I write a blocked report to output or a problem report?",
+   "note": ""
+  }
+ ],
+ "obligations": {
+  "boundary": [
+   {
+    "id": "BND-disposition",
+    "text": "result-disposition controlled value; problem versus disposition",
+    "files": [
+     "J:boundary",
+     "B",
+     "W"
+    ],
+    "consumer": "workflow control (run/close_without_analysis); overview",
+    "sources": "J:boundary L36-41, L97; B L29-32; W L36-41",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-target-class",
+    "text": "target-class value",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "overview; later analysts",
+    "sources": "J:boundary L43-44; B L23",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-boundary-kind",
+    "text": "boundary-kind value and its whole-system requirements",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "later analysts' scope; verify; overview",
+    "sources": "J:boundary L43-57; B L24, L50-57",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-reviewed-boundary",
+    "text": "reviewed-boundary equals source-revision",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "code identity checks; members",
+    "sources": "J:boundary L69-71, L100; B L25",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-cutoff",
+    "text": "analysis-cutoff",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "overview reader",
+    "sources": "J:boundary L101; B L26",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-tier",
+    "text": "evidence-tier",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "overview reader; comparison populations",
+    "sources": "J:boundary L102; B L27",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-source",
+    "text": "source mapping (kind, identity, revision, path, sha256)",
+    "files": [
+     "J:boundary",
+     "W"
+    ],
+    "consumer": "code: run-state registration, quote helper",
+    "sources": "J:boundary L66-76, L103-118; W L57",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-identity",
+    "text": "source.identity exactly equals source-identity",
+    "files": [
+     "J:boundary"
+    ],
+    "consumer": "code refusal check",
+    "sources": "J:boundary L116-118",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-sec-boundary",
+    "text": "Boundary and evidence section content; each exclusion names the prevented conclusion",
+    "files": [
+     "J:boundary",
+     "B",
+     "S"
+    ],
+    "consumer": "overview (copied unchanged); later analysts",
+    "sources": "J:boundary L43-57; B L14-19, L34-48; S L14-15",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-coverage-table",
+    "text": "whole-system top-level coverage table",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "verify; overview",
+    "sources": "J:boundary L49-57; B L40-48",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-register",
+    "text": "Source register rows with eight columns, SRC-* in first cell",
+    "files": [
+     "J:boundary",
+     "B",
+     "S"
+    ],
+    "consumer": "all later roles; overview",
+    "sources": "J:boundary L77-82; B L59-69; S L17-24",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-layer",
+    "text": "evidence layer per row (controlled)",
+    "files": [
+     "B",
+     "S"
+    ],
+    "consumer": "later analysts",
+    "sources": "B L82-83; S L45-57",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-not-allowlist",
+    "text": "register records initial coverage, not an allowlist",
+    "files": [
+     "J:boundary",
+     "B",
+     "S",
+     "W"
+    ],
+    "consumer": "later analysts",
+    "sources": "J:boundary L61-65, L77-82; B L71-80; S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-not-reached",
+    "text": "Not reached section for blocked/out-of-scope",
+    "files": [
+     "J:boundary",
+     "B"
+    ],
+    "consumer": "overview; workflow",
+    "sources": "J:boundary L119-122; B L29-32",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-exactly",
+    "text": "frontmatter fields and sections exactly as given, nothing else",
+    "files": [
+     "J:boundary"
+    ],
+    "consumer": "code refusal check",
+    "sources": "J:boundary L93-114",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "BND-INC-evline",
+    "text": "one-line evidence basis opening (conflicts with BND-exactly)",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "runtime": [
+   {
+    "id": "RT-fm-type",
+    "text": "frontmatter type literal",
+    "files": [
+     "RT"
+    ],
+    "consumer": "validator; set",
+    "sources": "RT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-fm-description",
+    "text": "frontmatter description per type",
+    "files": [
+     "RT"
+    ],
+    "consumer": "retained-set reader (retrieval)",
+    "sources": "RT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-fm-run-id",
+    "text": "run-id copied unchanged",
+    "files": [
+     "RT",
+     "W"
+    ],
+    "consumer": "code identity check",
+    "sources": "RT frontmatter table; W L21",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-fm-reviewed-boundary",
+    "text": "reviewed-boundary from boundary",
+    "files": [
+     "RT"
+    ],
+    "consumer": "code identity check",
+    "sources": "RT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-sr-headings",
+    "text": "Shared records with kind headings; empty-kind phrase",
+    "files": [
+     "RT",
+     "R"
+    ],
+    "consumer": "set validation; later roles",
+    "sources": "RT Shared records section; R L28-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-decl",
+    "text": "declaration heading grammar, RT- prefix, monotonic IDs",
+    "files": [
+     "J:runtime",
+     "R"
+    ],
+    "consumer": "code prefix check; set resolution",
+    "sources": "J:runtime declaration sentence; R L14-23, L56-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-CMP",
+    "text": "component record fields",
+    "files": [
+     "R",
+     "D:RF"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-OBJ",
+    "text": "operative object record fields",
+    "files": [
+     "R",
+     "D:RF"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-RTE",
+    "text": "route record fields",
+    "files": [
+     "R"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L116",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-CLM",
+    "text": "claim record fields",
+    "files": [
+     "R"
+    ],
+    "consumer": "epistemic claim comparison; reconciliation",
+    "sources": "R L117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-ABS",
+    "text": "evidenced absence record fields",
+    "files": [
+     "R",
+     "S"
+    ],
+    "consumer": "memory profile `absent`; reconciliation",
+    "sources": "R L118; S L90-95",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-kind-BAP",
+    "text": "behavioral-authority path fields",
+    "files": [
+     "R"
+    ],
+    "consumer": "reconciliation; synthesis",
+    "sources": "R L119",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-route-syntax",
+    "text": "seven labelled route fields; inapplicable/uninspected with reason",
+    "files": [
+     "R",
+     "J:runtime"
+    ],
+    "consumer": "validator; verify",
+    "sources": "R L128-163; J:runtime L37-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-status",
+    "text": "conclusion-status controlled value per layer",
+    "files": [
+     "R"
+    ],
+    "consumer": "validator; verify; synthesis",
+    "sources": "R L87-109",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-cmp-fixity",
+    "text": "component fixity fields for distributed-parametric components",
+    "files": [
+     "R",
+     "J:runtime"
+    ],
+    "consumer": "synthesis (learning claims)",
+    "sources": "R L121-126; J:runtime L45-47",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-cond-decision",
+    "text": "conditional fields: diagnosis/comparison/admission/selection routes",
+    "files": [
+     "R",
+     "RT"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L165-180; RT L40-42",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-cond-admission",
+    "text": "conditional fields: routes admitting product/knowledge/capability changes",
+    "files": [
+     "R",
+     "J:runtime"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L173; J:runtime L48-52",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-theory-conditions",
+    "text": "theory route account and theory-builder conditions 1-4",
+    "files": [
+     "R",
+     "D:TB"
+    ],
+    "consumer": "synthesis (OT theory statements)",
+    "sources": "R L182-204",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-addressability",
+    "text": "addressability grade",
+    "files": [
+     "R",
+     "D:AT"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L211",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-persistence",
+    "text": "persistence horizon",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L212",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-learning",
+    "text": "learning claim",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L213",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-reflection",
+    "text": "reflection",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L214",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-reflective-tb",
+    "text": "reflective theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L215",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-autonomous-tb",
+    "text": "autonomous theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L216",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-reach",
+    "text": "explanatory-reach revision criterion",
+    "files": [
+     "R",
+     "D:ER"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L218-221",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-cite",
+    "text": "SRC-* plus local anchor; path-only prose anchors",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code checks; verify",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-quote",
+    "text": "quotations generated by commonplace-quote, exact once",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code quote check; verify",
+    "sources": "S L68-86; W L119-139",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-no-ranges",
+    "text": "full IDs, no ranges",
+    "files": [
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-resolve",
+    "text": "citations resolve against own declarations and inputs",
+    "files": [
+     "J:runtime",
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "J:runtime acceptance sentence; R L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-coverage-add",
+    "text": "additional file coverage recorded in the member",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "verify",
+    "sources": "S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-evidence-interp",
+    "text": "evidence distinctions; negative findings name boundary and prevented conclusion",
+    "files": [
+     "S",
+     "RT"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "S L88-95; RT evidence/limits text",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-native-first",
+    "text": "source-native operation before Commonplace mapping",
+    "files": [
+     "S",
+     "C"
+    ],
+    "consumer": "reader; synthesis",
+    "sources": "S L97-100; C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L137-139",
+     "shortening": "C:shortening L8-10",
+     "split": "C:split L9-11"
+    }
+   },
+   {
+    "id": "RT-transfer-excl",
+    "text": "no current Commonplace differences or adoption ideas",
+    "files": [
+     "C"
+    ],
+    "consumer": "stable analysis",
+    "sources": "C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L159, L188",
+     "shortening": "C:shortening L59-63",
+     "split": "C:split L27-29"
+    }
+   },
+   {
+    "id": "RT-INC-evline",
+    "text": "one-line evidence basis opening",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-INC-linknotes",
+    "text": "link the defining notes with rests-on/defined-in",
+    "files": [
+     "C:incumbent",
+     "LV",
+     "D:TB"
+    ],
+    "consumer": "KB graph; reader (validator refuses such local links in set members)",
+    "sources": "C:incumbent L157, L168",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-account",
+    "text": "Runtime account: ordinary invocation with the loop fields",
+    "files": [
+     "J:runtime",
+     "RT",
+     "D:RF"
+    ],
+    "consumer": "later analysts; synthesis",
+    "sources": "J:runtime L26-28; RT L28-38",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-alternates",
+    "text": "alternate and forcing routes",
+    "files": [
+     "J:runtime",
+     "RT"
+    ],
+    "consumer": "later analysts; verify",
+    "sources": "J:runtime L29-36; RT L30-32",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-guarantee",
+    "text": "load-bearing guarantee fields incl. guarantee strength",
+    "files": [
+     "RT",
+     "R",
+     "J:runtime"
+    ],
+    "consumer": "synthesis; verify",
+    "sources": "RT L34-38; R L93-95; J:runtime L37-38",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-capability",
+    "text": "capability surface, grant set, isolation envelope",
+    "files": [
+     "J:runtime"
+    ],
+    "consumer": "memory/epistemic analysts",
+    "sources": "J:runtime L40-44",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-account-links",
+    "text": "account links to route and component records",
+    "files": [
+     "RT",
+     "R"
+    ],
+    "consumer": "reader; reconciliation",
+    "sources": "RT L40-42",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "RT-annotations",
+    "text": "Annotations section (ordinarily none)",
+    "files": [
+     "RT",
+     "R"
+    ],
+    "consumer": "validator",
+    "sources": "RT L56-64; R L41-44",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "memory": [
+   {
+    "id": "MEM-fm-type",
+    "text": "frontmatter type literal",
+    "files": [
+     "MT"
+    ],
+    "consumer": "validator; set",
+    "sources": "MT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-fm-description",
+    "text": "frontmatter description per type",
+    "files": [
+     "MT"
+    ],
+    "consumer": "retained-set reader (retrieval)",
+    "sources": "MT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-fm-run-id",
+    "text": "run-id copied unchanged",
+    "files": [
+     "MT",
+     "W"
+    ],
+    "consumer": "code identity check",
+    "sources": "MT frontmatter table; W L21",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-fm-reviewed-boundary",
+    "text": "reviewed-boundary from boundary",
+    "files": [
+     "MT"
+    ],
+    "consumer": "code identity check",
+    "sources": "MT frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sr-headings",
+    "text": "Shared records with kind headings; empty-kind phrase",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "set validation; later roles",
+    "sources": "MT Shared records section; R L28-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-decl",
+    "text": "declaration heading grammar, MEM- prefix, monotonic IDs",
+    "files": [
+     "J:memory",
+     "R"
+    ],
+    "consumer": "code prefix check; set resolution",
+    "sources": "J:memory declaration sentence; R L14-23, L56-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-CMP",
+    "text": "component record fields",
+    "files": [
+     "R",
+     "D:RF",
+     "MT"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115; MT L213-219",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-OBJ",
+    "text": "operative object record fields",
+    "files": [
+     "R",
+     "D:RF",
+     "MT"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115; MT L213-219",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-RTE",
+    "text": "route record fields",
+    "files": [
+     "R",
+     "MT"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L116; MT L217-219",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-CLM",
+    "text": "claim record fields",
+    "files": [
+     "R"
+    ],
+    "consumer": "epistemic claim comparison; reconciliation",
+    "sources": "R L117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-ABS",
+    "text": "evidenced absence record fields",
+    "files": [
+     "R",
+     "S"
+    ],
+    "consumer": "memory profile `absent`; reconciliation",
+    "sources": "R L118; S L90-95",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-kind-BAP",
+    "text": "behavioral-authority path fields",
+    "files": [
+     "R",
+     "MT"
+    ],
+    "consumer": "reconciliation; synthesis",
+    "sources": "R L119; MT L100-121",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-route-syntax",
+    "text": "seven labelled route fields; inapplicable/uninspected with reason",
+    "files": [
+     "R"
+    ],
+    "consumer": "validator; verify",
+    "sources": "R L128-163",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-status",
+    "text": "conclusion-status controlled value per layer",
+    "files": [
+     "R"
+    ],
+    "consumer": "validator; verify; synthesis",
+    "sources": "R L87-109",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-cmp-fixity",
+    "text": "component fixity fields for distributed-parametric components",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis (learning claims)",
+    "sources": "R L121-126",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-cond-decision",
+    "text": "conditional fields: diagnosis/comparison/admission/selection routes",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L165-180",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-cond-admission",
+    "text": "conditional fields: routes admitting product/knowledge/capability changes",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L173",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-theory-conditions",
+    "text": "theory route account and theory-builder conditions 1-4",
+    "files": [
+     "R",
+     "D:TB"
+    ],
+    "consumer": "synthesis (OT theory statements)",
+    "sources": "R L182-204",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-addressability",
+    "text": "addressability grade",
+    "files": [
+     "R",
+     "D:AT"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L211",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-persistence",
+    "text": "persistence horizon",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L212",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-learning",
+    "text": "learning claim",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L213",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-reflection",
+    "text": "reflection",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L214",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-reflective-tb",
+    "text": "reflective theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L215",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-autonomous-tb",
+    "text": "autonomous theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L216",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-reach",
+    "text": "explanatory-reach revision criterion",
+    "files": [
+     "R",
+     "D:ER"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L218-221",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-cite",
+    "text": "SRC-* plus local anchor; path-only prose anchors",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code checks; verify",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-quote",
+    "text": "quotations generated by commonplace-quote, exact once",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code quote check; verify",
+    "sources": "S L68-86; W L119-139",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-no-ranges",
+    "text": "full IDs, no ranges",
+    "files": [
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-resolve",
+    "text": "citations resolve against own declarations and inputs",
+    "files": [
+     "J:memory",
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "J:memory acceptance sentence; R L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-coverage-add",
+    "text": "additional file coverage recorded in the member",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "verify",
+    "sources": "S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-evidence-interp",
+    "text": "evidence distinctions; negative findings name boundary and prevented conclusion",
+    "files": [
+     "S",
+     "MT"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "S L88-95; MT evidence/limits text",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-native-first",
+    "text": "source-native operation before Commonplace mapping",
+    "files": [
+     "S",
+     "C"
+    ],
+    "consumer": "reader; synthesis",
+    "sources": "S L97-100; C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L137-139",
+     "shortening": "C:shortening L8-10",
+     "split": "C:split L9-11"
+    }
+   },
+   {
+    "id": "MEM-transfer-excl",
+    "text": "no current Commonplace differences or adoption ideas",
+    "files": [
+     "C",
+     "J:memory"
+    ],
+    "consumer": "stable analysis",
+    "sources": "C (candidate line); J:memory L44-45",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L159, L188",
+     "shortening": "C:shortening L59-63",
+     "split": "C:split L27-29"
+    }
+   },
+   {
+    "id": "MEM-INC-evline",
+    "text": "one-line evidence basis opening",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-INC-linknotes",
+    "text": "link the defining notes with rests-on/defined-in",
+    "files": [
+     "C:incumbent",
+     "LV",
+     "D:TB"
+    ],
+    "consumer": "KB graph; reader (validator refuses such local links in set members)",
+    "sources": "C:incumbent L157, L168",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-overlap",
+    "text": "compare referents with supplied records; annotation instead of redeclaration; distinct-identity evidence",
+    "files": [
+     "R",
+     "J:memory"
+    ],
+    "consumer": "reconciliation",
+    "sources": "R L60-79; J:memory L63-69",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-partof",
+    "text": "Part of: grammar and single-parent containment",
+    "files": [
+     "R",
+     "J:memory"
+    ],
+    "consumer": "set checks; reconciliation; verify",
+    "sources": "R L64-79; J:memory L66-67",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-ids-unchanged",
+    "text": "keep supplied RT-/EPI- IDs unchanged",
+    "files": [
+     "R",
+     "J:memory"
+    ],
+    "consumer": "set resolution",
+    "sources": "R L22-23; J:memory L70-71",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-fm-source-identity",
+    "text": "source-identity",
+    "files": [
+     "MT"
+    ],
+    "consumer": "code; comparison",
+    "sources": "MT L27",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-fm-status",
+    "text": "report-status complete/blocked and blocked semantics",
+    "files": [
+     "MT",
+     "W"
+    ],
+    "consumer": "workflow",
+    "sources": "MT L29-36; W L36-41",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-profile-scope",
+    "text": "memory-comparison scope",
+    "files": [
+     "MT",
+     "J:memory"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L40-45; J:memory L32-34",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-storage_substrate",
+    "text": "axis storage_substrate: controlled values",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L49, L95-97; R L115",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-representational_form",
+    "text": "axis representational_form: controlled values",
+    "files": [
+     "MT",
+     "R",
+     "D:RF"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L50, L95-97; R L115",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-lineage",
+    "text": "axis lineage: controlled values",
+    "files": [
+     "MT"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L51, L97-98",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-behavioral_authority",
+    "text": "axis behavioral_authority: controlled values",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L52, L100-121; R L119",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-write_agency",
+    "text": "axis write_agency: controlled values",
+    "files": [
+     "MT"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L53, L98",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-curation_operations",
+    "text": "axis curation_operations: controlled values",
+    "files": [
+     "MT"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L54, L123-139",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-read_back_direction",
+    "text": "axis read_back_direction: controlled values",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L55, L141-155; R L128-135",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-read_back_signal",
+    "text": "axis read_back_signal: controlled values",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L56, L141-155; R L128-135",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-trace_learning",
+    "text": "axis trace_learning: controlled values",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L57, L157-169; R L213",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-trace_source",
+    "text": "axis trace_source: controlled values",
+    "files": [
+     "MT"
+    ],
+    "consumer": "comparison (systems matrix, landscape)",
+    "sources": "MT L58, L171-187",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-axis-fields",
+    "text": "per-axis assessment/values/evidence/records/note; basis values; local declaration or annotation of cited records; absent needs ABS",
+    "files": [
+     "MT",
+     "J:memory",
+     "R"
+    ],
+    "consumer": "comparison; reconcile/verify check it",
+    "sources": "MT L60-87; J:memory L58-61; R L89-90, L118",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-profile-agreement",
+    "text": "scope agreement across profile, records and prose",
+    "files": [
+     "MT",
+     "J:memory"
+    ],
+    "consumer": "comparison; reconcile/verify",
+    "sources": "MT L89-93; J:memory L32-34",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-comparison-rationale",
+    "text": "Comparison rationale section",
+    "files": [
+     "MT"
+    ],
+    "consumer": "comparison reader",
+    "sources": "MT L257-261",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-boundary",
+    "text": "Boundary and evidence with coverage table",
+    "files": [
+     "MT",
+     "J:memory",
+     "S",
+     "W"
+    ],
+    "consumer": "reconcile; verify; reader",
+    "sources": "MT L191-200; J:memory L31-34, L49-54; S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-core",
+    "text": "Core ideas",
+    "files": [
+     "MT",
+     "J:memory"
+    ],
+    "consumer": "synthesis; reader",
+    "sources": "MT L202-206; J:memory L43-46",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-write",
+    "text": "Write side",
+    "files": [
+     "MT",
+     "J:memory"
+    ],
+    "consumer": "synthesis; reader",
+    "sources": "MT L234-243; J:memory L49-52",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-readback",
+    "text": "Read-back section",
+    "files": [
+     "MT",
+     "R",
+     "J:memory"
+    ],
+    "consumer": "synthesis; reader",
+    "sources": "MT L245-255; R L128-135; J:memory L49-52",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-integration",
+    "text": "Integration issues with IDs, evidence and consequence",
+    "files": [
+     "MT",
+     "J:memory",
+     "R"
+    ],
+    "consumer": "reconciliation",
+    "sources": "MT L263-271; J:memory L43-44, L63-69; R L60-62",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-sec-limitations",
+    "text": "Limitations and checks with validation result; no 'Validation: pending'",
+    "files": [
+     "MT",
+     "J:memory"
+    ],
+    "consumer": "reader; acceptance",
+    "sources": "MT L273-282; J:memory L86-94",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-annotations",
+    "text": "Annotations: memory-specific fields only; every profile-cited foreign record annotated",
+    "files": [
+     "MT",
+     "R"
+    ],
+    "consumer": "profile validation; reconciliation",
+    "sources": "MT L221-232, L77-80; R L41-44",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "MEM-correction",
+    "text": "correction round: answer each returned finding, keep IDs, rewrite whole report",
+    "files": [
+     "J:memory",
+     "R"
+    ],
+    "consumer": "reconciliation",
+    "sources": "J:memory L73-84; R L56-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "epistemic": [
+   {
+    "id": "EPI-fm-type",
+    "text": "frontmatter type literal",
+    "files": [
+     "ET"
+    ],
+    "consumer": "validator; set",
+    "sources": "ET frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-fm-description",
+    "text": "frontmatter description per type",
+    "files": [
+     "ET"
+    ],
+    "consumer": "retained-set reader (retrieval)",
+    "sources": "ET frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-fm-run-id",
+    "text": "run-id copied unchanged",
+    "files": [
+     "ET",
+     "W"
+    ],
+    "consumer": "code identity check",
+    "sources": "ET frontmatter table; W L21",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-fm-reviewed-boundary",
+    "text": "reviewed-boundary from boundary",
+    "files": [
+     "ET"
+    ],
+    "consumer": "code identity check",
+    "sources": "ET frontmatter table",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-sr-headings",
+    "text": "Shared records with kind headings; empty-kind phrase",
+    "files": [
+     "ET",
+     "R"
+    ],
+    "consumer": "set validation; later roles",
+    "sources": "ET Shared records section; R L28-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-decl",
+    "text": "declaration heading grammar, EPI- prefix, monotonic IDs",
+    "files": [
+     "J:epistemic",
+     "R"
+    ],
+    "consumer": "code prefix check; set resolution",
+    "sources": "J:epistemic declaration sentence; R L14-23, L56-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-CMP",
+    "text": "component record fields",
+    "files": [
+     "R",
+     "D:RF"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-OBJ",
+    "text": "operative object record fields",
+    "files": [
+     "R",
+     "D:RF",
+     "ET"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L113-115; ET L118-122",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-RTE",
+    "text": "route record fields",
+    "files": [
+     "R",
+     "ET"
+    ],
+    "consumer": "later roles; reconciliation",
+    "sources": "R L116; ET L197-205",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-CLM",
+    "text": "claim record fields",
+    "files": [
+     "R"
+    ],
+    "consumer": "epistemic claim comparison; reconciliation",
+    "sources": "R L117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-ABS",
+    "text": "evidenced absence record fields",
+    "files": [
+     "R",
+     "S"
+    ],
+    "consumer": "memory profile `absent`; reconciliation",
+    "sources": "R L118; S L90-95",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-kind-BAP",
+    "text": "behavioral-authority path fields",
+    "files": [
+     "R",
+     "ET"
+    ],
+    "consumer": "reconciliation; synthesis",
+    "sources": "R L119; ET L53-55",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-route-syntax",
+    "text": "seven labelled route fields; inapplicable/uninspected with reason",
+    "files": [
+     "R"
+    ],
+    "consumer": "validator; verify",
+    "sources": "R L128-163",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-status",
+    "text": "conclusion-status controlled value per layer",
+    "files": [
+     "R"
+    ],
+    "consumer": "validator; verify; synthesis",
+    "sources": "R L87-109",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-cmp-fixity",
+    "text": "component fixity fields for distributed-parametric components",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis (learning claims)",
+    "sources": "R L121-126",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-cond-decision",
+    "text": "conditional fields: diagnosis/comparison/admission/selection routes",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L165-180",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-cond-admission",
+    "text": "conditional fields: routes admitting product/knowledge/capability changes",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis; reconciliation",
+    "sources": "R L173",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-theory-conditions",
+    "text": "theory route account and theory-builder conditions 1-4",
+    "files": [
+     "R",
+     "D:TB"
+    ],
+    "consumer": "synthesis (OT theory statements)",
+    "sources": "R L182-204",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-addressability",
+    "text": "addressability grade",
+    "files": [
+     "R",
+     "D:AT"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L211",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-persistence",
+    "text": "persistence horizon",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L212",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-learning",
+    "text": "learning claim",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L213",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-reflection",
+    "text": "reflection",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L214",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-reflective-tb",
+    "text": "reflective theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L215",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-autonomous-tb",
+    "text": "autonomous theory builder",
+    "files": [
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L216",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-reach",
+    "text": "explanatory-reach revision criterion",
+    "files": [
+     "R",
+     "D:ER"
+    ],
+    "consumer": "synthesis",
+    "sources": "R L218-221",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-cite",
+    "text": "SRC-* plus local anchor; path-only prose anchors",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code checks; verify",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-quote",
+    "text": "quotations generated by commonplace-quote, exact once",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code quote check; verify",
+    "sources": "S L68-86; W L119-139",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-no-ranges",
+    "text": "full IDs, no ranges",
+    "files": [
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-resolve",
+    "text": "citations resolve against own declarations and inputs",
+    "files": [
+     "J:epistemic",
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "J:epistemic acceptance sentence; R L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-coverage-add",
+    "text": "additional file coverage recorded in the member",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "verify",
+    "sources": "S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-evidence-interp",
+    "text": "evidence distinctions; negative findings name boundary and prevented conclusion",
+    "files": [
+     "S",
+     "ET"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "S L88-95; ET evidence/limits text",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-native-first",
+    "text": "source-native operation before Commonplace mapping",
+    "files": [
+     "S",
+     "C"
+    ],
+    "consumer": "reader; synthesis",
+    "sources": "S L97-100; C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L137-139",
+     "shortening": "C:shortening L8-10",
+     "split": "C:split L9-11"
+    }
+   },
+   {
+    "id": "EPI-transfer-excl",
+    "text": "no current Commonplace differences or adoption ideas",
+    "files": [
+     "C"
+    ],
+    "consumer": "stable analysis",
+    "sources": "C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L159, L188",
+     "shortening": "C:shortening L59-63",
+     "split": "C:split L27-29"
+    }
+   },
+   {
+    "id": "EPI-INC-evline",
+    "text": "one-line evidence basis opening",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-INC-linknotes",
+    "text": "link the defining notes with rests-on/defined-in",
+    "files": [
+     "C:incumbent",
+     "LV",
+     "D:TB"
+    ],
+    "consumer": "KB graph; reader (validator refuses such local links in set members)",
+    "sources": "C:incumbent L157, L168",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-overlap",
+    "text": "compare referents with supplied records; annotation instead of redeclaration; distinct-identity evidence",
+    "files": [
+     "R",
+     "J:epistemic"
+    ],
+    "consumer": "reconciliation",
+    "sources": "R L60-79; J:epistemic L42-49",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-partof",
+    "text": "Part of: grammar and single-parent containment",
+    "files": [
+     "R",
+     "J:epistemic"
+    ],
+    "consumer": "set checks; reconciliation; verify",
+    "sources": "R L64-79; J:epistemic L46-47",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-ids-unchanged",
+    "text": "keep supplied RT-/EPI- IDs unchanged",
+    "files": [
+     "R",
+     "J:epistemic"
+    ],
+    "consumer": "set resolution",
+    "sources": "R L22-23; J:epistemic L30-31",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-block1",
+    "text": "Source-and-claim boundary with coverage table",
+    "files": [
+     "ET",
+     "J:epistemic",
+     "S",
+     "W"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "ET L106-116; J:epistemic L35-40; S L26-35; W L108-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-block2",
+    "text": "Epistemic-object inventory columns and splitting",
+    "files": [
+     "ET",
+     "J:epistemic"
+    ],
+    "consumer": "ledger; reconciliation",
+    "sources": "ET L118-122; J:epistemic L42-53",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-material",
+    "text": "material-route boundary and term definitions applied",
+    "files": [
+     "ET"
+    ],
+    "consumer": "all blocks",
+    "sources": "ET L30-60",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-ledger-columns",
+    "text": "authority-route ledger: 17 columns, one row per consequential function",
+    "files": [
+     "ET",
+     "J:epistemic"
+    ],
+    "consumer": "synthesis; verify",
+    "sources": "ET L124-129; J:epistemic L82-86",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-route-function",
+    "text": "route function controlled value",
+    "files": [
+     "ET"
+    ],
+    "consumer": "validator; synthesis",
+    "sources": "ET L131-136",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-arch-status",
+    "text": "architectural status controlled value",
+    "files": [
+     "ET"
+    ],
+    "consumer": "validator; synthesis",
+    "sources": "ET L153-161",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-content-relation",
+    "text": "content/update relation in checking order",
+    "files": [
+     "ET",
+     "J:epistemic"
+    ],
+    "consumer": "synthesis; reconciliation (memory profile check)",
+    "sources": "ET L163-178; J:epistemic L71-80",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-ledger-format",
+    "text": "table contiguity, pipe escaping or compact records",
+    "files": [
+     "ET"
+    ],
+    "consumer": "validator",
+    "sources": "ET L138-151",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-early-branch",
+    "text": "storage-only / claim-without-route / continue branch",
+    "files": [
+     "J:epistemic",
+     "ET"
+    ],
+    "consumer": "bounded conclusion",
+    "sources": "J:epistemic L55-69; ET L91-95, L148-151",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-assessment-limits",
+    "text": "assessment limits and causal limits",
+    "files": [
+     "ET",
+     "S"
+    ],
+    "consumer": "bounded conclusion; verify",
+    "sources": "ET L62-95; S L53-57",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-sparsity",
+    "text": "blocks cite IDs, repeat at most ID/label/anchor; 'see <ID>'",
+    "files": [
+     "ET"
+    ],
+    "consumer": "reader",
+    "sources": "ET L99-104",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-block4",
+    "text": "System-claim versus route comparison",
+    "files": [
+     "ET",
+     "J:epistemic"
+    ],
+    "consumer": "synthesis",
+    "sources": "ET L180-183; J:epistemic L88-90",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "EPI-block5",
+    "text": "Bounded conclusion",
+    "files": [
+     "ET",
+     "J:epistemic"
+    ],
+    "consumer": "synthesis",
+    "sources": "ET L185-195; J:epistemic L88-90",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "reconcile": [
+   {
+    "id": "REC-headings",
+    "text": "only ## Reconciliation, then optional Returned section",
+    "files": [
+     "J:reconcile",
+     "CT"
+    ],
+    "consumer": "code assembly",
+    "sources": "J:reconcile L28-30, L68-71; CT L27-29",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-amendment",
+    "text": "Amendment paragraph grammar",
+    "files": [
+     "R",
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "verify; synthesis; overview index",
+    "sources": "R L46-58; CT L29-35; J:reconcile L38-39, L62-64",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-supersession",
+    "text": "duplicate supersession",
+    "files": [
+     "R",
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "R L48-55; CT L33-35; J:reconcile L38",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-split",
+    "text": "split supersession only by declared parts; never allocate IDs",
+    "files": [
+     "R",
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "verify",
+    "sources": "R L50-55; CT L37-43; J:reconcile L40-42",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-partof",
+    "text": "check Part of: relations; keep valid containers",
+    "files": [
+     "R",
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "verify",
+    "sources": "R L64-79; CT L39-40; J:reconcile L39-40",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-missing-part",
+    "text": "missing part: return or Unresolved conflict",
+    "files": [
+     "R",
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "memory correction; verify",
+    "sources": "R L80-85; CT L40-43; J:reconcile L42-46",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-unresolved",
+    "text": "Unresolved conflict paragraph format",
+    "files": [
+     "CT",
+     "J:reconcile",
+     "R"
+    ],
+    "consumer": "verify; synthesis Limitations",
+    "sources": "CT L45-49; J:reconcile L74-77; R L82-84",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-convergence",
+    "text": "independent convergence only when independent",
+    "files": [
+     "J:reconcile",
+     "CT"
+    ],
+    "consumer": "synthesis",
+    "sources": "J:reconcile L46-47; CT L30",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-ownership",
+    "text": "recheck shared-route ownership",
+    "files": [
+     "J:reconcile",
+     "CT"
+    ],
+    "consumer": "verify",
+    "sources": "J:reconcile L47; CT L30-31",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-admission",
+    "text": "attach memory routes' admission fields",
+    "files": [
+     "J:reconcile",
+     "R"
+    ],
+    "consumer": "synthesis",
+    "sources": "J:reconcile L48-49; R L173",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-profile-check",
+    "text": "check memory profile axis by axis against the whole set incl. EPI transformations; do not strengthen",
+    "files": [
+     "J:reconcile",
+     "MT",
+     "R",
+     "ET",
+     "D:RF"
+    ],
+    "consumer": "comparison (profile's terminal consumer)",
+    "sources": "J:reconcile L49-57; MT L38-187; R; ET L163-178",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-resolve",
+    "text": "every cited ID resolves; keep declaring prefix",
+    "files": [
+     "J:reconcile",
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "J:reconcile L59-64; R L22-23, L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-no-ranges",
+    "text": "full IDs, no ranges (not restated in J:reconcile)",
+    "files": [
+     "R"
+    ],
+    "consumer": "code reference check",
+    "sources": "R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-return",
+    "text": "Returned section format; may-return gating; malformed memory citation is a return",
+    "files": [
+     "J:reconcile"
+    ],
+    "consumer": "memory correction round",
+    "sources": "J:reconcile L66-78",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-blockers",
+    "text": "after-blockers: resolve each blocker; carry over previous",
+    "files": [
+     "J:reconcile"
+    ],
+    "consumer": "verify",
+    "sources": "J:reconcile L34-36, L80-88",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-integration",
+    "text": "integration-issue dispositions",
+    "files": [
+     "CT",
+     "MT"
+    ],
+    "consumer": "verify; synthesis",
+    "sources": "CT L29-31; MT L263-271",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-anchors",
+    "text": "prose anchors without line ranges",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code check",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-set-links",
+    "text": "member-relative links stay inside the set directory",
+    "files": [
+     "CT"
+    ],
+    "consumer": "publication/retention move",
+    "sources": "CT L51-52",
+    "flag": "publication",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-no-rewrite",
+    "text": "no synthesis or verification text; no analyst rewrite",
+    "files": [
+     "CT",
+     "J:reconcile"
+    ],
+    "consumer": "assembly",
+    "sources": "CT L52-53; J:reconcile L30, L55-57",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "REC-INC-evline",
+    "text": "one-line evidence basis opening (conflicts)",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "verify": [
+   {
+    "id": "VER-sections",
+    "text": "exactly ### Record verification and ### Blockers",
+    "files": [
+     "J:verify"
+    ],
+    "consumer": "code; overview",
+    "sources": "J:verify L29-36",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-content",
+    "text": "record checked routes, dispositions, anchors, IDs, statuses, boundary, members, conflicts",
+    "files": [
+     "J:verify",
+     "S",
+     "R"
+    ],
+    "consumer": "overview reader; reconcile",
+    "sources": "J:verify L49-51; S L59-86; R L87-109",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-no-ranges",
+    "text": "full IDs, no ranges",
+    "files": [
+     "J:verify",
+     "R"
+    ],
+    "consumer": "code check",
+    "sources": "J:verify L52-53; R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-profile",
+    "text": "memory profile against the whole set",
+    "files": [
+     "J:verify",
+     "MT",
+     "R",
+     "D:RF"
+    ],
+    "consumer": "comparison (profile's terminal consumer)",
+    "sources": "J:verify L41-47; MT L38-187",
+    "flag": "comparison",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-boundary",
+    "text": "boundary kind and coverage table against the repository tree",
+    "files": [
+     "J:verify",
+     "S"
+    ],
+    "consumer": "run integrity",
+    "sources": "J:verify L55-65; S L37-43 (B not supplied)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-problem",
+    "text": "problem versus blocker for boundary contradiction",
+    "files": [
+     "J:verify",
+     "W",
+     "S"
+    ],
+    "consumer": "workflow",
+    "sources": "J:verify L67-72, L108-111; W L44-47; S L37-43",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-partof",
+    "text": "Part of: and split checks",
+    "files": [
+     "J:verify",
+     "R"
+    ],
+    "consumer": "reconcile",
+    "sources": "J:verify L74-82; R L64-79",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-blocker-def",
+    "text": "blocker definition and available repairs",
+    "files": [
+     "J:verify",
+     "CT"
+    ],
+    "consumer": "reconcile",
+    "sources": "J:verify L84-106; CT L45-49",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-blockers-format",
+    "text": "exactly none or a list",
+    "files": [
+     "J:verify"
+    ],
+    "consumer": "code control",
+    "sources": "J:verify L113-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-structural",
+    "text": "structural failures become blockers",
+    "files": [
+     "J:verify"
+    ],
+    "consumer": "code control",
+    "sources": "J:verify L38-39, L92-93",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-amended",
+    "text": "judge records as amended",
+    "files": [
+     "J:verify",
+     "R"
+    ],
+    "consumer": "reconcile",
+    "sources": "J:verify L105-106; R L46-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-anchors",
+    "text": "prose anchors without ranges",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code check",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-resolve",
+    "text": "citations resolve",
+    "files": [
+     "J:verify",
+     "R"
+    ],
+    "consumer": "code check",
+    "sources": "J:verify L38; R L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VER-INC-evline",
+    "text": "one-line evidence basis opening (conflicts)",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "synthesize": [
+   {
+    "id": "SYN-sections",
+    "text": "exactly Description, Bounded synthesis, Limitations",
+    "files": [
+     "J:synthesize"
+    ],
+    "consumer": "code assembly",
+    "sources": "J:synthesize L27-35",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-description",
+    "text": "one sentence, 50-250 characters",
+    "files": [
+     "J:synthesize",
+     "OT"
+    ],
+    "consumer": "overview description; public review description",
+    "sources": "J:synthesize L43-45; OT L22",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-content",
+    "text": "Bounded synthesis content list",
+    "files": [
+     "OT",
+     "J:synthesize"
+    ],
+    "consumer": "overview reader",
+    "sources": "OT L77-83; J:synthesize L37",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-theory",
+    "text": "theory-builder conditions, learning, reflective/autonomous, self-improving, each at own status",
+    "files": [
+     "OT",
+     "R",
+     "D:TB",
+     "D:SI"
+    ],
+    "consumer": "overview reader",
+    "sources": "OT L83-89; R L182-221",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [
+     "C:incumbent"
+    ],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-organization",
+    "text": "operational progression; cite records; no ranking, adoption advice or Commonplace delta",
+    "files": [
+     "OT",
+     "J:synthesize",
+     "C"
+    ],
+    "consumer": "overview reader",
+    "sources": "OT L89-96; J:synthesize L47-48; C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L159, L188",
+     "shortening": "C:shortening L59-63",
+     "split": "C:split L27-29"
+    }
+   },
+   {
+    "id": "SYN-learning-lead",
+    "text": "lead with strongest supported learning contribution",
+    "files": [
+     "OT"
+    ],
+    "consumer": "overview reader",
+    "sources": "OT L93-96",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-standalone",
+    "text": "readable without members' context",
+    "files": [
+     "OT",
+     "J:synthesize"
+    ],
+    "consumer": "public generated review (stated reason)",
+    "sources": "OT L98-103; J:synthesize L45-47",
+    "flag": "publication",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-links",
+    "text": "member links resolve from the retained set directory",
+    "files": [
+     "J:synthesize",
+     "OT"
+    ],
+    "consumer": "retention/publication move",
+    "sources": "J:synthesize L48-49; OT L101-103",
+    "flag": "publication",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-limitations",
+    "text": "Limitations rows with five columns",
+    "files": [
+     "OT"
+    ],
+    "consumer": "overview reader",
+    "sources": "OT L105-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-unresolved",
+    "text": "carry every Unresolved conflict into Limitations",
+    "files": [
+     "J:synthesize",
+     "OT"
+    ],
+    "consumer": "overview reader",
+    "sources": "J:synthesize L51-52; OT L111",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-fault",
+    "text": "new record fault becomes a limitation or problem",
+    "files": [
+     "J:synthesize",
+     "OT"
+    ],
+    "consumer": "overview reader",
+    "sources": "J:synthesize L52-55; OT L112-114",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-amended",
+    "text": "resolve amended/superseded records through reconciliation",
+    "files": [
+     "J:synthesize",
+     "R",
+     "OT"
+    ],
+    "consumer": "overview reader",
+    "sources": "J:synthesize L38-39; R L46-58; OT L73-75",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-resolve",
+    "text": "cited IDs resolve; no ranges",
+    "files": [
+     "J:synthesize",
+     "R"
+    ],
+    "consumer": "code check",
+    "sources": "J:synthesize L60; R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-blockers",
+    "text": "after-blockers correction",
+    "files": [
+     "J:synthesize"
+    ],
+    "consumer": "verify-synthesis",
+    "sources": "J:synthesize L57-60",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-anchors",
+    "text": "prose anchors without ranges",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code check",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-native-first",
+    "text": "source-native operation before mapping",
+    "files": [
+     "S",
+     "C"
+    ],
+    "consumer": "reader",
+    "sources": "S L97-100; C (candidate line)",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": {
+     "incumbent": "C:incumbent L137-139",
+     "shortening": "C:shortening L8-10",
+     "split": "C:split L9-11"
+    }
+   },
+   {
+    "id": "SYN-INC-evline",
+    "text": "one-line evidence basis opening (conflicts)",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "SYN-INC-linknotes",
+    "text": "link the defining notes (validator refuses)",
+    "files": [
+     "C:incumbent",
+     "LV",
+     "D:TB"
+    ],
+    "consumer": "KB graph",
+    "sources": "C:incumbent L157, L168",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ],
+  "verify-synthesis": [
+   {
+    "id": "VS-sections",
+    "text": "exactly ### Synthesis verification and ### Blockers",
+    "files": [
+     "J:verify-synthesis"
+    ],
+    "consumer": "code; overview",
+    "sources": "J:verify-synthesis L25-31",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-support",
+    "text": "judge every statement against cited records incl. amendments",
+    "files": [
+     "J:verify-synthesis",
+     "R"
+    ],
+    "consumer": "synthesizer",
+    "sources": "J:verify-synthesis L33-35; R L46-58",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-type",
+    "text": "Description, Bounded synthesis and Limitations meet OT incl. theory statements",
+    "files": [
+     "J:verify-synthesis",
+     "OT",
+     "R",
+     "D:TB",
+     "D:SI"
+    ],
+    "consumer": "synthesizer",
+    "sources": "J:verify-synthesis L35-36; OT L77-117",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-standalone",
+    "text": "readability without members' context",
+    "files": [
+     "J:verify-synthesis",
+     "OT"
+    ],
+    "consumer": "public generated review (stated reason)",
+    "sources": "J:verify-synthesis L36; OT L98-103",
+    "flag": "publication",
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-unresolved",
+    "text": "every Unresolved conflict carried",
+    "files": [
+     "J:verify-synthesis",
+     "OT"
+    ],
+    "consumer": "synthesizer",
+    "sources": "J:verify-synthesis L36-37; OT L111",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-no-ranges",
+    "text": "full IDs, no ranges",
+    "files": [
+     "J:verify-synthesis",
+     "R"
+    ],
+    "consumer": "code check",
+    "sources": "J:verify-synthesis L39-40; R L35-39",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-blockers-format",
+    "text": "exactly none or a list",
+    "files": [
+     "J:verify-synthesis"
+    ],
+    "consumer": "code control",
+    "sources": "J:verify-synthesis L42-45",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-faults",
+    "text": "record faults bounded; else problem",
+    "files": [
+     "J:verify-synthesis"
+    ],
+    "consumer": "workflow",
+    "sources": "J:verify-synthesis L45-48",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-anchors",
+    "text": "prose anchors without ranges",
+    "files": [
+     "S",
+     "W"
+    ],
+    "consumer": "code check",
+    "sources": "S L59-66; W L129-131",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-resolve",
+    "text": "citations resolve",
+    "files": [
+     "R"
+    ],
+    "consumer": "code check",
+    "sources": "R L33-34",
+    "flag": null,
+    "candidates": "all",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   },
+   {
+    "id": "VS-INC-evline",
+    "text": "one-line evidence basis opening (conflicts)",
+    "files": [
+     "C:incumbent"
+    ],
+    "consumer": "reader",
+    "sources": "C:incumbent L135",
+    "flag": null,
+    "candidates": "incumbent",
+    "incumbent_extra_files": [],
+    "candidate_files": null
+   }
+  ]
+ },
+ "summary": {
+  "boundary": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 1,
+    "ref_ids": [
+     "REF-COLL"
+    ],
+    "conflicts": 4,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-EVLINE"
+    ],
+    "obligations": 16,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 5,
+    "above_two_ids": [
+     "BND-disposition",
+     "BND-tier",
+     "BND-sec-boundary",
+     "BND-register",
+     "BND-not-allowlist"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 0,
+    "ref_ids": [],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 15,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 4,
+    "above_two_ids": [
+     "BND-disposition",
+     "BND-sec-boundary",
+     "BND-register",
+     "BND-not-allowlist"
+    ]
+   },
+   "split": {
+    "concerns": 4,
+    "concern_ids": [
+     "A1",
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 0,
+    "ref_ids": [],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 15,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 4,
+    "above_two_ids": [
+     "BND-disposition",
+     "BND-sec-boundary",
+     "BND-register",
+     "BND-not-allowlist"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 0,
+    "conflicts": 3
+   }
+  },
+  "runtime": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 9,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-INC-LINKNOTES",
+     "REF-INC-SEARCHNOTES",
+     "REF-INC-SCANREF",
+     "REF-INC-LV"
+    ],
+    "conflicts": 3,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE"
+    ],
+    "obligations": 41,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 3,
+    "above_two": 5,
+    "above_two_ids": [
+     "RT-theory-conditions",
+     "RT-addressability",
+     "RT-INC-linknotes",
+     "RT-account",
+     "RT-guarantee"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 39,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 3,
+    "above_two": 2,
+    "above_two_ids": [
+     "RT-account",
+     "RT-guarantee"
+    ]
+   },
+   "split": {
+    "concerns": 3,
+    "concern_ids": [
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 39,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 3,
+    "above_two": 2,
+    "above_two_ids": [
+     "RT-account",
+     "RT-guarantee"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 8,
+    "conflicts": 2
+   }
+  },
+  "memory": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 9,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-INC-LINKNOTES",
+     "REF-INC-SEARCHNOTES",
+     "REF-INC-SCANREF",
+     "REF-INC-LV"
+    ],
+    "conflicts": 4,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-BLOCKED"
+    ],
+    "obligations": 62,
+    "flagged": 14,
+    "flagged_ids": [
+     "MEM-profile-scope",
+     "MEM-axis-storage_substrate",
+     "MEM-axis-representational_form",
+     "MEM-axis-lineage",
+     "MEM-axis-behavioral_authority",
+     "MEM-axis-write_agency",
+     "MEM-axis-curation_operations",
+     "MEM-axis-read_back_direction",
+     "MEM-axis-read_back_signal",
+     "MEM-axis-trace_learning",
+     "MEM-axis-trace_source",
+     "MEM-axis-fields",
+     "MEM-profile-agreement",
+     "MEM-sec-comparison-rationale"
+    ],
+    "max_depth": 4,
+    "above_two": 10,
+    "above_two_ids": [
+     "MEM-kind-CMP",
+     "MEM-kind-OBJ",
+     "MEM-theory-conditions",
+     "MEM-addressability",
+     "MEM-INC-linknotes",
+     "MEM-axis-representational_form",
+     "MEM-axis-fields",
+     "MEM-sec-boundary",
+     "MEM-sec-readback",
+     "MEM-sec-integration"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 2,
+    "conflict_ids": [
+     "CF-PRIOR",
+     "CF-BLOCKED"
+    ],
+    "obligations": 60,
+    "flagged": 14,
+    "flagged_ids": [
+     "MEM-profile-scope",
+     "MEM-axis-storage_substrate",
+     "MEM-axis-representational_form",
+     "MEM-axis-lineage",
+     "MEM-axis-behavioral_authority",
+     "MEM-axis-write_agency",
+     "MEM-axis-curation_operations",
+     "MEM-axis-read_back_direction",
+     "MEM-axis-read_back_signal",
+     "MEM-axis-trace_learning",
+     "MEM-axis-trace_source",
+     "MEM-axis-fields",
+     "MEM-profile-agreement",
+     "MEM-sec-comparison-rationale"
+    ],
+    "max_depth": 4,
+    "above_two": 7,
+    "above_two_ids": [
+     "MEM-kind-CMP",
+     "MEM-kind-OBJ",
+     "MEM-axis-representational_form",
+     "MEM-axis-fields",
+     "MEM-sec-boundary",
+     "MEM-sec-readback",
+     "MEM-sec-integration"
+    ]
+   },
+   "split": {
+    "concerns": 3,
+    "concern_ids": [
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-BLOCKED"
+    ],
+    "obligations": 60,
+    "flagged": 14,
+    "flagged_ids": [
+     "MEM-profile-scope",
+     "MEM-axis-storage_substrate",
+     "MEM-axis-representational_form",
+     "MEM-axis-lineage",
+     "MEM-axis-behavioral_authority",
+     "MEM-axis-write_agency",
+     "MEM-axis-curation_operations",
+     "MEM-axis-read_back_direction",
+     "MEM-axis-read_back_signal",
+     "MEM-axis-trace_learning",
+     "MEM-axis-trace_source",
+     "MEM-axis-fields",
+     "MEM-profile-agreement",
+     "MEM-sec-comparison-rationale"
+    ],
+    "max_depth": 4,
+    "above_two": 7,
+    "above_two_ids": [
+     "MEM-kind-CMP",
+     "MEM-kind-OBJ",
+     "MEM-axis-representational_form",
+     "MEM-axis-fields",
+     "MEM-sec-boundary",
+     "MEM-sec-readback",
+     "MEM-sec-integration"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 8,
+    "conflicts": 3
+   }
+  },
+  "epistemic": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 9,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-INC-LINKNOTES",
+     "REF-INC-SEARCHNOTES",
+     "REF-INC-SCANREF",
+     "REF-INC-LV"
+    ],
+    "conflicts": 3,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE"
+    ],
+    "obligations": 51,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 5,
+    "above_two_ids": [
+     "EPI-kind-OBJ",
+     "EPI-theory-conditions",
+     "EPI-addressability",
+     "EPI-INC-linknotes",
+     "EPI-block1"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 49,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 2,
+    "above_two_ids": [
+     "EPI-kind-OBJ",
+     "EPI-block1"
+    ]
+   },
+   "split": {
+    "concerns": 3,
+    "concern_ids": [
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 49,
+    "flagged": 0,
+    "flagged_ids": [],
+    "max_depth": 4,
+    "above_two": 2,
+    "above_two_ids": [
+     "EPI-kind-OBJ",
+     "EPI-block1"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 8,
+    "conflicts": 2
+   }
+  },
+  "reconcile": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 5,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 5,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-EVLINE",
+     "CF-SETLINK"
+    ],
+    "obligations": 20,
+    "flagged": 2,
+    "flagged_ids": [
+     "REC-profile-check",
+     "REC-set-links"
+    ],
+    "max_depth": 5,
+    "above_two": 7,
+    "above_two_ids": [
+     "REC-amendment",
+     "REC-supersession",
+     "REC-split",
+     "REC-partof",
+     "REC-missing-part",
+     "REC-unresolved",
+     "REC-profile-check"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 2,
+    "conflict_ids": [
+     "CF-PRIOR",
+     "CF-SETLINK"
+    ],
+    "obligations": 19,
+    "flagged": 2,
+    "flagged_ids": [
+     "REC-profile-check",
+     "REC-set-links"
+    ],
+    "max_depth": 5,
+    "above_two": 7,
+    "above_two_ids": [
+     "REC-amendment",
+     "REC-supersession",
+     "REC-split",
+     "REC-partof",
+     "REC-missing-part",
+     "REC-unresolved",
+     "REC-profile-check"
+    ]
+   },
+   "split": {
+    "concerns": 3,
+    "concern_ids": [
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 4,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-SETLINK"
+    ],
+    "obligations": 19,
+    "flagged": 2,
+    "flagged_ids": [
+     "REC-profile-check",
+     "REC-set-links"
+    ],
+    "max_depth": 5,
+    "above_two": 7,
+    "above_two_ids": [
+     "REC-amendment",
+     "REC-supersession",
+     "REC-split",
+     "REC-partof",
+     "REC-missing-part",
+     "REC-unresolved",
+     "REC-profile-check"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 4,
+    "conflicts": 4
+   }
+  },
+  "verify": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 6,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-BK"
+    ],
+    "conflicts": 4,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-EVLINE"
+    ],
+    "obligations": 14,
+    "flagged": 1,
+    "flagged_ids": [
+     "VER-profile"
+    ],
+    "max_depth": 4,
+    "above_two": 3,
+    "above_two_ids": [
+     "VER-content",
+     "VER-profile",
+     "VER-problem"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 5,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-BK"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 13,
+    "flagged": 1,
+    "flagged_ids": [
+     "VER-profile"
+    ],
+    "max_depth": 4,
+    "above_two": 3,
+    "above_two_ids": [
+     "VER-content",
+     "VER-profile",
+     "VER-problem"
+    ]
+   },
+   "split": {
+    "concerns": 3,
+    "concern_ids": [
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 5,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-BK"
+    ],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 13,
+    "flagged": 1,
+    "flagged_ids": [
+     "VER-profile"
+    ],
+    "max_depth": 4,
+    "above_two": 3,
+    "above_two_ids": [
+     "VER-content",
+     "VER-profile",
+     "VER-problem"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 5,
+    "conflicts": 3
+   }
+  },
+  "synthesize": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 11,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI",
+     "REF-SETLINK",
+     "REF-INC-LINKNOTES",
+     "REF-INC-SEARCHNOTES",
+     "REF-INC-SCANREF",
+     "REF-INC-LV"
+    ],
+    "conflicts": 4,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-EVLINE"
+    ],
+    "obligations": 18,
+    "flagged": 2,
+    "flagged_ids": [
+     "SYN-standalone",
+     "SYN-links"
+    ],
+    "max_depth": 5,
+    "above_two": 4,
+    "above_two_ids": [
+     "SYN-theory",
+     "SYN-organization",
+     "SYN-amended",
+     "SYN-INC-linknotes"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 6,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI",
+     "REF-SETLINK"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 16,
+    "flagged": 2,
+    "flagged_ids": [
+     "SYN-standalone",
+     "SYN-links"
+    ],
+    "max_depth": 4,
+    "above_two": 3,
+    "above_two_ids": [
+     "SYN-theory",
+     "SYN-organization",
+     "SYN-amended"
+    ]
+   },
+   "split": {
+    "concerns": 5,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 6,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI",
+     "REF-SETLINK"
+    ],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 16,
+    "flagged": 2,
+    "flagged_ids": [
+     "SYN-standalone",
+     "SYN-links"
+    ],
+    "max_depth": 4,
+    "above_two": 3,
+    "above_two_ids": [
+     "SYN-theory",
+     "SYN-organization",
+     "SYN-amended"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 10,
+    "conflicts": 3
+   }
+  },
+  "verify-synthesis": {
+   "incumbent": {
+    "concerns": 10,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "A10"
+    ],
+    "refs": 6,
+    "ref_ids": [
+     "REF-COLL",
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI"
+    ],
+    "conflicts": 4,
+    "conflict_ids": [
+     "CF-READ",
+     "CF-PRIOR",
+     "CF-PROMOTE",
+     "CF-EVLINE"
+    ],
+    "obligations": 11,
+    "flagged": 1,
+    "flagged_ids": [
+     "VS-standalone"
+    ],
+    "max_depth": 5,
+    "above_two": 1,
+    "above_two_ids": [
+     "VS-type"
+    ]
+   },
+   "shortening": {
+    "concerns": 9,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9"
+    ],
+    "refs": 5,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI"
+    ],
+    "conflicts": 1,
+    "conflict_ids": [
+     "CF-PRIOR"
+    ],
+    "obligations": 10,
+    "flagged": 1,
+    "flagged_ids": [
+     "VS-standalone"
+    ],
+    "max_depth": 5,
+    "above_two": 1,
+    "above_two_ids": [
+     "VS-type"
+    ]
+   },
+   "split": {
+    "concerns": 5,
+    "concern_ids": [
+     "A1",
+     "A2",
+     "A5",
+     "A7",
+     "A9"
+    ],
+    "refs": 5,
+    "ref_ids": [
+     "REF-TB",
+     "REF-AT",
+     "REF-RF",
+     "REF-ER",
+     "REF-SI"
+    ],
+    "conflicts": 0,
+    "conflict_ids": [],
+    "obligations": 10,
+    "flagged": 1,
+    "flagged_ids": [
+     "VS-standalone"
+    ],
+    "max_depth": 5,
+    "above_two": 1,
+    "above_two_ids": [
+     "VS-type"
+    ]
+   },
+   "incumbent+entry": {
+    "concerns": 10,
+    "refs": 5,
+    "conflicts": 3
+   }
+  }
+ }
+}

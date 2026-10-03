@@ -1,0 +1,1290 @@
+{
+  "inputs_commit": "2b7fe74982ae806b18e51701dc59af5b125e9fce",
+  "boundary": "Current file bytes; finite declared method reads and latest saved prompts. Source inspection and harness context excluded. Alternatives hold non-contract file bytes constant.",
+  "contracts": {
+    "incumbent": {
+      "path": "kb/agentic-systems/COLLECTION.md",
+      "bytes": 13727,
+      "sha256": "fb149cfca25666cfb67f1e35864761eea5a40750066150231d8b152bfcc54d87"
+    },
+    "shortening": {
+      "path": "kb/work/analyse-agentic-system-amendments/split-drafts/shortened-agentic-systems-contract.md",
+      "bytes": 4939,
+      "sha256": "81b6d1fef6aebb5c68271c71ca78cc2f33ffc297f16a21f6e3a6b710391ffe7e"
+    },
+    "split": {
+      "path": "kb/work/analyse-agentic-system-amendments/split-drafts/analysis-collection-contract.md",
+      "bytes": 2249,
+      "sha256": "0dc0fd8f7df5fb97eca7eeb9f2a09fb62549e59d94d9a77032478b67a05c032f"
+    }
+  },
+  "roles": {
+    "boundary": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md",
+          "bytes": 6105,
+          "sha256": "6a8a82f322a571fae6d1a91cc4b3416b345b2a3c9816b234feab43c70438aeb0"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+          "bytes": 4719,
+          "sha256": "edfe50d03ebee890fa2568269a65b951be7cddebe6282235ac4acb02be2eaf9c"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        }
+      ],
+      "role_bytes": 24117,
+      "with_contract": {
+        "incumbent": 37844,
+        "shortening": 29056,
+        "split": 26366
+      }
+    },
+    "runtime": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/runtime.md",
+          "bytes": 2760,
+          "sha256": "e9ca286ae084e0d8c7baff67a867f0d65745906ee23c033ca4e9a3c8b4f80898"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        }
+      ],
+      "role_bytes": 33203,
+      "with_contract": {
+        "incumbent": 46930,
+        "shortening": 38142,
+        "split": 35452
+      }
+    },
+    "memory": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+          "bytes": 4582,
+          "sha256": "0f9e65c3955c54ca2ff62df7df1c9ba516ca806b6c4099bb16d62bd8959e5460"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        }
+      ],
+      "role_bytes": 47993,
+      "with_contract": {
+        "incumbent": 61720,
+        "shortening": 52932,
+        "split": 50242
+      }
+    },
+    "epistemic": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md",
+          "bytes": 4998,
+          "sha256": "1f4bc2e57bcf6d86295137562dfac6689c9bedda5e597f0d948e102e9b8cbef1"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        }
+      ],
+      "role_bytes": 44544,
+      "with_contract": {
+        "incumbent": 58271,
+        "shortening": 49483,
+        "split": 46793
+      }
+    },
+    "reconcile": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+          "bytes": 4784,
+          "sha256": "7caeab3601e09ddd7093df103d4ebefd1c639e9c353862d81a842f3a787011cc"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        }
+      ],
+      "role_bytes": 67254,
+      "with_contract": {
+        "incumbent": 80981,
+        "shortening": 72193,
+        "split": 69503
+      }
+    },
+    "verify": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify.md",
+          "bytes": 6194,
+          "sha256": "3a73732d5bff040f6dcb8a5139c3ecf0d01180df93fd9ac167bd4df333491416"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        }
+      ],
+      "role_bytes": 68664,
+      "with_contract": {
+        "incumbent": 82391,
+        "shortening": 73603,
+        "split": 70913
+      }
+    },
+    "synthesize": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md",
+          "bytes": 2586,
+          "sha256": "113758bd5a87a8cd89ad58f29d388eda3e9acdfa0adccf607736268921121f75"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        }
+      ],
+      "role_bytes": 37724,
+      "with_contract": {
+        "incumbent": 51451,
+        "shortening": 42663,
+        "split": 39973
+      }
+    },
+    "verify-synthesis": {
+      "files": [
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+          "bytes": 2176,
+          "sha256": "1895547631275fc86a761a236afaca1c666217a945f2dcb932fc154bd7282b0a"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        }
+      ],
+      "role_bytes": 37314,
+      "with_contract": {
+        "incumbent": 51041,
+        "shortening": 42253,
+        "split": 39563
+      }
+    }
+  },
+  "saved_packets": {
+    "boundary": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/boundary/prompt.md",
+        "bytes": 2479,
+        "sha256": "b555c294adbafd8fffbf013158b3a00a4776a20f0fd63b0c21d6a251f5b9d628"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/boundary.md",
+          "bytes": 6105,
+          "sha256": "6a8a82f322a571fae6d1a91cc4b3416b345b2a3c9816b234feab43c70438aeb0"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-boundary.md",
+          "bytes": 4719,
+          "sha256": "edfe50d03ebee890fa2568269a65b951be7cddebe6282235ac4acb02be2eaf9c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/opening.json",
+          "bytes": 262,
+          "sha256": "036585082c5e5f0827e92dc4b974465932491cc8a1b464c71460b961d47e0e8b"
+        }
+      ],
+      "prompt_and_files_bytes": 26858,
+      "with_contract": {
+        "incumbent": 40585,
+        "shortening": 31797,
+        "split": 29107
+      }
+    },
+    "epistemic": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/epistemic/prompt.md",
+        "bytes": 3267,
+        "sha256": "e4cb5336f8017fbbd2a42ce2cf80a3906fcec241c93ed928deb2f15a4e88a261"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/epistemic.md",
+          "bytes": 4998,
+          "sha256": "1f4bc2e57bcf6d86295137562dfac6689c9bedda5e597f0d948e102e9b8cbef1"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        }
+      ],
+      "prompt_and_files_bytes": 80118,
+      "with_contract": {
+        "incumbent": 93845,
+        "shortening": 85057,
+        "split": 82367
+      }
+    },
+    "memory-0": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/prompt.md",
+        "bytes": 3880,
+        "sha256": "8e39ab7063c36bbd96c7374ef481b16abdf73c7fed89403ae87d151816e12f8a"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+          "bytes": 4582,
+          "sha256": "0f9e65c3955c54ca2ff62df7df1c9ba516ca806b6c4099bb16d62bd8959e5460"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-0/kept/1-memory-report-0.md",
+          "bytes": 38118,
+          "sha256": "aeec160461adec036876c954311c5d487fa53399a9a69250f9d56940f22df6ec"
+        }
+      ],
+      "prompt_and_files_bytes": 122298,
+      "with_contract": {
+        "incumbent": 136025,
+        "shortening": 127237,
+        "split": 124547
+      }
+    },
+    "memory-1": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/memory-1/prompt.md",
+        "bytes": 4403,
+        "sha256": "ef9225daccfd0eea9be40d7a5d8003a254e2fe85a757e491e2ad7cb946aed14a"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
+          "bytes": 4582,
+          "sha256": "0f9e65c3955c54ca2ff62df7df1c9ba516ca806b6c4099bb16d62bd8959e5460"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-0.md",
+          "bytes": 38117,
+          "sha256": "d2dee73f4c67f80af541b6a9469726334bbbd588c363e4517937bf673cce56f6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/reconcile-0.md",
+          "bytes": 2199,
+          "sha256": "e94642942b669153002a0929d2211894791bcb1a1c55e13c8b80a5a6c8979915"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        }
+      ],
+      "prompt_and_files_bytes": 144076,
+      "with_contract": {
+        "incumbent": 157803,
+        "shortening": 149015,
+        "split": 146325
+      }
+    },
+    "reconcile-0": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-0/prompt.md",
+        "bytes": 4845,
+        "sha256": "f3d97bb3a36dd94cb5024d72e804190cee1cb8722f5a7499db1a0f878cae3c59"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+          "bytes": 4784,
+          "sha256": "7caeab3601e09ddd7093df103d4ebefd1c639e9c353862d81a842f3a787011cc"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-0.md",
+          "bytes": 38117,
+          "sha256": "d2dee73f4c67f80af541b6a9469726334bbbd588c363e4517937bf673cce56f6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        }
+      ],
+      "prompt_and_files_bytes": 161580,
+      "with_contract": {
+        "incumbent": 175307,
+        "shortening": 166519,
+        "split": 163829
+      }
+    },
+    "reconcile-1": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/prompt.md",
+        "bytes": 5703,
+        "sha256": "e42bd59b6120241bc23dad97874fe55b7e1f8423d71f3998896fc4e64c7b747d"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+          "bytes": 4784,
+          "sha256": "7caeab3601e09ddd7093df103d4ebefd1c639e9c353862d81a842f3a787011cc"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/reconcile-0.md",
+          "bytes": 2199,
+          "sha256": "e94642942b669153002a0929d2211894791bcb1a1c55e13c8b80a5a6c8979915"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-1/kept/2-reconcile-1.md",
+          "bytes": 2950,
+          "sha256": "384fa52e6bb31cc41b82614d83ecf1ebe421e15f795a24b49ce8deac40db7ee5"
+        }
+      ],
+      "prompt_and_files_bytes": 171122,
+      "with_contract": {
+        "incumbent": 184849,
+        "shortening": 176061,
+        "split": 173371
+      }
+    },
+    "reconcile-2": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/reconcile-2/prompt.md",
+        "bytes": 5585,
+        "sha256": "76c92fbae24a0b9466d7b22c5aeef3ce830e6db31f34a47e89a56c3d0dc94d71"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/reconcile.md",
+          "bytes": 4784,
+          "sha256": "7caeab3601e09ddd7093df103d4ebefd1c639e9c353862d81a842f3a787011cc"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/reconcile-1.md",
+          "bytes": 2958,
+          "sha256": "93514bd5822a2d237038a3047636daa7db7b3c663183a23d9c7fb6c298b096d3"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/verification-1.md",
+          "bytes": 3995,
+          "sha256": "13b2045d593dcf5c23bdf79acf1fded1c2245d4ceb444fc9201e08355ffe8041"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/set-check-1.md",
+          "bytes": 25,
+          "sha256": "3eac998978d8df45c0a6c4733624b3a52eddf14736394e661967acca4b99e45f"
+        }
+      ],
+      "prompt_and_files_bytes": 172833,
+      "with_contract": {
+        "incumbent": 186560,
+        "shortening": 177772,
+        "split": 175082
+      }
+    },
+    "runtime": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/runtime/prompt.md",
+        "bytes": 2678,
+        "sha256": "61632d5c4a572f222fbb21f28035f0ef15870b6339b75c2f5e87d1b752400538"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/runtime.md",
+          "bytes": 2760,
+          "sha256": "e9ca286ae084e0d8c7baff67a867f0d65745906ee23c033ca4e9a3c8b4f80898"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        }
+      ],
+      "prompt_and_files_bytes": 42646,
+      "with_contract": {
+        "incumbent": 56373,
+        "shortening": 47585,
+        "split": 44895
+      }
+    },
+    "synthesize": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/prompt.md",
+        "bytes": 4989,
+        "sha256": "e0c1e16fc0504275ae97516068207f5d27165820bb18c6e4fea58f4a9ca51e3a"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md",
+          "bytes": 2586,
+          "sha256": "113758bd5a87a8cd89ad58f29d388eda3e9acdfa0adccf607736268921121f75"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize/kept/3-synthesis-0.md",
+          "bytes": 5593,
+          "sha256": "0c7755eec14f109c50b7b5a3d06bfd35b306cc1060d97089cce11649debc96ed"
+        }
+      ],
+      "prompt_and_files_bytes": 145310,
+      "with_contract": {
+        "incumbent": 159037,
+        "shortening": 150249,
+        "split": 147559
+      }
+    },
+    "synthesize-1": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/synthesize-1/prompt.md",
+        "bytes": 4928,
+        "sha256": "d8ca87f7b862671f91f210c0d9138a9ce5633752b75c7bf1a7089b03fa6ef6e9"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/synthesize.md",
+          "bytes": 2586,
+          "sha256": "113758bd5a87a8cd89ad58f29d388eda3e9acdfa0adccf607736268921121f75"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/synthesis-0.md",
+          "bytes": 5603,
+          "sha256": "8848394c368702f21cb3c2856a6154653621a220a4cb6951f32ef06a56565938"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/synthesis-verification-0.md",
+          "bytes": 3011,
+          "sha256": "6b07ba5f75764d876f7874eb84782b8094008f9f70356704bdad584afe53297f"
+        }
+      ],
+      "prompt_and_files_bytes": 148270,
+      "with_contract": {
+        "incumbent": 161997,
+        "shortening": 153209,
+        "split": 150519
+      }
+    },
+    "verify-1": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-1/prompt.md",
+        "bytes": 5329,
+        "sha256": "8eca0666d68803ffd7c815a16a346a00c97c214af1bedcb073c4d4fa616ad966"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify.md",
+          "bytes": 6194,
+          "sha256": "3a73732d5bff040f6dcb8a5139c3ecf0d01180df93fd9ac167bd4df333491416"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/set-check-1.md",
+          "bytes": 25,
+          "sha256": "3eac998978d8df45c0a6c4733624b3a52eddf14736394e661967acca4b99e45f"
+        }
+      ],
+      "prompt_and_files_bytes": 171022,
+      "with_contract": {
+        "incumbent": 184749,
+        "shortening": 175961,
+        "split": 173271
+      }
+    },
+    "verify-2": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-2/prompt.md",
+        "bytes": 5329,
+        "sha256": "3300f480edc5880951ad81fefe8d0d5e355a2af63794a90e0cc57e6e9e062a05"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify.md",
+          "bytes": 6194,
+          "sha256": "3a73732d5bff040f6dcb8a5139c3ecf0d01180df93fd9ac167bd4df333491416"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-runtime-report.md",
+          "bytes": 3440,
+          "sha256": "91341746f30ec22fcf008d0ef4349644d3c97b5f2fee281cbd50c28747faecc9"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agent-memory-analysis-report.md",
+          "bytes": 16408,
+          "sha256": "ed1475d04b7b3db94c3f351b0035bac2995744f08676874dc9459e14a910141d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-epistemic-report.md",
+          "bytes": 12543,
+          "sha256": "27307c5fbec215a42b087e8956d6508509e85f3bf2c695e18487c59017fa292f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-reconciliation-report.md",
+          "bytes": 3076,
+          "sha256": "1dbe9f31502b71be3d0a596007684d6f4b939d7d5f5848bc55a9f265774bd150"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/memory-report-1.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/set-check-2.md",
+          "bytes": 25,
+          "sha256": "3eac998978d8df45c0a6c4733624b3a52eddf14736394e661967acca4b99e45f"
+        }
+      ],
+      "prompt_and_files_bytes": 171022,
+      "with_contract": {
+        "incumbent": 184749,
+        "shortening": 175961,
+        "split": 173271
+      }
+    },
+    "verify-synthesis": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis/prompt.md",
+        "bytes": 4672,
+        "sha256": "ff12f471688df7f84f46b0014bcf06be65eaca373465e55f8c1f6298bd93f0a6"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+          "bytes": 2176,
+          "sha256": "1895547631275fc86a761a236afaca1c666217a945f2dcb932fc154bd7282b0a"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/synthesis-0.md",
+          "bytes": 5603,
+          "sha256": "8848394c368702f21cb3c2856a6154653621a220a4cb6951f32ef06a56565938"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        }
+      ],
+      "prompt_and_files_bytes": 144593,
+      "with_contract": {
+        "incumbent": 158320,
+        "shortening": 149532,
+        "split": 146842
+      }
+    },
+    "verify-synthesis-1": {
+      "prompt": {
+        "path": "kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/workflow-state/jobs/verify-synthesis-1/prompt.md",
+        "bytes": 4833,
+        "sha256": "b81987d9ac71db6f64198b729c1d0629d04896933b70b2ecba93dcd225f7a9c6"
+      },
+      "required_files": [
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+          "bytes": 2176,
+          "sha256": "1895547631275fc86a761a236afaca1c666217a945f2dcb932fc154bd7282b0a"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8123,
+          "sha256": "bacbe81fecb8ebb47eff22fe62bd32e616beaab4da7606002aacf7e3f11b6dec"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/instructions/agentic-analysis-records.md",
+          "bytes": 13710,
+          "sha256": "2754b97a4f1f79fe49edb93dd90a25e130fe9c9a0bd76b79b0f3e904da9bf571"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/types/agentic-system-analysis-overview.md",
+          "bytes": 8135,
+          "sha256": "86fb365a3ffb48da2df8765f9e9b4dddc0cce35fb0a0e86e4ec77621aeb71050"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/synthesis-1.md",
+          "bytes": 6620,
+          "sha256": "0fd49be40e8aee4da11f20923372375edbc0a1cb06feee1c603186caa4e6052f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/boundary.md",
+          "bytes": 6765,
+          "sha256": "10b64ea400725e4b74ccc5eef9cdd2076ec98218733417400914216e6759dfae"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/runtime.md",
+          "bytes": 25542,
+          "sha256": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/memory.md",
+          "bytes": 41652,
+          "sha256": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/epistemic.md",
+          "bytes": 19057,
+          "sha256": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/kb/agentic-systems/reports/state/AAS-2026-10-03-dynamic-cheatsheet-02/output/reconciliation.md",
+          "bytes": 3988,
+          "sha256": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600"
+        }
+      ],
+      "prompt_and_files_bytes": 145771,
+      "with_contract": {
+        "incumbent": 159498,
+        "shortening": 150710,
+        "split": 148020
+      }
+    }
+  }
+}
