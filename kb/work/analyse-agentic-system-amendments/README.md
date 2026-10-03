@@ -32,6 +32,11 @@ analysis, or adopt an ID design by opening.
 - [Skill inconsistencies](./skill-inconsistencies.md) — read-only audit of
   the live skill's job texts, types, schemas, contracts and operator docs
   against the code, with a suggested fix order before the next test run.
+- [Fresh-run audit](./fresh-run-audit.md) — Dynamic Cheatsheet completion,
+  recovered errors, root causes, remaining source-coverage concern and
+  evidence for each adopted improvement.
+- [Fresh-run trace evidence](./fresh-run-trace-evidence.md) — hashed inventory
+  of the parent and 13 worker sessions with bounded diagnostic excerpts.
 
 ## State and next actions
 
@@ -59,28 +64,64 @@ Done:
   identity checks, amendment-index placement inside Source register,
   reconciliation anchor acceptance checks, and clarified heading/read order.
   Acceptance evidence is recorded in [implementation checks](./implementation-check.md).
+- 2026-10-03: the operator commissioned an hourly completion check and
+  post-run error audit. Dynamic Cheatsheet completed under method commit
+  `77a8e0d9d`. Its published outputs pass validation; traces expose three
+  verification retries, recovered analyst and tool errors, a new range-check
+  false positive and a containment correction. The whole-system source
+  boundary also needs reconsideration. See the [fresh-run audit](./fresh-run-audit.md).
+
+- 2026-10-03: the fresh-run audit was checked against the published set,
+  the checker and the archive. Its findings reproduce. One addition: all six
+  archived Dynamic Cheatsheet analyses cited `prompts/` and
+  `run_benchmark.py`; this run is the first to exclude them, so the source
+  coverage problem is a regression of the boundary job, not a judgment call.
+  The three `EPI-OBJ` amendments that move parts from `RT-OBJ-2` to
+  `MEM-OBJ-1` are the first observed memory-versus-epistemic identity
+  interaction; reconciliation handled it with amendments, so option D10
+  (identity pass) stays unadopted.
 
 Next, in order:
 
-1. **First run under the amended method** (step 3 of the acceptance checks).
-   The implementation is committed before opening a run, which pins that
-   commit. A new run was explicitly outside this implementation commission.
-   Collect
-   any refusals with their stage; the identity-paragraph count is a
-   secondary measure. This is also the first run under the `RT-` grammar,
-   so it tests reservation 3 of the prefix change (forgotten `RT-` on
-   citations).
-2. **Review the new evidence, then close.** Reconsider deferred audit items
-   using the run's refusals and verification findings before deciding what
-   needs follow-up. Closure evidence is the split fixtures passing and the fresh
-   run producing no new ID errors; a run that happens to contain no split
-   does not by itself show rule 2 and rule 3 work. Record the decision in
-   a commit per the closure section below and delete the workshop. Options
-   B, C9 and D10 in the fix options stay unadopted unless step 1 produces a refusal that
-   points at the grammar, numbering, or parallel-analyst duplicates.
+1. **Narrow the range check** (`_RANGE` in `agentic_records.py`). A range is
+   two IDs with the same prefix and kind whose numbers ascend by at least 2,
+   or the `RT-OBJ-1–4` shorthand. `EPI-OBJ-8 to RT-OBJ-1` and
+   `RT-OBJ-1 to RT-OBJ-2` are then prose, not ranges. Regression cases: the
+   false positive from the run, the three genuine forms the run produced,
+   and a same-kind adjacent pair.
+2. **Say the range rule where verification writes it.** Add one sentence to
+   `verify.md` and `verify-synthesis.md`: list every ID in full; a range
+   such as `RT-RTE-1 through RT-RTE-5` is refused. Three of three
+   verification jobs lost their retry to this; a text fix is tried before any
+   preflight tool, and the next run measures it.
+3. **Add a coverage question to the boundary job.** Before freezing a
+   `whole-system` register for a memory or knowledge system, the boundary
+   job names the shipped prompts, the callers that persist or reload the
+   retained store, and the evaluators, and either registers them or states
+   the exclusion with its prevented conclusion. Verification checks the
+   label against the register.
+4. **One sentence on candidate versus admitted identity** in the record
+   contract's part rule: a candidate that can replace a record is not a
+   part of it. The semantic verifier caught the case; the sentence makes it
+   cheaper to avoid.
+5. **Commit the published set and review as they stand**, then open
+   `dynamic-cheatsheet-02` with the register including `prompts/` and
+   `run_benchmark.py`. That run tests steps 1 to 4 and supersedes the review.
+   The `-01` set stays as frozen evidence for this workshop; do not edit it.
+6. **Write a design proposal, not code, for recovery history**:
+   `engine.accept` resets `failures` and `history`, so within-job repairs
+   survive only in session traces. The proposal states what a reader of the
+   run state needs; YAGNI until then.
+7. **Close** after `-02` publishes with no range false positive, no
+   verification retry on ranges, and a register that names the shipped
+   prompts. Deferred audit items 8 to 16 stay deferred; none was exercised.
+
+Not adopted from the audit: a worker-side preflight check for section-only
+outputs (step 2 is tried first) and any change to the run-state storage
+(step 6 records the need instead).
 
 The operator's original error reports are on a machine not currently
-accessible; if they reappear, add them to the problem file before the fresh run.
+accessible; if they reappear, add them to the problem file.
 
 ## Minimal pre-run adoption plan
 
