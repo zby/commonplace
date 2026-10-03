@@ -16,6 +16,73 @@ Invocation authorizes the run directory under `kb/agentic-systems/reports/state/
 
 Run the orchestrator from the repository root and keep that working directory throughout the run. Workers must inherit it: `commonplace-validate` discovers the root there, and the boundary job uses `related-systems/`.
 
+## Isolated run setup
+
+Run each analysis in a dedicated Commonplace worktree at a committed method
+revision. Prepare it from the originating checkout before starting the run:
+
+```bash
+commonplace-workflow prepare-analysis --name <system-label>
+```
+
+Code creates a detached worktree under `.commonplace/worktrees/`, installs
+its local commands from the committed lockfile, verifies their binding, and
+prints a JSON record with the worktree, commit, command paths and setup status.
+`--worktree <new-path>` overrides the location; `--revision <commit>` selects
+a committed method revision instead of `HEAD`. Existing destinations are refused.
+Failed installations retain the worktree and a sibling `.preparation.json`
+record for diagnosis; they do not open an analysis or launch a harness.
+
+By default, uncommitted changes stop preparation. `--allow-dirty-origin` permits
+unrelated changes in the originating checkout and excludes them from the new
+worktree. It never permits changed startup instructions or configuration:
+instruction files such as `AGENTS.md`, harness directories (`.agents/`,
+`.claude/`, `.codex/`, `.pi/`, `.cursor/`), and repository-local targets of skill
+symlinks must match the selected commit. Staged, unstaged, untracked and ignored
+startup files are checked; this conservative boundary includes documentation
+inside harness directories. Source and publication checks remain unchanged.
+The Git comparison covers repository files, not user-wide harness settings.
+
+To prepare and launch a fresh harness in one command, append its executable
+and arguments after `--`, for example:
+
+```bash
+commonplace-workflow prepare-analysis --name letta-code -- pi
+```
+
+Code starts that process in the new worktree with its local commands first on
+`PATH` and inherited Python import overrides removed. Do not pass harness
+arguments that change its working directory or resume an earlier session.
+A coordinator may prepare the worktree, but must not continue the analysis in
+its existing session: startup instructions already loaded from the origin
+cannot be cleared by changing directory. Start a fresh harness in the prepared
+worktree. Its workers must inherit that directory and command environment,
+including after network escalation. Do not reinstall the shared user-level
+tool to point at the run.
+
+When preparation was run without a harness command, use the returned worktree
+and `path-prefix` to start a fresh harness there. Preparation alone is not proof
+that an IDE or remote harness inherited the environment.
+
+Before opening a run, check inside the harness:
+
+```bash
+command -v commonplace-workflow
+command -v commonplace-validate
+python3 -c 'import commonplace.lib.agentic_workflow as m; print(m.__file__)'
+```
+
+Both commands must resolve under this worktree's `.venv/bin/`, and the module
+must resolve under its `src/commonplace/`. If they do not, stop before opening
+the run and ask the operator to repair the harness environment. A separate
+working directory alone does not isolate the shared editable installation.
+
+Keep the worktree's code, method files, lockfile and environment unchanged
+until the run finishes; develop and merge method changes elsewhere. On resume,
+restore the same environment before following the worker-recovery rules.
+After completion, transfer the retained set and review back when the operator
+authorizes merging the results.
+
 ## 1. Open the run
 
 1. Commit any pending method change first: the run pins the method commit when it opens, and publication requires it unchanged.

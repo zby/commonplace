@@ -128,6 +128,11 @@ The second command durably adds uv's tool executable directory to the user envir
 
 This establishes one active Commonplace command version per OS user. All projects for that user resolve the same tool. Project dependencies remain independent and do not share Commonplace's isolated tool environment.
 
+Dedicated Commonplace analysis worktrees are an explicit exception: follow
+[isolated run setup](./kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup)
+to launch the harness with a worktree-local command environment. Do not switch
+the user-level editable installation while another analysis is running.
+
 For Commonplace development, install an editable checkout instead, from that checkout's root:
 
 ```text

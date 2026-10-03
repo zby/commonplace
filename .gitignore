@@ -1,5 +1,6 @@
 # Python
 .venv/
+/.commonplace/worktrees/
 .uv-cache/
 __pycache__/
 *.pyc
@@ -64,4 +65,3 @@ kb/work/auditable-llm-editing/experiment-02-full-memory-article/
 dir-index.md
 
 kb/work/agent-memory-review-rerun-comparison/
-

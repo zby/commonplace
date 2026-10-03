@@ -9,6 +9,11 @@ Code decides what runs next and judges every result. You launch the workers it n
 
 `<run>` below is the run directory.
 
+For `analyse-agentic-system`, use the worktree and command environment from
+[isolated run setup](./SKILL.md#isolated-run-setup) for every command and worker.
+Check that environment again on resume. Do not switch installations or update
+the run's code or method files while workers are active.
+
 ## Commands
 
 Inspect exit status and stderr as well as stdout for every command. With

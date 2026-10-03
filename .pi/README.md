@@ -4,6 +4,13 @@ Start Pi from this worktree's root and grant project trust to load the project
 extension. Use `/reload` after changing resources in an already-running Pi
 session whose working directory is this worktree.
 
+For an analysis run, prepare the dedicated worktree's local command environment
+using [isolated run setup](../kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup)
+before starting Pi; `commonplace-workflow prepare-analysis --name <system> -- pi`
+prepares and launches it in one command. Worker processes inherit its `PATH`.
+Starting Pi from a worktree alone does not isolate the shared editable Commonplace installation.
+Keep the run's code and method files unchanged until completion.
+
 `APPEND_SYSTEM.md` supplies the worker call format and coordinator preflight in
 Pi's startup system prompt. It also loads in children; the coordinator rules
 apply only when the `subagent` tool is exposed. Worker selection excludes that
