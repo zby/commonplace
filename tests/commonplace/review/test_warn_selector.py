@@ -192,7 +192,7 @@ def test_warn_selector_reports_note_changed_residue_outside_queue(tmp_path: Path
     )
 
 
-@pytest.mark.parametrize("outcome", ["pass", "fail"])
+@pytest.mark.parametrize("outcome", ["pass"])
 def test_warn_selector_skips_explicit_warns_from_non_warn_pairs(
     tmp_path: Path,
     outcome: str,

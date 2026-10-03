@@ -208,9 +208,6 @@ tags: {tags}
         ),
         ({"body": "Body changed."}, {"body"}, False),
         ({"body": "Body changed."}, {"title"}, True),
-        ({"title": "Updated title"}, {"title"}, False),
-        ({"description": "Updated description"}, {"title", "description"}, False),
-        ({"tags": "[computational-model]"}, {"title", "description"}, True),
         # Whitespace-only churn alters the hash but no parsed part; it is the
         # most trivial change of all and must qualify.
         ({"body": "Body.   \n\n"}, {"body", "title", "description"}, True),

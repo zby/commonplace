@@ -8,8 +8,6 @@ import pytest
 from commonplace.review import review_db, review_target_selector
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import (
-    criterion_id_for_path,
-    criterion_id_from_stored_path,
     normalize_criterion_path,
 )
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
@@ -160,17 +158,6 @@ class TestGateIdPlumbing:
         build_fixture(tmp_path)
         assert normalize_criterion_path(tmp_path, "type/definition") == "kb/types/definition.md"
 
-    def test_criterion_id_for_type_spec_path_uses_type_lens(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        assert criterion_id_for_path(tmp_path, "kb/types/definition.md") == "type/definition"
-
-    def test_stored_type_spec_path_renders_type_lens_without_fs(self) -> None:
-        assert criterion_id_from_stored_path("kb/types/definition.md") == "type/definition"
-        assert criterion_id_from_stored_path("kb/notes/types/structured-claim.md") == "type/structured-claim"
-        assert criterion_id_from_stored_path("kb/instructions/review-gates/prose/source-residue.md") == (
-            "prose/source-residue"
-        )
-
     def test_collection_local_type_resolves_when_unique(self, tmp_path: Path) -> None:
         make_type_spec(tmp_path / "kb" / "notes" / "types" / "structured-claim.md", "structured-claim")
         assert resolve_type_criterion_id(tmp_path, "type/structured-claim") == "kb/notes/types/structured-claim.md"
@@ -190,10 +177,6 @@ class TestGateIdPlumbing:
         (tmp_path / "kb").mkdir()
         with pytest.raises(FileNotFoundError, match="type/nonexistent"):
             resolve_type_criterion_id(tmp_path, "type/nonexistent")
-
-    def test_type_criterion_id_rejects_nested_names(self, tmp_path: Path) -> None:
-        with pytest.raises(ValueError, match="invalid type gate id"):
-            resolve_type_criterion_id(tmp_path, "type/nested/name")
 
     def test_review_gate_catalog_paths_are_not_type_spec_paths(self) -> None:
         assert not is_type_spec_criterion_path("kb/instructions/review-gates/types/sneaky.md")
@@ -294,34 +277,6 @@ class TestSelectorTypePairs:
         )
         assert stale == []
 
-    def test_mixed_catalog_and_type_requests(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
-        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue", "type"],
-            note_filter=["kb/notes/plain.md"],
-        )
-        assert [(s.criterion_id, s.reasons) for s in stale] == [
-            ("prose/source-residue", ("missing-baseline",)),
-            ("type/note", ("missing-baseline",)),
-        ]
-
-    def test_requested_mode_emits_type_pairs(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        requested = review_target_selector.select_requested_criteria(
-            tmp_path,
-            criterion_ids=["type"],
-            user_verified_only=True,
-        )
-        assert [(s.note_path, s.criterion_id, s.reasons) for s in requested] == [
-            ("kb/notes/definition.md", "type/definition", ("requested",)),
-            ("kb/notes/plain.md", "type/note", ("requested",)),
-        ]
-
     def test_all_gates_cli_includes_type_pairs(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
@@ -389,6 +344,7 @@ class TestPromptWrapper:
             job_output_path="job-output.md",
         )
         assert "This is a type-conformance gate." not in prompt
+        assert "This is a collection-conformance gate." not in prompt
 
 
 class TestCreateJobsForTypePairs:

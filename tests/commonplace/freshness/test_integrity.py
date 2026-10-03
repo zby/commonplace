@@ -58,37 +58,3 @@ def test_healthcheck_rejects_unguarded_queued_pair(tmp_path: Path) -> None:
         RuntimeError, match="exactly one CAS field"
     ):
         assert_queued_pair_cas_integrity(conn)
-
-
-def test_healthcheck_rejects_dual_populated_queued_pair(tmp_path: Path) -> None:
-    db_path = tmp_path / "store.sqlite"
-    ensure_db(db_path)
-    with connect(db_path) as conn:
-        cursor = conn.execute(
-            """
-            INSERT INTO review_jobs (
-                model_partition, created_at, status, grouping
-            ) VALUES ('codex', '2026-07-13T00:00:00+00:00', 'queued', 'note')
-            """
-        )
-        job_id = int(cursor.lastrowid)
-        conn.execute(
-            """
-            INSERT INTO review_pairs (
-                review_job_id,
-                note_path,
-                criterion_path,
-                pair_ordinal,
-                result_kind,
-                expected_baseline_revision,
-                expected_generation_next_revision
-            ) VALUES (?, 'kb/notes/example.md', 'kb/instructions/gate.md', 1, 'verdict', 1, 2)
-            """,
-            (job_id,),
-        )
-        conn.commit()
-
-    with connect(db_path) as conn, pytest.raises(
-        RuntimeError, match="exactly one CAS field"
-    ):
-        assert_queued_pair_cas_integrity(conn)

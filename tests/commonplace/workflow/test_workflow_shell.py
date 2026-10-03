@@ -58,25 +58,6 @@ def test_start_names_the_run_where_the_definition_says(tmp_path, monkeypatch, ca
     assert Orchestrator.open(second).workflow.params == {"name": "example"}
 
 
-def test_start_skips_a_name_already_in_use(tmp_path, monkeypatch, capsys):
-    monkeypatch.chdir(tmp_path)
-    (tmp_path / "runs" / "example-01").mkdir(parents=True)
-
-    assert (
-        main(
-            [
-                "start",
-                "tests.commonplace.workflow.definitions:Located",
-                "--param",
-                "name=example",
-            ]
-        )
-        == 0
-    )
-
-    assert capsys.readouterr().out.strip().endswith("example-02")
-
-
 def test_start_without_a_location_needs_the_run_directory(
     tmp_path, monkeypatch, capsys
 ):

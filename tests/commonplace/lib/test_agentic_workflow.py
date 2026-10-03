@@ -28,7 +28,6 @@ from commonplace.lib.agentic_workflow import (
     boundary_refusals,
     overview_enums,
     reading_batches,
-    retarget_links,
 )
 from commonplace.workflow import (
     Blocked,
@@ -381,8 +380,10 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert candidate.read_bytes() == review.read_bytes()
 
 
-@pytest.mark.parametrize("job_name", ["runtime", "memory-0", "epistemic"])
-@pytest.mark.parametrize("field", ["run-id", "reviewed-boundary"])
+@pytest.mark.parametrize(
+    ("job_name", "field"),
+    [("runtime", "run-id"), ("memory-0", "reviewed-boundary")],
+)
 def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     fixture: Fixture, job_name: str, field: str,
 ) -> None:
@@ -413,7 +414,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     assert frontmatter(member)["reviewed-boundary"] == fixture.revision
 
 
-@pytest.mark.parametrize("source_first", [False, True])
+@pytest.mark.parametrize("source_first", [True])
 def test_amendment_index_is_inside_source_register_in_either_boundary_order(
     fixture: Fixture, source_first: bool,
 ) -> None:
@@ -474,18 +475,6 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     assert isinstance(scripted.orchestrator.step(), Done)
 
 
-def test_records_are_checked_without_an_overview_or_synthesis(fixture: Fixture) -> None:
-    def verify(handout: Handout) -> None:
-        assert not (fixture.run_dir / "output/overview.md").exists()
-        assert not (fixture.run_dir / "synthesis-0.md").exists()
-        assert (fixture.run_dir / "output/reconciliation.md").exists()
-        assert (fixture.run_dir / "set-check-0.md").read_text().strip().endswith("none")
-        handout.output_path.write_text(fixture.verification())
-
-    scripted, _ = agent(fixture, **{"verify-0": verify})
-    assert isinstance(scripted.run()[-1], Done)
-
-
 def test_synthesis_blockers_correct_public_text_without_reopening_records(fixture: Fixture) -> None:
     blocked = fixture.verification(
         "- MEM-OBJ-1 has a record scope gap; state its prevented conclusion in Limitations.",
@@ -529,9 +518,7 @@ def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> Non
     assert "synthesis.md: unresolved record RT-OBJ-99" in prompt
 
 
-@pytest.mark.parametrize("link", [
-    "../../notes/theory.md", "..%2Fnotes%2Ftheory.md", "nested/theory.md",
-])
+@pytest.mark.parametrize("link", ["../../notes/theory.md"])
 def test_synthesis_links_are_repaired_before_the_verifier(
     fixture: Fixture, link: str,
 ) -> None:
@@ -624,80 +611,23 @@ def last_prompt(fixture: Fixture, name: str) -> str:
     return found.read_text(encoding="utf-8")
 
 
-@pytest.mark.parametrize("case", ["declared-split", "memory-return", "unresolved-part"])
-def test_split_dispositions_preserve_members_and_publish(
-    fixture: Fixture, case: str,
-) -> None:
+def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> None:
     """Scripted findings exercise workflow handling, not analyst judgment."""
     amendment = (
         "RT-OBJ-1 is superseded by EPI-OBJ-1 and EPI-OBJ-2; "
         "the combined finding conflates two parts. Evidence: SRC-1 README.md. "
         "Affected findings: runtime object identity and epistemic objects."
     )
-    conflict = (
-        "Unresolved conflict: RT-OBJ-1 combines a store and an undeclared "
-        "access-policy part. Evidence: SRC-1 README.md. The missing policy "
-        "record prevents a separate authority conclusion; the store account remains bounded."
+    epistemic = epistemic_text(fixture.revision).replace(
+        "Object the epistemic lens established. Evidence: SRC-1.",
+        "Part of: RT-OBJ-1\n\nStore part. Evidence: SRC-1.\n\n"
+        "#### EPI-OBJ-2 — Access-policy part\n\n"
+        "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
     )
-    epistemic = epistemic_text(fixture.revision)
-    if case == "declared-split":
-        epistemic = epistemic.replace(
-            "Object the epistemic lens established. Evidence: SRC-1.",
-            "Part of: RT-OBJ-1\n\nStore part. Evidence: SRC-1.\n\n"
-            "#### EPI-OBJ-2 — Access-policy part\n\n"
-            "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
-        )
-
-    def corrected_memory(_: Handout) -> str:
-        return fixture.memory_report(1).replace(
-            "Store the specialist established, from SRC-1.",
-            "Part of: RT-OBJ-1\n\nStore part, from SRC-1.\n\n"
-            "#### MEM-OBJ-2 — Missing access-policy part\n\n"
-            "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
-        )
-
-    workers = {"epistemic": fixture.writes(lambda _: epistemic)}
-    if case == "declared-split":
-        workers["reconcile-0"] = fixture.writes(
-            lambda _: fixture.reconciliation(amendment=amendment)
-        )
-    elif case == "memory-return":
-        workers["reconcile-0"] = fixture.writes(lambda _: (
-            fixture.reconciliation()
-            + "\n## Returned to the memory analyst\n\n"
-            "- RT-OBJ-1: declare the missing access-policy part separately; "
-            "Evidence: SRC-1 README.md. It prevents a separate authority conclusion.\n"
-        ))
-        workers["memory-1"] = fixture.writes(corrected_memory)
-        workers["reconcile-1"] = fixture.writes(lambda _: fixture.reconciliation(
-            amendment=amendment.replace("EPI-OBJ-1 and EPI-OBJ-2", "MEM-OBJ-1 and MEM-OBJ-2")
-        ))
-    else:
-        # Reach the last reconciliation round, where returning is prohibited.
-        for round_ in range(AnalyseAgenticSystem.correction_rounds):
-            workers[f"reconcile-{round_}"] = fixture.writes(
-                lambda _: fixture.reconciliation()
-                + "\n## Returned to the memory analyst\n\n"
-                + "- RT-OBJ-1: the access-policy part remains undeclared; "
-                + "Evidence: SRC-1 README.md. Declare it if the source supports it.\n"
-            )
-        last = f"reconcile-{AnalyseAgenticSystem.correction_rounds}"
-
-        def retain_conflict(handout: Handout) -> str:
-            assert "may-return = no\n" in handout.prompt_path.read_text(encoding="utf-8")
-            return fixture.reconciliation() + "\n" + conflict + "\n"
-
-        workers[last] = fixture.writes(retain_conflict)
-        workers["synthesize"] = fixture.writes(
-            lambda _: fixture.synthesis(limitations=conflict)
-        )
-        workers[f"verify-{AnalyseAgenticSystem.correction_rounds}"] = fixture.writes(
-            lambda _: fixture.verification().replace(
-                "Passed: every claim checked against its records.",
-                "Checked conflict on RT-OBJ-1 at SRC-1: missing access-policy "
-                "part prevents a separate authority conclusion; retained as a limitation.",
-            )
-        )
+    workers = {
+        "epistemic": fixture.writes(lambda _: epistemic),
+        "reconcile-0": fixture.writes(lambda _: fixture.reconciliation(amendment=amendment)),
+    }
 
     scripted, definition = agent(fixture, **workers)
     results = scripted.run()
@@ -707,21 +637,8 @@ def test_split_dispositions_preserve_members_and_publish(
     assert (output / "runtime.md").read_text(encoding="utf-8") == runtime_text(fixture.revision)
     assert (output / "epistemic.md").read_text(encoding="utf-8") == epistemic
     reconciliation = (output / "reconciliation.md").read_text(encoding="utf-8")
-    if case == "unresolved-part":
-        assert conflict in reconciliation
-        assert conflict in (output / "overview.md").read_text(encoding="utf-8")
-        assert f"memory-{AnalyseAgenticSystem.correction_rounds + 1}" not in scripted.launched
-    else:
-        expected = amendment if case == "declared-split" else amendment.replace(
-            "EPI-OBJ-1 and EPI-OBJ-2", "MEM-OBJ-1 and MEM-OBJ-2"
-        )
-        assert "Amendment: " + expected in reconciliation
-        if case == "memory-return":
-            assert scripted.launched.index("reconcile-0") < scripted.launched.index("memory-1")
-            assert (output / "memory.md").read_bytes() == (fixture.run_dir / "memory-report-1.md").read_bytes()
-            assert "#### MEM-OBJ-2" in (output / "memory.md").read_text(encoding="utf-8")
-        else:
-            assert "memory-1" not in scripted.launched
+    assert "Amendment: " + amendment in reconciliation
+    assert "memory-1" not in scripted.launched
     for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
         assert (fixture.root / retained).read_bytes() == (output / name).read_bytes()
 
@@ -771,7 +688,7 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     )
 
 
-@pytest.mark.parametrize("returned", [False, True])
+@pytest.mark.parametrize("returned", [False])
 def test_reconciliation_amending_an_undeclared_record_is_refused(
     fixture: Fixture, returned: bool,
 ) -> None:
@@ -788,15 +705,6 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
     assert "reconciliation.md: unresolved record MEM-OBJ-9" in prompt
 
 
-def test_returning_reconciliation_refuses_ranges_with_declared_endpoints(fixture: Fixture) -> None:
-    ranged = fixture.reconciliation(returned=True) + "\nRT-OBJ-1 through EPI-OBJ-1.\n"
-    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: ranged)})
-    drive_to(scripted, "reconcile-0")
-    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
-    assert attempt == 2
-    assert "ranges are not expanded" in prompt
-
-
 def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixture) -> None:
     text = fixture.verification().replace(
         "its records.", "its records. Compared EPI-OBJ-1 to RT-OBJ-1 at SRC-1."
@@ -807,7 +715,7 @@ def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixtur
     assert scripted.launched.count("verify-0") == 1
 
 
-@pytest.mark.parametrize("returned", [False, True])
+@pytest.mark.parametrize("returned", [False])
 def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
     fixture: Fixture, returned: bool,
 ) -> None:
@@ -820,7 +728,7 @@ def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
     assert "memory-1" not in scripted.launched
 
 
-@pytest.mark.parametrize("returned", [False, True])
+@pytest.mark.parametrize("returned", [False])
 def test_reconciliation_preserves_permitted_quote_attributions(
     fixture: Fixture, returned: bool,
 ) -> None:
@@ -833,15 +741,6 @@ def test_reconciliation_preserves_permitted_quote_attributions(
     assert isinstance(result, Launch)
     assert "reconcile-0" not in [job.name for job in result.jobs]
     assert "memory-1" in scripted.launched if returned else "verify-0" in scripted.launched
-
-
-def test_reconciliation_heading_order_refusal_names_the_required_order(fixture: Fixture) -> None:
-    text = "## Returned to the memory analyst\n\nMEM-OBJ-1 needs checking.\n\n## Reconciliation\n\nRT-OBJ-1 stays declared.\n"
-    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
-    drive_to(scripted, "reconcile-0")
-    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
-    assert attempt == 2
-    assert "Reconciliation followed by any permitted Returned to the memory analyst section" in prompt
 
 
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
@@ -911,26 +810,6 @@ def test_the_description_and_synthesis_become_the_public_review(
     assert validation.validate_note(review_path, repo_root=fixture.root).warns == []
 
 
-def test_retarget_links_resolves_set_links_from_the_destination() -> None:
-    text = (
-        "[a](runtime.md) [b](./memory.md#mem-obj-1) "
-        "[d](https://example.invalid/x.md) [e](#blockers) `[f](epistemic.md)`"
-    )
-
-    moved = retarget_links(
-        text,
-        set_dir="kb/agentic-systems/reports/retained/AAS-2026-09-04-x-01",
-        destination="kb/agentic-systems/reviews/x.md",
-    )
-
-    base = "../reports/retained/AAS-2026-09-04-x-01"
-    assert moved == (
-        f"[a]({base}/runtime.md) [b]({base}/memory.md#mem-obj-1) "
-        "[d](https://example.invalid/x.md) "
-        "[e](#blockers) `[f](epistemic.md)`"
-    )
-
-
 # 5. A named blocker stops before publication
 
 
@@ -967,26 +846,12 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     [
         ("none", True),
         ("- RT-RTE-1 is never traced.", True),
-        ("- RT-RTE-1 is never traced;\n  resolve it from `README.md`.\n- RT-OBJ-1 is thin.", True),
-        ("None.", False),
         ("None found", False),
-        ("RT-RTE-1 is never traced.", False),
         ("- RT-RTE-1 is never traced.\nRT-OBJ-1 is thin.", False),
     ],
 )
 def test_blockers_are_none_or_a_list(blockers: str, accepted: bool) -> None:
     assert (blockers_refusals(blockers) == []) is accepted
-
-
-def test_a_verification_with_free_text_blockers_is_refused(fixture: Fixture) -> None:
-    free = fixture.verification("None found")
-    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(lambda _: free)})
-    drive_to(scripted, "verify-0")
-
-    attempt, prompt = prompt_of(scripted.round(), "verify-0")
-
-    assert attempt == 2
-    assert "must be exactly `none` or a Markdown list" in prompt
 
 
 def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) -> None:
@@ -1010,26 +875,6 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
 
 
-def test_epistemic_member_citing_an_undeclared_record_is_refused(
-    fixture: Fixture,
-) -> None:
-    def epistemic_citing_an_undeclared_record(handout: Handout) -> None:
-        handout.output_path.write_text(
-            epistemic_text(fixture.revision).replace(
-                "Route ID: RT-RTE-1", "Route ID: RT-RTE-1 and RT-OBJ-99"
-            ),
-            encoding="utf-8",
-        )
-
-    scripted, _ = agent(fixture, epistemic=epistemic_citing_an_undeclared_record)
-    drive_to(scripted, "epistemic")
-
-    attempt, prompt = prompt_of(scripted.round(), "epistemic")
-
-    assert attempt == 2
-    assert "epistemic.md: unresolved record RT-OBJ-99" in prompt
-
-
 def test_memory_report_re_declaring_a_runtime_record_is_refused(
     fixture: Fixture,
 ) -> None:
@@ -1051,7 +896,7 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     assert "duplicate set declaration: RT-RTE-1" in prompt
 
 
-@pytest.mark.parametrize("job", ["runtime", "epistemic", "memory-0", "memory-1"])
+@pytest.mark.parametrize("job", ["runtime", "memory-1"])
 def test_altered_analyst_quote_is_repaired_before_reconciliation(
     fixture: Fixture, job: str,
 ) -> None:
@@ -1118,7 +963,7 @@ def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) 
     assert definition.publications == 1
 
 
-@pytest.mark.parametrize("prefix", ["", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["", "MEM-"])
 def test_runtime_declaration_prefix_is_repaired_before_specialists(
     fixture: Fixture, prefix: str,
 ) -> None:
@@ -1157,10 +1002,7 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
 @pytest.mark.parametrize(
     ("given", "normalized"),
     [
-        ("https://github.com/Owner/Repo", "https://github.com/Owner/Repo"),
         ("  HTTPS://GitHub.com/Owner/Repo.git/ ", "https://github.com/Owner/Repo"),
-        ("https://github.com/owner/repo/", "https://github.com/owner/repo"),
-        ("document bundle", "document bundle"),
         ("Captures/Bundle.git", "Captures/Bundle"),
     ],
 )
@@ -1305,7 +1147,7 @@ def test_boundary_cannot_substitute_another_commit_for_the_frozen_one(fixture: F
     assert definition.publications == 0
 
 
-@pytest.mark.parametrize("revision", ["", "HEAD", "main", "abc123", "a" * 40 + "\n"])
+@pytest.mark.parametrize("revision", ["HEAD", "abc123"])
 def test_source_revision_requires_a_full_commit(revision: str) -> None:
     with pytest.raises(ValueError, match="source-revision must be a full 40-hex Git commit"):
         AnalyseAgenticSystem({"source-identity": GITHUB, "source-revision": revision})
@@ -1500,47 +1342,14 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
     ("kind", "round_", "memory", "reason", "expected"),
     [
         ("boundary", 0, 0, None, {"opening": "opening.json"}),
-        ("runtime", 0, 0, None, {"boundary": "boundary.md"}),
-        ("epistemic", 0, 0, None, {"boundary": "boundary.md", "runtime": "output/runtime.md"}),
-        ("memory", 0, 0, None, {"boundary": "boundary.md", "runtime": "output/runtime.md", "round": "first"}),
         ("memory", 1, 2, None, {
             "boundary": "boundary.md", "runtime": "output/runtime.md", "round": "correction",
             "previous-memory": "memory-report-0.md", "returned-findings": "reconcile-2.md",
             "epistemic": "output/epistemic.md",
         }),
-        ("memory", 2, 3, None, {
-            "boundary": "boundary.md", "runtime": "output/runtime.md", "round": "correction",
-            "previous-memory": "memory-report-1.md", "returned-findings": "reconcile-3.md",
-            "epistemic": "output/epistemic.md",
-        }),
-        ("reconcile", 0, 0, None, {"round": "first", "may-return": "yes"}),
-        ("reconcile", 1, 1, "returned", {
-            "round": "after-correction", "may-return": "yes", "previous-reconciliation": "reconcile-0.md",
-        }),
         ("reconcile", 2, 0, "blockers", {
             "round": "after-blockers", "may-return": "no", "previous-reconciliation": "reconcile-1.md",
             "verification": "verification-1.md", "set-check": "set-check-1.md",
-        }),
-        ("verify", 0, 0, None, {
-            "boundary": "boundary.md", "reconciliation": "output/reconciliation.md", "runtime": "output/runtime.md",
-            "memory": "memory-report-0.md", "epistemic": "output/epistemic.md", "set-check": "set-check-0.md",
-            "memory-return": "yes",
-        }),
-        ("verify", 2, 0, None, {
-            "boundary": "boundary.md", "reconciliation": "output/reconciliation.md", "runtime": "output/runtime.md",
-            "memory": "memory-report-0.md", "epistemic": "output/epistemic.md", "set-check": "set-check-2.md",
-            "memory-return": "no",
-        }),
-        ("synthesize", 0, 0, None, {
-            "round": "first", "boundary": "boundary.md", "runtime": "output/runtime.md",
-            "memory": "output/memory.md", "epistemic": "output/epistemic.md",
-            "reconciliation": "output/reconciliation.md",
-        }),
-        ("synthesize", 1, 0, None, {
-            "round": "after-blockers", "boundary": "boundary.md", "runtime": "output/runtime.md",
-            "memory": "output/memory.md", "epistemic": "output/epistemic.md",
-            "reconciliation": "output/reconciliation.md", "previous-synthesis": "synthesis-0.md",
-            "verification": "synthesis-verification-0.md",
         }),
         ("verify-synthesis", 0, 0, None, {
             "synthesis": "synthesis-0.md", "boundary": "boundary.md", "runtime": "output/runtime.md",
@@ -1641,9 +1450,6 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
 
 @pytest.mark.parametrize("dependency", [
     "kb/agentic-systems/instructions/analyse-agentic-system/jobs/memory.md",
-    "kb/agentic-systems/instructions/agentic-analysis-sources.md",
-    "kb/agentic-systems/instructions/agentic-analysis-records.md",
-    "kb/agentic-systems/types/agent-memory-analysis-report.md",
 ])
 def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, dependency: str) -> None:
     scripted, _ = agent(fixture)

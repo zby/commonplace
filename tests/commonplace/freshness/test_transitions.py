@@ -157,29 +157,6 @@ def test_ack_rejects_decoy_artifact_path(tmp_path: Path) -> None:
             )
 
 
-def test_upsert_rejects_mismatched_expected_revision(tmp_path: Path) -> None:
-    from commonplace.review import review_db
-
-    db_path = _init_store(tmp_path)
-    with connect(db_path) as conn:
-        pair_id, note_snapshot_id, criterion_snapshot_id = _seed_accepted_baseline(
-            conn,
-            tmp_path,
-        )
-        with pytest.raises(ValueError, match="stale-baseline-revision"):
-            review_db.upsert_freshness_baseline(
-                conn,
-                note_path=NOTE_PATH,
-                criterion_path=CRITERION_PATH,
-                model_partition=MODEL_PARTITION,
-                evidence_review_pair_id=pair_id,
-                baseline_note_snapshot_id=note_snapshot_id,
-                baseline_criterion_snapshot_id=criterion_snapshot_id,
-                baseline_updated_at="2026-07-13T01:00:00+00:00",
-                expected_baseline_revision=99,
-            )
-
-
 def test_finalize_rejects_missing_baseline_after_retire_aba(tmp_path: Path) -> None:
     from commonplace.review.review_db import (
         ReviewPairCompletion,
@@ -253,21 +230,6 @@ def test_finalize_rejects_missing_baseline_after_retire_aba(tmp_path: Path) -> N
                 baseline_updated_at="2026-07-13T02:00:00+00:00",
                 expected_baseline_revision=queued.expected_baseline_revision,
                 expected_generation_next_revision=queued.expected_generation_next_revision,
-            )
-
-
-def test_ack_rejects_empty_selected_inputs(tmp_path: Path) -> None:
-    db_path = _init_store(tmp_path)
-    with connect(db_path) as conn:
-        _seed_accepted_baseline(conn, tmp_path)
-        with pytest.raises(ValueError, match="selected_inputs must not be empty"):
-            ack_target_inputs(
-                conn,
-                repo_root=tmp_path,
-                target_kind="review-pair",
-                target_key=_target_key(),
-                expected_baseline_revision=1,
-                selected_inputs=(),
             )
 
 

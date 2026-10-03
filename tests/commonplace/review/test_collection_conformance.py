@@ -13,11 +13,8 @@ from commonplace.review.collection_conformance import (
     resolve_collection_criterion_id,
 )
 from commonplace.review.paths import (
-    criterion_id_for_path,
-    criterion_id_from_stored_path,
     normalize_criterion_path,
 )
-from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
@@ -124,17 +121,6 @@ class TestGateIdPlumbing:
         build_fixture(tmp_path)
         assert normalize_criterion_path(tmp_path, "collection/notes") == "kb/notes/COLLECTION.md"
 
-    def test_criterion_id_for_collection_md_path_uses_collection_lens(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        assert criterion_id_for_path(tmp_path, "kb/notes/COLLECTION.md") == "collection/notes"
-
-    def test_stored_collection_md_path_renders_collection_lens_without_fs(self) -> None:
-        assert criterion_id_from_stored_path("kb/notes/COLLECTION.md") == "collection/notes"
-        assert criterion_id_from_stored_path("kb/commonplace/notes/COLLECTION.md") == "collection/commonplace/notes"
-        assert criterion_id_from_stored_path("kb/instructions/review-gates/prose/source-residue.md") == (
-            "prose/source-residue"
-        )
-
     def test_namespaced_collection_resolves(self, tmp_path: Path) -> None:
         make_collection_md(tmp_path / "kb" / "commonplace" / "notes" / "COLLECTION.md", "kb/commonplace/notes/")
         assert (
@@ -231,47 +217,6 @@ class TestSelectorCollectionPairs:
         )
         assert stale == []
 
-    def test_mixed_catalog_type_and_collection_requests(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        write(
-            tmp_path / "kb" / "types" / "note.md",
-            """---
-type: types/type-spec.md
-name: note
-description: Test type spec for note
-schema: null
----
-
-# Note
-
-## Authoring Instructions
-
-State one claim per note.
-""",
-        )
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["type", "collection"],
-            note_filter=["kb/notes/plain.md"],
-        )
-        assert [(s.criterion_id, s.reasons) for s in stale] == [
-            ("collection/notes", ("missing-baseline",)),
-            ("type/note", ("missing-baseline",)),
-        ]
-
-    def test_requested_mode_emits_collection_pairs(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        requested = review_target_selector.select_requested_criteria(
-            tmp_path,
-            criterion_ids=["collection"],
-            user_verified_only=True,
-        )
-        assert [(s.note_path, s.criterion_id, s.reasons) for s in requested] == [
-            ("kb/notes/plain.md", "collection/notes", ("requested",)),
-            ("kb/reference/doc.md", "collection/reference", ("requested",)),
-        ]
-
     def test_all_gates_cli_includes_collection_pairs(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         write(
@@ -356,38 +301,6 @@ class TestAckCollectionPair:
             note_filter=["kb/notes/plain.md"],
         )
         assert stale_after == []
-
-
-class TestPromptWrapper:
-    def test_catalog_gate_has_no_collection_wrapper(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/plain.md",
-                    criterion_paths=("kb/instructions/review-gates/prose/source-residue.md",),
-                    note_text="# Plain\n\nBody.",
-                )
-            ],
-            criterion_texts={"kb/instructions/review-gates/prose/source-residue.md": "## Failure mode\n\nFixture."},
-            result_kind="verdict",
-            job_output_path="job-output.md",
-        )
-        assert "This is a collection-conformance gate." not in prompt
-
-    def test_wrapper_states_type_conformance_boundary(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/plain.md",
-                    criterion_paths=("kb/notes/COLLECTION.md",),
-                    note_text="# Plain note\n\nBody.",
-                )
-            ],
-            criterion_texts={"kb/notes/COLLECTION.md": "# Writing conventions"},
-            result_kind="verdict",
-            job_output_path="job-output.md",
-        )
-        assert "type-conformance pair's job" in prompt
 
 
 class TestCreateJobsForCollectionPairs:

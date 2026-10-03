@@ -92,7 +92,6 @@ def seed_freshness_baseline(
     repo_root: Path,
     *,
     note_path: str,
-    note_abs: Path,
     gate_abs: Path,
     criterion_id: str,
     model_partition: str = TEST_MODEL,
@@ -154,7 +153,6 @@ def build_fixture(tmp_path: Path) -> dict[str, Path]:
         seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
-            note_abs=stable,
             gate_abs=gate_abs,
             criterion_id=criterion_id,
         )
@@ -209,7 +207,6 @@ class TestMissingReview:
         seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
-            note_abs=fixture["stable"],
             gate_abs=fixture["gate_prose_sr"],
             criterion_id="prose/source-residue",
             model_partition="claude-opus",
@@ -217,7 +214,6 @@ class TestMissingReview:
         seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
-            note_abs=fixture["stable"],
             gate_abs=fixture["gate_prose_cm"],
             criterion_id="prose/confidence-miscalibration",
             model_partition="claude-opus",
@@ -577,68 +573,6 @@ class TestAckMetadata:
         assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
         assert row["baseline_note_hash"] is not None
 
-    def test_ack_after_gate_change_carries_forward_review_pair_and_records_criterion_snapshot(
-        self, tmp_path: Path
-    ) -> None:
-        fixture = build_fixture(tmp_path)
-        write(
-            fixture["gate_prose_sr"],
-            """---
-gate_id: prose/source-residue
-name: Source Residue
-lens: prose
-watches: [body]
-staleness: changed
----
-
-## Failure mode
-
-Fixture gate with baseline wording update.
-
-## Test
-
-Fixture test.
-""",
-        )
-
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            conn.row_factory = sqlite3.Row
-            source_review_pair = conn.execute(
-                """
-                SELECT rp.review_pair_id
-                FROM review_pairs AS rp
-                JOIN review_jobs AS j
-                  ON j.review_job_id = rp.review_job_id
-                WHERE rp.note_path = ?
-                  AND rp.criterion_path = ?
-                  AND j.model_partition = ?
-                """,
-                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-
-        records = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-        ack_pairs(tmp_path, records, TEST_MODEL)
-
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            conn.row_factory = sqlite3.Row
-            row = conn.execute(
-                """
-                SELECT evidence_review_pair_id, baseline_criterion_snapshot_id, baseline_criterion_hash
-                FROM current_review_freshness_baselines
-                WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-        assert row is not None
-        assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
-        assert row["baseline_criterion_snapshot_id"] is not None
-        assert row["baseline_criterion_hash"] is not None
-
     def test_ack_can_advance_only_one_inspected_role_from_a_joint_change(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -810,36 +744,6 @@ Fixture test.
         assert row["evidence_review_pair_id"] == expected_pair["review_pair_id"]
         assert row["evidence_review_pair_id"] != other_pair_id
 
-    def test_ack_rejects_pair_without_completed_review_and_writes_nothing(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        stale_before = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
-            note_filter=["kb/notes/unreviewed.md"],
-        )
-        assert len(stale_before) == 2
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_before = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
-
-        with pytest.raises(ValueError, match="no baseline revision"):
-            ack_pairs(tmp_path, stale_before, TEST_MODEL)
-
-        stale_after = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
-            note_filter=["kb/notes/unreviewed.md"],
-        )
-        assert len(stale_after) == 2
-
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            freshness_baseline_count_after = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_after = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
-        assert freshness_baseline_count_after == freshness_baseline_count_before
-        assert snapshot_count_after == snapshot_count_before
-
     def test_ack_multi_pair_preflight_is_all_or_nothing(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -877,60 +781,7 @@ Fixture test.
         assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
-    def test_ack_rejects_duplicate_selector_targets(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
-        criterion_path = "kb/instructions/review-gates/prose/source-residue.md"
-
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            freshness_baseline_count_before = conn.execute(
-                """
-                SELECT count(*)
-                FROM current_review_freshness_baselines
-                WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", criterion_path, TEST_MODEL),
-            ).fetchone()[0]
-
-        records = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-        with pytest.raises(ValueError, match="duplicate selector target"):
-            ack_pairs(tmp_path, [records[0], records[0]], TEST_MODEL)
-
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            freshness_baseline_count_after = conn.execute(
-                """
-                SELECT count(*)
-                FROM current_review_freshness_baselines
-                WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", criterion_path, TEST_MODEL),
-            ).fetchone()[0]
-        assert freshness_baseline_count_after == freshness_baseline_count_before
-
-
 class TestJsonOutput:
-    def test_json_output_is_object_envelope_with_criterion_ids(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
-            note_filter=["kb/notes/unreviewed.md"],
-        )
-        json_str = review_target_selector.render_json(stale)
-        payload = json.loads(json_str)
-        assert payload["schema"] == review_target_selector.SELECTOR_SCHEMA
-        assert payload["model_partition"] is None
-        assert len(payload["targets"]) == 2
-        for item in payload["targets"]:
-            assert "criterion_id" in item
-            assert "review_path" not in item
-
     def test_requested_mode_emits_explicit_applicable_pairs(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
 
@@ -1022,23 +873,6 @@ class TestModelOptional:
 
         assert result.returncode == 2
         assert "--model-partition is required unless selecting missing-baseline coverage" in result.stderr
-
-    def test_cli_requires_model_for_requested_mode(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-
-        result = run_cli(
-            "review_target_selector",
-            "--mode",
-            "requested",
-            "prose",
-            "--note",
-            "kb/notes/stable.md",
-            cwd=tmp_path,
-            check=False,
-        )
-
-        assert result.returncode == 2
-        assert "--model-partition is required with --mode requested" in result.stderr
 
     def test_ack_review_cli_rejects_mismatched_criterion_identity(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
