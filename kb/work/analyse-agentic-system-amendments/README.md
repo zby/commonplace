@@ -94,12 +94,25 @@ Next, in order:
    such as `RT-RTE-1 through RT-RTE-5` is refused. Three of three
    verification jobs lost their retry to this; a text fix is tried before any
    preflight tool, and the next run measures it.
-3. **Add a coverage question to the boundary job.** Before freezing a
-   `whole-system` register for a memory or knowledge system, the boundary
-   job names the shipped prompts, the callers that persist or reload the
-   retained store, and the evaluators, and either registers them or states
-   the exclusion with its prevented conclusion. Verification checks the
-   label against the register.
+3. **Fix the register's unit, then add the coverage question.** The
+   regression's cause (boundary trace, 22:00–22:03 UTC): the worker listed
+   the tree, read README and two implementation files, named five files as
+   anchors and wrote "Only the listed commit-relative files and scopes may
+   supply evidence"; later analysts obeyed. The method allowed it because
+   (a) the register moved from the integrator, who wrote it with the
+   analysis, to a three-minute job that writes it first and binds everyone
+   after it; (b) the unit is ambiguous — worker-rules and the sources
+   contract register the repository ("read and grep the files under
+   `source.path`"), the boundary contract asks for "inspected commit-relative
+   paths", and `boundary.md` says "before inspection, record a compact
+   allowlist"; (c) no check ties `boundary-kind: whole-system` to the tree.
+   Repairs, in `boundary.md`, the boundary contract and `verify.md`: for a
+   Git source the registered unit is the repository at the commit, and
+   listed paths describe inspected scope without restricting later analysts;
+   drop "before inspection" and "compact"; for `whole-system`, the boundary
+   classifies each top-level path as included or excluded with the
+   conclusion an exclusion prevents, naming shipped prompts, persistence
+   callers and evaluators; verification compares the label with that list.
 4. **One sentence on candidate versus admitted identity** in the record
    contract's part rule: a candidate that can replace a record is not a
    part of it. The semantic verifier caught the case; the sentence makes it
