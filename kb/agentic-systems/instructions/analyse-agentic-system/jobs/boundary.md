@@ -45,11 +45,24 @@ value from the supplied boundary contract, and state functional inclusions,
 exclusions, and external dependencies. Do not assign responsibilities owned
 by an excluded host to the selected target.
 
+Inspect the repository tree and trace shipped entry points and their
+consumers before making that classification. For `whole-system`, write the
+boundary contract's top-level coverage table under Boundary and evidence.
+For a memory or knowledge system, find shipped prompts, maintenance
+instructions, persistence and reload callers, later consumers, and
+evaluators. Inspect their wiring and either include them or justify their
+exclusion with its prevented conclusion. A shipped driver is not external
+merely because it supplies state to an API. An intentional library-only
+target gets a narrower boundary kind. Do not turn an uninspected file into
+an access gap when it is available at the frozen commit.
+
 ## Freeze the sources
 
-1. Before inspection, record a compact source allowlist: the exact
-   repositories, captures, documents, and time boundary that may supply
-   evidence.
+1. Record the exact repositories, reviewed commits, captures, documents,
+   and time boundary that may supply evidence. For Git, the registered unit
+   is the repository at the commit. Inspect it to establish the selected
+   target and initial coverage; the paths you list do not restrict later
+   analysts' inspection of other files at that same commit.
 2. For a GitHub source, code has already frozen the checkout at
    `source-path`, detached at `source-revision` with no local changes.
    Inspect it read-only: do not clone, fetch, pull, check out, reset or
@@ -62,7 +75,10 @@ by an excluded host to the selected target.
    stable identity, version or capture label, absolute path, and SHA-256. Do
    not analyse a moving live page as though it were frozen.
 4. Build one `SRC-*` register with the columns the boundary contract
-   requires and the evidence layers of the source contract.
+   requires and the evidence layers of the source contract. Record initially
+   inspected paths as coverage, not as a path allowlist. Later analysts
+   record additional file coverage in their own members without changing
+   the repository identity or revision.
 
 The source pin is an evidence boundary. If it changes or cannot be verified, write a problem report.
 

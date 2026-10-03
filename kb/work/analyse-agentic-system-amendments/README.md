@@ -80,6 +80,13 @@ Done:
   `MEM-OBJ-1` are the first observed memory-versus-epistemic identity
   interaction; reconciliation handled it with amendments, so option D10
   (identity pass) stays unadopted.
+- 2026-10-03: the operator authorized repairing the register ambiguity and
+  coverage regression. Step 3 below is implemented across the boundary and
+  source contracts, boundary and verification jobs, worker rules and overview
+  type. Git registration permits the pinned repository; listed paths record
+  initial coverage. Whole-system classification requires tracing shipped
+  responsibilities, and verification rejects a contradicted frozen boundary
+  through the existing problem path. See [implementation checks](./implementation-check.md#repository-registration-and-whole-system-coverage).
 
 Next, in order:
 
@@ -94,7 +101,7 @@ Next, in order:
    such as `RT-RTE-1 through RT-RTE-5` is refused. Three of three
    verification jobs lost their retry to this; a text fix is tried before any
    preflight tool, and the next run measures it.
-3. **Fix the register's unit, then add the coverage question.** The
+3. **Implemented: fix the register's unit and whole-system coverage.** The
    regression's cause (boundary trace, 22:00–22:03 UTC): the worker listed
    the tree, read README and two implementation files, named five files as
    anchors and wrote "Only the listed commit-relative files and scopes may
@@ -113,6 +120,11 @@ Next, in order:
    classifies each top-level path as included or excluded with the
    conclusion an exclusion prevents, naming shipped prompts, persistence
    callers and evaluators; verification compares the label with that list.
+   The sources contract and worker rules now also distinguish additional
+   file inspection at the pinned commit from changing the selected target or
+   frozen source identity. A contradicted whole-system label requires
+   `problem`, since reconciliation cannot repair boundary metadata. The next
+   model run still needs to test adherence to these instructions.
 4. **One sentence on candidate versus admitted identity** in the record
    contract's part rule: a candidate that can replace a record is not a
    part of it. The semantic verifier caught the case; the sentence makes it

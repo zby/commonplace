@@ -102,3 +102,57 @@ The remaining audit items 8–16 stay deferred under the README's scope; no
 schema, shared parser, stage or report syntax changed. These scripted checks
 verify the workflow repairs, not model behavior in the later full analysis.
 No fresh analysis is opened by this commission.
+
+## Repository registration and whole-system coverage
+
+On 2026-10-03 the operator authorized repairing the source-register ambiguity
+identified in the Dynamic Cheatsheet audit. The boundary job's initial path
+selection had become a binding allowlist, excluding shipped prompts and a
+persistence caller from a result labelled `whole-system`.
+
+The boundary and source contracts now register a Git repository at its pinned
+commit. Listed paths describe initial inspection, not the files later jobs
+may read. Workers may inspect and cite additional files at that commit and
+record their coverage in their own members, using existing source IDs and
+the passage's actual evidence layer. The selected target, source identity and
+revision remain fixed. Captures remain limited to their frozen contents.
+
+Before selecting `whole-system`, the boundary job inspects the tree and
+traces shipped entry points and consumers. Its Boundary and evidence section
+classifies each top-level tracked file or directory, names material paths,
+and gives exclusions with prevented conclusions. For memory and knowledge
+systems it must identify prompts and maintenance instructions, persistence
+and reload callers, later consumers and evaluators. A shipped driver is not
+an external host merely because it calls a library API.
+
+Verification compares the classification with the frozen tree and actual
+material wiring. It may inspect files omitted from the initial path list.
+An individual finding can use the existing blocker/conflict process. An
+incorrect frozen target or boundary-kind classification requires `problem`;
+reconciliation cannot repair that metadata or make the wrong label acceptable
+by adding a limitation. The worker rules and overview type agree with these
+contracts. No runtime code, schema, report field, source ID allocation or
+workflow stage changes.
+
+The repaired instructions distinguish these concrete cases:
+
+- A register initially lists README and API files: an analyst may inspect
+  shipped prompt or caller files at the same commit without source expansion.
+- Inspection finds a shipped persistence caller excluded from a purported
+  whole system: the analyst identifies the responsibility and prevented
+  conclusion; verification cannot silently certify that classification.
+- The operator selected only the library API: the boundary states that target
+  with a narrower kind; inspecting a caller for relevance does not authorize
+  expanding the target.
+- A newly required external repository, revision or capture remains outside
+  the registered evidence boundary and requires the existing problem path.
+
+Deterministic validation passed for all six changed method documents with
+zero warnings or failures. `git diff --check` passed. This change is confined
+to Markdown method documents and workshop records, so pytest is not required
+under the repository's development rule. Validation checks the document
+contracts; the concrete cases above are an instruction review, not a model
+adherence test. The later `dynamic-cheatsheet-02` run remains the live test.
+The completed `-01` set and review are unchanged and remain untracked by this
+commission. The range, verification-output and candidate-identity repairs
+are separate pending steps.

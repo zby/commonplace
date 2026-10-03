@@ -67,6 +67,9 @@ boundary contract, copied from the boundary job.
 
 `## Source register` contains that job's `SRC-*` rows under the boundary
 contract. Source identity and evidence scopes remain stable across members.
+For Git, the identity is the repository at the reviewed commit; listed
+paths record initial coverage and do not prevent later members from
+inspecting and citing other files at that commit for the selected target.
 For a complete run, code appends `Amended or superseded records: <IDs or none>`
 and a link to `reconciliation.md`. Resolve these IDs through that member
 before relying on an analyst's original wording.

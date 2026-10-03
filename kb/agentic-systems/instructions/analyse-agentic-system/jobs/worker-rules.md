@@ -35,9 +35,15 @@ the source cannot support the claim, narrow or withdraw it and update the text.
 Use supplied paths unchanged. Read every `read-first` dependency before
 the task. Missing required parameters, unavailable required inputs,
 source access or scope decisions that prevent completion, and needed
-expansion beyond the frozen boundary require `problem`; do not reconstruct
-paths, expand scope or submit a blocked member. A justified unknown that
-only limits a conclusion remains in `output`, naming that conclusion.
+changes to the selected target or frozen source identity require `problem`.
+Do not reconstruct paths, expand scope or submit a blocked member. A justified
+unknown that only limits a conclusion remains in `output`, naming that conclusion.
+Reading another file at the registered Git commit is not a source-boundary
+expansion. If inspection shows that an explicit functional exclusion or
+boundary kind omits a material shipped responsibility of the selected
+target, name the path, responsibility and prevented conclusion in `problem`
+instead of accepting the exclusion as missing evidence. The verification
+job's instructions govern its disposition of such a defect.
 Retry refusal feedback applies to the same job and does not change its
 analytical round.
 
@@ -95,7 +101,12 @@ planning a check or setting up an environment.
 
 Read evidence only from the sources the supplied `boundary` registers. For
 Git, read and grep the files under `source.path`; that directory holds
-exactly the reviewed commit's files. Treat it as read-only: do not fetch,
+exactly the reviewed commit's files. Listed register paths describe initial
+inspection, not reading permission: other files at that commit may be
+inspected and cited for the selected target. Record additional coverage in
+your member, following the source contract. You may inspect an excluded
+path to check its relevance; that does not authorize changing functional
+scope. Treat the checkout as read-only: do not fetch,
 check out or copy the source elsewhere. For a capture, read the recorded
 file.
 

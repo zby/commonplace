@@ -50,6 +50,25 @@ Record the checked routes and material dispositions, and the check of every
 source anchor, canonical ID, evidence status, boundary, member and unresolved
 conflict. Structural validation does not perform this check.
 
+For a Git source, compare the boundary kind and top-level coverage table
+with the frozen repository tree, not just with the listed citation anchors.
+Listed paths are initial inspection coverage, not an allowlist. Inspect
+unlisted material files when checking the selected target. For a
+`whole-system` memory or knowledge system, check that the coverage account
+names shipped prompts and maintenance instructions, persistence and reload
+callers, later consumers, and evaluators, and that their material wiring is
+covered by the members or justified exclusions. Check any additional paths
+the analysts discovered. A shipped caller is not external merely because
+it invokes an API. Distinguish real source-access gaps from available files
+omitted during analysis.
+
+If an omitted file affects an individual finding while the boundary kind
+remains supported, use the existing blocker and conflict rules below. If
+the evidence contradicts `whole-system` or the selected target's functional
+exclusions, write `problem` naming the paths, responsibilities and prevented
+conclusions: reconciliation cannot rewrite the frozen boundary metadata.
+Do not accept an incorrect classification by moving it into Limitations.
+
 Check every `Part of:` relation against the records' identities and evidence.
 An unresolved parent, malformed field, self-reference or unexplained parent
 of a different kind is a blocker. A valid part keeps its own fields and
@@ -85,8 +104,9 @@ Judge each record as the reconciliation amends it. An original value that an
 amendment replaces is not a defect.
 
 Write `problem` instead only when the records as a whole cannot support any
-bounded conclusion. A defect that limits individual findings is not that
-case.
+bounded conclusion, or when the frozen target or boundary-kind classification
+is contradicted as described above. A defect that limits individual findings
+within a supported boundary is not that case.
 
 Under Blockers write exactly `none`, or a Markdown list with one `- ` entry
 per blocker; indent any continuation line. Anything else is refused,

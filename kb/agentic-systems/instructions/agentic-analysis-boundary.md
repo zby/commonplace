@@ -31,6 +31,31 @@ remains null when the work stopped before establishing it. A blocked or
 out-of-scope boundary names what was not reached, why, and the conclusion
 that prevents.
 
+For a Git source, establish functional scope after inspecting the repository
+tree and tracing the shipped entry points and their consumers. A caller in
+the same repository is not an excluded enclosing application merely because
+it calls a library API. Determine whether it belongs to the selected target
+from the shipped usage and the responsibilities it performs.
+
+Before declaring `whole-system`, include a coverage table under Boundary and
+evidence. Classify every top-level tracked file or directory as included or
+excluded, with its role and the conclusion any exclusion prevents. Directory
+rows name material paths within them; a top-level label alone does not show
+coverage of the system's loop. For a memory or knowledge system, explicitly
+identify shipped prompts and maintenance instructions, callers that persist,
+reload or later consume retained content, and evaluators. Trace their wiring
+before deciding whether they are material. Distinguish unavailable evidence
+from a deliberate exclusion and from material not yet inspected.
+
+`whole-system` requires coverage of the material shipped paths that produce,
+maintain, admit and consume the selected system's state. If the requested
+target is only a library API or another subsystem, name that narrower target
+and use the corresponding boundary kind. If a material shipped path cannot
+be inspected, state the prevented conclusion and choose a boundary kind
+that describes the partial loop; do not retain `whole-system` solely because
+the repository was cloned. Coverage is judged semantically, not by the
+presence of a table alone.
+
 ## Source register
 
 One row declares each `SRC-*` ID in its first cell, as `| SRC-1 | ... |`:
@@ -39,9 +64,20 @@ One row declares each `SRC-*` ID in its first cell, as `| SRC-1 | ... |`:
 
 Each stable source identity is in a code span, including a non-URL capture
 identity. A Git row identifies the canonical repository, full reviewed
-commit, inspected commit-relative paths and commit-pinned anchors. An access
-root such as `related-systems/<owner>--<repo>/` may also appear; its mutable
+commit, initially inspected commit-relative paths and commit-pinned anchors.
+An access root such as `related-systems/<owner>--<repo>/` may also appear; its mutable
 worktree or current HEAD is not the durable evidence identity.
+
+The registered Git source is the repository at that commit. Listed paths
+record the boundary job's initial inspection; they are not an allowlist for
+later analysts. Later jobs may inspect and cite other files at the same
+commit for the selected target and record their additional coverage in their
+own members. Functional target exclusions remain explicit, but neither a
+path omitted from the register nor a coverage-table exclusion forbids
+inspection to determine a file's relevance. Do not write a path-only
+allowlist that changes this rule. Captures remain limited to their frozen
+contents; another repository, revision or capture requires a new evidence
+boundary.
 
 Each row names one evidence layer from the source contract; a source with
 several layers uses separate rows or clearly separated scopes.

@@ -23,6 +23,25 @@ access root. Supplied execution traces and experimental results use frozen
 source identities and anchors like other evidence; their scope and
 conditions bound the findings.
 
+For Git, registration permits inspection of the repository at the reviewed
+commit. The register's inspected paths and citation anchors describe the
+boundary job's initial coverage, not the files later analysts may read.
+Inspect and cite newly discovered material files at that same commit,
+recording the additional coverage in your member and retaining the required
+anchors and quotations. Use the registered repository's source ID, and
+state the evidence layer appropriate to the passage; discovering a file
+does not establish observed operation or causal support. Do not add a source
+ID or rewrite the boundary. A different repository, commit or capture is a
+change to the frozen evidence boundary, not additional file coverage.
+
+The selected target's functional scope remains binding. Inspection of an
+excluded path to establish relevance is permitted; if it reveals that a
+material shipped responsibility was excluded or that the boundary kind is
+wrong, identify the path, responsibility and prevented conclusion. Follow
+the job's problem or verification rules rather than silently treating the
+file as unavailable or broadening the selected target. Captures permit only
+their frozen contents.
+
 | Evidence layer | What it supports |
 |---|---|
 | `implementation` | Inspected executable behavior |
