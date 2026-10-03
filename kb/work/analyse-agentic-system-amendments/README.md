@@ -37,6 +37,11 @@ analysis, or adopt an ID design by opening.
   evidence for each adopted improvement.
 - [Fresh-run trace evidence](./fresh-run-trace-evidence.md) — hashed inventory
   of the parent and 13 worker sessions with bounded diagnostic excerpts.
+- [Second-run audit](./second-run-audit.md) — assessment of the repaired
+  method, recovered failures, successful coverage expansion and a surviving
+  duplicate identity in the published set.
+- [Second-run trace evidence](./second-run-trace-evidence.md) — hashed
+  inventory of the second run's parent and 17 workers, with diagnostic excerpts.
 
 ## State and next actions
 
@@ -90,6 +95,13 @@ Done:
 
 Fix status and remaining run actions:
 
+The full `AAS-2026-10-03-dynamic-cheatsheet-02` run completed and was audited
+on 2026-10-03. Its set and review validate cleanly. The source-coverage repair
+and verification range guidance worked; other jobs still needed range retries.
+A duplicate cheatsheet identity survived semantic checks, and the register
+overstates initial inspection. See the [second-run audit](./second-run-audit.md)
+before deciding closure or another change. No further run is opened by that audit.
+
 1. **Implemented: narrow the range check.** Ordinary `to` prose relates
    records without enumerating intervening IDs. Explicit dash and `through`
    intervals remain refused, including adjacent endpoints and shorthand.
@@ -123,24 +135,26 @@ Fix status and remaining run actions:
    The sources contract and worker rules now also distinguish additional
    file inspection at the pinned commit from changing the selected target or
    frozen source identity. A contradicted whole-system label requires
-   `problem`, since reconciliation cannot repair boundary metadata. The next
-   model run still needs to test adherence to these instructions.
+   `problem`, since reconciliation cannot repair boundary metadata. The second
+   model run tested adherence successfully for repository access and the
+   material memory loop; initial-inspection fidelity remains a new audit finding.
 4. **Implemented: candidate versus admitted identity.** The record contract
    now states that a candidate that can replace a record's referent is not
    thereby a part of it. The semantic verifier caught this case in `-01`.
-5. **Preserve the published set and review unchanged**, then open
-   `dynamic-cheatsheet-02` with the register including `prompts/` and
-   `run_benchmark.py`. The preserved `-01` outputs are committed separately
-   as frozen evidence. The next run tests steps 1 to 4 and supersedes the
-   review; launching it remains a separate action.
+5. **Completed: preserve and rerun.** The original `-01` set and review
+   were committed unchanged as frozen evidence. The separately commissioned
+   `AAS-2026-10-03-dynamic-cheatsheet-02` run includes `prompts/` and
+   `run_benchmark.py`, tests the fixes and supersedes the generated review.
 6. **Implemented: recovery-history design proposal.**
    [Workflow recovery history](../../reference/proposals/workflow-recovery-history.md)
    describes manual audits, a derived summary and separate engine event
    retention, with consumers, coverage limits and adoption criteria. No
    run-state storage change is adopted.
-7. **Close** after `-02` publishes with no range false positive, no
-   verification retry on ranges, and a register that names the shipped
-   prompts. Deferred audit items 8 to 16 stay deferred; none was exercised.
+7. **Closure decision pending.** `-02` published with no range false positive,
+   no verification retry on ranges and shipped prompts registered. Those
+   planned live criteria are met, but the audit found a surviving duplicate
+   identity and overstated inspection claims. Dispose of those findings before
+   closing; deferred audit items 8 to 16 remain deferred as a group.
 
 Not adopted from the audit: a worker-side preflight check for section-only
 outputs (step 2 is tried first) and any change to the run-state storage
