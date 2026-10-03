@@ -54,7 +54,7 @@ Before assessing theory pathways, read the Theory account in the
 It supplies independently evidenced conditions and separate learning,
 persistence, addressability and reflection assessments; analytical jobs already
 receive it. Before editing instructions, shared contracts or local types, follow
-[method maintenance](./method-maintenance.md).
+[method maintenance](../drafts/method-maintenance.md).
 
 Durable analyses exclude current Commonplace differences, adoption ideas and
 watch items: those belong in separately commissioned transfer state under

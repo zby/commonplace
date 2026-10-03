@@ -92,7 +92,7 @@ does not supply its exact path.
 **Disposition, operator decision 2026-10-03:** do not implement this item
 under this plan. Supplying the current 13.7 KB contract to every job would
 make its full reading cost routine. The
-[report-collection split](./report-collection-split-proposal.md) creates a
+[report-collection split](../analysis-collection-split/collection-design.md) creates a
 small analysis-only contract, and the relocation supplies that contract to
 every job packet as a `read-first` path and job dependency. Until then the
 packets stay as they are. Do not add a worker exemption from the reading rule.
@@ -170,7 +170,7 @@ were combined. It also flagged an inaccurate epistemic checkpoint identifier.
 
 The `decay` finding concerns the memory comparison profile. The operator
 decided on 2026-10-03 to move the profile to its own job; see the
-[comparison-profile job proposal](./comparison-profile-job-proposal.md). Do
+[comparison-profile job proposal](../analysis-collection-split/profile-job-design.md). Do
 not repair profile classification in the memory job under this plan. The rule
 "classify from the supplied definitions without extra conditions" goes into
 the profile job's instruction.
@@ -205,7 +205,7 @@ record parsing under this item.
 ### 7. Small repairs found by the complexity measurement
 
 Added on 2026-10-03 from the
-[complexity measurements](./split-drafts/complexity-measurements.md). These
+[complexity measurements](../analysis-collection-split/evidence/complexity-measurements.md). These
 touch neither the collection contract nor the memory profile.
 
 - **No-ranges rule.** The rule against ID ranges is stated once, in the

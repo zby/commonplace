@@ -3,7 +3,7 @@
 ## Purpose and quality
 
 This collection holds ordinary authored accounts of external agentic systems,
-comparisons, public analysis references and the collection-owned analysis method.
+comparisons and the comparison procedures.
 The quality goal for system accounts is fidelity and economy: explain the external
 system's native operation before applying Commonplace concepts. Qualify uncertain
 mappings. Open authored analyses with their evidence basis and capture boundary.
@@ -13,9 +13,10 @@ is historical. New workflow analyses belong in `kb/agentic-system-analyses/`.
 ## Placement and ownership
 
 The root holds README.md and COLLECTION.md. `reviews/` holds ordinary authored
-accounts and workflow-owned analysis references. `comparisons/` holds cross-system
-analyses and generated tables. `instructions/` owns the analysis method, shared
-contracts, landscape synthesis, taxonomy maintenance and publication procedure.
+accounts. `comparisons/` holds cross-system
+analyses and generated tables. `instructions/` owns landscape synthesis and
+taxonomy maintenance. `reports/` is frozen history from before the analysis
+collection existed; it is excluded from validation and from comparison.
 `types/` owns local types for artifacts that remain here. There are no nested
 collection contracts. Research skill projections point to canonical instructions;
 these skills are not promoted to every initialized KB.
@@ -27,19 +28,13 @@ edits require checking direct callers, callees, conditional loads and result
 consumers; update affected interfaces together. Method-maintenance guidance must
 be loaded through an explicit instruction-authoring path, not by analyst packets.
 
-## Public analysis references
+## Workflow analyses
 
-An analysis reference selects one accepted retained set per source identity and
-pins its manifest. It provides navigation and provenance, not another synthesis.
-The reference type defines its fields and body. The workflow validates the set
-and private reference candidate before publication. Workers cannot publish.
-Only accepted retained analyses enter current comparison populations; readers
-verify manifest and member hashes and apply the comparison evidence-tier rules.
-
-References are workflow-owned. Corrections to findings require a new analysis;
-selection changes require verified publication. Historical generated reviews
-keep their producing contract until explicitly migrated or retired. Ordinary
-unmarked authored accounts remain author-maintained.
+Workflow-produced analyses, their method and their publication belong to
+`kb/agentic-system-analyses/`. Comparison tools read the current analyses
+from that collection's `retained/` area. When a system is regenerated there,
+its authored account here is retired with the relocation command.
+Ordinary authored accounts remain author-maintained.
 
 Before assessing theory pathways in ordinary authored accounts, read the Theory
 account in the [shared record contract](../../../agentic-systems/instructions/agentic-analysis-records.md).

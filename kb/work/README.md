@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [analysis-collection-split](./analysis-collection-split/README.md) — moving agentic-system analysis into a self-contained collection with stable per-system paths and a separate comparison-profile job; design decided 2026-10-03, implementation commissioned by its plan, nothing built yet
 - [analyse-agentic-system-amendments](./analyse-agentic-system-amendments/README.md) — investigating shared record ID errors and a simpler declaration and reconciliation contract for the live analysis skill
 - [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open
 - [code-simplification](./code-simplification/README.md) — backlog of verified-by-review duplication, test clean-up, and design-level simplifications left after the 2026-09-28 dead-code sweep; one commit per item

@@ -1,12 +1,11 @@
-# Comparison-profile job proposal
+# Profile job design
 
-## Commission and status
+## Status
 
-On 2026-10-03 the operator decided to take the memory comparison profile out
-of the memory analyst's job and produce it in an additional job. This file,
-drafted by an agent, is the design for that decision. The decision to
-separate is made, and so is the source-reading rule; see Decided. The
-remaining design choices are agent recommendations awaiting adoption. This file authorizes no method edit, relocation or run.
+Settled design, decided by the operator on 2026-10-03. Implementation is
+commissioned by the [plan](./plan.md) as
+its second phase; this file says what to build and why, and authorizes
+nothing by itself.
 
 Terms: the **comparison profile** is the `memory-comparison` frontmatter
 mapping of the memory report. It classifies a system's memory on ten axes
@@ -15,7 +14,7 @@ with controlled values. The **profile job** is the proposed new job.
 ## Why
 
 Analysis workers fail parts of their jobs, and the operator's response is to
-simplify each job. The [complexity measurements](./split-drafts/complexity-measurements.md)
+simplify each job. The [complexity measurements](./evidence/complexity-measurements.md)
 found the profile to be the largest simplification available in any role file:
 
 - It is 14 of the memory job's 60 output obligations. Its only consumers are
@@ -32,7 +31,7 @@ found the profile to be the largest simplification available in any role file:
 The memory job today holds two tasks: trace how memory works from source, and
 classify the result in a vocabulary built for comparing systems. Separating
 them gives each worker one task. It also follows the
-[split proposal](./report-collection-split-proposal.md): an analyst holds
+[collection design](./collection-design.md): an analyst holds
 only the analysis.
 
 The evidence is two audited runs of one source and one stopped run. It shows
@@ -149,8 +148,8 @@ no consumer needs a reader for both layouts.
   regenerated once. It gets its own decision record, separate from the
   collection split's.
 
-No design decision remains open. Implementation still needs the replay
-below, the ADR check and the operator's explicit commission.
+No design decision remains open. The plan requires the replay below and the
+ADR check before the jobs are built.
 
 ## Costs and risks
 
@@ -169,14 +168,14 @@ below, the ADR check and the operator's explicit commission.
   list. Retained sets in the old shape stop validating as current sets.
 - [ADR 083](../../reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md)
   and ADR 093 bear on where results are carried. Read both before drafting
-  the decision; this proposal has not checked it against them clause by clause.
+  the decision; this design has not been checked against them clause by clause.
 
-## Check before adoption
+## Replay before building
 
-Run a replay before changing the live method. It needs separate commission
-because it starts model jobs.
+Run a replay before changing the live method. It starts model jobs; the
+operator authorized it on 2026-10-03, to run on Luna.
 
-1. Draft the profile type and the profile job instruction in this workshop.
+1. Draft the profile type and the profile job instruction.
 2. Take the two retained Dynamic Cheatsheet sets. Give a worker the set's
    members with the `memory-comparison` mapping and Comparison rationale
    removed from the memory member, plus the drafts and the frozen source.
@@ -201,7 +200,7 @@ the five measures of the complexity measurements, and the two new packets on
 their own. The simplification claim fails if the new jobs carry the
 obligations that the old ones lost without any role getting simpler.
 
-## What closes this proposal
+## What closes this design
 
 An accepted decision record, the implemented jobs and type with their tests,
 and a recorded replay result; or a recorded rejection with the reason.

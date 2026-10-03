@@ -18,14 +18,15 @@ their job's exact headings. State the evidence basis and capture boundary in the
 member's format; attribution and record formats belong to its supplied contracts.
 
 Analysis workers write only assigned working outputs. Retained analyses are frozen: substantive
-corrections require a new run. Preserve historical archives under their producing
-contracts. Assembly, acceptance, migration and publication are coordinator tasks.
+corrections require a new run. Assembly, acceptance and publication are
+coordinator tasks.
 
 ## Placement and types
 
-`state/` holds working analyses, `retained/` accepted analyses and
-`retained-archive/` historical analyses. `instructions/` holds the analysis
-method. Comparative writing and publication procedures belong in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
+`state/` holds working analyses. `retained/` holds the current accepted
+analysis of each system, one directory per system. `retained-archive/` holds
+superseded analyses. `instructions/` holds the analysis method.
+Comparative writing belongs in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
 its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
 raw source captures belong in source snapshot storage.
 

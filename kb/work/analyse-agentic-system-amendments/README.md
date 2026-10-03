@@ -45,15 +45,10 @@ analysis, or adopt an ID design by opening.
 - [Sol run follow-up plan](./sol-run-follow-up-plan.md) — remaining input,
   quotation, formatting and classification repairs from the stopped Graphiti
   run, excluding the separately owned isolation work.
-- [Report-collection split proposal](./report-collection-split-proposal.md) —
-  proposal awaiting adoption: move analysis reports and their member types to
-  a separate collection with a minimal contract; revises ADR 099.
-- [Comparison-profile job proposal](./comparison-profile-job-proposal.md) —
-  design for producing the memory comparison profile in a separate job after
-  record verification; the separation is decided, the design awaits adoption.
-
-- [Split-case drafts](./split-drafts/README.md) — candidate collection contracts,
-  publication references, migration decisions and static input measurements.
+- [Analysis collection split](../analysis-collection-split/README.md) —
+  separate workshop, opened 2026-10-03, for the self-contained analysis
+  collection and the profile job that grew out of the Sol run follow-up. Its
+  design and plan live there, not here.
 
 ## State and next actions
 

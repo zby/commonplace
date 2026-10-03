@@ -4,7 +4,8 @@ Draft decision material, not an accepted ADR. Assign the ADR number and adoption
 date only after the decision is made and implemented. Revises
 [ADR 099](../../../reference/adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md).
 The operator took the decisions below on 2026-10-03; the
-[parent proposal](../report-collection-split-proposal.md) holds their reasoning.
+[collection design](../collection-design.md) states them and the
+[motivation record](../evidence/motivation.md) holds their reasoning.
 
 ## Context
 
