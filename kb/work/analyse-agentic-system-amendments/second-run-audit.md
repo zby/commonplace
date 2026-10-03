@@ -222,3 +222,11 @@ range retry and shipped prompts registered—were met, but the new retained
 identity error needs disposition before workshop closure. Deferred audit
 items 8–16 remain deferred as a group; these concrete findings do not justify
 implementing that entire list or adopting a new identity-pass stage.
+
+## Operator disposition (2026-10-03)
+
+After reviewing this audit, the operator accepted the result as good enough
+and requested retaining it unchanged. The findings and recommendations above
+remain evidence, not an adopted repair plan. Revisit the demonstrated errors
+if they recur in later runs; no immediate method fix or repeat run is
+commissioned. Retain the published set, review and audit for that comparison.

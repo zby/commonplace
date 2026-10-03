@@ -1,0 +1,12 @@
+type: agentic-systems/types/agentic-system-analysis-set.md
+members:
+  overview.md:
+    sha256: 141adafdd5e3b6cef73a869e478b6c05ff7a9a228ea44d76ce2596abde11fb2a
+  runtime.md:
+    sha256: 4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57
+  memory.md:
+    sha256: 00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d
+  epistemic.md:
+    sha256: 5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343
+  reconciliation.md:
+    sha256: 44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600

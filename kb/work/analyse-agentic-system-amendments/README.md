@@ -100,7 +100,10 @@ on 2026-10-03. Its set and review validate cleanly. The source-coverage repair
 and verification range guidance worked; other jobs still needed range retries.
 A duplicate cheatsheet identity survived semantic checks, and the register
 overstates initial inspection. See the [second-run audit](./second-run-audit.md)
-before deciding closure or another change. No further run is opened by that audit.
+for the retained findings. On 2026-10-03 the operator accepted the result as
+good enough and chose to retain it unchanged. The remaining findings are
+accepted limitations; revisit a fix only if the same errors recur in later
+runs. No further repair or rerun is commissioned by this workshop decision.
 
 1. **Implemented: narrow the range check.** Ordinary `to` prose relates
    records without enumerating intervening IDs. Explicit dash and `through`
@@ -150,11 +153,13 @@ before deciding closure or another change. No further run is opened by that audi
    describes manual audits, a derived summary and separate engine event
    retention, with consumers, coverage limits and adoption criteria. No
    run-state storage change is adopted.
-7. **Closure decision pending.** `-02` published with no range false positive,
+7. **Result accepted; remaining repairs deferred.** `-02` published with no range false positive,
    no verification retry on ranges and shipped prompts registered. Those
-   planned live criteria are met, but the audit found a surviving duplicate
-   identity and overstated inspection claims. Dispose of those findings before
-   closing; deferred audit items 8 to 16 remain deferred as a group.
+   planned live criteria are met. The operator accepted the surviving duplicate
+   identity and overstated inspection claims as limitations of this retained
+   result. Reopen their repair if the same errors recur in later runs; keep
+   the audit as comparison evidence. Deferred audit items 8 to 16 remain
+   deferred as a group. Workshop evidence consolidation remains separate.
 
 Not adopted from the audit: a worker-side preflight check for section-only
 outputs (step 2 is tried first) and any change to the run-state storage
