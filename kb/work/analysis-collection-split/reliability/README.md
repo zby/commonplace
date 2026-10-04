@@ -38,6 +38,10 @@ checks on its own draft and repairs what they report.
   stopped on an unresolved synthesis overclaim before publication. A deeper
   audit found a second, latent publication block from a reused run ID and a
   profile cross-axis classification that needs review.
+- [Sol rerun audit](./third-run-sol-outcome-check-audit.md) — same frozen source
+  and method code, with Sol workers. The candidate passed reviews and set
+  validation, then publication hit the predicted run-ID collision. The audit
+  compares all three runs and checks for hidden trace failures.
 
 ## Proposals awaiting adoption
 
@@ -65,5 +69,5 @@ with voting, and a different model for verification (both too heavy for now).
 
 ## Evidence base
 
-Two audited Dynamic Cheatsheet runs, one stopped Graphiti run, and the code
+Three audited Dynamic Cheatsheet runs, one stopped Graphiti run, and the code
 as read on 2026-10-04. Recheck paths and behavior before building.

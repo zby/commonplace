@@ -1,0 +1,478 @@
+{
+  "run": "AAS-2026-10-04-dynamic-cheatsheet-01",
+  "worktree": ".commonplace/worktrees/dynamic-cheatsheet-4d912688cb3b",
+  "method_commit": "49725e9aab162a67ef352c880d03631c5ddad6ae",
+  "source_revision": "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9",
+  "outcome": "publication blocked: replacement requires a new run ID",
+  "traces": [
+    {
+      "job": "coordinator",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-29-57-01a108d2-d786-7222-836d-b538a7722976.jsonl",
+      "sha256": "9395e894e40bc0a8933734723cb4921a20d4b8efeaa4853566a9b2c609f6c2f9",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 2363,
+      "total_tokens": 3288899,
+      "cached_input_tokens": 3208448,
+      "tool_calls": 102,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "boundary",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-30-37-01a108d3-7256-7663-b087-24fa13c82464.jsonl",
+      "sha256": "4e824f7b62fb5d44739dc7ab5daad1b5ca17c983a86a964e2a03fd6ce8b0e4fe",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 195,
+      "total_tokens": 676692,
+      "cached_input_tokens": 609280,
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "runtime",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-34-02-01a108d6-9368-70a3-8007-e7d0a6c9b853.jsonl",
+      "sha256": "ff09b3d6b787ce916aa2fbda797c4014bb73ca24cb79d60288f1e661be237be7",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 284,
+      "total_tokens": 748108,
+      "cached_input_tokens": 686592,
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "epistemic",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-38-57-01a108db-1190-7460-ab16-766ce6eda52e.jsonl",
+      "sha256": "8eb2c602460e697a09674c0ff2e07ffb2e10b3e00d6364963b76156a48779345",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 386,
+      "total_tokens": 1674097,
+      "cached_input_tokens": 1579392,
+      "tool_calls": 26,
+      "truncated_tool_outputs": 2
+    },
+    {
+      "job": "memory-0",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-39-02-01a108db-280e-78c2-ae0c-96d1d85ca2cb.jsonl",
+      "sha256": "c3f2cfcdb5ef1ff41edfc170a803cb3a756d7c6f4e0ec2ae117e8a3b14cc7a23",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 339,
+      "total_tokens": 1180668,
+      "cached_input_tokens": 1115392,
+      "tool_calls": 23,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "reconcile-0",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-45-34-01a108e1-23b2-73d1-a878-2f4a216399e8.jsonl",
+      "sha256": "6289784f736c545e154ef7440d7b70f46af444d86d3e7afe64f96208fc9100df",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 142,
+      "total_tokens": 670586,
+      "cached_input_tokens": 618112,
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "memory-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-48-08-01a108e3-7b13-7832-8905-e071d3ac2b1b.jsonl",
+      "sha256": "fa271c871cd8dfae8960e29b969dc4585269421f1318a65780ada6c77df37c51",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 210,
+      "total_tokens": 1125701,
+      "cached_input_tokens": 1063552,
+      "tool_calls": 23,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "reconcile-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-51-51-01a108e6-e42d-7c13-8385-75017f09bf7e.jsonl",
+      "sha256": "47968369c46c943e81c70ed3ab95a0f5283771661c06f246517326fa6117610e",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 121,
+      "total_tokens": 816784,
+      "cached_input_tokens": 760064,
+      "tool_calls": 17,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "verify-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-54-09-01a108e8-ff59-7562-953b-f745c7ecb255.jsonl",
+      "sha256": "91071d8e9fd2cd76b37781efe66249f54b16c241eb14d3e3b4211cffe67a38e6",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 251,
+      "total_tokens": 2022854,
+      "cached_input_tokens": 1913600,
+      "tool_calls": 29,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "profile",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T23-58-37-01a108ed-15fa-7942-95cc-6b71ac7ca95d.jsonl",
+      "sha256": "851ce667ec906a6eb4499e69906e56ec23d128831d6b8ed7ebd856a66f3f43cd",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 174,
+      "total_tokens": 640985,
+      "cached_input_tokens": 584704,
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "verify-profile",
+      "file": "~/.codex/sessions/2026/10/05/rollout-2026-10-05T00-01-48-01a108ef-fd8a-7633-bd45-503809fa124a.jsonl",
+      "sha256": "21aa5d68b15546d077cc4c0d08047e220339ed5db3d93a23f9a987db39e083d4",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 116,
+      "total_tokens": 703075,
+      "cached_input_tokens": 644480,
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "synthesize",
+      "file": "~/.codex/sessions/2026/10/05/rollout-2026-10-05T00-04-01-01a108f2-059f-7183-9bba-c5ebf8094e44.jsonl",
+      "sha256": "b7e706ca00a2c6c8e415b411d3ee3529b571977274a3bba6e187d530e6c85c50",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 151,
+      "total_tokens": 601895,
+      "cached_input_tokens": 530816,
+      "tool_calls": 14,
+      "truncated_tool_outputs": 0
+    },
+    {
+      "job": "verify-synthesis",
+      "file": "~/.codex/sessions/2026/10/05/rollout-2026-10-05T00-06-49-01a108f4-966d-7d32-9223-0ac2388fa303.jsonl",
+      "sha256": "5c1573219b3f1133b48beaabfb62d8731b38cd6722e018dbd9c3d985151dcdae",
+      "model": "gpt-6.1-sol",
+      "effort": "low",
+      "duration_seconds": 116,
+      "total_tokens": 622909,
+      "cached_input_tokens": 576000,
+      "tool_calls": 14,
+      "truncated_tool_outputs": 0
+    }
+  ],
+  "acceptance_checks": {
+    "boundary": {
+      "sha256": "8a55188f2daec37d6dd7f642614de1cfe0bb29a56f8423181b487c63c9b28729",
+      "calls": 2,
+      "refusals_by_call": [
+        {
+          "member identity": 1
+        },
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 3,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 3,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "epistemic": {
+      "sha256": "649d82a9f051d294f013a5a7985d40a6c621739ed3b13afb4fb7473f674d9823",
+      "calls": 2,
+      "refusals_by_call": [
+        {
+          "quotation uniqueness": 2,
+          "quotation occurrence": 1
+        },
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 20,
+          "not_found": 1,
+          "ambiguous": 2
+        },
+        {
+          "inspected": 20,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "memory-0": {
+      "sha256": "2a001c232ff6fdc65f87b30122d3dafa40695a7af7f437944ad6679d79b92748",
+      "calls": 3,
+      "refusals_by_call": [
+        {
+          "quotation uniqueness": 1
+        },
+        {},
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 13,
+          "not_found": 0,
+          "ambiguous": 1
+        },
+        {
+          "inspected": 13,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 13,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "memory-1": {
+      "sha256": "a7be6e22c7a50df8c2bddfb782543e029cd689b4df8b110e6f5b1bcd0533abf3",
+      "calls": 2,
+      "refusals_by_call": [
+        {},
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 20,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 20,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "profile": {
+      "sha256": "a4ed03223e8c4b6c153048bfc87da3a105df6ad3e5889e768ca751c6e208deb1",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "reconcile-0": {
+      "sha256": "af33d27cd8f97066c3c59c33b07cf459794204f3b103b056b282aef2e2f28a60",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "reconcile-1": {
+      "sha256": "71546ea309c759472869b8591d223bacf5195ae95ef4c9c741f74691b49e397e",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "runtime": {
+      "sha256": "9924f6c3cf6f5349ae3374d5b6e63659c0729383f3c2682800d57256bd867a24",
+      "calls": 2,
+      "refusals_by_call": [
+        {
+          "quotation uniqueness": 1
+        },
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 15,
+          "not_found": 0,
+          "ambiguous": 1
+        },
+        {
+          "inspected": 15,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "synthesize": {
+      "sha256": "f048fb69e402397281cd087ba03c7b4f93a968be1b980a579c3a984d90c29692",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-1": {
+      "sha256": "568c866a3d3f10b1411bc9c718040df832cd8f9ccce108fb6d6fd04b5c020799",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-profile": {
+      "sha256": "5cf47c5905dd775f8719955a5bc7466892c8cda52c0d3bbce706470584c8e0d5",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-synthesis": {
+      "sha256": "58297d805102c916c628409f07eeed3b1b590b02f23c704608749f455a97077e",
+      "calls": 1,
+      "refusals_by_call": [
+        {}
+      ],
+      "quotations_by_call": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    }
+  },
+  "accepted_outputs": {
+    "boundary": {
+      "file": "jobs/boundary/boundary.md",
+      "sha256": "d0e2596f58fa513e75bc68e2b0571d33a20006b4c54bdba00400b11d68d9de79",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "epistemic": {
+      "file": "jobs/epistemic/epistemic.md",
+      "sha256": "3dc7c4e65db68886bd3cd47060b29a33c20885cfce495fe5d601b0073e995500",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "memory-0": {
+      "file": "jobs/memory-0/memory-report-0.md",
+      "sha256": "ae7f181ebdaff6b0066896d41c35bbbe9197486a4d707234cdd1eefdaad99fbe",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "memory-1": {
+      "file": "jobs/memory-1/memory-report-1.md",
+      "sha256": "e14d75c02c593ee910bef6bbf6b3b7c6a2504fc840779cc34f3c90773a3da8b7",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "profile": {
+      "file": "jobs/profile/profile-0.md",
+      "sha256": "bc04a2ebabffa65784d36b373c1068342065f79f07ecc25ddd2f0f56c33da8a2",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "reconcile-0": {
+      "file": "jobs/reconcile-0/reconcile-0.md",
+      "sha256": "91cc37cb940e6fba4f49ef893426441f4317182b70e0ead0e4334ba5faa99bff",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "reconcile-1": {
+      "file": "jobs/reconcile-1/reconcile-1.md",
+      "sha256": "ded47a7855a6f296968b01b6d0418965ecd194a5c336ebce2b7130476f8564ba",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "runtime": {
+      "file": "jobs/runtime/runtime.md",
+      "sha256": "f39536d848c4636f7c3b41a7e079400c6ecad3d069fdad9d213dc72d812423da",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "synthesize": {
+      "file": "jobs/synthesize/synthesis-0.md",
+      "sha256": "26fb7fa638ac9aba739b369f979ae49c27f6909c185156df9f94257b9ba22757",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "verify-1": {
+      "file": "jobs/verify-1/verification-1.md",
+      "sha256": "805fd802efc2cd1d980567faac6822f61f69e8d1b3777e573a9ce9ceb9e88996",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "verify-profile": {
+      "file": "jobs/verify-profile/profile-verification-0.md",
+      "sha256": "560d0bfbba1a3a6f6a8bde4c6a43aa160eafe0724c8d2ab26f9383f7a2f56b6a",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    },
+    "verify-synthesis": {
+      "file": "jobs/verify-synthesis/synthesis-verification-0.md",
+      "sha256": "1cbd75372c71b39e04e0529e818b1dcbcf723fb3cbc57b4d2ab10436103c2d06",
+      "matches_recorded_acceptance": true,
+      "handouts": 1,
+      "acceptance_failures": 0
+    }
+  },
+  "run_files_sha256": {
+    "run-state.md": "f1036c36a1b55f43e4405fa16e7a30ebe16681468d92de6aae7ac0af8cf0909c",
+    "workflow-state/state.json": "f5d903470cbf1319ea05aa8d6a9ee024475c7b379a1033ce44e507c2406f88f1",
+    "workflow-state/reports.jsonl": "e0a1a6b1d1bc304a93bef2feb94340fea75ac6844f7ba9f7e3ec9f959c460fb9",
+    "workflow-state/workflow/block-1.md": "bff412b58f079c95e65c9a522fd8c6ec55fc364eeb79717cf3abca2cdd307202",
+    "workflow-state/effects/publish.json": "29e4dd174cca8655a073570f27c602df648aefa5cc91633a7a6e27c0868a404a",
+    "output/ARTIFACT.yaml": "f65ec3a73d78b444ae9063acc7536d6320897fe687b7f42e9595b9638fc209e7",
+    "output/overview.md": "6684a252839996bfa402df7e64e732265cd4d23d84165149a366e49c2ec00118",
+    "output/memory-profile.md": "bc04a2ebabffa65784d36b373c1068342065f79f07ecc25ddd2f0f56c33da8a2"
+  },
+  "incumbent_overview_sha256": "c1a930c035b6a236d1279aedf7cfc3aacecaef8e5aa04ef270a25ec8c3dc9202",
+  "limits": "Visible trace calls/results, accepted files and retained state only; reasoning and inter-agent messages are not inspectable."
+}
