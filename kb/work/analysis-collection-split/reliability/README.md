@@ -31,6 +31,7 @@ checks on its own draft and repairs what they report.
   analysis run under the split, the profile job, named IDs and the acceptance
   check: what is run, the baseline, preflight, what to collect and count.
   Agent draft; the operator's launch is the authority.
+  Run on 2026-10-04; see [its audit](./first-run-outcome-check-audit.md).
 
 ## Proposals awaiting adoption
 

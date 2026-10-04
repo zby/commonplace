@@ -1,0 +1,349 @@
+{
+ "run": "AAS-2026-10-04-dynamic-cheatsheet-01",
+ "worktree": ".commonplace/worktrees/dynamic-cheatsheet-3e10f8a5a72f",
+ "method-commit": "bb3126f84bc3a06f12a32cfbc7be56dfbee1e23c",
+ "source-revision": "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9",
+ "harness": "codex-tui 0.160.0",
+ "model": "gpt-6-luna",
+ "effort": "medium",
+ "traces": [
+  {
+   "agent": "/root",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T11-46-52-01a1064f-23f3-7073-a43b-725afd2dd70b.jsonl",
+   "sha256": "235e38d37b74ee26780a04687ff3032fdded0a25eb9f03e2213aa34bc39dbbeb",
+   "tool-calls": 48,
+   "duration-seconds": 51,
+   "total-tokens": 1328749,
+   "cached-input-tokens": 1245696
+  },
+  {
+   "agent": "/root/boundary",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T11-58-56-01a1065a-2ff3-76c3-8665-cf6ad4f3147d.jsonl",
+   "sha256": "4640ec865320de6090bf54a031acee7df6f87455d9354abfab380ea9cc057044",
+   "tool-calls": 17,
+   "duration-seconds": 132,
+   "total-tokens": 739514,
+   "cached-input-tokens": 671232
+  },
+  {
+   "agent": "/root/runtime",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-01-15-01a1065c-5110-74f1-a3ee-dd760fd308cb.jsonl",
+   "sha256": "69cea336d894bd0cfe6de84883d74b928caf24f5294269bee09ca77ed8fe87e5",
+   "tool-calls": 15,
+   "duration-seconds": 194,
+   "total-tokens": 678297,
+   "cached-input-tokens": 606208
+  },
+  {
+   "agent": "/root/epistemic",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-04-39-01a1065f-6c93-77c1-89eb-5b9c2c711a43.jsonl",
+   "sha256": "0f524150545d4bd753c95ba43364567bc0d8f8a4e69a5a625193d24df7463f57",
+   "tool-calls": 15,
+   "duration-seconds": 185,
+   "total-tokens": 689763,
+   "cached-input-tokens": 624640
+  },
+  {
+   "agent": "/root/memory",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-04-43-01a1065f-7b42-7931-9f61-d0491a854840.jsonl",
+   "sha256": "ea649b4d401a261b2327adb1ed02e639b04ab511061bf095723c4046662fe200",
+   "tool-calls": 21,
+   "duration-seconds": 285,
+   "total-tokens": 1099436,
+   "cached-input-tokens": 1022464
+  },
+  {
+   "agent": "/root/reconcile",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-09-38-01a10663-faed-7551-b477-19f85f4f0b6f.jsonl",
+   "sha256": "1aff57841351bcd0baac33b5d079027b8bddfba785603c759506fb8326c655db",
+   "tool-calls": 14,
+   "duration-seconds": 89,
+   "total-tokens": 565081,
+   "cached-input-tokens": 516352
+  },
+  {
+   "agent": "/root/verify",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-11-19-01a10665-8853-7b13-aeba-145aee27cf7c.jsonl",
+   "sha256": "32cfc6427877fcc61aad7d00008081becdcfd381b9cd519eb0a95751edb94afd",
+   "tool-calls": 16,
+   "duration-seconds": 105,
+   "total-tokens": 695431,
+   "cached-input-tokens": 641792
+  },
+  {
+   "agent": "/root/profile",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-13-13-01a10667-434f-7681-9136-9aa69e984426.jsonl",
+   "sha256": "ffd6625f6e1da98d0a97a7c15e01333cf03367bca72bbc2952872ab8095f1333",
+   "tool-calls": 10,
+   "duration-seconds": 111,
+   "total-tokens": 402438,
+   "cached-input-tokens": 355584
+  },
+  {
+   "agent": "/root/verify_profile",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-15-11-01a10669-12f0-7902-be04-5557307ef204.jsonl",
+   "sha256": "8f49bf9f0e541f817ddfe116b7ee56607e460784fbfab66493d0a80a98565bf0",
+   "tool-calls": 12,
+   "duration-seconds": 84,
+   "total-tokens": 447031,
+   "cached-input-tokens": 401152
+  },
+  {
+   "agent": "/root/synthesize",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-16-47-01a1066a-8758-7010-bc1f-95f30f2cb87f.jsonl",
+   "sha256": "3954e453e44e0bc7fbe95e8cd393fc927f9994ff1819a4356678795483f83dcc",
+   "tool-calls": 14,
+   "duration-seconds": 95,
+   "total-tokens": 543977,
+   "cached-input-tokens": 494848
+  },
+  {
+   "agent": "/root/verify_synthesis",
+   "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T12-18-31-01a1066c-1f7f-7e51-bddc-8b9f7dc59303.jsonl",
+   "sha256": "bf2c407bb2ed1261c26e60107e2785d9d55e67227267d18e58a7ba86b214bd51",
+   "tool-calls": 12,
+   "duration-seconds": 68,
+   "total-tokens": 452845,
+   "cached-input-tokens": 410368
+  }
+ ],
+ "acceptance-checks": {
+  "boundary": [
+   {
+    "time": "2026-10-04T10:01:03.421151+00:00",
+    "job": "boundary",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 3,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "epistemic": [
+   {
+    "time": "2026-10-04T10:07:24.069295+00:00",
+    "job": "epistemic",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 9,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   },
+   {
+    "time": "2026-10-04T10:07:41.754652+00:00",
+    "job": "epistemic",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 9,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "memory-0": [
+   {
+    "time": "2026-10-04T10:08:40.013544+00:00",
+    "job": "memory-0",
+    "refusals_by_rule": {
+     "job contract": 1
+    },
+    "quotations": {
+     "inspected": 10,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   },
+   {
+    "time": "2026-10-04T10:08:56.243471+00:00",
+    "job": "memory-0",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 10,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   },
+   {
+    "time": "2026-10-04T10:09:19.139773+00:00",
+    "job": "memory-0",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 10,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "profile": [
+   {
+    "time": "2026-10-04T10:15:01.382267+00:00",
+    "job": "profile",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "reconcile-0": [
+   {
+    "time": "2026-10-04T10:11:04.350024+00:00",
+    "job": "reconcile-0",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "runtime": [
+   {
+    "time": "2026-10-04T10:03:56.957967+00:00",
+    "job": "runtime",
+    "refusals_by_rule": {
+     "conclusion status": 8,
+     "quotation uniqueness": 1
+    },
+    "quotations": {
+     "inspected": 4,
+     "not_found": 0,
+     "ambiguous": 1
+    }
+   },
+   {
+    "time": "2026-10-04T10:04:08.235856+00:00",
+    "job": "runtime",
+    "refusals_by_rule": {
+     "conclusion status": 8
+    },
+    "quotations": {
+     "inspected": 4,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   },
+   {
+    "time": "2026-10-04T10:04:15.022419+00:00",
+    "job": "runtime",
+    "refusals_by_rule": {
+     "conclusion status": 8
+    },
+    "quotations": {
+     "inspected": 4,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   },
+   {
+    "time": "2026-10-04T10:04:27.220612+00:00",
+    "job": "runtime",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 4,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "synthesize": [
+   {
+    "time": "2026-10-04T10:18:16.912716+00:00",
+    "job": "synthesize",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "verify-0": [
+   {
+    "time": "2026-10-04T10:13:01.398341+00:00",
+    "job": "verify-0",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "verify-profile": [
+   {
+    "time": "2026-10-04T10:16:31.845101+00:00",
+    "job": "verify-profile",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ],
+  "verify-synthesis": [
+   {
+    "time": "2026-10-04T10:19:38.017187+00:00",
+    "job": "verify-synthesis",
+    "refusals_by_rule": {},
+    "quotations": {
+     "inspected": 0,
+     "not_found": 0,
+     "ambiguous": 0
+    }
+   }
+  ]
+ },
+ "stopped-attempt": {
+  "worktree": ".commonplace/worktrees/dynamic-cheatsheet-6bf435ccc534",
+  "method-commit": "653ed1b2c62fb5c1929665fc6ecb5cde29d960a3",
+  "acceptance-checks": {
+   "boundary": [
+    {
+     "time": "2026-10-04T09:19:50.411278+00:00",
+     "job": "boundary",
+     "refusals_by_rule": {},
+     "quotations": {
+      "inspected": 4,
+      "not_found": 0,
+      "ambiguous": 0
+     }
+    }
+   ],
+   "runtime": [
+    {
+     "time": "2026-10-04T09:23:28.410730+00:00",
+     "job": "runtime",
+     "refusals_by_rule": {
+      "conclusion status": 7,
+      "job contract": 1,
+      "quotation occurrence": 1,
+      "quotation uniqueness": 1
+     },
+     "quotations": {
+      "inspected": 12,
+      "not_found": 1,
+      "ambiguous": 1
+     }
+    },
+    {
+     "time": "2026-10-04T09:24:15.312637+00:00",
+     "job": "runtime",
+     "refusals_by_rule": {
+      "job contract": 1
+     },
+     "quotations": {
+      "inspected": 12,
+      "not_found": 0,
+      "ambiguous": 0
+     }
+    }
+   ]
+  }
+ },
+ "retained-manifest-sha256": "c60a6891f6312db05f9de2361ae40113c489e5b0d2762f73acb5814f8745d0ab"
+}
