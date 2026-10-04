@@ -9,6 +9,7 @@ from commonplace.lib.agentic_records import (
     record_reference_errors,
     route_field_errors,
     set_record_errors,
+    source_register_rows,
 )
 
 ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
@@ -483,6 +484,18 @@ def test_misspelling_refuses_reference_and_suggests_declared_name() -> None:
 def test_named_group_cannot_replace_single_part_identifier() -> None:
     body = '## Shared records\n\n#### MEM-OBJ-part — Part\n\nPart of: RT-OBJ-store through RT-OBJ-input\n'
     assert any('exactly one full record ID' in error for error in record_reference_errors(body))
+
+
+def test_source_register_rows_preserve_escaped_pipes_and_ignore_examples() -> None:
+    row = r"| SRC-1 | git | `https://example.invalid/source` | `revision` | implementation | `a\|b.txt` | `a\|b.txt` | none |"
+    body = "## Source register\n\n" + row
+    body += "\n> " + row.replace("SRC-1", "SRC-2")
+    body += "\n```markdown\n" + row.replace("SRC-1", "SRC-3") + "\n```\n"
+
+    assert source_register_rows(body) == [[
+        "SRC-1", "git", "`https://example.invalid/source`", "`revision`",
+        "implementation", "`a|b.txt`", "`a|b.txt`", "none",
+    ]]
 
 
 def test_invalid_names_and_source_ranges_inside_source_excerpts_are_ignored() -> None:

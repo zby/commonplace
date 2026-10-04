@@ -39,6 +39,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from jsonschema import FormatChecker
 
 from commonplace.lib.agentic_analysis import load_run_state, verify_quote_anchors
 from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
@@ -57,6 +58,7 @@ from commonplace.lib.agentic_records import (
     section,
     set_record_errors,
     source_register_ids,
+    source_register_rows,
 )
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
@@ -289,6 +291,9 @@ def boundary_refusals(
         for name in BOUNDARY_FIELDS
         if fields.get(name) is not None and not isinstance(fields[name], str)
     ]
+    cutoff = fields.get("analysis-cutoff")
+    if isinstance(cutoff, str) and not FormatChecker().conforms(cutoff, "date"):
+        refusals.append("analysis-cutoff must be a valid quoted YYYY-MM-DD date")
     source = fields.get("source")
     if source is not None and (
         not isinstance(source, dict) or set(source) != set(SOURCE_FIELDS)
@@ -309,6 +314,7 @@ def boundary_refusals(
                 f"its commit `{frozen['revision']}`: {json.dumps(frozen)}"
             )
         refusals += frozen_source_refusals(source)
+        refusals += source_register_refusals(body, source=frozen or source)
     wanted = ["Boundary and evidence", "Source register"]
     if disposition == "complete":
         missing = [
@@ -324,6 +330,25 @@ def boundary_refusals(
         "and separate evidence layers and scopes within that row"
         for identifier, count in Counter(source_register_ids(body)).items() if count > 1
     ]
+    return refusals
+
+
+def source_register_refusals(body: str, *, source: dict[str, Any]) -> list[str]:
+    """The register declares the source whose identity the run can verify."""
+    rows = source_register_rows(body)
+    expected = tuple(str(source.get(field) or "") for field in ("kind", "identity", "revision"))
+    refusals = [
+        f"source register: {row[0]} needs all eight columns from the boundary contract"
+        for row in rows if len(row) != 8
+    ]
+    if not any(
+        len(row) == 8 and tuple(cell.strip("`") for cell in row[1:4]) == expected
+        for row in rows
+    ):
+        refusals.append(
+            "source register must declare the frozen source in a SRC-* row: "
+            f"kind `{expected[0]}`, identity `{expected[1]}`, revision or capture `{expected[2]}`"
+        )
     return refusals
 
 

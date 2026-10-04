@@ -106,6 +106,15 @@ def source_register_ids(body: str) -> list[str]:
     )
 
 
+def source_register_rows(body: str) -> list[list[str]]:
+    """Declared source rows, excluding quoted and fenced examples."""
+    register = section(_analysis_prose(body), "Source register")
+    return [
+        [cell.strip().replace(r"\|", "|") for cell in re.split(r"(?<!\\)\|", line.strip()[1:].removesuffix("|"))]
+        for line in register.splitlines() if _SOURCE_DECLARATION.match(line)
+    ]
+
+
 def annotated_ids(body: str) -> set[str]:
     """IDs a member annotates with `On <ID>` headings without declaring them."""
     return set(_ANNOTATION.findall(_analysis_prose(body)))

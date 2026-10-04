@@ -735,6 +735,67 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     )
 
 
+@pytest.mark.parametrize("cutoff, valid", [
+    ("2026-10-04", True), ("2024-02-29", True),
+    ("not-a-date", False), ("2026-02-29", False),
+    ("2026-13-01", False), ("2026-10-4", False),
+    ("2026-10-04T00:00:00Z", False),
+])
+def test_boundary_cutoff_uses_the_overview_date_format(fixture: Fixture, cutoff: str, valid: bool) -> None:
+    path = fixture.scratch / "boundary.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(fixture.boundary(**{"analysis-cutoff": cutoff}), encoding="utf-8")
+
+    refusals = boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
+
+    assert refusals == ([] if valid else ["analysis-cutoff must be a valid quoted YYYY-MM-DD date"])
+
+
+@pytest.mark.parametrize("defect", ["missing", "fenced", "quoted", "kind", "identity", "revision", "columns"])
+def test_boundary_register_must_declare_the_frozen_source(fixture: Fixture, defect: str) -> None:
+    boundary = fixture.boundary()
+    row = next(line for line in boundary.splitlines() if line.startswith("| SRC-1 |"))
+    cells = [cell.strip() for cell in row.strip("|").split("|")]
+    if defect == "missing":
+        replacement = "No frozen source declared."
+    elif defect == "fenced":
+        replacement = "```markdown\n" + row + "\n```"
+    elif defect == "quoted":
+        replacement = "> " + row
+    else:
+        if defect == "columns":
+            cells = cells[:4]
+        else:
+            position = {"kind": 1, "identity": 2, "revision": 3}[defect]
+            cells[position] = {"kind": "capture", "identity": "`https://example.invalid/other`", "revision": "`" + "0" * 40 + "`"}[defect]
+        replacement = "| " + " | ".join(cells) + " |"
+    path = fixture.scratch / "boundary.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(boundary.replace(row, replacement), encoding="utf-8")
+
+    refusals = boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
+
+    assert any("source register must declare the frozen source" in reason for reason in refusals)
+    assert any(f"identity `{SOURCE}`, revision or capture `{fixture.revision}`" in reason for reason in refusals)
+    if defect == "columns":
+        assert any("needs all eight columns" in reason for reason in refusals)
+
+
+def test_boundary_register_accepts_a_frozen_capture(fixture: Fixture) -> None:
+    capture = fixture.root / "capture.txt"
+    capture.write_text("Frozen capture.\n", encoding="utf-8")
+    source = {"kind": "capture", "identity": SOURCE, "revision": "capture-1",
+              "path": str(capture), "sha256": digest(capture)}
+    boundary = fixture.boundary(source=source, **{"reviewed-boundary": "capture-1"})
+    row = next(line for line in boundary.splitlines() if line.startswith("| SRC-1 |"))
+    replacement = f"| SRC-1 | capture | `{SOURCE}` | `capture-1` | doctrine/design | capture | `{capture}` | none |"
+    path = fixture.scratch / "boundary.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(boundary.replace(row, replacement), encoding="utf-8")
+
+    assert boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE) == []
+
+
 @pytest.mark.slow
 @pytest.mark.parametrize("returned", [False])
 def test_reconciliation_amending_an_undeclared_record_is_refused(
@@ -1270,8 +1331,9 @@ def test_a_git_source_without_a_path_is_refused(fixture: Fixture) -> None:
 
 
 def test_a_checkout_at_another_commit_is_refused(fixture: Fixture) -> None:
-    (refusal,) = source_refusals(fixture, revision="0" * 40)
-    assert "is not at source.revision" in refusal
+    refusals = source_refusals(fixture, revision="0" * 40)
+    assert any("is not at source.revision" in refusal for refusal in refusals)
+    assert any("source register must declare the frozen source" in refusal for refusal in refusals)
 
 
 def test_a_clone_without_checked_out_files_is_refused(fixture: Fixture) -> None:
