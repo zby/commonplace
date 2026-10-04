@@ -3,8 +3,16 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from commonplace.cli.guard_full_pass_report import main
 from tests.commonplace.lib.test_full_pass import write_packet
+
+
+@pytest.fixture(autouse=True)
+def isolated_command_directory(tmp_path: Path, monkeypatch) -> None:
+    """Keep checkout-specific initialization warnings out of CLI assertions."""
+    monkeypatch.chdir(tmp_path)
 
 
 def test_guard_cli_emits_json_and_exits_zero_when_all_inputs_match(
