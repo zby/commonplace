@@ -1302,7 +1302,7 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
 
 
 def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -> None:
-    scripted, _ = agent(fixture)
+    scripted, definition = agent(fixture)
 
     assert isinstance(scripted.run()[-1], Done)
 
@@ -1326,11 +1326,23 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "synthesize": {"sources", "records", "overview"},
         "verify-synthesis": {"sources", "records", "overview"},
     }
+    jobs = {
+        "boundary": definition.boundary_job(fixture.run_dir, overview_enums(fixture.root)),
+        "runtime": definition.runtime_job(fixture.run_dir),
+        "memory-0": definition.memory_job(fixture.run_dir, 0, 0),
+        "epistemic": definition.epistemic_job(fixture.run_dir),
+        "reconcile-0": definition.reconcile_job(fixture.run_dir, 0, 0, None, True),
+        "verify-0": definition.verification_job(fixture.run_dir, 0, 0),
+        "synthesize": definition.synthesis_job(fixture.run_dir, 0),
+        "verify-synthesis": definition.synthesis_verification_job(fixture.run_dir, 0),
+    }
     for job, wanted in expected.items():
         prompt = last_prompt(fixture, job)
         contract = str((fixture.root / "kb/agentic-system-analyses/COLLECTION.md").resolve())
         _, _, reads = invocation(prompt)
+        assert Path(contract).is_absolute()
         assert contract in reads, job
+        assert contract in jobs[job].inputs, job
         assert str(fixture.root / "kb/agentic-system-analyses/instructions/publish-analysis.md") not in reads
         assert {name for name, path in types.items() if path in prompt} == wanted, job
 

@@ -4,9 +4,12 @@
 
 2026-10-04: phase 1 is implemented. Phase 2 has not started; the plan requires
 a return to the operator here. No regeneration is commissioned.
-The operator authorized revising ADR 095 alongside ADR 099 in this session:
-the accepted overview replaces the separate review pin; manifest and member
-hash checks remain.
+The operator authorized revising ADR 095 alongside ADR 099 in the implementation
+conversation. The question explicitly named ADR 095's separate published review
+pin, proposed the accepted overview as public entry point while keeping manifest
+and member hash checks, and received the answer: "Revise ADR 095 too
+(recommended)". This records conversation authorization; the repository alone
+does not independently authenticate it.
 
 ## Preflight
 
@@ -18,9 +21,40 @@ is stopped after a fetch failure. No old run is resumed or repaired here.
 
 Before mutation, the old reports tree contained 218 files. Its aggregate
 SHA-256 was `d9b45e24be4baa2ab97c2672bdabcd208b33fa8d162c47ca1cc6216168fed676`.
-The digest hashes, in sorted path order, each relative POSIX path's UTF-8 byte
-length as eight big-endian bytes, the path bytes, and its file's SHA-256 bytes.
-This includes ignored local state.
+The digest uses paths relative to `kb/agentic-systems/reports/`, ordered by
+Python `Path` comparison (component order, not POSIX-string order). It includes
+ignored local state and excludes only the newly added root validation marker.
+For each file it hashes the relative POSIX path's UTF-8 byte length as eight
+big-endian bytes, those path bytes, then the raw 32-byte file SHA-256 digest.
+This exact recipe reproduces the preflight count and digest:
+
+```bash
+python3 - <<'PYTHON'
+import hashlib
+from pathlib import Path
+
+root = Path("kb/agentic-systems/reports")
+files = sorted(
+    path for path in root.rglob("*")
+    if path.is_file() and path != root / ".commonplace-validation-ignore"
+)
+aggregate = hashlib.sha256()
+for path in files:
+    relative = path.relative_to(root).as_posix().encode("utf-8")
+    aggregate.update(len(relative).to_bytes(8, "big"))
+    aggregate.update(relative)
+    aggregate.update(hashlib.sha256(path.read_bytes()).digest())
+print(len(files), aggregate.hexdigest())
+assert len(files) == 218
+assert aggregate.hexdigest() == (
+    "d9b45e24be4baa2ab97c2672bdabcd208b33fa8d162c47ca1cc6216168fed676"
+)
+PYTHON
+```
+
+An independent recheck on 2026-10-04 reproduced it. Sorting POSIX strings instead
+produces `fc8ede1eaaba0368c100256ebd17ddbc2121643366e6d82eae0dac9cc97fa74d`
+over the same files. The original prose did not distinguish these orders.
 
 ## Consumer inventory and change packet
 
@@ -219,6 +253,27 @@ second projection. The consumer dispositions above are complete for phase 1.
 Fresh init validates; repeated init and pointer checks pass; existing user
 content with historical research paths survives unchanged. No research method
 is installed in consuming projects.
+
+The tests questioned in the operator's review are:
+
+- `test_comparison_population_must_select_one_review_per_source` in
+  `tests/commonplace/lib/test_agentic_analysis.py`: duplicates a current set
+  under `twin` and requires the duplicate-source diagnostic from the comparison
+  reader, which calls the shared current-set enumerator.
+- `test_each_job_declares_the_contracts_it_writes_or_judges` in
+  `tests/commonplace/lib/test_agentic_workflow.py`: covers all eight roles,
+  requiring the resolved collection path in read-first and declared inputs.
+- `test_invocations_resolve_each_jobs_inputs_and_round` in that file: checks
+  absolute invocation paths and that every read-first file is a dependency,
+  including correction/reconciliation variants.
+- `test_analyst_trial_tracks_the_supplied_collection_contract`: checks all three
+  analyst trials, including the contract's recorded hash.
+
+The operator's review also identified deliberate limits already recorded above:
+old reports remain published as historical evidence; hard interruptions require
+separately authorized recovery; residual conflicts and references are not fixed
+by the collection split. Phase 2 remains unstarted. After making the all-role dependency assertion
+explicit, the nine targeted tests above pass; Ruff and result validation pass.
 
 ## Remaining work
 
