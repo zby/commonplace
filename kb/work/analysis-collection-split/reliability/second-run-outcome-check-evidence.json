@@ -1,0 +1,550 @@
+{
+  "run": "AAS-2026-10-04-dynamic-cheatsheet-01",
+  "worktree": ".commonplace/worktrees/dynamic-cheatsheet-b0dc01a84b3c",
+  "method_commit": "6f497a14e4cee76bac1a8571c23ebfec77784314",
+  "source_revision": "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9",
+  "trace_scope": "coordinator and sixteen worker sessions sharing the run root turn",
+  "traces": [
+    {
+      "job": "coordinator",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-23-57-01a10828-8d5f-7533-9b84-714bcc3cf7ee.jsonl",
+      "sha256": "8873fd4a7863c33f1b6c628da671fb55ebc28511857a618a57393c99c15807d6",
+      "started_utc": "2026-10-04T18:24:03.119Z",
+      "ended_utc": "2026-10-04T19:10:57.016Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 52,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 1416858,
+      "cached_input_tokens": 1341184
+    },
+    {
+      "job": "boundary",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-24-31-01a10829-1194-7862-b13b-261e5dacf7f8.jsonl",
+      "sha256": "d4a47802fedbbfc692a405ca523c40d4b72b6cf6c19fec0d106a77a3c325766b",
+      "started_utc": "2026-10-04T18:24:31.770Z",
+      "ended_utc": "2026-10-04T18:26:56.991Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 18,
+      "truncated_tool_outputs": 2,
+      "total_tokens": 818331,
+      "cached_input_tokens": 755968
+    },
+    {
+      "job": "runtime",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-27-02-01a1082b-5d7b-7a03-b5e7-c66b7c8ad397.jsonl",
+      "sha256": "4643b5c11076c967ddc64cf9c5fd8ce3c3a71baed92d124a48696ae22c260ccd",
+      "started_utc": "2026-10-04T18:27:02.287Z",
+      "ended_utc": "2026-10-04T18:32:55.547Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 19,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 1012852,
+      "cached_input_tokens": 912384
+    },
+    {
+      "job": "epistemic",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-33-03-01a10830-e18f-7ea3-91be-2c8e38ed5244.jsonl",
+      "sha256": "f7b8cbbb5f9d0880107cfcfd475aea2dbcb2d777d5b6a013f43f43f590a3f4bc",
+      "started_utc": "2026-10-04T18:33:03.766Z",
+      "ended_utc": "2026-10-04T18:47:42.132Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 47,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 4491988,
+      "cached_input_tokens": 4275200
+    },
+    {
+      "job": "memory-0",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-33-06-01a10830-edeb-7062-bda3-b36126ec026a.jsonl",
+      "sha256": "11af3f5a5989ead6fd8db97e66e17d77a8760a06188de485dd489142e736b520",
+      "started_utc": "2026-10-04T18:33:06.954Z",
+      "ended_utc": "2026-10-04T18:40:26.256Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 27,
+      "truncated_tool_outputs": 2,
+      "total_tokens": 1806985,
+      "cached_input_tokens": 1693696
+    },
+    {
+      "job": "reconcile-0",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-47-51-01a1083e-6c3a-7593-8a7b-20d6367b0921.jsonl",
+      "sha256": "7e27ad7280f2a252def3c863c4f7f4294145ffe01d0acc2fb5073bbcc4398922",
+      "started_utc": "2026-10-04T18:47:51.231Z",
+      "ended_utc": "2026-10-04T18:49:11.870Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 662173,
+      "cached_input_tokens": 605184
+    },
+    {
+      "job": "verify-0",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-49-20-01a1083f-c93e-7f93-b89e-66d17009b327.jsonl",
+      "sha256": "dcad9be41ddf81dff270ba5f89a10b0ea23067d1009159ed427dc41c84e606ed",
+      "started_utc": "2026-10-04T18:49:20.572Z",
+      "ended_utc": "2026-10-04T18:51:01.357Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 737076,
+      "cached_input_tokens": 677632
+    },
+    {
+      "job": "reconcile-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-51-09-01a10841-7446-7da3-b1fb-6091780db241.jsonl",
+      "sha256": "671ad437b0d337191e8a15733bfafb76d129b2906ce707c97d7cd95093a050ff",
+      "started_utc": "2026-10-04T18:51:09.897Z",
+      "ended_utc": "2026-10-04T18:53:02.470Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 19,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 1052126,
+      "cached_input_tokens": 969728
+    },
+    {
+      "job": "verify-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-53-13-01a10843-562d-7290-ab2d-e44d01b4146b.jsonl",
+      "sha256": "949180dd5a69a854f4b587d0ed116e9d53ee5f38590b67586869a9a104de6aa9",
+      "started_utc": "2026-10-04T18:53:13.262Z",
+      "ended_utc": "2026-10-04T18:55:01.802Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 747905,
+      "cached_input_tokens": 681728
+    },
+    {
+      "job": "profile",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-55-10-01a10845-1f05-7082-83ea-d31e565b87fe.jsonl",
+      "sha256": "305c8163a0935e6ee88d57dfd3d5ac49fda90f29d6744e4a1f2f8c9c800ee081",
+      "started_utc": "2026-10-04T18:55:10.234Z",
+      "ended_utc": "2026-10-04T18:57:47.956Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 1,
+      "total_tokens": 762700,
+      "cached_input_tokens": 690944
+    },
+    {
+      "job": "verify-profile",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T20-57-56-01a10847-a9e4-73a2-8b68-a182c0c6ae5b.jsonl",
+      "sha256": "b2474fbf7391f08d34e26939226aac4c108df00472d30dbccebd3d4c0960b48a",
+      "started_utc": "2026-10-04T18:57:56.842Z",
+      "ended_utc": "2026-10-04T19:00:19.103Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 17,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 786416,
+      "cached_input_tokens": 712192
+    },
+    {
+      "job": "profile-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-00-27-01a10849-f6c1-7bc0-8e84-129baab1f7b5.jsonl",
+      "sha256": "598164aa24dde67ac5defb72f6ee117b6959b48c8a107846e5655ac9a418c71b",
+      "started_utc": "2026-10-04T19:00:27.583Z",
+      "ended_utc": "2026-10-04T19:01:34.402Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 690840,
+      "cached_input_tokens": 618240
+    },
+    {
+      "job": "verify-profile-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-01-43-01a1084b-1fb1-7e61-80e0-367312eed982.jsonl",
+      "sha256": "94c569b068e5294df1f835ae68e25180c3db03004d74d5732508224d9cd8de7a",
+      "started_utc": "2026-10-04T19:01:43.611Z",
+      "ended_utc": "2026-10-04T19:03:15.261Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 710186,
+      "cached_input_tokens": 648960
+    },
+    {
+      "job": "synthesize",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-03-23-01a1084c-a7f3-7c92-a0dc-b21f9cc705ce.jsonl",
+      "sha256": "c962018d9f5e1774c738f3e16dfc75360a5e0b0c1c1981836f102d5cc910f22c",
+      "started_utc": "2026-10-04T19:03:24.002Z",
+      "ended_utc": "2026-10-04T19:05:01.231Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 644062,
+      "cached_input_tokens": 586752
+    },
+    {
+      "job": "verify-synthesis",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-05-10-01a1084e-495e-7c52-b52b-5f62ff8e4328.jsonl",
+      "sha256": "97a18304e41da31ae654d5b72ee4373ca52de1482b59546b4329fa08e50be687",
+      "started_utc": "2026-10-04T19:05:10.884Z",
+      "ended_utc": "2026-10-04T19:06:45.250Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 14,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 611022,
+      "cached_input_tokens": 551168
+    },
+    {
+      "job": "synthesize-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-06-53-01a1084f-dc94-7421-9273-df88bc529c70.jsonl",
+      "sha256": "f2d3b4a8fcab87a607231dfe1a231596c47d34ed6148f027a52ff25cb6650d30",
+      "started_utc": "2026-10-04T19:06:54.094Z",
+      "ended_utc": "2026-10-04T19:08:41.725Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 15,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 659016,
+      "cached_input_tokens": 601088
+    },
+    {
+      "job": "verify-synthesis-1",
+      "file": "~/.codex/sessions/2026/10/04/rollout-2026-10-04T21-08-50-01a10851-a3c4-7071-9751-9c186fa7634c.jsonl",
+      "sha256": "301cb2d944b5649a9d4779fc81230ef8e0f1e4266673bfea2dfc11796a672953",
+      "started_utc": "2026-10-04T19:08:50.630Z",
+      "ended_utc": "2026-10-04T19:10:40.666Z",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "tool_calls": 16,
+      "truncated_tool_outputs": 0,
+      "total_tokens": 734556,
+      "cached_input_tokens": 670464
+    }
+  ],
+  "acceptance_checks": {
+    "boundary": {
+      "sha256": "2fac87e1b5bd2ede978a948be401e16be2cd51300f322c9d23c921e177caa42e",
+      "runs": 4,
+      "refusals_by_run": [
+        {
+          "member identity": 1
+        },
+        {
+          "member identity": 1
+        },
+        {
+          "member identity": 1
+        },
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 4,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 4,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 4,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 4,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "epistemic": {
+      "sha256": "08ddc5982d528f7370b8697b871f6baf2f4418f2bb2fc56612813187eee6e867",
+      "runs": 3,
+      "refusals_by_run": [
+        {
+          "record contract": 2,
+          "epistemic ledger": 16,
+          "job contract": 2,
+          "quotation occurrence": 3
+        },
+        {
+          "record contract": 2,
+          "quotation occurrence": 1
+        },
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 16,
+          "not_found": 3,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 18,
+          "not_found": 1,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 18,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "memory-0": {
+      "sha256": "29dca551c2d733ec2ead93a183015f29cfdc2d2ee037127bbc8b4bb7c8bbc067",
+      "runs": 5,
+      "refusals_by_run": [
+        {
+          "quotation uniqueness": 2
+        },
+        {
+          "quotation occurrence": 1
+        },
+        {
+          "quotation occurrence": 1
+        },
+        {},
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 6,
+          "not_found": 0,
+          "ambiguous": 2
+        },
+        {
+          "inspected": 6,
+          "not_found": 1,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 6,
+          "not_found": 1,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 6,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 6,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "profile": {
+      "sha256": "038b916b236f66e207d2c2d72b9dc949f319d937485a40bb3bc943dd40224a6e",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "profile-1": {
+      "sha256": "07dc50c0e30d4a21aa0d08ba476d1c2fed77727aa059a8ff69978f75e32bec01",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "reconcile-0": {
+      "sha256": "c64739f1312d42475487f6f3198e09ccbb4462386abde77732bd9a3bd1b9a574",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "reconcile-1": {
+      "sha256": "8f0989399f2ab0086d392ca07c1456975761816bd32cf9f19350676eb58745a6",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "runtime": {
+      "sha256": "dde7192bc881fecf9f240f24a8db28e6dd014787c6c8cdebea334ff4234bcbbe",
+      "runs": 2,
+      "refusals_by_run": [
+        {
+          "quotation uniqueness": 3
+        },
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 15,
+          "not_found": 0,
+          "ambiguous": 3
+        },
+        {
+          "inspected": 15,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "synthesize": {
+      "sha256": "44ec19d93d7d14031488c9b68d31284d677f0b44ad3181a674d42c1ed57e0b6d",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "synthesize-1": {
+      "sha256": "fc63b45e8f7b8877bcc32fd21624ea8610e068e7fd7a9cbf7b11e9ab2915c29c",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-0": {
+      "sha256": "e9f3ceaa53c53a68347da2865be252c51e3316bdc134fc86fb916fdfcc512d56",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-1": {
+      "sha256": "caa0a13ed9a815b3545551180d72867b9e8082cae1692c18627509b2872760e6",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-profile": {
+      "sha256": "effd86569cb0982cfc6e067e40e9221828a644b6546df6d02c046468bcfa8672",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-profile-1": {
+      "sha256": "373482550a7359037da6f4ed63cbdaa6b3dac4cdc089a1fdeaa8190ffb65a1e2",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-synthesis": {
+      "sha256": "8092b7d79d083139a6ababc2ff3e63cdb610a229aca5bde791b0ad4052780bfa",
+      "runs": 1,
+      "refusals_by_run": [
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    },
+    "verify-synthesis-1": {
+      "sha256": "6a629ff842ac1d26f5f59497699f48102eaf7a4e9f718504fdcbe1969abfa5f1",
+      "runs": 2,
+      "refusals_by_run": [
+        {},
+        {}
+      ],
+      "quotations_by_run": [
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        },
+        {
+          "inspected": 0,
+          "not_found": 0,
+          "ambiguous": 0
+        }
+      ]
+    }
+  },
+  "run_files_sha256": {
+    "run-state.md": "1221126fc6d20999a51e33f2bb98fe14da026cbd88604571ec66589263d10a0a",
+    "workflow-state/state.json": "e5c60cac138c5e3c74b3b9fb8bae231433ef3d0cf902cbe61307128f6767293f",
+    "workflow-state/reports.jsonl": "61a80fb29c4b6730726e20158d3a2ad49704d7bd4e1461de0f49e4699a1bb2c5",
+    "workflow-state/workflow/block-1.md": "183d42f4c44ec21bd70621f92843d22578326f1c09dff2702bcff37577de1180"
+  }
+}

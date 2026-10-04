@@ -25,13 +25,17 @@ checks on its own draft and repairs what they report.
   is the analyst's work, through the check. Implemented; see
   [its result](./analyst-acceptance-check-result.md).
 
-## Awaiting launch
+## Outcome checks
 
 - [First run outcome check](./first-run-outcome-check-plan.md) — the first
   analysis run under the split, the profile job, named IDs and the acceptance
   check: what is run, the baseline, preflight, what to collect and count.
-  Agent draft; the operator's launch is the authority.
-  Run on 2026-10-04; see [its audit](./first-run-outcome-check-audit.md).
+  The operator launched it on 2026-10-04; see
+  [its audit](./first-run-outcome-check-audit.md).
+- [Second run audit](./second-run-outcome-check-audit.md) — same source and
+  model at a later method commit. Analysts repaired draft defects with their
+  checks, three independent-review correction rounds ran, and the workflow
+  stopped on an unresolved synthesis overclaim before publication.
 
 ## Proposals awaiting adoption
 
