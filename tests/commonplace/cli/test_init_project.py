@@ -180,6 +180,35 @@ def test_check_reports_current_and_stale_outputs(
     assert library.stale_outputs(tmp_path) == []
 
 
+def test_init_and_check_resolve_the_library_from_the_project_root(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """CI runs init from the checkout and --check from inside the project.
+
+    The library is resolved from the project being initialized, not from the
+    working directory, so both invocations compare against the same root.
+    """
+    monkeypatch.delenv(library.LIBRARY_ENV, raising=False)
+    library_kb = library.library_root(Path.cwd())
+    # Another checkout: the same library under a different path.
+    other = tmp_path / "other-checkout"
+    (other / "src" / "commonplace").mkdir(parents=True)
+    (other / "kb").symlink_to(library_kb)
+    (other / "pyproject.toml").write_text('[project]\nname = "llm-commonplace"\n', encoding="utf-8")
+    project = tmp_path / "project"
+
+    monkeypatch.chdir(other)
+    init_project(project, name="project")
+    routing = (project / library.ROUTING).read_text(encoding="utf-8")
+    assert str(library_kb) in routing
+    assert str(other / "kb") not in routing
+
+    monkeypatch.chdir(project)
+    assert [item.status for item in init_project_module.check_project(project)] == ["ok"] * len(
+        init_project_module.check_project(project)
+    )
+
+
 def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path) -> None:
     root = library.library_root()
     legacy = tmp_path / "kb" / "commonplace" / "instructions"

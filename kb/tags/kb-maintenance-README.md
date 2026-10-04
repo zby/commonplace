@@ -22,6 +22,7 @@ How an agent-operated knowledge base stays healthy as it grows: the checks that 
 - [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — truth verdicts separated from repair dispositions
 - [Brainstorming: how explanatory-reach informs KB design](../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes on what the quality goal implies for maintenance choices
 - [A reader-facing banner for user verification](../reference/proposals/a-reader-facing-banner-for-user-verification.md) — proposal: show verification status to readers of the published site
+- [Type-declared cross checks and one validation surface](../reference/proposals/type-declared-cross-checks-and-one-validation-surface.md) — proposal: one check surface for analysts, acceptance and maintainers, with cross checks declared by types and resolved from the artifact graph
 
 ## Related Tags
 
