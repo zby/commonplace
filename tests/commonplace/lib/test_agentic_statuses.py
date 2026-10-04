@@ -38,6 +38,14 @@ def test_invalid_or_combined_values_are_rejected(value: str) -> None:
     assert len(errors) == 1 and "invalid value" in errors[0]
 
 
+def test_a_repeated_invalid_value_is_one_finding_naming_each_record() -> None:
+    body = (route("- implementation conclusion status: wired\n- operation conclusion status: uninspected.")
+            + "\n#### RT-RTE-resume — Resume\n\n- implementation conclusion status: wired\n"
+            "- operation conclusion status: uninspected.\n")
+    (error,) = conclusion_status_errors(body)
+    assert "invalid value 'uninspected.' in RT-RTE-model-call, RT-RTE-resume (2 fields)" in error
+
+
 def test_layers_remain_separate_and_ordinary_unobserved_prose_is_allowed() -> None:
     fields = ("- implementation conclusion status: `wired`\n"
               "- operation conclusion status: uninspected\n"

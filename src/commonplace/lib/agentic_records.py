@@ -227,12 +227,26 @@ def conclusion_status_errors(body: str) -> list[str]:
     """Check labelled conclusion statuses, without inferring them from prose."""
     prose = _analysis_prose(body)
     errors = []
-    for label, value in _STATUS_FIELD.findall(prose):
-        if value.strip().strip("`") not in CONCLUSION_STATUSES:
-            errors.append(
-                f"conclusion status: {label}: invalid value {value.strip()!r}; "
-                "use one of " + ", ".join(sorted(CONCLUSION_STATUSES))
-            )
+    # One repeated mistake is one finding: name every place it occurs.
+    invalid: dict[tuple[str, str], list[str]] = {}
+    all_headings = list(re.finditer(r"(?m)^#{2,6}[ \t]+([^\n]+)$", prose))
+    for field in _STATUS_FIELD.finditer(prose):
+        label, value = field[1], field[2].strip()
+        if value.strip("`") in CONCLUSION_STATUSES:
+            continue
+        heading = next((h for h in reversed(all_headings) if h.start() < field.start()), None)
+        declaration = _DECLARATION.fullmatch(heading[0]) if heading else None
+        place = declaration[1] if declaration else (
+            f"under '{heading[1].strip()}'" if heading else "before the first heading"
+        )
+        invalid.setdefault((label, value), []).append(place)
+    for (label, value), places in invalid.items():
+        errors.append(
+            f"conclusion status: {label}: invalid value {value!r} in "
+            + ", ".join(dict.fromkeys(places))
+            + (f" ({len(places)} fields)" if len(places) > 1 else "")
+            + "; use one of " + ", ".join(sorted(CONCLUSION_STATUSES))
+        )
     records = section(prose, "Shared records")
     headings = list(re.finditer(r"(?m)^#{3,6}[ \t]+[^\n]+$", records))
     for index, heading in enumerate(headings):

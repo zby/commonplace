@@ -404,12 +404,16 @@ def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) 
         "missing field": "supply the named field in that record with an answer or an explicit reason it is uninspected or inapplicable",
         "empty field": "supply a substantive answer in the named field",
         "does not match": "replace the named identity field with the expected run value shown",
+        "invalid value": "write exactly one listed value in each named field, with no trailing punctuation or added text",
         "invalid route function": "use a registered route function, or 'other — description'",
         "invalid architectural status": "use a registered architectural status from the epistemic contract",
         "structural failures require": "write the supplied structural failures as explicit blockers",
     }
     findings = []
-    for reason in reasons:
+    # An identical reason repeated adds nothing the analyst can act on.
+    for reason, count in Counter(reasons).items():
+        if count > 1:
+            reason += f" ({count} identical findings)"
         repair = next((value for key, value in repairs.items() if key in reason),
                       "correct the named field, section or citation to satisfy the stated rule and the supplied job/type contract")
         rule = refusal_rule(reason)
