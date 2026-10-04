@@ -80,11 +80,18 @@ and to learn, and what keeps one check behind both callers.
   location in the draft.
 - **Every ambiguous quotation comes back with proposed fixes**, as the
   helper's batch mode gives today. For each passage that occurs more than
-  once, the check prints a list of candidates, one per occurrence: a ready
-  attribution line with its line range, and enough surrounding source text
-  to tell the occurrences apart. One run covers all ambiguous quotations in
-  the draft. The analyst picks a candidate by its context and pastes that
-  attribution line, or lengthens the quotation until it is unique.
+  once, the check prints a list of candidates, one per occurrence, each with
+  enough surrounding source text to tell the occurrences apart. One run
+  covers all ambiguous quotations in the draft.
+- **A candidate carries a ready attribution line only when that line would
+  resolve the ambiguity**: its range contains exactly one occurrence of the
+  unchanged passage. The analyst picks such a candidate by its context and
+  pastes the line. Where a range cannot separate the occurrences, as when
+  the passage occurs twice on one line, the candidate shows the
+  distinguishing context and no attribution, and the check tells the analyst
+  to lengthen the quotation. Today's helper handles that case by expanding
+  the quoted text itself; this design inserts nothing, so the analyst
+  expands it. Lengthening is always an allowed repair.
 - A passage with more occurrences than the existing limit gets no list. The
   check asks the analyst to expand the quotation so that it is less
   ambiguous. The limit is the one the helper uses today,
@@ -114,7 +121,9 @@ commission.
   holds: one occurrence in the file, or one inside a given range.
 - An analyst never calculates a line range. Pasting an attribution line the
   check proposed is allowed, and the check then verifies that the passage
-  occurs in that range.
+  occurs exactly once in that range.
+- The check never proposes an attribution that would itself fail the
+  uniqueness rule.
 - The check proposes fixes only for ambiguity, where every candidate is a
   genuine occurrence of the exact passage. It proposes nothing for a passage
   that is not found; a guess there would be a fuzzy match.
@@ -191,6 +200,8 @@ what must stay true, and say what you changed.
    carries in `src/commonplace/lib/agentic_workflow.py`; the engine applies
    it in `src/commonplace/workflow/engine.py`. Find how a command can obtain
    the same validator for a named job of a run without advancing the run.
+   This is real work: replaying the definition to reach a job writes run
+   files today.
    Prove with a test that the tool and acceptance return the same refusals
    for the same file.
 2. Report independent failures together. `pass_refusals` returns at the first
@@ -203,12 +214,21 @@ what must stay true, and say what you changed.
    Add the accepted value where it is determined. Messages are produced in
    `agentic_workflow.py`, `agentic_records.py`, `agentic_ledger.py`,
    `agentic_analysis.py` and the type validation; redo that inventory.
-4. **Fixed: measure ambiguity before changing quotation.** Take the retained
-   members as read-only input, strip the line range and revision from every
-   citation in copies, and run the quotation check. Report how many
-   quotations pass and how many are ambiguous without their range. It needs
-   no model. It is fixed because it is the only cheap evidence of how often
-   an analyst will have to lengthen a quotation or copy a range.
+4. **Fixed: measure ambiguity before changing quotation.** The new
+   collection's `retained/` is empty, so the corpus is the two historical
+   Dynamic Cheatsheet sets under `kb/agentic-systems/reports/retained/`,
+   read-only. An earlier check by the executor found 39 quotations there, of
+   which one is ambiguous without its range; confirm both figures. Today's
+   quotation check refuses a path-only attribution, so do not run it on
+   stripped copies. Measure through the shared matcher in
+   `src/commonplace/lib/quote_matching.py` and `quote_generation.py`: for
+   each citation take its passage and path, supply the set's frozen source
+   identity from outside, and count occurrences in the whole file. Report
+   how many are unique, how many are ambiguous, and how many of the
+   ambiguous ones no range can separate. If a set's frozen source is no
+   longer available, say so and measure what is. It needs no model. It is
+   fixed because it is the only cheap evidence of how often an analyst will
+   have to paste a range or lengthen a quotation.
 5. Accept path-only attribution: take the revision from the run, treat a
    range as optional, and make the two refusals state the block's location.
    For an ambiguous passage, reuse what the batch mode produces today in
@@ -220,8 +240,11 @@ what must stay true, and say what you changed.
    entry in `kb/reference/commands.md`.
 7. Make the counts of the revisit condition obtainable. The tool must not
    write run state, but it may append one line per run to a log in the job's
-   scratch directory: the time and the refusals by rule. Acceptance refusals
-   are already in the engine's records.
+   scratch directory: the time, the refusals by rule, and for quotations the
+   number inspected, not found and ambiguous in that run. Acceptance
+   refusals are already in the engine's records. The number of quotations a
+   job wrote is counted from its accepted member, not from the log, since a
+   draft changes between check runs.
 8. Measure, verify, write the decision record and the result record.
 
 ## Left to the executor
@@ -260,16 +283,19 @@ Otherwise proceed without asking.
   and a repair. A wrong identity field is reported with the expected value.
 - No test finds code changing a job's output.
 - Quotation fixtures: a path-only citation that is unique passes; one not
-  found is refused with its location and no proposal; an ambiguous one is
-  refused with one proposed attribution and context per occurrence, and
-  passes once a proposed line is pasted; a draft with several ambiguous
+  found is refused with its location and no proposal; an ambiguous one whose
+  occurrences lie on different lines is refused with context and a proposed
+  attribution per occurrence, and passes once a proposed line is pasted; a
+  passage that occurs twice on one line is refused with distinguishing
+  context, no proposed attribution and a request to lengthen it, and passes
+  once lengthened; a draft with several ambiguous
   quotations gets a list for each of them in one run; a passage with more
   occurrences than the limit gets a request to expand the quotation and no
   list; a citation in
   the old complete form still passes; altered content fails.
 - The ambiguity measurement of step 4, recorded with its counts.
 - After a tool run, the scratch log holds one line with that run's refusals
-  by rule, and the run's state is unchanged.
+  by rule and its quotation counts, and the run's state is unchanged.
 - Targeted `commonplace-validate` passes for the changed instructions and
   the command reference.
 - Bytes of the worker's quotation and validation rules before and after.
@@ -294,28 +320,40 @@ the first few analyses under them, or earlier if one of these is observed:
 - readers or reviewers needing line ranges that citations no longer carry;
 - analysts writing ranges or revisions by hand.
 
-Count per job, from the scratch log and the engine's records: check runs
-before submission, refusals by rule in those runs, refusals at acceptance,
-quotations written, not found and ambiguous. The alternatives to weigh are a
+Count per job: check runs before submission and their refusals by rule,
+from the scratch log; refusals at acceptance, from the engine's records;
+quotations written, from the accepted member; quotations not found and
+ambiguous per check run, from the scratch log. The alternatives to weigh are a
 tool that completes citations in the draft, and designation by position with
 a numbered view; the [design review](./quotation-design-review.md) describes
 both.
 
 ## Later direction, not part of this work
 
-Operator statement, 2026-10-04: in the future the checks should move into the
-verifier, and this should not be done in the same step as the work above.
+Operator statement, 2026-10-04, clarified the same day: in the future these
+checks should be integrated with `commonplace-validate`, the KB's general
+validation command. This is not about the verification job of an analysis
+run. It should not be done in the same step as the work above.
 
-As understood here: the verification job would run these checks as its own
-tool and own the judgment of a member's form, so that code at acceptance no
-longer carries them. That is a change to the run loop and to what acceptance
-means. It needs its own decision and plan.
+`commonplace-validate` already checks a member against its type and checks a
+retained set as a whole. What it does not do is apply the checks that need a
+run's context to a working member: identity against the run, references
+against the set so far, and quotations against the frozen source. The
+direction is one validation command that does all of it, so that an analyst,
+the engine and a maintainer validate a member the same way and no separate
+check tool exists.
 
-This work must not make that step harder. Keep the check callable for any
-member of a run from outside the engine, by any job that may read the
-member, and keep its messages addressed to a reader who will act on them.
-Do not tie the tool to the role of the analyst that wrote the member. Do
-nothing else toward this direction now: acceptance keeps running the check.
+This work must not make that step harder:
+
+- Keep each check a function of the member and the run's context, with no
+  dependence on the engine or on which job wrote the member.
+- Keep the check callable from outside the engine for any member of a run.
+- Where it costs nothing, return findings in the form validation already
+  uses, so that later integration is a matter of registration and not of
+  rewriting messages.
+
+Do nothing else toward this direction now. Acceptance keeps running the
+check, and the tool commissioned above may be a separate command.
 
 Carry this into the decision record as a second literal `TODO`, so that it
 is found with the revisit condition.
