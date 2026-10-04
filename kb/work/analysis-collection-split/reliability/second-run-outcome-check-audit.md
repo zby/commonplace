@@ -99,6 +99,53 @@ overclaim from replacing the public set. It also shows that a verifier can
 miss one issue while reporting another; its broad assurance that
 implementation claims agreed with the records did not cover this claim.
 
+## Latent failures found by a deeper audit
+
+**Publication would also have stopped on the run ID.** This worktree allocated
+`AAS-2026-10-04-dynamic-cheatsheet-01`, the same ID carried by the incumbent
+retained overview. `Orchestrator.start` chooses the first free suffix in the
+*local* `state/` directory. The new isolated worktree had no prior local run
+state, even though it inherited the retained set from the method commit.
+Publication's `_check_set` explicitly raises `replacement requires a new run
+ID` when the incumbent and candidate IDs match. The synthesis stop occurred
+first, so the publication check did not run and this blocker appears in no
+workflow report. A same-day fresh-worktree rerun can reproduce it unless run
+allocation or preflight accounts for retained and archived IDs. This is a
+deterministic publication failure, not an inference about the synthesis.
+
+**The profile has an unresolved cross-axis inconsistency.** The first run's
+profile included `learning` in `behavioral_authority`; this candidate omits
+it while retaining `trace_learning: "yes"`. The candidate's own rationale
+says task inputs and generated outputs feed an automatic retained text update
+that is supplied later. The profile type defines `learning` authority when
+retained examples or experience feed an update to a durable behavior-shaping
+artifact. On the supplied records, that appears to support the omitted value.
+The profile verifier said all ten axes were supported and did not discuss
+this cross-axis difference. The issue needs a semantic disposition before
+using the candidate in the comparison matrix; a changed value is not by
+itself proof that the new or old classification is correct.
+
+Five of the ten profile axes changed against the incumbent at the same source
+revision. The verifier was intentionally source-first and did not receive the
+incumbent; this comparison is the audit's, not evidence it ignored a supplied
+input.
+
+| Axis | First run → candidate | Audit disposition |
+|---|---|---|
+| Representational form | text and parametric → adds symbolic | Structured checkpoint fields plausibly support the added value. |
+| Lineage | known, including trace-extracted → partial, omitting trace-extracted | Review whether prior answer traces feeding model-written context retain this known derivation path; unknown vector provenance does not erase a separately supported path. |
+| Behavioral authority | learning included → omitted | Likely inconsistency with the candidate's `trace_learning: "yes"` and the type's learning definition. |
+| Write agency | automatic and manual → automatic | The type says a human-triggered automatic extraction is automatic; whether caller-supplied initial text is a separate manual write remains a scope judgment. |
+| Curation operations | four known values → partial consolidation only | More conservative about unobserved model output; no defect established from the difference alone. |
+
+The trace and state audit found no check bypass: each of the sixteen accepted
+job bytes matches its recorded acceptance hash, its final local check passed,
+and no worker edited its output after that check. Other tool failures remained
+local to workers: epistemic made a failed shell-quoted edit and a wrong-path
+source read, and profile verification made one invalid patch call, then
+recovered. These attempts are absent from workflow failure counts and did not
+cause the terminal stop.
+
 ## Other trace findings
 
 - **Source-register repair loop.** The new boundary check refused the same
@@ -158,9 +205,10 @@ checker caused the semantic defects or that its passing result certified
 content quality.
 
 Before another comparable run, the strongest narrow repairs to evaluate are
+run-ID allocation against retained sets, the profile's learning classification,
 the source-register check's treatment and message for an allowed access root,
 typed section placement for epistemic object declarations, and why the first
 synthesis verifier missed a claim the second caught. A larger correction
 budget could allow another synthesis edit, but would not remove the cause of
-the overclaim or the missed first review. The worktree and traces should be
-retained until those decisions are made.
+the overclaim, the missed first review, or the publication collision. The
+worktree and traces should be retained until those decisions are made.

@@ -546,5 +546,36 @@
     "workflow-state/state.json": "e5c60cac138c5e3c74b3b9fb8bae231433ef3d0cf902cbe61307128f6767293f",
     "workflow-state/reports.jsonl": "61a80fb29c4b6730726e20158d3a2ad49704d7bd4e1461de0f49e4699a1bb2c5",
     "workflow-state/workflow/block-1.md": "183d42f4c44ec21bd70621f92843d22578326f1c09dff2702bcff37577de1180"
+  },
+  "latent_publication_check": {
+    "candidate_run_id": "AAS-2026-10-04-dynamic-cheatsheet-01",
+    "incumbent_run_id": "AAS-2026-10-04-dynamic-cheatsheet-01",
+    "allocation_rule": "src/commonplace/workflow/engine.py:613-638 checks the local state directory",
+    "publication_rule": "src/commonplace/lib/agentic_publication.py:396-399 rejects the same incumbent run ID",
+    "check_executed": false,
+    "reason_not_executed": "synthesis verification stopped first"
+  },
+  "profile_cross_axis_review": {
+    "first_run_behavioral_authority": [
+      "knowledge",
+      "learning",
+      "ranking",
+      "routing"
+    ],
+    "candidate_behavioral_authority": [
+      "knowledge",
+      "ranking",
+      "routing"
+    ],
+    "candidate_trace_learning": "yes",
+    "type_rule": "kb/agentic-system-analyses/types/agent-memory-profile.md:99",
+    "disposition": "semantic review required",
+    "changed_axes": [
+      "representational_form",
+      "lineage",
+      "behavioral_authority",
+      "write_agency",
+      "curation_operations"
+    ]
   }
 }

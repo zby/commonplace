@@ -35,7 +35,9 @@ checks on its own draft and repairs what they report.
 - [Second run audit](./second-run-outcome-check-audit.md) — same source and
   model at a later method commit. Analysts repaired draft defects with their
   checks, three independent-review correction rounds ran, and the workflow
-  stopped on an unresolved synthesis overclaim before publication.
+  stopped on an unresolved synthesis overclaim before publication. A deeper
+  audit found a second, latent publication block from a reused run ID and a
+  profile cross-axis classification that needs review.
 
 ## Proposals awaiting adoption
 
