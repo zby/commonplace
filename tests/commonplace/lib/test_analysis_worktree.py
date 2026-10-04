@@ -124,6 +124,18 @@ def test_harness_runtime_state_and_readmes_are_not_startup_inputs(origin: Path) 
     assert prepared["status"] == "ready"
 
 
+def test_only_ignored_local_harness_settings_are_exempt(origin: Path) -> None:
+    # A user-wide ignore file must not decide the unignored case.
+    git(origin, "config", "core.excludesFile", "/dev/null")
+    local = origin / ".claude/settings.local.json"
+    local.parent.mkdir()
+    local.write_text("{}\n")
+    with pytest.raises(ValueError, match="settings.local.json"):
+        aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
+    (origin / ".git/info/exclude").write_text("**/.claude/settings.local.json\n")
+    assert aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
+
+
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:
     destination = tmp_path / "existing"
     destination.mkdir()

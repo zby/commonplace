@@ -40,7 +40,8 @@ def require_committed_startup(origin: Path, commit: str) -> None:
     """The dirty-origin exception never permits different startup instructions.
 
     Inspect index and working tree independently (their changes can cancel),
-    plus untracked and ignored startup files. Skill links also protect their
+    plus untracked and ignored startup files, except ignored local harness
+    settings. Skill links also protect their
     repository-local targets, where the actual instruction bytes live.
     """
     protected = {origin / path for path in (*STARTUP_DIRECTORIES, *STARTUP_FILES)}
@@ -62,10 +63,18 @@ def require_committed_startup(origin: Path, commit: str) -> None:
         ["diff", "--cached", "--name-only", "--no-renames", "-z"],
         ["diff", "--name-only", "--no-renames", "-z"],
         ["ls-files", "--others", "--exclude-standard", "-z"],
-        ["ls-files", "--others", "--ignored", "--exclude-standard", "-z", "--",
-         *ignored_startup],
     ):
         paths.update(_git_paths(origin, args))
+    # An ignored `settings.local.json` holds one user's harness permissions.
+    # No commit can contain it, so requiring a match would stop every checkout
+    # where that harness has run. Tracked or unignored copies stay checked.
+    paths.update(
+        name for name in _git_paths(origin, [
+            "ls-files", "--others", "--ignored", "--exclude-standard", "-z", "--",
+            *ignored_startup,
+        ])
+        if Path(name).name != "settings.local.json"
+    )
     changed = sorted(
         name for name in paths
         if Path(name).name in STARTUP_FILENAMES

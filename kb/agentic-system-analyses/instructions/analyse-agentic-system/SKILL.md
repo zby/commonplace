@@ -46,7 +46,8 @@ instructions or configuration: instruction files such as `AGENTS.md`, project
 harness settings and system prompts, skill and agent directories, extensions,
 hooks and prompt resources, and repository-local targets of skill symlinks must
 match the selected commit. Staged, unstaged, untracked and ignored startup files
-are checked. Runtime locks, caches and top-level harness README files are not
+are checked, except an ignored `settings.local.json`, which holds one user's
+harness permissions. Runtime locks, caches and top-level harness README files are not
 startup inputs. The Git comparison covers repository files, not user-wide
 harness settings.
 
