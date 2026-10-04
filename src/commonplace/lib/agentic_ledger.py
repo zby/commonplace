@@ -28,9 +28,15 @@ def _values(function: str, status: str, where: str) -> list[str]:
     if function not in ROUTE_FUNCTIONS and not (
         function.startswith("other — ") and function.removeprefix("other — ").strip()
     ):
-        errors.append(f"{where}: invalid route function {function!r}")
+        errors.append(
+            f"{where}: invalid route function {function!r}; use one of "
+            + ", ".join(sorted(ROUTE_FUNCTIONS)) + ", or 'other — description'"
+        )
     if status not in ARCHITECTURAL_STATUSES:
-        errors.append(f"{where}: invalid architectural status {status!r}")
+        errors.append(
+            f"{where}: invalid architectural status {status!r}; use one of "
+            + ", ".join(sorted(ARCHITECTURAL_STATUSES))
+        )
     return errors
 
 

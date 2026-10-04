@@ -82,11 +82,9 @@ an access gap when it is available at the frozen commit.
 
 The source pin is an evidence boundary. If it changes or cannot be verified, write a problem report.
 
-For a GitHub source, code has registered the frozen checkout in `run-state`
-before this job, so `commonplace-quote` is available. For a non-Git source,
-this job establishes the capture that code registers after accepting your
-output. Do not call the quotation helper in that case; record source paths
-in the register. Later analysts retain quotations for their findings.
+For a GitHub source, code registers the frozen checkout before this job.
+For a non-Git source, establish the capture for registration after acceptance;
+record source paths in the register. Later analysts retain quotations.
 
 ## Output
 
@@ -120,3 +118,5 @@ The two sections follow the boundary contract; they go into the overview
 unchanged. A `blocked` or `out-of-scope` disposition adds a third section,
 `## Not reached`, saying what was not reached, why, and which conclusion
 that prevents.
+
+Run the acceptance check before submitting.

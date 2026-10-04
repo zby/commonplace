@@ -21,6 +21,9 @@ _RANGES = r"[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*"
 LOCAL_SOURCE_RE = re.compile(
     rf"`(?P<path>[^`\n]+?)(?::(?P<ranges>{_RANGES}))?`\s*@\s*`(?P<version>[^`]+)`"
 )
+LOCAL_STUB_RE = re.compile(
+    rf"`(?P<path>[^`\n]+?)(?::(?P<ranges>{_RANGES}))?`"
+)
 LOCAL_ANCHOR_RE = re.compile(
     rf"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):(?P<ranges>{_RANGES})`"
 )
@@ -98,6 +101,13 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
             line,
             attribution,
         )
+    stub = LOCAL_STUB_RE.fullmatch(attribution)
+    if stub:
+        return Citation(
+            quote, stub["path"],
+            ranges=parse_line_ranges(stub["ranges"]) if stub["ranges"] else (),
+            line=line, attribution=attribution,
+        )
     url_match = URL_RE.search(attribution)
     if url_match:
         url = url_match[0].rstrip(".,;")
@@ -113,7 +123,7 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
         None,
         line=line,
         attribution=attribution,
-        error="expected a pinned source path or source URL",
+        error="expected a source path in backticks or source URL",
     )
 
 

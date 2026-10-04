@@ -1437,6 +1437,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             "system": SYSTEM,
             "run-id": RUN_ID,
             "run-state": str(run / "run-state.md"),
+            "job": job.name,
             "output": str(job.output_path(run)),
             "problem": str(job.problem_path(run)),
             "workspace": str(run / "jobs" / job.name) + "/",
@@ -1445,7 +1446,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             **{key: (value if key in {"round", "may-return", "memory-return"} else str(run / value)) for key, value in expected.items()},
         }
         path_values = [value for key, value in values.items()
-                       if key not in {"system", "run-id", "round", "may-return", "memory-return", "source-identity"}]
+                       if key not in {"system", "run-id", "job", "round", "may-return", "memory-return", "source-identity"}]
         assert all(Path(path).is_absolute() for path in [method, *first_reads, *path_values])
         files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return", "memory-return"}}
         assert set(job.inputs) == {method, *first_reads, *files}

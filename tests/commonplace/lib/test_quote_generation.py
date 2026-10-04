@@ -1,189 +1,106 @@
+"""Occurrence diagnostics preserve the passage and only propose checked ranges."""
 from hashlib import sha256
 
 import pytest
 
 from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
-from commonplace.lib.quote_generation import (
-    generate_quote_batch,
-    generate_quotes,
-    quote_occurrences,
-    render_quote,
-)
-from commonplace.lib.quote_matching import (
-    match_quote,
-    normalize_text,
-    parse_blockquotes,
-)
+from commonplace.lib.quote_generation import MAX_QUOTE_OCCURRENCES, quote_occurrences
+from commonplace.lib.quote_matching import match_quote, normalize_text
 
 
-@pytest.mark.parametrize(
-    "text,source,count",
-    [
-        ("one", "one\none\none", 3),
-        ("one", "one one", 2),
-        ("ana", "banana", 2),
-        ("one two", "one\n\t two\n", 1),
-        ("* a ** b", "header\r\n * a ** b\r\nend", 1),
-        ("café", "café\ncafé", 2),
-        ("word", "word\vword", 2),
-        ("not present", "original source", 0),
-    ],
-)
-def test_every_occurrence_yields_source_text_with_a_unique_derived_range(
-    text, source, count
-):
+@pytest.mark.parametrize("text,source,count", [
+    ("one", "one\none\none", 3), ("one", "one one", 2),
+    ("ana", "banana", 2), ("one two", "one\n\t two\n", 1),
+    ("* a ** b", "header\r\n * a ** b\r\nend", 1),
+    ("café", "café\ncafé", 2), ("word", "word\vword", 2),
+    ("not present", "original source", 0),
+])
+def test_occurrences_are_exact_source_substrings_without_context_expansion(text, source, count):
     occurrences = quote_occurrences(text, source)
     assert len(occurrences) == count
     for occurrence in occurrences:
-        assert (
-            occurrence.text == source[occurrence.start_offset : occurrence.end_offset]
-        )
-        assert normalize_text(text, "code") in normalize_text(occurrence.text, "code")
-        citation = parse_blockquotes(
-            render_quote(occurrence, path="source.md", version="abc")
-        )[0]
-        assert citation.error is None
-        assert match_quote(
-            citation.quote, source, kind="code", ranges=citation.ranges
-        ).matched
+        assert occurrence.text == source[occurrence.start_offset:occurrence.end_offset]
+        assert normalize_text(text, "code") == normalize_text(occurrence.text, "code")
 
 
-def test_rendered_lines_carry_no_trailing_whitespace_and_still_match():
-    source = "intro\nfirst line  \n\nsecond line\t\nend\n"
-    (occurrence,) = quote_occurrences("first line second line", source)
-    rendered = render_quote(occurrence, path="source.md", version="abc")
-
-    lines = rendered.splitlines()
-    assert lines[:3] == ["> first line", ">", "> second line"]
-    assert all(line == line.rstrip() for line in lines)
-    citation = parse_blockquotes(rendered)[0]
-    assert citation.error is None
-    assert match_quote(
-        citation.quote, source, kind="code", ranges=citation.ranges
-    ).matched
+def capture(tmp_path, text):
+    path = tmp_path / "capture.md"
+    path.write_text(text)
+    return SourceIdentity("capture", "https://example.com/doc", "capture", path, sha256(path.read_bytes()).hexdigest())
 
 
-@pytest.mark.parametrize("text", ["", " \n\t"])
-def test_empty_selection_is_rejected(text):
-    with pytest.raises(ValueError, match="empty"):
-        quote_occurrences(text, "source")
+def block(source, text, suffix=""):
+    return "\n".join("> " + line for line in text.splitlines()) + f"\n> --- `{source.path}{suffix}`\n"
 
 
-def test_capture_generation_preserves_text_and_uses_frozen_identity(tmp_path):
-    snapshot = tmp_path / "source.md"
-    snapshot.write_text(" * repeated\n * repeated\n")
-    digest = sha256(snapshot.read_bytes()).hexdigest()
-    source = SourceIdentity(
-        "capture", "https://example.com/doc", "capture", snapshot, digest
-    )
-
-    result = generate_quotes("* repeated", source=source)
-    assert [c["start_line"] for c in result["occurrences"]] == [1, 2]
-    for candidate in result["occurrences"]:
-        assert "sha256:" + digest in candidate["citation"]
-        assert not verify_quote_anchors(candidate["citation"], source=source)[1]
-    snapshot.write_text("changed source")
-    with pytest.raises(ValueError, match="SHA-256 mismatch"):
-        generate_quotes("changed source", source=source)
+def test_unique_path_only_quote_and_whitespace_pass(tmp_path):
+    source = capture(tmp_path, "original\n    passage\n")
+    assert not verify_quote_anchors(block(source, "original passage"), source=source)[1]
+    complete = block(source, "original passage", ":1-2").rstrip() + f" @ `sha256:{source.expected_sha256}`\n"
+    assert not verify_quote_anchors(complete, source=source)[1]
+    assert verify_quote_anchors(complete.replace(source.expected_sha256, "0" * 64), source=source)[1]
 
 
-def test_generation_does_not_clean_up_comment_markers(tmp_path):
-    snapshot = tmp_path / "source.md"
-    snapshot.write_text(" * first line\n * second line\n")
-    source = SourceIdentity(
-        "capture", "doc", "capture", snapshot, sha256(snapshot.read_bytes()).hexdigest()
-    )
-    with pytest.raises(ValueError, match="does not occur"):
-        generate_quotes("first line\nsecond line", source=source)
+def test_not_found_never_proposes_repair_and_rechecks_claim(tmp_path):
+    source = capture(tmp_path, 'write("\\n")')
+    _, errors = verify_quote_anchors(block(source, 'write("\\\\n")'), source=source)
+    assert "quotation not found" in errors[0]
+    assert "recheck the claim" in errors[0]
+    assert "candidate" not in errors[0] and "paste attribution" not in errors[0]
 
 
-def test_unrepresentable_attribution_delimiter_is_explicit(tmp_path):
-    snapshot = tmp_path / "source.md"
-    snapshot.write_text("before\n--- source\nafter")
-    source = SourceIdentity(
-        "capture", "doc", "capture", snapshot, sha256(snapshot.read_bytes()).hexdigest()
-    )
-    with pytest.raises(ValueError, match="cannot be represented"):
-        generate_quotes(snapshot.read_text(), source=source)
+def test_several_ambiguous_quotes_offer_ranges_that_pass(tmp_path):
+    source = capture(tmp_path, "first\nrepeated\nsecond\nrepeated\nother\nother\n")
+    _, errors = verify_quote_anchors(block(source, "repeated") + "\n" + block(source, "other"), source=source)
+    assert len(errors) == 2
+    assert all("candidate 1" in error and "candidate 2" in error for error in errors)
+    assert f"> --- `{source.path}:2-2`" in errors[0]
+    assert not verify_quote_anchors(block(source, "repeated", ":2-2"), source=source)[1]
+    assert verify_quote_anchors(block(source, "repeated", ":1-1"), source=source)[1]
 
 
-@pytest.mark.parametrize("count", [1, 2, 10, 11])
-def test_generation_output_and_ambiguity_limit(tmp_path, count):
-    snapshot = tmp_path / "source.md"
-    snapshot.write_text("selected passage\n" * count)
-    source = SourceIdentity(
-        "capture", "doc", "capture", snapshot, sha256(snapshot.read_bytes()).hexdigest()
-    )
-    if count > 10:
-        with pytest.raises(
-            ValueError, match="more than 10 occurrences; choose a longer quote"
-        ):
-            generate_quotes("selected passage", source=source)
-        return
-    result = generate_quotes("selected passage", source=source)
-    if count == 1:
-        assert isinstance(result, str)
-        assert result.startswith("> selected passage\n> --- ")
-        assert len(parse_blockquotes(result)) == 1
-    else:
-        assert list(result) == ["occurrences"]
-        assert [entry["occurrence"] for entry in result["occurrences"]] == list(
-            range(1, count + 1)
-        )
-        assert [entry["start_line"] for entry in result["occurrences"]] == list(
-            range(1, count + 1)
-        )
+def test_same_line_ambiguity_requires_longer_passage(tmp_path):
+    source = capture(tmp_path, "one one")
+    _, errors = verify_quote_anchors(block(source, "one"), source=source)
+    assert "lengthen the quotation" in errors[0]
+    assert "candidate 1" in errors[0] and "candidate 2" in errors[0]
+    assert "paste attribution" not in errors[0]
+    assert not match_quote("one", "one one", kind="code", ranges=((1, 1),)).matched
+    assert not verify_quote_anchors(block(source, "one one"), source=source)[1]
 
 
-def capture_source(tmp_path, text):
-    snapshot = tmp_path / "source.md"
-    snapshot.write_text(text)
-    return SourceIdentity(
-        "capture", "doc", "capture", snapshot, sha256(snapshot.read_bytes()).hexdigest()
-    )
+def test_limit_and_checked_range_apply_to_eligible_region(tmp_path):
+    source = capture(tmp_path, "repeated\n" * (MAX_QUOTE_OCCURRENCES + 1))
+    _, errors = verify_quote_anchors(block(source, "repeated"), source=source)
+    assert "expand the quotation" in errors[0] and "no candidates proposed" in errors[0]
+    assert "candidate 1" not in errors[0]
+    assert not verify_quote_anchors(block(source, "repeated", ":3-3"), source=source)[1]
+    _, errors = verify_quote_anchors(block(source, "repeated", ":3-4"), source=source)
+    assert "paste attribution" in errors[0]
 
 
-def test_batch_resolves_each_key_independently(tmp_path):
-    source = capture_source(tmp_path, "unique line\nrepeated\nrepeated\n")
-    results = generate_quote_batch(
-        [
-            {"key": "one", "text": "unique line"},
-            {"key": "two", "text": "repeated", "source_path": None},
-            {"key": "missing", "text": "absent text"},
-            {"key": "bad", "text": 7},
-        ],
-        source=source,
-    )
-    assert list(results) == ["one", "two", "missing", "bad"]
-    assert results["one"]["status"] == "citation"
-    assert results["one"]["citation"] == generate_quotes("unique line", source=source)
-    assert results["two"]["status"] == "candidates"
-    assert [c["start_line"] for c in results["two"]["occurrences"]] == [2, 3]
-    assert results["missing"] == {
-        "status": "error", "error": "requested text does not occur in the frozen source",
-    }
-    assert results["bad"] == {"status": "error", "error": "text must be a string"}
+def test_capture_path_and_hash_are_checked_even_without_version(tmp_path):
+    source = capture(tmp_path, "original")
+    assert verify_quote_anchors(block(source, "original").replace("capture.md", "wrong.md"), source=source)[1]
+    source.path.write_text("changed")
+    assert verify_quote_anchors(block(source, "changed"), source=source)[1]
 
 
-@pytest.mark.parametrize(
-    "selections,message",
-    [
-        ([], "nonempty JSON list"),
-        (["text"], "not a JSON object"),
-        ([{"text": "unique"}], "nonempty string key"),
-        ([{"key": "a", "text": "unique"}, {"key": "a", "text": "unique"}], "not unique"),
-    ],
-)
-def test_malformed_batch_is_rejected_as_a_whole(tmp_path, selections, message):
-    source = capture_source(tmp_path, "unique\n")
-    with pytest.raises(ValueError, match=message):
-        generate_quote_batch(selections, source=source)
+def test_registered_capture_url_candidates_propose_its_path(tmp_path):
+    source = capture(tmp_path, "repeated\nrepeated\n")
+    _, errors = verify_quote_anchors(f"> repeated\n> --- {source.identity}\n", source=source)
+    assert f"> --- `{source.path}:1-1`" in errors[0]
+    assert not verify_quote_anchors(block(source, "repeated", ":1-1"), source=source)[1]
 
 
-def test_batch_source_path_rules_follow_the_source_kind(tmp_path):
-    source = capture_source(tmp_path, "unique\n")
-    results = generate_quote_batch(
-        [{"key": "a", "text": "unique", "source_path": "README.md"}], source=source
-    )
-    assert results["a"]["status"] == "error"
-    assert "omit --source-path" in results["a"]["error"]
+def test_overlapping_ranges_do_not_duplicate_diagnostic_candidates(tmp_path):
+    source = capture(tmp_path, "repeated\nrepeated\n")
+    _, errors = verify_quote_anchors(block(source, "repeated", ":1-2,1-2"), source=source)
+    assert "candidate 1" in errors[0] and "candidate 2" in errors[0]
+    assert "candidate 3" not in errors[0]
+
+
+def test_fenced_examples_and_ordinary_blockquotes_are_not_quotations(tmp_path):
+    source = capture(tmp_path, "source")
+    text = '> ordinary blockquote\n\n```text\n> absent\n> --- `capture.md`\n```\n'
+    assert verify_quote_anchors(text, source=source) == ([], [])

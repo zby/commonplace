@@ -85,10 +85,6 @@ returned findings still refer to the previous report's IDs.
 
 ## Check
 
-Validate `output` with `commonplace-validate --full <output>` and correct
-structural errors. Code checks the written quotations before accepting the
-report; run no separate quote check.
-Retain the validation result and prevented conclusions under Limitations and
-checks.
-
-After repair, update the check result and validate the final report again.
+Run the acceptance check before submitting; repair refusals and retain the
+result and prevented conclusions under Limitations and checks. After repair,
+update the check result and check the final report again.

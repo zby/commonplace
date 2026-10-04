@@ -109,3 +109,5 @@ per blocker; indent any continuation line. Anything else is refused,
 including `None.` or `none found`. Code continues only on `none`: a blocker
 list starts another reconciliation round, which gets your verification, and
 in the last round it stops the run.
+
+Run the acceptance check before submitting.

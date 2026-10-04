@@ -52,3 +52,5 @@ Declare runtime-owned records with `RT-` under the shared record contract.
 
 Acceptance requires a valid member whose citations resolve against its
 own declarations and the Source register of `boundary`.
+
+Run the acceptance check before submitting.

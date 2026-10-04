@@ -19,11 +19,12 @@ Every job uses these parameters; its instruction defines additional ones:
 |---|---|
 | `system` | Source-native system name |
 | `run-id` | Exact run identity; copy unchanged when the member type requires it |
-| `run-state` | Absolute path passed to `commonplace-quote`; not an evidence input |
+| `run-state` | Absolute path passed to the acceptance check; not an evidence input |
+| `job` | Exact job name passed to the acceptance check |
 | `output` | Absolute path for the completed result |
 | `problem` | Absolute path for the reason the job cannot finish |
 | `workspace` | Absolute per-job writable directory, when supplied by the workflow |
-| `scratch` | Absolute directory for intermediate files, including selections and extracts |
+| `scratch` | Absolute directory for intermediate files, including extracts |
 
 A repair invocation may also supply `previous-output`, the absolute path of
 the preserved report from the refused attempt. Read that file as the baseline.
@@ -118,27 +119,23 @@ scope. Treat the checkout as read-only: do not fetch,
 check out or copy the source elsewhere. For a capture, read the recorded
 file.
 
-## Quotation
+## Check and quotation
 
-Use the supplied `run-state` path directly. Keep selection files in `scratch`.
-The boundary job's source-registration instructions govern quotation
-availability during that job.
+Before submitting, run
+`commonplace-analysis-check <run-state> <job> <output>` with the supplied values.
+Repair refusals and rerun until it passes. It shares acceptance checks,
+changes no output or run state, and logs counts in `scratch`.
+A pass establishes form and occurrence, not the correctness of findings.
 
-Generate every quote block with
-`commonplace-quote <run-state> --source-path <commit-relative-path> --text-file <selection-file>`,
-omitting `--source-path` for the run's capture, or
-`--selections <json-file>` for many selections. Choose the occurrence whose
-context supports the finding and insert its citation unchanged. Request
-discontiguous passages separately. Only a quote attribution carries a line
-range; cite a source in prose by path only. A failed lookup requires
-rereading the source and revising the selection; never format a citation or
-calculate a range by hand. A generated citation proves occurrence, not
-support; judge support yourself.
+Copy each passage into a blockquote ending in `> ---` and a backticked
+source path. Use full commit-relative Git paths or the registered capture
+path. Omit revisions; the run fixes them. Only attributions carry ranges;
+prose cites paths only. Keep discontiguous passages separate.
 
-Code matches the written runtime, memory and epistemic quotations against the
-frozen source before accepting each output. A mismatch requests amendment of
-the preserved report. Regenerate the citation, insert it unchanged, and check
-its effect on the report's claims before resubmitting.
+For ambiguity, select by printed context and paste a proposed attribution or
+lengthen the quote. Same-line repeats require lengthening. Never calculate
+ranges or revisions. For "not found", reread the source and recheck its
+supporting claim before repair. Judge support yourself.
 
 ## Prior analyses
 

@@ -58,3 +58,5 @@ For `after-blockers`, read the previous synthesis and verification. Recheck
 every carried statement against the records and resolve each blocker by
 correcting the public text or stating its supported limit. This is the one
 synthesis correction round. Every cited ID must resolve in the supplied set.
+
+Run the acceptance check before submitting.

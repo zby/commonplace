@@ -278,7 +278,7 @@ def boundary_refusals(
         value = fields.get(name)
         if value is not None and value not in allowed:
             refusals.append(
-                f"{name} {value!r} is not one of the overview type's values"
+                f"{name} {value!r} is not one of the overview type's values; use one of {allowed!r}"
             )
     refusals += [
         f"{name} must be a quoted string or null, not {type(fields[name]).__name__}"
@@ -328,7 +328,7 @@ def frozen_source_refusals(source: dict[str, Any]) -> list[str]:
         if not path.is_file():
             return [f"source.path {path} is not a file"]
         if source.get("sha256") != digest(path):
-            return ["source.sha256 must be the SHA-256 of the capture file"]
+            return [f"source.sha256 must be the SHA-256 of the capture file: expected {digest(path)}"]
         return []
     revision = str(source.get("revision") or "")
     if not re.fullmatch(r"[0-9a-f]{40}", revision):
@@ -362,6 +362,52 @@ def member_refusals(path: Path, *, repo_root: Path) -> list[str]:
     return list(validate_note(path, repo_root=repo_root).fails)
 
 
+def refusal_rule(reason: str) -> str:
+    """Stable rule names for advice and per-job measurements, not locations."""
+    for phrase, rule in (
+        ("quotation ambiguous", "quotation uniqueness"),
+        ("quotation not found", "quotation occurrence"),
+        ("quote-anchored citation", "quotation source"),
+        ("unresolved record", "record reference"),
+        ("identity", "member identity"),
+        ("route fields", "route fields"),
+        ("epistemic ledger", "epistemic ledger"),
+        ("conclusion status", "conclusion status"),
+        ("record", "record contract"),
+        ("source", "source identity"),
+        ("frontmatter", "frontmatter"),
+        ("parse", "document parsing"),
+    ):
+        if phrase in reason:
+            return rule
+    return "job contract"
+
+
+def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) -> list[str]:
+    """Address the same mechanical findings to either caller, never edit output."""
+    try:
+        reasons = validator(path)
+    except (OSError, ValueError, KeyError) as error:
+        reasons = [f"validation input: {error}; correct malformed output or report a missing supplied input to the coordinator"]
+    repairs = {
+        "unresolved record": "check the named declaration and use its full ID; reconsider the reference if no declaration supports it",
+        "duplicate": "keep one declaration or field per identity; give distinct records distinct names",
+        "missing field": "supply the named field in that record with an answer or an explicit reason it is uninspected or inapplicable",
+        "empty field": "supply a substantive answer in the named field",
+        "does not match": "replace the named identity field with the expected run value shown",
+        "invalid route function": "use a registered route function, or 'other — description'",
+        "invalid architectural status": "use a registered architectural status from the epistemic contract",
+        "structural failures require": "write the supplied structural failures as explicit blockers",
+    }
+    findings = []
+    for reason in reasons:
+        repair = next((value for key, value in repairs.items() if key in reason),
+                      "correct the named field, section or citation to satisfy the stated rule and the supplied job/type contract")
+        rule = refusal_rule(reason)
+        findings.append(f"{path.name}: rule {rule}: {reason}\nRepair: {repair}")
+    return findings
+
+
 def set_bodies(
     *, boundary: Path, reconciled: Path | None = None, **members: Path
 ) -> dict[str, str]:
@@ -383,7 +429,7 @@ def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
     """Every record the bodies cite is declared once among them."""
     try:
         found = bodies()
-    except ValueError as error:
+    except (ValueError, OSError) as error:
         return [f"a set document does not parse: {error}"]
     _, errors = set_record_errors(found)
     return errors
@@ -397,40 +443,36 @@ def pass_refusals(
     """The output of an analyst, which declares records: a valid member whose
     record references resolve against the set so far and whose quotations
     resolve against the frozen source."""
-    refusals = member_refusals(path, repo_root=repo_root) or reference_refusals(
-        partial(bodies, path)
-    )
-    if refusals:
-        return refusals
+    refusals = member_refusals(path, repo_root=repo_root)
+    refusals += reference_refusals(partial(bodies, path))
     try:
         state = load_run_state(run_state, repo_root=repo_root)
         metadata, _ = split(path.read_text(encoding="utf-8"))
         boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return [str(error)]
+    except (ValueError, OSError) as error:
+        return refusals + [str(error)]
     identities = (("run-id", state.run_id),
-                  ("reviewed-boundary", boundary_fields["reviewed-boundary"]))
+                  ("reviewed-boundary", boundary_fields.get("reviewed-boundary")))
     identity_errors = [
         f"member identity: {field} {metadata.get(field)!r} does not match {expected!r}"
         for field, expected in identities if metadata.get(field) != expected
     ]
-    if identity_errors:
-        return identity_errors
+    refusals += identity_errors
     wrong_prefix = [
         identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
         if not identifier.startswith(declaration_prefix)
     ]
     if wrong_prefix:
-        return [
+        refusals += [
             f"record declarations: this analyst must use {declaration_prefix}: "
             + ", ".join(wrong_prefix)
             + "; keep supplied IDs unchanged in references and annotations"
         ]
     source = state.source
     if source is None:
-        return ["quotation checks require a registered frozen source"]
+        return refusals + ["quotation checks require a registered frozen source; report the missing source to the coordinator"]
     _, failures = verify_quote_anchors(path.read_text(encoding="utf-8"), source=source)
-    return failures
+    return refusals + failures
 
 
 def reconcile_refusals(
@@ -459,9 +501,7 @@ def reconcile_refusals(
             f"this is the last round: remove `## {RETURNED}` and retain the conflicts "
             "as explicit uncertainty"
         )
-    if refusals:
-        return refusals
-    return reference_refusals(
+    return refusals + reference_refusals(
         partial(
             set_bodies,
             boundary=boundary,
@@ -519,7 +559,7 @@ def synthesis_refusals(path: Path, *, bodies: Callable[[Path], dict[str, str]]) 
         refusals += agentic_set_member_link_failures(
             path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links,
         )
-    return refusals or source_anchor_refusals(text) or reference_refusals(partial(bodies, path))
+    return refusals + source_anchor_refusals(text) + reference_refusals(partial(bodies, path))
 
 
 def verification_refusals(path: Path, *, title: str = "Record verification") -> list[str]:
@@ -528,7 +568,7 @@ def verification_refusals(path: Path, *, title: str = "Record verification") -> 
     refusals = require_sections(text, 3, wanted)
     if headings(text, 2) or headings(text, 3) != wanted:
         refusals.append(f"write exactly ### {title} and ### Blockers")
-    return refusals or blockers_refusals(subsection(text, "Blockers")) or source_anchor_refusals(text)
+    return refusals + blockers_refusals(subsection(text, "Blockers")) + source_anchor_refusals(text)
 
 
 def one_line(text: str) -> str:
@@ -586,6 +626,7 @@ class AnalyseAgenticSystem(Workflow):
         )
         self.job_destinations: dict[str, Path] = {}
         self.source_revision = self.params.get("source-revision")
+        self._checking = False
         if self.source_revision is not None and (
             not isinstance(self.source_revision, str)
             or re.fullmatch(r"[0-9a-f]{40}", self.source_revision) is None
@@ -719,6 +760,64 @@ class AnalyseAgenticSystem(Workflow):
 
     # Jobs
 
+    def acceptance_job(self, run_dir: Path, name: str) -> Job:
+        """Obtain a job's existing validator without replay or file writes.
+
+        Job constructors own the contexts at both call sites. This builds only
+        the job value, without rendering its prompt or making its workspace.
+        """
+        self.repo = self.repo_root(run_dir)
+        self.run_id = run_dir.name
+        self.jobs_dir = self.repo / JOBS
+        self._checking = True
+        try:
+            if name == "boundary":
+                frozen_path = run_dir / FROZEN_SOURCE
+                frozen = json.loads(frozen_path.read_text()) if frozen_path.exists() else None
+                return self.boundary_job(run_dir, overview_enums(self.repo), frozen)
+            if name == "runtime":
+                return self.runtime_job(run_dir)
+            if name == "epistemic":
+                return self.epistemic_job(run_dir)
+            if name == "profile":
+                return self.profile_job(run_dir, 0)
+            if name == "verify-profile":
+                return self.profile_verification_job(run_dir, 0)
+            if name == "synthesize":
+                return self.synthesis_job(run_dir, 0)
+            if name == "verify-synthesis":
+                return self.synthesis_verification_job(run_dir, 0)
+            match = re.fullmatch(r"(memory|reconcile|verify|profile|verify-profile|synthesize|verify-synthesis)-(\d+)", name)
+            if match is None:
+                raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
+            kind, round_ = match[1], int(match[2])
+            if kind == "memory":
+                return self.memory_job(run_dir, round_, max(0, round_ - 1))
+            if kind == "reconcile":
+                # This round may follow blockers without a new memory round.
+                # Its supplied invocation, not its round number, identifies
+                # which accepted memory report its validator consumes.
+                prompt = (run_dir / "workflow-state/jobs" / name / "prompt.md").read_text()
+                invocation = prompt.split("\n## Input reading batches", 1)[0]
+                supplied = re.search(r"(?m)^memory = (.+)$", invocation)
+                memory = re.fullmatch(r"memory-report-(\d+)\.md", Path(supplied[1]).name) if supplied else None
+                if memory is None:
+                    raise ValueError(f"{name}: missing supplied memory input; report the invocation to the coordinator")
+                return self.reconcile_job(run_dir, round_, int(memory[1]), None, round_ < self.correction_rounds)
+            if kind == "verify":
+                text = (run_dir / round_file("set-check", round_)).read_text()
+                failures = [line[2:] for line in text.splitlines() if line.startswith("- ")]
+                return self.verification_job(run_dir, round_, 0, validator=partial(self.record_verification_refusals, run_dir, failures=failures))
+            constructors = {
+                "profile": self.profile_job,
+                "verify-profile": self.profile_verification_job,
+                "synthesize": self.synthesis_job,
+                "verify-synthesis": self.synthesis_verification_job,
+            }
+            return constructors[kind](run_dir, round_)
+        finally:
+            self._checking = False
+
     def run_job(self, ctx, job: Job) -> None:
         """Expose a worker result to later jobs only after engine acceptance.
 
@@ -752,6 +851,9 @@ class AnalyseAgenticSystem(Workflow):
         names the coordinator-owned accepted copy used by downstream readers.
         """
         run_dir = run_dir.resolve()
+        validator = partial(actionable_refusals, validator) if validator is not None else None
+        if self._checking:
+            return Job(name=name, prompt="", output=f"jobs/{name}/{Path(output).name}", validator=validator)
         instruction = instruction or name
         method = [f"{instruction}.md", "../../../COLLECTION.md", "worker-rules.md"]
         method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
@@ -773,6 +875,7 @@ class AnalyseAgenticSystem(Workflow):
             "run-id": run_dir.name,
             **(parameters or {}),
             "run-state": str(run_dir / RUN_STATE),
+            "job": name,
             **input_paths,
             "output": str(job.output_path(run_dir)),
             "problem": str(job.problem_path(run_dir)),
@@ -973,7 +1076,7 @@ class AnalyseAgenticSystem(Workflow):
             metadata, _ = split(path.read_text(encoding="utf-8"))
             for field, expected in (("run-id", self.run_id), ("reviewed-boundary", fields["reviewed-boundary"])):
                 if metadata.get(field) != expected:
-                    failures.append(f"{name}: {field} does not match the boundary")
+                    failures.append(f"{name}: {field} {metadata.get(field)!r} does not match the boundary; expected {expected!r}")
         failures.extend(reference_refusals(partial(self.record_bodies, run_dir)))
         return failures
 
@@ -1016,7 +1119,7 @@ class AnalyseAgenticSystem(Workflow):
         refusals = verification_refusals(path)
         if failures and subsection(path.read_text(encoding="utf-8"), "Blockers") == "none":
             refusals.append("structural failures require explicit blockers")
-        return refusals or reference_refusals(partial(self.record_bodies, run_dir, verification=path))
+        return refusals + reference_refusals(partial(self.record_bodies, run_dir, verification=path))
 
     def profile_job(self, run_dir: Path, round_: int) -> Job:
         reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
@@ -1034,18 +1137,16 @@ class AnalyseAgenticSystem(Workflow):
 
     def profile_refusals(self, run_dir: Path, path: Path) -> list[str]:
         refusals = member_refusals(path, repo_root=self.repo)
-        if refusals:
-            return refusals
         metadata, _ = split(path.read_text(encoding="utf-8"))
         if metadata.get("type") != "agentic-system-analyses/types/agent-memory-profile.md":
-            refusals.append("profile must use the memory profile type")
+            refusals.append("profile frontmatter type must be agentic-system-analyses/types/agent-memory-profile.md")
         fields, _ = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
         for key, expected in (("run-id", self.run_id),
                               ("reviewed-boundary", fields["reviewed-boundary"]),
                               ("source-identity", self.source_identity)):
             if metadata.get(key) != expected:
-                refusals.append(f"profile identity: {key} does not match the run")
-        return refusals or reference_refusals(partial(self.record_bodies, run_dir, profile=path))
+                refusals.append(f"profile identity: {key} {metadata.get(key)!r} does not match the run's expected {expected!r}")
+        return refusals + reference_refusals(partial(self.record_bodies, run_dir, profile=path))
 
     def profile_verification_job(self, run_dir: Path, round_: int) -> Job:
         return self.job(
@@ -1060,7 +1161,7 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
-        return verification_refusals(path, title="Profile verification") or reference_refusals(
+        return verification_refusals(path, title="Profile verification") + reference_refusals(
             partial(self.record_bodies, run_dir, verification=path))
 
     def synthesis_job(self, run_dir: Path, round_: int) -> Job:
@@ -1090,7 +1191,7 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
-        return verification_refusals(path, title="Synthesis verification") or reference_refusals(
+        return verification_refusals(path, title="Synthesis verification") + reference_refusals(
             partial(self.record_bodies, run_dir,
                     synthesis=run_dir / round_file("synthesis", round_), verification=path))
 

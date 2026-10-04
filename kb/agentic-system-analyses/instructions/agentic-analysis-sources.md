@@ -71,13 +71,14 @@ supplied member's record can supply the passage: cite it rather than
 repeat it. Parallel analysts may independently retain the same passage;
 reconciliation identifies overlapping support without rewriting members.
 
-Each block preserves the excerpt, range and attribution emitted by
-`commonplace-quote`, ending in a `> ---` attribution:
+Write each passage as a blockquote ending in a `> ---` attribution:
 
-- Git: a full-commit GitHub blob URL matching the registered repository,
-  or `` `commit-relative/path` @ `full-commit` ``.
-- Capture: `` `capture/path[:start-end]` @ `sha256:<checksum>` `` with the
-  registered checksum, or the exact registered source URL.
+- Git: `` `commit-relative/path` ``.
+- Capture: `` `registered/capture/path` ``.
+
+The run fixes the revision or checksum. For ambiguity, paste a checked range
+or lengthen the passage; never calculate a range. Existing pinned GitHub
+URLs and ranged, versioned attributions remain valid.
 
 Under whitespace normalization, the quote occurs exactly once in the
 frozen blob or capture, or exactly once within a supplied line range that

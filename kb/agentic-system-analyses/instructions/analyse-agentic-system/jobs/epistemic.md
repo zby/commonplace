@@ -92,6 +92,6 @@ inventory and ledger when assessing the same referents.
 ## Check
 
 Check coverage, object separation, edge classifications, evidence support
-and bounded licenses against the type. Run
-`commonplace-validate --full <output>` and repair detectable defects before
-submitting; the type defines ledger formatting and controlled values.
+and bounded licenses against the type. Run the acceptance check before
+submitting and repair refusals; the type defines ledger formatting and
+controlled values.

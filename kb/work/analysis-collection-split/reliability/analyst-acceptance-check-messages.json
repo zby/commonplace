@@ -1,0 +1,631 @@
+{
+  "review": "Job validators share a rule/location/repair wrapper. Identity fields, source checksum/path failures and enum failures state determined values. Ledger vocabularies print their permitted values. Existing record diagnostics retain IDs and nearest-name suggestions. Schema/type findings retain their original details and receive job-local repair advice. Parse and input failures report correction or coordinator recovery rather than output mutation.",
+  "producer_inventory": {
+    "src/commonplace/lib/agentic_workflow.py": [
+      {
+        "line": 126,
+        "message_expression": "\"\"\"Shared byte budget for input batches and line ranges.\n\nKeep below the harness's tool-result delivery limit, leaving room for wrappers.\nChange this constant to tune both grouping and range hints together. Workers\nmust still recover actual truncation; the budget is not a delivery guarantee.\n\"\"\""
+      },
+      {
+        "line": 214,
+        "message_expression": "f\"missing section `{marker} {title}`\""
+      },
+      {
+        "line": 284,
+        "message_expression": "f\"{name} must be a quoted string or null, not {type(fields[name]).__name__}\""
+      },
+      {
+        "line": 398,
+        "message_expression": "\"invalid route function\""
+      },
+      {
+        "line": 399,
+        "message_expression": "\"invalid architectural status\""
+      },
+      {
+        "line": 397,
+        "message_expression": "\"replace the named identity field with the expected run value shown\""
+      },
+      {
+        "line": 457,
+        "message_expression": "f\"member identity: {field} {metadata.get(field)!r} does not match {expected!r}\""
+      },
+      {
+        "line": 528,
+        "message_expression": "\"`### Blockers` must be exactly `none` or a Markdown list whose \"\n            \"entries start with `- `\""
+      },
+      {
+        "line": 1250,
+        "message_expression": "\"\"\"Where a missing checkout is cloned from, and the origin an existing\n        one must have.\"\"\""
+      },
+      {
+        "line": 1303,
+        "message_expression": "f\"# Agentic-system analysis run \u2014 {self.run_id}\\n\\n## Run\\n\\n\"\n            f\"Target: {self.params['system']}. Source: {source.get('identity', 'not frozen')}\"\n            f\" at {source.get('revision', 'no revision')}. Expected incumbent digest: \"\n            f\"`{opening['expected-incumbent-sha256']}`.\\n\\n## Outcome\\n\\n{outcome}\""
+      },
+      {
+        "line": 276,
+        "message_expression": "f\"result-disposition must be one of {', '.join(DISPOSITIONS)}\""
+      },
+      {
+        "line": 284,
+        "message_expression": " must be a quoted string or null, not "
+      },
+      {
+        "line": 326,
+        "message_expression": "\"source.path must be the absolute path of the frozen source\""
+      },
+      {
+        "line": 335,
+        "message_expression": "\"source.revision must be a full 40-hex commit\""
+      },
+      {
+        "line": 369,
+        "message_expression": "\"quotation not found\""
+      },
+      {
+        "line": 1245,
+        "message_expression": "\"expected-incumbent-sha256\""
+      },
+      {
+        "line": 271,
+        "message_expression": "\"the frontmatter must have exactly these fields: \""
+      },
+      {
+        "line": 276,
+        "message_expression": "result-disposition must be one of "
+      },
+      {
+        "line": 293,
+        "message_expression": "\"source must be null or a mapping of \""
+      },
+      {
+        "line": 331,
+        "message_expression": "f\"source.sha256 must be the SHA-256 of the capture file: expected {digest(path)}\""
+      },
+      {
+        "line": 391,
+        "message_expression": "f\"validation input: {error}; correct malformed output or report a missing supplied input to the coordinator\""
+      },
+      {
+        "line": 473,
+        "message_expression": "\"quotation checks require a registered frozen source; report the missing source to the coordinator\""
+      },
+      {
+        "line": 634,
+        "message_expression": "\"source-revision must be a full 40-hex Git commit\""
+      },
+      {
+        "line": 1142,
+        "message_expression": "\"profile frontmatter type must be agentic-system-analyses/types/agent-memory-profile.md\""
+      },
+      {
+        "line": 1208,
+        "message_expression": "f\"a run directory must be directly under {STATE_ROOT}\""
+      },
+      {
+        "line": 1235,
+        "message_expression": "\"expected_incumbent_sha256\""
+      },
+      {
+        "line": 298,
+        "message_expression": "f\"source.identity must be `{identity}`, the run's source identity\""
+      },
+      {
+        "line": 304,
+        "message_expression": "\"source must be exactly the checkout code froze, and reviewed-boundary \"\n                f\"its commit `{frozen['revision']}`: {json.dumps(frozen)}\""
+      },
+      {
+        "line": 331,
+        "message_expression": "source.sha256 must be the SHA-256 of the capture file: expected "
+      },
+      {
+        "line": 391,
+        "message_expression": "; correct malformed output or report a missing supplied input to the coordinator"
+      },
+      {
+        "line": 467,
+        "message_expression": "f\"record declarations: this analyst must use {declaration_prefix}: \""
+      },
+      {
+        "line": 752,
+        "message_expression": "\"expected-incumbent-sha256\""
+      },
+      {
+        "line": 1148,
+        "message_expression": "f\"profile identity: {key} {metadata.get(key)!r} does not match the run's expected {expected!r}\""
+      },
+      {
+        "line": 1208,
+        "message_expression": "a run directory must be directly under "
+      },
+      {
+        "line": 1306,
+        "message_expression": "'expected-incumbent-sha256'"
+      },
+      {
+        "line": 298,
+        "message_expression": "source.identity must be `"
+      },
+      {
+        "line": 304,
+        "message_expression": "\"source must be exactly the checkout code froze, and reviewed-boundary \"\n                f\"its commit `"
+      },
+      {
+        "line": 467,
+        "message_expression": "record declarations: this analyst must use "
+      },
+      {
+        "line": 805,
+        "message_expression": "f\"{name}: missing supplied memory input; report the invocation to the coordinator\""
+      },
+      {
+        "line": 1079,
+        "message_expression": "f\"{name}: {field} {metadata.get(field)!r} does not match the boundary; expected {expected!r}\""
+      },
+      {
+        "line": 1148,
+        "message_expression": " does not match the run's expected "
+      },
+      {
+        "line": 805,
+        "message_expression": ": missing supplied memory input; report the invocation to the coordinator"
+      },
+      {
+        "line": 1079,
+        "message_expression": " does not match the boundary; expected "
+      }
+    ],
+    "src/commonplace/lib/agentic_analysis.py": [
+      {
+        "line": 283,
+        "message_expression": "f\"{identity.role}: SHA-256 mismatch for {identity.display_path}; \"\n            f\"expected {identity.expected_sha256}, got {actual}\""
+      },
+      {
+        "line": 369,
+        "message_expression": "\"expected a normalized commit-relative path\""
+      },
+      {
+        "line": 74,
+        "message_expression": "f\"{field}: expected a non-empty string\""
+      },
+      {
+        "line": 83,
+        "message_expression": "f\"{field}: expected null or a non-empty string\""
+      },
+      {
+        "line": 89,
+        "message_expression": "f\"{field}: expected a normalized repository-relative kb/ path\""
+      },
+      {
+        "line": 102,
+        "message_expression": "\"source: expected null or a mapping\""
+      },
+      {
+        "line": 105,
+        "message_expression": "\"source.path: expected an absolute path\""
+      },
+      {
+        "line": 124,
+        "message_expression": "f\"{role}: expected null or a mapping\""
+      },
+      {
+        "line": 161,
+        "message_expression": "\"run-state path: expected kb/agentic-system-analyses/state/\"\n            \"<run-id>/run-state.md\""
+      },
+      {
+        "line": 167,
+        "message_expression": "\"run state: missing frontmatter\""
+      },
+      {
+        "line": 169,
+        "message_expression": "f\"type: expected {AGENTIC_ANALYSIS_RUN_TYPE}\""
+      },
+      {
+        "line": 172,
+        "message_expression": "\"run-id: expected the run-state parent directory name\""
+      },
+      {
+        "line": 190,
+        "message_expression": "f\"artifact.path: expected <run-id>/{OUTPUT_DIR}/{MANIFEST_NAME}\""
+      },
+      {
+        "line": 192,
+        "message_expression": "\"generated-review.path: expected kb/agentic-system-analyses/retained/<slug>/overview.md\""
+      },
+      {
+        "line": 283,
+        "message_expression": "; \"\n            f\"expected "
+      },
+      {
+        "line": 298,
+        "message_expression": "f\"frozen capture SHA-256 mismatch; expected {source.expected_sha256}, \"\n            f\"got {actual}\""
+      },
+      {
+        "line": 333,
+        "message_expression": "\"expected a normalized commit-relative path\""
+      },
+      {
+        "line": 668,
+        "message_expression": "\"overview: run-id does not match run state\""
+      },
+      {
+        "line": 670,
+        "message_expression": "\"overview: system does not match run state\""
+      },
+      {
+        "line": 672,
+        "message_expression": "\"overview: disposition does not match run state\""
+      },
+      {
+        "line": 676,
+        "message_expression": "\"overview: reviewed-boundary does not match frozen source\""
+      },
+      {
+        "line": 74,
+        "message_expression": ": expected a non-empty string"
+      },
+      {
+        "line": 83,
+        "message_expression": ": expected null or a non-empty string"
+      },
+      {
+        "line": 89,
+        "message_expression": ": expected a normalized repository-relative kb/ path"
+      },
+      {
+        "line": 124,
+        "message_expression": ": expected null or a mapping"
+      },
+      {
+        "line": 156,
+        "message_expression": "\"run-state path: expected kb/agentic-system-analyses/state/\"\n            \"<run-id>/run-state.md\""
+      },
+      {
+        "line": 190,
+        "message_expression": "artifact.path: expected <run-id>/"
+      },
+      {
+        "line": 298,
+        "message_expression": "frozen capture SHA-256 mismatch; expected "
+      },
+      {
+        "line": 417,
+        "message_expression": "\"source citation: GitHub anchor uses repository \"\n                f\"{blob.repository}, expected {source_identity}\""
+      },
+      {
+        "line": 423,
+        "message_expression": "\"source citation: GitHub anchor uses revision \"\n                f\"{blob.revision}, expected {source_revision}: {blob.path}\""
+      },
+      {
+        "line": 683,
+        "message_expression": "\"memory.md: source-identity does not match the frozen source\""
+      },
+      {
+        "line": 717,
+        "message_expression": "\"published overview: path does not match run identity\""
+      },
+      {
+        "line": 719,
+        "message_expression": "\"published overview: must preserve the accepted overview bytes\""
+      },
+      {
+        "line": 485,
+        "message_expression": "f\"attribution URL does not match registered capture identity; expected {source.identity}, or cite {source.path.as_posix()}\""
+      },
+      {
+        "line": 490,
+        "message_expression": "f\"attribution checksum does not match frozen capture; expected sha256:{source.expected_sha256}\""
+      },
+      {
+        "line": 500,
+        "message_expression": "f\"{label}: source error: attribution uses repository {repository}, expected {source.identity}\""
+      },
+      {
+        "line": 503,
+        "message_expression": "f\"{label}: source error: attribution uses revision {citation.version}, expected {source.revision}\""
+      },
+      {
+        "line": 485,
+        "message_expression": "attribution URL does not match registered capture identity; expected "
+      },
+      {
+        "line": 489,
+        "message_expression": "f\"sha256:{source.expected_sha256}\""
+      },
+      {
+        "line": 490,
+        "message_expression": "attribution checksum does not match frozen capture; expected sha256:"
+      },
+      {
+        "line": 492,
+        "message_expression": "f\"attribution path does not identify frozen capture; expected {source.path.as_posix()}\""
+      },
+      {
+        "line": 519,
+        "message_expression": "f\"{label}: quotation not found: {matched.error} ({location}); reread the source and recheck the claim this quotation supports\""
+      },
+      {
+        "line": 492,
+        "message_expression": "attribution path does not identify frozen capture; expected "
+      },
+      {
+        "line": 519,
+        "message_expression": ": quotation not found: "
+      }
+    ],
+    "src/commonplace/lib/agentic_records.py": [
+      {
+        "line": 185,
+        "message_expression": "\"\"\"Check unconditional route fields, without judging their answers.\n\n    Each declaration owns its fields. An adjacent annotation, another record,\n    source quotation or fenced excerpt cannot supply a missing answer.\n    \"\"\""
+      },
+      {
+        "line": 268,
+        "message_expression": "f\"duplicate set declaration: {identifier}\""
+      },
+      {
+        "line": 132,
+        "message_expression": "f\"record IDs: invalid ID {identifier}; use RT-, MEM- or EPI-, a registered kind, and one to three lowercase words starting with a letter (digits may follow letters)\""
+      },
+      {
+        "line": 268,
+        "message_expression": "duplicate set declaration: "
+      },
+      {
+        "line": 132,
+        "message_expression": "record IDs: invalid ID "
+      },
+      {
+        "line": 179,
+        "message_expression": "\"record references: duplicate declarations: \""
+      },
+      {
+        "line": 241,
+        "message_expression": "f\"conclusion status: {declaration[1]}: missing labelled field; \"\n                \"write '- implementation conclusion status: <value>' and label \"\n                \"any other assessed layer separately\""
+      },
+      {
+        "line": 294,
+        "message_expression": "f\"{name}: unresolved record {identifier}{hint}\""
+      },
+      {
+        "line": 153,
+        "message_expression": "\"record references: Part of: must belong to a declared record\""
+      },
+      {
+        "line": 207,
+        "message_expression": "f\"{prefix}: missing field\""
+      },
+      {
+        "line": 226,
+        "message_expression": "f\"conclusion status: {label}: invalid value {value.strip()!r}; \"\n                \"use one of \""
+      },
+      {
+        "line": 241,
+        "message_expression": ": missing labelled field; \"\n                \"write '- implementation conclusion status: <value>' and label \"\n                \"any other assessed layer separately\""
+      },
+      {
+        "line": 248,
+        "message_expression": "f\"conclusion status: {declaration[1]}: duplicate {label} field\""
+      },
+      {
+        "line": 156,
+        "message_expression": "f\"record references: {owner}: duplicate Part of: field\""
+      },
+      {
+        "line": 209,
+        "message_expression": "f\"{prefix}: duplicate field\""
+      },
+      {
+        "line": 156,
+        "message_expression": ": duplicate Part of: field"
+      }
+    ],
+    "src/commonplace/lib/agentic_ledger.py": [
+      {
+        "line": 37,
+        "message_expression": "f\"{where}: invalid architectural status {status!r}; use one of \""
+      },
+      {
+        "line": 62,
+        "message_expression": "f\"{where}: table row must end with a pipe\""
+      },
+      {
+        "line": 86,
+        "message_expression": "f\"{where}: row has {len(cells)} cells, expected {len(header)}\""
+      },
+      {
+        "line": 32,
+        "message_expression": "f\"{where}: invalid route function {function!r}; use one of \""
+      },
+      {
+        "line": 37,
+        "message_expression": ": invalid architectural status "
+      },
+      {
+        "line": 62,
+        "message_expression": ": table row must end with a pipe"
+      },
+      {
+        "line": 32,
+        "message_expression": ": invalid route function "
+      }
+    ],
+    "src/commonplace/lib/validation.py": [
+      {
+        "line": 725,
+        "message_expression": "\"\"\"Resolve `verbatim`-marked quotations against the sources they cite.\n\n    A `verbatim` citation claims a quoted span is copied exactly from a linked\n    source retained in the KB. That is mechanically decidable, so leaving it\n    hand-trusted is the state the derived-copy rule forbids: a false `verbatim`\n    claim is a false copy, and false copies fail rather than warn.\n\n    `unresolved` candidates are reported only in notes that demonstrably use the\n    convention (they carry at least one resolvable verbatim quote). Prose that\n    merely discusses verbatim citation near a link would otherwise warn in every\n    KB that never adopted the convention, and a check that cries wolf teaches\n    authors to ignore it \u2014 which is the failure this check exists to prevent.\n    \"\"\""
+      },
+      {
+        "line": 860,
+        "message_expression": "\"\"\"Diagnose retained snapshot bytes that are not name-paired to an ingest.\n\n    Snapshot absence remains valid because the cache is ignored. When local\n    bytes are present, however, the ingest's durable checksum can distinguish a\n    missing cache entry from filename drift without authorizing the alternate\n    path for grounding or mutation.\n    \"\"\""
+      },
+      {
+        "line": 1071,
+        "message_expression": "\"\"\"Links must survive moving a member into a retained set directory.\"\"\""
+      },
+      {
+        "line": 1512,
+        "message_expression": "\"\"\"Every tag in use within the tag space has a head (ADR 089).\n\n    Applies to artifacts in participating collections that carry a `tags:`\n    list. Tags outside the tag space are not read, so nothing is reported for\n    them. A missing or malformed tag-space declaration is a warning, because\n    the artifact cannot fix it.\n    \"\"\""
+      },
+      {
+        "line": 1549,
+        "message_expression": "\"\"\"Enforce the write-brief sidecar pairing in both directions (ADR 092).\n\n    A document's `brief:` must be exactly its own `<stem>.brief.md` and name an\n    existing sibling of the write-brief type. A `.brief.md` file must be of that\n    type and be declared by its sibling `<stem>.md`. The suffix and the type\n    must agree. Forbidden fields inside a brief are the brief schema's job.\n    \"\"\""
+      },
+      {
+        "line": 301,
+        "message_expression": "\"\"\"Cache which paths Git actually excludes from version control.\n\n        Git-ignored files can still be validated explicitly. They retain the\n        structural pipeline, but authored-library length limits do not apply to\n        them. A missing Git executable or non-worktree root fails closed: the\n        ordinary authored limits remain in force.\n        \"\"\""
+      },
+      {
+        "line": 1622,
+        "message_expression": "f\"brief: {expected} resolves to a write brief\""
+      },
+      {
+        "line": 915,
+        "message_expression": "f\"expected {shown} is absent; snapshot_sha256 locates the exact \"\n            f\"recorded bytes at {located(exact)}\""
+      },
+      {
+        "line": 963,
+        "message_expression": "\"source quotes: source error: missing snapshot_sha256\""
+      },
+      {
+        "line": 973,
+        "message_expression": "f\"attribution must name {expected_path}\""
+      },
+      {
+        "line": 1026,
+        "message_expression": "\"snapshot structure: first nonblank body line must be an H1 title\""
+      },
+      {
+        "line": 1312,
+        "message_expression": "f\"source_notes: {len(missing)} of {len(source_notes)} paths do not \"\n            f\"resolve from the repo root: {', '.join(map(str, missing))}\""
+      },
+      {
+        "line": 1417,
+        "message_expression": "\"resolution projection: body section does not match canonical frontmatter rendering\""
+      },
+      {
+        "line": 1602,
+        "message_expression": "f\"brief: value {value!r} must be the document's own sibling \"\n            f\"filename {expected!r}\""
+      },
+      {
+        "line": 1608,
+        "message_expression": "f\"brief: {expected} does not exist\""
+      },
+      {
+        "line": 1612,
+        "message_expression": "f\"brief: {expected} cannot be resolved: {error}\""
+      },
+      {
+        "line": 1619,
+        "message_expression": "f\"brief: {expected} is not of type {WRITE_BRIEF_TYPE}\""
+      },
+      {
+        "line": 1822,
+        "message_expression": "\"no same-stem ingest; its checksum duplicates the valid \"\n                f\"name-paired snapshot for {names(owners)}\""
+      },
+      {
+        "line": 1914,
+        "message_expression": "\"[repository] properdocs.yml: root must be a mapping\""
+      },
+      {
+        "line": 1919,
+        "message_expression": "\"[repository] docs_dir: expected a non-empty path\""
+      },
+      {
+        "line": 1925,
+        "message_expression": "\"[repository] plugins: expected a list\""
+      },
+      {
+        "line": 1934,
+        "message_expression": "\"[repository] redirects plugin: expected exactly one configured entry\""
+      },
+      {
+        "line": 1940,
+        "message_expression": "\"[repository] redirects plugin: expected a mapping\""
+      },
+      {
+        "line": 1944,
+        "message_expression": "\"[repository] redirect_maps: expected a mapping\""
+      },
+      {
+        "line": 1947,
+        "message_expression": "\"[repository] redirect_maps: keys and targets must be paths\""
+      },
+      {
+        "line": 2021,
+        "message_expression": "\"overview amendment index does not match reconciliation\""
+      },
+      {
+        "line": 634,
+        "message_expression": "f\"link health: missing target {link}\""
+      },
+      {
+        "line": 920,
+        "message_expression": "f\"expected {shown} is absent; snapshot_sha256 matches multiple \"\n            f\"local files ({located(exact)})\""
+      },
+      {
+        "line": 946,
+        "message_expression": "\"source quotes: expected attributed blockquotes in Quotes section\""
+      },
+      {
+        "line": 973,
+        "message_expression": "attribution must name "
+      },
+      {
+        "line": 1468,
+        "message_expression": "f\"{location}: missing {contains['const']!r}\""
+      },
+      {
+        "line": 1602,
+        "message_expression": " must be the document's own sibling \"\n            f\"filename "
+      },
+      {
+        "line": 1822,
+        "message_expression": "\"no same-stem ingest; its checksum duplicates the valid \"\n                f\"name-paired snapshot for "
+      },
+      {
+        "line": 2011,
+        "message_expression": "\"current analysis must be complete\""
+      },
+      {
+        "line": 463,
+        "message_expression": "\"directory artifact type must define a shared schema\""
+      },
+      {
+        "line": 634,
+        "message_expression": "link health: missing target "
+      },
+      {
+        "line": 925,
+        "message_expression": "f\"expected {shown} is absent; its source URL matches \"\n            f\"{located(by_url)}, but snapshot_sha256 identifies different bytes\""
+      },
+      {
+        "line": 1283,
+        "message_expression": "f\"complete mark: missing entry for {path.relative_to(run.repo_root)} \u2014 \"\n                    \"link it with a context phrase, link its tag's head, or drop the mark; \"\n                    f\"{_TAG_README_FIX_HINT}\""
+      },
+      {
+        "line": 2015,
+        "message_expression": "\"current directory name does not match its source\""
+      },
+      {
+        "line": 900,
+        "message_expression": "f\"{shown} does not match snapshot_sha256; the exact recorded \"\n                f\"bytes are at {located(exact)}\""
+      },
+      {
+        "line": 907,
+        "message_expression": "f\"{shown} does not match snapshot_sha256 and no exact local \"\n                f\"match was found{detail}\""
+      },
+      {
+        "line": 1283,
+        "message_expression": "complete mark: missing entry for "
+      },
+      {
+        "line": 900,
+        "message_expression": " does not match snapshot_sha256; the exact recorded \"\n                f\"bytes are at "
+      },
+      {
+        "line": 907,
+        "message_expression": " does not match snapshot_sha256 and no exact local \"\n                f\"match was found"
+      }
+    ]
+  }
+}

@@ -139,13 +139,13 @@ def test_structural_and_source_checks_accept_registered_urls(tmp_path, wrapper):
     assert not errors
 
 
-@pytest.mark.parametrize("attribution", ["`README.md`", "[source](README.md)", "`documentation`"])
+@pytest.mark.parametrize("attribution", ["[source](README.md)"])
 def test_structural_validation_reports_missing_parsed_source(attribution):
     from commonplace.lib.validation import validate_quote_citations
 
     results = CheckResults(note_type="agentic-system-analysis-result")
     validate_quote_citations(results, "> quote\n> --- " + attribution + "\n")
-    assert any("expected a pinned source path or source URL" in message for message in results.warns)
+    assert any("expected a source path in backticks or source URL" in message for message in results.warns)
 
 
 @pytest.mark.parametrize("source,genre", [
@@ -166,7 +166,7 @@ def test_notes_preserve_repository_ingest_operators(tmp_path, source, genre, quo
 @pytest.mark.parametrize("attribution,expected", [
     ("[source](https://example.com/paper)", True),
     ("[unrelated](https://example.com/other)", False),
-    ("`source.md`", False),
+    ("`source.md`", True),
     ("`source.md` @ `sha256:{digest}`", True),
     ("`wrong.md` @ `sha256:{digest}`", False),
     ("`source.md` @ `sha256:wrong`", False),

@@ -14,7 +14,6 @@ import yaml
 from commonplace.cli import (
     agentic_analysis_handoff,
     agentic_analysis_publication,
-    quote,
 )
 from commonplace.lib import agentic_publication, agentic_set, systems_matrix, validation
 from commonplace.lib.agentic_publication import (
@@ -1574,55 +1573,6 @@ def test_path_only_anchor_to_a_binary_blob_resolves(tmp_path: Path) -> None:
     assert any("does not resolve to a blob" in item for item in failures)
 
 
-def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
-    state, spec, _ = publication_fixture(tmp_path)
-    for name in ("overview.md", *MEMBER_TYPES):
-        (output_path(state.parent, name)).unlink()
-    spec.generated_candidate_path.unlink(missing_ok=True)
-    text = write(tmp_path / "selection.txt", "Frozen source")
-    before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
-    assert quote.main([
-        str(state), "--source-path", "README.md", "--text-file", str(text),
-    ], cwd=tmp_path) == 0
-    output = capsys.readouterr().out
-    revision = frontmatter(state)["source"]["revision"]
-    assert output == f"> Frozen source\n> --- `README.md:1-1` @ `{revision}`\n"
-    assert before == {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
-    assert frontmatter(state)["run-status"] == "running"
-    assert not (tmp_path / spec.generated_destination).exists()
-
-
-def test_quote_cli_resolves_a_selection_list_in_one_call(tmp_path, capsys):
-    state, _, _ = publication_fixture(tmp_path)
-    root = Path(frontmatter(state)["source"]["path"])
-    revision = frontmatter(state)["source"]["revision"]
-    selections = write(tmp_path / "selections.json", json.dumps([
-        {"key": "readme", "source_path": "README.md", "text": "Frozen source"},
-        {"key": "absent", "source_path": "README.md", "text": "not in source"},
-        {"key": "nofile", "source_path": "missing.md", "text": "Frozen source"},
-    ]))
-    status = quote.main([str(state), "--selections", str(selections)], cwd=tmp_path)
-    output = capsys.readouterr()
-    assert status == 2
-    results = json.loads(output.out)
-    assert results["readme"] == {
-        "status": "citation",
-        "citation": f"> Frozen source\n> --- `README.md:1-1` @ `{revision}`\n",
-    }
-    assert results["absent"]["status"] == "error"
-    assert results["nofile"]["status"] == "error"
-    assert "2 of 3 selections need attention: absent (error), nofile (error)" in output.err
-    assert root.exists()
-
-    single = write(tmp_path / "single.json", json.dumps(
-        [{"key": "readme", "source_path": "README.md", "text": "Frozen source"}]
-    ))
-    assert quote.main([str(state), "--selections", str(single)], cwd=tmp_path) == 0
-    output = capsys.readouterr()
-    assert not output.err
-    assert json.loads(output.out)["readme"]["status"] == "citation"
-
-
 def test_generated_source_links_publish_through_regular_validator(tmp_path, monkeypatch):
     original_checkout = git_checkout
     foreign = "https://github.com/other/repo/blob/" + "b" * 40 + "/example.md#L1"
@@ -1644,7 +1594,6 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
     monkeypatch.setattr(sys.modules[__name__], "git_checkout", source_with_examples)
     state, spec, _ = publication_fixture(tmp_path)
     from commonplace.lib.agentic_analysis import SourceIdentity
-    from commonplace.lib.quote_generation import generate_quotes
 
     source = frontmatter(state)["source"]
     identity = SourceIdentity("git", source["identity"], source["revision"], Path(source["path"]), None)
@@ -1652,10 +1601,10 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
     write(identity.path / "README.md", "uncommitted replacement\n")
     runtime = state.parent / "output/runtime.md"
     for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
-        payload = generate_quotes(text, source=identity, source_path="README.md")
         if text == "* repeated comment":
-            assert [entry["start_line"] for entry in payload["occurrences"]] == [5, 6]
-        citation = payload if isinstance(payload, str) else payload["occurrences"][-1]["citation"]
+            citation = f"> {text}\n> --- `README.md:6-6` @ `{identity.revision}`\n"
+        else:
+            citation = f"> {text}\n> --- `README.md`\n"
         runtime.write_text(runtime.read_text() + "\n" + citation)
     repin(state.parent / "output")
     prepare_publication(spec)

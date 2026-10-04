@@ -1,0 +1,67 @@
+{
+  "bytes": {
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/runtime.md": 2720,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md": 4537,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/epistemic.md": 4998,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md": 4250,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md": 5730,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md": 2104,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/boundary.md": 6131,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/profile.md": 2609,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md": 8336,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-profile.md": 2155,
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/synthesize.md": 2586,
+    "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md": 5170
+  },
+  "searches": {
+    "commonplace-quote": [
+      "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+      "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+      "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/boundary.md",
+      "kb/reference/commands.md",
+      "kb/reference/adr/094-quotations-require-a-unique-occurrence-or-a-containing-range.md"
+    ],
+    "generate_quote_batch": [
+      "tests/commonplace/lib/test_quote_generation.py",
+      "src/commonplace/lib/quote_generation.py",
+      "src/commonplace/cli/quote.py"
+    ],
+    "generate_quotes": [
+      "tests/commonplace/lib/test_agentic_analysis.py",
+      "tests/commonplace/lib/test_quote_generation.py",
+      "src/commonplace/lib/quote_generation.py",
+      "src/commonplace/cli/quote.py"
+    ],
+    "parse_blockquotes": [
+      "tests/commonplace/lib/test_note_parser.py",
+      "tests/commonplace/lib/test_quote_matching.py",
+      "tests/commonplace/lib/test_quote_generation.py",
+      "src/commonplace/lib/quote_matching.py",
+      "src/commonplace/lib/agentic_analysis.py",
+      "src/commonplace/lib/validation.py",
+      "src/commonplace/lib/quote_verification.py"
+    ],
+    "verify_quote_anchors": [
+      "tests/commonplace/lib/test_quote_matching.py",
+      "tests/commonplace/lib/test_quote_generation.py",
+      "src/commonplace/lib/agentic_workflow.py",
+      "src/commonplace/lib/agentic_analysis.py",
+      "kb/reference/proposals/archive/quote-occurrence-location-and-verification.md"
+    ],
+    "commonplace-validate --full": [
+      "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/epistemic.md",
+      "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md",
+      "src/commonplace/cli/validate_notes.py",
+      "tests/commonplace/cli/test_validate_notes.py",
+      "kb/reference/proposals/code-scheduled-workflows.md"
+    ]
+  },
+  "search_hit_counts": {
+    "commonplace-quote": 5,
+    "generate_quote_batch": 3,
+    "generate_quotes": 4,
+    "parse_blockquotes": 7,
+    "verify_quote_anchors": 5,
+    "commonplace-validate --full": 5
+  }
+}

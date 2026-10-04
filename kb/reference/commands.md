@@ -56,9 +56,9 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 Publication invokes the regular validator on the prospective complete run
 set, including quotation occurrence within attribution ranges and the existence
-of path-only source anchors at the frozen commit. Quotation generation
-belongs to `commonplace-quote`; there is no separate authoring-time source-check
-operation in this command.
+of path-only source anchors at the frozen commit. Analysts use
+`commonplace-analysis-check` before submission; publication independently
+checks the assembled set.
 
 Inspect a destination, prepare or publish the accepted analysis of one running
 agentic-system analysis. `inspect-destination` takes `--generated-destination`
@@ -136,31 +136,23 @@ Audit `verbatim`-marked quotations over one or more Markdown files or
 directories, including unresolved pairings that do not fail ordinary
 validation.
 
-### commonplace-quote
+### commonplace-analysis-check
 
-Generate citations from selected text and an analysis run's frozen Git blob or
-capture. One occurrence returns only the Markdown citation, containing the exact
-source excerpt and derived range. Two to ten occurrences return JSON candidates
-with selection metadata. More than ten returns an error asking for a longer
-quote. When repeated occurrences share a line, the returned excerpts include
-enough surrounding source to distinguish them. The author chooses one and
-inserts it unchanged; the tool does not validate an assembled document.
-Publication uses the regular validator. Use `--text-file` or stdin for
-selected text to avoid shell quoting, and omit `--source-path` when the run's
-source is a capture rather than a Git blob.
+Check an analysis draft with the validator acceptance applies to its job:
+`commonplace-analysis-check <run-state> <job> [draft]`. Use the supplied job
+name, including its round. The draft defaults to that job's output. The
+command prints independent refusals together, with locations and repairs;
+it never edits the draft, advances the run or counts an attempt. Exit 0 means
+pass, 1 means refusals, and 2 means the command could not check the draft.
+A pass establishes neither claim support nor analytical correctness.
 
-To resolve many selections in one call, pass `--selections <file>` instead: a
-JSON list of objects with a unique `key`, the selected `text`, and
-`source_path` (omitted or null for a capture). The output is a JSON object
-keyed by selection; each value has `status: citation` with the citation to
-insert unchanged, `status: candidates` with the same occurrence list as the
-single-selection case, or `status: error` with the reason. Exit status 0 means
-every key resolved to a citation; 2 means at least one key needs a choice or
-failed, and stderr names them; 1 is a malformed list or an unusable run state.
-Each source file is read once per call. Treat a `candidates` entry as a choice
-to make (insert one candidate's citation unchanged, or lengthen the selection)
-and an `error` entry as a selection to rewrite from a fresh source read; an
-assembler that only handles `citation` fails silently on both.
+Quotation attributions may name only a frozen-source path. The check resolves
+that path at the run's revision, checks the passage under whitespace
+normalization, and proposes ranged attributions for ambiguity only when the
+range isolates the unchanged passage. Otherwise it asks for a longer quote.
+It appends counts to the job's `scratch/acceptance-checks.jsonl`; acceptance
+retains the same messages in the engine's records. General KB validation
+remains `commonplace-validate`.
 
 ### Generated indexes (no command)
 

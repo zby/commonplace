@@ -1,0 +1,20 @@
+{
+  "corpus": "two historical Dynamic Cheatsheet sets in kb/agentic-systems/reports/retained/",
+  "counts": {
+    "quotations": 39,
+    "unique": 38,
+    "ambiguous": 1,
+    "inseparable_by_range": 0,
+    "not_found": 0,
+    "unavailable": 0
+  },
+  "ambiguous": [
+    {
+      "member": "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02/runtime.md",
+      "attribution_line": 76,
+      "path": "dynamic_cheatsheet/language_model.py",
+      "occurrences": 2,
+      "inseparable_by_range": false
+    }
+  ]
+}

@@ -8,6 +8,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-09-27
+**Amended by:** [ADR 105](./105-let-analysts-run-their-acceptance-check-before-submission.md) replaces analysis citation construction with an analyst-callable acceptance check and path-only attribution. The constructor clauses below record the earlier decision; normalization and uniqueness remain current.
 
 ## Context
 

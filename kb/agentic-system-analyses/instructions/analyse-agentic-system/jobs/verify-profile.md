@@ -46,3 +46,5 @@ bounded assessments or a problem if no faithful profile is possible. Source
 reading is bounded to the cited paths needed to resolve a named ambiguity;
 log path, lines and purpose under Profile verification. New source facts cannot replace supporting records.
 The coordinator permits one profile correction; persistent blockers stop the run.
+
+Run the acceptance check before submitting.

@@ -48,3 +48,5 @@ supporting IDs, scope agreement and explicit missing facts. The coordinator
 checks structure and set references; the independent verifier judges support.
 After blockers, read previous-profile and verification and correct only the
 profile. There is one correction round. Persistent blockers stop publication.
+
+Run the acceptance check before submitting.

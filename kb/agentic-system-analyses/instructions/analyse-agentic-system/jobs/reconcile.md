@@ -78,3 +78,5 @@ memory analyst when the memory report is at fault. The runtime and epistemic
 members are not rewritten; a blocker in one of them that no amendment
 resolves stays an `Unresolved conflict:` with its prevented conclusion. Read
 `previous-reconciliation` too: carry over what still holds.
+
+Run the acceptance check before submitting.

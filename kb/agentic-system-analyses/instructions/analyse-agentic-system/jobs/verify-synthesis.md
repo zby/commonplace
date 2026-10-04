@@ -48,3 +48,5 @@ misleading, write `problem` and stop.
 
 Code sends a blocker list to the synthesizer for one correction round. If
 the final verification still names blockers, the run stops before publication.
+
+Run the acceptance check before submitting.
