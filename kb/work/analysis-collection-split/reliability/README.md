@@ -22,8 +22,15 @@ checks on its own draft and repairs what they report.
   the location and the repair; quotations become a blockquote with a
   path-only attribution, and the quotation helper's generation modes are
   removed. It dissolves the earlier structured recovery proposal: recovery
-  is the analyst's work, through the check. Takes effect when the operator
-  launches an executor on it.
+  is the analyst's work, through the check. Implemented; see
+  [its result](./analyst-acceptance-check-result.md).
+
+## Awaiting launch
+
+- [First run outcome check](./first-run-outcome-check-plan.md) — the first
+  analysis run under the split, the profile job, named IDs and the acceptance
+  check: what is run, the baseline, preflight, what to collect and count.
+  Agent draft; the operator's launch is the authority.
 
 ## Proposals awaiting adoption
 
