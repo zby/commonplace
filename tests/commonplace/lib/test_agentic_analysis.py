@@ -41,6 +41,7 @@ REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
 # fixtures pin the fixture repository's real HEAD.
 INPUTS_COMMIT = "f" * 40
 MEMBER_TYPES = {
+    "memory-profile.md": "agentic-system-analyses/types/agent-memory-profile.md",
     "runtime.md": "agentic-system-analyses/types/agentic-system-runtime-report.md",
     "memory.md": "agentic-system-analyses/types/agent-memory-analysis-report.md",
     "epistemic.md": "agentic-system-analyses/types/agentic-system-epistemic-report.md",
@@ -157,9 +158,7 @@ def uninspected_profile(scope: str) -> dict:
     }
 
 
-def memory_report_fixture(run_dir: Path, revision: str) -> Path:
-    """The specialist's report, which is the memory member unchanged: one
-    `MEM-` record, one annotated seed, one quote."""
+def profile_report_fixture(run_dir: Path, revision: str) -> Path:
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
     profile["axes"]["storage_substrate"] = {
         "assessment": "known", "values": ["sqlite", "files"],
@@ -168,13 +167,24 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "records": ["MEM-OBJ-1"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
+        "type": "agentic-system-analyses/types/agent-memory-profile.md",
+        "description": "Comparison of the fixture memory boundary from verified source records",
+        "run-id": RUN_ID, "source-identity": SOURCE,
+        "reviewed-boundary": revision, "memory-comparison": profile,
+    }
+    return write(run_dir / "output/memory-profile.md", "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n# Fixture memory profile\n\n## Comparison rationale\n\nBoth stores are MEM-OBJ-1.\n")
+
+
+def memory_report_fixture(run_dir: Path, revision: str) -> Path:
+    """The specialist's report, which is the memory member unchanged: one
+    `MEM-` record, one annotated seed, one quote."""
+    values = {
         "type": "agentic-system-analyses/types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "run-id": RUN_ID,
         "source-identity": SOURCE,
         "reviewed-boundary": revision,
         "report-status": "complete",
-        "memory-comparison": profile,
     }
     body = f"""# Fixture memory analysis
 
@@ -226,10 +236,6 @@ Fixture evidence on MEM-OBJ-1.
 ## Read-back
 
 Fixture evidence on RT-RTE-1.
-
-## Comparison rationale
-
-Both stores are MEM-OBJ-1.
 
 ## Integration issues
 
@@ -398,6 +404,10 @@ None.
 
 Passed.
 
+### Profile verification
+
+Profile passes.
+
 ### Synthesis verification
 
 Passed.
@@ -451,6 +461,7 @@ def write_set(run_dir: Path, revision: str) -> Path:
     members = {
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
+        "memory-profile.md": profile_report_fixture(run_dir, revision),
         "epistemic.md": write(run_dir / "output/epistemic.md", epistemic_text(revision)),
         "reconciliation.md": write(run_dir / "output/reconciliation.md", reconciliation_text(revision)),
     }
@@ -541,6 +552,10 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     report_values.update({"source-identity": values["source"]["identity"],
                           "reviewed-boundary": values["source"]["revision"]})
     replace_frontmatter(report, report_values)
+    profile = run_dir / "output/memory-profile.md"
+    replace_frontmatter(profile, {**frontmatter(profile),
+                                 "source-identity": values["source"]["identity"],
+                                 "reviewed-boundary": values["source"]["revision"]})
     generated = tmp_path / values["generated-review"]["path"]
     if generated.exists():
         (run_dir / "output/overview.md").write_bytes(generated.read_bytes())
@@ -755,7 +770,7 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path) -> N
     run_dir = state.parent
     values = frontmatter(state)
     sync_set(tmp_path, values)
-    expected = "memory.md: source-identity does not match the frozen source"
+    expected = "source-identity does not match memory.md"
     path = run_dir / "output/memory.md"
     replace_frontmatter(path, {**frontmatter(path), "source-identity": "https://example.invalid/other"})
     # Re-pin the manifest and copies around the edit without regenerating the member.
@@ -952,13 +967,15 @@ def test_handoff_command_renders_a_valid_run(
 
 
 @pytest.mark.parametrize("mutation", ["valid", "outside"])
-def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: str) -> None:
-    report = member_fixture(tmp_path) / "output/memory.md"
-    body = report.read_text().replace(
+def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation: str) -> None:
+    directory = member_fixture(tmp_path) / "output"
+    memory = directory / "memory.md"
+    report = directory / "memory-profile.md"
+    body = memory.read_text().replace(
         "### Evidenced absences\n\nnone proposed.\n",
         "### Evidenced absences\n\n#### MEM-ABS-1 — Inspected absence\n\nSearched.\n",
     )
-    report.write_text(body)
+    memory.write_text(body)
     metadata = frontmatter(report)
     axes = metadata["memory-comparison"]["axes"]
     axes["storage_substrate"] = {
@@ -972,17 +989,17 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
     }
     expected_error = None
     if mutation == "outside":
-        report.write_text(report.read_text().replace(
+        memory.write_text(memory.read_text().replace(
             "#### MEM-OBJ-1 — Fixture memory store\n", "",
         ) + "\nMEM-OBJ-1 outside the register.\n")
-        expected_error = "storage_substrate: unresolved records"
+        expected_error = "unresolved record"
     replace_frontmatter(report, metadata)
     checked = validation.validate_note(report, repo_root=tmp_path)
     if expected_error:
         assert any(expected_error in error for error in checked.fails)
     else:
         assert checked.fails == []
-        assert any("declared or annotated references resolve" in message for message in checked.passes)
+        assert any("canonical set references resolve" in message for message in checked.passes)
 
 
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path) -> None:
@@ -1185,9 +1202,9 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
     elif mutation == "member":
         memory.write_bytes(memory.read_bytes() + b"drift\n")
     elif mutation == "profile":
-        data = frontmatter(memory)
+        data = frontmatter(memory.with_name("memory-profile.md"))
         data.pop("memory-comparison")
-        replace_frontmatter(memory, data)
+        replace_frontmatter(memory.with_name("memory-profile.md"), data)
         repin_overview()
     else:
         key = "source-identity" if mutation == "source" else "reviewed-boundary"
@@ -1241,12 +1258,12 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
     state, spec, _ = publication_fixture(tmp_path)
-    memory = state.parent / "output/memory.md"
-    old_bytes = {name: (output_path(state.parent, name)).read_bytes() for name in ("memory.md", "overview.md")}
+    memory = state.parent / "output/memory-profile.md"
+    old_bytes = {name: (output_path(state.parent, name)).read_bytes() for name in ("memory-profile.md", "overview.md")}
     data = frontmatter(memory)
     data.pop("memory-comparison")
     replace_frontmatter(memory, data)
-    with pytest.raises(ValueError, match="manifest member memory.md: SHA-256 mismatch"):
+    with pytest.raises(ValueError, match="manifest member memory-profile.md: SHA-256 mismatch"):
         prepare_publication(spec)
     overview = state.parent / "output/overview.md"
     repin(overview.parent)

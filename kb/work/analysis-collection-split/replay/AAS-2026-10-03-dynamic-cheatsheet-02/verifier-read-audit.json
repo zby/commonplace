@@ -1,0 +1,109 @@
+{
+  "read_files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 11594,
+      "lines": 195
+    },
+    {
+      "path": "kb/work/COLLECTION.md",
+      "bytes": 8410,
+      "lines": 96
+    },
+    {
+      "path": "kb/agentic-system-analyses/COLLECTION.md",
+      "bytes": 2328,
+      "lines": 44
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/verify-profile.md",
+      "bytes": 1774,
+      "lines": 36
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "bytes": 11100,
+      "lines": 203
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+      "bytes": 14473,
+      "lines": 231
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+      "bytes": 5170,
+      "lines": 100
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/overview.md",
+      "bytes": 20898,
+      "lines": 106
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/runtime.md",
+      "bytes": 25542,
+      "lines": 216
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/memory.md",
+      "bytes": 31377,
+      "lines": 283
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/epistemic.md",
+      "bytes": 19057,
+      "lines": 152
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/reconciliation.md",
+      "bytes": 3988,
+      "lines": 22
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/frozen-source.json",
+      "bytes": 250,
+      "lines": 7
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/memory-profile.md",
+      "bytes": 12976,
+      "lines": 174
+    }
+  ],
+  "source_reads": [],
+  "total_bytes": 168937,
+  "total_lines": 1865,
+  "source_read_volume": {
+    "files": 0,
+    "lines": 0,
+    "bytes": 0
+  },
+  "session_provenance": {
+    "turn_context_model": "unavailable to verifier",
+    "session_id": "unavailable to verifier",
+    "session_path": "unavailable to verifier"
+  },
+  "recheck_reads": [
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/memory-profile.md",
+      "lines": "24-51, 124-137",
+      "purpose": "Check strengthened parametric/imported witnesses and corrected read-back signal."
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/memory.md",
+      "lines": "89-170",
+      "purpose": "Check MEM-OBJ-3 and MEM-RTE-3/4 descriptions of vector identity, lineage, retrieval selection, generation and parser fallback."
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/runtime.md",
+      "lines": "113-136",
+      "purpose": "Check RT-RTE-2 selector and synthesis route distinctions."
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "lines": "205-240",
+      "purpose": "Reapply unchanged read-back signal and profile evidence requirements."
+    }
+  ]
+}

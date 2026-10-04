@@ -9,14 +9,14 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_records import annotated_ids, declared_ids, is_absence
+from commonplace.lib.agentic_records import is_absence, set_record_errors
 from commonplace.lib.agentic_set import current_analyses
 
 __all__ = [
     "AXES",
     "csv_text",
     "load_results",
-    "memory_member_comparison",
+    "profile_member_comparison",
     "validate_comparison",
 ]
 AXES = {
@@ -203,14 +203,11 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
     return profile
 
 
-def memory_member_comparison(metadata: dict, body: str) -> dict:
-    """Validate a memory report's own ``memory-comparison`` and return it.
-
-    The one profile check shared by the memory type's validation rule and
-    the comparison loader. The profile cites records the report declares and
-    seeded records it annotates with ``On <ID>`` headings.
-    """
-    known = annotated_ids(body) | set(declared_ids(body))
+def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) -> dict:
+    """Resolve profile support against canonical declarations in record members."""
+    known, errors = set_record_errors(record_bodies)
+    if errors:
+        raise ValueError("; ".join(errors))
     return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
 
 
@@ -224,7 +221,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
     """Select explicit current overviews, or all current analyses; fail on gaps.
 
     The shared enumerator validates membership and manifest hashes. Identity
-    comes from the overview and comparison data from the memory member.
+    comes from the overview and comparison data from the profile member.
     """
     from commonplace.lib.validation import ValidationRun
 
@@ -248,11 +245,12 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         data = member_set.overview.frontmatter
         source = member_set.memory.frontmatter["source-identity"]
         meta = {**data, "analysis-run": data["run-id"]}
-        memory = member_set.memory
-        assert memory is not None  # a complete manifest names the memory member
-        # The memory member's own validation above already accepted this
-        # profile; reading it the same way keeps loading equal to publishing.
-        profile = memory_member_comparison(memory.frontmatter, memory.body)
+        member = member_set.profile
+        assert member is not None  # complete sets require the separate profile
+        profile = profile_member_comparison(member.frontmatter, record_bodies={
+            document.name: document.body for document in member_set.documents
+            if document.name != "memory-profile.md"
+        })
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
             raise ValueError(f"invalid evidence tier: {retained}")

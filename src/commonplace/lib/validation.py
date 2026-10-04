@@ -1142,20 +1142,49 @@ def _epistemic_ledger_rule(
         results.passes.append("epistemic ledger: table/record syntax and controlled function/status checked")
 
 
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-def _memory_report_comparison_rule(
+@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
+def _memory_profile_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.systems_matrix import memory_member_comparison
+    from commonplace.lib.agentic_records import annotated_ids, declared_ids
+    from commonplace.lib.agentic_set import OVERVIEW_NAME, RECORD_MEMBER_NAMES
+    from commonplace.lib.systems_matrix import profile_member_comparison
 
+    if re.search(r"(?m)^> ?", parsed.document.body):
+        results.fails.append("memory profile cannot add source quotations")
+    if declared_ids(parsed.document.body) or annotated_ids(parsed.document.body):
+        results.fails.append("memory profile cannot declare or annotate records")
+    directory = parsed.path.parent
+    # Worker outputs live in a job directory; accepted records are already
+    # canonical under that same run's output/ before profiling starts.
+    state = run.repo_root / "kb/agentic-system-analyses/state"
+    if parsed.path.is_relative_to(state):
+        parts = parsed.path.relative_to(state).parts
+        directory = state / parts[0] / "output"
+    bodies = {}
     try:
-        memory_member_comparison(parsed.document.frontmatter or {}, parsed.document.body)
-    except ValueError as exc:
+        for name in RECORD_MEMBER_NAMES:
+            loaded = run.load_document(directory / name)
+            if loaded.error or loaded.document is None:
+                raise ValueError(f"cannot read canonical record member {name}")
+            bodies[name] = loaded.document.body
+        # Before assembly, the boundary supplies source declarations.
+        overview = directory / OVERVIEW_NAME
+        if not overview.is_file() and directory.parent.parent == state:
+            overview = directory.parent / "boundary.md"
+        loaded = run.load_document(overview)
+        if loaded.error or loaded.document is None:
+            raise ValueError("cannot read overview or frozen boundary")
+        bodies[OVERVIEW_NAME] = loaded.document.body
+        profile_member_comparison(parsed.document.frontmatter or {}, record_bodies=bodies)
+        from commonplace.lib.agentic_records import set_record_errors
+        _, errors = set_record_errors({**bodies, "memory-profile.md": parsed.document.body})
+        if errors:
+            raise ValueError("; ".join(errors))
+    except (ValueError, OSError) as exc:
         results.fails.append(f"memory comparison: {exc}")
     else:
-        results.passes.append(
-            "memory comparison: assessments and declared or annotated references resolve"
-        )
+        results.passes.append("memory comparison: canonical set references resolve")
 
 
 @type_rule("types/type-spec.md")
@@ -1985,13 +2014,13 @@ def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *,
             if artifact.path.name != source_slug(identity, member_set.overview.frontmatter["system"]):
                 results.fails.append("current directory name does not match its source")
 
-    known, errors = set_record_errors({document.name: document.body for document in member_set.documents})
+    known, errors = set_record_errors({document.name: document.body for document in member_set.documents if document.name != "memory-profile.md"})
     results.fails.extend(errors)
     reconciliation = member_set.members.get("reconciliation.md")
     if reconciliation is not None and amendment_index(reconciliation.body) not in member_set.overview.body.splitlines():
         results.fails.append("overview amendment index does not match reconciliation")
-    if member_set.memory is not None:
+    if member_set.profile is not None:
         try:
-            validate_comparison(member_set.memory.frontmatter["memory-comparison"], known_ids=known)
+            validate_comparison(member_set.profile.frontmatter.get("memory-comparison"), known_ids=known)
         except ValueError as exc:
             results.fails.append(str(exc))

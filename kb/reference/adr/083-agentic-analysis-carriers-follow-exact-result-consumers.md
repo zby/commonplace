@@ -13,7 +13,7 @@ status: accepted
 **Amended by:** [ADR 095](./095-directory-artifacts-add-shared-set-validation.md)
 for manifest-pinned member sets, and [ADR 099](./099-agentic-analysis-method-and-reports-belong-to-the-collection.md)
 for collection-owned method and report paths. The single-file path below records
-the original decision; current run state lives under `kb/agentic-systems/reports/state/`.
+the original decision; current run state lives under `kb/agentic-system-analyses/state/`.
 
 ## Context
 

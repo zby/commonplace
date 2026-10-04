@@ -22,16 +22,16 @@ in the response. Load the output collection's contract before writing there.
 The evidence inputs are current accepted sets enumerated from
 `kb/agentic-system-analyses/retained/<system-slug>/`. Use the shared current-set
 enumerator through the comparison tools; no separate review metadata selects
-or pins the population. Each set is five
+or pins the population. Each set is six
 members: the overview holds the boundary, source register, amendment index,
 synthesis and limitations; `runtime.md` the runtime account and the records
 the runtime pass declared; `memory.md` the memory findings, memory-declared
-records and the `memory-comparison` profile; `epistemic.md` the epistemic
+records; `memory-profile.md` the `memory-comparison` profile; `epistemic.md` the epistemic
 blocks; `reconciliation.md` holds amendments, supersessions and unresolved
 conflicts. Validate the artifact directory before reading its members. The accepted overview is the reader entry point. It cannot replace a missing
 member or comparison assessment.
 
-Use `kb/agentic-system-analyses/types/agent-memory-analysis-report.md` for the `memory-comparison`
+Use `kb/agentic-system-analyses/types/agent-memory-profile.md` for the `memory-comparison`
 contract, `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
 `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for shared evidence and record
 conventions, and `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md` for overview

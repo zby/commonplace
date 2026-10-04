@@ -1,0 +1,91 @@
+{
+  "task": "independent final profile verification",
+  "run_id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+  "read_files": [
+    {
+      "path": "/home/zby/llm/commonplace/AGENTS.md",
+      "lines": 195,
+      "bytes": 11594
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/COLLECTION.md",
+      "lines": 96,
+      "bytes": 8410
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/agentic-system-analyses/COLLECTION.md",
+      "lines": 44,
+      "bytes": 2328
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/drafts/verify-profile.md",
+      "lines": 36,
+      "bytes": 1774
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "lines": 203,
+      "bytes": 11100
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+      "lines": 231,
+      "bytes": 14473
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+      "lines": 100,
+      "bytes": 5170
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/overview.md",
+      "lines": 91,
+      "bytes": 18649
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/runtime.md",
+      "lines": 328,
+      "bytes": 37378
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/memory.md",
+      "lines": 187,
+      "bytes": 21849
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/epistemic.md",
+      "lines": 247,
+      "bytes": 35401
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/reconciliation.md",
+      "lines": 28,
+      "bytes": 5528
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/frozen-source.json",
+      "lines": 7,
+      "bytes": 250
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/memory-profile.md",
+      "lines": 142,
+      "bytes": 11866
+    }
+  ],
+  "source_reads": [],
+  "source_read_volume": {
+    "paths": 0,
+    "lines": 0
+  },
+  "read_volume": {
+    "files": 14,
+    "lines": 1935,
+    "bytes": 185770
+  },
+  "session_provenance": {
+    "session_id": null,
+    "path": null,
+    "availability": "not available in this worker context"
+  }
+}

@@ -90,15 +90,15 @@ def test_cross_reference_is_not_a_record_declaration():
     data["axes"]["storage_substrate"] = known(["files"], ["MEM-OBJ-9"])
     body = "## Shared records\n\nSee MEM-OBJ-9 for more details.\n\n#### MEM-OBJ-1 — store\n"
     with pytest.raises(ValueError, match="unresolved"):
-        sm.memory_member_comparison({"memory-comparison": data}, body)
+        sm.profile_member_comparison({"memory-comparison": data}, record_bodies={"overview.md": "", "memory.md": body})
 
 
-def test_comparison_resolves_annotations_on_runtime_ids():
+def test_comparison_resolves_canonical_runtime_ids():
     identifier = "RT-OBJ-1"
     data = profile()
     data["axes"]["storage_substrate"] = known(["files"], [identifier])
-    body = f"## Shared records\n\n### Operative objects\n\n#### On {identifier} — Store\n"
-    assert sm.memory_member_comparison({"memory-comparison": data}, body) == data
+    body = "## Shared records\n\n### Operative objects\n\n" + "\n".join(f"#### {id_} — Fixture\n" for id_ in KNOWN | {identifier})
+    assert sm.profile_member_comparison({"memory-comparison": data}, record_bodies={"overview.md": "", "memory.md": body}) == data
 
 
 def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():

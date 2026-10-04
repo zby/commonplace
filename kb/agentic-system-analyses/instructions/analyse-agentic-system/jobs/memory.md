@@ -22,17 +22,18 @@ Common parameters are defined in the supplied worker rules.
 
 ## Task
 
-Produce a source-grounded account of `system`'s memory mechanisms and
-comparison classifications as one typed report at `output`. Code copies the
+Produce a source-grounded account of `system`'s memory mechanisms as one typed report at `output`. Code copies the
 accepted report unchanged into the set's memory member. The reconciliation
 owns integration and records its corrections as amendments in the
 reconciliation member.
 
 Work from `boundary` and `runtime`. Treat the runtime member's records as
 provisional findings to check against sources. Choose the memory scope from
-those routes and state its inclusions and exclusions in the profile's
-`scope` and the report's Boundary and evidence. The supplied memory type
-fixes the report content and comparison profile; the shared contracts fix
+those routes and state its inclusions and exclusions in Boundary and
+evidence. Describe storage, form, lineage, consumers and their authority,
+write agency, curation, trace-fed writes and read-back selection in
+source-native terms. Do not map them to controlled comparison values.
+The supplied memory type fixes the report content; the shared contracts fix
 evidence and record conventions.
 
 ## Inspect and explain
@@ -53,11 +54,10 @@ and withdrawal, through retained results and later consumers. The runtime
 is a starting account, not the inspection limit. Retain the type's coverage
 table; this is a memory-scope check, not a second whole-runtime inventory.
 
-## Classify and record
+## Record the mechanisms
 
-Use the memory type's comparison definitions. Profile citations must be
-declared or annotated locally; other prose may cite `runtime` or the Source
-register, and `epistemic` in correction rounds. Acceptance requires a valid
+Prose may cite `runtime` or the Source register, and `epistemic` in
+correction rounds. Acceptance requires a valid
 member with references resolved against those inputs and its own records.
 
 Before declaring records, compare referents with supplied records under

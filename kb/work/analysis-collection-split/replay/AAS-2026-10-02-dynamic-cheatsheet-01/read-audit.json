@@ -1,0 +1,116 @@
+{
+  "run_id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+  "output": "memory-profile.md",
+  "source_reads_occurred": false,
+  "source_read_volume": {
+    "files": 0,
+    "lines": 0
+  },
+  "reads": [
+    {
+      "path": "AGENTS.md",
+      "lines": "1-195",
+      "purpose": "Repository instructions"
+    },
+    {
+      "path": "kb/work/COLLECTION.md",
+      "lines": "1-96",
+      "purpose": "Work collection contract"
+    },
+    {
+      "path": "kb/agentic-system-analyses/COLLECTION.md",
+      "lines": "1-44",
+      "purpose": "Analysis collection contract"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/profile.md",
+      "lines": "1-37",
+      "purpose": "Profile replay procedure"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "lines": "1-203",
+      "purpose": "Profile type and axis definitions"
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+      "lines": "1-231",
+      "purpose": "Record identity, status, and scope contract"
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+      "lines": "1-100",
+      "purpose": "Frozen source boundary and evidence rules"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.schema.yaml",
+      "lines": "1-163",
+      "purpose": "Draft type schema"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/overview.md",
+      "lines": "1-91",
+      "purpose": "Supplied boundary, source register, and set scope"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/runtime.md",
+      "lines": "1-328",
+      "purpose": "Supplied runtime records and routes"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/memory.md",
+      "lines": "1-187",
+      "purpose": "Supplied memory records and annotations"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/epistemic.md",
+      "lines": "1-247",
+      "purpose": "Supplied epistemic records and canonical candidate distinctions"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/reconciliation.md",
+      "lines": "1-28",
+      "purpose": "Supplied amendments and canonical record resolution"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/frozen-source.json",
+      "lines": "1-7",
+      "purpose": "Frozen source identity metadata; no source content inspected"
+    },
+    {
+      "path": "src/commonplace/lib/systems_matrix.py",
+      "lines": "1-60, 100-165",
+      "purpose": "Comparison validator API and validation conditions"
+    },
+    {
+      "path": "src/commonplace/lib/systems_matrix.py",
+      "lines": "search results only",
+      "purpose": "Located validator definition and import path"
+    },
+    {
+      "path": "tests/commonplace/lib/test_systems_matrix.py",
+      "lines": "search results only",
+      "purpose": "Located validator references; test file not opened"
+    }
+  ],
+  "frozen_source_inspection": [],
+  "session_provenance": "No session record exposing turn_context.payload.model, timestamp, or session identifier was available in this execution context.",
+  "correction_reads": [
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/runtime.md",
+      "lines": "166-184, 203-219",
+      "purpose": "Recheck RT-RTE-1 and RT-RTE-3 implementation status and inputs wired to cumulative curation; strongest-basis reassessment for trace_source.session-logs"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/inputs/memory.md",
+      "lines": "130-134, 142-146",
+      "purpose": "Recheck annotated query/answer feed and separately afforded later resubmission route"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-02-dynamic-cheatsheet-01/memory-profile.md",
+      "lines": "110-129",
+      "purpose": "Inspect affected trace_learning and trace_source values before correcting only trace_source basis"
+    }
+  ],
+  "correction_disposition": "Set trace_source.session-logs basis to wired because existing cumulative route records wire query and generated answer into curation. Kept trace_learning.yes basis afforded because cross-call reuse depends on caller resubmission. No value, scope, or other profile field changed."
+}

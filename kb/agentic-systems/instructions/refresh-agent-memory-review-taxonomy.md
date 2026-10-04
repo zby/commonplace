@@ -13,7 +13,7 @@ through the producing method and source regeneration.
 Use the supplied current overviews under `kb/agentic-system-analyses/retained/`.
 Without an explicit selection, inspect all current analyses; do not
 silently drop an input that fails. An input must belong to a complete current retained set. Its sibling
-`ARTIFACT.yaml` pins every member, including the memory report that carries the profile. A legacy review,
+`ARTIFACT.yaml` pins every member, including the separate `memory-profile.md`. A legacy review,
 old CSV, transfer scan or compact summary cannot substitute for that set.
 If the request names only a legacy review, report the main-analysis regeneration
 needed rather than treating its prose as classification evidence.
@@ -27,7 +27,7 @@ within that request's scope; do not request authorization again.
 ## Check and read the inputs
 
 1. **Load the memory report contract.** Read
-   `kb/agentic-system-analyses/types/agent-memory-analysis-report.md`, including `memory-comparison`,
+   `kb/agentic-system-analyses/types/agent-memory-profile.md`, including `memory-comparison`,
    and the shared `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
    `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` contracts for evidence and
    record identity. Read `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md`

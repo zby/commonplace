@@ -30,6 +30,7 @@ properties:
           memory.md: *id001
           epistemic.md: *id001
           reconciliation.md: *id001
+          memory-profile.md: *id001
         additionalProperties: false
     additionalProperties: false
   members:
@@ -90,14 +91,28 @@ properties:
                 const: agentic-system-analyses/types/agentic-system-epistemic-report.md
       reconciliation.md:
         type: object
-        required: [frontmatter]
+        required:
+        - frontmatter
         properties:
           frontmatter:
             type: object
-            required: [type]
+            required:
+            - type
             properties:
               type:
                 const: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+      memory-profile.md:
+        type: object
+        required:
+        - frontmatter
+        properties:
+          frontmatter:
+            type: object
+            required:
+            - type
+            properties:
+              type:
+                const: agentic-system-analyses/types/agent-memory-profile.md
     additionalProperties: false
 allOf:
 - if:
@@ -121,6 +136,7 @@ allOf:
         - memory.md
         - epistemic.md
         - reconciliation.md
+        - memory-profile.md
       manifest:
         properties:
           members:
@@ -130,6 +146,7 @@ allOf:
             - memory.md
             - epistemic.md
             - reconciliation.md
+            - memory-profile.md
   else:
     properties:
       members:

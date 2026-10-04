@@ -1,0 +1,1983 @@
+{
+  "phase": 2,
+  "counting_rules": "complexity-measurements.md#counting-rules",
+  "scope": "Same semantic counting units as phase1. Finite mandatory method input, excluding root/harness and task data; immutable baseline/phase1 summaries retained. Source audit is a separately observable output obligation. Optional source-read volume belongs to replay audits, not mandatory method bytes. Existing residual concerns, references and conflicts are intentionally retained.",
+  "files": {
+    "J:boundary": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/boundary.md",
+    "J:runtime": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/runtime.md",
+    "J:memory": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md",
+    "J:epistemic": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/epistemic.md",
+    "J:reconcile": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md",
+    "J:verify": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md",
+    "J:synthesize": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/synthesize.md",
+    "J:verify-synthesis": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
+    "W": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+    "B": "kb/agentic-system-analyses/instructions/agentic-analysis-boundary.md",
+    "S": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+    "R": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+    "RT": "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+    "MT": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+    "ET": "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
+    "CT": "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
+    "OT": "kb/agentic-system-analyses/types/agentic-system-analysis-overview.md",
+    "A": "AGENTS.md",
+    "D:TB": "kb/notes/definitions/theory-builder.md",
+    "D:AT": "kb/notes/definitions/addressable-theory.md",
+    "D:RF": "kb/notes/definitions/representational-form.md",
+    "D:ER": "kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md",
+    "D:SI": "kb/notes/definitions/self-improving-system.md",
+    "LV": "kb/reference/link-vocabulary.md",
+    "C": "kb/agentic-system-analyses/COLLECTION.md",
+    "PT": "kb/agentic-system-analyses/types/agent-memory-profile.md",
+    "J:profile": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/profile.md",
+    "J:verify-profile": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-profile.md"
+  },
+  "activities": {
+    "A1": "publication (generated review, retention copy, pins)",
+    "A2": "public selection / comparison reading (populations, pin checks, trial clearance)",
+    "A3": "review and ordinary-account authoring",
+    "A4": "comparison writing",
+    "A5": "method authoring (instructions, skills, shared contracts, local types)",
+    "A6": "layout migration",
+    "A7": "retained-set and archive maintenance",
+    "A8": "transfer-scan state management",
+    "A9": "run lifecycle operations (cleanup, validation markers, run-state authoring, resume commit)",
+    "A10": "note authoring (promotion of transferable claims)"
+  },
+  "concerns": [
+    {
+      "id": "A7",
+      "where": "C Authoring: retained analyses are frozen; substantive corrections require a new run",
+      "reason": "Retained-output correction rule remains so analysts cannot mistake a working edit for correction of accepted evidence."
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-SI",
+      "roles": [
+        "synthesize",
+        "verify-synthesis"
+      ],
+      "candidates": [
+        "incumbent",
+        "shortening",
+        "split"
+      ],
+      "text": "OT requires a self-improving assessment and gives no inline definition; the definition is reachable only by link.",
+      "where": "OT L85-89 (link at L87)"
+    },
+    {
+      "id": "REF-BK",
+      "roles": [
+        "verify"
+      ],
+      "candidates": [
+        "incumbent",
+        "shortening",
+        "split"
+      ],
+      "text": "Verify must judge `whole-system` and the coverage table; their definitions are in the boundary contract, which the verify packet does not supply (verify.md restates part of them).",
+      "where": "J:verify L55-72; B L40-57 not in packet"
+    },
+    {
+      "id": "REF-SETLINK",
+      "roles": [
+        "synthesize"
+      ],
+      "candidates": [
+        "incumbent",
+        "shortening",
+        "split"
+      ],
+      "text": "Member links must resolve from the future retained set directory; the worker derives sibling link targets for a directory that does not yet exist.",
+      "where": "J:synthesize L48-49; validator agentic_set_member_link_failures (validation.py L1070-1079)"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "CF-SETLINK",
+      "roles": [
+        "reconcile"
+      ],
+      "candidates": [
+        "incumbent",
+        "shortening",
+        "split"
+      ],
+      "instruction_a": "Collection link grammar to kb/notes/ (C:incumbent L157, L172; C:shortening L74; C:split L41)",
+      "instruction_b": "CT L51-52: member-relative links stay inside the set directory",
+      "question": "May the reconciliation member link a defining note?",
+      "note": "Arises only if the reconciler writes a theory mapping. For runtime, memory, epistemic and synthesis the same restriction exists only in the validator (validation.py L1070-1079), not in a loaded instruction, so it is a hidden constraint, not a counted conflict."
+    },
+    {
+      "id": "CF-BLOCKED",
+      "roles": [
+        "memory"
+      ],
+      "candidates": [
+        "incumbent",
+        "shortening",
+        "split"
+      ],
+      "instruction_a": "MT L29-36: report-status `blocked` report that keeps all sections",
+      "instruction_b": "W L36-41: blocking conditions require `problem`; do not submit a blocked member",
+      "question": "When blocked, do I write a blocked report to output or a problem report?",
+      "note": ""
+    }
+  ],
+  "root_doctrine_concerns_constant": {
+    "code development and tests": "A L82-103",
+    "installation and health check": "A L95-97, L104-108",
+    "downloads": "A L109-111",
+    "staging and commits": "A L113-133",
+    "design proposals and note writing (YAGNI routing)": "A L89-92",
+    "tag assignment": "A L180-183",
+    "agent mailbox": "A L184-185",
+    "review, triage and fix system": "A L186-187",
+    "skill and instruction editing": "A L188-193",
+    "delegation as parent": "A L157-169"
+  },
+  "roles": {
+    "memory": {
+      "baseline_bytes": 61720,
+      "phase1_bytes": 51278,
+      "mandatory_files": [
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md",
+          "bytes": 4549,
+          "sha256": "2a025818830804ba0105aad91c6d9086cbbe071ad4d8052cd39c6a91adcdc9c9"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8336,
+          "sha256": "8577a427bf3ca0458c6fdc0d976e87704b5e73a899adcf922cb13669c4b0687b"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+          "bytes": 14473,
+          "sha256": "196e1d7f91c80dfa82f67dfa10893d541570c223f13b4a912e1db9c6f39414ae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+          "bytes": 6595,
+          "sha256": "e530cd46400da516f505bcc1b169e981e51940ca9d9f3cfaa18e6b65f70233b0"
+        },
+        {
+          "path": "kb/agentic-system-analyses/COLLECTION.md",
+          "bytes": 2328,
+          "sha256": "bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3"
+        }
+      ],
+      "baseline": {
+        "concerns": 10,
+        "concern_ids": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10"
+        ],
+        "refs": 9,
+        "ref_ids": [
+          "REF-COLL",
+          "REF-TB",
+          "REF-AT",
+          "REF-RF",
+          "REF-ER",
+          "REF-INC-LINKNOTES",
+          "REF-INC-SEARCHNOTES",
+          "REF-INC-SCANREF",
+          "REF-INC-LV"
+        ],
+        "conflicts": 4,
+        "conflict_ids": [
+          "CF-READ",
+          "CF-PRIOR",
+          "CF-PROMOTE",
+          "CF-BLOCKED"
+        ],
+        "obligations": 62,
+        "flagged": 14,
+        "flagged_ids": [
+          "MEM-profile-scope",
+          "MEM-axis-storage_substrate",
+          "MEM-axis-representational_form",
+          "MEM-axis-lineage",
+          "MEM-axis-behavioral_authority",
+          "MEM-axis-write_agency",
+          "MEM-axis-curation_operations",
+          "MEM-axis-read_back_direction",
+          "MEM-axis-read_back_signal",
+          "MEM-axis-trace_learning",
+          "MEM-axis-trace_source",
+          "MEM-axis-fields",
+          "MEM-profile-agreement",
+          "MEM-sec-comparison-rationale"
+        ],
+        "max_depth": 4,
+        "above_two": 10,
+        "above_two_ids": [
+          "MEM-kind-CMP",
+          "MEM-kind-OBJ",
+          "MEM-theory-conditions",
+          "MEM-addressability",
+          "MEM-INC-linknotes",
+          "MEM-axis-representational_form",
+          "MEM-axis-fields",
+          "MEM-sec-boundary",
+          "MEM-sec-readback",
+          "MEM-sec-integration"
+        ]
+      },
+      "phase1": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 1,
+        "conflict_ids": [
+          "CF-BLOCKED"
+        ],
+        "obligations": 60,
+        "flagged": 14,
+        "flagged_ids": [
+          "MEM-profile-scope",
+          "MEM-axis-storage_substrate",
+          "MEM-axis-representational_form",
+          "MEM-axis-lineage",
+          "MEM-axis-behavioral_authority",
+          "MEM-axis-write_agency",
+          "MEM-axis-curation_operations",
+          "MEM-axis-read_back_direction",
+          "MEM-axis-read_back_signal",
+          "MEM-axis-trace_learning",
+          "MEM-axis-trace_source",
+          "MEM-axis-fields",
+          "MEM-profile-agreement",
+          "MEM-sec-comparison-rationale"
+        ],
+        "max_depth": 4,
+        "above_two": 4,
+        "above_two_ids": [
+          "MEM-axis-fields",
+          "MEM-sec-boundary",
+          "MEM-sec-readback",
+          "MEM-sec-integration"
+        ]
+      },
+      "obligations": [
+        {
+          "id": "MEM-fm-type",
+          "text": "frontmatter type literal",
+          "files": [
+            "MT"
+          ],
+          "consumer": "validator; set",
+          "flag": null,
+          "baseline_sources": "MT frontmatter table",
+          "depth": 1
+        },
+        {
+          "id": "MEM-fm-description",
+          "text": "frontmatter description per type",
+          "files": [
+            "MT"
+          ],
+          "consumer": "retained-set reader (retrieval)",
+          "flag": null,
+          "baseline_sources": "MT frontmatter table",
+          "depth": 1
+        },
+        {
+          "id": "MEM-fm-run-id",
+          "text": "run-id copied unchanged",
+          "files": [
+            "MT",
+            "W"
+          ],
+          "consumer": "code identity check",
+          "flag": null,
+          "baseline_sources": "MT frontmatter table; W L21",
+          "depth": 2
+        },
+        {
+          "id": "MEM-fm-reviewed-boundary",
+          "text": "reviewed-boundary from boundary",
+          "files": [
+            "MT"
+          ],
+          "consumer": "code identity check",
+          "flag": null,
+          "baseline_sources": "MT frontmatter table",
+          "depth": 1
+        },
+        {
+          "id": "MEM-sr-headings",
+          "text": "Shared records with kind headings; empty-kind phrase",
+          "files": [
+            "MT",
+            "R"
+          ],
+          "consumer": "set validation; later roles",
+          "flag": null,
+          "baseline_sources": "MT Shared records section; R L28-34",
+          "depth": 2
+        },
+        {
+          "id": "MEM-decl",
+          "text": "declaration heading grammar, MEM- prefix, monotonic IDs",
+          "files": [
+            "J:memory",
+            "R"
+          ],
+          "consumer": "code prefix check; set resolution",
+          "flag": null,
+          "baseline_sources": "J:memory declaration sentence; R L14-23, L56-58",
+          "depth": 2
+        },
+        {
+          "id": "MEM-kind-CMP",
+          "text": "component record fields",
+          "files": [
+            "R",
+            "MT"
+          ],
+          "consumer": "later roles; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L113-115; MT L213-219",
+          "depth": 2
+        },
+        {
+          "id": "MEM-kind-OBJ",
+          "text": "operative object record fields",
+          "files": [
+            "R",
+            "MT"
+          ],
+          "consumer": "later roles; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L113-115; MT L213-219",
+          "depth": 2
+        },
+        {
+          "id": "MEM-kind-RTE",
+          "text": "route record fields",
+          "files": [
+            "R",
+            "MT"
+          ],
+          "consumer": "later roles; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L116; MT L217-219",
+          "depth": 2
+        },
+        {
+          "id": "MEM-kind-CLM",
+          "text": "claim record fields",
+          "files": [
+            "R"
+          ],
+          "consumer": "epistemic claim comparison; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L117",
+          "depth": 1
+        },
+        {
+          "id": "MEM-kind-ABS",
+          "text": "evidenced absence record fields",
+          "files": [
+            "R",
+            "S"
+          ],
+          "consumer": "memory profile `absent`; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L118; S L90-95",
+          "depth": 2
+        },
+        {
+          "id": "MEM-kind-BAP",
+          "text": "behavioral-authority path fields",
+          "files": [
+            "R",
+            "MT"
+          ],
+          "consumer": "reconciliation; synthesis",
+          "flag": null,
+          "baseline_sources": "R L119; MT L100-121",
+          "depth": 2
+        },
+        {
+          "id": "MEM-route-syntax",
+          "text": "seven labelled route fields; inapplicable/uninspected with reason",
+          "files": [
+            "R"
+          ],
+          "consumer": "validator; verify",
+          "flag": null,
+          "baseline_sources": "R L128-163",
+          "depth": 1
+        },
+        {
+          "id": "MEM-status",
+          "text": "conclusion-status controlled value per layer",
+          "files": [
+            "R"
+          ],
+          "consumer": "validator; verify; synthesis",
+          "flag": null,
+          "baseline_sources": "R L87-109",
+          "depth": 1
+        },
+        {
+          "id": "MEM-cmp-fixity",
+          "text": "component fixity fields for distributed-parametric components",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis (learning claims)",
+          "flag": null,
+          "baseline_sources": "R L121-126",
+          "depth": 1
+        },
+        {
+          "id": "MEM-cond-decision",
+          "text": "conditional fields: diagnosis/comparison/admission/selection routes",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L165-180",
+          "depth": 1
+        },
+        {
+          "id": "MEM-cond-admission",
+          "text": "conditional fields: routes admitting product/knowledge/capability changes",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis; reconciliation",
+          "flag": null,
+          "baseline_sources": "R L173",
+          "depth": 1
+        },
+        {
+          "id": "MEM-theory-conditions",
+          "text": "theory route account and theory-builder conditions 1-4",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis (OT theory statements)",
+          "flag": null,
+          "baseline_sources": "R L182-204",
+          "depth": 1
+        },
+        {
+          "id": "MEM-addressability",
+          "text": "addressability grade",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L211",
+          "depth": 1
+        },
+        {
+          "id": "MEM-persistence",
+          "text": "persistence horizon",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L212",
+          "depth": 1
+        },
+        {
+          "id": "MEM-learning",
+          "text": "learning claim",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L213",
+          "depth": 1
+        },
+        {
+          "id": "MEM-reflection",
+          "text": "reflection",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L214",
+          "depth": 1
+        },
+        {
+          "id": "MEM-reflective-tb",
+          "text": "reflective theory builder",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L215",
+          "depth": 1
+        },
+        {
+          "id": "MEM-autonomous-tb",
+          "text": "autonomous theory builder",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L216",
+          "depth": 1
+        },
+        {
+          "id": "MEM-reach",
+          "text": "explanatory-reach revision criterion",
+          "files": [
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "R L218-221",
+          "depth": 1
+        },
+        {
+          "id": "MEM-cite",
+          "text": "SRC-* plus local anchor; path-only prose anchors",
+          "files": [
+            "S",
+            "W"
+          ],
+          "consumer": "code checks; verify",
+          "flag": null,
+          "baseline_sources": "S L59-66; W L129-131",
+          "depth": 2
+        },
+        {
+          "id": "MEM-quote",
+          "text": "quotations generated by commonplace-quote, exact once",
+          "files": [
+            "S",
+            "W"
+          ],
+          "consumer": "code quote check; verify",
+          "flag": null,
+          "baseline_sources": "S L68-86; W L119-139",
+          "depth": 2
+        },
+        {
+          "id": "MEM-no-ranges",
+          "text": "full IDs, no ranges",
+          "files": [
+            "R"
+          ],
+          "consumer": "code reference check",
+          "flag": null,
+          "baseline_sources": "R L35-39",
+          "depth": 1
+        },
+        {
+          "id": "MEM-resolve",
+          "text": "citations resolve against own declarations and inputs",
+          "files": [
+            "J:memory",
+            "R"
+          ],
+          "consumer": "code reference check",
+          "flag": null,
+          "baseline_sources": "J:memory acceptance sentence; R L33-34",
+          "depth": 2
+        },
+        {
+          "id": "MEM-coverage-add",
+          "text": "additional file coverage recorded in the member",
+          "files": [
+            "S",
+            "W"
+          ],
+          "consumer": "verify",
+          "flag": null,
+          "baseline_sources": "S L26-35; W L108-117",
+          "depth": 2
+        },
+        {
+          "id": "MEM-evidence-interp",
+          "text": "evidence distinctions; negative findings name boundary and prevented conclusion",
+          "files": [
+            "S",
+            "MT"
+          ],
+          "consumer": "verify; synthesis",
+          "flag": null,
+          "baseline_sources": "S L88-95; MT evidence/limits text",
+          "depth": 2
+        },
+        {
+          "id": "MEM-native-first",
+          "text": "source-native operation before Commonplace mapping",
+          "files": [
+            "S",
+            "C"
+          ],
+          "consumer": "reader; synthesis",
+          "flag": null,
+          "baseline_sources": "S L97-100; C (candidate line)",
+          "depth": 2
+        },
+        {
+          "id": "MEM-transfer-excl",
+          "text": "no current Commonplace differences or adoption ideas",
+          "files": [
+            "C",
+            "J:memory"
+          ],
+          "consumer": "stable analysis",
+          "flag": null,
+          "baseline_sources": "C (candidate line); J:memory L44-45",
+          "depth": 2
+        },
+        {
+          "id": "MEM-overlap",
+          "text": "compare referents with supplied records; annotation instead of redeclaration; distinct-identity evidence",
+          "files": [
+            "R",
+            "J:memory"
+          ],
+          "consumer": "reconciliation",
+          "flag": null,
+          "baseline_sources": "R L60-79; J:memory L63-69",
+          "depth": 2
+        },
+        {
+          "id": "MEM-partof",
+          "text": "Part of: grammar and single-parent containment",
+          "files": [
+            "R",
+            "J:memory"
+          ],
+          "consumer": "set checks; reconciliation; verify",
+          "flag": null,
+          "baseline_sources": "R L64-79; J:memory L66-67",
+          "depth": 2
+        },
+        {
+          "id": "MEM-ids-unchanged",
+          "text": "keep supplied RT-/EPI- IDs unchanged",
+          "files": [
+            "R",
+            "J:memory"
+          ],
+          "consumer": "set resolution",
+          "flag": null,
+          "baseline_sources": "R L22-23; J:memory L70-71",
+          "depth": 2
+        },
+        {
+          "id": "MEM-fm-source-identity",
+          "text": "source-identity",
+          "files": [
+            "MT"
+          ],
+          "consumer": "code; comparison",
+          "flag": null,
+          "baseline_sources": "MT L27",
+          "depth": 1
+        },
+        {
+          "id": "MEM-fm-status",
+          "text": "report-status complete/blocked and blocked semantics",
+          "files": [
+            "MT",
+            "W"
+          ],
+          "consumer": "workflow",
+          "flag": null,
+          "baseline_sources": "MT L29-36; W L36-41",
+          "depth": 2
+        },
+        {
+          "id": "MEM-sec-boundary",
+          "text": "Boundary and evidence with coverage table",
+          "files": [
+            "MT",
+            "J:memory",
+            "S",
+            "W"
+          ],
+          "consumer": "reconcile; verify; reader",
+          "flag": null,
+          "baseline_sources": "MT L191-200; J:memory L31-34, L49-54; S L26-35; W L108-117",
+          "depth": 4
+        },
+        {
+          "id": "MEM-sec-core",
+          "text": "Core ideas",
+          "files": [
+            "MT",
+            "J:memory"
+          ],
+          "consumer": "synthesis; reader",
+          "flag": null,
+          "baseline_sources": "MT L202-206; J:memory L43-46",
+          "depth": 2
+        },
+        {
+          "id": "MEM-sec-write",
+          "text": "Write side",
+          "files": [
+            "MT",
+            "J:memory"
+          ],
+          "consumer": "synthesis; reader",
+          "flag": null,
+          "baseline_sources": "MT L234-243; J:memory L49-52",
+          "depth": 2
+        },
+        {
+          "id": "MEM-sec-readback",
+          "text": "Read-back section",
+          "files": [
+            "MT",
+            "R",
+            "J:memory"
+          ],
+          "consumer": "synthesis; reader",
+          "flag": null,
+          "baseline_sources": "MT L245-255; R L128-135; J:memory L49-52",
+          "depth": 3
+        },
+        {
+          "id": "MEM-sec-integration",
+          "text": "Integration issues with IDs, evidence and consequence",
+          "files": [
+            "MT",
+            "J:memory",
+            "R"
+          ],
+          "consumer": "reconciliation",
+          "flag": null,
+          "baseline_sources": "MT L263-271; J:memory L43-44, L63-69; R L60-62",
+          "depth": 3
+        },
+        {
+          "id": "MEM-sec-limitations",
+          "text": "Limitations and checks with validation result; no 'Validation: pending'",
+          "files": [
+            "MT",
+            "J:memory"
+          ],
+          "consumer": "reader; acceptance",
+          "flag": null,
+          "baseline_sources": "MT L273-282; J:memory L86-94",
+          "depth": 2
+        },
+        {
+          "id": "MEM-annotations",
+          "text": "Annotations carry memory-specific descriptive fields only; no profile-driven local annotation requirement",
+          "files": [
+            "MT",
+            "R"
+          ],
+          "consumer": "reconciliation",
+          "flag": null,
+          "baseline_sources": "MT L221-232, L77-80; R L41-44",
+          "depth": 2
+        },
+        {
+          "id": "MEM-correction",
+          "text": "correction round: answer each returned finding, keep IDs, rewrite whole report",
+          "files": [
+            "J:memory",
+            "R"
+          ],
+          "consumer": "reconciliation",
+          "flag": null,
+          "baseline_sources": "J:memory L73-84; R L56-58",
+          "depth": 2
+        }
+      ],
+      "phase2": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 1,
+        "conflict_ids": [
+          "CF-BLOCKED"
+        ],
+        "obligations": 46,
+        "flagged": 0,
+        "flagged_ids": [],
+        "max_depth": 4,
+        "above_two": 3,
+        "above_two_ids": [
+          "MEM-sec-boundary",
+          "MEM-sec-readback",
+          "MEM-sec-integration"
+        ]
+      },
+      "phase2_bytes": 41451
+    },
+    "reconcile": {
+      "baseline_bytes": 80981,
+      "phase1_bytes": 70622,
+      "mandatory_files": [
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md",
+          "bytes": 4334,
+          "sha256": "ff79fd71ffaa7286e1a71dcc407b9a9ba32a6b6bd172ee82da63aca5d8c451ce"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8336,
+          "sha256": "8577a427bf3ca0458c6fdc0d976e87704b5e73a899adcf922cb13669c4b0687b"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+          "bytes": 14473,
+          "sha256": "196e1d7f91c80dfa82f67dfa10893d541570c223f13b4a912e1db9c6f39414ae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+          "bytes": 3456,
+          "sha256": "b8167996b8a55c5377b161d74f464842521bd0e5d11e32c9c3e5b1d3b2ff5eae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+          "bytes": 6595,
+          "sha256": "e530cd46400da516f505bcc1b169e981e51940ca9d9f3cfaa18e6b65f70233b0"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
+          "bytes": 12559,
+          "sha256": "ba6c3fd2370315637b2af708f50555ec0e4614f88531bfde17da2a8e17082b4f"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
+          "bytes": 3092,
+          "sha256": "ba9e010f00785b49dca2be15ad437104c532f680988a66301a85d82f3dc3bb01"
+        },
+        {
+          "path": "kb/agentic-system-analyses/COLLECTION.md",
+          "bytes": 2328,
+          "sha256": "bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3"
+        }
+      ],
+      "baseline": {
+        "concerns": 10,
+        "concern_ids": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10"
+        ],
+        "refs": 5,
+        "ref_ids": [
+          "REF-COLL",
+          "REF-TB",
+          "REF-AT",
+          "REF-RF",
+          "REF-ER"
+        ],
+        "conflicts": 5,
+        "conflict_ids": [
+          "CF-READ",
+          "CF-PRIOR",
+          "CF-PROMOTE",
+          "CF-EVLINE",
+          "CF-SETLINK"
+        ],
+        "obligations": 20,
+        "flagged": 2,
+        "flagged_ids": [
+          "REC-profile-check",
+          "REC-set-links"
+        ],
+        "max_depth": 5,
+        "above_two": 7,
+        "above_two_ids": [
+          "REC-amendment",
+          "REC-supersession",
+          "REC-split",
+          "REC-partof",
+          "REC-missing-part",
+          "REC-unresolved",
+          "REC-profile-check"
+        ]
+      },
+      "phase1": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 1,
+        "conflict_ids": [
+          "CF-SETLINK"
+        ],
+        "obligations": 19,
+        "flagged": 2,
+        "flagged_ids": [
+          "REC-profile-check",
+          "REC-set-links"
+        ],
+        "max_depth": 4,
+        "above_two": 7,
+        "above_two_ids": [
+          "REC-amendment",
+          "REC-supersession",
+          "REC-split",
+          "REC-partof",
+          "REC-missing-part",
+          "REC-unresolved",
+          "REC-profile-check"
+        ]
+      },
+      "obligations": [
+        {
+          "id": "REC-headings",
+          "text": "only ## Reconciliation, then optional Returned section",
+          "files": [
+            "J:reconcile",
+            "CT"
+          ],
+          "consumer": "code assembly",
+          "flag": null,
+          "baseline_sources": "J:reconcile L28-30, L68-71; CT L27-29",
+          "depth": 2
+        },
+        {
+          "id": "REC-amendment",
+          "text": "Amendment paragraph grammar",
+          "files": [
+            "R",
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "verify; synthesis; overview index",
+          "flag": null,
+          "baseline_sources": "R L46-58; CT L29-35; J:reconcile L38-39, L62-64",
+          "depth": 3
+        },
+        {
+          "id": "REC-supersession",
+          "text": "duplicate supersession",
+          "files": [
+            "R",
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "verify; synthesis",
+          "flag": null,
+          "baseline_sources": "R L48-55; CT L33-35; J:reconcile L38",
+          "depth": 3
+        },
+        {
+          "id": "REC-split",
+          "text": "split supersession only by declared parts; never allocate IDs",
+          "files": [
+            "R",
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "verify",
+          "flag": null,
+          "baseline_sources": "R L50-55; CT L37-43; J:reconcile L40-42",
+          "depth": 3
+        },
+        {
+          "id": "REC-partof",
+          "text": "check Part of: relations; keep valid containers",
+          "files": [
+            "R",
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "verify",
+          "flag": null,
+          "baseline_sources": "R L64-79; CT L39-40; J:reconcile L39-40",
+          "depth": 3
+        },
+        {
+          "id": "REC-missing-part",
+          "text": "missing part: return or Unresolved conflict",
+          "files": [
+            "R",
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "memory correction; verify",
+          "flag": null,
+          "baseline_sources": "R L80-85; CT L40-43; J:reconcile L42-46",
+          "depth": 3
+        },
+        {
+          "id": "REC-unresolved",
+          "text": "Unresolved conflict paragraph format",
+          "files": [
+            "CT",
+            "J:reconcile",
+            "R"
+          ],
+          "consumer": "verify; synthesis Limitations",
+          "flag": null,
+          "baseline_sources": "CT L45-49; J:reconcile L74-77; R L82-84",
+          "depth": 3
+        },
+        {
+          "id": "REC-convergence",
+          "text": "independent convergence only when independent",
+          "files": [
+            "J:reconcile",
+            "CT"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "J:reconcile L46-47; CT L30",
+          "depth": 2
+        },
+        {
+          "id": "REC-ownership",
+          "text": "recheck shared-route ownership",
+          "files": [
+            "J:reconcile",
+            "CT"
+          ],
+          "consumer": "verify",
+          "flag": null,
+          "baseline_sources": "J:reconcile L47; CT L30-31",
+          "depth": 2
+        },
+        {
+          "id": "REC-admission",
+          "text": "attach memory routes' admission fields",
+          "files": [
+            "J:reconcile",
+            "R"
+          ],
+          "consumer": "synthesis",
+          "flag": null,
+          "baseline_sources": "J:reconcile L48-49; R L173",
+          "depth": 2
+        },
+        {
+          "id": "REC-resolve",
+          "text": "every cited ID resolves; keep declaring prefix",
+          "files": [
+            "J:reconcile",
+            "R"
+          ],
+          "consumer": "code reference check",
+          "flag": null,
+          "baseline_sources": "J:reconcile L59-64; R L22-23, L33-34",
+          "depth": 2
+        },
+        {
+          "id": "REC-no-ranges",
+          "text": "full IDs, no ranges (not restated in J:reconcile)",
+          "files": [
+            "R"
+          ],
+          "consumer": "code reference check",
+          "flag": null,
+          "baseline_sources": "R L35-39",
+          "depth": 1
+        },
+        {
+          "id": "REC-return",
+          "text": "Returned section format; may-return gating; malformed memory citation is a return",
+          "files": [
+            "J:reconcile"
+          ],
+          "consumer": "memory correction round",
+          "flag": null,
+          "baseline_sources": "J:reconcile L66-78",
+          "depth": 1
+        },
+        {
+          "id": "REC-blockers",
+          "text": "after-blockers: resolve each blocker; carry over previous",
+          "files": [
+            "J:reconcile"
+          ],
+          "consumer": "verify",
+          "flag": null,
+          "baseline_sources": "J:reconcile L34-36, L80-88",
+          "depth": 1
+        },
+        {
+          "id": "REC-integration",
+          "text": "integration-issue dispositions",
+          "files": [
+            "CT",
+            "MT"
+          ],
+          "consumer": "verify; synthesis",
+          "flag": null,
+          "baseline_sources": "CT L29-31; MT L263-271",
+          "depth": 2
+        },
+        {
+          "id": "REC-anchors",
+          "text": "prose anchors without line ranges",
+          "files": [
+            "S",
+            "W"
+          ],
+          "consumer": "code check",
+          "flag": null,
+          "baseline_sources": "S L59-66; W L129-131",
+          "depth": 2
+        },
+        {
+          "id": "REC-set-links",
+          "text": "member-relative links stay inside the set directory",
+          "files": [
+            "CT"
+          ],
+          "consumer": "publication/retention move",
+          "flag": "publication",
+          "baseline_sources": "CT L51-52",
+          "depth": 1
+        },
+        {
+          "id": "REC-no-rewrite",
+          "text": "no synthesis or verification text; no analyst rewrite",
+          "files": [
+            "CT",
+            "J:reconcile"
+          ],
+          "consumer": "assembly",
+          "flag": null,
+          "baseline_sources": "CT L52-53; J:reconcile L30, L55-57",
+          "depth": 2
+        }
+      ],
+      "phase2": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 1,
+        "conflict_ids": [
+          "CF-SETLINK"
+        ],
+        "obligations": 18,
+        "flagged": 1,
+        "flagged_ids": [
+          "REC-set-links"
+        ],
+        "max_depth": 3,
+        "above_two": 6,
+        "above_two_ids": [
+          "REC-amendment",
+          "REC-supersession",
+          "REC-split",
+          "REC-partof",
+          "REC-missing-part",
+          "REC-unresolved"
+        ]
+      },
+      "phase2_bytes": 60343
+    },
+    "verify": {
+      "baseline_bytes": 82391,
+      "phase1_bytes": 72032,
+      "mandatory_files": [
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md",
+          "bytes": 5802,
+          "sha256": "544c2ed6ca0534ec44879a6bcfa5d947dc3983245e58249f725a1d3147b96aea"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8336,
+          "sha256": "8577a427bf3ca0458c6fdc0d976e87704b5e73a899adcf922cb13669c4b0687b"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+          "bytes": 14473,
+          "sha256": "196e1d7f91c80dfa82f67dfa10893d541570c223f13b4a912e1db9c6f39414ae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+          "bytes": 3456,
+          "sha256": "b8167996b8a55c5377b161d74f464842521bd0e5d11e32c9c3e5b1d3b2ff5eae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+          "bytes": 6595,
+          "sha256": "e530cd46400da516f505bcc1b169e981e51940ca9d9f3cfaa18e6b65f70233b0"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
+          "bytes": 12559,
+          "sha256": "ba6c3fd2370315637b2af708f50555ec0e4614f88531bfde17da2a8e17082b4f"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
+          "bytes": 3092,
+          "sha256": "ba9e010f00785b49dca2be15ad437104c532f680988a66301a85d82f3dc3bb01"
+        },
+        {
+          "path": "kb/agentic-system-analyses/COLLECTION.md",
+          "bytes": 2328,
+          "sha256": "bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3"
+        }
+      ],
+      "baseline": {
+        "concerns": 10,
+        "concern_ids": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10"
+        ],
+        "refs": 6,
+        "ref_ids": [
+          "REF-COLL",
+          "REF-TB",
+          "REF-AT",
+          "REF-RF",
+          "REF-ER",
+          "REF-BK"
+        ],
+        "conflicts": 4,
+        "conflict_ids": [
+          "CF-READ",
+          "CF-PRIOR",
+          "CF-PROMOTE",
+          "CF-EVLINE"
+        ],
+        "obligations": 14,
+        "flagged": 1,
+        "flagged_ids": [
+          "VER-profile"
+        ],
+        "max_depth": 4,
+        "above_two": 3,
+        "above_two_ids": [
+          "VER-content",
+          "VER-profile",
+          "VER-problem"
+        ]
+      },
+      "phase1": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 1,
+        "ref_ids": [
+          "REF-BK"
+        ],
+        "conflicts": 0,
+        "conflict_ids": [],
+        "obligations": 13,
+        "flagged": 1,
+        "flagged_ids": [
+          "VER-profile"
+        ],
+        "max_depth": 3,
+        "above_two": 3,
+        "above_two_ids": [
+          "VER-content",
+          "VER-profile",
+          "VER-problem"
+        ]
+      },
+      "obligations": [
+        {
+          "id": "VER-sections",
+          "text": "exactly ### Record verification and ### Blockers",
+          "files": [
+            "J:verify"
+          ],
+          "consumer": "code; overview",
+          "flag": null,
+          "baseline_sources": "J:verify L29-36",
+          "depth": 1
+        },
+        {
+          "id": "VER-content",
+          "text": "record checked routes, dispositions, anchors, IDs, statuses, boundary, members, conflicts",
+          "files": [
+            "J:verify",
+            "S",
+            "R"
+          ],
+          "consumer": "overview reader; reconcile",
+          "flag": null,
+          "baseline_sources": "J:verify L49-51; S L59-86; R L87-109",
+          "depth": 3
+        },
+        {
+          "id": "VER-no-ranges",
+          "text": "full IDs, no ranges",
+          "files": [
+            "J:verify",
+            "R"
+          ],
+          "consumer": "code check",
+          "flag": null,
+          "baseline_sources": "J:verify L52-53; R L35-39",
+          "depth": 2
+        },
+        {
+          "id": "VER-boundary",
+          "text": "boundary kind and coverage table against the repository tree",
+          "files": [
+            "J:verify",
+            "S"
+          ],
+          "consumer": "run integrity",
+          "flag": null,
+          "baseline_sources": "J:verify L55-65; S L37-43 (B not supplied)",
+          "depth": 2
+        },
+        {
+          "id": "VER-problem",
+          "text": "problem versus blocker for boundary contradiction",
+          "files": [
+            "J:verify",
+            "W",
+            "S"
+          ],
+          "consumer": "workflow",
+          "flag": null,
+          "baseline_sources": "J:verify L67-72, L108-111; W L44-47; S L37-43",
+          "depth": 3
+        },
+        {
+          "id": "VER-partof",
+          "text": "Part of: and split checks",
+          "files": [
+            "J:verify",
+            "R"
+          ],
+          "consumer": "reconcile",
+          "flag": null,
+          "baseline_sources": "J:verify L74-82; R L64-79",
+          "depth": 2
+        },
+        {
+          "id": "VER-blocker-def",
+          "text": "blocker definition and available repairs",
+          "files": [
+            "J:verify",
+            "CT"
+          ],
+          "consumer": "reconcile",
+          "flag": null,
+          "baseline_sources": "J:verify L84-106; CT L45-49",
+          "depth": 2
+        },
+        {
+          "id": "VER-blockers-format",
+          "text": "exactly none or a list",
+          "files": [
+            "J:verify"
+          ],
+          "consumer": "code control",
+          "flag": null,
+          "baseline_sources": "J:verify L113-117",
+          "depth": 1
+        },
+        {
+          "id": "VER-structural",
+          "text": "structural failures become blockers",
+          "files": [
+            "J:verify"
+          ],
+          "consumer": "code control",
+          "flag": null,
+          "baseline_sources": "J:verify L38-39, L92-93",
+          "depth": 1
+        },
+        {
+          "id": "VER-amended",
+          "text": "judge records as amended",
+          "files": [
+            "J:verify",
+            "R"
+          ],
+          "consumer": "reconcile",
+          "flag": null,
+          "baseline_sources": "J:verify L105-106; R L46-58",
+          "depth": 2
+        },
+        {
+          "id": "VER-anchors",
+          "text": "prose anchors without ranges",
+          "files": [
+            "S",
+            "W"
+          ],
+          "consumer": "code check",
+          "flag": null,
+          "baseline_sources": "S L59-66; W L129-131",
+          "depth": 2
+        },
+        {
+          "id": "VER-resolve",
+          "text": "citations resolve",
+          "files": [
+            "J:verify",
+            "R"
+          ],
+          "consumer": "code check",
+          "flag": null,
+          "baseline_sources": "J:verify L38; R L33-34",
+          "depth": 2
+        }
+      ],
+      "phase2": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 1,
+        "ref_ids": [
+          "REF-BK"
+        ],
+        "conflicts": 0,
+        "conflict_ids": [],
+        "obligations": 12,
+        "flagged": 0,
+        "flagged_ids": [],
+        "max_depth": 3,
+        "above_two": 2,
+        "above_two_ids": [
+          "VER-content",
+          "VER-problem"
+        ]
+      },
+      "phase2_bytes": 61811
+    },
+    "profile": {
+      "mandatory_files": [
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/profile.md",
+          "bytes": 2609,
+          "sha256": "e5cf9a5ce2cf1f964f1abbb87c19b02367b3126f9a17ec365060020fbcca2d5c"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8336,
+          "sha256": "8577a427bf3ca0458c6fdc0d976e87704b5e73a899adcf922cb13669c4b0687b"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+          "bytes": 14473,
+          "sha256": "196e1d7f91c80dfa82f67dfa10893d541570c223f13b4a912e1db9c6f39414ae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agent-memory-profile.md",
+          "bytes": 11067,
+          "sha256": "4713d11364fff95d1a9344c00e14537d50bb832dc9318f1f1097d030f2756251"
+        },
+        {
+          "path": "kb/agentic-system-analyses/COLLECTION.md",
+          "bytes": 2328,
+          "sha256": "bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "PRO-profile-scope",
+          "text": "memory-comparison scope",
+          "files": [
+            "PT",
+            "J:profile"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-storage_substrate",
+          "text": "axis storage_substrate: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-representational_form",
+          "text": "axis representational_form: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-lineage",
+          "text": "axis lineage: controlled values",
+          "files": [
+            "PT"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 1
+        },
+        {
+          "id": "PRO-axis-behavioral_authority",
+          "text": "axis behavioral_authority: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-write_agency",
+          "text": "axis write_agency: controlled values",
+          "files": [
+            "PT"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 1
+        },
+        {
+          "id": "PRO-axis-curation_operations",
+          "text": "axis curation_operations: controlled values",
+          "files": [
+            "PT"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 1
+        },
+        {
+          "id": "PRO-axis-read_back_direction",
+          "text": "axis read_back_direction: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-read_back_signal",
+          "text": "axis read_back_signal: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-trace_learning",
+          "text": "axis trace_learning: controlled values",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-axis-trace_source",
+          "text": "axis trace_source: controlled values",
+          "files": [
+            "PT"
+          ],
+          "consumer": "comparison (systems matrix, landscape)",
+          "flag": "comparison",
+          "depth": 1
+        },
+        {
+          "id": "PRO-axis-fields",
+          "text": "Exact per-axis and per-value shape, canonical set IDs and ABS support; no local annotation",
+          "files": [
+            "PT",
+            "R"
+          ],
+          "consumer": "comparison; reconcile/verify check it",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-profile-agreement",
+          "text": "scope agreement across profile, records and prose",
+          "files": [
+            "PT",
+            "J:profile"
+          ],
+          "consumer": "comparison; reconcile/verify",
+          "flag": "comparison",
+          "depth": 2
+        },
+        {
+          "id": "PRO-sec-comparison-rationale",
+          "text": "Comparison rationale section",
+          "files": [
+            "PT"
+          ],
+          "consumer": "comparison reader",
+          "flag": "comparison",
+          "depth": 1
+        },
+        {
+          "id": "PRO-fm-type",
+          "text": "Profile frontmatter type",
+          "files": [
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-fm-description",
+          "text": "Profile frontmatter description",
+          "files": [
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-fm-run-id",
+          "text": "Profile frontmatter run-id",
+          "files": [
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-fm-source-identity",
+          "text": "Profile frontmatter source-identity",
+          "files": [
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-fm-reviewed-boundary",
+          "text": "Profile frontmatter reviewed-boundary",
+          "files": [
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-set-only",
+          "text": "No new records, annotations or evidence; cite accepted canonical members",
+          "files": [
+            "J:profile",
+            "PT",
+            "R"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 3
+        },
+        {
+          "id": "PRO-limits",
+          "text": "Missing recorded facts retain bounded assessments, source path and prevented conclusion",
+          "files": [
+            "J:profile",
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        },
+        {
+          "id": "PRO-correction",
+          "text": "After blockers correct only profile; one round",
+          "files": [
+            "J:profile"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "PRO-source-audit",
+          "text": "Optional source reading bounded to named ambiguity; log path, lines and purpose",
+          "files": [
+            "J:profile",
+            "S"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        }
+      ],
+      "phase2": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 0,
+        "conflict_ids": [],
+        "obligations": 23,
+        "flagged": 14,
+        "flagged_ids": [
+          "PRO-profile-scope",
+          "PRO-axis-storage_substrate",
+          "PRO-axis-representational_form",
+          "PRO-axis-lineage",
+          "PRO-axis-behavioral_authority",
+          "PRO-axis-write_agency",
+          "PRO-axis-curation_operations",
+          "PRO-axis-read_back_direction",
+          "PRO-axis-read_back_signal",
+          "PRO-axis-trace_learning",
+          "PRO-axis-trace_source",
+          "PRO-axis-fields",
+          "PRO-profile-agreement",
+          "PRO-sec-comparison-rationale"
+        ],
+        "max_depth": 3,
+        "above_two": 1,
+        "above_two_ids": [
+          "PRO-set-only"
+        ]
+      },
+      "phase2_bytes": 43983
+    },
+    "verify-profile": {
+      "mandatory_files": [
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-profile.md",
+          "bytes": 2155,
+          "sha256": "c1a7712e8f01963b257a41eb450961f88d19599b5520b10237d5cdc791c0111e"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+          "bytes": 8336,
+          "sha256": "8577a427bf3ca0458c6fdc0d976e87704b5e73a899adcf922cb13669c4b0687b"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+          "bytes": 5170,
+          "sha256": "8df021e4aa97dd5ed622aa9431ea48469f43faab76f2fa90e80c56f2eaa0dc32"
+        },
+        {
+          "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+          "bytes": 14473,
+          "sha256": "196e1d7f91c80dfa82f67dfa10893d541570c223f13b4a912e1db9c6f39414ae"
+        },
+        {
+          "path": "kb/agentic-system-analyses/types/agent-memory-profile.md",
+          "bytes": 11067,
+          "sha256": "4713d11364fff95d1a9344c00e14537d50bb832dc9318f1f1097d030f2756251"
+        },
+        {
+          "path": "kb/agentic-system-analyses/COLLECTION.md",
+          "bytes": 2328,
+          "sha256": "bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "VP-sections",
+          "text": "Exactly Profile verification then Blockers",
+          "files": [
+            "J:verify-profile"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "VP-axes",
+          "text": "Check ten definitions, scope, every positive and evidence basis",
+          "files": [
+            "J:verify-profile",
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        },
+        {
+          "id": "VP-canonical",
+          "text": "Apply amendments and supersessions; no profile-created support",
+          "files": [
+            "J:verify-profile",
+            "PT",
+            "R"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 3
+        },
+        {
+          "id": "VP-limits",
+          "text": "Check missing facts and coverage limits",
+          "files": [
+            "J:verify-profile",
+            "PT"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        },
+        {
+          "id": "VP-report",
+          "text": "Record checked axes and consequential limits",
+          "files": [
+            "J:verify-profile"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "VP-blockers",
+          "text": "Exact none or Markdown blocker list with axis, full IDs and resolving repair",
+          "files": [
+            "J:verify-profile",
+            "R"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        },
+        {
+          "id": "VP-no-rewrite",
+          "text": "No replacement profile, record edits or reconciliation reopening",
+          "files": [
+            "J:verify-profile"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 1
+        },
+        {
+          "id": "VP-source-audit",
+          "text": "Bounded ambiguity reads and path/line/purpose audit; no new facts as support",
+          "files": [
+            "J:verify-profile",
+            "S"
+          ],
+          "consumer": "profile verification and comparison readers",
+          "flag": null,
+          "depth": 2
+        }
+      ],
+      "phase2": {
+        "concerns": 1,
+        "concern_ids": [
+          "A7"
+        ],
+        "refs": 0,
+        "ref_ids": [],
+        "conflicts": 0,
+        "conflict_ids": [],
+        "obligations": 8,
+        "flagged": 0,
+        "flagged_ids": [],
+        "max_depth": 3,
+        "above_two": 1,
+        "above_two_ids": [
+          "VP-canonical"
+        ]
+      },
+      "phase2_bytes": 43529
+    }
+  },
+  "removed_obligation_ids": {
+    "memory": [
+      "MEM-profile-scope",
+      "MEM-axis-storage_substrate",
+      "MEM-axis-representational_form",
+      "MEM-axis-lineage",
+      "MEM-axis-behavioral_authority",
+      "MEM-axis-write_agency",
+      "MEM-axis-curation_operations",
+      "MEM-axis-read_back_direction",
+      "MEM-axis-read_back_signal",
+      "MEM-axis-trace_learning",
+      "MEM-axis-trace_source",
+      "MEM-axis-fields",
+      "MEM-profile-agreement",
+      "MEM-sec-comparison-rationale"
+    ],
+    "reconcile": [
+      "REC-profile-check"
+    ],
+    "verify": [
+      "VER-profile"
+    ]
+  }
+}

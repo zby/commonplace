@@ -51,7 +51,7 @@ the authored classification.
 
 ## Consequences
 
-Analysis coordinators and memory specialists consume the type and producing
+Analysis coordinators and profile classifiers consume the type and producing
 instructions as binding authoring rules. Schemas and validators enforce shape,
 controlled values and declared references. Matrix and table emitters preserve
 per-value evidence; statistics and synthesis consumers apply separate positive
@@ -63,6 +63,11 @@ not establish corpus representativeness, semantic correctness, observed benefit,
 or comparability between different scopes. Partial positives support lower-bound
 counts, not whole-population prevalence estimates.
 
-The [memory report type](../../agentic-system-analyses/types/agent-memory-analysis-report.md#memory-comparison-fields)
+The [memory profile type](../../agentic-system-analyses/types/agent-memory-profile.md#memory-comparison-fields)
 owns the authoring and counting contract; at the time of this decision the
 fields lived in the since-retired single-file analysis result type.
+
+Carrier amendment, 2026-10-04: the profile classifier authors a separate pinned
+`memory-profile.md` after record verification; independent profile verification
+checks support before synthesis. Axis definitions, evidence bases and counting
+rules remain unchanged.

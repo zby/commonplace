@@ -1,7 +1,7 @@
 """Build a memory comparison matrix directly from retained analysis sets.
 
 Each current accepted set has an ARTIFACT.yaml; that manifest
-pins every member, including the memory member that carries the comparison
+pins every member, including the profile member that carries the comparison
 profile.
 
 Run: uv run python scripts/build_systems_matrix.py [--review kb/agentic-system-analyses/retained/source/overview.md]

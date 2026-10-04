@@ -15,8 +15,7 @@
             "run-id",
             "source-identity",
             "reviewed-boundary",
-            "report-status",
-            "memory-comparison"
+            "report-status"
           ],
           "properties": {
             "type": {
@@ -43,111 +42,6 @@
                 "complete",
                 "blocked"
               ]
-            },
-            "memory-comparison": {
-              "type": "object",
-              "required": [
-                "scope",
-                "axes"
-              ],
-              "properties": {
-                "scope": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "axes": {
-                  "type": "object",
-                  "required": [
-                    "storage_substrate",
-                    "representational_form",
-                    "lineage",
-                    "behavioral_authority",
-                    "write_agency",
-                    "curation_operations",
-                    "read_back_direction",
-                    "read_back_signal",
-                    "trace_learning",
-                    "trace_source"
-                  ],
-                  "minProperties": 10,
-                  "maxProperties": 10,
-                  "additionalProperties": {
-                    "type": "object",
-                    "required": [
-                      "assessment",
-                      "evidence",
-                      "values",
-                      "records",
-                      "note"
-                    ],
-                    "properties": {
-                      "assessment": {
-                        "enum": [
-                          "known",
-                          "partial",
-                          "absent",
-                          "inapplicable",
-                          "uninspected",
-                          "not-determinable"
-                        ]
-                      },
-                      "values": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "records": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "note": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "evidence": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "object",
-                          "required": [
-                            "basis",
-                            "records",
-                            "note"
-                          ],
-                          "properties": {
-                            "basis": {
-                              "enum": [
-                                "claimed",
-                                "afforded",
-                                "wired",
-                                "observed",
-                                "causally supported"
-                              ]
-                            },
-                            "records": {
-                              "type": "array",
-                              "minItems": 1,
-                              "uniqueItems": true,
-                              "items": {
-                                "type": "string"
-                              }
-                            },
-                            "note": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          },
-                          "additionalProperties": false
-                        }
-                      }
-                    },
-                    "additionalProperties": false
-                  }
-                }
-              },
-              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -186,13 +80,6 @@
             {
               "contains": {
                 "const": "## Read-back"
-              },
-              "minContains": 1,
-              "maxContains": 1
-            },
-            {
-              "contains": {
-                "const": "## Comparison rationale"
               },
               "minContains": 1,
               "maxContains": 1

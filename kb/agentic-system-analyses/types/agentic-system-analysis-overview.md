@@ -111,9 +111,11 @@ its analytical consequence.
 ### Verification and blockers
 
 `## Verification and blockers` contains `### Record verification`,
-`### Synthesis verification`, `### Deterministic validation`, and
-`### Blockers`. The two independent checks remain separate: record
-verification covers the memory profile, amendments, supersessions and scope;
+`### Profile verification`, `### Synthesis verification`,
+`### Deterministic validation`, and
+`### Blockers`. The three independent checks remain separate: record
+verification covers amendments, supersessions and scope; profile verification
+covers axis coverage and per-value support against accepted records;
 synthesis verification covers support for public statements, readability
 without the members' context, and unresolved conflicts in Limitations.
 Record the exact deterministic validation
@@ -154,6 +156,8 @@ inputs-commit: "{full commit of this repository at run start}"
 ## Verification and blockers
 
 ### Record verification
+
+### Profile verification
 
 ### Synthesis verification
 

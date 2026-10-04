@@ -1,0 +1,66 @@
+[
+  {
+    "agent": "/root/profile_replay_01",
+    "session-id": "01a10579-bc76-7350-965b-6fd3eb6433b8",
+    "session-path": "/home/zby/.codex/sessions/2026/10/04/rollout-2026-10-04T07-53-46-01a10579-bc76-7350-965b-6fd3eb6433b8.jsonl",
+    "turn-contexts": [
+      {
+        "timestamp": "2026-10-04T05:53:49.028Z",
+        "model": "gpt-6-luna"
+      },
+      {
+        "timestamp": "2026-10-04T06:03:44.099Z",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "trace-sha256-at-check": "caa4dfa5706d5c6a29d786085ab655f77e8f7871db8f0fab2f9c05761a803243"
+  },
+  {
+    "agent": "/root/profile_replay_02",
+    "session-id": "01a1057a-1516-7a41-9457-46e9d4b2d46b",
+    "session-path": "/home/zby/.codex/sessions/2026/10/04/rollout-2026-10-04T07-54-09-01a1057a-1516-7a41-9457-46e9d4b2d46b.jsonl",
+    "turn-contexts": [
+      {
+        "timestamp": "2026-10-04T05:54:11.046Z",
+        "model": "gpt-6-luna"
+      },
+      {
+        "timestamp": "2026-10-04T06:03:58.800Z",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "trace-sha256-at-check": "a45fe8412841982af50766d2216b8e7a987a54e0a426668e34c127f18e53e546"
+  },
+  {
+    "agent": "/root/profile_verify_01",
+    "session-id": "01a1057e-1be8-7032-8a6a-029a60448fc4",
+    "session-path": "/home/zby/.codex/sessions/2026/10/04/rollout-2026-10-04T07-58-33-01a1057e-1be8-7032-8a6a-029a60448fc4.jsonl",
+    "turn-contexts": [
+      {
+        "timestamp": "2026-10-04T05:58:34.973Z",
+        "model": "gpt-6-luna"
+      },
+      {
+        "timestamp": "2026-10-04T06:07:46.375Z",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "trace-sha256-at-check": "b75d0ee4b236f5c787202371976f2d0137c5fd86670b219019b18bba5822b9f8"
+  },
+  {
+    "agent": "/root/profile_verify_02",
+    "session-id": "01a1057f-8fa4-7bb1-bd08-9fb4ae1af8e6",
+    "session-path": "/home/zby/.codex/sessions/2026/10/04/rollout-2026-10-04T08-00-08-01a1057f-8fa4-7bb1-bd08-9fb4ae1af8e6.jsonl",
+    "turn-contexts": [
+      {
+        "timestamp": "2026-10-04T06:00:10.311Z",
+        "model": "gpt-6-luna"
+      },
+      {
+        "timestamp": "2026-10-04T06:07:26.410Z",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "trace-sha256-at-check": "a0798b71339ad6a406511d489c249046bbb71de115fde91a9fb71d20adcad81c"
+  }
+]

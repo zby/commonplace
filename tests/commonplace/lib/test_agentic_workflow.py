@@ -50,6 +50,7 @@ from tests.commonplace.lib.test_agentic_analysis import (
     epistemic_text,
     git_checkout,
     memory_report_fixture,
+    profile_report_fixture,
     retained_fixture_paths,
     run_git,
     runtime_text,
@@ -182,6 +183,10 @@ class Fixture:
         )
         return text + f"\nWritten in round {round_}.\n"
 
+    def memory_profile(self) -> str:
+        return profile_report_fixture(self.scratch / "profile", self.revision).read_text().replace(
+            SOURCE, normalize_source_identity(self.identity))
+
     @staticmethod
     def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
         text = ("## Reconciliation\n\n"
@@ -226,6 +231,10 @@ class Fixture:
             workers["synthesize" if round_ == 0 else f"synthesize-{round_}"] = writes(self.synthesis)
             workers["verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}"] = writes(
                 lambda: self.verification(title="Synthesis verification"))
+        for round_ in range(AnalyseAgenticSystem.profile_correction_rounds + 1):
+            workers["profile" if round_ == 0 else f"profile-{round_}"] = writes(self.memory_profile)
+            workers["verify-profile" if round_ == 0 else f"verify-profile-{round_}"] = writes(
+                lambda: self.verification(title="Profile verification"))
         workers.update(overrides)
         return workers
 
@@ -330,6 +339,8 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         "memory-0",
         "reconcile-0",
         "verify-0",
+        "profile",
+        "verify-profile",
         "synthesize",
         "verify-synthesis",
     ]
@@ -829,7 +840,7 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     order = [
         name
         for name in scripted.launched
-        if name.startswith(("reconcile-", "verify-")) and not name.startswith("verify-synthesis")
+        if name.startswith(("reconcile-", "verify-")) and not name.startswith(("verify-synthesis", "verify-profile"))
     ]
     assert order == [
         "reconcile-0",
@@ -1310,6 +1321,7 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "boundary": "kb/agentic-system-analyses/instructions/agentic-analysis-boundary.md",
         "sources": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
         "records": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+        "profile": "kb/agentic-system-analyses/types/agent-memory-profile.md",
         "overview": "kb/agentic-system-analyses/types/agentic-system-analysis-overview.md",
         "runtime": "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
         "memory": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
@@ -1321,8 +1333,10 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "runtime": {"sources", "records", "runtime"},
         "memory-0": {"sources", "records", "memory"},
         "epistemic": {"sources", "records", "epistemic"},
-        "reconcile-0": set(types) - {"overview", "boundary"},
-        "verify-0": set(types) - {"overview", "boundary"},
+        "reconcile-0": set(types) - {"overview", "boundary", "profile"},
+        "verify-0": set(types) - {"overview", "boundary", "profile"},
+        "profile": {"sources", "records", "profile"},
+        "verify-profile": {"sources", "records", "profile"},
         "synthesize": {"sources", "records", "overview"},
         "verify-synthesis": {"sources", "records", "overview"},
     }
@@ -1333,6 +1347,8 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "epistemic": definition.epistemic_job(fixture.run_dir),
         "reconcile-0": definition.reconcile_job(fixture.run_dir, 0, 0, None, True),
         "verify-0": definition.verification_job(fixture.run_dir, 0, 0),
+        "profile": definition.profile_job(fixture.run_dir, 0),
+        "verify-profile": definition.profile_verification_job(fixture.run_dir, 0),
         "synthesize": definition.synthesis_job(fixture.run_dir, 0),
         "verify-synthesis": definition.synthesis_verification_job(fixture.run_dir, 0),
     }
@@ -1498,3 +1514,56 @@ def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst)
     receipt = json.loads((prompt.parent / "trial.json").read_text())
     assert str(contract.resolve()) in str(receipt)
     assert digest(contract) in str(receipt)
+
+
+def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None:
+    blocked = fixture.verification("- storage_substrate needs a corrected rationale for MEM-OBJ-1.", title="Profile verification")
+    corrected = fixture.memory_profile() + "\nCorrected rationale for MEM-OBJ-1.\n"
+    scripted, _ = agent(fixture, **{
+        "verify-profile": fixture.writes(lambda _: blocked),
+        "profile-1": fixture.writes(lambda _: corrected),
+    })
+    assert isinstance(scripted.run()[-1], Done)
+    assert scripted.launched.index("verify-0") < scripted.launched.index("profile")
+    assert scripted.launched.index("verify-profile-1") < scripted.launched.index("synthesize")
+    assert [n for n in scripted.launched if n.startswith("memory-")] == ["memory-0"]
+    assert [n for n in scripted.launched if n.startswith("reconcile-")] == ["reconcile-0"]
+    assert (fixture.run_dir / "output/memory.md").read_bytes() == (fixture.run_dir / "memory-report-0.md").read_bytes()
+    assert (fixture.public_path.parent / "memory-profile.md").read_text() == corrected
+    assert "### Profile verification" in fixture.public_path.read_text()
+    prompt = last_prompt(fixture, "profile-1")
+    assert "previous-profile =" in prompt and "profile-verification-0.md" in prompt
+
+
+def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> None:
+    blocked = fixture.verification("- storage_substrate is unsupported by MEM-OBJ-1.", title="Profile verification")
+    scripted, definition = agent(fixture, **{
+        "verify-profile": fixture.writes(lambda _: blocked),
+        "verify-profile-1": fixture.writes(lambda _: blocked),
+    })
+    outcome = scripted.run()[-1]
+    assert isinstance(outcome, Blocked)
+    assert "profile verification of the last round names blockers" in outcome.blocks[0].reason
+    assert "synthesize" not in scripted.launched
+    assert definition.publications == 0
+    assert not fixture.public_path.exists()
+
+
+@pytest.mark.parametrize("fault", ["declaration", "annotation", "quote", "reference", "identity"])
+def test_profile_cannot_create_its_own_support(fixture: Fixture, fault: str) -> None:
+    bad = fixture.memory_profile()
+    bad += {
+        "declaration": "\n## Shared records\n\n#### MEM-OBJ-99 — Invented support\n",
+        "annotation": "\n## Annotations\n\n#### On MEM-OBJ-1 — Extra evidence\n",
+        "quote": "\n> Source-only fact\n",
+        "reference": "\nMEM-OBJ-99 supports a value.\n",
+        "identity": "",
+    }[fault]
+    if fault == "identity":
+        bad = bad.replace(f"run-id: {RUN_ID}", "run-id: AAS-2026-09-04-other-01")
+    scripted, _ = agent(fixture, profile=fixture.writes(lambda _: bad))
+    drive_to(scripted, "profile")
+    outcome = scripted.orchestrator.step()
+    assert isinstance(outcome, Launch)
+    assert outcome.jobs[0].attempt == 2
+    assert not (fixture.run_dir / "output/memory-profile.md").exists()

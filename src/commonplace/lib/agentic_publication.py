@@ -52,6 +52,8 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
     "kb/agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml",
     "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
+    "kb/agentic-system-analyses/types/agent-memory-profile.md",
+    "kb/agentic-system-analyses/types/agent-memory-profile.schema.yaml",
     "kb/agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml",
     "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.md",
     "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.schema.yaml",

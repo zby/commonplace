@@ -55,9 +55,9 @@ from commonplace.lib.agentic_records import (
     set_record_errors,
 )
 from commonplace.lib.agentic_set import (
-    MEMBER_NAMES,
     OUTPUT_DIR,
     OVERVIEW_NAME,
+    RECORD_MEMBER_NAMES,
     RETAINED_ROOT,
     RUN_ID,
     normalize_source_identity,
@@ -81,6 +81,7 @@ SOURCES_CONTRACT = "../../agentic-analysis-sources.md"
 RECORDS_CONTRACT = "../../agentic-analysis-records.md"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
+PROFILE_CONTRACT = f"{TYPES}/agent-memory-profile.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
 EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
 RECONCILIATION_CONTRACT = f"{TYPES}/agentic-system-reconciliation-report.md"
@@ -101,6 +102,7 @@ BOUNDARY = "boundary.md"
 RUN_STATE = "run-state.md"
 RUNTIME = f"{OUTPUT_DIR}/runtime.md"
 MEMORY = f"{OUTPUT_DIR}/memory.md"
+PROFILE = f"{OUTPUT_DIR}/memory-profile.md"
 EPISTEMIC = f"{OUTPUT_DIR}/epistemic.md"
 RECONCILIATION = f"{OUTPUT_DIR}/reconciliation.md"
 OVERVIEW = f"{OUTPUT_DIR}/{OVERVIEW_NAME}"
@@ -563,15 +565,17 @@ class AnalyseAgenticSystem(Workflow):
     branch.
 
     Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
-    then rounds of `reconcile-<n>` and `verify-<n>`, followed by synthesis
-    and independent synthesis verification. Code renders the
-    overview and the public review.
+    then rounds of `reconcile-<n>` and `verify-<n>`, followed by profile
+    classification and independent profile verification,
+    then synthesis and independent synthesis verification. Code renders the
+    accepted overview.
     """
 
     correction_rounds = 2
     """How many reconciliation rounds may follow the first, whether a round
     returned findings to the memory analyst or its verification named blockers."""
     synthesis_correction_rounds = 1
+    profile_correction_rounds = 1
 
     def __init__(self, params=None) -> None:
         super().__init__(params)
@@ -674,6 +678,17 @@ class AnalyseAgenticSystem(Workflow):
             reconcile += 1
             reason = "blockers"
 
+        for profile_round in range(self.profile_correction_rounds + 1):
+            self.run_job(ctx, self.profile_job(run_dir, profile_round))
+            self.run_job(ctx, self.profile_verification_job(run_dir, profile_round))
+            profile_verification = (run_dir / round_file("profile-verification", profile_round)).read_text(encoding="utf-8")
+            blockers = subsection(profile_verification, "Blockers")
+            if blockers == "none":
+                break
+            if profile_round == self.profile_correction_rounds:
+                raise StopRun("the profile verification of the last round names blockers: " + blockers)
+        atomic_write(run_dir / PROFILE, (run_dir / round_file("profile", profile_round)).read_bytes())
+
         for synthesis_round in range(self.synthesis_correction_rounds + 1):
             self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round))
             self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round))
@@ -685,7 +700,7 @@ class AnalyseAgenticSystem(Workflow):
                 raise StopRun("the synthesis verification of the last round names blockers: " + blockers)
 
         self.assemble(run_dir, opening, fields, boundary_body, synthesis_round,
-                      verification, synthesis_verification)
+                      verification, profile_verification, synthesis_verification)
         self.validate_set(run_dir)
 
         spec = PublicationSpec(
@@ -952,7 +967,7 @@ class AnalyseAgenticSystem(Workflow):
     def record_check(self, run_dir: Path, fields: dict[str, Any]) -> list[str]:
         """Check records directly, before any public synthesis or overview exists."""
         failures = []
-        for name in MEMBER_NAMES:
+        for name in RECORD_MEMBER_NAMES:
             path = run_dir / OUTPUT_DIR / name
             failures.extend(f"{name}: {failure}" for failure in member_refusals(path, repo_root=self.repo))
             metadata, _ = split(path.read_text(encoding="utf-8"))
@@ -1002,6 +1017,51 @@ class AnalyseAgenticSystem(Workflow):
         if failures and subsection(path.read_text(encoding="utf-8"), "Blockers") == "none":
             refusals.append("structural failures require explicit blockers")
         return refusals or reference_refusals(partial(self.record_bodies, run_dir, verification=path))
+
+    def profile_job(self, run_dir: Path, round_: int) -> Job:
+        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
+                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION}
+        if round_:
+            reads.update({"previous-profile": round_file("profile", round_ - 1),
+                          "verification": round_file("profile-verification", round_ - 1)})
+        return self.job(
+            run_dir, "profile" if round_ == 0 else f"profile-{round_}",
+            round_file("profile", round_), reads=reads, instruction="profile",
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT),
+            parameters={"round": "after-blockers" if round_ else "first"},
+            validator=partial(self.profile_refusals, run_dir),
+        )
+
+    def profile_refusals(self, run_dir: Path, path: Path) -> list[str]:
+        refusals = member_refusals(path, repo_root=self.repo)
+        if refusals:
+            return refusals
+        metadata, _ = split(path.read_text(encoding="utf-8"))
+        if metadata.get("type") != "agentic-system-analyses/types/agent-memory-profile.md":
+            refusals.append("profile must use the memory profile type")
+        fields, _ = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
+        for key, expected in (("run-id", self.run_id),
+                              ("reviewed-boundary", fields["reviewed-boundary"]),
+                              ("source-identity", self.source_identity)):
+            if metadata.get(key) != expected:
+                refusals.append(f"profile identity: {key} does not match the run")
+        return refusals or reference_refusals(partial(self.record_bodies, run_dir, profile=path))
+
+    def profile_verification_job(self, run_dir: Path, round_: int) -> Job:
+        return self.job(
+            run_dir, "verify-profile" if round_ == 0 else f"verify-profile-{round_}",
+            round_file("profile-verification", round_),
+            reads={"profile": round_file("profile", round_), "boundary": BOUNDARY,
+                   "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
+                   "reconciliation": RECONCILIATION},
+            instruction="verify-profile",
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT),
+            validator=partial(self.profile_verification_refusals, run_dir),
+        )
+
+    def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
+        return verification_refusals(path, title="Profile verification") or reference_refusals(
+            partial(self.record_bodies, run_dir, verification=path))
 
     def synthesis_job(self, run_dir: Path, round_: int) -> Job:
         reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
@@ -1149,12 +1209,12 @@ class AnalyseAgenticSystem(Workflow):
     def assemble(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
         boundary_body: str, round_: int, record_verification: str,
-        synthesis_verification: str,
+        profile_verification: str, synthesis_verification: str,
     ) -> None:
-        """Render the final overview after both independent checks pass."""
+        """Render the final overview after all three independent checks pass."""
         write_file(run_dir / OVERVIEW, self.render_overview(
             run_dir, opening, fields, boundary_body, round_,
-            record_verification, synthesis_verification,
+            record_verification, profile_verification, synthesis_verification,
         ))
         build_manifest(run_dir)
 
@@ -1201,7 +1261,7 @@ class AnalyseAgenticSystem(Workflow):
     def render_overview(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
         boundary_body: str, round_: int, record_verification: str,
-        synthesis_verification: str,
+        profile_verification: str, synthesis_verification: str,
     ) -> str:
         synthesis = (run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8")
         index = amendment_index((run_dir / RECONCILIATION).read_text(encoding="utf-8"))
@@ -1210,6 +1270,7 @@ class AnalyseAgenticSystem(Workflow):
             f"## Limitations\n\n{section(synthesis, 'Limitations').strip()}\n\n"
             "## Verification and blockers\n\n"
             f"### Record verification\n\n{subsection(record_verification, 'Record verification')}\n\n"
+            f"### Profile verification\n\n{subsection(profile_verification, 'Profile verification')}\n\n"
             f"### Synthesis verification\n\n{subsection(synthesis_verification, 'Synthesis verification')}\n\n"
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             "### Blockers\n\nnone\n"
@@ -1241,6 +1302,7 @@ class AnalyseAgenticSystem(Workflow):
             f"## Limitations\n\n{reason}\n\n"
             "## Verification and blockers\n\n"
             f"### Record verification\n\n{not_reached}\n\n"
+            f"### Profile verification\n\n{not_reached}\n\n"
             f"### Synthesis verification\n\n{not_reached}\n\n"
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             f"### Blockers\n\n{reason}\n"

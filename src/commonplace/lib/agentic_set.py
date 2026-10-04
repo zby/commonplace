@@ -20,7 +20,9 @@ SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
 OVERVIEW_NAME = "overview.md"
-MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
+RECORD_MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
+PROFILE_NAME = "memory-profile.md"
+MEMBER_NAMES = (*RECORD_MEMBER_NAMES, PROFILE_NAME)
 SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
 
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
@@ -107,6 +109,10 @@ class MemberSet:
     def memory(self) -> SetDocument | None:
         return self.members.get("memory.md")
 
+    @property
+    def profile(self) -> SetDocument | None:
+        return self.members.get(PROFILE_NAME)
+
 
 def from_artifact(artifact: DirectoryArtifact) -> MemberSet:
     documents = {
@@ -142,6 +148,9 @@ def set_identity_errors(
             errors.append(f"{name}: run-id does not match the overview")
         if values.get("reviewed-boundary") != boundary:
             errors.append(f"{name}: reviewed-boundary does not match the overview")
+    if (member_set.profile is not None and member_set.memory is not None
+            and member_set.profile.frontmatter.get("source-identity") != member_set.memory.frontmatter.get("source-identity")):
+        errors.append("memory-profile.md: source-identity does not match memory.md")
     return errors
 
 

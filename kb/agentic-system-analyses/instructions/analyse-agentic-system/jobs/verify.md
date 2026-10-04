@@ -1,5 +1,5 @@
 ---
-description: "Job of an analyse-agentic-system run: independently check the reconciled records and memory profile before public synthesis"
+description: "Job of an analyse-agentic-system run: independently check the reconciled records before public synthesis"
 type: types/instruction.md
 ---
 
@@ -38,13 +38,8 @@ Verification and blockers:
 Acceptance requires valid verification sections, resolved citations and explicit
 blockers when the structural check has failures.
 
-Check the whole set, not the separate returns of the memory and epistemic
-analysts, against the Memory comparison fields of the
-[memory report type](../../../types/agent-memory-analysis-report.md), whose
-definitions govern every profile value: scope agreement with the canonical
-records across members, every scoped trace-fed write including compaction,
-each push signal's consumer and selector, and the reconciliation member's
-amendments and supersessions against the records they name.
+Check the whole record set, including reconciliation amendments and
+supersessions, against the shared source and record contracts.
 
 Record the checked routes and material dispositions, and the check of every
 source anchor, canonical ID, evidence status, boundary, member and unresolved
@@ -88,7 +83,7 @@ repair. Reconciliation may correct its own text, amend or supersede a record
 with an `Amendment:` paragraph, mark a conflict `Unresolved conflict:`, and,
 when `memory-return = yes`, return a finding to the memory analyst. For each
 blocker, give the member and IDs it affects and which of these repairs would
-resolve it. A known assessment unsupported by its records is a blocker;
+resolve it. An unsupported record finding is a blocker;
 properly scoped explicit uncertainty is not. Every failure the set check
 lists is a blocker too.
 

@@ -1,0 +1,97 @@
+{
+  "run_id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+  "output": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/memory-profile.md",
+  "profile_type": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+  "reads": [
+    {
+      "path": "AGENTS.md",
+      "lines": "1-195",
+      "purpose": "Repository and agent operating instructions"
+    },
+    {
+      "path": "kb/work/COLLECTION.md",
+      "lines": "1-96",
+      "purpose": "Workshop collection contract"
+    },
+    {
+      "path": "kb/agentic-system-analyses/COLLECTION.md",
+      "lines": "1-44",
+      "purpose": "Analysis collection contract"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/profile.md",
+      "lines": "1-37",
+      "purpose": "Commissioned profile classification instructions"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "lines": "40-69 and 84-85 and 132-174 (targeted definition reread; full file had been read on initial replay)",
+      "purpose": "Profile type, axis vocabulary, evidence and rationale requirements"
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+      "lines": "1-231",
+      "purpose": "Canonical record identities, statuses, parts, and route-field interpretation"
+    },
+    {
+      "path": "kb/agentic-system-analyses/instructions/agentic-analysis-sources.md",
+      "lines": "1-100",
+      "purpose": "Frozen source boundary and evidence-layer rules"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/overview.md",
+      "lines": "1-106",
+      "purpose": "Set boundary, source register, synthesis, record inventory and reconciliation context; initial combined output was truncated, recovered with bounded reads of lines 1-52 and 53-106"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/runtime.md",
+      "lines": "1-216",
+      "purpose": "Supplied runtime records and route evidence"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/memory.md",
+      "lines": "1-283",
+      "purpose": "Supplied memory records, annotations and scope"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/epistemic.md",
+      "lines": "1-152",
+      "purpose": "Supplied epistemic records, especially answer scoring boundary"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/reconciliation.md",
+      "lines": "1-22",
+      "purpose": "Amendment/supersession resolution and memory classification cross-check"
+    },
+    {
+      "path": "src/commonplace/lib/systems_matrix.py",
+      "lines": "100-190",
+      "purpose": "Inspect comparison validator signature and reference-validation requirements"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/profile-verification.md",
+      "lines": "1-11",
+      "purpose": "Single-round verifier feedback on read-back signal"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/drafts/agent-memory-profile.md",
+      "lines": "40-69 and 84-85 and 132-174 (targeted definition reread; full file had been read on initial replay)",
+      "purpose": "Recheck the controlled meaning of read-back signals and basis strength"
+    },
+    {
+      "path": "kb/work/analysis-collection-split/replay/AAS-2026-10-03-dynamic-cheatsheet-02/inputs/memory.md",
+      "lines": "89-110, 154-202, 230-254",
+      "purpose": "Recheck embedding identity/load, wired selector, synthesis route and container annotations"
+    }
+  ],
+  "frozen_source_reads": [],
+  "source_reads_occurred": false,
+  "source_read_volume": {
+    "files": 0,
+    "lines": 0
+  },
+  "input_members_read_completely": true,
+  "truncation_recovered": [
+    "overview.md"
+  ]
+}

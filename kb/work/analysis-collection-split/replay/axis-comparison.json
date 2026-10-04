@@ -1,0 +1,336 @@
+[
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "storage_substrate",
+    "retained-assessment": "partial",
+    "replay-assessment": "partial",
+    "retained-values": [
+      "in-memory"
+    ],
+    "replay-values": [
+      "in-memory"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "representational_form",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "natural-language",
+      "parametric"
+    ],
+    "replay-values": [
+      "natural-language",
+      "parametric"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "lineage",
+    "retained-assessment": "partial",
+    "replay-assessment": "partial",
+    "retained-values": [
+      "authored",
+      "trace-extracted"
+    ],
+    "replay-values": [
+      "authored",
+      "trace-extracted"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "behavioral_authority",
+    "retained-assessment": "partial",
+    "replay-assessment": "partial",
+    "retained-values": [
+      "knowledge",
+      "ranking",
+      "learning"
+    ],
+    "replay-values": [
+      "knowledge",
+      "ranking",
+      "learning"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "write_agency",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "automatic",
+      "manual"
+    ],
+    "replay-values": [
+      "automatic",
+      "manual"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "curation_operations",
+    "retained-assessment": "not-determinable",
+    "replay-assessment": "not-determinable",
+    "retained-values": [],
+    "replay-values": [],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "read_back_direction",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "pull",
+      "push"
+    ],
+    "replay-values": [
+      "pull",
+      "push"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "read_back_signal",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "inferred-embedding"
+    ],
+    "replay-values": [
+      "inferred-embedding"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "trace_learning",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "yes"
+    ],
+    "replay-values": [
+      "yes"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "axis": "trace_source",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "session-logs"
+    ],
+    "replay-values": [
+      "session-logs"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "storage_substrate",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "files",
+      "in-memory"
+    ],
+    "replay-values": [
+      "files",
+      "in-memory"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "representational_form",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "natural-language",
+      "parametric"
+    ],
+    "replay-values": [
+      "natural-language",
+      "parametric"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "lineage",
+    "retained-assessment": "partial",
+    "replay-assessment": "partial",
+    "retained-values": [
+      "imported",
+      "trace-extracted"
+    ],
+    "replay-values": [
+      "imported",
+      "trace-extracted"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "behavioral_authority",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "knowledge",
+      "ranking",
+      "routing",
+      "learning"
+    ],
+    "replay-values": [
+      "knowledge",
+      "ranking",
+      "routing",
+      "learning"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "write_agency",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "automatic",
+      "manual"
+    ],
+    "replay-values": [
+      "automatic",
+      "manual"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "curation_operations",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "consolidate",
+      "dedup",
+      "evolve",
+      "synthesize"
+    ],
+    "replay-values": [
+      "consolidate",
+      "dedup",
+      "evolve",
+      "synthesize"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "read_back_direction",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "pull",
+      "push"
+    ],
+    "replay-values": [
+      "pull",
+      "push"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "read_back_signal",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "coarse",
+      "inferred-embedding"
+    ],
+    "replay-values": [
+      "coarse",
+      "inferred-embedding"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "trace_learning",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "yes"
+    ],
+    "replay-values": [
+      "yes"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "axis": "trace_source",
+    "retained-assessment": "known",
+    "replay-assessment": "known",
+    "retained-values": [
+      "session-logs",
+      "tool-traces"
+    ],
+    "replay-values": [
+      "session-logs",
+      "tool-traces"
+    ],
+    "same-assessment": true,
+    "same-values": true,
+    "per-value-basis-differences": {}
+  }
+]

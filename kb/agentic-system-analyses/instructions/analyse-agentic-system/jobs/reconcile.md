@@ -46,14 +46,7 @@ the combined ID, missing part in prose, evidence and prevented conclusion.
 Report independent convergence only
 when the analysts reached it independently. Recheck shared-route ownership.
 Attach the admission fields of memory routes from the memory analyst's
-findings rather than tracing those mechanisms twice. The memory analyst's
-`memory-comparison` profile stays in the memory member with its scope,
-per-value evidence bases and records, coverage assessments, uncertainties,
-and rationale preserved; check it axis by axis, under the definitions of the
-[memory report type](../../../types/agent-memory-analysis-report.md)'s
-Memory comparison fields, against the records of the whole set, including
-every `EPI-` record of a transformation of retained content. Do not draft a
-second memory analysis, and do not silently strengthen the memory analyst's
+findings rather than tracing those mechanisms twice. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's
 findings.
 
 Every ID you cite, in amendments too, must resolve in the set your output

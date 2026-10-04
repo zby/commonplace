@@ -75,10 +75,14 @@ file. A workflow calls `ValidationRun.validate(directory)` to check the set
 without starting traversal; repeated requests reuse results and active
 cycles fail.
 
-Analysis set checks resolve references across all five members, including
+Analysis set checks resolve references across all six members, including
 amendments in the reconciliation, and check the overview's amendment index.
 Before synthesis, the workflow checks the four record members and their
-shared boundary directly; it does not require a provisional overview.
+shared boundary directly; it does not require a provisional overview. The
+separate profile resolves support against canonical declarations in those
+record members and the boundary. It contributes no declarations, annotations
+or source quotations. Explicit profile validation therefore reads its supporting
+record members; an isolated profile cannot validate its references.
 
 See [ADR 095](./adr/095-directory-artifacts-add-shared-set-validation.md)
 for the boundary and alternatives, and the

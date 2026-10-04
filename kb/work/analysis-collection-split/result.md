@@ -275,12 +275,121 @@ separately authorized recovery; residual conflicts and references are not fixed
 by the collection split. Phase 2 remains unstarted. After making the all-role dependency assertion
 explicit, the nine targeted tests above pass; Ruff and result validation pass.
 
+## Phase 2: separate profile job
+
+Completed on 2026-10-04 after the operator's explicit phase 2 continuation.
+The operator also approved amending ADR 093's carrier and author-role clauses;
+[the ADR check](./phase2-adr-check.md) records the clause dispositions. ADR 083's
+current state-path annotation was corrected without changing its policy.
+ADR 093 keeps its analytical definitions, evidence and counting rules.
+[ADR 103](../../reference/adr/103-classify-memory-profiles-after-record-verification.md)
+records the implemented separation.
+
+The [replay record](./replay/README.md) retains stripped inputs and their receipts,
+initial and corrected candidates, independent reviews, read audits, twenty-axis
+comparisons and model provenance. Four workers ran exactly `gpt-6-luna`, confirmed
+from their own session turn contexts, including the correction and recheck turns.
+Both candidates matched all twenty retained assessments and value sets initially.
+Three per-value strengths were corrected from afforded to wired using existing
+records. An independent verifier's proposed inferred-judgment signal was disputed
+and then cleared on independent recheck: generation of a new view was not evidence
+of judgment selecting retained parts for delivery. Final values, coverage and
+per-value bases all match. No missing recorded fact weakened an axis; all source
+read counts are zero. Both final reviews have no blockers. The replay gate passed
+before live type or workflow edits.
+
+### Implementation and choices
+
+- `profile` and `verify-profile` run after record verification closes and before
+  synthesis. One correction changes only the profile; persistent blockers stop
+  before synthesis or publication. The overview keeps all three independent
+  verification accounts separately.
+- `memory-profile.md` is the sixth required member of complete sets. Code copies
+  its accepted bytes unchanged and pins them in the manifest. Blocked and
+  out-of-scope sets remain overview-only. Source and boundary identity, all
+  member hashes and publication/archive safeguards remain enforced.
+- The memory type/job lose the mapping, axis definitions, Comparison rationale,
+  profile/prose agreement and profile-driven local annotation rule. They retain
+  every descriptive record and annotation field, write-side/read-back tracing
+  and evidence rule. Memory describes those mechanisms in source-native terms.
+  Reconciliation and record verification lose classification checks and
+  profile-only return reasons.
+- Profile validation resolves references against canonical declarations in the
+  supporting record members and overview/boundary. It rejects profile declarations,
+  annotations, source quotations and unresolved references. A worker candidate
+  resolves against its run's already accepted `output/` records; a retained profile
+  resolves against sibling members. An isolated profile cannot validate support.
+  Analytical warrant stays with the independent verifier.
+- Matrix and comparison procedures read the new member without a fallback. CSV
+  columns and counting semantics stay unchanged. Publication's method guard pins
+  the new jobs, type and schema. Site rules publish the current retained profile
+  and exclude it from run state and archive publication.
+- Workshop drafts were used for replay before promotion, a small deviation from
+  drafting directly in the collection, so an untested type did not become live.
+  Initial replay artifacts remain separate from adopted contracts. Source-read
+  audit entries belong in Comparison rationale or Profile verification rather
+  than creating another member or workflow stage.
+
+The [consumer inventory](./evidence/phase2-consumer-inventory.json) and [final
+rescan](./evidence/phase2-consumer-inventory-final.json) cover runtime readers, types/schemas, jobs, comparison procedures and
+landing, command/validation references, scripts, tests, site rules and method
+pins. Historical ADR 096/098 passages describe their earlier single-file/five-member
+layouts; their identity and independent-review rules remain intact. Current
+carriers are specified by ADR 102/103. Frozen historical reports remain consumers
+of their original contracts, outside current validation and comparison.
+
+### Phase 2 measurements
+
+[Itemized measurements](./evidence/phase2-measurements.json) retain the original
+baseline and phase 1 summaries, current mandatory-file byte/hash receipts,
+removed obligation IDs and the units behind all five counts. Mandatory input
+excludes root/harness context, task data and optional source reads.
+
+| Role | Phase 1 bytes | Phase 2 bytes | Output obligations | Other-activity concerns | Unresolved references | Conflicts | Maximum composition depth |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| memory | 51278 | 41451 | 60 → 46 | 1 | 0 | 1 | 4 → 4 |
+| reconcile | 70622 | 60343 | 19 → 18 | 1 | 0 | 1 | 4 → 3 |
+| verify | 72032 | 61811 | 13 → 12 | 1 | 1 | 0 | 3 → 3 |
+| profile | — | 43983 | — → 23 | 1 | 0 | 0 | — → 3 |
+| verify-profile | — | 43529 | — → 8 | 1 | 0 | 0 | — → 3 |
+
+Memory loses fourteen comparison obligations and 9,827 mandatory bytes;
+reconciliation loses one obligation and 10,279 bytes, and record verification
+loses one and 10,221 bytes. Obligations composing more than two files fall from
+4 to 3, 7 to 6 and 3 to 2 respectively. The new classifier has 23 obligations
+and verifier 8, at maximum depth 3. Reconciliation's maximum falls from 4 to 3.
+Concerns, unresolved references and conflicts do not fall further in phase 2:
+the retained-output correction concern stays in every packet, memory retains
+its blocked-report conflict, reconciliation its conditional link conflict, and
+record verification its boundary-definition reference. Separation reduces each
+old role's classification work; the total workflow gains two jobs. This is not
+proof of improved worker adherence or analytical outcomes.
+
+### Verification
+
+- `uv run pytest -q`: 987 passed. Added checks cover profile-only correction,
+  persistent blockers stopping before synthesis/publication, refusal of self-created
+  support, all ten packets' absolute collection dependency, and site visibility
+  for the new member. Existing publication, hash, identity and archive tests pass.
+- `uv run ruff check .` passes. Relevant deterministic validation passes with
+  zero failures and warnings for the collection, changed comparison/reference
+  contracts, ADRs and redirect map; only orphan information remains.
+- Collection-scoped validation of `kb/agentic-systems/` excludes old reports and
+  passes. An explicit validation request for the old reports directory bypasses
+  collection exclusions and reports twelve missing historical-type failures;
+  this is the existing marker's documented explicit-target behavior. No historical
+  evidence was altered to make that explicit check pass.
+- The 218-file historical reports digest is still
+  `d9b45e24be4baa2ab97c2672bdabcd208b33fa8d162c47ca1cc6216168fed676`, using the
+  runnable recipe above. No retained set, archive or stopped run was migrated,
+  retyped, repinned or resumed.
+
 ## Remaining work
 
-Return to the operator before phase 2, as the plan requires. Phase 2 first checks
-ADR 083 and ADR 093, then replays both retained Dynamic Cheatsheet profiles on
-Luna and verifies the model from worker session records. Only a passing replay
-authorizes adding profile and verify-profile jobs and the sixth member, moving
-profile obligations out of memory/reconciliation/record verification, and writing
-the second ADR. The profile replay is commissioned by the plan; analysis
-regeneration, old-run recovery and changes to the Sol follow-up plan are not.
+Both implementation phases are complete. Regeneration and the first live outcome
+check need their own commission. The replay used records authored with the axes
+in view and two sets from one source; it does not establish sufficiency of future
+source-native records. Old reports remain historical published evidence. Hard
+publication interruptions still require separately authorized recovery. The Sol
+follow-up plan was not changed. An unrelated `reliability/` workshop directory
+appeared during execution and was left outside this work's commit.

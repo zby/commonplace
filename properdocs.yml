@@ -28,6 +28,7 @@ exclude_docs: |
   !agentic-system-analyses/retained/*/overview.md
   !agentic-system-analyses/retained/*/runtime.md
   !agentic-system-analyses/retained/*/memory.md
+  !agentic-system-analyses/retained/*/memory-profile.md
   !agentic-system-analyses/retained/*/epistemic.md
   !agentic-system-analyses/retained/*/reconciliation.md
   sources/**

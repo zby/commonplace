@@ -51,6 +51,10 @@ None.
 
 Passed.
 
+### Profile verification
+
+Passed.
+
 ### Synthesis verification
 
 Passed.

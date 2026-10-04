@@ -56,9 +56,9 @@ allOf:
           members: false
         additionalProperties: true
       headings:
-        description: "One H1 followed by five ordered overview sections; both verification subheadings remain explicit in every disposition."
+        description: "One H1 followed by five ordered overview sections; all three verification subheadings remain explicit in every disposition."
         type: array
-        minItems: 10
+        minItems: 11
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
@@ -77,6 +77,7 @@ allOf:
           - {contains: {const: "## Limitations"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Verification and blockers"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Record verification"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Profile verification"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Synthesis verification"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Deterministic validation"}, minContains: 1, maxContains: 1}
           - {contains: {const: "### Blockers"}, minContains: 1, maxContains: 1}
@@ -85,7 +86,7 @@ allOf:
           - description: "The five overview sections must appear in their canonical reading order."
             pattern: '(?ms)^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
           - description: "Verification subheadings must appear under Verification and blockers in canonical order."
-            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Record verification\s*$.*?^### Synthesis verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
+            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Record verification\s*$.*?^### Profile verification\s*$.*?^### Synthesis verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
   - if:
       properties:
         frontmatter:

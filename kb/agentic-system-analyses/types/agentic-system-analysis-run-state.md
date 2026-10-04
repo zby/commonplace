@@ -42,6 +42,8 @@ pin is historical after replacement. Comparison readers enumerate current sets
 directly, validate each manifest and every member, and need no run state.
 
 The set's `memory.md` is the memory analyst's last accepted report, unchanged.
+Its separately accepted `memory-profile.md` classifies the verified records and
+is pinned in the same manifest.
 Completion verification checks the manifest, run and boundary identity
 across members, the memory member's complete status and source identity,
 and applies the shared set checks, including cross-member record

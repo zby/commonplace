@@ -4,12 +4,12 @@ The matrix builder, table renderer and analyzer enumerate current accepted sets
 under `kb/agentic-system-analyses/retained/<system-slug>/` through the same
 library function as the site. The accepted overview supplies the entry point,
 boundary and synthesis. The manifest, `ARTIFACT.yaml`, pins every member.
-Readers validate membership and take the comparison profile from `memory.md`.
+Readers validate membership and take the comparison profile from `memory-profile.md`.
 They reject duplicate sources and directory names that disagree with sources.
 Old `agentic-systems/reports/` and the new `retained-archive/` do not participate
 in current validation or comparison. No local run state, source checkout,
 legacy review or prior CSV is required. The
-[memory report contract](../../agentic-system-analyses/types/agent-memory-analysis-report.md#memory-comparison-fields)
+[memory profile contract](../../agentic-system-analyses/types/agent-memory-profile.md#memory-comparison-fields)
 defines the scoped fields and per-value evidence assessments.
 
 Run from the repository root:
