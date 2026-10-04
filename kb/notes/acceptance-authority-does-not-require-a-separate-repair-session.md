@@ -45,11 +45,25 @@ submit → refuse → prepare a handoff → invoke a worker → reconstruct cont
 
 If the next worker is only meant to continue the author's correction work, this route introduces a handoff without introducing a new analytical role. The draft survives, but source selections, unresolved alternatives, and reasons for particular choices must be supplied, reread, or reconstructed. In-session feedback makes a separate repair handoff unnecessary while that working context remains useful.
 
+The handoff is a property of a one-way worker session, which ends when it submits. Where the orchestrator can continue a conversation with the worker, a third route exists:
+
+```text
+submit → refuse → return the refusal to the same session → revise → submit
+```
+
+This route keeps the working context while the orchestrator remains the only caller of the check. Context continuity and the check's caller are therefore separate choices. Most of the saving argued here comes from continuity. Worker-local checking adds less: a check consumes no submission attempt and no orchestrator turn, and its findings arrive before the worker has declared the draft complete. In a workflow built from one-way sessions the two choices coincide, because the worker tool is the only way to deliver feedback while the session still exists.
+
 This is a [context-engineering](./definitions/context-engineering.md) question: how knowledge reaches and remains available to bounded model calls. A session is a sequence of calls with retained or reassembled context, not one unbounded call. The [bounded-context orchestration model](./bounded-context-orchestration-model.md) represents qualifying workflows but does not rank their decompositions. It does not require each tool check to become an outer workflow transition.
 
 Nor does continuity justify retaining everything. Since [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md), the reason to preserve a repair session is useful task context, not the identity of the agent or the existence of its transcript. Stale reasoning and repeated failure messages can make that context worse than a fresh assembly.
 
 The conditional cost hypothesis is that worker-local checking reduces completion effort when repair fits the remaining usable context, relevant knowledge is already available there, and a fresh invocation adds no required isolation, capability, or independent judgment. The avoided handoff is a mechanism for savings, not proof of a net improvement.
+
+## A check the worker can repeat becomes a repair target
+
+A worker that can repeat the acceptance check without cost can satisfy it by reducing the draft as well as by correcting it. Removing a finding that is hard to support, or rewording a claim to fit a passage that matches, passes the same check as finding the right evidence. The check cannot distinguish these repairs, because it tests the form of what remains, not what was removed. Orchestrator-mediated repair has the same weakness, but each refusal there costs an attempt and leaves a record.
+
+Worker-local checking also moves the failure evidence. Defects repaired before submission never appear as refusals, so the acceptance record stops measuring draft quality. A workflow that wants that measurement must record local check runs and their findings where the orchestrator or operator can read them.
 
 ## Scope
 
@@ -65,10 +79,10 @@ A fresh invocation has a distinct purpose when:
 
 Checks that require inputs the worker may not read cannot simply be exposed unchanged. Checks with irreversible effects also need a separate inspection interface before they can serve as draft feedback.
 
-Worker-local tools do not guarantee that a worker will call them or act on their results. Enforced acceptance and bounded failure handling remain necessary. If a worker submits invalid output, an orchestrator retry is still a legitimate fallback.
+Worker-local tools do not guarantee that a worker will call them or act on their results. Enforced acceptance and bounded failure handling remain necessary. Attempt limits count submissions, so they no longer bound repair effort; local repair is bounded only by the session's budget. If a worker submits invalid output, an orchestrator retry is still a legitimate fallback.
 
 ## How to test the cost hypothesis
 
-Compare worker-local repair with orchestrator-mediated repair on the same task class, acceptance rules, source access, model, and overall resource budget. Count all checking calls, context loading, repair work, and orchestration work through accepted completion or terminal failure. Keeping the gate fixed prevents fewer refusals from appearing to be an improvement when the contract was merely weakened.
+Compare worker-local repair with orchestrator-mediated repair on the same task class, acceptance rules, source access, model, and overall resource budget. Count all checking calls, context loading, repair work, and orchestration work through accepted completion or terminal failure. Keeping the gate fixed prevents fewer refusals from appearing to be an improvement when the contract was merely weakened. It does not detect a draft reduced to pass, so the comparison also needs a measure of accepted content that the check does not compute, such as the findings retained or the results of independent verification. Where the orchestrator can continue a worker session, include that route as a third arm; it separates the effect of context continuity from the effect of the worker calling the check.
 
 Repeated cases in which fresh repair contexts achieve better accepted completion within the same budget would challenge the cost hypothesis. They would not show that acceptance authority logically requires a separate session. The structural separation and its practical value are different claims.
