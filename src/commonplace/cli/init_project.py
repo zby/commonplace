@@ -196,7 +196,7 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
         "/PATH/TO/COMMONPLACE/": str(root) + "/",
     }
 
-    library_root = library.library_root()
+    library_root = library.library_root(root)
 
     for rel_path in MANIFEST.directories:
         target = root / rel_path
@@ -248,7 +248,8 @@ def type_collisions(root: Path, library_root: Path | None = None) -> list[librar
 
 def check_project(root: Path) -> list[library.OutputStatus]:
     """Init's outputs and type collisions in a project, without writing anything."""
-    return [*library.statuses(root), *type_collisions(root)]
+    library_root = library.library_root(root)
+    return [*library.statuses(root, library_root), *type_collisions(root, library_root)]
 
 
 # --- installation diagnostics ---------------------------------------------------------

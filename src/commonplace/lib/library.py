@@ -84,15 +84,19 @@ def _working_checkout_kb(cwd: Path) -> Path | None:
     return None
 
 
-def library_root() -> Path:
-    """The library root: the working Commonplace checkout's kb/, the installed source
-    tree's kb/ for an editable install, else shared data.
+def library_root(start: Path | None = None) -> Path:
+    """The library root for the repository at or above ``start``: that Commonplace
+    checkout's kb/, the installed source tree's kb/ for an editable install, else
+    shared data.
 
+    ``start`` defaults to the working directory, which commands take as the
+    repository root. Init passes the project it initializes, so the project's
+    pointers do not depend on where init was invoked.
     ``COMMONPLACE_LIBRARY_ROOT`` overrides all three.
     """
     override = os.environ.get(LIBRARY_ENV)
     if not override:
-        working = _working_checkout_kb(Path.cwd().resolve())
+        working = _working_checkout_kb((start or Path.cwd()).resolve())
         override = str(working) if working is not None else None
     return _library_root(override)
 
@@ -265,7 +269,7 @@ class OutputStatus:
 
 def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
     """Compare init's outputs in a project with what init would write now."""
-    root = root or library_root()
+    root = root or library_root(project)
     wanted = skills(root)
     found: list[OutputStatus] = []
     for skill_dir in MANIFEST.skills_dirs:
