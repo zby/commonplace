@@ -20,6 +20,7 @@ def snapshot(root: Path):
             for p in root.rglob("*") if p.is_file()}
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("correction", ["none", "blockers", "returned"])
 def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch, capsys, correction):
     monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
@@ -86,6 +87,7 @@ def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch
         assert "memory-1" in observed
 
 
+@pytest.mark.slow
 def test_independent_member_failures_include_identity_and_quote(tmp_path, monkeypatch):
     monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
     fixture = Fixture(tmp_path)

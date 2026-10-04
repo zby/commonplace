@@ -294,6 +294,7 @@ def prompt_of(result, name: str) -> tuple[int, str]:
     return handout.attempt, handout.prompt_path.read_text(encoding="utf-8")
 
 
+@pytest.mark.slow
 def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> None:
     scripted, _ = agent(fixture, runtime=fixture.writes(lambda _: "invalid runtime\n"))
 
@@ -326,6 +327,7 @@ def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> N
 # 1. A complete run
 
 
+@pytest.mark.slow
 def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     scripted, definition = agent(fixture)
 
@@ -395,6 +397,7 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert candidate.read_bytes() == review.read_bytes()
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize(
     ("job_name", "field"),
     [("runtime", "run-id"), ("memory-0", "reviewed-boundary")],
@@ -429,6 +432,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     assert frontmatter(member)["reviewed-boundary"] == fixture.revision
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("source_first", [True])
 def test_amendment_index_is_inside_source_register_in_either_boundary_order(
     fixture: Fixture, source_first: bool,
@@ -459,6 +463,7 @@ def test_amendment_index_is_inside_source_register_in_either_boundary_order(
 # 2. An out-of-scope boundary
 
 
+@pytest.mark.slow
 def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     fixture: Fixture,
 ) -> None:
@@ -490,6 +495,7 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     assert isinstance(scripted.orchestrator.step(), Done)
 
 
+@pytest.mark.slow
 def test_synthesis_blockers_correct_public_text_without_reopening_records(fixture: Fixture) -> None:
     blocked = fixture.verification(
         "- MEM-OBJ-store has a record scope gap; state its prevented conclusion in Limitations.",
@@ -510,6 +516,7 @@ def test_synthesis_blockers_correct_public_text_without_reopening_records(fixtur
     assert "### Synthesis verification" in (fixture.run_dir / "output/overview.md").read_text()
 
 
+@pytest.mark.slow
 def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> None:
     blocked = fixture.verification("- RT-OBJ-store is overstated in the synthesis.", title="Synthesis verification")
     scripted, definition = agent(fixture, **{
@@ -524,6 +531,7 @@ def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> No
     assert not (fixture.run_dir / "output/overview.md").exists()
 
 
+@pytest.mark.slow
 def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> None:
     bad = fixture.synthesis(synthesis="RT-OBJ-missing proves this result.")
     scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: bad))
@@ -533,6 +541,7 @@ def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> Non
     assert "synthesis.md: unresolved record RT-OBJ-missing" in prompt
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("link", ["../../notes/theory.md"])
 def test_synthesis_links_are_repaired_before_the_verifier(
     fixture: Fixture, link: str,
@@ -561,6 +570,7 @@ def test_synthesis_links_are_repaired_before_the_verifier(
 # 3. The correction cycle
 
 
+@pytest.mark.slow
 def test_returned_findings_run_correction_rounds_until_the_last(
     fixture: Fixture,
 ) -> None:
@@ -626,6 +636,7 @@ def last_prompt(fixture: Fixture, name: str) -> str:
     return found.read_text(encoding="utf-8")
 
 
+@pytest.mark.slow
 def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> None:
     """Scripted findings exercise workflow handling, not analyst judgment."""
     amendment = (
@@ -671,6 +682,7 @@ def drive_to(scripted: ScriptedAgent, name: str) -> None:
     raise AssertionError(f"{name} was never handed out")
 
 
+@pytest.mark.slow
 def test_boundary_with_a_wrong_field_set_is_refused(fixture: Fixture) -> None:
     bad = fixture.boundary()
     bad = bad.replace("evidence-tier:", "evidence-level:")
@@ -703,6 +715,7 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     )
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("returned", [False])
 def test_reconciliation_amending_an_undeclared_record_is_refused(
     fixture: Fixture, returned: bool,
@@ -720,6 +733,7 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
     assert "reconciliation.md: unresolved record MEM-OBJ-example9" in prompt
 
 
+@pytest.mark.slow
 def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixture) -> None:
     text = fixture.verification().replace(
         "its records.", "its records. Compared EPI-OBJ-store to RT-OBJ-store at SRC-1."
@@ -730,6 +744,7 @@ def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixtur
     assert scripted.launched.count("verify-0") == 1
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("returned", [False])
 def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
     fixture: Fixture, returned: bool,
@@ -743,6 +758,7 @@ def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
     assert "memory-1" not in scripted.launched
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("returned", [False])
 def test_reconciliation_preserves_permitted_quote_attributions(
     fixture: Fixture, returned: bool,
@@ -758,6 +774,7 @@ def test_reconciliation_preserves_permitted_quote_attributions(
     assert "memory-1" in scripted.launched if returned else "verify-0" in scripted.launched
 
 
+@pytest.mark.slow
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
     supersedes = fixture.reconciliation(
         amendment="EPI-OBJ-store is superseded by RT-OBJ-store; both name `README.md` at SRC-1."
@@ -777,6 +794,7 @@ def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) 
     assert definition.publications == 1
 
 
+@pytest.mark.slow
 def test_synthesis_without_a_description_is_refused(fixture: Fixture) -> None:
     missing = fixture.synthesis().replace(f"## Description\n\n{DESCRIPTION}\n\n", "")
     scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: missing))
@@ -788,6 +806,7 @@ def test_synthesis_without_a_description_is_refused(fixture: Fixture) -> None:
     assert "missing section `## Description`" in prompt
 
 
+@pytest.mark.slow
 def test_the_description_and_synthesis_become_the_public_review(
     fixture: Fixture,
 ) -> None:
@@ -828,6 +847,7 @@ def test_the_description_and_synthesis_become_the_public_review(
 # 5. A named blocker stops before publication
 
 
+@pytest.mark.slow
 def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -> None:
     blocked = fixture.verification(BLOCKER)
     scripted, definition = agent(
@@ -869,6 +889,7 @@ def test_blockers_are_none_or_a_list(blockers: str, accepted: bool) -> None:
     assert (blockers_refusals(blockers) == []) is accepted
 
 
+@pytest.mark.slow
 def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) -> None:
     blocked = fixture.verification(BLOCKER)
     verifiers = {
@@ -890,6 +911,7 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
 
 
+@pytest.mark.slow
 def test_memory_report_re_declaring_a_runtime_record_is_refused(
     fixture: Fixture,
 ) -> None:
@@ -911,6 +933,7 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     assert "duplicate set declaration: RT-RTE-model-call" in prompt
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("job", ["runtime", "memory-1"])
 def test_altered_analyst_quote_is_repaired_before_reconciliation(
     fixture: Fixture, job: str,
@@ -954,6 +977,7 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
     assert definition.publications == 1
 
 
+@pytest.mark.slow
 def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) -> None:
     def runtime(handout: Handout) -> None:
         if handout.attempt == 1:
@@ -978,6 +1002,7 @@ def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) 
     assert definition.publications == 1
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("prefix", ["", "MEM-"])
 def test_runtime_declaration_prefix_is_repaired_before_specialists(
     fixture: Fixture, prefix: str,
@@ -1029,6 +1054,7 @@ def test_the_source_identity_is_normalized_once(given: str, normalized: str) -> 
     assert definition.source_identity == normalized
 
 
+@pytest.mark.slow
 def test_the_boundary_is_given_the_normalized_identity(fixture: Fixture) -> None:
     fixture.identity = "HTTPS://Example.invalid/example-system.git/"
     scripted, definition = agent(fixture)
@@ -1055,6 +1081,7 @@ def github_agent(
     ), definition
 
 
+@pytest.mark.slow
 def test_code_freezes_a_github_checkout_at_the_default_tip(fixture: Fixture) -> None:
     fixture.on_github()
     fixture.revision = fixture.advance_upstream()
@@ -1073,6 +1100,7 @@ def test_code_freezes_a_github_checkout_at_the_default_tip(fixture: Fixture) -> 
     assert frontmatter(fixture.public_path)["reviewed-boundary"] == fixture.revision
 
 
+@pytest.mark.slow
 def test_pinned_revision_reuses_a_matching_checkout_unchanged(fixture: Fixture) -> None:
     fixture.on_github()
     fixture.advance_upstream()
@@ -1088,6 +1116,7 @@ def test_pinned_revision_reuses_a_matching_checkout_unchanged(fixture: Fixture) 
     assert run_git(fixture.source_root, "rev-parse", "--abbrev-ref", "HEAD") == branch
 
 
+@pytest.mark.slow
 def test_missing_checkout_is_cloned_at_the_requested_older_commit(fixture: Fixture) -> None:
     fixture.on_github()
     latest = fixture.advance_upstream()
@@ -1109,6 +1138,7 @@ def test_missing_checkout_is_cloned_at_the_requested_older_commit(fixture: Fixtu
     assert [path.name for path in fixture.source_root.parent.iterdir()] == ["example--system"]
 
 
+@pytest.mark.slow
 def test_pinned_revision_moves_a_clean_checkout_to_a_commit_it_lacks(fixture: Fixture) -> None:
     fixture.on_github()
     fixture.revision = fixture.advance_upstream()
@@ -1122,6 +1152,7 @@ def test_pinned_revision_moves_a_clean_checkout_to_a_commit_it_lacks(fixture: Fi
     assert run_git(fixture.source_root, "status", "--porcelain") == ""
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("condition", ["dirty", "unavailable commit", "foreign origin"])
 def test_a_checkout_code_cannot_freeze_stops_before_the_boundary(
     fixture: Fixture, condition: str,
@@ -1149,6 +1180,7 @@ def test_a_checkout_code_cannot_freeze_stops_before_the_boundary(
         assert (fixture.source_root / "local.txt").read_text(encoding="utf-8") == "keep me\n"
 
 
+@pytest.mark.slow
 def test_boundary_cannot_substitute_another_commit_for_the_frozen_one(fixture: Fixture) -> None:
     fixture.on_github()
     other = fixture.boundary(**{"reviewed-boundary": "0" * 40})
@@ -1173,6 +1205,7 @@ def test_source_revision_requires_a_github_identity() -> None:
         AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": "a" * 40})
 
 
+@pytest.mark.slow
 def test_a_boundary_with_another_source_identity_is_refused(fixture: Fixture) -> None:
     other = fixture.boundary(
         source={
@@ -1236,6 +1269,7 @@ def test_a_clone_without_checked_out_files_is_refused(fixture: Fixture) -> None:
 # 8. The verification is validated as overview text
 
 
+@pytest.mark.slow
 def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) -> None:
     ranged = fixture.verification().replace(
         "Passed:", "Passed at `README.md:1`:"
@@ -1312,6 +1346,7 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
 # 10. A job loads shared definitions and the member types it writes or judges
 
 
+@pytest.mark.slow
 def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -> None:
     scripted, definition = agent(fixture)
 
@@ -1486,6 +1521,7 @@ def test_boundary_caller_input_is_preserved_inside_a_longer_fence(fixture: Fixtu
     assert invocation(prompt)[1]["output"] == str(fixture.run_dir / "jobs/boundary/boundary.md")
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("dependency", [
     "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md",
     "kb/agentic-system-analyses/COLLECTION.md",
@@ -1501,6 +1537,7 @@ def test_changed_fixed_dependency_reopens_the_memory_job(fixture: Fixture, depen
     assert scripted.launched.count("memory-0") == 2
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("analyst", ["runtime", "memory", "epistemic"])
 def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst):
     from scripts import analyst_trial
@@ -1517,6 +1554,7 @@ def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst)
     assert digest(contract) in str(receipt)
 
 
+@pytest.mark.slow
 def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None:
     blocked = fixture.verification("- storage_substrate needs a corrected rationale for MEM-OBJ-store.", title="Profile verification")
     corrected = fixture.memory_profile() + "\nCorrected rationale for MEM-OBJ-store.\n"
@@ -1536,6 +1574,7 @@ def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None
     assert "previous-profile =" in prompt and "profile-verification-0.md" in prompt
 
 
+@pytest.mark.slow
 def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> None:
     blocked = fixture.verification("- storage_substrate is unsupported by MEM-OBJ-store.", title="Profile verification")
     scripted, definition = agent(fixture, **{
@@ -1550,6 +1589,7 @@ def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> 
     assert not fixture.public_path.exists()
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("fault", ["declaration", "annotation", "quote", "reference", "identity"])
 def test_profile_cannot_create_its_own_support(fixture: Fixture, fault: str) -> None:
     bad = fixture.memory_profile()

@@ -46,6 +46,11 @@ uv tool update-shell
 
 Restart consumers of the command path. Ordinary source changes are then visible through the editable installation. After dependency, entry-point, build-metadata, or packaged-scaffold changes, reinstall with `uv tool install --reinstall --python ">=3.11" --editable .`. Run development checks with `uv run pytest` and `uv run ruff check .`. Do not run `commonplace-init` in the source checkout.
 
+`uv run pytest` excludes expensive analysis workflow tests marked `slow`.
+Use `uv run pytest -m slow` for those tests, or `uv run pytest -m ""` for
+the complete suite. CI runs the complete suite. Run the slow tests when changing
+the analysis workflow or its acceptance checks.
+
 ## What's in the box
 
 ```text

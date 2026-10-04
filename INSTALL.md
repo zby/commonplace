@@ -271,7 +271,11 @@ read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly.
 Do not run `commonplace-init` to repair the source checkout.
 
 Development dependencies run through uv: `uv run pytest` and
-`uv run ruff check .`. If a sandboxed Windows session cannot write
+`uv run ruff check .`. The default test run excludes expensive analysis workflow
+tests marked `slow`. Use `uv run pytest -m slow` for those tests, or
+`uv run pytest -m ""` for the complete suite, as CI does. Run the slow tests when
+changing the analysis workflow or its acceptance checks.
+If a sandboxed Windows session cannot write
 `.pytest_cache`, use `uv run pytest -p no:cacheprovider`; a cache-only warning
 is not a test failure. The editable tool installation commands above work
 in PowerShell too; after restarting the consuming process, use

@@ -27,7 +27,7 @@ jobs:
         run: echo "${{ runner.temp }}/uv-tool-bin" >> "$GITHUB_PATH"
 
       - name: Run software tests
-        run: uv run pytest
+        run: uv run pytest -m ""
 
       - name: Build wheel
         run: uv build --wheel

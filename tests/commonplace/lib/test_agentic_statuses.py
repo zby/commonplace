@@ -59,6 +59,7 @@ def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> 
     assert any("RTE-model-call: missing labelled field" in error for error in errors)
 
 
+@pytest.mark.slow
 def test_status_defects_are_amended_before_reconciliation(
     tmp_path: Path, monkeypatch,
 ) -> None:
