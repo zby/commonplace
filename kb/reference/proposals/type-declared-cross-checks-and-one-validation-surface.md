@@ -165,8 +165,13 @@ flow holds in variables: the current round, why it opened (returned findings
 or blockers), which memory report it consumes, and the remaining correction
 budget. The acceptance check recovers these from job names and from the
 prompt the engine wrote for the job. The run-state type excludes phase and
-correction state by decision, so the artifact would be a sibling in the run
-directory, code-written like the run state and the manifest.
+correction state by [ADR 083](../adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md),
+decided when an agent coordinator maintained that state by hand and the
+cost fell on every successful run. The code-scheduled engine now keeps the
+per-job part of it in `workflow-state/`, so the surviving force is
+narrower: the run state is the completion record later consumers verify,
+while progress is live, git-ignored state. Whether progress joins the run
+state or sits beside it is a free choice; either way code writes it.
 
 Such an artifact is a derived copy of engine records and file presence, so it
 is checked against its recomputation or it is absent. Two forms satisfy
@@ -237,8 +242,8 @@ changes a visible contract where today it changes a loop variable.
 - Access roots: the run state stays the source of truth, or a registry
   replaces it and the run state points into the registry.
 - Progress: a derived view over the run directory, or a materialized
-  artifact the engine writes; a global workflow type, or one local to the
-  analysis collection.
+  artifact the engine writes; inside the run state or beside it; a global
+  workflow type, or one local to the analysis collection.
 
 ## Adoption criteria
 
