@@ -26,8 +26,10 @@ from __future__ import annotations
 
 import datetime
 import json
+import os
 import re
 import subprocess
+import sys
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import replace
 from functools import partial
@@ -876,6 +878,7 @@ class AnalyseAgenticSystem(Workflow):
             **(parameters or {}),
             "run-state": str(run_dir / RUN_STATE),
             "job": name,
+            **self.command_path(run_dir),
             **input_paths,
             "output": str(job.output_path(run_dir)),
             "problem": str(job.problem_path(run_dir)),
@@ -1196,6 +1199,20 @@ class AnalyseAgenticSystem(Workflow):
                     synthesis=run_dir / round_file("synthesis", round_), verification=path))
 
     # Steps that code executes
+
+    @staticmethod
+    def command_path(run_dir: Path) -> dict[str, str]:
+        """Name the run's local command directory when this code runs from it.
+
+        A worker launched by a session that began outside the run's checkout
+        does not inherit that directory on PATH.
+        """
+        bin_dir = Path(sys.prefix) / ("Scripts" if os.name == "nt" else "bin")
+        parents = run_dir.parents
+        depth = len(STATE_ROOT.parts)
+        if len(parents) <= depth or Path(sys.prefix).resolve() != (parents[depth] / ".venv").resolve():
+            return {}
+        return {"command-path": str(bin_dir) + "/"}
 
     @staticmethod
     def repo_root(run_dir: Path) -> Path:

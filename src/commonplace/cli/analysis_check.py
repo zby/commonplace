@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+from commonplace.lib.analysis_worktree import require_run_code
 from commonplace.lib.library import checks_library
 from commonplace.lib.quote_matching import parse_blockquotes
 from commonplace.workflow.engine import load_definition
@@ -49,6 +50,7 @@ def main(argv: list[str] | None = None) -> int:
         # Reject path traversal before constructing a job or a scratch path.
         if not args.job or "/" in args.job or "\\" in args.job or args.job in (".", ".."):
             raise ValueError("job must be the supplied analysis job name")
+        require_run_code(run_dir)
         output, refusals = check_draft(run_dir, args.job, args.draft.resolve() if args.draft else None)
         quotes = parse_blockquotes(output.read_text(encoding="utf-8"))
         counts = Counter(reason.split(": rule ", 1)[-1].split(":", 1)[0] for reason in refusals)

@@ -219,7 +219,12 @@ worktree and installs and verifies its local command environment. It pins a
 commit and excludes uncommitted origin changes only with `--allow-dirty-origin`;
 changed startup instructions and configuration always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
-directory and environment. It does not open or advance an analysis. See
+directory and environment. Without `--revision` it refuses a `HEAD` behind the
+default branch. It does not open or advance an analysis. The `step`, `report`,
+`start`, `resolve` and `release` commands, `commonplace-analysis-check` and
+`commonplace-agentic-analysis-handoff` refuse a run inside a Commonplace source
+checkout when they run another checkout's code or, except the check, from
+another working directory. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
 Run a code-scheduled workflow. `start <package.module:ClassName>` creates a

@@ -121,7 +121,8 @@ def _install(worktree: Path) -> dict[str, str]:
             "import json, shutil; import commonplace.lib.agentic_workflow as m; "
             "print(json.dumps({'module': m.__file__, "
             "'workflow': shutil.which('commonplace-workflow'), "
-            "'validate': shutil.which('commonplace-validate')}))"
+            "'validate': shutil.which('commonplace-validate'), "
+            "'check': shutil.which('commonplace-analysis-check')}))"
         )],
         cwd=worktree,
         env=env,
@@ -131,7 +132,7 @@ def _install(worktree: Path) -> dict[str, str]:
         expected = worktree / "src/commonplace/lib/agentic_workflow.py"
         if Path(found["module"]).resolve() != expected.resolve():
             raise ValueError("the installed package resolves outside the analysis worktree")
-        for key in ("workflow", "validate"):
+        for key in ("workflow", "validate", "check"):
             # Resolve the directory, not the executable: uv may use symlinks.
             if not found[key] or Path(found[key]).parent.resolve() != bin_dir.resolve():
                 raise ValueError(f"{key} command resolves outside the local environment")
@@ -140,12 +141,75 @@ def _install(worktree: Path) -> dict[str, str]:
     return {"python": str(python), "path-prefix": str(bin_dir)}
 
 
+RUNTIME_MARKER = "src/commonplace/lib/agentic_workflow.py"
+
+
+def source_checkout(path: Path) -> Path | None:
+    """The nearest Commonplace source checkout containing ``path``, if any."""
+    path = path.resolve()
+    for directory in (path, *path.parents):
+        if (directory / RUNTIME_MARKER).is_file():
+            return directory
+    return None
+
+
+def require_run_code(run: Path, *, cwd: Path | None = None) -> None:
+    """Refuse a command whose code is not the run's own checkout's.
+
+    A run inside a Commonplace source checkout pins that checkout's method.
+    The shared editable installation runs another checkout's code, so a
+    worker that drops the local command directory would silently mix methods.
+    Runs outside a source checkout (consuming projects) are not bound.
+    """
+    checkout = source_checkout(run)
+    if checkout is None:
+        return
+    import commonplace
+
+    loaded = Path(commonplace.__file__).resolve().parents[2]
+    bin_dir = checkout / ".venv" / ("Scripts" if os.name == "nt" else "bin")
+    repair = (
+        f"run it from {checkout}, calling the command in {bin_dir}/"
+        if bin_dir.is_dir() else f"run it from {checkout} with that checkout's commands"
+    )
+    if loaded != checkout:
+        raise ValueError(
+            f"this run belongs to the checkout {checkout}, but this command "
+            f"runs code from {loaded}; {repair}"
+        )
+    if cwd is not None and source_checkout(cwd) != checkout:
+        raise ValueError(
+            f"this run belongs to the checkout {checkout}, but the working "
+            f"directory is {cwd}; {repair}"
+        )
+
+
+def _require_current_revision(origin: Path, commit: str) -> None:
+    """An implicit HEAD behind the default branch is a stale launching checkout."""
+    for branch in ("main", "master"):
+        ref = f"refs/heads/{branch}"
+        if subprocess.run(
+            ["git", "rev-parse", "--verify", "--quiet", ref],
+            cwd=origin, capture_output=True, check=False,
+        ).returncode:
+            continue
+        behind = int(_run(["git", "rev-list", "--count", f"{commit}..{ref}"], cwd=origin))
+        ahead = int(_run(["git", "rev-list", "--count", f"{ref}..{commit}"], cwd=origin))
+        if behind and not ahead:
+            raise ValueError(
+                f"HEAD is {behind} commits behind {branch}: this checkout and the "
+                "session started in it hold an older method; start from the "
+                f"current {branch}, or pass --revision to select this revision deliberately"
+            )
+        return
+
+
 def prepare_analysis(
     origin: Path,
     *,
     name: str,
     allow_dirty_origin: bool = False,
-    revision: str = "HEAD",
+    revision: str | None = None,
     worktree: Path | None = None,
 ) -> dict[str, object]:
     """Create a new worktree, never copy dirty bytes, and retain setup evidence.
@@ -157,9 +221,11 @@ def prepare_analysis(
         raise ValueError("name must contain lowercase letters, digits and hyphens")
     origin = Path(_run(["git", "rev-parse", "--show-toplevel"], cwd=origin)).resolve()
     commit = _run(
-        ["git", "rev-parse", "--verify", "--end-of-options", f"{revision}^{{commit}}"],
+        ["git", "rev-parse", "--verify", "--end-of-options", f"{revision or 'HEAD'}^{{commit}}"],
         cwd=origin,
     )
+    if revision is None:
+        _require_current_revision(origin, commit)
     require_committed_startup(origin, commit)
     dirty = bool(_run(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin))
     if dirty and not allow_dirty_origin:

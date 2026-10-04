@@ -21,6 +21,7 @@ Every job uses these parameters; its instruction defines additional ones:
 | `run-id` | Exact run identity; copy unchanged when the member type requires it |
 | `run-state` | Absolute path passed to the acceptance check; not an evidence input |
 | `job` | Exact job name passed to the acceptance check |
+| `command-path` | Directory of this run's `commonplace-*` commands, when supplied |
 | `output` | Absolute path for the completed result |
 | `problem` | Absolute path for the reason the job cannot finish |
 | `workspace` | Absolute per-job writable directory, when supplied by the workflow |
@@ -123,6 +124,7 @@ file.
 
 Before submitting, run
 `commonplace-analysis-check <run-state> <job> <output>` with the supplied values.
+When `command-path` is supplied, call the command in that directory.
 Repair refusals and rerun until it passes. It shares acceptance checks,
 changes no output or run state, and logs counts in `scratch`.
 A pass establishes form and occurrence, not the correctness of findings.

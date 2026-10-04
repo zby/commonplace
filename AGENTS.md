@@ -97,7 +97,7 @@ slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
   use `cp-skill-health-check`. CLI reference: [commands](./kb/reference/commands.md).
   Exception: isolated Commonplace analysis worktrees use their own command
   environment as described in [run setup](./kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
-  Keep bare command names; start the harness with that environment on `PATH`.
+  There, call each command in the directory that setup reports.
 - Run development dependencies through uv: `uv run pytest`, `uv run ruff check .`.
   All required tests must pass. Markdown KB data changes need relevant
   `commonplace-validate` checks, not pytest, unless they affect test inputs or fixtures.

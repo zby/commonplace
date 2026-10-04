@@ -10,6 +10,7 @@ from commonplace.lib.agentic_analysis import (
     load_run_state,
     render_agentic_analysis_handoff,
 )
+from commonplace.lib.analysis_worktree import require_run_code
 from commonplace.lib.library import checks_library
 
 
@@ -22,6 +23,7 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = Path.cwd().resolve()
     run_state_path = (repo_root / args.run_state).resolve()
     try:
+        require_run_code(run_state_path, cwd=repo_root)
         state = load_run_state(run_state_path, repo_root=repo_root)
         rendered = render_agentic_analysis_handoff(state)
     except ValueError as exc:

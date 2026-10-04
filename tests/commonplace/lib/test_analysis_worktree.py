@@ -183,7 +183,7 @@ def test_command_environment_clears_inherited_python_overrides(tmp_path: Path, m
     assert env["PATH"].split(os.pathsep)[0] == str(tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin"))
 
 
-@pytest.mark.parametrize("wrong", ["module", "workflow", "validate"])
+@pytest.mark.parametrize("wrong", ["module", "workflow", "validate", "check"])
 def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, monkeypatch, wrong: str) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
@@ -191,8 +191,65 @@ def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, 
         "module": str(tmp_path / "src/commonplace/lib/agentic_workflow.py"),
         "workflow": str(local_bin / "commonplace-workflow"),
         "validate": str(local_bin / "commonplace-validate"),
+        "check": str(local_bin / "commonplace-analysis-check"),
     }
     found[wrong] = "/shared/main/runtime"
     monkeypatch.setattr(aw, "_run", lambda args, **kwargs: "" if args[0] == "uv" else json.dumps(found))
     with pytest.raises(ValueError, match="outside"):
         aw._install(tmp_path)
+
+
+def test_implicit_head_behind_the_default_branch_is_refused(origin: Path) -> None:
+    git(origin, "branch", "-M", "main")
+    first = git(origin, "rev-parse", "HEAD")
+    (origin / "note.md").write_text("Later method\n")
+    git(origin, "commit", "--quiet", "-am", "Later")
+    git(origin, "checkout", "--quiet", "--detach", first)
+    with pytest.raises(ValueError, match="1 commits behind main"):
+        aw.prepare_analysis(origin, name="example")
+    assert not (origin / ".commonplace").exists()
+    # A deliberate selection of the same revision is the operator's choice.
+    assert aw.prepare_analysis(origin, name="example", revision=first)["commit"] == first
+
+
+def fake_checkout(root: Path) -> Path:
+    marker = root / aw.RUNTIME_MARKER
+    marker.parent.mkdir(parents=True)
+    marker.write_text("")
+    run = root / "kb/agentic-system-analyses/state/AAS-2026-01-01-example-01"
+    run.mkdir(parents=True)
+    return run
+
+
+def test_run_outside_a_source_checkout_is_not_bound(tmp_path: Path) -> None:
+    aw.require_run_code(tmp_path / "run", cwd=tmp_path)
+
+
+def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys) -> None:
+    import commonplace
+    from commonplace.cli.analysis_check import main as check_main
+
+    run = fake_checkout(tmp_path / "worktree")
+    (tmp_path / "worktree/.venv/bin").mkdir(parents=True)
+    with pytest.raises(ValueError, match=r"runs code from .*; run it from .*worktree, calling the command in .*\.venv/bin/"):
+        aw.require_run_code(run)
+    # Both callers refuse before touching the run.
+    monkeypatch.chdir(tmp_path / "worktree")
+    assert main(["step", str(run)]) == 1
+    assert check_main([str(run), "memory-0"]) == 2
+    assert capsys.readouterr().err.count("runs code from") == 2
+    assert list(run.iterdir()) == []
+
+    monkeypatch.setattr(commonplace, "__file__", str(tmp_path / "worktree/src/commonplace/__init__.py"))
+    aw.require_run_code(run, cwd=tmp_path / "worktree")
+    with pytest.raises(ValueError, match="working directory"):
+        aw.require_run_code(run, cwd=tmp_path)
+
+
+def test_invocation_names_the_command_directory_only_for_a_local_environment(tmp_path: Path, monkeypatch) -> None:
+    from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+
+    run = fake_checkout(tmp_path)
+    assert AnalyseAgenticSystem.command_path(run) == {}
+    monkeypatch.setattr(sys, "prefix", str(tmp_path / ".venv"))
+    assert AnalyseAgenticSystem.command_path(run) == {"command-path": str(tmp_path / ".venv/bin") + "/"}
