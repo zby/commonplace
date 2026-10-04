@@ -38,6 +38,14 @@ the identifier design so that one such violation cannot be written.
 - [Counterfactual design review](./counterfactual-design-review.md) — retained
   episode and reasoning behind the instruction, including why the range
   audits did not initially suggest named IDs.
+- [Quotation design review](./quotation-design-review.md) — the instruction
+  above applied to quotation errors: recommends that workers write each
+  quotation once in the draft and one helper call completes them, with the
+  JSON batch mode removed; advises against designation by line number.
+- [Quotations completed in the draft](./quotations-completed-in-draft-plan.md)
+  — adopted by the operator on 2026-10-04 and written as an implementation
+  plan from that review. It takes effect when the operator launches an
+  executor on it.
 
 The first three overlap by design. Bookkeeping removes an obligation, so it cannot
 fail. A check catches a failure the worker can still make. Recovery decides
