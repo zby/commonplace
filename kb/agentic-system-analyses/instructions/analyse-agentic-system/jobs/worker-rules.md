@@ -137,6 +137,11 @@ lengthen the quote. Same-line repeats require lengthening. Never calculate
 ranges or revisions. For "not found", reread the source and recheck its
 supporting claim before repair. Judge support yourself.
 
+A quotation exists to show the source passage that supports a finding.
+Narrow or withdraw a finding only when the source cannot support it, never
+to pass the check. List each finding narrowed or withdrawn during check
+repair, with its reason, in `scratch/check-repairs.md`.
+
 ## Prior analyses
 
 Do not call agent listings for status; their payloads may include prior
