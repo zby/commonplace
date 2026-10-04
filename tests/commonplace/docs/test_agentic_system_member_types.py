@@ -86,7 +86,7 @@ Trace.
 
 ### Components
 
-#### RT-CMP-1 — Model endpoint
+#### RT-CMP-model — Model endpoint
 
 Record.
 
@@ -96,7 +96,7 @@ none declared in this member.
 
 ### Routes
 
-#### RT-RTE-1 — Ordinary invocation
+#### RT-RTE-model-call — Ordinary invocation
 
 - implementation conclusion status: wired
 
@@ -146,7 +146,7 @@ Inventory.
 
 ## Authority-route ledger
 
-Route ID: RT-RTE-1
+Route ID: RT-RTE-model-call
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
@@ -163,7 +163,7 @@ Conclusion.
 
 ### Routes
 
-#### EPI-RTE-1 — Admission check
+#### EPI-RTE-model-call — Admission check
 
 - implementation conclusion status: wired
 
@@ -207,7 +207,7 @@ reviewed-boundary: "{REVISION}"
 
 ## Reconciliation
 
-Amendment: EPI-OBJ-1 is superseded by RT-OBJ-1; both name the same store at SRC-1.
+Amendment: EPI-OBJ-store is superseded by RT-OBJ-store; both name the same store at SRC-1.
 '''
 
 
@@ -254,7 +254,7 @@ def test_member_validation_rejects_missing_route_answers(tmp_path: Path) -> None
         "- Selection predicate: The caller selects the object.\n", ""
     )
     failures = validate(tmp_path, "runtime.md", content).fails
-    assert any("RT-RTE-1: Selection predicate: missing field" in error for error in failures)
+    assert any("RT-RTE-model-call: Selection predicate: missing field" in error for error in failures)
 
 
 def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Path) -> None:
@@ -264,7 +264,7 @@ def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Pat
 
 
 def test_runtime_report_has_no_amendments_section(tmp_path: Path) -> None:
-    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: RT-OBJ-1 label changed.\n"
+    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: RT-OBJ-store label changed.\n"
     assert validate(tmp_path, "runtime.md", amended).fails != []
 
 
@@ -283,7 +283,7 @@ def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Pa
 
 def test_reconciliation_report_validates_and_excludes_working_returns(tmp_path: Path) -> None:
     assert validate(tmp_path, "reconciliation.md", RECONCILIATION_TEXT).fails == []
-    returned = RECONCILIATION_TEXT + "\n## Returned to the memory analyst\n\nMEM-OBJ-1 needs correction.\n"
+    returned = RECONCILIATION_TEXT + "\n## Returned to the memory analyst\n\nMEM-OBJ-store needs correction.\n"
     assert validate(tmp_path, "reconciliation.md", returned).fails
 
 

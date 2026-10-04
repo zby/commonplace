@@ -4,13 +4,17 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from difflib import get_close_matches
 
 # A record ID carries the prefix of the analyst that established it, for the
 # life of the set: `RT-`, `MEM-`, or `EPI-`. Archived results written with
 # bare runtime IDs are not read by current code.
 _PREFIX = r"(?:RT|MEM|EPI)-"
-_RECORD_ID = rf"{_PREFIX}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
-_ID = rf"(?:SRC-\d+|{_RECORD_ID})"
+_KIND = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)"
+_NAME = r"[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}"
+_RECORD_ID = rf"{_PREFIX}{_KIND}-{_NAME}"
+# Scan whole candidates first, including malformed names and kind codes.
+_RECORD_TOKEN = rf"{_PREFIX}[A-Z]+-[\w-]*"
 _DECLARATION = re.compile(
     rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
@@ -18,17 +22,32 @@ _ANNOTATION = re.compile(
     rf"(?m)^####[ \t]+On[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
 _UNPREFIXED_DECLARATION = re.compile(
-    r"(?m)^####[ \t]+((?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)[ \t]+—[ \t]+\S[^\n]*$"
+    rf"(?m)^####[ \t]+({_KIND}-[\w-]+)[ \t]+—[ \t]+\S[^\n]*$"
 )
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
-_REFERENCE = re.compile(rf"(?<![\w-]){_ID}(?![\w-])")
-# "to" connects records in ordinary relation prose; it does not enumerate IDs.
-# Keep explicit interval notation, including adjacent and abbreviated endpoints.
+_REFERENCE = re.compile(rf"(?<![\w-])(?:SRC-\d+|{_RECORD_TOKEN})(?![\w-])")
+# Only numbered source IDs retain interval syntax refusals.
 _RANGE = re.compile(
-    rf"(?<![\w-])(?:{_ID}`?[ \t]*(?:through|[–—-])[ \t]*`?"
-    rf"(?:{_ID}|(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)"
-    rf"|{_ID}[–-][RO]?\d+)(?![\w-])"
+    r"(?<![\w-])(?:SRC-\d+`?[ \t]*(?:through|[–—-])[ \t]*`?"
+    r"(?:SRC-\d+|\d+)|SRC-\d+[–-][RO]?\d+)(?![\w-])"
 )
+
+
+def _references(prose: str) -> set[str]:
+    # An ASCII dash between two full IDs is grouping punctuation. A lowercase
+    # attached word stays in the token, so sheet-based cannot resolve as sheet.
+    separated = re.sub(r"-(?=(?:RT|MEM|EPI)-[A-Z]+-)", " ", prose)
+    return set(_REFERENCE.findall(separated))
+
+
+def _prefix_collisions(identifiers: list[str]) -> list[str]:
+    names = sorted(set(identifiers))
+    return [
+        f"record IDs: {long} extends declared ID {short}; use names neither of which is the other plus a hyphenated word"
+        for short in names for long in names if long.startswith(short + "-")
+    ]
+
+
 ROUTE_FIELDS = (
     "Immediate return",
     "Later read-back",
@@ -75,7 +94,7 @@ def section(body: str, title: str) -> str:
 def declared_ids(body: str) -> list[str]:
     """IDs declared under Shared records, in order, with repeats kept.
 
-    An annotation heading (`#### On RT-OBJ-1 — label`) is not a declaration.
+    An annotation heading (`#### On RT-OBJ-store — label`) is not a declaration.
     """
     return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
@@ -87,7 +106,7 @@ def annotated_ids(body: str) -> set[str]:
 
 def is_absence(identifier: str) -> bool:
     """Whether a record ID names an evidenced absence, whichever analyst declared it."""
-    return re.fullmatch(rf"{_PREFIX}ABS-\d+", identifier) is not None
+    return re.fullmatch(rf"{_PREFIX}ABS-{_NAME}", identifier) is not None
 
 
 def amendment_index(body: str) -> str:
@@ -106,9 +125,14 @@ def _record_syntax_errors(body: str) -> list[str]:
     """Check ranges and part fields without resolving cross-member references."""
     prose = _analysis_prose(body)
     errors = [
-        f"record references: ranges are not expanded: {match[0]}; list every full ID"
+        f"source references: ranges are not expanded: {match[0]}; list every full SRC ID"
         for match in _RANGE.finditer(prose)
     ]
+    errors.extend(
+        f"record IDs: invalid ID {identifier}; use RT-, MEM- or EPI-, a registered kind, and one to three lowercase words starting with a letter (digits may follow letters)"
+        for identifier in sorted(_references(prose))
+        if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None
+    )
     # A Part of field belongs to a declaration, not an annotation or prose section.
     owner = None
     in_records = False
@@ -153,6 +177,7 @@ def record_reference_errors(body: str) -> list[str]:
     )
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))
+    errors.extend(_prefix_collisions(declared_ids(body)))
     return errors
 
 
@@ -168,7 +193,7 @@ def route_field_errors(body: str) -> list[str]:
     for index, heading in enumerate(headings):
         declaration = _DECLARATION.fullmatch(heading[0])
         if declaration is None or not re.fullmatch(
-            rf"{_PREFIX}RTE-\d+", declaration[1]
+            rf"{_PREFIX}RTE-{_NAME}", declaration[1]
         ):
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(prose)
@@ -206,7 +231,7 @@ def conclusion_status_errors(body: str) -> list[str]:
     for index, heading in enumerate(headings):
         declaration = _DECLARATION.fullmatch(heading[0])
         if declaration is None or not re.fullmatch(
-            rf"{_PREFIX}RTE-\d+", declaration[1]
+            rf"{_PREFIX}RTE-{_NAME}", declaration[1]
         ):
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(records)
@@ -243,10 +268,13 @@ def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
         f"duplicate set declaration: {identifier}"
         for identifier, count in Counter(declarations).items() if count > 1
     ]
+    errors.extend(_prefix_collisions([identifier for identifier in declarations if not identifier.startswith("SRC-")]))
     for name, body in bodies.items():
         errors.extend(f"{name}: {error}" for error in _record_syntax_errors(body))
-        references = set(_REFERENCE.findall(_analysis_prose(body)))
+        references = _references(_analysis_prose(body))
         for identifier in sorted(references - known):
+            if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None:
+                continue  # the whole-token grammar diagnostic above is sufficient
             hint = ""
             if re.fullmatch(_RECORD_ID, identifier):
                 suffix = identifier.split("-", 1)[1]
@@ -255,5 +283,13 @@ def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
                                       and candidate.split("-", 1)[1] == suffix)
                 if alternatives:
                     hint = "; declared with another analyst prefix: " + ", ".join(alternatives)
+            if not hint:
+                candidates = sorted(candidate for candidate in known
+                                    if candidate.startswith("SRC-") == identifier.startswith("SRC-"))
+                labels = {candidate.split("-", 2)[-1]: candidate for candidate in candidates
+                          if candidate.split("-", 2)[:2] == identifier.split("-", 2)[:2]}
+                closest = get_close_matches(identifier.split("-", 2)[-1], sorted(labels), n=1, cutoff=0.6)
+                if closest:
+                    hint = "; nearest declared ID: " + labels[closest[0]]
             errors.append(f"{name}: unresolved record {identifier}{hint}")
     return known, errors

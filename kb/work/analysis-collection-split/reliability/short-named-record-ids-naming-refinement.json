@@ -1,0 +1,9 @@
+[
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "old-id": "EPI-OBJ-3",
+    "preflight-proposed-id": "EPI-OBJ-generator-outputs",
+    "final-proposed-id": "EPI-OBJ-generator-outputs-far",
+    "reason": "Keep three distinguishing words from generator_outputs_so_far, as the conversion rule requires."
+  }
+]

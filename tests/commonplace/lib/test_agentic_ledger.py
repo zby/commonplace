@@ -9,7 +9,7 @@ from commonplace.lib.validation import validate_note
 from tests.commonplace.lib.test_agentic_analysis import member_fixture
 
 HEADER = "| route ID | route function | architectural status | gap/limit |\n|---|---|---|---|\n"
-ROW = "| `RTE-1` | content transformation | implemented | no observed candidate |\n"
+ROW = "| `RTE-model-call` | content transformation | implemented | no observed candidate |\n"
 
 
 def errors(ledger: str) -> list[str]:
@@ -49,11 +49,11 @@ def test_controlled_values_accept_code_formatting_and_described_other_functions(
     assert errors(HEADER + ROW.replace("content transformation", "other — "))
 
 
-COMPACT = "Route ID: RTE-1\nRoute function: retention\nArchitectural status: implemented\n"
+COMPACT = "Route ID: RTE-model-call\nRoute function: retention\nArchitectural status: implemented\n"
 
 
 def test_compact_records_preserve_controlled_fields_without_wide_tables() -> None:
-    assert errors(COMPACT + '\n' + COMPACT.replace("RTE-1", "RTE-2")) == []
+    assert errors(COMPACT + '\n' + COMPACT.replace("RTE-model-call", "RTE-memory-update")) == []
     assert errors(COMPACT.replace("retention", "truth-apt transformation"))
     assert errors(COMPACT.replace("Route function: retention\n", ""))
     assert errors(COMPACT.replace("retention", ""))
@@ -62,7 +62,7 @@ def test_compact_records_preserve_controlled_fields_without_wide_tables() -> Non
 
 def test_source_examples_are_not_ledger_records() -> None:
     evidence = '\n```text\n' + HEADER + ROW.replace("implemented", "bogus") + '```\n'
-    evidence += '\n> Route ID: RTE-99\n> Route function: bogus\n'
+    evidence += '\n> Route ID: RTE-missing\n> Route function: bogus\n'
     assert errors(COMPACT + evidence) == []
 
 

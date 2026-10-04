@@ -4,7 +4,7 @@ import pytest
 
 from commonplace.lib import systems_matrix as sm
 
-KNOWN = {"RT-OBJ-1", "RT-RTE-1", "RT-ABS-1"}
+KNOWN = {"RT-OBJ-store", "RT-RTE-model-call", "RT-ABS-missing-route"}
 
 
 def profile():
@@ -29,13 +29,13 @@ def known(values, records=None, basis="wired"):
         "evidence": {
             value: {
                 "basis": basis,
-                "records": records or ["RT-OBJ-1"],
+                "records": records or ["RT-OBJ-store"],
                 "note": "Fixture witness.",
             }
             for value in values
         },
         "values": values,
-        "records": records or ["RT-OBJ-1"],
+        "records": records or ["RT-OBJ-store"],
         "note": "The named records cover the boundary.",
     }
 
@@ -43,7 +43,7 @@ def known(values, records=None, basis="wired"):
 def test_multiple_stores_and_distinct_unknown_assessments():
     data = profile()
     data["axes"]["storage_substrate"] = known(["files", "sqlite"])
-    data["axes"]["curation_operations"].update(assessment="absent", records=["RT-ABS-1"])
+    data["axes"]["curation_operations"].update(assessment="absent", records=["RT-ABS-missing-route"])
     data["axes"]["lineage"]["assessment"] = "not-determinable"
     before = deepcopy(data)
     assert sm.validate_comparison(data, known_ids=KNOWN) == before
@@ -63,7 +63,7 @@ def test_multiple_stores_and_distinct_unknown_assessments():
             "duplicate",
         ),
         (
-            lambda p: p["axes"].update(storage_substrate=known(["files"], ["RT-OBJ-99"])),
+            lambda p: p["axes"].update(storage_substrate=known(["files"], ["RT-OBJ-missing"])),
             "unresolved",
         ),
         (
@@ -87,14 +87,14 @@ def test_rejects_unsupported_or_contradictory_classification(edit, error):
 
 def test_cross_reference_is_not_a_record_declaration():
     data = profile()
-    data["axes"]["storage_substrate"] = known(["files"], ["MEM-OBJ-9"])
-    body = "## Shared records\n\nSee MEM-OBJ-9 for more details.\n\n#### MEM-OBJ-1 — store\n"
+    data["axes"]["storage_substrate"] = known(["files"], ["MEM-OBJ-example9"])
+    body = "## Shared records\n\nSee MEM-OBJ-example9 for more details.\n\n#### MEM-OBJ-store — store\n"
     with pytest.raises(ValueError, match="unresolved"):
         sm.profile_member_comparison({"memory-comparison": data}, record_bodies={"overview.md": "", "memory.md": body})
 
 
 def test_comparison_resolves_canonical_runtime_ids():
-    identifier = "RT-OBJ-1"
+    identifier = "RT-OBJ-store"
     data = profile()
     data["axes"]["storage_substrate"] = known(["files"], [identifier])
     body = "## Shared records\n\n### Operative objects\n\n" + "\n".join(f"#### {id_} — Fixture\n" for id_ in KNOWN | {identifier})
@@ -103,8 +103,8 @@ def test_comparison_resolves_canonical_runtime_ids():
 
 def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
     data = profile()
-    data["axes"]["read_back_direction"] = known(["pull"], ["RT-RTE-1"])
-    data["axes"]["trace_learning"] = known(["no"], ["RT-ABS-1"])
+    data["axes"]["read_back_direction"] = known(["pull"], ["RT-RTE-model-call"])
+    data["axes"]["trace_learning"] = known(["no"], ["RT-ABS-missing-route"])
     for axis in ("read_back_signal", "trace_source"):
         data["axes"][axis]["assessment"] = "inapplicable"
     sm.validate_comparison(data, known_ids=KNOWN)
@@ -121,7 +121,7 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
     from scripts.render_systems_table import assessment
 
     data = profile()
-    entry = known(["automatic", "manual"], ["RT-RTE-1"])
+    entry = known(["automatic", "manual"], ["RT-RTE-model-call"])
     entry["evidence"]["manual"]["basis"] = "afforded"
     data["axes"]["write_agency"] = entry
     for disposition in ("known", "partial"):
@@ -159,12 +159,12 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
 )
 def test_each_value_requires_its_own_witness(mutation, error):
     data = profile()
-    entry = known(["automatic", "manual"], ["RT-RTE-1"])
+    entry = known(["automatic", "manual"], ["RT-RTE-model-call"])
     data["axes"]["write_agency"] = entry
     if mutation == "missing":
         del entry["evidence"]["manual"]
     elif mutation == "unknown-record":
-        entry["evidence"]["manual"]["records"] = ["RT-RTE-99"]
+        entry["evidence"]["manual"]["records"] = ["RT-RTE-missing"]
     elif mutation == "no-basis":
         entry["evidence"]["manual"]["basis"] = None
     else:
@@ -175,7 +175,7 @@ def test_each_value_requires_its_own_witness(mutation, error):
 
 def test_partial_negative_does_not_establish_absence():
     data = profile()
-    data["axes"]["trace_learning"] = known(["no"], ["RT-ABS-1"])
+    data["axes"]["trace_learning"] = known(["no"], ["RT-ABS-missing-route"])
     data["axes"]["trace_learning"]["assessment"] = "partial"
     with pytest.raises(ValueError, match="partial coverage cannot establish no"):
         sm.validate_comparison(data, known_ids=KNOWN)

@@ -20,8 +20,7 @@ Common parameters are defined in the supplied worker rules.
 Write the runtime member to `output` under the supplied runtime type,
 within `boundary`. It gives the later specialists their starting account.
 No job rewrites it afterwards.
-Declare every runtime-owned record with `RT-`, such as `RT-OBJ-1` or
-`RT-RTE-1`, under the shared record contract.
+Declare runtime-owned records with `RT-` under the shared record contract.
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one
    ordinary invocation end to end and record it with the fields the type's

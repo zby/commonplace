@@ -162,9 +162,9 @@ def profile_report_fixture(run_dir: Path, revision: str) -> Path:
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
     profile["axes"]["storage_substrate"] = {
         "assessment": "known", "values": ["sqlite", "files"],
-        "evidence": {v: {"basis": "wired", "records": ["MEM-OBJ-1"], "note": "Fixture witness."}
+        "evidence": {v: {"basis": "wired", "records": ["MEM-OBJ-store"], "note": "Fixture witness."}
                      for v in ["sqlite", "files"]},
-        "records": ["MEM-OBJ-1"], "note": "Both stores occur within the fixture boundary.",
+        "records": ["MEM-OBJ-store"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
         "type": "agentic-system-analyses/types/agent-memory-profile.md",
@@ -172,7 +172,7 @@ def profile_report_fixture(run_dir: Path, revision: str) -> Path:
         "run-id": RUN_ID, "source-identity": SOURCE,
         "reviewed-boundary": revision, "memory-comparison": profile,
     }
-    return write(run_dir / "output/memory-profile.md", "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n# Fixture memory profile\n\n## Comparison rationale\n\nBoth stores are MEM-OBJ-1.\n")
+    return write(run_dir / "output/memory-profile.md", "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n# Fixture memory profile\n\n## Comparison rationale\n\nBoth stores are MEM-OBJ-store.\n")
 
 
 def memory_report_fixture(run_dir: Path, revision: str) -> Path:
@@ -207,13 +207,13 @@ none proposed.
 
 ### Operative objects
 
-#### MEM-OBJ-1 — Fixture memory store
+#### MEM-OBJ-store — Fixture memory store
 
 Store the specialist established, from SRC-1.
 
 ### Routes
 
-#### On RT-RTE-1 — Fixture route
+#### On RT-RTE-model-call — Fixture route
 
 Seeded route with the specialist's memory fields.
 
@@ -231,11 +231,11 @@ none proposed.
 
 ## Write side
 
-Fixture evidence on MEM-OBJ-1.
+Fixture evidence on MEM-OBJ-store.
 
 ## Read-back
 
-Fixture evidence on RT-RTE-1.
+Fixture evidence on RT-RTE-model-call.
 
 ## Integration issues
 
@@ -269,24 +269,24 @@ Implementation inspected at `README.md`; operation is unobserved.
 
 ### Components
 
-#### RT-CMP-1 — Fixture component
+#### RT-CMP-model — Fixture component
 
 Record. Evidence: SRC-1.
 
 ### Operative objects
 
-#### RT-OBJ-1 — Fixture object
+#### RT-OBJ-store — Fixture object
 
 Record. Evidence: SRC-1.
 
 ### Routes
 
-#### RT-RTE-1 — Fixture route
+#### RT-RTE-model-call — Fixture route
 
 - implementation conclusion status: wired
 
 - Immediate return: The fixture invocation returns the stored object.
-- Later read-back: A later invocation reads RT-OBJ-1.
+- Later read-back: A later invocation reads RT-OBJ-store.
 - Delegated visibility: inapplicable — the fixture has no delegated workers.
 - Selection predicate: The caller requests the fixture object.
 - Invalidation or expiry: inapplicable — the fixture has no expiry mechanism.
@@ -297,7 +297,7 @@ Record. Evidence: SRC-1.
 
 ### Claims
 
-#### RT-CLM-1 — Fixture claim
+#### RT-CLM-runtime-claim — Fixture claim
 
 Record. Evidence: SRC-1.
 
@@ -307,7 +307,7 @@ none found within the fixture boundary.
 
 ### Behavioral-authority paths
 
-#### RT-BAP-1 — Fixture authority path
+#### RT-BAP-content-authority — Fixture authority path
 
 Record. Evidence: SRC-1.
 
@@ -333,18 +333,18 @@ Boundary from the overview's Source register.
 
 ## Epistemic-object inventory
 
-RT-OBJ-1 and EPI-OBJ-1 carry no candidate truth-apt content.
+RT-OBJ-store and EPI-OBJ-store carry no candidate truth-apt content.
 
 ## Authority-route ledger
 
-Route ID: RT-RTE-1
+Route ID: RT-RTE-model-call
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
 
 ## System-claim versus route comparison
 
-RT-CLM-1 is compared with RT-RTE-1.
+RT-CLM-runtime-claim is compared with RT-RTE-model-call.
 
 ## Bounded conclusion
 
@@ -354,7 +354,7 @@ Conclusion.
 
 ### Operative objects
 
-#### EPI-OBJ-1 — Fixture checked object
+#### EPI-OBJ-store — Fixture checked object
 
 Object the epistemic lens established. Evidence: SRC-1.
 """
@@ -392,7 +392,7 @@ Fixture boundary at `{revision}`.
 
 ## Bounded synthesis
 
-Fixture synthesis over RT-OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RT-RTE-1.
+Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.
 
 ## Limitations
 
@@ -482,7 +482,7 @@ reviewed-boundary: {revision}
 
 ## Reconciliation
 
-MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.
+MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.
 '''
 
 
@@ -498,7 +498,7 @@ def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> No
     run = member_fixture(tmp_path)
     reconciliation = run / "output/reconciliation.md"
     reconciliation.write_text(reconciliation.read_text() +
-        "\nAmendment: EPI-OBJ-1 is superseded by RT-OBJ-1; identity evidence at SRC-1.\n")
+        "\nAmendment: EPI-OBJ-store is superseded by RT-OBJ-store; identity evidence at SRC-1.\n")
     repin(reconciliation.parent)
     failures = validation.validate_note(reconciliation.parent, repo_root=tmp_path).fails
     assert any("amendment index does not match" in failure for failure in failures)
@@ -973,25 +973,25 @@ def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation
     report = directory / "memory-profile.md"
     body = memory.read_text().replace(
         "### Evidenced absences\n\nnone proposed.\n",
-        "### Evidenced absences\n\n#### MEM-ABS-1 — Inspected absence\n\nSearched.\n",
+        "### Evidenced absences\n\n#### MEM-ABS-missing-route — Inspected absence\n\nSearched.\n",
     )
     memory.write_text(body)
     metadata = frontmatter(report)
     axes = metadata["memory-comparison"]["axes"]
     axes["storage_substrate"] = {
         "assessment": "known", "values": ["files"],
-        "evidence": {"files": {"basis": "wired", "records": ["MEM-OBJ-1"], "note": "Fixture witness."}},
-        "records": ["MEM-OBJ-1"], "note": "Fixture source writes files.",
+        "evidence": {"files": {"basis": "wired", "records": ["MEM-OBJ-store"], "note": "Fixture witness."}},
+        "records": ["MEM-OBJ-store"], "note": "Fixture source writes files.",
     }
     axes["trace_learning"] = {
         "assessment": "absent", "evidence": {}, "values": [],
-        "records": ["MEM-ABS-1"], "note": "Fixture source was inspected.",
+        "records": ["MEM-ABS-missing-route"], "note": "Fixture source was inspected.",
     }
     expected_error = None
     if mutation == "outside":
         memory.write_text(memory.read_text().replace(
-            "#### MEM-OBJ-1 — Fixture memory store\n", "",
-        ) + "\nMEM-OBJ-1 outside the register.\n")
+            "#### MEM-OBJ-store — Fixture memory store\n", "",
+        ) + "\nMEM-OBJ-store outside the register.\n")
         expected_error = "unresolved record"
     replace_frontmatter(report, metadata)
     checked = validation.validate_note(report, repo_root=tmp_path)
@@ -1708,7 +1708,7 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     values["result-disposition"] = disposition
     replace_frontmatter(overview, values)
     overview.write_text(re.sub(r"(?m)^Amended or superseded records:.*\n", "",
-        re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text())))
+        re.sub(r"(?:RT|MEM|EPI)-(?:OBJ|RTE|CMP|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}", "not evaluated", overview.read_text())))
     for name in MEMBER_TYPES:
         (directory / name).unlink()
     repin(directory)

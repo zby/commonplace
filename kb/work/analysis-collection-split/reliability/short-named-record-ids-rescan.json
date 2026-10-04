@@ -1,0 +1,73 @@
+[
+  {
+    "pattern": "(?:RT|MEM|EPI)-(?:CMP|OBJ|RTE|CLM|ABS|BAP)-[0-9]+",
+    "scopes": [
+      "src",
+      "tests",
+      "scripts",
+      "kb/agentic-system-analyses",
+      ".agents",
+      ".claude",
+      "kb/reference",
+      "AGENTS.md"
+    ],
+    "matches": [
+      "kb/reference/adr/096-analysis-passes-declare-their-own-records-under-lens-prefixes.md:40:for the memory lens (`MEM-OBJ-1`), `EPI-` for the epistemic lens",
+      "kb/reference/adr/096-analysis-passes-declare-their-own-records-under-lens-prefixes.md:41:(`EPI-OBJ-1`). Each pass declares its records in its own member, with the",
+      "kb/reference/adr/096-analysis-passes-declare-their-own-records-under-lens-prefixes.md:54:`Amendment: MEM-RTE-3 is superseded by RTE-7`, with the evidence for the",
+      "tests/commonplace/lib/test_agentic_records.py:413:    body += \"\\n```markdown\\nRT-OBJ-1\u2013RT-OBJ-missing\\nPart of: RT-OBJ-missing\\n```\\n\"",
+      "tests/commonplace/lib/test_agentic_records.py:482:    body = BASE + '\\n> RT-OBJ-1 SRC-1 through SRC-9 RT-OBJ-UPPER\\n'"
+    ],
+    "hit-count": 5
+  },
+  {
+    "pattern": "(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\\\\d",
+    "scopes": [
+      "src",
+      "tests",
+      "scripts",
+      "kb/agentic-system-analyses",
+      ".agents",
+      ".claude",
+      "kb/reference",
+      "AGENTS.md"
+    ],
+    "matches": [],
+    "hit-count": 0
+  },
+  {
+    "pattern": "record.*range|range.*record|monotonic|new number",
+    "scopes": [
+      "src",
+      "tests",
+      "scripts",
+      "kb/agentic-system-analyses",
+      ".agents",
+      ".claude",
+      "kb/reference",
+      "AGENTS.md"
+    ],
+    "matches": [
+      "kb/reference/adr/052-general-freshness-store-review-first-migration.md:26:One freshness mechanism owns path-keyed `file-text` artifact snapshots with mandatory stored text; one current baseline per registered target with a monotonic revision; accepted input roles pointing at snapshots; and a review-only bridge retaining the completed evidence pair for `review-pair` targets.",
+      "kb/reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md:15:**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.",
+      "kb/reference/adr/076-source-claim-grounding-is-a-promoted-skill.md:14:**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.",
+      "kb/reference/proposals/archive/quote-occurrence-location-and-verification.md:26:| Agentic-analysis attributed blockquote | [agentic_analysis.py](../../../../src/commonplace/lib/agentic_analysis.py) `_verify_quote_anchors`: blockquote plus `> ---` attribution; git blob at the recorded commit, or checksum-pinned capture | whitespace collapsed only | 1,592 quotes in 44 retained results; 1,528 in the local `path @ commit` form, none of those carrying a line range |",
+      "kb/reference/adr/086-projects-read-the-library-from-the-installed-package.md:85:**Left open.** Whether a stale stub or an uncovered root makes commands stop or only warn. Stopping would not close the stale-read gap (see Consequences), so commands warn. Also open: where a project records its accepted Commonplace version range; a `[tool.commonplace]` table in `pyproject.toml` suits Python projects but not others.",
+      "kb/reference/adr/086-projects-read-the-library-from-the-installed-package.md:93:- The library changes on upgrade with no diff for the user to review. A recorded version range (a separate change, below) makes an unwanted upgrade detectable.",
+      "kb/reference/adr/086-projects-read-the-library-from-the-installed-package.md:101:**Separate changes.** A recorded PEP 440 version range per project, which would fill ADR 021's missing version marker, remains useful in any layout and is decided separately.",
+      "kb/reference/proposals/keyword-tags-without-heads.md:13:[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, that membership ranges over one fixed set of participating collections, and that no consumer reads tags outside that set. It records this proposal's idea under its considered alternatives and rejects it for now on YAGNI grounds: the headless tags that prompted it were mistakes under the existing rules, and were given heads or retagged in the same change rather than legalized by a new mechanism. `kb/work/` and `kb/sources/` artifacts may carry `tags:` lines; nothing reads them, so they are neither keywords nor memberships but inert text.",
+      "scripts/run_isolated_codex.py:327:    started = time.monotonic()",
+      "scripts/run_isolated_codex.py:371:        \"elapsed_seconds\": round(time.monotonic() - started, 2),",
+      "kb/reference/adr/078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md:14:**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.",
+      "tests/commonplace/lib/test_agentic_records.py:355:    assert any(\"ranges are not expanded\" in error for error in record_reference_errors(body))",
+      "tests/commonplace/lib/test_agentic_records.py:365:def test_relation_prose_does_not_enumerate_a_record_range(reference: str) -> None:",
+      "tests/commonplace/test_isolated_codex.py:121:        deadline = time.monotonic() + 10",
+      "tests/commonplace/test_isolated_codex.py:124:            assert time.monotonic() < deadline",
+      "tests/commonplace/workflow/definitions.py:337:        deadline = time.monotonic() + 30",
+      "tests/commonplace/workflow/definitions.py:338:        while not finish.exists() and time.monotonic() < deadline:",
+      "tests/commonplace/workflow/test_workflow_processes.py:137:        deadline = time.monotonic() + 30",
+      "tests/commonplace/workflow/test_workflow_processes.py:138:        while not holding.exists() and time.monotonic() < deadline:"
+    ],
+    "hit-count": 19
+  }
+]

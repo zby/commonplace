@@ -22,14 +22,14 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 
 def route(fields: str, prefix: str = "RT-") -> str:
-    return f"## Shared records\n\n### Routes\n\n#### {prefix}RTE-1 — Recall\n\n{fields}\n"
+    return f"## Shared records\n\n### Routes\n\n#### {prefix}RTE-model-call — Recall\n\n{fields}\n"
 
 
 def test_unlabelled_route_statuses_do_not_satisfy_the_contract() -> None:
     prefix = "MEM-"
     errors = conclusion_status_errors(route("The route is wired; operation unobserved.", prefix))
     assert len(errors) == 1
-    assert prefix + "RTE-1" in errors[0] and "missing labelled field" in errors[0]
+    assert prefix + "RTE-model-call" in errors[0] and "missing labelled field" in errors[0]
 
 
 @pytest.mark.parametrize("value", ["", "unobserved", "wired; observed", "wired — code inspected"])
@@ -51,12 +51,12 @@ def test_layers_remain_separate_and_ordinary_unobserved_prose_is_allowed() -> No
 @pytest.mark.parametrize("other", [
     "> - implementation conclusion status: wired\n",
     "```markdown\n- implementation conclusion status: wired\n```\n",
-    "#### On RT-RTE-1 — Annotation\n- implementation conclusion status: wired\n",
-    "#### MEM-RTE-2 — Another route\n- implementation conclusion status: wired\n",
+    "#### On RT-RTE-model-call — Annotation\n- implementation conclusion status: wired\n",
+    "#### MEM-RTE-memory-update — Another route\n- implementation conclusion status: wired\n",
 ])
 def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> None:
     errors = conclusion_status_errors(route(other))
-    assert any("RTE-1: missing labelled field" in error for error in errors)
+    assert any("RTE-model-call: missing labelled field" in error for error in errors)
 
 
 def test_status_defects_are_amended_before_reconciliation(

@@ -61,7 +61,7 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 SYSTEM = "Example System"
 DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
-BLOCKER = "- RT-RTE-1 has an unresolved scope in the reconciled records."
+BLOCKER = "- RT-RTE-model-call has an unresolved scope in the reconciled records."
 REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
 # Its checkout is the fixture's related-systems/example--system.
 GITHUB = "https://github.com/example/system"
@@ -190,18 +190,18 @@ class Fixture:
     @staticmethod
     def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
         text = ("## Reconciliation\n\n"
-                "MEM-OBJ-1 and EPI-OBJ-1 duplicate no runtime record.\n\n"
+                "MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.\n\n"
                 + (f"Amendment: {amendment}\n\n" if amendment else ""))
         if returned:
             text += ("\n## Returned to the memory analyst\n\n"
-                     "- MEM-OBJ-1: the write-side anchor does not resolve at `README.md`.\n")
+                     "- MEM-OBJ-store: the write-side anchor does not resolve at `README.md`.\n")
         return text
 
     @staticmethod
     def synthesis(*, synthesis: str = "", limitations: str = "None.") -> str:
         return (f"## Description\n\n{DESCRIPTION}\n\n"
                 "## Bounded synthesis\n\n"
-                "Fixture synthesis over RT-OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RT-RTE-1.\n\n"
+                "Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.\n\n"
                 + (f"{synthesis}\n\n" if synthesis else "")
                 + f"## Limitations\n\n{limitations}\n")
 
@@ -440,7 +440,7 @@ def test_amendment_index_is_inside_source_register_in_either_boundary_order(
         start = boundary.index("## Boundary and evidence\n")
         middle = boundary.index(source_heading)
         boundary = boundary[:start] + boundary[middle:].rstrip() + "\n\n" + boundary[start:middle]
-    amendment = "RT-OBJ-1 has a narrower interpretation; replace the broad scope with the fixture scope at SRC-1 README.md. Affected finding: runtime identity."
+    amendment = "RT-OBJ-store has a narrower interpretation; replace the broad scope with the fixture scope at SRC-1 README.md. Affected finding: runtime identity."
     scripted, _ = agent(
         fixture,
         boundary=fixture.writes(lambda _: boundary),
@@ -450,7 +450,7 @@ def test_amendment_index_is_inside_source_register_in_either_boundary_order(
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
     match = re.search(r"(?ms)^## Source register\n(.*?)(?=^## |\Z)", overview)
     assert match is not None
-    index = "Amended or superseded records: RT-OBJ-1; [reconciliation](reconciliation.md)."
+    index = "Amended or superseded records: RT-OBJ-store; [reconciliation](reconciliation.md)."
     assert overview.count(index) == 1
     assert row in match[1]
     assert match[1].index(row) < match[1].index(index)
@@ -492,10 +492,10 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
 
 def test_synthesis_blockers_correct_public_text_without_reopening_records(fixture: Fixture) -> None:
     blocked = fixture.verification(
-        "- MEM-OBJ-1 has a record scope gap; state its prevented conclusion in Limitations.",
+        "- MEM-OBJ-store has a record scope gap; state its prevented conclusion in Limitations.",
         title="Synthesis verification",
     )
-    corrected = fixture.synthesis(limitations="MEM-OBJ-1 has a scope gap; its deployment use is unknown.")
+    corrected = fixture.synthesis(limitations="MEM-OBJ-store has a scope gap; its deployment use is unknown.")
     scripted, _ = agent(fixture, **{
         "verify-synthesis": fixture.writes(lambda _: blocked),
         "synthesize-1": fixture.writes(lambda _: corrected),
@@ -505,13 +505,13 @@ def test_synthesis_blockers_correct_public_text_without_reopening_records(fixtur
     assert [name for name in scripted.launched if name.startswith("synthesize")] == ["synthesize", "synthesize-1"]
     prompt = last_prompt(fixture, "synthesize-1")
     assert "previous-synthesis =" in prompt and "synthesis-verification-0.md" in prompt
-    assert "MEM-OBJ-1 has a scope gap" in (fixture.public_path).read_text()
+    assert "MEM-OBJ-store has a scope gap" in (fixture.public_path).read_text()
     assert "### Record verification" in (fixture.run_dir / "output/overview.md").read_text()
     assert "### Synthesis verification" in (fixture.run_dir / "output/overview.md").read_text()
 
 
 def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> None:
-    blocked = fixture.verification("- RT-OBJ-1 is overstated in the synthesis.", title="Synthesis verification")
+    blocked = fixture.verification("- RT-OBJ-store is overstated in the synthesis.", title="Synthesis verification")
     scripted, definition = agent(fixture, **{
         "verify-synthesis": fixture.writes(lambda _: blocked),
         "verify-synthesis-1": fixture.writes(lambda _: blocked),
@@ -525,12 +525,12 @@ def test_last_synthesis_blockers_stop_before_publication(fixture: Fixture) -> No
 
 
 def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> None:
-    bad = fixture.synthesis(synthesis="RT-OBJ-99 proves this result.")
+    bad = fixture.synthesis(synthesis="RT-OBJ-missing proves this result.")
     scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: bad))
     drive_to(scripted, "synthesize")
     attempt, prompt = prompt_of(scripted.round(), "synthesize")
     assert attempt == 2
-    assert "synthesis.md: unresolved record RT-OBJ-99" in prompt
+    assert "synthesis.md: unresolved record RT-OBJ-missing" in prompt
 
 
 @pytest.mark.parametrize("link", ["../../notes/theory.md"])
@@ -629,15 +629,15 @@ def last_prompt(fixture: Fixture, name: str) -> str:
 def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> None:
     """Scripted findings exercise workflow handling, not analyst judgment."""
     amendment = (
-        "RT-OBJ-1 is superseded by EPI-OBJ-1 and EPI-OBJ-2; "
+        "RT-OBJ-store is superseded by EPI-OBJ-store and EPI-OBJ-input; "
         "the combined finding conflates two parts. Evidence: SRC-1 README.md. "
         "Affected findings: runtime object identity and epistemic objects."
     )
     epistemic = epistemic_text(fixture.revision).replace(
         "Object the epistemic lens established. Evidence: SRC-1.",
-        "Part of: RT-OBJ-1\n\nStore part. Evidence: SRC-1.\n\n"
-        "#### EPI-OBJ-2 — Access-policy part\n\n"
-        "Part of: RT-OBJ-1\n\nPolicy part. Evidence: SRC-1.",
+        "Part of: RT-OBJ-store\n\nStore part. Evidence: SRC-1.\n\n"
+        "#### EPI-OBJ-input — Access-policy part\n\n"
+        "Part of: RT-OBJ-store\n\nPolicy part. Evidence: SRC-1.",
     )
     workers = {
         "epistemic": fixture.writes(lambda _: epistemic),
@@ -709,7 +709,7 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
 ) -> None:
     dangling = fixture.reconciliation(
         returned=returned,
-        amendment="MEM-OBJ-9 is superseded by RT-OBJ-1; both name `README.md`."
+        amendment="MEM-OBJ-example9 is superseded by RT-OBJ-store; both name `README.md`."
     )
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: dangling)})
     drive_to(scripted, "reconcile-0")
@@ -717,12 +717,12 @@ def test_reconciliation_amending_an_undeclared_record_is_refused(
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
 
     assert attempt == 2
-    assert "reconciliation.md: unresolved record MEM-OBJ-9" in prompt
+    assert "reconciliation.md: unresolved record MEM-OBJ-example9" in prompt
 
 
 def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixture) -> None:
     text = fixture.verification().replace(
-        "its records.", "its records. Compared EPI-OBJ-1 to RT-OBJ-1 at SRC-1."
+        "its records.", "its records. Compared EPI-OBJ-store to RT-OBJ-store at SRC-1."
     )
     scripted, _ = agent(fixture, **{"verify-0": fixture.writes(lambda _: text)})
     results = scripted.run()
@@ -760,7 +760,7 @@ def test_reconciliation_preserves_permitted_quote_attributions(
 
 def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) -> None:
     supersedes = fixture.reconciliation(
-        amendment="EPI-OBJ-1 is superseded by RT-OBJ-1; both name `README.md` at SRC-1."
+        amendment="EPI-OBJ-store is superseded by RT-OBJ-store; both name `README.md` at SRC-1."
     )
     scripted, definition = agent(
         fixture, **{"reconcile-0": fixture.writes(lambda _: supersedes)}
@@ -771,8 +771,8 @@ def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) 
     assert isinstance(results[-1], Done), results[-1]
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
     assert "Amendment:" not in overview
-    assert "Amended or superseded records: EPI-OBJ-1" in overview
-    assert "Amendment: EPI-OBJ-1 is superseded by RT-OBJ-1" in (
+    assert "Amended or superseded records: EPI-OBJ-store" in overview
+    assert "Amendment: EPI-OBJ-store is superseded by RT-OBJ-store" in (
         fixture.run_dir / "output/reconciliation.md").read_text()
     assert definition.publications == 1
 
@@ -815,7 +815,7 @@ def test_the_description_and_synthesis_become_the_public_review(
     assert review_path.read_bytes() == overview.read_bytes()
     assert frontmatter(review_path)["evidence-tier"] == "code-grounded"
     assert frontmatter(review_path)["analysis-cutoff"] == "2026-09-04"
-    assert "Fixture synthesis over RT-OBJ-1, MEM-OBJ-1, EPI-OBJ-1 and RT-RTE-1." in review
+    assert "Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call." in review
     assert "## Limitations\n\nNone.\n" in review
     assert "[the runtime member](./runtime.md#routes)" in review
     assert "[the overview](overview.md)" in review
@@ -860,9 +860,9 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     ("blockers", "accepted"),
     [
         ("none", True),
-        ("- RT-RTE-1 is never traced.", True),
+        ("- RT-RTE-model-call is never traced.", True),
         ("None found", False),
-        ("- RT-RTE-1 is never traced.\nRT-OBJ-1 is thin.", False),
+        ("- RT-RTE-model-call is never traced.\nRT-OBJ-store is thin.", False),
     ],
 )
 def test_blockers_are_none_or_a_list(blockers: str, accepted: bool) -> None:
@@ -894,10 +894,10 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     fixture: Fixture,
 ) -> None:
     def redeclared(_: Handout) -> str:
-        route = runtime_text(fixture.revision).split("#### RT-RTE-1 — Fixture route\n\n", 1)[1]
+        route = runtime_text(fixture.revision).split("#### RT-RTE-model-call — Fixture route\n\n", 1)[1]
         route = route.split("\n### Claims", 1)[0]
         return fixture.memory_report().replace(
-            "#### On RT-RTE-1 — Fixture route", "#### RT-RTE-1 — Fixture route"
+            "#### On RT-RTE-model-call — Fixture route", "#### RT-RTE-model-call — Fixture route"
         ).replace(
             "Seeded route with the specialist's memory fields.", route
         )
@@ -908,7 +908,7 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
     attempt, prompt = prompt_of(scripted.round(), "memory-0")
 
     assert attempt == 2
-    assert "duplicate set declaration: RT-RTE-1" in prompt
+    assert "duplicate set declaration: RT-RTE-model-call" in prompt
 
 
 @pytest.mark.parametrize("job", ["runtime", "memory-1"])
@@ -958,7 +958,7 @@ def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) 
     def runtime(handout: Handout) -> None:
         if handout.attempt == 1:
             text = runtime_text(fixture.revision).replace(
-                "- Later read-back: A later invocation reads RT-OBJ-1.\n", ""
+                "- Later read-back: A later invocation reads RT-OBJ-store.\n", ""
             )
         else:
             prompt = handout.prompt_path.read_text(encoding="utf-8")
@@ -971,7 +971,7 @@ def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) 
     drive_to(scripted, "runtime")
     attempt, prompt = prompt_of(scripted.round(), "runtime")
     assert attempt == 2
-    assert "RT-RTE-1: Later read-back: missing field" in prompt
+    assert "RT-RTE-model-call: Later read-back: missing field" in prompt
     assert isinstance(scripted.run()[-1], Done)
     assert scripted.launched.count("runtime") == 2
     assert scripted.launched.count("reconcile-0") == 1
@@ -1517,8 +1517,8 @@ def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst)
 
 
 def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None:
-    blocked = fixture.verification("- storage_substrate needs a corrected rationale for MEM-OBJ-1.", title="Profile verification")
-    corrected = fixture.memory_profile() + "\nCorrected rationale for MEM-OBJ-1.\n"
+    blocked = fixture.verification("- storage_substrate needs a corrected rationale for MEM-OBJ-store.", title="Profile verification")
+    corrected = fixture.memory_profile() + "\nCorrected rationale for MEM-OBJ-store.\n"
     scripted, _ = agent(fixture, **{
         "verify-profile": fixture.writes(lambda _: blocked),
         "profile-1": fixture.writes(lambda _: corrected),
@@ -1536,7 +1536,7 @@ def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None
 
 
 def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> None:
-    blocked = fixture.verification("- storage_substrate is unsupported by MEM-OBJ-1.", title="Profile verification")
+    blocked = fixture.verification("- storage_substrate is unsupported by MEM-OBJ-store.", title="Profile verification")
     scripted, definition = agent(fixture, **{
         "verify-profile": fixture.writes(lambda _: blocked),
         "verify-profile-1": fixture.writes(lambda _: blocked),
@@ -1553,10 +1553,10 @@ def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> 
 def test_profile_cannot_create_its_own_support(fixture: Fixture, fault: str) -> None:
     bad = fixture.memory_profile()
     bad += {
-        "declaration": "\n## Shared records\n\n#### MEM-OBJ-99 — Invented support\n",
-        "annotation": "\n## Annotations\n\n#### On MEM-OBJ-1 — Extra evidence\n",
+        "declaration": "\n## Shared records\n\n#### MEM-OBJ-missing — Invented support\n",
+        "annotation": "\n## Annotations\n\n#### On MEM-OBJ-store — Extra evidence\n",
         "quote": "\n> Source-only fact\n",
-        "reference": "\nMEM-OBJ-99 supports a value.\n",
+        "reference": "\nMEM-OBJ-missing supports a value.\n",
         "identity": "",
     }[fault]
     if fault == "identity":

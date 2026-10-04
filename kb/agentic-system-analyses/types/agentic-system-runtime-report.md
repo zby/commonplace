@@ -7,9 +7,8 @@ schema: ./agentic-system-runtime-report.schema.yaml
 
 # Agentic system runtime report
 
-The runtime baseline: source-grounded invocations and alternate/forcing
-routes, and records under `RT-` IDs. It is
-written before the two specialist members and remains unchanged afterward.
+The runtime baseline gives source-grounded invocations, alternate/forcing
+routes and `RT-` records. It precedes both specialists and stays unchanged.
 The [source contract](../instructions/agentic-analysis-sources.md) governs
 evidence; the [record contract](../instructions/agentic-analysis-records.md)
 governs identity, fields, statuses and theory assessments.
@@ -56,7 +55,7 @@ admission and theory fields.
 ### Annotations
 
 `## Annotations` holds only runtime-specific fields on records declared
-elsewhere, as `#### On MEM-RTE-10 — Short label`: admission and theory
+elsewhere, as `#### On MEM-RTE-memory-read — Short label`: admission and theory
 fields, decision roles, operating mode, answer oracle and links to
 runtime-declared records. It repeats no generic identity, evidence passage
 or memory finding. Ordinarily this section says `none`: the runtime is

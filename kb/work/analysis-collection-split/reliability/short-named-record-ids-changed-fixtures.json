@@ -1,0 +1,15 @@
+[
+  "tests/commonplace/docs/test_agentic_system_member_types.py",
+  "tests/commonplace/lib/test_agentic_records.py",
+  "tests/commonplace/lib/test_agentic_workflow.py",
+  "tests/commonplace/lib/test_agentic_statuses.py",
+  "tests/commonplace/lib/test_agentic_ledger.py",
+  "tests/commonplace/lib/test_agentic_analysis.py",
+  "tests/commonplace/lib/test_systems_matrix.py",
+  "kb/agentic-system-analyses/types/agentic-system-runtime-report.md",
+  "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",
+  "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/runtime.md",
+  "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md",
+  "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md",
+  "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md"
+]

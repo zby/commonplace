@@ -52,9 +52,8 @@ findings.
 Every ID you cite, in amendments too, must resolve in the set your output
 makes: the Source register, the runtime member, the memory report and the
 epistemic member. Your output is refused with the unresolved IDs otherwise.
-Keep the declaring analyst's prefix when amending another member's finding:
-an epistemic finding about `RT-RTE-5` is amended as `Amendment: RT-RTE-5`,
-with the epistemic member named under affected findings.
+Keep the declaring analyst's prefix when amending another member's finding,
+with that member named under affected findings.
 
 ## Return findings to the memory analyst
 

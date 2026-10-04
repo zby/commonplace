@@ -1,0 +1,594 @@
+[
+  {
+    "run-id": "AAS-2026-10-02-dynamic-cheatsheet-01",
+    "declarations": [
+      {
+        "source-identity": "answer text returned by `advanced_generate` or a direct client generation call.",
+        "old-id": "EPI-OBJ-1",
+        "proposed-id": "EPI-OBJ-returned-answer",
+        "label": "Returned answer candidate",
+        "member": "epistemic.md",
+        "record-line": 129,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "`original_input_corpus` entries aligned by index with supplied outputs and embeddings.",
+        "old-id": "EPI-OBJ-2",
+        "proposed-id": "EPI-OBJ-original-input-corpus",
+        "label": "Prior input strings",
+        "member": "epistemic.md",
+        "record-line": 137,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "entries in `generator_outputs_so_far` paired by index with prior inputs.",
+        "old-id": "EPI-OBJ-3",
+        "proposed-id": "EPI-OBJ-generator-outputs",
+        "label": "Prior generated output strings",
+        "member": "epistemic.md",
+        "record-line": 146,
+        "qualified": false,
+        "source_words_dropped": true,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "rows in `original_input_embeddings`, including the final current-query row.",
+        "old-id": "EPI-OBJ-4",
+        "proposed-id": "EPI-OBJ-original-input-embeddings",
+        "label": "Supplied embedding rows",
+        "member": "epistemic.md",
+        "record-line": 155,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "Python code extracted from model response or instructions submitted to a provider-native execution tool.",
+        "old-id": "EPI-OBJ-5",
+        "proposed-id": "EPI-OBJ-executable-code",
+        "label": "Proposed executable code",
+        "member": "epistemic.md",
+        "record-line": 164,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "captured stdout/stderr or provider-returned execution-related response.",
+        "old-id": "EPI-OBJ-6",
+        "proposed-id": "EPI-OBJ-stdout-stderr",
+        "label": "Execution output text",
+        "member": "epistemic.md",
+        "record-line": 173,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "title, URL and content values formatted from Tavily results for direct client generation; native provider search results are not exposed as inspectable strings in the registered code.",
+        "old-id": "EPI-OBJ-7",
+        "proposed-id": "EPI-OBJ-search-results",
+        "label": "Search result strings",
+        "member": "epistemic.md",
+        "record-line": 182,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "the substring selected from a curator response between `<cheatsheet>` and `</cheatsheet>`.",
+        "old-id": "EPI-OBJ-8",
+        "proposed-id": "EPI-OBJ-cheatsheet-segment",
+        "label": "Proposed cumulative sheet segment",
+        "member": "epistemic.md",
+        "record-line": 190,
+        "qualified": true,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "EPI-RTE-1",
+        "proposed-id": "EPI-RTE-client-web-search",
+        "label": "Direct-client web search",
+        "member": "epistemic.md",
+        "record-line": 201,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "EPI-CLM-1",
+        "proposed-id": "EPI-CLM-persistent-evolving-memory",
+        "label": "Persistent, evolving memory",
+        "member": "epistemic.md",
+        "record-line": 223,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "EPI-CLM-2",
+        "proposed-id": "EPI-CLM-experience-driven-learning",
+        "label": "Experience-driven learning without labels or feedback",
+        "member": "epistemic.md",
+        "record-line": 229,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "EPI-CLM-3",
+        "proposed-id": "EPI-CLM-benchmark-performance-gains",
+        "label": "Benchmark performance gains",
+        "member": "epistemic.md",
+        "record-line": 235,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "prior rows of `original_input_corpus` paired by index with `generator_outputs_so_far`.",
+        "old-id": "MEM-OBJ-1",
+        "proposed-id": "MEM-OBJ-original-input-corpus",
+        "label": "Caller-supplied prior input/output examples",
+        "member": "memory.md",
+        "record-line": 193,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "rows of `original_input_embeddings`, with the final row treated as the current query in retrieval-only and retrieval-synthesis routes and earlier rows treated as candidates.",
+        "old-id": "MEM-OBJ-2",
+        "proposed-id": "MEM-OBJ-original-input-embeddings",
+        "label": "Caller-supplied embedding matrix",
+        "member": "memory.md",
+        "record-line": 204,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "the provider/model pair selected by `LanguageModel(model_name=...)`; this same configured endpoint handles answer generation, curation and retrieval synthesis in the wrapper.",
+        "old-id": "RT-CMP-1",
+        "proposed-id": "RT-CMP-language-model",
+        "label": "Configured language-model endpoint",
+        "member": "runtime.md",
+        "record-line": 112,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "not identified; the inspected routes accept precomputed vectors and do not produce them.",
+        "old-id": "RT-CMP-2",
+        "proposed-id": "RT-CMP-embedding-producer",
+        "label": "Caller-supplied embedding producer (identity unknown)",
+        "member": "runtime.md",
+        "record-line": 122,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "the `cheatsheet` argument and returned `final_cheatsheet` value of cumulative routes.",
+        "old-id": "RT-OBJ-1",
+        "proposed-id": "RT-OBJ-cheatsheet",
+        "label": "Cumulative cheatsheet string",
+        "member": "runtime.md",
+        "record-line": 135,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "`original_input_corpus`, `generator_outputs_so_far` and `original_input_embeddings` arguments.",
+        "old-id": "RT-OBJ-2",
+        "proposed-id": "RT-OBJ-retrieval-corpus",
+        "label": "Retrieval corpus and embeddings",
+        "member": "runtime.md",
+        "record-line": 142,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "`UnifiedLLMClient.messages`.",
+        "old-id": "RT-OBJ-3",
+        "proposed-id": "RT-OBJ-client-messages",
+        "label": "Unified client chat history",
+        "member": "runtime.md",
+        "record-line": 149,
+        "qualified": true,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "local Python subprocess path or provider-native tool/container selected by the wrapper.",
+        "old-id": "RT-OBJ-4",
+        "proposed-id": "RT-OBJ-execution-environment",
+        "label": "Code execution environment",
+        "member": "runtime.md",
+        "record-line": 156,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-1",
+        "proposed-id": "RT-RTE-cumulative-update",
+        "label": "Cumulative cheatsheet generation and update",
+        "member": "runtime.md",
+        "record-line": 166,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-2",
+        "proposed-id": "RT-RTE-retrieval-synthesis",
+        "label": "Retrieval-synthesis query route",
+        "member": "runtime.md",
+        "record-line": 186,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-3",
+        "proposed-id": "RT-RTE-cumulative-retrieval",
+        "label": "Cumulative cheatsheet with retrieval",
+        "member": "runtime.md",
+        "record-line": 203,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-4",
+        "proposed-id": "RT-RTE-history-appending",
+        "label": "Full-history appending",
+        "member": "runtime.md",
+        "record-line": 221,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-5",
+        "proposed-id": "RT-RTE-dynamic-retrieval",
+        "label": "Dynamic retrieval without synthesis",
+        "member": "runtime.md",
+        "record-line": 236,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-6",
+        "proposed-id": "RT-RTE-unified-client-generation",
+        "label": "Direct unified-client generation and chat history",
+        "member": "runtime.md",
+        "record-line": 253,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-7",
+        "proposed-id": "RT-RTE-local-python-subprocess",
+        "label": "Flag-triggered local Python subprocess",
+        "member": "runtime.md",
+        "record-line": 268,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-8",
+        "proposed-id": "RT-RTE-provider-code-interpreter",
+        "label": "Provider-native code interpreter",
+        "member": "runtime.md",
+        "record-line": 284,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-BAP-1",
+        "proposed-id": "RT-BAP-local-python-authority",
+        "label": "Model-text authority to launch local Python",
+        "member": "runtime.md",
+        "record-line": 310,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-BAP-2",
+        "proposed-id": "RT-BAP-remote-execution-authority",
+        "label": "Model/provider tool authority to request remote code execution",
+        "member": "runtime.md",
+        "record-line": 318,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      }
+    ],
+    "counts": {
+      "records": 30,
+      "qualified": 2,
+      "source_words_dropped": 1,
+      "source_name_unavailable": 6,
+      "unnameable": 0,
+      "token-prefix-collisions": 0
+    },
+    "member-sha256": {
+      "ARTIFACT.yaml": "3c6e73159fc28d3f8f2ad9b229e3b24de8df8627f503e07c43650cb193947515",
+      "epistemic.md": "19851392c8ac1a31d5bee3ac82cc09a586f6d7aefd8d95dca703c7fb15c9cea2",
+      "memory.md": "4435d046c21c1f5b9ff9b278b2e8550194f0b1981988b3286bbb689f269ebdd7",
+      "overview.md": "02d3f1f4fbd735072521a8231f20960eec71ea13cad392bb16209c3a80de9ad0",
+      "reconciliation.md": "afd1e7e58951cbff0b0fbaf46bea693867324e7c72b3e9b9f2cbdce699c55322",
+      "runtime.md": "b93e21f3f351745733e1a9d1ccfaa7c8111bc94a7a623562863f5cb153cb9fb9"
+    }
+  },
+  {
+    "run-id": "AAS-2026-10-03-dynamic-cheatsheet-02",
+    "declarations": [
+      {
+        "source-identity": "`final_answer`, extracted from model response by `extract_answer` and consumed by the benchmark evaluator.",
+        "old-id": "EPI-OBJ-1",
+        "proposed-id": "EPI-OBJ-final-answer",
+        "label": "Extracted final answer",
+        "member": "epistemic.md",
+        "record-line": 66,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "dataset `target` paired with task input and interpreted by the task branch in `run_benchmark.py`.",
+        "old-id": "EPI-OBJ-2",
+        "proposed-id": "EPI-OBJ-target",
+        "label": "Benchmark target and task criterion",
+        "member": "epistemic.md",
+        "record-line": 74,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "EPI-RTE-1",
+        "proposed-id": "EPI-RTE-benchmark-answer-scoring",
+        "label": "Post-answer benchmark scoring",
+        "member": "epistemic.md",
+        "record-line": 84,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "runner's `cheatsheet` / returned `final_cheatsheet` string.",
+        "old-id": "MEM-OBJ-1",
+        "proposed-id": "MEM-OBJ-final-cheatsheet",
+        "label": "Persisted cumulative cheatsheet",
+        "member": "memory.md",
+        "record-line": 213,
+        "qualified": true,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "result-row `input`, `raw_input`, `target`, `final_output`, `final_answer`, steps and `final_cheatsheet`; later consumers use prior inputs and `final_output` values, with the `target` retained only for result reporting/evaluation.",
+        "old-id": "MEM-OBJ-2",
+        "proposed-id": "MEM-OBJ-result-rows",
+        "label": "Retained task interaction rows",
+        "member": "memory.md",
+        "record-line": 227,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": "`embeddings/<task>.csv` rows parsed into dense numeric vectors and reordered to match dataset inputs.",
+        "old-id": "MEM-OBJ-3",
+        "proposed-id": "MEM-OBJ-embeddings",
+        "label": "Precomputed retrieval embeddings",
+        "member": "memory.md",
+        "record-line": 244,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "MEM-RTE-1",
+        "proposed-id": "MEM-RTE-cumulative-curation",
+        "label": "Cumulative curation and later use",
+        "member": "memory.md",
+        "record-line": 269,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "MEM-RTE-2",
+        "proposed-id": "MEM-RTE-history-appending",
+        "label": "Full-history appending",
+        "member": "memory.md",
+        "record-line": 291,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "MEM-RTE-3",
+        "proposed-id": "MEM-RTE-embedding-example-selection",
+        "label": "Embedding top-k example selection",
+        "member": "memory.md",
+        "record-line": 309,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "MEM-RTE-4",
+        "proposed-id": "MEM-RTE-retrieval-synthesis-view",
+        "label": "Retrieval-synthesis text view",
+        "member": "memory.md",
+        "record-line": 327,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "model identifier selected by `model_name`, with provider dispatch by prefix through `LanguageModel` and `UnifiedLLMClient`.",
+        "old-id": "RT-CMP-1",
+        "proposed-id": "RT-CMP-language-model",
+        "label": "Selected inference model",
+        "member": "runtime.md",
+        "record-line": 55,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "`cheatsheet` / `final_cheatsheet`, a text string threaded by the benchmark runner.",
+        "old-id": "RT-OBJ-1",
+        "proposed-id": "RT-OBJ-cheatsheet",
+        "label": "Cumulative cheatsheet text",
+        "member": "runtime.md",
+        "record-line": 68,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": "`questions` / `original_input_corpus` paired in retrieval approaches with `generator_outputs_so_far`.",
+        "old-id": "RT-OBJ-2",
+        "proposed-id": "RT-OBJ-retrieval-corpus",
+        "label": "Prior question/output corpus",
+        "member": "runtime.md",
+        "record-line": 80,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": true
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-1",
+        "proposed-id": "RT-RTE-cumulative-curation-persistence",
+        "label": "Cumulative generation, curation and persistence",
+        "member": "runtime.md",
+        "record-line": 90,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-2",
+        "proposed-id": "RT-RTE-retrieved-history-context",
+        "label": "Retrieved or full-history context construction",
+        "member": "runtime.md",
+        "record-line": 113,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-3",
+        "proposed-id": "RT-RTE-local-subprocess-execution",
+        "label": "Model-requested local subprocess execution",
+        "member": "runtime.md",
+        "record-line": 137,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-RTE-4",
+        "proposed-id": "RT-RTE-provider-code-interpreter",
+        "label": "Provider-side code interpreter",
+        "member": "runtime.md",
+        "record-line": 159,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-CLM-1",
+        "proposed-id": "RT-CLM-curator-quality-guidance",
+        "label": "Curator quality guidance",
+        "member": "runtime.md",
+        "record-line": 183,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-BAP-1",
+        "proposed-id": "RT-BAP-local-python-process",
+        "label": "Generated local Python process",
+        "member": "runtime.md",
+        "record-line": 198,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      },
+      {
+        "source-identity": null,
+        "old-id": "RT-BAP-2",
+        "proposed-id": "RT-BAP-provider-interpreter-tool",
+        "label": "Provider code-interpreter tool",
+        "member": "runtime.md",
+        "record-line": 206,
+        "qualified": false,
+        "source_words_dropped": false,
+        "source_name_unavailable": false
+      }
+    ],
+    "counts": {
+      "records": 20,
+      "qualified": 1,
+      "source_words_dropped": 0,
+      "source_name_unavailable": 2,
+      "unnameable": 0,
+      "token-prefix-collisions": 0
+    },
+    "member-sha256": {
+      "ARTIFACT.yaml": "1aa78cd07fca9f97750f6c6fac912d9477496e5f4ef00bb207e3a9f99538c4a8",
+      "epistemic.md": "5edecbe86158b2cb478769b3f14611ad079cbef699b6fab1a43635bc2b40a343",
+      "memory.md": "00782732c6c4a167e5b187b77e9be77c23299ac2ec3918bbde4c2cfb7ca0ac9d",
+      "overview.md": "141adafdd5e3b6cef73a869e478b6c05ff7a9a228ea44d76ce2596abde11fb2a",
+      "reconciliation.md": "44aec383457b8ff56b7172095309521e00d534e2399091e8cc715716facb9600",
+      "runtime.md": "4ed41fb256c27753d2b1aa0727de218b75ceaa970198bea57f0f665b19b2fe57"
+    }
+  }
+]

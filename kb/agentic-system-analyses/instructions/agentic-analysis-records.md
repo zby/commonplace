@@ -17,25 +17,34 @@ The record kinds are components (`CMP-*`), operative objects (`OBJ-*`),
 routes (`RTE-*`), claims (`CLM-*`), evidenced absences (`ABS-*`) and
 behavioral-authority paths (`BAP-*`). `SRC-*` sources belong only to the
 Source register. The analyst that establishes a record declares it in its
-member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-1`), memory has
-`MEM-` (`MEM-OBJ-1`), epistemic has `EPI-` (`EPI-OBJ-1`).
+member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory has
+`MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
 The prefix identifies the declaring analyst, not the member discussing the
 record. Keep a supplied ID unchanged in references, annotations and amendments.
+
+Names: one to three lowercase hyphenated words, each starting with a letter;
+digits may follow. Components/objects use available source-native names.
+Drop extensions; split case changes and separators; lowercase and join.
+Attach digit-only fragments to the preceding word (`GPT-4` → `gpt4`). If
+longer, keep three distinguishing words. Routes, claims, absences and
+behavioral-authority paths use two or three words from the label. Qualify
+generic names or split parts by source path or role, never a number.
+Without a source-native name, role, input or label may suggest a handle.
+Names are handles, not conclusions (`validated-knowledge`).
 
 Within `## Shared records`, kind headings group declarations:
 `### Components`, `### Operative objects`, `### Routes`, `### Claims`,
 `### Evidenced absences`, `### Behavioral-authority paths`. A declaration
-is one level-four heading, `#### RT-OBJ-1 — Short label`. Prose, lists and
+is one level-four heading, `#### RT-OBJ-store — Short label`. Prose, lists and
 tables do not declare records. Member types specify which empty kind
 headings remain. IDs are unique across the set and resolve within it.
-References use full IDs, separated by commas or words; suffixes and ranges
-are not inferred. Explicit `through` and dash ranges are refused even when
-both endpoints resolve, including adjacent endpoints; list every full ID
-instead. Ordinary `to` prose may relate two records but does not enumerate
-intervening IDs. Source quotations and fenced excerpts are excluded from
-identifier checks.
+Use full IDs; aliases are not inferred. Named `through`, dash and
+`to` grouping prose is permitted; code resolves written IDs without expanding
+intervals. Structured citation lists and single-ID fields remain explicit.
+Numbered `SRC-*` ranges are refused; list each source ID. Source quotations
+and fenced excerpts are excluded from identifier checks.
 
-An annotation, `#### On RT-OBJ-1 — Short label`, supplies another analyst's
+An annotation, `#### On RT-OBJ-store — Short label`, supplies another analyst's
 fields on a record declared elsewhere. It does not repeat generic identity
 or redefine the referent, and never annotates a record the member declares.
 Its location and permitted fields come from the annotating member's type.
@@ -43,16 +52,16 @@ Its location and permitted fields come from the annotating member's type.
 Only the reconciliation member amends records. An `Amendment:`
 paragraph gives the full ID, superseded value, replacement, evidence anchor
 and affected findings. An anchored conflict retains both values. A
-supersession uses `Amendment: MEM-RTE-3 is superseded by RT-RTE-7`, with
+supersession uses `Amendment: MEM-RTE-selection-route is superseded by RT-RTE-policy-check`, with
 identity evidence; both IDs stay declared. A split supersedes the combined
 record only by parts already declared in analyst members, for example
-`Amendment: RT-OBJ-3 is superseded by EPI-OBJ-1 and EPI-OBJ-2`, with identity
+`Amendment: RT-OBJ-output is superseded by EPI-OBJ-store and EPI-OBJ-input`, with identity
 evidence and affected findings. Reconciliation never allocates IDs. Supersede
 a combined record only when its findings are wrong once the parts are
 separated; a valid container can remain alongside its parts. No ID changes referent, and
 no step renames IDs or rewrites another analyst's member. Provisional
-labels are local tags. Allocate IDs monotonically within a prefix and
-never reuse dropped numbers; gaps are harmless.
+labels are local tags. Keep IDs fixed through label or finding changes and
+correction rounds; never reuse a dropped ID for a different referent.
 
 When other members are supplied, a new declaration records its closest
 supplied full IDs and distinct identity, possible-duplicate evidence, or
@@ -61,7 +70,7 @@ annotation rather than another declaration; a different prefix or label
 does not establish a distinct referent. Material parts with different
 checks or consumers are declared and assessed separately. A declaration
 whose referent is a material part of exactly one supplied record writes
-`Part of: RT-OBJ-1` on its own unindented line within that declaration,
+`Part of: RT-OBJ-store` on its own unindented line within that declaration,
 using its parent's full record ID. The field carries exactly one ID,
 without backticks or other text, and cannot name the declaring record itself.
 Local and set checks enforce its syntax; existing set resolution checks its

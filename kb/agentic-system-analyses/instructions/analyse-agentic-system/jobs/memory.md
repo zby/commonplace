@@ -78,8 +78,8 @@ returned finding from the sources: correct the report where the finding
 holds, and keep your finding with its evidence where it does not. Write the
 whole report again; it replaces the previous report.
 
-A surviving record keeps its ID and referent. A new record gets a new
-number; never reuse a number from a dropped record. No withdrawal marker is
+Keep surviving IDs and referents; a new referent gets a new ID, including
+when an earlier record was dropped. No withdrawal marker is
 needed for a dropped record: only the accepted report enters the set. The
 returned findings still refer to the previous report's IDs.
 
