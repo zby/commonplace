@@ -7,8 +7,10 @@ executor the operator launches on it. The launch is the authority to
 implement; this file alone starts nothing.
 
 It replaces the earlier plan "quotations completed in the draft", which the
-operator set aside the same day in favour of this simpler design, and it
-absorbs one part of the [structured recovery proposal](./structured-recovery-proposal.md).
+operator set aside the same day in favour of this simpler design. It also
+dissolves the earlier "structured recovery" proposal: the operator decided on
+2026-10-04 that recovery belongs with the analyst, through the check it can
+call, and not in machinery around the run loop. Git history keeps both.
 It does not authorize an analysis run or the regeneration of any system.
 
 ## Intent
@@ -27,6 +29,12 @@ Give the analyst the acceptance check as a tool. One check, two callers: the
 analyst before submitting, the engine at acceptance. Mistakes are then found
 where fixing them is cheap.
 
+Recovery is the analyst's work. The analyst knows what its output must
+achieve; the check tells it exactly what is wrong, where, and what would be
+accepted. It then corrects its own output by its own judgment. The run loop
+stays simple: code accepts or refuses. No machinery around the loop repairs
+outputs, escalates messages or routes failures by class.
+
 With that tool, quotation needs no helper. An analyst quotes the way a person
 does: copy the passage, say which file it is from, and check. This removes
 the selection files, the JSON batch and the copying of generated citations,
@@ -44,6 +52,19 @@ and to learn, and what keeps one check behind both callers.
 - That check reports every independent failure in one run. It stops early
   only where a later check cannot run until an earlier one passes, such as
   quotation matching in a member that does not parse.
+- **Every message gives the analyst what it needs to act:** the rule, the
+  location (record ID, field, block or line), and the repair. Where the
+  offending text is short, the message shows it. This holds for all checks,
+  not only quotation.
+- **Where the accepted value is determined, the message states it.** A wrong
+  identity field is reported with the value the run expects. An unresolved
+  record ID is reported with the nearest declared ID, as today. An ambiguous
+  quotation gets its list of candidates, below. The analyst applies the fix;
+  code does not edit the output.
+- **Where the failure puts a finding in doubt, the message says so.** A
+  quotation that is not found tells the analyst to reread the source and
+  recheck the claim it supports, as the worker rules already require.
+- The same messages appear at acceptance, because it is the same check.
 - An analyst writes a quotation as a blockquote of the passage and an
   attribution line naming the source path:
 
@@ -119,17 +140,24 @@ calculation, and the tool moves the catch before submission.
 ## Boundaries
 
 - **Analytical content and evidence rules are unchanged.**
-- **The tool is advice to the analyst.** It records nothing in the run and
-  cannot accept an output.
+- **The tool is advice to the analyst.** It changes nothing in the run's
+  state and cannot accept an output.
+- **Code never edits an analyst's output**, at the tool or at acceptance. It
+  states the accepted value and the analyst writes it.
+- **The run loop is unchanged.** Retry and repair limits, the refusal
+  section of a retry prompt and the rule that an orchestrating agent does
+  not write a job's output all stay as they are.
 - **One documented route for quotation.** Do not keep the helper's old route
   in the instructions beside the new one.
 - **Citations already written with a range and revision stay valid**, so
   frozen sets and their fixtures need no change. Frozen sets are not edited.
 - **No net growth of worker input.** Measure the affected rules before and
   after.
-- **Not in scope:** code fixing mechanical values, escalation when a refusal
-  repeats, and recording refusals per rule. These stay in the structured
-  recovery proposal.
+- **Dropped from the dissolved proposal:** code silently fixing mechanical
+  values, and escalating messages when a refusal repeats. The first
+  conflicts with the analyst owning its output. The second assumed failures
+  surface at acceptance; with the tool, the fuller message is the only
+  message.
 - **Other sessions edit this repository.** Start from the committed state.
   Check status before each commit and stage only this work's files.
 - **Repository rules apply**, as in the collection-split plan. Removing a
@@ -141,11 +169,12 @@ calculation, and the tool moves the catch before submission.
 The tool comes first and is useful alone: it closes the gap between local
 validation and acceptance for every existing check. Reporting all independent
 failures comes second, because a tool that shows one class of error per run
-needs several runs. Path-only quotation and removal of the helper come third
-and go together, so that analysts are never taught a route that no longer
+needs several runs. The message review comes third: the analyst now reads
+these messages and acts on them alone. Path-only quotation and removal of the
+helper come fourth and go together, so that analysts are never taught a route that no longer
 exists or left without one.
 
-If work stops after the first or second part, that is an acceptable result:
+If work stops after any of the first three parts, that is an acceptable result:
 quotation stays as it is today, with the helper. A state in which the helper
 is removed and path-only quotations are not accepted is not acceptable.
 Record what remains.
@@ -169,26 +198,36 @@ what must stay true, and say what you changed.
    quotations. Decide for each stage whether it truly depends on the earlier
    ones, and run the rest together. Check the other jobs' validators for the
    same pattern.
-3. **Fixed: measure ambiguity before changing quotation.** Take the retained
+3. Review every existing refusal message against the three parts: rule,
+   location, repair. List those that state only a mismatch and rewrite them.
+   Add the accepted value where it is determined. Messages are produced in
+   `agentic_workflow.py`, `agentic_records.py`, `agentic_ledger.py`,
+   `agentic_analysis.py` and the type validation; redo that inventory.
+4. **Fixed: measure ambiguity before changing quotation.** Take the retained
    members as read-only input, strip the line range and revision from every
    citation in copies, and run the quotation check. Report how many
    quotations pass and how many are ambiguous without their range. It needs
    no model. It is fixed because it is the only cheap evidence of how often
    an analyst will have to lengthen a quotation or copy a range.
-4. Accept path-only attribution: take the revision from the run, treat a
+5. Accept path-only attribution: take the revision from the run, treat a
    range as optional, and make the two refusals state the block's location.
    For an ambiguous passage, reuse what the batch mode produces today in
    `generate_quote_batch`: per occurrence, the range, the source context
    that distinguishes it, and the attribution to paste.
-5. Rewrite the Quotation section of the worker rules and the related
+6. Rewrite the Quotation section of the worker rules and the related
    passages of the source contract, the boundary job and the job files that
    name a validation step. Remove the helper's generation modes and their
    entry in `kb/reference/commands.md`.
-6. Measure, verify, write the decision record and the result record.
+7. Make the counts of the revisit condition obtainable. The tool must not
+   write run state, but it may append one line per run to a log in the job's
+   scratch directory: the time and the refusals by rule. Acceptance refusals
+   are already in the engine's records.
+8. Measure, verify, write the decision record and the result record.
 
 ## Left to the executor
 
-The command's name and where it lives; how it finds the job and its draft;
+The command's name and where it lives; the wording of each message; the
+form of the scratch log; how it finds the job and its draft;
 its output format and exit statuses; how much source context a candidate
 shows; the attribution form for a capture
 source, which has no commit-relative path; which stages are truly dependent;
@@ -217,6 +256,9 @@ Otherwise proceed without asking.
   refusals on the same file, and that running the tool leaves the run's
   state and the file unchanged.
 - A member with two unrelated defects is reported with both in one run.
+- Every refusal message a fixture can produce names its rule, its location
+  and a repair. A wrong identity field is reported with the expected value.
+- No test finds code changing a job's output.
 - Quotation fixtures: a path-only citation that is unique passes; one not
   found is refused with its location and no proposal; an ambiguous one is
   refused with one proposed attribution and context per occurrence, and
@@ -225,7 +267,9 @@ Otherwise proceed without asking.
   occurrences than the limit gets a request to expand the quotation and no
   list; a citation in
   the old complete form still passes; altered content fails.
-- The ambiguity measurement of step 3, recorded with its counts.
+- The ambiguity measurement of step 4, recorded with its counts.
+- After a tool run, the scratch log holds one line with that run's refusals
+  by rule, and the run's state is unchanged.
 - Targeted `commonplace-validate` passes for the changed instructions and
   the command reference.
 - Bytes of the worker's quotation and validation rules before and after.
@@ -242,17 +286,39 @@ the first few analyses under them, or earlier if one of these is observed:
 
 - refused outputs at acceptance for failures the tool would have reported,
   which means analysts do not run it or do not act on it;
+- an analyst failing the same check repeatedly in one job, which would mean
+  a message does not tell it enough;
 - analysts presenting a passing check as evidence that findings are correct;
 - quotations not found at a rate near the old batch failure rate, which
   would mean retyping the passage is itself the problem;
 - readers or reviewers needing line ranges that citations no longer carry;
 - analysts writing ranges or revisions by hand.
 
-Count per job: check runs before submission, refusals at acceptance,
+Count per job, from the scratch log and the engine's records: check runs
+before submission, refusals by rule in those runs, refusals at acceptance,
 quotations written, not found and ambiguous. The alternatives to weigh are a
 tool that completes citations in the draft, and designation by position with
 a numbered view; the [design review](./quotation-design-review.md) describes
 both.
+
+## Later direction, not part of this work
+
+Operator statement, 2026-10-04: in the future the checks should move into the
+verifier, and this should not be done in the same step as the work above.
+
+As understood here: the verification job would run these checks as its own
+tool and own the judgment of a member's form, so that code at acceptance no
+longer carries them. That is a change to the run loop and to what acceptance
+means. It needs its own decision and plan.
+
+This work must not make that step harder. Keep the check callable for any
+member of a run from outside the engine, by any job that may read the
+member, and keep its messages addressed to a reader who will act on them.
+Do not tie the tool to the role of the analyst that wrote the member. Do
+nothing else toward this direction now: acceptance keeps running the check.
+
+Carry this into the decision record as a second literal `TODO`, so that it
+is found with the revisit condition.
 
 ## Records
 

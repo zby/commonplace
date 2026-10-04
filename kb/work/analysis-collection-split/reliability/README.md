@@ -8,8 +8,8 @@ It follows the KB's diagnosis rule: a deviation is repaired only by an
 intervention that reaches its cause
 ([three-way diagnosis](../../../notes/llm-output-deviation-requires-three-way-diagnosis.md)).
 The preferred repair removes what makes an error attractive or possible. A
-check catches a failure the worker can still make. Recovery decides what a
-caught failure costs.
+check catches a failure the worker can still make. The analyst runs the
+checks on its own draft and repairs what they report.
 
 ## Adopted, with implementation plans
 
@@ -18,15 +18,15 @@ caught failure costs.
   label. Implemented; see [its result](./short-named-record-ids-result.md).
 - [Analyst acceptance check](./analyst-acceptance-check-plan.md) — a tool
   that lets an analyst run its job's acceptance check on the draft, with all
-  independent failures reported together; quotations become a blockquote
-  with a path-only attribution, and the quotation helper's generation modes
-  are removed. Takes effect when the operator launches an executor on it.
+  independent failures reported together and every message stating the rule,
+  the location and the repair; quotations become a blockquote with a
+  path-only attribution, and the quotation helper's generation modes are
+  removed. It dissolves the earlier structured recovery proposal: recovery
+  is the analyst's work, through the check. Takes effect when the operator
+  launches an executor on it.
 
 ## Proposals awaiting adoption
 
-- [Structured recovery](./structured-recovery-proposal.md) — what remains
-  after the acceptance check plan took over reporting all failures together:
-  message form, mechanical fixes by code, and recording refusals per rule.
 - [Remaining code checks](./remaining-code-checks-proposal.md) — what is left
   for code to do or check after the two redesigns: a short ordered list, a
   failure register, and the classification that decides whether more exists.

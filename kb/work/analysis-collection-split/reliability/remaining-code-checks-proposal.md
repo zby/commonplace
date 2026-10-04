@@ -38,9 +38,10 @@ When a failure is observed, choose its repair in this order:
 A check costs worker input only when the mistake happens; added instruction
 text costs input in every job
 ([oracle accumulation](../../../notes/oracle-accumulation-improves-the-selection-environment.md)).
-A check makes the accepted output reliable. It does not stop the attempt from
-failing, so what a refusal costs is decided by
-[structured recovery](./structured-recovery-proposal.md).
+A check makes the accepted output reliable. It does not stop a draft from
+failing it. What a failure costs is decided by the
+[analyst acceptance check](./analyst-acceptance-check-plan.md): the analyst
+runs every check on its draft and repairs what it reports.
 
 ## What remains
 
@@ -52,7 +53,7 @@ it is built.
 | 1 | Every code identifier a record cites occurs in the frozen source. | Check | A wrong identifier, `summary_valid_at`, reached reconciliation in the stopped Graphiti run. |
 | 2 | An inventory of the files in the frozen checkout, supplied with the packet. | Code supplies | Wrong-path source reads in the Graphiti run. |
 | 3 | An index of every declared record, with kind, member and part relation, supplied to reconciliation and verification. | Code supplies | No failure observed. Named IDs removed the order and count that numbers gave, so completeness now needs a list. |
-| 4 | Identity fields in member frontmatter, `run-id` and `reviewed-boundary`. | Code writes, or fixes | Checked today; no failure recorded in the audits. |
+| 4 | Identity fields in member frontmatter, `run-id` and `reviewed-boundary`. | Code writes | Checked today; no failure recorded in the audits. Under the acceptance check plan the message states the expected value, which may be enough. |
 | 5 | Ledger cells hold only claim IDs or `none`. | Check | Five cells in the Graphiti run. Also item 6 of the Sol run follow-up plan. |
 | 6 | A required assessment is present in synthesis. | Check, presence only | One synthesis blocker in the second Dynamic Cheatsheet run. |
 | 7 | Frontmatter written as YAML by hand. | Accept for now | One broken indentation, caught by validation. |
