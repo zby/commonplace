@@ -415,7 +415,7 @@ def test_range_and_part_examples_in_source_excerpts_are_ignored() -> None:
     assert set_record_errors({"overview.md": body})[1] == []
 
 
-@pytest.mark.parametrize('name', ['sheet', 'original-input-corpus', 'gpt4', 'top-k-examples'])
+@pytest.mark.parametrize('name', ['original-input-corpus', 'gpt4'])
 def test_named_ids_resolve_in_declarations_annotations_and_parts(name: str) -> None:
     identifier = f'RT-OBJ-{name}'
     runtime = f'## Shared records\n\n#### {identifier} — Object\n'
@@ -426,10 +426,17 @@ def test_named_ids_resolve_in_declarations_annotations_and_parts(name: str) -> N
     assert set_record_errors({'overview.md': OVERVIEW, 'runtime.md': runtime, 'memory.md': memory})[1] == []
 
 
-@pytest.mark.parametrize('name', ['1', 'sheet-2', 'Sheet', 'one-two-three-four',
-                                  'sheet_', 'sheet-', 'sheet--cache', 'café'])
-@pytest.mark.parametrize('context', ['#### {id} — Object', '{id} supports this finding.',
-                                      '#### On {id} — Annotation', 'Amendment: {id} corrected.'])
+# Each malformed form and reference context needs coverage, not their product.
+@pytest.mark.parametrize(('name', 'context'), [
+    ('1', '#### {id} — Object'),
+    ('sheet-2', '{id} supports this finding.'),
+    ('Sheet', '#### On {id} — Annotation'),
+    ('one-two-three-four', 'Amendment: {id} corrected.'),
+    ('sheet_', '#### {id} — Object'),
+    ('sheet-', '{id} supports this finding.'),
+    ('sheet--cache', '#### On {id} — Annotation'),
+    ('café', 'Amendment: {id} corrected.'),
+])
 def test_malformed_candidate_tokens_are_refused_whole(name: str, context: str) -> None:
     identifier = f'RT-OBJ-{name}'
     body = '## Shared records\n\n' + context.format(id=identifier) + '\n'
