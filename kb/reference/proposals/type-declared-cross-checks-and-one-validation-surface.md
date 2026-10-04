@@ -110,10 +110,11 @@ Operativity: the set type admits a working set, either by relaxing the
 finished-set branches or through a sibling working-set type; the validator
 exposes a draft override; worker rules name the validator with the output
 directory. Checks that depend on run progress rather than on artifacts
-remain workflow checks: the last-round rule for returned findings, blockers
-required after a failed set check, and the frozen checkout's cleanliness.
-The declaring prefix moves to the member type, since it is a property of the
-runtime, memory or epistemic report, not of the job.
+remain workflow checks unless option E records them: the last-round rule
+for returned findings, blockers required after a failed set check, and the
+frozen checkout's cleanliness. The declaring prefix moves to the member type,
+since it is a property of the runtime, memory or epistemic report, not of
+the job.
 
 ### C. Types declare their cross checks
 
@@ -153,6 +154,36 @@ gone whenever the registry holds the entry. Operativity: the freeze step
 registers; the validator's resolver consults; an absent entry yields an
 unverified notice, which strict callers may refuse.
 
+### E. Record run progress as a declared artifact
+
+The run directory already records progress in two layers. The engine keeps
+per-job records (hand-outs, failures, acceptance, blocks) and event reports
+in its own JSON under `workflow-state/`. The definition's control flow leaves
+round-numbered files: memory reports, reconciliations, set checks and
+verifications. What no file states is the workflow-level state the control
+flow holds in variables: the current round, why it opened (returned findings
+or blockers), which memory report it consumes, and the remaining correction
+budget. The acceptance check recovers these from job names and from the
+prompt the engine wrote for the job. The run-state type excludes phase and
+correction state by decision, so the artifact would be a sibling in the run
+directory, code-written like the run state and the manifest.
+
+Such an artifact is a derived copy of engine records and file presence, so it
+is checked against its recomputation or it is absent. Two forms satisfy
+that: a derived view, a function over the run directory that a status
+command or the validator calls; or a materialized typed artifact the engine
+writes at each step and validation recomputes.
+
+What it buys: the run-progress checks in B stop being workflow-only, because
+the last-round and blockers rules read declared facts; the acceptance check
+needs no job argument, since the draft's location and the progress identify
+the job; the validator learns which members are accepted, which is the set
+so far, and which strictness applies; operators and handoffs read progress
+without the engine; and other code-scheduled workflows reuse the same
+artifact kind. Operativity: the engine writes or derives it; the validator,
+the check command and the handoff consume it; a change in control flow then
+changes a visible contract where today it changes a loop variable.
+
 ### Assumptions each option changes
 
 | Standing assumption | Replacement | Options |
@@ -163,6 +194,7 @@ unverified notice, which strict callers may refuse.
 | Acceptance context comes from the job | Context comes from the artifact graph; the job names the target and the strictness | B, C |
 | Intermediate drafts are untyped | Boundary, synthesis and verification drafts are collection-local types whose schemas own their shape | B |
 | A finding is a string with a rule prefix | A finding carries rule, subject, location, reason, expected value and repair | A, B, C |
+| Run progress is control-flow state the definition holds | Run progress is a declared fact of the run directory, derived from or checked against engine records and files | E |
 
 ## Forces
 
@@ -182,8 +214,9 @@ unverified notice, which strict callers may refuse.
 - **Repair belongs to the finding.** Expected values, candidate ranges and
   repair sentences are what made the analysis check usable. They must
   survive unification as structured fields, not as text the caller parses.
-- **Run-progress checks stay in the workflow.** A type can state what a
-  valid member contains. It cannot know which round this is.
+- **Run-progress checks stay in the workflow until progress is declared.**
+  A type can state what a valid member contains. It cannot know which round
+  this is unless the run directory says so (option E).
 - **Measurement continues.** ADR 105 counts check runs and refusals by rule
   from the scratch log. A unified surface emits the same counts through its
   JSON result or the engine's records.
@@ -203,6 +236,9 @@ unverified notice, which strict callers may refuse.
   in a sidecar beside the schema file.
 - Access roots: the run state stays the source of truth, or a registry
   replaces it and the run state points into the registry.
+- Progress: a derived view over the run directory, or a materialized
+  artifact the engine writes; a global workflow type, or one local to the
+  analysis collection.
 
 ## Adoption criteria
 
@@ -216,6 +252,10 @@ unverified notice, which strict callers may refuse.
   together, as the older proposal requires.
 - Adopt a registry (D) when a third source kind needs resolution, or when
   retained sets must verify without their run directories.
+- Adopt a declared progress artifact (E) when a second consumer beyond the
+  acceptance check needs round facts, such as the handoff, an operator status
+  view or validator strictness, or when a second definition runs on the
+  engine.
 - Measure refusals by rule before and after from the scratch log and the
   validator's JSON output; a unified surface that loses rule or repair
   detail fails its own purpose.
