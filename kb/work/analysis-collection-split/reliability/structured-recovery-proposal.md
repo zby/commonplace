@@ -1,16 +1,17 @@
 # Structured recovery proposal
 
-Agent draft, 2026-10-04, at the operator's request. Awaiting adoption.
-Authorizes nothing.
+Agent draft, 2026-10-04, at the operator's request; current state rechecked
+after named record IDs landed. Awaiting adoption. Authorizes nothing.
 
-## Revise after named record IDs
+## Partly absorbed into a plan
 
-The operator decided on 2026-10-04 to implement
-[short named record IDs](./short-named-record-ids-plan.md) first. That plan
-adds a nearest-declared-ID hint to the unresolved-reference refusal, which is
-the first message built to this proposal's three-part form. Revise the
-current-state section against the implemented code, and take that message as
-the pattern for the rest.
+The [analyst acceptance check plan](./analyst-acceptance-check-plan.md),
+adopted on 2026-10-04, takes over item 1 below, reporting every independent
+failure in one refusal, and gives the analyst the acceptance check as a tool
+before submission. That reduces how often a refusal happens at all. What
+remains proposed here: the three-part message form for all checks, code
+fixing mechanical values, not repeating an identical refusal, and recording
+refusals per rule. Reassess their value after the first run with the tool.
 
 ## Problem
 
@@ -36,8 +37,9 @@ Read from `src/commonplace/workflow/engine.py` and
   record prefixes, then quotations. A worker whose output has errors in two
   stages sees only the first, repairs it, and is refused again for the second.
   With one retry, that job blocks although each error was simple.
-- Messages vary in how much they help. Some state the repair ("list every
-  full ID"). Others state only the mismatch.
+- Messages vary in how much they help. The unresolved-reference refusal now
+  names the nearest declared ID, which is the three-part form proposed
+  below. Others state only the mismatch, such as the member identity check.
 - Refusals are not recorded in a form that allows counting by rule across
   runs.
 
@@ -56,8 +58,8 @@ independent of each other.
 3. **Classify each check's recovery, and route by class:**
    - *Mechanical*: code can produce the correct value. Code fixes it and does
      not bounce the output. Example: an identity field that must equal a run
-     parameter. This overlaps with code-owned bookkeeping; the difference is
-     that here the worker still wrote the field.
+     parameter. The [remaining code checks](./remaining-code-checks-proposal.md)
+     list the same field as a candidate for code to write outright.
    - *Local edit*: the worker amends the named location in the previous
      output. The current repair path, with better messages.
    - *Re-derive*: the failure shows the finding may be wrong, such as a
@@ -70,8 +72,8 @@ independent of each other.
    report that names the rule, so the operator sees a method defect and not a
    worker defect.
 5. **Record refusals per job** with rule, location, recovery class and
-   attempt number, in run state. This is the measurement the other two
-   proposals need: which rules fail, where, and whether a repair worked.
+   attempt number, in run state. This is the measurement the failure
+   register needs: which rules fail, where, and whether a repair worked.
 
 ## Constraints
 

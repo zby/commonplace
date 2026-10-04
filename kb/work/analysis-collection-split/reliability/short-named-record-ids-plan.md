@@ -162,7 +162,7 @@ named record IDs do not address them.
 - **Naming stays with the analyst.** Choosing a name needs judgment. Code
   checks grammar, uniqueness, the token rule and reference resolution. It
   does not generate names. This is why the change is not part of
-  [code-owned bookkeeping](./code-owned-bookkeeping-proposal.md).
+  the [code checks proposal](./remaining-code-checks-proposal.md).
 - **No migration and no compatibility layer.** Frozen sets keep their
   numeric IDs and are not read as current sets. Do not build a rename tool or
   a reader for both formats without a demonstrated consumer.

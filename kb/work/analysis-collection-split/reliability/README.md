@@ -1,65 +1,55 @@
-# Reliability proposals
+# Reliability work
 
-Proposals for making analysis runs more reliable. The first three were
-requested by the operator on 2026-10-04; the named-ID proposal followed a
-discussion of recurring range errors. All are agent drafts, **not part of the
-[plan](../plan.md)'s commission**. An executor working on the plan does not
-implement them. The first three await the operator's adoption and authorize
-nothing. The fourth was adopted on 2026-10-04 and is now a separate
-implementation plan.
+Work on making analysis runs more reliable, started at the operator's request
+on 2026-10-04. None of it is part of the [collection-split plan](../plan.md)'s
+commission, and an executor working on that plan does not implement it.
 
-They follow the KB's diagnosis rule: a deviation is repaired only by an
+It follows the KB's diagnosis rule: a deviation is repaired only by an
 intervention that reaches its cause
 ([three-way diagnosis](../../../notes/llm-output-deviation-requires-three-way-diagnosis.md)).
-Splitting work addresses load. The first three address workers that violate a
-clear rule, and what happens after a violation is caught. The fourth changes
-the identifier design so that one such violation cannot be written.
+The preferred repair removes what makes an error attractive or possible. A
+check catches a failure the worker can still make. Recovery decides what a
+caught failure costs.
 
-- [Code-owned bookkeeping](./code-owned-bookkeeping-proposal.md) — move
-  obligations with exact answers from the worker to code.
-- [Failures become checks](./failures-become-checks-proposal.md) — retain
-  each observed failure as a maintained check where one is possible, and as
-  instruction text only where it is not.
-- [Structured recovery](./structured-recovery-proposal.md) — make a refused
-  output cheap to repair: report all failures at once, say what to do, and
-  fix mechanical ones in code.
-- [Short named record IDs](./short-named-record-ids-plan.md) — adopted by
-  the operator on 2026-10-04 and written as an implementation plan: replace
-  numeric record suffixes with short names taken from the analysed system or
-  from the record's label. It takes effect when the operator launches an
-  executor on it, after the collection-split work is committed.
+## Adopted, with implementation plans
 
-## Diagnosis method
+- [Short named record IDs](./short-named-record-ids-plan.md) — replace numeric
+  record suffixes with short names from the analysed system or the record's
+  label. Implemented; see [its result](./short-named-record-ids-result.md).
+- [Analyst acceptance check](./analyst-acceptance-check-plan.md) — a tool
+  that lets an analyst run its job's acceptance check on the draft, with all
+  independent failures reported together; quotations become a blockquote
+  with a path-only attribution, and the quotation helper's generation modes
+  are removed. Takes effect when the operator launches an executor on it.
+
+## Proposals awaiting adoption
+
+- [Structured recovery](./structured-recovery-proposal.md) — what remains
+  after the acceptance check plan took over reporting all failures together:
+  message form, mechanical fixes by code, and recording refusals per rule.
+- [Remaining code checks](./remaining-code-checks-proposal.md) — what is left
+  for code to do or check after the two redesigns: a short ordered list, a
+  failure register, and the classification that decides whether more exists.
+
+## Diagnosis method and its applications
 
 - [Review design pressure behind recurring errors](../../../instructions/review-design-pressure-behind-recurring-errors.md)
-  — reusable instruction: ask what makes a violation convenient and which
-  design choice creates that pressure. Available through search or explicit
-  invocation, not an automatic gate.
-- [Counterfactual design review](./counterfactual-design-review.md) — retained
-  episode and reasoning behind the instruction, including why the range
-  audits did not initially suggest named IDs.
+  — the library instruction: ask what makes a violation convenient and which
+  design choice creates that pressure. Operator-invoked for now.
+- [Counterfactual design review](./counterfactual-design-review.md) — the
+  retained episode behind the instruction, including why the range audits
+  did not initially suggest named IDs.
 - [Quotation design review](./quotation-design-review.md) — the instruction
-  above applied to quotation errors: recommends that workers write each
-  quotation once in the draft and one helper call completes them, with the
-  JSON batch mode removed; advises against designation by line number.
-- [Quotations completed in the draft](./quotations-completed-in-draft-plan.md)
-  — adopted by the operator on 2026-10-04 and written as an implementation
-  plan from that review. It takes effect when the operator launches an
-  executor on it.
+  applied to quotation errors. Its recommended design was superseded by the
+  simpler acceptance check plan; it stays as the record of the diagnosis.
 
-The first three overlap by design. Bookkeeping removes an obligation, so it cannot
-fail. A check catches a failure the worker can still make. Recovery decides
-what a caught failure costs. Adopt in that order where the choice exists.
+## Not pursued
 
-Order, by the operator's decision of 2026-10-04: named record IDs are
-implemented first. The other three are then revised against the implemented
-state; each carries a section listing what to revise.
+By the operator's decision of 2026-10-04: splitting the reconcile and verify
+jobs (too little evidence of their failures yet), repeated classification
+with voting, and a different model for verification (both too heavy for now).
 
-Not proposed here, by the operator's decision of 2026-10-04: splitting the
-reconcile and verify jobs (too little evidence of their failures yet),
-repeated classification with voting, and a different model for verification
-(both too heavy for now).
+## Evidence base
 
-Evidence base for the first three: two audited Dynamic Cheatsheet runs, one stopped
-Graphiti run, and the code as read on 2026-10-04 while the plan's
-implementation was in progress. Recheck paths and behavior before building.
+Two audited Dynamic Cheatsheet runs, one stopped Graphiti run, and the code
+as read on 2026-10-04. Recheck paths and behavior before building.

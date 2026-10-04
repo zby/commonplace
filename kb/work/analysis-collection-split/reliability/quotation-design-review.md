@@ -15,8 +15,16 @@ and the fragility of copying exact text between files and formats.
 
 The operator first preferred removing the batch mode alone (alternative R),
 then reconsidered because workers have a real need for a batch, and adopted S
-on 2026-10-04. Implementation is commissioned by the
-[plan](./quotations-completed-in-draft-plan.md).
+on 2026-10-04.
+
+**Superseded the same day.** The operator then chose a simpler design that
+none of the alternatives below describes: analysts write quotations with a
+path-only attribution, and a tool lets them run the acceptance check on
+their draft before submitting. No helper generates or completes citations.
+That design is commissioned by the
+[analyst acceptance check plan](./analyst-acceptance-check-plan.md). This
+review stays as the record of the diagnosis and of the alternatives; S and B
+are the fallbacks named in that plan's revisit condition.
 
 Do not move to designation by line number now.
 
@@ -262,6 +270,7 @@ for a possibly quiet one.
 ## Relation to other work
 
 Removing the batch replaces item 2 of the Sol run follow-up plan, which
-documents the JSON shape. B is an instance of [code-owned bookkeeping](./code-owned-bookkeeping-proposal.md):
-code handles exact text, the worker handles choice. Named record IDs do not
+documents the JSON shape. B applies the principle of the
+[remaining code checks](./remaining-code-checks-proposal.md): code handles
+exact text, the worker handles choice. Named record IDs do not
 affect either.
