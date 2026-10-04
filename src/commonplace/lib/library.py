@@ -302,9 +302,18 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
     return found
 
 
+def initialized(project: Path) -> bool:
+    """Whether init has set this project up.
+
+    The bare output directory is not evidence: other commands keep their own
+    files there, such as analysis worktrees.
+    """
+    return (project / ROUTING).is_file() or (project / RULE_RECORD).is_file()
+
+
 def stale_outputs(project: Path) -> list[OutputStatus]:
     """Init outputs that need a rerun of init; empty for a project init never set up."""
-    if not (project / OUTPUT_DIR).is_dir():
+    if not initialized(project):
         return []
     return [s for s in statuses(project) if s.status in ("stale", "missing", "extra")]
 
@@ -313,7 +322,7 @@ def find_project(start: Path | None = None) -> Path | None:
     """The nearest directory at or above start that init has set up."""
     here = (start or Path.cwd()).resolve()
     for candidate in (here, *here.parents):
-        if (candidate / OUTPUT_DIR).is_dir():
+        if initialized(candidate):
             return candidate
     return None
 

@@ -406,3 +406,15 @@ def test_installation_warnings_empty_for_healthy_tool_install(
     )
 
     assert installation_warnings() == []
+
+
+def test_a_bare_output_directory_is_not_an_initialized_project(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # Analysis worktrees live under the same directory without any init.
+    (tmp_path / ".commonplace" / "worktrees").mkdir(parents=True)
+    assert library.find_project(tmp_path / ".commonplace" / "worktrees") is None
+    library.warn_if_stale(tmp_path)
+    assert capsys.readouterr().err == ""
+    init_project(tmp_path)
+    assert library.find_project(tmp_path / ".commonplace" / "worktrees") == tmp_path
