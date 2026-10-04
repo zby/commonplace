@@ -99,6 +99,13 @@ def declared_ids(body: str) -> list[str]:
     return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
 
+def source_register_ids(body: str) -> list[str]:
+    """Source IDs declared by register rows, in order, with repeats kept."""
+    return _SOURCE_DECLARATION.findall(
+        section(_analysis_prose(body), "Source register")
+    )
+
+
 def annotated_ids(body: str) -> set[str]:
     """IDs a member annotates with `On <ID>` headings without declaring them."""
     return set(_ANNOTATION.findall(_analysis_prose(body)))
@@ -258,11 +265,7 @@ def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
     declarations = []
     for body in bodies.values():
         declarations.extend(declared_ids(body))
-    declarations.extend(
-        _SOURCE_DECLARATION.findall(
-            section(_analysis_prose(bodies["overview.md"]), "Source register")
-        )
-    )
+    declarations.extend(source_register_ids(bodies["overview.md"]))
     known = set(declarations)
     errors = [
         f"duplicate set declaration: {identifier}"

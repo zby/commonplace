@@ -698,6 +698,26 @@ def test_boundary_with_a_wrong_field_set_is_refused(fixture: Fixture) -> None:
     ).read_text(encoding="utf-8")
 
 
+@pytest.mark.parametrize("duplicate", [False, True])
+def test_boundary_source_register_checks_unique_ids_across_layers(fixture: Fixture, duplicate: bool) -> None:
+    boundary = fixture.boundary()
+    row = next(line for line in boundary.splitlines() if line.startswith("| SRC-1 |"))
+    if duplicate:
+        boundary = boundary.replace(row, row + "\n" + row.replace("| implementation |", "| doctrine/design |"))
+    else:
+        boundary = boundary.replace("| implementation |", "| implementation; doctrine/design |")
+    path = fixture.scratch / "boundary.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(boundary, encoding="utf-8")
+
+    refusals = boundary_refusals(path, enums=overview_enums(fixture.root), identity=SOURCE)
+
+    assert refusals == ([
+        ("duplicate source declaration: SRC-1; keep one row per source ID "
+         "and separate evidence layers and scopes within that row")
+    ] if duplicate else [])
+
+
 def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     path = fixture.scratch / "boundary.md"
     path.parent.mkdir(parents=True, exist_ok=True)

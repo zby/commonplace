@@ -30,6 +30,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import Counter
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import replace
 from functools import partial
@@ -55,6 +56,7 @@ from commonplace.lib.agentic_records import (
     declared_ids,
     section,
     set_record_errors,
+    source_register_ids,
 )
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
@@ -317,6 +319,11 @@ def boundary_refusals(
     elif disposition in DISPOSITIONS:
         wanted.append("Not reached")
     refusals += require_sections(body, 2, wanted)
+    refusals += [
+        f"duplicate source declaration: {identifier}; keep one row per source ID "
+        "and separate evidence layers and scopes within that row"
+        for identifier, count in Counter(source_register_ids(body)).items() if count > 1
+    ]
     return refusals
 
 

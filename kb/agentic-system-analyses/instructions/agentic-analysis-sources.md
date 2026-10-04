@@ -50,9 +50,10 @@ their frozen contents.
 | `observed run` | An inspectable execution trace or artifact |
 | `causal experiment` | An observed intervention and comparison with evidence about the design; design and confounding limits bound attribution |
 
-A source with several layers uses separate rows or clearly separated
-scopes. A contrast is necessary but not sufficient for causal
-identification; attribution is no finer than the treatment and comparison
+A source with several layers keeps one register row and one source ID.
+Label each layer and its inspected scope within that row; do not repeat the
+ID or create another ID only to distinguish layers. A contrast is necessary
+but not sufficient for causal identification; attribution is no finer than the treatment and comparison
 actually performed. A component effect requires independent variation of
 that component.
 

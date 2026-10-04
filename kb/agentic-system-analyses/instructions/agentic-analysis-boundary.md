@@ -79,5 +79,7 @@ allowlist that changes this rule. Captures remain limited to their frozen
 contents; another repository, revision or capture requires a new evidence
 boundary.
 
-Each row names one evidence layer from the source contract; a source with
-several layers uses separate rows or clearly separated scopes.
+Each source ID is declared once. A source with several evidence layers
+keeps one row: list the layers from the source contract and label each
+layer's inspected scope, anchors and limits within that row. Do not repeat
+the ID or create another ID only to distinguish layers.
