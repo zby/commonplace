@@ -19,6 +19,8 @@ The check reports the violated rule, the defect's location, and the information 
 
 For example, a quotation checker can locate every exact occurrence of a passage. Choosing which occurrence supports a finding remains the author's judgment. A failed occurrence check may require revising the finding, not merely its citation.
 
+A check result is evidence that arrives during execution. It does not exist until there is a draft, and it can change which means the worker chooses. Under [intent-framed delegation](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md), a choice of means is left to the executor when such evidence can change it and the executor can access that evidence. Exposing the check places the evidence where the repair judgment is already delegated. An orchestrator that relays a deterministic check result adds no information the worker lacks.
+
 Exposing that check does not transfer acceptance authority. The tool returns findings; it cannot mark the job accepted or release dependent work. As [cross-task transition policy remains scheduling behind tools](./cross-task-transition-policy-remains-scheduling-behind-tools.md), an interface's tool shape does not determine its authority. The relevant distinction is which transitions the implementation owns.
 
 ## Acceptance remains a separate operation
@@ -62,6 +64,8 @@ The conditional cost hypothesis is that worker-local checking reduces completion
 ## A check the worker can repeat becomes a repair target
 
 A worker that can repeat the acceptance check without cost can satisfy it by reducing the draft as well as by correcting it. Removing a finding that is hard to support, or rewording a claim to fit a passage that matches, passes the same check as finding the right evidence. The check cannot distinguish these repairs, because it tests the form of what remains, not what was removed. Orchestrator-mediated repair has the same weakness, but each refusal there costs an attempt and leaves a record.
+
+A check exposes an acceptance condition, not the task's intent. A worker that knows only the condition can treat passing as the goal. The handoff therefore also states what the checked element is for, such as that a quotation exists to support a finding. With that purpose stated, removing a supportable finding to pass is recognizable as failing the task. Stated intent reduces the pressure; the check still cannot detect a reduction.
 
 Worker-local checking also moves the failure evidence. Defects repaired before submission never appear as refusals, so the acceptance record stops measuring draft quality. A workflow that wants that measurement must record local check runs and their findings where the orchestrator or operator can read them.
 
