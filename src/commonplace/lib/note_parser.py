@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable, Iterator
-from dataclasses import dataclass
+from copy import deepcopy
+from dataclasses import dataclass, replace
+from functools import lru_cache
 from typing import Any
 
 from commonplace.lib import frontmatter as fm_mod
@@ -158,6 +160,19 @@ def extract_body_dates(body: str) -> tuple[str, ...]:
 
 
 def parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:
+    """Reuse parsing for unchanged text, without sharing mutable frontmatter.
+
+    Workflow replay validates the same documents repeatedly. Keying by text
+    keeps edits visible; the bounded cache does not retain every run's inputs.
+    """
+    document, error = _parse_document(content)
+    if document is not None and document.frontmatter is not None:
+        document = replace(document, frontmatter=deepcopy(document.frontmatter))
+    return document, error
+
+
+@lru_cache(maxsize=256)
+def _parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:
     frontmatter: dict[str, Any] | None = None
     if fm_mod.opens_frontmatter(content):
         result = fm_mod.parse(content)

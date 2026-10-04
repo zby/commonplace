@@ -322,7 +322,10 @@ def _library_refs_to_files(node: Any, library: Path) -> Any:
 @cache
 def _load_schema_with_library(path_str: str, library_str: str) -> dict[str, Any]:
     path = Path(path_str)
-    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    raw = yaml.load(
+        path.read_text(encoding="utf-8"),
+        Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader),
+    )
     if not isinstance(raw, dict):
         raise TypeError(f"{path}: schema must load to a mapping")
     raw = _library_refs_to_files(raw, Path(library_str))

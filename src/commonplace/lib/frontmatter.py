@@ -1,8 +1,8 @@
 """Parse markdown frontmatter with a thin YAML wrapper.
 
 Frontmatter sits between ``---`` delimiters at the start of a markdown
-file. Delimiter handling stays local; the contents are parsed with
-``yaml.safe_load``.
+file. Delimiter handling stays local; the contents use PyYAML's safe loader,
+with its C implementation when available.
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ def parse(content: str) -> FrontmatterResult:
     raw = match.group(1)
     result = FrontmatterResult()
     try:
-        loaded = yaml.safe_load(raw)
+        loaded = yaml.load(raw, Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
     except yaml.YAMLError as exc:
         result.errors.append(str(exc))
         return result

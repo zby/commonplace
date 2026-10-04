@@ -8,6 +8,44 @@ from commonplace.lib.note_parser import (
 )
 
 
+def test_repeated_parsing_does_not_share_nested_frontmatter() -> None:
+    content = "---\nitems:\n  - name: original\n---\n# Cache isolation\n"
+    first, error = parse_document(content)
+    assert error is None and first is not None
+    assert first.frontmatter is not None
+    first.frontmatter["items"][0]["name"] = "mutated"
+    first.frontmatter["added"] = True
+
+    second, error = parse_document(content)
+    assert error is None and second is not None
+    assert second.frontmatter == {"items": [{"name": "original"}]}
+
+
+def test_parsing_changed_text_refreshes_metadata_and_body() -> None:
+    content = "---\ndescription: before\n---\n# Before\n[old](old.md)\n"
+    before, error = parse_document(content)
+    assert error is None and before is not None
+
+    after, error = parse_document(
+        content.replace("before", "after").replace("Before", "After").replace("old", "new")
+    )
+    assert error is None and after is not None
+    assert after.frontmatter == {"description": "after"}
+    assert after.title == "After"
+    assert after.links == ("new.md",)
+    assert "[new](new.md)" in after.body
+
+
+def test_parsing_corrected_yaml_does_not_reuse_an_error() -> None:
+    content = "---\nitems: [\n---\n# Corrected YAML\n"
+    invalid, error = parse_document(content)
+    assert invalid is None and error is not None
+
+    corrected, error = parse_document(content.replace("items: [", "items: []"))
+    assert error is None and corrected is not None
+    assert corrected.frontmatter == {"items": []}
+
+
 def test_parse_document_extracts_headings_and_excludes_fenced_code() -> None:
     document, error = parse_document(
         """---
