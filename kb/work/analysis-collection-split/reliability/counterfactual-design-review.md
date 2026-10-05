@@ -19,11 +19,11 @@ a hypothesis to evaluate, not proof that the alternative will work.
 
 ## The missed question in the range audits
 
-The [first Dynamic Cheatsheet audit](../../analyse-agentic-system-amendments/fresh-run-audit.md)
+The [first Dynamic Cheatsheet audit](../../analyse-agentic-system-amendments/history/fresh-run-audit.md)
 identified range compression in verification summaries, despite workers
 having read the full-ID rule. It also identified late checking and a checker
 false positive. The
-[second audit](../../analyse-agentic-system-amendments/second-run-audit.md)
+[second audit](../../analyse-agentic-system-amendments/history/second-run-audit.md)
 found no verification range retries after local guidance, but still found
 ranges in reconciliation, synthesis and epistemic work.
 

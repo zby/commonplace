@@ -19,7 +19,7 @@ back to ordinary shorthand when they summarize a group. Numbered IDs invite
 that shorthand: `MEM-OBJ-1 through MEM-OBJ-3` looks natural. The reference
 scanner recognizes only its endpoints, so the phrase can pass while an
 implied intermediate ID is undeclared. This checking gap was the recorded
-reason for refusing ranges in [the earlier fix options](../../analyse-agentic-system-amendments/fix-options.md#a-targeted-repairs-id-grammar-unchanged).
+reason for refusing ranges in [the earlier fix options](../../analyse-agentic-system-amendments/history/fix-options.md#a-targeted-repairs-id-grammar-unchanged).
 The ban did not establish that grouping prose was analytically wrong.
 
 Numbered IDs also carry no meaning, so every reference needs a lookup, and
@@ -57,11 +57,11 @@ a useful name drawn from its recorded role or label. The naming check below
 tests whether these sources yield short, stable handles.
 
 The evidence for the diagnosis is in the audits: the
-[first Dynamic Cheatsheet audit](../../analyse-agentic-system-amendments/fresh-run-audit.md)
+[first Dynamic Cheatsheet audit](../../analyse-agentic-system-amendments/history/fresh-run-audit.md)
 records three verification submissions refused for ranges and five ranges an
 analyst repaired locally, with ranges appearing in coverage statements,
 inventory summaries and grouped support. The
-[second audit](../../analyse-agentic-system-amendments/second-run-audit.md)
+[second audit](../../analyse-agentic-system-amendments/history/second-run-audit.md)
 records none in verification after local guidance, and ranges still written
 in reconciliation, synthesis and the epistemic job. The first audit also
 records a range-detector false positive on ordinary `to` relation prose,

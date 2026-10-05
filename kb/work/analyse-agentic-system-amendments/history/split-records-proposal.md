@@ -7,14 +7,14 @@ checker now implement these rules; the fresh analysis remains pending. See
 
 ## Problem
 
-The [record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md)
+The [record contract](../../../agentic-system-analyses/instructions/agentic-analysis-records.md)
 lets a later analyst relate its record to a supplied one in two ways: the
 same referent, which it annotates, or a distinct one, which it declares with
 "closest supplied IDs" and possible-duplicate evidence. Reconciliation then
 either supersedes a duplicate or leaves both declared. For a split, the
 contract says reconciliation "allocates fresh IDs for the parts and
 supersedes the combined record", but the
-[reconciliation report type](../../agentic-system-analyses/types/agentic-system-reconciliation-report.md)
+[reconciliation report type](../../../agentic-system-analyses/types/agentic-system-reconciliation-report.md)
 declares no records and the
 [checker](../../../src/commonplace/lib/agentic_records.py) accepts only IDs
 declared under a member's `## Shared records`.

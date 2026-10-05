@@ -32,11 +32,11 @@ are useful remain open.
 ## Design freedom and coordination
 
 Worker roles, correction ownership, report boundaries, review placement and
-round budgets remain means to test. The [correction candidate](./versioned-corrections-for-agentic-analysis-reports.md)
+round budgets remain means to test. The [correction candidate](../work/analyse-agentic-system-amendments/versioned-corrections-for-agentic-analysis-reports.md)
 is one option, not the architecture this brief requires.
 
-The selected [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
-awaits closure of the [classification workshop](../analysis-classification-revision/README.md).
+The selected [publication-policy direction](./proposals/publishing-analyses-with-unresolved-issues.md)
+awaits closure of the [classification workshop](../work/analysis-classification-revision/README.md).
 This brief adds no run or implementation authorization. Carry it into workshop
 handoffs; extract the still-needed intent before workshop closure rather than
 making shipped instructions depend on this file.

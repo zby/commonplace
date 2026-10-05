@@ -44,7 +44,7 @@ per job and per rule, not as a verdict on a decision.
 ## Baseline
 
 The second audited run, `AAS-2026-10-03-dynamic-cheatsheet-02`, from its
-[audit](../../analyse-agentic-system-amendments/second-run-audit.md):
+[audit](../../analyse-agentic-system-amendments/history/second-run-audit.md):
 
 | Measure | Second run |
 |---|---|
@@ -151,7 +151,7 @@ Stop and report when:
 ## Records
 
 - **Audit result:** one file in this directory, in the form of the
-  [second-run audit](../../analyse-agentic-system-amendments/second-run-audit.md):
+  [second-run audit](../../analyse-agentic-system-amendments/history/second-run-audit.md):
   evidence and limits, the counts above against the baseline, recovered
   failures with causes, and what the traces cannot show.
 - **Revisit conditions:** state for each `TODO` in ADR 102, 104 and 105 what this

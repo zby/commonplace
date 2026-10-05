@@ -19,7 +19,7 @@ fresh-run requirement explicit.
   This closes audit finding 2 in [the separate audit](./skill-inconsistencies.md),
   which directly affected the commissioned checks. Other audit findings
   remain follow-ups.
-- The [shared record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md)
+- The [shared record contract](../../../agentic-system-analyses/instructions/agentic-analysis-records.md)
   is consumed through declared dependencies by analysts, reconciliation and
   verification. It now distinguishes identity, single-parent containment and
   overlapping groupings. Splits supersede only by already-declared parts;
@@ -190,7 +190,7 @@ unchanged in `0f49f426a`, separately from method fixes. The retained manifest's
 member hashes and the review's manifest hash remain unchanged. Its source
 omissions remain evidence; the next run must supersede the review.
 
-[Workflow recovery history](../../reference/proposals/workflow-recovery-history.md)
+[Workflow recovery history](../../../reference/proposals/workflow-recovery-history.md)
 records the need for observable recovery evidence, manual audits, a derived
 summary and separate engine-event retention. It names consumers, coverage
 limits and adoption criteria without selecting a storage implementation.

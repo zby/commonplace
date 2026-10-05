@@ -66,7 +66,7 @@ comparison or an accepted Graphiti analysis.
 Local evidence is not guaranteed to survive cleanup. This is a prerequisite
 for items 1–6 and must finish before cleanup or an observation-driven method
 change. Retain a bounded trace record alongside this plan, following the
-workshop's [second-run trace evidence](./second-run-trace-evidence.md) precedent.
+workshop's [second-run trace evidence](./history/second-run-trace-evidence.md) precedent.
 Record the session's exact-byte SHA-256, line count, model, parent-line and
 embedded-worker message anchors, and selected diagnostic calls/results. Hash
 and retain the relevant reconciliation excerpts, including returned items 1

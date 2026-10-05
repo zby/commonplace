@@ -2,7 +2,7 @@
 
 ## Read before evolving the workflow
 
-The [process brief](./process-brief.md) retains the operator's 2026-10-05
+The [process brief](../../reference/agentic-system-analysis-design-brief.md) retains the operator's 2026-10-05
 direction for future workflow changes: primarily chart the design space and
 find solutions useful to Commonplace; secondarily support a public database,
 potentially organized around categories such as memory systems or harnesses.
@@ -29,32 +29,32 @@ analysis, or adopt an ID design by opening.
 - [Versioned corrections](./versioned-corrections-for-agentic-analysis-reports.md)
   — candidate report-correction design under the process brief; retains the
   motivating evidence, alternatives and questions to test before adoption.
-- [Problem](./problem.md) — the starting problem, the unowned split
+- [Problem](./history/problem.md) — the starting problem, the unowned split
   declaration, the evidence read from the archived results, and the
   questions to settle.
-- [Fix options](./fix-options.md) — verified workflow context and the
+- [Fix options](./history/fix-options.md) — verified workflow context and the
   repairs considered, each judged against the archive evidence, with
   dispositions of the considered repairs; A1 and A4 are adopted.
-- [Split-records proposal](./split-records-proposal.md) — the recommended
+- [Split-records proposal](./history/split-records-proposal.md) — the recommended
   option: a declared `Part of:` relation, splits as supersession by
   already-declared parts, and no ID allocation by reconciliation.
-- [Pre-adoption check](./pre-adoption-check.md) — normalized archive copies,
+- [Pre-adoption check](./history/pre-adoption-check.md) — normalized archive copies,
   seven declared part relations, negative target checks and three bounded
   workflow fixtures; also records the limits of scripted acceptance.
-- [Implementation check](./implementation-check.md) — adopted method changes,
+- [Implementation check](./history/implementation-check.md) — adopted method changes,
   their consumers, verification and the stopping point before a fresh run.
-- [Skill inconsistencies](./skill-inconsistencies.md) — read-only audit of
+- [Skill inconsistencies](./history/skill-inconsistencies.md) — read-only audit of
   the live skill's job texts, types, schemas, contracts and operator docs
   against the code, with a suggested fix order before the next test run.
-- [Fresh-run audit](./fresh-run-audit.md) — Dynamic Cheatsheet completion,
+- [Fresh-run audit](./history/fresh-run-audit.md) — Dynamic Cheatsheet completion,
   recovered errors, root causes, remaining source-coverage concern and
   evidence for each adopted improvement.
-- [Fresh-run trace evidence](./fresh-run-trace-evidence.md) — hashed inventory
+- [Fresh-run trace evidence](./history/fresh-run-trace-evidence.md) — hashed inventory
   of the parent and 13 worker sessions with bounded diagnostic excerpts.
-- [Second-run audit](./second-run-audit.md) — assessment of the repaired
+- [Second-run audit](./history/second-run-audit.md) — assessment of the repaired
   method, recovered failures, successful coverage expansion and a surviving
   duplicate identity in the published set.
-- [Second-run trace evidence](./second-run-trace-evidence.md) — hashed
+- [Second-run trace evidence](./history/second-run-trace-evidence.md) — hashed
   inventory of the second run's parent and 17 workers, with diagnostic excerpts.
 - [Sol run follow-up plan](./sol-run-follow-up-plan.md) — remaining input,
   quotation, formatting and classification repairs from the stopped Graphiti
@@ -80,28 +80,28 @@ Done:
   backcompat removed, bare `####` headings under `## Shared records`
   refused by name.
 - `6fd147f59` (2026-10-02): archive evidence recorded in the
-  [problem](./problem.md#observed-evidence); options rejudged; proposal
+  [problem](./history/problem.md#observed-evidence); options rejudged; proposal
   rewritten around `Part of:`.
 - 2026-10-02: archive rewrite and bounded fixture updates executed at the
   operator's request. The copied sets resolve all 53 and 34 declared IDs;
   seven records become parts and both duplicate supersessions remain. See
-  [pre-adoption evidence](./pre-adoption-check.md) for checks and test results.
+  [pre-adoption evidence](./history/pre-adoption-check.md) for checks and test results.
 - 2026-10-02: the operator authorized implementation through the point before
   a new run. A1 refusal hints/range detection and A4 part/split rules are
   implemented in the checker, shared contract, analyst jobs, reconciliation
   type and verification job. Reference checks now also run on returning
-  reconciliation rounds. See [implementation checks](./implementation-check.md).
+  reconciliation rounds. See [implementation checks](./history/implementation-check.md).
 - 2026-10-02: the operator commissioned the minimal pre-run adoption plan.
   Its four repairs are implemented: explicit run identity and early member
   identity checks, amendment-index placement inside Source register,
   reconciliation anchor acceptance checks, and clarified heading/read order.
-  Acceptance evidence is recorded in [implementation checks](./implementation-check.md).
+  Acceptance evidence is recorded in [implementation checks](./history/implementation-check.md).
 - 2026-10-03: the operator commissioned an hourly completion check and
   post-run error audit. Dynamic Cheatsheet completed under method commit
   `77a8e0d9d`. Its published outputs pass validation; traces expose three
   verification retries, recovered analyst and tool errors, a new range-check
   false positive and a containment correction. The whole-system source
-  boundary also needs reconsideration. See the [fresh-run audit](./fresh-run-audit.md).
+  boundary also needs reconsideration. See the [fresh-run audit](./history/fresh-run-audit.md).
 
 - 2026-10-03: the fresh-run audit was checked against the published set,
   the checker and the archive. Its findings reproduce. One addition: all six
@@ -118,7 +118,7 @@ Done:
   type. Git registration permits the pinned repository; listed paths record
   initial coverage. Whole-system classification requires tracing shipped
   responsibilities, and verification rejects a contradicted frozen boundary
-  through the existing problem path. See [implementation checks](./implementation-check.md#repository-registration-and-whole-system-coverage).
+  through the existing problem path. See [implementation checks](./history/implementation-check.md#repository-registration-and-whole-system-coverage).
 
 Fix status and remaining run actions:
 
@@ -126,7 +126,7 @@ The full `AAS-2026-10-03-dynamic-cheatsheet-02` run completed and was audited
 on 2026-10-03. Its set and review validate cleanly. The source-coverage repair
 and verification range guidance worked; other jobs still needed range retries.
 A duplicate cheatsheet identity survived semantic checks, and the register
-overstates initial inspection. See the [second-run audit](./second-run-audit.md)
+overstates initial inspection. See the [second-run audit](./history/second-run-audit.md)
 for the retained findings. On 2026-10-03 the operator accepted the result as
 good enough and chose to retain it unchanged. The remaining findings are
 accepted limitations; revisit a fix only if the same errors recur in later
@@ -199,11 +199,11 @@ accessible; if they reappear, add them to the problem file.
 
 Prevent known late failures and misplaced generated content with local changes
 to the existing workflow. Item numbers below refer to
-[the skill audit](./skill-inconsistencies.md), not the fix-options numbering.
+[the skill audit](./history/skill-inconsistencies.md), not the fix-options numbering.
 Items 2 and 7 were already resolved by `4807abb47`; their tests remain.
 The operator subsequently authorized implementing this plan. All four repairs
 below are implemented; validation evidence is retained in the
-[implementation check](./implementation-check.md). The fresh run stays separate.
+[implementation check](./history/implementation-check.md). The fresh run stays separate.
 The audit remains a record of its original method boundary. This plan governs
 the adopted pre-run scope instead of its broader suggested order.
 

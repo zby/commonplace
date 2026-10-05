@@ -132,8 +132,8 @@ Read between 20:53 and 21:40 +02:00 on 2026-10-03. SHA-256 at first read:
 
 Role-file hashes equal those in `input-measurements.json` (inputs commit
 `2b7fe749`). Packet code: `src/commonplace/lib/agentic_workflow.py` at the
-working tree of that commit. Outcome sources: [fresh-run audit](../../analyse-agentic-system-amendments/fresh-run-audit.md),
-[second-run audit](../../analyse-agentic-system-amendments/second-run-audit.md),
+working tree of that commit. Outcome sources: [fresh-run audit](../../analyse-agentic-system-amendments/history/fresh-run-audit.md),
+[second-run audit](../../analyse-agentic-system-amendments/history/second-run-audit.md),
 [Sol run follow-up plan](../../analyse-agentic-system-amendments/sol-run-follow-up-plan.md) and the two
 trace-evidence files. Raw traces and run state were not read.
 

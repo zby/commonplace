@@ -5,7 +5,7 @@
 Would correcting report text reduce total work and correction failures compared
 with keeping the original reports and applying amendments during later use?
 
-This is a candidate under the [process brief](./process-brief.md), retained for
+This is a candidate under the [process brief](../../reference/agentic-system-analysis-design-brief.md), retained for
 future workflow design on 2026-10-05. The single loop below is a working
 hypothesis. The brief's priorities govern its evaluation; its worker roles,
 report boundaries and correction budget remain design choices.

@@ -12,8 +12,8 @@ beside this one.
 Analysis workers fail parts of their jobs. The audited runs show refused
 submissions, retries, rules read and not applied, wrong-path reads and
 classifications returned by reconciliation; see the
-[fresh-run audit](../../analyse-agentic-system-amendments/fresh-run-audit.md), the
-[second-run audit](../../analyse-agentic-system-amendments/second-run-audit.md) and the
+[fresh-run audit](../../analyse-agentic-system-amendments/history/fresh-run-audit.md), the
+[second-run audit](../../analyse-agentic-system-amendments/history/second-run-audit.md) and the
 [Sol run follow-up plan](../../analyse-agentic-system-amendments/sol-run-follow-up-plan.md). The operator's response
 is to simplify the analyst's job. The split serves that goal: an analyst should
 hold only the analysis. Fewer bytes are one part of the simplification. The
@@ -85,7 +85,7 @@ Dynamic Cheatsheet runs was 18–44% of the provider window. Refused submissions
 did not concentrate in the largest contexts, and retries passed at about the
 same size. The recurring lapse was a rule read and not applied when writing,
 such as the prohibition on record ranges in the
-[fresh-run audit](../../analyse-agentic-system-amendments/fresh-run-audit.md). It stopped in verification jobs once
+[fresh-run audit](../../analyse-agentic-system-amendments/history/fresh-run-audit.md). It stopped in verification jobs once
 their packets stated the rule conspicuously, and it then appeared in
 reconciliation and synthesis, whose packets did not. This supports the
 interference and complexity pressures, in two runs of one source on one model.
