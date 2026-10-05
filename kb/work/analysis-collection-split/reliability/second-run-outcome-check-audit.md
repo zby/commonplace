@@ -12,9 +12,9 @@ assessment of effectiveness and accuracy. That request is not an independently
 checked correctness gate, but it makes the blanket statement false. The
 workflow had used its one synthesis correction and allowed only stopping.
 The coordinator recorded a stop report at 19:10:52 UTC. No publication effect
-ran and the incumbent retained set was unchanged. The human-readable run
-state still says `running`; the workflow state and stop report are the
-terminal evidence for this attempt.
+ran and the incumbent retained set was unchanged. The workflow state and stop
+report show why the coordinator stopped. The run state still says `running`
+because it records completion or abandonment, not the live workflow block.
 
 ## Evidence and limits
 
@@ -175,10 +175,12 @@ cause the terminal stop.
   first-run audit found that exit status had been discarded in all command
   calls. The coordinator used the worktree-local executable and working
   directory throughout this run.
-- **Run-state visibility.** After the workflow stop report, `workflow-state`
-  records `stopped` and the block says `Permitted: stop`, while `run-state.md`
-  still says `running`. A reader of only the run-state file would miss the
-  terminal result. No publication `prepare` or `publish` effect is present.
+- **Status surfaces.** `workflow-state` records a stop-only block, and the
+  coordinator's stop report records that its session ended. `run-state.md`
+  remains `running` because the run has neither completed nor been marked
+  abandoned. The run-state type explicitly excludes recovery state; inspect
+  the workflow block and report to learn why work stopped. No publication
+  `prepare` or `publish` effect is present.
 
 ## Previous published defects and current disposition
 

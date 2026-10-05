@@ -15,8 +15,8 @@ incumbent's ID. The coordinator reported this block at 22:09:17 UTC. The
 publication effect remains `started`; no retained-set replacement or archive
 was written. The incumbent overview's SHA-256 still equals its opening
 expected digest. The workflow remains blocked with repair permitted, and
-`run-state.md` still says `running`. The coordinator ended its session; the
-public set is unchanged.
+`run-state.md` still says `running` because the run has not been marked
+abandoned. The coordinator ended its session; the public set is unchanged.
 
 ## Evidence and limits
 
@@ -113,11 +113,13 @@ not exercised.
    workflow spends the full analysis before detecting it. A new attempt
    needs allocation or preflight that checks retained and archived IDs; the
    current blocked run cannot be published under its present ID.
-2. **Completion state remains misleading.** The coordinator's report and
-   block file establish a publication failure, while the human run-state
-   file says `running` and workflow `stopped` is null. Its `publish` effect is
-   recorded as `started`. These files must be read together to avoid calling
-   the analysis published or still actively progressing.
+2. **Run state is not a live workflow status.** The coordinator's report and
+   block file establish a publication failure. `run-state.md` says `running`
+   because that status means neither completed nor abandoned. Workflow
+   `stopped` is null because this block permits repair, and the `publish`
+   effect is recorded as `started`. Read the workflow block and report for
+   the current operating state. Marking the run `failed` would be an
+   abandonment decision, not an automatic consequence of `report stop`.
 3. **Two epistemic tool outputs were truncated.** One combined prompt/source
    read and one broad search exceeded the visible output limit. The worker
    continued with narrower reads, and the independent record verifier read
