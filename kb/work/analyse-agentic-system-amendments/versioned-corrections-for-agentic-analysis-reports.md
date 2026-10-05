@@ -110,9 +110,9 @@ problems. Nonblocking findings need not consume the remaining correction rounds;
 later runs can revisit them with better models or methods. At the budget limit,
 remaining publication blockers stop the run.
 
-That policy is scheduled for implementation after the
-[classification workshop](../analysis-classification-revision/README.md)
-closes. Compare correction designs under the same publication policy so that
+That policy was scheduled for implementation after the classification
+revision ([ADR 107](../../reference/adr/107-classify-memory-by-scoped-findings.md)),
+which closed on 2026-10-05. Compare correction designs under the same publication policy so that
 allowing local issues is not mistaken for evidence that one repair mechanism
 works better.
 

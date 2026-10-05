@@ -45,10 +45,17 @@ As of the 2026-10-05 direction:
   to connecting reports. It awaits operator acceptance and
   does not include the publication policy.
 - The [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
-  was selected for implementation after the
-  [classification workshop](../analysis-classification-revision/README.md)
-  closes. It is not made live by this cleanup. Compare correction mechanisms
-  under the same publication policy.
+  was selected for implementation after the classification revision. That
+  revision closed on 2026-10-05, so the policy is now unblocked but not live.
+  Compare correction mechanisms under the same publication policy.
+- The classification revision ([ADR 107](../../reference/adr/107-classify-memory-by-scoped-findings.md),
+  method `b95a2bb79`) was tested by the four runs listed in the
+  [report-correction plan](./report-correction-implementation-plan.md#why-now).
+  In the complete Dynamic Cheatsheet run, `write_agency` and `lineage` kept
+  supported findings beside named unresolved parts, as intended. The two stopped
+  runs failed on correction propagation, which this workshop owns. Open item:
+  the cause of the blocked run `AAS-2026-10-05-dynamic-cheatsheet-56ba8ab235b8-01`
+  has not been examined.
 - The [analysis collection split](../analysis-collection-split/README.md)
   owns its separate design and implementation plan. Its workshop framing is
   historical relative to the shipped collection; inspect the live method

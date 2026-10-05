@@ -6,11 +6,11 @@ description: "Proposal: permit analysis publication with explicit local unresolv
 # Publishing analyses with unresolved issues
 
 On 2026-10-05 the operator selected this direction for implementation after
-the analysis-classification-revision workshop closes. The intended result is
+the analysis classification revision. That revision closed on 2026-10-05, so
+implementation is unblocked. The intended result is
 to publish useful analyses with declared limits without requiring every
 semantic review finding to be resolved. This proposal records that direction;
-it changes no current acceptance or publication rule. Workshop closure is the
-implementation prerequisite, not an additional task for that workshop.
+it changes no current acceptance or publication rule.
 
 ## Current state (as of 2026-10-05)
 
@@ -23,9 +23,13 @@ writer and reviewer instructions prevent the defect. Its retained record is
 objections. These observations motivate a publication-policy change but do
 not establish its reliability.
 
-Classification definitions and uncertainty representation are being revised
-in the active analysis-classification-revision workshop. This proposal must
-use the resulting contracts after closure rather than freeze their design.
+[ADR 107](../adr/107-classify-memory-by-scoped-findings.md) delivered the
+revised classification contracts. Profiles at revision 2 of
+`memory-comparison` keep each finding on a scoped unit and can mark a unit
+or axis `partial`, `not-determinable` or `uninspected`; the
+[profile type](../../agentic-system-analyses/types/agent-memory-profile.md)
+defines that representation. This proposal must build on those contracts
+rather than redesign them.
 
 ## Proposed publication policy
 
@@ -82,8 +86,8 @@ and false objections.
 
 ## Adoption criteria and free choices
 
-After the classification workshop closes, reconcile this proposal with its
-delivered contracts. Implementation must show that a local unresolved issue
+Before implementation, reconcile this proposal with the revision-2 profile
+contracts. Implementation must show that a local unresolved issue
 can be published with specific consequences, a misleading central conclusion
 still blocks publication, and disputed profile values cannot silently enter
 comparisons as settled findings. Records read independently must remain
