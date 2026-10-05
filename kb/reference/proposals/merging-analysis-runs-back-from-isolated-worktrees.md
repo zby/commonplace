@@ -91,8 +91,8 @@ and auditors.
   distinct with 48 random bits.
 - The counter stays because one worktree can hold more than one run: a failed
   run is never resumed, and its replacement may start in the same worktree.
-  Keeping it also leaves `Orchestrator.start` unchanged: `run_location`
-  returns the stem `AAS-<date>-<slug>-<token>`.
+  `Orchestrator.start` still allocates the first free number after the stem
+  `AAS-<date>-<slug>-<token>`.
 - The token in the ID names the worktree that holds the run directory while
   that worktree exists.
 - The existing `RUN_ID` pattern and the schema patterns already match the new
@@ -101,10 +101,15 @@ and auditors.
 
 **Token channel.** Preparation records the token as its own field in the
 preparation record, including when `--worktree` overrides the path (it then
-generates a token without putting it in the path). `run_location` reads the
-record at `<repo root>.preparation.json` and refuses to allocate without a
-ready record. Opening also refuses a run whose ID token differs from the
-record. That check covers `start --run <dir>`, which bypasses allocation.
+generates a token without putting it in the path). `Orchestrator.start`
+passes its existing `base` path to `run_location(base)`. The analysis workflow
+reads `<base>.preparation.json` and refuses to allocate unless the record is
+ready and names that worktree. The generic hook gains this one argument;
+the CLI gains none. At opening, the analysis workflow derives the worktree
+root from the run directory and makes the same record check. It also refuses
+a token-bearing run whose ID token differs from the record. That covers
+`start --run <dir>`, which bypasses allocation. Existing legacy runs remain
+readable; the token check applies to newly allocated runs.
 
 Rejected channels: parsing the worktree directory name fails under
 `--worktree`; a `--param run-token` relies on the coordinator copying a value
@@ -211,9 +216,11 @@ checkouts stay ignored local state. Nothing in this design tracks them.
 preparation record may be removed by the operator, or by an agent the operator
 authorizes, when all of these hold.
 
-- Every run in it is terminal: `complete` and merged into `main`, or `failed`.
-  A run that is `running`, blocked, stopped or uncertain keeps its worktree,
-  because its state is needed to resume or recover.
+- Every run in it is `complete` and merged into `main`. A run that is
+  `running`, blocked, stopped or uncertain keeps its worktree because its
+  state is needed to resume or recover. A `failed` run also keeps its
+  worktree: its traces and rejected outputs are evidence of failure, including
+  cases where public state is uncertain.
 - No integration branch from it awaits a merge or a conflict decision.
 - Every audit that uses the run has extracted its evidence record (part 4),
   or the operator has stated that no audit needs it.
@@ -221,6 +228,10 @@ authorizes, when all of these hold.
 Removal uses `git worktree remove`, then deletes the preparation record and
 any merged `analysis/<run-id>` branch. Removal is never automatic. Ignore
 status does not license deletion; the rule above does.
+
+This routine removal rule never covers a worktree containing a failed run.
+If its evidence is later disposed of, that needs a separate explicit operator
+decision after the failure and any uncertain public state have been reviewed.
 
 What removal loses: job outputs, rejected attempts and workflow records not
 copied into an evidence record, and the frozen checkout. The checkout is
@@ -246,13 +257,15 @@ are specified, or the analysis collection's method maintenance instruction.
 
 ## Adoption criteria
 
-- A run started after adoption carries a token-bearing ID, and `start
-  --run` with a mismatched token is refused at opening.
+- A run started after adoption carries a token-bearing ID, including when
+  `Orchestrator.start` is given an explicit `base`; `start --run` with a
+  mismatched token is refused at opening.
 - One end-to-end integration is exercised: a replacing publication merged
   cleanly into `main`, and a second publication for the same slug from an
   older method commit stops with a conflict that leaves `main` unchanged.
 - The skill and publication instruction state the integration procedure and
-  the removal rule, and the "Do not remove the worktree" sentence is gone.
+  the removal rule, including retention of failed runs, and the "Do not
+  remove the worktree" sentence is gone.
 - Adopting part 4 needs one new evidence record written with the three keys.
 
 ---
