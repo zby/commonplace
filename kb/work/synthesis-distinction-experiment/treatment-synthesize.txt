@@ -1,0 +1,5 @@
+Shorten the account without strengthening its claims. Preserve distinctions
+between what a prompt requests, what code enforces, what an execution
+demonstrates, and what remains unknown. When a record describes a mechanism
+and limits its assurance, retain both. Lack of enforcement does not establish
+absence of the requested behavior.

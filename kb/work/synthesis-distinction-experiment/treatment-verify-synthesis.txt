@@ -1,0 +1,10 @@
+For each substantive statement, inspect the cited record for the strongest
+detail that could contradict, narrow, or qualify it. Record that detail and
+whether the public wording preserves its consequence. A relevant citation is
+insufficient if its contents support only a narrower claim.
+
+Under Synthesis verification use a table with columns:
+public claim | qualifying or contrary record detail | judgment.
+Use one row per substantive claim, splitting sentences with distinct claims.
+Include the record ID with the detail. If you find no qualifying or contrary
+detail, state that instead of inventing one. Keep the required Blockers section.

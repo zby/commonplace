@@ -45,6 +45,24 @@ These hypotheses remain open. A favorable outcome need not identify its
 cause or establish the explanation's scope. Contradictions, rival explanations,
 and overlooked conditions can also change an idea without another use.
 
+## Information efficiency direction to test
+
+Start with the next real decision and ask what evidence could change it.
+Compare three routes before requesting a full experiment: feedback from
+ordinary use, a small check aimed at a named failure or qualification, and a
+controlled comparison. Name what each route can and cannot establish. A
+low-stakes, reversible decision with observable consequences may justify
+provisional use and later feedback; a consequential decision with weak
+feedback or a causal claim may require stronger evidence. This is a candidate
+decision procedure, not an adopted gate or a numeric information score.
+
+The cost comparison includes capture, retrieval, interpretation, retention,
+and later correction, not only model calls. A cheap observation that cannot
+change the decision supplies little value; a costly trial may be justified
+when it resolves a live uncertainty shared by many future decisions. Record
+the uncertainty left open so that a smaller check is not reported as a
+reliability or causal result.
+
 The five-aspect assessment table discussed earlier is not an adopted
 contract. Likewise, retained theories improving sample efficiency remains
 a [conjecture](../../notes/retained-theories-may-improve-sample-efficiency.md),
@@ -87,6 +105,17 @@ and reading costs are separate: summaries need not reduce retained volume.
   source claims from our operational extensions.
 
 ## Evaluation boundary
+
+The [synthesis pilot cost case](./synthesis-pilot-cost-case.md) is the first
+worked ordinary-work episode. It records a decision to reduce an expensive
+planned trial before any treatment outcome exists. It tests whether a compact
+record can keep the decision, its grounds, expected information, and missing
+outcome distinct while detailed protocol remains linked. The operator's cost
+judgment is evidence of the decision, not a measured claim that the smaller
+check is more effective. A later reader should test whether this record is
+sufficient without the creating session. This case tests trial selection and
+record form; it does not replace the favorable, conflicting, failed and
+unknown operational-use cases still needed below.
 
 Examine concrete cases before selecting machinery. The analysis-offload
 [analysis-offload closure evidence](../../reports/retained/analysis-offload-closure-20261002.md)
