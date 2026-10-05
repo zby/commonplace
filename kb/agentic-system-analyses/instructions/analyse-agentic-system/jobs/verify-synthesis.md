@@ -35,7 +35,14 @@ including amendments and supersessions in the reconciliation. Check that
 Description, Bounded synthesis and Limitations meet the supplied overview
 type, read without the members' context, and carry every `Unresolved conflict:`
 into a limitation with its affected IDs and prevented conclusion. Record the
-checked claims and limits. Structural acceptance does not establish support.
+checked claims and limits. Check that supported contributions survive unresolved
+included parts without an aggregate completeness claim, and that missing facts
+remain tied to prevented conclusions. Check each epistemic function and each
+theory-builder condition, learning, reflection, autonomy and self-improvement
+claim independently; no bundled negative or inference of improved capacity from
+trace-fed retention is warranted. Unsupported values, hidden coverage gaps and
+unwarranted absence/completeness claims are blockers; explicit faithful
+uncertainty alone is not. Structural acceptance does not establish support.
 Use full IDs; list numbered `SRC-*` references separately.
 
 Write no correction. Under Blockers write exactly `none`, or a Markdown list

@@ -10,7 +10,9 @@ Old `agentic-systems/reports/` and the new `retained-archive/` do not participat
 in current validation or comparison. No local run state, source checkout,
 legacy review or prior CSV is required. The
 [memory profile contract](../../agentic-system-analyses/types/agent-memory-profile.md#memory-comparison-fields)
-defines the scoped fields and per-value evidence assessments.
+defines scoped findings, evidence bases and coverage assessments. New profiles
+use revision 2; immutable unversioned profiles retain revision-1 interpretation.
+Do not silently pool changed write-agency semantics across revisions.
 
 Run from the repository root:
 
@@ -29,16 +31,22 @@ review per source identity; repeat runs do not count as distinct systems.
 Builder and renderer accept `--output <path>` for an isolated trial.
 
 Each CSV row records the source, run, boundary, tier, compared scope, and the
-hashes of the review and the manifest (`artifact_sha256`). Axis values are JSON arrays with
-separate coverage assessment, JSON per-value evidence maps, and
-canonical-record columns. Each evidence entry retains its basis, supporting
-records and rationale. The members carry the source evidence.
-The table separates code-grounded and doc-grounded sets and links the accepted overview. Statistics count code-grounded wired, observed,
-or causally supported values, including supported positives under partial
-coverage; the remainder is not inferred absent. Weaker bases and coverage
-assessments are reported separately. Entropy and redundancy require known
-coverage and strong evidence for every member, treating the complete set as one
-category. Evidenced absences remain a separate category. Denominators describe this selected population only.
+hashes of the review and the manifest (`artifact_sha256`), plus the profile
+revision. Axis unions are JSON arrays with separate coverage assessment,
+coverage rationale, derived existence-evidence maps, canonical records and
+JSON unit data. Revision-2 units preserve each finding's scope, basis, records
+and limitation; a strong witness in the union does not upgrade another unit.
+Revision-1 rows preserve their original assessment and rationale without
+reclassification. The members carry the source evidence.
+The table separates code-grounded and doc-grounded sets, displays revision and
+unit limitations, and links the accepted overview. Statistics separate revisions
+and count code-grounded wired, observed, or causally supported values, including
+supported positives under partial coverage; the remainder is not inferred
+absent. Weaker bases and coverage assessments are reported separately. Entropy
+and redundancy require known coverage and strong evidence for every finding,
+not just the strongest witness per value. Evidenced absence, inapplicability and
+incomplete coverage remain distinct. Denominators describe this selected
+revision-specific population only.
 
 Existing reviews without a retained set and normalized comparison fields
 need regeneration through the main analysis before inclusion. Do not

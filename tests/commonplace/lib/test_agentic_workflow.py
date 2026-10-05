@@ -186,7 +186,7 @@ class Fixture:
         return text + f"\nWritten in round {round_}.\n"
 
     def memory_profile(self) -> str:
-        return profile_report_fixture(self.scratch / "profile", self.revision).read_text().replace(
+        return profile_report_fixture(self.scratch / "profile", self.revision, version=2).read_text().replace(
             SOURCE, normalize_source_identity(self.identity))
 
     @staticmethod
@@ -1700,6 +1700,61 @@ def test_analyst_trial_tracks_the_supplied_collection_contract(fixture, analyst)
     receipt = json.loads((prompt.parent / "trial.json").read_text())
     assert str(contract.resolve()) in str(receipt)
     assert digest(contract) in str(receipt)
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("fault", ["v1", "version", "shape", "canonical-reference", "unresolved-reference"])
+def test_scheduled_profile_requires_valid_v2(fixture: Fixture, fault: str) -> None:
+    if fault == "v1":
+        bad = profile_report_fixture(fixture.scratch / "historical-profile", fixture.revision).read_text()
+    else:
+        _, header, body = fixture.memory_profile().split("---", 2)
+        metadata = yaml.safe_load(header)
+        comparison = metadata["memory-comparison"]
+        storage = comparison["axes"]["storage_substrate"]
+        if fault == "version":
+            comparison["version"] = "2"
+        elif fault == "shape":
+            storage["units"][0]["findings"] = "not a list"
+        else:
+            storage["units"][0]["findings"][0]["records"] = [
+                "MEM-OBJ-store-extra-segments-invalid" if fault == "canonical-reference" else "MEM-OBJ-missing"
+            ]
+        bad = "---\n" + yaml.safe_dump(metadata, sort_keys=False) + "---" + body
+    scripted, definition = agent(fixture, profile=fixture.writes(lambda _: bad))
+    drive_to(scripted, "profile")
+    path = fixture.scratch / "bad-profile.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(bad, encoding="utf-8")
+    refusals = definition.profile_refusals(fixture.run_dir, path)
+    assert refusals
+    if fault == "v1":
+        assert "new workflow profiles require memory-comparison version: 2" in refusals
+    outcome = scripted.orchestrator.step()
+    assert isinstance(outcome, Launch)
+    assert outcome.jobs[0].attempt == 2
+    assert not (fixture.run_dir / "output/memory-profile.md").exists()
+
+
+@pytest.mark.slow
+def test_v2_partial_positive_and_unresolved_unit_publish(fixture: Fixture) -> None:
+    _, header, body = fixture.memory_profile().split("---", 2)
+    metadata = yaml.safe_load(header)
+    storage = metadata["memory-comparison"]["axes"]["storage_substrate"]
+    storage["assessment"] = "partial"
+    storage["note"] = "The inspected stores are supported; provider storage remains unresolved."
+    storage["units"].append({
+        "scope": "Included opaque provider storage",
+        "assessment": "not-determinable", "findings": [],
+        "records": ["MEM-OBJ-store"],
+        "note": "The fixture record does not establish the provider substrate; no value is inferred.",
+    })
+    partial_profile = "---\n" + yaml.safe_dump(metadata, sort_keys=False) + "---" + body
+    scripted, _ = agent(fixture, profile=fixture.writes(lambda _: partial_profile))
+    assert isinstance(scripted.run()[-1], Done)
+    retained = frontmatter(fixture.public_path.parent / "memory-profile.md")["memory-comparison"]
+    assert retained == metadata["memory-comparison"]
+    assert [finding["value"] for finding in retained["axes"]["storage_substrate"]["units"][0]["findings"]] == ["sqlite", "files"]
 
 
 @pytest.mark.slow

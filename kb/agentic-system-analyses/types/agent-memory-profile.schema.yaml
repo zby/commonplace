@@ -1,5 +1,60 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "records": {
+      "type": "array", "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(RT|MEM|EPI)-(CMP|OBJ|RTE|CLM|ABS|BAP)-[a-z][a-z0-9]*(-[a-z][a-z0-9]*){0,2}$"}
+    },
+    "assessment": {"enum": ["known", "partial", "absent", "inapplicable", "uninspected", "not-determinable"]},
+    "finding": {
+      "type": "object", "required": ["value", "basis", "records", "note"],
+      "properties": {
+        "value": {"$ref": "#/$defs/text"},
+        "basis": {"enum": ["claimed", "afforded", "wired", "observed", "causally supported"]},
+        "records": {"allOf": [{"$ref": "#/$defs/records"}, {"minItems": 1}]},
+        "note": {"$ref": "#/$defs/text"}
+      }, "additionalProperties": false
+    },
+    "coverage": {
+      "if": {"properties": {"assessment": {"enum": ["known", "partial", "absent", "inapplicable"]}}},
+      "then": {"properties": {"records": {"minItems": 1}}}
+    },
+    "unit": {
+      "allOf": [
+        {"$ref": "#/$defs/coverage"},
+        {
+          "if": {"properties": {"assessment": {"enum": ["known", "partial"]}}},
+          "then": {"properties": {"findings": {"minItems": 1}}},
+          "else": {"properties": {"findings": {"maxItems": 0}}}
+        }
+      ],
+      "type": "object", "required": ["scope", "assessment", "findings", "records", "note"],
+      "properties": {
+        "scope": {"$ref": "#/$defs/text"},
+        "assessment": {"$ref": "#/$defs/assessment"},
+        "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+        "records": {"$ref": "#/$defs/records"},
+        "note": {"$ref": "#/$defs/text"}
+      }, "additionalProperties": false
+    },
+    "axis2": {
+      "allOf": [
+        {"$ref": "#/$defs/coverage"},
+        {
+          "if": {"properties": {"assessment": {"enum": ["known", "partial"]}}},
+          "then": {"properties": {"units": {"minItems": 1}}}
+        }
+      ],
+      "type": "object", "required": ["assessment", "units", "records", "note"],
+      "properties": {
+        "assessment": {"$ref": "#/$defs/assessment"},
+        "units": {"type": "array", "items": {"$ref": "#/$defs/unit"}},
+        "records": {"$ref": "#/$defs/records"},
+        "note": {"$ref": "#/$defs/text"}
+      }, "additionalProperties": false
+    }
+  },
   "allOf": [
     {
       "$ref": "../../types/note.schema.yaml"
@@ -39,11 +94,19 @@
             },
             "memory-comparison": {
               "type": "object",
+              "allOf": [
+                {
+                  "if": {"required": ["version"]},
+                  "then": {"properties": {"axes": {"additionalProperties": {"$ref": "#/$defs/axis2"}}}},
+                  "else": {"properties": {"axes": {"additionalProperties": {"required": ["values", "evidence"]}}}}
+                }
+              ],
               "required": [
                 "scope",
                 "axes"
               ],
               "properties": {
+                "version": {"const": 2, "type": "integer"},
                 "scope": {
                   "type": "string",
                   "minLength": 1
@@ -65,6 +128,10 @@
                   "minProperties": 10,
                   "maxProperties": 10,
                   "additionalProperties": {
+                    "oneOf": [
+                    {"$ref": "#/$defs/axis2"},
+                    {
+                    "$comment": "BACKCOMPAT: immutable retained Dynamic Cheatsheet revision-1 profiles; remove after no retained or archived consumer needs revision 1.",
                     "type": "object",
                     "required": [
                       "assessment",
@@ -137,6 +204,8 @@
                       }
                     },
                     "additionalProperties": false
+                    }
+                    ]
                   }
                 }
               },

@@ -92,7 +92,15 @@ An intentionally operational or lab-tracking scope is not product failure;
 broader knowledge-production claims still require comparison with the
 routes. The assessment imposes no natural-language claim format, proposal
 loop, Commonplace storage model or universal ontology. Heterogeneous routes
-retain separate evaluators, statuses and authorities.
+retain separate evaluators, statuses and authorities. Supported positives
+coexist with unresolved included functions or inputs. Each uncertainty names
+its scope, missing fact and prevented conclusion; neither an opaque route nor
+an uninspected alternative warrants absence. Coverage claims need inventory
+support, not merely one established route. Learning, reflection, autonomy,
+self-improvement and theory-builder conditions remain independent claims,
+each with its own route/property boundary and evidence. A trace-fed retained
+update does not establish improved capacity; failure to establish one property
+does not negate the others.
 
 ## Required blocks
 

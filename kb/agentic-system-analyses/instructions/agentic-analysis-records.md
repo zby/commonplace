@@ -177,6 +177,53 @@ status-field check above enforces conclusion-status form. Component fixity
 and conditional route fields retain their requirements without new presence
 checks.
 
+## Source-native coverage and uncertainty
+
+Memory and epistemic accounts retain an inventory of included material parts
+and mechanisms, including opaque alternatives. Record supported facts beside
+their actual part, route, transformation, input or consumer and evidence layer.
+A positive witness establishes existence, not complete enumeration. Name each
+unresolved included part, the missing fact, inspection/access limit and
+conclusion prevented. Available but uninspected evidence is not evidenced
+absence; inspected but inconclusive evidence is not an unsupported positive.
+Use the existing status vocabularies; do not invent a record conclusion status
+for profile coverage. Bounded absence requires a searched boundary and warrant.
+Inapplicability requires the relevant boundary and reason.
+
+Source analysts describe these dimensions without assigning controlled profile
+values. Preserve enough source-native detail for later classification:
+
+| Dimension | Unit and distinctions to retain |
+|---|---|
+| Storage | Each operative object/part, including opaque provider state; distinguish encoding from substrate. |
+| Form | Each operative part and consumption path; separate mixed text, symbolic and numerical material. |
+| Lineage | Each object/part and derivation path; keep unresolved initial or embedding provenance local. |
+| Authority | Each retained part, actual consumer and effect; delivery is not compliance, and update and downstream consumers differ. |
+| Admission control | Each write/admission mechanism: human decision supplying, editing, approving or replacing that content versus software/model admission; authorship and physical I/O are separate. Starting a workflow is not per-content approval; generic caller identity leaves human control unresolved. Reads alone do not establish writes. |
+| Curation | Each implemented transformation with its evidence layer; requested behavior and route names do not establish changed meaning or a new claim. |
+| Read-back direction | Request, selection and delivery operations in a chain; requested delivery and independent unsolicited supply differ. |
+| Selection | Actual selector input and selected retained part; an identifier on a requested file is not evidence of targeted selection. |
+| Trace-fed update | Each automatic trace-fed write, its durable behavior-shaping result and later consumer; retaining raw logs alone is insufficient. |
+| Trace origin | Original input to each qualifying write, including mixed or opaque provenance; adapter labels do not establish origin. |
+
+Several effects or transformations can coexist without resolving an opaque
+alternative. Group only units sharing the same scope, control and coverage.
+A trace-fed artifact update may give retained experience learning authority
+at the update consumer while its output gives a later agent knowledge; neither
+establishes improved capacity. Preserve these actual paths rather than a
+system-wide implication or score.
+
+Faithfully scoped uncertainty is an acceptable result, not a blocker by itself.
+Unsupported findings, concealed included parts, unjustified complete coverage,
+unsupported negatives and malformed references remain defects. Reconciliation
+may narrow or amend an assertion and retain a named conflict; no step erases
+supported positives to make another part's uncertainty disappear. A missing
+fact becomes a problem only when no faithful bounded account is possible or
+required inputs or frozen scope prevent completing the task. Keep learning,
+reflection, autonomy and self-improvement, and each theory-builder condition,
+as independent route/property conclusions. A supported contribution coexists
+with independently unestablished properties; never bundle them into a negative.
+
 ## Conditional route fields
 
 These requirements apply to the named route classes. Inapplicability is
@@ -230,7 +277,37 @@ separately:
 | Reflective theory builder | Its method texts meet conditions 1–4 and are criticized against records of its own operation |
 | Autonomous theory builder | Role-by-role evidence that computation performs every internal operation; users supplying problems and judging products are outside the boundary. Autonomy does not establish reliability. |
 
-Learning, reflection and autonomy remain independent claims. Revision
+### Self-improvement attribution
+
+When attributing or qualifying [self-improvement](../../notes/definitions/self-improving-system.md),
+assess the named pathway independently of learning, reflection and autonomy.
+Self-improvement is operative, evidence-responsive change to the bounded system's
+own [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md),
+not merely improvement of an external work product. An output can enter that
+organization when retained and consumed in later operation; its output label
+alone decides neither inclusion nor exclusion.
+
+Declare the boundary, assessment horizon and improvement objective. The objective
+must be specifiable independently of the change it licenses. For an exercised
+pathway, establish all four causal links within that boundary and horizon:
+
+1. Evidence bearing on the objective causally shapes determination of the update.
+2. The result changes the system's own organization, rather than remaining
+   evidence, a proposal or an external product.
+3. The changed organization enters a live behavioral-authority path: consumer,
+   channel and force capable of reaching later behavior.
+4. Subsequent operation exercises that path and causally depends on the change.
+
+Storage, retrieval, acceptance, installation and loading alone do not close these
+links. Name an unestablished link and the attribution it prevents. A standing but
+dormant pathway supports only a marked dispositional claim, not exercised
+self-improvement over the horizon. Membership establishes improvement-directed
+self-change, not successful improvement; success needs separate outcome evidence.
+Neither reflection, autonomy nor a separate evaluator or rejection gate is a
+membership condition. This test governs self-improvement claims; it adds no
+universal assessment obligation for other routes.
+
+Learning, reflection, autonomy and self-improvement remain independent claims. Revision
 selection prefers
 [explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence; it does not trade fit away for reach.

@@ -51,7 +51,8 @@ within that request's scope; do not request authorization again.
    root = Path.cwd()
    inputs = load_results(root, [Path(p) for p in sys.argv[1:]] or None)
    fields = ("review_file", "artifact_file", "analysis_run", "source_identity",
-             "reviewed_revision", "analysis_cutoff", "source_tier", "comparison_scope")
+             "reviewed_revision", "analysis_cutoff", "source_tier", "comparison_scope",
+             "comparison_version")
    print(json.dumps({"inputs": inputs.hashes,
                      "population": [{k: row[k] for k in fields} for row in inputs.rows]},
                     sort_keys=True, indent=2))
@@ -66,7 +67,14 @@ within that request's scope; do not request authorization again.
 3. **Read full sets.** Read each selected retained set at its recorded
    hashes: the overview's source register, reconciliation and limitations;
    the runtime report's and memory report's records; and the memory report's
-   findings and comparison frontmatter. Source revision and cutoff
+   findings; and the separate memory-profile's comparison frontmatter.
+   Identify the profile revision from the reader's `comparison_version`.
+   Unversioned retained profiles are revision 1 and retain their original
+   contract, not revision-2 classifications. Read the matching historical
+   contract when evaluating original conformance. Record a semantic mismatch
+   with current comparisons separately; never mechanically reclassify old
+   values or treat a changed rule as proof that the original analysis failed.
+   Source revision and cutoff
    bound the evidence; age alone neither invalidates an immutable observation
    nor establishes present upstream behavior. Do not use `last-checked` or a
    rolling age threshold as permission to edit it.
@@ -85,9 +93,16 @@ within that request's scope; do not request authorization again.
 
 5. **Check the aggregate and dependent axes.** Compare values and rationale with
    the cited records and declared memory scope. A known set must cover all
-   scoped parts. Each value must have its own warranted evidence basis and
-   supporting records; partial coverage retains positives without asserting a
-   complete set. Match scope across the
+   scoped parts. In revision 2, inspect every axis's units and each finding's
+   value, basis, records and note. Check the named inventory's coverage and
+   each unit's unresolved part, missing fact and prevented conclusion. The
+   derived union's strongest evidence establishes existence only: it cannot
+   upgrade a weaker route with the same value. Complete strong profiles need
+   strong evidence for every positive unit finding. In revision 1, apply the
+   original per-value evidence contract. Partial coverage retains positives
+   without asserting a complete set; omitted values and unresolved included
+   parts never establish absence. Bounded absence and inapplicability require
+   their own records and boundary. Match scope across the
    profile, objects, route branches and lens account, including opaque parts and
    explicit exclusions. Preserve per-route distinctions such as a wired push
    consumer and an afforded pull API. Do not
@@ -95,7 +110,16 @@ within that request's scope; do not request authorization again.
    Check push signals at a named consumer and selector; distinguish requested
    returns from automatic selection and names in a catalog from identity matches
    that select delivered parts.
-   For trace learning, distinguish retained raw traces from automatically
+   For revision-2 write agency, check each admission mechanism: manual means
+   an explicit human decision supplying, editing, approving or replacing the
+   retained content; automatic means software/model admission without that
+   decision. Do not infer manual admission from a generic caller, workflow
+   start or checkpoint read-back. Keep authorship and physical I/O separate.
+   Do not pool these classifications with revision-1 write agency.
+   For trace learning, retain a supported positive despite an unresolved
+   alternative. A local bounded `no` is not a system-wide negative in partial
+   coverage, and a `yes` union must not erase local negative unit evidence.
+   Distinguish retained raw traces from automatically
    produced durable material and its behavior-shaping consumer; keep source,
    scope, timing and distilled form attached to every qualifying scoped route.
    Apply the type's criterion to generated continuation summaries too; reshaping

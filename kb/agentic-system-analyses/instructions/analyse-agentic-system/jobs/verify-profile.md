@@ -32,8 +32,14 @@ Write output with exactly these sections:
 
 Check each of the ten axes against the supplied definitions and accepted records,
 including amendments and supersessions. Check scope, all supported positives,
-per-value evidence strength, canonical IDs and the missing facts named by weaker
-assessments. No profile-only record or source quote can establish support.
+revision-2 shape, natural unit scope, finding-specific evidence strength,
+canonical IDs and the missing facts named by unresolved units. Check inventory
+support independently of positive witnesses: `known` needs resolved included
+units and coverage evidence, not just established existence. Unresolved included
+parts cannot be omitted, classified as absent or made inapplicable by a known
+alternative. Check bounded absence, pull-only inapplicability, human admission
+control versus generic callers, implemented transformations versus requests,
+and local trace-learning negatives versus any positive alternative. No profile-only record or source quote can establish support.
 Classify from the supplied definitions without added conditions; decay requires
 forgetting or downweighting, not a time-based policy.
 

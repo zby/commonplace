@@ -47,7 +47,13 @@ Report independent convergence only
 when the analysts reached it independently. Recheck shared-route ownership.
 Attach the admission fields of memory routes from the memory analyst's
 findings rather than tracing those mechanisms twice. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's
-findings.
+findings. Preserve source-native positives and their local evidence layers
+alongside unresolved included parts. Name missing facts and prevented conclusions
+without deleting parts to obtain complete coverage. Distinguish inspected but
+inconclusive evidence, uninspected evidence, bounded absence and inapplicability.
+Keep independent epistemic properties separate. Faithful uncertainty alone
+needs no return; unsupported assertions and hidden coverage gaps still require
+repair or a warranted conflict marking.
 
 Every ID you cite, in amendments too, must resolve in the set your output
 makes: the Source register, the runtime member, the memory report and the

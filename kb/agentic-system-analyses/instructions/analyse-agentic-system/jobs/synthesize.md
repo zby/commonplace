@@ -44,7 +44,13 @@ Under Description write one sentence of 50 to 250 characters describing the
 system's mechanism and limits for retrieval. Code uses it as the description
 of the overview and public review. Bounded synthesis and Limitations become
 public text unchanged apart from links; they must read without the members'
-context. Cite the records supporting each substantive statement rather than
+context. Lead with supported contributions, retaining their scope and evidence
+strength, then name unresolved included parts and the conclusions prevented.
+A positive witness is not complete enumeration; uncertainty elsewhere does not
+negate it. Keep theory-builder conditions, learning, reflection, autonomy and
+self-improvement as independent route/property findings. Never replace several
+unestablished properties with a bundled negative or infer improved capacity
+from trace-fed retention. Cite the records supporting each substantive statement rather than
 copying their classifications. Member links resolve from the retained set
 directory, using sibling names such as `runtime.md`.
 

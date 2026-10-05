@@ -1189,6 +1189,13 @@ class AnalyseAgenticSystem(Workflow):
     def profile_refusals(self, run_dir: Path, path: Path) -> list[str]:
         refusals = member_refusals(path, repo_root=self.repo)
         metadata, _ = split(path.read_text(encoding="utf-8"))
+        # Require the current write contract only at scheduled job acceptance.
+        # Immutable set and finalization readers still interpret retained v1.
+        comparison = metadata.get("memory-comparison")
+        if (not isinstance(comparison, dict)
+                or type(comparison.get("version")) is not int
+                or comparison["version"] != 2):
+            refusals.append("new workflow profiles require memory-comparison version: 2")
         if metadata.get("type") != "agentic-system-analyses/types/agent-memory-profile.md":
             refusals.append("profile frontmatter type must be agentic-system-analyses/types/agent-memory-profile.md")
         fields, _ = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))

@@ -36,8 +36,15 @@ contract, `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` 
 `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for shared evidence and record
 conventions, and `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md` for overview
 content. Each matrix row preserves its source revision, run,
-analysis cutoff, evidence tier, compared memory boundary, and per-axis
-coverage assessment, values, per-value evidence, and canonical records. No
+analysis cutoff, evidence tier, compared memory boundary, profile revision
+(`comparison_version`), and per-axis coverage assessment, supported value
+unions, per-value existence evidence, canonical records, and revision-2 unit
+data (`<axis>_units`). The unversioned retained profile is revision 1; the reader
+preserves it without reclassification. Revision 2 measures write admission
+control: `manual` requires an explicit human content-admission decision;
+software/model admission without that decision is `automatic`. A generic
+caller alone does not establish manual control. Revision-1 write-agency values
+retain their original meaning and cannot be pooled with revision 2. No
 legacy review, old CSV, transfer scan, or newly acquired source may supply or
 repair a finding. Missing required inputs block the selected population;
 report the main-analysis regeneration needed. Existing sets must not be
@@ -85,19 +92,32 @@ must remain auditable without ignored local run state.
 4. **Compute quantitative candidates.** Query the matrix CSV mechanically,
    decoding value cells as JSON arrays. For implementation/operation counts,
    decode `<axis>_evidence` as a JSON object and use code-grounded values at
-   `wired`, `observed`, or `causally supported` basis. Both `known` and
-   `partial` coverage can support positive membership. Use `absent` assessments
-   for evidenced negatives; omitted values and weaker evidence are not negatives.
-   Complete-set distributions and set-equality queries require `known` coverage
-   and strong evidence for every member, without filtering away weak members.
-   Keep claimed and afforded findings separate. Keep doc-grounded findings in
-   a separate qualitative section. Within each query, report partial, inapplicable,
+   `wired`, `observed`, or `causally supported` basis for existence counts.
+   For revision 2, also decode `<axis>_units` as a JSON array: each unit retains
+   its scope, assessment, findings, records and note; each finding retains its
+   value, basis, records and note. The union's strongest witness supports
+   existence only; it does not upgrade another unit with the same value.
+   Both `known` and `partial` coverage can support positive membership.
+   Use `absent` assessments for bounded evidenced negatives; omitted values,
+   unresolved units and weaker evidence are not negatives. A local trace-learning
+   `no` is not a system-wide negative in partial coverage; a `yes` union retains
+   local negative evidence in its units.
+   Complete-set distributions and set-equality queries require `known` axis
+   coverage and strong evidence for every positive unit finding in revision 2,
+   not merely one strong witness per union value. Revision 1 uses its original
+   per-value evidence contract. Do not filter weak findings to manufacture a
+   complete profile. Keep claimed and afforded findings separate. Keep
+   doc-grounded findings in a separate qualitative section. Within each query, report partial, inapplicable,
    uninspected, and not-determinable rows separately; none is an observed
    negative. A structurally valid unknown does not block unrelated findings.
 
    Retain an executable query and its output in a working query ledger. Each
    candidate names the fields, value-membership or set-equality test, tier and
    basis filters, numerator, denominator, included run IDs, and exclusions.
+   Stratify queries by `comparison_version` and report each revision's
+   denominator. Never pool changed write-agency semantics across revisions or
+   infer human control from an old caller-based value. Cross-revision contrasts
+   must name the semantic differences and withhold equivalence where unproved.
    Count each system once per query even when its value set contains several
    stores or routes. An assessed-subset proportion must name that subset;
    a whole-population prevalence claim requires complete applicable assessment.

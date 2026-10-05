@@ -88,6 +88,13 @@ inventory and ledger when assessing the same referents.
 6. **Compare claims and conclude.** Fill the claim comparison and Bounded
    conclusion from the routes, applying the type's assessment limits.
    Include only findings that change the answer to the analysis question.
+   Preserve supported functions alongside unresolved included functions, naming
+   missing facts and prevented conclusions locally. Assess theory-builder
+   conditions, learning, reflection, autonomy and self-improvement independently
+   at their own route/property boundaries. Do not turn several unestablished
+   properties into a bundled negative or infer improved capacity from a retained
+   trace-fed update. Unsupported assertions and concealed gaps remain defects;
+   faithful uncertainty alone does not prevent completion.
 
 ## Check
 

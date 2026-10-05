@@ -158,7 +158,8 @@ def uninspected_profile(scope: str) -> dict:
     }
 
 
-def profile_report_fixture(run_dir: Path, revision: str) -> Path:
+def profile_report_fixture(run_dir: Path, revision: str, *, version: int = 1) -> Path:
+    """Keep historical-reader fixtures v1; scheduled workflow fixtures use v2."""
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
     profile["axes"]["storage_substrate"] = {
         "assessment": "known", "values": ["sqlite", "files"],
@@ -166,6 +167,33 @@ def profile_report_fixture(run_dir: Path, revision: str) -> Path:
                      for v in ["sqlite", "files"]},
         "records": ["MEM-OBJ-store"], "note": "Both stores occur within the fixture boundary.",
     }
+    if version == 2:
+        profile = {
+            "version": 2, "scope": profile["scope"],
+            "axes": {
+                axis: {"assessment": "uninspected", "units": [], "records": [],
+                       "note": "Not inspected in this fixture."}
+                for axis in systems_matrix.AXES
+            },
+        }
+        profile["axes"]["storage_substrate"] = {
+            "assessment": "known",
+            "units": [{
+                "scope": "The fixture's two inspected stores",
+                "assessment": "known",
+                "findings": [
+                    {"value": value, "basis": "wired", "records": ["MEM-OBJ-store"],
+                     "note": "Fixture witness."}
+                    for value in ["sqlite", "files"]
+                ],
+                "records": ["MEM-OBJ-store"],
+                "note": "Both stores occur within the fixture boundary.",
+            }],
+            "records": ["MEM-OBJ-store"],
+            "note": "Both stores cover the fixture inventory.",
+        }
+    else:
+        assert version == 1
     values = {
         "type": "agentic-system-analyses/types/agent-memory-profile.md",
         "description": "Comparison of the fixture memory boundary from verified source records",

@@ -8,6 +8,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-09-26
+**Amended by:** [ADR 107](./107-classify-memory-by-scoped-findings.md) for scoped findings, admission-control semantics and revision-aware comparison. The decision below records revision 1; ADR 107 governs new profiles.
 
 ## Context
 

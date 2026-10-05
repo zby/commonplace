@@ -14,6 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT = REPO_ROOT / "kb/agentic-systems/comparisons/memory-systems-table.md"
 DISPLAY = {
     "storage_substrate": "Storage",
+    "write_agency": "Write agency",
     "read_back_direction": "Read-back",
     "read_back_signal": "Push selection",
     "trace_learning": "Trace learning",
@@ -27,11 +28,26 @@ def cell(text: str) -> str:
 
 def assessment(row: dict, axis: str) -> str:
     disposition = row[axis + "_assessment"]
+    note = row[axis + "_note"]
+    if row.get("comparison_version") == 2:
+        units = []
+        for unit in row[axis + "_units"]:
+            findings = ", ".join(
+                f"{finding['value']} [{finding['basis']}]"
+                for finding in unit["findings"]
+            )
+            detail = f"{unit['scope']}: {unit['assessment']}"
+            if findings:
+                detail += f" — {findings}"
+            detail += f" ({unit['note']})"
+            units.append(detail)
+        detail = f"{disposition} coverage ({note})"
+        return detail + ("; " + "; ".join(units) if units else "")
     if disposition not in {"known", "partial"}:
-        return disposition
+        return f"{disposition} ({note})"
     evidence = row[axis + "_evidence"]
     values = ", ".join(f"{value} [{evidence[value]['basis']}]" for value in row[axis])
-    return values + ("; partial coverage" if disposition == "partial" else "")
+    return values + ("; partial coverage" if disposition == "partial" else "") + f" ({note})"
 
 
 def render(rows: list[dict], output: Path) -> str:
@@ -45,7 +61,10 @@ def render(rows: list[dict], output: Path) -> str:
         "# Memory mechanisms in agentic systems",
         "",
         "Each row uses one retained analysis set and its stated memory boundary. Values",
-        "carry their evidence basis. Absence, inapplicability, uninspected mechanisms,",
+        "carry their evidence basis. Revision 2 shows each unit's scope, findings and",
+        "coverage; a strong witness does not upgrade weaker alternatives. Revision 1",
+        "retains its original aggregate meaning. Admission-control semantics differ",
+        "between revisions; do not pool them. Absence, inapplicability, uninspected mechanisms,",
         "and indeterminate classifications remain distinct. This is the selected",
         "population, not the historical memory-review corpus.",
         "",
@@ -58,10 +77,10 @@ def render(rows: list[dict], output: Path) -> str:
             continue
         lines.extend(
             [
-                "| System | Compared boundary | "
+                "| System | Profile revision | Compared boundary | "
                 + " | ".join(DISPLAY.values())
                 + " | Evidence |",
-                "|---|---|" + "---|" * (len(DISPLAY) + 1),
+                "|---|---|---|" + "---|" * (len(DISPLAY) + 1),
             ]
         )
         for row in selected:
@@ -69,6 +88,7 @@ def render(rows: list[dict], output: Path) -> str:
             evidence = os.path.relpath((REPO_ROOT / row["artifact_file"]).with_name("overview.md"), output.parent)
             cells = [
                 f"[{cell(row['system_name'])}]({public})",
+                str(row["comparison_version"]),
                 cell(row["comparison_scope"]),
             ]
             cells += [cell(assessment(row, key)) for key in DISPLAY]
@@ -79,7 +99,7 @@ def render(rows: list[dict], output: Path) -> str:
     for row in rows:
         lines.extend(
             [
-                f"- `{row['review_file']}`: `{row['review_sha256']}`; artifact `{row['artifact_file']}`: `{row['artifact_sha256']}`; source `{row['source_identity']}` at `{row['reviewed_revision']}`."
+                f"- Profile revision {row['comparison_version']}; `{row['review_file']}`: `{row['review_sha256']}`; artifact `{row['artifact_file']}`: `{row['artifact_sha256']}`; source `{row['source_identity']}` at `{row['reviewed_revision']}`."
             ]
         )
     return "\n".join(lines) + "\n"

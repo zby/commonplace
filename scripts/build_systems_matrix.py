@@ -2,7 +2,10 @@
 
 Each current accepted set has an ARTIFACT.yaml; that manifest
 pins every member, including the profile member that carries the comparison
-profile.
+profile. The shared reader exports revision identity, supported unions,
+coverage, evidence and records, plus revision-2 units as JSON cells. Union
+support is existence evidence, not complete coverage of every route. Retained
+revision-1 semantics are preserved, not reclassified.
 
 Run: uv run python scripts/build_systems_matrix.py [--review kb/agentic-system-analyses/retained/source/overview.md]
 Default: every current accepted analysis. Missing evidence or fields fail the build.

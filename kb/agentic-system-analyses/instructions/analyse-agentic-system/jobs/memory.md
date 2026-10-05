@@ -32,7 +32,14 @@ provisional findings to check against sources. Choose the memory scope from
 those routes and state its inclusions and exclusions in Boundary and
 evidence. Describe storage, form, lineage, consumers and their authority,
 write agency, curation, trace-fed writes and read-back selection in
-source-native terms. Do not map them to controlled comparison values.
+source-native terms. Do not map them to controlled comparison values. Apply the supplied record
+contract's source-native coverage dimensions to all included parts, not merely
+a primary store or best-understood route. Retain supported facts together with
+unresolved alternatives, naming missing facts and prevented conclusions. Keep
+content authorship, human admission decisions and physical I/O separate;
+generic caller identity does not establish human control. Describe each
+transformation, request/selection/delivery operation, original trace input and
+actual later consumer independently when scope or evidence differs.
 The supplied memory type fixes the report content; the shared contracts fix
 evidence and record conventions.
 

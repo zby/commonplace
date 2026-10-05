@@ -43,7 +43,15 @@ supersessions, against the shared source and record contracts.
 
 Record the checked routes and material dispositions, and the check of every
 source anchor, canonical ID, evidence status, boundary, member and unresolved
-conflict. Structural validation does not perform this check.
+conflict. Structural validation does not perform this check. Apply the supplied record
+contract's coverage dimensions: positives must retain their part/mechanism and
+evidence layer, and unresolved included parts must remain named with missing
+facts and prevented conclusions. Check complete inventories and bounded
+negatives against evidence, not the existence of one route. Distinguish generic
+callers from human admission control, requested transformations from implemented
+ones, selection from delivery, and trace-fed writes from improved capacity.
+Verify epistemic functions and independent properties separately. Faithful
+uncertainty alone is not a blocker; unsupported claims or concealed gaps are.
 Use full IDs; list numbered `SRC-*` references separately.
 
 For a Git source, compare the boundary kind and top-level coverage table

@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
@@ -17,6 +18,7 @@ __all__ = [
     "csv_text",
     "load_results",
     "profile_member_comparison",
+    "project_comparison",
     "validate_comparison",
 ]
 AXES = {
@@ -87,12 +89,13 @@ METADATA = [
     "source_tier",
     "boundary_kind",
     "comparison_scope",
+    "comparison_version",
     "one_line",
 ]
 COLUMNS = METADATA + [
     name + suffix
     for name in AXES
-    for suffix in ("", "_assessment", "_evidence", "_records")
+    for suffix in ("", "_assessment", "_evidence", "_records", "_units", "_note")
 ]
 
 
@@ -106,7 +109,9 @@ def _strings(value: object, label: str) -> list[str]:
     return value
 
 
-def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
+# BACKCOMPAT: immutable retained Dynamic Cheatsheet profiles are unversioned -
+# remove after no retained or archived consumer needs revision 1.
+def _validate_v1(profile: object, *, known_ids: set[str]) -> dict:
     """Validate authored assessments and references, without classifying prose.
 
     ``known_ids`` are the record IDs the profile may cite.
@@ -136,7 +141,7 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
                 f"{name}: requires assessment, evidence, values, records, and note"
             )
         values = _strings(entry["values"], name + ".values")
-        records = _strings(entry["records"], name + ".records")
+        records = _refs(entry["records"], name + ".records", ids)
         if (
             not isinstance(entry["assessment"], str)
             or entry["assessment"] not in ASSESSMENTS
@@ -167,7 +172,7 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
                 raise ValueError(f"{name}.{value}: requires basis, records, and note")
             if not isinstance(support["basis"], str) or support["basis"] not in BASES:
                 raise ValueError(f"{name}.{value}: invalid evidence basis")
-            refs = _strings(support["records"], f"{name}.{value}.records")
+            refs = _refs(support["records"], f"{name}.{value}", ids)
             if not refs or not set(refs) <= ids:
                 raise ValueError(f"{name}.{value}: unresolved records")
             if not isinstance(support["note"], str) or not support["note"].strip():
@@ -200,7 +205,164 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
         raise ValueError(
             "read_back_signal: must be inapplicable for pull-only read-back"
         )
+    _validate_applicability(project_comparison(profile))
     return profile
+
+
+def _validate_applicability(row: dict) -> None:
+    """Whole-axis inapplicability needs complete coverage of its prerequisite."""
+    trace_negative = (
+        row["trace_learning_assessment"] == "absent"
+        or (row["trace_learning_assessment"] == "known" and row["trace_learning"] == ["no"])
+    )
+    if row["trace_source_assessment"] == "inapplicable" and not trace_negative:
+        raise ValueError("trace_source: inapplicability requires complete bounded trace-learning absence")
+    direction_negative = (
+        row["read_back_direction_assessment"] == "absent"
+        or (row["read_back_direction_assessment"] == "known" and row["read_back_direction"] == ["pull"])
+    )
+    # Bounded absent read-back has no push selector, just as complete pull-only
+    # read-back does. Unresolved or push-containing inventories do not qualify.
+    if row["read_back_signal_assessment"] == "inapplicable" and not direction_negative:
+        raise ValueError("read_back_signal: inapplicability requires complete pull-only or bounded absent read-back")
+
+
+def _refs(value: object, label: str, ids: set[str], *, required: bool = False) -> list[str]:
+    refs = _strings(value, label)
+    if any(re.fullmatch(
+        r"(?:RT|MEM|EPI)-(?:CMP|OBJ|RTE|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}",
+        ref,
+    ) is None for ref in refs):
+        raise ValueError(f"{label}: invalid canonical record ID")
+    if (required and not refs) or not set(refs) <= ids:
+        raise ValueError(f"{label}: unresolved records")
+    return refs
+
+
+def _coverage(entry: dict, label: str, ids: set[str]) -> None:
+    if not isinstance(entry["assessment"], str) or entry["assessment"] not in ASSESSMENTS:
+        raise ValueError(f"{label}: invalid assessment")
+    if not isinstance(entry["note"], str) or not entry["note"].strip():
+        raise ValueError(f"{label}: missing rationale or conclusion prevented")
+    refs = _refs(entry["records"], label + ".records", ids, required=entry["assessment"] in {
+        "known", "partial", "absent", "inapplicable",
+    })
+    if entry["assessment"] == "absent" and not any(is_absence(ref) for ref in refs):
+        raise ValueError(f"{label}: absence requires an evidenced-absence record")
+
+
+def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
+    """Check structure and canonical references, not the truth of source claims."""
+    if isinstance(profile, dict) and "version" not in profile:
+        return _validate_v1(profile, known_ids=known_ids)
+    if not isinstance(profile, dict) or set(profile) != {"version", "scope", "axes"}:
+        raise ValueError("memory-comparison requires version, scope and axes")
+    if type(profile["version"]) is not int or profile["version"] != 2:
+        raise ValueError("memory-comparison: unsupported version")
+    if not isinstance(profile["scope"], str) or not profile["scope"].strip():
+        raise ValueError("memory-comparison.scope must name the compared memory boundary")
+    axes = profile["axes"]
+    if not isinstance(axes, dict) or set(axes) != set(AXES):
+        raise ValueError("memory-comparison.axes must contain every registered axis exactly once")
+    resolved = {"known", "absent", "inapplicable"}
+    for name, vocabulary in AXES.items():
+        entry = axes[name]
+        if not isinstance(entry, dict) or set(entry) != {"assessment", "units", "records", "note"}:
+            raise ValueError(f"{name}: requires assessment, units, records, and note")
+        _coverage(entry, name, known_ids)
+        units = entry["units"]
+        if not isinstance(units, list):
+            raise ValueError(f"{name}: units must be a list")  # noqa: TRY004 - validation API
+        positives = []
+        for index, unit in enumerate(units):
+            label = f"{name}.units[{index}]"
+            if not isinstance(unit, dict) or set(unit) != {"scope", "assessment", "findings", "records", "note"}:
+                raise ValueError(f"{label}: requires scope, assessment, findings, records, and note")
+            if not isinstance(unit["scope"], str) or not unit["scope"].strip():
+                raise ValueError(f"{label}: missing unit scope")
+            _coverage(unit, label, known_ids)
+            findings = unit["findings"]
+            if not isinstance(findings, list):
+                raise ValueError(f"{label}: findings must be a list")  # noqa: TRY004 - validation API
+            for finding in findings:
+                if not isinstance(finding, dict) or set(finding) != {"value", "basis", "records", "note"}:
+                    raise ValueError(f"{label}: finding requires value, basis, records, and note")
+                if not isinstance(finding["value"], str) or finding["value"] not in vocabulary:
+                    raise ValueError(f"{label}: off-vocabulary value")
+                if not isinstance(finding["basis"], str) or finding["basis"] not in BASES:
+                    raise ValueError(f"{label}: invalid evidence basis")
+                refs = _refs(finding["records"], label + ".finding.records", known_ids, required=True)
+                if not isinstance(finding["note"], str) or not finding["note"].strip():
+                    raise ValueError(f"{label}: missing evidence rationale")
+                if name == "trace_learning" and finding["value"] == "no":
+                    if unit["assessment"] != "known" or not any(is_absence(ref) for ref in refs):
+                        raise ValueError(f"{label}: local no requires resolved bounded absence")
+                else:
+                    positives.append(finding)
+            if unit["assessment"] in {"known", "partial"}:
+                if not findings:
+                    raise ValueError(f"{label}: positive assessment needs findings")
+            elif findings:
+                raise ValueError(f"{label}: non-positive assessment requires empty findings")
+            if name == "trace_learning" and {f["value"] for f in findings} == {"yes", "no"}:
+                raise ValueError(f"{label}: yes and no require distinct units")
+        status = entry["assessment"]
+        unresolved = any(unit["assessment"] not in resolved for unit in units)
+        if status == "known" and (not units or unresolved):
+            raise ValueError(f"{name}: known coverage requires resolved units")
+        if status == "known" and all(unit["assessment"] == "inapplicable" for unit in units):
+            raise ValueError(f"{name}: wholly inapplicable units require inapplicable axis coverage")
+        if status == "partial" and (not positives or not unresolved):
+            raise ValueError(f"{name}: partial coverage needs positives and unresolved coverage")
+        if status not in {"known", "partial"} and positives:
+            raise ValueError(f"{name}: non-positive assessment requires empty positive findings")
+        if status in {"absent", "inapplicable"} and any(unit["findings"] for unit in units):
+            raise ValueError(f"{name}: absence or inapplicability requires empty findings")
+        if status in {"absent", "inapplicable"} and any(unit["assessment"] != status for unit in units):
+            raise ValueError(f"{name}: incompatible unit coverage")
+    projected = project_comparison(profile)
+    _validate_applicability(projected)
+    if (
+        projected["trace_learning_assessment"] == "known"
+        and projected["trace_learning"] == ["no"]
+        and axes["trace_source"]["assessment"] != "inapplicable"
+    ):
+        raise ValueError("trace_source: must be inapplicable when trace learning is no")
+    if (
+        projected["read_back_direction_assessment"] == "known"
+        and projected["read_back_direction"] == ["pull"]
+        and axes["read_back_signal"]["assessment"] != "inapplicable"
+    ):
+        raise ValueError("read_back_signal: must be inapplicable for pull-only read-back")
+    return profile
+
+
+def project_comparison(profile: dict) -> dict:
+    """Derive unions and strongest existence witnesses; retain local evidence."""
+    row = {"comparison_version": profile.get("version", 1)}
+    ranks = {basis: index for index, basis in enumerate(
+        ("claimed", "afforded", "wired", "observed", "causally supported")
+    )}
+    for name, entry in profile["axes"].items():
+        units = entry.get("units", [])
+        if profile.get("version", 1) == 1:
+            evidence = entry["evidence"]
+        else:
+            evidence = {}
+            for unit in units:
+                for finding in unit["findings"]:
+                    value = finding["value"]
+                    if value not in evidence or ranks[finding["basis"]] > ranks[evidence[value]["basis"]]:
+                        evidence[value] = {key: finding[key] for key in ("basis", "records", "note")}
+            if name == "trace_learning" and ("yes" in evidence or entry["assessment"] != "known"):
+                evidence.pop("no", None)
+        row[name] = sorted(evidence)
+        row[name + "_assessment"] = entry["assessment"]
+        row[name + "_evidence"] = evidence
+        row[name + "_records"] = list(entry["records"])
+        row[name + "_units"] = units
+        row[name + "_note"] = entry["note"]
+    return row
 
 
 def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) -> dict:
@@ -213,7 +375,7 @@ def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) 
 
 @dataclass(frozen=True)
 class MatrixInputs:
-    rows: list[dict[str, str]]
+    rows: list[dict]
     hashes: dict[str, str]
 
 
@@ -270,15 +432,12 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
                     tier,
                     str(data["boundary-kind"]),
                     profile["scope"],
+                    profile.get("version", 1),
                     str(meta.get("description", "")),
                 ],
             )
         )
-        for name, entry in profile["axes"].items():
-            row[name] = sorted(entry["values"])
-            row[name + "_assessment"] = entry["assessment"]
-            row[name + "_evidence"] = entry["evidence"]
-            row[name + "_records"] = list(entry["records"])
+        row.update(project_comparison(profile))
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
         hashes[retained.as_posix()] = manifest_hash
@@ -317,6 +476,18 @@ def complete_values(row: dict, axis: str) -> tuple[str, ...] | None:
         return None
     if row[axis + "_assessment"] == "absent":
         return ()
+    if row[axis + "_assessment"] == "inapplicable":
+        return None
+    if row.get("comparison_version", 1) == 2:
+        units = row[axis + "_units"]
+        if not units or all(unit["assessment"] == "inapplicable" for unit in units):
+            return None
+        if any(
+            unit["assessment"] not in {"known", "absent", "inapplicable"}
+            or any(finding["basis"] not in STRONG_BASES for finding in unit["findings"])
+            for unit in units
+        ):
+            return None
     values = set(row[axis])
     if row[axis + "_assessment"] == "known" and values == supported_values(row, axis):
         return tuple(sorted(values))
@@ -325,14 +496,18 @@ def complete_values(row: dict, axis: str) -> tuple[str, ...] | None:
 
 def csv_row(row: dict) -> dict[str, str]:
     """Serialize one structured row; JSON cells exist only in the CSV file."""
-    out = {name: row[name] for name in METADATA}
+    out = {name: str(row[name]) for name in METADATA}
     for axis in AXES:
         out[axis] = json.dumps(row[axis], separators=(",", ":"))
         out[axis + "_assessment"] = row[axis + "_assessment"]
+        out[axis + "_note"] = row[axis + "_note"]
         out[axis + "_evidence"] = json.dumps(
             row[axis + "_evidence"], sort_keys=True, separators=(",", ":")
         )
         out[axis + "_records"] = ";".join(row[axis + "_records"])
+        out[axis + "_units"] = json.dumps(
+            row[axis + "_units"], sort_keys=True, separators=(",", ":")
+        )
     return out
 
 

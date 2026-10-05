@@ -88,7 +88,13 @@ generic adoption advice, system-wide epistemic grade, Commonplace delta, or
 transfer recommendation. For learning and self-improvement findings it leads
 with the strongest supported contribution, including partial results, then
 states the unresolved question, at the level of the comparison actually
-performed.
+performed. Supported positives coexist with unresolved included parts, naming
+missing facts and prevented conclusions locally. A positive witness warrants
+existence, not complete enumeration; an uninspected or inconclusive part is
+not an absent one. Several unestablished independent properties are not a
+bundled negative. Trace-fed durable updates alone do not establish improved
+capacity. Faithfully bounded uncertainty remains publishable; unsupported
+assertions or concealed coverage gaps do not.
 
 The Bounded synthesis must read without the members' context. State its
 evidence basis and boundary, and link the member records that support it so
@@ -115,7 +121,8 @@ its analytical consequence.
 `### Deterministic validation`, and
 `### Blockers`. The three independent checks remain separate: record
 verification covers amendments, supersessions and scope; profile verification
-covers axis coverage and per-value support against accepted records;
+covers axis inventory, natural unit scope and finding-specific support against
+accepted records;
 synthesis verification covers support for public statements, readability
 without the members' context, and unresolved conflicts in Limitations.
 Record the exact deterministic validation

@@ -42,7 +42,14 @@ not additional mandatory inputs. Missing required parameters, unavailable requir
 source access or scope decisions that prevent completion, and needed
 changes to the selected target or frozen source identity require `problem`.
 Do not reconstruct paths, expand scope or submit a blocked member. A justified
-unknown that only limits a conclusion remains in `output`, naming that conclusion.
+unknown that only limits a conclusion remains in `output`, naming the included
+part, missing fact, inspection/access limit and conclusion prevented. Preserve
+supported positives beside it. Do not omit unresolved parts to obtain complete
+coverage, equate uninspected or inconclusive evidence with absence, or bundle
+independent properties into one negative. Explicit faithful uncertainty is
+acceptable; unsupported positives, negatives or completeness assertions,
+concealed gaps and structurally invalid outputs remain defects. Use the supplied
+job contracts' status vocabularies; this rule adds no new status.
 Reading another file at the registered Git commit is not a source-boundary
 expansion. If inspection shows that an explicit functional exclusion or
 boundary kind omits a material shipped responsibility of the selected

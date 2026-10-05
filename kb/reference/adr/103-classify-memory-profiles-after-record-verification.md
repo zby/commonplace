@@ -9,6 +9,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-10-04
 **Amends:** [ADR 093](./093-memory-comparisons-keep-evidence-per-value.md) for the profile carrier and author role.
+**Amended by:** [ADR 107](./107-classify-memory-by-scoped-findings.md) for the profile representation and semantics. Classifier ownership, evidence boundaries and independent verification below remain in force.
 
 ## Context
 

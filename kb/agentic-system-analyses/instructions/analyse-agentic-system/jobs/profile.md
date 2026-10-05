@@ -23,8 +23,11 @@ Read every supplied read-first file before any other step. The coordinator's
 invocation supplies output, boundary, runtime, memory, epistemic, reconciliation,
 frozen source, profile type and record/source contracts as absolute paths.
 
-Write output under the supplied profile type, with its exact metadata and
-Comparison rationale section. Resolve amendments and supersessions before
+Write a revision-2 profile under the supplied profile type, with its exact
+metadata and Comparison rationale section. Use `version: 2`, scoped units and
+single-value findings, not revision-1 value lists or evidence maps. Choose each
+axis's natural unit from the supplied type, grouping only shared scope and
+coverage; keep distinct evidence bases on distinct findings. Resolve amendments and supersessions before
 classifying. Apply the supplied definitions without extra conditions. In
 particular, decay means forgetting or downweighting; it does not require a
 clock, time-based policy or a named decay command.
@@ -34,7 +37,10 @@ Do not declare records, add quotes or evidence, edit members, reopen record
 verification or return work to the memory analyst. Every asserted value cites
 records already in the set. Where a needed fact is absent from those records,
 use a warranted partial, uninspected or not-determinable assessment and name
-the missing fact, cited source path and prevented conclusion in the note.
+the missing fact and prevented conclusion in the unit note, with accepted
+record IDs and any cited source path already recorded. Keep unresolved included
+units in the inventory. Axis `known` requires accepted coverage evidence and
+all units resolved; a positive witness does not establish complete inventory.
 Preserve supported positives and route-specific evidence strength.
 
 Source reading is optional and bounded to a named ambiguity in a cited record.
@@ -43,8 +49,11 @@ Do not prospect new roots. Log each source read in Comparison rationale with pat
 ambiguity resolved. Source understanding cannot replace a missing supporting
 record. Do not read an incumbent or reference profile.
 
-Before submission, check all ten axes, exact per-value evidence keys, canonical
-supporting IDs, scope agreement and explicit missing facts. The coordinator
+Before submission, check all ten axes, natural unit scopes, finding-specific
+bases, canonical supporting IDs, inventory coverage and explicit missing facts.
+Preserve local bounded trace-learning negatives without making a partial axis
+system-wide negative; positive `"yes"` dominates `"no"` only in derived unions.
+Do not author an additional aggregate value/evidence copy. The coordinator
 checks structure and set references; the independent verifier judges support.
 After blockers, read previous-profile and verification and correct only the
 profile. There is one correction round. Persistent blockers stop publication.
