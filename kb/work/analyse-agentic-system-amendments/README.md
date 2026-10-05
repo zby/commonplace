@@ -1,5 +1,16 @@
 # Analyse-agentic-system amendments
 
+## Read before evolving the workflow
+
+The [process brief](./process-brief.md) retains the operator's 2026-10-05
+direction for future workflow changes: primarily chart the design space and
+find solutions useful to Commonplace; secondarily support a public database,
+potentially organized around categories such as memory systems or harnesses.
+Identify the main constraints, permit marked local problems, and leave
+implementation choices open to evidence. Read it before design or implementation work in
+this workshop. It applies across code, job instructions and report contracts;
+it does not change the live method or authorize another run.
+
 ## Commission
 
 Opened on 2026-10-02 at the operator's request. Examine amendments to the
@@ -15,6 +26,9 @@ analysis, or adopt an ID design by opening.
 
 ## Files
 
+- [Versioned corrections](./versioned-corrections-for-agentic-analysis-reports.md)
+  — candidate report-correction design under the process brief; retains the
+  motivating evidence, alternatives and questions to test before adoption.
 - [Problem](./problem.md) — the starting problem, the unowned split
   declaration, the evidence read from the archived results, and the
   questions to settle.
