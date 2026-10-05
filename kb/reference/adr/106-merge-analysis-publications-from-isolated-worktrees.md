@@ -73,8 +73,8 @@ The preparation record and start/open checks enforce run identity in code.
 The integration command enforces path and ancestry checks at Git operation
 time. The analysis skill, publication instruction and command reference
 supply the authority and operator procedure. Local type templates teach the
-new ID; their schemas continue accepting legacy IDs. Audit instructions
-teach evidence record keys.
+new ID; their schemas continue accepting legacy IDs. The collection contract
+teaches auditors the evidence record keys.
 
 Git now detects competing publications for the same source. A completed run
 can remain in its worktree until integration is authorized, and a conflict

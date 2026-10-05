@@ -29,6 +29,13 @@ Comparative writing belongs in `kb/agentic-systems/`; current Commonplace transf
 its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
 raw source captures belong in source snapshot storage.
 
+## Run evidence
+
+An audit that extracts evidence from an analysis run records `run-id`,
+`method-commit` and `source-revision` under those exact keys. The worktree
+path is local context, not the run identity. Retain failed worktrees as
+evidence; the routine removal rule in the analysis skill excludes them.
+
 Use global types under `types/` or local types under
 `agentic-system-analyses/types/`. Frontmatter-free Markdown is text. Method authors follow
 [method maintenance](./instructions/maintain-analysis-method.md) before editing

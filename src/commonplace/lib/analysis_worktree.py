@@ -423,7 +423,7 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"
     if model:
         body += f"\n\nModel: {model}"
-    _run(["git", "commit", "-m", f"Publish analysis {run_id}", "-m", body], cwd=worktree)
+    _run(["git", "commit", "-m", "Publish analysis result", "-m", body], cwd=worktree)
     merge = subprocess.run(["git", "merge", "--no-ff", "--no-edit", branch], cwd=origin, capture_output=True, text=True, check=False)
     if merge.returncode:
         if (origin / ".git/MERGE_HEAD").exists():
