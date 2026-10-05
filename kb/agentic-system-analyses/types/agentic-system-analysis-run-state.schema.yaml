@@ -30,7 +30,7 @@ allOf:
             minLength: 1
             pattern: '\S'
           run-status:
-            enum: [running, complete, failed]
+            enum: [running, blocked, stopped, uncertain, complete, failed]
           result-disposition:
             enum: [complete, blocked, out-of-scope, null]
           source:
@@ -67,7 +67,7 @@ allOf:
         frontmatter:
           properties:
             run-status:
-              const: running
+              enum: [running, blocked, stopped, uncertain]
     then:
       properties:
         frontmatter:

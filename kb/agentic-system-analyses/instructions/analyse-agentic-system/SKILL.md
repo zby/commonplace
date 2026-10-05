@@ -110,7 +110,7 @@ Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>
 
 When `step` gives `done`, run `commonplace-agentic-analysis-handoff <run>/run-state.md` and include its output unchanged in your final response. After a published analysis, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
 
-When the run stopped, the loop's stop report is your final response; do not run the handoff. A correctable pre-publication failure keeps the run `running`: the operator repairs the condition and a later session resumes the loop. Set `run-status: failed` with one concise reason only when abandoning the run or when publication left public state uncertain. Never resume a failed run; use a new run ID.
+When the run stopped, the loop's stop report is your final response; do not run the handoff. A blocked step records `run-status: blocked` when repair is permitted and `run-status: stopped` when it permits only stopping. An uncertain effect records `run-status: uncertain`. The operator repairs or resolves the condition and a later session resumes the loop. Set `run-status: failed` with one concise reason only when abandoning the run or when publication left public state uncertain. Never resume a failed run; use a new run ID.
 
 A transfer scan is separate: run [`scan-agentic-system-transfer`](../../../instructions/scan-agentic-system-transfer/SKILL.md) only when separately commissioned and only after the complete run state validates.
 

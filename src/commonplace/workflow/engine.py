@@ -276,6 +276,13 @@ class Workflow:
         """
         return None
 
+    def record_step_result(self, run_dir: Path, result: StepResult) -> None:
+        """Update a definition-owned status projection after a step is recorded.
+
+        The workflow state remains authoritative. Definitions without a
+        separate operator-facing status file need no projection.
+        """
+
 
 class _PathEnded(BaseException):
     """The path cannot continue in this step.
@@ -714,16 +721,22 @@ class Orchestrator:
                 block = self._stopped_block(RESERVED, stopped)
                 for name, record in sorted(effects.items()):
                     if record["status"] == "started":
-                        return Uncertain(
+                        result = Uncertain(
                             name,
                             "the effect started and its completion was not "
                             "recorded; the definition is stopped",
                             (block,),
                         )
-                return Blocked((block,))
+                        self.workflow.record_step_result(self.run_dir, result)
+                        return result
+                result = Blocked((block,))
+                self.workflow.record_step_result(self.run_dir, result)
+                return result
             step = _Step(self, store, state, effects)
             step.run()
-            return step.finish()
+            result = step.finish()
+            self.workflow.record_step_result(self.run_dir, result)
+            return result
 
     def resolve(self, effect: str, recognition: Recognition) -> None:
         """Record what the operator established about an effect.

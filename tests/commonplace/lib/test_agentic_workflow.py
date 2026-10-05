@@ -37,6 +37,7 @@ from commonplace.workflow import (
     Launch,
     Orchestrator,
     Recognition,
+    Uncertain,
 )
 from commonplace.workflow.engine import render_prompt
 from tests.commonplace.lib.test_agentic_analysis import (
@@ -350,6 +351,7 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
         name.startswith(("runtime-final", "epistemic-final")) for name in scripted.launched
     )
     assert definition.publications == 1
+
     for name, canonical in definition.job_destinations.items():
         workspace = fixture.run_dir / "jobs" / name
         assert (workspace / "scratch").is_dir()
@@ -395,6 +397,58 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     # Replay renders the candidate again, byte for byte what was published,
     # so the publication effect's recorded inputs still match.
     assert candidate.read_bytes() == review.read_bytes()
+
+
+@pytest.mark.slow
+def test_repairable_publication_block_updates_run_status_and_recovers(fixture: Fixture) -> None:
+    class FailsOnce(CountsPublication):
+        fail = True
+
+        def publish(self, spec) -> None:
+            if self.fail:
+                raise ValueError("temporary publication condition")
+            super().publish(spec)
+
+    definition = FailsOnce(fixture.params())
+    scripted = ScriptedAgent(
+        Orchestrator(fixture.run_dir, definition), fixture.workers(), default=_unscripted
+    )
+
+    result = scripted.run()[-1]
+
+    assert isinstance(result, Blocked)
+    assert result.blocks[0].permitted == "repair"
+    state_path = fixture.run_dir / "run-state.md"
+    assert frontmatter(state_path)["run-status"] == "blocked"
+    assert (
+        "Blocked: workflow: ValueError: temporary publication condition"
+        in state_path.read_text()
+    )
+    assert validation.validate_note(state_path, repo_root=fixture.root).fails == []
+    scripted.orchestrator.report("stop", text="coordinator stopped")
+    assert frontmatter(state_path)["run-status"] == "blocked"
+
+    definition.fail = False
+    assert isinstance(scripted.orchestrator.step(), Done)
+    assert frontmatter(state_path)["run-status"] == "complete"
+    assert fixture.public_path.is_file()
+
+
+def test_uncertain_effect_updates_run_status(fixture: Fixture) -> None:
+    definition = AnalyseAgenticSystem(fixture.params())
+    definition.run_id = RUN_ID
+    definition.write_run_state(
+        fixture.run_dir, {"expected-incumbent-sha256": "absent"}, {}
+    )
+
+    definition.record_step_result(
+        fixture.run_dir, Uncertain("publish", "completion not established")
+    )
+
+    state_path = fixture.run_dir / "run-state.md"
+    assert frontmatter(state_path)["run-status"] == "uncertain"
+    assert "Uncertain effect publish: completion not established" in state_path.read_text()
+    assert validation.validate_note(state_path, repo_root=fixture.root).fails == []
 
 
 @pytest.mark.slow
@@ -989,7 +1043,10 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert block.permitted == "stop"
     assert definition.publications == 0
     assert not (fixture.public_path).exists()
-    assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "running"
+    assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "stopped"
+    assert validation.validate_note(
+        fixture.run_dir / "run-state.md", repo_root=fixture.root
+    ).fails == []
 
 
 @pytest.mark.slow

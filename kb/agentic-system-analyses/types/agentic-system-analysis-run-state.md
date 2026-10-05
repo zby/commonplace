@@ -16,14 +16,21 @@ workflow is `kb/agentic-system-analyses/instructions/analyse-agentic-system/SKIL
 This record proves only what later consumers need:
 
 - which run produced the outputs;
-- which frozen source boundary it used; and
+- which frozen source boundary it used;
+- the last recorded workflow outcome; and
 - which exact manifest and published review bytes completed the run; the
   manifest pins every member of the set.
 
-It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
-resume a failed run or preserve phase, packet, correction, validation-receipt,
-or retry state. Start another run with a new run ID. Temporary candidate files
-inside the run directory are disposable and never appear in this record.
+It is not a recovery log. `run-status` reports the last completed workflow step:
+`running` while jobs are pending, `blocked` when repair is permitted,
+`stopped` when the workflow permits only stopping, and `uncertain` when an
+effect's completion is unknown. The workflow block or effect record gives
+the repair detail. `complete` means the run finished; `failed` means it was
+abandoned or left public state uncertain. A coordinator's `report stop` is an
+observation, not a status transition. Do not resume a failed run or preserve
+phase, packet, correction, validation-receipt, or retry state. Start another
+run with a new run ID. Temporary candidate files inside the run directory
+are disposable and never appear in this record.
 The `## Run` prose records the destination inspection's expected incumbent
 digest (or `absent`). The accepted manifest lives at
 `kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`.

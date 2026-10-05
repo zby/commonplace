@@ -72,7 +72,17 @@ from commonplace.lib.agentic_set import (
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import agentic_set_member_link_failures, validate_note
-from commonplace.workflow import Job, Recognition, StopRun, Workflow
+from commonplace.workflow import (
+    Blocked,
+    Done,
+    Job,
+    Launch,
+    Recognition,
+    StepResult,
+    StopRun,
+    Uncertain,
+    Workflow,
+)
 
 JOBS = "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
 STATE_ROOT = Path("kb/agentic-system-analyses/state")
@@ -1359,6 +1369,33 @@ class AnalyseAgenticSystem(Workflow):
             f"`{opening['expected-incumbent-sha256']}`.\n\n## Outcome\n\n{outcome}"
         )
         write_file(path, dump_frontmatter(frontmatter, body))
+
+    def record_step_result(self, run_dir: Path, result: StepResult) -> None:
+        """Project the last workflow outcome into the operator-facing run state."""
+        path = run_dir / RUN_STATE
+        if not path.is_file() or isinstance(result, Done):
+            return
+        fields, body = split(path.read_text(encoding="utf-8"))
+        if fields.get("run-status") in ("complete", "failed"):
+            return
+        if isinstance(result, Uncertain):
+            status = "uncertain"
+            outcome = f"Uncertain effect {result.effect}: {result.detail}"
+        elif isinstance(result, Blocked):
+            status = "stopped" if any(block.permitted == "stop" for block in result.blocks) else "blocked"
+            outcome = f"{status.capitalize()}: " + "; ".join(
+                f"{block.subject}: {block.reason}" for block in result.blocks
+            )
+        elif isinstance(result, Launch):
+            status = "running"
+            outcome = "Running."
+        else:
+            raise TypeError(f"unknown step result: {result!r}")
+        fields["run-status"] = status
+        prefix, separator, _ = body.partition("## Outcome\n\n")
+        if not separator:
+            raise ValueError("run state has no Outcome section")
+        write_file(path, dump_frontmatter(fields, prefix + separator + outcome))
 
     def assemble(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
