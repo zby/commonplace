@@ -1,0 +1,2 @@
+2026-10-05T09:27:26.230588Z ERROR codex_models_manager::manager: failed to refresh available models: Connection failed: error sending request
+2026-10-05T09:27:26.269839Z ERROR codex_models_manager::manager: failed to refresh available models: Connection failed: error sending request

@@ -1,7 +1,8 @@
 """Prepare isolated packets for the frozen synthesis wording experiment.
 
 No model calls, workflow mutations, acceptance claims, or semantic scoring.
-See kb/work/synthesis-distinction-experiment/README.md for execution rules.
+See kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/README.md
+for execution rules.
 """
 
 import argparse
@@ -9,7 +10,7 @@ import hashlib
 import json
 from pathlib import Path
 
-WORKSHOP = Path(__file__).resolve().parents[1] / "kb/work/synthesis-distinction-experiment"
+PROTOCOL = Path(__file__).resolve().parents[1] / "kb/reports/retained/synthesis-distinction-pilot-20261005/protocol"
 TARGET = "None checks prior outputs for correctness before inclusion."
 CASES = {
     "original": TARGET,
@@ -34,7 +35,7 @@ def digest(data):
 
 
 def load_bundle():
-    path = WORKSHOP / "frozen-input.json"
+    path = PROTOCOL / "frozen-input.json"
     raw = path.read_bytes()
     bundle = json.loads(raw)
     for key, item in bundle["files"].items():
@@ -54,6 +55,7 @@ def main():
     packet.add_argument("--synthesis", type=Path)
     packet.add_argument("--verification", type=Path)
     packet.add_argument("--case", choices=list(CASES))
+    packet.add_argument("--delivery", choices=["files", "inline"], default="files")
     args = parser.parse_args()
     bundle, bundle_hash = load_bundle()
     if args.command == "verify":
@@ -83,7 +85,7 @@ def main():
     instruction = bundle["files"][f"method/{args.job}.md"]["text"]
     amendment = b""
     if args.arm == "treatment":
-        amendment = (WORKSHOP / f"treatment-{args.job}.txt").read_bytes()
+        amendment = (PROTOCOL / f"treatment-{args.job}.txt").read_bytes()
         marker = "Run the acceptance check before submitting."
         if instruction.count(marker) != 1:
             raise ValueError("Instruction insertion point changed")
@@ -108,11 +110,21 @@ def main():
     (out / "scratch").mkdir()
     round_name = "after-blockers" if args.verification else "first"
     task_inputs = ["boundary.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md"]
+    if args.delivery == "inline":
+        reading = [
+            "Read the complete inlined instruction, method contracts and records below.",
+            "They are the exact contents of the named files under inputs/.",
+            "Use the files only for targeted checks; avoid rereading whole documents.",
+        ]
+    else:
+        reading = [
+            "Read inputs/instruction.md, then all files in inputs/method/, then these records:",
+            *[f"- inputs/records/{name}" for name in task_inputs],
+            "Read each required file completely in bounded ranges; recover truncated reads.",
+        ]
     lines = [
         "Complete one isolated analysis job using only this packet.",
-        "Read inputs/instruction.md, then all files in inputs/method/, then these records:",
-        *[f"- inputs/records/{name}" for name in task_inputs],
-        "Read each required file completely in bounded ranges; recover truncated reads.",
+        *reading,
         "Inspect only source paths needed to test a claim. Do not dump the source tree",
         "or re-read whole records when a targeted range or search will suffice.",
         "Keep a concise scratch index of record IDs and source anchors for later checks.",
@@ -143,10 +155,32 @@ def main():
         lines.append(f"{key} = inputs/synthesis.md")
     if args.verification:
         lines.append("verification = inputs/verification.md")
+    if args.delivery == "inline":
+        lines += [
+            "", "Required documents follow in full. Their text is the content of the",
+            "corresponding inputs/ files, with SHA-256 in each boundary line.",
+            "Reading the text below fulfills the read-first and task-input reading",
+            "rules. Do not re-read these files wholesale through tools; use their",
+            "paths only for targeted checks. Inspect source files selectively.",
+        ]
+        names = [
+            "inputs/instruction.md",
+            *[f"inputs/method/{name}" for name in (
+                "collection.md", "worker-rules.md", "sources.md", "records.md",
+                "overview.md",
+            )],
+            *[f"inputs/records/{name}" for name in task_inputs],
+            *[f"inputs/{name}" for name in supplied],
+        ]
+        for name in names:
+            data = (out / name).read_bytes()
+            lines += ["", f"=== BEGIN {name} sha256={digest(data)} ===",
+                      data.decode(), f"=== END {name} ==="]
     lines += ["", "Finish with one line naming output.md or problem.md."]
     (out / "prompt.txt").write_text("\n".join(lines) + "\n")
     manifest = {
         "arm": args.arm, "job": args.job, "case": args.case,
+        "delivery": args.delivery,
         "round": round_name, "bundle_sha256": bundle_hash,
         "treatment_sha256": digest(amendment) if amendment else None,
         "files": {str(p.relative_to(out)): digest(p.read_bytes())

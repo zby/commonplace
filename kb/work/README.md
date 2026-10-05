@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [synthesis-distinction-experiment](./synthesis-distinction-experiment/README.md) — eight-call frozen-input feasibility check of distinction-preserving synthesis and counterevidence review; prepared 2026-10-05, trials not yet run
 - [analysis-collection-split](./analysis-collection-split/README.md) — moving agentic-system analysis into a self-contained collection with stable per-system paths and a separate comparison-profile job; design decided 2026-10-03, implementation commissioned by its plan, nothing built yet
 - [analyse-agentic-system-amendments](./analyse-agentic-system-amendments/README.md) — investigating shared record ID errors and a simpler declaration and reconciliation contract for the live analysis skill
 - [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open

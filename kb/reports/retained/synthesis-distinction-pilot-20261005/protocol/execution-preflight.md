@@ -1,7 +1,10 @@
 # Execution preflight for the synthesis distinction pilot
 
-Prepared on 2026-10-05. No synthesis or review model trial has run. The
-preflight checks below do not establish a treatment result.
+Prepared on 2026-10-05 before the first model call. Version 1's first control
+attempt exceeded the token ceiling. Version 2 completed all eight calls; see
+the [retained execution record](../README.md)
+and [scores](../scores.md).
+The checks below were preflight checks, not treatment evidence.
 
 ## Fixed runtime and limits
 
@@ -17,13 +20,14 @@ preflight checks below do not establish a treatment result.
 | Token accounting ceiling | 1,000,000 reported input plus output tokens per job, identical for all jobs |
 | Run order | the predeclared schedule in [README.md](./README.md) |
 
-The packet is about 343 KB on disk, but only the short `prompt.txt` is sent
-at launch. Workers read the required records and inspect relevant source files
-through tools. Required instructions and records total about 176 KB; the
-optional source tree is about 165 KB. Repeated tool outputs can make cumulative
-input tokens much larger than a single reading, so the former 200,000-token
-ceiling was too tight. The 1,000,000-token ceiling is an emergency accounting
-limit, not an expected usage estimate or a context-window setting.
+Version 1's packet was about 343 KB on disk, with a short `prompt.txt`.
+Workers read required records and relevant source files through tools.
+Required instructions and records total about 176 KB; the optional source
+tree is about 165 KB. Repeated tool outputs made cumulative input much larger
+than a single reading. Version 2 therefore puts the exact required document
+bytes in the initial prompt, about 180 KB, and leaves source files available
+for targeted inspection. The 1,000,000-token ceiling remains an emergency
+accounting limit, not an expected usage estimate or a context-window setting.
 
 The launcher records each completed turn's reported token use. The CLI does
 not expose a documented cumulative per-job token cutoff to this launcher, so
@@ -51,8 +55,8 @@ the [experiment plan](./README.md). Run one packet with:
 
 ```bash
 python3 scripts/run_synthesis_distinction_job.py \
-  --packet /tmp/synthesis-distinction/r1-control-write \
-  --records /tmp/synthesis-distinction-evidence/r1-control-write
+  --packet /tmp/synthesis-distinction-v2/r1-control-write \
+  --records /tmp/synthesis-distinction-evidence-v2/r1-control-write
 ```
 
 The launcher verifies the sibling packet manifest before the call, retains a
@@ -66,10 +70,14 @@ Keep temporary packet and evidence directories until scoring is complete.
 Retain the final report, scores, manifests, prompts, outputs, raw traces and
 launch/result records under
 `kb/reports/retained/synthesis-distinction-pilot-20261005/`. This is the
-durable report area under the [reports contract](../../reports/COLLECTION.md).
+durable report area under the [reports contract](../../../COLLECTION.md).
 Copy exact files there before clearing temporary directories. The retained
-report must name all incomplete calls and infrastructure retries. No result
-directory or report has been created yet.
+report must name all incomplete calls and infrastructure retries. The
+retained result directory contains both version 1 attempts and all eight
+version 2 jobs.
 
-The launcher and its probe were checked without a model call. Its first live
-invocation remains the first scheduled control writer in the plan.
+The launcher and its probe were checked without a model call. The first live
+invocation was the scheduled control writer. It failed before inference in
+the outer network sandbox, then produced an over-budget draft on retry. The
+remaining schedule ran in version 2 after a common inline-delivery change;
+all eight calls completed within the unchanged token and time limits.

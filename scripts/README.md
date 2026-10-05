@@ -43,13 +43,13 @@ the test sequence.
 ## Analyst trials
 
 For the frozen synthesis/review wording pilot, see
-[synthesis distinction experiment](../kb/work/synthesis-distinction-experiment/README.md).
+[synthesis distinction experiment](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/README.md).
 `python3 scripts/synthesis_distinction_trial.py verify` verifies the copied
 evidence; `packet --help` describes isolated worker-packet preparation.
 The helper launches no models and does not alter a live analysis run.
 `python3 scripts/run_synthesis_distinction_job.py --help` describes the
 isolated single-packet launcher and its predeclared limits; see the
-[execution preflight](../kb/work/synthesis-distinction-experiment/execution-preflight.md).
+[execution preflight](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/execution-preflight.md).
 
 Rerun one analyst of a recorded analysis run (the runtime, memory or
 epistemic analyst) on that run's frozen inputs, to test a change to its

@@ -1,7 +1,7 @@
 # A trial-cost decision before any outcome exists
 
 This worked case was recorded on 2026-10-05 from the operator's direction and
-the [synthesis distinction workshop](../synthesis-distinction-experiment/README.md).
+the [retained synthesis distinction protocol](../../reports/retained/synthesis-distinction-pilot-20261005/protocol/README.md).
 It tests whether a small ordinary-work record can preserve a useful decision
 without presenting a planned comparison as evidence that the treatment works.
 
@@ -18,9 +18,9 @@ without presenting a planned comparison as evidence that the treatment works.
 | Outcome as of recording | The plan and scoring guide were narrowed to eight calls. No synthesis or review outcome exists yet. The cost of an executed job is unknown. |
 | Next observation | Record actual call count, time, tokens, outputs, scoring judgments, and any decision about provisional use or a larger trial. Keep the initial expectation above unchanged when adding those results. |
 
-The [experiment plan](../synthesis-distinction-experiment/README.md),
-[scoring guide](../synthesis-distinction-experiment/scoring.md), and
-[execution preflight](../synthesis-distinction-experiment/execution-preflight.md)
+The [experiment plan](../../reports/retained/synthesis-distinction-pilot-20261005/protocol/README.md),
+[scoring guide](../../reports/retained/synthesis-distinction-pilot-20261005/protocol/scoring.md), and
+[execution preflight](../../reports/retained/synthesis-distinction-pilot-20261005/protocol/execution-preflight.md)
 carry the detailed protocol and preparation evidence. A session pointer is
 not needed to recover the decision and its grounds from this record.
 
@@ -53,3 +53,49 @@ process outcome; `treatment works` is unobserved. A later result should be
 appended with its date and evidence link rather than replacing this initial
 record. If the trial is never run, the record should say so instead of
 silently treating absence of a failure as success.
+
+## Follow-up observation, 2026-10-05
+
+The first control writer reached an output in 182.7 seconds but reported
+1,283,864 cumulative input and output tokens, above the predeclared
+1,000,000-token ceiling. Most input tokens were cached. The [retained
+execution record](../../reports/retained/synthesis-distinction-pilot-20261005/README.md)
+preserves the trace and exact attempt. This is a resource and execution
+observation, not a favorable or unfavorable treatment outcome. The control
+draft was not semantically scored, and no treatment writer or reviewer had
+run when this follow-up was recorded.
+
+The observation changes the next decision: continuing the eight-call schedule
+under the same ceiling would mark an otherwise completed writer incomplete.
+A larger ceiling or fewer model turns would require a separately identified
+protocol version. The record keeps that revision question distinct from the
+original decision to run a smaller check.
+
+## Trial outcome observed later on 2026-10-05
+
+The execution changed a delivery detail common to both arms: version 2 put
+the required documents in the initial prompt and kept source files available
+for targeted checks. All eight planned version 2 calls completed in 332.32
+seconds of aggregate model runtime and 1,950,094 reported input-plus-output
+tokens, including 1,563,392 cached input tokens. The [retained report](../../reports/retained/synthesis-distinction-pilot-20261005/README.md)
+keeps every output, trace and [score](../../reports/retained/synthesis-distinction-pilot-20261005/scores.md).
+The measured total is much smaller than the original 36–48-call plan would
+have required at similar per-call cost, but it is not a controlled cost
+estimate for that unrun plan.
+
+The treatment writer omitted the intended retrieval-synthesis distinction,
+as did the control writer. Neither reviewer caught the known overclaim in the
+original fixed draft. The treatment reviewer correctly accepted the qualified
+draft, while the control reviewer falsely blocked it. Both new syntheses
+omitted other material overview requirements. Under the predeclared rule this
+does not warrant adopting the combined treatment. It also does not show that
+either instruction always fails: each diagnostic case and arm ran once.
+
+This episode now has a process outcome (the smaller check ran), a resource
+outcome (measured cost and a delivery revision), and a bounded method outcome
+(no promising signal in this case). Production benefit remains unobserved.
+The first resource failure justified a narrower delivery change before
+further calls; the final semantic result does not justify extending this
+trial until a preferred answer appears. This is the kind of decision that a
+compact use record can convey without treating reuse or execution as
+favorable evidence.

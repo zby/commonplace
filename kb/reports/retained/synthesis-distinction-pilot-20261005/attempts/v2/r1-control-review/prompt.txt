@@ -1,0 +1,2100 @@
+Complete one isolated analysis job using only this packet.
+Read the complete inlined instruction, method contracts and records below.
+They are the exact contents of the named files under inputs/.
+Use the files only for targeted checks; avoid rereading whole documents.
+Inspect only source paths needed to test a claim. Do not dump the source tree
+or re-read whole records when a targeted range or search will suffice.
+Keep a concise scratch index of record IDs and source anchors for later checks.
+
+Experiment transport overrides (identical in both conditions):
+This is an offline replay, not a live workflow job. These overrides replace
+the frozen method's filesystem, command, source-access and submission rules.
+All paths below are relative to your working directory. Do not resolve
+historical absolute paths, follow background links, or read parent directories.
+The supplied method contracts contain the operative vocabulary definitions.
+Relevant source text from the registered revision is in inputs/source/.
+You may inspect it read-only. Other source artifacts are unavailable here;
+bound conclusions accordingly. Do not execute source code or use the network.
+Do not run Commonplace commands: there is no live run-state or acceptance service.
+Check your format and references yourself; do not claim a checker passed.
+Write only output.md or problem.md, plus scratch/ files. Do not delegate.
+Do not read other tasks, previous audits, scoring guides, or experiment metadata.
+
+job = verify-synthesis
+system = Dynamic Cheatsheet
+run-id = AAS-2026-10-04-dynamic-cheatsheet-01
+round = first
+boundary = inputs/records/boundary.md
+runtime = inputs/records/runtime.md
+memory = inputs/records/memory.md
+epistemic = inputs/records/epistemic.md
+reconciliation = inputs/records/reconciliation.md
+output = output.md
+problem = problem.md
+scratch = scratch/
+Member citations retain sibling names such as runtime.md; these denote
+the corresponding supplied records, not missing files beside output.md.
+synthesis = inputs/synthesis.md
+
+Required documents follow in full. Their text is the content of the
+corresponding inputs/ files, with SHA-256 in each boundary line.
+Reading the text below fulfills the read-first and task-input reading
+rules. Do not re-read these files wholesale through tools; use their
+paths only for targeted checks. Inspect source files selectively.
+
+=== BEGIN inputs/instruction.md sha256=03aecaad8eddc743a151a764d66beefc79892d870c904ecc1a8ef33fdffa509d ===
+---
+description: "Job of an analyse-agentic-system run: independently verify public statements and limitations against the settled records"
+type: types/instruction.md
+---
+
+# Verify the public synthesis
+
+Read every file under `read-first` in your invocation before any other step.
+
+## Job parameters
+
+Common parameters are defined in the supplied worker rules.
+
+| Name | Meaning | Present |
+|---|---|---|
+| `synthesis` | Absolute path of the synthesis being judged | Always |
+| `boundary` | Absolute path of the frozen boundary and Source register | Always |
+| `runtime` | Absolute path of the runtime member | Always |
+| `memory` | Absolute path of the accepted memory member | Always |
+| `epistemic` | Absolute path of the epistemic member | Always |
+| `reconciliation` | Absolute path of the settled reconciliation member | Always |
+
+## Task
+
+Write `output` with exactly these sections:
+
+```markdown
+### Synthesis verification
+
+### Blockers
+```
+
+Judge every substantive synthesis statement against the records it cites,
+including amendments and supersessions in the reconciliation. Check that
+Description, Bounded synthesis and Limitations meet the supplied overview
+type, read without the members' context, and carry every `Unresolved conflict:`
+into a limitation with its affected IDs and prevented conclusion. Record the
+checked claims and limits. Structural acceptance does not establish support.
+Use full IDs; list numbered `SRC-*` references separately.
+
+Write no correction. Under Blockers write exactly `none`, or a Markdown list
+with one `- ` entry per blocker, its affected statement and IDs, and what
+would resolve it. Indent continuation lines. An unsupported statement is a
+blocker; a faithfully stated uncertainty is not. Record faults discovered
+here must be bounded in the public text; they do not reopen reconciliation.
+If a fault cannot be stated as a limitation without making the synthesis
+misleading, write `problem` and stop.
+
+Code sends a blocker list to the synthesizer for one correction round. If
+the final verification still names blockers, the run stops before publication.
+
+Run the acceptance check before submitting.
+
+=== END inputs/instruction.md ===
+
+=== BEGIN inputs/method/collection.md sha256=bd9deecccdd14af4ad5a5d920a922d4854fb9b9b4df80c01b87b9c3c66b2fbd3 ===
+# Writing conventions for kb/agentic-system-analyses/
+
+## Purpose and quality
+
+This collection holds workflow-produced analyses of external agentic systems,
+their run state, local types and the analysis method.
+Their contribution is an evidence-grounded account of source-native operation,
+with bounded synthesis and explicit limitations. The quality goal is fidelity
+and economy. Explain the external mechanism before applying Commonplace concepts;
+qualify mappings and keep evidence limits beside claims. The source account
+must remain intelligible when a reader rejects the mapping.
+
+## Authoring
+
+For titled reports, name the system and report role. Use the supplied member type's title and description conventions; worker
+fragments keep their job's exact headings. State the evidence basis and capture boundary in the
+member's format; attribution and record formats belong to its supplied contracts.
+
+Analysis workers write only assigned working outputs. Retained analyses are frozen: substantive
+corrections require a new run. Assembly, acceptance and publication are
+coordinator tasks.
+
+## Placement and types
+
+`state/` holds working analyses. `retained/` holds the current accepted
+analysis of each system, one directory per system. `retained-archive/` holds
+superseded analyses. `instructions/` holds the analysis method.
+Comparative writing belongs in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
+its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
+raw source captures belong in source snapshot storage.
+
+Use global types under `types/` or local types under
+`agentic-system-analyses/types/`. Frontmatter-free Markdown is text. Method authors follow
+[method maintenance](./instructions/maintain-analysis-method.md) before editing
+local types or instructions. Analysts do not load it.
+
+## Outbound links
+
+- `kb/sources/`: cite tracked ingests, never snapshots; `evidenced-by`.
+- External: cite evidence used, preferably version-pinned; do not prospect the open
+  web; `evidenced-by`.
+- `kb/notes/`: cite theory used in a mapping; `rests-on`, `defined-in`.
+- Within this collection: point to supporting members or records; `see-also`.
+- Local instructions and types: link their governing contracts; `composition`, `see-also`.
+
+=== END inputs/method/collection.md ===
+
+=== BEGIN inputs/method/worker-rules.md sha256=7c377c04e6846e1fe468bd1e7bb552e1ffa0cccaa8eb2e062b4b4bdd351f78be ===
+---
+description: "Rules every job of an analyse-agentic-system workflow run follows: authority, command discipline, source reading, quotation, and prior-analysis exposure"
+type: types/instruction.md
+---
+
+# Follow the worker rules of an analysis run
+
+Produce the result of one code-scheduled analysis job within its assigned
+evidence and write scope. Code schedules the job and judges its output.
+
+## Invocation and authority
+
+Read the supplied invocation prompt completely and recover any truncated
+read before proceeding. Use its job parameters and retry feedback unchanged.
+
+Every job uses these parameters; its instruction defines additional ones:
+
+| Parameter | Meaning |
+|---|---|
+| `system` | Source-native system name |
+| `run-id` | Exact run identity; copy unchanged when the member type requires it |
+| `run-state` | Absolute path passed to the acceptance check; not an evidence input |
+| `job` | Exact job name passed to the acceptance check |
+| `command-path` | Directory of this run's `commonplace-*` commands, when supplied |
+| `output` | Absolute path for the completed result |
+| `problem` | Absolute path for the reason the job cannot finish |
+| `workspace` | Absolute per-job writable directory, when supplied by the workflow |
+| `scratch` | Absolute directory for intermediate files, including extracts |
+
+A repair invocation may also supply `previous-output`, the absolute path of
+the preserved report from the refused attempt. Read that file as the baseline.
+Amend the reported failures and any dependent findings, preserving unrelated
+analysis and records. Write the amended report to `output`; do not repeat the
+full analysis. For quote repairs, check whether the corrected passage supports
+the associated claim and carry any change through dependent conclusions. If
+the source cannot support the claim, narrow or withdraw it and update the text.
+
+Use supplied paths unchanged. Read every `read-first` dependency before
+the task. The supplied analysis contracts carry the operative definitions of
+registered vocabulary for this job. Their linked definition notes are background,
+not additional mandatory inputs. Missing required parameters, unavailable required inputs,
+source access or scope decisions that prevent completion, and needed
+changes to the selected target or frozen source identity require `problem`.
+Do not reconstruct paths, expand scope or submit a blocked member. A justified
+unknown that only limits a conclusion remains in `output`, naming that conclusion.
+Reading another file at the registered Git commit is not a source-boundary
+expansion. If inspection shows that an explicit functional exclusion or
+boundary kind omits a material shipped responsibility of the selected
+target, name the path, responsibility and prevented conclusion in `problem`
+instead of accepting the exclusion as missing evidence. The verification
+job's instructions govern its disposition of such a defect.
+Retry refusal feedback applies to the same job and does not change its
+analytical round.
+
+Write only `output` or `problem`, plus intermediate files in `scratch`.
+When `workspace` is supplied, all three destinations are inside that job's
+workspace. Supplied inputs outside it are read-only. Do not create other files
+in the workspace or write to another job's workspace. Code copies accepted
+results to coordinator-owned paths for later consumers; do not write those
+copies yourself. This layout expresses authority but is not a filesystem sandbox.
+The boundary job may create and freeze sources as its instruction permits.
+Do not edit other run files, publish, delegate, stage or commit, or change
+`workflow-state/`. Only the supplied invocation prompt and `previous-output`
+may be read there. When finished, reply in one line naming the file
+written, without summarizing it. Follow higher-priority runtime requirements
+for progress messages.
+
+## Commands
+
+Run acceptance commands separately and inspect each exit status, or chain
+dependent commands with `&&`. Shell pipelines need `set -o pipefail`. When
+wrapping tool calls, retain status and stderr as well as stdout; a later
+successful command does not clear an earlier failure. State a check's result
+in your output only after you have run the check.
+
+With standard Codex tools, return the complete command result, not just
+`result.output`. For example, one bounded read through `functions.exec` is:
+
+```javascript
+const result = await tools.exec_command({
+  cmd: "sed -n '1,100p' /absolute/path/from/the/invocation.md",
+  max_output_tokens: 3000
+});
+text(result);
+```
+
+Replace the example path with a supplied path or the invocation's batch of
+paths. Read the named job instruction before the Input reading batches.
+Follow those batches in order, completing Read-first before
+Task inputs. Read each batch in one tool call; a batch marked for bounded
+ranges requires successive smaller reads until the file's end. Read files
+outside the batch list, including `previous-output` and source searches, in
+bounded ranges. The suggested grouping is a starting budget, not a guarantee:
+long lines can still overflow it. Inspect the
+complete returned object for `exit_code`, errors, and truncation. A running
+command has no final exit status yet; wait for its completion. If either
+the command or outer tool delivery is truncated, repeat that range with a
+smaller range before advancing. Raising only the inner token limit does
+not raise the outer delivery limit. Apply the same pattern to source
+searches and reads. Use one command per call for file preparation and
+acceptance checks, or `&&` when they must share a shell invocation.
+
+## Sources
+
+Analyse source text and evidence supplied within the frozen boundary.
+Do not execute the target, its tests or examples, call its model providers
+or services, install its dependencies, or create runtime fixtures.
+Source-reading, quotation and Commonplace validation commands remain in
+scope. Missing execution evidence limits conclusions; it does not require
+planning a check or setting up an environment.
+
+Read evidence only from the sources the supplied `boundary` registers. For
+Git, read and grep the files under `source.path`; that directory holds
+exactly the reviewed commit's files. Listed register paths describe initial
+inspection, not reading permission: other files at that commit may be
+inspected and cited for the selected target. Record additional coverage in
+your member, following the source contract. You may inspect an excluded
+path to check its relevance; that does not authorize changing functional
+scope. Treat the checkout as read-only: do not fetch,
+check out or copy the source elsewhere. For a capture, read the recorded
+file.
+
+## Check and quotation
+
+Before submitting, run
+`commonplace-analysis-check <run-state> <job> <output>` with the supplied values.
+When `command-path` is supplied, call the command in that directory.
+Repair refusals and rerun until it passes. It shares acceptance checks,
+changes no output or run state, and logs counts in `scratch`.
+A pass establishes form and occurrence, not the correctness of findings.
+
+Copy each passage into a blockquote ending in `> ---` and a backticked
+source path. Use full commit-relative Git paths or the registered capture
+path. Omit revisions; the run fixes them. Only attributions carry ranges;
+prose cites paths only. Keep discontiguous passages separate.
+
+For ambiguity, select by printed context and paste a proposed attribution or
+lengthen the quote. Same-line repeats require lengthening. Never calculate
+ranges or revisions. For "not found", reread the source and recheck its
+supporting claim before repair. Judge support yourself.
+
+A quotation exists to show the source passage that supports a finding.
+Narrow or withdraw a finding only when the source cannot support it, never
+to pass the check. List each finding narrowed or withdrawn during check
+repair, with its reason, in `scratch/check-repairs.md`.
+
+## Prior analyses
+
+Do not call agent listings for status; their payloads may include prior
+analyses even with a path filter. Do not read style exemplars or
+`kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`,
+`kb/agentic-systems/reviews-archive/`,
+`kb/agentic-systems/reports/`, `kb/agentic-system-analyses/retained/`,
+`kb/agentic-system-analyses/retained-archive/`,
+`kb/work/analyse-agentic-system/`, other runs under
+`kb/agentic-system-analyses/state/`, surveys, comparison outputs, or
+agent listings. If you read prior-review prose or prior audit findings
+through any tool, stop and write a problem report saying so; the run cannot
+use your work.
+
+=== END inputs/method/worker-rules.md ===
+
+=== BEGIN inputs/method/sources.md sha256=3c625c95ba41816278a5617d54eb0caf587f4ca2b5183e3170ddbbbe43e0948b ===
+---
+type: types/note.md
+description: "Shared evidence contract for agentic analyses: evidence layers, reading the Source register, citation anchors and retained quotations"
+---
+
+# Agentic analysis sources
+
+This contract defines the frozen evidence used by every worker of an
+`analyse-agentic-system` run. The boundary job writes Boundary and evidence
+and the Source register under the
+[boundary contract](./agentic-analysis-boundary.md); code copies them into
+the overview. Job invocations declare this file as a required read.
+
+An excluded host's responsibilities are not attributed to the selected
+target.
+
+## Source register
+
+The register declares each `SRC-*` ID in one row. Source IDs belong to this
+register alone. A source's durable evidence identity is its registered
+repository and reviewed commit, or its capture; a worktree path is only the
+access root. Supplied execution traces and experimental results use frozen
+source identities and anchors like other evidence; their scope and
+conditions bound the findings.
+
+For Git, registration permits inspection of the repository at the reviewed
+commit. The register's inspected paths and citation anchors describe the
+boundary job's initial coverage, not the files later analysts may read.
+Inspect and cite newly discovered material files at that same commit,
+recording the additional coverage in your member and retaining the required
+anchors and quotations. Use the registered repository's source ID, and
+state the evidence layer appropriate to the passage; discovering a file
+does not establish observed operation or causal support. Do not add a source
+ID or rewrite the boundary. A different repository, commit or capture is a
+change to the frozen evidence boundary, not additional file coverage.
+
+The selected target's functional scope remains binding. Inspection of an
+excluded path to establish relevance is permitted; if it reveals that a
+material shipped responsibility was excluded or that the boundary kind is
+wrong, identify the path, responsibility and prevented conclusion. Follow
+the job's problem or verification rules rather than silently treating the
+file as unavailable or broadening the selected target. Captures permit only
+their frozen contents.
+
+| Evidence layer | What it supports |
+|---|---|
+| `implementation` | Inspected executable behavior |
+| `doctrine/design` | Declared intent or contract |
+| `reported operation` | Attributed operation without inspectable run evidence |
+| `observed run` | An inspectable execution trace or artifact |
+| `causal experiment` | An observed intervention and comparison with evidence about the design; design and confounding limits bound attribution |
+
+A source with several layers keeps one register row and one source ID.
+Label each layer and its inspected scope within that row; do not repeat the
+ID or create another ID only to distinguish layers. A contrast is necessary
+but not sufficient for causal identification; attribution is no finer than the treatment and comparison
+actually performed. A component effect requires independent variation of
+that component.
+
+## Anchors and quotations
+
+Every source-dependent finding cites a `SRC-*` ID and a local anchor. For
+Git, the anchor is one code span containing the full commit-relative path,
+such as `packages/runtime/src/agent-run.ts`, or a GitHub blob link at the
+reviewed commit. A basename denotes a repository-root file. The path must
+exist at that commit and may be binary. Only quotation attributions carry
+line ranges; prose paths and GitHub links carry no ranges.
+
+Load-bearing findings, including disputed mechanisms, comparison
+classifications and assessments, retain minimum verbatim passages. A
+supplied member's record can supply the passage: cite it rather than
+repeat it. Parallel analysts may independently retain the same passage;
+reconciliation identifies overlapping support without rewriting members.
+
+Write each passage as a blockquote ending in a `> ---` attribution:
+
+- Git: `` `commit-relative/path` ``.
+- Capture: `` `registered/capture/path` ``.
+
+The run fixes the revision or checksum. For ambiguity, paste a checked range
+or lengthen the passage; never calculate a range. Existing pinned GitHub
+URLs and ranged, versioned attributions remain valid.
+
+Under whitespace normalization, the quote occurs exactly once in the
+frozen blob or capture, or exactly once within a supplied line range that
+contains the whole quote. Display line numbers, invented ellipses and
+formatting fences are not quote text; discontiguous passages use separate
+blocks. Occurrence establishes neither semantic support nor coverage.
+
+## Evidence interpretation
+
+Presence, delivery, activation and demonstrated benefit are distinct.
+Claim, affordance, wiring, observation and causal support are distinct.
+Curation alone establishes no warrant. Every negative, thin, conflicting
+or uncertain finding names its inspected boundary and the conclusion it
+prevents. A casual search miss or uninspected branch supports a limitation,
+not an evidenced absence.
+
+Source-native operation precedes a Commonplace interpretation. The fit and
+any partial or unresolved mapping are stated; ontology never replaces the
+operational account. Omission from an open-ended mechanism list is not
+evidence of absence.
+
+=== END inputs/method/sources.md ===
+
+=== BEGIN inputs/method/records.md sha256=2323217d433b8ac4742ea8bfed33e94ab5620909c3a7ce796adfb131911b6b66 ===
+---
+type: types/note.md
+description: "Shared record contract for agentic analyses: identity, annotations, amendments, evidence statuses, record fields and conditional theory assessments"
+---
+
+# Agentic analysis records
+
+This contract defines records used across the runtime, memory and
+epistemic members. Their authors, reconciliation and verification receive
+it as a declared dependency. Member types add their own fields and section
+placement; the [source contract](./agentic-analysis-sources.md) supplies
+evidence layers, anchors and quotations.
+
+## Identity and grammar
+
+The record kinds are components (`CMP-*`), operative objects (`OBJ-*`),
+routes (`RTE-*`), claims (`CLM-*`), evidenced absences (`ABS-*`) and
+behavioral-authority paths (`BAP-*`). `SRC-*` sources belong only to the
+Source register. The analyst that establishes a record declares it in its
+member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory has
+`MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
+The prefix identifies the declaring analyst, not the member discussing the
+record. Keep a supplied ID unchanged in references, annotations and amendments.
+
+Names: one to three lowercase hyphenated words, each starting with a letter;
+digits may follow. Components/objects use available source-native names.
+Drop extensions; split case changes and separators; lowercase and join.
+Attach digit-only fragments to the preceding word (`GPT-4` → `gpt4`). If
+longer, keep three distinguishing words. Routes, claims, absences and
+behavioral-authority paths use two or three words from the label. Qualify
+generic names or split parts by source path or role, never a number.
+Without a source-native name, role, input or label may suggest a handle.
+Names are handles, not conclusions (`validated-knowledge`).
+
+Within `## Shared records`, kind headings group declarations:
+`### Components`, `### Operative objects`, `### Routes`, `### Claims`,
+`### Evidenced absences`, `### Behavioral-authority paths`. A declaration
+is one level-four heading, `#### RT-OBJ-store — Short label`. Prose, lists and
+tables do not declare records. Member types specify which empty kind
+headings remain. IDs are unique across the set and resolve within it.
+Use full IDs; aliases are not inferred. Named `through`, dash and
+`to` grouping prose is permitted; code resolves written IDs without expanding
+intervals. Structured citation lists and single-ID fields remain explicit.
+Numbered `SRC-*` ranges are refused; list each source ID. Source quotations
+and fenced excerpts are excluded from identifier checks.
+
+An annotation, `#### On RT-OBJ-store — Short label`, supplies another analyst's
+fields on a record declared elsewhere. It does not repeat generic identity
+or redefine the referent, and never annotates a record the member declares.
+Its location and permitted fields come from the annotating member's type.
+
+Only the reconciliation member amends records. An `Amendment:`
+paragraph gives the full ID, superseded value, replacement, evidence anchor
+and affected findings. An anchored conflict retains both values. A
+supersession uses `Amendment: MEM-RTE-selection-route is superseded by RT-RTE-policy-check`, with
+identity evidence; both IDs stay declared. A split supersedes the combined
+record only by parts already declared in analyst members, for example
+`Amendment: RT-OBJ-output is superseded by EPI-OBJ-store and EPI-OBJ-input`, with identity
+evidence and affected findings. Reconciliation never allocates IDs. Supersede
+a combined record only when its findings are wrong once the parts are
+separated; a valid container can remain alongside its parts. No ID changes referent, and
+no step renames IDs or rewrites another analyst's member. Provisional
+labels are local tags. Keep IDs fixed through label or finding changes and
+correction rounds; never reuse a dropped ID for a different referent.
+
+When other members are supplied, a new declaration records its closest
+supplied full IDs and distinct identity, possible-duplicate evidence, or
+no counterpart after comparison. An existing referent receives an
+annotation rather than another declaration; a different prefix or label
+does not establish a distinct referent. Material parts with different
+checks or consumers are declared and assessed separately. A declaration
+whose referent is a material part of exactly one supplied record writes
+`Part of: RT-OBJ-store` on its own unindented line within that declaration,
+using its parent's full record ID. The field carries exactly one ID,
+without backticks or other text, and cannot name the declaring record itself.
+Local and set checks enforce its syntax; existing set resolution checks its
+target. Explain a parent of a different record kind beside the relation.
+Semantic verification checks containment; matching kinds alone does not prove it.
+A candidate that can replace a record's referent is not thereby a part of it.
+
+The part owns its fields and status; the container keeps its identity.
+Containment alone requires neither possible-duplicate evidence nor
+supersession. A record spanning several supplied records without being part
+of exactly one keeps the distinct-identity comparison, naming each overlap.
+
+When a required part is undeclared, reconciliation returns it to the memory
+analyst if that analyst should declare it and returning is permitted.
+Otherwise retain an `Unresolved conflict:` naming the combined ID, missing
+part, evidence and prevented conclusion. Name the undeclared part in prose,
+without inventing an unresolved ID. This adds no runtime or epistemic rewrite
+and no new return round.
+
+## Status fields
+
+Conclusion status is exactly one of `absent`, `inapplicable`, `uninspected`,
+`claimed`, `afforded`, `wired`, `observed`, or `causally supported`.
+Different layers have separate labelled fields, such as `implementation
+conclusion status: wired` and `operation conclusion status: observed`;
+`wired; observed` is not one value. Guarantee strength is a separate field:
+`invariant`, `protocol`, `policy`, `best effort`, `deployment guarantee`,
+or `no claimed guarantee`. Epistemic architectural status and observed
+candidate state retain their own vocabularies.
+
+Every route declaration has at least one conclusion-status field on its
+own line. For example:
+
+```markdown
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+```
+
+Write one controlled value only; keep its evidence and
+explanation outside the value. A field cannot come from another record,
+annotation or source excerpt. Member acceptance checks presence, duplicate
+layer labels and controlled values; semantic verification judges the choice.
+
+## Record fields
+
+| Kind | Required content |
+|---|---|
+| Component / operative object | Source-native identity, representational form, storage substrate and evidence |
+| Route | Endpoints, progression, owner, context/state/action effects, applicable status fields and evidence |
+| Claim | Claimed operation and its source |
+| Evidenced absence | `absent` status, searched roots or files, query and revision, evidence, and conclusion supported or prevented |
+| Behavioral-authority path | Consumer, channel, force and horizon |
+
+[Representational form](../../notes/definitions/representational-form.md)
+classifies encoding and consumption, independently of storage. Natural-language
+content receives consequences through model or human interpretation. Symbolic
+content has localized units and fixed consumer rules determining its permitted
+behavior. Distributed-parametric content spreads numerical state across weights
+or dense representations. Split mixed objects by operative part or consumption
+path when their evidence, invalidation or rollback differs. Prompt names model
+input supply, not a fourth form.
+
+Each distributed-parametric component used by inspected routes separately
+states whether parameters change during operation, whether its exact
+version is pinned, and whether a mutable endpoint can resolve to another
+model. Provider internals remain uninspected when inaccessible. Fixed
+weights do not establish absence of learning through other retained
+material.
+
+Each route records immediate return, later read-back, delegated visibility,
+selection predicate, invalidation or expiry, activation or effect and
+evidence limits. An inapplicable or uninspected field gives a reason.
+Read-back is material accumulated or changed through use that reaches a
+later consumer invocation; static shipped material and ordinary current-run
+state are excluded. A summary that compacts or replaces current-run state
+is retained memory when a later invocation receives it, within or across
+runs. Activation requires evidence that delivered material changed behavior.
+
+### Route field syntax
+
+Within each route declaration, write each of these exact labels once as an
+unindented bullet, with a non-empty answer on the same line:
+
+```markdown
+- Immediate return: ...
+- Later read-back: ...
+- Delegated visibility: ...
+- Selection predicate: ...
+- Invalidation or expiry: ...
+- Activation or effect: ...
+- Evidence limits: ...
+```
+
+Replace every `...` with the finding. When a field is inapplicable or
+uninspected, use exactly `inapplicable — reason` or `uninspected — reason`,
+replacing `reason` with the explanation. Supporting prose, tables and
+quotations may follow. Another record or an annotation cannot supply these
+fields for the declaration.
+
+Local member validation and set validation reject missing, empty or duplicate
+fields and uncertainty values without reasons. They check presence and form;
+semantic verification judges the answers and their evidence. The separate
+status-field check above enforces conclusion-status form. Component fixity
+and conditional route fields retain their requirements without new presence
+checks.
+
+## Conditional route fields
+
+These requirements apply to the named route classes. Inapplicability is
+not evidence of an absent epistemic phase.
+
+| Applies to | Required content |
+|---|---|
+| Diagnosis, candidate comparison, admission or successor selection | Who proposes, decides and can veto; separate computational and human contributions; any answer oracle (expected answer or reference outcome, provider, use); operating mode and improvement triggers |
+| Routes admitting product, knowledge/instruction, capability or production-machinery changes | Trigger, proposed change, admission, rejection ability, rollback/recovery; guidance that shaped the proposal, what it says and what persists |
+| Routes involving formulated theories | The theory account and separately evidenced properties below |
+
+Model judgment alone establishes no answer oracle. Operating modes distinguish
+open requests, bounded experiments/curricula and multiple modes; oracle use
+belongs to its mode. Routine logs, counters and unchanged checkpoints need
+no separate revision account unless they change later decisions or recovery.
+Writes governed by one admission mechanism may be grouped.
+
+## Theory account
+
+A theory route states the guidance it applies, derives from, criticizes,
+revises/replaces, and retains or reconstructs. It names what persists:
+formulated theories, criticisms, input/outcome records, parameters or other
+source-native material. A rule set can express a theory without historical
+rationale; classification depends on its content and exposed assumptions,
+scope conditions and parts, not its storage label. Missing rationale does
+not establish absent formulated criticism. Retained rationale names its
+later reader, if any.
+
+Each [theory-builder](../../notes/definitions/theory-builder.md) condition has
+its own conclusion status and evidence under the label
+`theory-builder conditions 1–4`:
+
+| Condition | Evidence required and limits |
+|---|---|
+| 1. Localized content | A theory stated in natural or formal language; its minimum is one whole unit carrying what the theory says. Whole replacement meets this minimum. |
+| 2. Consumption | Decisions depend on what the theory says. Storage, citation and delivery alone do not establish it. |
+| 3. Content-directed criticism | Stated criticism names the challenged claim, result and placement of blame (theory, test, data or auxiliary assumption), and resulting revision or changed reliance. Derivation under an unchanged theory and scores selecting variants do not establish it. A prose contradiction is an interpretation unless codified. A surviving theory can change reliance or test selection without changing text; rejection and replacement count as revision. |
+| 4. Iteration | Criticism's result is kept and shapes a next round, including within one run. Reconstruction from retained criticisms counts; unused critic reports or retained input/outcome records alone do not. A builder ends when another system freezes its product for deployment. |
+
+No condition is inferred from another. The report distinguishes absent
+formulation or criticism from inaccessible model processing; opacity alone
+establishes neither presence nor absence. Additional properties are assessed
+separately:
+
+| Property | Required finding |
+|---|---|
+| [Addressability](../../notes/definitions/addressable-theory.md) | Degree to which assumptions, scope conditions and parts are individually inspectable and revisable, and the assessment boundary; finer grades exceed condition 1's minimum |
+| Persistence | What persists, later consumer and attained horizon: reasoning episode, rounds of one run, runs on one task, or problems/sessions |
+| Learning | Under `learning`: improved capacity for future action, assessment boundary, improvement evidence and attribution evidence. Membership, revision, persistence or connected steps alone do not establish it; capacity need not have been exercised. Later capacity traces persistence to that time; later/recurrent use also traces the retained result and consumer. The memory axis `trace_learning` has its own write-route meaning. |
+| [Reflection](../../notes/definitions/reflective-system.md) | Selected aspects within the boundary, their self-representation and both causal directions: aspect changes can update the representation; representation-mediated operations can affect later behavior. Subject matter alone is insufficient; direct machinery modification is unnecessary. |
+| Reflective theory builder | Its method texts meet conditions 1–4 and are criticized against records of its own operation |
+| Autonomous theory builder | Role-by-role evidence that computation performs every internal operation; users supplying problems and judging products are outside the boundary. Autonomy does not establish reliability. |
+
+Learning, reflection and autonomy remain independent claims. Revision
+selection prefers
+[explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+among revisions that fit the evidence; it does not trade fit away for reach.
+Explanatory-reach means that a criticizable account of why a pattern works
+continues to apply beyond its originating case because the mechanism persists.
+Vary a load-bearing premise and ask what change the explanation predicts;
+transfer or local success alone does not establish that account.
+
+=== END inputs/method/records.md ===
+
+=== BEGIN inputs/method/overview.md sha256=be2e4a6ee76c97f080d1d54ec1657387ebcbb9b21c30f5810c11f5b1324062ce ===
+---
+type: types/type-spec.md
+name: agentic-system-analysis-overview
+description: "Entry member of one agentic-system analysis run's retained set: identity, boundary, source register, amendment index, synthesis, limitations and both verifications"
+schema: ./agentic-system-analysis-overview.schema.yaml
+---
+
+# Agentic system analysis overview
+
+The reading entry point of one `analyse-agentic-system` run's retained set.
+It holds identity, evidence boundary, source register, an amendment index,
+synthesis, limitations and both verifications. Runtime, memory, epistemic
+and reconciliation findings live in their respective members. The sibling
+`ARTIFACT.yaml` selects the [analysis set type](./agentic-system-analysis-set.md)
+and pins every member, including this overview.
+
+## Frontmatter
+
+| Field | Required | Use |
+|---|---:|---|
+| `type` | Yes | `agentic-system-analyses/types/agentic-system-analysis-overview.md` |
+| `description` | Yes | For a `complete` run, the synthesizer's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
+| `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
+| `system` | Yes | Source-native system name or the caller's unambiguous identifier |
+| `run-date` | Yes | Date the run opened |
+| `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
+| `target-class` | Yes | Target role under the boundary contract; `null` before classification |
+| `boundary-kind` | Yes | Extent of the selected target under the boundary contract; `null` before establishment |
+| `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
+| `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
+| `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
+| `inputs-commit` | Yes | Full repository commit supplying the instructions, contracts, schemas and package code; publication requires the method unchanged |
+
+For a `complete` run, the five boundary fields are non-null. A `blocked`
+or `out-of-scope` overview retains every required section and states what
+was not reached, why, and which conclusion that prevents.
+
+## Shared contracts
+
+The [boundary contract](../instructions/agentic-analysis-boundary.md) defines
+boundary classifications and source declarations. The
+[source contract](../instructions/agentic-analysis-sources.md) defines
+evidence layers, anchors and quotations. The [record contract](../instructions/agentic-analysis-records.md)
+defines the namespace, declarations, annotations, amendments, fields and
+status meanings for all members.
+
+### Identity and completion
+
+The [set type](./agentic-system-analysis-set.md) owns membership and set
+checks. File validation checks this overview independently; directory
+validation checks the whole set. The manifest pins every member, and
+`inputs-commit` identifies the method's committed inputs.
+
+## Required sections
+
+### Boundary and evidence
+
+`## Boundary and evidence` contains the boundary account defined by the
+boundary contract, copied from the boundary job.
+
+### Source register
+
+`## Source register` contains that job's `SRC-*` rows under the boundary
+contract. Source identity and evidence scopes remain stable across members.
+For Git, the identity is the repository at the reviewed commit; listed
+paths record initial coverage and do not prevent later members from
+inspecting and citing other files at that commit for the selected target.
+For a complete run, code appends `Amended or superseded records: <IDs or none>`
+and a link to `reconciliation.md`. Resolve these IDs through that member
+before relying on an analyst's original wording.
+
+### Bounded synthesis
+
+`## Bounded synthesis` gives the evidence basis and boundary, architectural
+characterization and claimed work, runtime map, only the discriminating
+mechanisms this target needs, scenario-relative assessment, and concrete
+evidence or system changes that would alter the assessment. Where the
+runtime report supports it, the synthesis states separately whether the
+system meets theory-builder conditions 1–4, whether criticism of a consumed
+theory improved the system's capacity for future action, whether the system
+is reflective or autonomous, and whether it is
+[self-improving](../../notes/definitions/self-improving-system.md) at the
+declared boundary, each at its own evidence status; these are independent
+properties, not a grade or a ladder. It is organized around the system's
+operational progression, not as concatenated analyst reports, and cites
+member records rather than restating them. It gives no product ranking,
+generic adoption advice, system-wide epistemic grade, Commonplace delta, or
+transfer recommendation. For learning and self-improvement findings it leads
+with the strongest supported contribution, including partial results, then
+states the unresolved question, at the level of the comparison actually
+performed.
+
+The Bounded synthesis must read without the members' context. State its
+evidence basis and boundary, and link the member records that support it so
+a reader can inspect the underlying account.
+
+### Limitations
+
+`## Limitations` contains one row per limitation:
+
+`limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it`
+
+Carry every `Unresolved conflict:` in the reconciliation into this section.
+A record fault found during synthesis verification is stated here with its
+prevented conclusion; it does not reopen reconciliation. If representing it
+as a limitation would make the synthesis misleading, stop the run.
+Use `none` only after checking the whole set. A blocker is also
+represented under Verification and blockers; this section still states
+its analytical consequence.
+
+### Verification and blockers
+
+`## Verification and blockers` contains `### Record verification`,
+`### Profile verification`, `### Synthesis verification`,
+`### Deterministic validation`, and
+`### Blockers`. The three independent checks remain separate: record
+verification covers amendments, supersessions and scope; profile verification
+covers axis coverage and per-value support against accepted records;
+synthesis verification covers support for public statements, readability
+without the members' context, and unresolved conflicts in Limitations.
+Record the exact deterministic validation
+targets and results for every member, and every unresolved blocker. Do
+not record projection review jobs, publication attempts, or cleanup here.
+A complete run says `none` under blockers; a blocked or out-of-scope run
+states its stopping condition here. The overview's digest never appears
+inside its own bytes.
+
+## Template
+
+```markdown
+---
+type: agentic-system-analyses/types/agentic-system-analysis-overview.md
+description: "{one sentence on the system's mechanism and limits}"
+run-id: AAS-YYYY-MM-DD-system-slug-nn
+system: "{source-native system name}"
+run-date: "YYYY-MM-DD"
+result-disposition: complete
+target-class: "{selected target class}"
+boundary-kind: whole-system
+reviewed-boundary: "{immutable revision or capture identity}"
+analysis-cutoff: "YYYY-MM-DD"
+evidence-tier: code-grounded
+inputs-commit: "{full commit of this repository at run start}"
+---
+
+# {System} agentic-system analysis
+
+## Boundary and evidence
+
+## Source register
+
+## Bounded synthesis
+
+## Limitations
+
+## Verification and blockers
+
+### Record verification
+
+### Profile verification
+
+### Synthesis verification
+
+### Deterministic validation
+
+### Blockers
+```
+
+=== END inputs/method/overview.md ===
+
+=== BEGIN inputs/records/boundary.md sha256=6e1d245a3e2df7984aaea13e0ec0ef55329ca06c9e8bbaceaa0ef7fbcb581178 ===
+---
+result-disposition: complete
+target-class: "memory/knowledge/context-engineering system"
+boundary-kind: whole-system
+reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+analysis-cutoff: "2026-10-04"
+evidence-tier: code-grounded
+source:
+  kind: git
+  identity: https://github.com/suzgunmirac/dynamic-cheatsheet
+  revision: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+  path: /home/zby/llm/commonplace/.commonplace/worktrees/dynamic-cheatsheet-b0dc01a84b3c/related-systems/suzgunmirac--dynamic-cheatsheet
+  sha256: null
+---
+
+## Boundary and evidence
+
+Dynamic Cheatsheet is an inference-time memory and context-engineering system. This run covers the shipped prompt-driven generation and curation approaches, retrieval and cumulative-state flow, the benchmark driver that persists and reloads state, and the supplied evaluation and result artifacts. The memory is represented as text passed between calls; this repository does not provide a separate durable memory service. The boundary is the complete shipped system in this repository, rather than only the `LanguageModel` library API.
+
+`LanguageModel.advanced_generate` assembles a generator prompt from the current cheatsheet, calls the model, calls a curator with the answer and prior cheatsheet, and returns the extracted updated cheatsheet. Other supported branches implement retrieval, retrieval-synthesis, hybrid retrieval plus cumulative memory, and full-history appending. `run_benchmark.py` loads prompt files and optional initial memory, supplies the current state to each call, takes the returned final cheatsheet forward, and can reload the last saved cheatsheet when resuming. Thus the driver, prompts, retrieval data, persistence path and task evaluators are material parts of the shipped loop.
+
+> After each answer, a curator call updates the cheatsheet.
+> --- `dynamic_cheatsheet/language_model.py`
+
+> last_cheatsheet = outputs[-1].get("final_cheatsheet")
+> --- `run_benchmark.py`
+
+> cheatsheet = output_dict["final_cheatsheet"]
+> --- `run_benchmark.py`
+
+> - Carefully analyze both the question and cheatsheet before starting
+> --- `prompts/generator_prompt.txt`
+
+External dependencies include model-provider APIs and their inference/code-execution services; credentials and those services are outside this repository. The benchmark driver also obtains benchmark datasets through the `datasets` package where applicable. No hosted run or service behavior is included as inspected execution evidence. The tracked datasets, embeddings and result files are repository artifacts; their provenance and experimental conditions are not independently established by this boundary inspection.
+
+Coverage of top-level tracked paths at the frozen commit:
+
+| Path | Coverage | Role and boundary decision |
+|---|---|---|
+| `.gitignore` | Included | Repository setup conventions; no operating responsibility identified. |
+| `README.md` | Included | Declares purpose, usage, approaches, model dependencies and benchmark interface. Design claims are not treated as observed operation. |
+| `LICENSE` | Included | Distribution context; no runtime responsibility. |
+| `dynamic_cheatsheet/` | Included | Core model wrapper, generation/curation/retrieval flow, answer and cheatsheet extraction, local execution helper and task evaluation functions. |
+| `prompts/` | Included | Generator and curator instructions define consumption and maintenance of retained text memory. |
+| `run_benchmark.py` | Included | Shipped driver wires prompts, data, model calls, cumulative state, checkpoint/resume, output persistence and evaluation. |
+| `text_generation/` | Included | Shipped provider client used by the core wrapper to issue model calls; provider services remain external. |
+| `data/` | Included | Tracked benchmark datasets and dataset metadata supplied to the driver. |
+| `embeddings/` | Included | Tracked vectors used by retrieval approaches. |
+| `results/` | Included | Tracked result artifacts consumed by result analysis; artifacts alone do not establish reproducible execution or causal effects. |
+| `EvaluatingResults.ipynb` | Included | Shipped downstream analysis of saved results and use of task evaluators. |
+| `ExampleUsage.ipynb` | Included | Shipped interactive caller demonstrating prompt loading, generation and reuse of returned memory. |
+| `figures/` | Included | Published illustration and performance visuals; no runtime responsibility and claims require separate source evidence. |
+
+No material shipped state-production, maintenance, persistence/reload, later-consumption or evaluation path was found outside the inspected repository. This whole-system boundary supports source-grounded claims about the shipped design and implementation. It does not by itself establish provider behavior, benchmark reproducibility, or that the reported results were caused by a particular component.
+
+## Source register
+
+| source ID | kind | identity/location | revision or capture | evidence layer | inspected scope | citation anchors | access gaps and conclusion prevented |
+|---|---|---|---|---|---|---|---|
+| SRC-1 | git | `https://github.com/suzgunmirac/dynamic-cheatsheet` | `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9` | implementation: `dynamic_cheatsheet/`, `run_benchmark.py`, `text_generation/`; doctrine/design: `README.md`, `prompts/`; tracked artifacts: `data/`, `embeddings/`, `results/`, `EvaluatingResults.ipynb`, `ExampleUsage.ipynb`, `figures/`; repository metadata: `.gitignore`, `LICENSE` | Inspected tracked repository tree and frozen revision; core orchestration, benchmark state initialization/resume/carry-forward, provider-client boundary, evaluator functions, generator and cumulative curator prompts, README usage and approach descriptions, notebook callers/result-analysis imports. These are initial coverage paths, not a path allowlist. | `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`; `prompts/generator_prompt.txt`; `README.md`; `EvaluatingResults.ipynb`; `ExampleUsage.ipynb` | Provider APIs, credentials, and any live execution are outside the repository inspection. Dataset/result artifact provenance and experimental protocol are not established here, preventing independent reproducibility or causal attribution claims. No source checkout access gap identified. |
+
+=== END inputs/records/boundary.md ===
+
+=== BEGIN inputs/records/runtime.md sha256=f33342886a3cb578889b4f997e19da8a7d0d1d7e0d845203d9705aaa71038cae ===
+---
+type: agentic-system-analyses/types/agentic-system-runtime-report.md
+description: "Runtime baseline of Dynamic Cheatsheet across its shipped inference, memory and benchmark routes"
+run-id: AAS-2026-10-04-dynamic-cheatsheet-01
+reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+---
+
+# Dynamic Cheatsheet runtime report
+
+## Runtime account
+
+### Evidence basis and runtime shape
+
+This is an implementation-grounded account of the repository at the registered commit. No live provider run or independent experiment was supplied. The tracked notebook contains saved outputs, but its cells do not establish a run performed under the frozen analysis conditions. Operation, whether retrieved or curated text changes a later answer, and the claimed performance benefits therefore remain unobserved here. The Source register in `boundary.md` supplies the evidence identity; this member inspected the listed orchestration, provider, prompt, execution, extraction and evaluation paths.
+
+The benchmark's ordinary cumulative path is selected by `--approach_name DynamicCheatsheet_Cumulative`. The principal is the benchmark caller (or a notebook/user of `LanguageModel.advanced_generate`). It provides a task input, prompt templates, current cheatsheet and configured model. `run_benchmark.py` builds the current question from the dataset input, omitting the target from the prompt, and calls `advanced_generate`. `LanguageModel` substitutes the input and cheatsheet into the generator template, then passes a one-message history to `generate`. The provider client sends this to the selected external model API. The output is parsed for a final answer; the same configured model is called again with the answer, question and prior cheatsheet in the curator prompt. `extract_cheatsheet` accepts text between `<cheatsheet>` tags and otherwise retains the previous text. The returned answer, raw output, updated text, question and benchmark target are assembled into a result object. The driver scores the final answer against the task target after curation; this score does not gate the curation decision.
+
+> generator_prompt = generator_template.replace("[[QUESTION]]", input_txt).replace("[[CHEATSHEET]]", generator_cheatsheet_content)
+> --- `dynamic_cheatsheet/language_model.py`
+
+The generator prompt directs the model to inspect and use the supplied cheatsheet. The cumulative curator prompt asks it to assess the current solution before retaining or revising text, but the software does not verify those judgments or require a separate approval. The curator produces a full replacement; the prompt instructs it to preserve useful prior entries. The parsing fallback is the previous cheatsheet, not a rejected candidate selected by a reviewer.
+
+> Before updating the cheatsheet, however, you should first assess the correctness of the provided solution and strategically incorporate code blocks, insights, and solutions into the new cheatsheet.
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
+
+> if "<cheatsheet>" in response:
+>     try:
+>         txt = response.split("<cheatsheet>")[1].strip()
+>         txt = txt.split("</cheatsheet>")[0].strip()
+>         return txt
+>     except:
+>         return old_cheatsheet
+> else:
+>     return old_cheatsheet
+> --- `dynamic_cheatsheet/utils/extractor.py`
+
+The benchmark owns per-example progression. It starts with `(empty)` unless an initial cheatsheet file is supplied. At each question the returned `final_cheatsheet` becomes the next call's input, while the final output is appended to the preceding-output list. The benchmark writes its accumulated JSONL after each processed example and once again at completion. For resume, it reloads all previous output rows, takes the last row's `final_cheatsheet` when present, restores the prior final outputs, and skips the corresponding number of dataset rows. The JSONL checkpoint is the only shipped durable memory path found; the library wrapper itself returns state to its caller and does not implement a separate memory service. In the direct notebook/API route, later read-back depends on the caller passing the returned text into the next call.
+
+> last_cheatsheet = outputs[-1].get("final_cheatsheet")
+> --- `run_benchmark.py`
+
+> # Save the outputs to a file after each example (for crash recovery)
+>         write_jsonl(args.save_path_name, outputs)
+> --- `run_benchmark.py`
+
+Resumption verifies only a selected group of saved arguments (generator prompt path, temperature, code-execution flag, task, model name, approach name and number of rounds). Other settings, including the curator prompt path and retrieval top-k, are not compared in that loop. The default dataset shuffle is seeded with 10. These checks and the saved row count are implementation evidence; no resumed execution was supplied to show recovery under interruption or changed files.
+
+### Alternate approach routes
+
+The approach name determines the material supplied to each generator call:
+
+- `default` sends one generator request with an empty cheatsheet and returns no retained text.
+- `DynamicCheatsheet_Cumulative` sends the prior text, then asks a curator to replace it after each answer.
+- `DynamicCheatsheet_RetrievalSynthesis` takes the current precomputed vector, compares it with vectors for prior inputs using cosine similarity, selects the top-k prior input/output pairs, and asks the curator to synthesize a per-question cheatsheet before the generator call. The runner records the returned `final_cheatsheet` as state, so it can become the `PREVIOUS_CHEATSHEET` supplied to the next synthesis prompt or be reloaded on resume.
+- `Dynamic_Retrieval` selects the same kind of top-k prior pairs and gives them directly to the generator. It does not call the curator in that branch. The runner still serializes the returned text field and carries it forward, but this branch does not consume the carried `cheatsheet` when constructing its retrieved examples.
+- `DynamicCheatsheet_CumulativeRetrieval` combines the current cumulative text with top-k examples, calls the generator, then calls the curator to replace the cumulative text.
+- `FullHistoryAppending` includes all prior input/output pairs in the generator prompt without curation.
+
+For retrieval approaches, vectors are loaded from the repository's `embeddings/<task>.csv`; rows are reordered to match the task dataset. No embedding service or embedding model is invoked by the inspected runtime path, and the vectors' model provenance is not established by source inspection. The similarity scores choose which examples to include; neither correctness labels nor an expected answer are part of this selection. Retrieval is therefore an implemented context-selection rule, not evidence that its selected examples improve an answer.
+
+> similarities = cosine_similarity([current_original_input_embedding], prev_original_input_embeddings)
+> --- `dynamic_cheatsheet/language_model.py`
+
+The full-history path grows the prompt with every previous pair, whereas retrieval limits its examples to the configured top-k. Both use the current task ordering and accumulated outputs maintained by the benchmark. In a retrieval resume, the driver restores prior outputs and starts at the saved row count; the exact vector alignment and behavior after changed unvalidated parameters have not been observed.
+
+### Executor, controls and effect boundary
+
+The ordinary answer and curator calls use the same configured `LanguageModel` instance and its same provider/model choice; role differences come from templates and inputs, not distinct configured model objects. The wrapper supports OpenAI, Anthropic/Claude, Gemini, xAI, and OpenAI-compatible endpoints including Together AI, DeepSeek and Ollama. Provider APIs, credentials, endpoint behavior, hosted policy enforcement and actual resolved model versions are outside this source boundary. The client retries a failed provider function three times with a ten-second delay by default; it does not establish successful delivery or response quality.
+
+> client_kwargs = {"provider": provider, "model": model_id, "max_retries": 3, "retry_delay": 10}
+> --- `dynamic_cheatsheet/language_model.py`
+
+A second generator execution path is available when the caller sets `use_code_interpreter`. That option disables local execution in `advanced_generate`; OpenAI creates a server-side container and uses Responses API code-interpreter tooling, while Claude enables its native code-execution tool. Other providers do not implement `create_container` in the wrapper. The generator gets the tool on each applicable model call; curator calls explicitly disable code execution. Provider sandbox isolation and persistence are not inspectable here. The returned textual answer remains the interface to the benchmark.
+
+By default, the generator can also trigger a local subprocess: its output must contain the configured `EXECUTE CODE!` string and the text before that flag must end in a code fence. The extractor selects the first Python block, may wrap the last line in `print`, writes it to a temporary file, and starts `python3`. The subprocess has a three-second timeout but no source-level sandbox, approval gate, resource policy or rollback. A generated program can use whatever filesystem, network and process permissions the deployed Python process has; the actual host privilege boundary was not supplied. The prompt encourages code generation and execution, and asks for result validation. That is guidance to the model, not a technical restriction on executable effects.
+
+> # TODO (msuzgun): Improve the security of this function by using a sandboxed environment
+> --- `dynamic_cheatsheet/utils/execute_code.py`
+
+The code-trigger route admits changes to the local environment to the extent that process permissions allow. Its trigger is model-authored output, not a human approval event. A response without the exact trigger/fence pattern is not executed by this branch; a malformed or failed program can return an error string, and timeout kills the direct process. No undo mechanism is implemented. In code-interpreter mode, code is instead admitted by the caller's option and executed by provider infrastructure. The generator prompt's execution instructions shape proposed code in both modes, but the provider's actual retention, isolation, and rollback contracts remain unknown.
+
+The benchmark evaluates the final answer with task-specific code after generation and curation. Game of 24 is checked by parsing/evaluating expressions; AIME is exact text matching after punctuation removal; multiple-choice tasks compare parsed option text with the target; equation balancing uses its own evaluator. These local evaluators supply an answer oracle in the benchmark mode, but their result updates only printed counters and summary: it is not fed back to the curator or used to admit/rollback the just-written cheatsheet. When a direct caller uses the library without the benchmark, no such oracle is wired in this loop.
+
+> result = eval_for_GameOf24(original_input, final_answer)
+> --- `run_benchmark.py`
+
+No human review, approval, veto or manual graph control is wired into the benchmark route. A user may choose the approach, model, prompts, initial cheatsheet, code-execution settings and input files before a call. The selected provider's capabilities and policies may differ, but are external to the inspected code. The saved outputs offer a recovery checkpoint, not a guarantee that the current provider, prompt files, dataset or execution environment match the earlier run.
+
+## Shared records
+
+### Components
+
+#### RT-CMP-model — Configured inference model
+
+- Identity: the model selected by `model_name`, used for both generator and curator roles through one `LanguageModel` and `UnifiedLLMClient`.
+- Representational form: distributed-parametric.
+- Storage substrate: provider-managed model weights, or a model served at the configured OpenAI-compatible/local endpoint; model storage is outside the inspected repository.
+- Parameters change during operation: no, not in the inspected inference code. The repository describes inference-time memory as separate from parameter modification; this is a source-level design claim, not provider telemetry.
+- Exact version pinned: not guaranteed by the interface. `model_name` is supplied as a string and examples include both dated identifiers and provider aliases.
+- Mutable endpoint can resolve to another model: yes, possible for aliases or mutable external endpoints; endpoint resolution is not inspected.
+- Evidence: `dynamic_cheatsheet/language_model.py`; `README.md`.
+
+> Rather than repeatedly re-discovering solutions or making the same mistakes, DC enables models to accumulate and leverage strategies, code snippets, and problem-solving techniques without modifying the underlying model parameters.
+> --- `README.md`
+
+### Operative objects
+
+#### RT-OBJ-cheatsheet — Curated text
+
+- Identity: the `cheatsheet` / `final_cheatsheet` value passed between calls.
+- Representational form: natural-language text. Its effect depends on a model interpreting the supplied prompt.
+- Storage substrate: caller memory for direct API use; in benchmark runs it is a string held during the loop and copied into the JSONL result row for disk persistence.
+- Evidence: `dynamic_cheatsheet/language_model.py`; `dynamic_cheatsheet/utils/extractor.py`; `run_benchmark.py`; `prompts/curator_prompt_for_dc_cumulative.txt`.
+
+#### RT-OBJ-retrieval-context — Prior examples and vectors
+
+- Identity: task input corpus, generator outputs and per-task precomputed `embedding` rows used by retrieval approaches.
+- Representational form: mixed natural-language inputs/outputs and dense numerical vectors; similarity scores are scalar numeric values.
+- Storage substrate: tracked CSV files for vectors, dataset objects in the benchmark process for examples and outputs.
+- Provenance limit: the vectors' generating model and conditions are not declared in the inspected route; no runtime embedding inference is shown.
+- Evidence: `run_benchmark.py`; `dynamic_cheatsheet/language_model.py`.
+
+#### RT-OBJ-run-checkpoint — Benchmark output file
+
+- Identity: JSONL rows holding inputs, targets, raw inputs, generated outputs and returned cheatsheet, plus a companion JSON parameters file.
+- Representational form: mixed symbolic JSON structure and natural-language text values.
+- Storage substrate: filesystem path under the chosen save directory.
+- Evidence: `run_benchmark.py`.
+
+### Routes
+
+#### RT-RTE-cumulative-loop — Cumulative generation and curation
+
+- Endpoints and progression: benchmark input → generator prompt/model → answer extraction → curator prompt/model → cheatsheet extraction → return object → next benchmark input; benchmark evaluator scores the answer after the curator call.
+- Owner: benchmark driver owns sequence and carry-forward; configured model proposes an answer and cheatsheet; local extraction code applies tag parsing.
+- Context, state and effects: current question and current text reach the generator; question, raw generator output and old text reach the curator. Extracted text is the next state; output row and target are persisted by benchmark mode.
+- Runtime-client controls: configured provider/model, temperature, token limits, extra API parameters, retries, approach selection, code execution options.
+- Persistence, coordination and return: library returns state to its caller; benchmark writes JSONL after each row and resume can reload its last returned cheatsheet.
+- Recovery and terminal output: parsing without `<cheatsheet>` retains old text; benchmark resumes from output count and last `final_cheatsheet`; answer and output are returned and scored, with no rollback on a wrong score.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: extracted answer, raw generator output, and newly extracted cheatsheet in the result dictionary.
+- Later read-back: benchmark passes returned text into the next question and can reload it on resume; direct callers must pass it themselves.
+- Delegated visibility: generator sees current text; curator sees previous text and current generator output; benchmark evaluator sees extracted answer and task target, but does not feed its score to the curator.
+- Selection predicate: CLI/API caller selects `DynamicCheatsheet_Cumulative`; the curator prompt and model select retained prose without a deterministic acceptance test.
+- Invalidation or expiry: no age, task boundary, size or expiry policy is implemented in this branch; a curator replacement can omit prior content.
+- Activation or effect: prompt substitution wires the text into the next generator invocation; behavioral change from that text is unobserved.
+- Evidence limits: implementation only; no trace establishes provider interpretation, correctness of curator assessments or benefit.
+- Decision roles: model proposes answer and replacement; the curator model performs the only in-loop content selection; program accepts tagged output or retains old text on extraction failure; no human approval or veto is wired.
+- Answer oracle: benchmark evaluator compares answer with task-specific target after curation; its score is not used for content admission. Direct API calls have no in-loop target oracle.
+- Operating mode and improvement trigger: sequential task loop; each processed question triggers generation and curation, even when the final answer fails local scoring.
+- Admission mechanism: tagged curator output replaces the text. The cumulative curator prompt says to judge solution correctness and preserve useful content. Missing tags retain the old text. No separate rejection mechanism or rollback exists; benchmark checkpoints permit resuming an earlier file only by caller choice, which is not a transaction rollback feature.
+
+> # Extract the new cheatsheet from the output (if present); otherwise, return the old cheatsheet
+> new_cheatsheet = extract_cheatsheet(response=cheatsheet_output, old_cheatsheet=current_cheatsheet)
+> cheatsheet = new_cheatsheet
+> --- `dynamic_cheatsheet/language_model.py`
+
+#### RT-RTE-retrieval-synthesis — Retrieve and synthesize
+
+- Endpoints and progression: current vector and prior vectors → cosine ranking/top-k input-output pairs → curator synthesis prompt → generator prompt/model → extracted answer and text return.
+- Owner: benchmark loads and aligns vectors; local code ranks examples; configured model synthesizes context and generates answer.
+- Context, state and effects: each request sees top-k prior pairs; the curator also receives the prior returned text and next input; generator receives synthesized text. Benchmark carries the returned text into the next iteration and persists it in JSONL.
+- Runtime-client controls: caller chooses approach, `retrieve_top_k`, model/provider, prompts, temperature, code options and token limits.
+- Persistence, coordination and return: prior model outputs are in-memory during a run and in checkpoint rows; vectors are read from tracked CSV; returned synthesized text can be reloaded on resume.
+- Recovery and terminal output: extraction failure falls back to the retrieved-context string; benchmark checkpoint/resume applies as above; no answer-based rollback.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: extracted answer, generator output, selected prior pairs and the synthesized context as `final_cheatsheet`.
+- Later read-back: next benchmark iteration supplies returned text as the prior cheatsheet to the next curator; resume reloads it; the direct-retrieval branch differs and does not consume it.
+- Delegated visibility: curator sees retrieved prior pairs, next input and prior cheatsheet; generator sees synthesized text and current input; no evaluator score reaches the curator.
+- Selection predicate: local cosine similarity over supplied vectors, descending top-k; no expected answer or correctness filter.
+- Invalidation or expiry: retrieved pairs are request-local; stored vectors have no runtime refresh or expiry path; returned synthesis may be replaced on the next request.
+- Activation or effect: synthesized text is inserted into the current generator prompt; effect on answer quality is unobserved.
+- Evidence limits: vector provenance and provider/model outputs are not established; no retrieval or synthesis trace was supplied.
+- Decision roles: local cosine ranking proposes selected pairs; curator model synthesizes and selects text; program accepts tagged output or retains its fallback; no human approval or veto.
+- Answer oracle: none for selecting pairs or admitting synthesized text. The benchmark's target-based evaluator scores the final answer after these decisions only.
+- Operating mode and improvement trigger: per-question bounded top-k synthesis; every question with this approach triggers ranking, synthesis and generation.
+- Admission mechanism: curator-tagged output becomes the returned context, guided by retrieval-synthesis prompt instructions to preserve/use useful prior content; missing tags retain the pre-synthesis retrieved string. No explicit correctness gate, human rejection or rollback.
+
+> # Get the current original input embedding
+> current_original_input_embedding = original_input_embeddings[-1]
+> prev_original_input_embeddings = original_input_embeddings[:-1]
+> 
+> # Retrieve the most similar k input-output pairs from the previous inputs and outputs
+> if len(prev_original_input_embeddings) > 0:
+>     similarities = cosine_similarity([current_original_input_embedding], prev_original_input_embeddings)
+>     top_k_indices = np.argsort(similarities[0])[::-1][:retrieve_top_k]
+> --- `dynamic_cheatsheet/language_model.py`
+
+#### RT-RTE-cumulative-retrieval — Cumulative text with retrieval
+
+- Endpoints and progression: current cumulative text plus top-k prior pairs → generator → answer extraction → curator using question, raw answer and prior cumulative text → text extraction and return.
+- Owner: local code ranks; model answers and proposes replacement text; benchmark coordinates and carries state.
+- Context, state and effects: generator sees general text and retrieved examples; curator sees the current problem, generator response and cumulative text. Returned text and outputs are saved by benchmark mode.
+- Runtime-client controls: caller sets approach, top-k, provider/model, prompts, sampling/token settings and execution mode.
+- Persistence, coordination and return: in-memory output list and current text; checkpoint JSONL and resume provide the benchmark persistence path.
+- Recovery and terminal output: missing tags retain prior cumulative text; checkpoint resume restores last text; no correctness-based rollback.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: answer, raw output, retrieved pairs and updated cumulative text.
+- Later read-back: benchmark supplies updated text and prior outputs to the next call; resume reads the last saved text.
+- Delegated visibility: generator receives cumulative text and selected examples; curator sees prior cumulative text and current raw answer; local evaluator does not inform the curator.
+- Selection predicate: cosine top-k selects examples; curator prompt/model selects text to carry forward.
+- Invalidation or expiry: no expiry or corpus pruning is implemented; curator can rewrite or omit text; selected pairs are current-call context only.
+- Activation or effect: both cumulative text and examples are in the generator prompt; resulting behavioral effect is unobserved.
+- Evidence limits: source shows wiring, not correct similarity provenance, provider behavior or benefit.
+- Decision roles: program ranks by cosine; curator model proposes replacement; extraction accepts tagged output or falls back; no human review/veto.
+- Answer oracle: benchmark checks the final answer against target after curation but does not condition curation or state carry-forward on the score.
+- Operating mode and improvement trigger: one bounded retrieval-plus-cumulative-memory iteration per input; a question triggers both example selection and a curator update.
+- Admission mechanism: curator-tagged replacement is carried forward; prompt guidance requests assessment and preservation of useful prior text; missing tags retain old text; no rollback beyond choosing an earlier saved checkpoint.
+
+> combined_cheatsheet = f"{cheatsheet}\n{retrieved_section}"
+> --- `dynamic_cheatsheet/language_model.py`
+
+#### RT-RTE-direct-retrieval — Top-k example context
+
+- Endpoints and progression: aligned precomputed vectors → local cosine ranking → retrieved prior input/output pairs → generator prompt/model → answer extraction and return.
+- Owner: driver supplies aligned vectors and outputs; local code ranks; model interprets examples and answers.
+- Context, state and effects: current input plus selected pairs; no curator call in this branch. The driver stores outputs and the returned text field, but this branch does not use the carried cheatsheet when constructing retrieval context.
+- Runtime-client controls: approach, top-k, provider/model, generator prompt, temperature/token limits and code mode.
+- Persistence, coordination and return: vectors are tracked CSV; outputs are in memory and benchmark checkpoint rows; direct library caller owns subsequent use.
+- Recovery and terminal output: benchmark can reload rows on resume; no separate correction or rollback of retrieved examples.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: answer, raw output, and selected prior pairs; returned `final_cheatsheet` is the selected example context.
+- Later read-back: prior output pairs participate in later top-k selection in a benchmark run; the returned text field is not consumed by this branch's next generation step.
+- Delegated visibility: only the generator sees selected examples; evaluator later sees answer and target in benchmark mode.
+- Selection predicate: descending cosine similarity over supplied fixed vectors, clipped to `retrieve_top_k`; no correctness or answer oracle.
+- Invalidation or expiry: no vector refresh or expiry; top-k membership changes with the current vector and prior corpus.
+- Activation or effect: examples are prompt content; behavioral effect is unobserved.
+- Evidence limits: embedding provenance and retrieval quality are unknown; source code does not establish that similarity implies task relevance.
+
+#### RT-RTE-full-history — Append prior solutions
+
+- Endpoints and progression: prior input/output list → local string construction of all prior pairs → generator prompt/model → answer extraction and return.
+- Owner: benchmark maintains pair history; local code appends; model interprets and answers.
+- Context, state and effects: full preceding pair history is included; no curation model is called. Benchmark retains outputs for subsequent calls and checkpointing.
+- Runtime-client controls: selected approach, provider/model, prompt and generation parameters, code options.
+- Persistence, coordination and return: prior outputs are in process memory and saved in JSONL by benchmark mode.
+- Recovery and terminal output: resume reloads outputs; no mechanism removes stale or incorrect pairs except caller changing/restarting input state.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: generated answer, raw output and the assembled history text in the result.
+- Later read-back: all prior outputs can appear in later prompts; saved rows are reloaded on resume.
+- Delegated visibility: generator sees the whole preceding history; evaluator sees answer/target after generation in benchmark mode.
+- Selection predicate: all outputs before the current input are included in sequence; no relevance or correctness filtering.
+- Invalidation or expiry: none within a run; the prompt grows with history until external context limits or provider behavior intervene.
+- Activation or effect: prior pairs are included in the prompt; effect is unobserved.
+- Evidence limits: no run trace or context-window failure evidence was supplied.
+
+> curated_cheatsheet += f"#### Previous Input #{i+1}:\n\n{previous_input_txt}\n\n#### Model Solution to Previous Input #{i+1}:\n\n{previous_output_txt}\n---\n---\n\n"
+> --- `dynamic_cheatsheet/language_model.py`
+
+#### RT-RTE-default — Single-call baseline
+
+- Endpoints and progression: current input and `(empty)` cheatsheet placeholder → generator prompt/model → answer extraction and return.
+- Owner: caller selects approach and model; local code builds prompt and extracts answer; model responds.
+- Context, state and effects: one question; no carried cheatsheet is consumed or returned.
+- Runtime-client controls: configured model/provider, generation options and code execution settings.
+- Persistence, coordination and return: no memory persistence in this branch; caller receives answer/output.
+- Recovery and terminal output: no checkpoint/recovery in library; benchmark wrapper still saves the row if this mode is used.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: extracted answer and raw generator output; `final_cheatsheet` is `None`.
+- Later read-back: inapplicable — this branch returns no accumulated memory for a later consumer.
+- Delegated visibility: generator sees current input and empty placeholder; evaluator sees final answer and target only in benchmark mode.
+- Selection predicate: explicit caller choice of `default`; no context-item selection.
+- Invalidation or expiry: inapplicable — this branch creates no retained item.
+- Activation or effect: inapplicable — no prior material is delivered for activation.
+- Evidence limits: source-level single-call wiring only; provider output and operation are unobserved.
+
+#### RT-RTE-checkpoint-resume — Save and resume benchmark state
+
+- Endpoints and progression: each completed benchmark row and current returned text → JSONL overwrite → later invocation loads JSONL and parameter file → restores outputs/text and skips saved row count.
+- Owner: benchmark process owns file writes and reload; caller chooses save and continue paths.
+- Context, state and effects: JSONL includes answer, target and returned memory text; companion JSON stores invocation arguments.
+- Runtime-client controls: save path, continue path, task/model/approach and other CLI arguments; resume compares only a subset before proceeding.
+- Persistence, coordination and return: filesystem JSONL persists rows; last row supplies text; restored outputs supply future retrieval and full-history context.
+- Recovery and terminal output: reload/restart is implemented; no atomic write, version migration, integrity check or rollback transaction is evidenced in this path.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: none from the checkpoint mechanism itself; the driver prints final summary when it processes new rows.
+- Later read-back: saved outputs and last text are read by a continuation run.
+- Delegated visibility: driver sees all loaded rows; subsequent approach branches see the prior text and/or prior outputs according to their mode.
+- Selection predicate: caller selects an existing result path; skip position is derived from number of rows, not a separately validated cursor.
+- Invalidation or expiry: no expiry; a different prompt or runtime setting can be used if not among the compared parameters.
+- Activation or effect: restored state enters later prompts only where the selected approach consumes it; actual effect is unobserved.
+- Evidence limits: no interruption/restart execution trace was supplied; file corruption, concurrent writers and provider/model drift are not tested.
+
+#### RT-RTE-local-python — Model-triggered local execution
+
+- Endpoints and progression: generator response with fenced Python and execution flag → extraction/print adjustment → temporary `.py` file → local `python3` subprocess → captured stdout/stderr appended to messages → another model call until depth condition ends.
+- Owner: model authors code and emits trigger; wrapper detects trigger; local process executes; no human or policy service approves the code.
+- Context, state and effects: prompt/question and model output; process inherits deployed host permissions; output is returned to model on continuation and in final output.
+- Runtime-client controls: `allow_code_execution`, trigger string, recursion-depth limit and 3-second subprocess communication timeout.
+- Persistence, coordination and return: temporary file is removed after direct process returns or times out; arbitrary side effects made by code are not reverted; output joins the returned answer transcript.
+- Recovery and terminal output: errors are rendered as text; timeout kills the process; no rollback or recovery for side effects.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: captured output/error string is appended to the conversation and final output.
+- Later read-back: only the same generator conversation receives execution output; retained benchmark history may store the combined final output, but no structured execution record is written.
+- Delegated visibility: generator receives local execution output in a subsequent turn; benchmark evaluator sees the final extracted answer, not a control decision about execution.
+- Selection predicate: response must contain the configured flag and preceding text must end with a code fence; first Python block is extracted.
+- Invalidation or expiry: temporary script file is removed; side effects outside it have no expiry or rollback.
+- Activation or effect: source code executes in the local Python process; the deployed OS permission and isolation envelope is unknown.
+- Evidence limits: subprocess implementation inspected; no execution trace or host configuration was supplied, and timeout is not evidence of sandboxing.
+- Trigger and proposal: the model proposes Python and requests execution with the flag; the generator prompt explicitly instructs this protocol when coding is required.
+- Admission and rejection: the wrapper executes on syntactic trigger without human review; absence of trigger or required fence prevents this branch from executing.
+- Rollback and recovery: no rollback is implemented; timeout kills the direct process and removes the temporary script, but cannot restore other side effects.
+- Guidance and persistence: generator instructions request self-contained Python, imports, comments and validation; execution output persists only in the conversation/result text and benchmark row, while process side effects may outlive the call.
+
+> process = Popen(["python3", temp_file.name], stdout=PIPE, stderr=PIPE)
+> --- `dynamic_cheatsheet/utils/execute_code.py`
+
+#### RT-RTE-provider-code — Provider code interpreter
+
+- Endpoints and progression: caller enables option → wrapper creates OpenAI container or sets Claude native sentinel → generator request includes provider code-execution tool → provider returns text output.
+- Owner: caller enables; wrapper chooses provider path; model proposes code; provider service controls its execution environment.
+- Context, state and effects: generator prompt and current input reach provider; local `allow_code_execution` is disabled for the invocation; provider container state and service isolation are external.
+- Runtime-client controls: `use_code_interpreter`, selected provider/model, token/temperature options; OpenAI container created once per benchmark run, Claude tool is attached per request.
+- Persistence, coordination and return: only textual output is returned to local wrapper; provider-side artifacts/container lifetime and file visibility are not evidenced by repository code.
+- Recovery and terminal output: provider retry wrapper retries failed API calls; no local rollback of remote effects is present.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: provider-returned model text is the generator output; it is not reparsed as a local execution event.
+- Later read-back: returned text can enter benchmark output history; provider-side files are not read back by this repository.
+- Delegated visibility: provider tool/model share whatever service-side context the API provides; local benchmark sees only response text.
+- Selection predicate: explicit caller option and provider support; OpenAI uses a run container, Claude uses its native tool, other providers are unsupported by `create_container`.
+- Invalidation or expiry: local code contains no provider-container cleanup or persistence policy; actual lifetime is unobserved.
+- Activation or effect: code-execution tool is sent to provider; actual tool activation and side effects are unobserved.
+- Evidence limits: source shows tool request construction only; provider sandbox, isolation, retention and execution are outside boundary.
+- Trigger and proposal: caller enables the capability; model can propose code under the same generator guidance, and the provider may execute it through the attached tool.
+- Admission and rejection: wrapper attaches the tool without per-action human approval; provider-side gating is unobserved.
+- Rollback and recovery: local code offers retry but no remote rollback; container recovery/cleanup contract is unavailable.
+- Guidance and persistence: generator prompt requires an explicit execution request for coding; output text may persist in benchmark JSONL, but provider-side files or state are not read back locally.
+
+### Claims
+
+none declared in this member.
+
+### Evidenced absences
+
+none declared in this member.
+
+### Behavioral-authority paths
+
+none declared in this member.
+
+## Annotations
+
+none
+
+=== END inputs/records/runtime.md ===
+
+=== BEGIN inputs/records/memory.md sha256=247368f10ad79ad3622ad123d319bd0bed1fa06f9b259c8723b5e3bafcd2ef79 ===
+---
+type: agentic-system-analyses/types/agent-memory-analysis-report.md
+description: "Retained text and example memory in Dynamic Cheatsheet's shipped prompt and benchmark routes"
+run-id: AAS-2026-10-04-dynamic-cheatsheet-01
+source-identity: "https://github.com/suzgunmirac/dynamic-cheatsheet"
+reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+report-status: complete
+---
+
+# Dynamic Cheatsheet memory report
+
+## Boundary and evidence
+
+This report covers the repository's retained, later-consumed material: the cumulative cheatsheet string; task input and generated-output pairs used by history and retrieval approaches; the precomputed vectors that select those pairs; and benchmark JSONL rows that preserve returned state for later continuation. It includes the direct `LanguageModel.advanced_generate` interface and the benchmark caller because each can pass or carry memory into a later model request. The frozen source is SRC-1 at `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`. Evidence is implementation and declared prompt/design text only; no hosted execution trace was supplied. The whole-system boundary and access limits are recorded in `boundary.md`.
+
+Provider-side conversation retention, model state, container files, and service behavior are excluded because they are outside this repository. Static prompt templates, datasets, and vector files are inputs to the memory routes, not retained state produced through use. The local temporary Python file is execution machinery, not later-read memory. The benchmark evaluator and result-analysis notebook consume saved answers for scoring; they do not admit, reject, or revise the cheatsheet. These exclusions prevent claims about external retention, actual model use of supplied material, and memory-caused performance.
+
+| Entry point or operation | Source path | Coverage | Limit or exclusion |
+|---|---|---|---|
+| CLI selection, initial state, checkpoint write/resume and answer scoring | `run_benchmark.py` | Supplied `RT-RTE-cumulative-loop`, `RT-RTE-checkpoint-resume`; annotations below | Source wiring only; no resume or provider run observed. |
+| Public generation and memory routes | `dynamic_cheatsheet/language_model.py` | Supplied `RT-RTE-cumulative-loop`, `RT-RTE-retrieval-synthesis`, `RT-RTE-cumulative-retrieval`, `RT-RTE-direct-retrieval`, `RT-RTE-full-history`, `RT-RTE-default`; new `MEM-RTE-cumulative-write` | No separate memory service, hook, or memory-specific tool registry appears in the inspected interface. Provider-side effects are outside the boundary. |
+| Curator instructions and extraction/fallback | `prompts/curator_prompt_for_dc_cumulative.txt`; `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`; `dynamic_cheatsheet/utils/extractor.py` | `MEM-RTE-cumulative-write`; annotation on `RT-OBJ-cheatsheet` | Prompt instructions do not validate the model's judgment or the resulting content. |
+| Raw example history and fixed retrieval index | `run_benchmark.py`; `dynamic_cheatsheet/language_model.py`; `embeddings/` | New `MEM-OBJ-example-history`, `MEM-OBJ-embedding-table`; annotations on `RT-OBJ-retrieval-context` | Embedding provenance and relevance are not established. |
+| Persisted result consumption and after-the-fact evaluation | `run_benchmark.py`; `EvaluatingResults.ipynb`; `dynamic_cheatsheet/utils/evaluation.py` | Annotations on `RT-OBJ-run-checkpoint`, `RT-RTE-checkpoint-resume` | The notebook's checked-in code is a consumer definition, not evidence that its displayed or recomputed scores came from this frozen run. |
+| Interactive caller | `ExampleUsage.ipynb`; `README.md` | Annotation on `RT-OBJ-cheatsheet` | The notebook contains saved outputs, not an inspectable run under this boundary's conditions. |
+
+Direct inspection added these paths to the initial paths listed in the Source register: `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/utils/evaluation.py`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`, `text_generation/simple_unified_client.py`, the `embeddings/` CSV files, and the input cells of `EvaluatingResults.ipynb` and `ExampleUsage.ipynb`. They are at the registered revision and use SRC-1. The client exposes provider request construction and code-interpreter operations, not a repository-owned persistent memory API. No source checkout access gap was found.
+
+## Core ideas
+
+The repository retains material in model-visible text and example pairs, not in a repository-owned memory service. A caller supplies the current cheatsheet to `advanced_generate`; the benchmark carries returned state across examples and writes it to JSONL. The configured inference model is called with the selected prompt text. The repository says this does not change model parameters, but provider telemetry and resolved model versions are outside the evidence boundary (SRC-1, `README.md`, `dynamic_cheatsheet/language_model.py`).
+
+The cumulative route writes derived prose. For each question, the model generates an answer, then the curator prompt receives that question, the raw generator response, and the prior cheatsheet. The curator's tagged text replaces the prior value; if the expected tags are absent, extraction returns the old value. The prompt asks the model to judge answer correctness and preserve useful material, but neither the benchmark's target-based evaluator nor a separate human reviewer gates the write. The answer target is scored only after generation and curation. The replacement and its input are retained, but no curator rationale or verified judgment is recorded as a separate artifact (SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`, `run_benchmark.py`, `prompts/curator_prompt_for_dc_cumulative.txt`).
+
+The other memory mechanism retains prior input/output pairs. Full-history appending supplies all prior pairs; direct retrieval supplies a top-k subset selected by cosine similarity over fixed, precomputed input vectors. Retrieval-synthesis transforms selected pairs plus prior cheatsheet text into a new text context before generation. Cumulative retrieval gives the generator both the accumulated text and selected pairs, then updates the text after the answer. In direct retrieval the runner still stores a returned text field, but that branch does not read that field when building its next retrieved context. Vector rows are shipped data and are not updated by the task loop (SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`).
+
+The benchmark JSONL stores each answer, target, returned cheatsheet, raw output, and the step fields returned by the wrapper; the latter retain current and new cheatsheet strings on curator routes. It rewrites the accumulated rows after each example. A later continuation loads all rows, restores the last cheatsheet and raw outputs, then the selected approach determines which state reaches a prompt. The parameter comparison for continuation omits some settings, and no integrity, atomicity, expiry, or versioning guarantee is implemented. The evaluation notebook can read these rows and recompute scores from saved generator output, but no such score is passed back to a curator or used to withdraw state (SRC-1, `run_benchmark.py`, `EvaluatingResults.ipynb`).
+
+## Shared records
+
+### Components
+
+none declared in this member.
+
+### Operative objects
+
+#### MEM-OBJ-example-history — Task input and generated-output pairs
+
+Part of: RT-OBJ-retrieval-context
+
+- Closest supplied record and distinct identity: `RT-OBJ-retrieval-context` groups this dynamic pair history with static vector rows. This record is only the ordered task-input and generated-output material; no other supplied object separately identifies that trace corpus.
+- Identity: prior task inputs paired with `final_output` strings supplied to history or retrieval routes.
+- Representational form: natural-language prompt and model-output text. The output may contain reasoning or code as text; this report does not treat it as verified.
+- Storage substrate: task inputs are held in the benchmark corpus; generated outputs are held in `generator_outputs_so_far` and in benchmark JSONL rows.
+- Lineage: each pair combines a task input with the model's returned output. Retrieval does not pair the target with the output; the target is saved separately and used by the evaluator.
+- Consumers and authority: full-history code gives every earlier pair to the generator; retrieval selects pairs for the generator, and retrieval-synthesis also supplies them to the curator. Their text is model-interpreted context, not a program-validated answer or instruction.
+- Persistence and limits: in-process during a run and in result rows on disk. Its survival does not establish correctness, usefulness, or future activation.
+- Evidence: SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`.
+
+> generator_outputs_so_far.append(output_dict["final_output"])
+> --- `run_benchmark.py`
+
+#### MEM-OBJ-embedding-table — Precomputed retrieval vectors
+
+Part of: RT-OBJ-retrieval-context
+
+- Closest supplied record and distinct identity: `RT-OBJ-retrieval-context` also covers task and output pairs. This record is the fixed numeric index used for ranking; it is not the retrieved example content and no other supplied object identifies it separately.
+- Identity: the task-specific rows read from `embeddings/<task>.csv` and aligned to the dataset's input order.
+- Representational form: dense numerical vectors used by a cosine-similarity consumer; these are not the configured model's weights.
+- Storage substrate: tracked per-task CSV files; loaded as numeric arrays for a benchmark run.
+- Lineage: precomputed before the inspected loop. The producing model and conditions are not identified by the inspected source, and the run computes no embeddings.
+- Consumers and authority: local cosine ranking selects which paired examples are included in retrieval prompts. The vectors choose context; they do not score answer correctness or decide whether a cheatsheet write is admitted.
+- Persistence and limits: fixed shipped data, with no refresh or expiry path in the inspected loop. Similarity does not establish relevance or benefit.
+- Evidence: SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `embeddings/`.
+
+> similarities = cosine_similarity([current_original_input_embedding], prev_original_input_embeddings)
+> --- `dynamic_cheatsheet/language_model.py`
+
+### Routes
+
+#### MEM-RTE-cumulative-write — Curator replacement of accumulated text
+
+Part of: RT-RTE-cumulative-loop
+
+- Endpoints and progression: current question, generator response and prior cheatsheet → curator request → tagged text extraction or old-text fallback → returned cheatsheet → benchmark carry-forward or caller reuse.
+- Owner: one configured model generates the answer and proposes the replacement; local code checks for `<cheatsheet>` delimiters and chooses extracted text or the prior string; the caller controls subsequent delivery.
+- Context, state and effects: the curator sees the question, ungraded generator response and prior text. The benchmark target and its post-response evaluation result do not enter the curator request.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: extracted cheatsheet text, or the previous string if `<cheatsheet>` tags are absent.
+- Later read-back: the benchmark passes the returned text to the next eligible call and reloads the last row's value on continuation; direct API callers must pass it themselves.
+- Delegated visibility: the curator model sees prior text and current answer; a subsequent generator sees the returned text when its approach supplies cumulative cheatsheet content.
+- Selection predicate: the model writes the candidate according to the curator prompt; code accepts the first tagged segment without checking claims, answer correctness, or usefulness. Missing tags preserve the prior text.
+- Invalidation or expiry: no time, task, or size-based invalidation is implemented; a replacement may omit earlier text. Earlier row versions remain in the JSONL output, but ordinary continuation restores only the last row's value.
+- Activation or effect: the returned text is wired into later prompts on cumulative routes; whether it changes model behavior is unobserved.
+- Evidence limits: implementation and prompt guidance only; no provider output or live operation is supplied, and no result shows that the curator's correctness judgment was accurate.
+- Decision roles: the curator model proposes and performs content selection; extraction code accepts a tagged segment or falls back. There is no separate human approval, veto, or content validator.
+- Answer oracle: the benchmark evaluator compares the extracted answer with the task target after the curator call, but its result does not gate this write. A direct library caller has no benchmark target oracle in this route.
+- Operating mode and trigger: each cumulative benchmark question triggers generation and curation; `max_num_rounds` can repeat this within one call. A wrong benchmark answer does not suppress the next write.
+- Admission, rejection, and recovery: tag presence admits the replacement. Missing tags preserve the prior text; there is no explicit candidate rejection decision or rollback operation. A caller may choose an earlier saved file for continuation, but this is not an in-route undo.
+- Guidance and persistence: the cumulative curator prompt asks for a correctness assessment and preservation/refinement of useful material. The saved rows include prior/new text and generator output, but not a separately retained curator rationale or curator response.
+- Evidence: SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`, `run_benchmark.py`, `prompts/curator_prompt_for_dc_cumulative.txt`.
+
+> # Extract the new cheatsheet from the output (if present); otherwise, return the old cheatsheet
+> new_cheatsheet = extract_cheatsheet(response=cheatsheet_output, old_cheatsheet=current_cheatsheet)
+> cheatsheet = new_cheatsheet
+> --- `dynamic_cheatsheet/language_model.py`
+
+### Claims
+
+none declared in this member.
+
+### Evidenced absences
+
+none declared in this member.
+
+### Behavioral-authority paths
+
+none declared in this member.
+
+## Annotations
+
+#### On RT-OBJ-cheatsheet — Curated text
+
+- Storage substrate: direct callers hold and pass a string; the benchmark holds it during the loop and saves it in each result row.
+- Representational form: natural-language text interpreted through generator or curator prompts.
+- Lineage and raw/derived distinction: cumulative curation derives replacement text from the current question, raw answer and previous text; retrieval-synthesis derives text from selected prior input/output pairs, next input and previous text. Direct retrieval's context is the selected raw pairs, despite storing that context as `final_cheatsheet` in the result.
+- Write agency and source: the model authors candidate text; the extractor applies delimiter fallback. The benchmark target and score do not supervise curation.
+- Memory consumers and authority: cumulative generation supplies the current string to the generator. Retrieval-synthesis supplies it to the curator as previous text, and the returned synthesis to the generator. In cumulative retrieval, the generator reads it alongside examples and the curator sees it for update. Direct retrieval does not consume its carried text field.
+- Read-back trigger and selector: caller chooses the approach; each next input triggers a call. The benchmark selects its latest returned value by position on resume; it does not semantically select among saved versions.
+- Persistence, delivery and horizon: caller-managed reuse or benchmark JSONL across continuation runs; delivered as prompt text. No beyond-run provider memory is evidenced.
+- Write status and limits: implementation wired, operation uninspected. Delivery is evidenced by source; activation and benefit are not.
+
+> Before updating the cheatsheet, however, you should first assess the correctness of the provided solution
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
+
+#### On RT-OBJ-retrieval-context — Prior examples and vectors
+
+- Storage substrate: static CSV vector rows; dataset input corpus and the per-run list of generated outputs; benchmark output rows also preserve these values.
+- Representational form: the object is mixed, so its material parts are declared as `MEM-OBJ-example-history` and `MEM-OBJ-embedding-table` above.
+- Lineage and raw/derived distinction: dataset inputs and model outputs are the trace content; vectors are precomputed numerical selectors, not transformed outputs. The retrieval-synthesis branch derives text from selected traces and prior cheatsheet as described on `RT-RTE-retrieval-synthesis`.
+- Memory consumers and authority: full-history exposes all prior pairs to the generator; direct and cumulative retrieval expose cosine-selected pairs to the generator; retrieval-synthesis also exposes selected pairs to the curator. Model interpretation is not a correctness check.
+- Read-back trigger, selector, budget, delivery and limits: the selected approach and current question trigger retrieval. Cosine similarity ranks prior input vectors; `retrieve_top_k` limits pair count. The pair text is inserted in the generator prompt, or additionally in a curator prompt for retrieval-synthesis. No execution trace establishes relevance or effect.
+
+> elif approach_name in ["Dynamic_Retrieval", "DynamicCheatsheet_RetrievalSynthesis"]:
+> --- `dynamic_cheatsheet/language_model.py`
+
+#### On RT-OBJ-run-checkpoint — Benchmark output file
+
+- Storage substrate and contents: JSONL rows contain current input, target, model result fields, final cheatsheet and wrapper `steps`; the companion JSON stores arguments. The `steps` on curation routes retain current and new text alongside generator output, not the curator's full response or a separately attributed rationale.
+- Lineage and curation: each completed row extends the in-memory output list and the next text is the returned `final_cheatsheet`. There is no separate append-only history service; each write rewrites accumulated rows.
+- Read-back trigger and selector: continuation is caller-triggered by `continue_from_last_run_path`; code restores all rows, the last row's cheatsheet if present, and prior `final_output` values. Subsequent mode logic decides which text/pairs are consumed. The saved-argument check covers only a subset of run settings.
+- Persistence and delivery: local filesystem across invocations; restored values enter the benchmark's selected prompt route. The notebook also reads JSONL for after-the-fact answer scoring. Scoring does not modify or withdraw retained state.
+- Limits: operation, interruption recovery, file integrity and result provenance are unobserved. No atomic write, expiry, or automatic rollback is evidenced.
+
+> last_cheatsheet = outputs[-1].get("final_cheatsheet")
+> --- `run_benchmark.py`
+
+#### On RT-RTE-retrieval-synthesis — Retrieve and synthesize
+
+- Write agency and retained source: local code selects prior pairs by cosine similarity; the curator model transforms those pairs together with the next input and previous text into a derived context. If it emits no expected tags, extraction falls back to the retrieved-pair text.
+- Read-back trigger and selection: each current question supplies its fixed vector; local code ranks earlier input vectors and selects at most `retrieve_top_k` associated input/output pairs. The curator receives these pairs, the next question and the prior returned text. The generator receives the extracted synthesis.
+- Persistence, delivery and later consumer: the benchmark stores the returned context in its row, carries it to the next iteration as prior text, and restores the last value on continuation. The next curator can read that text; the next generator sees the new synthesis. Selected traces remain available in output history for later retrieval.
+- Behavioral authority and limits: cosine controls pair selection; the model controls the synthesized prose; no answer target gates synthesis. Prompt inclusion is wired, but correct use and answer improvement are unobserved. The prompt requests critical treatment of examples, which is not a programmatic check.
+
+#### On RT-RTE-cumulative-retrieval — Cumulative text with retrieval
+
+- Write agency and source: the same curator operation as the cumulative route rewrites prior text from the current question and raw answer; the generator also receives the locally selected top-k example pairs.
+- Read-back trigger, selection and delivery: a current vector ranks earlier vectors; at most `retrieve_top_k` pairs plus the accumulated cheatsheet enter the generator prompt. The returned cumulative text is carried to a later question and saved for continuation. The curator sees prior cumulative text but not the selected examples or evaluator score in its request.
+- Rejection, persistence and limits: missing tags keep prior text; the evaluator's score does not reject a write. Pair selection and text delivery are wired, while model use and benefit are unobserved. No expiry or pruning is implemented.
+
+#### On RT-RTE-direct-retrieval — Top-k example context
+
+- Read-back trigger and selector inputs: current question's fixed vector ranks vectors for previous inputs; selected indices retrieve corresponding input/output pairs, up to `retrieve_top_k`.
+- Selected material, delivery and consumer: only selected pairs are inserted in the generator prompt. There is no curator call. The `final_cheatsheet` result field contains the context, is stored by the runner, and is restored as a value on continuation, but this branch does not use that value when building the next context.
+- Persistence, authority and limits: output history preserves the raw pairs; their use in later calls is governed by new cosine ranking. Delivery is wired, activation and benefit are unobserved, and vector provenance is unknown.
+
+#### On RT-RTE-full-history — Append prior solutions
+
+- Read-back trigger and selector: each question after the first triggers assembly of every earlier input/output pair in order; there is no relevance filter, answer check, or configured top-k budget.
+- Delivery, consumer and persistence: the assembled text is placed in the generator prompt; benchmark output history preserves pairs and continuation reloads them. The generator receives all prior outputs when this route is selected.
+- Limits: accumulation has no in-route removal or expiry. The source establishes prompt inclusion, not correct use or benefit; provider context limits and operation are not evidenced.
+
+#### On RT-RTE-checkpoint-resume — Save and resume benchmark state
+
+- Read-back selector and trigger: a caller supplies a prior JSONL path. The driver restores the saved rows, selects the last row's `final_cheatsheet` as current text, restores all `final_output` strings, and skips as many dataset rows as were loaded.
+- Persistence, delivery and consumers: each row is written after processing and the full list is written again at completion. On continuation, the selected approach determines whether restored text, output pairs, or both reach a model prompt. The result-analysis notebook reads saved rows for scoring but does not feed the score into memory.
+- Limits: parameter consistency checks cover only named settings in the implementation; no observed continuation or corruption-recovery run is supplied. A checkpoint is a caller-selected persistence path, not a transactional rollback mechanism.
+
+#### On RT-RTE-default — Single-call baseline
+
+- Memory status: no retained material is read or produced by this branch. The benchmark can still write its answer row, but a later default call receives no accumulated cheatsheet from this route.
+- Limits: implementation only; no provider execution was supplied.
+
+## Write side
+
+In cumulative mode, write agency is the configured model acting as curator after each generator answer. The prompt asks it to assess the solution, preserve useful old items, add lessons, and replace the full text. The output extractor accepts text bounded by the first expected cheatsheet tags; otherwise it keeps the prior text. The code does not parse individual items, confirm usage counts, independently evaluate the answer, or compare a candidate against a trusted reference. This is prompt-guided model selection with a delimiter fallback, not validated curation (SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`).
+
+In retrieval-synthesis mode, the write input is selected earlier: local cosine ranking chooses prior examples, then the model writes a question-specific synthesis from those pairs, the next input and prior text. Missing tags return the retrieved-pair string. In cumulative-retrieval mode, retrieval examples reach the generator, but the curator prompt uses the question, raw generator answer and prior accumulated text. In direct retrieval and full-history modes, no curator writes derived text. These routes retain source examples rather than an answer-checked memory update (SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`).
+
+The cumulative generator response is retained in output rows alongside current and new cheatsheet strings. This gives a later reader the answer and before/after text, but not a standalone curator response or stated reasons for each kept, revised, omitted or rejected item. The benchmark target is in the row for evaluation, but is not passed to the curator. The evaluator runs after the memory write and produces counters; neither it nor the notebook removes a failing pair or rolls back a text replacement. A prior JSONL row can still contain an earlier text version, but the regular continuation path reads only the last row's current value. No automated withdrawal operation was found (SRC-1, `run_benchmark.py`, `EvaluatingResults.ipynb`).
+
+## Read-back
+
+The generation route is selected by the caller or CLI `approach_name`, not by a memory-side policy. Cumulative text is supplied to generator prompts; retrieval-synthesis first supplies examples and previous text to a curator, then supplies the returned synthesis to the generator; cumulative retrieval supplies both accumulated text and selected examples to the generator; direct retrieval supplies only selected examples; full-history supplies every preceding pair; default supplies an empty placeholder. The benchmark carries returned text and generated outputs across examples. Direct library callers must supply their own subsequent inputs and state (SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `README.md`, `ExampleUsage.ipynb`).
+
+For retrieval, the selector is local cosine similarity over static vectors aligned to dataset inputs; `retrieve_top_k` bounds the selected pair count. The code neither uses task targets in ranking nor verifies the retrieved outputs. The vector provenance and accuracy are not established. Full-history has no relevance selection and grows with all preceding pairs. On continuation, restored values are available to the chosen route; availability does not mean every route consumes each restored field. Specifically, direct retrieval ignores its carried text value while using restored prior output pairs.
+
+Prompt insertion establishes delivery, not activation. No inspectable provider trace establishes whether or how the model relied on the text or examples, and no comparison establishes benefit. The evaluator and notebook are later consumers of answer records for scoring, not selectors or validators of retained memory. There is no repository-defined interface for users to edit or approve memory items separately from choosing prompt files, initial text, mode and call arguments.
+
+## Integration issues
+
+- The supplied `RT-OBJ-retrieval-context` combines distinct material: mutable per-run input/output history and a fixed precomputed vector table. They have different lineage, storage, and consumers. This report declares `MEM-OBJ-example-history` and `MEM-OBJ-embedding-table` as its two parts; keep the container identity and assess the parts separately. Evidence: SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `embeddings/`. Consequence: do not describe the vector table as learned or updated by the trace-fed route.
+- `MEM-RTE-cumulative-write` is the curator write subroute within `RT-RTE-cumulative-loop`, declared as a part because its candidate-admission check and memory consumer differ from answer generation. The parent remains a valid end-to-end route. Evidence: SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`. Consequence: treat model assessment as prompt guidance, not the benchmark's target-based oracle.
+- `RT-OBJ-cheatsheet` is the same returned text object discussed here, so it is annotated, not redeclared. `RT-OBJ-run-checkpoint` is the same JSONL persistence object and is annotated, not redeclared. Evidence: SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`. Consequence: retain the supplied runtime IDs and use the memory-specific consumers above.
+- The existing `RT-RTE-cumulative-loop`, `RT-RTE-retrieval-synthesis`, `RT-RTE-cumulative-retrieval`, `RT-RTE-direct-retrieval`, `RT-RTE-full-history`, `RT-RTE-default` and `RT-RTE-checkpoint-resume` already identify the end-to-end runtime routes. This report annotates their memory aspects rather than creating duplicate route records. Evidence: SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`. Consequence: use their existing IDs when integrating route-level findings.
+- The checked-in evaluation path recomputes answer scores from saved generator outputs but does not send results into memory admission, deletion, or rollback. Evidence: SRC-1, `EvaluatingResults.ipynb`, `run_benchmark.py`. Consequence: evaluation artifacts cannot support a claim that incorrect memory is withdrawn or that subsequent memory reflects benchmark feedback.
+- Provider-side retention and user-visible mutation beyond passing or choosing text are unresolved because the repository contains only provider-call construction, not service behavior or a deployed caller trace. Evidence: SRC-1, `text_generation/simple_unified_client.py`, `dynamic_cheatsheet/language_model.py`. Consequence: conclusions stop at repository-owned prompt delivery and local persistence.
+
+## Limitations and checks
+
+Source identity rechecked against the frozen boundary: repository `https://github.com/suzgunmirac/dynamic-cheatsheet`, commit `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`; cited source paths are within the registered checkout. The runtime baseline was treated as provisional and cross-checked against the benchmark CLI/caller, wrapper branches, extraction code, curation prompts, provider client interface, evaluator and result notebook. No live provider operation, continuation trace, candidate-quality audit, memory-effect experiment, or reproducible provenance for vectors/results was supplied. These gaps prevent claims about actual activation, correctness, usefulness, improvement, or service-side retention. The final `commonplace-analysis-check <run-state> memory-0 <output>` passed after quotation repairs; that check establishes member form and citation occurrence, not finding correctness or analysis independence.
+
+=== END inputs/records/memory.md ===
+
+=== BEGIN inputs/records/epistemic.md sha256=68ed2d1808972d5a9cb4142b3111bc8f04f5c61dcae8886585e6def4df4dfd22 ===
+---
+type: agentic-system-analyses/types/agentic-system-epistemic-report.md
+description: "Epistemic routes of Dynamic Cheatsheet at 5cfe3c3"
+run-id: AAS-2026-10-04-dynamic-cheatsheet-01
+reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+---
+
+# Dynamic Cheatsheet epistemic report
+
+## Source-and-claim boundary
+
+Dynamic Cheatsheet (DC) is a prompt-driven inference-time system that generates answers and carries text between calls. This report traces candidate production, curation, task checking, exposure to future calls, and the separately exposed generic text-generation client. The frozen whole-system boundary is SRC-1 at commit 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9. The question is whether DC produces, checks, accepts, retains, and operationally uses truth-apt content, and what evidence warrants the README's learning and performance claims.
+
+The run code-inspected prompt assembly, extraction, local code execution, benchmark dispatch and score consumers, checkpoint/resume, retrieval, and the generic provider client operations. Supplied runtime records cover the cumulative and alternative approach flows and code execution paths. The benchmark loads task targets for its local evaluator after answer and cheatsheet generation; it does not pass those targets to the generator or curator. That benchmark check therefore cannot have admitted or withdrawn the cheatsheet for the already completed question.
+
+| Entry point or operation | Source path | Covering records | Coverage and limit |
+|---|---|---|---|
+| Benchmark CLI, approach dispatch, per-question state and scoring | `run_benchmark.py`; `dynamic_cheatsheet/language_model.py` | RT-RTE-cumulative-loop; RT-RTE-retrieval-synthesis; RT-RTE-cumulative-retrieval; RT-RTE-direct-retrieval; RT-RTE-full-history; RT-RTE-default; EPI-RTE-benchmark-answer-check | Directly inspected. The benchmark exposes the listed approaches and task evaluator branches. It scores after curation and carries state irrespective of score. No benchmark execution trace was supplied. |
+| Generator and curator content routes | `prompts/generator_prompt.txt`; `prompts/curator_prompt_for_dc_cumulative.txt`; `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`; `dynamic_cheatsheet/language_model.py`; `dynamic_cheatsheet/utils/extractor.py` | RT-RTE-cumulative-loop; RT-RTE-retrieval-synthesis; RT-RTE-cumulative-retrieval | Directly inspected. The prompts declare desired reasoning; model interpretation and any actual assessment are unobserved. |
+| Retrieval and example selection | `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`; `embeddings/` | RT-OBJ-retrieval-context; RT-RTE-retrieval-synthesis; RT-RTE-direct-retrieval; RT-RTE-cumulative-retrieval; RT-RTE-full-history | Directly inspected. Vectors are precomputed; their provenance and any correctness relation to examples are unknown. |
+| Benchmark evaluators and disconnected evaluator utilities | `run_benchmark.py`; `dynamic_cheatsheet/utils/evaluation.py`; `dynamic_cheatsheet/utils/sonnet_eval.py` | EPI-RTE-benchmark-answer-check | Directly inspected. The runner dispatches Game of 24, AIME exact matching, multiple choice, and equation balancing. Checkmate and programming-puzzle helpers and sonnet checks exist but are not dispatched by this runner or connected to curation. Their independent use does not establish an automatic DC check route. |
+| Local execution and provider code tools | `dynamic_cheatsheet/utils/execute_code.py`; `dynamic_cheatsheet/language_model.py`; `text_generation/simple_unified_client.py` | RT-RTE-local-python; RT-RTE-provider-code | Directly inspected. Execution output returns to the model as text. No execution, host configuration, or provider-side trace was supplied. |
+| Generic client conversation and optional web search | `text_generation/simple_unified_client.py`; `dynamic_cheatsheet/language_model.py` | EPI-RTE-client-chat; EPI-RTE-client-search | Directly inspected. Public client methods support in-memory chat history and optional Tavily or provider web search. The DC wrapper constructs the client without web-search settings and calls `generate_from_messages`, which disables native search flags; the optional `chat` route is separately callable. An OpenAI search-preview model can still invoke its model-specific search behavior through the wrapper, but provider operation is not observed. |
+| Result, data and notebook artifacts | `results/`; `data/`; `embeddings/`; `EvaluatingResults.ipynb`; `ExampleUsage.ipynb`; `figures/` | RT-OBJ-run-checkpoint; RT-OBJ-retrieval-context | Included in the registered boundary. Saved files and notebook outputs do not identify a run under these frozen conditions or establish artifact provenance, reproducibility, or a component's causal effect. |
+| Provider services, model internals and actual search/code-tool operation | External provider APIs and execution services | RT-CMP-model; RT-RTE-provider-code; EPI-RTE-client-search | Not inspectable in SRC-1. This prevents conclusions about the provider's resolved model version, internal checks, web results, sandbox, execution, or effects. |
+
+README claims relevant to this question are EPI-CLM-performance-gains and EPI-CLM-zero-shot-learning. The source register is supplied in boundary.md; the evidence identity is SRC-1 throughout. The retained boundary quotation that identifies the shipped curation, carry-forward, and evaluation loop is:
+
+> After each answer, a curator call updates the cheatsheet.
+> --- `dynamic_cheatsheet/language_model.py`
+
+## Epistemic-object inventory
+
+| Object ID | Candidate truth-apt content or none | Claimed role | Evidence source ID and local anchor | Gap/limit |
+|---|---|---|---|---|
+| RT-OBJ-cheatsheet | Mixed natural-language procedures, examples, and possible factual or mathematical assertions | Curated reusable problem-solving text | SRC-1 `prompts/curator_prompt_for_dc_cumulative.txt`; RT-OBJ-cheatsheet | The format permits truth-apt claims and instructions. No supplied live instance shows its content, origin, or correctness. Instructions and factual claims need separate interpretation. |
+| EPI-OBJ-current-answer | A candidate answer to the current task; truth apt only over the task's stated question and answer domain | Generator output extracted for return and, in benchmark mode, task scoring | SRC-1 `dynamic_cheatsheet/language_model.py`; `dynamic_cheatsheet/utils/extractor.py`; RT-OBJ-run-checkpoint | The model's actual answer and its premises are unobserved. Extraction changes the returned string, not its warrant. |
+| EPI-OBJ-prior-pairs | Natural-language benchmark inputs and prior model outputs; outputs may assert answers or procedures | Context material for top-k retrieval or full-history prompting | SRC-1 `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`; RT-OBJ-retrieval-context | Prior outputs have no route-linked correctness status. They may be wrong; task targets are not used to filter them. |
+| EPI-OBJ-retrieval-vectors | None individually: dense numeric vectors and cosine scores encode selection signals, not stated propositions | Select prior examples for some approaches | SRC-1 `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`; RT-OBJ-retrieval-context | Vector model, construction conditions, and semantic alignment are not established. Similarity is not correctness or warrant. |
+| EPI-OBJ-client-history | Conversation text, including user messages and generated assistant responses; some responses can make truth-apt claims | In-memory history consumed by later calls to the generic client | SRC-1 `text_generation/simple_unified_client.py` | This is separate from the DC cheatsheet and benchmark JSONL. It has no automatic truth check or disk persistence in the inspected client. |
+| EPI-OBJ-tavily-results | Imported natural-language result snippets with titles and URLs | Optional external context for a generic-client call | SRC-1 `text_generation/simple_unified_client.py` | Result provenance, source truth, ranking quality and actual use are not established. Native provider search has no locally inspectable result object. |
+
+The three EPI parts of supplied aggregate objects retain their parent identity: EPI-OBJ-current-answer is part of RT-OBJ-run-checkpoint; EPI-OBJ-prior-pairs and EPI-OBJ-retrieval-vectors are each part of RT-OBJ-retrieval-context. The parents remain valid aggregate records. These distinctions separate answer checking, prior-output consumption, and non-propositional numeric selection. EPI-OBJ-client-history, EPI-OBJ-tavily-results and EPI-OBJ-provider-search have no supplied equivalent: they distinguish in-memory conversation, optional Tavily snippets, and inaccessible provider-side search content from tracked prior examples.
+
+## Authority-route ledger
+
+### Candidate generation and curation
+
+Route ID: RT-RTE-cumulative-loop
+
+Route function: content transformation
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-current-answer
+- Content/update relation: truth-apt transformation: indeterminate — the model generates an answer from the task and prompt context; without an inspectable candidate and warranted premises, entailed derivation, ampliative conjecture, and other model transformations cannot be distinguished.
+- Transition or check target: current task question and requested answer domain.
+- Evaluator/condition and domain: configured model interprets the generator prompt and supplied cheatsheet; no external answer oracle enters this call in the benchmark loop.
+- Activation and timing: each selected approach calls the generator for the current input; operation is unobserved.
+- Possible or observed result: candidate natural-language answer and raw response; no observed result in this run.
+- Implemented force: candidate is returned and may be scored after curation; it is not itself accepted as warranted by this route.
+- Epistemic authority and scope: none established by generation, fluency, or prompt fit.
+- Operational authority: the returned answer is the answer used by the driver; the caller receives it in direct API use.
+- Behavioral-authority path: benchmark driver or library caller, through returned answer text, for the current question only; benchmark score prints a counter.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; RT-RTE-cumulative-loop.
+- Claim IDs or none: EPI-CLM-performance-gains; EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: README improvement and learning claims exceed candidate-generation wiring.
+- Gap/limit: no model output, provider operation, warranted premise set, or answer trace was supplied.
+
+Route ID: RT-RTE-cumulative-loop; linked to the candidate-generation row
+
+Route function: check/evidence production
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-current-answer and RT-OBJ-cheatsheet
+- Content/update relation: no content change as a distinct check result; the curator prompt requests a correctness and usefulness assessment while also asking for replacement text.
+- Transition or check target: the generated solution and existing cheatsheet entries, for correctness and future usefulness.
+- Evaluator/condition and domain: the same configured model is prompted to judge the solution; no reference answer, evidence source, explicit criterion, or independent evaluator is wired into the curator call.
+- Activation and timing: follows each generated answer in cumulative and hybrid routes; no separate assessment artifact is returned or stored.
+- Possible or observed result: any judgment is embedded in the proposed cheatsheet; no judgment trace is supplied.
+- Implemented force: the prompt directs a model assessment; the software does not verify that an assessment occurred or that it is correct.
+- Epistemic authority and scope: no warranted correctness conclusion; the prompt's instruction to include tested and proven solutions is not evidence that tests occurred.
+- Operational authority: any resulting replacement can affect later prompts through extraction and carry-forward.
+- Behavioral-authority path: curator model to parser to next generator prompt, advisory text becoming operative context; later effect is unobserved.
+- Evidence source ID and local anchor: SRC-1 `prompts/curator_prompt_for_dc_cumulative.txt`; `dynamic_cheatsheet/language_model.py`; RT-RTE-cumulative-loop.
+- Claim IDs or none: EPI-CLM-performance-gains; EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: instructed self-assessment is not an independently checked acceptance decision.
+- Gap/limit: no separate check output, reference oracle, reviewer, or operation trace.
+
+> Before updating the cheatsheet, however, you should first assess the correctness of the provided solution and strategically incorporate code blocks, insights, and solutions into the new cheatsheet.
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
+
+Route ID: RT-RTE-cumulative-loop; linked to both preceding rows
+
+Route function: disposition/acceptance
+Architectural status: implemented
+- Object/candidate ID: RT-OBJ-cheatsheet
+- Content/update relation: truth-apt transformation: indeterminate — a full natural-language replacement may preserve, revise, remove, or add assertions; no instance permits semantic comparison.
+- Transition or check target: curator response as candidate replacement for the prior text.
+- Evaluator/condition and domain: deterministic tag extraction checks for an opening `<cheatsheet>` marker; it does not check truth, closing-tag completeness, evidence, scope, or intended use.
+- Activation and timing: runs after each curator call; absence of an opening marker falls back to the previous text.
+- Possible or observed result: extracted text becomes `final_cheatsheet`; otherwise the fallback text is returned.
+- Implemented force: operational replacement or fallback, not epistemic acceptance under an evidence-consuming criterion.
+- Epistemic authority and scope: no truth warrant is licensed by delimiter presence.
+- Operational authority: replacement controls later cumulative context; fallback retains the old text.
+- Behavioral-authority path: extractor and benchmark state variable to later generator and curator prompts; across subsequent questions and resume.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/utils/extractor.py`; `dynamic_cheatsheet/language_model.py`; RT-RTE-cumulative-loop.
+- Claim IDs or none: EPI-CLM-performance-gains; EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: syntax gate substitutes for no content-directed check or rollback.
+- Gap/limit: no candidate, assessment rationale, rejection record, validation result, or route-linked version history is supplied.
+
+Source-inspected deduction: for response `prefix <cheatsheet>alpha</cheatsheet> suffix`, the extractor returns `alpha`; for a response with an opening marker but no closing marker, the split returns all remaining text. A response with no opening marker returns the prior text. This parser changes the string boundaries without establishing the meaning or truth of the enclosed text.
+
+> if "<cheatsheet>" in response:
+>     try:
+>         txt = response.split("<cheatsheet>")[1].strip()
+>         txt = txt.split("</cheatsheet>")[0].strip()
+>         return txt
+> --- `dynamic_cheatsheet/utils/extractor.py`
+
+### Retrieved and accumulated prior outputs
+
+Route ID: RT-RTE-retrieval-synthesis
+
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-retrieval-vectors and EPI-OBJ-prior-pairs
+- Content/update relation: no content change in cosine ranking; the selected prior pairs are then included as prompt text. Curator synthesis is assessed separately as indeterminate truth-apt transformation.
+- Transition or check target: prior input/output examples eligible for the current prompt.
+- Evaluator/condition and domain: local cosine similarity over supplied vectors, descending top-k; no answer oracle or correctness predicate.
+- Activation and timing: on each retrieval-synthesis request; selected pairs reach curator and synthesized text reaches generator.
+- Possible or observed result: a ranked top-k list and candidate synthesized context; no run output supplied.
+- Implemented force: similarity ranking determines context inclusion; it does not determine truth or acceptance.
+- Epistemic authority and scope: none; vector similarity does not warrant the prior answers or their relevance as correct.
+- Operational authority: determines which earlier examples the model can see.
+- Behavioral-authority path: local ranker to curator and generator prompts, for the current call; any later returned text is carried by the benchmark.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`; RT-RTE-retrieval-synthesis.
+- Claim IDs or none: EPI-CLM-performance-gains.
+- Mismatch marker or none: selected similarity is not evidence of answer correctness or benefit.
+- Gap/limit: vector provenance, example validity, actual selection and downstream effects are unobserved.
+
+Route ID: RT-RTE-cumulative-retrieval; linked to RT-RTE-retrieval-synthesis
+
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-retrieval-vectors; EPI-OBJ-prior-pairs; RT-OBJ-cheatsheet
+- Content/update relation: truth-apt transformation: non-ampliative reshaping for deterministic assembly of selected examples beside cumulative text; truth-apt transformation: indeterminate for the curator's replacement.
+- Transition or check target: similar prior examples and current cumulative text supplied to answer generation; prior cumulative text supplied to curator.
+- Evaluator/condition and domain: cosine top-k selects examples; the curator model proposes text without answer-target feedback.
+- Activation and timing: retrieval and generation occur for the current question; curation follows the answer.
+- Possible or observed result: prompt containing the cumulative text plus examples, then candidate replacement text; no operation trace.
+- Implemented force: inclusion in the prompt and subsequent replacement/fallback determine context, with no correctness gate.
+- Epistemic authority and scope: none established for selected examples or replacement text.
+- Operational authority: selected examples and cumulative text can shape later model inputs.
+- Behavioral-authority path: ranker and curator through prompt strings and benchmark carry-forward, across later questions.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; RT-RTE-cumulative-retrieval.
+- Claim IDs or none: EPI-CLM-performance-gains; EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: context selection and prompt guidance do not establish verified learning.
+- Gap/limit: vector provenance, curation quality and effect are unobserved.
+
+Route ID: RT-RTE-direct-retrieval
+
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-retrieval-vectors and EPI-OBJ-prior-pairs
+- Content/update relation: truth-apt transformation: non-ampliative reshaping — selected input/output strings are assembled as prompt context.
+- Transition or check target: prior model outputs selected for the current answer.
+- Evaluator/condition and domain: descending cosine top-k only; the prompt warns that examples may contain errors, but no checker verifies them.
+- Activation and timing: before each generator call; this branch does not consume the carried cheatsheet.
+- Possible or observed result: selected examples become visible to the generator; no observed response supplied.
+- Implemented force: prompt inclusion only.
+- Epistemic authority and scope: none; prior answers remain unverified.
+- Operational authority: selected examples can influence the current answer.
+- Behavioral-authority path: local ranker to generator prompt, one current call at a time.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; RT-RTE-direct-retrieval.
+- Claim IDs or none: EPI-CLM-performance-gains.
+- Mismatch marker or none: similarity ranking does not check examples.
+- Gap/limit: no embedding provenance, answer traces, or observed behavioral effect.
+
+Route ID: RT-RTE-full-history
+
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-prior-pairs
+- Content/update relation: truth-apt transformation: non-ampliative reshaping — all previous input/output pairs are formatted and appended in order.
+- Transition or check target: all preceding benchmark outputs, including unchecked or incorrect answers.
+- Evaluator/condition and domain: no selection or correctness check; sequence position alone includes each pair.
+- Activation and timing: before every generator call after the first example.
+- Possible or observed result: full prior history is included; no run output supplied.
+- Implemented force: prompt inclusion.
+- Epistemic authority and scope: none established for any prior answer.
+- Operational authority: all prior answer text can affect later generation.
+- Behavioral-authority path: benchmark history to generator prompt, increasing over a run and restored on resume.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; RT-RTE-full-history.
+- Claim IDs or none: EPI-CLM-performance-gains.
+- Mismatch marker or none: retention and use extend exposure without accuracy selection.
+- Gap/limit: no run trace or context-limit behavior supplied.
+
+Route ID: RT-RTE-checkpoint-resume
+
+Route function: retention
+Architectural status: implemented
+- Object/candidate ID: RT-OBJ-run-checkpoint and RT-OBJ-cheatsheet
+- Content/update relation: truth-apt transformation: non-ampliative reshaping — JSON serialization retains returned text, answers, inputs, and targets.
+- Transition or check target: accumulated rows and latest returned text.
+- Evaluator/condition and domain: filesystem write and row-count resume; no integrity, correctness, or full-configuration check.
+- Activation and timing: after each scored example and at completion; on continuation, reads prior rows and skips their count.
+- Possible or observed result: durable JSONL and reloadable candidate state; no interruption/resume trace supplied.
+- Implemented force: saved text and outputs can be restored into later benchmark calls.
+- Epistemic authority and scope: persistence adds no warrant and the saved target does not mark its answer as accepted.
+- Operational authority: loaded output/text seeds subsequent retrieval, full history, or cumulative context according to the selected approach.
+- Behavioral-authority path: checkpoint file to benchmark driver to later model prompts, within continued runs.
+- Evidence source ID and local anchor: SRC-1 `run_benchmark.py`; RT-RTE-checkpoint-resume.
+- Claim IDs or none: EPI-CLM-performance-gains.
+- Mismatch marker or none: checkpoint recovery is not validation or rollback.
+- Gap/limit: file integrity, changed unchecked parameters, and actual recovery are not established.
+
+### Benchmark answer check
+
+Route ID: EPI-RTE-benchmark-answer-check
+
+Route function: check/evidence production
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-current-answer
+- Content/update relation: no content change — task-specific functions return a Boolean match result about the extracted answer.
+- Transition or check target: final answer against the benchmark target and task rules; e.g. arithmetic expression and digit use, exact AIME text, multiple-choice option, or equation balance.
+- Evaluator/condition and domain: local program. Game of 24 evaluates the expression, requires value 24 and compares used digits; AIME removes listed punctuation/newlines and compares normalized strings; multiple choice uses option parsing and text/letter heuristics; equation balancing checks operator-stripped form and computed value. The benchmark target is the answer oracle for these modes.
+- Activation and timing: after generation and curation, per benchmark question; not part of direct library calls.
+- Possible or observed result: Boolean updates printed correct/total counters; no execution result supplied.
+- Implemented force: counter and final summary only; score is neither fed back to curator nor used to reject, revise, withhold, or roll back the answer or cheatsheet.
+- Epistemic authority and scope: bounded to implemented task predicate and target. Exact match licenses only normalized textual identity; Game of 24 licenses arithmetic-rule compliance; the option heuristic licenses its own parsed match. None warrants reasoning, explanation, generalization, memory entries, or performance gains.
+- Operational authority: no admission or continuation decision; all output rows are written regardless of score.
+- Behavioral-authority path: evaluator to printed counters and summary, after the answer and cheatsheet have already been selected.
+- Evidence source ID and local anchor: SRC-1 `run_benchmark.py`; `dynamic_cheatsheet/utils/evaluation.py`; RT-RTE-cumulative-loop.
+- Claim IDs or none: EPI-CLM-performance-gains; EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: task check is downstream measurement, not a content-admission oracle.
+- Gap/limit: evaluator operation and benchmark provenance are unobserved; helper evaluators for CheckmateInOne and Python programming puzzles are not dispatched by the runner, and `sonnet_errors` is not connected to it.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: inapplicable — the evaluator result is consumed locally by the benchmark counter rather than returned as model content.
+- Later read-back: inapplicable — the Boolean result is not persisted in the output row or supplied to a later model call.
+- Delegated visibility: the benchmark driver sees answer and target; generator and curator do not see this score in the inspected loop.
+- Selection predicate: the task-specific function listed above; its predicate varies by task and is not a universal correctness test.
+- Invalidation or expiry: inapplicable — no stored evaluator judgment exists to invalidate.
+- Activation or effect: counter changes only; answer/cheatsheet carry-forward and checkpoint write proceed on both true and false.
+- Evidence limits: source inspection establishes dispatch and predicate code, not evaluator execution, dataset validity, or the benchmark's experimental conditions.
+- Decision roles: benchmark code computes and reports the predicate; no human or model decision-maker uses it to admit or reject content.
+- Answer oracle: supplied benchmark target, consulted after curation for scoring only; direct library route has no such target oracle.
+- Operating mode and improvement trigger: benchmark mode, once per completed question; each score does not trigger a curation revision.
+
+> result = eval_for_GameOf24(original_input, final_answer)
+> --- `run_benchmark.py`
+
+> if not (abs(value - 24) < 1e-3):
+>     return False
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+> if input_digits != output_digits:
+>     return False
+> return True
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+> output = remove_punctuation(output)
+> output = convert_newline_to_space(output)
+> if target == output:
+>     return True
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+> if target_text and target_text in clean_answer:
+>     return True
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+> if abs(output_value - eval(target_val)) < 1e-6:
+>     return True
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+Source-inspected deduction: answer extraction is a string-boundary operation. For `prefix <answer>42</answer> suffix`, the extractor returns `42`; it does not evaluate the answer. The benchmark checker is therefore the only wired local task comparison found in this loop, and its result has no admission force.
+
+>         txt = response.split("<answer>")[-1].strip()
+>         txt = txt.split("</answer>")[0].strip()
+>         return txt
+> --- `dynamic_cheatsheet/utils/extractor.py`
+
+> if result:
+>     correct_so_far += 1
+> total_so_far += 1
+> --- `run_benchmark.py`
+
+> # Save the outputs to a file after each example (for crash recovery)
+> write_jsonl(args.save_path_name, outputs)
+> --- `run_benchmark.py`
+
+### Execution and optional client routes
+
+Route ID: RT-RTE-local-python
+
+Route function: check/evidence production
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-current-answer
+- Content/update relation: non-truth-apt policy/content update: execution output is appended to the model conversation; this is an observation of program output, not by itself a truth check of the task answer.
+- Transition or check target: model-authored Python's behavior in the current host process, not a specified proof obligation.
+- Evaluator/condition and domain: Python interpreter returns stdout or an error string; no expected result or correctness criterion is imposed by the executor.
+- Activation and timing: generator response must contain the execution flag and code-fence shape; repeats can occur up to the depth limit.
+- Possible or observed result: stdout/stderr or timeout/error text is appended to the model conversation; no execution trace supplied.
+- Implemented force: model can use returned text in a subsequent generator turn; program side effects occur according to host permissions.
+- Epistemic authority and scope: output establishes at most what the process printed under its environment; it does not prove the code implements the intended algorithm or that the answer is correct.
+- Operational authority: model-authored code executes without an in-loop human approval; timeout kills the process but does not undo side effects.
+- Behavioral-authority path: generator output to Python process to captured text to next model turn; final transcript may enter saved answer history.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; `dynamic_cheatsheet/utils/execute_code.py`; RT-RTE-local-python.
+- Claim IDs or none: none.
+- Mismatch marker or none: requested self-validation is model guidance, not a separate check or safety gate.
+- Gap/limit: no host permission boundary, execution, output, rollback, or observed effect was supplied.
+
+Route ID: RT-RTE-provider-code
+
+Route function: check/evidence production
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-current-answer
+- Content/update relation: non-truth-apt policy/content update: provider code-tool output returns as model text; actual content and execution cannot be determined from source.
+- Transition or check target: model-proposed computation in provider-hosted code tooling.
+- Evaluator/condition and domain: caller's `use_code_interpreter` option attaches OpenAI or Claude tooling; no local correctness criterion or per-action reviewer is present.
+- Activation and timing: per enabled generator invocation; the benchmark can create an OpenAI container at startup.
+- Possible or observed result: provider response text; provider execution and result are unobserved.
+- Implemented force: returned text may inform the model's answer; provider-side effects, persistence, and cleanup are not inspected.
+- Epistemic authority and scope: none from tool attachment alone; execution correctness and sandbox behavior are unknown.
+- Operational authority: provider service decides execution within its external contract; caller option enables tool attachment.
+- Behavioral-authority path: model and provider tool to returned text, then caller or benchmark; result remains candidate content.
+- Evidence source ID and local anchor: SRC-1 `dynamic_cheatsheet/language_model.py`; `text_generation/simple_unified_client.py`; RT-RTE-provider-code.
+- Claim IDs or none: none.
+- Mismatch marker or none: tool availability does not establish correct computation, isolation, or rollback.
+- Gap/limit: provider sandbox, execution trace, result artifacts, and container lifetime are outside evidence.
+
+Route ID: EPI-RTE-client-chat
+
+Route function: retention
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-client-history
+- Content/update relation: truth-apt transformation: non-ampliative reshaping — the client appends the original user message and returned assistant text to an in-memory list.
+- Transition or check target: current conversation history for later client calls.
+- Evaluator/condition and domain: no check; the public `chat` method retains each response as supplied.
+- Activation and timing: each successful `chat` call on a client instance; history lasts in that object's memory until reset or replacement.
+- Possible or observed result: a later `chat` call includes previous user/assistant messages; no run trace supplied.
+- Implemented force: retained transcript is supplied to subsequent generic-client generation.
+- Epistemic authority and scope: none; keeping an answer does not endorse it.
+- Operational authority: prior conversation text can influence later replies.
+- Behavioral-authority path: `self.messages` to a later provider call, within one client instance; no automatic disk persistence.
+- Evidence source ID and local anchor: SRC-1 `text_generation/simple_unified_client.py`.
+- Claim IDs or none: EPI-CLM-zero-shot-learning.
+- Mismatch marker or none: this separately exposed transcript route is not the curated cheatsheet or benchmark checkpoint.
+- Gap/limit: direct API route is not called by `LanguageModel.advanced_generate` and no operation is observed.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: response text from the generic client.
+- Later read-back: subsequent calls use accumulated user and assistant messages; `reset_history` clears it and `set_history` replaces it.
+- Delegated visibility: generic-client provider call receives the full stored message history; this is not the benchmark curator route.
+- Selection predicate: append every successful call; no relevance or correctness filter.
+- Invalidation or expiry: only explicit reset or replacing history; no time-based expiry.
+- Activation or effect: history is included in subsequent calls; behavioral effect is unobserved.
+- Evidence limits: client code establishes storage and wiring only; provider interpretation and any effect are unobserved.
+
+> self.messages.append({"role": "user", "content": message})
+> self.messages.append({"role": "assistant", "content": full_response})
+> --- `text_generation/simple_unified_client.py`
+
+Route ID: EPI-RTE-client-search
+
+Route function: content transformation
+Architectural status: implemented
+- Object/candidate ID: EPI-OBJ-tavily-results and EPI-OBJ-provider-search
+- Content/update relation: truth-apt transformation: acquisition/import — when enabled and results are returned, Tavily snippets are inserted before the caller's query; their source warrant is unknown.
+- Transition or check target: caller prompt plus external search snippets.
+- Evaluator/condition and domain: caller must enable Tavily and request `use_web_search`; client formats returned title, URL, and content but does not check their truth or source authority.
+- Activation and timing: optional generic-client `generate` or `chat` calls; the DC wrapper does not initialize or invoke this option.
+- Possible or observed result: formatted search context is sent to the provider; no search result or call trace supplied.
+- Implemented force: imported text can inform the model response; `chat` stores the original user message and assistant response, not a separate result record.
+- Epistemic authority and scope: none established by inclusion or URL display; current source truth and relevance remain unknown.
+- Operational authority: option controls whether fetched snippets are placed in the prompt.
+- Behavioral-authority path: Tavily response to generic-client prompt to provider response; ephemeral to the call except for any influence on retained assistant text.
+- Evidence source ID and local anchor: SRC-1 `text_generation/simple_unified_client.py`.
+- Claim IDs or none: none.
+- Mismatch marker or none: this optional exposed-client acquisition route is not part of the benchmark's configured wrapper path.
+- Gap/limit: no Tavily invocation, source pages, result provenance, or provider response was supplied.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: generated assistant text, not a structured search-result object.
+- Later read-back: the generic `chat` route retains the original message and response; it does not separately retain the fetched result snippets.
+- Delegated visibility: provider receives the prompt augmented with result text; downstream caller sees only returned model text.
+- Selection predicate: Tavily's external search response and caller's query; source ranking and search coverage are not established here.
+- Invalidation or expiry: inapplicable — result snippets are prompt-local and no separate result store is implemented.
+- Activation or effect: enabled search results are put in model input; actual interpretation and effect are unobserved.
+- Evidence limits: external search operation and provider response are unobserved; this route is not used by the DC wrapper as configured.
+
+> if use_web_search and self.web_search_enabled:
+>     query = search_query or prompt
+>     search_context = self._web_search(query)
+>     if search_context and not search_context.startswith("Web search failed"):
+>         prompt = f"Web Search Results:\n{search_context}\n\nUser Query: {prompt}"
+> --- `text_generation/simple_unified_client.py`
+
+The client also declares native provider search tools and recognizes OpenAI search-preview model identifiers. `LanguageModel` calls `generate_from_messages`, which passes the native-search flag as false; the client nevertheless calls its OpenAI search-preview branch when the configured model name has that suffix. This is an optional provider-mediated acquisition route with implementation evidence but no inspectable search result, operation trace, or provider-side warrant. It can affect generator output and potentially the curator's answer input when such a model is selected; the run cannot determine whether a result was retrieved or used.
+
+## System-claim versus route comparison
+
+| Claim ID | Claimed operation or warrant | Claim source ID/anchor and evidence layer | Doctrine/design support | Implemented route IDs | Observed-run support | Causal support and design limits | Supported conclusion | Mismatch/unknown |
+|---|---|---|---|---|---|---|---|---|
+| EPI-CLM-performance-gains | Retaining curated insights improves task performance; README also reports substantial benchmark gains. | SRC-1 `README.md`, doctrine/design | Explicit performance, puzzle, math, and knowledge-task claims. | RT-RTE-cumulative-loop; RT-RTE-retrieval-synthesis; RT-RTE-cumulative-retrieval; RT-RTE-direct-retrieval; RT-RTE-full-history; EPI-RTE-benchmark-answer-check | None supplied under this run. Tracked result artifacts are not a frozen execution trace. | No intervention/comparison protocol or component-isolating evidence is available in this boundary; results cannot identify the curator, retrieval, prompts, model, or other component as cause. | Code implements answer generation, text carry-forward, context selection, and post-answer scoring. It does not support a conclusion that retained text improves performance or that the quoted gains are reproduced here. | Numerical report and causal explanation remain unverified; outcome score does not select or revise memory. |
+| EPI-CLM-zero-shot-learning | README says performance improves without ground-truth labels or human feedback, and frames accumulated experience as learning. | SRC-1 `README.md`, doctrine/design | Explicit “Zero-Shot Learning” and “Experience-Driven Learning” feature claims. | RT-RTE-cumulative-loop; EPI-RTE-benchmark-answer-check; RT-RTE-checkpoint-resume | No operation trace or capacity comparison supplied. | Benchmark targets are withheld from prompts and checked after curation, but the score is only counted. This is compatible with no target feedback into curation; it does not show improved future capacity. Optional exposed-client search and provider behavior are unobserved. | The benchmark wiring has no human admission gate and does not feed its target score into curation. It does retain or retrieve prior outputs. These routes alone do not establish learning or improved future capacity. | README's learning and performance claims exceed inspected operation evidence. “Without ground-truth labels” is not equivalent to verified learning; the benchmark does use target labels downstream for scorekeeping. |
+
+> * **Zero-Shot Learning**: Improves performance without ground-truth labels or human feedback
+> --- `README.md`
+
+> * **Puzzles**: GPT-4o's success rate on Game of 24 increased from approximately 10% to 99% after discovering and reusing Python-based solutions
+> --- `README.md`
+
+## Bounded conclusion
+
+DC generates truth-apt candidate answers and can produce replacement cheatsheet text, but the inspected model routes do not establish the candidates' truth or warrant. The curator is instructed to assess correctness and usefulness; it receives no benchmark target or independently established answer evidence. Its proposed replacement becomes operational when the parser sees an opening marker. Tag extraction is a syntactic disposition with a fallback, not evidence-consuming acceptance against a named criterion, intended use, and scope. Source-inspected string extraction only changes which text is returned.
+
+Retrieval and full-history modes admit previous model answers into later prompts. Similarity ranks examples by precomputed vectors, not correctness. Cumulative text, retrieved examples, and persisted rows can all affect future model inputs, but their later behavioral effect is not observed. Checkpointing provides a durable path to retain and reload those candidates; it neither endorses them nor records the downstream Boolean evaluator result.
+
+The benchmark evaluator has bounded answer-oracle authority for its local task predicates. Game of 24 checks expression value and digit use, while the other task handlers perform normalized exact matching, option matching, or equation comparison. The score reaches counters and printed summaries after curation. It does not admit, reject, revise, or roll back an answer or memory entry. The standalone Checkmate, programming-puzzle and sonnet helpers are not wired into this dispatch.
+
+Local Python execution can return process output to the generator, but no correctness condition distinguishes useful computation from unrelated output, and process side effects have no rollback. The optional provider code tool is similarly only an attached capability from this source boundary; its execution and cleanup contracts remain outside inspection. The generic provider client adds separately callable in-memory chat history and optional search. Those routes are not configured by the DC benchmark wrapper, except that a chosen OpenAI search-preview model may invoke provider-managed search behavior. No source or run evidence establishes what such a provider returns or how it uses it.
+
+The README's performance figures, zero-shot claim, and learning characterization remain unsupported by an observed run or causal comparison in this boundary. No route establishes accepted ampliative knowledge: candidate generation is not acceptance, model-directed checking lacks an inspectable evidence basis, and retention or operational reuse adds no warrant. Provider internals, live web sources, benchmark provenance and execution, model versions, and causal contribution of individual components remain unassessed; they prevent stronger conclusions about correctness, learning, performance, or transfer.
+
+## Shared records
+
+### Operative objects
+
+#### EPI-OBJ-current-answer — Current task answer
+
+Part of: RT-OBJ-run-checkpoint
+
+- Identity: the `final_answer` text extracted from the current generator response and compared by the benchmark evaluator.
+- Representational form: natural-language text; task-dependent content may also be a formula, option token, or code.
+- Storage substrate: current result dictionary and, in benchmark mode, JSONL row.
+- Closest supplied record: RT-OBJ-run-checkpoint; distinct identity: the current candidate answer is the checked text field within the aggregate row.
+- Evidence: SRC-1 `dynamic_cheatsheet/language_model.py`; `dynamic_cheatsheet/utils/extractor.py`; `run_benchmark.py`.
+
+#### EPI-OBJ-prior-pairs — Prior input-output examples
+
+Part of: RT-OBJ-retrieval-context
+
+- Identity: benchmark questions paired with prior model outputs and exposed to retrieval or full-history prompts.
+- Representational form: natural-language inputs and outputs, which may include truth-apt answers, explanations, or code.
+- Storage substrate: dataset and output lists in the benchmark process; checkpoint rows persist outputs.
+- Closest supplied record: RT-OBJ-retrieval-context; distinct identity: these linguistic examples are separate from its dense vector part.
+- Evidence: SRC-1 `dynamic_cheatsheet/language_model.py`; `run_benchmark.py`.
+
+#### EPI-OBJ-retrieval-vectors — Precomputed retrieval vectors
+
+Part of: RT-OBJ-retrieval-context
+
+- Identity: per-task numeric embeddings loaded from CSV and compared by cosine similarity.
+- Representational form: distributed numeric vectors and scalar similarity values; no proposition is individually stated.
+- Storage substrate: tracked `embeddings/<task>.csv` and numeric arrays in process memory.
+- Closest supplied record: RT-OBJ-retrieval-context; distinct identity: numeric ranking state, separate from the natural-language input/output pairs.
+- Evidence: SRC-1 `run_benchmark.py`; `dynamic_cheatsheet/language_model.py`.
+
+#### EPI-OBJ-client-history — Generic client conversation history
+
+- Identity: `UnifiedLLMClient.messages`, a list of user messages and returned assistant responses.
+- Representational form: natural-language message text.
+- Storage substrate: client-instance memory, cleared by reset or replaced by set; no disk path in the inspected client.
+- Closest supplied records: RT-OBJ-cheatsheet and RT-OBJ-run-checkpoint; distinct identity: general conversational history rather than curated memory or benchmark persistence.
+- Evidence: SRC-1 `text_generation/simple_unified_client.py`.
+
+#### EPI-OBJ-tavily-results — Tavily search snippets
+
+- Identity: formatted result strings containing titles, URLs and returned content.
+- Representational form: natural-language text with symbolic URLs.
+- Storage substrate: transient augmented prompt; no separate result archive.
+- Closest supplied record: RT-OBJ-retrieval-context; distinct identity: external web snippets rather than tracked task examples and their vectors.
+- Evidence: SRC-1 `text_generation/simple_unified_client.py`.
+
+### Routes
+
+#### EPI-RTE-benchmark-answer-check — Benchmark task check
+
+Part of: RT-RTE-cumulative-loop
+
+- Identity: task-dispatched local comparison of extracted answer and benchmark target after answer and memory generation.
+- Endpoints and progression: answer and target → task-specific evaluator → Boolean → printed correct/total counter and summary.
+- Owner: benchmark driver dispatches; local evaluator code computes; no human or model consumes the Boolean for admission.
+- Context, state and effects: final answer and task target; only score counters change.
+- Evidence: SRC-1 `run_benchmark.py`; `dynamic_cheatsheet/utils/evaluation.py`.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: inapplicable — result remains a Boolean for the benchmark counter.
+- Later read-back: inapplicable — score is not persisted or sent to a later model call.
+- Delegated visibility: driver sees target and answer; generator and curator do not see the score.
+- Selection predicate: task-specific exact, arithmetic, option, or equation comparison.
+- Invalidation or expiry: inapplicable — no stored judgment to invalidate.
+- Activation or effect: changes counters and summary only.
+- Evidence limits: no live evaluator run or artifact provenance.
+- Compared supplied route: RT-RTE-cumulative-loop; distinct identity: its post-curation scoring subroute, whose result has no disposition force.
+- Decision roles: code computes and prints; no human or model veto.
+- Answer oracle: benchmark target, used after curation for scoring only.
+- Operating mode and improvement triggers: once per benchmark question; a score does not trigger a memory update.
+
+#### EPI-RTE-client-chat — Generic client chat and history
+
+- Identity: public `UnifiedLLMClient.chat` call that appends the user message and assistant response to instance history.
+- Endpoints and progression: message plus prior history → provider call → returned response → append both messages.
+- Owner: client caller chooses messages; client stores and reuses; provider generates response.
+- Context, state and effects: full instance transcript enters later calls through `self.messages`.
+- Evidence: SRC-1 `text_generation/simple_unified_client.py`.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: generated response text.
+- Later read-back: later `chat` calls include all stored messages until reset or replacement.
+- Delegated visibility: selected provider receives message history.
+- Selection predicate: every successful chat turn is appended.
+- Invalidation or expiry: explicit reset or set-history replacement only.
+- Activation or effect: history is included in subsequent provider input; effect is unknown.
+- Evidence limits: no provider call or output trace.
+- Compared supplied records: RT-RTE-cumulative-loop and RT-RTE-checkpoint-resume; distinct identity: standalone client history in memory, not the benchmark cheatsheet or JSONL state.
+- Decision roles: caller supplies turns; client appends; provider responds; no answer oracle or human admission.
+- Answer oracle: inapplicable — none is wired into generic chat.
+- Operating mode and improvement triggers: each successful chat call triggers history growth; no measured improvement evidence.
+
+#### EPI-RTE-client-search — Optional generic client search
+
+- Identity: configured generic-client Tavily search insertion, with separate provider-native search capability when configured.
+- Endpoints and progression: caller query → optional external search → result text in provider prompt → returned model response.
+- Owner: caller enables facility; Tavily or provider service selects results; model consumes resulting context.
+- Context, state and effects: Tavily text is inserted into the prompt. Chat history later stores the original message and response, not a separately identified search-result record.
+- Evidence: SRC-1 `text_generation/simple_unified_client.py`; `dynamic_cheatsheet/language_model.py`.
+- implementation conclusion status: wired
+- operation conclusion status: uninspected
+- Immediate return: model response text; search result is not returned as a structured client object.
+- Later read-back: only any search-informed assistant response can enter chat history.
+- Delegated visibility: provider receives Tavily-augmented prompt or configured native-search tool request.
+- Selection predicate: caller option and external search/provider behavior.
+- Invalidation or expiry: inapplicable — prompt-local result text is not separately stored.
+- Activation or effect: optional search context reaches the model; actual retrieval and effect are unobserved.
+- Evidence limits: no result, source, citation record, or provider execution supplied.
+- Compared supplied records: RT-CMP-model and RT-RTE-cumulative-loop; distinct identity: optional generic-client search route, not the benchmark's local vector retrieval or configured wrapper call.
+- Decision roles: caller enables; external service selects content; provider model returns text; no local source evaluation.
+- Answer oracle: inapplicable — no expected answer or reference outcome is used by search selection.
+- Operating mode and improvement triggers: only when directly configured and requested, or when the selected OpenAI model itself is a search-preview identifier; no search-related performance evidence.
+
+### Claims
+
+#### EPI-OBJ-provider-search — Provider-native search content
+
+- Identity: any search content used by a provider-managed search-preview or native-search feature; no separate result payload is exposed by the inspected wrapper.
+- Representational form: not determinable — the source does not expose the provider's search-result representation or content.
+- Storage substrate: provider service, inaccessible in SRC-1; the local response may contain only model-generated text.
+- Closest supplied record: RT-CMP-model; distinct identity: external search context is not the model's distributed parameters.
+- Evidence: SRC-1 `text_generation/simple_unified_client.py`; RT-CMP-model.
+
+#### EPI-CLM-performance-gains — Reported performance improvement
+
+- Claimed operation: carried strategies and code increase task performance, including the README's reported task gains.
+- Source: SRC-1 `README.md`, doctrine/design.
+- Closest supplied claim: none declared in runtime member; distinct identity: README-level empirical and causal claim, not a runtime route record.
+- Evidence: README claim quotation below; runtime records show wiring but no run trace or causal attribution.
+
+#### EPI-CLM-zero-shot-learning — Reported learning without feedback
+
+- Claimed operation: performance improves without ground-truth labels or human feedback through accumulated experience.
+- Source: SRC-1 `README.md`, doctrine/design.
+- Closest supplied claim: none declared in runtime member; distinct identity: README-level learning claim rather than an implementation route.
+- Evidence: README claim quotation above; the target is available to benchmark scoring after curation, but the score is not fed back into memory decisions.
+
+> * **Self-Curated Storage**: Automatically focuses on concise, transferable snippets rather than entire transcripts
+> --- `README.md`
+
+> * **Experience-Driven Learning**: Bridges the gap between isolated inference events and cumulative learning
+> --- `README.md`
+
+=== END inputs/records/epistemic.md ===
+
+=== BEGIN inputs/records/reconciliation.md sha256=2e1466239ec7847e0842e2279acd4bc1df396e9a096fd974e632b4894e273e3a ===
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: Reconciliation of Dynamic Cheatsheet records at 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
+run-id: AAS-2026-10-04-dynamic-cheatsheet-01
+reviewed-boundary: 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
+---
+
+# Dynamic Cheatsheet reconciliation
+
+## Reconciliation
+
+Amendment: EPI-OBJ-provider-search has a superseded value of operative-object declaration placed under `### Claims`; its replacement classification is an operative object under `### Operative objects`, retaining the same ID and referent: provider-native search content used through a provider-managed search feature. The evidence anchor is SRC-1 `text_generation/simple_unified_client.py`, which documents the client-side search-preview/native-search capability while leaving the content and representation provider-managed and inaccessible. Affected findings: the epistemic member's EPI-OBJ-provider-search declaration and the source-and-claim boundary and authority-route ledger references to this ID. This repairs the kind/placement classification without renaming the record or changing its referent; the evidence still does not expose provider search content or establish its operation.
+
+Amendment: EPI-OBJ-prior-pairs is superseded by MEM-OBJ-example-history; both identify the same prior task-input and generated-output pairs, and the memory member already declares that operative part of RT-OBJ-retrieval-context. Evidence: SRC-1 `run_benchmark.py` and `dynamic_cheatsheet/language_model.py`; the memory record documents the matching identity, lineage, storage and consumers. Affected findings: epistemic-object inventory and authority-route ledger rows referencing EPI-OBJ-prior-pairs; read them as MEM-OBJ-example-history. The RT-OBJ-retrieval-context container remains valid.
+
+Amendment: EPI-OBJ-retrieval-vectors is superseded by MEM-OBJ-embedding-table; both identify the fixed per-task numeric vectors loaded from CSV and used for cosine ranking, already declared as a part of RT-OBJ-retrieval-context. Evidence: SRC-1 `embeddings/`, `run_benchmark.py` and `dynamic_cheatsheet/language_model.py`; the memory record establishes the same identity, lineage, storage and consumer. Affected findings: epistemic-object inventory and authority-route ledger rows referencing EPI-OBJ-retrieval-vectors; read them as MEM-OBJ-embedding-table. The RT-OBJ-retrieval-context container remains valid.
+
+The two independently authored memory parts and the epistemic overlay's corresponding distinctions converge on the same split of RT-OBJ-retrieval-context into linguistic task/output history and static numeric selector vectors. The declared MEM records provide the canonical identities; the superseded EPI records do not add further parts. RT-OBJ-cheatsheet, RT-OBJ-run-checkpoint, RT-RTE-cumulative-loop and the other runtime route records remain valid containers or end-to-end routes. MEM-RTE-cumulative-write and EPI-RTE-benchmark-answer-check are distinct subroutes within RT-RTE-cumulative-loop: memory replacement and post-curation scoring, respectively. Their `Part of:` relations do not supersede the parent. EPI-OBJ-current-answer is a distinct answer field within RT-OBJ-run-checkpoint, not a duplicate of that aggregate object. EPI-OBJ-provider-search remains a separate operative object for inaccessible provider-managed search content, not a claim or the configured benchmark's vector retrieval.
+
+The memory analyst owns the memory-route admission and read-back findings on runtime routes, including MEM-RTE-cumulative-write and its annotation fields. Epistemic entries assess warrant and authority separately; their descriptions of route mechanics do not amend or strengthen the memory findings. The runtime account and memory findings agree that benchmark scoring occurs after curation and does not control memory admission. No substantive conflict requires return to the memory analyst.
+
+=== END inputs/records/reconciliation.md ===
+
+=== BEGIN inputs/synthesis.md sha256=7f3bb97d41b9fa39e9678782cd6ff64f6b9b579596d7072acff7f42edeeeb5e1 ===
+## Description
+
+Dynamic Cheatsheet carries prompt-visible text and prior examples between model calls, with benchmark checkpointing; repository code shows delivery and scoring, but not model use or memory-caused gains.
+
+## Bounded synthesis
+
+The evidence is implementation inspection of the complete shipped repository at the registered SRC-1 revision, with declared prompt/design text; no hosted operation was observed ([boundary.md](boundary.md)). In the cumulative route, one configured model generates an answer and then proposes a full cheatsheet replacement. The extractor accepts tagged text or retains the previous text; the benchmark carries returned text into later eligible prompts and saves rows for continuation ([runtime.md#RT-RTE-cumulative-loop](runtime.md), [memory.md#MEM-RTE-cumulative-write](memory.md)). This is prompt-guided curation with a syntax fallback, not a verified correctness gate.
+
+Other routes use selected prior input/output pairs, all prior pairs, or both pairs and cumulative text. Retrieval ranks prior inputs by cosine similarity over fixed precomputed vectors; it does not select on answer correctness. The benchmark can restore saved outputs and the latest cheatsheet, while direct retrieval does not consume its carried text field ([runtime.md#RT-RTE-retrieval-synthesis](runtime.md), [runtime.md#RT-RTE-direct-retrieval](runtime.md), [runtime.md#RT-RTE-full-history](runtime.md), [runtime.md#RT-RTE-checkpoint-resume](runtime.md), [memory.md#MEM-OBJ-example-history](memory.md), [memory.md#MEM-OBJ-embedding-table](memory.md)).
+
+The benchmark compares answers with task targets after generation and curation, then updates counters; that score does not admit, reject, revise, or roll back answers or memory ([epistemic.md#EPI-RTE-benchmark-answer-check](epistemic.md)). These mechanisms establish prompt delivery and local persistence, not behavioral activation, answer correctness beyond the task predicate, improved future capacity, or memory-caused performance gains. The README’s learning and performance claims therefore remain unverified in this evidence set ([epistemic.md#EPI-CLM-performance-gains](epistemic.md), [epistemic.md#EPI-CLM-zero-shot-learning](epistemic.md)).
+
+## Limitations
+
+| limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it |
+|---|---|---|---|---|
+| No provider execution trace establishes how models interpret or use delivered text, or whether curation judgments are accurate. | SRC-1; RT-CMP-model; RT-RTE-cumulative-loop; MEM-RTE-cumulative-write; RT-RTE-retrieval-synthesis | Registered repository at the frozen revision; provider services and live runs excluded. | Actual activation, correctness of retained content, and behavioral effect. | Frozen provider traces with prompts, outputs, resolved model identities, and auditable curation cases. |
+| Tracked result and vector artifacts lack independently established provenance and experimental conditions; no intervention comparison isolates components. | SRC-1; RT-OBJ-retrieval-context; MEM-OBJ-embedding-table; EPI-CLM-performance-gains | Shipped repository and artifacts only. | Reproducibility of reported results and causal attribution of performance gains to curation, retrieval, or another component. | Reproducible benchmark protocol and controlled comparisons varying relevant components independently. |
+| Benchmark answer checks run after curation and only feed counters; their task predicates do not assess reasoning or memory entries. | EPI-RTE-benchmark-answer-check; RT-RTE-cumulative-loop | Inspected benchmark dispatch and evaluator code; no evaluator run supplied. | Claims that benchmark scores validate or control memory admission, or warrant explanations and retained procedures. | Evidence of a distinct content-validation route and its criteria, input, and disposition effects. |
+| Provider model resolution and provider-side search/code execution, isolation, retention, and cleanup are outside the repository evidence. | RT-CMP-model; RT-RTE-provider-code; EPI-RTE-client-search; EPI-OBJ-provider-search | Client request construction inspected; external provider behavior unavailable. | Conclusions about resolved model versions, search results, tool execution, sandboxing, or external persistence. | Versioned provider records and execution/service contracts for the relevant calls. |
+
+=== END inputs/synthesis.md ===
+
+Finish with one line naming output.md or problem.md.

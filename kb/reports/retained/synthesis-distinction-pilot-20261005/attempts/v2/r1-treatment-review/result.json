@@ -1,0 +1,20 @@
+{
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 42.96,
+  "reported_tokens": 211949,
+  "token_limit_exceeded": false,
+  "usage": [
+    {
+      "input_tokens": 210019,
+      "cached_input_tokens": 163840,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1930,
+      "reasoning_output_tokens": 291
+    }
+  ],
+  "outputs": {
+    "output.md": "4541529181cfc7100be738714b09d26f477bec18ffe919e20381490493aeb9d6"
+  },
+  "inputs_unchanged": true
+}

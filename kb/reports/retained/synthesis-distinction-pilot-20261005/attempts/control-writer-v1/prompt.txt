@@ -1,0 +1,42 @@
+Complete one isolated analysis job using only this packet.
+Read inputs/instruction.md, then all files in inputs/method/, then these records:
+- inputs/records/boundary.md
+- inputs/records/runtime.md
+- inputs/records/memory.md
+- inputs/records/epistemic.md
+- inputs/records/reconciliation.md
+Read each required file completely in bounded ranges; recover truncated reads.
+Inspect only source paths needed to test a claim. Do not dump the source tree
+or re-read whole records when a targeted range or search will suffice.
+Keep a concise scratch index of record IDs and source anchors for later checks.
+
+Experiment transport overrides (identical in both conditions):
+This is an offline replay, not a live workflow job. These overrides replace
+the frozen method's filesystem, command, source-access and submission rules.
+All paths below are relative to your working directory. Do not resolve
+historical absolute paths, follow background links, or read parent directories.
+The supplied method contracts contain the operative vocabulary definitions.
+Relevant source text from the registered revision is in inputs/source/.
+You may inspect it read-only. Other source artifacts are unavailable here;
+bound conclusions accordingly. Do not execute source code or use the network.
+Do not run Commonplace commands: there is no live run-state or acceptance service.
+Check your format and references yourself; do not claim a checker passed.
+Write only output.md or problem.md, plus scratch/ files. Do not delegate.
+Do not read other tasks, previous audits, scoring guides, or experiment metadata.
+
+job = synthesize
+system = Dynamic Cheatsheet
+run-id = AAS-2026-10-04-dynamic-cheatsheet-01
+round = first
+boundary = inputs/records/boundary.md
+runtime = inputs/records/runtime.md
+memory = inputs/records/memory.md
+epistemic = inputs/records/epistemic.md
+reconciliation = inputs/records/reconciliation.md
+output = output.md
+problem = problem.md
+scratch = scratch/
+Member citations retain sibling names such as runtime.md; these denote
+the corresponding supplied records, not missing files beside output.md.
+
+Finish with one line naming output.md or problem.md.

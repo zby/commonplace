@@ -3,9 +3,12 @@
 Commissioned by the operator on 2026-10-05: create an experiment comparing
 the existing synthesis and review instructions with two additions together:
 preserve evidence distinctions while compressing, and search for qualifying
-or contrary evidence during review. Preparation is complete; no model trials
-have run. This commission creates the experiment, not a production method
-change or a new external-system analysis.
+or contrary evidence during review. Preparation and the eight-call version 2
+check completed on 2026-10-05. The combined treatment did not meet the
+predeclared promising-signal rule. Exact attempts, [scores](../scores.md)
+and costs are in the [retained execution record](../README.md).
+This commission creates the experiment, not a production method change or a
+new external-system analysis.
 
 The immediate decision is whether the combined treatment is usable enough
 to consider in ordinary work or a larger trial. This is now an eight-call
@@ -36,7 +39,7 @@ The prepared bundle's SHA-256 is
   invocation packets, source identity and run metadata. The packet generator
   withholds history except a selected fixed diagnostic draft.
 
-The historical audit is [second-run outcome check](../analysis-collection-split/reliability/second-run-outcome-check-audit.md).
+The historical audit is [second-run outcome check](../../../../work/analysis-collection-split/reliability/second-run-outcome-check-audit.md).
 Its source interpretation needs a precision correction: the runtime route
 record describes prompt-guided selection and useful-content preservation;
 it does not itself quote the explicit accuracy instruction. That wording
@@ -54,8 +57,19 @@ job texts remain frozen, including the correction-round instruction.
 ## Conditions and schedule
 
 The fixed harness, limits, access checks and result retention are recorded in
-[execution preflight](./execution-preflight.md). The first live call is still
-the first scheduled writer below.
+[execution preflight](./execution-preflight.md). The schedule below was run
+once in version 2, with no correction rounds or added cases.
+
+Version 1 supplied required documents as files. Its first control writer
+needed 23 command turns and exceeded the cumulative token ceiling, so it is
+retained as resource calibration and excluded from semantic scoring. Version 2
+supplies the same required document bytes inline in `prompt.txt` to avoid
+repeated file-read turns; source files remain available for targeted checks.
+This common delivery change affects both arms. Version 2 restarts the full
+eight-call schedule below with fresh sessions. Its model, treatment, evidence,
+time limit and 1,000,000-token accounting ceiling are unchanged. If a version
+2 job exceeds the ceiling, stop and report it as incomplete; do not silently
+raise the ceiling again.
 
 Control uses the frozen job instructions. Treatment inserts
 [the writer paragraph](./treatment-synthesize.txt) and
@@ -104,7 +118,7 @@ From this checkout:
 
 ```bash
 python3 scripts/synthesis_distinction_trial.py verify
-python3 scripts/synthesis_distinction_trial.py packet --arm control --job synthesize --out /tmp/synthesis-distinction/r1-control-write
+python3 scripts/synthesis_distinction_trial.py packet --delivery inline --arm control --job synthesize --out /tmp/synthesis-distinction-v2/r1-control-write
 ```
 
 Launch a clean worker with that directory as its working directory and
@@ -113,7 +127,7 @@ outside the worker directory. The worker writes `output.md` or `problem.md`.
 Prepare its independent reviewer after the writer completes:
 
 ```bash
-python3 scripts/synthesis_distinction_trial.py packet --arm control --job verify-synthesis --synthesis /tmp/synthesis-distinction/r1-control-write/output.md --out /tmp/synthesis-distinction/r1-control-review
+python3 scripts/synthesis_distinction_trial.py packet --delivery inline --arm control --job verify-synthesis --synthesis /tmp/synthesis-distinction-v2/r1-control-write/output.md --out /tmp/synthesis-distinction-v2/r1-control-review
 ```
 
 Follow the fixed order above for treatment and control. Do not pass a previous
@@ -145,7 +159,7 @@ avoids rejecting a supported qualification. It does not estimate the
 combined pipeline effect.
 
 ```bash
-python3 scripts/synthesis_distinction_trial.py packet --arm treatment --job verify-synthesis --case original --out /tmp/synthesis-distinction/r1-treatment-case1
+python3 scripts/synthesis_distinction_trial.py packet --delivery inline --arm treatment --job verify-synthesis --case original --out /tmp/synthesis-distinction-v2/r1-treatment-case1
 ```
 
 Repeat for `qualified` and both arms in the fixed order above. Use opaque
@@ -171,8 +185,8 @@ favorable result may warrant provisional use in a reversible setting or a
 separately justified larger trial. The prompts were designed around this
 failure, so it is a development case, not held-out evidence.
 
-Useful methodological precedents: [prompt variation](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md)
-and [claims limited to the contrast actually run](../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+Useful methodological precedents: [prompt variation](../../../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md)
+and [claims limited to the contrast actually run](../../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
 ## Preparation verification
 

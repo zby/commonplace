@@ -1,0 +1,10 @@
+{
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 16.51,
+  "reported_tokens": 0,
+  "token_limit_exceeded": false,
+  "usage": [],
+  "outputs": {},
+  "inputs_unchanged": true
+}
