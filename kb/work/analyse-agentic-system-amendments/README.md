@@ -39,6 +39,11 @@ As of the 2026-10-05 direction:
   text rather than remain amendments that later consumers interpret.
   Correction ownership, report boundaries, review organization and budgets
   remain open to evidence.
+- The [report-correction implementation plan](./report-correction-implementation-plan.md)
+  scopes a first change from that candidate: verifier findings go to the
+  declaring analyst, for all three reports, and reconciliation is narrowed
+  to connecting reports. It awaits operator acceptance and
+  does not include the publication policy.
 - The [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
   was selected for implementation after the
   [classification workshop](../analysis-classification-revision/README.md)
