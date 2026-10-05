@@ -11,7 +11,13 @@ Keep analysis method edits executable and update every affected consumer.
 
 The method author loads this instruction before an applicable edit, together
 with the owning collection and selected instruction/type-spec contract. The collection contract supplies this mandatory route to method authors.
-Analyst job packets do not load it. This instruction grants no mutation authority beyond the commissioned edit.
+Before changing analysis code, worker instructions, report contracts or
+publication design, read the [analysis design brief](../../reference/agentic-system-analysis-design-brief.md)
+for the operator's goals and evaluation priorities. Treat it as design intent,
+not a replacement for adopted execution contracts.
+
+Analyst job packets load neither this instruction nor the design brief. This
+instruction grants no mutation authority beyond the commissioned edit.
 
 ## Composition
 

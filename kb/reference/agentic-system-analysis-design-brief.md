@@ -1,8 +1,14 @@
-# Process brief: evolving agentic-system analysis
+---
+description: "Operator goals and evaluation priorities to read before changing agentic-system analysis code, worker instructions, report contracts or publication design"
+type: types/note.md
+---
 
-Operator direction, 2026-10-05. Read before changing the workflow through this
-workshop, including its code, instructions and report contracts. This brief
-guides design; adopted contracts govern runs until revised.
+# Agentic-system analysis design brief
+
+Operator direction, 2026-10-05: evolve agentic-system analysis to chart the
+design space and find solutions useful to Commonplace. This brief supplies
+premises for method changes across code, worker instructions and report
+contracts. Adopted contracts govern runs until explicitly revised.
 
 ## Goals
 
@@ -14,29 +20,34 @@ and the conditions under which a solution could help us.
 as agent memory systems or harnesses. Which categories and how much coverage
 are useful remain open.
 
-## Priorities
+## Evaluation priorities
 
-- We have many potentially useful theories in the KB. Consult them where they
-  help; workflow design and runs can offer opportunities to apply and test them.
-- Judge the workflow by what we can learn, compare or borrow at reasonable
-  cost. More reports, fewer defects or completed runs alone are insufficient.
-- Discover the main constraints through use. Distinguish operator requirements,
-  observed limits and design hypotheses; do not freeze the current arrangement.
-- Publish useful analyses with clearly marked local problems. Preserve
-  consequential uncertainty in reports and comparison values. Review objections
-  are contestable; materially misleading conclusions still need repair or
-  qualification. Later runs can improve the account with better models or methods.
-- Keep source-system findings distinguishable from judgments about their fit
-  for Commonplace. Separate transfer scans can serve the primary goal.
+- The KB's theories are potential inputs to workflow design and analysis.
+  Design changes and runs can offer opportunities to apply and test them.
+- Learning, comparison and useful borrowing at reasonable cost matter more
+  than report counts, defect counts or completion alone. Evaluation includes
+  the work of producing, reviewing and later consuming the analyses.
+- Main constraints should be discovered through use. Operator requirements,
+  observed limits and design hypotheses remain distinguishable; the current
+  arrangement is not itself a requirement.
+- Useful analyses can carry clearly marked local problems. Consequential
+  uncertainty belongs beside affected conclusions and comparison values.
+  Review objections are contestable; materially misleading conclusions still
+  need repair or qualification. Later runs can improve the account with
+  better models or methods.
+- Source-system findings remain distinguishable from judgments about their
+  fit for Commonplace. Separately commissioned transfer scans can serve the
+  primary goal without making the source account adoption advice.
 
-## Design freedom and coordination
+## Design freedom and scope
 
 Worker roles, correction ownership, report boundaries, review placement and
-round budgets remain means to test. The [correction candidate](../work/analyse-agentic-system-amendments/versioned-corrections-for-agentic-analysis-reports.md)
-is one option, not the architecture this brief requires.
+round budgets are means to test, not architecture fixed by this brief.
+Compare alternatives against learning value and total work, preserving the
+conditions under which an observed benefit holds.
 
-The selected [publication-policy direction](./proposals/publishing-analyses-with-unresolved-issues.md)
-awaits closure of the [classification workshop](../work/analysis-classification-revision/README.md).
-This brief adds no run or implementation authorization. Carry it into workshop
-handoffs; extract the still-needed intent before workshop closure rather than
-making shipped instructions depend on this file.
+The brief supplies design intent, not run or implementation authorization.
+Its publication priority does not override the live acceptance contract.
+Changing that contract requires an explicit adoption decision and updates to
+its affected consumers. No particular correction mechanism follows from the
+goals alone.

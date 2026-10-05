@@ -4,6 +4,12 @@
 
 This collection holds ordinary authored accounts of external agentic systems,
 comparisons and the comparison procedures.
+The operator's primary research purpose, supplied on 2026-10-05, is to chart
+the design space and find solutions useful to Commonplace; a useful public
+database is secondary. Source accounts and comparisons support that purpose
+while keeping Commonplace fit judgments in separately commissioned transfer
+scans.
+
 The quality goal for system accounts is fidelity and economy: explain the external
 system's native operation before applying Commonplace concepts. Qualify uncertain
 mappings. Open authored analyses with their evidence basis and capture boundary.

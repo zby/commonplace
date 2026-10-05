@@ -4,6 +4,12 @@
 
 This collection holds workflow-produced analyses of external agentic systems,
 their run state, local types and the analysis method.
+The operator's primary purpose, supplied on 2026-10-05, is to chart the design
+space and find solutions useful to Commonplace. A useful public database is
+secondary. The [analysis design brief](../reference/agentic-system-analysis-design-brief.md)
+holds the evaluation priorities for method changes. Analyses support that
+purpose without including Commonplace adoption advice.
+
 Their contribution is an evidence-grounded account of source-native operation,
 with bounded synthesis and explicit limitations. The quality goal is fidelity
 and economy. Explain the external mechanism before applying Commonplace concepts;

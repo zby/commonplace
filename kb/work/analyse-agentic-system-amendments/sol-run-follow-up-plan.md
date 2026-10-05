@@ -1,5 +1,37 @@
 # Sol run follow-up plan
 
+## Status after workshop cleanup
+
+This is the operator's 2026-10-03 planning record, not the workshop's current
+execution plan. It remains visible because the disposition of every item has
+not been established. Read the [current framing](./README.md) first. The
+original scope and acceptance criteria below remain historical; recheck them
+against the live method before proposing further work.
+
+The cleanup established these interface changes, not model adherence:
+
+- **Item 1's collection-supply interface is present.** The live
+  `AnalyseAgenticSystem.job()` supplies `../../../COLLECTION.md` among method
+  inputs. This does not repeat the split's full acceptance checks.
+- **Item 2's batch-instruction repair is superseded as a worker-interface
+  task.** Current worker rules use `commonplace-analysis-check` for quotation
+  occurrence and repair, rather than the old `--selections` batch helper.
+  Do not add the obsolete batch example to those rules.
+- **Item 5's profile ownership has moved.** Profile generation and verification
+  have separate jobs. Do not put profile classification back into the memory
+  analyst; the remaining source-identifier and part-assessment questions need
+  a separate disposition review.
+- **Item 6's parser gap remains observable.** `epistemic_ledger_errors()` checks
+  structure and route-function/status values, not claim-reference categories.
+  The proposed bounded probe is still unadopted, not an authorized repair.
+
+Evidence retention in item 0 and the remaining parts of items 3–5 and 7 still
+need disposition review; this cleanup does not mark them completed or newly
+commission them. Before implementation or workshop closure, check the original
+evidence where required, identify what remains relevant, and return unresolved
+choices to the operator. Unavailable evidence is a gap, not permission to
+infer completion. This review grants no implementation or run authority.
+
 ## Commission and completion
 
 Commissioned by the operator on 2026-10-03: plan the remaining procedure
