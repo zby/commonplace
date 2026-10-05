@@ -14,7 +14,7 @@ The [execution plan](./plan.md) owns the implementation scope, acceptance cases,
 
 ## Evidence and limits
 
-The [write-agency probe](../write-agency-route-list-probe/README.md) retains exact accepted inputs, its intervention and one fresh Sol result. The [evaluation](../write-agency-route-list-probe/evaluation.md) establishes a local representational improvement: automatic findings and unresolved initialization coexist without a conflicting `known` assertion. It does not establish better general reliability. The probe changed semantics, representation and task breadth together.
+An exploratory write-agency probe (one Sol and one Luna execution on the baseline run's accepted inputs) informed this revision. It was discarded without retention on 2026-10-05 after the instructions changed; its results are not evidence for this workshop.
 
 Baseline run evidence:
 
@@ -22,7 +22,7 @@ Baseline run evidence:
 - method-commit: 885b1bb6f123801e62b7a14a65a3c1818e12827f
 - source-revision: 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
 
-The [earlier run audit](../analysis-collection-split/reliability/second-run-outcome-check-audit.md) retains observed lineage, curation, authority and synthesis concerns. These are maintenance evidence, not instructions or replacement evidence for analysis workers. The retained [Luna evaluation](../write-agency-route-list-probe/luna/evaluation.md) was available during implementation and was read as maintenance evidence. Its Sol-comparison sentence conflicts with the current Sol result; the implementation does not use that sentence to establish reliability or an exact cross-model comparison.
+The [earlier run audit](../analysis-collection-split/reliability/second-run-outcome-check-audit.md) retains observed lineage, curation, authority and synthesis concerns. These are maintenance evidence, not instructions or replacement evidence for analysis workers.
 
 The present risk inventory is retained in [the plan](./plan.md#classification-risks). Its prospective examples are test cases to investigate, not claims that all corresponding failures have occurred.
 
