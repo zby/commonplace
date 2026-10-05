@@ -452,6 +452,7 @@ plugins:
         'reference/proposals/ingest-source-units-and-supporting-material.md': 'reference/proposals/archive/ingest-source-units-and-supporting-material.md'
         'reference/proposals/lens-prefixed-canonical-record-ids.md': 'reference/adr/096-analysis-passes-declare-their-own-records-under-lens-prefixes.md'
         'reference/proposals/library-served-from-the-installed-package.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
+        'reference/proposals/merging-analysis-runs-back-from-isolated-worktrees.md': 'reference/adr/106-merge-analysis-publications-from-isolated-worktrees.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/open-an-analysis-run-in-code.md': 'reference/proposals/archive/open-an-analysis-run-in-code.md'
         'reference/proposals/operational-destinations-for-literature-grounding-findings.md': 'reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md'
