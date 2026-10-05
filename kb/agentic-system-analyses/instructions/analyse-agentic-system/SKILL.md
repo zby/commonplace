@@ -67,9 +67,24 @@ it; do not reinstall the shared user-level tool to point at the run.
 Keep the worktree's code, method files, lockfile and environment unchanged
 until the run finishes; develop and merge method changes elsewhere. On resume,
 use the same worktree and command directory before following the
-worker-recovery rules. Do not remove the worktree: its run state is the
-evidence of the run. After completion, transfer the retained set back when the
-operator authorizes merging the results.
+worker-recovery rules. A `complete` run stays in this worktree until the
+operator separately authorizes integration. From the origin checkout on
+`main`, use its `commonplace-workflow integrate-analysis <run>` command after
+the handoff; an agent also supplies `--model <model-id>`. The command commits
+the publication on `analysis/<run-id>` from the method commit and merges that
+branch into `main`. If Git reports a conflict, the command aborts the merge,
+keeps the branch and worktree, and stops for the operator. Do not copy the
+retained set into `main`.
+
+Worktree removal is a separate operator decision. It is permitted only when
+every run in it is `complete` and merged into `main`, no integration branch
+awaits a merge or conflict decision, and every audit has extracted its
+evidence record or the operator has said none needs it. Then use `git worktree
+remove`, remove the sibling preparation record, and delete merged analysis
+branches. Never remove a worktree containing a `failed` run through this
+routine: failures, rejected outputs and traces are evidence. Disposing of
+such evidence needs a separate explicit operator decision after reviewing
+the failure and any uncertain public state. Removal is never automatic.
 
 A command after `--` instead starts a separate harness in the prepared
 worktree with its commands on `PATH`; the operator may use it to run this
@@ -87,7 +102,7 @@ skill there. This session then stops after preparation.
      --param source="<the caller's source input, as given>"
    ```
 
-   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID takes its name from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. Publication uses that source slug as its stable directory; `review-path` is no longer a parameter. The command allocates the run ID and prints the run directory, `kb/agentic-system-analyses/state/<run-id>`.
+   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID has the form `AAS-<date>-<source-slug>-<worktree-token>-<nn>`; the slug comes from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. The token comes from the ready preparation record, including with `--worktree`. Publication uses the source slug as its stable directory; `review-path` is no longer a parameter. The command allocates the run ID and prints the run directory, `kb/agentic-system-analyses/state/<run-id>`.
 
    For a GitHub source, code freezes `related-systems/<owner>--<repo>/`
    before the boundary job. Without a revision it clones a missing checkout,

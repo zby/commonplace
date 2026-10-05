@@ -57,7 +57,7 @@ recommendation) holds for the review too.
 type: agentic-system-analyses/types/generated-review.md
 description: "{one-sentence description}"
 generated-by: analyse-agentic-system
-analysis-run: AAS-YYYY-MM-DD-system-slug-nn
+analysis-run: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: {stable identity}
 reviewed-revision: "{revision or capture label}"
 analysis-artifact: kb/agentic-system-analyses/retained/{run-id}/ARTIFACT.yaml

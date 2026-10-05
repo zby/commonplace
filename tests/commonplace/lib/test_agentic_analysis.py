@@ -33,6 +33,7 @@ def running_package_is_the_fixture_repository(tmp_path, monkeypatch):
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
+RETAINED_OVERVIEW = agentic_set.RETAINED_ROOT / "example-system" / "overview.md"
 SOURCE = "https://example.invalid/example-system"
 STATE_DIR = Path("kb/agentic-system-analyses/state")
 REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
@@ -443,12 +444,12 @@ def repin(directory: Path) -> None:
 
 
 def retained_fixture_paths(run_id: str) -> dict[str, Path]:
-    directory = agentic_set.retained_overview_path(run_id).parent
+    directory = RETAINED_OVERVIEW.parent
     return {name: directory / name for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES)}
 
 
 def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
-    directory = agentic_set.retained_overview_path(run_id).parent
+    directory = RETAINED_OVERVIEW.parent
     for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES):
         retained = directory / name
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
@@ -622,7 +623,7 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     candidate = state.parent / "output/overview.md"
     candidate.write_bytes(public.read_bytes())
     public.unlink()
-    shutil.rmtree(tmp_path / agentic_set.retained_overview_path(RUN_ID).parent)
+    shutil.rmtree(tmp_path / RETAINED_OVERVIEW.parent)
     head = commit_inputs(tmp_path)
     pin_inputs_commit(state.parent, head, candidate)
     values.update({"run-status": "running", "result-disposition": None,
@@ -1082,7 +1083,7 @@ def test_publish_replaces_the_set_and_completes_run_state(tmp_path: Path) -> Non
 
 def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
-    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
+    retained = tmp_path / RETAINED_OVERVIEW
     candidate = spec.generated_candidate_path
     content = candidate.read_text() + (
         "\n[Exact analysis](overview.md)\n"
@@ -1136,7 +1137,7 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
         raise AssertionError("publication unexpectedly survived injected failure")
 
     assert not (tmp_path / spec.generated_destination).exists()
-    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID)).parent.exists()
+    assert not (tmp_path / RETAINED_OVERVIEW).parent.exists()
     assert state.read_bytes() == original_state
     assert spec.generated_candidate_path.exists()
 
@@ -1153,7 +1154,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     from scripts import build_systems_matrix, render_systems_table
 
     state = valid_run_state(tmp_path)
-    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
+    retained = tmp_path / RETAINED_OVERVIEW
     shutil.rmtree(tmp_path / "kb/agentic-system-analyses/state")
     shutil.rmtree(tmp_path / "kb/agent-memory-systems")
     shutil.rmtree(tmp_path / "related-systems")
@@ -1187,7 +1188,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 ])
 def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
     valid_run_state(tmp_path)
-    retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
+    retained = tmp_path / RETAINED_OVERVIEW
     memory = retained.with_name("memory.md")
 
     def repin_overview() -> None:
@@ -1249,7 +1250,7 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
 
 def test_comparison_population_must_select_one_review_per_source(tmp_path):
     valid_run_state(tmp_path)
-    current = tmp_path / agentic_set.retained_overview_path(RUN_ID).parent
+    current = tmp_path / RETAINED_OVERVIEW.parent
     shutil.copytree(current, current.with_name("twin"))
     with pytest.raises(ValueError, match="multiple current analyses"):
         systems_matrix.load_results(tmp_path)
@@ -1271,7 +1272,7 @@ def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp
     for name, content in old_bytes.items():
         (output_path(state.parent, name)).write_bytes(content)
     repin(state.parent / "output")
-    retained = write(tmp_path / agentic_set.retained_overview_path(RUN_ID), "frozen earlier overview\n")
+    retained = write(tmp_path / RETAINED_OVERVIEW, "frozen earlier overview\n")
     with pytest.raises(ValueError, match="ARTIFACT.yaml"):
         prepare_publication(spec)
     assert retained.read_text() == "frozen earlier overview\n"
@@ -1664,7 +1665,7 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     assert not validation.ValidationRun(tmp_path, ()).validate(directory).fails
     with pytest.raises(ValueError, match="requires a complete"):
         prepare_publication(spec)
-    retained = tmp_path / agentic_set.retained_artifact_path(RUN_ID).parent
+    retained = tmp_path / RETAINED_OVERVIEW.parent
     shutil.copytree(directory, retained)
     review = tmp_path / REVIEW_PATH
     write(review, review_text(values["reviewed-boundary"], overview))

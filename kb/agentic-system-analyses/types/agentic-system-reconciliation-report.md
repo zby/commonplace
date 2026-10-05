@@ -58,7 +58,7 @@ public synthesis nor verification text, and does not rewrite analyst reports.
 ---
 type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 description: "Reconciliation of {system} records at {boundary}"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 reviewed-boundary: "{immutable revision or capture identity}"
 ---
 

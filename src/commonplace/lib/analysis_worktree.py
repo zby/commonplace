@@ -12,6 +12,11 @@ import uuid
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.lib.agentic_set import ARCHIVE_ROOT, RETAINED_ROOT
+from commonplace.lib.note_parser import parse_document
+
+STATE_ROOT = Path("kb/agentic-system-analyses/state")
+
 STARTUP_DIRECTORIES = (
     ".agents/skills", ".claude/skills", ".claude/agents", ".claude/hooks",
     ".codex/skills", ".codex/agents", ".pi/skills", ".pi/agents",
@@ -252,8 +257,9 @@ def prepare_analysis(
     except (ValueError, tomllib.TOMLDecodeError) as error:
         raise ValueError(f"analysis preparation requires a committed Commonplace source checkout: {error}") from error
 
+    token = uuid.uuid4().hex[:12]
     if worktree is None:
-        worktree = origin / ".commonplace/worktrees" / f"{name}-{uuid.uuid4().hex[:12]}"
+        worktree = origin / ".commonplace/worktrees" / f"{name}-{token}"
     elif not worktree.is_absolute():
         worktree = origin / worktree
     # Do not accept an existing empty directory or a dangling symlink either.
@@ -274,6 +280,7 @@ def prepare_analysis(
     _run(["git", "worktree", "add", "--detach", str(worktree), commit], cwd=origin)
     record: dict[str, object] = {
         "format": 1,
+        "token": token,
         "origin": str(origin),
         "worktree": str(worktree),
         "commit": commit,
@@ -302,3 +309,124 @@ def prepare_analysis(
         raise ValueError(f"analysis setup failed in {worktree}; retained {record_path}: {error}") from error
     record_path.write_text(json.dumps(record, indent=2) + "\n")
     return record
+
+
+def preparation_for(worktree: Path, *, require_token: bool = True) -> dict[str, object]:
+    """Read a ready record bound to this exact worktree."""
+    worktree = Path(worktree).resolve()
+    record_path = worktree.with_name(worktree.name + ".preparation.json")
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"ready analysis preparation record required: {record_path}") from error
+    if not isinstance(record, dict) or record.get("status") != "ready" or record.get("worktree") != str(worktree):
+        raise ValueError(f"preparation record does not name a ready worktree: {record_path}")
+    token = record.get("token")
+    if require_token and (not isinstance(token, str) or re.fullmatch(r"[0-9a-f]{12}", token) is None):
+        raise ValueError(f"preparation record has no valid worktree token: {record_path}")
+    return record
+
+
+def _frontmatter(text: str, path: Path) -> dict[str, object]:
+    document, error = parse_document(text)
+    if error or document is None or not isinstance(document.frontmatter, dict):
+        raise ValueError(f"cannot read frontmatter in {path}: {error}")
+    return document.frontmatter
+
+
+def _changed_paths(worktree: Path, *args: str) -> list[str]:
+    """Keep NUL-delimited Git paths intact, including leading whitespace."""
+    result = subprocess.run(
+        ["git", "diff", "--no-renames", "--name-only", "-z", *args],
+        cwd=worktree, capture_output=True, check=False,
+    )
+    if result.returncode:
+        raise ValueError(f"could not inspect changed paths: {result.stderr.decode(errors='replace').strip()}")
+    return [os.fsdecode(path) for path in result.stdout.split(b"\0") if path]
+
+
+def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
+    """Commit one completed publication in its worktree and merge it into main.
+
+    Calling this is the separate authorization to transfer a published run.
+    A conflict is aborted in main; its publication branch remains for review.
+    """
+    run_dir = Path(run_dir).resolve()
+    if run_dir.parent.name != STATE_ROOT.name:
+        raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
+    worktree = run_dir.parents[len(STATE_ROOT.parts)]
+    if worktree / STATE_ROOT != run_dir.parent:
+        raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
+    record = preparation_for(worktree)
+    origin = Path(str(record["origin"]))
+    if Path(_run(["git", "rev-parse", "--show-toplevel"], cwd=origin)).resolve() != origin:
+        raise ValueError("preparation origin is not its current Git root")
+    if _run(["git", "symbolic-ref", "--quiet", "HEAD"], cwd=origin) != "refs/heads/main":
+        raise ValueError("integration requires the origin checkout on main")
+    method = str(record["commit"])
+    if _run(["git", "rev-parse", "HEAD"], cwd=worktree) != method:
+        raise ValueError("worktree HEAD differs from its preparation commit")
+    if subprocess.run(["git", "merge-base", "--is-ancestor", method, "main"], cwd=origin, check=False).returncode:
+        raise ValueError("the method commit is not an ancestor of main")
+
+    run_id = run_dir.name
+    token = str(record["token"])
+    if re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-[a-z0-9-]+-{token}-\d{{2}}", run_id) is None:
+        raise ValueError("run ID does not match the worktree preparation token")
+    state_path = run_dir / "run-state.md"
+    state = _frontmatter(state_path.read_text(encoding="utf-8"), state_path)
+    if state.get("run-id") != run_id or state.get("run-status") != "complete":
+        raise ValueError("integration requires this run's complete run-state")
+    generated = state.get("generated-review")
+    if not isinstance(generated, dict) or not isinstance(generated.get("path"), str):
+        raise TypeError("complete run-state has no published overview path")
+    overview_rel = Path(generated["path"])
+    if (overview_rel.parent.parent != RETAINED_ROOT or overview_rel.name != "overview.md"
+            or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", overview_rel.parent.name)):
+        raise ValueError("published overview must be under retained/<slug>/")
+    overview_path = worktree / overview_rel
+    overview = _frontmatter(overview_path.read_text(encoding="utf-8"), overview_path)
+    if overview.get("run-id") != run_id or overview.get("inputs-commit") != method:
+        raise ValueError("published overview does not pin this run and method commit")
+    source_revision = overview.get("reviewed-boundary")
+    if not isinstance(source_revision, str) or not source_revision:
+        raise ValueError("published overview has no source revision")
+
+    paths = [overview_rel.parent.as_posix()]
+    old_location = f"{method}:{overview_rel.as_posix()}"
+    if subprocess.run(["git", "cat-file", "-e", old_location], cwd=worktree, capture_output=True, check=False).returncode == 0:
+        old = _frontmatter(_run(["git", "show", old_location], cwd=worktree), overview_rel)
+        old_id = old.get("run-id")
+        if not isinstance(old_id, str) or not re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9-]+-\d{2}", old_id):
+            raise ValueError("method commit has an invalid incumbent run ID")
+        archive = ARCHIVE_ROOT / old_id
+        if not (worktree / archive).is_dir():
+            raise ValueError(f"publication archive is missing: {archive}")
+        paths.append(archive.as_posix())
+
+    branch = f"analysis/{run_id}"
+    if subprocess.run(["git", "show-ref", "--verify", "--quiet", f"refs/heads/{branch}"], cwd=worktree, check=False).returncode == 0:
+        raise ValueError(f"publication branch already exists: {branch}")
+    staged = _changed_paths(worktree, "--cached")
+    if staged:
+        raise ValueError("worktree already has staged changes")
+    tracked = _changed_paths(worktree, "HEAD")
+    outside = [path for path in tracked if not any(path == allowed or path.startswith(allowed + "/") for allowed in paths)]
+    if outside:
+        raise ValueError("tracked changes outside publication paths: " + ", ".join(outside))
+
+    _run(["git", "switch", "-c", branch], cwd=worktree)
+    _run(["git", "add", "-A", "--", *paths], cwd=worktree)
+    changed = _changed_paths(worktree, "--cached")
+    if not changed or any(not any(path == allowed or path.startswith(allowed + "/") for allowed in paths) for path in changed):
+        raise ValueError("publication staging is empty or includes another path")
+    body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"
+    if model:
+        body += f"\n\nModel: {model}"
+    _run(["git", "commit", "-m", f"Publish analysis {run_id}", "-m", body], cwd=worktree)
+    merge = subprocess.run(["git", "merge", "--no-ff", "--no-edit", branch], cwd=origin, capture_output=True, text=True, check=False)
+    if merge.returncode:
+        if (origin / ".git/MERGE_HEAD").exists():
+            _run(["git", "merge", "--abort"], cwd=origin)
+        raise ValueError(f"integration stopped; publication branch kept: {merge.stderr.strip() or merge.stdout.strip()}")
+    return _run(["git", "rev-parse", "HEAD"], cwd=origin)

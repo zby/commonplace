@@ -12,6 +12,8 @@ import pytest
 
 from commonplace.cli.workflow import main
 from commonplace.lib import analysis_worktree as aw
+from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+from commonplace.workflow import Orchestrator
 
 
 def git(root: Path, *args: str) -> str:
@@ -74,6 +76,9 @@ def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(orig
     assert prepared["origin-dirty"] is True
     assert prepared["uncommitted-changes-excluded"] is True
     assert prepared["status"] == "ready"
+    assert len(prepared["token"]) == 12
+    assert tree.name.endswith("-" + prepared["token"])
+    assert aw.preparation_for(tree) == prepared
     assert (tree / "note.md").read_text() == "Committed note\n"
     assert not (tree / "untracked.md").exists()
     assert git(tree, "status", "--porcelain") == ""
@@ -141,6 +146,36 @@ def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -
     destination.mkdir()
     with pytest.raises(ValueError, match="already exists"):
         aw.prepare_analysis(origin, name="example", worktree=destination)
+
+
+def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Path, tmp_path: Path) -> None:
+    destination = tmp_path / "chosen"
+    prepared = aw.prepare_analysis(origin, name="example", worktree=destination)
+    assert len(prepared["token"]) == 12
+    record_path = Path(str(prepared["record"]))
+    record = json.loads(record_path.read_text())
+    record["worktree"] = str(origin)
+    record_path.write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="does not name"):
+        aw.preparation_for(destination)
+
+
+def test_analysis_start_uses_explicit_base_and_open_rejects_wrong_token(origin: Path, tmp_path: Path) -> None:
+    prepared = aw.prepare_analysis(origin, name="example", worktree=tmp_path / "chosen")
+    tree = Path(str(prepared["worktree"]))
+    params = {"system": "Example", "source-identity": "https://example.com/example", "source": "local"}
+    definition = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
+    started = Orchestrator.start(definition, params, base=tree)
+    assert started.run_dir.name.endswith(f"-{prepared['token']}-01")
+    assert aw.preparation_for(tree)["token"] == prepared["token"]
+
+    wrong = tree / "kb/agentic-system-analyses/state/AAS-2026-10-05-example-000000000000-02"
+    wrong.mkdir()
+    workflow = AnalyseAgenticSystem(params)
+    workflow.repo = tree
+    workflow.run_id = wrong.name
+    with pytest.raises(ValueError, match="preparation token"):
+        workflow.open(wrong)
 
 
 def test_failed_installation_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys) -> None:

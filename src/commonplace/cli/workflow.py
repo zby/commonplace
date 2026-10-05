@@ -10,6 +10,7 @@ from pathlib import Path
 
 from commonplace.lib.analysis_worktree import (
     command_environment,
+    integrate_analysis,
     prepare_analysis,
     require_run_code,
 )
@@ -30,9 +31,23 @@ def _require_bound_code(args: list[str]) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
+    if args[:1] == ["integrate-analysis"]:
+        parser = argparse.ArgumentParser(
+            prog="commonplace-workflow integrate-analysis",
+            description="Commit a completed analysis in its worktree and merge its publication into main.",
+        )
+        parser.add_argument("run", type=Path)
+        parser.add_argument("--model", help="model ID for the agent commit trailer")
+        arguments = parser.parse_args(args[1:])
+        try:
+            print(integrate_analysis(arguments.run, model=arguments.model))
+        except (ValueError, OSError) as error:
+            print(str(error), file=sys.stderr)
+            return 1
+        return 0
     if not args or args[0] != "prepare-analysis":
         if args in (["--help"], ["-h"]):
-            print("Additional Commonplace setup command: prepare-analysis --help\n")
+            print("Additional Commonplace commands: prepare-analysis, integrate-analysis\n")
         try:
             _require_bound_code(args)
         except ValueError as error:

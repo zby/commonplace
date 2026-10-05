@@ -45,6 +45,12 @@ method/types and generic instructions, notes, reference and tags as needed.
 Workflow execution inputs enter through declared dependencies. Do not make
 reviews, archives or workshops execution inputs.
 
+When an audit extracts evidence from a run, its evidence record names
+`run-id`, `method-commit` and `source-revision` under those exact keys. The
+worktree path may help locate local state but is not the run identity. Keep
+failed runs and their traces as evidence; routine worktree cleanup excludes
+them.
+
 Edit canonical instructions. Inspect projection, promotion and stub generation
 when names, skill metadata or promotion status change. Test the affected loading,
 authority, validation and result paths. Commit method changes before a new run;

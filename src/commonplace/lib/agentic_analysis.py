@@ -10,7 +10,6 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from commonplace.lib.agentic_set import (
-    MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     SET_NAMES,
@@ -19,6 +18,7 @@ from commonplace.lib.agentic_set import (
     load_member_set,
     normalize_source_identity,
 )
+from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_generation import MAX_QUOTE_OCCURRENCES, quote_occurrences
 from commonplace.lib.quote_matching import (

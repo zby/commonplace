@@ -89,15 +89,16 @@ workflow identity; it does not retain a validation receipt.
 A `failed` run was abandoned or left public state uncertain; it is never
 resumed. Git history is the history
 of successfully published tracked reviews; this workflow does not stage or
-commit.
+commit. After a complete run and separate authorization, integration commits
+its retained set from the isolated worktree and merges it into `main`.
 
 ## Template
 
 ```markdown
 ---
 type: agentic-system-analyses/types/agentic-system-analysis-run-state.md
-description: "Minimal completion state for AAS-YYYY-MM-DD-system-slug-nn"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+description: "Minimal completion state for AAS-YYYY-MM-DD-system-slug-token-nn"
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 system: "Source-native system name"
 run-status: running
 result-disposition: null
@@ -107,7 +108,7 @@ generated-review: null
 failure: null
 ---
 
-# Agentic-system analysis run — AAS-YYYY-MM-DD-system-slug-nn
+# Agentic-system analysis run — AAS-YYYY-MM-DD-system-slug-token-nn
 
 ## Run
 

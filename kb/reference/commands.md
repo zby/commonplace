@@ -216,7 +216,9 @@ observation under a basename ending in the capture date.
 
 `prepare-analysis --name <system>` creates a dedicated Commonplace source
 worktree and installs and verifies its local command environment. It pins a
-commit and excludes uncommitted origin changes only with `--allow-dirty-origin`;
+commit and a 12-hex worktree token in the preparation record for distinct
+analysis run IDs. It excludes uncommitted origin changes only with
+`--allow-dirty-origin`;
 changed startup instructions and configuration always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
 directory and environment. Without `--revision` it refuses a `HEAD` behind the
@@ -226,6 +228,12 @@ default branch. It does not open or advance an analysis. The `step`, `report`,
 checkout when they run another checkout's code or, except the check, from
 another working directory. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
+
+`integrate-analysis <run>` commits a completed published set and any incumbent
+archive on an analysis branch, then merges that branch into `main` after
+separate operator authorization. A conflict leaves the branch and worktree
+for review while `main` stays unchanged. An agent supplies `--model <model-id>`
+for its commit trailer.
 
 Run a code-scheduled workflow. `start <package.module:ClassName>` creates a
 run where the definition says its runs go, allocating a free name, and prints

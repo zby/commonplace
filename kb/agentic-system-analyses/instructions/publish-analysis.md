@@ -17,9 +17,16 @@ expected incumbent identity before changing a public path. The accepted
 Publish to `retained/<source-slug>/`; the slug is the run-ID source slug. Move
 an incumbent unchanged to `retained-archive/<its-run-id>/`, then copy the
 accepted manifest and members unchanged. Complete run state pins the working
-manifest and published overview. The manifest pins every member. Stage and
-commit the full archive move and replacement together when Git publication is
-authorized; do not commit a partial set.
+manifest and published overview. The manifest pins every member. After the
+handoff and separate operator authorization, run `commonplace-workflow
+integrate-analysis <run>` from the origin checkout on `main` (an agent adds
+`--model <model-id>`). It stages only the changed retained set and its archive,
+commits them together on `analysis/<run-id>` from the method commit, then
+merges that branch into `main`. It refuses unrelated tracked changes or
+pre-existing staged changes in the worktree, and refuses a method commit that
+is not an ancestor of `main`. A merge conflict is aborted; keep the branch and
+worktree for an operator decision. Do not copy the set or choose a side of a
+conflict automatically.
 
 Ordinary I/O failures restore the incumbent and previous run state. An abrupt
 interruption may leave a partial directory or an archive with no current set.

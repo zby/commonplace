@@ -188,7 +188,7 @@ in the cited records.
 ---
 type: agentic-system-analyses/types/agent-memory-profile.md
 description: "Memory profile of {system} at {memory boundary}"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: "{repository or capture identity}"
 reviewed-boundary: "{frozen revision or capture label}"
 memory-comparison:

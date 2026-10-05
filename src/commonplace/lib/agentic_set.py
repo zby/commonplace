@@ -9,7 +9,7 @@ from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlsplit, urlunsplit
 
-from commonplace.lib.directory_artifact import MANIFEST_NAME, DirectoryArtifact
+from commonplace.lib.directory_artifact import DirectoryArtifact
 
 if TYPE_CHECKING:
     from commonplace.lib.validation import ValidationRun
@@ -59,16 +59,6 @@ def normalize_source_identity(identity: str) -> str:
         return value
     user, at, host = parts.netloc.rpartition("@")
     return urlunsplit(parts._replace(netloc=f"{user}{at}{host.lower()}"))
-
-
-def retained_overview_path(run_id: str) -> Path:
-    if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
-        raise ValueError("invalid analysis run ID")
-    return RETAINED_ROOT / run_id[15:].rsplit("-", 1)[0] / OVERVIEW_NAME
-
-
-def retained_artifact_path(run_id: str) -> Path:
-    return retained_overview_path(run_id).with_name(MANIFEST_NAME)
 
 
 @dataclass(frozen=True)

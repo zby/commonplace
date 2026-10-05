@@ -4,11 +4,11 @@ Start a run with
 
     commonplace-workflow start commonplace.lib.agentic_workflow:AnalyseAgenticSystem \\
         --param system=<name> --param source-identity=<identity> \\
-        --param source=<the caller's source input> [--param review-path=<path>]
+        --param source=<the caller's source input>
 
-from the repository root. `start` allocates the run ID, AAS-<date>-<system
-slug>-<nn> (the slug from the source identity's last path segment, or
-the system name), creates the run directory under
+from the prepared worktree root. `start` allocates the run ID,
+AAS-<date>-<system slug>-<worktree token>-<nn> (the slug from the source
+identity's last path segment, or the system name), creates the run directory under
 `kb/agentic-system-analyses/state/`, and prints it; the run ID is the directory's
 name. Each job's task is an instruction file under
 `kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/`, declared as an
@@ -69,6 +69,7 @@ from commonplace.lib.agentic_set import (
     normalize_source_identity,
     source_slug,
 )
+from commonplace.lib.analysis_worktree import preparation_for
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import agentic_set_member_link_failures, validate_note
@@ -684,17 +685,18 @@ class AnalyseAgenticSystem(Workflow):
         if self.source_revision is not None and self.checkout is None:
             raise ValueError("source-revision requires a GitHub repository identity")
 
-    def run_location(self) -> tuple[str, str]:
-        """`AAS-<today>-<slug>` under the analysis state directory.
+    def run_location(self, base: Path) -> tuple[str, str]:
+        """`AAS-<today>-<slug>-<worktree token>` under analysis state.
 
         The slug is the last path segment of the source identity when it is a
         URL, such as the repository name of a GitHub URL, so reruns of a system
         keep one review path whatever the system is called; otherwise it is the
         system parameter.
         """
+        token = preparation_for(base)["token"]
         slug = source_slug(self.source_identity, str(self.params["system"]))
         today = datetime.datetime.now(datetime.UTC).date().isoformat()
-        return STATE_ROOT.as_posix(), f"AAS-{today}-{slug}"
+        return STATE_ROOT.as_posix(), f"AAS-{today}-{slug}-{token}"
 
     def run(self, ctx) -> None:
         run_dir = ctx.run_dir
@@ -1264,7 +1266,7 @@ class AnalyseAgenticSystem(Workflow):
     def repo_root(run_dir: Path) -> Path:
         if not RUN_ID.fullmatch(run_dir.name):
             raise ValueError(
-                f"{run_dir.name} is not a run ID of the form AAS-YYYY-MM-DD-slug-nn"
+                f"{run_dir.name} is not a run ID of the form AAS-YYYY-MM-DD-slug-token-nn"
             )
         repo_root = run_dir.parents[len(STATE_ROOT.parts)]
         if repo_root / STATE_ROOT != run_dir.parent:
@@ -1298,7 +1300,23 @@ class AnalyseAgenticSystem(Workflow):
         return str(found["expected_incumbent_sha256"])
 
     def open(self, run_dir: Path) -> None:
+        record_path = self.repo.with_name(self.repo.name + ".preparation.json")
+        slug = source_slug(self.source_identity, str(self.params["system"]))
+        tokenized = re.fullmatch(
+            rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-[0-9a-f]{{12}}-\d{{2}}",
+            self.run_id,
+        ) is not None
+        if tokenized or record_path.exists():
+            preparation = preparation_for(self.repo, require_token=tokenized)
+            token = preparation.get("token")
+            if token is not None and not re.fullmatch(
+                rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-{token}-\d{{2}}",
+                self.run_id,
+            ):
+                raise ValueError("analysis run ID does not match the worktree preparation token")
         commit = self.head()
+        if tokenized and preparation["commit"] != commit:
+            raise ValueError("analysis worktree HEAD differs from its preparation commit")
         self.check_opening(commit)
         destination = self.review_path()
         record = {

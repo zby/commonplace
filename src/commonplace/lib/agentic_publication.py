@@ -17,7 +17,6 @@ from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_state
 from commonplace.lib.agentic_set import (
     ARCHIVE_ROOT,
-    MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
@@ -29,6 +28,7 @@ from commonplace.lib.agentic_set import (
     normalize_source_identity,
     source_slug,
 )
+from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
 # The files whose tree at ``inputs-commit`` supplied the run's method. A run

@@ -210,7 +210,7 @@ occurs.
 ---
 type: agentic-system-analyses/types/agentic-system-epistemic-report.md
 description: "Epistemic routes of {system} at {boundary}"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 reviewed-boundary: "{immutable revision or capture identity}"
 ---
 

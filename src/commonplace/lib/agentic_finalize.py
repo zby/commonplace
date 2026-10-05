@@ -12,12 +12,12 @@ from pathlib import Path
 import yaml
 
 from commonplace.lib.agentic_set import (
-    MANIFEST_NAME,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     SET_NAMES,
     SET_TYPE,
 )
+from commonplace.lib.directory_artifact import MANIFEST_NAME
 
 
 def build_manifest(run_dir: Path) -> str:

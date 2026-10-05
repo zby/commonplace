@@ -129,7 +129,7 @@ independently attest acceptance.
 ---
 type: agentic-system-analyses/types/agent-memory-analysis-report.md
 description: "Memory mechanisms of {system} within {memory boundary}"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: "{repository or capture identity}"
 reviewed-boundary: "{immutable revision or capture identity}"
 report-status: complete

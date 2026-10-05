@@ -64,7 +64,7 @@ def lens_job(name: str) -> Job:
 class Located(Workflow):
     """A definition that names where its runs go."""
 
-    def run_location(self):
+    def run_location(self, base: Path):
         return "runs", self.params["name"]
 
     def run(self, ctx):

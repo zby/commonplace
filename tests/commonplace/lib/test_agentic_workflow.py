@@ -42,6 +42,7 @@ from commonplace.workflow import (
 from commonplace.workflow.engine import render_prompt
 from tests.commonplace.lib.test_agentic_analysis import (
     REPO_ROOT,
+    RETAINED_OVERVIEW,
     RUN_ID,
     SOURCE,
     STATE_DIR,
@@ -1426,6 +1427,10 @@ def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) ->
 def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:
     from commonplace.workflow import Orchestrator as Runs
 
+    token = "a" * 12
+    tmp_path.with_name(tmp_path.name + ".preparation.json").write_text(json.dumps({
+        "status": "ready", "worktree": str(tmp_path), "token": token,
+    }))
     params = {"system": "Example System", "source-identity": "x", "source": "x"}
     reference = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
 
@@ -1433,7 +1438,7 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
     second = Runs.start(reference, params, base=tmp_path).run_dir
 
     assert first.parent == tmp_path / "kb/agentic-system-analyses/state"
-    assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-example-system-01", first.name)
+    assert re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-example-system-{token}-01", first.name)
     assert second.name == first.name[:-2] + "02"
     assert AnalyseAgenticSystem.repo_root(first) == tmp_path
 
@@ -1441,6 +1446,10 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
 def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> None:
     from commonplace.workflow import Orchestrator as Runs
 
+    token = "b" * 12
+    tmp_path.with_name(tmp_path.name + ".preparation.json").write_text(json.dumps({
+        "status": "ready", "worktree": str(tmp_path), "token": token,
+    }))
     params = {
         "system": "mem",
         "source-identity": "https://github.com/jasonkneen/instinctual-memory.git",
@@ -1450,7 +1459,7 @@ def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> No
         "commonplace.lib.agentic_workflow:AnalyseAgenticSystem", params, base=tmp_path
     ).run_dir
 
-    assert re.fullmatch(r"AAS-\d{4}-\d{2}-\d{2}-instinctual-memory-01", run_dir.name)
+    assert re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-instinctual-memory-{token}-01", run_dir.name)
 
 
 # 9. Publication interrupted after the retained set began
@@ -1475,7 +1484,7 @@ def test_a_partly_written_retained_set_is_not_an_absent_publication(
     )
     assert definition.recognize_publication(spec) is Recognition.ABSENT
 
-    retained = fixture.root / agentic_set.retained_overview_path(RUN_ID).parent
+    retained = fixture.root / RETAINED_OVERVIEW.parent
     retained.mkdir(parents=True)
     (retained / "ARTIFACT.yaml").write_text("partial", encoding="utf-8")
 

@@ -265,13 +265,13 @@ class Workflow:
         same run directory, and every step in it must be safe to meet again."""
         raise NotImplementedError
 
-    def run_location(self) -> tuple[str, str] | None:
+    def run_location(self, base: Path) -> tuple[str, str] | None:
         """Where `Orchestrator.start` puts a new run of this definition.
 
         Returns the directory that holds the runs, relative to the directory
         `start` is given, and the stem of the new run's name; `start` appends
         `-01`, `-02` and so on and takes the first name not in use. It is asked
-        once, when the run starts, so it may use the date or the parameters.
+        once, when the run starts, so it may use the date, parameters or base.
         None, the default, means the caller names the run directory.
         """
         return None
@@ -625,7 +625,7 @@ class Orchestrator:
         up to 99 are all in use.
         """
         workflow = load_definition(definition)(params)
-        location = workflow.run_location()
+        location = workflow.run_location(Path(base).resolve())
         if location is None:
             raise ValueError(
                 f"{definition} does not say where its runs go; give the run directory"

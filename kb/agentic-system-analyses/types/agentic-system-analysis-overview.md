@@ -20,7 +20,7 @@ and pins every member, including this overview.
 |---|---:|---|
 | `type` | Yes | `agentic-system-analyses/types/agentic-system-analysis-overview.md` |
 | `description` | Yes | For a `complete` run, the synthesizer's one-sentence retrieval description of the system's mechanism and limits, which the public review also carries; otherwise a code-written description naming the system, selected boundary, and disposition |
-| `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
+| `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-token-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
 | `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
@@ -131,7 +131,7 @@ inside its own bytes.
 ---
 type: agentic-system-analyses/types/agentic-system-analysis-overview.md
 description: "{one sentence on the system's mechanism and limits}"
-run-id: AAS-YYYY-MM-DD-system-slug-nn
+run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 system: "{source-native system name}"
 run-date: "YYYY-MM-DD"
 result-disposition: complete
