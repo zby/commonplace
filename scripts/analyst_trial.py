@@ -32,14 +32,15 @@ import shutil
 import sys
 from pathlib import Path
 
+from commonplace.lib.agentic_finalize import start_manifest
 from commonplace.lib.agentic_workflow import (
-    BOUNDARY,
     JOBS,
     OPENING,
     RUN_STATE,
     STATE_ROOT,
     AnalyseAgenticSystem,
     report,
+    slot,
 )
 from commonplace.workflow.engine import render_prompt
 
@@ -93,7 +94,7 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
     repo = recorded.parents[len(STATE_ROOT.parts)]
     if repo / STATE_ROOT != recorded.parent:
         raise ValueError(f"not a run directory under {STATE_ROOT}: {recorded}")
-    wanted = [BOUNDARY, OPENING, RUN_STATE]
+    wanted = [slot("boundary"), OPENING, RUN_STATE]
     runtime = report("runtime", 0)
     if analyst != "runtime":
         wanted.append(runtime)
@@ -107,8 +108,9 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
     params.setdefault("model", "unrecorded")
 
     trial = trial_dir(repo / STATE_ROOT, recorded.name, analyst, label)
-    (trial / "output").mkdir(parents=True)
-    for name in (BOUNDARY, OPENING):
+    trial.mkdir(parents=True)
+    start_manifest(trial)
+    for name in (slot("boundary"), OPENING):
         shutil.copy2(recorded / name, trial / name)
     (trial / RUN_STATE).write_text(
         running_state((recorded / RUN_STATE).read_text(encoding="utf-8"), trial.name),
@@ -116,6 +118,7 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
     )
     if analyst != "runtime":
         shutil.copy2(recorded / runtime, trial / runtime)
+        shutil.copy2(recorded / runtime, trial / slot("runtime"))
 
     definition = AnalyseAgenticSystem(params)
     definition.run_id = trial.name

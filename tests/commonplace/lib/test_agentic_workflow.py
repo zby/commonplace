@@ -345,7 +345,7 @@ def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> N
 
     first = scripted.round()
     assert isinstance(first, Launch)
-    boundary = fixture.run_dir / "boundary.md"
+    boundary = fixture.run_dir / "output/boundary.md"
     assert not boundary.exists()
     worker_boundary = fixture.run_dir / "jobs/boundary/boundary.md"
     assert worker_boundary.is_file()
@@ -523,7 +523,8 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     drive_to(scripted, job_name)
     attempt, prompt = prompt_of(scripted.round(), job_name)
     assert attempt == 2
-    assert f"member identity: {field}" in prompt
+    assert f"identity field {field}" in prompt
+    assert "rule member identity" in prompt
     assert f"run-id = {RUN_ID}\n" in prompt
     assert "reconcile-0" not in scripted.launched
     assert isinstance(scripted.run()[-1], Done)
@@ -581,6 +582,7 @@ def test_out_of_scope_boundary_closes_with_an_overview_only_set(
     output = fixture.run_dir / "output"
     assert sorted(path.name for path in output.iterdir()) == [
         "ARTIFACT.yaml",
+        "boundary.md",
         "overview.md",
     ]
     state_path = fixture.run_dir / "run-state.md"
@@ -719,7 +721,7 @@ def test_a_blocker_addressed_to_an_analyst_corrects_that_report(fixture: Fixture
     retained = fixture.public_path.parent
     assert (retained / "epistemic.md").read_text(encoding="utf-8") == corrected
     assert sorted(path.name for path in retained.iterdir()) == sorted(
-        ["ARTIFACT.yaml", "epistemic.md", "memory.md", "memory-profile.md",
+        ["ARTIFACT.yaml", "boundary.md", "epistemic.md", "memory.md", "memory-profile.md",
          "overview.md", "reconciliation.md", "runtime.md"])
     assert definition.publications == 1
     # A replay rewrites the current versions in the same order and changes nothing.
@@ -1791,38 +1793,38 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
     ("kind", "round_", "expected"),
     [
         ("boundary", 0, {"opening": "run-metadata.json"}),
-        ("memory", 0, {"boundary": "boundary.md", "runtime": "runtime-report-0.md", "round": "first"}),
-        ("runtime", 0, {"boundary": "boundary.md", "round": "first"}),
+        ("memory", 0, {"boundary": "output/boundary.md", "runtime": "runtime-report-0.md", "round": "first"}),
+        ("runtime", 0, {"boundary": "output/boundary.md", "round": "first"}),
         ("memory", 2, {
-            "boundary": "boundary.md", "round": "correction",
+            "boundary": "output/boundary.md", "round": "correction",
             "previous-report": "memory-report-1.md", "requests": "memory-requests-2.md",
             "answers": "jobs/memory-2/answers.md",
         }),
         ("runtime", 1, {
-            "boundary": "boundary.md", "round": "correction",
+            "boundary": "output/boundary.md", "round": "correction",
             "previous-report": "runtime-report-0.md", "requests": "runtime-requests-1.md",
             "answers": "jobs/runtime-1/answers.md",
         }),
         ("reconcile", 0, {
-            "round": "first", "boundary": "boundary.md", "runtime": "runtime-report-0.md",
+            "round": "first", "boundary": "output/boundary.md", "runtime": "runtime-report-0.md",
             "memory": "memory-report-0.md", "epistemic": "epistemic-report-0.md",
         }),
         ("reconcile", 2, {
-            "round": "after-blockers", "boundary": "boundary.md", "runtime": "runtime-report-1.md",
+            "round": "after-blockers", "boundary": "output/boundary.md", "runtime": "runtime-report-1.md",
             "memory": "memory-report-2.md", "epistemic": "epistemic-report-0.md",
             "previous-reconciliation": "reconcile-1.md",
             "verification": "verification-1.md", "set-check": "set-check-1.md",
             "memory-answers": "memory-answers-2.md", "memory-changes": "memory-changes-2.md",
         }),
         ("verify", 2, {
-            "round": "after-blockers", "boundary": "boundary.md", "reconciliation": "output/reconciliation.md",
+            "round": "after-blockers", "boundary": "output/boundary.md", "reconciliation": "output/reconciliation.md",
             "runtime": "runtime-report-1.md", "memory": "memory-report-2.md",
             "epistemic": "epistemic-report-0.md", "set-check": "set-check-2.md",
             "previous-verification": "verification-1.md",
             "memory-answers": "memory-answers-2.md", "memory-changes": "memory-changes-2.md",
         }),
         ("verify-synthesis", 0, {
-            "synthesis": "synthesis-0.md", "boundary": "boundary.md", "runtime": "output/runtime.md",
+            "synthesis": "synthesis-0.md", "boundary": "output/boundary.md", "runtime": "output/runtime.md",
             "memory": "output/memory.md", "epistemic": "output/epistemic.md",
             "reconciliation": "output/reconciliation.md",
             "record-verification": "verification-2.md", "profile-verification": "profile-verification-1.md",

@@ -11,8 +11,7 @@ from typing import Any
 
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
-    OVERVIEW_NAME,
-    SET_NAMES,
+    analysis_layout,
     is_normalized_relative,
     is_review_path,
     load_member_set,
@@ -588,7 +587,7 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         else f"{state.source.identity} @ {state.source.revision}"
     )
     members = (
-        ", ".join(SET_NAMES) + " (pinned by ARTIFACT.yaml)"
+        ", ".join(role.path for role in analysis_layout().roles.values()) + " (pinned by ARTIFACT.yaml)"
         if state.result_disposition == "complete"
         else "none"
     )
@@ -684,12 +683,11 @@ def verify_agentic_analysis_run_state(
 
     if state.generated_review is not None:
         retained_dir = Path(state.generated_review.display_path).parent
-        retained_paths = {name: retained_dir / name for name in (MANIFEST_NAME, *SET_NAMES)}
-        expected_hashes = {MANIFEST_NAME: state.artifact.expected_sha256,
-                           OVERVIEW_NAME: member_set.overview.sha256}
+        expected_hashes = {MANIFEST_NAME: state.artifact.expected_sha256}
         expected_hashes.update(
-            {name: member.sha256 for name, member in member_set.members.items()}
+            {document.name: document.sha256 for document in member_set.documents}
         )
+        retained_paths = {name: retained_dir / name for name in expected_hashes}
         retained_failures = []
         for name, expected_sha256 in expected_hashes.items():
             retained = OutputIdentity(
@@ -713,7 +711,7 @@ def verify_agentic_analysis_run_state(
                 load_member_set((state.repo_root / retained_paths[MANIFEST_NAME]).parent, run=run)
             except ValueError as exc:
                 failures.append(f"retained artifact: {exc}")
-        if state.generated_review.display_path != retained_paths[OVERVIEW_NAME].as_posix():
+        if state.generated_review.display_path != retained_paths[member_set.overview.name].as_posix():
             failures.append("published overview: path does not match run identity")
         if state.generated_review.expected_sha256 != member_set.overview.sha256:
             failures.append("published overview: must preserve the accepted overview bytes")

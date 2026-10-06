@@ -46,7 +46,7 @@ from commonplace.lib.agentic_analysis import (
     verify_quote_anchors,
 )
 from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
-from commonplace.lib.agentic_finalize import build_manifest
+from commonplace.lib.agentic_finalize import build_manifest, start_manifest
 from commonplace.lib.agentic_publication import (
     PublicationSpec,
     atomic_write,
@@ -68,17 +68,22 @@ from commonplace.lib.agentic_records import (
 )
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
-    OVERVIEW_NAME,
-    RECORD_MEMBER_NAMES,
     RETAINED_ROOT,
     RUN_ID,
+    SET_TYPE,
+    analysis_layout,
     normalize_source_identity,
     source_slug,
 )
 from commonplace.lib.analysis_worktree import preparation_for
+from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_matching import ranged_prose_anchors
-from commonplace.lib.validation import agentic_set_member_link_failures, validate_note
+from commonplace.lib.validation import (
+    ValidationRun,
+    agentic_set_member_link_failures,
+    validate_note,
+)
 from commonplace.workflow import (
     Blocked,
     Done,
@@ -125,15 +130,14 @@ SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT, SY
 OPENING = "opening.json"
 RUN_METADATA = "run-metadata.json"
 FROZEN_SOURCE = "source.json"
-BOUNDARY = "boundary.md"
 RUN_STATE = "run-state.md"
-RUNTIME = f"{OUTPUT_DIR}/runtime.md"
-MEMORY = f"{OUTPUT_DIR}/memory.md"
-PROFILE = f"{OUTPUT_DIR}/memory-profile.md"
-EPISTEMIC = f"{OUTPUT_DIR}/epistemic.md"
-RECONCILIATION = f"{OUTPUT_DIR}/reconciliation.md"
-OVERVIEW = f"{OUTPUT_DIR}/{OVERVIEW_NAME}"
-MANIFEST = f"{OUTPUT_DIR}/ARTIFACT.yaml"
+MANIFEST = f"{OUTPUT_DIR}/{MANIFEST_NAME}"
+
+
+def slot(role: str) -> str:
+    """Where a set role's current document is, relative to the run directory."""
+    return f"{OUTPUT_DIR}/{analysis_layout().path(role)}"
+
 
 BOUNDARY_FIELDS = (
     "target-class",
@@ -151,10 +155,10 @@ ANALYST_SPECS: dict[str, dict[str, Any]] = {
 and the analysts whose reports it reads in its first round. `reads` also
 orders the work: an analyst runs after the analysts it reads."""
 ANALYSTS = tuple(ANALYST_SPECS)
+RECORD_ROLES = (*ANALYSTS, "reconciliation")
+"""The set roles whose records the round-close check judges."""
 ADDRESSEES = (*ANALYSTS, "reconciliation")
 """Who a record-verification blocker can be addressed to."""
-CURRENT = {"runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC}
-"""Where the current version of each analyst report is in the output set."""
 DECLARING = {spec["prefix"]: member for member, spec in ANALYST_SPECS.items()}
 ANSWERS_NAME = "answers.md"
 """What a correcting analyst writes beside its report, in its job workspace."""
@@ -427,43 +431,60 @@ def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) 
     return findings
 
 
-def set_bodies(
-    *, boundary: Path, reconciled: Path | None = None, **members: Path
-) -> dict[str, str]:
-    """The bodies of the set these files make, by set name.
+def set_bodies(run_dir: Path, **extra: Path) -> dict[str, str]:
+    """The bodies of the output members present and of extra documents, by set name.
 
-    The boundary supplies the overview's Source register, without requiring
-    a rendered overview. Each member keyword names a file without its `.md`.
+    Each extra keyword names a file without its `.md`.
     """
-    _, boundary_body = split(boundary.read_text(encoding="utf-8"))
-    bodies = {OVERVIEW_NAME: boundary_body}
-    if reconciled is not None:
-        bodies["reconciliation.md"] = split(reconciled.read_text(encoding="utf-8"))[1]
-    for name, path in members.items():
+    bodies = {}
+    for role in analysis_layout().roles.values():
+        path = run_dir / OUTPUT_DIR / role.path
+        if path.is_file():
+            bodies[role.path] = split(path.read_text(encoding="utf-8"))[1]
+    for name, path in extra.items():
         bodies[f"{name}.md"] = split(path.read_text(encoding="utf-8"))[1]
     return bodies
 
 
 def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
-    """Every record the bodies cite is declared once among them."""
+    """Every record the bodies cite is declared once among them; the
+    boundary's Source register declares the sources."""
     try:
         found = bodies()
     except (ValueError, OSError) as error:
         return [f"a set document does not parse: {error}"]
-    _, errors = set_record_errors(found)
+    _, errors = set_record_errors(analysis_layout().path("boundary"), found)
     return errors
 
 
+def set_role_refusals(path: Path, *, run_dir: Path, repo_root: Path, role: str) -> list[str]:
+    """The set's findings for one role, with ``path`` as that role's document.
+
+    The manifest is read as the working one, so a replay over a finished,
+    pinned set judges a candidate the same way the run first did.
+    """
+    output = run_dir / OUTPUT_DIR
+    run = ValidationRun(repo_root, (), content_overrides={
+        output / analysis_layout().path(role): path.read_bytes(),
+        output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE}),
+    })
+    try:
+        findings = run.artifact_findings(output)
+    except (OSError, UnicodeError, ValueError, TypeError) as error:
+        return [f"set check: {error}"]
+    return [finding.message for finding in findings if finding.role == role]
+
+
 def pass_refusals(
-    path: Path, *, repo_root: Path, run_state: Path, boundary: Path,
+    path: Path, *, repo_root: Path, run_state: Path,
     declaration_prefix: str,
-    bodies: Callable[[Path], dict[str, str]],
+    set_check: Callable[[Path], list[str]],
 ) -> list[str]:
     """The output of an analyst, which declares records: a valid member whose
-    record references resolve against the set so far and whose quotations
-    resolve against the frozen source."""
+    identity and record references hold in the set so far and whose
+    quotations resolve against the frozen source."""
     refusals = member_refusals(path, repo_root=repo_root)
-    refusals += reference_refusals(partial(bodies, path))
+    refusals += set_check(path)
     try:
         # Read the run's identity and source without validating its published
         # artifact: a replay of a complete run passes through earlier report
@@ -472,11 +493,8 @@ def pass_refusals(
         if error is not None or document is None:
             raise ValueError(f"run state does not parse: {error}")
         state = parse_agentic_analysis_run_state(run_state, document, repo_root=repo_root)
-        metadata, _ = split(path.read_text(encoding="utf-8"))
-        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
     except (ValueError, OSError) as error:
         return refusals + [str(error)]
-    refusals += identity_refusals(metadata, run_id=state.run_id, boundary_fields=boundary_fields)
     wrong_prefix = [
         identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
         if not identifier.startswith(declaration_prefix)
@@ -507,21 +525,15 @@ def reconcile_refusals(
     path: Path,
     *,
     repo_root: Path,
-    run_id: str,
-    boundary: Path,
-    runtime: Path,
-    report: Path,
-    epistemic: Path,
+    set_check: Callable[[Path], list[str]],
 ) -> list[str]:
     """A valid reconciliation member of this run, with no value amendment, and
     every record it cites declared in the set it will make."""
     refusals = member_refusals(path, repo_root=repo_root)
     try:
-        metadata, body = split(path.read_text(encoding="utf-8"))
-        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
+        _, body = split(path.read_text(encoding="utf-8"))
     except (ValueError, OSError) as error:
         return refusals + [str(error)]
-    refusals += identity_refusals(metadata, run_id=run_id, boundary_fields=boundary_fields)
     refusals.extend(
         "value amendment: reconciliation states connections between reports and does "
         "not replace a record's value; describe the disagreement with both records and "
@@ -530,16 +542,7 @@ def reconcile_refusals(
         for line in value_amendments(body)
     )
     refusals.extend(source_anchor_refusals(body))
-    return refusals + reference_refusals(
-        partial(
-            set_bodies,
-            boundary=boundary,
-            reconciled=path,
-            runtime=runtime,
-            memory=report,
-            epistemic=epistemic,
-        )
-    )
+    return refusals + set_check(path)
 
 
 def blocker_entries(blockers: str) -> list[str]:
@@ -729,7 +732,7 @@ def synthesis_refusals(
         return refusals + [str(error)]
     refusals += identity_refusals(dict(document.frontmatter or {}), run_id=run_id, boundary_fields=boundary_fields)
     # Synthesis is written beside output/, then assembled into overview.md.
-    refusals += agentic_set_member_link_failures(path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links)
+    refusals += agentic_set_member_link_failures(path.parent / slot("overview"), document.links)
     refusals += carried_limit_refusals(document.body, verifications)
     return refusals + reference_refusals(partial(bodies, path))
 
@@ -883,15 +886,15 @@ class AnalyseAgenticSystem(Workflow):
             frozen = json.loads((run_dir / FROZEN_SOURCE).read_text(encoding="utf-8"))
             self.write_run_state(run_dir, opening, {"source": frozen})
 
+        start_manifest(run_dir)
         self.run_job(ctx, self.boundary_job(run_dir, frozen))
-        fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
+        fields, boundary_body = split((run_dir / slot("boundary")).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
         if fields["result-disposition"] != "complete":
             self.close_without_analysis(run_dir, opening, fields, boundary_body)
             return
 
-        (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
         versions = dict.fromkeys(ANALYSTS, 0)
         self.run_analysts(ctx, run_dir, ANALYSTS, versions)
 
@@ -923,7 +926,7 @@ class AnalyseAgenticSystem(Workflow):
                 break
             if profile_round == self.profile_correction_rounds:
                 raise StopRun("the profile verification of the last round names blockers: " + blockers)
-        atomic_write(run_dir / PROFILE, (run_dir / round_file("profile", profile_round)).read_bytes())
+        atomic_write(run_dir / slot("memory-profile"), (run_dir / round_file("profile", profile_round)).read_bytes())
 
         judged = (round_file("verification", round_), round_file("profile-verification", profile_round))
         for synthesis_round in range(self.synthesis_correction_rounds + 1):
@@ -943,14 +946,14 @@ class AnalyseAgenticSystem(Workflow):
         spec = PublicationSpec(
             repo_root=repo_root,
             run_state_path=run_dir / RUN_STATE,
-            generated_candidate_path=run_dir / OVERVIEW,
+            generated_candidate_path=run_dir / slot("overview"),
             generated_destination=opening["review-path"],
             expected_incumbent_sha256=opening["expected-incumbent-sha256"],
         )
         ctx.effect(
             "publish",
             partial(self.publish, spec),
-            inputs=(OVERVIEW, MANIFEST),
+            inputs=(slot("overview"), MANIFEST),
             recognize=partial(self.recognize_publication, spec),
         )
 
@@ -1066,7 +1069,7 @@ class AnalyseAgenticSystem(Workflow):
             verification = round_file("verification", requests_from)
             text = (run_dir / verification).read_text(encoding="utf-8")
             bodies = {
-                other: split((run_dir / CURRENT[other]).read_text(encoding="utf-8"))[1]
+                other: split((run_dir / slot(other)).read_text(encoding="utf-8"))[1]
                 for other in ANALYSTS if other != member
             }
             self.replace(run_dir / requests(member, round_), render_requests(
@@ -1075,7 +1078,7 @@ class AnalyseAgenticSystem(Workflow):
         job = self.analyst_job(run_dir, member, round_)
         self.run_job(ctx, job)
         destination = self.job_destinations[job.name]
-        self.replace(run_dir / CURRENT[member], destination.read_bytes())
+        self.replace(run_dir / slot(member), destination.read_bytes())
         if round_:
             self.replace(
                 run_dir / answers(member, round_),
@@ -1196,7 +1199,7 @@ class AnalyseAgenticSystem(Workflow):
         return self.job(
             run_dir,
             "boundary",
-            BOUNDARY,
+            slot("boundary"),
             reads={"opening": RUN_METADATA},
             extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT, BOUNDARY_TYPE),
             parameters={
@@ -1222,22 +1225,19 @@ class AnalyseAgenticSystem(Workflow):
         run_dir = run_dir.resolve()
         spec = ANALYST_SPECS[member]
         name = f"{member}-{round_}"
-        reads = {"boundary": BOUNDARY}
+        reads = {"boundary": slot("boundary")}
         parameters = {"round": "correction" if round_ else "first"}
         if round_:
             reads.update({"previous-report": report(member, round_ - 1), "requests": requests(member, round_)})
             parameters["answers"] = str(run_dir / "jobs" / name / ANSWERS_NAME)
-            cited = {other: run_dir / CURRENT[other] for other in ANALYSTS if other != member}
         else:
             reads.update({read: report(read, 0) for read in spec["reads"]})
-            cited = {read: run_dir / CURRENT[read] for read in spec["reads"]}
         checks = [partial(
             pass_refusals,
             repo_root=self.repo,
             run_state=run_dir / RUN_STATE,
-            boundary=run_dir / BOUNDARY,
             declaration_prefix=spec["prefix"],
-            bodies=lambda path: set_bodies(boundary=run_dir / BOUNDARY, **cited, **{member: path}),
+            set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=member),
         )]
         if round_:
             checks.append(partial(
@@ -1264,7 +1264,7 @@ class AnalyseAgenticSystem(Workflow):
         self, run_dir: Path, round_: int, versions: Mapping[str, int],
         corrected: Sequence[str],
     ) -> Job:
-        reads = {"boundary": BOUNDARY, **{member: report(member, versions[member]) for member in ANALYSTS}}
+        reads = {"boundary": slot("boundary"), **{member: report(member, versions[member]) for member in ANALYSTS}}
         if round_ > 0:
             reads["previous-reconciliation"] = reconciliation(round_ - 1)
             reads.update({kind: round_file(kind, round_ - 1) for kind in ("verification", "set-check")})
@@ -1280,35 +1280,24 @@ class AnalyseAgenticSystem(Workflow):
             validator=partial(
                 reconcile_refusals,
                 repo_root=self.repo,
-                run_id=run_dir.name,
-                boundary=run_dir / BOUNDARY,
-                runtime=run_dir / reads["runtime"],
-                report=run_dir / reads["memory"],
-                epistemic=run_dir / reads["epistemic"],
+                set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role="reconciliation"),
             ),
         )
 
-    def record_bodies(self, run_dir: Path, **extra: Path) -> dict[str, str]:
-        return set_bodies(
-            boundary=run_dir / BOUNDARY,
-            reconciled=run_dir / RECONCILIATION,
-            runtime=run_dir / RUNTIME,
-            memory=run_dir / MEMORY,
-            epistemic=run_dir / EPISTEMIC,
-            **extra,
-        )
-
-    def record_check(self, run_dir: Path, fields: dict[str, Any]) -> list[str]:
-        """Check records directly, before any public synthesis or overview exists."""
+    def record_check(self, run_dir: Path) -> list[str]:
+        """Check the record members directly, before any public synthesis or
+        overview exists: each one's own validation, then the set's findings
+        for its role."""
+        output = run_dir / OUTPUT_DIR
+        layout = analysis_layout()
         failures = []
-        for name in RECORD_MEMBER_NAMES:
-            path = run_dir / OUTPUT_DIR / name
-            failures.extend(f"{name}: {failure}" for failure in member_refusals(path, repo_root=self.repo))
-            metadata, _ = split(path.read_text(encoding="utf-8"))
-            for field, expected in (("run-id", self.run_id), ("reviewed-boundary", fields["reviewed-boundary"])):
-                if metadata.get(field) != expected:
-                    failures.append(f"{name}: {field} {metadata.get(field)!r} does not match the boundary; expected {expected!r}")
-        failures.extend(reference_refusals(partial(self.record_bodies, run_dir)))
+        for role in RECORD_ROLES:
+            name = layout.path(role)
+            failures.extend(f"{name}: {failure}" for failure in member_refusals(output / name, repo_root=self.repo))
+        findings = ValidationRun(self.repo, (), content_overrides={
+            output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE}),
+        }).artifact_findings(output)
+        failures.extend(finding.message for finding in findings if finding.role in RECORD_ROLES)
         return failures
 
     def close_round(
@@ -1317,9 +1306,9 @@ class AnalyseAgenticSystem(Workflow):
     ) -> str:
         """Make the round's reports current, check the records, and independently judge them."""
         for member in ANALYSTS:
-            self.replace(run_dir / CURRENT[member], (run_dir / report(member, versions[member])).read_bytes())
-        self.replace(run_dir / RECONCILIATION, (run_dir / reconciliation(round_)).read_bytes())
-        failures = self.record_check(run_dir, fields)
+            self.replace(run_dir / slot(member), (run_dir / report(member, versions[member])).read_bytes())
+        self.replace(run_dir / slot("reconciliation"), (run_dir / reconciliation(round_)).read_bytes())
+        failures = self.record_check(run_dir)
         write_file(run_dir / round_file("set-check", round_),
                    "# Record set check\n\n" + ("\n".join(f"- {failure}" for failure in failures) or "none") + "\n")
         self.run_job(ctx, self.verification_job(
@@ -1331,7 +1320,7 @@ class AnalyseAgenticSystem(Workflow):
     def verifier_refusals(self, run_dir: Path, verifies: str) -> Callable[[Path], list[str]]:
         return partial(
             verification_refusals, repo_root=self.repo, run_id=run_dir.name,
-            boundary=run_dir / BOUNDARY, verifies=verifies,
+            boundary=run_dir / slot("boundary"), verifies=verifies,
         )
 
     def verification_job(
@@ -1339,7 +1328,7 @@ class AnalyseAgenticSystem(Workflow):
         corrected: Sequence[str],
         *, validator: Callable[[Path], Sequence[str]] | None = None,
     ) -> Job:
-        reads = {"boundary": BOUNDARY, "reconciliation": RECONCILIATION,
+        reads = {"boundary": slot("boundary"), "reconciliation": slot("reconciliation"),
                  **{member: report(member, versions[member]) for member in ANALYSTS},
                  "set-check": round_file("set-check", round_)}
         if round_ > 0:
@@ -1362,11 +1351,11 @@ class AnalyseAgenticSystem(Workflow):
             refusals.append("structural failures require explicit blockers")
         if not blockers_refusals(blockers):
             refusals += addressee_refusals(blockers)
-        return refusals + reference_refusals(partial(self.record_bodies, run_dir, verification=path))
+        return refusals + reference_refusals(partial(set_bodies, run_dir, verification=path))
 
     def profile_job(self, run_dir: Path, round_: int) -> Job:
-        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
-                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION}
+        reads = {"boundary": slot("boundary"), "runtime": slot("runtime"), "memory": slot("memory"),
+                 "epistemic": slot("epistemic"), "reconciliation": slot("reconciliation")}
         if round_:
             reads.update({"previous-profile": round_file("profile", round_ - 1),
                           "verification": round_file("profile-verification", round_ - 1)})
@@ -1388,23 +1377,18 @@ class AnalyseAgenticSystem(Workflow):
                 or type(comparison.get("version")) is not int
                 or comparison["version"] != 2):
             refusals.append("new workflow profiles require memory-comparison version: 2")
-        if metadata.get("type") != "agentic-system-analyses/types/agent-memory-profile.md":
-            refusals.append("profile frontmatter type must be agentic-system-analyses/types/agent-memory-profile.md")
-        fields, _ = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
-        for key, expected in (("run-id", self.run_id),
-                              ("reviewed-boundary", fields["reviewed-boundary"]),
-                              ("source-identity", self.source_identity)):
-            if metadata.get(key) != expected:
-                refusals.append(f"profile identity: {key} {metadata.get(key)!r} does not match the run's expected {expected!r}")
-        return refusals + reference_refusals(partial(self.record_bodies, run_dir, profile=path))
+        if metadata.get("source-identity") != self.source_identity:
+            refusals.append(f"profile identity: source-identity {metadata.get('source-identity')!r} "
+                            f"does not match the run's expected {self.source_identity!r}")
+        return refusals + set_role_refusals(path, run_dir=run_dir, repo_root=self.repo, role="memory-profile")
 
     def profile_verification_job(self, run_dir: Path, round_: int) -> Job:
         return self.job(
             run_dir, "verify-profile" if round_ == 0 else f"verify-profile-{round_}",
             round_file("profile-verification", round_),
-            reads={"profile": round_file("profile", round_), "boundary": BOUNDARY,
-                   "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
-                   "reconciliation": RECONCILIATION},
+            reads={"profile": round_file("profile", round_), "boundary": slot("boundary"),
+                   "runtime": slot("runtime"), "memory": slot("memory"), "epistemic": slot("epistemic"),
+                   "reconciliation": slot("reconciliation")},
             instruction="verify-profile",
             extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT, VERIFICATION_CONTRACT),
             validator=partial(self.profile_verification_refusals, run_dir),
@@ -1412,13 +1396,13 @@ class AnalyseAgenticSystem(Workflow):
 
     def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
         return self.verifier_refusals(run_dir, "profile")(path) + reference_refusals(
-            partial(self.record_bodies, run_dir, verification=path))
+            partial(set_bodies, run_dir, verification=path))
 
     def synthesis_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
         """The synthesizer reads the accepted members and the final record and
         profile verifications, whose limits its Limitations must carry."""
-        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
-                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION,
+        reads = {"boundary": slot("boundary"), "runtime": slot("runtime"), "memory": slot("memory"),
+                 "epistemic": slot("epistemic"), "reconciliation": slot("reconciliation"),
                  **self.judged_reads(judged)}
         if round_:
             reads.update({"previous-synthesis": round_file("synthesis", round_ - 1),
@@ -1429,9 +1413,9 @@ class AnalyseAgenticSystem(Workflow):
             extra=SYNTHESIS_CONTRACTS,
             parameters={"round": "after-blockers" if round_ else "first"},
             validator=partial(synthesis_refusals, repo_root=self.repo, run_id=run_dir.name,
-                              boundary=run_dir / BOUNDARY,
+                              boundary=run_dir / slot("boundary"),
                               verifications=tuple(run_dir / name for name in judged if name),
-                              bodies=lambda path: self.record_bodies(run_dir, synthesis=path)),
+                              bodies=lambda path: set_bodies(run_dir, synthesis=path)),
         )
 
     @staticmethod
@@ -1444,16 +1428,16 @@ class AnalyseAgenticSystem(Workflow):
         return self.job(
             run_dir, "verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}",
             round_file("synthesis-verification", round_),
-            reads={"synthesis": round_file("synthesis", round_), "boundary": BOUNDARY,
-                   "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
-                   "reconciliation": RECONCILIATION, **self.judged_reads(judged)},
+            reads={"synthesis": round_file("synthesis", round_), "boundary": slot("boundary"),
+                   "runtime": slot("runtime"), "memory": slot("memory"), "epistemic": slot("epistemic"),
+                   "reconciliation": slot("reconciliation"), **self.judged_reads(judged)},
             instruction="verify-synthesis", extra=(*SYNTHESIS_CONTRACTS, VERIFICATION_CONTRACT),
             validator=partial(self.synthesis_verification_refusals, run_dir, round_),
         )
 
     def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
         return self.verifier_refusals(run_dir, "synthesis")(path) + reference_refusals(
-            partial(self.record_bodies, run_dir,
+            partial(set_bodies, run_dir,
                     synthesis=run_dir / round_file("synthesis", round_), verification=path))
 
     # Steps that code executes
@@ -1486,7 +1470,7 @@ class AnalyseAgenticSystem(Workflow):
     def review_path(self) -> str:
         if "review-path" in self.params:
             raise ValueError("review-path is no longer a run parameter; publication uses the source slug")
-        return (RETAINED_ROOT / source_slug(self.source_identity, str(self.params["system"])) / OVERVIEW_NAME).as_posix()
+        return (RETAINED_ROOT / source_slug(self.source_identity, str(self.params["system"])) / analysis_layout().path("overview")).as_posix()
 
     def head(self) -> str:
         result = subprocess.run(
@@ -1631,7 +1615,7 @@ class AnalyseAgenticSystem(Workflow):
         profile_verification: str, synthesis_verification: str,
     ) -> None:
         """Render the final overview after all three independent checks pass."""
-        write_file(run_dir / OVERVIEW, self.render_overview(
+        write_file(run_dir / slot("overview"), self.render_overview(
             run_dir, opening, fields, boundary_body, round_,
             record_verification, profile_verification, synthesis_verification,
         ))
@@ -1683,7 +1667,7 @@ class AnalyseAgenticSystem(Workflow):
         profile_verification: str, synthesis_verification: str,
     ) -> str:
         synthesis_fields, synthesis = split((run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8"))
-        index = amendment_index((run_dir / RECONCILIATION).read_text(encoding="utf-8"))
+        index = amendment_index((run_dir / slot("reconciliation")).read_text(encoding="utf-8"))
         rest = (
             f"## Bounded synthesis\n\n{section(synthesis, 'Bounded synthesis').strip()}\n\n"
             f"## Limitations\n\n{section(synthesis, 'Limitations').strip()}\n\n"
@@ -1726,9 +1710,8 @@ class AnalyseAgenticSystem(Workflow):
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             f"### Blockers\n\n{reason}\n"
         )
-        (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
         write_file(
-            run_dir / OVERVIEW,
+            run_dir / slot("overview"),
             dump_frontmatter(
                 self.overview_frontmatter(opening, fields),
                 self.overview_body(boundary_body, rest),

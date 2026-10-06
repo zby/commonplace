@@ -405,6 +405,7 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
         overview=overview, memory=memory, profile=profile_member,
         artifact=SimpleNamespace(path=overview.path.parent, content=b"manifest"),
         documents=[overview, memory, profile_member],
+        roles={"overview": overview, "memory": memory, "memory-profile": profile_member},
     )
     monkeypatch.setattr(sm, "current_analyses", lambda root, run: [member_set])
     inputs = sm.load_results(tmp_path)

@@ -27,10 +27,12 @@ Two systems check conformance to a type — split by mechanical vs. judgment, no
 
 Do not restate a schema rule in body text. The validator already enforces it, so the restatement adds no protection — it only spends the reviewer's judgment re-confirming something already guaranteed, instead of on the properties only a reviewer can check.
 
-A directory type's schema receives `{manifest, members}` rather than one
-parsed document. It owns required and optional members and open or closed
-membership; its manifest supplies instance metadata. Every member also
-receives ordinary file validation. See the
+A directory type declares its members in an optional `layout` frontmatter
+field: roles with their files and expected types, the roles each member takes
+identity from and may cite, requiredness, and open or closed membership. Its
+schema receives `{manifest, members}` rather than one parsed document and
+constrains the manifest's instance metadata. Every member also receives
+ordinary file validation. See the
 [directory validation contract](../reference/validation-contract.md#directory-artifacts).
 
 ## Writing Shape

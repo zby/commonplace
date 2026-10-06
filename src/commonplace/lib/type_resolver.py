@@ -26,6 +26,7 @@ from referencing import Registry, Resource
 from referencing.exceptions import NoSuchResource
 
 from commonplace.lib import frontmatter
+from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.library import library_root
 from commonplace.lib.project_paths import collection_for_path, kb_root
 
@@ -37,6 +38,7 @@ class TypeProfile:
     type_name: str
     schema_path: Path | None
     schema: dict[str, Any] | None = None
+    layout: Layout | None = None
 
 
 TYPE_SPEC = "types/type-spec.md"
@@ -421,6 +423,10 @@ def resolve_type_definition(
         type_name=type_name.strip(),
         schema_path=schema_path,
         schema=schema,
+        layout=(
+            parse_layout(type_frontmatter["layout"], where=f"{type_doc_rel}: layout")
+            if "layout" in type_frontmatter else None
+        ),
     )
 
 

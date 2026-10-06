@@ -208,7 +208,7 @@ def materialize(specification):
 def test_plan_classifications_retain_fixture_findings_and_limits(specification, expected):
     profile, bodies = materialize(specification)
     before = deepcopy(profile)
-    known, errors = set_record_errors(bodies)
+    known, errors = set_record_errors("overview.md", bodies)
     assert errors == []
     assert route_field_errors(bodies["memory.md"]) == []
     assert conclusion_status_errors(bodies["memory.md"]) == []
@@ -356,7 +356,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     # The blocker grammar is the part a scripted check can judge; the type and identity are not in play here.
     assert blockers_refusals(section(verdict.read_text(), "Blockers").strip()) == []
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
-    assert set_record_errors({**bodies, "verification.md": verdict.read_text()})[1] == []
+    assert set_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
     packet = loaded_packet(workflow(tmp_path).profile_verification_job(tmp_path, 0), tmp_path)
     assert "an unsupported value or an unjustified coverage claim" in packet
 
@@ -432,12 +432,12 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
         "| Internal role ownership unresolved | RT-RTE-model-call | synthetic fixture | Autonomy is not established | Role-by-role execution evidence |\n"
         "| Evidence-responsive organizational change and exercised downstream dependence not inspected | RT-OBJ-store | synthetic fixture boundary and horizon | Self-improvement is not established | Declared objective, evidence-shaped organizational update, live consumer/channel/force and subsequent causal dependence |\n"
         "| Initial admission control inaccessible | MEM-OBJ-store | synthetic fixture | Complete write-agency coverage is prevented | Initial admission policy |\n")
-    bodies = {name: path.read_text() for name in ("overview.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
+    bodies = {name: path.read_text() for name in ("boundary.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
               if (path := directory / name).is_file()}
     candidate = directory.parent / "synthesis.md"
     candidate.write_text(synthesis)
     check = partial(synthesis_refusals, repo_root=tmp_path, run_id=overview_fields["run-id"],
-                    boundary=directory / "overview.md",
+                    boundary=directory / "boundary.md",
                     bodies=lambda path: {**bodies, "synthesis.md": path.read_text()})
     assert check(candidate) == []
     candidate.write_text(synthesis.replace("MEM-OBJ-store retains", "MEM-OBJ-undeclared retains"))
@@ -457,9 +457,9 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
 
 
 def test_reconciliation_cannot_hide_an_unresolved_record():
-    profile, bodies = materialize({"write_agency": axis(Part(
+    _, bodies = materialize({"write_agency": axis(Part(
         "curator-write", "Automatic curator", "Software controls admission.", ("automatic",)))})
     bodies["reconciliation.md"] = "## Reconciliation\n\nAmendment: MEM-RTE-curator-write is superseded by RT-RTE-missing-write; identity evidence at SRC-1.\n"
     assert "MEM-RTE-curator-write" in amendment_index(bodies["reconciliation.md"])
-    with pytest.raises(ValueError, match="reconciliation.md: unresolved record RT-RTE-missing-write"):
-        sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
+    _, errors = set_record_errors("overview.md", bodies)
+    assert "reconciliation.md: unresolved record RT-RTE-missing-write" in errors

@@ -25,6 +25,7 @@ from commonplace.lib.directory_artifact import (
     load_directory_artifact,
     member_paths,
 )
+from commonplace.lib.directory_layout import Finding, Layout, layout_findings
 from commonplace.lib.full_pass import (
     FULL_PASS_REPORT_TYPE,
     parse_full_pass_report,
@@ -444,6 +445,30 @@ class ValidationRun:
         finally:
             self._evaluating.pop()
 
+    def artifact_profile(self, directory: Path) -> TypeProfile:
+        return resolve_type(
+            directory / MANIFEST_NAME, self.artifact(directory).manifest,
+            repo_root=self.repo_root, load_frontmatter=self.load_frontmatter,
+        )
+
+    def artifact_findings(self, directory: Path) -> list[Finding]:
+        """Layout and relation findings over the members present, by role.
+
+        They do not wait for the schema: an incomplete working instance gets
+        its absent members as findings and its relations checked as far as
+        its members reach.
+        """
+        artifact = self.artifact(directory)
+        profile = self.artifact_profile(directory)
+        findings = []
+        if profile.layout is not None:
+            findings += layout_findings(profile.layout, {
+                name: member.document for name, member in artifact.members.items()
+            })
+        for rule in _DIRECTORY_TYPE_RULES.get(profile.type_path, []):
+            findings += rule(artifact, layout=profile.layout, run=self)
+        return findings
+
     def _validate_artifact(self, directory: Path) -> CheckResults:
         results = CheckResults("unknown")
         # A bad manifest must not suppress the ordinary member checks.
@@ -454,10 +479,7 @@ class ValidationRun:
             _merge_labelled(results, self.validate(path), f"member {path.name}")
         try:
             artifact = self.artifact(directory)
-            profile = resolve_type(
-                directory / MANIFEST_NAME, artifact.manifest,
-                repo_root=self.repo_root, load_frontmatter=self.load_frontmatter,
-            )
+            profile = self.artifact_profile(directory)
             results.note_type = profile.type_path
             if profile.schema is None:
                 raise ValueError("directory artifact type must define a shared schema")
@@ -469,11 +491,10 @@ class ValidationRun:
                 )
             if not errors:
                 results.passes.append("[schema] directory artifact requirements satisfied")
-            if not errors and not results.fails:
-                for rule in _DIRECTORY_TYPE_RULES.get(profile.type_path, []):
-                    specific = CheckResults(profile.type_path)
-                    rule(specific, artifact, run=self)
-                    _merge_labelled(results, specific, f"type: {profile.type_name}")
+            findings = self.artifact_findings(directory)
+            results.fails.extend(f"[type: {profile.type_name}] {finding.message}" for finding in findings)
+            if not findings and (profile.layout is not None or _DIRECTORY_TYPE_RULES.get(profile.type_path)):
+                results.passes.append(f"[type: {profile.type_name}] members, roles and relations satisfied")
         except (OSError, UnicodeError, ValueError, TypeError) as exc:
             results.fails.append(f"[base] artifact: {exc}")
         return results
@@ -1143,48 +1164,16 @@ def _epistemic_ledger_rule(
 
 
 @type_rule("agentic-system-analyses/types/agent-memory-profile.md")
-def _memory_profile_comparison_rule(
+def _memory_profile_local_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
+    """The profile's own content; its references resolve in the set rule."""
     from commonplace.lib.agentic_records import annotated_ids, declared_ids
-    from commonplace.lib.agentic_set import OVERVIEW_NAME, RECORD_MEMBER_NAMES
-    from commonplace.lib.systems_matrix import profile_member_comparison
 
     if re.search(r"(?m)^> ?", parsed.document.body):
         results.fails.append("memory profile cannot add source quotations")
     if declared_ids(parsed.document.body) or annotated_ids(parsed.document.body):
         results.fails.append("memory profile cannot declare or annotate records")
-    directory = parsed.path.parent
-    # Worker outputs live in a job directory; accepted records are already
-    # canonical under that same run's output/ before profiling starts.
-    state = run.repo_root / "kb/agentic-system-analyses/state"
-    if parsed.path.is_relative_to(state):
-        parts = parsed.path.relative_to(state).parts
-        directory = state / parts[0] / "output"
-    bodies = {}
-    try:
-        for name in RECORD_MEMBER_NAMES:
-            loaded = run.load_document(directory / name)
-            if loaded.error or loaded.document is None:
-                raise ValueError(f"cannot read canonical record member {name}")
-            bodies[name] = loaded.document.body
-        # Before assembly, the boundary supplies source declarations.
-        overview = directory / OVERVIEW_NAME
-        if not overview.is_file() and directory.parent.parent == state:
-            overview = directory.parent / "boundary.md"
-        loaded = run.load_document(overview)
-        if loaded.error or loaded.document is None:
-            raise ValueError("cannot read overview or frozen boundary")
-        bodies[OVERVIEW_NAME] = loaded.document.body
-        profile_member_comparison(parsed.document.frontmatter or {}, record_bodies=bodies)
-        from commonplace.lib.agentic_records import set_record_errors
-        _, errors = set_record_errors({**bodies, "memory-profile.md": parsed.document.body})
-        if errors:
-            raise ValueError("; ".join(errors))
-    except (ValueError, OSError) as exc:
-        results.fails.append(f"memory comparison: {exc}")
-    else:
-        results.passes.append("memory comparison: canonical set references resolve")
 
 
 @type_rule("types/type-spec.md")
@@ -1997,30 +1986,69 @@ def run_validation(
 
 
 @directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
-def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *, run: ValidationRun) -> None:
-    from commonplace.lib.agentic_records import amendment_index, set_record_errors
-    from commonplace.lib.agentic_set import from_artifact, set_identity_errors
+def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
+    """Relations the layout names but code must compute, over the members present."""
+    from commonplace.lib.agentic_records import (
+        amendment_index,
+        section,
+        set_declarations,
+        set_record_findings,
+    )
+    from commonplace.lib.agentic_set import RETAINED_ROOT, source_slug
     from commonplace.lib.systems_matrix import validate_comparison
 
-    member_set = from_artifact(artifact)
-    results.fails.extend(set_identity_errors(member_set))
-    from commonplace.lib.agentic_set import RETAINED_ROOT, source_slug
-    current_root = run.repo_root / RETAINED_ROOT
-    if artifact.path.parent == current_root:
-        if member_set.memory is None:
-            results.fails.append("current analysis must be complete")
-        else:
-            identity = member_set.memory.frontmatter.get("source-identity", "")
-            if artifact.path.name != source_slug(identity, member_set.overview.frontmatter["system"]):
-                results.fails.append("current directory name does not match its source")
+    if layout is None:
+        return [Finding(None, "the analysis set type must declare a layout")]
+    documents = {
+        role.name: artifact.members[role.path].document
+        for role in layout.roles.values() if role.path in artifact.members
+    }
+    findings = []
+    pinned = artifact.manifest.get("members")
+    if isinstance(pinned, dict):
+        findings += [Finding(None, f"manifest: member {name} is not pinned")
+                     for name in sorted(set(artifact.members) - set(pinned))]
 
-    known, errors = set_record_errors({document.name: document.body for document in member_set.documents if document.name != "memory-profile.md"})
-    results.fails.extend(errors)
-    reconciliation = member_set.members.get("reconciliation.md")
-    if reconciliation is not None and amendment_index(reconciliation.body) not in member_set.overview.body.splitlines():
-        results.fails.append("overview amendment index does not match reconciliation")
-    if member_set.profile is not None:
+    bodies = {layout.path(name): document.body for name, document in documents.items()}
+    cites = {role.path: [layout.path(cited) for cited in role.cites] for role in layout.roles.values()}
+    sources = layout.path("boundary")
+    _, record_findings = set_record_findings(sources, bodies, cites=cites)
+    for name, message in record_findings:
+        role = layout.role_at(name) if name else None
+        findings.append(Finding(role.name if role else None, message))
+
+    boundary, overview = documents.get("boundary"), documents.get("overview")
+    reconciliation = documents.get("reconciliation")
+    index = amendment_index(reconciliation.body) if reconciliation is not None else None
+    if boundary is not None and overview is not None:
+        copied = section(overview.body, "Boundary and evidence").strip()
+        if copied != section(boundary.body, "Boundary and evidence").strip():
+            findings.append(Finding("overview", f"{layout.path('overview')}: Boundary and evidence "
+                                                f"is not the copy of {sources}"))
+        register = section(boundary.body, "Source register").strip()
+        expected = {register} if index is None else {register, f"{register}\n\n{index}"}
+        if section(overview.body, "Source register").strip() not in expected:
+            findings.append(Finding("overview", f"{layout.path('overview')}: Source register is not the copy "
+                                                f"of {sources}" + ("" if index is None else " with the amendment index")))
+    if index is not None and overview is not None and index not in overview.body.splitlines():
+        findings.append(Finding("overview", "overview amendment index does not match reconciliation"))
+
+    profile = documents.get("memory-profile")
+    if profile is not None:
+        declared = set_declarations(sources, bodies)
+        scope = {identifier for cited in cites[layout.path("memory-profile")]
+                 for identifier in declared.get(cited, ())}
         try:
-            validate_comparison(member_set.profile.frontmatter.get("memory-comparison"), known_ids=known)
+            validate_comparison((profile.frontmatter or {}).get("memory-comparison"), known_ids=scope)
         except ValueError as exc:
-            results.fails.append(str(exc))
+            findings.append(Finding("memory-profile", f"{layout.path('memory-profile')}: {exc}"))
+
+    if artifact.path.parent == run.repo_root / RETAINED_ROOT:
+        memory = documents.get("memory")
+        if memory is None or overview is None:
+            findings.append(Finding(None, "current analysis must be complete"))
+        else:
+            identity = (memory.frontmatter or {}).get("source-identity", "")
+            if artifact.path.name != source_slug(identity, (overview.frontmatter or {}).get("system", "")):
+                findings.append(Finding(None, "current directory name does not match its source"))
+    return findings

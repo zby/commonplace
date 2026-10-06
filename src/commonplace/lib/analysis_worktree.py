@@ -12,7 +12,7 @@ import uuid
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_set import ARCHIVE_ROOT, RETAINED_ROOT
+from commonplace.lib.agentic_set import ARCHIVE_ROOT, RETAINED_ROOT, analysis_layout
 from commonplace.lib.note_parser import parse_document
 
 STATE_ROOT = Path("kb/agentic-system-analyses/state")
@@ -381,7 +381,7 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     if not isinstance(generated, dict) or not isinstance(generated.get("path"), str):
         raise TypeError("complete run-state has no published overview path")
     overview_rel = Path(generated["path"])
-    if (overview_rel.parent.parent != RETAINED_ROOT or overview_rel.name != "overview.md"
+    if (overview_rel.parent.parent != RETAINED_ROOT or overview_rel.name != analysis_layout().path("overview")
             or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", overview_rel.parent.name)):
         raise ValueError("published overview must be under retained/<slug>/")
     overview_path = worktree / overview_rel

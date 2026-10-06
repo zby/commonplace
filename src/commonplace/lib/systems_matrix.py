@@ -10,8 +10,8 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_records import is_absence, set_record_errors
-from commonplace.lib.agentic_set import current_analyses
+from commonplace.lib.agentic_records import declared_ids, is_absence
+from commonplace.lib.agentic_set import analysis_layout, current_analyses
 
 __all__ = [
     "AXES",
@@ -366,10 +366,11 @@ def project_comparison(profile: dict) -> dict:
 
 
 def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) -> dict:
-    """Resolve profile support against canonical declarations in record members."""
-    known, errors = set_record_errors(record_bodies)
-    if errors:
-        raise ValueError("; ".join(errors))
+    """Resolve profile support against the records the given members declare.
+
+    The set rule checks the record members themselves.
+    """
+    known = {identifier for body in record_bodies.values() for identifier in declared_ids(body)}
     return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
 
 
@@ -390,6 +391,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
     root = root.resolve()
     run = ValidationRun(root, ())
     sets = current_analyses(root, run=run)
+    layout = analysis_layout()
     selected = None if review_paths is None else {(root / path).resolve() for path in review_paths}
     available = {member_set.overview.path for member_set in sets}
     if selected is not None and not selected <= available:
@@ -409,9 +411,9 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         meta = {**data, "analysis-run": data["run-id"]}
         member = member_set.profile
         assert member is not None  # complete sets require the separate profile
+        cited = layout.roles["memory-profile"].cites
         profile = profile_member_comparison(member.frontmatter, record_bodies={
-            document.name: document.body for document in member_set.documents
-            if document.name != "memory-profile.md"
+            role: member_set.roles[role].body for role in cited if role in member_set.roles
         })
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:

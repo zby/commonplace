@@ -10,6 +10,7 @@ status: accepted
 **Date:** 2026-09-28
 
 **Amended by:** [ADR 102](./102-separate-the-analysis-collection-and-publish-stable-system-paths.md). The accepted overview is now the public entry point; completed run state pins it and the manifest, and the manifest still pins every member.
+[ADR 111](./111-directory-types-declare-their-layout.md). A type's declared layout, not its schema, owns membership, requiredness and member relations; the schema keeps the manifest's metadata.
 
 ## Context
 

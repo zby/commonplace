@@ -47,44 +47,52 @@ failures exit nonzero.
 ## Directory artifacts
 
 `ARTIFACT.yaml` makes its directory one additional validation unit. Its
-`type` selects a type spec and shared schema. The schema receives
-`{manifest, members}`: parsed manifest metadata and a map from each visible
-direct Markdown filename to its ordinary parsed-document representation.
-It sees actual files, including ones without manifest entries. Descendants
-remain independent traversal targets.
+`type` selects a type spec. Visible direct Markdown children are the
+candidate members; descendants remain independent traversal targets.
 
-Required members use `required`; optional members appear in `properties`
-without `required`. `additionalProperties: false` gives closed membership;
-omitting it gives open membership. Expected types constrain each member's
-`frontmatter.type`, independently of whether the member is required.
-A type may permit bare Markdown with no type declaration.
+A type spec's `layout` declares the members. Each role names a direct child
+file, the type expected there, the roles whose fields it repeats
+(`identity`) and the roles whose declarations its references resolve against
+(`cites`). `required` lists the roles every instance has and, through a
+discriminating role and field, the roles each value requires and admits.
+`membership: closed` makes a file that matches no role a finding;
+`membership: open` admits it. The validator checks membership, expected
+types, requiredness and identity from the layout; type rules registered for
+the directory type compute what needs a grammar, such as record references
+within each role's citation scope.
 
+The shared schema receives `{manifest, members}` and constrains the manifest.
 The manifest can contain only `type` when no metadata is required. Optional
 `members` entries map filenames to `{sha256: <digest>}`. Each entry asserts
-that its file exists; each supplied digest must match exact bytes. The
-shared schema decides when entries and hashes are mandatory. Metadata
-cannot authorize a member forbidden by the schema.
+that its file exists; each supplied digest must match exact bytes. Whether
+every member must be pinned is the type's rule. Metadata cannot authorize a
+member the layout forbids.
 
 Explicit directory validation runs set checks alongside ordinary file checks,
-even with a malformed manifest. A collection sweep groups direct members
-under their directory and counts the directory once. In JSON,
-`analysed_artifacts` uses the directory path and full type-spec path; member
-diagnostics use the member's path. The existing `files_analysed` field counts
-these validation units. Explicit member-file validation checks only that
-file. A workflow calls `ValidationRun.validate(directory)` to check the set
-without starting traversal; repeated requests reuse results and active
+even with a malformed manifest. Layout and type-rule checks run over the
+members present even when the schema or a member fails, so an incomplete
+working instance reports its absent required members and checks the relations
+its members reach. Every such finding names its role, or no role when it
+concerns the whole artifact. `ValidationRun.artifact_findings(directory)`
+returns them for a caller that filters by role; content overrides can place a
+candidate's bytes at its role's path without writing it. A collection sweep
+groups direct members under their directory and counts the directory once.
+In JSON, `analysed_artifacts` uses the directory path and full type-spec path;
+member diagnostics use the member's path. The existing `files_analysed` field
+counts these validation units. Explicit member-file validation checks only
+that file. A workflow calls `ValidationRun.validate(directory)` to check the
+set without starting traversal; repeated requests reuse results and active
 cycles fail.
 
-Analysis set checks resolve references across all six members, including
-supersessions in the reconciliation, and check the overview's index of them.
-Before synthesis, the workflow checks the four record members and their
-shared boundary directly; it does not require a provisional overview. The
-separate profile resolves support against canonical declarations in those
-record members and the boundary. It contributes no declarations, annotations
-or source quotations. Explicit profile validation therefore reads its supporting
-record members; an isolated profile cannot validate its references.
+The analysis set's boundary is a member and declares its sources. Each
+member's references resolve against the members its role cites, including
+supersessions in the reconciliation, and the set rule checks the overview's
+index of them and its copy of the boundary's sections. The profile cites only
+the three analyst reports; it contributes no declarations, annotations or
+source quotations, so an isolated profile cannot validate its references.
 
 See [ADR 095](./adr/095-directory-artifacts-add-shared-set-validation.md)
+and [ADR 111](./adr/111-directory-types-declare-their-layout.md)
 for the boundary and alternatives, and the
 [analysis set type](../agentic-system-analyses/types/agentic-system-analysis-set.md) for the
 first production contract.

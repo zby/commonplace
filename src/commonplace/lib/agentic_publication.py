@@ -18,10 +18,9 @@ from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_s
 from commonplace.lib.agentic_set import (
     ARCHIVE_ROOT,
     OUTPUT_DIR,
-    OVERVIEW_NAME,
     RETAINED_ROOT,
-    SET_NAMES,
     MemberSet,
+    analysis_layout,
     current_analyses,
     is_review_path,
     load_member_set,
@@ -374,7 +373,8 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     running_state, state_document = _load_running_state(
         state_path, repo_root=repo_root
     )
-    if generated_candidate != running_state.run_dir / OUTPUT_DIR / OVERVIEW_NAME:
+    overview_name = analysis_layout().path("overview")
+    if generated_candidate != running_state.run_dir / OUTPUT_DIR / overview_name:
         raise ValueError("publication candidate must be the accepted output/overview.md")
     require_publishable_worktree(repo_root)
     run = validation.ValidationRun(repo_root, ())
@@ -396,7 +396,7 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     retained_dir = generated_path.parent
     if retained_dir.resolve() != retained_dir:
         raise ValueError("retained set must use its canonical paths")
-    expected_path = RETAINED_ROOT / source_slug(running_state.source.identity, running_state.system) / OVERVIEW_NAME
+    expected_path = RETAINED_ROOT / source_slug(running_state.source.identity, running_state.system) / overview_name
     if generated_path.relative_to(repo_root) != expected_path:
         raise ValueError("publication directory name does not match its source")
     if incumbent.review_bytes is not None:
@@ -406,7 +406,8 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
         archive = repo_root / ARCHIVE_ROOT / incumbent_meta["run-id"]
         if archive.exists():
             raise ValueError(f"archive destination already exists: {archive}")
-    retained_paths = {name: retained_dir / name for name in (MANIFEST_NAME, *SET_NAMES)}
+    retained_paths = {name: retained_dir / name
+                      for name in (MANIFEST_NAME, *(document.name for document in member_set.documents))}
 
     generated_bytes, _ = _read_utf8(
         generated_candidate, label="generated candidate"
@@ -474,7 +475,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     checked = _check_set(spec)
     repo_root = checked.spec.repo_root
     state_path = checked.spec.run_state_path
-    retained_dir = checked.retained_paths[OVERVIEW_NAME].parent
+    retained_dir = checked.retained_paths[MANIFEST_NAME].parent
     archive = None
     old_state = state_path.read_bytes()
     moved = False

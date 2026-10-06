@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from collections.abc import Mapping, Sequence
 from difflib import get_close_matches
 
 # A record ID carries the prefix of the analyst that established it, for the
@@ -319,43 +320,76 @@ def conclusion_status_errors(body: str) -> list[str]:
     return errors
 
 
-def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
-    """Resolve references against the set's declarations, excluding source excerpts.
+def set_declarations(sources: str, bodies: Mapping[str, str]) -> dict[str, list[str]]:
+    """Each body's record declarations; ``sources`` also declares its Source register."""
+    declarations = {name: declared_ids(body) for name, body in bodies.items()}
+    if sources in bodies:
+        declarations[sources] = [*declarations[sources], *source_register_ids(bodies[sources])]
+    return declarations
 
-    ``bodies`` maps set names to bodies and includes ``overview.md``, whose
-    Source register declares the ``SRC-*`` records.
+
+def set_record_findings(
+    sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
+) -> tuple[set[str], list[tuple[str | None, str]]]:
+    """Resolve references against declarations, excluding source excerpts.
+
+    ``bodies`` maps set names to bodies. The Source register of ``sources``
+    declares the ``SRC-*`` records. With ``cites``, a body's references resolve
+    only against the declarations of the names it cites; a body it does not
+    list resolves against every declaration. Each finding names the body it
+    belongs to.
     """
-    declarations = []
-    for body in bodies.values():
-        declarations.extend(declared_ids(body))
-    declarations.extend(source_register_ids(bodies["overview.md"]))
-    known = set(declarations)
-    errors = [
-        f"duplicate set declaration: {identifier}"
-        for identifier, count in Counter(declarations).items() if count > 1
-    ]
-    errors.extend(_prefix_collisions([identifier for identifier in declarations if not identifier.startswith("SRC-")]))
+    declared = set_declarations(sources, bodies)
+    known = {identifier for identifiers in declared.values() for identifier in identifiers}
+    findings: list[tuple[str | None, str]] = []
+    counts = Counter(identifier for identifiers in declared.values() for identifier in identifiers)
+    for name, identifiers in declared.items():
+        findings.extend(
+            (name, f"{name}: duplicate set declaration: {identifier}")
+            for identifier in dict.fromkeys(identifiers) if counts[identifier] > 1
+        )
+    owners = {identifier: name for name, identifiers in declared.items() for identifier in identifiers}
+    for error in _prefix_collisions([identifier for identifier in known if not identifier.startswith("SRC-")]):
+        longer = error.split(" ", 3)[2]
+        findings.append((owners.get(longer), error))
     for name, body in bodies.items():
-        errors.extend(f"{name}: {error}" for error in _record_syntax_errors(body))
+        findings.extend((name, f"{name}: {error}") for error in _record_syntax_errors(body))
+        scope = known if cites is None or name not in cites else {
+            identifier for cited in cites[name] for identifier in declared.get(cited, ())
+        }
         references = _references(_analysis_prose(body))
-        for identifier in sorted(references - known):
+        for identifier in sorted(references - scope):
             if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None:
                 continue  # the whole-token grammar diagnostic above is sufficient
+            if identifier in known:
+                findings.append((name, (
+                    f"{name}: unresolved record {identifier}; it is declared outside "
+                    f"the documents this one may cite: {', '.join(cites[name]) or 'none'}"
+                )))
+                continue
             hint = ""
             if re.fullmatch(_RECORD_ID, identifier):
                 suffix = identifier.split("-", 1)[1]
-                alternatives = sorted(candidate for candidate in known
+                alternatives = sorted(candidate for candidate in scope
                                       if re.fullmatch(_RECORD_ID, candidate)
                                       and candidate.split("-", 1)[1] == suffix)
                 if alternatives:
                     hint = "; declared with another analyst prefix: " + ", ".join(alternatives)
             if not hint:
-                candidates = sorted(candidate for candidate in known
+                candidates = sorted(candidate for candidate in scope
                                     if candidate.startswith("SRC-") == identifier.startswith("SRC-"))
                 labels = {candidate.split("-", 2)[-1]: candidate for candidate in candidates
                           if candidate.split("-", 2)[:2] == identifier.split("-", 2)[:2]}
                 closest = get_close_matches(identifier.split("-", 2)[-1], sorted(labels), n=1, cutoff=0.6)
                 if closest:
                     hint = "; nearest declared ID: " + labels[closest[0]]
-            errors.append(f"{name}: unresolved record {identifier}{hint}")
-    return known, errors
+            findings.append((name, f"{name}: unresolved record {identifier}{hint}"))
+    return known, findings
+
+
+def set_record_errors(
+    sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
+) -> tuple[set[str], list[str]]:
+    """``set_record_findings`` without attribution."""
+    known, findings = set_record_findings(sources, bodies, cites=cites)
+    return known, [message for _, message in findings]

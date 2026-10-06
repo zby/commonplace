@@ -105,7 +105,7 @@ def test_independent_member_failures_include_identity_and_quote(tmp_path, monkey
         draft.write_text(text)
         _, reasons = check_draft(fixture.run_dir, "runtime-0")
         assert any("unresolved record MEM-OBJ-missing" in r for r in reasons)
-        assert any("member identity: run-id" in r and fixture.run_dir.name in r for r in reasons)
+        assert any("identity field run-id" in r and fixture.run_dir.name in r for r in reasons)
         assert any("quotation not found" in r and "recheck the claim" in r for r in reasons)
         original_runtime(handout)
 

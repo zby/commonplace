@@ -387,6 +387,40 @@ Object the epistemic lens established. Evidence: SRC-1.
 """
 
 
+SET_NAMES = tuple(role.path for role in agentic_set.analysis_layout().roles.values())
+
+
+def boundary_text(revision: str, *, source: str = SOURCE) -> str:
+    return f"""---
+type: agentic-system-analyses/types/agentic-system-boundary.md
+description: "Example System at the frozen fixture boundary, analysed as an enclosing runtime"
+run-id: {RUN_ID}
+result-disposition: complete
+target-class: enclosing runtime
+boundary-kind: whole-system
+reviewed-boundary: {revision}
+analysis-cutoff: "2026-09-04"
+evidence-tier: code-grounded
+source:
+  kind: git
+  identity: {source}
+  revision: {revision}
+  path: /fixture/example-system
+  sha256: null
+---
+
+# Example System boundary
+
+## Boundary and evidence
+
+Fixture boundary at `{revision}`.
+
+## Source register
+
+| SRC-1 | git | `{source}` | `{revision}` | implementation | README.md | `README.md` | none |
+"""
+
+
 def overview_text(
     revision: str, members: dict[str, Path], *, inputs_commit: str = INPUTS_COMMIT
 ) -> str:
@@ -458,7 +492,7 @@ def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
 
 
 def output_path(run_dir: Path, name: str) -> Path:
-    if name in (*agentic_set.SET_NAMES, "ARTIFACT.yaml"):
+    if name in (*SET_NAMES, "ARTIFACT.yaml"):
         return run_dir / "output" / name
     return run_dir / name
 
@@ -472,12 +506,12 @@ def repin(directory: Path) -> None:
 
 def retained_fixture_paths(run_id: str) -> dict[str, Path]:
     directory = RETAINED_OVERVIEW.parent
-    return {name: directory / name for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES)}
+    return {name: directory / name for name in ("ARTIFACT.yaml", *SET_NAMES)}
 
 
 def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
     directory = RETAINED_OVERVIEW.parent
-    for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES):
+    for name in ("ARTIFACT.yaml", *SET_NAMES):
         retained = directory / name
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / retained).write_bytes((output_path(run_dir, name)).read_bytes())
@@ -485,6 +519,7 @@ def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
 
 def write_set(run_dir: Path, revision: str) -> Path:
     """Write the members and the overview pinning them."""
+    write(run_dir / "output/boundary.md", boundary_text(revision))
     members = {
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
@@ -579,6 +614,12 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     report_values.update({"source-identity": values["source"]["identity"],
                           "reviewed-boundary": values["source"]["revision"]})
     replace_frontmatter(report, report_values)
+    boundary = run_dir / "output/boundary.md"
+    boundary_values = frontmatter(boundary)
+    boundary_values["reviewed-boundary"] = values["source"]["revision"]
+    boundary_values["source"] = {**boundary_values["source"], "identity": values["source"]["identity"],
+                                 "revision": values["source"]["revision"]}
+    replace_frontmatter(boundary, boundary_values)
     profile = run_dir / "output/memory-profile.md"
     replace_frontmatter(profile, {**frontmatter(profile),
                                  "source-identity": values["source"]["identity"],
@@ -592,7 +633,7 @@ def sync_set(tmp_path: Path, values: dict) -> None:
         generated = tmp_path / expected
         values["generated-review"]["path"] = expected.as_posix()
     repin(run_dir / "output")
-    for name in ("ARTIFACT.yaml", *agentic_set.SET_NAMES):
+    for name in ("ARTIFACT.yaml", *SET_NAMES):
         (generated.parent / name).write_bytes((run_dir / "output" / name).read_bytes())
     values["artifact"]["sha256"] = digest(run_dir / "output/ARTIFACT.yaml")
     values["generated-review"]["sha256"] = digest(generated)
@@ -600,7 +641,7 @@ def sync_set(tmp_path: Path, values: dict) -> None:
 
 def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
     """Move every set document and the review to another boundary."""
-    for path in (*(output_path(run_dir, name) for name in ("overview.md", *MEMBER_TYPES)),
+    for path in (*(output_path(run_dir, name) for name in ("boundary.md", "overview.md", *MEMBER_TYPES)),
                  tmp_path / REVIEW_PATH):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
@@ -797,7 +838,7 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path) -> N
     run_dir = state.parent
     values = frontmatter(state)
     sync_set(tmp_path, values)
-    expected = "source-identity does not match memory.md"
+    expected = "memory-profile.md: identity field source-identity 'https://example.invalid/example-system' does not match memory.md"
     path = run_dir / "output/memory.md"
     replace_frontmatter(path, {**frontmatter(path), "source-identity": "https://example.invalid/other"})
     # Re-pin the manifest and copies around the edit without regenerating the member.
@@ -1021,12 +1062,13 @@ def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation
         ) + "\nMEM-OBJ-store outside the register.\n")
         expected_error = "unresolved record"
     replace_frontmatter(report, metadata)
-    checked = validation.validate_note(report, repo_root=tmp_path)
+    repin(directory)
+    checked = validation.validate_note(directory, repo_root=tmp_path)
     if expected_error:
         assert any(expected_error in error for error in checked.fails)
     else:
         assert checked.fails == []
-        assert any("canonical set references resolve" in message for message in checked.passes)
+        assert any("members, roles and relations satisfied" in message for message in checked.passes)
 
 
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path) -> None:
@@ -1313,7 +1355,7 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     state, first, _ = publication_fixture(tmp_path)
     publish_publication(first)
     old_review = (tmp_path / first.generated_destination).read_bytes()
-    old_set = {name: (output_path(state.parent, name)).read_bytes() for name in ("ARTIFACT.yaml", "overview.md", *MEMBER_TYPES)}
+    old_set = {name: (output_path(state.parent, name)).read_bytes() for name in ("ARTIFACT.yaml", *SET_NAMES)}
     next_id = RUN_ID[:-2] + "02"
     new_dir = state.parent.with_name(next_id)
     shutil.copytree(state.parent, new_dir)
@@ -1684,6 +1726,9 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     values = frontmatter(overview)
     values["result-disposition"] = disposition
     replace_frontmatter(overview, values)
+    boundary = directory / "boundary.md"
+    replace_frontmatter(boundary, {**frontmatter(boundary), "result-disposition": disposition})
+    boundary.write_text(boundary.read_text() + "\n## Not reached\n\nFixture analysis was not reached.\n")
     overview.write_text(re.sub(r"(?m)^Amended or superseded records:.*\n", "",
         re.sub(r"(?:RT|MEM|EPI)-(?:OBJ|RTE|CMP|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}", "not evaluated", overview.read_text())))
     for name in MEMBER_TYPES:

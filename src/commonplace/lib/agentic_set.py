@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from functools import cache
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlsplit, urlunsplit
 
 from commonplace.lib.directory_artifact import DirectoryArtifact
+from commonplace.lib.directory_layout import Layout, parse_layout
 
 if TYPE_CHECKING:
     from commonplace.lib.validation import ValidationRun
@@ -19,16 +21,27 @@ from commonplace.lib.note_parser import ParsedDocument
 SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
-OVERVIEW_NAME = "overview.md"
-RECORD_MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
-PROFILE_NAME = "memory-profile.md"
-MEMBER_NAMES = (*RECORD_MEMBER_NAMES, PROFILE_NAME)
-SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
-
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
 REVIEWS_ROOT = PurePosixPath(RETAINED_ROOT.as_posix())
 ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
+
+
+def analysis_layout() -> Layout:
+    """The set type's declared layout, from the library this process runs."""
+    from commonplace.lib.library import library_root
+
+    return _layout_at(str(library_root()))
+
+
+@cache
+def _layout_at(library: str) -> Layout:
+    from commonplace.lib import frontmatter
+
+    parsed = frontmatter.parse((Path(library) / SET_TYPE).read_text(encoding="utf-8"))
+    if parsed.errors:
+        raise ValueError(f"{SET_TYPE}: {'; '.join(parsed.errors)}")
+    return parse_layout(parsed.data.get("layout"), where=f"{SET_TYPE}: layout")
 
 
 def is_normalized_relative(value: str) -> bool:
@@ -42,7 +55,7 @@ def is_normalized_relative(value: str) -> bool:
 def is_review_path(value: str) -> bool:
     """Whether ``value`` names a current accepted overview at its stable path."""
     pure = PurePosixPath(value)
-    return (is_normalized_relative(value) and pure.name == OVERVIEW_NAME
+    return (is_normalized_relative(value) and pure.name == analysis_layout().path("overview")
             and pure.parent.parent == REVIEWS_ROOT)
 
 
@@ -87,30 +100,39 @@ class SetDocument:
 
 @dataclass(frozen=True)
 class MemberSet:
+    """One analysis set's documents, by layout role."""
+
     artifact: DirectoryArtifact
-    overview: SetDocument
-    members: dict[str, SetDocument]
+    roles: dict[str, SetDocument]
 
     @property
     def documents(self) -> list[SetDocument]:
-        return [self.overview, *self.members.values()]
+        return list(self.roles.values())
+
+    @property
+    def overview(self) -> SetDocument:
+        return self.roles["overview"]
 
     @property
     def memory(self) -> SetDocument | None:
-        return self.members.get("memory.md")
+        return self.roles.get("memory")
 
     @property
     def profile(self) -> SetDocument | None:
-        return self.members.get(PROFILE_NAME)
+        return self.roles.get("memory-profile")
 
 
-def from_artifact(artifact: DirectoryArtifact) -> MemberSet:
-    documents = {
-        name: SetDocument(name, member.path, member.content, member.document)
-        for name, member in artifact.members.items()
-    }
-    overview = documents.pop(OVERVIEW_NAME)
-    return MemberSet(artifact, overview, documents)
+def from_artifact(artifact: DirectoryArtifact, layout: Layout | None = None) -> MemberSet:
+    """The members that have a layout role; a missing overview is an error."""
+    layout = layout or analysis_layout()
+    roles = {}
+    for role in layout.roles.values():
+        member = artifact.members.get(role.path)
+        if member is not None:
+            roles[role.name] = SetDocument(role.path, member.path, member.content, member.document)
+    if "overview" not in roles:
+        raise ValueError(f"analysis set has no {layout.path('overview')}")
+    return MemberSet(artifact, roles)
 
 
 def load_member_set(directory: Path, *, run: ValidationRun) -> MemberSet:
@@ -122,26 +144,6 @@ def load_member_set(directory: Path, *, run: ValidationRun) -> MemberSet:
     if artifact.manifest.get("type") != SET_TYPE:
         raise ValueError(f"expected analysis artifact type {SET_TYPE}")
     return from_artifact(artifact)
-
-
-def set_identity_errors(
-    member_set: MemberSet,
-) -> list[str]:
-    """Check that every member carries the overview's run and boundary identity."""
-    overview = member_set.overview.frontmatter
-    run_id = overview.get("run-id")
-    boundary = overview.get("reviewed-boundary")
-    errors: list[str] = []
-    for name, member in member_set.members.items():
-        values = member.frontmatter
-        if values.get("run-id") != run_id:
-            errors.append(f"{name}: run-id does not match the overview")
-        if values.get("reviewed-boundary") != boundary:
-            errors.append(f"{name}: reviewed-boundary does not match the overview")
-    if (member_set.profile is not None and member_set.memory is not None
-            and member_set.profile.frontmatter.get("source-identity") != member_set.memory.frontmatter.get("source-identity")):
-        errors.append("memory-profile.md: source-identity does not match memory.md")
-    return errors
 
 
 def source_slug(identity: str, system: str) -> str:
@@ -166,10 +168,11 @@ def current_analyses(repo_root: Path, *, run=None) -> list[MemberSet]:
     directories = sorted((root / RETAINED_ROOT).iterdir()) if (root / RETAINED_ROOT).exists() else ()
     # Diagnose duplicates before a misplaced copy's path-name error hides them.
     from commonplace.lib.note_parser import parse_document
+    memory = analysis_layout().path("memory")
     for directory in directories:
-        if directory.name.startswith(".") or not (directory / "memory.md").is_file():
+        if directory.name.startswith(".") or not (directory / memory).is_file():
             continue
-        document, error = parse_document(run.read_bytes(directory / "memory.md").decode("utf-8"))
+        document, error = parse_document(run.read_bytes(directory / memory).decode("utf-8"))
         identity = (document.frontmatter or {}).get("source-identity") if document is not None and error is None else None
         if isinstance(identity, str):
             identity = normalize_source_identity(identity)
