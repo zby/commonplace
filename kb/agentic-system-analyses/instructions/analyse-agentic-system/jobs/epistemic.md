@@ -33,11 +33,11 @@ against the frozen source.
 Write the epistemic report to `output` under the supplied epistemic type. It
 answers whether and how `system` acquires or produces truth-apt content,
 checks it, grants or withholds reliance, and lets it affect later behavior.
-The type fixes the blocks, the early branch for systems that only store or
-serve content, the content and update relations, the ledger and its
-controlled values, and the assessment limits; follow its checking order and
-record `not determinable` where the accessible evidence cannot individuate
-truth-apt content. Declare new records with `EPI-`; keep supplied `RT-` IDs
+The type fixes the blocks, which routes are material, the empty-ledger form
+for a system that only stores or serves content, the content and update
+relations, the ledger and its controlled values, and the assessment limits;
+follow its checking order and record `not determinable` where the
+accessible evidence cannot individuate truth-apt content. Declare new records with `EPI-`; keep supplied `RT-` IDs
 when assessing the same referents, and flag a needed supersession or a
 defective supplied fact beside the finding it affects, with evidence.
 
@@ -46,8 +46,9 @@ registered tools and exposed operations against it, and trace material
 evaluation, cleanup, rejection and withdrawal through their results and
 consequential consumers, including operations the runtime omitted. Name a
 target and its domain before judging its evaluator. For a deterministic text
-transformation, trace a concrete input through the inspected code and label
-the result a source-inspected deduction.
+transformation, trace a concrete input through the inspected code; the
+finding rests on the `implementation` evidence layer as a deduction from
+inspected code and needs no target execution.
 
 ## Boundaries
 

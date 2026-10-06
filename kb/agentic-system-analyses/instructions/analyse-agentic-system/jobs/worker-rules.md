@@ -43,7 +43,11 @@ source access or scope decisions that prevent completion, and needed
 changes to the selected target or frozen source identity require `problem`.
 Do not reconstruct paths or expand scope. A justified unknown that only
 limits a conclusion is not a problem: it stays in `output` in the form the
-record contract gives for uncertainty, beside the supported positives.
+record contract gives for uncertainty, beside the supported positives. The
+record contract's coverage and uncertainty rules govern every report and
+profile; in particular, a supported finding is kept beside an unresolved
+part rather than dropped to make coverage uniform, and an uninspected or
+inconclusive part is not an absent one.
 Reading another file at the registered Git commit is not a source-boundary
 expansion. If inspection shows that an explicit functional exclusion or
 boundary kind omits a material shipped responsibility of the selected

@@ -51,6 +51,10 @@ isolation envelope. Leave memory revisions to the memory analyst.
 Cite your own declarations, the Source register of `boundary` and, in a
 correction round, any record `requests` supplies; the output is refused with
 unresolved IDs otherwise. Read evidence only from the frozen source.
+Inspect permissions, approval, delegation, dynamic extension, reliability,
+observability, providers, packaging and performance only where they change
+claimed work, a control path, evidence strength, or a result the memory or
+epistemic analyst will rely on; the report is not a product inventory.
 
 When `round = correction`, follow **Correct a report after verification** in
 the supplied worker rules; this instruction still governs the report's
