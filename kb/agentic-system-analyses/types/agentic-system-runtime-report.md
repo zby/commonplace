@@ -3,6 +3,7 @@ type: types/type-spec.md
 name: agentic-system-runtime-report
 description: "Runtime member of an analysis set: source-grounded runtime account, the canonical records the runtime analyst declares, and its annotations on other members' records"
 schema: ./agentic-system-runtime-report.schema.yaml
+record-prefix: RT-
 ---
 
 # Agentic system runtime report

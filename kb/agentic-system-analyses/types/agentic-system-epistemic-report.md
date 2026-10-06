@@ -3,6 +3,7 @@ type: types/type-spec.md
 name: agentic-system-epistemic-report
 description: "Epistemic member of an analysis set: the five-block sparse overlay tracing the system's truth-apt routes over the set's records, and the EPI- records the epistemic analyst establishes"
 schema: ./agentic-system-epistemic-report.schema.yaml
+record-prefix: EPI-
 ---
 
 # Agentic system epistemic report

@@ -19,7 +19,8 @@ behavioral-authority paths (`BAP-*`). `SRC-*` sources belong only to the
 Source register. The analyst that establishes a record declares it in its
 member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory has
 `MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
-The prefix identifies the declaring analyst, not the member discussing the
+Each report type declares its prefix as `record-prefix`, and validating the
+report checks every declaration against it. The prefix identifies the declaring analyst, not the member discussing the
 record. Keep a supplied ID unchanged in references, annotations and supersessions.
 
 Names: one to three lowercase hyphenated words, each starting with a letter;

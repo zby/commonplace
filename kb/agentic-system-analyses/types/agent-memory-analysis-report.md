@@ -3,6 +3,7 @@ type: types/type-spec.md
 name: agent-memory-analysis-report
 description: "Memory analyst's source-grounded findings and integration questions for one analysis run; the report is the set's memory member unchanged"
 schema: ./agent-memory-analysis-report.schema.yaml
+record-prefix: MEM-
 ---
 
 # Agent memory analysis report

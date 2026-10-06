@@ -1850,3 +1850,12 @@ def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) ->
     assert any("EPI-OBJ-dangling" in refusal for refusal in
                set_role_refusals(epistemic, run_dir=run_dir, repo_root=tmp_path, role="epistemic"))
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
+
+
+def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
+    run_dir = member_fixture(tmp_path)
+    runtime = run_dir / "output/runtime.md"
+    assert not validation.validate_note(runtime, repo_root=tmp_path).fails
+    runtime.write_text(runtime.read_text().replace("#### RT-OBJ-store —", "#### MEM-OBJ-store —", 1))
+    failures = validation.validate_note(runtime, repo_root=tmp_path).fails
+    assert any("this report declares only RT- records: MEM-OBJ-store" in failure for failure in failures)

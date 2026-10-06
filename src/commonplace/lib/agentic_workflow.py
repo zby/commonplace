@@ -73,6 +73,7 @@ from commonplace.lib.agentic_set import (
     SET_TYPE,
     analysis_layout,
     normalize_source_identity,
+    record_prefix,
     source_slug,
 )
 from commonplace.lib.analysis_worktree import preparation_for
@@ -148,13 +149,14 @@ BOUNDARY_FIELDS = (
     "evidence-tier",
 )
 ANALYST_SPECS: dict[str, dict[str, Any]] = {
-    "runtime": {"prefix": "RT-", "contract": RUNTIME_CONTRACT, "reads": ()},
-    "memory": {"prefix": "MEM-", "contract": MEMORY_CONTRACT, "reads": ("runtime",)},
-    "epistemic": {"prefix": "EPI-", "contract": EPISTEMIC_CONTRACT, "reads": ("runtime",)},
+    "runtime": {"contract": RUNTIME_CONTRACT, "reads": ()},
+    "memory": {"contract": MEMORY_CONTRACT, "reads": ("runtime",)},
+    "epistemic": {"contract": EPISTEMIC_CONTRACT, "reads": ("runtime",)},
 }
-"""The analysts: the ID prefix each declares, the type its report follows,
-and the analysts whose reports it reads in its first round. `reads` also
-orders the work: an analyst runs after the analysts it reads."""
+"""The analysts: the type its report follows, and the analysts whose reports
+it reads in its first round. `reads` also orders the work: an analyst runs
+after the analysts it reads. The ID prefix each declares is its report
+type's `record-prefix`."""
 ANALYSTS = tuple(ANALYST_SPECS)
 RECORD_ROLES = (*ANALYSTS, "reconciliation")
 """The set roles whose records the round-close check judges."""
@@ -162,7 +164,6 @@ LATER_ROLES = ("memory-profile", "overview")
 """The set roles written after the record rounds close."""
 ADDRESSEES = (*ANALYSTS, "reconciliation")
 """Who a record-verification blocker can be addressed to."""
-DECLARING = {spec["prefix"]: member for member, spec in ANALYST_SPECS.items()}
 ANSWERS_NAME = "answers.md"
 """What a correcting analyst writes beside its report, in its job workspace."""
 READ_BATCH_BYTES = 24 * 1024
@@ -486,12 +487,12 @@ def cited_reference_refusals(path: Path, *, run_dir: Path, repo_root: Path, scop
 
 def pass_refusals(
     path: Path, *, repo_root: Path, run_state: Path,
-    declaration_prefix: str,
     set_check: Callable[[Path], list[str]],
 ) -> list[str]:
-    """The output of an analyst, which declares records: a valid member whose
-    identity and record references hold in the set so far and whose
-    quotations resolve against the frozen source."""
+    """The output of an analyst, which declares records: a valid member, whose
+    own validation checks its declaration prefix, whose identity and record
+    references hold in the set so far and whose quotations resolve against
+    the frozen source."""
     refusals = member_refusals(path, repo_root=repo_root)
     refusals += set_check(path)
     try:
@@ -504,16 +505,6 @@ def pass_refusals(
         state = parse_agentic_analysis_run_state(run_state, document, repo_root=repo_root)
     except (ValueError, OSError) as error:
         return refusals + [str(error)]
-    wrong_prefix = [
-        identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
-        if not identifier.startswith(declaration_prefix)
-    ]
-    if wrong_prefix:
-        refusals += [
-            f"record declarations: this analyst must use {declaration_prefix}: "
-            + ", ".join(wrong_prefix)
-            + "; keep supplied IDs unchanged in references and annotations"
-        ]
     source = state.source
     if source is None:
         return refusals + ["quotation checks require a registered frozen source; report the missing source to the coordinator"]
@@ -643,7 +634,8 @@ def render_requests(
     ]
     cited = []
     for identifier in sorted(record_references("\n".join(own))):
-        declaring = DECLARING.get(identifier.split("-", 1)[0] + "-")
+        declaring = next((analyst for analyst in ANALYSTS
+                          if identifier.startswith(record_prefix(analyst))), None)
         if declaring is None or declaring == member:
             continue
         declaration = record_declaration(bodies[declaring], identifier)
@@ -1245,7 +1237,6 @@ class AnalyseAgenticSystem(Workflow):
             pass_refusals,
             repo_root=self.repo,
             run_state=run_dir / RUN_STATE,
-            declaration_prefix=spec["prefix"],
             set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=member),
         )]
         if round_:

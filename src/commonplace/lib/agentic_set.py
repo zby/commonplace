@@ -35,13 +35,28 @@ def analysis_layout() -> Layout:
 
 
 @cache
-def _layout_at(library: str) -> Layout:
+def _spec_at(library: str, type_path: str) -> dict[str, Any]:
     from commonplace.lib import frontmatter
 
-    parsed = frontmatter.parse((Path(library) / SET_TYPE).read_text(encoding="utf-8"))
+    parsed = frontmatter.parse((Path(library) / type_path).read_text(encoding="utf-8"))
     if parsed.errors:
-        raise ValueError(f"{SET_TYPE}: {'; '.join(parsed.errors)}")
-    return parse_layout(parsed.data.get("layout"), where=f"{SET_TYPE}: layout")
+        raise ValueError(f"{type_path}: {'; '.join(parsed.errors)}")
+    return parsed.data
+
+
+@cache
+def _layout_at(library: str) -> Layout:
+    return parse_layout(_spec_at(library, SET_TYPE).get("layout"), where=f"{SET_TYPE}: layout")
+
+
+def record_prefix(role: str) -> str:
+    """The ID prefix a role's records carry: its type's ``record-prefix``."""
+    from commonplace.lib.library import library_root
+
+    prefix = _spec_at(str(library_root()), analysis_layout().roles[role].type).get("record-prefix")
+    if not isinstance(prefix, str) or not prefix:
+        raise ValueError(f"the {role} role's type declares no record-prefix")
+    return prefix
 
 
 def is_normalized_relative(value: str) -> bool:

@@ -1139,6 +1139,32 @@ def _agentic_set_member_link_rule(
         results.passes.append("set member links: relative links stay inside the set directory")
 
 
+@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
+@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+def _record_prefix_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """A report declares records only under its type's ``record-prefix``."""
+    from commonplace.lib.agentic_records import declared_ids
+
+    assert parsed.profile.type_doc_path is not None
+    prefix = run.load_frontmatter(parsed.profile.type_doc_path).data.get("record-prefix")
+    if not isinstance(prefix, str) or not prefix:
+        results.fails.append(f"record declarations: {parsed.profile.type_name} declares no record-prefix")
+        return
+    foreign = [identifier for identifier in declared_ids(parsed.document.body)
+               if not identifier.startswith(prefix)]
+    if foreign:
+        results.fails.append(
+            f"record declarations: this report declares only {prefix} records: "
+            + ", ".join(foreign)
+            + "; keep supplied IDs unchanged in references and annotations"
+        )
+    else:
+        results.passes.append(f"record declarations: every declaration uses {prefix}")
+
+
 @type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
 def _memory_report_pending_check_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun

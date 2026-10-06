@@ -1387,7 +1387,7 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
     assert attempt == 2
     expected = (
         "declarations without an analyst prefix" if prefix == ""
-        else "record declarations: this analyst must use RT-:"
+        else "record declarations: this report declares only RT- records:"
     )
     assert expected in prompt
     assert isinstance(scripted.run()[-1], Done)
