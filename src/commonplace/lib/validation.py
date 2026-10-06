@@ -1085,6 +1085,7 @@ def agentic_set_member_link_failures(path: Path, links: tuple[str, ...]) -> list
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/generated-review.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-verification.md")
 def _agentic_plain_source_anchor_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

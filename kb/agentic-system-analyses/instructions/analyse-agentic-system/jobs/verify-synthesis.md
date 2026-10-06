@@ -22,13 +22,8 @@ Common parameters are defined in the supplied worker rules.
 
 ## Task
 
-Write `output` with exactly these sections:
-
-```markdown
-### Synthesis verification
-
-### Blockers
-```
+Write the verification to `output` under the supplied verification type, with
+`verifies: synthesis`, `run-id` and the `reviewed-boundary` of `boundary`.
 
 Judge every substantive synthesis statement against the records it cites,
 including supersessions in the reconciliation. Check that
@@ -45,10 +40,8 @@ unwarranted absence/completeness claims are blockers; explicit faithful
 uncertainty alone is not. Structural acceptance does not establish support.
 Use full IDs; list numbered `SRC-*` references separately.
 
-Write no correction. Under Blockers write exactly `none`, or a Markdown list
-with one `- ` entry per blocker, its affected statement and IDs, and what
-would resolve it. Indent continuation lines. An unsupported statement is a
-blocker; a faithfully stated uncertainty is not. Record faults discovered
+Write no correction. A blocker names its affected statement and IDs, and
+what would resolve it. An unsupported statement is a blocker; a faithfully stated uncertainty is not. Record faults discovered
 here must be bounded in the public text; they do not reopen reconciliation.
 If a fault cannot be stated as a limitation without making the synthesis
 misleading, write `problem` and stop.

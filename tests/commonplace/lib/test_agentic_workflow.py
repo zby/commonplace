@@ -203,10 +203,14 @@ class Fixture:
                 + (f"{synthesis}\n\n" if synthesis else "")
                 + f"## Limitations\n\n{limitations}\n")
 
-    @staticmethod
-    def verification(blockers: str = "none", *, title: str = "Record verification") -> str:
-        return (f"### {title}\n\nPassed: every claim checked against "
-                f"its records.\n\n### Blockers\n\n{blockers}\n")
+    def verification(self, blockers: str = "none", *, title: str = "Record verification") -> str:
+        verifies = {"Record verification": "records", "Profile verification": "profile",
+                    "Synthesis verification": "synthesis"}[title]
+        return ("---\ntype: agentic-system-analyses/types/agentic-system-verification.md\n"
+                f'description: "{title} of Example System at the frozen source boundary"\n'
+                f"run-id: {RUN_ID}\nreviewed-boundary: {self.revision}\nverifies: {verifies}\n---\n\n"
+                f"# Example System {title.lower()}\n\n## Verification\n\nPassed: every claim checked against "
+                f"its records.\n\n## Blockers\n\n{blockers}\n")
 
     def workers(self, **overrides: Worker) -> dict[str, Worker]:
         def writes(text: Callable[[], str]) -> Worker:

@@ -28,17 +28,10 @@ Common parameters are defined in the supplied worker rules.
 
 Read the record set from `boundary`, `runtime`, `memory`, `epistemic` and
 `reconciliation`, and read `set-check` for structural validation findings.
-There is no overview or public synthesis yet; judge records only. Write
-`output` with exactly these sections, which go into the overview's
-Verification and blockers:
-
-```markdown
-### Record verification
-
-### Blockers
-```
-
-Acceptance requires valid verification sections, resolved citations and explicit
+There is no overview or public synthesis yet; judge records only. Write the
+verification to `output` under the supplied verification type, with
+`verifies: records`, `run-id` and the `reviewed-boundary` of `boundary`.
+Acceptance requires a valid verification, resolved citations and explicit
 blockers when the structural check has failures.
 
 Judge the reports as they are written. Check the whole record set, including
@@ -107,7 +100,7 @@ it names. No job rewrites the boundary.
 Read each `Unresolved conflict:` in the reconciliation. When the sources
 settle it, address a blocker to the report that is wrong. When they do not,
 the conflict stands: check that it gives its IDs, both findings, the evidence
-and the prevented conclusion, and record it under Record verification as a
+and the prevented conclusion, and record it under Verification as a
 checked conflict. The synthesis then states it as a limitation. A conflict
 missing one of those parts is a blocker addressed to `reconciliation`.
 
@@ -132,10 +125,8 @@ bounded conclusion, or when the frozen target or boundary-kind classification
 is contradicted as described above. A defect that limits individual findings
 within a supported boundary is not that case.
 
-Under Blockers write exactly `none`, or a Markdown list with one `- ` entry
-per blocker; indent any continuation line. Anything else is refused,
-including `None.` or `none found`. Code continues only on `none`. A blocker
-list sends each addressed analyst your verification, then starts another
-reconciliation and verification; in the last round it stops the run.
+Code continues only when Blockers is `none`. Otherwise it cuts each addressed
+analyst the blockers addressed to it, with the records they cite, then starts
+another reconciliation and verification; in the last round it stops the run.
 
 Run the acceptance check before submitting.

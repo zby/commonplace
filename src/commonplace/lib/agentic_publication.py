@@ -57,6 +57,8 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml",
     "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.md",
     "kb/agentic-system-analyses/types/agentic-system-analysis-run-state.schema.yaml",
+    "kb/agentic-system-analyses/types/agentic-system-verification.md",
+    "kb/agentic-system-analyses/types/agentic-system-verification.schema.yaml",
     # Every member schema references these.
     "kb/types/note.schema.yaml",
     "kb/types/note-base.schema.yaml",

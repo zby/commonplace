@@ -21,13 +21,14 @@ from commonplace.lib.agentic_records import (
     amendment_index,
     conclusion_status_errors,
     route_field_errors,
+    section,
     set_record_errors,
 )
 from commonplace.lib.agentic_workflow import (
     AnalyseAgenticSystem,
+    blockers_refusals,
     subsection,
     synthesis_refusals,
-    verification_refusals,
 )
 from commonplace.workflow.engine import render_prompt
 from scripts import analyze_matrix as stats
@@ -350,9 +351,10 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
     verdict = tmp_path / "verifier.md"
     expected_blocker = "- curation_operations: MEM-RTE-named-synthesis does not establish a new claim; remove synthesize or provide an accepted supporting record."
-    verdict.write_text("### Profile verification\n\nSynthetic expected finding: requested behavior is not implementation.\n\n### Blockers\n\n" + expected_blocker + "\n")
-    assert verification_refusals(verdict, title="Profile verification") == []
-    assert subsection(verdict.read_text(), "Blockers") == expected_blocker
+    verdict.write_text("## Verification\n\nSynthetic expected finding: requested behavior is not implementation.\n\n## Blockers\n\n" + expected_blocker + "\n")
+    # The blocker grammar is the part a scripted check can judge; the type and identity are not in play here.
+    assert blockers_refusals(section(verdict.read_text(), "Blockers").strip()) == []
+    assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert set_record_errors({**bodies, "verification.md": verdict.read_text()})[1] == []
     packet = loaded_packet(workflow(tmp_path).profile_verification_job(tmp_path, 0), tmp_path)
     assert "An unsupported value or unjustified coverage claim is a blocker" in packet

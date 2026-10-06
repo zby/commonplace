@@ -109,6 +109,8 @@ PROFILE_CONTRACT = f"{TYPES}/agent-memory-profile.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
 EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
 RECONCILIATION_CONTRACT = f"{TYPES}/agentic-system-reconciliation-report.md"
+VERIFICATION_CONTRACT = f"{TYPES}/agentic-system-verification.md"
+VERIFICATION_TYPE = "agentic-system-analyses/types/agentic-system-verification.md"
 RECORD_CONTRACTS = (
     SOURCES_CONTRACT,
     RECORDS_CONTRACT,
@@ -781,13 +783,25 @@ def synthesis_refusals(path: Path, *, bodies: Callable[[Path], dict[str, str]]) 
     return refusals + source_anchor_refusals(text) + reference_refusals(partial(bodies, path))
 
 
-def verification_refusals(path: Path, *, title: str = "Record verification") -> list[str]:
-    text = path.read_text(encoding="utf-8")
-    wanted = [title, "Blockers"]
-    refusals = require_sections(text, 3, wanted)
-    if headings(text, 2) or headings(text, 3) != wanted:
-        refusals.append(f"write exactly ### {title} and ### Blockers")
-    return refusals + blockers_refusals(subsection(text, "Blockers")) + source_anchor_refusals(text)
+def verification_refusals(
+    path: Path, *, repo_root: Path, run_id: str, boundary: Path, verifies: str,
+) -> list[str]:
+    """A valid verification of this run and stage, with well-formed blockers."""
+    refusals = member_refusals(path, repo_root=repo_root)
+    try:
+        metadata, body = split(path.read_text(encoding="utf-8"))
+        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as error:
+        return refusals + [str(error)]
+    refusals += identity_refusals(metadata, run_id=run_id, boundary_fields=boundary_fields)
+    if metadata.get("verifies") != verifies:
+        refusals.append(f"member identity: verifies {metadata.get('verifies')!r} does not match {verifies!r}")
+    return refusals + blockers_refusals(section(body, "Blockers").strip())
+
+
+def verified(verification: str) -> str:
+    """A verification's account, for the overview."""
+    return section(split(verification)[1], "Verification").strip()
 
 
 def one_line(text: str) -> str:
@@ -918,7 +932,7 @@ class AnalyseAgenticSystem(Workflow):
         while True:
             self.run_job(ctx, self.reconcile_job(run_dir, round_, versions, corrected))
             verification = self.close_round(ctx, run_dir, fields, round_, versions, corrected)
-            blockers = subsection(verification, "Blockers")
+            blockers = section(split(verification)[1], "Blockers").strip()
             if blockers == "none":
                 break
             if round_ >= self.correction_rounds:
@@ -936,7 +950,7 @@ class AnalyseAgenticSystem(Workflow):
             self.run_job(ctx, self.profile_job(run_dir, profile_round))
             self.run_job(ctx, self.profile_verification_job(run_dir, profile_round))
             profile_verification = (run_dir / round_file("profile-verification", profile_round)).read_text(encoding="utf-8")
-            blockers = subsection(profile_verification, "Blockers")
+            blockers = section(split(profile_verification)[1], "Blockers").strip()
             if blockers == "none":
                 break
             if profile_round == self.profile_correction_rounds:
@@ -947,7 +961,7 @@ class AnalyseAgenticSystem(Workflow):
             self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round))
             self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round))
             synthesis_verification = (run_dir / round_file("synthesis-verification", synthesis_round)).read_text(encoding="utf-8")
-            blockers = subsection(synthesis_verification, "Blockers")
+            blockers = section(split(synthesis_verification)[1], "Blockers").strip()
             if blockers == "none":
                 break
             if synthesis_round == self.synthesis_correction_rounds:
@@ -1083,7 +1097,7 @@ class AnalyseAgenticSystem(Workflow):
                 for other in ANALYSTS if other != member
             }
             self.replace(run_dir / requests(member, round_), render_requests(
-                member, verification, subsection(text, "Blockers"), bodies,
+                member, verification, section(split(text)[1], "Blockers").strip(), bodies,
             ).encode("utf-8"))
         job = self.analyst_job(run_dir, member, round_)
         self.run_job(ctx, job)
@@ -1344,6 +1358,12 @@ class AnalyseAgenticSystem(Workflow):
         ))
         return (run_dir / round_file("verification", round_)).read_text(encoding="utf-8")
 
+    def verifier_refusals(self, run_dir: Path, verifies: str) -> Callable[[Path], list[str]]:
+        return partial(
+            verification_refusals, repo_root=self.repo, run_id=run_dir.name,
+            boundary=run_dir / BOUNDARY, verifies=verifies,
+        )
+
     def verification_job(
         self, run_dir: Path, round_: int, versions: Mapping[str, int],
         corrected: Sequence[str],
@@ -1357,13 +1377,16 @@ class AnalyseAgenticSystem(Workflow):
             reads.update(self.correction_reads(corrected, versions))
         return self.job(
             run_dir, f"verify-{round_}", round_file("verification", round_),
-            reads=reads, instruction="verify", extra=RECORD_CONTRACTS, validator=validator,
-            parameters={"round": "after-blockers" if round_ else "first"},
+            reads=reads, instruction="verify", extra=(*RECORD_CONTRACTS, VERIFICATION_CONTRACT),
+            validator=validator, parameters={"round": "after-blockers" if round_ else "first"},
         )
 
     def record_verification_refusals(self, run_dir: Path, path: Path, *, failures: Sequence[str]) -> list[str]:
-        refusals = verification_refusals(path)
-        blockers = subsection(path.read_text(encoding="utf-8"), "Blockers")
+        refusals = self.verifier_refusals(run_dir, "records")(path)
+        try:
+            blockers = section(split(path.read_text(encoding="utf-8"))[1], "Blockers").strip()
+        except ValueError:
+            return refusals
         if failures and blockers == "none":
             refusals.append("structural failures require explicit blockers")
         if not blockers_refusals(blockers):
@@ -1412,12 +1435,12 @@ class AnalyseAgenticSystem(Workflow):
                    "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
                    "reconciliation": RECONCILIATION},
             instruction="verify-profile",
-            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT),
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT, VERIFICATION_CONTRACT),
             validator=partial(self.profile_verification_refusals, run_dir),
         )
 
     def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
-        return verification_refusals(path, title="Profile verification") + reference_refusals(
+        return self.verifier_refusals(run_dir, "profile")(path) + reference_refusals(
             partial(self.record_bodies, run_dir, verification=path))
 
     def synthesis_job(self, run_dir: Path, round_: int) -> Job:
@@ -1442,12 +1465,12 @@ class AnalyseAgenticSystem(Workflow):
             reads={"synthesis": round_file("synthesis", round_), "boundary": BOUNDARY,
                    "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
                    "reconciliation": RECONCILIATION},
-            instruction="verify-synthesis", extra=SYNTHESIS_CONTRACTS,
+            instruction="verify-synthesis", extra=(*SYNTHESIS_CONTRACTS, VERIFICATION_CONTRACT),
             validator=partial(self.synthesis_verification_refusals, run_dir, round_),
         )
 
     def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
-        return verification_refusals(path, title="Synthesis verification") + reference_refusals(
+        return self.verifier_refusals(run_dir, "synthesis")(path) + reference_refusals(
             partial(self.record_bodies, run_dir,
                     synthesis=run_dir / round_file("synthesis", round_), verification=path))
 
@@ -1683,9 +1706,9 @@ class AnalyseAgenticSystem(Workflow):
             f"## Bounded synthesis\n\n{section(synthesis, 'Bounded synthesis').strip()}\n\n"
             f"## Limitations\n\n{section(synthesis, 'Limitations').strip()}\n\n"
             "## Verification and blockers\n\n"
-            f"### Record verification\n\n{subsection(record_verification, 'Record verification')}\n\n"
-            f"### Profile verification\n\n{subsection(profile_verification, 'Profile verification')}\n\n"
-            f"### Synthesis verification\n\n{subsection(synthesis_verification, 'Synthesis verification')}\n\n"
+            f"### Record verification\n\n{verified(record_verification)}\n\n"
+            f"### Profile verification\n\n{verified(profile_verification)}\n\n"
+            f"### Synthesis verification\n\n{verified(synthesis_verification)}\n\n"
             f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
             "### Blockers\n\nnone\n"
         )
