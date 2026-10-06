@@ -76,7 +76,7 @@ without starting traversal; repeated requests reuse results and active
 cycles fail.
 
 Analysis set checks resolve references across all six members, including
-amendments in the reconciliation, and check the overview's amendment index.
+supersessions in the reconciliation, and check the overview's index of them.
 Before synthesis, the workflow checks the four record members and their
 shared boundary directly; it does not require a provisional overview. The
 separate profile resolves support against canonical declarations in those

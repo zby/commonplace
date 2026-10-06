@@ -137,6 +137,24 @@ def amendment_index(body: str) -> str:
     )
 
 
+def value_amendments(body: str) -> list[str]:
+    """The first line of each `Amendment:` paragraph that is not a supersession.
+
+    Reconciliation states identity between declared records. A changed value
+    belongs in the declaring analyst's report.
+    """
+    supersession = re.compile(
+        rf"Amendment:[ \t]+`?{_RECORD_ID}`?[ \t]+is superseded by[ \t]+`?{_RECORD_ID}(?![\w-])"
+    )
+    # A wrapped paragraph is one statement.
+    paragraphs = re.split(r"\n[ \t]*\n", _analysis_prose(body))
+    return [
+        paragraph.splitlines()[0] for paragraph in paragraphs
+        if paragraph.startswith("Amendment:")
+        and supersession.match(" ".join(paragraph.split())) is None
+    ]
+
+
 def _record_syntax_errors(body: str) -> list[str]:
     """Check ranges and part fields without resolving cross-member references."""
     prose = _analysis_prose(body)

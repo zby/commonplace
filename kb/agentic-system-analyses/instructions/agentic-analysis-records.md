@@ -1,6 +1,6 @@
 ---
 type: types/note.md
-description: "Shared record contract for agentic analyses: identity, annotations, amendments, evidence statuses, record fields and conditional theory assessments"
+description: "Shared record contract for agentic analyses: identity, annotations, supersessions, evidence statuses, record fields and conditional theory assessments"
 ---
 
 # Agentic analysis records
@@ -20,7 +20,7 @@ Source register. The analyst that establishes a record declares it in its
 member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory has
 `MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
 The prefix identifies the declaring analyst, not the member discussing the
-record. Keep a supplied ID unchanged in references, annotations and amendments.
+record. Keep a supplied ID unchanged in references, annotations and supersessions.
 
 Names: one to three lowercase hyphenated words, each starting with a letter;
 digits may follow. Components/objects use available source-native names.
@@ -49,9 +49,10 @@ fields on a record declared elsewhere. It does not repeat generic identity
 or redefine the referent, and never annotates a record the member declares.
 Its location and permitted fields come from the annotating member's type.
 
-Only the reconciliation member amends records. An `Amendment:`
-paragraph gives the full ID, superseded value, replacement, evidence anchor
-and affected findings. An anchored conflict retains both values. A
+A record's value changes only in the report that declares it: the declaring
+analyst corrects it in a correction round. The reconciliation member states
+identity between declared records and never replaces a value. A conflict it
+cannot settle retains both findings. A
 supersession uses `Amendment: MEM-RTE-selection-route is superseded by RT-RTE-policy-check`, with
 identity evidence; both IDs stay declared. A split supersedes the combined
 record only by parts already declared in analyst members, for example
@@ -60,8 +61,10 @@ evidence and affected findings. Reconciliation never allocates IDs. Supersede
 a combined record only when its findings are wrong once the parts are
 separated; a valid container can remain alongside its parts. No ID changes referent, and
 no step renames IDs or rewrites another analyst's member. Provisional
-labels are local tags. Keep IDs fixed through label or finding changes and
-correction rounds; never reuse a dropped ID for a different referent.
+labels are local tags. Keep IDs fixed through label or finding changes. A
+corrected report keeps every ID its predecessor declared, because other
+reports cite them; a record whose finding no longer holds keeps its
+declaration and states the corrected finding.
 
 When other members are supplied, a new declaration records its closest
 supplied full IDs and distinct identity, possible-duplicate evidence, or
@@ -83,12 +86,11 @@ Containment alone requires neither possible-duplicate evidence nor
 supersession. A record spanning several supplied records without being part
 of exactly one keeps the distinct-identity comparison, naming each overlap.
 
-When a required part is undeclared, reconciliation returns it to the memory
-analyst if that analyst should declare it and returning is permitted.
-Otherwise retain an `Unresolved conflict:` naming the combined ID, missing
-part, evidence and prevented conclusion. Name the undeclared part in prose,
-without inventing an unresolved ID. This adds no runtime or epistemic rewrite
-and no new return round.
+When a required part is undeclared, reconciliation retains an
+`Unresolved conflict:` naming the combined ID, missing part, evidence and
+prevented conclusion. The record verifier addresses it to the analyst who
+should declare the part. Name the undeclared part in prose,
+without inventing an unresolved ID.
 
 ## Status fields
 
@@ -215,8 +217,9 @@ system-wide implication or score.
 
 Faithfully scoped uncertainty is an acceptable result, not a blocker by itself.
 Unsupported findings, concealed included parts, unjustified complete coverage,
-unsupported negatives and malformed references remain defects. Reconciliation
-may narrow or amend an assertion and retain a named conflict; no step erases
+unsupported negatives and malformed references remain defects. The declaring
+analyst may narrow or correct an assertion, and reconciliation may retain a
+named conflict; no step erases
 supported positives to make another part's uncertainty disappear. A missing
 fact becomes a problem only when no faithful bounded account is possible or
 required inputs or frozen scope prevent completing the task. Keep learning,

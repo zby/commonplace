@@ -31,7 +31,7 @@ Write output with exactly these sections:
 ```
 
 Check each of the ten axes against the supplied definitions and accepted records,
-including amendments and supersessions. Check scope, all supported positives,
+including the reconciliation's supersessions. Check scope, all supported positives,
 revision-2 shape, natural unit scope, finding-specific evidence strength,
 canonical IDs and the missing facts named by unresolved units. Check inventory
 support independently of positive witnesses: `known` needs resolved included

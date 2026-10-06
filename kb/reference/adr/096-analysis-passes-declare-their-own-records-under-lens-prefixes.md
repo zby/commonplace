@@ -11,6 +11,8 @@ status: accepted
 
 **Amended 2026-10-01:** [ADR 098](./098-separate-analysis-reconciliation-from-synthesis.md) moves amendments to a separate reconciliation member and separates public synthesis from record reconciliation. Lens-prefixed identities and immutable analyst members remain in force; the location and combined-writing descriptions below record the prior decision.
 
+**Amended 2026-10-05:** [ADR 108](./108-declaring-analysts-correct-their-reports.md) lets each declaring analyst correct its own report after record verification and removes value amendments from reconciliation. Lens-prefixed identities and declaration ownership remain in force; statements below that members are not rewritten record the prior decision.
+
 **Amended 2026-10-04:** [ADR 104](./104-name-analysis-records-with-stable-short-handles.md) replaces numeric record suffixes with stable short names. Analyst ownership and immutable identities remain in force; numeric examples below describe the historical contract.
 
 ## Context

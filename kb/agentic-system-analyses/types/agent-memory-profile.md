@@ -225,7 +225,7 @@ imported lineage, not a trace source.
 ## Comparison rationale
 
 Explain non-obvious mappings and unions without repeating the records. State
-which amendments affect a value, and which missing recorded facts prevent a
+which supersessions affect a value, and which missing recorded facts prevent a
 stronger assessment. Source inspection may disambiguate a cited record but
 cannot supply replacement evidence. Each classification keeps its warrant
 in the cited records.

@@ -63,7 +63,7 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 SYSTEM = "Example System"
 DESCRIPTION = "Example System keeps fixture memory in one store and reads it back by route."
-BLOCKER = "- RT-RTE-model-call has an unresolved scope in the reconciled records."
+BLOCKER = "- reconciliation: RT-RTE-model-call has an unresolved scope in the reconciled records."
 REVIEW_PATH = "kb/agentic-system-analyses/retained/example-system/overview.md"
 # Its checkout is the fixture's related-systems/example--system.
 GITHUB = "https://github.com/example/system"
@@ -72,6 +72,7 @@ INSTRUCTIONS = (
 )
 
 Worker = Callable[[Handout], None]
+ZERO = {"runtime": 0, "memory": 0, "epistemic": 0}
 
 
 @pytest.fixture(autouse=True)
@@ -190,14 +191,10 @@ class Fixture:
             SOURCE, normalize_source_identity(self.identity))
 
     @staticmethod
-    def reconciliation(*, returned: bool = False, amendment: str = "") -> str:
-        text = ("## Reconciliation\n\n"
+    def reconciliation(*, amendment: str = "") -> str:
+        return ("## Reconciliation\n\n"
                 "MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.\n\n"
                 + (f"Amendment: {amendment}\n\n" if amendment else ""))
-        if returned:
-            text += ("\n## Returned to the memory analyst\n\n"
-                     "- MEM-OBJ-store: the write-side anchor does not resolve at `README.md`.\n")
-        return text
 
     @staticmethod
     def synthesis(*, synthesis: str = "", limitations: str = "None.") -> str:
@@ -225,10 +222,13 @@ class Fixture:
             "runtime": writes(lambda: runtime_text(self.revision)),
             "epistemic": writes(lambda: epistemic_text(self.revision)),
         }
+        workers["memory-0"] = writes(partial(self.memory_report, 0))
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1):
-            workers[f"memory-{round_}"] = writes(partial(self.memory_report, round_))
             workers[f"reconcile-{round_}"] = writes(self.reconciliation)
             workers[f"verify-{round_}"] = writes(self.verification)
+            if round_:
+                for member in ("runtime", "memory", "epistemic"):
+                    workers[f"{member}-{round_}"] = self.corrects(member)
         for round_ in range(AnalyseAgenticSystem.synthesis_correction_rounds + 1):
             workers["synthesize" if round_ == 0 else f"synthesize-{round_}"] = writes(self.synthesis)
             workers["verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}"] = writes(
@@ -239,6 +239,35 @@ class Fixture:
                 lambda: self.verification(title="Profile verification"))
         workers.update(overrides)
         return workers
+
+    @staticmethod
+    def supplied(handout: Handout) -> dict[str, str]:
+        """The `key = value` lines of a handed-out invocation."""
+        prompt = handout.prompt_path.read_text(encoding="utf-8")
+        return dict(re.findall(r"(?m)^([a-z-]+) = (.+)$", prompt.split("\n## Input reading batches", 1)[0]))
+
+    def corrects(
+        self, member: str, *, decline: bool = False,
+        report: Callable[[Handout, str], str] | None = None,
+    ) -> Worker:
+        """A correcting analyst: a changed report, or the same one, and one
+        answer per blocker addressed to it."""
+        def worker(handout: Handout) -> None:
+            values = self.supplied(handout)
+            blockers = Path(values["requests"]).read_text(encoding="utf-8").split("### Blockers", 1)[1]
+            count = len(re.findall(rf"(?m)^- {member}: ", blockers))
+            previous = Path(values["previous-report"]).read_text(encoding="utf-8")
+            text = previous if decline else previous.rstrip("\n") + f"\n\nCorrected by {handout.name}.\n"
+            if report is not None:
+                text = report(handout, text)
+            handout.output_path.write_text(text, encoding="utf-8")
+            verb = "declined" if decline else "corrected"
+            Path(values["answers"]).write_text(
+                "".join(f"- {verb}: fixture answer {number}.\n" for number in range(count)),
+                encoding="utf-8",
+            )
+
+        return worker
 
     def writes(self, text: Callable[[Handout], str]) -> Worker:
         def worker(handout: Handout) -> None:
@@ -489,7 +518,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
 
 @pytest.mark.slow
 @pytest.mark.parametrize("source_first", [True])
-def test_amendment_index_is_inside_source_register_in_either_boundary_order(
+def test_supersession_index_is_inside_source_register_in_either_boundary_order(
     fixture: Fixture, source_first: bool,
 ) -> None:
     boundary = fixture.boundary()
@@ -499,7 +528,7 @@ def test_amendment_index_is_inside_source_register_in_either_boundary_order(
         start = boundary.index("## Boundary and evidence\n")
         middle = boundary.index(source_heading)
         boundary = boundary[:start] + boundary[middle:].rstrip() + "\n\n" + boundary[start:middle]
-    amendment = "RT-OBJ-store has a narrower interpretation; replace the broad scope with the fixture scope at SRC-1 README.md. Affected finding: runtime identity."
+    amendment = "EPI-OBJ-store is superseded by RT-OBJ-store; both name `README.md` at SRC-1."
     scripted, _ = agent(
         fixture,
         boundary=fixture.writes(lambda _: boundary),
@@ -509,7 +538,7 @@ def test_amendment_index_is_inside_source_register_in_either_boundary_order(
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
     match = re.search(r"(?ms)^## Source register\n(.*?)(?=^## |\Z)", overview)
     assert match is not None
-    index = "Amended or superseded records: RT-OBJ-store; [reconciliation](reconciliation.md)."
+    index = "Amended or superseded records: EPI-OBJ-store; [reconciliation](reconciliation.md)."
     assert overview.count(index) == 1
     assert row in match[1]
     assert match[1].index(row) < match[1].index(index)
@@ -625,63 +654,191 @@ def test_synthesis_links_are_repaired_before_the_verifier(
 # 3. The correction cycle
 
 
-@pytest.mark.slow
-def test_returned_findings_run_correction_rounds_until_the_last(
-    fixture: Fixture,
-) -> None:
-    last = f"reconcile-{AnalyseAgenticSystem.correction_rounds}"
-
-    def reconcile(returned_on_first_attempt: bool) -> Worker:
-        return fixture.writes(
-            lambda handout: fixture.reconciliation(
-                returned=returned_on_first_attempt and handout.attempt == 1
-            )
-        )
-
-    returning = {
-        f"reconcile-{round_}": fixture.writes(
-            lambda _: fixture.reconciliation(returned=True)
-        )
-        for round_ in range(AnalyseAgenticSystem.correction_rounds)
-    }
-    scripted, definition = agent(fixture, **returning, **{last: reconcile(True)})
-
-    result = None
-    while not (
-        isinstance(result, Launch) and any(job.name == last for job in result.jobs)
-    ):
-        result = scripted.round()
-        assert isinstance(result, Launch), result
-    # The last round returned findings on its first attempt; it is refused.
-    refused = scripted.round()
-    attempt, prompt = prompt_of(refused, last)
-    assert attempt == 2
-    assert "this is the last round: remove `## Returned to the memory analyst`" in prompt
-    assert "may-return = no\n" in prompt
-
-    results = scripted.run()
-
-    assert isinstance(results[-1], Done), results[-1]
-    rounds = AnalyseAgenticSystem.correction_rounds
-    order = [
-        name for name in scripted.launched if name.startswith(("memory-", "reconcile-"))
+def record_loop(scripted: ScriptedAgent) -> list[str]:
+    """The record loop's jobs in launch order, without the round-0 analysts."""
+    return [
+        name for name in scripted.launched
+        if re.fullmatch(r"(runtime|memory|epistemic|reconcile|verify)-[1-9]|(reconcile|verify)-0", name)
     ]
-    expected = ["memory-0", "reconcile-0"]
-    for round_ in range(1, rounds + 1):
-        expected += [f"memory-{round_}", f"reconcile-{round_}"]
-    expected.append(last)
-    assert order == expected
-    prompt = last_prompt(fixture, "memory-1")
-    assert "memory-report-0.md" in prompt and "reconcile-0.md" in prompt
-    # A correction round may cite the epistemic member, so it is an input.
-    assert "output/epistemic.md" in prompt
+
+
+@pytest.mark.slow
+def test_a_blocker_addressed_to_an_analyst_corrects_that_report(fixture: Fixture) -> None:
+    blocked = fixture.verification("- epistemic: EPI-OBJ-store overstates its scope at SRC-1.")
+    scripted, definition = agent(fixture, **{"verify-0": fixture.writes(lambda _: blocked)})
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    assert record_loop(scripted) == ["reconcile-0", "verify-0", "epistemic-1", "reconcile-1", "verify-1"]
+    run = fixture.run_dir
+    original = epistemic_text(fixture.revision)
+    corrected = (run / "epistemic-report-1.md").read_text(encoding="utf-8")
+    # The predecessor stays in the run directory; the output set holds the successor.
+    assert (run / "epistemic-report-0.md").read_text(encoding="utf-8") == original
+    assert corrected == original.rstrip("\n") + "\n\nCorrected by epistemic-1.\n"
+    assert (run / "output/epistemic.md").read_text(encoding="utf-8") == corrected
+    assert (run / "output/runtime.md").read_bytes() == (run / "runtime-report-0.md").read_bytes()
+    assert not (run / "runtime-report-1.md").exists() and not (run / "memory-report-1.md").exists()
+    correction = last_prompt(fixture, "epistemic-1")
+    assert "round = correction\n" in correction
+    assert "epistemic-report-0.md" in correction and "verification-0.md" in correction
+    assert f"answers = {run}/jobs/epistemic-1/answers.md\n" in correction
+    assert (run / "epistemic-answers-1.md").read_text() == "- corrected: fixture answer 0.\n"
+    assert "+Corrected by epistemic-1." in (run / "epistemic-changes-1.md").read_text()
+    for judge in ("reconcile-1", "verify-1"):
+        prompt = last_prompt(fixture, judge)
+        assert "epistemic-report-1.md" in prompt and "runtime-report-0.md" in prompt
+        assert "epistemic-answers-1.md" in prompt and "epistemic-changes-1.md" in prompt
+        assert "round = after-blockers\n" in prompt
+    assert "previous-verification =" in last_prompt(fixture, "verify-1")
+    # Later jobs and publication receive the versions the last verification judged.
+    for later in ("profile", "synthesize"):
+        assert f"epistemic = {run}/output/epistemic.md\n" in last_prompt(fixture, later)
+    retained = fixture.public_path.parent
+    assert (retained / "epistemic.md").read_text(encoding="utf-8") == corrected
+    assert sorted(path.name for path in retained.iterdir()) == sorted(
+        ["ARTIFACT.yaml", "epistemic.md", "memory.md", "memory-profile.md",
+         "overview.md", "reconciliation.md", "runtime.md"])
     assert definition.publications == 1
-    # The memory member is the last accepted round's report, unchanged.
-    member = (fixture.run_dir / "output/memory.md").read_bytes()
-    assert member == (fixture.run_dir / f"memory-report-{rounds}.md").read_bytes()
-    assert f"Written in round {rounds}." in member.decode()
-    overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
-    assert "Returned to the memory analyst" not in overview
+    # A replay rewrites the current versions in the same order and changes nothing.
+    assert isinstance(scripted.orchestrator.step(), Done)
+    assert (run / "output/epistemic.md").read_text(encoding="utf-8") == corrected
+    assert definition.publications == 1
+
+
+@pytest.mark.slow
+def test_a_runtime_correction_finishes_before_the_reports_that_read_it(fixture: Fixture) -> None:
+    blocked = fixture.verification(
+        "- memory: MEM-OBJ-store repeats the runtime scope.\n"
+        "- runtime: RT-OBJ-store overstates its scope at SRC-1.\n"
+        "- runtime: RT-RTE-model-call repeats that scope."
+    )
+    scripted, definition = agent(fixture, **{"verify-0": fixture.writes(lambda _: blocked)})
+    drive_to(scripted, "verify-0")
+
+    first = scripted.round()
+    assert isinstance(first, Launch) and [job.name for job in first.jobs] == ["runtime-1"]
+    second = scripted.round()
+    assert isinstance(second, Launch) and [job.name for job in second.jobs] == ["memory-1"]
+    assert isinstance(scripted.run()[-1], Done)
+
+    # One verification's blockers are one correction step, whatever it names.
+    assert record_loop(scripted) == [
+        "reconcile-0", "verify-0", "runtime-1", "memory-1", "reconcile-1", "verify-1"]
+    run = fixture.run_dir
+    memory = last_prompt(fixture, "memory-1")
+    assert f"runtime = {run}/runtime-report-1.md\n" in memory
+    assert f"epistemic = {run}/epistemic-report-0.md\n" in memory
+    assert (run / "runtime-answers-1.md").read_text().count("- corrected:") == 2
+    assert (run / "memory-answers-1.md").read_text().count("- corrected:") == 1
+    reconcile = last_prompt(fixture, "reconcile-1")
+    for name in ("runtime-report-1.md", "memory-report-1.md", "epistemic-report-0.md",
+                 "runtime-changes-1.md", "memory-answers-1.md"):
+        assert name in reconcile
+    assert "epistemic-answers" not in reconcile
+    assert definition.publications == 1
+
+
+@pytest.mark.slow
+def test_a_declined_blocker_keeps_the_report_and_delivers_the_reason(fixture: Fixture) -> None:
+    blocked = fixture.verification("- epistemic: EPI-OBJ-store overstates its scope at SRC-1.")
+    scripted, definition = agent(fixture, **{
+        "verify-0": fixture.writes(lambda _: blocked),
+        "epistemic-1": fixture.corrects("epistemic", decline=True),
+    })
+
+    assert isinstance(scripted.run()[-1], Done)
+
+    run = fixture.run_dir
+    assert (run / "epistemic-report-1.md").read_bytes() == (run / "epistemic-report-0.md").read_bytes()
+    assert (run / "epistemic-answers-1.md").read_text() == "- declined: fixture answer 0.\n"
+    assert "None: `epistemic-report-1.md` is identical" in (run / "epistemic-changes-1.md").read_text()
+    assert "epistemic-answers-1.md" in last_prompt(fixture, "verify-1")
+    assert definition.publications == 1
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize(("defect", "refusal"), [
+    ("dropped-record", "a corrected report keeps every record its predecessor declared, because other reports cite them: EPI-OBJ-store"),
+    ("no-answers", "correction answers: write answers.md beside the report"),
+    ("wrong-count", "answers.md needs exactly 1 entries"),
+    ("unchanged", "an entry says corrected but the report is identical to its predecessor"),
+])
+def test_a_refused_correction_leaves_the_current_report(
+    fixture: Fixture, defect: str, refusal: str,
+) -> None:
+    valid = fixture.corrects("epistemic")
+
+    def correct(handout: Handout) -> None:
+        valid(handout)
+        if handout.attempt > 1:
+            return
+        answers = Path(fixture.supplied(handout)["answers"])
+        if defect == "dropped-record":
+            handout.output_path.write_text(
+                handout.output_path.read_text().replace("EPI-OBJ-store", "EPI-OBJ-shelf"))
+        elif defect == "no-answers":
+            answers.unlink()
+        elif defect == "wrong-count":
+            answers.write_text("- corrected: one.\n- declined: two.\n")
+        else:
+            handout.output_path.write_bytes(
+                Path(fixture.supplied(handout)["previous-report"]).read_bytes())
+
+    blocked = fixture.verification("- epistemic: EPI-OBJ-store overstates its scope at SRC-1.")
+    scripted, definition = agent(
+        fixture, **{"verify-0": fixture.writes(lambda _: blocked), "epistemic-1": correct})
+    drive_to(scripted, "epistemic-1")
+
+    attempt, prompt = prompt_of(scripted.round(), "epistemic-1")
+
+    assert attempt == 2
+    assert refusal in prompt
+    run = fixture.run_dir
+    assert not (run / "epistemic-report-1.md").exists()
+    assert (run / "output/epistemic.md").read_bytes() == (run / "epistemic-report-0.md").read_bytes()
+    assert "reconcile-1" not in scripted.launched
+    assert isinstance(scripted.run()[-1], Done)
+    assert definition.publications == 1
+
+
+@pytest.mark.slow
+def test_a_blocker_without_an_addressee_is_refused(fixture: Fixture) -> None:
+    def verify(handout: Handout) -> str:
+        blocker = "RT-RTE-model-call has an unresolved scope."
+        return fixture.verification(
+            f"- {blocker}\n- memories: {blocker}" if handout.attempt == 1 else f"- runtime: {blocker}")
+
+    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(verify)})
+    drive_to(scripted, "verify-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "verify-0")
+
+    assert attempt == 2
+    assert prompt.count("blocker addressee: start each blocker with `runtime:`") == 2
+    assert "runtime-1" not in scripted.launched
+    assert isinstance(scripted.run()[-1], Done)
+    assert "runtime-1" in scripted.launched
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize(("text", "refusal"), [
+    (lambda fixture: fixture.reconciliation(
+        amendment="RT-OBJ-store has a narrower scope; replace the broad scope at SRC-1."),
+     "value amendment: reconciliation states connections between reports"),
+    (lambda fixture: fixture.reconciliation()
+     + "\n## Returned to the memory analyst\n\n- MEM-OBJ-store: recheck the write side.\n",
+     "write only `## Reconciliation`; reconciliation returns no findings"),
+])
+def test_reconciliation_neither_corrects_nor_returns(fixture: Fixture, text, refusal: str) -> None:
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text(fixture))})
+    drive_to(scripted, "reconcile-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
+
+    assert attempt == 2
+    assert refusal in prompt
+    assert "verify-0" not in scripted.launched
 
 
 def last_prompt(fixture: Fixture, name: str) -> str:
@@ -719,7 +876,7 @@ def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> No
     assert (output / "epistemic.md").read_text(encoding="utf-8") == epistemic
     reconciliation = (output / "reconciliation.md").read_text(encoding="utf-8")
     assert "Amendment: " + amendment in reconciliation
-    assert "memory-1" not in scripted.launched
+    assert record_loop(scripted) == ["reconcile-0", "verify-0"]
     for name, retained in retained_fixture_paths(RUN_ID).items():
         assert (fixture.root / retained).read_bytes() == (output / name).read_bytes()
 
@@ -852,12 +1009,8 @@ def test_boundary_register_accepts_a_frozen_capture(fixture: Fixture) -> None:
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("returned", [False])
-def test_reconciliation_amending_an_undeclared_record_is_refused(
-    fixture: Fixture, returned: bool,
-) -> None:
+def test_reconciliation_superseding_an_undeclared_record_is_refused(fixture: Fixture) -> None:
     dangling = fixture.reconciliation(
-        returned=returned,
         amendment="MEM-OBJ-example9 is superseded by RT-OBJ-store; both name `README.md`."
     )
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: dangling)})
@@ -881,33 +1034,27 @@ def test_verification_relation_prose_is_accepted_without_a_retry(fixture: Fixtur
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("returned", [False])
-def test_reconciliation_refuses_prose_line_anchors_at_acceptance(
-    fixture: Fixture, returned: bool,
-) -> None:
-    text = fixture.reconciliation(returned=returned) + "\nEvidence: `README.md:1-2`.\n"
+def test_reconciliation_refuses_prose_line_anchors_at_acceptance(fixture: Fixture) -> None:
+    text = fixture.reconciliation() + "\nEvidence: `README.md:1-2`.\n"
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
     drive_to(scripted, "reconcile-0")
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
     assert attempt == 2
     assert "source anchor" in prompt and "carries a line range" in prompt
-    assert "memory-1" not in scripted.launched
+    assert "verify-0" not in scripted.launched
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("returned", [False])
-def test_reconciliation_preserves_permitted_quote_attributions(
-    fixture: Fixture, returned: bool,
-) -> None:
+def test_reconciliation_preserves_permitted_quote_attributions(fixture: Fixture) -> None:
     # This syntax check preserves quotation exclusions; it does not certify occurrence.
     quote = f"\n> Source text.\n> --- `README.md:1-2` @ `{fixture.revision}`\n"
-    text = fixture.reconciliation(returned=returned) + quote
+    text = fixture.reconciliation() + quote
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
     drive_to(scripted, "reconcile-0")
     result = scripted.round()
     assert isinstance(result, Launch)
     assert "reconcile-0" not in [job.name for job in result.jobs]
-    assert "memory-1" in scripted.launched if returned else "verify-0" in scripted.launched
+    assert "verify-0" in scripted.launched
 
 
 @pytest.mark.slow
@@ -1007,6 +1154,9 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
     prompt = last_prompt(fixture, "reconcile-1")
     assert "verification-0.md" in prompt and "set-check-0.md" in prompt
     assert "round = after-blockers\n" in prompt
+    # A blocker addressed to reconciliation runs no analyst.
+    assert record_loop(scripted) == order
+    assert "-answers" not in prompt and "-changes" not in prompt
     assert definition.publications == 1
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
     assert "never traced" not in overview
@@ -1042,6 +1192,7 @@ def test_blockers_in_the_last_round_stop_before_publication(fixture: Fixture) ->
     assert block.subject == "workflow"
     assert "the last round names blockers" in block.reason
     assert block.permitted == "stop"
+    assert scripted.launched.count("verify-2") == 1 and "profile" not in scripted.launched
     assert definition.publications == 0
     assert not (fixture.public_path).exists()
     assert frontmatter(fixture.run_dir / "run-state.md")["run-status"] == "stopped"
@@ -1086,6 +1237,8 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
     }
 
     def analyst(handout: Handout) -> None:
+        if job == "memory-1":
+            Path(fixture.supplied(handout)["answers"]).write_text("- corrected: fixture.\n")
         if handout.attempt == 1:
             text = reports[job]() + "\n" + citation.replace("Frozen source", "Frozen call source")
         else:
@@ -1099,7 +1252,8 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
 
     workers = {job: analyst}
     if job == "memory-1":
-        workers["reconcile-0"] = fixture.writes(lambda _: fixture.reconciliation(returned=True))
+        workers["verify-0"] = fixture.writes(
+            lambda _: fixture.verification("- memory: MEM-OBJ-store lacks its write-side anchor."))
     scripted, definition = agent(fixture, **workers)
     drive_to(scripted, job)
 
@@ -1117,7 +1271,7 @@ def test_altered_analyst_quote_is_repaired_before_reconciliation(
 
 
 @pytest.mark.slow
-def test_missing_route_field_is_amended_before_reconciliation(fixture: Fixture) -> None:
+def test_missing_route_field_is_repaired_before_reconciliation(fixture: Fixture) -> None:
     def runtime(handout: Handout) -> None:
         if handout.attempt == 1:
             text = runtime_text(fixture.revision).replace(
@@ -1526,10 +1680,10 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     jobs = {
         "boundary": definition.boundary_job(fixture.run_dir, overview_enums(fixture.root)),
         "runtime": definition.runtime_job(fixture.run_dir),
-        "memory-0": definition.memory_job(fixture.run_dir, 0, 0),
+        "memory-0": definition.memory_job(fixture.run_dir, 0),
         "epistemic": definition.epistemic_job(fixture.run_dir),
-        "reconcile-0": definition.reconcile_job(fixture.run_dir, 0, 0, None, True),
-        "verify-0": definition.verification_job(fixture.run_dir, 0, 0),
+        "reconcile-0": definition.reconcile_job(fixture.run_dir, 0, ZERO, ()),
+        "verify-0": definition.verification_job(fixture.run_dir, 0, ZERO, ()),
         "profile": definition.profile_job(fixture.run_dir, 0),
         "verify-profile": definition.profile_verification_job(fixture.run_dir, 0),
         "synthesize": definition.synthesis_job(fixture.run_dir, 0),
@@ -1559,19 +1713,44 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
 
 
 @pytest.mark.parametrize(
-    ("kind", "round_", "memory", "reason", "expected"),
+    ("kind", "round_", "expected"),
     [
-        ("boundary", 0, 0, None, {"opening": "run-metadata.json"}),
-        ("memory", 1, 2, None, {
-            "boundary": "boundary.md", "runtime": "output/runtime.md", "round": "correction",
-            "previous-memory": "memory-report-0.md", "returned-findings": "reconcile-2.md",
-            "epistemic": "output/epistemic.md",
+        ("boundary", 0, {"opening": "run-metadata.json"}),
+        ("memory", 0, {"boundary": "boundary.md", "runtime": "output/runtime.md", "round": "first"}),
+        ("memory", 2, {
+            "boundary": "boundary.md", "runtime": "runtime-report-1.md", "round": "correction",
+            "previous-report": "memory-report-1.md", "requests": "verification-1.md",
+            "epistemic": "epistemic-report-0.md", "answers": "jobs/memory-2/answers.md",
         }),
-        ("reconcile", 2, 0, "blockers", {
-            "round": "after-blockers", "may-return": "no", "previous-reconciliation": "reconcile-1.md",
+        ("epistemic", 1, {
+            "boundary": "boundary.md", "runtime": "runtime-report-1.md", "round": "correction",
+            "previous-report": "epistemic-report-0.md", "requests": "verification-1.md",
+            "answers": "jobs/epistemic-1/answers.md",
+        }),
+        ("runtime", 1, {
+            "boundary": "boundary.md", "round": "correction",
+            "previous-report": "runtime-report-0.md", "requests": "verification-1.md",
+            "answers": "jobs/runtime-1/answers.md",
+        }),
+        ("reconcile", 0, {
+            "round": "first", "boundary": "boundary.md", "runtime": "runtime-report-0.md",
+            "memory": "memory-report-0.md", "epistemic": "epistemic-report-0.md",
+        }),
+        ("reconcile", 2, {
+            "round": "after-blockers", "boundary": "boundary.md", "runtime": "runtime-report-1.md",
+            "memory": "memory-report-2.md", "epistemic": "epistemic-report-0.md",
+            "previous-reconciliation": "reconcile-1.md",
             "verification": "verification-1.md", "set-check": "set-check-1.md",
+            "memory-answers": "memory-answers-2.md", "memory-changes": "memory-changes-2.md",
         }),
-        ("verify-synthesis", 0, 0, None, {
+        ("verify", 2, {
+            "round": "after-blockers", "boundary": "boundary.md", "reconciliation": "output/reconciliation.md",
+            "runtime": "runtime-report-1.md", "memory": "memory-report-2.md",
+            "epistemic": "epistemic-report-0.md", "set-check": "set-check-2.md",
+            "previous-verification": "verification-1.md",
+            "memory-answers": "memory-answers-2.md", "memory-changes": "memory-changes-2.md",
+        }),
+        ("verify-synthesis", 0, {
             "synthesis": "synthesis-0.md", "boundary": "boundary.md", "runtime": "output/runtime.md",
             "memory": "output/memory.md", "epistemic": "output/epistemic.md",
             "reconciliation": "output/reconciliation.md",
@@ -1579,32 +1758,33 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
     ],
 )
 def test_invocations_resolve_each_jobs_inputs_and_round(
-    fixture: Fixture, kind: str, round_: int, memory: int, reason: str | None,
-    expected: dict[str, str], monkeypatch,
+    fixture: Fixture, kind: str, round_: int, expected: dict[str, str], monkeypatch,
 ) -> None:
     definition = AnalyseAgenticSystem(fixture.params())
     definition.repo = fixture.root
     definition.jobs_dir = fixture.root / "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
     run = fixture.run_dir
+    versions = {"runtime": 1, "memory": 2, "epistemic": 0} if round_ else ZERO
 
     def build():
         if kind == "boundary":
             return definition.boundary_job(run, overview_enums(fixture.root))
+        if kind == "runtime":
+            return definition.runtime_job(run, round_, 1)
+        if kind == "epistemic":
+            return definition.epistemic_job(run, round_, 1, 1)
         if kind == "memory":
-            return definition.memory_job(run, round_, memory)
+            return definition.memory_job(run, round_, 1, 0, 1 if round_ else None)
         if kind == "reconcile":
-            return definition.reconcile_job(run, round_, memory, reason, round_ < 2)
+            return definition.reconcile_job(run, round_, versions, ("memory",) if round_ else ())
         if kind == "verify":
-            return definition.verification_job(run, round_, memory)
+            return definition.verification_job(run, round_, versions, ("memory",))
         if kind == "synthesize":
             return definition.synthesis_job(run, round_)
         if kind == "verify-synthesis":
             return definition.synthesis_verification_job(run, round_)
         return getattr(definition, f"{kind}_job")(run)
 
-    if kind == "reconcile":
-        expected = {"boundary": "boundary.md", "runtime": "output/runtime.md",
-                    "memory": f"memory-report-{memory}.md", "epistemic": "output/epistemic.md", **expected}
     monkeypatch.chdir(fixture.root)
     job = build()
     monkeypatch.chdir(fixture.root.parent)
@@ -1626,14 +1806,15 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             "workspace": str(run / "jobs" / job.name) + "/",
             "scratch": str(run / "jobs" / job.name / "scratch") + "/",
             **({"source-identity": SOURCE} if kind == "boundary" else {}),
-            **{key: (value if key in {"round", "may-return", "memory-return"} else str(run / value)) for key, value in expected.items()},
+            **{key: (value if key == "round" else str(run / value)) for key, value in expected.items()},
         }
         path_values = [value for key, value in values.items()
-                       if key not in {"system", "run-id", "job", "round", "may-return", "memory-return", "source-identity"}]
+                       if key not in {"system", "run-id", "job", "round", "source-identity"}]
         assert all(Path(path).is_absolute() for path in [method, *first_reads, *path_values])
-        files = {str(run / value) for key, value in expected.items() if key not in {"round", "may-return", "memory-return"}}
+        files = {str(run / value) for key, value in expected.items() if key not in {"round", "answers"}}
         assert set(job.inputs) == {method, *first_reads, *files}
         assert not set(job.inputs) & {values[key] for key in ("run-state", "output", "problem", "scratch")}
+        assert values.get("answers") not in job.inputs
         hints = job.prompt.split("## Input reading batches", 1)[1].split("\nsource:\n", 1)[0]
         assert f"Read the named job instruction {method} before these reading batches." in hints
         batches = re.findall(r"^\d+\. (.+)$", hints, re.MULTILINE)

@@ -15,17 +15,18 @@ Common parameters are defined in the supplied worker rules.
 |---|---|---|
 | `round` | `first` or `correction`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
-| `runtime` | Absolute path of the runtime member. | Always |
-| `previous-memory` | Absolute path of the previous memory report. | `correction` |
-| `returned-findings` | Absolute path of the reconciliation requesting this correction. | `correction` |
-| `epistemic` | Absolute path of the epistemic member. | `correction` |
+| `runtime` | Absolute path of the current runtime report. | Always |
+| `epistemic` | Absolute path of the current epistemic report. | `correction` |
+| `previous-report` | Absolute path of your report as the record verifier judged it. | `correction` |
+| `requests` | Absolute path of the record verification whose blockers you answer. | `correction` |
+| `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
 ## Task
 
 Produce a source-grounded account of `system`'s memory mechanisms as one typed report at `output`. Code copies the
-accepted report unchanged into the set's memory member. The reconciliation
-owns integration and records its corrections as amendments in the
-reconciliation member.
+last accepted report unchanged into the set's memory member. Reconciliation
+states how its records connect to the other reports; corrections to this
+report are yours to make.
 
 Work from `boundary` and `runtime`. Treat the runtime member's records as
 provisional findings to check against sources. Choose the memory scope from
@@ -73,22 +74,16 @@ Integration issues. Separate operative parts with different checks or
 consumers. Declare a part of exactly one supplied record with `Part of:`
 under the shared contract; a grouping spanning several supplied records
 keeps its distinct-identity comparison. Flag defective supplied findings
-and any needed supersession by declared parts for reconciliation.
+and any needed supersession by declared parts under Integration issues.
 Declare new records with `MEM-`. Keep supplied `RT-` and `EPI-` IDs unchanged
 when referring to or annotating their records.
 
-## Correct returned findings
+## Correction rounds
 
-When `round = first`, write the initial report. When `round = correction`,
-read `previous-memory`, `returned-findings`, and `epistemic`. Answer each
-returned finding from the sources: correct the report where the finding
-holds, and keep your finding with its evidence where it does not. Write the
-whole report again; it replaces the previous report.
-
-Keep surviving IDs and referents; a new referent gets a new ID, including
-when an earlier record was dropped. No withdrawal marker is
-needed for a dropped record: only the accepted report enters the set. The
-returned findings still refer to the previous report's IDs.
+When `round = correction`, follow **Correct a report after verification** in
+the supplied worker rules; the rest of this instruction still governs the
+report's content. Also read `epistemic`, which you may
+now cite.
 
 ## Check
 

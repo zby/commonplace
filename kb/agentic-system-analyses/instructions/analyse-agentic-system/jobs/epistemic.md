@@ -13,8 +13,12 @@ Common parameters are defined in the supplied worker rules.
 
 | Name | Meaning | Present |
 |---|---|---|
+| `round` | `first` or `correction`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
-| `runtime` | Absolute path of the runtime member. | Always |
+| `runtime` | Absolute path of the current runtime report. | Always |
+| `previous-report` | Absolute path of your report as the record verifier judged it. | `correction` |
+| `requests` | Absolute path of the record verification whose blockers you answer. | `correction` |
+| `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
 ## Task
 
@@ -22,7 +26,9 @@ Write the epistemic member to `output` under the supplied epistemic type.
 It answers whether and how `system` acquires or produces truth-apt content,
 checks it, grants reliance, and lets it affect later behavior. Work from
 `boundary` and `runtime`; the shared contracts supply evidence and record
-rules. No job rewrites this member afterward.
+rules. When `round = correction`, follow **Correct a report after verification** in
+the supplied worker rules; the rest of this instruction still governs the
+report's content.
 
 The memory analyst runs in parallel. Cite only your own declarations,
 `runtime` records and the Source register in `boundary`; do not inspect the

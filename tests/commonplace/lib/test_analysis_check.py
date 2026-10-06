@@ -21,7 +21,7 @@ def snapshot(root: Path):
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("correction", ["none", "blockers", "returned"])
+@pytest.mark.parametrize("correction", ["none", "blockers", "corrected"])
 def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch, capsys, correction):
     monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
     fixture = Fixture(tmp_path)
@@ -42,9 +42,10 @@ def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch
     monkeypatch.setattr(definition, "job", remember)
     originals = fixture.workers()
     if correction == "blockers":
-        originals["verify-0"] = fixture.writes(lambda _: fixture.verification("- Recheck this fixture finding."))
-    if correction == "returned":
-        originals["reconcile-0"] = fixture.writes(lambda _: fixture.reconciliation(returned=True))
+        originals["verify-0"] = fixture.writes(lambda _: fixture.verification("- reconciliation: Recheck this fixture finding."))
+    if correction == "corrected":
+        originals["verify-0"] = fixture.writes(lambda _: fixture.verification(
+            "- runtime: Recheck RT-OBJ-store.\n- memory: Recheck MEM-OBJ-store.\n- epistemic: Recheck EPI-OBJ-store."))
     observed = set()
 
     def wrap(worker):
@@ -79,12 +80,11 @@ def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch
     assert observed == set(scripted.launched)
     assert {"boundary", "runtime", "epistemic", "memory-0", "reconcile-0",
             "profile", "verify-profile", "synthesize", "verify-synthesis"} <= observed
-    if correction != "returned":
-        assert "verify-0" in observed
+    assert "verify-0" in observed
     if correction != "none":
         assert "reconcile-1" in observed and "verify-1" in observed
-    if correction == "returned":
-        assert "memory-1" in observed
+    if correction == "corrected":
+        assert {"runtime-1", "memory-1", "epistemic-1"} <= observed
 
 
 @pytest.mark.slow

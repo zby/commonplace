@@ -228,6 +228,9 @@ def test_plan_classifications_retain_fixture_findings_and_limits(specification, 
     assert profile == before
 
 
+ZERO = {"runtime": 0, "memory": 0, "epistemic": 0}
+
+
 def workflow(tmp_path):
     definition = AnalyseAgenticSystem({"system": "Synthetic acceptance fixture", "source-identity": "synthetic"})
     definition.repo = REPO_ROOT
@@ -249,10 +252,10 @@ def loaded_packet(job, run):
 
 
 @pytest.mark.parametrize("builder, phrases", [
-    (lambda d, r: d.memory_job(r, 0, 0), ["generic caller identity does not establish human control", "implemented transformation", "missing facts and prevented conclusions"]),
+    (lambda d, r: d.memory_job(r, 0), ["generic caller identity does not establish human control", "implemented transformation", "missing facts and prevented conclusions"]),
     (lambda d, r: d.epistemic_job(r), ["checking is never", "improved capacity", "independent claims"]),
-    (lambda d, r: d.reconcile_job(r, 0, 0, None, True), ["never allocate ids", "faithful uncertainty alone", "bounded absence"]),
-    (lambda d, r: d.verification_job(r, 0, 0), ["unsupported claims or concealed gaps", "requested transformations from implemented", "verify epistemic functions"]),
+    (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocate ids", "faithful uncertainty alone", "bounded absence"]),
+    (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested transformations from implemented", "verify epistemic functions"]),
     (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
     (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or unjustified coverage claim is a blocker", "semantic verification judges support", "unresolved included parts cannot be omitted"]),
     (lambda d, r: d.synthesis_job(r, 0), ["independent route/property findings", "never replace several unestablished properties with a bundled negative", "faithfully bounded uncertainty remains publishable"]),
@@ -266,11 +269,13 @@ def test_semantic_rules_reach_operative_job_packets(tmp_path, builder, phrases):
 
 @pytest.mark.parametrize("builder", [
     pytest.param(lambda d, r: d.runtime_job(r), id="runtime"),
-    pytest.param(lambda d, r: d.memory_job(r, 0, 0), id="memory"),
-    pytest.param(lambda d, r: d.memory_job(r, 1, 0), id="memory-correction"),
+    pytest.param(lambda d, r: d.memory_job(r, 0), id="memory"),
+    pytest.param(lambda d, r: d.memory_job(r, 1, 0, 0, 0), id="memory-correction"),
+    pytest.param(lambda d, r: d.runtime_job(r, 1, 0), id="runtime-correction"),
+    pytest.param(lambda d, r: d.epistemic_job(r, 1, 0, 0), id="epistemic-correction"),
     pytest.param(lambda d, r: d.epistemic_job(r), id="epistemic"),
-    pytest.param(lambda d, r: d.reconcile_job(r, 0, 0, None, True), id="reconcile"),
-    pytest.param(lambda d, r: d.verification_job(r, 0, 0), id="verify"),
+    pytest.param(lambda d, r: d.reconcile_job(r, 0, ZERO, ()), id="reconcile"),
+    pytest.param(lambda d, r: d.verification_job(r, 0, ZERO, ()), id="verify"),
     pytest.param(lambda d, r: d.profile_job(r, 0), id="profile"),
     pytest.param(lambda d, r: d.profile_verification_job(r, 0), id="verify-profile"),
     pytest.param(lambda d, r: d.synthesis_job(r, 0), id="synthesize"),

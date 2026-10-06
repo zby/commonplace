@@ -1,17 +1,18 @@
 ---
 type: types/type-spec.md
 name: agentic-system-reconciliation-report
-description: "Reconciliation member of an analysis set: record amendments, duplicate supersessions, anchored conflicts and integration dispositions"
+description: "Reconciliation member of an analysis set: connections between the analyst reports, duplicate supersessions, anchored conflicts and integration dispositions"
 schema: ./agentic-system-reconciliation-report.schema.yaml
 ---
 
 # Agentic system reconciliation report
 
 The retained reconciliation of the runtime, memory and epistemic members.
-It settles records before public synthesis. Code writes its identity and
-copies the accepted job's Reconciliation section; returned memory findings
-remain working inputs and never enter this member. The [record
-contract](../instructions/agentic-analysis-records.md) governs amendments and
+It states how their records connect and where the reports disagree. It does
+not judge one report's support and does not correct a report: the record
+verifier judges, and the declaring analyst corrects its own report. Code
+writes its identity and copies the accepted job's Reconciliation section.
+The [record contract](../instructions/agentic-analysis-records.md) governs
 supersessions; the [source contract](../instructions/agentic-analysis-sources.md)
 governs evidence. The member declares no analyst records of its own.
 
@@ -26,21 +27,23 @@ governs evidence. The member declares no analyst records of its own.
 
 ## Reconciliation
 
-The body contains `## Reconciliation`: amendments, duplicate supersessions,
-anchored conflicts, independent convergence, analyst ownership checks and
-integration-issue dispositions. Name full IDs and resolve discrepancies
-without selecting the strongest-sounding status. An amendment paragraph
-starts `Amendment: <full record ID>` and gives its superseded value,
-replacement, evidence anchor and affected findings. Both supersession IDs
-stay declared in their original members.
+The body contains `## Reconciliation`: duplicate supersessions, anchored
+conflicts, independent convergence, analyst ownership checks and
+integration-issue dispositions. Name full IDs and describe discrepancies
+without selecting the strongest-sounding status. A supersession paragraph
+starts `Amendment: <full record ID> is superseded by <full record IDs>` and
+gives its identity evidence and affected findings. Both supersession IDs
+stay declared in their original members. An `Amendment:` paragraph that
+replaces a record's value is not accepted in a new set; sets published before
+report correction can contain them.
 
 A split supersedes a combined record only by parts already declared in the
 analyst members. Reconciliation never allocates IDs or declares parts. A
 valid container stays alongside its declared `Part of:` records; containment
-alone is no reason to supersede it. If a required part is missing, return it
-to the memory analyst when that analyst should declare it and returning is
-permitted. Otherwise retain an `Unresolved conflict:` naming the combined ID,
-the missing part in prose, evidence and prevented conclusion.
+alone is no reason to supersede it. If a required part is missing, retain an
+`Unresolved conflict:` naming the combined ID, the missing part in prose,
+evidence and prevented conclusion; the verifier addresses it to the analyst
+who should declare the part.
 
 Mark every conflict left unresolved with a paragraph starting
 `Unresolved conflict:`, followed by the affected IDs, conflicting findings,

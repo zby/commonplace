@@ -72,6 +72,34 @@ may be read there. When finished, reply in one line naming the file
 written, without summarizing it. Follow higher-priority runtime requirements
 for progress messages.
 
+## Correct a report after verification
+
+This section applies to an analyst job whose `round` is `correction`.
+`previous-report` is your report as the record verifier judged it.
+`requests` is that verification. Each entry of its `### Blockers` list
+starts with the report it is addressed to.
+
+Answer every blocker addressed to your report. Read the others too: a
+correction requested of another report can leave your text stale, and a
+report you read may have been corrected since your previous round.
+
+Recheck each blocker against the frozen source. Where it holds, correct the
+finding and every field, table row, ledger entry and conclusion in your
+report that depended on the old value. Where it does not hold, keep the
+finding. Do not repeat the whole analysis, and leave findings that no
+blocker or consequence touches as they are.
+
+Write the complete report to `output`; it replaces `previous-report`. Keep
+every record ID the previous report declared, with its referent, because
+other reports cite them. A record whose finding no longer holds keeps its
+declaration and states the corrected finding. A new referent gets a new ID.
+
+Write `answers` with one list entry per blocker addressed to your report, in
+the verification's order: `- corrected: <what changed and where>` or
+`- declined: <the source evidence for keeping the finding>`. Start no other
+line with `- `. A report identical to `previous-report` is accepted only
+when every entry is `declined`.
+
 ## Commands
 
 Run acceptance commands separately and inspect each exit status, or chain

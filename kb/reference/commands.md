@@ -43,7 +43,7 @@ Build the manifest of one `running` agentic-system analysis set.
 `manifest <run-state>` writes `output/ARTIFACT.yaml` pinning the set members
 present in `output/`; rerun it after any member edit.
 A complete analysis pins six members, including reconciliation and the separate memory profile;
-the overview links amended records to that member and records record, profile and synthesis
+the overview links superseded records to that member and records record, profile and synthesis
 verifications.
 
 ### commonplace-agentic-analysis-handoff

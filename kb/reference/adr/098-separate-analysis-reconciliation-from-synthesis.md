@@ -9,6 +9,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-10-01
 
+**Amended 2026-10-05:** [ADR 108](./108-declaring-analysts-correct-their-reports.md) moves record corrections to the declaring analysts and removes the memory return route. The separate reconciliation member, the record loop's limit and the three independent checks remain in force; the correction descriptions below record the prior decision.
+
 ## Context
 
 Record repair and public writing have different dependencies. A public author

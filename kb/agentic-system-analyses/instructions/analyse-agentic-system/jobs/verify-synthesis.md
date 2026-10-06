@@ -31,7 +31,7 @@ Write `output` with exactly these sections:
 ```
 
 Judge every substantive synthesis statement against the records it cites,
-including amendments and supersessions in the reconciliation. Check that
+including supersessions in the reconciliation. Check that
 Description, Bounded synthesis and Limitations meet the supplied overview
 type, read without the members' context, and carry every `Unresolved conflict:`
 into a limitation with its affected IDs and prevented conclusion. Record the

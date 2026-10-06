@@ -25,6 +25,7 @@ is replayed from the run's files in every step.
 from __future__ import annotations
 
 import datetime
+import difflib
 import json
 import os
 import re
@@ -41,7 +42,10 @@ from typing import Any
 import yaml
 from jsonschema import FormatChecker
 
-from commonplace.lib.agentic_analysis import load_run_state, verify_quote_anchors
+from commonplace.lib.agentic_analysis import (
+    parse_agentic_analysis_run_state,
+    verify_quote_anchors,
+)
 from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
 from commonplace.lib.agentic_finalize import build_manifest
 from commonplace.lib.agentic_publication import (
@@ -59,6 +63,7 @@ from commonplace.lib.agentic_records import (
     set_record_errors,
     source_register_ids,
     source_register_rows,
+    value_amendments,
 )
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
@@ -134,7 +139,15 @@ BOUNDARY_FIELDS = (
     "evidence-tier",
 )
 SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
-RETURNED = "Returned to the memory analyst"
+ANALYSTS = ("runtime", "memory", "epistemic")
+"""The analyst reports, with the runtime report first: the other two read it."""
+ADDRESSEES = (*ANALYSTS, "reconciliation")
+"""Who a record-verification blocker can be addressed to."""
+CURRENT = {"runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC}
+"""Where the current version of each analyst report is in the output set."""
+PREFIXES = {"runtime": "RT-", "memory": "MEM-", "epistemic": "EPI-"}
+ANSWERS_NAME = "answers.md"
+"""What a correcting analyst writes beside its report, in its job workspace."""
 DESCRIPTION_LENGTH = (50, 250)
 """The length the note schema expects of a description; the synthesizer's
 description becomes the overview's and the review's."""
@@ -189,8 +202,19 @@ def reading_ranges(path: Path) -> list[tuple[int, int]]:
     return ranges
 
 
-def memory_report(round_: int) -> str:
-    return f"memory-report-{round_}.md"
+def report(member: str, round_: int) -> str:
+    """One version of an analyst report. Versions are never overwritten."""
+    return f"{member}-report-{round_}.md"
+
+
+def answers(member: str, round_: int) -> str:
+    """The analyst's answers to the blockers that version responds to."""
+    return f"{member}-answers-{round_}.md"
+
+
+def changes(member: str, round_: int) -> str:
+    """The text difference between a version and its predecessor."""
+    return f"{member}-changes-{round_}.md"
 
 
 def reconciliation(round_: int) -> str:
@@ -495,7 +519,13 @@ def pass_refusals(
     refusals = member_refusals(path, repo_root=repo_root)
     refusals += reference_refusals(partial(bodies, path))
     try:
-        state = load_run_state(run_state, repo_root=repo_root)
+        # Read the run's identity and source without validating its published
+        # artifact: a replay of a complete run passes through earlier report
+        # versions in output/, which the final manifest does not pin.
+        document, error = parse_document(run_state.read_text(encoding="utf-8"))
+        if error is not None or document is None:
+            raise ValueError(f"run state does not parse: {error}")
+        state = parse_agentic_analysis_run_state(run_state, document, repo_root=repo_root)
         metadata, _ = split(path.read_text(encoding="utf-8"))
         boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
     except (ValueError, OSError) as error:
@@ -531,25 +561,24 @@ def reconcile_refusals(
     runtime: Path,
     report: Path,
     epistemic: Path,
-    may_return: bool,
 ) -> list[str]:
-    """The reconciliation's sections, the last-round
-    rule, and every record it cites, amendments included, declared in the set
-    it will make."""
+    """The reconciliation's one section, no value amendment, and every record
+    it cites declared in the set it will make."""
     body = path.read_text(encoding="utf-8")
-    returned = RETURNED in headings(body, 2)
-    wanted = ["Reconciliation", *([RETURNED] if returned else [])]
-    refusals = require_sections(body, 2, wanted)
-    if headings(body, 2) != wanted:
+    refusals = require_sections(body, 2, ["Reconciliation"])
+    if headings(body, 2) != ["Reconciliation"]:
         refusals.append(
-            "write only Reconciliation followed by any permitted Returned to the memory analyst section"
+            "write only `## Reconciliation`; reconciliation returns no findings and "
+            "requests no corrections, so describe a disagreement there for the verifier"
         )
+    refusals.extend(
+        "value amendment: reconciliation states connections between reports and does "
+        "not replace a record's value; describe the disagreement with both records and "
+        "their evidence, or use `Amendment: <ID> is superseded by <IDs>` for an "
+        f"identity judgment: {line[:120]}"
+        for line in value_amendments(body)
+    )
     refusals.extend(source_anchor_refusals(body))
-    if returned and not may_return:
-        refusals.append(
-            f"this is the last round: remove `## {RETURNED}` and retain the conflicts "
-            "as explicit uncertainty"
-        )
     return refusals + reference_refusals(
         partial(
             set_bodies,
@@ -559,6 +588,90 @@ def reconcile_refusals(
             memory=report,
             epistemic=epistemic,
         )
+    )
+
+
+def blocker_entries(blockers: str) -> list[str]:
+    """The first line of each blocker in a `### Blockers` list."""
+    return [line for line in blockers.splitlines() if line.startswith("- ")]
+
+
+def blocker_addressees(blockers: str) -> list[str]:
+    """Who each blocker is addressed to, in order; empty for one without an
+    addressee. Code routes corrections by this word, not by the blocker's prose."""
+    found = []
+    for line in blocker_entries(blockers):
+        match = re.match(r"- ([a-z]+): \S", line)
+        found.append(match[1] if match and match[1] in ADDRESSEES else "")
+    return found
+
+
+def addressee_refusals(blockers: str) -> list[str]:
+    return [
+        "blocker addressee: start each blocker with `runtime:`, `memory:`, `epistemic:` "
+        "or `reconciliation:`, naming the one report whose text must change; write a "
+        f"blocker that concerns two reports as two blockers: {line[:120]}"
+        for line, addressee in zip(blocker_entries(blockers), blocker_addressees(blockers), strict=True)
+        if not addressee
+    ]
+
+
+def correction_refusals(
+    path: Path, *, member: str, previous: Path, verification: Path,
+) -> list[str]:
+    """A corrected report keeps its predecessor's records and answers every
+    blocker addressed to it, by a correction or a reason for declining."""
+    text = path.read_text(encoding="utf-8")
+    dropped = sorted(
+        set(declared_ids(previous.read_text(encoding="utf-8"))) - set(declared_ids(text))
+    )
+    refusals = []
+    if dropped:
+        refusals.append(
+            "record declarations: a corrected report keeps every record its predecessor "
+            "declared, because other reports cite them: " + ", ".join(dropped)
+            + "; keep the declaration and correct its finding"
+        )
+    blockers = subsection(verification.read_text(encoding="utf-8"), "Blockers")
+    wanted = blocker_addressees(blockers).count(member)
+    answers_path = path.parent / ANSWERS_NAME
+    if not answers_path.is_file():
+        return [*refusals, (
+            f"correction answers: write {ANSWERS_NAME} beside the report, with one "
+            "`- corrected: ...` or `- declined: ...` entry per blocker addressed to this report"
+        )]
+    entries = [line for line in answers_path.read_text(encoding="utf-8").splitlines() if line.startswith("- ")]
+    malformed = [line for line in entries if re.match(r"- (corrected|declined): \S", line) is None]
+    if malformed or len(entries) != wanted:
+        refusals.append(
+            f"correction answers: {ANSWERS_NAME} needs exactly {wanted} entries, one per "
+            f"blocker addressed to the {member} report, each starting `- corrected: ` or "
+            f"`- declined: `; found {len(entries)}"
+            + (f", malformed: {malformed[0][:80]}" if malformed else "")
+        )
+    elif (any(line.startswith("- corrected:") for line in entries)
+            and path.read_bytes() == previous.read_bytes()):
+        refusals.append(
+            "correction answers: an entry says corrected but the report is identical to "
+            "its predecessor; change the report or decline the blocker with a reason"
+        )
+    return refusals
+
+
+def render_changes(member: str, previous: str, current: str, old: str, new: str) -> str:
+    """What changed between two versions, for readers judging a correction."""
+    lines = list(difflib.unified_diff(
+        previous.splitlines(), current.splitlines(), fromfile=old, tofile=new, lineterm="",
+    ))
+    if not lines:
+        return f"# Changes to the {member} report\n\nNone: `{new}` is identical to `{old}`.\n"
+    # Report text can contain fences; the diff stays data inside a longer one.
+    fence = "`" * max(3, 1 + max((len(run) for run in re.findall(r"`+", "\n".join(lines))), default=0))
+    return (
+        f"# Changes to the {member} report\n\n"
+        "Code computed this difference. It shows which lines changed, not whether a "
+        "change is right or whether unchanged text is still supported.\n\n"
+        f"{fence}diff\n" + "\n".join(lines) + f"\n{fence}\n"
     )
 
 
@@ -653,16 +766,21 @@ class AnalyseAgenticSystem(Workflow):
     `source-revision` when given, and otherwise at the tip of the default
     branch.
 
-    Jobs: `boundary`; `runtime`; the `memory-<n>` and `epistemic` analysts;
-    then rounds of `reconcile-<n>` and `verify-<n>`, followed by profile
-    classification and independent profile verification,
-    then synthesis and independent synthesis verification. Code renders the
-    accepted overview.
+    Jobs: `boundary`; the `runtime`, `memory-0` and `epistemic` analysts;
+    then rounds of `reconcile-<n>` and `verify-<n>`. A verification's blockers
+    name the reports that must change; code runs those analysts again as
+    `runtime-<n>`, `memory-<n>` and `epistemic-<n>` before the next round.
+    Profile classification and synthesis follow, each independently verified.
+    Code renders the accepted overview.
+
+    Every version of an analyst report stays in the run directory as
+    `<member>-report-<n>.md`. `output/` holds the current version at each
+    point of the definition, so a replay rewrites it in the same order.
     """
 
     correction_rounds = 2
-    """How many reconciliation rounds may follow the first, whether a round
-    returned findings to the memory analyst or its verification named blockers."""
+    """How many reconciliation rounds may follow the first. Each follows a
+    verification that named blockers; analysts named there correct in between."""
     synthesis_correction_rounds = 1
     profile_correction_rounds = 1
 
@@ -734,40 +852,30 @@ class AnalyseAgenticSystem(Workflow):
             return
 
         (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
-        self.run_job(ctx, self.runtime_job(run_dir))
+        self.run_analyst(ctx, run_dir, "runtime", self.runtime_job(run_dir))
         ctx.parallel(
-            lambda: self.run_job(ctx, self.memory_job(run_dir, 0, 0)),
-            lambda: self.run_job(ctx, self.epistemic_job(run_dir)),
+            lambda: self.run_analyst(ctx, run_dir, "memory", self.memory_job(run_dir, 0)),
+            lambda: self.run_analyst(ctx, run_dir, "epistemic", self.epistemic_job(run_dir)),
         )
 
-        reconcile = 0
-        memory = 0
-        reason = None
+        round_ = 0
+        versions = dict.fromkeys(ANALYSTS, 0)
+        corrected: tuple[str, ...] = ()
         while True:
-            last = reconcile >= self.correction_rounds
-            self.run_job(
-                ctx, self.reconcile_job(run_dir, reconcile, memory, reason, not last)
-            )
-            text = (run_dir / reconciliation(reconcile)).read_text(encoding="utf-8")
-            if RETURNED in headings(text, 2):
-                memory += 1
-                self.run_job(ctx, self.memory_job(run_dir, memory, reconcile))
-                reconcile += 1
-                reason = "returned"
-                continue
-            verification = self.close_round(
-                ctx, run_dir, fields, reconcile, memory
-            )
+            self.run_job(ctx, self.reconcile_job(run_dir, round_, versions, corrected))
+            verification = self.close_round(ctx, run_dir, fields, round_, versions, corrected)
             blockers = subsection(verification, "Blockers")
             if blockers == "none":
                 break
-            if last:
+            if round_ >= self.correction_rounds:
                 raise StopRun(
                     "the record verification of the last round names blockers: "
                     + blockers
                 )
-            reconcile += 1
-            reason = "blockers"
+            addressed = blocker_addressees(blockers)
+            corrected = tuple(member for member in ANALYSTS if member in addressed)
+            versions = self.correct(ctx, run_dir, round_, versions, corrected)
+            round_ += 1
 
         for profile_round in range(self.profile_correction_rounds + 1):
             self.run_job(ctx, self.profile_job(run_dir, profile_round))
@@ -837,27 +945,34 @@ class AnalyseAgenticSystem(Workflow):
                 return self.synthesis_job(run_dir, 0)
             if name == "verify-synthesis":
                 return self.synthesis_verification_job(run_dir, 0)
-            match = re.fullmatch(r"(memory|reconcile|verify|profile|verify-profile|synthesize|verify-synthesis)-(\d+)", name)
+            match = re.fullmatch(r"(runtime|memory|epistemic|reconcile|verify|profile|verify-profile|synthesize|verify-synthesis)-(\d+)", name)
             if match is None:
                 raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
             kind, round_ = match[1], int(match[2])
-            if kind == "memory":
-                return self.memory_job(run_dir, round_, max(0, round_ - 1))
-            if kind == "reconcile":
-                # This round may follow blockers without a new memory round.
-                # Its supplied invocation, not its round number, identifies
-                # which accepted memory report its validator consumes.
-                prompt = (run_dir / "workflow-state/jobs" / name / "prompt.md").read_text()
-                invocation = prompt.split("\n## Input reading batches", 1)[0]
-                supplied = re.search(r"(?m)^memory = (.+)$", invocation)
-                memory = re.fullmatch(r"memory-report-(\d+)\.md", Path(supplied[1]).name) if supplied else None
-                if memory is None:
-                    raise ValueError(f"{name}: missing supplied memory input; report the invocation to the coordinator")
-                return self.reconcile_job(run_dir, round_, int(memory[1]), None, round_ < self.correction_rounds)
+            if kind == "memory" and round_ == 0:
+                return self.memory_job(run_dir, 0)
+            if kind in ANALYSTS and round_ == 0:
+                raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
+            if kind in ANALYSTS or kind == "reconcile":
+                # The round number does not say which versions the job was
+                # given. Its supplied invocation does.
+                supplied = self.supplied(run_dir, name)
+                versions = {
+                    member: self.supplied_round(name, supplied, member, "report")
+                    for member in ANALYSTS if member in supplied
+                }
+                if kind == "reconcile":
+                    return self.reconcile_job(run_dir, round_, versions, ())
+                requests = self.supplied_round(name, supplied, "requests", "verification")
+                if kind == "runtime":
+                    return self.runtime_job(run_dir, round_, requests)
+                if kind == "epistemic":
+                    return self.epistemic_job(run_dir, round_, versions["runtime"], requests)
+                return self.memory_job(run_dir, round_, versions["runtime"], versions["epistemic"], requests)
             if kind == "verify":
                 text = (run_dir / round_file("set-check", round_)).read_text()
                 failures = [line[2:] for line in text.splitlines() if line.startswith("- ")]
-                return self.verification_job(run_dir, round_, 0, validator=partial(self.record_verification_refusals, run_dir, failures=failures))
+                return self.verification_job(run_dir, round_, dict.fromkeys(ANALYSTS, 0), (), validator=partial(self.record_verification_refusals, run_dir, failures=failures))
             constructors = {
                 "profile": self.profile_job,
                 "verify-profile": self.profile_verification_job,
@@ -867,6 +982,74 @@ class AnalyseAgenticSystem(Workflow):
             return constructors[kind](run_dir, round_)
         finally:
             self._checking = False
+
+    @staticmethod
+    def supplied(run_dir: Path, name: str) -> dict[str, str]:
+        """The `key = value` lines of the invocation a job was handed."""
+        prompt = (run_dir / "workflow-state/jobs" / name / "prompt.md").read_text()
+        invocation = prompt.split("\n## Input reading batches", 1)[0]
+        return dict(re.findall(r"(?m)^([a-z-]+) = (.+)$", invocation))
+
+    @staticmethod
+    def supplied_round(name: str, supplied: Mapping[str, str], key: str, kind: str) -> int:
+        """The round in a supplied `<...>-<kind>-<n>.md` or `<kind>-<n>.md` path."""
+        found = re.search(rf"(?:^|-){kind}-(\d+)\.md$", Path(supplied.get(key, "")).name)
+        if found is None:
+            raise ValueError(f"{name}: missing supplied {key} input; report the invocation to the coordinator")
+        return int(found[1])
+
+    def run_analyst(self, ctx, run_dir: Path, member: str, job: Job) -> None:
+        """Run one analyst job, then make its report the current version.
+
+        A corrected report also yields the analyst's answers and the text
+        difference from its predecessor, for the next reconciler and verifier.
+        """
+        self.run_job(ctx, job)
+        destination = self.job_destinations[job.name]
+        round_ = int(re.fullmatch(rf"{member}-report-(\d+)\.md", destination.name)[1])
+        self.replace(run_dir / CURRENT[member], destination.read_bytes())
+        if round_:
+            self.replace(
+                run_dir / answers(member, round_),
+                (job.output_path(run_dir).parent / ANSWERS_NAME).read_bytes(),
+            )
+            old, new = report(member, round_ - 1), report(member, round_)
+            self.replace(run_dir / changes(member, round_), render_changes(
+                member, (run_dir / old).read_text(encoding="utf-8"),
+                destination.read_text(encoding="utf-8"), old, new,
+            ).encode("utf-8"))
+
+    def correct(
+        self, ctx, run_dir: Path, requests: int, versions: Mapping[str, int],
+        addressed: Sequence[str],
+    ) -> dict[str, int]:
+        """Run the analysts a verification's blockers name, and return the
+        versions the next round reads.
+
+        The memory and epistemic analysts read the runtime report, so a
+        runtime correction finishes first and they read its result.
+        """
+        new = {member: version + (member in addressed) for member, version in versions.items()}
+        if "runtime" in addressed:
+            self.run_analyst(ctx, run_dir, "runtime", self.runtime_job(run_dir, new["runtime"], requests))
+        later = {
+            "memory": lambda: self.memory_job(
+                run_dir, new["memory"], new["runtime"], versions["epistemic"], requests),
+            "epistemic": lambda: self.epistemic_job(
+                run_dir, new["epistemic"], new["runtime"], requests),
+        }
+        ctx.parallel(*(
+            partial(lambda member: self.run_analyst(ctx, run_dir, member, later[member]()), member)
+            for member in later if member in addressed
+        ))
+        return new
+
+    @staticmethod
+    def replace(path: Path, content: bytes) -> None:
+        """Write coordinator-owned bytes only when they differ, so a replay
+        that changes nothing leaves the file alone."""
+        if not path.is_file() or path.read_bytes() != content:
+            atomic_write(path, content)
 
     def run_job(self, ctx, job: Job) -> None:
         """Expose a worker result to later jobs only after engine acceptance.
@@ -987,109 +1170,102 @@ class AnalyseAgenticSystem(Workflow):
             ),
         )
 
-    def runtime_job(self, run_dir: Path) -> Job:
-        """The runtime analyst. Its member cites the boundary's sources and its
+    def analyst_job(
+        self, run_dir: Path, member: str, round_: int, *, name: str,
+        reads: Mapping[str, str], contract: str, cited: Mapping[str, Path],
+        requests: int | None,
+    ) -> Job:
+        """One analyst job. A correction round also gets the analyst's previous
+        report and the verification whose blockers it answers."""
+        run_dir = run_dir.resolve()
+        reads = dict(reads)
+        parameters = {"round": "correction" if round_ else "first"}
+        checks = [partial(
+            pass_refusals,
+            repo_root=self.repo,
+            run_state=run_dir / RUN_STATE,
+            boundary=run_dir / BOUNDARY,
+            declaration_prefix=PREFIXES[member],
+            bodies=lambda path: set_bodies(
+                boundary=run_dir / BOUNDARY, **cited, **{member: path}
+            ),
+        )]
+        if round_:
+            if requests is None:
+                raise ValueError(f"{name}: a correction round needs the verification it answers")
+            previous = report(member, round_ - 1)
+            verification = round_file("verification", requests)
+            reads.update({"previous-report": previous, "requests": verification})
+            parameters["answers"] = str(run_dir / "jobs" / name / ANSWERS_NAME)
+            checks.append(partial(
+                correction_refusals, member=member, previous=run_dir / previous,
+                verification=run_dir / verification,
+            ))
+        return self.job(
+            run_dir, name, report(member, round_), reads=reads, instruction=member,
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, contract),
+            parameters=parameters,
+            validator=lambda path: [reason for check in checks for reason in check(path)],
+        )
+
+    def runtime_job(self, run_dir: Path, round_: int = 0, requests: int | None = None) -> Job:
+        """The runtime analyst. Its report cites the boundary's sources and its
         own records."""
-        return self.job(
-            run_dir,
-            "runtime",
-            RUNTIME,
-            reads={"boundary": BOUNDARY},
-            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, RUNTIME_CONTRACT),
-            validator=partial(
-                pass_refusals,
-                repo_root=self.repo,
-                run_state=run_dir / RUN_STATE,
-                boundary=run_dir / BOUNDARY,
-                declaration_prefix="RT-",
-                bodies=lambda path: set_bodies(
-                    boundary=run_dir / BOUNDARY, runtime=path
-                ),
-            ),
+        return self.analyst_job(
+            run_dir, "runtime", round_, name=f"runtime-{round_}" if round_ else "runtime",
+            reads={"boundary": BOUNDARY}, contract=RUNTIME_CONTRACT, cited={},
+            requests=requests,
         )
 
-    def epistemic_job(self, run_dir: Path) -> Job:
+    def epistemic_job(
+        self, run_dir: Path, round_: int = 0, runtime: int = 0, requests: int | None = None,
+    ) -> Job:
         """The epistemic analyst. It runs beside the memory analyst, so its
-        member cites the boundary's sources, the runtime member and its own
+        report cites the boundary's sources, the runtime report and its own
         records."""
-        return self.job(
-            run_dir,
-            "epistemic",
-            EPISTEMIC,
-            reads={"boundary": BOUNDARY, "runtime": RUNTIME},
-            extra=(
-                SOURCES_CONTRACT,
-                RECORDS_CONTRACT,
-                EPISTEMIC_CONTRACT,
-            ),
-            validator=partial(
-                pass_refusals,
-                repo_root=self.repo,
-                run_state=run_dir / RUN_STATE,
-                boundary=run_dir / BOUNDARY,
-                declaration_prefix="EPI-",
-                bodies=lambda path: set_bodies(
-                    boundary=run_dir / BOUNDARY,
-                    runtime=run_dir / RUNTIME,
-                    epistemic=path,
-                ),
-            ),
+        supplied = report("runtime", runtime) if round_ else RUNTIME
+        return self.analyst_job(
+            run_dir, "epistemic", round_, name=f"epistemic-{round_}" if round_ else "epistemic",
+            reads={"boundary": BOUNDARY, "runtime": supplied}, contract=EPISTEMIC_CONTRACT,
+            cited={"runtime": run_dir / supplied}, requests=requests,
         )
 
-    def memory_job(self, run_dir: Path, round_: int, returned_by: int) -> Job:
+    def memory_job(
+        self, run_dir: Path, round_: int, runtime: int = 0, epistemic: int = 0,
+        requests: int | None = None,
+    ) -> Job:
         """One round of the memory analyst. Its report cites the boundary's
-        sources, the runtime member and its own records; a correction round,
-        which runs after the epistemic member exists, may cite that member too."""
-        reads = {"boundary": BOUNDARY, "runtime": RUNTIME}
-        cited = {"runtime": run_dir / RUNTIME}
-        if round_ > 0:
-            reads.update({
-                "previous-memory": memory_report(round_ - 1),
-                "returned-findings": reconciliation(returned_by),
-                "epistemic": EPISTEMIC,
-            })
-            cited["epistemic"] = run_dir / EPISTEMIC
-        return self.job(
-            run_dir,
-            f"memory-{round_}",
-            memory_report(round_),
-            reads=reads,
-            instruction="memory",
-            extra=(
-                SOURCES_CONTRACT,
-                RECORDS_CONTRACT,
-                MEMORY_CONTRACT,
-            ),
-            parameters={"round": "correction" if round_ > 0 else "first"},
-            validator=partial(
-                pass_refusals,
-                repo_root=self.repo,
-                run_state=run_dir / RUN_STATE,
-                boundary=run_dir / BOUNDARY,
-                declaration_prefix="MEM-",
-                bodies=lambda path: set_bodies(
-                    boundary=run_dir / BOUNDARY, memory=path, **cited
-                ),
-            ),
+        sources, the runtime report and its own records; a correction round,
+        which runs after the epistemic report exists, may cite that report too."""
+        supplied = report("runtime", runtime) if round_ else RUNTIME
+        reads = {"boundary": BOUNDARY, "runtime": supplied}
+        cited = {"runtime": run_dir / supplied}
+        if round_:
+            reads["epistemic"] = report("epistemic", epistemic)
+            cited["epistemic"] = run_dir / reads["epistemic"]
+        return self.analyst_job(
+            run_dir, "memory", round_, name=f"memory-{round_}", reads=reads,
+            contract=MEMORY_CONTRACT, cited=cited, requests=requests,
         )
+
+    @staticmethod
+    def correction_reads(corrected: Sequence[str], versions: Mapping[str, int]) -> dict[str, str]:
+        """What the last correction step produced, for the jobs that judge it."""
+        reads = {}
+        for member in corrected:
+            reads[f"{member}-answers"] = answers(member, versions[member])
+            reads[f"{member}-changes"] = changes(member, versions[member])
+        return reads
 
     def reconcile_job(
-        self,
-        run_dir: Path,
-        round_: int,
-        memory: int,
-        reason: str | None,
-        may_return: bool,
+        self, run_dir: Path, round_: int, versions: Mapping[str, int],
+        corrected: Sequence[str],
     ) -> Job:
-        report = memory_report(memory)
-        reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": report, "epistemic": EPISTEMIC}
+        reads = {"boundary": BOUNDARY, **{member: report(member, versions[member]) for member in ANALYSTS}}
         if round_ > 0:
             reads["previous-reconciliation"] = reconciliation(round_ - 1)
-        if reason == "blockers":
             reads.update({kind: round_file(kind, round_ - 1) for kind in ("verification", "set-check")})
-        round_kind = "first" if round_ == 0 else (
-            "after-blockers" if reason == "blockers" else "after-correction"
-        )
+            reads.update(self.correction_reads(corrected, versions))
         return self.job(
             run_dir,
             f"reconcile-{round_}",
@@ -1097,14 +1273,13 @@ class AnalyseAgenticSystem(Workflow):
             reads=reads,
             instruction="reconcile",
             extra=RECORD_CONTRACTS,
-            parameters={"round": round_kind, "may-return": "yes" if may_return else "no"},
+            parameters={"round": "after-blockers" if round_ else "first"},
             validator=partial(
                 reconcile_refusals,
                 boundary=run_dir / BOUNDARY,
-                runtime=run_dir / RUNTIME,
-                report=run_dir / report,
-                epistemic=run_dir / EPISTEMIC,
-                may_return=may_return,
+                runtime=run_dir / reads["runtime"],
+                report=run_dir / reads["memory"],
+                epistemic=run_dir / reads["epistemic"],
             ),
         )
 
@@ -1132,10 +1307,12 @@ class AnalyseAgenticSystem(Workflow):
         return failures
 
     def close_round(
-        self, ctx, run_dir: Path, fields: dict[str, Any], round_: int, memory: int,
+        self, ctx, run_dir: Path, fields: dict[str, Any], round_: int,
+        versions: Mapping[str, int], corrected: Sequence[str],
     ) -> str:
         """Render reconciliation, check the records, and independently judge them."""
-        atomic_write(run_dir / MEMORY, (run_dir / memory_report(memory)).read_bytes())
+        for member in ANALYSTS:
+            self.replace(run_dir / CURRENT[member], (run_dir / report(member, versions[member])).read_bytes())
         reconciled = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
         write_file(run_dir / RECONCILIATION, dump_frontmatter({
             "type": "agentic-system-analyses/types/agentic-system-reconciliation-report.md",
@@ -1147,29 +1324,35 @@ class AnalyseAgenticSystem(Workflow):
         write_file(run_dir / round_file("set-check", round_),
                    "# Record set check\n\n" + ("\n".join(f"- {failure}" for failure in failures) or "none") + "\n")
         self.run_job(ctx, self.verification_job(
-            run_dir, round_, memory,
+            run_dir, round_, versions, corrected,
             validator=partial(self.record_verification_refusals, run_dir, failures=failures),
         ))
         return (run_dir / round_file("verification", round_)).read_text(encoding="utf-8")
 
     def verification_job(
-        self, run_dir: Path, round_: int, memory: int,
+        self, run_dir: Path, round_: int, versions: Mapping[str, int],
+        corrected: Sequence[str],
         *, validator: Callable[[Path], Sequence[str]] | None = None,
     ) -> Job:
+        reads = {"boundary": BOUNDARY, "reconciliation": RECONCILIATION,
+                 **{member: report(member, versions[member]) for member in ANALYSTS},
+                 "set-check": round_file("set-check", round_)}
+        if round_ > 0:
+            reads["previous-verification"] = round_file("verification", round_ - 1)
+            reads.update(self.correction_reads(corrected, versions))
         return self.job(
             run_dir, f"verify-{round_}", round_file("verification", round_),
-            reads={"boundary": BOUNDARY, "reconciliation": RECONCILIATION,
-                   "runtime": RUNTIME, "memory": memory_report(memory),
-                   "epistemic": EPISTEMIC, "set-check": round_file("set-check", round_)},
-            instruction="verify", extra=RECORD_CONTRACTS, validator=validator,
-            # The round its blockers would start is the one that may return.
-            parameters={"memory-return": "yes" if round_ + 1 < self.correction_rounds else "no"},
+            reads=reads, instruction="verify", extra=RECORD_CONTRACTS, validator=validator,
+            parameters={"round": "after-blockers" if round_ else "first"},
         )
 
     def record_verification_refusals(self, run_dir: Path, path: Path, *, failures: Sequence[str]) -> list[str]:
         refusals = verification_refusals(path)
-        if failures and subsection(path.read_text(encoding="utf-8"), "Blockers") == "none":
+        blockers = subsection(path.read_text(encoding="utf-8"), "Blockers")
+        if failures and blockers == "none":
             refusals.append("structural failures require explicit blockers")
+        if not blockers_refusals(blockers):
+            refusals += addressee_refusals(blockers)
         return refusals + reference_refusals(partial(self.record_bodies, run_dir, verification=path))
 
     def profile_job(self, run_dir: Path, round_: int) -> Job:

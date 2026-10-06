@@ -19,9 +19,9 @@ records the method's initial development.
 1. [Analysis design brief](../../reference/agentic-system-analysis-design-brief.md)
    — operator intent; read before design or implementation work.
 2. [Versioned corrections candidate](./versioned-corrections-for-agentic-analysis-reports.md)
-   — whether correcting report text would reduce total work and correction
-   failures compared with amendment overlays. Its single correction loop is
-   a hypothesis, not the selected architecture.
+   — the design reasoning for correcting report text instead of keeping
+   amendment overlays. Its first part is implemented; its publication step
+   and its evidence questions are not settled.
 3. [Live method](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
    and [method maintenance](../../agentic-system-analyses/instructions/maintain-analysis-method.md)
    — current execution contracts and the route for authorized method edits.
@@ -33,17 +33,20 @@ implementation audit needs its original acceptance criteria.
 
 As of the 2026-10-05 direction:
 
-- The live method remains authoritative. The correction candidate changes no
-  run contract, report or accepted result.
-- The current design question is whether corrections should reach report
-  text rather than remain amendments that later consumers interpret.
-  Correction ownership, report boundaries, review organization and budgets
-  remain open to evidence.
+- The live method remains authoritative. Since ADR 108 it corrects reports
+  in place: verifier blockers go to the declaring analyst. No accepted result
+  or retained set changed.
+- The open design question is now empirical: whether report correction
+  reduces total work and correction failures compared with the stopped
+  amendment-overlay runs. Round budgets, declined requests and declared
+  dependencies between findings remain open to evidence.
 - The [report-correction implementation plan](./report-correction-implementation-plan.md)
   scopes a first change from that candidate: verifier findings go to the
   declaring analyst, for all three reports, and reconciliation is narrowed
-  to connecting reports. It awaits operator acceptance and
-  does not include the publication policy.
+  to connecting reports. The operator accepted it on 2026-10-05 and it is
+  implemented under [ADR 108](../../reference/adr/108-declaring-analysts-correct-their-reports.md);
+  its result section lists what was built. No model run has exercised it,
+  and it does not include the publication policy.
 - The [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
   was selected for implementation after the classification revision. That
   revision closed on 2026-10-05, so the policy is now unblocked but not live.
@@ -78,11 +81,12 @@ a new model run, recovery of a stopped run or edits to retained analyses.
 Keep separately owned work separate. Existing retained sets are frozen
 comparison evidence; do not revise an open run's pinned method to resume it.
 
-The next design decision should identify which uncertain mechanism is worth
-testing and what evidence would distinguish the alternatives. The candidate's
-[adoption evidence](./versioned-corrections-for-agentic-analysis-reports.md#evidence-needed-before-adoption)
-provides questions, not an authorized trial plan. Return a bounded proposal
-for operator decision before implementation or a live trial.
+The next decision is whether to authorize the trial the
+[implementation plan](./report-correction-implementation-plan.md#trial-separately-authorized)
+describes. The candidate's
+[evidence questions](./versioned-corrections-for-agentic-analysis-reports.md#evidence-needed-before-adoption)
+remain questions, not an authorized trial plan. Return a bounded proposal for
+operator decision before a further method change or a live trial.
 
 ## Closure
 

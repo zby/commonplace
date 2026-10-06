@@ -9,9 +9,8 @@ schema: ./agent-memory-analysis-report.schema.yaml
 
 The memory analyst's source-grounded findings and integration questions for one run, at the run's
 frozen boundary. The last report the run accepts is the set's memory member
-byte for byte: it declares its records under their `MEM-` IDs, and no step
-rewrites it. Corrections to its records are amendments in the reconciliation
-member.
+byte for byte: it declares its records under their `MEM-` IDs, and only the
+memory analyst revises it, in a correction round.
 The [source contract](../instructions/agentic-analysis-sources.md) governs
 evidence; the [record contract](../instructions/agentic-analysis-records.md)
 governs identity, common fields and statuses.
@@ -119,7 +118,7 @@ requested read-back does not resolve an opaque alternative.
 List every correction to a supplied fact, every record of this report that
 may duplicate a seeded record, and every unresolved question, with its
 evidence, analytical consequence and the full IDs it concerns, so the
-reconciliation can amend or supersede without rediscovering its meaning.
+reconciliation can connect or supersede without rediscovering its meaning.
 State `none` when no issues remain. Supported corrections and justified
 unknowns can remain in a complete report; side-channel messages do not
 substitute for this section.

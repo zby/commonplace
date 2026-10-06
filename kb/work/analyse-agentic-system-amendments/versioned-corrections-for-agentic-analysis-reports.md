@@ -1,5 +1,16 @@
 # Versioned corrections for agentic analysis reports
 
+## Status
+
+On 2026-10-05 the operator had the first part of this candidate implemented:
+verifier requests answered by the declaring analyst, one current version per
+report, and reconciliation limited to relations between reports. See
+[ADR 108](../../reference/adr/108-declaring-analysts-correct-their-reports.md)
+and the [implementation plan](./report-correction-implementation-plan.md).
+The section "Current mechanism and motivating evidence" below describes the
+method before that change. Publication with remaining problems and the
+evidence questions are not implemented or settled.
+
 ## Design question
 
 Would correcting report text reduce total work and correction failures compared
@@ -172,8 +183,7 @@ versions were selected. Semantic judgments still depend on models and source
 inspection. The trials should narrow the design space and identify the dominant
 constraints, not merely demonstrate that this candidate can finish.
 
-Adopting this candidate would require changes to ADR 096's report immutability
-and ADR 098's correction organization, plus the code and consumers that enforce
-them. This working design does not change live runs or authorize rerunning a
-stopped analysis. Extract a library proposal or decision when the design is
+ADR 108 made the changes to ADR 096's report immutability and ADR 098's
+correction organization that the correction loop needed. This document does
+not authorize rerunning a stopped analysis. Extract a library proposal or decision when the design is
 settled enough for that role.

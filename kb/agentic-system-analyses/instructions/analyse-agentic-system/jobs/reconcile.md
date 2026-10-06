@@ -1,5 +1,5 @@
 ---
-description: "Job of an analyse-agentic-system run: settle the three analysts' records through amendments, supersessions and explicit unresolved conflicts"
+description: "Job of an analyse-agentic-system run: state how the three analysts' records connect and where their reports disagree"
 type: types/instruction.md
 ---
 
@@ -13,76 +13,83 @@ Common parameters are defined in the supplied worker rules.
 
 | Name | Meaning | Present |
 |---|---|---|
-| `round` | `first`, `after-correction`, or `after-blockers`. | Always |
-| `may-return` | `yes` permits returning findings; `no` prohibits it. | Always |
+| `round` | `first` or `after-blockers`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
-| `runtime` | Absolute path of the runtime member. | Always |
-| `memory` | Absolute path of the selected memory report. | Always |
-| `epistemic` | Absolute path of the epistemic member. | Always |
-| `previous-reconciliation` | Absolute path of the previous reconciliation. | `after-correction` or `after-blockers` |
-| `verification` | Absolute path of the verification whose blockers you must resolve. | `after-blockers` |
+| `runtime` | Absolute path of the current runtime report. | Always |
+| `memory` | Absolute path of the current memory report. | Always |
+| `epistemic` | Absolute path of the current epistemic report. | Always |
+| `previous-reconciliation` | Absolute path of the previous reconciliation. | `after-blockers` |
+| `verification` | Absolute path of the previous record verification. | `after-blockers` |
 | `set-check` | Absolute path of the structural check for that verification. | `after-blockers` |
+| `<report>-answers` | Absolute path of an analyst's answers to that verification's blockers. | For each report corrected since |
+| `<report>-changes` | Absolute path of the text difference of a corrected report from its predecessor. | For each report corrected since |
 
 ## Task
 
-Write `output` with `## Reconciliation`, under the supplied reconciliation
-report type. Code writes the retained member's identity and copies this
-section unchanged. Do not write Description, Bounded synthesis or Limitations.
+Write `output` with `## Reconciliation` and no other section, under the
+supplied reconciliation report type. Code writes the retained member's
+identity and copies this section unchanged.
 
-## Reconcile
+Your subject is the relations between the three reports: which records name
+the same thing, which are parts of others, where the analysts converged
+independently, and where two reports disagree. You do not judge whether one
+report's finding is supported by the sources, and you do not correct a
+report. The record verifier judges support, and the declaring analyst
+corrects.
 
-Reconcile the members as they are; when `round` is `after-correction` or
-`after-blockers`, read `previous-reconciliation` and recheck anything you
-carry over from it rather than copying its text.
+## Connect the records
 
-Resolve duplicates, corrections and anchored conflicts under the shared
-record contract's amendment grammar. Check `Part of:` relations without
-superseding valid containers. A split supersedes a combined record only by
-parts already declared in analyst members, with identity evidence and
-affected findings; never allocate IDs or declare split parts here. If a
-required part is missing, return it when the memory analyst should declare
-it and `may-return = yes`; otherwise retain an `Unresolved conflict:` naming
-the combined ID, missing part in prose, evidence and prevented conclusion.
-Report independent convergence only
-when the analysts reached it independently. Recheck shared-route ownership.
-Attach the admission fields of memory routes from the memory analyst's
-findings rather than tracing those mechanisms twice. Do not draft a second memory analysis, and do not silently strengthen the memory analyst's
-findings. Preserve source-native positives and their local evidence layers
-alongside unresolved included parts. Name missing facts and prevented conclusions
-without deleting parts to obtain complete coverage. Distinguish inspected but
-inconclusive evidence, uninspected evidence, bounded absence and inapplicability.
-Keep independent epistemic properties separate. Faithful uncertainty alone
-needs no return; unsupported assertions and hidden coverage gaps still require
-repair or a warranted conflict marking.
+Resolve duplicates and identity under the shared record contract. State an
+identity judgment as a supersession, `Amendment: <full ID> is superseded by
+<full IDs>`, with identity evidence. A split supersedes a combined record only
+by parts already declared in analyst reports; never allocate IDs or declare
+split parts here. Check `Part of:` relations without superseding valid
+containers. Recheck shared-route ownership. Report independent convergence
+only when the analysts reached it independently. Attach the admission fields
+of memory routes from the memory analyst's findings; do not trace those
+mechanisms again.
 
-Every ID you cite, in amendments too, must resolve in the set your output
-makes: the Source register, the runtime member, the memory report and the
-epistemic member. Your output is refused with the unresolved IDs otherwise.
-Keep the declaring analyst's prefix when amending another member's finding,
-with that member named under affected findings.
+## Describe disagreements
 
-## Return findings to the memory analyst
+Where two reports assert incompatible things about the same referent, write
+a paragraph starting `Unresolved conflict:` with the full IDs, each report's
+finding, the evidence each cites and the conclusion the conflict prevents.
+Do not choose a side and do not write a replacement value: an `Amendment:`
+paragraph that is not a supersession is refused. The verifier reads the
+conflict and addresses a blocker to the report that must change. A required
+part that no analyst declared is the same kind of entry: name the combined
+ID, the missing part in prose, the evidence and the prevented conclusion.
 
-When a substantive conflict needs the memory analyst, add the section
-`## Returned to the memory analyst`, listing each returned finding with its
-IDs and evidence anchor. Place it after `## Reconciliation`; the accepted
-heading order is Reconciliation, then the optional memory return.
-Code then runs a correction round of the memory
-analyst and gives you its report in the next reconciliation. Return findings
-only when `may-return = yes`. When `may-return = no`, retain each unresolved
-conflict in a paragraph starting `Unresolved conflict:`, with its full IDs,
-evidence and conclusion prevented. The later synthesizer carries these
-conflicts into Limitations. A malformed citation in the memory analyst's
-report is also a return, not something you fix.
+A report whose finding rests on another report's record disagrees with that
+report when the record no longer says what the finding relies on. After a
+correction, check the reports that cite the corrected records.
 
-## Resolve a verification's blockers
+## Limits on your own statements
 
-When `round = after-blockers`, read `verification` and `set-check`. Resolve
-each blocker in what you write: correct the reconciliation; amend or
-supersede a record through an `Amendment:` paragraph; or return it to the
-memory analyst when the memory report is at fault. The runtime and epistemic
-members are not rewritten; a blocker in one of them that no amendment
-resolves stays an `Unresolved conflict:` with its prevented conclusion. Read
-`previous-reconciliation` too: carry over what still holds.
+Do not strengthen an analyst's finding, draft a second analysis, or erase
+uncertainty a report states. Preserve source-native positives and their
+evidence layers alongside unresolved included parts. Keep inspected but
+inconclusive evidence, uninspected evidence, bounded absence and
+inapplicability distinct when you restate a finding, and keep independent
+epistemic properties separate. Faithful uncertainty alone is not a
+disagreement and needs no entry.
+
+Every ID you cite must resolve in the set your output makes: the Source
+register and the three current reports. Your output is refused with the
+unresolved IDs otherwise.
+
+## After blockers
+
+When `round = after-blockers`, read `previous-reconciliation`,
+`verification`, `set-check`, and each supplied `<report>-answers` and
+`<report>-changes`. Reconcile the current reports again; recheck anything
+you carry over rather than copying it.
+
+- Answer every blocker addressed to `reconciliation` by correcting your own
+  account.
+- A blocker addressed to an analyst report is that analyst's to answer. Do
+  not restate its correction as your own finding.
+- A declined blocker that concerns two reports stays an
+  `Unresolved conflict:` with both positions, including the analyst's reason.
 
 Run the acceptance check before submitting.

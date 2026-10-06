@@ -13,13 +13,19 @@ Common parameters are defined in the supplied worker rules.
 
 | Name | Meaning | Present |
 |---|---|---|
+| `round` | `first` or `correction`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
+| `previous-report` | Absolute path of your report as the record verifier judged it. | `correction` |
+| `requests` | Absolute path of the record verification whose blockers you answer. | `correction` |
+| `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
 ## Task
 
 Write the runtime member to `output` under the supplied runtime type,
 within `boundary`. It gives the later specialists their starting account.
-No job rewrites it afterwards.
+When `round = correction`, follow **Correct a report after verification** in
+the supplied worker rules; the rest of this instruction still governs the
+report's content.
 Declare runtime-owned records with `RT-` under the shared record contract.
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one
@@ -48,7 +54,7 @@ Declare runtime-owned records with `RT-` under the shared record contract.
    retained knowledge or instructions, capabilities, or production
    machinery. Record each on its admitting `RT-RTE-*` record with the
    conditional fields the shared record contract requires. Leave memory
-   revisions to the memory analyst; the reconciliation attaches them.
+   revisions to the memory analyst.
 
 Acceptance requires a valid member whose citations resolve against its
 own declarations and the Source register of `boundary`.

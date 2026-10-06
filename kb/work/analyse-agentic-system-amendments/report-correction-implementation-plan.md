@@ -20,6 +20,50 @@ before editing. The [corrections candidate](./versioned-corrections-for-agentic-
 gives the design reasoning; where it and this plan differ, this plan sets
 the scope of the first change.
 
+## Implementation result (2026-10-05)
+
+Implemented in the working tree by `claude-fable-5-1`; see
+[ADR 108](../../reference/adr/108-declaring-analysts-correct-their-reports.md)
+for the decision and its limits. No model run has exercised it.
+
+What was built, beyond the required result below:
+
+- **Blocker form.** Each record-verification blocker starts `- runtime: `,
+  `- memory: `, `- epistemic: ` or `- reconciliation: `.
+- **Answers.** A correcting analyst writes `answers.md` beside its report,
+  one `- corrected: ` or `- declined: ` entry per blocker addressed to it.
+  Acceptance checks the count, and refuses `corrected` with an unchanged
+  report. Code keeps the answers as `<member>-answers-<n>.md`.
+- **Versions.** `<member>-report-<n>.md` in the run directory; `output/`
+  holds the current version; `<member>-changes-<n>.md` is the computed
+  difference.
+- **Shared correction rules.** One section in the worker rules serves all
+  three analysts.
+
+Acceptance cases 1–10 are scripted tests in
+`tests/commonplace/lib/test_agentic_workflow.py` and
+`tests/commonplace/lib/test_analysis_check.py`. Case 11 was checked by
+validating the retained `dynamic-cheatsheet` set. The full suite passed
+except one process-timeout test in `test_isolated_codex.py`, which passed
+when rerun alone.
+
+Deviations and findings:
+
+- **Run identity check.** Analyst acceptance no longer validates the
+  published artifact when it reads the run's identity and source. A replay
+  of a complete run passes through earlier report versions in `output/`,
+  which the final manifest does not pin, and the old check then reopened an
+  accepted correction. The same exposure existed before for a memory
+  correction after a blocker round.
+- **Round-0 inputs.** The first memory and epistemic jobs still read
+  `output/runtime.md`; correction, reconciliation and verification jobs read
+  numbered versions.
+- **Not done.** The instruction wording review against the two stopped runs
+  was made by the implementer only, not independently. `scripts/analyst_trial.py`
+  still copies `output/runtime.md`, which after a corrected run is the last
+  runtime version, not the one the first analysts read.
+- No decision return was triggered.
+
 ## Why now
 
 Four runs used the committed classification revision (method `b95a2bb79`):

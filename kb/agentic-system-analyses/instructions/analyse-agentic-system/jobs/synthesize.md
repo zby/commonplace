@@ -35,7 +35,7 @@ Write `output` with exactly these sections:
 ```
 
 The supplied overview type governs the synthesis and limitations. Read the
-members for their findings and resolve amended or superseded records through
+members for their findings as written, and resolve superseded records through
 the reconciliation. Do not reconcile records, return work to an analyst, or
 write verification text. The record loop has already passed independent
 verification.

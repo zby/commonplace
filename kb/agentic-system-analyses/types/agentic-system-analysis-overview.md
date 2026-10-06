@@ -41,7 +41,7 @@ The [boundary contract](../instructions/agentic-analysis-boundary.md) defines
 boundary classifications and source declarations. The
 [source contract](../instructions/agentic-analysis-sources.md) defines
 evidence layers, anchors and quotations. The [record contract](../instructions/agentic-analysis-records.md)
-defines the namespace, declarations, annotations, amendments, fields and
+defines the namespace, declarations, annotations, supersessions, fields and
 status meanings for all members.
 
 ### Identity and completion
@@ -66,8 +66,9 @@ For Git, the identity is the repository at the reviewed commit; listed
 paths record initial coverage and do not prevent later members from
 inspecting and citing other files at that commit for the selected target.
 For a complete run, code appends `Amended or superseded records: <IDs or none>`
-and a link to `reconciliation.md`. Resolve these IDs through that member
-before relying on an analyst's original wording.
+and a link to `reconciliation.md`. Resolve these IDs through that member.
+In a set published before report correction, an amendment there can also
+replace a value in an analyst's wording.
 
 ### Bounded synthesis
 
@@ -120,7 +121,7 @@ its analytical consequence.
 `### Profile verification`, `### Synthesis verification`,
 `### Deterministic validation`, and
 `### Blockers`. The three independent checks remain separate: record
-verification covers amendments, supersessions and scope; profile verification
+verification covers the reports as corrected, supersessions and scope; profile verification
 covers axis inventory, natural unit scope and finding-specific support against
 accepted records;
 synthesis verification covers support for public statements, readability

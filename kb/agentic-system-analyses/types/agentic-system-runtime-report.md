@@ -59,8 +59,8 @@ elsewhere, as `#### On MEM-RTE-memory-read — Short label`: admission and theor
 fields, decision roles, operating mode, answer oracle and links to
 runtime-declared records. It repeats no generic identity, evidence passage
 or memory finding. Ordinarily this section says `none`: the runtime is
-written before the other analysts declare records. Reconciliation attaches
-any later-needed runtime fields and amends this member's findings.
+written before the other analysts declare records. A correction round can
+add later-needed runtime fields and correct this member's findings.
 
 ## Template
 

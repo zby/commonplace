@@ -27,14 +27,14 @@ Write a revision-2 profile under the supplied profile type, with its exact
 metadata and Comparison rationale section. Use `version: 2`, scoped units and
 single-value findings, not revision-1 value lists or evidence maps. Choose each
 axis's natural unit from the supplied type, grouping only shared scope and
-coverage; keep distinct evidence bases on distinct findings. Resolve amendments and supersessions before
-classifying. Apply the supplied definitions without extra conditions. In
+coverage; keep distinct evidence bases on distinct findings. Resolve supersessions through the reconciliation before
+classifying; the reports already carry their corrections. Apply the supplied definitions without extra conditions. In
 particular, decay means forgetting or downweighting; it does not require a
 clock, time-based policy or a named decay command.
 
 Read the supplied set to establish scope, parts, consumers and supported routes.
 Do not declare records, add quotes or evidence, edit members, reopen record
-verification or return work to the memory analyst. Every asserted value cites
+verification or return work to an analyst. Every asserted value cites
 records already in the set. Where a needed fact is absent from those records,
 use a warranted partial, uninspected or not-determinable assessment and name
 the missing fact and prevented conclusion in the unit note, with accepted
