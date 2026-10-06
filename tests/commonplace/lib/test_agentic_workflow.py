@@ -822,22 +822,16 @@ def test_a_blocker_without_an_addressee_is_refused(fixture: Fixture) -> None:
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize(("text", "refusal"), [
-    (lambda fixture: fixture.reconciliation(
-        amendment="RT-OBJ-store has a narrower scope; replace the broad scope at SRC-1."),
-     "value amendment: reconciliation states connections between reports"),
-    (lambda fixture: fixture.reconciliation()
-     + "\n## Returned to the memory analyst\n\n- MEM-OBJ-store: recheck the write side.\n",
-     "write only `## Reconciliation`; reconciliation returns no findings"),
-])
-def test_reconciliation_neither_corrects_nor_returns(fixture: Fixture, text, refusal: str) -> None:
-    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text(fixture))})
+def test_a_value_amendment_in_reconciliation_is_refused(fixture: Fixture) -> None:
+    amending = fixture.reconciliation(
+        amendment="RT-OBJ-store has a narrower scope; replace the broad scope at SRC-1.")
+    scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: amending)})
     drive_to(scripted, "reconcile-0")
 
     attempt, prompt = prompt_of(scripted.round(), "reconcile-0")
 
     assert attempt == 2
-    assert refusal in prompt
+    assert "value amendment: reconciliation states connections between reports" in prompt
     assert "verify-0" not in scripted.launched
 
 

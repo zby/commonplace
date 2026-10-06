@@ -34,7 +34,7 @@ clock, time-based policy or a named decay command.
 
 Read the supplied set to establish scope, parts, consumers and supported routes.
 Do not declare records, add quotes or evidence, edit members, reopen record
-verification or return work to an analyst. Every asserted value cites
+verification. Every asserted value cites
 records already in the set. Where a needed fact is absent from those records,
 use a warranted partial, uninspected or not-determinable assessment and name
 the missing fact and prevented conclusion in the unit note, with accepted

@@ -281,10 +281,10 @@ def test_epistemic_report_declares_its_records_under_shared_records(tmp_path: Pa
     assert validate(tmp_path, "epistemic.md", missing).fails != []
 
 
-def test_reconciliation_report_validates_and_excludes_working_returns(tmp_path: Path) -> None:
+def test_reconciliation_report_validates_and_has_one_section(tmp_path: Path) -> None:
     assert validate(tmp_path, "reconciliation.md", RECONCILIATION_TEXT).fails == []
-    returned = RECONCILIATION_TEXT + "\n## Returned to the memory analyst\n\nMEM-OBJ-store needs correction.\n"
-    assert validate(tmp_path, "reconciliation.md", returned).fails
+    extra = RECONCILIATION_TEXT + "\n## Open questions\n\nMEM-OBJ-store needs a second look.\n"
+    assert validate(tmp_path, "reconciliation.md", extra).fails
 
 
 def test_generated_review_validates_and_pins_the_manifest(tmp_path: Path) -> None:

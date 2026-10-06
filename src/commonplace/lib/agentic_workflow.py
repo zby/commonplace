@@ -567,10 +567,7 @@ def reconcile_refusals(
     body = path.read_text(encoding="utf-8")
     refusals = require_sections(body, 2, ["Reconciliation"])
     if headings(body, 2) != ["Reconciliation"]:
-        refusals.append(
-            "write only `## Reconciliation`; reconciliation returns no findings and "
-            "requests no corrections, so describe a disagreement there for the verifier"
-        )
+        refusals.append("write only `## Reconciliation`")
     refusals.extend(
         "value amendment: reconciliation states connections between reports and does "
         "not replace a record's value; describe the disagreement with both records and "
