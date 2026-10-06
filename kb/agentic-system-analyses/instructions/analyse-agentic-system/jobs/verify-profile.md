@@ -42,11 +42,29 @@ record contract fix those definitions; this instruction adds none.
 ## Boundaries
 
 You mark and explain; you write no replacement profile and change no record.
-A blocker is an unsupported value or an unjustified coverage claim; a limit
-is admissible only where the profile value already expresses the uncertainty
-(`partial`, `not-determinable`, `uninspected`), since an overview caveat does
-not travel with an extracted value. A faithfully stated evidence limit is
-neither. No profile-only record or source quotation can establish support;
+A blocker meets the supplied verification type's materiality threshold:
+an unsupported emitted value or evidence strength, an unjustified absence or
+complete-coverage assessment, or a defect that materially changes the bounded
+account or system-level comparison. Explain the incorrect inference and why
+a limit cannot contain it; a departure from the authoring ideal alone is not
+enough.
+
+Use Limits for a local omission, coarse unit or overly cautious assessment
+when the axis already expresses incomplete coverage and its emitted findings
+remain supported. For example, omitting one descriptive-attribute knowledge
+path can be a limit when other records already establish `knowledge` and the
+axis is `partial`; name the omitted records and withhold complete
+consumer-route comparisons. It is a blocker if the omission removes the only
+support for a system-level value, creates a false absence/completeness claim,
+or materially changes the account. Apply the same threshold on every round;
+neither exhaustion of the correction budget nor a predecessor's objection
+settles materiality.
+
+A limit on a profile value is admissible only where the affected axis or unit
+already expresses the uncertainty (`partial`, `not-determinable`,
+`uninspected`), since an overview caveat does not travel with an extracted
+value. A faithfully stated evidence limit is neither. No profile-only record
+or source quotation can establish support;
 read the source only for the cited paths needed to resolve a named ambiguity,
 and log each such read under Verification. New source facts cannot replace
 supporting records.

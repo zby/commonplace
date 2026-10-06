@@ -42,7 +42,10 @@ refused. Code continues only when Blockers is `none`.
 
 A **blocker** is a defect that must be repaired before publication: it
 undermines a central conclusion, leaves the analysis materially misleading, or
-is a known false assertion with a supported correction. It names the full IDs
+asserts an unsupported comparison value, evidence strength, absence or complete
+coverage. A repairable defect is not automatically a blocker. Explain what
+readers or comparison consumers would infer incorrectly and why a stated limit
+cannot preserve the bounded account. It names the full IDs
 it concerns, the passage holding the defective text, what is wrong and the
 evidence. In a record verification each blocker starts with the one report
 whose text must change, `runtime:`, `memory:`, `epistemic:` or
@@ -60,6 +63,16 @@ itself already expresses the uncertainty (`partial`, `not-determinable` or
 `uninspected`), because an overview caveat does not travel with an extracted
 value. A disagreement between reports that the sources do not settle is a
 limit naming both positions.
+
+Local omissions, coarse units and overly cautious assessments can be limits
+when they leave the supported conclusions and emitted comparison findings
+valid and do not imply absence or complete coverage. A supported mechanism
+missing from a partial inventory need not stop publication merely because a
+more complete inventory could be written. State the omitted mechanism and
+which inventory or route comparisons remain incomplete. If the omission
+changes a central conclusion or a system-level comparison value, it is a
+blocker. Do not use a limit to excuse an unsupported emitted value or a false
+`known`, `absent` or `inapplicable` assessment.
 
 Faithfully scoped uncertainty is neither a blocker nor a limit. A review
 objection is evidence to assess, not an established defect.

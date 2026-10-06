@@ -101,6 +101,14 @@ profile; a value the profile asserts is supported by the records it
 cites. Identify included and excluded alternatives on each branch. An
 inspected display summary does not classify an opaque consumed payload.
 
+These are authoring requirements. Publication review uses the supplied
+[verification type](./agentic-system-verification.md)'s materiality threshold,
+not exhaustive conformity as a stop condition. A partial inventory can retain
+a declared local omission when its emitted findings remain valid and the
+omission does not change a central conclusion or system-level comparison
+value. Unsupported emitted findings and unjustified absence or complete
+coverage remain blockers.
+
 ### Classification units
 
 | Axis | Natural unit and boundary |

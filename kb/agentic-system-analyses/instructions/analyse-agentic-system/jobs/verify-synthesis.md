@@ -49,7 +49,12 @@ no improved capacity inferred from trace-fed retention.
 
 You write no correction. A blocker is an unsupported statement, a hidden
 coverage gap, an unwarranted absence or completeness claim, or a declared
-limit missing from Limitations; explicit faithful uncertainty is not. A record
+limit missing from Limitations, judged by the supplied verification type's
+materiality threshold. Explain the incorrect reader inference and why a
+stated limit cannot contain it. Local omissions or imprecise wording that
+leave the bounded conclusions valid can be limits; do not demand exhaustive
+restatement of the records or editorial polish before publication. Explicit
+faithful uncertainty is neither a blocker nor a limit. A record
 fault you discover here is a limit to be stated in the public text, not a
 reason to reopen reconciliation; if it cannot be stated without making the
 synthesis misleading, write `problem` and stop. Structural acceptance does not

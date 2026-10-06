@@ -42,12 +42,12 @@ verification type, with `verifies: records`, `run-id` and the
 
 When you are done, every record, source anchor, evidence status, `Part of:`
 relation, supersession and unresolved conflict has been checked and the
-Verification section says so; every defect that a change to one report's
-text can repair is a blocker addressed to that report; every disagreement the
-sources settle is a blocker addressed to the report that is wrong, and every
-one they do not settle stands as a checked conflict for the synthesis to
-state as a limitation; and no supported finding has been weakened by a
-correction nobody asked for.
+Verification section says so; defects meet the supplied verification type's
+materiality threshold before becoming blockers addressed to a report; local
+issues that leave the bounded conclusions valid become limits; disagreements
+the sources settle are judged by the same threshold, and those they do not
+settle stand as checked conflicts for the synthesis to state as limitations;
+and no supported finding has been weakened by a correction nobody asked for.
 
 The contracts fix what counts as a defect. The record contract gives the
 coverage and uncertainty rules, including that faithful uncertainty alone is
@@ -62,6 +62,13 @@ API.
 
 You mark and explain defects; you do not write corrected text. Each analyst
 corrects its own report, the reconciler the reconciliation. The verification
+type fixes the blocker threshold: explain the incorrect reader inference and
+why a stated limit cannot contain it. A repairable wording, local coverage or
+classification defect alone does not require another round when the remaining
+conclusions hold. Unsupported findings, evidence strengths and absence or
+completeness claims still require correction.
+
+The verification
 type gives the blocker form: one report named first, full IDs, the passage,
 what is wrong, the evidence; a defect in two reports is two blockers, and a
 passage in another report that depends on a defective value is a blocker
