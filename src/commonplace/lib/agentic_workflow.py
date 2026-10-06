@@ -814,7 +814,7 @@ class AnalyseAgenticSystem(Workflow):
     """How many reconciliation rounds may follow the first. Each follows a
     verification that named blockers; analysts named there correct in between."""
     synthesis_correction_rounds = 1
-    profile_correction_rounds = 1
+    profile_correction_rounds = 2
 
     def __init__(self, params=None) -> None:
         super().__init__(params)

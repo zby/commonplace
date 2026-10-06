@@ -51,6 +51,6 @@ and the ambiguity resolved. Source understanding cannot replace a missing
 supporting record. Do not read an incumbent or reference profile.
 
 After blockers, read `previous-profile` and `verification` and correct only
-the profile; there is one correction round.
+the profile; there are two correction rounds.
 
 Run the acceptance check before submitting.

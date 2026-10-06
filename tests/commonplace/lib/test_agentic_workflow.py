@@ -2032,12 +2032,14 @@ def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None
 def test_persistent_profile_blockers_stop_before_synthesis(fixture: Fixture) -> None:
     blocked = fixture.verification("- storage_substrate is unsupported by MEM-OBJ-store.", title="Profile verification")
     scripted, definition = agent(fixture, **{
-        "verify-profile": fixture.writes(lambda _: blocked),
-        "verify-profile-1": fixture.writes(lambda _: blocked),
+        f"verify-profile-{n}" if n else "verify-profile": fixture.writes(lambda _: blocked)
+        for n in range(AnalyseAgenticSystem.profile_correction_rounds + 1)
     })
     outcome = scripted.run()[-1]
     assert isinstance(outcome, Blocked)
     assert "profile verification of the last round names blockers" in outcome.blocks[0].reason
+    # Two corrections, like the record loop; the third verification's blockers stop the run.
+    assert [n for n in scripted.launched if n.startswith("profile")] == ["profile", "profile-1", "profile-2"]
     assert "synthesize" not in scripted.launched
     assert definition.publications == 0
     assert not fixture.public_path.exists()

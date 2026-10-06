@@ -1,19 +1,24 @@
 ---
-description: "Proposal: validate a candidate document's references and other applicable constraints against the current working set without validating unrelated documents or requiring a complete set."
+description: "Proposal: one directory-member type declaration selects a document's contract and discovers context for candidate-only validation, without requiring a complete set."
 type: reference/types/design-proposal.md
 tags: [type-system, kb-maintenance]
 ---
 
 # Document validation in working-set context
 
-This proposal asks how a candidate document can be checked against the current
-working set without making the whole set a validation target. The operator's
-primary use is authoring feedback: check references originating in the candidate,
-not every reference in the surrounding reports.
+This proposal describes candidate-document validation through a single declared
+directory-member type. The declaration selects a member contract, which supplies
+the underlying document type and contextual constraints. The directory type's
+member layout resolves related files from the candidate's containing directory.
+The operator's primary use is authoring feedback: check references originating
+in the candidate, not every reference in the surrounding reports.
 
 The document is the target; available members supply context. Reading a member
 to resolve a reference does not make that member another target. The workflow
 continues to own scheduling, authority and progress-dependent acceptance.
+
+The operator selected this direction for the proposal. It is not shipped behavior
+or an implementation commission. Exact declaration syntax remains open.
 
 ## Current state (as of 2026-10-06)
 
@@ -72,49 +77,78 @@ not silently treated as absence or successful resolution. Diagnostics should
 name the affected candidate check and the blocking context. The design need not
 invent a recoverable fragment when the supplied document cannot be parsed.
 
-## Options
+## Selected design direction
 
-### A. Supply explicit context to a document check
+### One declaration selects the member contract
 
-A caller supplies the candidate, its intended identity or member slot, and the
-context needed for its checks. The validator evaluates the document through the
-ordinary pipeline plus applicable cross-document checks, without promoting the
-context documents to targets.
+A document declares either a standalone document type or a member of a directory
+type. In the member form, the directory's member contract selects the underlying
+document type. The instance does not independently repeat that type in a second
+field. This prevents disagreement between two declarations of its local contract.
 
-Worker self-checks, acceptance and maintenance tools would consume this
-interface. A workflow may assemble the context under its existing authority;
-the checker need not reconstruct a job merely to resolve references. The oracle
-is the supplied declarations, identity facts and other evidence required by the
-candidate's contract. It establishes bounded conformance, not global set health.
+Illustrative syntax, not a finalized format:
 
-This is the proposed starting direction, not an adopted interface. Explicit
-context needs an accountable completeness boundary: callers cannot claim
-set-wide uniqueness after supplying only a subset of the relevant declarations.
+```yaml
+type: agentic-system-analyses/types/analysis-set.md#memory
+```
 
-### B. Discover context from the document's artifact relationships
+The named directory type would define the `memory` role, its underlying
+memory-report type, its location and its contextual constraints. The validator
+would resolve that role, apply the underlying document contract, then apply the
+member's contextual constraints. An unknown role or an unavailable contract is
+a validation failure, not grounds to fall back to local-only validation.
 
-The validator could use the intended location, containing manifest or declared
-relationships to discover context. The document remains the only target;
-discovery changes how inputs are obtained, not the scope of validation.
+The member contract composes local document requirements with requirements arising
+from membership. Different directory types can reuse one underlying document
+contract without copying it. A standalone declaration requests only that
+standalone contract; it does not establish directory-member conformance. A
+consumer requiring member conformance must not accept a standalone declaration
+as an equivalent substitute.
 
-An author or maintainer would invoke the document check, and the resolver would
-supply context to its cross-document checks. The oracle remains the actual
-related artifacts, not the relationship label alone. This reduces caller
-bookkeeping but needs clear behavior for missing manifests, incomplete sets and
-ambiguous membership. Filesystem proximity is neither evidence authority nor
-permission to read another worker's output.
+### Discover instances through the directory layout
 
-### C. Retain a workflow-specific adapter
+The directory type supplies the member layout; the containing directory supplies
+the actual files. The validator uses that layout to locate the context needed
+for the candidate's checks. It does not scan arbitrary nearby Markdown files.
+A manifest or recorded workflow progress is not a prerequisite for this member
+check. Whole-directory validation may retain its own manifest requirements.
 
-Keep the analysis command responsible for selecting the candidate and context,
-while separating target-scoped checks from whole-set checks in the shared
-library. The existing acceptance and self-check consumers would invoke that
-adapter; a general public interface could wait for another consumer.
+A scratch draft needs an intended member path: check these candidate bytes as
+that member, and discover context relative to that destination rather than the
+scratch directory. The caller supplies the destination, not a hand-built list
+of sibling reports. Candidate bytes replace the incumbent at that slot for all
+checks in the invocation.
 
-This can deliver the desired feedback boundary without new CLI or directory-type
-machinery. Its limitation is that a maintainer outside a run still needs a way
-to supply equivalent context. One command name is not the goal; matching content
-judgments for the same target and context is.
+If a referenced file or declaration is absent, malformed in a way that prevents
+resolution, or ambiguous, the required check fails. The checker does not defer
+the failure because a file may become ready later. Readiness has no hidden
+workflow meaning here: the actual content either supports the required check
+or does not. A member not needed for any applicable candidate check need not
+exist merely to make the directory complete.
+
+Self-check, acceptance and standalone validation would consume the member-type
+resolver. No such resolver is supplied by the current type contract; it must be
+built. The oracle is the actual declarations and identity facts in the located
+files, not the type reference itself. Successful checks establish bounded
+conformance, not source support, publication integrity or execution history.
+
+## Alternatives and trade-offs
+
+- **Separate file-type and directory-membership fields.** This makes both
+  declarations explicit, but repeats the underlying document type when the
+  member contract already selects it. The selected design derives that type
+  from one member declaration instead.
+- **Caller-supplied context.** This can support tests and internal adapters, but
+  is not the selected author-facing behavior. Discovery lets a maintainer check
+  a member without reconstructing the producing job. An internal explicit-context
+  path must preserve the same target, replacement and checking semantics.
+- **Workflow-only context assembly.** This is a smaller local repair but leaves
+  standalone validation without the declared relationship it needs. A workflow
+  adapter may still supply the intended destination and enforce evidence access;
+  it must not be the sole owner of the content-context relationship.
+
+One command name is not the goal. Existing commands may remain if the same target
+and resolved context receive the same content judgments.
 
 ## Distinct operations
 
@@ -131,9 +165,10 @@ have its own correction contract requiring stable IDs; enforcing that rule
 against its predecessor does not require validating every consumer.
 
 [Generalized validation invalidation](./generalized-validation-invalidation-and-imperative-extension.md)
-addresses affected-target selection. Neither that mechanism nor a working-set
-type is prerequisite for target-scoped checking. A separate working-set type
-may become useful when a consumer needs to judge the unfinished set as a whole.
+addresses affected-target selection. That mechanism is not prerequisite for
+target-scoped checking. A separate working-set type is needed only if the working
+members require a distinct contract; incompleteness alone does not require one.
+Member validation does not apply whole-directory completeness requirements.
 
 ## Forces and boundaries
 
@@ -160,10 +195,16 @@ may become useful when a consumer needs to judge the unfinished set as a whole.
 
 ## Free choices
 
-Explicit versus discovered context, the consumer interface, and use of existing
-content overrides remain open. Start with existing Python checks; the separate
+The single member-type declaration and directory-layout discovery are the
+selected proposal direction. Exact reference syntax, the representation of
+member contracts and layout, the consumer interface, and use of existing content
+overrides remain implementation choices. The illustration above does not
+establish fragment syntax as a shipped type-reference format.
+
+Start with existing Python checks; the separate
 [type-selected Python validation proposal](./type-selected-python-validation-checks.md)
-is not a prerequisite. No constraint language, general source registry or
+is not a prerequisite. Selecting a member contract does not authorize loading
+repository Python code. No constraint language, general source registry or
 progress-state artifact is required here.
 
 Directory-level semantic review and unfinished-set conformance remain separate
@@ -174,6 +215,11 @@ several files.
 
 A candidate interface must demonstrate that:
 
+- One member declaration resolves both the underlying document contract and
+  applicable contextual constraints, without an independent duplicate type field.
+- Unknown members and unavailable contracts fail explicitly.
+- Context files are discovered from the directory type's member layout at the
+  intended destination, including for a scratch draft.
 - The candidate's missing references and identity disagreements are reported.
 - Valid references resolve against the current authorized context even when the
   surrounding set is incomplete.
@@ -187,6 +233,7 @@ A candidate interface must demonstrate that:
 
 Incoming-reference failures and whole-set incompleteness should remain visible
 when those operations are explicitly requested, not leak into this operation.
-Compare the cost of a general interface with a workflow adapter before selecting
-one. Test fixtures establish checking behavior, not model adherence or the
-semantic truth of a report. No live analysis run is prerequisite.
+Implementation must update type-reference consumers and their contracts together;
+passing one command while other consumers misread member declarations is not
+completion. Test fixtures establish checking behavior, not model adherence or
+the semantic truth of a report. No live analysis run is prerequisite.

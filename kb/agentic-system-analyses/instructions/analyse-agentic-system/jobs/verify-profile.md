@@ -51,6 +51,6 @@ read the source only for the cited paths needed to resolve a named ambiguity,
 and log each such read under Verification. New source facts cannot replace
 supporting records.
 
-Code permits one profile correction; blockers after it stop the run.
+Code permits two profile corrections; blockers after the last stop the run.
 
 Run the acceptance check before submitting.

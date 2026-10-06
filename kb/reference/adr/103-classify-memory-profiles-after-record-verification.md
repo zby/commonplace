@@ -7,6 +7,8 @@ status: accepted
 # 103-Classify memory profiles after record verification
 
 **Status:** accepted
+
+**Amended 2026-10-06:** the profile loop permits two corrections, matching the record loop (commit on this date). Two runs stopped after one correction on a second-look finding of the same kind the first had named; the one-correction rule below records the prior decision.
 **Date:** 2026-10-04
 **Amends:** [ADR 093](./093-memory-comparisons-keep-evidence-per-value.md) for the profile carrier and author role.
 **Amended by:** [ADR 107](./107-classify-memory-by-scoped-findings.md) for the profile representation and semantics. Classifier ownership, evidence boundaries and independent verification below remain in force.
