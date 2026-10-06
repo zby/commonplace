@@ -119,4 +119,54 @@ these as a criterion anyway, note it; it is not a miss either way.
 
 | Date | Model / effort | Result file | Recovered / partial / missed | Verdict vs verification-2 |
 |---|---|---|---|---|
-| | | | | |
+| 2026-10-06 | `gpt-6-luna`, Pi; effort not exposed to the model (medium per the session) | [result](./withheld-instruction-review-result-gpt-6-luna.md) | 7 / 5 / 5 of 17 | No substantive defect found, agreeing with `none`; one blocker, a false positive |
+
+## Results: gpt-6-luna, 2026-10-06
+
+Scored against the operative table by the coordinator (`claude-fable-5-1`).
+
+**Recovered (7):** frontmatter identity; cited IDs resolve; ledger controlled
+values; required blocks in order; evidence layer per finding without promoting
+design to implementation; coverage table with unassessed limits; quotation
+form (blockquote with attribution, matching the frozen source).
+
+**Partial (5):** `EPI-` prefix stated, keeping supplied IDs unchanged only
+implied; quotation uniqueness not stated; materiality named as "material
+operative part" without the type's test; coverage and uncertainty rules
+stated as "no unsupported negatives or completeness" without the no-bundled-
+negative rule; bounded conclusion as "within evidence" without "only findings
+that change the answer".
+
+**Missed (5):** prose anchors carry no ranges; numbered `SRC-*` ranges refused;
+`Part of:` form and semantics; comparison with supplied records before
+declaring; theory-builder, learning, reflection, autonomy and self-improvement
+assessed independently (the reviewer's Gaps section says no criterion requires
+them; the record contract's Theory account does, conditionally).
+
+**Misplaced criteria: none.** Every missed criterion is stated in a file the
+reviewer was given (record contract sections Identity and grammar, Record
+fields, Theory account; epistemic type checking order). The misses are recall
+failures on the record contract's relational rules, not criteria that live
+only in the job instruction. This is the plan's test, and it passes for this
+report.
+
+**Verdict.** The reviewer checked the load-bearing quotations and code claims
+in the frozen source and found no substantive defect, agreeing with
+`verification-2.md`. Its one blocker, that anchors such as `run_benchmark.py`
+and `README.md` lack a full commit-relative path, is a false positive: the
+source contract's anchor rule says "A basename denotes a repository-root file",
+and both are root files; the report has no bare `language_model.py` or
+`extractor.py` anchors (checked by search) and its attributions use full paths.
+The reviewer quoted the rule without that sentence. Three of the report's
+earlier defects (the `Part of:` containment, the misassigned ledger row) were
+already corrected in this version, so the review could not show whether it
+would have caught them.
+
+**Side finding.** Pi does not expose the reasoning-effort setting to the model.
+The manifest's `effort` therefore has to come from the operator at `start`,
+which is how the skill now asks for it; a worker cannot report it.
+
+**Limits.** One reviewer, one report, the most-corrected one. The recall gaps
+cluster on relations between records, which this report happened not to
+exercise (it declares no `Part of:` and makes no theory-builder claim), so a
+reviewer may simply not have looked for rules it had no occasion to apply.
