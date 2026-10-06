@@ -22,7 +22,9 @@ How an agent-operated knowledge base stays healthy as it grows: the checks that 
 - [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — truth verdicts separated from repair dispositions
 - [Brainstorming: how explanatory-reach informs KB design](../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes on what the quality goal implies for maintenance choices
 - [A reader-facing banner for user verification](../reference/proposals/a-reader-facing-banner-for-user-verification.md) — proposal: show verification status to readers of the published site
-- [Type-declared cross checks and one validation surface](../reference/proposals/type-declared-cross-checks-and-one-validation-surface.md) — proposal: one check surface for analysts, acceptance and maintainers, with cross checks declared by types and resolved from the artifact graph
+- [Working-set and candidate validation](../reference/proposals/type-declared-cross-checks-and-one-validation-surface.md) — proposal: check unfinished sets and candidate replacements against the same content contract used at acceptance
+- [Type-selected Python validation checks](../reference/proposals/type-selected-python-validation-checks.md) — proposal: select executable checks without inventing a constraint language; code trust and registration remain open
+- [Generalized validation invalidation](../reference/proposals/generalized-validation-invalidation-and-imperative-extension.md) — proposal: choose affected validation targets through explicit selectors, shared change handling or conservative broader checks
 
 ## Related Tags
 

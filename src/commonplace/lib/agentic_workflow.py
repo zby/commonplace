@@ -40,7 +40,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from jsonschema import FormatChecker
 
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
@@ -101,6 +100,7 @@ RUN_STATE_TYPE = "agentic-system-analyses/types/agentic-system-analysis-run-stat
 # judging records need the analyst types and reconciliation type.
 TYPES = "../../../types"
 BOUNDARY_CONTRACT = "../../agentic-analysis-boundary.md"
+BOUNDARY_TYPE = f"{TYPES}/agentic-system-boundary.md"
 SOURCES_CONTRACT = "../../agentic-analysis-sources.md"
 RECORDS_CONTRACT = "../../agentic-analysis-records.md"
 OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
@@ -135,7 +135,6 @@ RECONCILIATION = f"{OUTPUT_DIR}/reconciliation.md"
 OVERVIEW = f"{OUTPUT_DIR}/{OVERVIEW_NAME}"
 MANIFEST = f"{OUTPUT_DIR}/ARTIFACT.yaml"
 
-DISPOSITIONS = ("complete", "blocked", "out-of-scope")
 BOUNDARY_FIELDS = (
     "target-class",
     "boundary-kind",
@@ -143,7 +142,6 @@ BOUNDARY_FIELDS = (
     "analysis-cutoff",
     "evidence-tier",
 )
-SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
 ANALYST_SPECS: dict[str, dict[str, Any]] = {
     "runtime": {"prefix": "RT-", "contract": RUNTIME_CONTRACT, "reads": ()},
     "memory": {"prefix": "MEM-", "contract": MEMORY_CONTRACT, "reads": ("runtime",)},
@@ -281,76 +279,20 @@ def require_sections(body: str, level: int, wanted: Sequence[str]) -> list[str]:
     return refusals
 
 
-def overview_enums(repo_root: Path) -> dict[str, list[Any]]:
-    """The allowed values of the boundary fields, from the overview schema."""
-    schema = yaml.safe_load(
-        (repo_root / "kb/agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml").read_text(
-            encoding="utf-8"
-        )
-    )
-    found: dict[str, list[Any]] = {}
-
-    def walk(node: Any) -> None:
-        if isinstance(node, dict):
-            properties = node.get("properties")
-            if isinstance(properties, dict):
-                for name, spec in properties.items():
-                    if (
-                        name in BOUNDARY_FIELDS
-                        and isinstance(spec, dict)
-                        and "enum" in spec
-                    ):
-                        found.setdefault(name, list(spec["enum"]))
-            for value in node.values():
-                walk(value)
-        elif isinstance(node, list):
-            for value in node:
-                walk(value)
-
-    walk(schema)
-    return found
-
-
 def boundary_refusals(
-    path: Path, *, enums: dict[str, list[Any]], identity: str,
+    path: Path, *, repo_root: Path, run_id: str, identity: str,
     frozen: dict[str, Any] | None = None,
 ) -> list[str]:
+    """A valid boundary of this run whose frozen source is the run's."""
+    refusals = member_refusals(path, repo_root=repo_root)
     try:
         fields, body = split(path.read_text(encoding="utf-8"))
     except ValueError as error:
-        return [f"boundary.md does not parse: {error}"]
-    refusals = []
-    expected = {"result-disposition", *BOUNDARY_FIELDS, "source"}
-    if set(fields) != expected:
-        refusals.append(
-            "the frontmatter must have exactly these fields: "
-            + ", ".join(sorted(expected))
-        )
-    disposition = fields.get("result-disposition")
-    if disposition not in DISPOSITIONS:
-        refusals.append(f"result-disposition must be one of {', '.join(DISPOSITIONS)}")
-    for name, allowed in enums.items():
-        value = fields.get(name)
-        if value is not None and value not in allowed:
-            refusals.append(
-                f"{name} {value!r} is not one of the overview type's values; use one of {allowed!r}"
-            )
-    refusals += [
-        f"{name} must be a quoted string or null, not {type(fields[name]).__name__}"
-        for name in BOUNDARY_FIELDS
-        if fields.get(name) is not None and not isinstance(fields[name], str)
-    ]
-    cutoff = fields.get("analysis-cutoff")
-    if isinstance(cutoff, str) and not FormatChecker().conforms(cutoff, "date"):
-        refusals.append("analysis-cutoff must be a valid quoted YYYY-MM-DD date")
+        return refusals + [f"boundary.md does not parse: {error}"]
+    if fields.get("run-id") != run_id:
+        refusals.append(f"member identity: run-id {fields.get('run-id')!r} does not match {run_id!r}")
     source = fields.get("source")
-    if source is not None and (
-        not isinstance(source, dict) or set(source) != set(SOURCE_FIELDS)
-    ):
-        refusals.append(
-            "source must be null or a mapping of " + ", ".join(SOURCE_FIELDS)
-        )
-    elif source is not None:
+    if isinstance(source, dict):
         if source.get("identity") != identity:
             refusals.append(
                 f"source.identity must be `{identity}`, the run's source identity"
@@ -364,16 +306,6 @@ def boundary_refusals(
             )
         refusals += frozen_source_refusals(source)
         refusals += source_register_refusals(body, source=frozen or source)
-    wanted = ["Boundary and evidence", "Source register"]
-    if disposition == "complete":
-        missing = [
-            name for name in (*BOUNDARY_FIELDS, "source") if fields.get(name) is None
-        ]
-        if missing:
-            refusals.append("a complete disposition needs " + ", ".join(missing))
-    elif disposition in DISPOSITIONS:
-        wanted.append("Not reached")
-    refusals += require_sections(body, 2, wanted)
     refusals += [
         f"duplicate source declaration: {identifier}; keep one row per source ID "
         "and separate evidence layers and scopes within that row"
@@ -907,8 +839,7 @@ class AnalyseAgenticSystem(Workflow):
             frozen = json.loads((run_dir / FROZEN_SOURCE).read_text(encoding="utf-8"))
             self.write_run_state(run_dir, opening, {"source": frozen})
 
-        enums = overview_enums(repo_root)
-        self.run_job(ctx, self.boundary_job(run_dir, enums, frozen))
+        self.run_job(ctx, self.boundary_job(run_dir, frozen))
         fields, boundary_body = split((run_dir / BOUNDARY).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
@@ -994,7 +925,7 @@ class AnalyseAgenticSystem(Workflow):
             if name == "boundary":
                 frozen_path = run_dir / FROZEN_SOURCE
                 frozen = json.loads(frozen_path.read_text()) if frozen_path.exists() else None
-                return self.boundary_job(run_dir, overview_enums(self.repo), frozen)
+                return self.boundary_job(run_dir, frozen)
             if name == "profile":
                 return self.profile_job(run_dir, 0)
             if name == "verify-profile":
@@ -1209,10 +1140,7 @@ class AnalyseAgenticSystem(Workflow):
             lines += ["", "source:", fence, source, fence]
         return replace(job, prompt="\n".join(lines) + "\n")
 
-    def boundary_job(
-        self, run_dir: Path, enums: dict[str, list[Any]],
-        frozen: dict[str, Any] | None = None,
-    ) -> Job:
+    def boundary_job(self, run_dir: Path, frozen: dict[str, Any] | None = None) -> Job:
         frozen_parameters = {} if frozen is None else {
             "source-revision": frozen["revision"], "source-path": frozen["path"],
         }
@@ -1221,15 +1149,15 @@ class AnalyseAgenticSystem(Workflow):
             "boundary",
             BOUNDARY,
             reads={"opening": RUN_METADATA},
-            extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT),
+            extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT, BOUNDARY_TYPE),
             parameters={
                 "source-identity": one_line(self.source_identity),
                 **frozen_parameters,
             },
             source=str(self.params["source"]),
             validator=partial(
-                boundary_refusals, enums=enums, identity=self.source_identity,
-                frozen=frozen,
+                boundary_refusals, repo_root=self.repo, run_id=run_dir.name,
+                identity=self.source_identity, frozen=frozen,
             ),
         )
 

@@ -1,15 +1,17 @@
 ---
 type: types/note.md
-description: "Boundary contract for agentic analyses: target classification, boundary fields and construction of the Source register; read by the boundary job only"
+description: "Boundary contract for agentic analyses: the meaning of the boundary fields, what Boundary and evidence states, and the form of the Source register"
 ---
 
 # Agentic analysis boundary
 
-This contract defines what the boundary job of an `analyse-agentic-system`
-run writes: Boundary and evidence and the Source register. Only that job's
-invocation declares this file. The
+This contract gives the meaning of a run's boundary: the fields, what
+Boundary and evidence states, and the form of the Source register. The
+[boundary type](../types/agentic-system-boundary.md) fixes the document the
+boundary job writes; the overview carries the same fields and sections. The
 [source contract](./agentic-analysis-sources.md), which every worker reads,
-supplies the evidence layers and their limits.
+supplies the evidence layers and their limits. The boundary job and the record
+verifier read this contract.
 
 ## Boundary and classification
 
@@ -31,21 +33,19 @@ remains null when the work stopped before establishing it. A blocked or
 out-of-scope boundary names what was not reached, why, and the conclusion
 that prevents.
 
-For a Git source, establish functional scope after inspecting the repository
-tree and tracing the shipped entry points and their consumers. A caller in
-the same repository is not an excluded enclosing application merely because
-it calls a library API. Determine whether it belongs to the selected target
-from the shipped usage and the responsibilities it performs.
+A caller in the same repository is not an excluded enclosing application
+merely because it calls a library API; whether it belongs to the selected
+target follows from the shipped usage and the responsibilities it performs.
 
-Before declaring `whole-system`, include a coverage table under Boundary and
-evidence. Classify every top-level tracked file or directory as included or
-excluded, with its role and the conclusion any exclusion prevents. Directory
-rows name material paths within them; a top-level label alone does not show
-coverage of the system's loop. For a memory or knowledge system, explicitly
-identify shipped prompts and maintenance instructions, callers that persist,
-reload or later consume retained content, and evaluators. Trace their wiring
-before deciding whether they are material. Distinguish unavailable evidence
-from a deliberate exclusion and from material not yet inspected.
+A `whole-system` boundary includes a coverage table under Boundary and
+evidence that classifies every top-level tracked file or directory as
+included or excluded, with its role and the conclusion any exclusion
+prevents. Directory rows name material paths within them; a top-level label
+alone does not show coverage of the system's loop. For a memory or knowledge
+system, the table accounts for shipped prompts and maintenance instructions,
+callers that persist, reload or later consume retained content, and
+evaluators. Unavailable evidence, a deliberate exclusion and material not yet
+inspected are distinguished.
 
 `whole-system` requires coverage of the material shipped paths that produce,
 maintain, admit and consume the selected system's state. If the requested

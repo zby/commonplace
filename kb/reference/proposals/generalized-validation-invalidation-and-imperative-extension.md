@@ -1,84 +1,124 @@
 ---
-description: "Proposal: generalize validator invalidation or imperative type extension only after explicit selectors and local mark cases prove reusable machinery"
+description: "Proposal: determine when validation needs general change-driven target selection rather than explicit selectors, with old/new state and conservative fallback as adoption conditions."
 type: reference/types/design-proposal.md
-tags: [type-system, kb-maintenance, review-system]
+tags: [type-system, kb-maintenance]
 ---
 
-# Generalized validation invalidation and imperative extension
+# Generalized validation invalidation
 
-[ADR 050](../adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) shipped the small common execution model: validation is artifact-anchored, one library-owned run caches parsed artifacts and collection indexes, and the CLI only resolves targets and presents results. This proposal retains the two questions that implementation deliberately did not answer: when explicit invalidation selectors should become a general dependency mechanism, and how a collection-local type could own a deterministic dereferencing check.
+This proposal asks when Commonplace should generalize the selection of artifacts
+that need revalidation after a change. It does not decide how checks execute.
+[Type-selected Python validation checks](./type-selected-python-validation-checks.md)
+addresses executable extensions; [working-set and candidate validation](./type-declared-cross-checks-and-one-validation-surface.md)
+addresses the unit being checked.
 
-## Current state (as of 2026-07-13)
+## Current state (as of 2026-10-06)
 
-`ValidationRun` evaluates ordinary per-artifact checks, tag-README marks, collection-scoped orphan detection, and collection structure through one result surface. It parses target artifacts once, builds one shared tag index per consulted collection, and builds the authored-link graph once for a collection target. The base → imperative type rules → schema sequence remains unchanged.
+- [ADR 050](../adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)
+  established a shared validation context and explicit impacted-tag-head
+  selection, without a general inverse dependency graph.
+- In `src/commonplace/lib/validation.py`,
+  `ValidationRun.impacted_marked_tag_readmes()` selects marked heads from the
+  current tags of supplied participating artifacts. `evaluate()` adds those
+  heads to its targets. The selector does not reconstruct removed tags or the
+  contents of deleted artifacts.
+- [Directory validation](../validation-contract.md#directory-artifacts) checks
+  a manifest and its direct Markdown members together. Explicit member-file
+  validation does not automatically validate the containing directory. This is
+  an evaluation boundary, not change-triggered invalidation.
+- `ValidationRun` caches bytes, parsed artifacts and results within one run.
+  These evaluation caches do not supply a persistent old/new dependency model.
 
-Target expansion is related but deliberately separate. `impacted_marked_tag_readmes` is still an explicit inverse selector: changing a tagged note pulls the corresponding marked tag-README into the run. There is no generic dependency vocabulary, old/new-state comparison, deletion handling, or schema-definition fan-out.
+## Problem
 
-A type's intra-document deterministic rules remain authorable as JSON Schema. Its semantic rules remain authorable in the type-conformance review criterion. A collection-local type still cannot author a deterministic rule that dereferences other artifacts. The one current mark-shaped rule, `tag-readme`, is a framework type with framework Python enforcement.
+An explicit validation target can pass while a related artifact now needs
+rechecking. A changed member can invalidate a containing set; a changed type or
+schema can affect many instances. Selecting those targets is separate from
+checking them once selected.
 
-## The remaining problems
+The files a check reads do not necessarily identify the smallest change that
+can alter its result. A tag-head check may read a whole collection index while
+only membership changes matter. Conversely, inspecting only current state can
+miss a removed tag, deleted target or previous referent.
 
-### Incremental invalidation has one worked selector
+The question is whether recurring selection needs justify shared machinery,
+not whether the validator has cross-artifact dependencies at all.
 
-Evaluation inputs and invalidation dependencies are different. A check may cheaply read a whole collection index while only tag membership changes can alter its result. Deriving a precise inverse from a coarse declaration such as "reads the collection" would over-invalidate; deriving it from current state alone misses removed tags, deleted files, and prior referents.
+## Options
 
-Schema checks expose the same future issue: their result depends on the note, type spec, schema, and referenced-schema closure, but editing a definition does not currently target every applicable note. This is a real dependency; it is not yet evidence that a generic engine is cheaper than another explicit selector.
+### A. Add explicit selectors where concrete consumers need them
 
-### Local imperative ownership has no worked case
+Keep each impact rule specific to its relation, following the existing
+marked-tag-head selector. A member-to-container selector or a type-to-instance
+selector could join the same target expansion path without a general language.
 
-JSON Schema cannot dereference. If a future collection-local type declares a mark—a cached value recomputable from other artifacts—review cannot safely enforce it: [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). Yet allowing arbitrary KB-side code would turn an inspectable data substrate into an execution surface.
+The validation target resolver or run would consume the selector's output and
+validate the added artifacts through the ordinary pipeline. Its selection
+oracle would be the relevant manifest, type identity or membership relation.
+It would establish candidate impact, not that an artifact is invalid.
 
-The extension gap is therefore narrower than "types need plugins": a local type may eventually need one constrained, deterministic, dereferencing primitive. No current local type does.
+This keeps individual rules inspectable. Overlapping selectors may eventually
+repeat change handling, especially deletion and previous-state recovery.
 
-## Deferred options
+### B. Generalize impact selection after unlike selectors expose shared needs
 
-### A. General dependency keys and inverse selection
+Introduce a shared model of dependency identity and change, including previous
+state where a current graph loses the affected relation. The implementation
+could be Python APIs rather than a KB-authored declaration language; the
+representation remains open.
 
-A check could declare artifact, path-existence, frontmatter-field, tag-membership, or definition-closure dependencies, with the run deriving impacted anchors.
+The validation target resolver would consume change information and dependency
+relations to produce the revalidation set. Adoption would need a reliable
+source for those relations and for the old state, or a declared conservative
+fallback when either is unavailable. A selected dependency is grounds to rerun
+a check, not grounds to reuse a verdict or infer semantic support.
 
-*For:* definition edits and cross-artifact changes become first-class invalidators; repeated selectors may share indexes and old/new-state handling.
+This could unify repeated selection work. It also introduces persistence or
+reconstruction costs, versioning questions and missing-history behavior.
 
-*Against:* this is an incremental build engine. It needs deletion semantics, previous state, dependency closure, and a conservative fallback. One selector does not establish the right vocabulary.
+### C. Prefer conservative broader validation
 
-### B. A declarative mark primitive
+When precise impact is expensive or uncertain, validate the enclosing artifact,
+collection or other explicitly bounded scope instead of constructing an inverse
+graph. Existing validation callers can choose wider targets; a proposed
+change-driven caller would map uncertain impact to that fallback scope.
 
-A type spec could declare a constrained recomputation such as `tag-members(index_key)` plus a comparison such as `every-member-linked`.
+The oracle is the known scope's membership and the checks performed over it.
+The claim stops at that scope: a collection sweep does not establish that no
+external consumer was affected. This option trades extra work for simpler
+selection and may remain cheaper at the KB's actual scale.
 
-*For:* a local type could own a machine-checked mark without arbitrary code, and the primitive could expose precise invalidation keys.
+## Forces and boundaries
 
-*Against:* it is a new language designed from one framework example. Languages grow, and a premature primitive would make the example's accidental shape permanent.
+- Selection must account for removed as well as added relations. Current-state
+  inspection alone cannot establish complete impact after deletion.
+- False-positive selection costs work; false-negative selection can leave a
+  stale result appearing current. Conservative fallback is preferable to a
+  false completeness claim.
+- Check execution, target selection and semantic review freshness are distinct
+  mechanisms. Adding Python checkers does not require generic invalidation,
+  and generic invalidation does not automatically solve review freshness.
+- Declared input reads may support conservative selection without supporting
+  precise inverse selection. No precision claim should exceed the recorded
+  dependency and change information.
 
-### C. KB-side code hooks — rejected
+## Free choices
 
-Arbitrary hooks provide maximal reach but violate the commitment that the KB is inspectable data rather than executable code. No current demand justifies reopening that substrate choice.
-
-### D. Collection-owned deterministic checks — no present demand
-
-Collections own text contracts and type menus, not frontmatter semantics. Intra-document mechanical variation belongs in a local type and schema; semantic variation belongs in review. A future heterogeneous collection relation may challenge this boundary, but only after an honest artifact anchor and type owner fail.
-
-## Forces
-
-- **A schema cannot dereference.** This inherited limit keeps an imperative path necessary.
-- **A mark must be machine-checked or absent.** Review cannot substitute for deterministic recomputation.
-- **Evaluation reads do not determine precise invalidation.** Old state and deletions matter to inverse selection.
-- **The KB is data, not code.** Extension should remain constrained and inspectable.
-- **YAGNI.** The run context removed current execution duplication; neither remaining mechanism has more than one worked case.
+The representation of dependencies, the source of previous state, persistence
+versus reconstruction, and the granularity of fallback remain open. The choice
+between an explicit selector and shared machinery should follow measured work
+and missed-impact cases, not the availability of a graph abstraction.
 
 ## Adoption criteria
 
-A general invalidation model is ready for its own ADR only after at least two unlike explicit selectors expose a stable shared vocabulary. Its prototype must handle old and new state, deletions, path-existence changes, and definition closures, or be explicitly conservative where it cannot.
+Adopt a new explicit selector when a concrete consumer repeatedly misses or
+manually supplies the same affected targets, and the relation has an inspectable
+oracle. Keep broader validation when its measured cost is acceptable.
 
-A declarative imperative primitive is ready only when a collection-local type needs a mark that neither its schema nor its review criterion can safely enforce. The primitive must be designed from that case together with `tag-readme`, not from `tag-readme` alone.
+Consider generalization only after at least two unlike selectors demonstrate
+shared change-handling needs. A candidate must handle old/new state, deletions,
+path-existence changes and type/schema dependencies, or explicitly fall back to
+a bounded broader check. Compare total work and missed impacts against the
+explicit-selector and broad-validation alternatives before choosing it.
 
-Collection ownership remains closed until a mechanical relation is inherently collection-wide after attempting an artifact anchor and type owner.
-
----
-
-Relevant Notes:
-
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why a mark requires deterministic recomputation
-- [The validation contract](../validation-contract.md) — evidenced-by: the shipped owner/mechanism boundary this proposal may eventually extend
-- [ADR 050 — Validation runs share parsed artifacts and collection indexes](../adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — partial-adoption: ships the artifact-anchored evaluation model while leaving invalidation and authoring generalization deferred
-- [ADR 038 — Type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the existing semantic extension path and why deterministic marks are the remaining gap
-- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — compares-with: the boundary collection-owned checks would have to challenge
-- [A framework rule with a boundary-preserving rival is not an inherited constraint](../../notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — rests-on: separates the schema's inherited dereferencing limit from optional extension machinery
+No general invalidation engine is adopted by this proposal.

@@ -50,6 +50,7 @@ Not included:
 ## Links
 
 - [Validation contract](../validation-contract.md) — implemented-by: the deterministic finding sources retain their existing order inside the run
-- [Generalized validation invalidation and imperative extension](../proposals/generalized-validation-invalidation-and-imperative-extension.md) — leaves-open: dependency generalization and local imperative extension remain deferred
+- [Generalized validation invalidation](../proposals/generalized-validation-invalidation-and-imperative-extension.md) — leaves-open: change-driven target selection beyond explicit selectors
+- [Type-selected Python validation checks](../proposals/type-selected-python-validation-checks.md) — leaves-open: type selection and authorized supply of executable checks beyond framework registrations
 - [ADR 049 — Validator resolution returns scope and loads types directly](./049-validator-resolution-returns-scope-and-loads-types-directly.md) — extends: the resolved target's paths and optional collection become the run boundary
 - [ADR 026 — Tag-README type with completeness and coverage marks](./026-tag-readme-type-with-completeness-and-coverage-marks.md) — preserves: explicit reactive impact selection and deterministic mark enforcement

@@ -1,278 +1,175 @@
 ---
-description: "Proposal: one validation surface for analysts, acceptance and maintainers, with cross checks declared by document and directory types and resolved from the artifact graph instead of a job"
+description: "Proposal: validate working directory artifacts and candidate member replacements through the same content contract used by workflow acceptance and later maintenance."
 type: reference/types/design-proposal.md
 tags: [type-system, kb-maintenance]
 ---
 
-# Type-declared cross checks and one validation surface
+# Working-set and candidate validation
 
-`commonplace-analysis-check` and `commonplace-validate` serve the same
-purpose: a deterministic, non-mutating check whose findings a writer repairs
-before submission. They share the per-file pipeline and the quotation
-matcher. They differ in where their context comes from, how they present
-findings, and which unit they can check. This proposal records the option
-space for closing that gap, and for letting types own the cross checks that
-today live in framework code keyed by hardcoded type paths.
+This proposal asks whether authors, workflow acceptance and maintainers can
+check the same artifact contract while a multi-document result is still being
+built. A candidate member would be checked in its intended set without replacing
+the accepted member. The workflow would continue to own scheduling, authority
+and progress-dependent acceptance.
 
-## Current state (as of 2026-10-04)
+The question is about validation context and artifact boundaries, not a new
+cross-check language. [Type-selected Python validation checks](./type-selected-python-validation-checks.md)
+addresses how types could select executable checks. Existing registrations are
+sufficient to explore this proposal.
 
-- `commonplace-analysis-check <run-state> <job> [draft]` reads the run's
-  recorded definition, builds the named job without replay, and applies the
-  job's validator to the draft ([ADR 105](../adr/105-let-analysts-run-their-acceptance-check-before-submission.md)).
-  An analyst member's validator runs the full `commonplace-validate` file
-  pipeline on the draft, then adds four run-context checks: record references
-  resolve against the members accepted so far; `run-id` and
-  `reviewed-boundary` match the run state and boundary; declared record IDs
-  carry the analyst's prefix; and every attributed blockquote occurs exactly
-  once in the frozen Git checkout or capture named by the run state. A
-  wrapper adds a rule name and a repair sentence to each refusal. The command
-  exits 0, 1 or 2 and appends counts to the job's scratch log. ADR 105 and the
-  [acceptance-check plan](../../work/analysis-collection-split/reliability/analyst-acceptance-check-plan.md)
-  both name integration with `commonplace-validate` as the later direction.
-- `commonplace-validate` runs base, type-rule and schema checks per file
-  ([validation contract](../validation-contract.md)). A directory with
-  `ARTIFACT.yaml` also receives its set rule
-  ([ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md)):
-  member identity against the overview, record references across members,
-  the amendment index and comparison references. The run-state type rule
-  verifies a complete run end to end, including every member's quotations
-  against the frozen source through the absolute `source.path` the run state
-  records. The validator therefore already reads evidence outside the
-  repository, anchored on the run-state artifact rather than on a working
-  member.
-- Quotation checking is one library with three resolvers. `verbatim` prose
-  quotes resolve against the linked KB file. Ingest `## Quotes` blockquotes
-  resolve against the name-paired, git-ignored snapshot pinned by
-  `snapshot_sha256` ([ingest report](../../types/ingest-report.md)); a missing
-  snapshot reports the extracts as unverified, never as passing. Analysis
-  blockquotes resolve against the run's frozen source
-  ([source contract](../../agentic-system-analyses/instructions/agentic-analysis-sources.md)).
-  Standalone validation of an analysis member only shape-checks its
-  blockquotes and warns, because the member alone names no source root.
-- The imperative rules for the collection-local analysis types are framework
-  Python in `validation.py`, registered under six hardcoded type paths. The
-  live proposal on
-  [generalized validation and imperative extension](./generalized-validation-invalidation-and-imperative-extension.md)
-  defers a declarative dereferencing primitive until a collection-local type
-  needs a check its schema and review criterion cannot enforce. The analysis
-  member and set types are now that case, beside `tag-readme`.
-- The boundary, synthesis and verification drafts carry no `type:`. Their
-  required fields and sections are checked by job functions.
-- The [analysis set type](../../agentic-system-analyses/types/agentic-system-analysis-set.md)
-  admits only finished sets: a complete disposition requires six members and
-  any other disposition exactly one. `ValidationRun` accepts byte overrides for
-  any path, including a manifest, but no command exposes a draft override.
+## Current state (as of 2026-10-06)
+
+- [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md) supplies
+  directory artifacts with schema-owned membership, ordinary member validation
+  and imperative set checks. Hashes are optional in the generic mechanism;
+  supplied hashes always bind. Directory artifacts need not be finished.
+- The [analysis-set schema](../../agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml)
+  requires six pinned members for a complete outcome and only the overview for
+  other outcomes. It does not represent the pre-synthesis record set.
+- `src/commonplace/lib/agentic_workflow.py` checks the record set before synthesis
+  through `record_check()`, composing member, identity and reference checks.
+  Its job validators also supply the run context for candidate acceptance.
+  Final set validation uses the ordinary directory path after manifest assembly.
+- `ValidationRun.content_overrides` in `src/commonplace/lib/validation.py`
+  already accepts replacement bytes for members and manifests. The directory
+  loader discovers supplied candidate paths as well as actual files. This is
+  library support, not a general candidate-replacement CLI contract.
+- Under [ADR 105](../adr/105-let-analysts-run-their-acceptance-check-before-submission.md),
+  `commonplace-analysis-check` obtains a candidate's checks from a named run and
+  job. It remains distinct from `commonplace-validate`. Synthesis and verification
+  outputs now have local types; untyped intermediate output is not a universal
+  premise for this proposal.
 
 ## Problem
 
-Two check surfaces exist for one feedback loop. The analysis check obtains
-its context from a job name: the job constructor supplies the run state,
-boundary, sibling members and declaration prefix. The validator obtains its
-context from the artifact graph: frontmatter, links, the containing
-directory and name-paired files. The job route cannot serve a maintainer
-who validates a retained member, and the artifact route cannot serve an
-analyst who holds an unsubmitted draft. The two also disagree on severity
-(refusals only against pass, warn, fail and info), on availability (a
-missing source is a refusal in one and an unverified notice in the other)
-and on presentation (rule and repair prefixes parsed from strings against
-labelled findings and JSON diagnostics with stable IDs).
+A report can conform locally while disagreeing with its set or referencing an
+unavailable record. During authoring, the workflow constructs the context needed
+to judge those relationships. After assembly, directory validation supplies a
+related context. The code shares checks, but the working set's validity is not
+fully represented by the finished directory contract.
 
-Separately, the checks that make an analysis member valid in its set are
-properties of the member and set types, yet neither type can state them.
-The type spec says in prose that quotations resolve and identities agree;
-the enforcement sits in framework code the type author cannot see from the
-spec, selected by type path.
+The intended improvement is one content-validity model usable before and after
+submission. One command name is neither necessary nor sufficient: forwarding a
+job name through another command would leave context and ownership unchanged.
 
 ## Options
 
-### A. Fold the analysis check into the validator as a run-context mode
+### A. Retain job-context checks over shared validation functions
 
-The validator gains an invocation that names a run state and a job, or
-infers the job from the draft's location, and applies the existing job
-validator. Workers call one command. Operativity: worker rules and the
-engine name the same entry point; the job constructors remain the context
-source. This is the smallest change and leaves both problems above in
-place: context is still job-shaped, and types still own no checks.
+Keep the workflow as the source of working-set context. Worker self-checks and
+acceptance continue to call the same job validator; ordinary directory
+validation remains the later maintenance surface. Consolidate common checks
+where duplication is demonstrated without adding a working artifact type.
 
-### B. Resolve context from the artifact graph
+The job constructor supplies expected identity, relevant members and frozen
+source to existing checks. Their oracle is the supplied artifact/evidence set;
+job acceptance additionally applies workflow conditions. This may be adequate
+when no other consumer needs to validate unfinished sets independently.
 
-A member already declares `run-id`, `reviewed-boundary` and, for the memory
-member, `source-identity`. Its directory holds its siblings. The run state at
-`state/<run-id>/` names the frozen source. Validation of a member inside a
-run's output directory can find its set and its run state by location and
-declared identity, with no job name. Draft checking becomes validating the
-directory with the draft's bytes replacing its slot. The "set so far" rule
-becomes: references resolve among the members present. A reference to a
-member not yet accepted fails as unresolved, which is the refusal the
-analyst receives today.
+### B. Give working sets an explicit directory contract
 
-Operativity: the set type admits a working set, either by relaxing the
-finished-set branches or through a sibling working-set type; the validator
-exposes a draft override; worker rules name the validator with the output
-directory. Checks that depend on run progress rather than on artifacts
-remain workflow checks unless option E records them: the last-round rule
-for returned findings, blockers required after a failed set check, and the
-frozen checkout's cleanliness. The declaring prefix moves to the member type,
-since it is a property of the runtime, memory or epistemic report, not of
-the job.
+Represent the set under construction with a type that permits its legitimate
+incompleteness while checking members and their relationships. This could be a
+separate working-set type or explicit states of one type. The finished contract
+would still require full membership and exact-byte pins.
 
-### C. Types declare their cross checks
+Authors and the workflow would validate the working artifact through the
+ordinary directory pipeline. The type and set contents, rather than only job
+construction, would identify the applicable content requirements. Expected
+identity could come from a declared set fact or related artifact; the design
+must not fabricate a provisional public overview merely to satisfy the current
+finished-set checker.
 
-A type spec selects framework primitives with parameters instead of the
-framework selecting types by path. Four primitives cover every imperative
-rule shipped today:
+The oracle is the declared membership, identity and reference scope. Permitting
+a missing member does not warrant accepting an unresolved reference. A valid
+working set establishes only the properties its state requires, not readiness
+for publication or completion of scheduled work.
 
-1. quotations resolve against a declared source: the linked file for
-   `verbatim`, the pinned snapshot for an ingest, the set's frozen source for
-   an analysis member;
-2. identity fields agree with a named container or sibling: members with the
-   overview, the profile with the memory member, members with the run state;
-3. references of a stated grammar resolve within a scope: record IDs within
-   the set, comparison references within the set's declarations;
-4. a derived listing equals its recomputation: the `tag-readme` complete
-   mark.
+### C. Check a candidate as a replacement within its set
 
-The framework ships the primitives and their resolvers; the KB remains data
-because the vocabulary is closed and inspectable. The six-path registrations
-leave `validation.py`. Operativity: type-rule dispatch reads the type spec's
-declarations; a changed declaration changes the type spec, so review
-freshness re-checks the cohort as it does for any spec edit
-([ADR 084](../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
-The oracle for each primitive is the referent it dereferences; the warrant
-stops where the source contract says it does, at occurrence and identity,
-never at claim support.
+Expose the existing content-override capability through a supported consumer
+interface. A caller supplies the candidate and its intended member slot;
+validation evaluates that hypothetical set without mutating accepted files.
+This can complement option B or check replacements in an already complete set.
 
-### D. One registry for frozen evidence
+The validator consumes the candidate view through its shared read context.
+All checks must observe that view, including referential checks; reopening
+accepted files independently would test different bytes. Findings describe
+the candidate set, not the on-disk incumbent.
 
-Generalize the ingest snapshot precedent. A registered frozen source has an
-identity, a revision or checksum, a kind and a local access root kept
-outside tracked content. Ingest snapshots, analysis checkouts and captures
-are entries. A blockquote attribution names a registered source path, and
-one resolver serves every type. The run state stops being the only route to
-a checkout, and a retained set stays verifiable after its run directory is
-gone whenever the registry holds the entry. Operativity: the freeze step
-registers; the validator's resolver consults; an absent entry yields an
-unverified notice, which strict callers may refuse.
+Supplied hashes continue to bind. A changed member paired with an old digest
+fails. A working contract may permit omitted pins, while a frozen candidate
+needs a corresponding candidate manifest. Neither route silently disables
+integrity checks. The interface must distinguish legitimate candidate metadata
+from the incumbent evidence it is replacing.
 
-### E. Record run progress as a declared artifact
+## Forces and boundaries
 
-The run directory already records progress in two layers. The engine keeps
-per-job records (hand-outs, failures, acceptance, blocks) and event reports
-in its own JSON under `workflow-state/`. The definition's control flow leaves
-round-numbered files: memory reports, reconciliations, set checks and
-verifications. What no file states is the workflow-level state the control
-flow holds in variables: the current round, why it opened (returned findings
-or blockers), which memory report it consumes, and the remaining correction
-budget. The acceptance check recovers these from job names and from the
-prompt the engine wrote for the job. The run-state type excludes phase and
-correction state by [ADR 083](../adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md),
-decided when an agent coordinator maintained that state by hand and the
-cost fell on every successful run. The code-scheduled engine now keeps the
-per-job part of it in `workflow-state/`, so the surviving force is
-narrower: the run state is the completion record later consumers verify,
-while progress is live, git-ignored state. Whether progress joins the run
-state or sits beside it is a free choice; either way code writes it.
+### Validity is not permission or progress
 
-Such an artifact is a derived copy of engine records and file presence, so it
-is checked against its recomputation or it is absent. Two forms satisfy
-that: a derived view, a function over the run directory that a status
-command or the validator calls; or a materialized typed artifact the engine
-writes at each step and validation recomputes.
+A directory contract can state required results and relationships. It does not
+schedule workers, allocate correction rounds, permit publication or determine
+whether a particular worker may read another report. Candidate context must
+preserve the workflow's authorized reference scope rather than treating every
+file in a run directory as available evidence.
 
-What it buys: the run-progress checks in B stop being workflow-only, because
-the last-round and blockers rules read declared facts; the acceptance check
-needs no job argument, since the draft's location and the progress identify
-the job; the validator learns which members are accepted, which is the set
-so far, and which strictness applies; operators and handoffs read progress
-without the engine; and other code-scheduled workflows reuse the same
-artifact kind. Operativity: the engine writes or derives it; the validator,
-the check command and the handoff consume it; a change in control flow then
-changes a visible contract where today it changes a loop variable.
+Invocation-specific expected values, correction obligations and other
+progress-dependent checks remain workflow responsibilities unless a separately
+justified artifact makes them checkable facts. No new progress record is
+required simply to eliminate a job argument.
 
-### Assumptions each option changes
+### Missing evidence is not success
 
-| Standing assumption | Replacement | Options |
-|---|---|---|
-| Validation reads only the repository and its ignored snapshots | Validation reads registered, pinned local sources; the run-state rule already does | B, D |
-| A directory artifact is a finished set | A directory artifact may be in progress; the type states what each state requires | B |
-| Imperative type rules are framework code keyed by type path | A type spec selects framework primitives | C |
-| Acceptance context comes from the job | Context comes from the artifact graph; the job names the target and the strictness | B, C |
-| Intermediate drafts are untyped | Boundary, synthesis and verification drafts are collection-local types whose schemas own their shape | B |
-| A finding is a string with a rule prefix | A finding carries rule, subject, location, reason, expected value and repair | A, B, C |
-| Run progress is control-flow state the definition holds | Run progress is a declared fact of the run directory, derived from or checked against engine records and files | E |
+Member and set checks can establish form, agreement and reference resolution.
+Quote occurrence additionally needs the frozen source. Missing source access
+must remain visible as unverified or failed under the caller's existing
+acceptance policy, not disappear when the entry point changes. Deterministic
+success establishes neither semantic support nor coverage of the source system.
 
-## Forces
+### Preserve useful feedback
 
-- **The derived-copy rule.** Where ground truth is available, a mismatch
-  fails. Where it is unavailable, the result is unverified, never a pass
-  ([a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)).
-  Acceptance requires resolution; a maintainer may accept unverified. The
-  checker reports facts and the caller sets strictness.
-- **A schema cannot dereference.** Every cross check needs an imperative
-  primitive. The question is who selects it, not whether it exists.
-- **The KB is data.** Arbitrary KB-side code stays rejected. A declarative
-  selection of shipped primitives preserves the substrate.
-- **Two worked cases.** The older proposal warns that a vocabulary designed
-  from one example fixes its accidents. Analysis members and `tag-readme`
-  give two unlike cases, and ingest quotes a third resolver; this is the
-  minimum the older proposal's adoption criterion asks for, not a surplus.
-- **Repair belongs to the finding.** Expected values, candidate ranges and
-  repair sentences are what made the analysis check usable. They must
-  survive unification as structured fields, not as text the caller parses.
-- **Run-progress checks stay in the workflow until progress is declared.**
-  A type can state what a valid member contains. It cannot know which round
-  this is unless the run directory says so (option E).
-- **Measurement continues.** ADR 105 counts check runs and refusals by rule
-  from the scratch log. A unified surface emits the same counts through its
-  JSON result or the engine's records.
-- **Bounded reads.** Following an absolute `source.path` is what the run-state
-  rule does today. A registry root bounds where the validator may read.
-- **Repeated set validation.** A run validates its working set once per
-  draft. The run's parse and byte caches already serve repeated requests.
+Workers need specific refusal reasons and repair information; maintainers need
+stable diagnostic identities and evidence limits. A shared checking path must
+not lose these or silently change warning/failure policy. Command naming and
+presentation may remain different when the consumers need different views.
 
-## Free choices
+### Keep infrastructure proportional
 
-- One command or two: the validator gains a mode, or a thin command keeps
-  its name and exit codes while calling the same library. ADR 105 calls the
-  name, text output and exit statuses implementation choices.
-- Working set: relax the set schema's finished-set branches, or add a
-  working-set type the output directory carries until finalization.
-- Declaration placement: in the type spec's frontmatter beside `schema`, or
-  in a sidecar beside the schema file.
-- Access roots: the run state stays the source of truth, or a registry
-  replaces it and the run state points into the registry.
-- Progress: a derived view over the run directory, or a materialized
-  artifact the engine writes; inside the run state or beside it; a global
-  workflow type, or one local to the analysis collection.
+The directory mechanism already supports optional members, conditional schemas,
+optional hashes and candidate byte views. Establish what these can express
+before expanding it. A general source registry, a declared run-progress artifact,
+nested membership and non-Markdown members are outside this proposal unless a
+concrete validation need makes one a separate decision.
+
+## Candidate direction and free choices
+
+Explore a working contract together with candidate replacement before choosing
+a new public command or generalized extension mechanism. Keep option A if the
+alternative adds metadata and state management without removing meaningful
+context duplication or enabling another consumer.
+
+Separate versus stateful types, the location of shared identity, how a candidate
+view is supplied, and one command versus a thin workflow-specific wrapper remain
+open. A broad weakening of the finished-set schema is not an acceptable shortcut.
+
+Directory-level semantic review remains an open question, not part of this
+adoption. It needs its own account of reviewer inputs and version identity;
+deterministic working-set validation does not supply that account automatically.
 
 ## Adoption criteria
 
-- Unify the surface (A or B) when a second separately commissioned analysis,
-  or a maintainer sweep over retained sets, shows the same checks requested
-  from more than one surface. The TODO in ADR 105 names the observations to
-  count.
-- Adopt type-declared primitives (C) when their declarations replace the
-  six-path analysis registrations and the `tag-readme` rule with no primitive
-  introduced for a single type. Design the vocabulary from both cases
-  together, as the older proposal requires.
-- Adopt a registry (D) when a third source kind needs resolution, or when
-  retained sets must verify without their run directories.
-- Adopt a declared progress artifact (E) when a second consumer beyond the
-  acceptance check needs round facts, such as the handoff, an operator status
-  view or validator strictness, or when a second definition runs on the
-  engine.
-- Measure refusals by rule before and after from the scratch log and the
-  validator's JSON output; a unified surface that loses rule or repair
-  detail fails its own purpose.
+Adopt a working-set contract when a real authoring or maintenance consumer can
+use it without reconstructing a workflow job, and it replaces rather than adds
+a competing definition of content validity. Demonstrate permitted incompleteness,
+forbidden membership, identity disagreement and unresolved references against
+representative working and complete sets.
 
----
+Adopt candidate replacement when the same candidate and context yield the same
+content findings during self-check and acceptance, without modifying incumbent
+bytes or bypassing hashes. Test candidate-aware referential reads as well as
+local schema checks. Keep independent workflow-acceptance checks explicit.
 
-Relevant Notes:
-
-- [ADR 105 — Let analysts run their acceptance check before submission](../adr/105-let-analysts-run-their-acceptance-check-before-submission.md) — extends: the decision whose TODO names this integration and whose check functions this proposal keeps as the primitive library
-- [Generalized validation invalidation and imperative extension](./generalized-validation-invalidation-and-imperative-extension.md) — narrows: option B there deferred a declarative dereferencing primitive until a collection-local type needed one; this proposal supplies that case
-- [The validation contract](../validation-contract.md) — rests-on: the base, type-rule and schema sources and the dereferencing limit that make a primitive necessary
-- [ADR 095 — Directory artifacts add shared set validation](../adr/095-directory-artifacts-add-shared-set-validation.md) — rests-on: the directory artifact as the unit a working set would reuse
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why resolvable mismatches fail and unavailable sources report unverified
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — rests-on: why a type that asserts a cross check should also be the place that selects its enforcement
-- [Collections and types](../collections-and-types.md) — see-also: how a type is named and resolved, which a declaration in the spec would reuse
+Compare implementation and maintenance cost with the existing shared-function
+route, and preserve diagnostic and repair detail. A passing fixture establishes
+interface behavior, not model adherence. No live external-system analysis,
+Python extension framework or generic invalidation engine is prerequisite.

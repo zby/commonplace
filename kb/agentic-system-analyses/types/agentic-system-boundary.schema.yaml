@@ -1,0 +1,87 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - type
+          - description
+          - run-id
+          - result-disposition
+          - target-class
+          - boundary-kind
+          - reviewed-boundary
+          - analysis-cutoff
+          - evidence-tier
+          - source
+        properties:
+          type:
+            const: agentic-system-analyses/types/agentic-system-boundary.md
+          description:
+            type: string
+          run-id:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/run-id"
+          result-disposition:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/result-disposition"
+          target-class:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/target-class"
+          boundary-kind:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/boundary-kind"
+          reviewed-boundary:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/reviewed-boundary"
+          analysis-cutoff:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/analysis-cutoff"
+          evidence-tier:
+            $ref: "./agentic-system-analysis-overview.schema.yaml#/allOf/1/properties/frontmatter/properties/evidence-tier"
+          source:
+            oneOf:
+              - type: "null"
+              - type: object
+                required: [kind, identity, revision, path, sha256]
+                properties:
+                  kind: {enum: [git, capture]}
+                  identity: {type: string, minLength: 1}
+                  revision: {type: string, minLength: 1}
+                  path: {type: string, minLength: 1}
+                  sha256: {type: [string, "null"]}
+                additionalProperties: false
+        additionalProperties: false
+        if:
+          properties:
+            result-disposition: {const: complete}
+        then:
+          properties:
+            target-class: {type: string}
+            boundary-kind: {type: string}
+            reviewed-boundary: {type: string}
+            analysis-cutoff: {type: string}
+            evidence-tier: {type: string}
+            source: {type: object}
+      headings:
+        type: array
+        minItems: 3
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - enum: ["## Boundary and evidence", "## Source register", "## Not reached"]
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Boundary and evidence"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Source register"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Not reached"}, minContains: 0, maxContains: 1}
+    if:
+      properties:
+        frontmatter:
+          properties:
+            result-disposition: {const: complete}
+    then:
+      properties:
+        headings:
+          not: {contains: {const: "## Not reached"}}
+    else:
+      properties:
+        headings:
+          contains: {const: "## Not reached"}

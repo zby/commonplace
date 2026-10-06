@@ -26,7 +26,6 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 
 - [Factored dependency pairs for review freshness](../reference/proposals/factored-dependency-pairs-for-review-freshness.md) — proposal to keep review dependencies as two-input pairs where that shape fits; decides how review targets with more than two inputs are handled
 - [Collection-as-artifact freshness](../reference/proposals/collection-as-artifact-freshness.md) — proposal to register collection-maintenance targets with collection-text inputs, for casebook-wide staleness without per-file dependency edges
-- [Generalized validation invalidation and imperative extension](../reference/proposals/generalized-validation-invalidation-and-imperative-extension.md) — proposal deciding when to generalize validator invalidation or imperative type extension: only after local cases prove reusable machinery
 
 ## Proposals: gates and review method
 

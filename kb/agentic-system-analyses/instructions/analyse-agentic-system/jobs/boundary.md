@@ -46,15 +46,18 @@ exclusions, and external dependencies. Do not assign responsibilities owned
 by an excluded host to the selected target.
 
 Inspect the repository tree and trace shipped entry points and their
-consumers before making that classification. For `whole-system`, write the
-boundary contract's top-level coverage table under Boundary and evidence.
-For a memory or knowledge system, find shipped prompts, maintenance
-instructions, persistence and reload callers, later consumers, and
-evaluators. Inspect their wiring and either include them or justify their
-exclusion with its prevented conclusion. A shipped driver is not external
-merely because it supplies state to an API. An intentional library-only
-target gets a narrower boundary kind. Do not turn an uninspected file into
-an access gap when it is available at the frozen commit.
+consumers before making that classification; a caller in the same repository
+is not an excluded enclosing application merely because it calls a library
+API, and a shipped driver is not external merely because it supplies state to
+an API. Decide what belongs to the target from the shipped usage and the
+responsibilities it performs. For `whole-system`, write the boundary
+contract's top-level coverage table under Boundary and evidence. For a memory
+or knowledge system, find shipped prompts, maintenance instructions,
+persistence and reload callers, later consumers, and evaluators; trace their
+wiring and either include them or justify their exclusion with its prevented
+conclusion. An intentional library-only target gets a narrower boundary kind.
+Do not turn an uninspected file into an access gap when it is available at
+the frozen commit.
 
 ## Freeze the sources
 
@@ -88,35 +91,14 @@ record source paths in the register. Later analysts retain quotations.
 
 ## Output
 
-`output` has this frontmatter and these sections, and nothing else:
-
-```markdown
----
-result-disposition: complete        # or blocked, out-of-scope
-target-class: "<value>"             # null when not classified
-boundary-kind: whole-system         # null when not established
-reviewed-boundary: "<full commit or capture identity>"   # null when not established
-analysis-cutoff: "YYYY-MM-DD"       # null when not established
-evidence-tier: code-grounded        # or doc-grounded; null when not established
-source:                             # null when no source was frozen
-  kind: git                         # or capture
-  identity: https://github.com/owner/repository   # exactly the `source-identity`
-  revision: "<full commit>"         # capture label for a capture
-  path: /absolute/path/to/checkout  # absolute capture file for a capture
-  sha256: null                      # the capture's digest for a capture
----
-
-## Boundary and evidence
-
-## Source register
-```
+Write the boundary to `output` under the supplied boundary type, with `run-id`
+as its identity. Its two sections follow the boundary contract and go into the
+overview unchanged. For a `blocked` or `out-of-scope` disposition, add
+`## Not reached`, saying what was not reached, why, and which conclusion that
+prevents.
 
 When you freeze a source, `source.identity` is exactly the
 `source-identity`; the output is refused otherwise. If the source you can
 freeze has another identity, you cannot finish: write the problem report.
-The two sections follow the boundary contract; they go into the overview
-unchanged. A `blocked` or `out-of-scope` disposition adds a third section,
-`## Not reached`, saying what was not reached, why, and which conclusion
-that prevents.
 
 Run the acceptance check before submitting.
