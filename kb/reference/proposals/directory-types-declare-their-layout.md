@@ -1,26 +1,26 @@
 ---
-description: "Proposal: a directory type declares the layout of its instances, so membership, roles, nesting and cross-member relations come from one external definition instead of filename conventions and code."
+description: "Proposal: a directory type declares the layout of its instances, so membership, roles and cross-member relations come from one external definition instead of filename conventions and code."
 type: reference/types/design-proposal.md
 tags: [type-system]
 ---
 
 # Directory types declare their layout
 
-A directory type is already defined outside its instances: a manifest points
-at a type spec, and the type spec names a schema. What that definition cannot
-do is describe the directory. It sees a flat set of sibling Markdown files and
-encodes everything else, roles, nesting, completeness and relations, in
-filename conventions, schema branches and Python keyed by type path.
+A directory type is defined outside its instances: a manifest points at a
+type spec, and the type spec names a schema. That definition cannot describe
+the directory. It sees a flat set of sibling Markdown files and encodes
+everything else, roles, completeness and relations, in filename conventions,
+schema branches and Python keyed by type path.
 
-This proposal gives the directory type a layout: a declared set of paths under
-the artifact root, beside the manifest or in subdirectories below it, each
-with a role, and for each role the expected document type, when it is
-required, and how it relates to other roles. Membership becomes "matches a
-layout entry". Whole-set validation, member-level validation, manifest
-construction and workflow code would all read the same declaration.
+This proposal gives the directory type a layout: a declared set of files
+beside the manifest, each with a role, and for each role the expected
+document type, when it is required, and how it relates to other roles.
+Membership becomes "matches a layout entry". Whole-set validation,
+member-level validation, manifest construction and workflow code read the
+same declaration.
 
-The operator selected this direction. It is not shipped behavior or an
-implementation commission. The companion proposal
+The operator selected this design on 2026-10-06. It is not shipped behavior.
+The companion proposal
 [document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md)
 depends on this one; this one does not depend on it.
 
@@ -28,41 +28,35 @@ depends on this one; this one does not depend on it.
 
 - [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md)
   recognizes a directory artifact by `ARTIFACT.yaml` at its root. Membership
-  is visible Markdown files directly beside the manifest; descendants are
-  outside membership, and the ADR names nested membership as deferred, not
-  foreclosed. `member_paths` in `src/commonplace/lib/directory_artifact.py`
-  iterates one directory and keeps direct children only.
-- The type's schema receives `{manifest, members}`. The one existing
-  directory type, the
-  [analysis set](../../agentic-system-analyses/types/agentic-system-analysis-set.md),
+  is visible Markdown files directly beside the manifest. `member_paths` in
+  `src/commonplace/lib/directory_artifact.py` keeps direct children only.
+- The type's schema receives `{manifest, members}`. The one directory type,
+  the [analysis set](../../agentic-system-analyses/types/agentic-system-analysis-set.md),
   encodes each role as a `members.properties.<filename>` entry with a
-  constant document type, and encodes completeness as an if/then on the
-  overview's `result-disposition`. Hash requirements are per manifest entry.
+  constant document type, encodes completeness as an if/then on the
+  overview's `result-disposition`, and requires a hash per manifest entry.
 - Cross-member relations, identity agreement, record-reference resolution and
   comparison-field checks, are Python rules registered per directory type path
   in `src/commonplace/lib/validation.py`. They run only on whole directories.
 - The analysis run's working artifact is `output/`, with its manifest at
-  `output/ARTIFACT.yaml`. The run keeps its source register in `boundary.md`
-  at the run root beside `output/`, outside the artifact. Before synthesis,
-  workflow code and one type rule substitute it for the absent overview by
-  path convention.
+  `output/ARTIFACT.yaml`. The run root beside it holds process files: run
+  state, the frozen source record, every report version, round files and job
+  workspaces. The boundary, `boundary.md`, is also at the run root, outside
+  the artifact. Before synthesis, workflow code and one type rule substitute
+  it for the absent overview by path convention.
 - Publication in `src/commonplace/lib/agentic_publication.py` copies the
-  output members into `retained/<system>/`. The retained set has no
-  `boundary.md`; the overview embeds the boundary's two sections verbatim at
-  assembly, and the whole-set identity check reads run and boundary identity
-  from the overview.
+  `output/` members into `retained/<system>/`, the same flat shape. The
+  retained set has no `boundary.md`; the overview embeds the boundary's two
+  sections verbatim at assembly, and the whole-set identity check reads run
+  and boundary identity from the overview.
 - Layout facts are repeated in code: member-name constants in
   `src/commonplace/lib/agentic_set.py` and `agentic_finalize.py`, the
   current-slot map in `src/commonplace/lib/agentic_workflow.py`, and the
   schema's filename properties each state which files make the set.
-- ADR 095 considered and rejected external directory formats such as Data
-  Package, DirSchema and RO-Crate, because their adapters would still need
-  Commonplace's Markdown representation, type resolution and imperative checks.
 
 ## Problem
 
-The external definition does not own the directory it defines. Four
-consequences follow:
+The external definition does not own the directory it defines:
 
 - The analysis set's declaration source, the boundary, is written outside
   the artifact, so its identity and declarations reach the set only through
@@ -73,81 +67,85 @@ consequences follow:
   definition and must be code.
 - Completeness is a schema branch on one member's field. A second directory
   type with a different completion rule writes a second idiom.
-- Every consumer that needs layout facts restates them. The schema, the
-  finalize step, the workflow and the set module each list the member names,
-  and they can drift.
+- Every consumer that needs layout facts restates them, and they can drift.
 
 A single member checked in its set's context, which the companion proposal
 describes, needs a role lookup and per-role relations. Neither can be built on
 a definition that does not describe the directory.
 
-## Selected direction: a layout in the directory type
+## Design
 
-The directory type declares its layout. Conceptually a layout is a list of
-entries, each binding a relative path under the artifact root to a role. A
-path may descend into subdirectories; a subdirectory is part of the layout,
-not a directory artifact of its own. A role states:
+### The layout
 
-- the expected document type at that slot, checked against the member's own
-  `type:` declaration, so each fact has one owner;
-- when the slot is required, as a condition the validator can evaluate from
-  the instance, such as another member's field value;
-- relations to other roles: which role supplies identity fields this member
-  must repeat, and which roles' declarations this member may cite.
+The directory type's spec carries a `layout` in its frontmatter. A layout is
+a set of roles keyed by name. Each role states:
 
-Membership is matching a layout entry. Paths the layout does not mention are
-governed by the type's open or closed policy, scoped to the directories the
-layout declares, so a working tree can hold non-member files inside the
-artifact root without those becoming members or failures. The analysis set's
-working and retained instances must share one layout; the recommended way,
-under Options, keeps the set flat by moving the boundary into the artifact
-root rather than moving the root up to meet it.
+- `path`: a literal filename beside the manifest. Membership stays direct
+  children of the manifest's directory, as ADR 095 has it. No pattern form
+  until a type needs one.
+- `type`: the expected document type at that slot, compared with the member's
+  own `type:` declaration, so each fact has one owner.
+- when the slot is required, as a condition the validator evaluates from the
+  instance, such as another member's field value.
+- `identity`: the role whose listed fields this member must repeat verbatim.
+- `cites`: the roles whose declarations resolve this member's references. A
+  role may list itself.
 
-The manifest keeps its ADR 095 role: recognition marker and instance metadata.
-It does not restate layout.
+Membership is matching a layout entry. A Markdown file beside the manifest
+that matches no entry is governed by the type's open or closed policy.
 
-Consumers read the layout instead of restating it. Whole-set validation
-derives required members from it. Manifest construction derives the member
-names from it. Workflow slot maps derive from it. Member
-mode, in the companion proposal, resolves a file's role from its path relative
-to the nearest manifest and applies the role's relations.
+The manifest keeps its ADR 095 role: recognition marker, instance metadata
+and hash requirements. Its schema stays JSON Schema and no longer lists
+filenames. The layout says nothing about content identity: which members a
+frozen instance pins belongs to publication integrity and freezing, and a
+supplied hash always binds.
 
 Relations split between data and code. Identity agreement and citation scope
-are simple enough to declare. Record-ID grammar, quotation anchoring and
-comparison-field validation stay imperative, registered per role rather than
-per type path. The split is stated in the type, not hidden in the rule set.
+are declared. Record-ID grammar, quotation anchoring and comparison-field
+validation stay imperative, registered per role rather than per type path.
 
-Three further decisions make the layout useful before any member-level
-validation exists:
+### Working instances
 
-- **A working instance declares itself from the first write.** A workflow
-  that builds a directory artifact writes a type-only manifest when it creates
-  the artifact root and lets its finishing step overwrite it with pinned
-  metadata. Recognition then works throughout the instance's life, not only
-  at the end.
-- **Whole-set validation of an incomplete instance is informative.** Required
-  members that are absent are one finding class. Relation checks, identity
-  agreement and citation resolution, run over the members that are present.
-  A coordinator can validate the working directory mid-run and read the
-  relation findings while treating the missing-member findings as expected.
-- **Findings carry the role they belong to.** A relation finding names the
-  role whose member it is about: a dangling reference belongs to the citing
-  role, an identity mismatch to the member that disagrees, a duplicate
-  declaration to each declaring role. A caller that wants one member's
-  findings filters by role.
+- **A working instance declares itself from the first write.** The workflow
+  writes a type-only manifest when it creates the artifact root and lets its
+  finishing step overwrite it with pinned metadata. Recognition works
+  throughout the instance's life. A replay must see no change from writing
+  it.
+- **Whole-set validation of an incomplete instance is informative.** Absent
+  required members are one finding class. Relation checks run over the
+  members present. A working manifest without hashes fails whole-set
+  validation until the set is complete, which is correct and needs no phase
+  concept.
+- **Findings carry the role they belong to.** A dangling reference belongs to
+  the citing role, an identity mismatch to the member that disagrees, a
+  duplicate declaration to each declaring role. A caller that wants one
+  member's findings filters by role.
 
-Together these let a workflow replace its private set-check code with one
-directory validation and a filter, before the companion proposal's member
-mode exists. Member mode then adds what filtering cannot: reading only the
-context a role needs, checking scratch bytes at an intended destination, and
-failing explicitly when context is unusable instead of reporting the context's
-own defects.
+These let the workflow replace its private set-check code with one directory
+validation and a role filter before the companion proposal's member mode
+exists.
+
+### The analysis set
+
+- **The boundary moves into `output/`.** Setup creates `output/` with the
+  type-only manifest and the boundary job writes `output/boundary.md` as the
+  first member. The working and retained instances then have one flat
+  layout, and the artifact stays drawn around the product rather than the
+  run directory. A withheld run already produces an overview-only `output/`.
+- **Publication copies the boundary** with the other members. No fallback to
+  the overview is carried in the type.
+- **The boundary owns source declarations.** After assembly the overview and
+  the boundary both carry the source register. The boundary is the declaring
+  role; the overview's embedded sections are a copy, which whole-set
+  validation checks against its source instead of treating as a second
+  declaration.
+- **The one retained set is regenerated** by a fresh run rather than migrated
+  or tolerated. Its original boundary file is not recoverable, and the
+  boundary type's `source` block is absent from the overview.
 
 ### Illustration
 
-The analysis set in one candidate vocabulary, as the type spec's frontmatter
-would carry it. This is an illustration of the decisions above, not a shipped
-format; the keys and their spelling are free choices.
+One candidate vocabulary; the keys and their spelling are free choices.
 
 ```yaml
 type: types/type-spec.md
@@ -191,216 +189,109 @@ layout:
     complete: [runtime, memory, epistemic, reconciliation, memory-profile]
 ```
 
-What each key decides:
+`required` has one discriminator and per-value lists, mirroring the schema
+branch the set uses today; a value with no list requires only `always`. The
+set is closed, as its schema is today. Manifest construction lists the roles
+present. Workflow slot constants become lookups into `roles`.
 
-- `roles` are keyed by name; imperative rules and member-level findings use
-  the name. `path` is a literal path relative to the artifact root, flat
-  here because the set needs no subdirectory; no pattern form until a type
-  needs one.
-- `type` is the expected type at the slot, compared with the member's own
-  `type:` declaration.
-- `identity` names the role whose listed fields this member must repeat
-  verbatim.
-- `cites` is the citation scope: the roles whose declarations resolve this
-  member's references. A role may list itself.
-- `required` has one discriminator and per-value lists, mirroring the schema
-  branch the set uses today. A value with no list requires only `always`.
-- The set is closed, as its schema is today: an undeclared Markdown file
-  beside the manifest fails. Run state, report versions and job workspaces
-  live at the run root, outside the artifact. A type with declared
-  subdirectories would name which of them are closed.
+### Consumers
 
-The nearest-manifest search bound for a member lookup is the deepest declared
-path depth, one directory for this set. Manifest construction lists the
-roles present. Workflow slot
-constants become lookups into `roles`. Hash requirements stay in the manifest
-schema, as today; the layout says nothing about content identity.
+The validator's directory path, manifest construction, the finalize step,
+the analysis workflow's slot constants and its round-close record check, and
+any future directory type. No consumer reads a layout today; the layout
+reader must be built. The oracle is the actual files at declared paths and
+their declared facts: deterministic success establishes declared structure,
+not analytical truth.
 
-### Operativity
-
-Consumers would be the validator's directory path, the finalize step, the
-analysis workflow's slot constants and its round-close record check, and any
-future directory type. No consumer reads a layout today; the layout
-representation and its reader must be built. The oracle is the actual files
-at declared paths and their declared facts. Nested membership amends ADR 095's
-direct-children rule and needs an amending decision when it ships, even
-though the analysis set's own layout stays flat.
-
-## Consequences of adoption on its own
+## Consequences
 
 What becomes checkable through the type, without the companion proposal:
 
-- The analysis set's membership and completeness by disposition validate from
-  the declaration instead of the schema's filename properties. Same checks,
-  one owner. Hash binding is unchanged and stays with the manifest schema.
+- Membership and completeness by disposition validate from the declaration
+  instead of the schema's filename properties. Same checks, one owner.
 - Boundary agreement moves from workflow code into the type. With the boundary
-  a member and named as the identity source, whole-set validation checks run
-  and boundary identity directly, before synthesis and without the overview.
+  a member and the identity source, whole-set validation checks run and
+  boundary identity directly, before synthesis and without the overview.
 - Citation resolution becomes role-scoped. The profile citing a source
   directly, or a report citing a role outside its scope, is a type finding.
   Today the pooled checker cannot see scope and the profile is excluded by
   hand.
-- A mid-run directory validation reports relation findings per role on the
-  members present. The workflow's round-close record check, its private body
-  assembly and the memory-profile rule's path heuristic can be retired in
-  favour of one directory validation and a role filter.
-- Manifest construction and workflow slot handling read the layout, and the
-  member-name constants in four modules go.
-- A reader of the type spec sees what an instance contains, which the type
-  spec contract already asks of a type for its non-validator readers.
+- A mid-run directory validation reports relation findings per role. The
+  workflow's round-close record check, its private body assembly and the
+  memory-profile rule's path heuristic retire in favour of one directory
+  validation and a role filter.
+- The member-name constants in four modules go.
+- A reader of the type spec sees what an instance contains.
 
-What it costs or forces:
+What it costs:
 
-- An ADR amending ADR 095: nested membership, layout as the owner of
-  membership, the manifest schema reduced to instance metadata and hashes, a
-  type-only working manifest, and partial-instance validation semantics.
+- An ADR amending ADR 095: layout as the owner of membership, the manifest
+  schema reduced to instance metadata and hashes, the type-only working
+  manifest, and partial-instance validation semantics. The ADR records the
+  alternatives below.
 - The validation contract, the type-spec contract and the set type document
   are rewritten for directory types.
-- **The boundary becomes a published member.** Today the working instance has
-  `boundary.md` at its root while the retained copy has only the output
-  members, with the boundary's sections embedded in the overview. One layout
-  cannot require the boundary and describe retained sets as they are. The
-  operator's decision (2026-10-06) is to retain the boundary and to give the
-  working and retained instances one layout; no fallback to the overview is
-  carried in the type. Where the boundary sits to satisfy that is the
-  proposal's recommendation, below, not an operator decision. The one
-  retained set predates this and is regenerated by a fresh run rather than
-  migrated or tolerated, since its original boundary file is not recoverable
-  and the boundary type's `source` block is absent from the overview.
-- **The boundary owns source declarations.** After assembly the overview and
-  the boundary both carry the source register, so both would declare the
-  `SRC-*` IDs and the duplicate-declaration check would fire. The boundary is
-  the declaring role; the overview's embedded sections are a copy, and
-  whole-set validation checks that copy against its source instead of
-  treating it as a second declaration.
+- The retained set is regenerated and the publication step copies one more
+  file.
 
-## Options
+## Alternatives considered
 
-### Where the layout lives
+For the implementing ADR to record.
 
-- **In the type spec's frontmatter.** The selected option. One file defines
-  the type. The type spec is already the file a reader opens to learn what a
-  type is, its frontmatter is already structured and already read by the
-  loader for `name` and `schema`, and the type-spec contract asks a type to
-  show its non-validator readers what an instance contains. A `layout` key
-  for six roles is about forty lines, and the type-spec schema can check its
-  shape. Frontmatter grows for directory types only.
-- **In the schema file under a reserved keyword.** Rejected: it hides a
+- **Layout in the schema file under a reserved keyword.** Rejected: hides a
   layout vocabulary inside a JSON Schema document whose validator ignores it.
-- **In a separate layout file named by the type spec.** Rejected while one
-  directory type exists: one more file per type and one more resolution step
-  for no separation the frontmatter does not already give.
-
-### How relations are expressed
-
-- **Declared data for identity and citation scope, code for the rest.** The
-  selected direction. Small vocabulary; the imperative remainder is keyed by
-  role.
-- **All relations in code keyed by role.** Smallest change to the definition.
-  The layout then declares only paths, types and requiredness, and
-  member mode still needs the rule set to know what a role relates to.
+- **Layout in a separate file named by the type spec.** Rejected while one
+  directory type exists: one more file and one more resolution step for no
+  separation the frontmatter does not give.
+- **All relations in code keyed by role.** Rejected: member mode would still
+  need the rule set to know what a role relates to, so the layout would be
+  the schema's filename properties renamed.
 - **A constraint language.** Rejected, as in ADR 095 and the
   [type-selected Python validation proposal](./type-selected-python-validation-checks.md).
-
-### Nesting in the layout vocabulary
-
-- **Nested paths allowed, subdirectories as layout not as types.** The
-  selected direction. A layout path may descend below the artifact root, and
-  membership follows the declaration. A declared subdirectory is structure
-  of the one artifact; it carries no manifest and no type of its own.
-  Requires the ADR 095 amendment and a membership policy scoped to declared
-  directories.
-- **Flat only.** Preserves ADR 095 unchanged. A type whose instance needs a
-  subdirectory could not declare it, and the layout would be a renaming of
-  the schema's filename properties.
-- **Nested directory artifacts.** Rejected here: a subdirectory with its own
-  manifest and type is composition of artifacts, a different question that
-  ADR 095's recognition rule already answers by finding the nearest manifest.
-
-### Where the analysis set's boundary goes
-
-The operator requires one layout for the working and retained instances and
-has no preference between these placements. The first is recommended as the
-least change.
-
-- **Boundary moves into `output/`.** Recommended. The working artifact root
-  is already `output/`, flat and the same shape as a retained set; the
-  boundary is the one file outside it. Moving it in brings the declaration
-  source inside the artifact without nesting, keeps one layout for both
-  instances, and leaves the publication destination and the stable overview
-  path unchanged.
-- **Manifest moves to the run root, members stay under `output/`, and the
-  retained tree takes the same shape.** Uses nesting to reach the boundary
-  where it is. Satisfies the one-layout requirement by changing the retained
-  tree to `retained/<system>/{ARTIFACT.yaml, boundary.md, output/*.md}`,
-  which moves the publication destination, the stable overview path that
-  review paths and links point at, and needs the scoped policy for the run
-  root's state and job workspaces. Nesting then has a shipped consumer.
-- **Boundary stays outside.** Leaves the declaration source outside the
-  artifact, and the companion proposal must let a type name external
-  context, which is a different widening.
-
-## Forces
-
-- **A layout is a small language.** ADR 095 rejected external directory
-  formats. The flat schema was the first draft of this language and has met
-  its limits in completeness branches and the external boundary file. Keep
-  the vocabulary to what the analysis set needs plus the one capability the
-  flat schema cannot express: literal relative paths that may descend,
-  expected type, a requiredness condition, two relation kinds.
-- **One directory type exists, and it is flat.** This is the YAGNI
-  counterweight. The proposal's warrant for roles and relations is that the
-  analysis set needs them and the companion proposal cannot be built without
-  them. The warrant for nested paths is thinner: no shipped type needs one
-  once the boundary moves inside `output/`. Nesting stays in the vocabulary
-  because a layout that cannot descend is only the schema's filename
-  properties renamed, and because ADR 095 already names it as the deferred
-  next step; its cost is one path join in the reader and the scoped
-  membership policy.
-- **Content identity is not layout.** Which members a frozen instance pins,
-  and when, belongs to publication integrity and freezing, a concern larger
-  than directory structure that ADR 095 and ADR 102 only begin. The layout
-  declares structure; the manifest schema keeps the set's hash requirements
-  as today, and a supplied hash always binds. A working manifest without
-  hashes therefore fails whole-set validation until the set is complete,
-  which is correct and needs no phase concept in the layout.
-- **One shape for working and retained instances.** Publication copies
-  members by name into `retained/<system>/`. A layout whose working paths
-  carry a prefix the retained set lacks needs a path mapping or a changed
-  retained tree. Keeping the artifact root at `output/` and moving the
-  boundary into it keeps one layout for both.
-- **Recognition still needs the manifest.** A layout tells the validator what
-  an instance contains; the manifest tells it where an instance begins. The
-  type-only working manifest is what makes a half-built instance visible, and
-  a replay must see no change from writing it.
-- **Drift between layout and code.** Until the workflow reads the layout, two
-  statements of the member names coexist. Adoption should retire the code
-  constants, not add a third copy.
+- **Hashing as a layout property.** Rejected: content identity is not
+  structure, and a role-level flag would need a phase concept to let working
+  instances validate.
+- **Nested paths in one artifact.** Deferred. A path could descend into
+  subdirectories without manifests of their own. It needs the direct-children
+  rule amended and a membership policy scoped to declared directories, and
+  the only use found, reaching the boundary by moving the manifest to the
+  run root, draws the artifact around the run directory instead of the
+  product. Reopen when a type needs a subdirectory of members.
+- **Nested directory artifacts.** Left aside, not designed. The analysis run
+  shows the shape that may be wanted: a run directory that is itself an
+  artifact, holding its process files and, as a member, the product artifact
+  it publishes. That is composition of artifacts, a different question from
+  layout.
+- **Manifest at the run root, members under `output/`, retained tree
+  reshaped to match.** Rejected: the artifact would be the run directory with
+  process files inside it as tolerated non-members, and the retained tree
+  would carry `output/` into the library and move every link to a retained
+  overview.
+- **Boundary stays outside the artifact, with a fallback to the overview.**
+  Rejected: the declaration source stays outside the definition, and the
+  companion proposal would have to let a type name external context.
 
 ## Free choices
 
 The layout's key vocabulary, the form of the requiredness condition and how
-roles key imperative rules are implementation choices. The manifest schema stays JSON Schema and keeps instance metadata
-and hash requirements. Start from the analysis set's six reports, its
-boundary file and its disposition-based completeness, and declare nothing the
-set does not need.
+roles key imperative rules. Start from the analysis set's six reports, its
+boundary and its disposition-based completeness, and declare nothing the set
+does not need. Until the workflow reads the layout, two statements of the
+member names coexist; retire the code constants rather than adding a third
+copy.
 
 ## Adoption criteria
 
 A candidate implementation must demonstrate that:
 
-- A directory type declares its members by path with roles, and the validator
-  derives membership and requiredness from that declaration
-  rather than from the schema's filename properties.
-- A member declared below the artifact root is found, typed and related like
-  a sibling member, with the direct-children rule amended by decision. With
-  no shipped type nesting, a test type demonstrates it.
-- Undeclared paths inside a declared subdirectory follow that type's scoped
-  membership policy and do not fail an open subtree.
-- The boundary is declared as a member of the analysis set, and the working
-  and retained instances validate under the same layout.
+- A directory type declares its members by filename with roles, and the
+  validator derives membership and requiredness from that declaration rather
+  than from the schema's filename properties.
+- The boundary is written inside `output/` and declared as a member of the
+  analysis set, and the working and retained instances validate under the
+  same layout.
 - A role's declared relations are applied by whole-set validation and are
-  available to a member-level lookup by path.
+  available to a member-level lookup by filename.
 - Manifest construction and the analysis workflow's slot handling read the
   layout, and their member-name constants are retired.
 - The analysis set validates as it does today, including completeness by
@@ -408,6 +299,6 @@ A candidate implementation must demonstrate that:
   binding unchanged.
 - Publication copies the boundary into the retained set, the overview's
   embedded boundary sections are checked against it, and the regenerated
-  retained set passes under the new layout.
+  retained set passes.
 - Deterministic success establishes the declared structure, not analytical
   truth or semantic support.

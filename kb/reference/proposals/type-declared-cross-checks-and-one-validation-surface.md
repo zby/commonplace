@@ -83,17 +83,17 @@ declaration of a cited ID is a finding against the candidate's reference.
 
 ### Finding the artifact
 
-Membership stays positional. The validator finds the nearest `ARTIFACT.yaml`
-at or above the candidate's directory, within the bound the layout proposal
-sets for nesting, and takes the candidate's path relative to that root. With
+Membership stays positional. The validator finds `ARTIFACT.yaml` in the
+candidate's own directory, since the layout proposal keeps membership to
+direct children, and takes the candidate's filename. With
 no manifest in reach, the file receives file-only validation, and a consumer
 requiring member conformance treats that as failure. No frontmatter field or
 type-reference syntax is added; `type:` keeps meaning a type-spec document.
 
 ### Resolving the role and its context
 
-The relative path matches a layout entry, which gives the role. An unmatched
-path or an unavailable directory type fails; there is no fallback to file-only
+The filename matches a layout entry, which gives the role. An unmatched
+filename or an unavailable directory type fails; there is no fallback to file-only
 validation. The role's relations name which siblings to read: the role that
 supplies identity fields, and the roles whose declarations may be cited. Only
 those files are read, and only for those checks. The layout's completeness
@@ -131,8 +131,7 @@ heuristic are already in place. Adopting member mode then means analyst
 acceptance and ADR 105 self-check call member mode with the job's output file
 as scratch bytes at the member's destination, instead of assembling sibling
 bodies privately. The manifest stays at `output/ARTIFACT.yaml` and
-`boundary.md` moves beside it as a member, per the layout proposal's layout
-decision.
+`boundary.md` moves beside it as a member, per the layout proposal.
 
 ## Alternatives
 
