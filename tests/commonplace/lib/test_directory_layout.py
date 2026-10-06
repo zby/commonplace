@@ -45,7 +45,18 @@ def test_an_incomplete_instance_reports_absence_and_checks_what_is_present() -> 
         Finding(None, "notes.md: no layout role; this type has closed membership"),
         Finding("head", "head.md: required member is absent", absent=True),
         Finding("body", "body.md: type 't/other.md' does not match the layout's t/body.md"),
+        Finding("body", "body.md: cannot check identity fields run; source member head.md is absent"),
     ]
+
+
+def test_missing_identity_source_is_a_dependent_finding_even_when_optional() -> None:
+    layout = parse_layout({**LAYOUT, "required": {}})
+    findings = layout_findings(layout, {"body.md": document("type: t/body.md\nrun: R")})
+    assert findings == [Finding(
+        "body", "body.md: cannot check identity fields run; source member head.md is absent",
+    )]
+    # This is a blocked comparison, not an absent candidate to discard mid-run.
+    assert not findings[0].absent
 
 
 def test_open_membership_admits_unmatched_files() -> None:

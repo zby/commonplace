@@ -354,10 +354,19 @@ def set_record_findings(
         findings.append((owners.get(longer), error))
     for name, body in bodies.items():
         findings.extend((name, f"{name}: {error}") for error in _record_syntax_errors(body))
-        scope = known if cites is None or name not in cites else {
-            identifier for cited in cites[name] for identifier in declared.get(cited, ())
-        }
+        scope_counts = counts if cites is None or name not in cites else Counter(
+            identifier for cited in set(cites[name]) for identifier in declared.get(cited, ())
+        )
+        scope = set(scope_counts)
         references = _references(_analysis_prose(body))
+        for identifier in sorted(references & scope):
+            if scope_counts[identifier] > 1 and identifier not in declared[name]:
+                # Declaring members already have a duplicate finding. Consumers
+                # need their own finding so candidate-only filtering preserves it.
+                findings.append((name, (
+                    f"{name}: ambiguous record {identifier}; "
+                    "multiple declarations in the documents this one may cite"
+                )))
         for identifier in sorted(references - scope):
             if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None:
                 continue  # the whole-token grammar diagnostic above is sufficient

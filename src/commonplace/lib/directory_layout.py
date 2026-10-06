@@ -194,6 +194,11 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> li
             source_role = layout.roles[source.role]
             origin = members.get(source_role.path)
             if origin is None:
+                findings.append(Finding(
+                    role.name,
+                    f"{role.path}: cannot check identity fields {', '.join(source.fields)}; "
+                    f"source member {source_role.path} is absent",
+                ))
                 continue
             expected_values = origin.frontmatter or {}
             for name in source.fields:

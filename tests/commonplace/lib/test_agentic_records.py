@@ -322,6 +322,49 @@ def test_a_reference_outside_the_cited_members_is_unresolved_for_the_citing_memb
     )]
 
 
+@pytest.mark.parametrize("split_declarations", [False, True])
+def test_ambiguous_references_belong_to_the_citing_document(split_declarations: bool) -> None:
+    declaration = "## Shared records\n\n#### MEM-OBJ-store — Stored object\n"
+    bodies = {
+        "memory.md": declaration,
+        "epistemic.md": declaration if split_declarations else "",
+        "candidate.md": "See MEM-OBJ-store.\n",
+    }
+    if not split_declarations:
+        bodies["memory.md"] += "\n#### MEM-OBJ-store — Duplicate object\n"
+    from commonplace.lib.agentic_records import set_record_findings
+
+    _, findings = set_record_findings("boundary.md", bodies, cites={
+        "candidate.md": ["memory.md", "epistemic.md"],
+    })
+    assert [message for name, message in findings if name == "candidate.md"] == [(
+        "candidate.md: ambiguous record MEM-OBJ-store; "
+        "multiple declarations in the documents this one may cite"
+    )]
+
+    bodies["candidate.md"] = "No record references.\n"
+    _, findings = set_record_findings("boundary.md", bodies)
+    assert not any(name == "candidate.md" for name, _ in findings)
+
+    if split_declarations:
+        bodies["candidate.md"] = "See MEM-OBJ-store.\n"
+        _, findings = set_record_findings("boundary.md", bodies, cites={"candidate.md": ["memory.md"]})
+        assert not any(name == "candidate.md" for name, _ in findings)
+
+
+def test_duplicate_source_reference_is_ambiguous_for_its_consumer() -> None:
+    from commonplace.lib.agentic_records import set_record_findings
+
+    _, findings = set_record_findings("boundary.md", {
+        "boundary.md": "## Source register\n\n| SRC-1 | First |\n| SRC-1 | Second |\n",
+        "candidate.md": "Evidence: SRC-1.\n",
+    })
+    assert ("candidate.md", (
+        "candidate.md: ambiguous record SRC-1; "
+        "multiple declarations in the documents this one may cite"
+    )) in findings
+
+
 def test_an_amendment_in_the_reconciliation_resolves_against_the_set() -> None:
     memory = MEMORY + "\n#### MEM-OBJ-store — Stored object\n"
     supersession = (

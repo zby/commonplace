@@ -1851,6 +1851,52 @@ def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) ->
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
+def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_workflow import (
+        cited_reference_refusals,
+        set_role_refusals,
+    )
+
+    run_dir = member_fixture(tmp_path)
+    output = run_dir / "output"
+    runtime = output / "runtime.md"
+    runtime.write_text(runtime.read_text().replace(
+        "## Annotations", "#### RT-OBJ-store — Duplicate object\n\n## Annotations",
+    ))
+    candidate = write(run_dir / "memory-candidate.md",
+                      (output / "memory.md").read_text() + "\nSee RT-OBJ-store.\n")
+    verification = write(run_dir / "verification.md", "# Verification\n\nSee RT-OBJ-store.\n")
+    before = {path.name: path.read_bytes() for path in output.iterdir()}
+
+    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory")
+    assert any("memory.md: ambiguous record RT-OBJ-store" in refusal for refusal in refusals)
+    refusals = cited_reference_refusals(verification, run_dir=run_dir, repo_root=tmp_path)
+    assert any("verification.md: ambiguous record RT-OBJ-store" in refusal for refusal in refusals)
+    assert {path.name: path.read_bytes() for path in output.iterdir()} == before
+
+
+def test_profile_rejects_missing_identity_source_without_requiring_whole_set(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_workflow import set_role_refusals
+
+    run_dir = member_fixture(tmp_path)
+    output = run_dir / "output"
+    candidate = write(run_dir / "profile-candidate.md", (output / "memory-profile.md").read_text()
+                      .replace("MEM-OBJ-store", "RT-OBJ-store")
+                      .replace(SOURCE, "https://example.invalid/unrelated"))
+    (output / "memory.md").unlink()
+    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory-profile")
+    assert refusals == [(
+        "[set] memory-profile.md: cannot check identity fields source-identity; "
+        "source member memory.md is absent"
+    )]
+    # Restore just the identity source. An unrelated absent member is not a
+    # candidate failure when no applicable check needs it.
+    write(output / "memory.md", "---\ntype: agentic-system-analyses/types/agent-memory-analysis-report.md\n"
+          "source-identity: https://example.invalid/unrelated\n---\n# Memory\n")
+    (output / "epistemic.md").unlink()
+    assert set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory-profile") == []
+
+
 def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     runtime = run_dir / "output/runtime.md"
