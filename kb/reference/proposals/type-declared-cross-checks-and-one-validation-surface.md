@@ -130,8 +130,9 @@ the role-scoped relation checks and the retirement of the memory-profile path
 heuristic are already in place. Adopting member mode then means analyst
 acceptance and ADR 105 self-check call member mode with the job's output file
 as scratch bytes at the member's destination, instead of assembling sibling
-bodies privately. Where the manifest sits, and whether `boundary.md` is a
-member, follows the layout proposal's nesting choice.
+bodies privately. The manifest stays at `output/ARTIFACT.yaml` and
+`boundary.md` moves beside it as a member, per the layout proposal's layout
+decision.
 
 ## Alternatives
 
