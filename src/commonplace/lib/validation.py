@@ -1124,11 +1124,9 @@ def _memory_report_pending_check_rule(
     from commonplace.lib.agentic_records import section
     from commonplace.lib.note_parser import blank_fenced_code_blocks
 
-    if (parsed.document.frontmatter or {}).get("report-status") != "complete":
-        return
     checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
     if re.search(r"(?im)^[ \t]*(?:\*\*)?Validation(?:\*\*)?:[ \t]*(?:`|\*\*)?pending\b", checks):
-        results.fails.append("memory checks: a complete report cannot retain 'Validation: pending'")
+        results.fails.append("memory checks: a report cannot retain 'Validation: pending'")
 
 
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")

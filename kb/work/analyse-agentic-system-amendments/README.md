@@ -26,6 +26,11 @@ records the method's initial development.
    and [method maintenance](../../agentic-system-analyses/instructions/maintain-analysis-method.md)
    — current execution contracts and the route for authorized method edits.
 
+4. [Separate analysis types from instructions](./separate-analysis-types-from-instructions.md)
+   — operator-requested plan for content contracts, intermediate results and
+   verifier inputs. Implementation remains separately authorized; coordinate
+   with agents already editing the method before executing it.
+
 Read history only when a design question needs its observed cases or an
 implementation audit needs its original acceptance criteria.
 

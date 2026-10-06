@@ -24,13 +24,11 @@ governs identity, common fields and statuses.
 | `run-id` | Yes | The set's run ID |
 | `source-identity` | Yes | Exact repository or capture identity |
 | `reviewed-boundary` | Yes | Full Git commit or capture label |
-| `report-status` | Yes | `complete` or `blocked` |
 
-A blocked report names missing access or an unresolved scope decision
-that prevents completing the assigned analysis. It keeps all sections;
-unreached mechanisms state explicit inspection limits rather than guessed
-findings. A blocked report never becomes a set member. A justified unknown that
-only limits a conclusion may remain in a complete report.
+A justified unknown that only limits a conclusion may remain in the report,
+naming the included part, the missing fact and the conclusion it prevents.
+A condition that prevents completing the analysis is reported through the
+job's problem path, not as a report.
 
 ## Report sections
 
@@ -144,7 +142,6 @@ description: "Memory mechanisms of {system} within {memory boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: "{repository or capture identity}"
 reviewed-boundary: "{immutable revision or capture identity}"
-report-status: complete
 ---
 
 # {System} memory report

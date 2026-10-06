@@ -71,12 +71,9 @@ properties:
             type: object
             required:
             - type
-            - report-status
             properties:
               type:
                 const: agentic-system-analyses/types/agent-memory-analysis-report.md
-              report-status:
-                const: complete
       epistemic.md:
         type: object
         required:

@@ -212,7 +212,6 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
         "run-id": RUN_ID,
         "source-identity": SOURCE,
         "reviewed-boundary": revision,
-        "report-status": "complete",
     }
     body = f"""# Fixture memory analysis
 
@@ -1069,16 +1068,16 @@ def test_prepare_rejects_a_locally_deleted_review(
     assert frontmatter(state)["run-status"] == "running"
 
 
-@pytest.mark.parametrize("mutation", ["bytes", "run", "source", "boundary", "blocked"])
-def test_publication_requires_an_exact_complete_memory_member(tmp_path: Path, mutation: str) -> None:
+@pytest.mark.parametrize("mutation", ["bytes", "run", "source", "boundary"])
+def test_publication_requires_an_exact_memory_member(tmp_path: Path, mutation: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     report = state.parent / "output/memory.md"
     if mutation == "bytes":
         report.write_text(report.read_text() + "\nChanged.\n")
     else:
         values = frontmatter(report)
-        field = {"run": "run-id", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
-        values[field] = "blocked" if mutation == "blocked" else "different"
+        field = {"run": "run-id", "source": "source-identity", "boundary": "reviewed-boundary"}[mutation]
+        values[field] = "different"
         replace_frontmatter(report, values)
         repin(state.parent / "output")
     with pytest.raises(ValueError, match="memory"):

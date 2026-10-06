@@ -14,8 +14,7 @@
             "description",
             "run-id",
             "source-identity",
-            "reviewed-boundary",
-            "report-status"
+            "reviewed-boundary"
           ],
           "properties": {
             "type": {
@@ -38,10 +37,8 @@
               "minLength": 1
             },
             "report-status": {
-              "enum": [
-                "complete",
-                "blocked"
-              ]
+              "$comment": "BACKCOMPAT: retained memory members written before 2026-10-06 carry report-status: complete; remove after no retained or archived set has the field",
+              "const": "complete"
             }
           },
           "additionalProperties": false
