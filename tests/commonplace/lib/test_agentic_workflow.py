@@ -641,7 +641,7 @@ def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> Non
     drive_to(scripted, "synthesize")
     attempt, prompt = prompt_of(scripted.round(), "synthesize")
     assert attempt == 2
-    assert "synthesis.md: unresolved record RT-OBJ-missing" in prompt
+    assert "[set] synthesis-0.md: unresolved record RT-OBJ-missing" in prompt
 
 
 @pytest.mark.slow

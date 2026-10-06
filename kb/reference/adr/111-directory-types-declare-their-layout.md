@@ -101,6 +101,16 @@ synthesis and without the overview. The memory-profile type rule keeps only
 the profile's own content rules; its references resolve in the set rule.
 Code reads member paths from the layout through `analysis_layout()`.
 
+The analysis workflow asks about set relations only through directory
+validation of the working instance. An analyst, reconciliation or profile
+candidate is placed at its role's path without being written, and acceptance
+and self-check deliver that role's findings, marked `[set]` to distinguish
+them from workflow checks such as declaration prefixes, quotation anchors and
+run-state agreement. The round-close check keeps every finding of the roles
+that exist at round close, dropping absent members. Verifications and the
+synthesis are not members; their references resolve within what the overview
+may cite.
+
 The retained set produced before this decision fails validation until a
 fresh run replaces it. Runs started before this decision, with their boundary
 at the run root, do not resume. Deterministic success establishes the declared

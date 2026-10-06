@@ -61,7 +61,7 @@ from commonplace.lib.agentic_records import (
     record_declaration,
     record_references,
     section,
-    set_record_errors,
+    set_record_findings,
     source_register_ids,
     source_register_rows,
     value_amendments,
@@ -77,6 +77,7 @@ from commonplace.lib.agentic_set import (
 )
 from commonplace.lib.analysis_worktree import preparation_for
 from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.directory_layout import Finding
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import (
@@ -157,6 +158,8 @@ orders the work: an analyst runs after the analysts it reads."""
 ANALYSTS = tuple(ANALYST_SPECS)
 RECORD_ROLES = (*ANALYSTS, "reconciliation")
 """The set roles whose records the round-close check judges."""
+LATER_ROLES = ("memory-profile", "overview")
+"""The set roles written after the record rounds close."""
 ADDRESSEES = (*ANALYSTS, "reconciliation")
 """Who a record-verification blocker can be addressed to."""
 DECLARING = {spec["prefix"]: member for member, spec in ANALYST_SPECS.items()}
@@ -431,48 +434,54 @@ def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) 
     return findings
 
 
-def set_bodies(run_dir: Path, **extra: Path) -> dict[str, str]:
-    """The bodies of the output members present and of extra documents, by set name.
+SET_LABEL = "[set] "
+"""Marks a refusal that is the set type's finding, as distinct from a workflow check."""
 
-    Each extra keyword names a file without its `.md`.
+
+def set_findings(
+    run_dir: Path, *, repo_root: Path, role: str | None = None, candidate: Path | None = None,
+) -> list[Finding]:
+    """The working set's findings, as its type reports them, by role.
+
+    With ``candidate``, its bytes stand at ``role``'s path; nothing is written
+    to ``output/``. The manifest is read as the working one, so a replay over
+    a finished, pinned set judges each step the same way the run first did.
     """
-    bodies = {}
-    for role in analysis_layout().roles.values():
-        path = run_dir / OUTPUT_DIR / role.path
-        if path.is_file():
-            bodies[role.path] = split(path.read_text(encoding="utf-8"))[1]
-    for name, path in extra.items():
-        bodies[f"{name}.md"] = split(path.read_text(encoding="utf-8"))[1]
-    return bodies
-
-
-def reference_refusals(bodies: Callable[[], dict[str, str]]) -> list[str]:
-    """Every record the bodies cite is declared once among them; the
-    boundary's Source register declares the sources."""
-    try:
-        found = bodies()
-    except (ValueError, OSError) as error:
-        return [f"a set document does not parse: {error}"]
-    _, errors = set_record_errors(analysis_layout().path("boundary"), found)
-    return errors
+    output = run_dir / OUTPUT_DIR
+    overrides: dict[Path, str | bytes] = {output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE})}
+    if candidate is not None:
+        assert role is not None
+        overrides[output / analysis_layout().path(role)] = candidate.read_bytes()
+    return ValidationRun(repo_root, (), content_overrides=overrides).artifact_findings(output)
 
 
 def set_role_refusals(path: Path, *, run_dir: Path, repo_root: Path, role: str) -> list[str]:
-    """The set's findings for one role, with ``path`` as that role's document.
+    """The set's findings for one role, with ``path`` as that role's document."""
+    try:
+        findings = set_findings(run_dir, repo_root=repo_root, role=role, candidate=path)
+    except (OSError, UnicodeError, ValueError, TypeError) as error:
+        return [f"{SET_LABEL}a set document does not parse: {error}"]
+    return [SET_LABEL + finding.message for finding in findings if finding.role == role]
 
-    The manifest is read as the working one, so a replay over a finished,
-    pinned set judges a candidate the same way the run first did.
-    """
+
+def cited_reference_refusals(path: Path, *, run_dir: Path, repo_root: Path, scope: str = "overview") -> list[str]:
+    """A document outside the set, such as a verification or the synthesis,
+    cites only records the ``scope`` role may cite, read from the working set."""
     output = run_dir / OUTPUT_DIR
+    layout = analysis_layout()
     run = ValidationRun(repo_root, (), content_overrides={
-        output / analysis_layout().path(role): path.read_bytes(),
         output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE}),
     })
     try:
-        findings = run.artifact_findings(output)
+        artifact = run.artifact(output)
+        _, body = split(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, ValueError, TypeError) as error:
-        return [f"set check: {error}"]
-    return [finding.message for finding in findings if finding.role == role]
+        return [f"{SET_LABEL}a set document does not parse: {error}"]
+    cited = [layout.path(role) for role in layout.roles[scope].cites]
+    bodies = {name: artifact.members[name].document.body for name in cited if name in artifact.members}
+    _, findings = set_record_findings(layout.path("boundary"), {**bodies, path.name: body},
+                                      cites={path.name: cited})
+    return [SET_LABEL + message for name, message in findings if name == path.name]
 
 
 def pass_refusals(
@@ -717,7 +726,7 @@ def carried_limit_refusals(synthesis_body: str, verifications: Sequence[Path]) -
 
 def synthesis_refusals(
     path: Path, *, repo_root: Path, run_id: str, boundary: Path,
-    bodies: Callable[[Path], dict[str, str]], verifications: Sequence[Path] = (),
+    references: Callable[[Path], list[str]], verifications: Sequence[Path] = (),
 ) -> list[str]:
     """A valid synthesis of this run whose links resolve from the overview and
     whose Limitations carry every declared limit."""
@@ -734,7 +743,7 @@ def synthesis_refusals(
     # Synthesis is written beside output/, then assembled into overview.md.
     refusals += agentic_set_member_link_failures(path.parent / slot("overview"), document.links)
     refusals += carried_limit_refusals(document.body, verifications)
-    return refusals + reference_refusals(partial(bodies, path))
+    return refusals + references(path)
 
 
 def verification_refusals(
@@ -1285,19 +1294,24 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def record_check(self, run_dir: Path) -> list[str]:
-        """Check the record members directly, before any public synthesis or
-        overview exists: each one's own validation, then the set's findings
-        for its role."""
+        """The round's whole-set check, before any profile or overview exists:
+        each record member's own validation, then the working set's findings.
+
+        Absent members are expected mid-run and dropped. Findings of the
+        roles written after the rounds are dropped too: a replay finds the
+        final profile and overview in place, and must write the same check
+        the round first wrote.
+        """
         output = run_dir / OUTPUT_DIR
         layout = analysis_layout()
         failures = []
         for role in RECORD_ROLES:
             name = layout.path(role)
             failures.extend(f"{name}: {failure}" for failure in member_refusals(output / name, repo_root=self.repo))
-        findings = ValidationRun(self.repo, (), content_overrides={
-            output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE}),
-        }).artifact_findings(output)
-        failures.extend(finding.message for finding in findings if finding.role in RECORD_ROLES)
+        failures.extend(
+            SET_LABEL + finding.message for finding in set_findings(run_dir, repo_root=self.repo)
+            if not finding.absent and finding.role not in LATER_ROLES
+        )
         return failures
 
     def close_round(
@@ -1351,7 +1365,7 @@ class AnalyseAgenticSystem(Workflow):
             refusals.append("structural failures require explicit blockers")
         if not blockers_refusals(blockers):
             refusals += addressee_refusals(blockers)
-        return refusals + reference_refusals(partial(set_bodies, run_dir, verification=path))
+        return refusals + cited_reference_refusals(path, run_dir=run_dir, repo_root=self.repo)
 
     def profile_job(self, run_dir: Path, round_: int) -> Job:
         reads = {"boundary": slot("boundary"), "runtime": slot("runtime"), "memory": slot("memory"),
@@ -1395,8 +1409,8 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
-        return self.verifier_refusals(run_dir, "profile")(path) + reference_refusals(
-            partial(set_bodies, run_dir, verification=path))
+        return self.verifier_refusals(run_dir, "profile")(path) + cited_reference_refusals(
+            path, run_dir=run_dir, repo_root=self.repo)
 
     def synthesis_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
         """The synthesizer reads the accepted members and the final record and
@@ -1415,7 +1429,7 @@ class AnalyseAgenticSystem(Workflow):
             validator=partial(synthesis_refusals, repo_root=self.repo, run_id=run_dir.name,
                               boundary=run_dir / slot("boundary"),
                               verifications=tuple(run_dir / name for name in judged if name),
-                              bodies=lambda path: set_bodies(run_dir, synthesis=path)),
+                              references=partial(cited_reference_refusals, run_dir=run_dir, repo_root=self.repo)),
         )
 
     @staticmethod
@@ -1436,9 +1450,8 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
-        return self.verifier_refusals(run_dir, "synthesis")(path) + reference_refusals(
-            partial(set_bodies, run_dir,
-                    synthesis=run_dir / round_file("synthesis", round_), verification=path))
+        return self.verifier_refusals(run_dir, "synthesis")(path) + cited_reference_refusals(
+            path, run_dir=run_dir, repo_root=self.repo)
 
     # Steps that code executes
 

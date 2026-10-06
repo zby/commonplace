@@ -48,10 +48,12 @@ class Requirement:
 @dataclass(frozen=True)
 class Finding:
     """One layout or relation finding; ``role`` is None for files no role matches
-    and for findings about the artifact as a whole."""
+    and for findings about the artifact as a whole. ``absent`` marks a required
+    member that is not there yet, which a working instance expects."""
 
     role: str | None
     message: str
+    absent: bool = False
 
 
 @dataclass(frozen=True)
@@ -176,7 +178,7 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> li
         document = members.get(role.path)
         if document is None:
             if role.name in required:
-                findings.append(Finding(role.name, f"{role.path}: required member is absent"))
+                findings.append(Finding(role.name, f"{role.path}: required member is absent", absent=True))
             continue
         if permitted is not None and role.name not in permitted:
             value = (members[layout.path(layout.required.by_role)].frontmatter or {}).get(layout.required.by_field)

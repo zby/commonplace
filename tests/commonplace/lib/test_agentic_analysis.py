@@ -1828,3 +1828,25 @@ def test_replacement_recognition_distinguishes_incumbent_from_interruption(tmp_p
     archive.rename(current)
     (current / "runtime.md").unlink()
     assert definition.recognize_publication(spec) is Recognition.UNKNOWN
+
+
+def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_workflow import set_role_refusals
+
+    run_dir = member_fixture(tmp_path)
+    output = run_dir / "output"
+    epistemic = output / "epistemic.md"
+    epistemic.write_text(epistemic.read_text() + "\nEPI-OBJ-dangling is cited here.\n")
+    before = {path.name: path.read_bytes() for path in output.iterdir()}
+    candidate = write(run_dir / "runtime-report-1.md",
+                      (output / "runtime.md").read_text().replace(f"run-id: {RUN_ID}", "run-id: AAS-2026-09-04-other-01"))
+
+    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="runtime")
+
+    assert refusals == [(
+        f"[set] runtime.md: identity field run-id 'AAS-2026-09-04-other-01' does not match boundary.md; "
+        f"expected '{RUN_ID}'"
+    )]
+    assert any("EPI-OBJ-dangling" in refusal for refusal in
+               set_role_refusals(epistemic, run_dir=run_dir, repo_root=tmp_path, role="epistemic"))
+    assert {path.name: path.read_bytes() for path in output.iterdir()} == before

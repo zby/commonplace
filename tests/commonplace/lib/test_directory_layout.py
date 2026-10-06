@@ -23,7 +23,7 @@ def document(values: str):
 def test_a_finished_value_requires_its_roles() -> None:
     layout = parse_layout(LAYOUT)
     findings = layout_findings(layout, {"head.md": document("type: t/head.md\nstate: done")})
-    assert findings == [Finding("body", "body.md: required member is absent")]
+    assert findings == [Finding("body", "body.md: required member is absent", absent=True)]
 
 
 def test_another_value_admits_only_the_roles_always_required() -> None:
@@ -43,7 +43,7 @@ def test_an_incomplete_instance_reports_absence_and_checks_what_is_present() -> 
     })
     assert findings == [
         Finding(None, "notes.md: no layout role; this type has closed membership"),
-        Finding("head", "head.md: required member is absent"),
+        Finding("head", "head.md: required member is absent", absent=True),
         Finding("body", "body.md: type 't/other.md' does not match the layout's t/body.md"),
     ]
 

@@ -28,6 +28,7 @@ from commonplace.lib.agentic_records import (
 from commonplace.lib.agentic_workflow import (
     AnalyseAgenticSystem,
     blockers_refusals,
+    cited_reference_refusals,
     subsection,
     synthesis_refusals,
 )
@@ -432,13 +433,11 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
         "| Internal role ownership unresolved | RT-RTE-model-call | synthetic fixture | Autonomy is not established | Role-by-role execution evidence |\n"
         "| Evidence-responsive organizational change and exercised downstream dependence not inspected | RT-OBJ-store | synthetic fixture boundary and horizon | Self-improvement is not established | Declared objective, evidence-shaped organizational update, live consumer/channel/force and subsequent causal dependence |\n"
         "| Initial admission control inaccessible | MEM-OBJ-store | synthetic fixture | Complete write-agency coverage is prevented | Initial admission policy |\n")
-    bodies = {name: path.read_text() for name in ("boundary.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md")
-              if (path := directory / name).is_file()}
     candidate = directory.parent / "synthesis.md"
     candidate.write_text(synthesis)
     check = partial(synthesis_refusals, repo_root=tmp_path, run_id=overview_fields["run-id"],
                     boundary=directory / "boundary.md",
-                    bodies=lambda path: {**bodies, "synthesis.md": path.read_text()})
+                    references=partial(cited_reference_refusals, run_dir=directory.parent, repo_root=tmp_path))
     assert check(candidate) == []
     candidate.write_text(synthesis.replace("MEM-OBJ-store retains", "MEM-OBJ-undeclared retains"))
     assert any("unresolved record MEM-OBJ-undeclared" in error for error in check(candidate))
