@@ -899,7 +899,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         ("example/system/blob/{revision}/README.md", None),
         ("unrelated/other/blob/{revision}/README.md", "uses repository"),
         ("example/system/blob/main/README.md", "uses revision"),
-        ("example/system/blob/{revision}/missing.md", "does not resolve to a blob"),
+        ("example/system/blob/{revision}/missing.md", "does not name a file at the recorded commit"),
         ("example/system/blob/{revision}/README.md#L1", "cite the path without a range"),
     ],
 )
@@ -954,8 +954,6 @@ def test_quote_anchors_resolve_from_the_recorded_commit(
     else:
         attribution = f"`README.md` @ `{revision}`"
 
-    source_root = Path(values["source"]["path"])
-    write(source_root / "README.md", "# Changed worktree\n")
     output = tmp_path / values["generated-review"]["path"]
     with output.open("a", encoding="utf-8") as handle:
         handle.write(
@@ -971,7 +969,7 @@ def test_quote_anchors_resolve_from_the_recorded_commit(
     assert not any("unverified" in item for item in results.infos)
 
 
-def test_quote_anchor_rejects_text_found_only_in_the_worktree(tmp_path: Path) -> None:
+def test_a_locally_changed_checkout_is_not_evidence_of_its_commit(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
     values = frontmatter(state)
     revision = values["source"]["revision"]
@@ -988,7 +986,10 @@ def test_quote_anchor_rejects_text_found_only_in_the_worktree(tmp_path: Path) ->
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("quote does not occur" in item for item in results.fails)
+    assert any("has local changes" in item for item in results.fails)
+    assert not any("quote resolves" in item for item in results.passes)
+    set_check = validation.validate_note(state.parent / "output", repo_root=tmp_path)
+    assert any("quotations unverified" in info and "has local changes" in info for info in set_check.infos)
 
 
 def test_handoff_command_refuses_a_running_run(
@@ -1640,7 +1641,7 @@ def test_path_only_anchor_to_a_binary_blob_resolves(tmp_path: Path) -> None:
         content.replace("paper.pdf", "missing.pdf"),
         source_root=root, source_identity=identity, source_revision=revision,
     )
-    assert any("does not resolve to a blob" in item for item in failures)
+    assert any("does not name a file at the recorded commit" in item for item in failures)
 
 
 def test_generated_source_links_publish_through_regular_validator(tmp_path, monkeypatch):
@@ -1667,8 +1668,6 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
 
     source = frontmatter(state)["source"]
     identity = SourceIdentity("git", source["identity"], source["revision"], Path(source["path"]), None)
-    # The worktree must not supply either the selected text or its locations.
-    write(identity.path / "README.md", "uncommitted replacement\n")
     runtime = state.parent / "output/runtime.md"
     for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
         if text == "* repeated comment":

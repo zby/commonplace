@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import subprocess
 from collections.abc import Mapping
 from dataclasses import dataclass
 from hashlib import sha256
@@ -308,38 +307,10 @@ def _same_repository(repository: str, source_identity: str) -> bool:
     return repository.casefold() == expected.casefold()
 
 
-def _git_blob_exists(
-    *, source_root: Path, revision: str, source_path: str
-) -> str | None:
-    """Check that a path names a blob at the commit, without decoding it."""
-    if not is_normalized_relative(source_path):
-        return "expected a normalized commit-relative path"
-    try:
-        kind = subprocess.run(
-            [
-                "git",
-                "--no-replace-objects",
-                "-C",
-                str(source_root),
-                "cat-file",
-                "-t",
-                f"{revision}:{source_path}",
-            ],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    except OSError as exc:
-        return f"could not invoke git: {exc}"
-    if kind.returncode != 0 or kind.stdout.strip() != "blob":
-        return "path does not resolve to a blob at the recorded commit"
-    return None
-
-
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
-    """Resolve GitHub source links by path at the recorded commit.
+    """Resolve GitHub source links by path in the checkout of the recorded commit.
 
     Line ranges belong to quote attributions, which quote verification
     resolves; member validation rejects ranged anchors in prose. A cited
@@ -373,12 +344,12 @@ def _verify_source_anchors(
             continue
         paths.add(blob.path)
 
+    pin = GitPin(source_identity, source_revision, source_root)
+    missing = pin.missing() if paths else None
+    if missing is not None:
+        return passes, [f"source citation: {missing}"]
     for source_path in sorted(paths):
-        error = _git_blob_exists(
-            source_root=source_root,
-            revision=source_revision,
-            source_path=source_path,
-        )
+        _, error = pin.file(source_path)
         if error is not None:
             failures.append(f"source citation: {source_path}: {error}")
             continue

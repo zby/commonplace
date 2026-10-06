@@ -33,6 +33,13 @@ capture file pinned by digest. Each citation resolves to `match`, `mismatch`
 (the attribution does not name the pin, or the quote is absent, ambiguous or
 outside its range) or `unverified` (the pinned bytes are not here).
 
+A Git pin reads files from the recorded checkout itself, not from the
+object store. Freezing leaves the checkout exactly at the frozen commit; the
+resolver confirms once that HEAD is that commit and nothing is changed, and
+otherwise treats the pinned bytes as absent. A checkout that is missing, at
+another commit or locally edited therefore makes quotations unverified, and a
+cited path missing from a confirmed checkout is a mismatch.
+
 The analysis set rule resolves every member's quotations against the
 boundary's `source`. Standing validation reports unverified quotations once
 per member as information, as it does for ingest extracts. The analysis
@@ -50,6 +57,10 @@ already rejected for ingest snapshots.
 **Store analysis sources as KB ingests with snapshots.** A checkout at a
 commit is many files, not one snapshot; one resolver interface over distinct
 pins keeps both shapes without converting either.
+
+**Read each cited file from the commit with `git cat-file`.** It tolerates a
+checkout at another commit or with local edits, which no workflow produces,
+at the cost of one Git process per citation on every validation.
 
 **Keep a run-state path for analysis quotations.** It would leave standing
 validation and draft feedback without quotation checks, and two resolvers

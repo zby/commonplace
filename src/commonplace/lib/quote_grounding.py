@@ -103,7 +103,13 @@ class SnapshotPin:
 
 @dataclass
 class GitPin:
-    """A checkout frozen at one commit; a citation names a path in it."""
+    """A checkout frozen at one commit; a citation names a path in it.
+
+    Files are read from the checkout itself. That is only evidence of the
+    commit while the checkout is exactly that commit's files, which freezing
+    establishes; this is confirmed once, and a checkout that is absent, at
+    another commit or locally changed leaves every citation unverified.
+    """
 
     identity: str
     revision: str
@@ -124,16 +130,31 @@ class GitPin:
     def missing(self) -> str | None:
         """Why the pinned bytes are not here, or None when they are."""
         if self._missing is False:
-            self._missing = git_commit_missing(self.root, self.revision)
+            self._missing = checkout_not_at(self.root, self.revision)
         return self._missing  # type: ignore[return-value]
+
+    def file(self, path: str) -> tuple[Path | None, str | None]:
+        """The checkout file a commit-relative path names, or why it names none."""
+        if not is_normalized_relative(path):
+            return None, "expected a normalized commit-relative path"
+        file = self.root / path
+        if not file.is_file() or not file.resolve().is_relative_to(self.root.resolve()):
+            return None, "path does not name a file at the recorded commit"
+        return file, None
 
     def read(self, citation: Citation) -> SourceText:
         missing = self.missing()
         if missing is not None:
             return SourceText(missing=missing)
         path, _ = git_citation_path(citation)
-        text, error = git_blob_text(source_root=self.root, revision=self.revision, source_path=path)
-        return SourceText(text, path, f"{path} at the recorded commit", error=error)
+        file, error = self.file(path)
+        if file is None:
+            return SourceText(path=path, error=error)
+        try:
+            text = file.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            return SourceText(path=path, error="cited file is not UTF-8 text")
+        return SourceText(text, path, f"{path} at the recorded commit")
 
 
 @dataclass
@@ -269,38 +290,23 @@ def quote_ambiguity_advice(citation: Citation, source_text: str, *, path: str) -
     return "choose the occurrence whose context supports the finding, or lengthen the quotation:\n" + "\n".join(proposals)
 
 
-def git_commit_missing(root: Path, revision: str) -> str | None:
-    """Why the frozen commit is not readable here, or None when it is."""
+def checkout_not_at(root: Path, revision: str) -> str | None:
+    """Why ``root`` is not exactly the files of ``revision``, or None when it is."""
     if not root.is_dir():
         return f"source checkout: directory does not exist: {root}"
-    try:
-        check = subprocess.run(
-            ["git", "--no-replace-objects", "-C", str(root), "cat-file", "-e", f"{revision}^{{commit}}"],
-            check=False, capture_output=True, text=True,
-        )
-    except OSError as exc:
-        return f"source checkout: could not invoke git: {exc}"
-    if check.returncode != 0:
-        return "source checkout: recorded revision is not a commit in the checkout"
+
+    def git(*args: str) -> str | None:
+        try:
+            done = subprocess.run(["git", "-C", str(root), *args], check=False, capture_output=True, text=True)
+        except OSError:
+            return None
+        return done.stdout.strip() if done.returncode == 0 else None
+
+    head = git("rev-parse", "HEAD")
+    if head is None:
+        return f"source checkout: not a readable Git checkout: {root}"
+    if head != revision:
+        return f"source checkout: at {head}, not the frozen revision {revision}"
+    if git("status", "--porcelain"):
+        return "source checkout: has local changes, so its files are not the frozen revision's"
     return None
-
-
-def git_blob_text(
-    *, source_root: Path, revision: str, source_path: str
-) -> tuple[str | None, str | None]:
-    if not is_normalized_relative(source_path):
-        return None, "expected a normalized commit-relative path"
-    try:
-        blob = subprocess.run(
-            ["git", "--no-replace-objects", "-C", str(source_root), "cat-file", "blob",
-             f"{revision}:{source_path}"],
-            check=False, capture_output=True,
-        )
-    except OSError as exc:
-        return None, f"could not invoke git: {exc}"
-    if blob.returncode != 0:
-        return None, "path does not resolve to a blob at the recorded commit"
-    try:
-        return blob.stdout.decode("utf-8"), None
-    except UnicodeDecodeError:
-        return None, "cited blob is not UTF-8 text"
