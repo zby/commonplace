@@ -134,9 +134,11 @@ exists.
 
 ### The analysis set
 
-The layout decisions for the set are below. Moving the workflow's acceptance,
-round-close and publication code onto the layout, and the runs that test it,
-are specified in
+The layout decisions for the set are below. The workflow's acceptance,
+round-close and publication code moved onto the layout on 2026-10-06. The
+remaining adoption, the synthesis and verifications as members, the overview
+thinned to an entry page and drafts checked through `commonplace-validate`,
+is specified in
 [adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md).
 
 - **The boundary moves into `output/`.** Setup creates `output/` with the
