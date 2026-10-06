@@ -7,9 +7,10 @@ tags: [type-system, kb-maintenance]
 # Document validation in working-set context
 
 The directory-type mechanism from ADR 095 validates a set as a whole, and
-[directory types declare their layout](./directory-types-declare-their-layout.md)
-lets it validate an incomplete working instance with findings attributed to
-roles. This proposal adds a member mode: one candidate file is validated at
+the declared layout of
+[ADR 111](../adr/111-directory-types-declare-their-layout.md), adopted from
+the proposal "Directory types declare their layout", lets it validate an
+incomplete working instance with findings attributed to roles. This proposal adds a member mode: one candidate file is validated at
 its intended member path, against the siblings its role relates to, whether
 or not the set is complete. The document is the target; available members
 supply context. Reading a member to resolve a reference does not make that

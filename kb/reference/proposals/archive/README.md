@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Directory types declare their layout](./directory-types-declare-their-layout.md) — adopted by ADR 111, 2026-10-06. The pre-adoption state, with the boundary outside the artifact and member names repeated across seven modules and the schema, and the candidate layout vocabulary the set type then declared.
 - [Merging analysis runs back from isolated worktrees](./merging-analysis-runs-back-from-isolated-worktrees.md) — adopted by ADR 106, 2026-10-05. Three colliding Dynamic Cheatsheet run IDs, an unintegrated worktree transfer path and inconsistent audit evidence keys before tokenized runs and guarded merges.
 - [Required route fields as labelled record lines](./required-route-fields-as-labelled-record-lines.md) — adopted in narrowed form by ADR 100, 2026-10-02. Historical route-label counts and a specialist correction episode; old-set migration and an additional adequacy assay were declined.
 - [Open an analysis run in code](./open-an-analysis-run-in-code.md) — adopted through workflow start by ADR 101, 2026-10-02. The pre-adoption manual opening, late preflight and copied incumbent-digest path.

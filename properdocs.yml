@@ -454,6 +454,7 @@ plugins:
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/assertion-force-separate-from-lifecycle-status.md': 'reference/proposals/archive/assertion-force-separate-from-lifecycle-status.md'
         'reference/proposals/atomic-step-grounding-bounds-unquoted-sources-per-note.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
+        'reference/proposals/directory-types-declare-their-layout.md': 'reference/proposals/archive/directory-types-declare-their-layout.md'
         'reference/proposals/exceeding-a-review-budget-splits-the-task.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/external-articles-collection.md': 'reference/proposals/archive/external-articles-collection.md'
         'reference/proposals/fewer-authored-decisions-in-agentic-analysis.md': 'reference/adr/097-agentic-analysis-drops-decisions-that-change-no-result.md'

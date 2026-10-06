@@ -6,6 +6,8 @@ tags: [type-system]
 
 # Directory types declare their layout
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 111](../../adr/111-directory-types-declare-their-layout.md): the [analysis set type](../../../agentic-system-analyses/types/agentic-system-analysis-set.md) declares the layout and the validation contract describes layout checks. The pre-adoption state, in which the boundary sat outside the artifact and member names were repeated across seven modules, and the candidate vocabulary remain here — design texture only.
+
 A directory type is defined outside its instances: a manifest points at a
 type spec, and the type spec names a schema. That definition cannot describe
 the directory. It sees a flat set of sibling Markdown files and encodes
@@ -21,17 +23,17 @@ same declaration.
 
 The operator selected this design on 2026-10-06. It is not shipped behavior.
 The companion proposal
-[document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md)
+[document validation in working-set context](../type-declared-cross-checks-and-one-validation-surface.md)
 depends on this one; this one does not depend on it.
 
 ## Current state (as of 2026-10-06)
 
-- [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md)
+- [ADR 095](../../adr/095-directory-artifacts-add-shared-set-validation.md)
   recognizes a directory artifact by `ARTIFACT.yaml` at its root. Membership
   is visible Markdown files directly beside the manifest. `member_paths` in
   `src/commonplace/lib/directory_artifact.py` keeps direct children only.
 - The type's schema receives `{manifest, members}`. The one directory type,
-  the [analysis set](../../agentic-system-analyses/types/agentic-system-analysis-set.md),
+  the [analysis set](../../../agentic-system-analyses/types/agentic-system-analysis-set.md),
   encodes each role as a `members.properties.<filename>` entry with a
   constant document type, encodes completeness as an if/then on the
   overview's `result-disposition`, and requires a hash per manifest entry.
@@ -139,7 +141,7 @@ round-close and publication code moved onto the layout on 2026-10-06. The
 remaining adoption, the synthesis and verifications as members, the overview
 thinned to an entry page and drafts checked through `commonplace-validate`,
 is specified in
-[adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md).
+[adopting the declared layout in the analysis workflow](../adopt-declared-layout-in-the-analysis-workflow.md).
 
 - **The boundary moves into `output/`.** Setup creates `output/` with the
   type-only manifest and the boundary job writes `output/boundary.md` as the
@@ -290,7 +292,7 @@ For the implementing ADR to record.
   need the rule set to know what a role relates to, so the layout would be
   the schema's filename properties renamed.
 - **A constraint language.** Rejected, as in ADR 095 and the
-  [type-selected Python validation proposal](./type-selected-python-validation-checks.md).
+  [type-selected Python validation proposal](../type-selected-python-validation-checks.md).
 - **Hashing as a layout property.** Rejected: content identity is not
   structure, and a role-level flag would need a phase concept to let working
   instances validate.
