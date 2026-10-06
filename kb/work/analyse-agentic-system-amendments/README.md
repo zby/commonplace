@@ -28,8 +28,8 @@ records the method's initial development.
 
 4. [Separate analysis types from instructions](./separate-analysis-types-from-instructions.md)
    — operator-requested plan for content contracts, intermediate results and
-   verifier inputs. Implementation remains separately authorized; coordinate
-   with agents already editing the method before executing it.
+   verifier inputs. Implemented on 2026-10-06 as far as the method itself
+   goes; see the state entry below for what remains.
 
 Read history only when a design question needs its observed cases or an
 implementation audit needs its original acceptance criteria.
@@ -52,6 +52,24 @@ As of the 2026-10-05 direction:
   implemented under [ADR 108](../../reference/adr/108-declaring-analysts-correct-their-reports.md);
   its result section lists what was built. No model run has exercised it,
   and it does not include the publication policy.
+- The type/instruction separation is implemented (commits `0e60d18d4`
+  through `ea942625e`). Every accepted output now has a type: the boundary,
+  the three analyst reports, the reconciliation, the three verifications and
+  the synthesis, each written whole by its worker and checked at acceptance
+  against the run's identity. The record contract states the correction
+  answers' form; the record verifier loads the boundary contract it judges
+  against. The run-state and overview types hold checkable properties only.
+  The job instructions (reconcile, verify, runtime, memory, epistemic) are
+  written as situation, mission and boundaries, and no longer restate
+  criteria the loaded contracts carry. Not done: the three shared contracts
+  still sit under `instructions/` (layout only); a few cross-references to
+  other jobs remain in contracts; and the plan's shared-contract review
+  boundary was examined only against the gate/freshness review system, which
+  the method does not use, so it stands as a decision for the operator if
+  retained sets are ever reviewed through that system.
+- The analysts are scheduled from one table (`ANALYST_SPECS`) with
+  `<member>-<n>` job names; a correcting analyst reads its previous report
+  and a code-cut request packet, not the other reports.
 - The [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
   was selected for implementation after the classification revision. That
   revision closed on 2026-10-05, so the policy is now unblocked but not live.
