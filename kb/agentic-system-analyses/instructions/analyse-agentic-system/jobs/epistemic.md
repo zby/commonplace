@@ -20,92 +20,44 @@ Common parameters are defined in the supplied worker rules.
 | `requests` | Absolute path of the blockers addressed to your report, with the current declarations of the records they cite from other reports. | `correction` |
 | `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
-## Task
+## Situation
 
-Write the epistemic member to `output` under the supplied epistemic type.
-It answers whether and how `system` acquires or produces truth-apt content,
-checks it, grants reliance, and lets it affect later behavior. Work from
-`boundary` and `runtime`; the shared contracts supply evidence and record
-rules. When `round = correction`, follow **Correct a report after verification** in
-the supplied worker rules; the rest of this instruction still governs the
-report's content.
+The runtime analyst has written `runtime`, a provisional account of how
+`system` runs, with its routes as `RT-` records. The memory analyst works in
+parallel with you and does not see your report. A reconciler will connect
+your records to the others', and an independent verifier will judge them
+against the frozen source.
 
-The memory analyst runs in parallel. Cite your own declarations, `runtime`
-records, the Source register in `boundary` and, in a correction round, any
-record `requests` supplies. Acceptance requires a valid member with resolved
-citations.
-Declare new records with `EPI-`. Keep supplied `RT-` IDs unchanged in your
-inventory and ledger when assessing the same referents.
+## Mission
 
-## Steps
+Write the epistemic report to `output` under the supplied epistemic type. It
+answers whether and how `system` acquires or produces truth-apt content,
+checks it, grants or withholds reliance, and lets it affect later behavior.
+The type fixes the blocks, the early branch for systems that only store or
+serve content, the content and update relations, the ledger and its
+controlled values, and the assessment limits; follow its checking order and
+record `not determinable` where the accessible evidence cannot individuate
+truth-apt content. Declare new records with `EPI-`; keep supplied `RT-` IDs
+when assessing the same referents, and flag a needed supersession or a
+defective supplied fact beside the finding it affects, with evidence.
 
-1. **Fix the boundary.** Fill Source-and-claim boundary from the supplied
-   boundary and register. Check CLI dispatch, hooks, registered tools and
-   exposed library/service operations against the runtime account. Trace
-   material evaluation, cleanup, rejection and withdrawal through their
-   result and consequential consumer, including operations the runtime
-   omitted. Retain the type's coverage table and explicit unassessed limits.
+Treat the runtime report as a starting account: check CLI dispatch, hooks,
+registered tools and exposed operations against it, and trace material
+evaluation, cleanup, rejection and withdrawal through their results and
+consequential consumers, including operations the runtime omitted. Name a
+target and its domain before judging its evaluator. For a deterministic text
+transformation, trace a concrete input through the inspected code and label
+the result a source-inspected deduction.
 
-2. **Inventory material objects before evaluators.** Use source-native
-   names and the type's material-route boundary. Before new declarations,
-   compare referents with supplied records under the shared record contract.
-   Separate heterogeneous parts into inventory rows and declarations. Declare
-   a part of exactly one supplied record with `Part of:` under the shared
-   contract; keep a multi-record grouping's distinct-identity comparison.
-   Flag any needed supersession by declared parts or defective supplied fact beside its affected finding,
-   with evidence. Name the target and domain before judging its evaluator.
-   Inspect natural-language content and symbolic artifacts within their
-   semantics. Assess distributed-parametric state only from accessible
-   sources and supplied execution evidence. If that evidence cannot
-   individuate truth-apt content, record `not determinable`.
+## Boundaries
 
-3. **Apply the early branch.**
+Cite your own declarations, `runtime` records, the Source register of
+`boundary` and, in a correction round, any record `requests` supplies; the
+output is refused with unresolved IDs otherwise. Assess distributed-parametric
+state only from accessible sources and supplied execution evidence.
 
-   - For storage, retrieval, serving or direct use alone, with no relevant
-     transformation or knowledge-production claim, record each material
-     ledger function or the type's empty-ledger statement. Record any
-     operational/behavioral authority and the bounded absence of a relevant
-     check or epistemic authority. Use the type's no-claim comparison and
-     bounded conclusion; this completes the member.
-   - For a knowledge-production claim with no supporting implemented or
-     observed route, inventory its claimed object and classify the claimed
-     transformation first. Record claimed functions and compare them with
-     the missing implementation or operation. Continue with remaining
-     evidenced routes.
-   - Otherwise continue. Scoped absence excludes no informal or unobserved
-     route beyond its search boundary.
+When `round = correction`, follow **Correct a report after verification** in
+the supplied worker rules; this instruction still governs the report's
+content.
 
-4. **Classify content edges and direct adaptations.** Apply the type's
-   content/update relations to each edge, in its checking order. Split
-   sequential transformations; state the remaining possibilities and
-   needed evidence when classification is indeterminate. Describe
-   non-truth-apt updates without forcing them into the truth-apt taxonomy.
-   For deterministic text transformations, trace a concrete input through
-   the inspected code and compare the resulting meaning. Label such findings
-   as source-inspected deductions; they do not require target execution.
-   For routes with no content change, still assess their consequential
-   function and authority.
-
-5. **Build the authority-route ledger.** Fill the type's fields, naming
-   targets before evaluators. Split or link rows for distinct consequential
-   functions and bound each check's epistemic and operational licenses
-   under Assessment limits. Cite a supplied record's retained passage when
-   it suffices; retain newly needed passages beside their findings.
-
-6. **Compare claims and conclude.** Fill the claim comparison and Bounded
-   conclusion from the routes, applying the type's assessment limits.
-   Include only findings that change the answer to the analysis question.
-   Preserve supported functions alongside unresolved included functions, naming
-   missing facts and prevented conclusions locally. Assess theory-builder
-   conditions, learning, reflection, autonomy and self-improvement independently
-   at their own route/property boundaries. Do not turn several unestablished
-   properties into a bundled negative or infer improved capacity from a retained
-   trace-fed update. Unsupported assertions and concealed gaps remain defects;
-   faithful uncertainty alone does not prevent completion.
-
-## Check
-
-Check coverage, object separation, edge classifications, evidence support
-and bounded licenses against the type. Run the acceptance check before
-submitting and repair refusals; the type defines ledger formatting and
-controlled values.
+Run the acceptance check before submitting.

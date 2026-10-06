@@ -254,7 +254,7 @@ def loaded_packet(job, run):
 
 
 @pytest.mark.parametrize("builder, phrases", [
-    (lambda d, r: d.analyst_job(r, "memory", 0), ["generic caller identity does not establish human control", "implemented transformation", "missing facts and prevented conclusions"]),
+    (lambda d, r: d.analyst_job(r, "memory", 0), ["generic caller identity does not establish human control", "implemented transformation", "the missing fact, inspection/access limit and"]),
     (lambda d, r: d.analyst_job(r, "epistemic", 0), ["checking is never", "improved capacity", "independent claims"]),
     (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
     (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),

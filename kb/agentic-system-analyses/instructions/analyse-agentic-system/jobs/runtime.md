@@ -19,45 +19,41 @@ Common parameters are defined in the supplied worker rules.
 | `requests` | Absolute path of the blockers addressed to your report, with the current declarations of the records they cite from other reports. | `correction` |
 | `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
-## Task
+## Situation
 
-Write the runtime member to `output` under the supplied runtime type,
-within `boundary`. It gives the later specialists their starting account.
+An analysis run of `system` has frozen its evidence boundary in `boundary`.
+Nothing has yet been established about how the system runs. The memory and
+epistemic analysts will start from your report, and a reconciler and an
+independent verifier will read it against the frozen source.
+
+## Mission
+
+Write the runtime report to `output` under the supplied runtime type, within
+`boundary`, so that the later analysts have a source-grounded account of the
+consequential claimed work, the shipped entry paths, one ordinary invocation
+traced end to end, the material routes, the load-bearing guarantees and their
+enforcement points, the distributed-parametric components, and the mechanisms
+that admit changes to the product, retained knowledge, capabilities or
+production machinery. Declare runtime records with `RT-` under the shared
+record contract; the type fixes the fields each kind of record carries.
+
+A guarantee covers only the paths its enforcement point covers, so judge it
+after enumerating the materially equivalent alternate paths: direct model
+calls, provider-native tools, host callbacks, shell access, extension code,
+subprocesses or remote workers, manual graph control, and durable variants.
+Inspect the smallest warranted set of forcing cases, ordinarily two to four
+for a full code-grounded analysis, and state what remains unobserved.
+Distinguish the capability surface, the current grant set and the deployed
+isolation envelope. Leave memory revisions to the memory analyst.
+
+## Boundaries
+
+Cite your own declarations, the Source register of `boundary` and, in a
+correction round, any record `requests` supplies; the output is refused with
+unresolved IDs otherwise. Read evidence only from the frozen source.
+
 When `round = correction`, follow **Correct a report after verification** in
-the supplied worker rules; the rest of this instruction still governs the
-report's content.
-Declare runtime-owned records with `RT-` under the shared record contract.
-
-1. Begin with consequential claimed work and shipped entry paths. Trace one
-   ordinary invocation end to end and record it with the fields the type's
-   Runtime account requires.
-2. Enumerate materially equivalent alternate paths before judging a
-   guarantee: direct model calls, provider-native tools, host callbacks,
-   shell access, extension code, subprocesses or remote workers, manual
-   graph control, and durable variants where present. A guarantee covers
-   only the paths its enforcement point covers.
-3. Inspect the smallest warranted set of forcing cases in the source,
-   ordinarily two to four for a full code-grounded analysis. Use supplied
-   execution evidence when available; state what remains unobserved.
-4. Record material routes under the shared record contract and load-bearing
-   guarantees under the runtime type. Audit each route's read-back fields
-   and applicability reasons before submitting.
-5. Distinguish the capability surface, current grant set, and deployed
-   isolation envelope. Inspect permissions, approval, delegation, dynamic
-   extension, reliability, observability, providers, packaging, and
-   performance only where they change claimed work, a control path, evidence
-   strength, or a result of the memory or epistemic analyst.
-6. Inventory the distributed-parametric components used by inspected routes
-   (LLMs, embedding models, parametric routers, critics and adapters) as
-   `RT-CMP-*` records with the shared component fields.
-7. Inspect materially distinct mechanisms that admit changes to the product,
-   retained knowledge or instructions, capabilities, or production
-   machinery. Record each on its admitting `RT-RTE-*` record with the
-   conditional fields the shared record contract requires. Leave memory
-   revisions to the memory analyst.
-
-Acceptance requires a valid member whose citations resolve against its
-own declarations, the Source register of `boundary` and, in a correction
-round, any record `requests` supplies.
+the supplied worker rules; this instruction still governs the report's
+content.
 
 Run the acceptance check before submitting.
