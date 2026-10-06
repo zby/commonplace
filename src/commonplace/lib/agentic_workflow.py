@@ -59,6 +59,8 @@ from commonplace.lib.agentic_publication import (
 from commonplace.lib.agentic_records import (
     amendment_index,
     declared_ids,
+    record_declaration,
+    record_references,
     section,
     set_record_errors,
     source_register_ids,
@@ -139,13 +141,20 @@ BOUNDARY_FIELDS = (
     "evidence-tier",
 )
 SOURCE_FIELDS = ("kind", "identity", "revision", "path", "sha256")
-ANALYSTS = ("runtime", "memory", "epistemic")
-"""The analyst reports, with the runtime report first: the other two read it."""
+ANALYST_SPECS: dict[str, dict[str, Any]] = {
+    "runtime": {"prefix": "RT-", "contract": RUNTIME_CONTRACT, "reads": ()},
+    "memory": {"prefix": "MEM-", "contract": MEMORY_CONTRACT, "reads": ("runtime",)},
+    "epistemic": {"prefix": "EPI-", "contract": EPISTEMIC_CONTRACT, "reads": ("runtime",)},
+}
+"""The analysts: the ID prefix each declares, the type its report follows,
+and the analysts whose reports it reads in its first round. `reads` also
+orders the work: an analyst runs after the analysts it reads."""
+ANALYSTS = tuple(ANALYST_SPECS)
 ADDRESSEES = (*ANALYSTS, "reconciliation")
 """Who a record-verification blocker can be addressed to."""
 CURRENT = {"runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC}
 """Where the current version of each analyst report is in the output set."""
-PREFIXES = {"runtime": "RT-", "memory": "MEM-", "epistemic": "EPI-"}
+DECLARING = {spec["prefix"]: member for member, spec in ANALYST_SPECS.items()}
 ANSWERS_NAME = "answers.md"
 """What a correcting analyst writes beside its report, in its job workspace."""
 DESCRIPTION_LENGTH = (50, 250)
@@ -205,6 +214,12 @@ def reading_ranges(path: Path) -> list[tuple[int, int]]:
 def report(member: str, round_: int) -> str:
     """One version of an analyst report. Versions are never overwritten."""
     return f"{member}-report-{round_}.md"
+
+
+def requests(member: str, round_: int) -> str:
+    """The blockers one analyst answers in a correction round, with the
+    records they cite from other reports."""
+    return f"{member}-requests-{round_}.md"
 
 
 def answers(member: str, round_: int) -> str:
@@ -622,7 +637,7 @@ def addressee_refusals(blockers: str) -> list[str]:
 
 
 def correction_refusals(
-    path: Path, *, member: str, previous: Path, verification: Path,
+    path: Path, *, member: str, previous: Path, packet: Path,
 ) -> list[str]:
     """A corrected report keeps its predecessor's records and answers every
     blocker addressed to it, by a correction or a reason for declining."""
@@ -637,8 +652,7 @@ def correction_refusals(
             "declared, because other reports cite them: " + ", ".join(dropped)
             + "; keep the declaration and correct its finding"
         )
-    blockers = subsection(verification.read_text(encoding="utf-8"), "Blockers")
-    wanted = blocker_addressees(blockers).count(member)
+    wanted = len(blocker_entries(section(packet.read_text(encoding="utf-8"), "Blockers")))
     answers_path = path.parent / ANSWERS_NAME
     if not answers_path.is_file():
         return [*refusals, (
@@ -661,6 +675,44 @@ def correction_refusals(
             "its predecessor; change the report or decline the blocker with a reason"
         )
     return refusals
+
+
+def blocker_texts(blockers: str) -> list[str]:
+    """Each blocker with its continuation lines."""
+    entries: list[str] = []
+    for line in blockers.splitlines():
+        if line.startswith("- "):
+            entries.append(line)
+        elif entries and line.strip():
+            entries[-1] += "\n" + line
+    return entries
+
+
+def render_requests(
+    member: str, verification: str, blockers: str, bodies: Mapping[str, str],
+) -> str:
+    """What one analyst needs to answer its blockers: the blockers addressed
+    to it, and the current declaration of every record they cite from another
+    report, cut by ID. The analyst reads these fragments, not the reports."""
+    own = [
+        text for text, addressee in zip(blocker_texts(blockers), blocker_addressees(blockers), strict=True)
+        if addressee == member
+    ]
+    cited = []
+    for identifier in sorted(record_references("\n".join(own))):
+        declaring = DECLARING.get(identifier.split("-", 1)[0] + "-")
+        if declaring is None or declaring == member:
+            continue
+        declaration = record_declaration(bodies[declaring], identifier)
+        if declaration is not None:
+            cited.append(f"From the {declaring} report:\n\n{declaration}")
+    return (
+        f"# Correction requests for the {member} report\n\n"
+        f"The record verification `{verification}` addressed these blockers to this report.\n\n"
+        "## Blockers\n\n" + "\n".join(own) + "\n\n"
+        "## Cited records from other reports\n\n"
+        + ("\n".join(cited) if cited else "none\n")
+    )
 
 
 def render_changes(member: str, previous: str, current: str, old: str, new: str) -> str:
@@ -771,10 +823,11 @@ class AnalyseAgenticSystem(Workflow):
     `source-revision` when given, and otherwise at the tip of the default
     branch.
 
-    Jobs: `boundary`; the `runtime`, `memory-0` and `epistemic` analysts;
-    then rounds of `reconcile-<n>` and `verify-<n>`. A verification's blockers
-    name the reports that must change; code runs those analysts again as
-    `runtime-<n>`, `memory-<n>` and `epistemic-<n>` before the next round.
+    Jobs: `boundary`; the analysts of ANALYST_SPECS as `<member>-0`, each
+    after the analysts it reads; then rounds of `reconcile-<n>` and
+    `verify-<n>`. A verification's blockers name the reports that must
+    change; code cuts each named analyst a request packet and runs it again
+    as `<member>-<n>` before the next round.
     Profile classification and synthesis follow, each independently verified.
     Code renders the accepted overview.
 
@@ -857,14 +910,10 @@ class AnalyseAgenticSystem(Workflow):
             return
 
         (run_dir / OUTPUT_DIR).mkdir(exist_ok=True)
-        self.run_analyst(ctx, run_dir, "runtime", self.runtime_job(run_dir))
-        ctx.parallel(
-            lambda: self.run_analyst(ctx, run_dir, "memory", self.memory_job(run_dir, 0)),
-            lambda: self.run_analyst(ctx, run_dir, "epistemic", self.epistemic_job(run_dir)),
-        )
+        versions = dict.fromkeys(ANALYSTS, 0)
+        self.run_analysts(ctx, run_dir, ANALYSTS, versions)
 
         round_ = 0
-        versions = dict.fromkeys(ANALYSTS, 0)
         corrected: tuple[str, ...] = ()
         while True:
             self.run_job(ctx, self.reconcile_job(run_dir, round_, versions, corrected))
@@ -879,7 +928,8 @@ class AnalyseAgenticSystem(Workflow):
                 )
             addressed = blocker_addressees(blockers)
             corrected = tuple(member for member in ANALYSTS if member in addressed)
-            versions = self.correct(ctx, run_dir, round_, versions, corrected)
+            versions = {member: version + (member in corrected) for member, version in versions.items()}
+            self.run_analysts(ctx, run_dir, corrected, versions, requests_from=round_)
             round_ += 1
 
         for profile_round in range(self.profile_correction_rounds + 1):
@@ -938,10 +988,6 @@ class AnalyseAgenticSystem(Workflow):
                 frozen_path = run_dir / FROZEN_SOURCE
                 frozen = json.loads(frozen_path.read_text()) if frozen_path.exists() else None
                 return self.boundary_job(run_dir, overview_enums(self.repo), frozen)
-            if name == "runtime":
-                return self.runtime_job(run_dir)
-            if name == "epistemic":
-                return self.epistemic_job(run_dir)
             if name == "profile":
                 return self.profile_job(run_dir, 0)
             if name == "verify-profile":
@@ -954,26 +1000,14 @@ class AnalyseAgenticSystem(Workflow):
             if match is None:
                 raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
             kind, round_ = match[1], int(match[2])
-            if kind == "memory" and round_ == 0:
-                return self.memory_job(run_dir, 0)
-            if kind in ANALYSTS and round_ == 0:
-                raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
-            if kind in ANALYSTS or kind == "reconcile":
+            if kind in ANALYSTS:
+                return self.analyst_job(run_dir, kind, round_)
+            if kind == "reconcile":
                 # The round number does not say which versions the job was
                 # given. Its supplied invocation does.
                 supplied = self.supplied(run_dir, name)
-                versions = {
-                    member: self.supplied_round(name, supplied, member, "report")
-                    for member in ANALYSTS if member in supplied
-                }
-                if kind == "reconcile":
-                    return self.reconcile_job(run_dir, round_, versions, ())
-                requests = self.supplied_round(name, supplied, "requests", "verification")
-                if kind == "runtime":
-                    return self.runtime_job(run_dir, round_, requests)
-                if kind == "epistemic":
-                    return self.epistemic_job(run_dir, round_, versions["runtime"], requests)
-                return self.memory_job(run_dir, round_, versions["runtime"], versions["epistemic"], requests)
+                versions = {member: self.supplied_round(name, supplied, member, "report") for member in ANALYSTS}
+                return self.reconcile_job(run_dir, round_, versions, ())
             if kind == "verify":
                 text = (run_dir / round_file("set-check", round_)).read_text()
                 failures = [line[2:] for line in text.splitlines() if line.startswith("- ")]
@@ -1003,15 +1037,57 @@ class AnalyseAgenticSystem(Workflow):
             raise ValueError(f"{name}: missing supplied {key} input; report the invocation to the coordinator")
         return int(found[1])
 
-    def run_analyst(self, ctx, run_dir: Path, member: str, job: Job) -> None:
+    def run_analysts(
+        self, ctx, run_dir: Path, members: Sequence[str], versions: Mapping[str, int],
+        requests_from: int | None = None,
+    ) -> None:
+        """Run analysts in dependency order: an analyst runs after the ones it
+        reads, and analysts that do not read each other run in parallel.
+
+        `versions` gives the version each named analyst produces; the first
+        round produces version 0, a correction round the next number. A
+        correction round answers the blockers of verification `requests_from`.
+        """
+        done: set[str] = set()
+        remaining = [member for member in ANALYSTS if member in members]
+        while remaining:
+            ready = [
+                member for member in remaining
+                if all(read in done or read not in members for read in ANALYST_SPECS[member]["reads"])
+            ]
+            if not ready:
+                raise ValueError(f"analysts read each other in a cycle: {remaining}")
+            ctx.parallel(*(
+                partial(self.run_analyst, ctx, run_dir, member, versions[member], requests_from)
+                for member in ready
+            ))
+            done.update(ready)
+            remaining = [member for member in remaining if member not in done]
+
+    def run_analyst(
+        self, ctx, run_dir: Path, member: str, round_: int, requests_from: int | None,
+    ) -> None:
         """Run one analyst job, then make its report the current version.
 
-        A corrected report also yields the analyst's answers and the text
-        difference from its predecessor, for the next reconciler and verifier.
+        A correction round first gets its request packet, cut from the current
+        reports; afterwards its answers and the text difference from its
+        predecessor are kept for the next reconciler and verifier.
         """
+        if round_:
+            if requests_from is None:
+                raise ValueError(f"{member}-{round_}: a correction round needs the verification it answers")
+            verification = round_file("verification", requests_from)
+            text = (run_dir / verification).read_text(encoding="utf-8")
+            bodies = {
+                other: split((run_dir / CURRENT[other]).read_text(encoding="utf-8"))[1]
+                for other in ANALYSTS if other != member
+            }
+            self.replace(run_dir / requests(member, round_), render_requests(
+                member, verification, subsection(text, "Blockers"), bodies,
+            ).encode("utf-8"))
+        job = self.analyst_job(run_dir, member, round_)
         self.run_job(ctx, job)
         destination = self.job_destinations[job.name]
-        round_ = int(re.fullmatch(rf"{member}-report-(\d+)\.md", destination.name)[1])
         self.replace(run_dir / CURRENT[member], destination.read_bytes())
         if round_:
             self.replace(
@@ -1023,31 +1099,6 @@ class AnalyseAgenticSystem(Workflow):
                 member, (run_dir / old).read_text(encoding="utf-8"),
                 destination.read_text(encoding="utf-8"), old, new,
             ).encode("utf-8"))
-
-    def correct(
-        self, ctx, run_dir: Path, requests: int, versions: Mapping[str, int],
-        addressed: Sequence[str],
-    ) -> dict[str, int]:
-        """Run the analysts a verification's blockers name, and return the
-        versions the next round reads.
-
-        The memory and epistemic analysts read the runtime report, so a
-        runtime correction finishes first and they read its result.
-        """
-        new = {member: version + (member in addressed) for member, version in versions.items()}
-        if "runtime" in addressed:
-            self.run_analyst(ctx, run_dir, "runtime", self.runtime_job(run_dir, new["runtime"], requests))
-        later = {
-            "memory": lambda: self.memory_job(
-                run_dir, new["memory"], new["runtime"], versions["epistemic"], requests),
-            "epistemic": lambda: self.epistemic_job(
-                run_dir, new["epistemic"], new["runtime"], requests),
-        }
-        ctx.parallel(*(
-            partial(lambda member: self.run_analyst(ctx, run_dir, member, later[member]()), member)
-            for member in later if member in addressed
-        ))
-        return new
 
     @staticmethod
     def replace(path: Path, content: bytes) -> None:
@@ -1175,82 +1226,45 @@ class AnalyseAgenticSystem(Workflow):
             ),
         )
 
-    def analyst_job(
-        self, run_dir: Path, member: str, round_: int, *, name: str,
-        reads: Mapping[str, str], contract: str, cited: Mapping[str, Path],
-        requests: int | None,
-    ) -> Job:
-        """One analyst job. A correction round also gets the analyst's previous
-        report and the verification whose blockers it answers."""
+    def analyst_job(self, run_dir: Path, member: str, round_: int) -> Job:
+        """One analyst job, `<member>-<round>`.
+
+        The first round reads the boundary and the first version of each
+        report the analyst depends on. A correction round reads the boundary,
+        its own previous report and its request packet, and writes its
+        answers beside the report. Citations resolve against the reports the
+        analyst read, or in a correction round against every current report.
+        """
         run_dir = run_dir.resolve()
-        reads = dict(reads)
+        spec = ANALYST_SPECS[member]
+        name = f"{member}-{round_}"
+        reads = {"boundary": BOUNDARY}
         parameters = {"round": "correction" if round_ else "first"}
+        if round_:
+            reads.update({"previous-report": report(member, round_ - 1), "requests": requests(member, round_)})
+            parameters["answers"] = str(run_dir / "jobs" / name / ANSWERS_NAME)
+            cited = {other: run_dir / CURRENT[other] for other in ANALYSTS if other != member}
+        else:
+            reads.update({read: report(read, 0) for read in spec["reads"]})
+            cited = {read: run_dir / CURRENT[read] for read in spec["reads"]}
         checks = [partial(
             pass_refusals,
             repo_root=self.repo,
             run_state=run_dir / RUN_STATE,
             boundary=run_dir / BOUNDARY,
-            declaration_prefix=PREFIXES[member],
-            bodies=lambda path: set_bodies(
-                boundary=run_dir / BOUNDARY, **cited, **{member: path}
-            ),
+            declaration_prefix=spec["prefix"],
+            bodies=lambda path: set_bodies(boundary=run_dir / BOUNDARY, **cited, **{member: path}),
         )]
         if round_:
-            if requests is None:
-                raise ValueError(f"{name}: a correction round needs the verification it answers")
-            previous = report(member, round_ - 1)
-            verification = round_file("verification", requests)
-            reads.update({"previous-report": previous, "requests": verification})
-            parameters["answers"] = str(run_dir / "jobs" / name / ANSWERS_NAME)
             checks.append(partial(
-                correction_refusals, member=member, previous=run_dir / previous,
-                verification=run_dir / verification,
+                correction_refusals, member=member,
+                previous=run_dir / reads["previous-report"], packet=run_dir / reads["requests"],
             ))
         return self.job(
             run_dir, name, report(member, round_), reads=reads, instruction=member,
-            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, contract),
+            extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, spec["contract"]),
             parameters=parameters,
             validator=lambda path: [reason for check in checks for reason in check(path)],
-        )
-
-    def runtime_job(self, run_dir: Path, round_: int = 0, requests: int | None = None) -> Job:
-        """The runtime analyst. Its report cites the boundary's sources and its
-        own records."""
-        return self.analyst_job(
-            run_dir, "runtime", round_, name=f"runtime-{round_}" if round_ else "runtime",
-            reads={"boundary": BOUNDARY}, contract=RUNTIME_CONTRACT, cited={},
-            requests=requests,
-        )
-
-    def epistemic_job(
-        self, run_dir: Path, round_: int = 0, runtime: int = 0, requests: int | None = None,
-    ) -> Job:
-        """The epistemic analyst. It runs beside the memory analyst, so its
-        report cites the boundary's sources, the runtime report and its own
-        records."""
-        supplied = report("runtime", runtime) if round_ else RUNTIME
-        return self.analyst_job(
-            run_dir, "epistemic", round_, name=f"epistemic-{round_}" if round_ else "epistemic",
-            reads={"boundary": BOUNDARY, "runtime": supplied}, contract=EPISTEMIC_CONTRACT,
-            cited={"runtime": run_dir / supplied}, requests=requests,
-        )
-
-    def memory_job(
-        self, run_dir: Path, round_: int, runtime: int = 0, epistemic: int = 0,
-        requests: int | None = None,
-    ) -> Job:
-        """One round of the memory analyst. Its report cites the boundary's
-        sources, the runtime report and its own records; a correction round,
-        which runs after the epistemic report exists, may cite that report too."""
-        supplied = report("runtime", runtime) if round_ else RUNTIME
-        reads = {"boundary": BOUNDARY, "runtime": supplied}
-        cited = {"runtime": run_dir / supplied}
-        if round_:
-            reads["epistemic"] = report("epistemic", epistemic)
-            cited["epistemic"] = run_dir / reads["epistemic"]
-        return self.analyst_job(
-            run_dir, "memory", round_, name=f"memory-{round_}", reads=reads,
-            contract=MEMORY_CONTRACT, cited=cited, requests=requests,
         )
 
     @staticmethod

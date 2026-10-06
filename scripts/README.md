@@ -63,7 +63,7 @@ uv run python scripts/analyst_trial.py prepare \
 It creates `kb/agentic-system-analyses/state/AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>/`
 (named like a run because the run-state schema requires one), copies the
 recorded run's `boundary.md`, `opening.json`, `run-state.md` (set back to
-running) and, for the memory and epistemic analysts, `output/runtime.md`,
+running) and, for the memory and epistemic analysts, `runtime-report-0.md`,
 and writes `prompt.md` from the current workflow code. Read `prompt.md` and send its
 content unchanged as the analyst's whole message, with the repository root
 as working directory. Instruction files are read from the working tree,

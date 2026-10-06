@@ -218,8 +218,8 @@ class Fixture:
 
         workers = {
             "boundary": writes(self.boundary),
-            "runtime": writes(lambda: runtime_text(self.revision)),
-            "epistemic": writes(lambda: epistemic_text(self.revision)),
+            "runtime-0": writes(lambda: runtime_text(self.revision)),
+            "epistemic-0": writes(lambda: epistemic_text(self.revision)),
         }
         workers["memory-0"] = writes(partial(self.memory_report, 0))
         for round_ in range(AnalyseAgenticSystem.correction_rounds + 1):
@@ -253,7 +253,7 @@ class Fixture:
         answer per blocker addressed to it."""
         def worker(handout: Handout) -> None:
             values = self.supplied(handout)
-            blockers = Path(values["requests"]).read_text(encoding="utf-8").split("### Blockers", 1)[1]
+            blockers = Path(values["requests"]).read_text(encoding="utf-8").split("## Blockers", 1)[1]
             count = len(re.findall(rf"(?m)^- {member}: ", blockers))
             previous = Path(values["previous-report"]).read_text(encoding="utf-8")
             text = previous if decline else previous.rstrip("\n") + f"\n\nCorrected by {handout.name}.\n"
@@ -326,7 +326,7 @@ def prompt_of(result, name: str) -> tuple[int, str]:
 
 @pytest.mark.slow
 def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> None:
-    scripted, _ = agent(fixture, runtime=fixture.writes(lambda _: "invalid runtime\n"))
+    scripted, _ = agent(fixture, **{"runtime-0": fixture.writes(lambda _: "invalid runtime\n")})
 
     first = scripted.round()
     assert isinstance(first, Launch)
@@ -344,11 +344,11 @@ def test_job_workspace_does_not_promote_unaccepted_output(fixture: Fixture) -> N
 
     retry = scripted.round()
     assert isinstance(retry, Launch)
-    assert [job.name for job in retry.jobs] == ["runtime"]
+    assert [job.name for job in retry.jobs] == ["runtime-0"]
     assert not runtime.exists()
     assert boundary.read_bytes() == original_boundary
-    assert retry.jobs[0].output_path.parent == fixture.run_dir / "jobs/runtime"
-    assert retry.jobs[0].problem_path.parent == fixture.run_dir / "jobs/runtime"
+    assert retry.jobs[0].output_path.parent == fixture.run_dir / "jobs/runtime-0"
+    assert retry.jobs[0].problem_path.parent == fixture.run_dir / "jobs/runtime-0"
 
 
 # 0. Deriving the repository root
@@ -366,8 +366,8 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert isinstance(results[-1], Done), results[-1]
     assert scripted.launched == [
         "boundary",
-        "runtime",
-        "epistemic",
+        "runtime-0",
+        "epistemic-0",
         "memory-0",
         "reconcile-0",
         "verify-0",
@@ -483,15 +483,15 @@ def test_uncertain_effect_updates_run_status(fixture: Fixture) -> None:
 @pytest.mark.slow
 @pytest.mark.parametrize(
     ("job_name", "field"),
-    [("runtime", "run-id"), ("memory-0", "reviewed-boundary")],
+    [("runtime-0", "run-id"), ("memory-0", "reviewed-boundary")],
 )
 def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     fixture: Fixture, job_name: str, field: str,
 ) -> None:
     original = {
-        "runtime": lambda: runtime_text(fixture.revision),
+        "runtime-0": lambda: runtime_text(fixture.revision),
         "memory-0": fixture.memory_report,
-        "epistemic": lambda: epistemic_text(fixture.revision),
+        "epistemic-0": lambda: epistemic_text(fixture.revision),
     }[job_name]
 
     def analyst(handout: Handout) -> str:
@@ -510,7 +510,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     assert "reconcile-0" not in scripted.launched
     assert isinstance(scripted.run()[-1], Done)
     assert definition.publications == 1
-    member = fixture.run_dir / "output" / ("memory.md" if job_name == "memory-0" else f"{job_name}.md")
+    member = fixture.run_dir / "output" / f"{job_name.rsplit('-', 1)[0]}.md"
     assert frontmatter(member)["run-id"] == RUN_ID
     assert frontmatter(member)["reviewed-boundary"] == fixture.revision
 
@@ -680,7 +680,12 @@ def test_a_blocker_addressed_to_an_analyst_corrects_that_report(fixture: Fixture
     assert not (run / "runtime-report-1.md").exists() and not (run / "memory-report-1.md").exists()
     correction = last_prompt(fixture, "epistemic-1")
     assert "round = correction\n" in correction
-    assert "epistemic-report-0.md" in correction and "verification-0.md" in correction
+    assert "epistemic-report-0.md" in correction and "epistemic-requests-1.md" in correction
+    # A correcting analyst reads fragments, not the other reports.
+    assert "runtime-report" not in correction and "memory-report" not in correction
+    packet = (run / "epistemic-requests-1.md").read_text()
+    assert "- epistemic: EPI-OBJ-store overstates its scope at SRC-1." in packet
+    assert "## Cited records from other reports\n\nnone" in packet
     assert f"answers = {run}/jobs/epistemic-1/answers.md\n" in correction
     assert (run / "epistemic-answers-1.md").read_text() == "- corrected: fixture answer 0.\n"
     assert "+Corrected by epistemic-1." in (run / "epistemic-changes-1.md").read_text()
@@ -708,8 +713,9 @@ def test_a_blocker_addressed_to_an_analyst_corrects_that_report(fixture: Fixture
 @pytest.mark.slow
 def test_a_runtime_correction_finishes_before_the_reports_that_read_it(fixture: Fixture) -> None:
     blocked = fixture.verification(
-        "- memory: MEM-OBJ-store repeats the runtime scope.\n"
+        "- memory: MEM-OBJ-store repeats the scope of RT-OBJ-store.\n"
         "- runtime: RT-OBJ-store overstates its scope at SRC-1.\n"
+        "  Its Later read-back field says the same.\n"
         "- runtime: RT-RTE-model-call repeats that scope."
     )
     scripted, definition = agent(fixture, **{"verify-0": fixture.writes(lambda _: blocked)})
@@ -726,8 +732,17 @@ def test_a_runtime_correction_finishes_before_the_reports_that_read_it(fixture: 
         "reconcile-0", "verify-0", "runtime-1", "memory-1", "reconcile-1", "verify-1"]
     run = fixture.run_dir
     memory = last_prompt(fixture, "memory-1")
-    assert f"runtime = {run}/runtime-report-1.md\n" in memory
-    assert f"epistemic = {run}/epistemic-report-0.md\n" in memory
+    assert f"requests = {run}/memory-requests-1.md\n" in memory
+    assert "runtime-report" not in memory and "epistemic-report" not in memory
+    # The packet carries the cited runtime record as the runtime analyst just corrected it.
+    packet = (run / "memory-requests-1.md").read_text()
+    assert "- memory: MEM-OBJ-store repeats the scope of RT-OBJ-store." in packet
+    assert "- runtime:" not in packet
+    assert "From the runtime report:\n\n#### RT-OBJ-store — " in packet
+    assert "Corrected by runtime-1." not in packet  # the cut ends at the next heading
+    assert "RT-RTE-model-call" not in packet.split("## Cited records", 1)[1]
+    runtime_packet = (run / "runtime-requests-1.md").read_text()
+    assert "  Its Later read-back field says the same." in runtime_packet
     assert (run / "runtime-answers-1.md").read_text().count("- corrected:") == 2
     assert (run / "memory-answers-1.md").read_text().count("- corrected:") == 1
     reconcile = last_prompt(fixture, "reconcile-1")
@@ -856,7 +871,7 @@ def test_split_dispositions_preserve_members_and_publish(fixture: Fixture) -> No
         "Part of: RT-OBJ-store\n\nPolicy part. Evidence: SRC-1.",
     )
     workers = {
-        "epistemic": fixture.writes(lambda _: epistemic),
+        "epistemic-0": fixture.writes(lambda _: epistemic),
         "reconcile-0": fixture.writes(lambda _: fixture.reconciliation(amendment=amendment)),
     }
 
@@ -1217,14 +1232,14 @@ def test_memory_report_re_declaring_a_runtime_record_is_refused(
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("job", ["runtime", "memory-1"])
+@pytest.mark.parametrize("job", ["runtime-0", "memory-1"])
 def test_altered_analyst_quote_is_repaired_before_reconciliation(
     fixture: Fixture, job: str,
 ) -> None:
     citation = f"> # Frozen source\n> --- `README.md:1-1` @ `{fixture.revision}`\n"
     reports = {
-        "runtime": lambda: runtime_text(fixture.revision),
-        "epistemic": lambda: epistemic_text(fixture.revision),
+        "runtime-0": lambda: runtime_text(fixture.revision),
+        "epistemic-0": lambda: epistemic_text(fixture.revision),
         "memory-0": fixture.memory_report,
         "memory-1": lambda: fixture.memory_report(1),
     }
@@ -1277,13 +1292,13 @@ def test_missing_route_field_is_repaired_before_reconciliation(fixture: Fixture)
             text = runtime_text(fixture.revision)
         handout.output_path.write_text(text, encoding="utf-8")
 
-    scripted, definition = agent(fixture, runtime=runtime)
-    drive_to(scripted, "runtime")
-    attempt, prompt = prompt_of(scripted.round(), "runtime")
+    scripted, definition = agent(fixture, **{"runtime-0": runtime})
+    drive_to(scripted, "runtime-0")
+    attempt, prompt = prompt_of(scripted.round(), "runtime-0")
     assert attempt == 2
     assert "RT-RTE-model-call: Later read-back: missing field" in prompt
     assert isinstance(scripted.run()[-1], Done)
-    assert scripted.launched.count("runtime") == 2
+    assert scripted.launched.count("runtime-0") == 2
     assert scripted.launched.count("reconcile-0") == 1
     assert definition.publications == 1
 
@@ -1306,9 +1321,9 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
             text = valid
         handout.output_path.write_text(text, encoding="utf-8")
 
-    scripted, definition = agent(fixture, runtime=runtime)
-    drive_to(scripted, "runtime")
-    attempt, prompt = prompt_of(scripted.round(), "runtime")
+    scripted, definition = agent(fixture, **{"runtime-0": runtime})
+    drive_to(scripted, "runtime-0")
+    attempt, prompt = prompt_of(scripted.round(), "runtime-0")
     assert attempt == 2
     expected = (
         "declarations without an analyst prefix" if prefix == ""
@@ -1316,8 +1331,8 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
     )
     assert expected in prompt
     assert isinstance(scripted.run()[-1], Done)
-    assert scripted.launched.count("runtime") == 2
-    assert scripted.launched.count("epistemic") == 1
+    assert scripted.launched.count("runtime-0") == 2
+    assert scripted.launched.count("epistemic-0") == 1
     assert scripted.launched.count("memory-0") == 1
     assert definition.publications == 1
 
@@ -1660,9 +1675,9 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     }
     expected = {
         "boundary": {"boundary", "sources"},
-        "runtime": {"sources", "records", "runtime"},
+        "runtime-0": {"sources", "records", "runtime"},
         "memory-0": {"sources", "records", "memory"},
-        "epistemic": {"sources", "records", "epistemic"},
+        "epistemic-0": {"sources", "records", "epistemic"},
         "reconcile-0": set(types) - {"overview", "boundary", "profile"},
         "verify-0": set(types) - {"overview", "boundary", "profile"},
         "profile": {"sources", "records", "profile"},
@@ -1672,9 +1687,9 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
     }
     jobs = {
         "boundary": definition.boundary_job(fixture.run_dir, overview_enums(fixture.root)),
-        "runtime": definition.runtime_job(fixture.run_dir),
-        "memory-0": definition.memory_job(fixture.run_dir, 0),
-        "epistemic": definition.epistemic_job(fixture.run_dir),
+        "runtime-0": definition.analyst_job(fixture.run_dir, "runtime", 0),
+        "memory-0": definition.analyst_job(fixture.run_dir, "memory", 0),
+        "epistemic-0": definition.analyst_job(fixture.run_dir, "epistemic", 0),
         "reconcile-0": definition.reconcile_job(fixture.run_dir, 0, ZERO, ()),
         "verify-0": definition.verification_job(fixture.run_dir, 0, ZERO, ()),
         "profile": definition.profile_job(fixture.run_dir, 0),
@@ -1709,20 +1724,16 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
     ("kind", "round_", "expected"),
     [
         ("boundary", 0, {"opening": "run-metadata.json"}),
-        ("memory", 0, {"boundary": "boundary.md", "runtime": "output/runtime.md", "round": "first"}),
+        ("memory", 0, {"boundary": "boundary.md", "runtime": "runtime-report-0.md", "round": "first"}),
+        ("runtime", 0, {"boundary": "boundary.md", "round": "first"}),
         ("memory", 2, {
-            "boundary": "boundary.md", "runtime": "runtime-report-1.md", "round": "correction",
-            "previous-report": "memory-report-1.md", "requests": "verification-1.md",
-            "epistemic": "epistemic-report-0.md", "answers": "jobs/memory-2/answers.md",
-        }),
-        ("epistemic", 1, {
-            "boundary": "boundary.md", "runtime": "runtime-report-1.md", "round": "correction",
-            "previous-report": "epistemic-report-0.md", "requests": "verification-1.md",
-            "answers": "jobs/epistemic-1/answers.md",
+            "boundary": "boundary.md", "round": "correction",
+            "previous-report": "memory-report-1.md", "requests": "memory-requests-2.md",
+            "answers": "jobs/memory-2/answers.md",
         }),
         ("runtime", 1, {
             "boundary": "boundary.md", "round": "correction",
-            "previous-report": "runtime-report-0.md", "requests": "verification-1.md",
+            "previous-report": "runtime-report-0.md", "requests": "runtime-requests-1.md",
             "answers": "jobs/runtime-1/answers.md",
         }),
         ("reconcile", 0, {
@@ -1762,12 +1773,8 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
     def build():
         if kind == "boundary":
             return definition.boundary_job(run, overview_enums(fixture.root))
-        if kind == "runtime":
-            return definition.runtime_job(run, round_, 1)
-        if kind == "epistemic":
-            return definition.epistemic_job(run, round_, 1, 1)
-        if kind == "memory":
-            return definition.memory_job(run, round_, 1, 0, 1 if round_ else None)
+        if kind in ("runtime", "memory", "epistemic"):
+            return definition.analyst_job(run, kind, round_)
         if kind == "reconcile":
             return definition.reconcile_job(run, round_, versions, ("memory",) if round_ else ())
         if kind == "verify":

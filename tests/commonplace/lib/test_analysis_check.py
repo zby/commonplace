@@ -78,7 +78,7 @@ def test_each_scheduled_job_has_identical_read_only_checks(tmp_path, monkeypatch
     scripted = ScriptedAgent(orchestrator, {name:wrap(worker) for name,worker in originals.items()})
     assert isinstance(scripted.run()[-1], Done)
     assert observed == set(scripted.launched)
-    assert {"boundary", "runtime", "epistemic", "memory-0", "reconcile-0",
+    assert {"boundary", "runtime-0", "epistemic-0", "memory-0", "reconcile-0",
             "profile", "verify-profile", "synthesize", "verify-synthesis"} <= observed
     assert "verify-0" in observed
     if correction != "none":
@@ -94,7 +94,7 @@ def test_independent_member_failures_include_identity_and_quote(tmp_path, monkey
     orchestrator = Orchestrator.create(fixture.run_dir, "tests.commonplace.lib.test_agentic_workflow:CountsPublication", fixture.params())
     originals = fixture.workers()
 
-    original_runtime = originals["runtime"]
+    original_runtime = originals["runtime-0"]
 
     def runtime(handout):
         original_runtime(handout)
@@ -103,12 +103,12 @@ def test_independent_member_failures_include_identity_and_quote(tmp_path, monkey
         text = text.replace(fixture.run_dir.name, "AAS-2026-09-04-wrong-system-01")
         text += '\nUnknown MEM-OBJ-missing.\n\n> absent passage\n> --- `README.md`\n'
         draft.write_text(text)
-        _, reasons = check_draft(fixture.run_dir, "runtime")
+        _, reasons = check_draft(fixture.run_dir, "runtime-0")
         assert any("unresolved record MEM-OBJ-missing" in r for r in reasons)
         assert any("member identity: run-id" in r and fixture.run_dir.name in r for r in reasons)
         assert any("quotation not found" in r and "recheck the claim" in r for r in reasons)
         original_runtime(handout)
 
-    originals["runtime"] = runtime
+    originals["runtime-0"] = runtime
     scripted = ScriptedAgent(orchestrator, originals)
     assert isinstance(scripted.run()[-1], Done)

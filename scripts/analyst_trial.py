@@ -8,7 +8,7 @@ directory beside the run directories, named like a run
 (AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>) because the run-state
 schema requires one, copies the recorded run's frozen
 inputs into it (boundary.md, opening.json, run-state.md set back to running,
-and output/runtime.md for the memory and epistemic analysts), and writes
+and runtime-report-0.md for the memory and epistemic analysts), and writes
 prompt.md: the analyst's prompt as the current workflow code builds it, with
 every path pointing into the trial directory. It prints the prompt path.
 
@@ -37,9 +37,9 @@ from commonplace.lib.agentic_workflow import (
     JOBS,
     OPENING,
     RUN_STATE,
-    RUNTIME,
     STATE_ROOT,
     AnalyseAgenticSystem,
+    report,
 )
 from commonplace.workflow.engine import render_prompt
 
@@ -94,8 +94,9 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
     if repo / STATE_ROOT != recorded.parent:
         raise ValueError(f"not a run directory under {STATE_ROOT}: {recorded}")
     wanted = [BOUNDARY, OPENING, RUN_STATE]
+    runtime = report("runtime", 0)
     if analyst != "runtime":
-        wanted.append(RUNTIME)
+        wanted.append(runtime)
     missing = [name for name in wanted if not (recorded / name).is_file()]
     if missing:
         raise ValueError(f"the recorded run lacks {', '.join(missing)}")
@@ -112,17 +113,13 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
         encoding="utf-8",
     )
     if analyst != "runtime":
-        shutil.copy2(recorded / RUNTIME, trial / RUNTIME)
+        shutil.copy2(recorded / runtime, trial / runtime)
 
     definition = AnalyseAgenticSystem(params)
     definition.run_id = trial.name
     definition.repo = repo
     definition.jobs_dir = repo / JOBS
-    job = {
-        "runtime": lambda: definition.runtime_job(trial),
-        "memory": lambda: definition.memory_job(trial, 0, 0),
-        "epistemic": lambda: definition.epistemic_job(trial),
-    }[analyst]()
+    job = definition.analyst_job(trial, analyst, 0)
     prompt = render_prompt(job, trial)
     inputs = {}
     for declared in job.inputs:

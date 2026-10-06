@@ -137,6 +137,28 @@ def amendment_index(body: str) -> str:
     )
 
 
+def record_references(text: str) -> set[str]:
+    """The well-formed record IDs a text refers to, excluding source IDs."""
+    return {
+        identifier for identifier in _references(_analysis_prose(text))
+        if re.fullmatch(_RECORD_ID, identifier)
+    }
+
+
+def record_declaration(body: str, identifier: str) -> str | None:
+    """A record's declaration as written: its heading and the text up to the
+    next heading of the same or a higher level, or None when the body does not
+    declare it."""
+    match = re.search(
+        rf"(?m)^(#{{3,6}})[ \t]+{re.escape(identifier)}[ \t]+—[ \t]+\S[^\n]*$", body,
+    )
+    if match is None:
+        return None
+    level = len(match[1])
+    following = re.compile(rf"(?m)^#{{1,{level}}}[ \t]").search(body, match.end())
+    return body[match.start():following.start() if following else len(body)].rstrip() + "\n"
+
+
 def value_amendments(body: str) -> list[str]:
     """The first line of each `Amendment:` paragraph that is not a supersession.
 

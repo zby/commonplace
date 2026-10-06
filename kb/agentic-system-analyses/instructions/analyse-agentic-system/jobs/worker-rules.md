@@ -76,14 +76,11 @@ for progress messages.
 
 This section applies to an analyst job whose `round` is `correction`.
 `previous-report` is your report as the record verifier judged it.
-`requests` is that verification. Each entry of its `### Blockers` list
-starts with the report it is addressed to.
+`requests` holds the verifier's blockers addressed to your report and, cut
+from the other reports as they now stand, the declaration of every record
+those blockers cite. You read these fragments, not the other reports.
 
-Answer every blocker addressed to your report. Read the others too: a
-correction requested of another report can leave your text stale, and a
-report you read may have been corrected since your previous round.
-
-Recheck each blocker against the frozen source. Where it holds, correct the
+Answer every blocker in `requests`. Recheck each blocker against the frozen source. Where it holds, correct the
 finding and every field, table row, ledger entry and conclusion in your
 report that depended on the old value. Where it does not hold, keep the
 finding. Do not repeat the whole analysis, and leave findings that no

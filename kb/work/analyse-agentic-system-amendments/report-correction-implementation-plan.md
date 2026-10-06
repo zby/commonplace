@@ -55,9 +55,14 @@ Deviations and findings:
   which the final manifest does not pin, and the old check then reopened an
   accepted correction. The same exposure existed before for a memory
   correction after a blocker round.
-- **Round-0 inputs.** The first memory and epistemic jobs still read
-  `output/runtime.md`; correction, reconciliation and verification jobs read
-  numbered versions.
+- **One analyst table.** After the first commit the three analyst job
+  builders and the two hand-written orderings were replaced by one table
+  (prefix, type, reports read) and one stage scheduler used for round 0 and
+  for corrections; all analyst jobs are named `<member>-<n>`.
+- **Request packets.** A correcting analyst does not read the other reports.
+  Code cuts it a packet: the blockers addressed to it and, by record ID, the
+  current declaration of every record those blockers cite from another
+  report. Its inputs are the boundary, its previous report and that packet.
 - **Not done.** The instruction wording review against the two stopped runs
   was made by the implementer only, not independently. `scripts/analyst_trial.py`
   still copies `output/runtime.md`, which after a corrected run is the last

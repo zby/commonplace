@@ -16,7 +16,7 @@ Common parameters are defined in the supplied worker rules.
 | `round` | `first` or `correction`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
 | `previous-report` | Absolute path of your report as the record verifier judged it. | `correction` |
-| `requests` | Absolute path of the record verification whose blockers you answer. | `correction` |
+| `requests` | Absolute path of the blockers addressed to your report, with the current declarations of the records they cite from other reports. | `correction` |
 | `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
 ## Task

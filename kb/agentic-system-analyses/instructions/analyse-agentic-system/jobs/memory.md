@@ -15,10 +15,9 @@ Common parameters are defined in the supplied worker rules.
 |---|---|---|
 | `round` | `first` or `correction`. | Always |
 | `boundary` | Absolute path of the frozen boundary and Source register. | Always |
-| `runtime` | Absolute path of the current runtime report. | Always |
-| `epistemic` | Absolute path of the current epistemic report. | `correction` |
+| `runtime` | Absolute path of the runtime report. | `first` |
 | `previous-report` | Absolute path of your report as the record verifier judged it. | `correction` |
-| `requests` | Absolute path of the record verification whose blockers you answer. | `correction` |
+| `requests` | Absolute path of the blockers addressed to your report, with the current declarations of the records they cite from other reports. | `correction` |
 | `answers` | Absolute path where you write your answers to those blockers. | `correction` |
 
 ## Task
@@ -64,8 +63,8 @@ table; this is a memory-scope check, not a second whole-runtime inventory.
 
 ## Record the mechanisms
 
-Prose may cite `runtime` or the Source register, and `epistemic` in
-correction rounds. Acceptance requires a valid
+Prose may cite `runtime` or the Source register, and in a correction round
+any record `requests` supplies. Acceptance requires a valid
 member with references resolved against those inputs and its own records.
 
 Before declaring records, compare referents with supplied records under
@@ -82,8 +81,7 @@ when referring to or annotating their records.
 
 When `round = correction`, follow **Correct a report after verification** in
 the supplied worker rules; the rest of this instruction still governs the
-report's content. Also read `epistemic`, which you may
-now cite.
+report's content.
 
 ## Check
 
