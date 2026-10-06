@@ -99,8 +99,14 @@ skill there. This session then stops after preparation.
    commonplace-workflow start commonplace.lib.agentic_workflow:AnalyseAgenticSystem \
      --param system="<source-native system name>" \
      --param source-identity="<stable source identity, e.g. https://github.com/owner/repo>" \
-     --param source="<the caller's source input, as given>"
+     --param source="<the caller's source input, as given>" \
+     --param model="<the exact identifier of the model you are, e.g. claude-fable-5-1>" \
+     --param effort="<your reasoning-effort setting, when your harness reports one>"
    ```
+
+   `model` is the model that runs this workflow's workers; code records it
+   and `effort` in the run's metadata and in the published manifest as run
+   evidence. Omit `--param effort` when your harness reports no setting.
 
    Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID has the form `AAS-<date>-<source-slug>-<worktree-token>-<nn>`; the slug comes from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. The token comes from the ready preparation record, including with `--worktree`. Publication uses the source slug as its stable directory; `review-path` is no longer a parameter. The command allocates the run ID and prints the run directory, `kb/agentic-system-analyses/state/<run-id>`.
 

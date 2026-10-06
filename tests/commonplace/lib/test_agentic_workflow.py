@@ -118,7 +118,8 @@ class Fixture:
         return self.root / agentic_set.RETAINED_ROOT / agentic_set.source_slug(self.identity, SYSTEM) / "overview.md"
 
     def params(self) -> dict[str, str]:
-        return {"system": SYSTEM, "source-identity": self.identity, "source": SOURCE}
+        return {"system": SYSTEM, "source-identity": self.identity, "source": SOURCE,
+                "model": "fixture-model", "effort": "high"}
 
     # What each scripted worker writes
 
@@ -431,6 +432,9 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
 
     overview = frontmatter(fixture.run_dir / "output/overview.md")
     assert overview["inputs-commit"] == fixture.head
+    manifest = yaml.safe_load((fixture.run_dir / "output/ARTIFACT.yaml").read_text(encoding="utf-8"))
+    assert manifest["worker"] == {"model": "fixture-model", "effort": "high"}
+    assert json.loads((fixture.run_dir / "run-metadata.json").read_text())["model"] == "fixture-model"
 
     before = state_path.read_bytes(), state_path.stat().st_mtime_ns
     assert isinstance(scripted.orchestrator.step(), Done)
@@ -1363,7 +1367,7 @@ def test_runtime_declaration_prefix_is_repaired_before_specialists(
 def test_the_source_identity_is_normalized_once(given: str, normalized: str) -> None:
     assert normalize_source_identity(given) == normalized
     definition = AnalyseAgenticSystem(
-        {"system": "x", "source-identity": given, "source": given}
+        {"system": "x", "source-identity": given, "source": given, "model": "fixture-model"}
     )
     assert definition.source_identity == normalized
 
@@ -1508,15 +1512,20 @@ def test_boundary_cannot_substitute_another_commit_for_the_frozen_one(fixture: F
     assert definition.publications == 0
 
 
+def test_a_run_needs_the_model_that_runs_its_workers() -> None:
+    with pytest.raises(ValueError, match="model is required"):
+        AnalyseAgenticSystem({"system": SYSTEM, "source-identity": SOURCE, "source": SOURCE})
+
+
 @pytest.mark.parametrize("revision", ["HEAD", "abc123"])
 def test_source_revision_requires_a_full_commit(revision: str) -> None:
     with pytest.raises(ValueError, match="source-revision must be a full 40-hex Git commit"):
-        AnalyseAgenticSystem({"source-identity": GITHUB, "source-revision": revision})
+        AnalyseAgenticSystem({"source-identity": GITHUB, "source-revision": revision, "model": "fixture-model"})
 
 
 def test_source_revision_requires_a_github_identity() -> None:
     with pytest.raises(ValueError, match="source-revision requires a GitHub repository identity"):
-        AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": "a" * 40})
+        AnalyseAgenticSystem({"source-identity": SOURCE, "source-revision": "a" * 40, "model": "fixture-model"})
 
 
 @pytest.mark.slow
@@ -1607,7 +1616,7 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
     tmp_path.with_name(tmp_path.name + ".preparation.json").write_text(json.dumps({
         "status": "ready", "worktree": str(tmp_path), "token": token,
     }))
-    params = {"system": "Example System", "source-identity": "x", "source": "x"}
+    params = {"system": "Example System", "source-identity": "x", "source": "x", "model": "fixture-model"}
     reference = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
 
     first = Runs.start(reference, params, base=tmp_path).run_dir
@@ -1630,6 +1639,7 @@ def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> No
         "system": "mem",
         "source-identity": "https://github.com/jasonkneen/instinctual-memory.git",
         "source": "x",
+        "model": "fixture-model",
     }
     run_dir = Runs.start(
         "commonplace.lib.agentic_workflow:AnalyseAgenticSystem", params, base=tmp_path

@@ -234,7 +234,7 @@ ZERO = {"runtime": 0, "memory": 0, "epistemic": 0}
 
 
 def workflow(tmp_path):
-    definition = AnalyseAgenticSystem({"system": "Synthetic acceptance fixture", "source-identity": "synthetic"})
+    definition = AnalyseAgenticSystem({"system": "Synthetic acceptance fixture", "source-identity": "synthetic", "model": "fixture-model"})
     definition.repo = REPO_ROOT
     definition.jobs_dir = REPO_ROOT / "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
     return definition

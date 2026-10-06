@@ -25,6 +25,20 @@ def test_manifest_pins_the_members_present(tmp_path: Path) -> None:
     assert manifest["members"]["runtime.md"] == {"sha256": sha256(b"runtime").hexdigest()}
 
 
+def test_manifest_names_the_worker_from_run_metadata(tmp_path: Path) -> None:
+    output = tmp_path / "output"
+    output.mkdir()
+    (output / "overview.md").write_text("overview", encoding="utf-8")
+    (tmp_path / "run-metadata.json").write_text(
+        '{"inputs-commit": "abc", "run-date": "2026-10-06", "model": "claude-fable-5-1", "effort": ""}',
+        encoding="utf-8")
+
+    manifest = yaml.safe_load(build_manifest(tmp_path))
+
+    assert manifest["worker"] == {"model": "claude-fable-5-1"}
+    assert list(manifest) == ["type", "members", "worker"]
+
+
 def test_manifest_needs_an_overview(tmp_path: Path) -> None:
     (tmp_path / "output").mkdir()
 

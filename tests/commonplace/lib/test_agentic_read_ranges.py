@@ -51,6 +51,7 @@ def test_invocation_names_ranges_for_oversized_method_and_task_inputs(tmp_path: 
     task.write_text("Input\n" * (READ_BATCH_BYTES // 6 + 1))
     definition = AnalyseAgenticSystem({
         "system": "Example", "source": "capture", "source-identity": "capture",
+        "model": "fixture-model",
     })
     definition.jobs_dir = tmp_path
 

@@ -103,6 +103,8 @@ def prepare(recorded: Path, analyst: str, label: str) -> Path:
     params = json.loads(
         (recorded / "workflow-state/run.json").read_text(encoding="utf-8")
     )["params"]
+    # Runs recorded before the manifest named its worker carry no model.
+    params.setdefault("model", "unrecorded")
 
     trial = trial_dir(repo / STATE_ROOT, recorded.name, analyst, label)
     (trial / "output").mkdir(parents=True)

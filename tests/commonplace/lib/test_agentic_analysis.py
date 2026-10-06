@@ -1772,7 +1772,7 @@ def test_replacement_recognition_distinguishes_incumbent_from_interruption(tmp_p
     from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
     from commonplace.workflow import Recognition
     spec, _, _ = rerun_publication_fixture(tmp_path)
-    definition = AnalyseAgenticSystem({"system": "Example System", "source-identity": SOURCE})
+    definition = AnalyseAgenticSystem({"system": "Example System", "source-identity": SOURCE, "model": "fixture-model"})
     definition.run_id = spec.run_state_path.parent.name
     assert definition.recognize_publication(spec) is Recognition.ABSENT
     current = (tmp_path / spec.generated_destination).parent

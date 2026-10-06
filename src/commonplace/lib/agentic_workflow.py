@@ -757,7 +757,9 @@ class AnalyseAgenticSystem(Workflow):
 
     Parameters: `system` (the name the caller gave), `source-identity` (the
     stable identity of the source), `source` (the caller's source input, as
-    given), and optionally `review-path` and `source-revision`. For a GitHub
+    given), `model` (the exact identifier of the model running the workers,
+    recorded in the manifest), and optionally `effort` (its reasoning-effort
+    setting) and `source-revision`. For a GitHub
     identity, code freezes the checkout before the boundary job: at
     `source-revision` when given, and otherwise at the tip of the default
     branch.
@@ -789,6 +791,12 @@ class AnalyseAgenticSystem(Workflow):
             str(self.params["source-identity"])
         )
         self.job_destinations: dict[str, Path] = {}
+        model = self.params.get("model")
+        if not isinstance(model, str) or not model.strip():
+            raise ValueError(
+                "model is required: the exact identifier of the model running this "
+                "workflow's workers, such as claude-fable-5-1 or gpt-6.1-sol"
+            )
         self.source_revision = self.params.get("source-revision")
         self._checking = False
         if self.source_revision is not None and (
@@ -826,7 +834,10 @@ class AnalyseAgenticSystem(Workflow):
             recognize=partial(self.recognize_file, run_dir / OPENING),
         )
         opening = json.loads((run_dir / OPENING).read_text(encoding="utf-8"))
-        write_file(run_dir / RUN_METADATA, json.dumps({key: opening[key] for key in ("inputs-commit", "run-date")}) + "\n")
+        write_file(run_dir / RUN_METADATA, json.dumps({
+            **{key: opening[key] for key in ("inputs-commit", "run-date")},
+            **{key: str(self.params[key]) for key in ("model", "effort") if self.params.get(key)},
+        }) + "\n")
         self.write_run_state(run_dir, opening, {})
 
         frozen = None

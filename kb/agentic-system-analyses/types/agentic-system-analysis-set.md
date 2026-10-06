@@ -9,8 +9,11 @@ schema: ./agentic-system-analysis-set.schema.yaml
 
 A directory artifact in the agentic-system-analyses collection's `retained/`
 area, or its local working `state/<run-id>/output/` directory. `ARTIFACT.yaml` selects this
-type and records a SHA-256 for every member. All direct Markdown children
-are members; this type uses closed membership.
+type, records a SHA-256 for every member, and names the worker that produced
+the run under `worker`: the exact `model` identifier and, when the harness
+reports one, its reasoning `effort`. One model writes a whole run, so the
+manifest carries it once; sets published before 2026-10-06 have no `worker`.
+All direct Markdown children are members; this type uses closed membership.
 
 A complete outcome requires `overview.md`, `runtime.md`, `memory.md`,
 `epistemic.md`, `reconciliation.md` and `memory-profile.md`. A blocked or out-of-scope outcome
