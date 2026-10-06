@@ -9,7 +9,7 @@ schema: ./agentic-system-analysis-overview.schema.yaml
 
 The reading entry point of one `analyse-agentic-system` run's retained set.
 It holds identity, evidence boundary, source register, an amendment index,
-synthesis, limitations and both verifications. Runtime, memory, epistemic
+synthesis, limitations and the three verifications. Runtime, memory, epistemic
 and reconciliation findings live in their respective members. The sibling
 `ARTIFACT.yaml` selects the [analysis set type](./agentic-system-analysis-set.md)
 and pins every member, including this overview.

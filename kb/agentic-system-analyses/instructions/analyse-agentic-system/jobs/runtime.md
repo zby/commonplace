@@ -57,6 +57,7 @@ Declare runtime-owned records with `RT-` under the shared record contract.
    revisions to the memory analyst.
 
 Acceptance requires a valid member whose citations resolve against its
-own declarations and the Source register of `boundary`.
+own declarations, the Source register of `boundary` and, in a correction
+round, any record `requests` supplies.
 
 Run the acceptance check before submitting.

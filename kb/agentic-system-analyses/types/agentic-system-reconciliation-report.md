@@ -28,8 +28,7 @@ governs evidence. The member declares no analyst records of its own.
 ## Reconciliation
 
 The body contains `## Reconciliation`: duplicate supersessions, anchored
-conflicts, independent convergence, analyst ownership checks and
-integration-issue dispositions. Name full IDs and describe discrepancies
+conflicts, independent convergence and integration-issue dispositions. Name full IDs and describe discrepancies
 without selecting the strongest-sounding status. A supersession paragraph
 starts `Amendment: <full record ID> is superseded by <full record IDs>` and
 gives its identity evidence and affected findings. Both supersession IDs
@@ -45,11 +44,11 @@ alone is no reason to supersede it. If a required part is missing, retain an
 evidence and prevented conclusion; the verifier addresses it to the analyst
 who should declare the part.
 
-Mark every conflict left unresolved with a paragraph starting
+Mark every disagreement between reports with a paragraph starting
 `Unresolved conflict:`, followed by the affected IDs, conflicting findings,
-evidence and conclusion prevented. Record verification checks these markers;
-synthesis must carry every unresolved conflict into its Limitations.
-Properly scoped uncertainty is not itself a completion blocker.
+evidence and conclusion prevented. The reconciler settles none of them: the
+verifier addresses a blocker to the report that must change, and a conflict
+the sources cannot settle becomes a limitation of the synthesis.
 
 All references resolve in the set. Member-relative links stay inside the
 set directory, because publication moves it. This member contains neither

@@ -38,7 +38,7 @@ only limits a conclusion may remain in a complete report.
 
 Name the subject, frozen source boundary, included and excluded memory
 surfaces, inspected paths and evidence layers, access gaps, and conclusion
-limits. The set's source declarations are the overview's.
+limits. The set's source declarations are the Source register of `boundary`.
 
 Retain a compact coverage table: entry point or memory operation, source
 path, covering supplied or new IDs, or exclusion/uninspected reason and
@@ -116,7 +116,7 @@ requested read-back does not resolve an opaque alternative.
 ### Integration issues
 
 List every correction to a supplied fact, every record of this report that
-may duplicate a seeded record, and every unresolved question, with its
+may duplicate a supplied record, and every unresolved question, with its
 evidence, analytical consequence and the full IDs it concerns, so the
 reconciliation can connect or supersede without rediscovering its meaning.
 State `none` when no issues remain. Supported corrections and justified

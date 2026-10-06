@@ -40,8 +40,9 @@ record verifier can judge the set as one account and the synthesizer can read
 it as one. The accepted report enters the set unchanged.
 
 When you are done, every identity between records is stated as a supersession
-or ruled out, every disagreement between two reports is described with both
-findings, the evidence each cites and the conclusion it prevents, and nothing
+or ruled out, every disagreement between two reports is an `Unresolved
+conflict:` paragraph with both findings, the evidence each cites and the
+conclusion it prevents, and nothing
 in your text replaces, strengthens or narrows a finding a report makes.
 Faithful uncertainty alone is not a disagreement. A finding that rests on
 another report's record disagrees with that report when the record no longer

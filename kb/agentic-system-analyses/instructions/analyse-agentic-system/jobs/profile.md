@@ -14,7 +14,7 @@ Common parameters are defined in the supplied worker rules.
 | `boundary` | Frozen boundary and source register. | Always |
 | `runtime`, `memory`, `epistemic`, `reconciliation` | Accepted record members. | Always |
 | `round` | `first` or `after-blockers`. | Always |
-| `previous-profile`, `verification` | Previous candidate and independent blockers. | Correction |
+| `previous-profile`, `verification` | Previous candidate and independent blockers. | `after-blockers` |
 
 ## Task
 

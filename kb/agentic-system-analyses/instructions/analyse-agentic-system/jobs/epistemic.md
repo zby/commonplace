@@ -30,9 +30,10 @@ rules. When `round = correction`, follow **Correct a report after verification**
 the supplied worker rules; the rest of this instruction still governs the
 report's content.
 
-The memory analyst runs in parallel. Cite only your own declarations,
-`runtime` records and the Source register in `boundary`; do not inspect the
-memory report. Acceptance requires a valid member with resolved citations.
+The memory analyst runs in parallel. Cite your own declarations, `runtime`
+records, the Source register in `boundary` and, in a correction round, any
+record `requests` supplies. Acceptance requires a valid member with resolved
+citations.
 Declare new records with `EPI-`. Keep supplied `RT-` IDs unchanged in your
 inventory and ledger when assessing the same referents.
 
