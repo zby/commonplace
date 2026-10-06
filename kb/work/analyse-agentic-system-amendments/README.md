@@ -50,8 +50,11 @@ As of the 2026-10-05 direction:
   declaring analyst, for all three reports, and reconciliation is narrowed
   to connecting reports. The operator accepted it on 2026-10-05 and it is
   implemented under [ADR 108](../../reference/adr/108-declaring-analysts-correct-their-reports.md);
-  its result section lists what was built. No model run has exercised it,
-  and it does not include the publication policy.
+  its result section lists what was built. The October 6 Dynamic Cheatsheet
+  runs exercised it; the [Sol/Luna audit](./dynamic-cheatsheet-sol-luna-audit-2026-10-06.md)
+  records correctness differences, model identities and elapsed runtimes.
+  Those observations do not establish a causal method improvement. The
+  implementation does not include the publication policy.
 - The type/instruction separation is implemented (commits `0e60d18d4`
   through `ea942625e`). Every accepted output now has a type: the boundary,
   the three analyst reports, the reconciliation, the three verifications and
