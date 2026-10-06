@@ -26,7 +26,10 @@ bytes at an intended destination, and failing explicitly when context is
 unusable instead of reporting the context's own defects.
 
 The operator selected this direction. It is not shipped behavior or an
-implementation commission.
+implementation commission. Its implementation waits on the two runs that
+[adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md)
+specifies; their measurements decide whether this proposal is implemented,
+narrowed to checking a file outside any job, or withdrawn.
 
 ## Current state (as of 2026-10-06)
 

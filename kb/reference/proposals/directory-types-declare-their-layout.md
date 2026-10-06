@@ -134,6 +134,11 @@ exists.
 
 ### The analysis set
 
+The layout decisions for the set are below. Moving the workflow's acceptance,
+round-close and publication code onto the layout, and the runs that test it,
+are specified in
+[adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md).
+
 - **The boundary moves into `output/`.** Setup creates `output/` with the
   type-only manifest and the boundary job writes `output/boundary.md` as the
   first member. The working and retained instances then have one flat
