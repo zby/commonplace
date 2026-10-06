@@ -49,10 +49,15 @@ depends on this one; this one does not depend on it.
   retained set has no `boundary.md`; the overview embeds the boundary's two
   sections verbatim at assembly, and the whole-set identity check reads run
   and boundary identity from the overview.
-- Layout facts are repeated in code: member-name constants in
-  `src/commonplace/lib/agentic_set.py` and `agentic_finalize.py`, the
-  current-slot map in `src/commonplace/lib/agentic_workflow.py`, and the
-  schema's filename properties each state which files make the set.
+- Layout facts are repeated in code. Member filenames are hard-coded in
+  `src/commonplace/lib/agentic_set.py` (member-name constants and the
+  `memory.md` probe), `agentic_finalize.py` (the set names), `agentic_workflow.py`
+  (slot constants and `boundary.md`), `agentic_records.py` (the overview as
+  source-register holder), `systems_matrix.py` and `validation.py` (the
+  hand-written profile exclusion, the reconciliation lookup and the boundary
+  path substitution), and `analysis_worktree.py` and `agentic_publication.py`
+  (the overview as publication destination). The schema's filename properties
+  state the same facts again.
 
 ## Problem
 
@@ -87,7 +92,9 @@ a set of roles keyed by name. Each role states:
   own `type:` declaration, so each fact has one owner.
 - when the slot is required, as a condition the validator evaluates from the
   instance, such as another member's field value.
-- `identity`: the role whose listed fields this member must repeat verbatim.
+- `identity`: one or more sources, each a role and the fields this member
+  must repeat verbatim from it. A member may take run identity from one role
+  and another field from a second, as the memory profile does today.
 - `cites`: the roles whose declarations resolve this member's references. A
   role may list itself.
 
@@ -131,7 +138,12 @@ exists.
   type-only manifest and the boundary job writes `output/boundary.md` as the
   first member. The working and retained instances then have one flat
   layout, and the artifact stays drawn around the product rather than the
-  run directory. A withheld run already produces an overview-only `output/`.
+  run directory. A withheld run already produces an overview-only `output/`,
+  and its disposition comes from the boundary the job wrote, so the boundary
+  is present and `required.always` holds. A boundary job that is refused
+  outright writes nothing and the run does not close; its `output/` is an
+  incomplete working instance in gitignored state, which is the expected
+  shape of a failed run.
 - **Publication copies the boundary** with the other members. No fallback to
   the overview is carried in the type.
 - **The boundary owns source declarations.** After assembly the overview and
@@ -142,6 +154,11 @@ exists.
 - **The one retained set is regenerated** by a fresh run rather than migrated
   or tolerated. Its original boundary file is not recoverable, and the
   boundary type's `source` block is absent from the overview.
+- **Legacy sets are out of scope.** Four tracked manifests under
+  `kb/agentic-systems/reports/retained/` and `retained-archive/` declare
+  type paths that no longer exist and already fail validation. Their
+  collection calls that tree frozen history from before the analysis
+  collection. The layout changes nothing for them.
 
 ### Illustration
 
@@ -155,33 +172,42 @@ layout:
   roles:
     boundary:
       path: boundary.md
-      type: agentic-system-analyses/types/agentic-system-analysis-boundary.md
+      type: agentic-system-analyses/types/agentic-system-boundary.md
     overview:
       path: overview.md
       type: agentic-system-analyses/types/agentic-system-analysis-overview.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
     runtime:
       path: runtime.md
       type: agentic-system-analyses/types/agentic-system-runtime-report.md
-      identity: {from: boundary, fields: [run-id, reviewed-boundary]}
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic]
     memory:
       path: memory.md
       type: agentic-system-analyses/types/agent-memory-analysis-report.md
-      identity: {from: boundary, fields: [run-id, reviewed-boundary]}
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic]
     epistemic:
       path: epistemic.md
       type: agentic-system-analyses/types/agentic-system-epistemic-report.md
-      identity: {from: boundary, fields: [run-id, reviewed-boundary]}
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic]
     reconciliation:
       path: reconciliation.md
       type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic]
     memory-profile:
       path: memory-profile.md
       type: agentic-system-analyses/types/agent-memory-profile.md
-      identity: {from: memory, fields: [source-identity]}
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+        - {from: memory, fields: [source-identity]}
       cites: [runtime, memory, epistemic]
   required:
     always: [boundary, overview]
@@ -193,6 +219,14 @@ layout:
 branch the set uses today; a value with no list requires only `always`. The
 set is closed, as its schema is today. Manifest construction lists the roles
 present. Workflow slot constants become lookups into `roles`.
+
+The identity entries reproduce today's check in full. `set_identity_errors`
+in `src/commonplace/lib/agentic_set.py` requires every member, the
+reconciliation and the profile included, to carry the overview's run and
+boundary identity, and the profile to match the memory report's source
+identity. With the boundary a member, the boundary becomes the source of run
+identity and the overview is checked against it like every other member;
+today the overview is the reference because the boundary is not in the set.
 
 ### Consumers
 
@@ -220,7 +254,9 @@ What becomes checkable through the type, without the companion proposal:
   workflow's round-close record check, its private body assembly and the
   memory-profile rule's path heuristic retire in favour of one directory
   validation and a role filter.
-- The member-name constants in four modules go.
+- The hard-coded member filenames listed under current state go, except
+  where code names the overview as the publication entry point under ADR 102;
+  those become lookups of the entry role rather than deletions.
 - A reader of the type spec sees what an instance contains.
 
 What it costs:
