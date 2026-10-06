@@ -1795,7 +1795,7 @@ def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
     from urllib.parse import urlsplit
 
     from commonplace.lib.note_parser import find_markdown_links
-    real = REPO_ROOT / "kb/agentic-systems/reports/retained/AAS-2026-10-03-dynamic-cheatsheet-02"
+    real = REPO_ROOT / "kb/agentic-systems/reports/retained-archive/AAS-2026-10-03-dynamic-cheatsheet-02"
     current = tmp_path / "kb/agentic-system-analyses/retained/dynamic-cheatsheet"
     archive = tmp_path / "kb/agentic-system-analyses/retained-archive/AAS-2026-10-03-dynamic-cheatsheet-02"
     shutil.copytree(real, current)
