@@ -41,10 +41,6 @@ from typing import Any
 
 import yaml
 
-from commonplace.lib.agentic_analysis import (
-    parse_agentic_analysis_run_state,
-    verify_quote_anchors,
-)
 from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
 from commonplace.lib.agentic_finalize import build_manifest, start_manifest
 from commonplace.lib.agentic_publication import (
@@ -486,30 +482,13 @@ def cited_reference_refusals(path: Path, *, run_dir: Path, repo_root: Path, scop
 
 
 def pass_refusals(
-    path: Path, *, repo_root: Path, run_state: Path,
-    set_check: Callable[[Path], list[str]],
+    path: Path, *, repo_root: Path, set_check: Callable[[Path], list[str]],
 ) -> list[str]:
     """The output of an analyst, which declares records: a valid member, whose
-    own validation checks its declaration prefix, whose identity and record
-    references hold in the set so far and whose quotations resolve against
-    the frozen source."""
-    refusals = member_refusals(path, repo_root=repo_root)
-    refusals += set_check(path)
-    try:
-        # Read the run's identity and source without validating its published
-        # artifact: a replay of a complete run passes through earlier report
-        # versions in output/, which the final manifest does not pin.
-        document, error = parse_document(run_state.read_text(encoding="utf-8"))
-        if error is not None or document is None:
-            raise ValueError(f"run state does not parse: {error}")
-        state = parse_agentic_analysis_run_state(run_state, document, repo_root=repo_root)
-    except (ValueError, OSError) as error:
-        return refusals + [str(error)]
-    source = state.source
-    if source is None:
-        return refusals + ["quotation checks require a registered frozen source; report the missing source to the coordinator"]
-    _, failures = verify_quote_anchors(path.read_text(encoding="utf-8"), source=source)
-    return refusals + failures
+    own validation checks its declaration prefix, and whose identity, record
+    references and quotations hold in the set so far. The set resolves
+    quotations against the boundary's frozen source, which a run must hold."""
+    return member_refusals(path, repo_root=repo_root) + set_check(path)
 
 
 def identity_refusals(metadata: Mapping[str, Any], *, run_id: str, boundary_fields: Mapping[str, Any]) -> list[str]:
@@ -1236,7 +1215,6 @@ class AnalyseAgenticSystem(Workflow):
         checks = [partial(
             pass_refusals,
             repo_root=self.repo,
-            run_state=run_dir / RUN_STATE,
             set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=member),
         )]
         if round_:

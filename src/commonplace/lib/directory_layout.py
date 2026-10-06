@@ -49,11 +49,14 @@ class Requirement:
 class Finding:
     """One layout or relation finding; ``role`` is None for files no role matches
     and for findings about the artifact as a whole. ``absent`` marks a required
-    member that is not there yet, which a working instance expects."""
+    member that is not there yet, which a working instance expects. ``info``
+    marks what standing validation reports without failing, such as evidence
+    whose pinned bytes are not on this machine."""
 
     role: str | None
     message: str
     absent: bool = False
+    info: bool = False
 
 
 @dataclass(frozen=True)

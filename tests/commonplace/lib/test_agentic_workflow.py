@@ -1114,8 +1114,8 @@ def test_reconciliation_refuses_prose_line_anchors_at_acceptance(fixture: Fixtur
 
 @pytest.mark.slow
 def test_reconciliation_preserves_permitted_quote_attributions(fixture: Fixture) -> None:
-    # This syntax check preserves quotation exclusions; it does not certify occurrence.
-    quote = f"\n> Source text.\n> --- `README.md:1-2` @ `{fixture.revision}`\n"
+    # A ranged quote attribution is not a prose anchor; the set resolves it.
+    quote = f"\n> # Frozen source\n> --- `README.md:1-1` @ `{fixture.revision}`\n"
     text = fixture.reconciliation() + quote
     scripted, _ = agent(fixture, **{"reconcile-0": fixture.writes(lambda _: text)})
     drive_to(scripted, "reconcile-0")

@@ -417,7 +417,7 @@ class TestIngestQuoteValidation:
     def test_extract_absent_from_snapshot_fails(self, tmp_path):
         ingest = self._ingest(tmp_path, "words never written", snapshot="something else entirely")
         results = self._run(ingest)
-        assert any("quote does not occur in the source region in the checksum-verified snapshot" in f for f in results.fails)
+        assert any("quote does not occur in the source region (the checksum-verified snapshot)" in f for f in results.fails)
 
     def test_populated_quotes_reject_stale_global_empty_claim(self, tmp_path):
         ingest = self._ingest(

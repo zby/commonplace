@@ -60,8 +60,8 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
+from commonplace.lib.quote_grounding import SnapshotPin, resolve_citations
 from commonplace.lib.quote_matching import (
-    match_quote,
     parse_blockquotes,
     ranged_prose_anchors,
 )
@@ -492,8 +492,11 @@ class ValidationRun:
             if not errors:
                 results.passes.append("[schema] directory artifact requirements satisfied")
             findings = self.artifact_findings(directory)
-            results.fails.extend(f"[type: {profile.type_name}] {finding.message}" for finding in findings)
-            if not findings and (profile.layout is not None or _DIRECTORY_TYPE_RULES.get(profile.type_path)):
+            for finding in findings:
+                (results.infos if finding.info else results.fails).append(
+                    f"[type: {profile.type_name}] {finding.message}")
+            failing = [finding for finding in findings if not finding.info]
+            if not failing and (profile.layout is not None or _DIRECTORY_TYPE_RULES.get(profile.type_path)):
                 results.passes.append(f"[type: {profile.type_name}] members, roles and relations satisfied")
         except (OSError, UnicodeError, ValueError, TypeError) as exc:
             results.fails.append(f"[base] artifact: {exc}")
@@ -948,10 +951,7 @@ def validate_ingest_snapshot_pairing(
         )
 
 
-def validate_ingest_quotes(
-    results: CheckResults, content: str, path: Path, *,
-    snapshots: SnapshotDirectory | None = None,
-) -> None:
+def validate_ingest_quotes(results: CheckResults, content: str, path: Path) -> None:
     """Verify attributed extracts when name-paired, checksum-pinned bytes exist.
 
     Missing bytes remain conditional under ADR 073, but are explicitly reported
@@ -987,35 +987,15 @@ def validate_ingest_quotes(
     # Attribution paths are repository-relative, as in analysis results. Compare
     # against the exact name-paired path even when no local snapshot is retained.
     expected_path = (Path("kb/sources/.snapshots") / snapshot.name).as_posix()
-    valid = []
-    for citation in citations:
-        error = citation.error
-        if not error and citation.source != expected_path:
-            error = f"attribution must name {expected_path}"
-        if not error and citation.version != "sha256:" + recorded["checksum"]:
-            error = "attribution checksum differs from snapshot_sha256"
-        if error:
-            results.fails.append(f"source quote: source error at Quotes line {citation.line}: {error}")
-        else:
-            valid.append(citation)
-    if snapshots is None:
-        snapshots = SnapshotDirectory(snapshot.parent)
-    facts = snapshots.read(snapshot)
-    if facts.sha256 != recorded["checksum"]:
-        results.infos.append("source quotes: source error: pinned snapshot unavailable or checksum differs; extracts unverified")
-        return
-    try:
-        snapshot_text = snapshot.read_text(encoding="utf-8")
-    except (OSError, UnicodeError) as exc:
-        results.infos.append(f"source quotes: source error: cannot read pinned snapshot; extracts unverified: {exc}")
-        return
-    failures = len(results.fails)
-    normalization = ingest_normalization(content)
-    for citation in valid:
-        matched = match_quote(citation.quote, snapshot_text, kind=normalization, ranges=citation.ranges)
-        if not matched.matched:
-            results.fails.append(f"source quote: {matched.error} in the checksum-verified snapshot: {citation.quote!r}")
-    if len(valid) == len(citations) and len(results.fails) == failures:
+    pin = SnapshotPin(expected_path, recorded["checksum"], snapshot)
+    resolutions = resolve_citations(citations, pin, kind=ingest_normalization(content))
+    for resolution in resolutions:
+        if resolution.status == "mismatch":
+            results.fails.append(f"source quote at Quotes line {resolution.citation.line}: {resolution.detail}")
+    unverified = [resolution for resolution in resolutions if resolution.status == "unverified"]
+    if unverified:
+        results.infos.append(f"source quotes: {len(unverified)} extracts unverified, {unverified[0].detail}")
+    elif all(resolution.status == "match" for resolution in resolutions):
         results.passes.append(f"source quotes: {len(citations)} resolve against the pinned snapshot")
 
 
@@ -1705,7 +1685,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     validate_ingest_snapshot_pairing(
         base, parsed.content, parsed.path, snapshots=snapshots
     )
-    validate_ingest_quotes(base, parsed.content, parsed.path, snapshots=snapshots)
+    validate_ingest_quotes(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
     type_identity = canonical_type_identity(parsed.profile)
@@ -2059,6 +2039,8 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
     if index is not None and overview is not None and index not in overview.body.splitlines():
         findings.append(Finding("overview", "overview amendment index does not match reconciliation"))
 
+    findings += _set_quotation_findings(artifact, layout, documents)
+
     profile = documents.get("memory-profile")
     if profile is not None:
         declared = set_declarations(sources, bodies)
@@ -2077,4 +2059,41 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
             identity = (memory.frontmatter or {}).get("source-identity", "")
             if artifact.path.name != source_slug(identity, (overview.frontmatter or {}).get("system", "")):
                 findings.append(Finding(None, "current directory name does not match its source"))
+    return findings
+
+
+def _set_quotation_findings(
+    artifact: DirectoryArtifact, layout: Layout, documents: dict[str, ParsedDocument],
+) -> list[Finding]:
+    """Every member's quotations resolve against the boundary's frozen source.
+
+    Pinned bytes absent from this machine leave the quotations unverified,
+    reported once per member as information.
+    """
+    from commonplace.lib.quote_grounding import frozen_source_pin, resolve_citations
+    from commonplace.lib.quote_matching import parse_blockquotes
+
+    boundary = documents.get("boundary")
+    source = (boundary.frontmatter or {}).get("source") if boundary is not None else None
+    pin = frozen_source_pin(source) if isinstance(source, dict) else None
+    findings = []
+    for role in layout.roles.values():
+        if role.name not in documents:
+            continue
+        citations = parse_blockquotes(artifact.members[role.path].content.decode("utf-8"))
+        if not citations:
+            continue
+        if pin is None:
+            findings.append(Finding(role.name, f"{role.path}: quotations need the boundary's frozen source"))
+            continue
+        unverified = []
+        for resolution in resolve_citations(citations, pin, kind="code"):
+            if resolution.status == "mismatch":
+                findings.append(Finding(role.name, f"{role.path}: quote-anchored citation at line "
+                                                   f"{resolution.citation.line}: {resolution.detail}"))
+            elif resolution.status == "unverified":
+                unverified.append(resolution)
+        if unverified:
+            findings.append(Finding(role.name, f"{role.path}: {len(unverified)} quotations unverified, "
+                                               f"{unverified[0].detail}", info=True))
     return findings

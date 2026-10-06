@@ -19,13 +19,14 @@ from commonplace.lib.agentic_set import (
 )
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.note_parser import ParsedDocument, parse_document
-from commonplace.lib.quote_generation import MAX_QUOTE_OCCURRENCES, quote_occurrences
+from commonplace.lib.quote_grounding import (
+    CapturePin,
+    GitPin,
+    resolve_citations,
+)
 from commonplace.lib.quote_matching import (
     URL_RE,
-    Citation,
     blank_quote_bodies,
-    git_citation_path,
-    match_quote,
     parse_blockquotes,
     parse_github_blob,
 )
@@ -285,74 +286,21 @@ def _verify_output(
     return None
 
 
-def _read_capture(source: SourceIdentity) -> tuple[bytes | None, str | None]:
-    """Return the frozen capture's bytes, or an error, after checking their hash."""
-    try:
-        content = source.path.read_bytes()
-    except OSError as exc:
-        return None, f"cannot read frozen capture {source.path}: {exc}"
-    actual = sha256(content).hexdigest()
-    if actual != source.expected_sha256:
-        return None, (
-            f"frozen capture SHA-256 mismatch; expected {source.expected_sha256}, "
-            f"got {actual}"
-        )
-    return content, None
+def source_pin(source: SourceIdentity) -> GitPin | CapturePin:
+    """The pin a run's frozen source declares."""
+    if source.kind == "capture":
+        return CapturePin(source.identity, source.revision, source.path, source.expected_sha256 or "")
+    return GitPin(source.identity, source.revision, source.path)
 
 
-def _verify_git_source(source: SourceIdentity) -> str | None:
-    if not source.path.is_dir():
-        return f"source checkout: directory does not exist: {source.path}"
-    try:
-        check = subprocess.run(
-            [
-                "git",
-                "--no-replace-objects",
-                "-C",
-                str(source.path),
-                "cat-file",
-                "-e",
-                f"{source.revision}^{{commit}}",
-            ],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    except OSError as exc:
-        return f"source checkout: could not invoke git: {exc}"
-    if check.returncode != 0:
-        return "source checkout: recorded revision is not a commit in the checkout"
-    return None
-
-
-def git_blob_text(
-    *, source_root: Path, revision: str, source_path: str
-) -> tuple[str | None, str | None]:
-    if not is_normalized_relative(source_path):
-        return None, "expected a normalized commit-relative path"
-    try:
-        blob = subprocess.run(
-            [
-                "git",
-                "--no-replace-objects",
-                "-C",
-                str(source_root),
-                "cat-file",
-                "blob",
-                f"{revision}:{source_path}",
-            ],
-            check=False,
-            capture_output=True,
-        )
-    except OSError as exc:
-        return None, f"could not invoke git: {exc}"
-    if blob.returncode != 0:
-        return None, "path does not resolve to a blob at the recorded commit"
-    try:
-        content = blob.stdout.decode("utf-8")
-    except UnicodeDecodeError:
-        return None, "cited blob is not UTF-8 text"
-    return content, None
+def verify_quote_anchors(content: str, *, source: SourceIdentity) -> tuple[list[str], list[str]]:
+    """Resolve quote-anchored citations while the frozen source must be present:
+    an unverified citation is a failure here, not information."""
+    passes, failures = [], []
+    for resolution in resolve_citations(parse_blockquotes(content), source_pin(source), kind="code"):
+        message = f"quote-anchored citation at line {resolution.citation.line}: {resolution.detail}"
+        (passes if resolution.status == "match" else failures).append(message)
+    return passes, failures
 
 
 def _same_repository(repository: str, source_identity: str) -> bool:
@@ -440,124 +388,6 @@ def _verify_source_anchors(
     return passes, failures
 
 
-def verify_quote_anchors(
-    content: str,
-    *,
-    source: SourceIdentity,
-    capture: tuple[bytes | None, str | None] | None = None,
-) -> tuple[list[str], list[str]]:
-    """Resolve quote-anchored citations against one frozen source.
-
-    ``capture`` is a capture source's already verified ``(bytes, error)``, so
-    a caller checking several documents reads and hashes the capture once.
-    """
-    passes: list[str] = []
-    failures: list[str] = []
-    citations = parse_blockquotes(content)
-    if not citations:
-        return passes, failures
-
-    capture_text: str | None = None
-    capture_error: str | None = None
-    if source.kind == "capture":
-        capture_bytes, capture_error = capture or _read_capture(source)
-        if capture_bytes is not None:
-            try:
-                capture_text = capture_bytes.decode("utf-8")
-            except UnicodeError as exc:
-                capture_error = f"cannot read frozen capture as UTF-8 text: {exc}"
-
-    for citation in citations:
-        label = f"quote-anchored citation at output line {citation.line}"
-        if not citation.quote.strip():
-            failures.append(f"{label}: quote body is empty")
-            continue
-        if citation.error:
-            failures.append(f"{label}: source error: {citation.error}")
-            continue
-        if source.kind == "capture":
-            source_text, error = capture_text, capture_error
-            citation_path = source.path.as_posix()
-            location = f"frozen capture {source.revision}"
-            if citation.source and citation.source.startswith(("http://", "https://")):
-                if citation.source != source.identity:
-                    error = f"attribution URL does not match registered capture identity; expected {source.identity}, or cite {source.path.as_posix()}"
-                elif citation.ranges:
-                    error = "a blob line range cannot address the full capture; cite a capture range"
-            else:
-                if citation.version is not None and citation.version != f"sha256:{source.expected_sha256}":
-                    error = f"attribution checksum does not match frozen capture; expected sha256:{source.expected_sha256}"
-                elif Path(citation.source or "").as_posix() != source.path.as_posix() and not source.path.as_posix().endswith("/" + (citation.source or "")):
-                    error = f"attribution path does not identify frozen capture; expected {source.path.as_posix()}"
-        else:
-            try:
-                source_path, repository = git_citation_path(citation)
-            except ValueError as exc:
-                failures.append(f"{label}: source error: {exc}")
-                continue
-            if repository and not _same_repository(repository, source.identity):
-                failures.append(f"{label}: source error: attribution uses repository {repository}, expected {source.identity}")
-                continue
-            if citation.version is not None and citation.version != source.revision:
-                failures.append(f"{label}: source error: attribution uses revision {citation.version}, expected {source.revision}")
-                continue
-            source_text, error = git_blob_text(
-                source_root=source.path, revision=source.revision, source_path=source_path,
-            )
-            citation_path = source_path
-            location = f"{source_path} at the recorded commit"
-        if error is not None or source_text is None:
-            failures.append(f"{label}: source error: {error}")
-            continue
-        matched = match_quote(citation.quote, source_text, kind="code", ranges=citation.ranges)
-        if not matched.matched:
-            if matched.count > 1:
-                advice = quote_ambiguity_advice(citation, source_text, path=citation_path)
-                failures.append(f"{label}: quotation ambiguous: {matched.error} ({location}); {advice}")
-            elif matched.count == 0 and (matched.error or "").startswith("quote does not occur"):
-                failures.append(f"{label}: quotation not found: {matched.error} ({location}); reread the source and recheck the claim this quotation supports")
-            else:
-                failures.append(f"{label}: {matched.error} ({location}); check the passage and range against the frozen source")
-            continue
-        passes.append(f"{label}: quote resolves in {location}")
-    return passes, failures
-
-
-def quote_ambiguity_advice(citation: Citation, source_text: str, *, path: str) -> str:
-    """Offer checked ranges; context cannot silently replace the quoted text."""
-    lines = source_text.splitlines(keepends=True)
-    regions: list[tuple[int, int]] = []
-    for start, end in sorted(citation.ranges or ((1, len(lines)),)):
-        if regions and start <= regions[-1][1] + 1:
-            regions[-1] = (regions[-1][0], max(end, regions[-1][1]))
-        else:
-            regions.append((start, end))
-    candidates = []
-    try:
-        for start, end in regions:
-            region = "".join(lines[start - 1:end])
-            region_offset = sum(map(len, lines[:start - 1]))
-            for occurrence in quote_occurrences(citation.quote, region):
-                first = start + occurrence.start_line - 1
-                last = start + occurrence.end_line - 1
-                candidates.append((first, occurrence.start_offset + region_offset, last))
-        if len(candidates) > MAX_QUOTE_OCCURRENCES:
-            raise ValueError(f"more than {MAX_QUOTE_OCCURRENCES} occurrences")
-    except ValueError as error:
-        return f"{error}; expand the quotation to make it less ambiguous; no candidates proposed"
-    proposals = []
-    for number, (first, offset, last) in enumerate(candidates, 1):
-        unique = match_quote(citation.quote, source_text, kind="code", ranges=((first, last),)).matched
-        attribution = f"> --- `{path}:{first}-{last}`"
-        if citation.version is not None:
-            attribution += f" @ `{citation.version}`"
-        context = "".join(lines[max(0, first - 2):min(len(lines), last + 1)]).rstrip()
-        column = offset - sum(map(len, lines[:first - 1])) + 1
-        repair = f"paste attribution: {attribution}" if unique else "no attribution can separate this occurrence; lengthen the quotation using its context"
-        proposals.append(f"candidate {number}, source line {first}, column {column}: {repair}\nsource context:\n{context}")
-    return "choose the occurrence whose context supports the finding, or lengthen the quotation:\n" + "\n".join(proposals)
-
-
 def _parsed_output(
     identity: OutputIdentity,
     content_overrides: Mapping[Path, str | bytes] | None,
@@ -621,13 +451,9 @@ def verify_agentic_analysis_run_state(
     passes: list[str] = []
     failures: list[str] = []
 
-    capture = None
     if state.source is not None:
-        if state.source.kind == "capture":
-            capture = _read_capture(state.source)
-            error = None if capture[1] is None else f"source capture: {capture[1]}"
-        else:
-            error = _verify_git_source(state.source)
+        missing = source_pin(state.source).missing()
+        error = f"source capture: {missing}" if missing and state.source.kind == "capture" else missing
         if error is None:
             passes.append(
                 f"source: {state.source.identity} resolves at {state.source.revision}"
@@ -735,10 +561,5 @@ def verify_agentic_analysis_run_state(
                 )
                 passes.extend(f"{role} {message}" for message in anchor_passes)
                 failures.extend(f"{role} {message}" for message in anchor_failures)
-            quote_passes, quote_failures = verify_quote_anchors(
-                content, source=state.source, capture=capture
-            )
-            passes.extend(f"{role} {message}" for message in quote_passes)
-            failures.extend(f"{role} {message}" for message in quote_failures)
 
     return passes, failures

@@ -390,7 +390,7 @@ Object the epistemic lens established. Evidence: SRC-1.
 SET_NAMES = tuple(role.path for role in agentic_set.analysis_layout().roles.values())
 
 
-def boundary_text(revision: str, *, source: str = SOURCE) -> str:
+def boundary_text(revision: str, *, source: str = SOURCE, path: str = "/fixture/example-system") -> str:
     return f"""---
 type: agentic-system-analyses/types/agentic-system-boundary.md
 description: "Example System at the frozen fixture boundary, analysed as an enclosing runtime"
@@ -405,7 +405,7 @@ source:
   kind: git
   identity: {source}
   revision: {revision}
-  path: /fixture/example-system
+  path: {path}
   sha256: null
 ---
 
@@ -517,9 +517,10 @@ def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
         (tmp_path / retained).write_bytes((output_path(run_dir, name)).read_bytes())
 
 
-def write_set(run_dir: Path, revision: str) -> Path:
+def write_set(run_dir: Path, revision: str, *, source_path: Path | None = None) -> Path:
     """Write the members and the overview pinning them."""
-    write(run_dir / "output/boundary.md", boundary_text(revision))
+    write(run_dir / "output/boundary.md", boundary_text(
+        revision, **({"path": source_path.as_posix()} if source_path else {})))
     members = {
         "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
@@ -572,7 +573,7 @@ def valid_run_state(tmp_path: Path) -> Path:
     source_root, revision = git_checkout(
         tmp_path / "related-systems/example--system"
     )
-    overview = write_set(run_dir, revision)
+    overview = write_set(run_dir, revision, source_path=source_root)
     retain_set(tmp_path, run_dir)
     generated = write(tmp_path / REVIEW_PATH, review_text(revision, overview))
     run_frontmatter: dict[str, object] = {
@@ -617,8 +618,7 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     boundary = run_dir / "output/boundary.md"
     boundary_values = frontmatter(boundary)
     boundary_values["reviewed-boundary"] = values["source"]["revision"]
-    boundary_values["source"] = {**boundary_values["source"], "identity": values["source"]["identity"],
-                                 "revision": values["source"]["revision"]}
+    boundary_values["source"] = dict(values["source"])
     replace_frontmatter(boundary, boundary_values)
     profile = run_dir / "output/memory-profile.md"
     replace_frontmatter(profile, {**frontmatter(profile),
@@ -718,7 +718,7 @@ def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
     assert results.fails == []
     assert results.note_type == "agentic-system-analysis-run-state"
     assert any("run state: complete" in item for item in results.passes)
-    assert any("README.md" in item and "resolve" in item for item in results.passes)
+    assert not any("unverified" in item for item in results.infos)
 
 
 def test_generated_review_must_live_in_reviews_directory(tmp_path: Path) -> None:
@@ -889,7 +889,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert results.fails == []
-    assert any("frozen capture" in item for item in results.passes)
+    assert not any("unverified" in item for item in results.infos)
 
 
 @pytest.mark.parametrize(
@@ -968,7 +968,7 @@ def test_quote_anchors_resolve_from_the_recorded_commit(
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert results.fails == []
-    assert any("quote resolves" in item for item in results.passes)
+    assert not any("unverified" in item for item in results.infos)
 
 
 def test_quote_anchor_rejects_text_found_only_in_the_worktree(tmp_path: Path) -> None:
@@ -1859,3 +1859,18 @@ def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
     runtime.write_text(runtime.read_text().replace("#### RT-OBJ-store —", "#### MEM-OBJ-store —", 1))
     failures = validation.validate_note(runtime, repo_root=tmp_path).fails
     assert any("this report declares only RT- records: MEM-OBJ-store" in failure for failure in failures)
+
+
+def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_workflow import set_role_refusals
+
+    run_dir = member_fixture(tmp_path)  # its boundary pins a checkout that is not here
+    output = run_dir / "output"
+
+    checked = validation.validate_note(output, repo_root=tmp_path)
+
+    assert checked.fails == []
+    assert any("memory.md:" in info and "quotations unverified, source unavailable" in info
+               for info in checked.infos)
+    refusals = set_role_refusals(output / "memory.md", run_dir=run_dir, repo_root=tmp_path, role="memory")
+    assert any("quotations unverified" in refusal for refusal in refusals)
