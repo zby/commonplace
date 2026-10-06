@@ -68,7 +68,7 @@ def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> 
 
 
 @pytest.mark.slow
-def test_status_defects_are_amended_before_reconciliation(
+def test_status_defects_are_repaired_before_reconciliation(
     tmp_path: Path, monkeypatch,
 ) -> None:
     defect = "- operation conclusion status: unobserved"
@@ -89,11 +89,11 @@ def test_status_defects_are_amended_before_reconciliation(
             assert text == valid
         handout.output_path.write_text(text, encoding="utf-8")
 
-    scripted, definition = agent(fixture, runtime=runtime)
-    drive_to(scripted, "runtime")
-    attempt, prompt = prompt_of(scripted.round(), "runtime")
+    scripted, definition = agent(fixture, **{"runtime-0": runtime})
+    drive_to(scripted, "runtime-0")
+    attempt, prompt = prompt_of(scripted.round(), "runtime-0")
     assert attempt == 2 and "conclusion status:" in prompt
     assert isinstance(scripted.run()[-1], Done)
-    assert scripted.launched.count("runtime") == 2
+    assert scripted.launched.count("runtime-0") == 2
     assert scripted.launched.count("reconcile-0") == 1
     assert definition.publications == 1

@@ -69,15 +69,10 @@ An access root such as `related-systems/<owner>--<repo>/` may also appear; its m
 worktree or current HEAD is not the durable evidence identity.
 
 The registered Git source is the repository at that commit. Listed paths
-record the boundary job's initial inspection; they are not an allowlist for
-later analysts. Later jobs may inspect and cite other files at the same
-commit for the selected target and record their additional coverage in their
-own members. Functional target exclusions remain explicit, but neither a
-path omitted from the register nor a coverage-table exclusion forbids
-inspection to determine a file's relevance. Do not write a path-only
-allowlist that changes this rule. Captures remain limited to their frozen
-contents; another repository, revision or capture requires a new evidence
-boundary.
+record the boundary job's initial inspection, not an allowlist: the source
+contract gives what later jobs may inspect and cite. Captures remain limited
+to their frozen contents; another repository, revision or capture requires a
+new evidence boundary.
 
 Each source ID is declared once. A source with several evidence layers
 keeps one row: list the layers from the source contract and label each
