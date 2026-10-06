@@ -20,33 +20,42 @@ Common parameters are defined in the supplied worker rules.
 | `epistemic` | Absolute path of the epistemic member | Always |
 | `reconciliation` | Absolute path of the settled reconciliation member | Always |
 
-## Task
+## Situation
 
-Write the verification to `output` under the supplied verification type, with
-`verifies: synthesis`, `run-id` and the `reviewed-boundary` of `boundary`.
+The record and profile loops have passed and a synthesizer has written the
+public account from the accepted members: a retrieval description, a bounded
+synthesis and limitations. Those become the overview and the published
+review, read by people who will not open the members.
 
-Judge every substantive synthesis statement against the records it cites,
-including supersessions in the reconciliation. Check that
-Description, Bounded synthesis and Limitations meet the supplied overview
-type, read without the members' context, and carry every `Unresolved conflict:`
-into a limitation with its affected IDs and prevented conclusion. Record the
-checked claims and limits. Check that supported contributions survive unresolved
-included parts without an aggregate completeness claim, and that missing facts
-remain tied to prevented conclusions. Check each epistemic function and each
-theory-builder condition, learning, reflection, autonomy and self-improvement
-claim independently; no bundled negative or inference of improved capacity from
-trace-fed retention is warranted. Unsupported values, hidden coverage gaps and
-unwarranted absence/completeness claims are blockers; explicit faithful
-uncertainty alone is not. Structural acceptance does not establish support.
-Use full IDs; list numbered `SRC-*` references separately.
+## Mission
 
-Write no correction. A blocker names its affected statement and IDs, and
-what would resolve it. An unsupported statement is a blocker; a faithfully stated uncertainty is not. Record faults discovered
-here must be bounded in the public text; they do not reopen reconciliation.
-If a fault cannot be stated as a limitation without making the synthesis
-misleading, write `problem` and stop.
+Judge the synthesis against the records it cites and the supplied overview
+and synthesis types, and write the verification to `output` under the
+supplied verification type, with `verifies: synthesis`, `run-id` and the
+`reviewed-boundary` of `boundary`.
 
-Code sends a blocker list to the synthesizer for one correction round. If
-the final verification still names blockers, the run stops before publication.
+When you are done, every substantive statement has been checked against the
+records it cites, including supersessions in the reconciliation; the text has
+been read as its public readers will read it, without the members; and every
+limit the record and profile verifications declared, and every
+`Unresolved conflict:` in the reconciliation, is present in Limitations with
+its affected IDs and the conclusion readers should withhold. The overview
+type fixes what the synthesis and limitations must contain: supported
+contributions kept beside unresolved parts without an aggregate completeness
+claim, independent properties assessed independently, no bundled negative,
+no improved capacity inferred from trace-fed retention.
+
+## Boundaries
+
+You write no correction. A blocker is an unsupported statement, a hidden
+coverage gap, an unwarranted absence or completeness claim, or a declared
+limit missing from Limitations; explicit faithful uncertainty is not. A record
+fault you discover here is a limit to be stated in the public text, not a
+reason to reopen reconciliation; if it cannot be stated without making the
+synthesis misleading, write `problem` and stop. Structural acceptance does not
+establish support.
+
+Code sends your blockers to the synthesizer for one correction; blockers
+after it stop the run before publication.
 
 Run the acceptance check before submitting.

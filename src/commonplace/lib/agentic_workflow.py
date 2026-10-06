@@ -688,11 +688,36 @@ def source_anchor_refusals(text: str) -> list[str]:
     ]
 
 
+def limits_of(verification: str) -> list[str]:
+    """The limits a verification declares, each with its continuation lines."""
+    text = section(split(verification)[1], "Limits").strip()
+    return [] if text == "none" else blocker_texts(text)
+
+
+def carried_limit_refusals(synthesis_body: str, verifications: Sequence[Path]) -> list[str]:
+    """Every limit a verification declared names a record the Limitations
+    section mentions. Code checks the ID, not that the consequence is stated."""
+    limitations = record_references(section(synthesis_body, "Limitations"))
+    refusals = []
+    for path in verifications:
+        if not path.is_file():
+            continue
+        for limit in limits_of(path.read_text(encoding="utf-8")):
+            cited = record_references(limit)
+            if cited and not cited & limitations:
+                refusals.append(
+                    f"limit not carried: Limitations names none of {', '.join(sorted(cited))} "
+                    f"for the limit {path.name} declares: {limit.splitlines()[0][:100]}"
+                )
+    return refusals
+
+
 def synthesis_refusals(
     path: Path, *, repo_root: Path, run_id: str, boundary: Path,
-    bodies: Callable[[Path], dict[str, str]],
+    bodies: Callable[[Path], dict[str, str]], verifications: Sequence[Path] = (),
 ) -> list[str]:
-    """A valid synthesis of this run whose links resolve from the overview."""
+    """A valid synthesis of this run whose links resolve from the overview and
+    whose Limitations carry every declared limit."""
     refusals = member_refusals(path, repo_root=repo_root)
     text = path.read_text(encoding="utf-8")
     document, error = parse_document(text)
@@ -705,6 +730,7 @@ def synthesis_refusals(
     refusals += identity_refusals(dict(document.frontmatter or {}), run_id=run_id, boundary_fields=boundary_fields)
     # Synthesis is written beside output/, then assembled into overview.md.
     refusals += agentic_set_member_link_failures(path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links)
+    refusals += carried_limit_refusals(document.body, verifications)
     return refusals + reference_refusals(partial(bodies, path))
 
 
@@ -721,12 +747,19 @@ def verification_refusals(
     refusals += identity_refusals(metadata, run_id=run_id, boundary_fields=boundary_fields)
     if metadata.get("verifies") != verifies:
         refusals.append(f"member identity: verifies {metadata.get('verifies')!r} does not match {verifies!r}")
-    return refusals + blockers_refusals(section(body, "Blockers").strip())
+    refusals += blockers_refusals(section(body, "Blockers").strip())
+    refusals += [reason.replace("### Blockers", "## Limits") for reason in blockers_refusals(section(body, "Limits").strip())]
+    return refusals
 
 
 def verified(verification: str) -> str:
-    """A verification's account, for the overview."""
-    return section(split(verification)[1], "Verification").strip()
+    """A verification's account, for the overview, with the limits it declared."""
+    body = split(verification)[1]
+    account = section(body, "Verification").strip()
+    limits = section(body, "Limits").strip()
+    if limits and limits != "none":
+        account += "\n\nLimits carried into Limitations:\n\n" + limits
+    return account
 
 
 def one_line(text: str) -> str:
@@ -892,9 +925,10 @@ class AnalyseAgenticSystem(Workflow):
                 raise StopRun("the profile verification of the last round names blockers: " + blockers)
         atomic_write(run_dir / PROFILE, (run_dir / round_file("profile", profile_round)).read_bytes())
 
+        judged = (round_file("verification", round_), round_file("profile-verification", profile_round))
         for synthesis_round in range(self.synthesis_correction_rounds + 1):
-            self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round))
-            self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round))
+            self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round, judged))
+            self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round, judged))
             synthesis_verification = (run_dir / round_file("synthesis-verification", synthesis_round)).read_text(encoding="utf-8")
             blockers = section(split(synthesis_verification)[1], "Blockers").strip()
             if blockers == "none":
@@ -941,10 +975,8 @@ class AnalyseAgenticSystem(Workflow):
                 return self.profile_job(run_dir, 0)
             if name == "verify-profile":
                 return self.profile_verification_job(run_dir, 0)
-            if name == "synthesize":
-                return self.synthesis_job(run_dir, 0)
-            if name == "verify-synthesis":
-                return self.synthesis_verification_job(run_dir, 0)
+            if name in ("synthesize", "verify-synthesis"):
+                return self.synthesis_stage_job(run_dir, name, 0)
             match = re.fullmatch(r"(runtime|memory|epistemic|reconcile|verify|profile|verify-profile|synthesize|verify-synthesis)-(\d+)", name)
             if match is None:
                 raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
@@ -961,15 +993,21 @@ class AnalyseAgenticSystem(Workflow):
                 text = (run_dir / round_file("set-check", round_)).read_text()
                 failures = [line[2:] for line in text.splitlines() if line.startswith("- ")]
                 return self.verification_job(run_dir, round_, dict.fromkeys(ANALYSTS, 0), (), validator=partial(self.record_verification_refusals, run_dir, failures=failures))
-            constructors = {
-                "profile": self.profile_job,
-                "verify-profile": self.profile_verification_job,
-                "synthesize": self.synthesis_job,
-                "verify-synthesis": self.synthesis_verification_job,
-            }
+            if kind in ("synthesize", "verify-synthesis"):
+                return self.synthesis_stage_job(run_dir, name, round_)
+            constructors = {"profile": self.profile_job, "verify-profile": self.profile_verification_job}
             return constructors[kind](run_dir, round_)
         finally:
             self._checking = False
+
+    def synthesis_stage_job(self, run_dir: Path, name: str, round_: int) -> Job:
+        """A synthesis-stage job as it was handed out: its supplied invocation
+        names the verifications whose limits it must carry."""
+        supplied = self.supplied(run_dir, name)
+        judged = (Path(supplied.get("record-verification", "")).name,
+                  Path(supplied.get("profile-verification", "")).name)
+        builder = self.synthesis_job if name.startswith("synthesize") else self.synthesis_verification_job
+        return builder(run_dir, round_, judged)
 
     @staticmethod
     def supplied(run_dir: Path, name: str) -> dict[str, str]:
@@ -1376,9 +1414,12 @@ class AnalyseAgenticSystem(Workflow):
         return self.verifier_refusals(run_dir, "profile")(path) + reference_refusals(
             partial(self.record_bodies, run_dir, verification=path))
 
-    def synthesis_job(self, run_dir: Path, round_: int) -> Job:
+    def synthesis_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
+        """The synthesizer reads the accepted members and the final record and
+        profile verifications, whose limits its Limitations must carry."""
         reads = {"boundary": BOUNDARY, "runtime": RUNTIME, "memory": MEMORY,
-                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION}
+                 "epistemic": EPISTEMIC, "reconciliation": RECONCILIATION,
+                 **self.judged_reads(judged)}
         if round_:
             reads.update({"previous-synthesis": round_file("synthesis", round_ - 1),
                           "verification": round_file("synthesis-verification", round_ - 1)})
@@ -1389,16 +1430,23 @@ class AnalyseAgenticSystem(Workflow):
             parameters={"round": "after-blockers" if round_ else "first"},
             validator=partial(synthesis_refusals, repo_root=self.repo, run_id=run_dir.name,
                               boundary=run_dir / BOUNDARY,
+                              verifications=tuple(run_dir / name for name in judged if name),
                               bodies=lambda path: self.record_bodies(run_dir, synthesis=path)),
         )
 
-    def synthesis_verification_job(self, run_dir: Path, round_: int) -> Job:
+    @staticmethod
+    def judged_reads(judged: tuple[str, str]) -> dict[str, str]:
+        record, profile = judged
+        return {**({"record-verification": record} if record else {}),
+                **({"profile-verification": profile} if profile else {})}
+
+    def synthesis_verification_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
         return self.job(
             run_dir, "verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}",
             round_file("synthesis-verification", round_),
             reads={"synthesis": round_file("synthesis", round_), "boundary": BOUNDARY,
                    "runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC,
-                   "reconciliation": RECONCILIATION},
+                   "reconciliation": RECONCILIATION, **self.judged_reads(judged)},
             instruction="verify-synthesis", extra=(*SYNTHESIS_CONTRACTS, VERIFICATION_CONTRACT),
             validator=partial(self.synthesis_verification_refusals, run_dir, round_),
         )

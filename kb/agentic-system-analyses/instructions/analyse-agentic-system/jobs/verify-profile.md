@@ -15,36 +15,42 @@ Common parameters are defined in the supplied worker rules.
 | `runtime`, `memory`, `epistemic`, `reconciliation` | Accepted record members. | Always |
 | `profile` | Profile candidate to check independently. | Always |
 
-## Task
+## Situation
 
-Ensure every memory classification has the scope and support its type requires.
-Read every supplied read-first file. Inputs are the profile, boundary, runtime,
-memory, epistemic and settled reconciliation, profile type and record/source
-contracts. The supplied paths and frozen source define the evidence boundary.
+The record loop has passed: the analyst reports and the reconciliation were
+judged against the frozen source. A profile job has since classified the
+memory findings into the comparison axes of the supplied profile type, from
+those accepted records and nothing else. Nobody has yet checked that
+classification independently.
 
-Write the verification to `output` under the supplied verification type, with
-`verifies: profile`, `run-id` and the `reviewed-boundary` of `boundary`.
+## Mission
 
-Check each of the ten axes against the supplied definitions and accepted records,
-including the reconciliation's supersessions. Check scope, all supported positives,
-revision-2 shape, natural unit scope, finding-specific evidence strength,
-canonical IDs and the missing facts named by unresolved units. Check inventory
-support independently of positive witnesses: `known` needs resolved included
-units and coverage evidence, not just established existence. Unresolved included
-parts cannot be omitted, classified as absent or made inapplicable by a known
-alternative. Check bounded absence, pull-only inapplicability, human admission
-control versus generic callers, implemented transformations versus requests,
-and local trace-learning negatives versus any positive alternative. No profile-only record or source quote can establish support.
-Classify from the supplied definitions without added conditions; decay requires
-forgetting or downweighting, not a time-based policy.
+Judge the profile against the accepted records and the profile type, and
+write the verification to `output` under the supplied verification type,
+with `verifies: profile`, `run-id` and the `reviewed-boundary` of `boundary`.
 
-Record the checked axes and consequential limits. Write no replacement profile
-and do not change records or reopen reconciliation. A blocker names its axis,
-the full affected IDs and what resolves it. An unsupported value or unjustified coverage claim is
-a blocker; a faithfully stated evidence limit is not. Record faults become
-bounded assessments or a problem if no faithful profile is possible. Source
-reading is bounded to the cited paths needed to resolve a named ambiguity;
-log path, lines and purpose under Verification. New source facts cannot replace supporting records.
-The coordinator permits one profile correction; persistent blockers stop the run.
+When you are done, every axis has been checked for scope, support and
+coverage: each asserted value rests on accepted records, each unit's scope is
+the type's natural unit, inventory coverage is established independently of
+positive witnesses (`known` needs resolved included units and coverage
+evidence, not one established existence), unresolved included parts stay in
+the inventory rather than being omitted, classified absent or made
+inapplicable by a known alternative, and the classification follows the
+supplied definitions without added conditions. The profile type and the
+record contract fix those definitions; this instruction adds none.
+
+## Boundaries
+
+You mark and explain; you write no replacement profile and change no record.
+A blocker is an unsupported value or an unjustified coverage claim; a limit
+is admissible only where the profile value already expresses the uncertainty
+(`partial`, `not-determinable`, `uninspected`), since an overview caveat does
+not travel with an extracted value. A faithfully stated evidence limit is
+neither. No profile-only record or source quotation can establish support;
+read the source only for the cited paths needed to resolve a named ambiguity,
+and log each such read under Verification. New source facts cannot replace
+supporting records.
+
+Code permits one profile correction; blockers after it stop the run.
 
 Run the acceptance check before submitting.

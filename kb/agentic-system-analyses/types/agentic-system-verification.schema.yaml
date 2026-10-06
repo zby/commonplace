@@ -22,16 +22,18 @@ allOf:
         additionalProperties: false
       headings:
         type: array
-        minItems: 3
+        minItems: 4
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
           anyOf:
             - const: "## Verification"
             - const: "## Blockers"
+            - const: "## Limits"
             - pattern: '^#{3,6} .+$'
         allOf:
           - {contains: {const: "## Verification"}, minContains: 1, maxContains: 1}
           - {contains: {const: "## Blockers"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Limits"}, minContains: 1, maxContains: 1}
       body:
-        pattern: '(?ms)^## Verification\s*\n\s*\S.*^## Blockers\s*\n\s*\S'
+        pattern: '(?ms)^## Verification\s*\n\s*\S.*^## Blockers\s*\n\s*\S.*^## Limits\s*\n\s*\S'

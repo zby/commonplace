@@ -213,14 +213,15 @@ class Fixture:
                 + (f"{synthesis}\n\n" if synthesis else "")
                 + f"## Limitations\n\n{limitations}\n")
 
-    def verification(self, blockers: str = "none", *, title: str = "Record verification") -> str:
+    def verification(self, blockers: str = "none", *, title: str = "Record verification",
+                     limits: str = "none") -> str:
         verifies = {"Record verification": "records", "Profile verification": "profile",
                     "Synthesis verification": "synthesis"}[title]
         return ("---\ntype: agentic-system-analyses/types/agentic-system-verification.md\n"
                 f'description: "{title} of Example System at the frozen source boundary"\n'
                 f"run-id: {RUN_ID}\nreviewed-boundary: {self.revision}\nverifies: {verifies}\n---\n\n"
                 f"# Example System {title.lower()}\n\n## Verification\n\nPassed: every claim checked against "
-                f"its records.\n\n## Blockers\n\n{blockers}\n")
+                f"its records.\n\n## Blockers\n\n{blockers}\n\n## Limits\n\n{limits}\n")
 
     def workers(self, **overrides: Worker) -> dict[str, Worker]:
         def writes(text: Callable[[], str]) -> Worker:
@@ -831,6 +832,46 @@ def test_a_refused_correction_leaves_the_current_report(
     assert "reconcile-1" not in scripted.launched
     assert isinstance(scripted.run()[-1], Done)
     assert definition.publications == 1
+
+
+@pytest.mark.slow
+def test_a_declared_limit_must_reach_the_overview_limitations(fixture: Fixture) -> None:
+    limit = "- MEM-OBJ-store: its deployment use was not inspected; withhold conclusions about runtime reuse."
+    limited = fixture.verification(limits=limit)
+    carried = fixture.synthesis(limitations="MEM-OBJ-store: deployment use uninspected; runtime reuse is not established.")
+
+    def synthesize(handout: Handout) -> None:
+        handout.output_path.write_text(fixture.synthesis() if handout.attempt == 1 else carried, encoding="utf-8")
+
+    scripted, definition = agent(fixture, **{"verify-0": fixture.writes(lambda _: limited), "synthesize": synthesize})
+    drive_to(scripted, "synthesize")
+
+    attempt, prompt = prompt_of(scripted.round(), "synthesize")
+
+    assert attempt == 2
+    assert "limit not carried: Limitations names none of MEM-OBJ-store" in prompt
+    assert f"record-verification = {fixture.run_dir}/verification-0.md\n" in prompt
+    assert isinstance(scripted.run()[-1], Done)
+    assert definition.publications == 1
+    overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
+    assert "Limits carried into Limitations:" in overview and limit in overview
+    assert "deployment use uninspected" in overview
+    assert "profile-verification =" in last_prompt(fixture, "verify-synthesis")
+
+
+@pytest.mark.slow
+def test_limits_are_none_or_a_list(fixture: Fixture) -> None:
+    def verify(handout: Handout) -> str:
+        return fixture.verification(limits="None found" if handout.attempt == 1 else "none")
+
+    scripted, _ = agent(fixture, **{"verify-0": fixture.writes(verify)})
+    drive_to(scripted, "verify-0")
+
+    attempt, prompt = prompt_of(scripted.round(), "verify-0")
+
+    assert attempt == 2
+    assert "`## Limits` must be exactly `none` or a Markdown list" in prompt
+    assert isinstance(scripted.run()[-1], Done)
 
 
 @pytest.mark.slow
@@ -1784,6 +1825,7 @@ def invocation(prompt: str) -> tuple[str, dict[str, str], list[str]]:
             "synthesis": "synthesis-0.md", "boundary": "boundary.md", "runtime": "output/runtime.md",
             "memory": "output/memory.md", "epistemic": "output/epistemic.md",
             "reconciliation": "output/reconciliation.md",
+            "record-verification": "verification-2.md", "profile-verification": "profile-verification-1.md",
         }),
     ],
 )
@@ -1805,10 +1847,11 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             return definition.reconcile_job(run, round_, versions, ("memory",) if round_ else ())
         if kind == "verify":
             return definition.verification_job(run, round_, versions, ("memory",))
+        judged = ("verification-2.md", "profile-verification-1.md")
         if kind == "synthesize":
-            return definition.synthesis_job(run, round_)
+            return definition.synthesis_job(run, round_, judged)
         if kind == "verify-synthesis":
-            return definition.synthesis_verification_job(run, round_)
+            return definition.synthesis_verification_job(run, round_, judged)
         return getattr(definition, f"{kind}_job")(run)
 
     monkeypatch.chdir(fixture.root)

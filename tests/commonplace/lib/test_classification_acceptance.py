@@ -259,9 +259,9 @@ def loaded_packet(job, run):
     (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
     (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
     (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
-    (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or unjustified coverage claim is a blocker", "semantic verification judges support", "unresolved included parts cannot be omitted"]),
+    (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or an unjustified coverage claim", "semantic verification judges support", "unresolved included part"]),
     (lambda d, r: d.synthesis_job(r, 0), ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
-    (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "explicit faithful uncertainty alone is not", "each epistemic function"]),
+    (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "explicit faithful uncertainty is not", "bundled negative"]),
 ])
 def test_semantic_rules_reach_operative_job_packets(tmp_path, builder, phrases):
     packet = loaded_packet(builder(workflow(tmp_path), tmp_path), tmp_path).lower()
@@ -358,7 +358,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert set_record_errors({**bodies, "verification.md": verdict.read_text()})[1] == []
     packet = loaded_packet(workflow(tmp_path).profile_verification_job(tmp_path, 0), tmp_path)
-    assert "An unsupported value or unjustified coverage claim is a blocker" in packet
+    assert "an unsupported value or an unjustified coverage claim" in packet
 
 
 def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):

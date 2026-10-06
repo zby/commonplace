@@ -16,46 +16,41 @@ Common parameters are defined in the supplied worker rules.
 | `round` | `first` or `after-blockers`. | Always |
 | `previous-profile`, `verification` | Previous candidate and independent blockers. | `after-blockers` |
 
-## Task
+## Situation
 
-Produce a comparison profile whose every value is warranted by accepted records.
-Read every supplied read-first file before any other step. The coordinator's
-invocation supplies output, boundary, runtime, memory, epistemic, reconciliation,
-frozen source, profile type and record/source contracts as absolute paths.
+The record loop has passed: the analyst reports and the reconciliation are
+accepted, and no record will change. Comparison consumers need the memory
+findings classified into the supplied profile type's axes, with the
+uncertainty each value carries expressed in the value itself.
 
-Write a revision-2 profile under the supplied profile type, with its exact
-metadata and Comparison rationale section. Use `version: 2`, scoped units and
-single-value findings, not revision-1 value lists or evidence maps. Choose each
-axis's natural unit from the supplied type, grouping only shared scope and
-coverage; keep distinct evidence bases on distinct findings. Resolve supersessions through the reconciliation before
-classifying; the reports already carry their corrections. Apply the supplied definitions without extra conditions. In
-particular, decay means forgetting or downweighting; it does not require a
-clock, time-based policy or a named decay command.
+## Mission
 
-Read the supplied set to establish scope, parts, consumers and supported routes.
-Do not declare records, add quotes or evidence, edit members, reopen record
-verification. Every asserted value cites
-records already in the set. Where a needed fact is absent from those records,
-use a warranted partial, uninspected or not-determinable assessment and name
-the missing fact and prevented conclusion in the unit note, with accepted
-record IDs and any cited source path already recorded. Keep unresolved included
-units in the inventory. Axis `known` requires accepted coverage evidence and
-all units resolved; a positive witness does not establish complete inventory.
-Preserve supported positives and route-specific evidence strength.
+Write a revision-2 profile to `output` under the supplied profile type, every
+value warranted by accepted records. The type fixes the axes, the natural
+units, the controlled values, the metadata and the Comparison rationale
+section; the record contract fixes the coverage and uncertainty rules; both
+are applied as written, without added conditions.
 
-Source reading is optional and bounded to a named ambiguity in a cited record.
-Read its cited paths at the frozen revision under the supplied source rules.
-Do not prospect new roots. Log each source read in Comparison rationale with path, bounded lines and
-ambiguity resolved. Source understanding cannot replace a missing supporting
-record. Do not read an incumbent or reference profile.
+When you are done, every asserted value cites records already in the set;
+where a needed fact is absent from them, the unit carries a warranted
+`partial`, `uninspected` or `not-determinable` assessment naming the missing
+fact and the prevented conclusion; unresolved included units stay in the
+inventory; an axis is `known` only with accepted coverage evidence and all
+units resolved, since a positive witness does not establish complete
+inventory; and supported positives and route-specific evidence strength are
+preserved beside the unresolved parts.
 
-Before submission, check all ten axes, natural unit scopes, finding-specific
-bases, canonical supporting IDs, inventory coverage and explicit missing facts.
-Preserve local bounded trace-learning negatives without making a partial axis
-system-wide negative; positive `"yes"` dominates `"no"` only in derived unions.
-Do not author an additional aggregate value/evidence copy. The coordinator
-checks structure and set references; the independent verifier judges support.
-After blockers, read previous-profile and verification and correct only the
-profile. There is one correction round. Persistent blockers stop publication.
+## Boundaries
+
+Declare no records, add no quotes or evidence, edit no member, and do not
+reopen record verification. Resolve superseded records through the
+reconciliation; the reports already carry their corrections. Source reading
+is bounded to a named ambiguity in a cited record, at its cited paths and the
+frozen revision; log each read under Comparison rationale with path, lines
+and the ambiguity resolved. Source understanding cannot replace a missing
+supporting record. Do not read an incumbent or reference profile.
+
+After blockers, read `previous-profile` and `verification` and correct only
+the profile; there is one correction round.
 
 Run the acceptance check before submitting.
