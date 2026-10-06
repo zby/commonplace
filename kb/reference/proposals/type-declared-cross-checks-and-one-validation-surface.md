@@ -1,175 +1,192 @@
 ---
-description: "Proposal: validate working directory artifacts and candidate member replacements through the same content contract used by workflow acceptance and later maintenance."
+description: "Proposal: validate a candidate document's references and other applicable constraints against the current working set without validating unrelated documents or requiring a complete set."
 type: reference/types/design-proposal.md
 tags: [type-system, kb-maintenance]
 ---
 
-# Working-set and candidate validation
+# Document validation in working-set context
 
-This proposal asks whether authors, workflow acceptance and maintainers can
-check the same artifact contract while a multi-document result is still being
-built. A candidate member would be checked in its intended set without replacing
-the accepted member. The workflow would continue to own scheduling, authority
-and progress-dependent acceptance.
+This proposal asks how a candidate document can be checked against the current
+working set without making the whole set a validation target. The operator's
+primary use is authoring feedback: check references originating in the candidate,
+not every reference in the surrounding reports.
 
-The question is about validation context and artifact boundaries, not a new
-cross-check language. [Type-selected Python validation checks](./type-selected-python-validation-checks.md)
-addresses how types could select executable checks. Existing registrations are
-sufficient to explore this proposal.
+The document is the target; available members supply context. Reading a member
+to resolve a reference does not make that member another target. The workflow
+continues to own scheduling, authority and progress-dependent acceptance.
 
 ## Current state (as of 2026-10-06)
 
 - [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md) supplies
   directory artifacts with schema-owned membership, ordinary member validation
-  and imperative set checks. Hashes are optional in the generic mechanism;
-  supplied hashes always bind. Directory artifacts need not be finished.
+  and imperative set checks. Explicit directory validation checks the set;
+  explicit member validation does not automatically check its containing set.
 - The [analysis-set schema](../../agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml)
-  requires six pinned members for a complete outcome and only the overview for
-  other outcomes. It does not represent the pre-synthesis record set.
-- `src/commonplace/lib/agentic_workflow.py` checks the record set before synthesis
-  through `record_check()`, composing member, identity and reference checks.
-  Its job validators also supply the run context for candidate acceptance.
-  Final set validation uses the ordinary directory path after manifest assembly.
+  describes completed output membership, not the pre-synthesis working context.
+  Its complete outcome requires six pinned members.
+- `src/commonplace/lib/agentic_workflow.py` supplies report bodies and expected
+  identities to job acceptance functions. `reference_refusals()` uses the shared
+  set-reference checker over supplied bodies; `record_check()` checks the record
+  set before synthesis. These are not an independently exposed candidate-only
+  reference-checking interface.
 - `ValidationRun.content_overrides` in `src/commonplace/lib/validation.py`
-  already accepts replacement bytes for members and manifests. The directory
-  loader discovers supplied candidate paths as well as actual files. This is
-  library support, not a general candidate-replacement CLI contract.
+  supports replacement bytes for intended paths. It provides a way to read
+  candidate bytes consistently, but does not by itself define which documents
+  are targets and which are context.
 - Under [ADR 105](../adr/105-let-analysts-run-their-acceptance-check-before-submission.md),
-  `commonplace-analysis-check` obtains a candidate's checks from a named run and
-  job. It remains distinct from `commonplace-validate`. Synthesis and verification
-  outputs now have local types; untyped intermediate output is not a universal
-  premise for this proposal.
+  `commonplace-analysis-check` obtains checks from a named run and job. It remains
+  distinct from `commonplace-validate`; the job supplies context that an isolated
+  document cannot supply alone.
 
 ## Problem
 
-A report can conform locally while disagreeing with its set or referencing an
-unavailable record. During authoring, the workflow constructs the context needed
-to judge those relationships. After assembly, directory validation supplies a
-related context. The code shares checks, but the working set's validity is not
-fully represented by the finished directory contract.
+A document can conform locally while citing an unavailable or ambiguous record,
+or carrying an identity inconsistent with its intended set. Checking only the
+file misses those relationships. Checking the entire unfinished set can instead
+report unrelated defects the author neither caused nor has authority to repair.
 
-The intended improvement is one content-validity model usable before and after
-submission. One command name is neither necessary nor sufficient: forwarding a
-job name through another command would leave context and ownership unchanged.
+The missing distinction is between the target of a judgment and the context
+needed to make it. A useful authoring check must identify both without requiring
+the surrounding set to be complete or globally valid.
+
+## Proposed checking boundary
+
+For the candidate, check its local contract, its applicable identity and other
+cross-document constraints, and references originating in its text or structured
+fields. Resolve those references against its own declarations and the available,
+authorized working context.
+
+For context documents, inspect what is needed to establish the candidate's
+conformance. Do not automatically run their full member checks or report their
+unrelated outgoing-reference failures.
+
+For example, a memory report citing a runtime record needs that record to
+resolve. An unrelated unresolved reference in the epistemic report is not a
+finding against the memory report. If the cited ID has conflicting declarations,
+however, the ambiguity prevents checking the candidate's reference and belongs
+in its result. Context is not assumed trustworthy merely because it is not a
+validation target.
+
+A context read or parse failure that prevents a required check must be explicit,
+not silently treated as absence or successful resolution. Diagnostics should
+name the affected candidate check and the blocking context. The design need not
+invent a recoverable fragment when the supplied document cannot be parsed.
 
 ## Options
 
-### A. Retain job-context checks over shared validation functions
+### A. Supply explicit context to a document check
 
-Keep the workflow as the source of working-set context. Worker self-checks and
-acceptance continue to call the same job validator; ordinary directory
-validation remains the later maintenance surface. Consolidate common checks
-where duplication is demonstrated without adding a working artifact type.
+A caller supplies the candidate, its intended identity or member slot, and the
+context needed for its checks. The validator evaluates the document through the
+ordinary pipeline plus applicable cross-document checks, without promoting the
+context documents to targets.
 
-The job constructor supplies expected identity, relevant members and frozen
-source to existing checks. Their oracle is the supplied artifact/evidence set;
-job acceptance additionally applies workflow conditions. This may be adequate
-when no other consumer needs to validate unfinished sets independently.
+Worker self-checks, acceptance and maintenance tools would consume this
+interface. A workflow may assemble the context under its existing authority;
+the checker need not reconstruct a job merely to resolve references. The oracle
+is the supplied declarations, identity facts and other evidence required by the
+candidate's contract. It establishes bounded conformance, not global set health.
 
-### B. Give working sets an explicit directory contract
+This is the proposed starting direction, not an adopted interface. Explicit
+context needs an accountable completeness boundary: callers cannot claim
+set-wide uniqueness after supplying only a subset of the relevant declarations.
 
-Represent the set under construction with a type that permits its legitimate
-incompleteness while checking members and their relationships. This could be a
-separate working-set type or explicit states of one type. The finished contract
-would still require full membership and exact-byte pins.
+### B. Discover context from the document's artifact relationships
 
-Authors and the workflow would validate the working artifact through the
-ordinary directory pipeline. The type and set contents, rather than only job
-construction, would identify the applicable content requirements. Expected
-identity could come from a declared set fact or related artifact; the design
-must not fabricate a provisional public overview merely to satisfy the current
-finished-set checker.
+The validator could use the intended location, containing manifest or declared
+relationships to discover context. The document remains the only target;
+discovery changes how inputs are obtained, not the scope of validation.
 
-The oracle is the declared membership, identity and reference scope. Permitting
-a missing member does not warrant accepting an unresolved reference. A valid
-working set establishes only the properties its state requires, not readiness
-for publication or completion of scheduled work.
+An author or maintainer would invoke the document check, and the resolver would
+supply context to its cross-document checks. The oracle remains the actual
+related artifacts, not the relationship label alone. This reduces caller
+bookkeeping but needs clear behavior for missing manifests, incomplete sets and
+ambiguous membership. Filesystem proximity is neither evidence authority nor
+permission to read another worker's output.
 
-### C. Check a candidate as a replacement within its set
+### C. Retain a workflow-specific adapter
 
-Expose the existing content-override capability through a supported consumer
-interface. A caller supplies the candidate and its intended member slot;
-validation evaluates that hypothetical set without mutating accepted files.
-This can complement option B or check replacements in an already complete set.
+Keep the analysis command responsible for selecting the candidate and context,
+while separating target-scoped checks from whole-set checks in the shared
+library. The existing acceptance and self-check consumers would invoke that
+adapter; a general public interface could wait for another consumer.
 
-The validator consumes the candidate view through its shared read context.
-All checks must observe that view, including referential checks; reopening
-accepted files independently would test different bytes. Findings describe
-the candidate set, not the on-disk incumbent.
+This can deliver the desired feedback boundary without new CLI or directory-type
+machinery. Its limitation is that a maintainer outside a run still needs a way
+to supply equivalent context. One command name is not the goal; matching content
+judgments for the same target and context is.
 
-Supplied hashes continue to bind. A changed member paired with an old digest
-fails. A working contract may permit omitted pins, while a frozen candidate
-needs a corresponding candidate manifest. Neither route silently disables
-integrity checks. The interface must distinguish legitimate candidate metadata
-from the incumbent evidence it is replacing.
+## Distinct operations
+
+| Operation | Target and purpose |
+|---|---|
+| Document validation in set context | Check the candidate and its outgoing references against available context |
+| Change-impact validation | Determine which other artifacts need checking after a replacement, including broken incoming references |
+| Whole-set validation | Check collective consistency, membership and completion requirements at an integration or publication boundary |
+
+Removing a declaration from a replacement document may break references in
+other reports while leaving the candidate's own outgoing references valid.
+That belongs to an explicit impact or whole-set check. A candidate can still
+have its own correction contract requiring stable IDs; enforcing that rule
+against its predecessor does not require validating every consumer.
+
+[Generalized validation invalidation](./generalized-validation-invalidation-and-imperative-extension.md)
+addresses affected-target selection. Neither that mechanism nor a working-set
+type is prerequisite for target-scoped checking. A separate working-set type
+may become useful when a consumer needs to judge the unfinished set as a whole.
 
 ## Forces and boundaries
 
-### Validity is not permission or progress
+- Candidate bytes must be read consistently at their intended slot. A context
+  resolver must not count the incumbent and replacement as two declarations or
+  reopen incumbent bytes while other checks see the candidate. Validation must
+  not mutate accepted files.
+- The supplied context must preserve the workflow's authorized evidence and
+  reference scope. Unavailable future declarations do not resolve a reference.
+- Candidate conformance does not attest that a frozen manifest pins those new
+  bytes. Integrity claims about supplied context still require their checks;
+  checking a hypothetical document does not silently rewrite hashes or certify
+  publication. Whole-set replacement and candidate-manifest validation remain
+  separate possible operations.
+- Missing source access remains visible when a candidate check needs it.
+  Reference resolution and quote occurrence establish neither semantic support
+  nor coverage of the source system.
+- Workflow conditions, correction budgets and publication authority remain
+  separate from document validity. A narrower content check must not silently
+  remove a required integration check or claim full job acceptance.
+- Findings retain useful rule identity, affected candidate location, context
+  limits and repair information. A context defect may block the check without
+  making its repair the candidate author's responsibility.
 
-A directory contract can state required results and relationships. It does not
-schedule workers, allocate correction rounds, permit publication or determine
-whether a particular worker may read another report. Candidate context must
-preserve the workflow's authorized reference scope rather than treating every
-file in a run directory as available evidence.
+## Free choices
 
-Invocation-specific expected values, correction obligations and other
-progress-dependent checks remain workflow responsibilities unless a separately
-justified artifact makes them checkable facts. No new progress record is
-required simply to eliminate a job argument.
+Explicit versus discovered context, the consumer interface, and use of existing
+content overrides remain open. Start with existing Python checks; the separate
+[type-selected Python validation proposal](./type-selected-python-validation-checks.md)
+is not a prerequisite. No constraint language, general source registry or
+progress-state artifact is required here.
 
-### Missing evidence is not success
-
-Member and set checks can establish form, agreement and reference resolution.
-Quote occurrence additionally needs the frozen source. Missing source access
-must remain visible as unverified or failed under the caller's existing
-acceptance policy, not disappear when the entry point changes. Deterministic
-success establishes neither semantic support nor coverage of the source system.
-
-### Preserve useful feedback
-
-Workers need specific refusal reasons and repair information; maintainers need
-stable diagnostic identities and evidence limits. A shared checking path must
-not lose these or silently change warning/failure policy. Command naming and
-presentation may remain different when the consumers need different views.
-
-### Keep infrastructure proportional
-
-The directory mechanism already supports optional members, conditional schemas,
-optional hashes and candidate byte views. Establish what these can express
-before expanding it. A general source registry, a declared run-progress artifact,
-nested membership and non-Markdown members are outside this proposal unless a
-concrete validation need makes one a separate decision.
-
-## Candidate direction and free choices
-
-Explore a working contract together with candidate replacement before choosing
-a new public command or generalized extension mechanism. Keep option A if the
-alternative adds metadata and state management without removing meaningful
-context duplication or enabling another consumer.
-
-Separate versus stateful types, the location of shared identity, how a candidate
-view is supplied, and one command versus a thin workflow-specific wrapper remain
-open. A broad weakening of the finished-set schema is not an acceptable shortcut.
-
-Directory-level semantic review remains an open question, not part of this
-adoption. It needs its own account of reviewer inputs and version identity;
-deterministic working-set validation does not supply that account automatically.
+Directory-level semantic review and unfinished-set conformance remain separate
+questions. Neither should expand a candidate check merely because it reads
+several files.
 
 ## Adoption criteria
 
-Adopt a working-set contract when a real authoring or maintenance consumer can
-use it without reconstructing a workflow job, and it replaces rather than adds
-a competing definition of content validity. Demonstrate permitted incompleteness,
-forbidden membership, identity disagreement and unresolved references against
-representative working and complete sets.
+A candidate interface must demonstrate that:
 
-Adopt candidate replacement when the same candidate and context yield the same
-content findings during self-check and acceptance, without modifying incumbent
-bytes or bypassing hashes. Test candidate-aware referential reads as well as
-local schema checks. Keep independent workflow-acceptance checks explicit.
+- The candidate's missing references and identity disagreements are reported.
+- Valid references resolve against the current authorized context even when the
+  surrounding set is incomplete.
+- An unrelated broken outgoing reference in a context member does not fail the
+  candidate check.
+- Ambiguity or unavailable context that prevents a candidate check is reported
+  rather than treated as success.
+- Replacement bytes are used consistently without changing accepted files.
+- The same target and context give the same content findings during self-check
+  and acceptance, with additional workflow checks identified separately.
 
-Compare implementation and maintenance cost with the existing shared-function
-route, and preserve diagnostic and repair detail. A passing fixture establishes
-interface behavior, not model adherence. No live external-system analysis,
-Python extension framework or generic invalidation engine is prerequisite.
+Incoming-reference failures and whole-set incompleteness should remain visible
+when those operations are explicitly requested, not leak into this operation.
+Compare the cost of a general interface with a workflow adapter before selecting
+one. Test fixtures establish checking behavior, not model adherence or the
+semantic truth of a report. No live analysis run is prerequisite.

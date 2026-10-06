@@ -47,9 +47,8 @@ status meanings for all members.
 ### Identity and completion
 
 The [set type](./agentic-system-analysis-set.md) owns membership and set
-checks. File validation checks this overview independently; directory
-validation checks the whole set. The manifest pins every member, and
-`inputs-commit` identifies the method's committed inputs.
+checks. The manifest pins every member, and `inputs-commit` identifies the
+method's committed inputs.
 
 ## Required sections
 
@@ -65,8 +64,8 @@ contract. Source identity and evidence scopes remain stable across members.
 For Git, the identity is the repository at the reviewed commit; listed
 paths record initial coverage and do not prevent later members from
 inspecting and citing other files at that commit for the selected target.
-For a complete run, code appends `Amended or superseded records: <IDs or none>`
-and a link to `reconciliation.md`. Resolve these IDs through that member.
+A complete run's register ends with `Amended or superseded records: <IDs or none>`
+and a link to `reconciliation.md`, listing the records that member supersedes.
 In a set published before report correction, an amendment there can also
 replace a value in an analyst's wording.
 
@@ -107,13 +106,11 @@ a reader can inspect the underlying account.
 
 `limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it`
 
-Carry every `Unresolved conflict:` in the reconciliation into this section.
-A record fault found during synthesis verification is stated here with its
-prevented conclusion; it does not reopen reconciliation. If representing it
-as a limitation would make the synthesis misleading, stop the run.
-Use `none` only after checking the whole set. A blocker is also
-represented under Verification and blockers; this section still states
-its analytical consequence.
+Every `Unresolved conflict:` in the reconciliation appears here, and so does
+a record fault found during synthesis verification, with its prevented
+conclusion. `none` means the whole set was checked and no limitation remains.
+A blocker also represented under Verification and blockers still has its
+analytical consequence stated here.
 
 ### Verification and blockers
 
@@ -126,10 +123,9 @@ covers axis inventory, natural unit scope and finding-specific support against
 accepted records;
 synthesis verification covers support for public statements, readability
 without the members' context, and unresolved conflicts in Limitations.
-Record the exact deterministic validation
-targets and results for every member, and every unresolved blocker. Do
-not record projection review jobs, publication attempts, or cleanup here.
-A complete run says `none` under blockers; a blocked or out-of-scope run
+Deterministic validation names its exact targets and results for every
+member. Blockers lists every unresolved blocker and nothing about review
+jobs, publication attempts or cleanup. A complete run says `none` under blockers; a blocked or out-of-scope run
 states its stopping condition here. The overview's digest never appears
 inside its own bytes.
 
