@@ -120,6 +120,7 @@ these as a criterion anyway, note it; it is not a miss either way.
 | Date | Model / effort | Result file | Recovered / partial / missed | Verdict vs verification-2 |
 |---|---|---|---|---|
 | 2026-10-06 | `gpt-6-luna`, Pi; effort not exposed to the model (medium per the session) | [result](./withheld-instruction-review-result-gpt-6-luna.md) | 7 / 5 / 5 of 17 | No substantive defect found, agreeing with `none`; one blocker, a false positive |
+| 2026-10-06 | `gpt-6-luna`, Pi, medium; subject: run `947b5c8445a4`'s `epistemic-report-0.md`, never corrected | [result](./withheld-instruction-review-result-gpt-6-luna-947b.md) | 9 / 4 / 4 of 17 | One blocker on a passage the run's verifier accepted; source-accurate and arguable, see below |
 
 ## Results: gpt-6-luna, 2026-10-06
 
@@ -166,7 +167,49 @@ would have caught them.
 The manifest's `effort` therefore has to come from the operator at `start`,
 which is how the skill now asks for it; a worker cannot report it.
 
-**Limits.** One reviewer, one report, the most-corrected one. The recall gaps
+## Results: gpt-6-luna on the uncorrected report, 2026-10-06
+
+Second subject: the `947b5c8445a4` run's epistemic report, accepted at its
+first verification with no blockers. Same reviewer model and conditions.
+
+**Recovered (9):** identity and blocks in order; `EPI-` declarations with full,
+unique, resolving IDs; quotation form, anchors and minimum verbatim support;
+evidence layers per finding and the interpretation rules; ledger controlled
+values; the content/update checking order with indeterminate requiring the
+remaining alternatives (missed by the first review); coverage table with
+assessed and unassessed limits; bounded conclusion limited to findings
+relevant to the question; route fields including conditional fields.
+
+**Partial (4):** materiality (named, not tested); uncertainty rules as "bound
+authority to target, domain, consumer, horizon" without the no-bundled-
+negative rule; keeping supplied IDs unchanged (implied); independence of
+theory-builder and related properties (not named).
+
+**Missed (4):** prose anchors without ranges; numbered `SRC-*` ranges refused;
+`Part of:` form and semantics; comparison with supplied records before
+declaring. All four are stated in the record contract. Misplaced criteria:
+none, as before.
+
+**Verdict.** The reviewer found one blocker where the run's verifier found
+none: `EPI-RTE-extract` classifies answer and cheatsheet extraction as
+`truth-apt transformation: non-ampliative reshaping` on the strength of a
+one-tag example, while `extract_answer` in the frozen
+`dynamic_cheatsheet/utils/extractor.py` also has `FINAL ANSWER` and
+code-fence branches that select substrings. The source reading is accurate
+(checked). Whether substring selection counts as reshaping or leaves the
+relation indeterminate under the type's first-established-test rule is a
+judgment; the objection is defensible, not a false positive, and the run's
+verifier did not raise it. One of two reviews therefore found a plausible
+defect the in-run verification let through.
+
+**Across the two reviews:** 14 of 17 operative criteria were recovered or
+partly recovered by at least one review; `Part of:`, the comparison with
+supplied records and the `SRC-*` range rule were missed by both, and all
+three are relational rules in the record contract that neither report
+exercised. Pi reported the effort setting in the second run (medium) and not
+in the first.
+
+**Limits.** Two reviews by one model of two reports from one system. The recall gaps
 cluster on relations between records, which this report happened not to
 exercise (it declares no `Part of:` and makes no theory-builder claim), so a
 reviewer may simply not have looked for rules it had no occasion to apply.

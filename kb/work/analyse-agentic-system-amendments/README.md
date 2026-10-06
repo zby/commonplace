@@ -73,10 +73,19 @@ As of the 2026-10-05 direction:
 - The analysts are scheduled from one table (`ANALYST_SPECS`) with
   `<member>-<n>` job names; a correcting analyst reads its previous report
   and a code-cut request packet, not the other reports.
-- The [publication-policy direction](../../reference/proposals/archive/publishing-analyses-with-unresolved-issues.md)
-  was selected for implementation after the classification revision. That
-  revision closed on 2026-10-05, so the policy is now unblocked but not live.
-  Compare correction mechanisms under the same publication policy.
+- The publication policy is implemented ([ADR 109](../../reference/adr/109-publish-analyses-with-declared-limits.md)):
+  each verification now classifies findings as blockers or limits, limits
+  travel into the overview's Limitations with their records, and a limit on a
+  profile value is admissible only where the value expresses the uncertainty.
+  Its proposal is archived. No run has exercised it; the stopped Sol run's
+  profile stage is the first case it would have changed.
+- The typed-output decision is recorded ([ADR 110](../../reference/adr/110-every-analysis-output-has-a-type.md)).
+  The mission-form sweep covers all job instructions since 2026-10-06.
+- The [withheld-instruction review](./withheld-instruction-review.md) ran
+  twice on Luna: 14 of 17 operative criteria were recovered or partly
+  recovered by at least one review, none was found to live only in an
+  instruction, and the second review raised a defensible classification
+  defect the run's verifier had passed.
 - The classification revision ([ADR 107](../../reference/adr/107-classify-memory-by-scoped-findings.md),
   method `b95a2bb79`) was tested by the four runs listed in the
   [report-correction plan](./report-correction-implementation-plan.md#why-now).
