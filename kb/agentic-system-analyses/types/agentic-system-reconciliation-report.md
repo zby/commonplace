@@ -10,9 +10,9 @@ schema: ./agentic-system-reconciliation-report.schema.yaml
 The retained reconciliation of the runtime, memory and epistemic members.
 It states how their records connect and where the reports disagree. It does
 not judge one report's support and does not correct a report: the record
-verifier judges, and the declaring analyst corrects its own report. Code
-writes its identity and copies the accepted job's Reconciliation section.
-The [record contract](../instructions/agentic-analysis-records.md) governs
+verifier judges, and the declaring analyst corrects its own report. The
+reconciler writes the whole member, and the accepted report enters the set
+unchanged. The [record contract](../instructions/agentic-analysis-records.md) governs
 supersessions; the [source contract](../instructions/agentic-analysis-sources.md)
 governs evidence. The member declares no analyst records of its own.
 

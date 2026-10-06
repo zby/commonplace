@@ -33,11 +33,11 @@ thing, some are parts of others, some rest on another report's record.
 
 ## Mission
 
-Write `output` with `## Reconciliation`, under the supplied reconciliation
-report type: the relations between the three reports, so that the record
-verifier can judge the set as one account and the synthesizer can read it as
-one. Code writes the retained member's identity and copies your section
-unchanged.
+Write the reconciliation report to `output` under the supplied reconciliation
+report type, with `run-id` and the `reviewed-boundary` of `boundary` as its
+identity. Its subject is the relations between the three reports, so that the
+record verifier can judge the set as one account and the synthesizer can read
+it as one. The accepted report enters the set unchanged.
 
 When you are done, every identity between records is stated as a supersession
 or ruled out, every disagreement between two reports is described with both

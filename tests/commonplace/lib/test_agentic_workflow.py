@@ -53,6 +53,7 @@ from tests.commonplace.lib.test_agentic_analysis import (
     git_checkout,
     memory_report_fixture,
     profile_report_fixture,
+    reconciliation_text,
     retained_fixture_paths,
     run_git,
     runtime_text,
@@ -190,11 +191,9 @@ class Fixture:
         return profile_report_fixture(self.scratch / "profile", self.revision, version=2).read_text().replace(
             SOURCE, normalize_source_identity(self.identity))
 
-    @staticmethod
-    def reconciliation(*, amendment: str = "") -> str:
-        return ("## Reconciliation\n\n"
-                "MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.\n\n"
-                + (f"Amendment: {amendment}\n\n" if amendment else ""))
+    def reconciliation(self, *, amendment: str = "") -> str:
+        return (reconciliation_text(self.revision)
+                + (f"\nAmendment: {amendment}\n" if amendment else ""))
 
     @staticmethod
     def synthesis(*, synthesis: str = "", limitations: str = "None.") -> str:

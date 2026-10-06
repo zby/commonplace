@@ -530,13 +530,7 @@ def pass_refusals(
         boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
     except (ValueError, OSError) as error:
         return refusals + [str(error)]
-    identities = (("run-id", state.run_id),
-                  ("reviewed-boundary", boundary_fields.get("reviewed-boundary")))
-    identity_errors = [
-        f"member identity: {field} {metadata.get(field)!r} does not match {expected!r}"
-        for field, expected in identities if metadata.get(field) != expected
-    ]
-    refusals += identity_errors
+    refusals += identity_refusals(metadata, run_id=state.run_id, boundary_fields=boundary_fields)
     wrong_prefix = [
         identifier for identifier in declared_ids(path.read_text(encoding="utf-8"))
         if not identifier.startswith(declaration_prefix)
@@ -554,20 +548,34 @@ def pass_refusals(
     return refusals + failures
 
 
+def identity_refusals(metadata: Mapping[str, Any], *, run_id: str, boundary_fields: Mapping[str, Any]) -> list[str]:
+    """A set member names the run and the frozen boundary it belongs to."""
+    identities = (("run-id", run_id), ("reviewed-boundary", boundary_fields.get("reviewed-boundary")))
+    return [
+        f"member identity: {field} {metadata.get(field)!r} does not match {expected!r}"
+        for field, expected in identities if metadata.get(field) != expected
+    ]
+
+
 def reconcile_refusals(
     path: Path,
     *,
+    repo_root: Path,
+    run_id: str,
     boundary: Path,
     runtime: Path,
     report: Path,
     epistemic: Path,
 ) -> list[str]:
-    """The reconciliation's one section, no value amendment, and every record
-    it cites declared in the set it will make."""
-    body = path.read_text(encoding="utf-8")
-    refusals = require_sections(body, 2, ["Reconciliation"])
-    if headings(body, 2) != ["Reconciliation"]:
-        refusals.append("write only `## Reconciliation`")
+    """A valid reconciliation member of this run, with no value amendment, and
+    every record it cites declared in the set it will make."""
+    refusals = member_refusals(path, repo_root=repo_root)
+    try:
+        metadata, body = split(path.read_text(encoding="utf-8"))
+        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as error:
+        return refusals + [str(error)]
+    refusals += identity_refusals(metadata, run_id=run_id, boundary_fields=boundary_fields)
     refusals.extend(
         "value amendment: reconciliation states connections between reports and does "
         "not replace a record's value; describe the disagreement with both records and "
@@ -1273,6 +1281,8 @@ class AnalyseAgenticSystem(Workflow):
             parameters={"round": "after-blockers" if round_ else "first"},
             validator=partial(
                 reconcile_refusals,
+                repo_root=self.repo,
+                run_id=run_dir.name,
                 boundary=run_dir / BOUNDARY,
                 runtime=run_dir / reads["runtime"],
                 report=run_dir / reads["memory"],
@@ -1307,16 +1317,10 @@ class AnalyseAgenticSystem(Workflow):
         self, ctx, run_dir: Path, fields: dict[str, Any], round_: int,
         versions: Mapping[str, int], corrected: Sequence[str],
     ) -> str:
-        """Render reconciliation, check the records, and independently judge them."""
+        """Make the round's reports current, check the records, and independently judge them."""
         for member in ANALYSTS:
             self.replace(run_dir / CURRENT[member], (run_dir / report(member, versions[member])).read_bytes())
-        reconciled = (run_dir / reconciliation(round_)).read_text(encoding="utf-8")
-        write_file(run_dir / RECONCILIATION, dump_frontmatter({
-            "type": "agentic-system-analyses/types/agentic-system-reconciliation-report.md",
-            "description": f"Reconciliation of {self.params['system']} records at {fields['reviewed-boundary']}",
-            "run-id": self.run_id,
-            "reviewed-boundary": fields["reviewed-boundary"],
-        }, f"# {self.params['system']} reconciliation\n\n## Reconciliation\n\n{section(reconciled, 'Reconciliation').strip()}\n"))
+        self.replace(run_dir / RECONCILIATION, (run_dir / reconciliation(round_)).read_bytes())
         failures = self.record_check(run_dir, fields)
         write_file(run_dir / round_file("set-check", round_),
                    "# Record set check\n\n" + ("\n".join(f"- {failure}" for failure in failures) or "none") + "\n")
