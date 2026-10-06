@@ -11,6 +11,7 @@ import csv
 import json
 from copy import deepcopy
 from dataclasses import dataclass
+from functools import partial
 from io import StringIO
 from pathlib import Path
 
@@ -259,7 +260,7 @@ def loaded_packet(job, run):
     (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested transformations from implemented", "verify epistemic functions"]),
     (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
     (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or unjustified coverage claim is a blocker", "semantic verification judges support", "unresolved included parts cannot be omitted"]),
-    (lambda d, r: d.synthesis_job(r, 0), ["independent route/property findings", "never replace several unestablished properties with a bundled negative", "faithfully bounded uncertainty remains publishable"]),
+    (lambda d, r: d.synthesis_job(r, 0), ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
     (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "explicit faithful uncertainty alone is not", "each epistemic function"]),
 ])
 def test_semantic_rules_reach_operative_job_packets(tmp_path, builder, phrases):
@@ -416,8 +417,12 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
     metadata = frontmatter(directory / "memory-profile.md")
     metadata["memory-comparison"] = profile
     replace_frontmatter(directory / "memory-profile.md", metadata)
+    overview_fields = frontmatter(directory / "overview.md")
     synthesis = (
-        "## Description\n\nSynthetic fixture retains session-derived guidance for later model use, without establishing improved capacity.\n\n"
+        "---\ntype: agentic-system-analyses/types/agentic-system-synthesis.md\n"
+        'description: "Synthetic fixture retains session-derived guidance for later model use, without establishing improved capacity."\n'
+        f"run-id: {overview_fields['run-id']}\nreviewed-boundary: {overview_fields['reviewed-boundary']}\n---\n\n"
+        "# Synthetic fixture synthesis\n\n"
         "## Bounded synthesis\n\nMEM-OBJ-store retains guidance for later use; this supported contribution does not establish improved capacity.\n\n"
         "## Limitations\n\n"
         "| limitation | affected record | inspected boundary | conclusion prevented | resolving evidence |\n"
@@ -431,10 +436,12 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
               if (path := directory / name).is_file()}
     candidate = directory.parent / "synthesis.md"
     candidate.write_text(synthesis)
-    assert synthesis_refusals(candidate, bodies=lambda path: {**bodies, "synthesis.md": path.read_text()}) == []
+    check = partial(synthesis_refusals, repo_root=tmp_path, run_id=overview_fields["run-id"],
+                    boundary=directory / "overview.md",
+                    bodies=lambda path: {**bodies, "synthesis.md": path.read_text()})
+    assert check(candidate) == []
     candidate.write_text(synthesis.replace("MEM-OBJ-store retains", "MEM-OBJ-undeclared retains"))
-    assert any("unresolved record MEM-OBJ-undeclared" in error for error in
-               synthesis_refusals(candidate, bodies=lambda path: {**bodies, "synthesis.md": path.read_text()}))
+    assert any("unresolved record MEM-OBJ-undeclared" in error for error in check(candidate))
     candidate.write_text(synthesis)
     overview = directory / "overview.md"
     text = overview.read_text()

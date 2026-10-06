@@ -24,40 +24,18 @@ Common parameters are defined in the supplied worker rules.
 
 ## Task
 
-Write `output` with exactly these sections:
+Write the synthesis to `output` under the supplied synthesis type, with
+`run-id` and the `reviewed-boundary` of `boundary` as its identity. Its
+`description`, Bounded synthesis and Limitations become the overview's, so
+the supplied overview type governs their content. Read the members for their
+findings as written, and resolve superseded records through the
+reconciliation. Do not reconcile records or write verification text: the
+record loop has already passed independent verification.
 
-```markdown
-## Description
-
-## Bounded synthesis
-
-## Limitations
-```
-
-The supplied overview type governs the synthesis and limitations. Read the
-members for their findings as written, and resolve superseded records through
-the reconciliation. Do not reconcile records or write verification text. The record loop has already passed independent
-verification.
-
-Under Description write one sentence of 50 to 250 characters describing the
-system's mechanism and limits for retrieval. Code uses it as the description
-of the overview and public review. Bounded synthesis and Limitations become
-public text unchanged apart from links; they must read without the members'
-context. Lead with supported contributions, retaining their scope and evidence
-strength, then name unresolved included parts and the conclusions prevented.
-A positive witness is not complete enumeration; uncertainty elsewhere does not
-negate it. Keep theory-builder conditions, learning, reflection, autonomy and
-self-improvement as independent route/property findings. Never replace several
-unestablished properties with a bundled negative or infer improved capacity
-from trace-fed retention. Cite the records supporting each substantive statement rather than
-copying their classifications. Member links resolve from the retained set
-directory, using sibling names such as `runtime.md`.
-
-Carry every paragraph marked `Unresolved conflict:` into a limitation naming
-its affected IDs and prevented conclusion. A newly discovered record fault
-also becomes a limitation; it does not reopen reconciliation. If a fault
-cannot be stated as a limitation without making the synthesis misleading,
-write `problem` and stop.
+Carry every paragraph marked `Unresolved conflict:` into a limitation. A
+record fault you discover becomes a limitation too; it does not reopen
+reconciliation. If a fault cannot be stated as a limitation without making
+the synthesis misleading, write `problem` and stop.
 
 For `after-blockers`, read the previous synthesis and verification. Recheck
 every carried statement against the records and resolve each blocker by

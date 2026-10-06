@@ -195,9 +195,11 @@ class Fixture:
         return (reconciliation_text(self.revision)
                 + (f"\nAmendment: {amendment}\n" if amendment else ""))
 
-    @staticmethod
-    def synthesis(*, synthesis: str = "", limitations: str = "None.") -> str:
-        return (f"## Description\n\n{DESCRIPTION}\n\n"
+    def synthesis(self, *, synthesis: str = "", limitations: str = "None.",
+                  description: str = DESCRIPTION) -> str:
+        return ("---\ntype: agentic-system-analyses/types/agentic-system-synthesis.md\n"
+                f'description: "{description}"\nrun-id: {RUN_ID}\nreviewed-boundary: {self.revision}\n---\n\n'
+                "# Example System synthesis\n\n"
                 "## Bounded synthesis\n\n"
                 "Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.\n\n"
                 + (f"{synthesis}\n\n" if synthesis else "")
@@ -1090,15 +1092,15 @@ def test_reconciliation_superseding_a_lens_record_is_accepted(fixture: Fixture) 
 
 
 @pytest.mark.slow
-def test_synthesis_without_a_description_is_refused(fixture: Fixture) -> None:
-    missing = fixture.synthesis().replace(f"## Description\n\n{DESCRIPTION}\n\n", "")
-    scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: missing))
+def test_synthesis_with_a_short_description_is_refused(fixture: Fixture) -> None:
+    short = fixture.synthesis(description="Too short.")
+    scripted, _ = agent(fixture, synthesize=fixture.writes(lambda _: short))
     drive_to(scripted, "synthesize")
 
     attempt, prompt = prompt_of(scripted.round(), "synthesize")
 
     assert attempt == 2
-    assert "missing section `## Description`" in prompt
+    assert "frontmatter.description: 'Too short.' is too short" in prompt
 
 
 @pytest.mark.slow

@@ -1,0 +1,37 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required: [type, description, run-id, reviewed-boundary]
+        properties:
+          type:
+            const: agentic-system-analyses/types/agentic-system-synthesis.md
+          description:
+            type: string
+            minLength: 50
+            maxLength: 250
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          reviewed-boundary:
+            type: string
+            minLength: 1
+        additionalProperties: false
+      headings:
+        type: array
+        minItems: 3
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - const: "## Bounded synthesis"
+            - const: "## Limitations"
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Bounded synthesis"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Limitations"}, minContains: 1, maxContains: 1}
+      body:
+        pattern: '(?ms)^## Bounded synthesis\s*\n\s*\S.*^## Limitations\s*\n\s*\S'

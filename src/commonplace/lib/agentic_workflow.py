@@ -110,6 +110,7 @@ MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
 EPISTEMIC_CONTRACT = f"{TYPES}/agentic-system-epistemic-report.md"
 RECONCILIATION_CONTRACT = f"{TYPES}/agentic-system-reconciliation-report.md"
 VERIFICATION_CONTRACT = f"{TYPES}/agentic-system-verification.md"
+SYNTHESIS_CONTRACT = f"{TYPES}/agentic-system-synthesis.md"
 VERIFICATION_TYPE = "agentic-system-analyses/types/agentic-system-verification.md"
 RECORD_CONTRACTS = (
     SOURCES_CONTRACT,
@@ -119,7 +120,7 @@ RECORD_CONTRACTS = (
     EPISTEMIC_CONTRACT,
     RECONCILIATION_CONTRACT,
 )
-SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT)
+SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT, SYNTHESIS_CONTRACT)
 
 OPENING = "opening.json"
 RUN_METADATA = "run-metadata.json"
@@ -159,10 +160,6 @@ CURRENT = {"runtime": RUNTIME, "memory": MEMORY, "epistemic": EPISTEMIC}
 DECLARING = {spec["prefix"]: member for member, spec in ANALYST_SPECS.items()}
 ANSWERS_NAME = "answers.md"
 """What a correcting analyst writes beside its report, in its job workspace."""
-DESCRIPTION_LENGTH = (50, 250)
-"""The length the note schema expects of a description; the synthesizer's
-description becomes the overview's and the review's."""
-
 READ_BATCH_BYTES = 24 * 1024
 """Shared byte budget for input batches and line ranges.
 
@@ -759,28 +756,24 @@ def source_anchor_refusals(text: str) -> list[str]:
     ]
 
 
-def synthesis_refusals(path: Path, *, bodies: Callable[[Path], dict[str, str]]) -> list[str]:
+def synthesis_refusals(
+    path: Path, *, repo_root: Path, run_id: str, boundary: Path,
+    bodies: Callable[[Path], dict[str, str]],
+) -> list[str]:
+    """A valid synthesis of this run whose links resolve from the overview."""
+    refusals = member_refusals(path, repo_root=repo_root)
     text = path.read_text(encoding="utf-8")
-    wanted = ["Description", "Bounded synthesis", "Limitations"]
-    refusals = require_sections(text, 2, wanted)
-    if headings(text, 2) != wanted:
-        refusals.append("write exactly Description, Bounded synthesis and Limitations")
-    description = one_line(section(text, "Description"))
-    shortest, longest = DESCRIPTION_LENGTH
-    if description and not shortest <= len(description) <= longest:
-        refusals.append(
-            f"the `## Description` sentence has {len(description)} characters; "
-            f"write {shortest} to {longest}"
-        )
     document, error = parse_document(text)
-    if error:
-        refusals.append(f"synthesis does not parse: {error}")
-    elif document is not None:
-        # Synthesis is written beside output/, then assembled into overview.md.
-        refusals += agentic_set_member_link_failures(
-            path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links,
-        )
-    return refusals + source_anchor_refusals(text) + reference_refusals(partial(bodies, path))
+    if error or document is None:
+        return refusals + [f"synthesis does not parse: {error}"]
+    try:
+        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as error:
+        return refusals + [str(error)]
+    refusals += identity_refusals(dict(document.frontmatter or {}), run_id=run_id, boundary_fields=boundary_fields)
+    # Synthesis is written beside output/, then assembled into overview.md.
+    refusals += agentic_set_member_link_failures(path.parent / OUTPUT_DIR / OVERVIEW_NAME, document.links)
+    return refusals + reference_refusals(partial(bodies, path))
 
 
 def verification_refusals(
@@ -1454,7 +1447,8 @@ class AnalyseAgenticSystem(Workflow):
             round_file("synthesis", round_), reads=reads, instruction="synthesize",
             extra=SYNTHESIS_CONTRACTS,
             parameters={"round": "after-blockers" if round_ else "first"},
-            validator=partial(synthesis_refusals,
+            validator=partial(synthesis_refusals, repo_root=self.repo, run_id=run_dir.name,
+                              boundary=run_dir / BOUNDARY,
                               bodies=lambda path: self.record_bodies(run_dir, synthesis=path)),
         )
 
@@ -1700,7 +1694,7 @@ class AnalyseAgenticSystem(Workflow):
         boundary_body: str, round_: int, record_verification: str,
         profile_verification: str, synthesis_verification: str,
     ) -> str:
-        synthesis = (run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8")
+        synthesis_fields, synthesis = split((run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8"))
         index = amendment_index((run_dir / RECONCILIATION).read_text(encoding="utf-8"))
         rest = (
             f"## Bounded synthesis\n\n{section(synthesis, 'Bounded synthesis').strip()}\n\n"
@@ -1720,7 +1714,7 @@ class AnalyseAgenticSystem(Workflow):
             count=1,
         )
         return dump_frontmatter(
-            self.overview_frontmatter(opening, fields, one_line(section(synthesis, "Description"))),
+            self.overview_frontmatter(opening, fields, one_line(str(synthesis_fields["description"]))),
             self.overview_body(boundary_with_index, rest),
         )
 
