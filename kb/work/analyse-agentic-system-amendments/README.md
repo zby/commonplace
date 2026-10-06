@@ -73,7 +73,7 @@ As of the 2026-10-05 direction:
 - The analysts are scheduled from one table (`ANALYST_SPECS`) with
   `<member>-<n>` job names; a correcting analyst reads its previous report
   and a code-cut request packet, not the other reports.
-- The [publication-policy direction](../../reference/proposals/publishing-analyses-with-unresolved-issues.md)
+- The [publication-policy direction](../../reference/proposals/archive/publishing-analyses-with-unresolved-issues.md)
   was selected for implementation after the classification revision. That
   revision closed on 2026-10-05, so the policy is now unblocked but not live.
   Compare correction mechanisms under the same publication policy.

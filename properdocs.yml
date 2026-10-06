@@ -458,6 +458,7 @@ plugins:
         'reference/proposals/operational-destinations-for-literature-grounding-findings.md': 'reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md'
         'reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
         'reference/proposals/per-artifact-write-briefs.md': 'reference/proposals/archive/per-artifact-write-briefs.md'
+        'reference/proposals/publishing-analyses-with-unresolved-issues.md': 'reference/proposals/archive/publishing-analyses-with-unresolved-issues.md'
         'reference/proposals/quote-occurrence-location-and-verification.md': 'reference/adr/094-quotations-require-a-unique-occurrence-or-a-containing-range.md'
         'reference/proposals/reader-facing-banner-for-unreviewed-notes.md': 'reference/proposals/a-reader-facing-banner-for-user-verification.md'
         'reference/proposals/recoverable-replacement-of-an-incumbent-review.md': 'reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md'

@@ -111,7 +111,7 @@ as an inherent constraint.
 
 ### Publication with remaining problems
 
-Use the selected [publication policy for unresolved issues](../../reference/proposals/publishing-analyses-with-unresolved-issues.md).
+Use the selected [publication policy for unresolved issues](../../reference/proposals/archive/publishing-analyses-with-unresolved-issues.md).
 A local problem can remain when its consequences are explicit and the remaining
 conclusions hold. Uncertainty must travel with affected comparison values.
 Known false assertions need correction, qualification or withdrawal.

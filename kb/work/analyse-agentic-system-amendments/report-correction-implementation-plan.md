@@ -142,7 +142,7 @@ corrects.
    stop the run, as now.
 
 Not in this change: coordinator disposition of nonblocking findings and the
-[publication policy for unresolved issues](../../reference/proposals/publishing-analyses-with-unresolved-issues.md).
+[publication policy for unresolved issues](../../reference/proposals/archive/publishing-analyses-with-unresolved-issues.md).
 Keeping them out lets a trial attribute its outcome to report correction.
 Also not included: declared dependency fields between findings, a durable
 archive of predecessors, corrections written by an editor, and changes to the

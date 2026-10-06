@@ -1,16 +1,16 @@
 ---
 type: reference/types/design-proposal.md
-description: "Proposal: permit analysis publication with explicit local unresolved issues, while blocking misleading conclusions and preserving uncertainty for comparison consumers"
+description: "Proposal (adopted): permit analysis publication with explicit local unresolved issues, while blocking misleading conclusions and preserving uncertainty for comparison consumers"
 ---
 
 # Publishing analyses with unresolved issues
 
-On 2026-10-05 the operator selected this direction for implementation after
-the analysis classification revision. That revision closed on 2026-10-05, so
-implementation is unblocked. The intended result is
-to publish useful analyses with declared limits without requiring every
-semantic review finding to be resolved. This proposal records that direction;
-it changes no current acceptance or publication rule.
+Adopted on 2026-10-06 by ADR 109, *Publish analyses with declared limits*:
+verifiers classify each unresolved finding as a blocker or a limit, limits
+travel into the overview's Limitations, and a limit on a profile value is
+admissible only where the value expresses the uncertainty. What follows is the
+proposal as it stood when selected on 2026-10-05, kept as the dated record of
+the design space; the ADR carries the decision and its alternatives.
 
 ## Current state (as of 2026-10-05)
 
@@ -23,11 +23,11 @@ writer and reviewer instructions prevent the defect. Its retained record is
 objections. These observations motivate a publication-policy change but do
 not establish its reliability.
 
-[ADR 107](../adr/107-classify-memory-by-scoped-findings.md) delivered the
+[ADR 107](../../adr/107-classify-memory-by-scoped-findings.md) delivered the
 revised classification contracts. Profiles at revision 2 of
 `memory-comparison` keep each finding on a scoped unit and can mark a unit
 or axis `partial`, `not-determinable` or `uninspected`; the
-[profile type](../../agentic-system-analyses/types/agent-memory-profile.md)
+[profile type](../../../agentic-system-analyses/types/agent-memory-profile.md)
 defines that representation. This proposal must build on those contracts
 rather than redesign them.
 
