@@ -163,7 +163,7 @@ def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Pa
 def test_analysis_start_uses_explicit_base_and_open_rejects_wrong_token(origin: Path, tmp_path: Path) -> None:
     prepared = aw.prepare_analysis(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
-    params = {"system": "Example", "source-identity": "https://example.com/example", "source": "local"}
+    params = {"system": "Example", "source-identity": "https://example.com/example", "source": "local", "model": "fixture-model"}
     definition = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
     started = Orchestrator.start(definition, params, base=tree)
     assert started.run_dir.name.endswith(f"-{prepared['token']}-01")
