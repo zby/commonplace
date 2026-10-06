@@ -25,6 +25,9 @@ the type said the boundary belonged to the set.
 
 ## Decision
 
+This adopts the proposal "Directory types declare their layout", now
+archived, in full.
+
 A directory type spec may carry `layout` in its frontmatter. A layout has
 `membership` (`open` or `closed`), `roles` and `required`. Each role names one
 direct child `path`, the document `type` expected there, `identity` (a list of
@@ -86,6 +89,11 @@ validate.
 members. The one use found, reaching the boundary by moving the manifest to
 the run root, would draw the artifact around the run directory rather than the
 product.
+
+**Nested directory artifacts.** Left aside, not designed. The analysis run
+shows the shape that may be wanted, a run directory that is itself an
+artifact holding its process files and, as a member, the product artifact it
+publishes. That is composition of artifacts, a different question from layout.
 
 **Manifest at the run root, or the boundary left outside with an overview
 fallback.** The first makes process files tolerated non-members and reshapes
