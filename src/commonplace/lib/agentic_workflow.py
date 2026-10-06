@@ -1370,7 +1370,8 @@ class AnalyseAgenticSystem(Workflow):
             reads.update(self.correction_reads(corrected, versions))
         return self.job(
             run_dir, f"verify-{round_}", round_file("verification", round_),
-            reads=reads, instruction="verify", extra=(*RECORD_CONTRACTS, VERIFICATION_CONTRACT),
+            reads=reads, instruction="verify",
+            extra=(*RECORD_CONTRACTS, BOUNDARY_CONTRACT, VERIFICATION_CONTRACT),
             validator=validator, parameters={"round": "after-blockers" if round_ else "first"},
         )
 

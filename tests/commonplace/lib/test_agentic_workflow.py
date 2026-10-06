@@ -1678,18 +1678,20 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "memory": "kb/agentic-system-analyses/types/agent-memory-analysis-report.md",
         "epistemic": "kb/agentic-system-analyses/types/agentic-system-epistemic-report.md",
         "reconciliation": "kb/agentic-system-analyses/types/agentic-system-reconciliation-report.md",
+        "verification": "kb/agentic-system-analyses/types/agentic-system-verification.md",
+        "synthesis": "kb/agentic-system-analyses/types/agentic-system-synthesis.md",
     }
     expected = {
         "boundary": {"boundary", "sources"},
         "runtime-0": {"sources", "records", "runtime"},
         "memory-0": {"sources", "records", "memory"},
         "epistemic-0": {"sources", "records", "epistemic"},
-        "reconcile-0": set(types) - {"overview", "boundary", "profile"},
-        "verify-0": set(types) - {"overview", "boundary", "profile"},
+        "reconcile-0": set(types) - {"overview", "boundary", "profile", "verification", "synthesis"},
+        "verify-0": set(types) - {"overview", "profile", "synthesis"},
         "profile": {"sources", "records", "profile"},
-        "verify-profile": {"sources", "records", "profile"},
-        "synthesize": {"sources", "records", "overview"},
-        "verify-synthesis": {"sources", "records", "overview"},
+        "verify-profile": {"sources", "records", "profile", "verification"},
+        "synthesize": {"sources", "records", "overview", "synthesis"},
+        "verify-synthesis": {"sources", "records", "overview", "synthesis", "verification"},
     }
     jobs = {
         "boundary": definition.boundary_job(fixture.run_dir, overview_enums(fixture.root)),

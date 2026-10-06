@@ -66,6 +66,12 @@ corrected report keeps every ID its predecessor declared, because other
 reports cite them; a record whose finding no longer holds keeps its
 declaration and states the corrected finding.
 
+A corrected report comes with the analyst's answers: a list with exactly one
+entry per blocker addressed to that report, in the verification's order, each
+starting `- corrected: ` or `- declined: `, and no other line starting
+`- `. A report identical to its predecessor is accepted only when every
+entry is `declined`.
+
 When other members are supplied, a new declaration records its closest
 supplied full IDs and distinct identity, possible-duplicate evidence, or
 no counterpart after comparison. An existing referent receives an
