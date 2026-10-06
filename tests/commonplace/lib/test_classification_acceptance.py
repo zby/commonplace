@@ -257,7 +257,7 @@ def loaded_packet(job, run):
     (lambda d, r: d.analyst_job(r, "memory", 0), ["generic caller identity does not establish human control", "implemented transformation", "missing facts and prevented conclusions"]),
     (lambda d, r: d.analyst_job(r, "epistemic", 0), ["checking is never", "improved capacity", "independent claims"]),
     (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
-    (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested transformations from implemented", "verify epistemic functions"]),
+    (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
     (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
     (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or unjustified coverage claim is a blocker", "semantic verification judges support", "unresolved included parts cannot be omitted"]),
     (lambda d, r: d.synthesis_job(r, 0), ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),

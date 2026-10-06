@@ -41,15 +41,9 @@ registered vocabulary for this job. Their linked definition notes are background
 not additional mandatory inputs. Missing required parameters, unavailable required inputs,
 source access or scope decisions that prevent completion, and needed
 changes to the selected target or frozen source identity require `problem`.
-Do not reconstruct paths, expand scope or submit a blocked member. A justified
-unknown that only limits a conclusion remains in `output`, naming the included
-part, missing fact, inspection/access limit and conclusion prevented. Preserve
-supported positives beside it. Do not omit unresolved parts to obtain complete
-coverage, equate uninspected or inconclusive evidence with absence, or bundle
-independent properties into one negative. Explicit faithful uncertainty is
-acceptable; unsupported positives, negatives or completeness assertions,
-concealed gaps and structurally invalid outputs remain defects. Use the supplied
-job contracts' status vocabularies; this rule adds no new status.
+Do not reconstruct paths or expand scope. A justified unknown that only
+limits a conclusion is not a problem: it stays in `output` in the form the
+record contract gives for uncertainty, beside the supported positives.
 Reading another file at the registered Git commit is not a source-boundary
 expansion. If inspection shows that an explicit functional exclusion or
 boundary kind omits a material shipped responsibility of the selected
@@ -159,15 +153,11 @@ Repair refusals and rerun until it passes. It shares acceptance checks,
 changes no output or run state, and logs counts in `scratch`.
 A pass establishes form and occurrence, not the correctness of findings.
 
-Copy each passage into a blockquote ending in `> ---` and a backticked
-source path. Use full commit-relative Git paths or the registered capture
-path. Omit revisions; the run fixes them. Only attributions carry ranges;
-prose cites paths only. Keep discontiguous passages separate.
-
-For ambiguity, select by printed context and paste a proposed attribution or
-lengthen the quote. Same-line repeats require lengthening. Never calculate
-ranges or revisions. For "not found", reread the source and recheck its
-supporting claim before repair. Judge support yourself.
+Quotations take the form the source contract gives. Omit revisions; the run
+fixes them. For ambiguity, select by printed context and paste a proposed
+attribution or lengthen the quote; same-line repeats require lengthening.
+Never calculate ranges or revisions. For "not found", reread the source and
+recheck its supporting claim before repair. Judge support yourself.
 
 A quotation exists to show the source passage that supports a finding.
 Narrow or withdraw a finding only when the source cannot support it, never
