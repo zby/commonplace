@@ -6,13 +6,16 @@ tags: [type-system]
 
 # Adopt the declared layout in the analysis workflow
 
-[Directory types declare their layout](./directory-types-declare-their-layout.md)
-shipped on 2026-10-06, and the analysis workflow's acceptance, round-close and
-publication code moved onto the declared layout the same day. This proposal
-is the remainder of that adoption: the run's products that still live outside
-the set, the overview sections that copy other members, and the separate
-check command that analysts run because `commonplace-validate` cannot check a
-draft at its slot. It is written as an ordered plan for an implementer. The
+Directory types declare their layout, and the analysis workflow's
+acceptance, round-close and publication code moved onto the declared layout
+on 2026-10-06. This proposal is the remainder of that adoption: the run's
+products that still live outside the set, the overview sections that copy
+other members, and the separate check command that analysts run because
+`commonplace-validate` cannot check a draft at its slot.
+
+It is written as a mission for an implementer: the situation, the intent
+and the end state, the boundaries that hold, and what is left to the
+implementer's judgment. It does not prescribe the sequence of work. The
 operator selected this direction on 2026-10-06. It is not shipped behavior.
 
 Its validator side is stage one of
@@ -71,115 +74,121 @@ command for the same findings that validate computes, because validate has
 no way to receive a draft at its slot. Each is a place where the workflow
 and the type can drift.
 
-## Design
+## Intent
 
-### Members
+One statement of what a run produces, and one validation surface for it.
+Everything a run produces as a product or a judgment is a member of the set,
+declared in the layout, pinned in the manifest and published as the author
+wrote it. Everything a run produces as a working aid stays outside. A draft
+is checked by the same validator, with the same findings and the same repair
+text, whether its author runs the check or the workflow accepts it, and the
+workflow's own acceptance adds only what depends on the job's invocation.
 
-Four roles join the set's layout, each with the current version at its slot
-and required when the disposition is `complete`:
+The purpose behind the intent: the workflow and the type cannot drift when
+the type is the only statement, a retained set is complete evidence of the
+run without the run directory, and an analyst needs one command they can
+also use on any other KB file.
 
-| Role | Path | Type | Identity | Cites |
-|---|---|---|---|---|
-| synthesis | `synthesis.md` | synthesis | boundary: run-id, reviewed-boundary | boundary, runtime, memory, epistemic |
-| record-verification | `record-verification.md` | verification | boundary: run-id, reviewed-boundary | boundary, runtime, memory, epistemic, reconciliation |
-| profile-verification | `profile-verification.md` | verification | boundary: run-id, reviewed-boundary | runtime, memory, epistemic, memory-profile |
-| synthesis-verification | `synthesis-verification.md` | verification | boundary: run-id, reviewed-boundary | boundary, runtime, memory, epistemic, synthesis |
+## End state
 
-The set rule gains one relation: every limit a verification declares names a
-record the synthesis's Limitations section mentions. That check leaves the
-synthesis acceptance function. The two overview copy rules are deleted.
+The mission is complete when all of the following hold.
 
-Each verification role's `verifies` value is fixed by its slot. Whether the
-layout gains a small fixed-fields facility for that or the workflow keeps
-the check is a free choice.
+- The set type's layout declares the synthesis and the three verifications
+  as roles, required for a `complete` disposition, with identity from the
+  boundary and citation scopes that match what each document may cite. A
+  retained complete set holds them, pinned. The relation that every limit a
+  verification declares is carried by the synthesis's Limitations is a set
+  relation.
+- The overview copies no other member. It is a code-written entry page:
+  identity and disposition, the synthesizer's description, links to every
+  member, the amendment index and the deterministic validation account. The
+  set rule has no copy check. Rules the overview type stated about the
+  synthesis's text live in the synthesis type.
+- `commonplace-validate` checks a draft at an intended member path and
+  reports the findings for that path's role, with repair text on the
+  findings, writing nothing. Acceptance for every job is that result plus a
+  labelled job residue, and a test asserts the equality.
+- `commonplace-analysis-check` does not exist, and no instruction, command
+  reference or worktree setup names it. ADR 105 is amended to one validation
+  command, and ADR 098 is amended on where the judgments live.
+- A regenerated dynamic-cheatsheet set on the production configuration and
+  one run on the test configuration on another system validate in the new
+  shape, with the measurements below recorded.
 
-### The overview
+## Boundaries
 
-The overview becomes a code-written entry page: identity and disposition in
-frontmatter, the synthesizer's description, a link to every member, the
-amendment index and the deterministic validation account. The boundary,
-source register, bounded synthesis, limitations and verification sections
-leave it. Rules the overview type states about the synthesis's text, such as
-reading without the members' context, move to the synthesis type. ADR 102's
-stable path and entry role are unchanged; ADR 098 is amended on where the
-judgments live.
+These hold throughout and are not the implementer's to trade.
 
-### What stays outside the set
+- **Membership stays closed and positional.** A member is a file at a
+  declared path; nothing declares membership in frontmatter.
+- **One version per slot.** The set holds the current version of each
+  member. Earlier versions, the answers file, correction packets, change
+  diffs, round set-check files and run state stay outside the set and are
+  never published. The set type's statement that working inputs live outside
+  is narrowed to name them, not removed.
+- **Validation writes nothing.** A draft placed at its slot replaces the
+  incumbent for every check in one invocation and leaves `output/` as it was.
+- **Replay is byte-idempotent.** Copying a verification or synthesis into
+  its slot is a coordinator write in a replayable sequence and must behave
+  as the report copies do.
+- **ADR 102 is unchanged.** The overview's path and its role as the public
+  entry stay; the boundary and the new members are members, not entries.
+- **Two callers, one judgment.** Self-check and acceptance print identical
+  text for the same set finding. The residue is labelled so a narrower
+  content pass never claims job acceptance.
+- **Absent is expected mid-run.** Callers drop absent-member findings
+  deliberately and never suppress failures in general.
+- **Isolated worktrees count only after the adoption is installed there.**
 
-Correction request packets and change diffs are code-rendered views of
-members and remain job inputs. Round set-check files are validation results
-and remain what the verifier reads. Previous versions of a member, the
-analyst's `answers.md` and run state remain working files. The set type's
-statement that working inputs live outside the output directory is narrowed
-to name these.
+## Delegated to the implementer
 
-### Drafts checked through validate
+Within the boundaries, the implementer decides, and need not ask:
 
-`commonplace-validate` takes a draft and the member path it is intended for,
-places the draft's bytes at that path through the existing content
-overrides, validates the directory, and reports the findings attributed to
-that path's role, with absent-member findings dropped. Nothing is written.
-Repair advice moves from the workflow's wrapper onto the findings, so a
-finding prints the same text whether validate or acceptance reports it. This
-is stage one of the companion proposal.
+- The sequence and parallelism of the work. One ordering that respects the
+  dependencies: the validator's draft-at-slot invocation is independent of
+  the new roles and useful to analysts at once; retirement of the command
+  needs both; the regeneration run comes last.
+- The validate flag's name and shape, and how repair text attaches to
+  findings.
+- The new members' file names, and whether each verification role's
+  `verifies` value is fixed by a small layout facility or stays in the job
+  residue.
+- Which checks join the residue. The expected residue is the boundary
+  against the frozen checkout and run parameters, the predecessor and
+  answers checks in correction rounds, the profile's current comparison
+  version and run identity, and the verifier's blockers after a failed round
+  check. A check the implementer finds expressible as a layout relation
+  should move into the layout; a check that turns out to depend on the
+  invocation joins the residue.
+- The overview's form within its end state, for instance a list or a table
+  of members.
+- How the worker rules and the handout name the residue to analysts.
+- Whether the regeneration run and the test run proceed in parallel.
 
-### Acceptance
+## Reserved to the operator
 
-Each job's acceptance is the draft's validate result plus a labelled job
-residue. The residue is what depends on the job's invocation, not on the
-documents:
+Report and wait rather than decide:
 
-- boundary: the frozen checkout is at the recorded revision and clean, the
-  source matches the run's parameters;
-- analysts in a correction round: no record its predecessor declared is
-  dropped, and `answers.md` answers every blocker addressed to it;
-- profile: the comparison block is the current write version, and the
-  source identity matches the run parameter;
-- verifiers: blockers are written when the round's set check failed.
+- Adding members beyond the four named, or changing the set's membership
+  policy.
+- Publishing anything the boundaries name as staying outside the set.
+- Any change to what the overview is for, or to ADR 102's entry path.
+- Keeping the check command in any form.
 
-The handout names the residue so an analyst knows which refusals the
-self-check cannot show. The parity test asserts that acceptance equals
-validate's result for the draft plus the residue.
+## Report back when
 
-### Retirement
+- A check the workflow needs cannot be expressed as a layout relation and
+  also does not depend on the job's invocation; it is the warrant the
+  companion proposal's stage two is waiting for.
+- Acceptance and self-check cannot be made equal for the same bytes.
+- Thinning the overview breaks a consumer: the published site, the
+  landscape synthesis, the comparison matrix or a transfer scan.
+- Replay, assembly, publication or retained-set validation needs a special
+  case for the new members.
+- A run on the new shape is refused for a reason the implementer cannot
+  attribute to the draft.
 
-With the residue labelled and validate able to check a draft at its slot,
-`commonplace-analysis-check` is removed: its entry point, module and test,
-the isolated-worktree lookup of it, the worker rules' check section, the
-command reference's two sections and its mention in the isolated-run
-paragraph. The scratch count log goes with it; ADR 105's revisit counts
-refusals from engine acceptance records instead. ADR 105 is amended to one
-validation command for analysts, acceptance and maintainers.
-
-### Order of work
-
-1. Stage one of the companion proposal on `commonplace-validate`, with
-   repair text on findings. It is independent of the new roles and analysts
-   can use it at once.
-2. The four roles in the set type, the limits-carried relation, the
-   `verifies` fixing, the synthesis rules moved from the overview type, the
-   overview type and renderer reduced, the copy rules deleted, publication
-   and the site following the layout. ADR 098 amended.
-3. The acceptance functions reduced to validate plus the labelled residue;
-   the parity test retargeted; the command, its docs and its log retired;
-   ADR 105 amended.
-4. A regeneration run of dynamic-cheatsheet on the production configuration,
-   the first set in the new shape, followed by one run on the test
-   configuration on another system.
-
-Steps 1 and 2 can proceed in parallel. Step 3 needs both. Step 4 needs the
-adoption landed in the installed tool of the isolated worktree.
-
-### What this changes for analysts and readers
-
-An analyst runs one command on a draft and sees the type's findings for
-their role, with the same repair text acceptance will print, plus a short
-named list of what only acceptance checks. A reader of a retained set finds
-the synthesis and each verification as the member its author wrote, pinned
-in the manifest, and reaches them from the overview by link rather than
-reading them inlined.
-
-### Measurements
+## Measurements
 
 Record per run and per job: the set findings delivered and how many
 concerned another member, which should be zero; the residue refusals by
@@ -207,45 +216,32 @@ companion proposal's decision on its stage two.
 - **Keep the overview self-contained under copy rules.** Possible, and it
   preserves what current readers get. Rejected by the operator: once every
   copied section has a member, the copies add only a rule to keep them equal.
+- **Prescribe the sequence of work.** The earlier version of this proposal
+  did. Rejected: the dependencies are few and visible, and an implementer
+  who meets the end state within the boundaries needs no order imposed.
 
 ## Forces
 
 - **Expected incompleteness.** Verifications are written after the member
   they judge, so mid-run the working set lacks them. The layout already
-  tolerates absent members in a working instance; callers drop absent
-  findings deliberately, not failures in general.
-- **One version per slot.** The set holds the current version of each
-  member; earlier versions stay in the run directory. The predecessor check
-  therefore stays in the residue.
-- **Consistent bytes.** A draft placed at its slot replaces the incumbent for
-  every check in the invocation and nothing is written to `output/`.
-- **Replay.** Copying a verification or synthesis into its slot is a new
-  coordinator write in a replayable sequence and must be idempotent on
-  bytes, as the report copies are.
-- **Published site.** Retained sets gain four pages; the overview stays the
-  entry under ADR 102.
-- **Two callers, one judgment.** Self-check and acceptance print the same
-  text for the same set finding, so repair advice lives on the finding.
-- **Isolated analysis worktrees** have their own command environment; the
-  adoption must land there before a run on it counts as evidence.
+  tolerates absent members in a working instance.
+- **Repair information.** An analyst acts on a finding only if it names the
+  rule, the location and the repair; moving repair text onto findings is
+  what lets one validator serve both callers.
+- **Published site.** Retained sets gain four pages; readers who relied on
+  the overview being self-contained follow one link.
+- **Evidence from runs.** The measurements are the only way to learn whether
+  whole-set reading with a role filter suffices; they must be recorded, not
+  reconstructed.
 
 ## Free choices
 
-The validate flag's name and shape, how repair text attaches to findings,
-whether `verifies` is fixed in the layout or in the workflow residue, the
-new members' file names, whether the overview links members in a list or a
-table, and whether the regeneration run and the test run proceed in parallel.
+Everything under "Delegated to the implementer".
 
 ## Adoption criteria
 
-- The set type's layout names the synthesis and three verification roles,
-  and a complete retained set contains them, pinned.
-- The overview holds no section that copies another member, and the set
-  rule has no copy check.
-- `commonplace-validate` reports, for a draft at an intended member path,
-  the findings for that role and nothing for other roles; acceptance equals
-  that result plus the labelled residue, and the parity test says so.
-- `commonplace-analysis-check` does not exist; worker rules and the command
-  reference name only `commonplace-validate`.
-- The regenerated retained set validates, and both runs are recorded with
-  the measurements above.
+The end state above, observed: the layout and a pinned retained set with the
+new roles; an overview without copies and a set rule without copy checks;
+validate checking a draft at its slot with acceptance equal to it plus the
+labelled residue, asserted by a test; the check command gone from code and
+documents; both runs recorded with their measurements.
