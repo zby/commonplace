@@ -1,5 +1,5 @@
 ---
-description: "Proposal: a directory type declares the layout of its instances, so membership, roles and cross-member relations come from one external definition instead of filename conventions and code."
+description: "Proposal: a directory type declares the layout of its instances, so membership, roles, nesting and cross-member relations come from one external definition instead of filename conventions and code."
 type: reference/types/design-proposal.md
 tags: [type-system]
 ---
@@ -9,14 +9,15 @@ tags: [type-system]
 A directory type is already defined outside its instances: a manifest points
 at a type spec, and the type spec names a schema. What that definition cannot
 do is describe the directory. It sees a flat set of sibling Markdown files and
-encodes everything else, roles, completeness and relations, in
+encodes everything else, roles, nesting, completeness and relations, in
 filename conventions, schema branches and Python keyed by type path.
 
-This proposal gives the directory type a layout: a declared set of files
-beside the manifest, each with a role, and for each role the expected document
-type, when it is required, and how it relates to other roles. Membership becomes "matches a layout entry". Whole-set validation,
-member-level validation, manifest construction and workflow code would all
-read the same declaration.
+This proposal gives the directory type a layout: a declared set of paths under
+the artifact root, beside the manifest or in subdirectories below it, each
+with a role, and for each role the expected document type, when it is
+required, and how it relates to other roles. Membership becomes "matches a
+layout entry". Whole-set validation, member-level validation, manifest
+construction and workflow code would all read the same declaration.
 
 The operator selected this direction. It is not shipped behavior or an
 implementation commission. The companion proposal
@@ -83,8 +84,9 @@ a definition that does not describe the directory.
 ## Selected direction: a layout in the directory type
 
 The directory type declares its layout. Conceptually a layout is a list of
-entries, each binding a filename beside the manifest to a role. A role
-states:
+entries, each binding a relative path under the artifact root to a role. A
+path may descend into subdirectories; a subdirectory is part of the layout,
+not a directory artifact of its own. A role states:
 
 - the expected document type at that slot, checked against the member's own
   `type:` declaration, so each fact has one owner;
@@ -93,11 +95,13 @@ states:
 - relations to other roles: which role supplies identity fields this member
   must repeat, and which roles' declarations this member may cite.
 
-Membership is matching a layout entry. A Markdown file beside the manifest
-that matches no entry is governed by the type's open or closed policy.
-Membership stays flat, as ADR 095 has it: the analysis set's boundary moves
-into the artifact root instead of the root moving up to meet it, so the
-working instance and the retained instance have one shape.
+Membership is matching a layout entry. Paths the layout does not mention are
+governed by the type's open or closed policy, scoped to the directories the
+layout declares, so a working tree can hold non-member files inside the
+artifact root without those becoming members or failures. The analysis set
+does not use nesting: its boundary moves into the artifact root instead of
+the root moving up to meet it, so the working instance and the retained
+instance have one flat shape.
 
 The manifest keeps its ADR 095 role: recognition marker and instance metadata.
 It does not restate layout.
@@ -105,8 +109,8 @@ It does not restate layout.
 Consumers read the layout instead of restating it. Whole-set validation
 derives required members from it. Manifest construction derives the member
 names from it. Workflow slot maps derive from it. Member
-mode, in the companion proposal, resolves a file's role from its filename
-beside its manifest and applies the role's relations.
+mode, in the companion proposal, resolves a file's role from its path relative
+to the nearest manifest and applies the role's relations.
 
 Relations split between data and code. Identity agreement and citation scope
 are simple enough to declare. Record-ID grammar, quotation anchoring and
@@ -190,7 +194,8 @@ layout:
 What each key decides:
 
 - `roles` are keyed by name; imperative rules and member-level findings use
-  the name. `path` is a literal filename; no pattern form until a type
+  the name. `path` is a literal path relative to the artifact root, flat
+  here because the set needs no subdirectory; no pattern form until a type
   needs one.
 - `type` is the expected type at the slot, compared with the member's own
   `type:` declaration.
@@ -202,10 +207,12 @@ What each key decides:
   branch the set uses today. A value with no list requires only `always`.
 - The set is closed, as its schema is today: an undeclared Markdown file
   beside the manifest fails. Run state, report versions and job workspaces
-  live at the run root, outside the artifact.
+  live at the run root, outside the artifact. A type with declared
+  subdirectories would name which of them are closed.
 
-A member lookup finds the manifest in the member's own directory. Manifest
-construction lists the roles present. Workflow slot
+The nearest-manifest search bound for a member lookup is the deepest declared
+path depth, one directory for this set. Manifest construction lists the
+roles present. Workflow slot
 constants become lookups into `roles`. Hash requirements stay in the manifest
 schema, as today; the layout says nothing about content identity.
 
@@ -215,9 +222,9 @@ Consumers would be the validator's directory path, the finalize step, the
 analysis workflow's slot constants and its round-close record check, and any
 future directory type. No consumer reads a layout today; the layout
 representation and its reader must be built. The oracle is the actual files
-at declared paths and their declared facts. Membership stays within ADR 095's
-direct-children rule; the amending decision covers what the layout takes over
-from the schema and from code.
+at declared paths and their declared facts. Nested membership amends ADR 095's
+direct-children rule and needs an amending decision when it ships, even
+though the analysis set's own layout stays flat.
 
 ## Consequences of adoption on its own
 
@@ -244,9 +251,9 @@ What becomes checkable through the type, without the companion proposal:
 
 What it costs or forces:
 
-- An ADR amending ADR 095: layout as the owner of membership, the manifest
-  schema reduced to instance metadata and hashes, a type-only working
-  manifest, and partial-instance validation semantics.
+- An ADR amending ADR 095: nested membership, layout as the owner of
+  membership, the manifest schema reduced to instance metadata and hashes, a
+  type-only working manifest, and partial-instance validation semantics.
 - The validation contract, the type-spec contract and the set type document
   are rewritten for directory types.
 - **The boundary becomes a published member.** Today the working instance has
@@ -294,35 +301,54 @@ What it costs or forces:
 - **A constraint language.** Rejected, as in ADR 095 and the
   [type-selected Python validation proposal](./type-selected-python-validation-checks.md).
 
-### Nesting
+### Nesting in the layout vocabulary
 
-- **Flat only, boundary inside the artifact.** The selected direction. The
-  working artifact root is already `output/`, flat and the same shape as a
-  retained set; the boundary is the one file outside it. Moving the boundary
-  into `output/` brings the declaration source inside the artifact, keeps
-  ADR 095's direct-children rule, and keeps one layout for working and
-  retained instances.
-- **Nested paths allowed.** Deferred. The manifest would move to the run
-  root with members under `output/`. That amends ADR 095, needs a membership
-  policy scoped to declared directories because run state and job workspaces
-  live at the run root, and gives the working instance a shape the retained
-  set lacks, so publication would need a path mapping or the retained tree
-  would change. No type needs it.
-- **Flat only, boundary outside.** Preserves ADR 095 unchanged but leaves the
-  declaration source outside the artifact, and the companion proposal must
-  let a type name external context, which is a different widening.
+- **Nested paths allowed, subdirectories as layout not as types.** The
+  selected direction. A layout path may descend below the artifact root, and
+  membership follows the declaration. A declared subdirectory is structure
+  of the one artifact; it carries no manifest and no type of its own.
+  Requires the ADR 095 amendment and a membership policy scoped to declared
+  directories.
+- **Flat only.** Preserves ADR 095 unchanged. A type whose instance needs a
+  subdirectory could not declare it, and the layout would be a renaming of
+  the schema's filename properties.
+- **Nested directory artifacts.** Rejected here: a subdirectory with its own
+  manifest and type is composition of artifacts, a different question that
+  ADR 095's recognition rule already answers by finding the nearest manifest.
+
+### Where the analysis set's boundary goes
+
+- **Boundary moves into `output/`.** The selected direction. The working
+  artifact root is already `output/`, flat and the same shape as a retained
+  set; the boundary is the one file outside it. Moving it in brings the
+  declaration source inside the artifact without nesting and keeps one
+  layout for working and retained instances.
+- **Manifest moves to the run root, members stay under `output/`.** Uses
+  nesting to reach the boundary where it is. Gives the working instance a
+  shape the retained set lacks, so publication would need a path mapping or
+  the retained tree would change, and the open run root needs the scoped
+  policy for its state and job workspaces.
+- **Boundary stays outside.** Leaves the declaration source outside the
+  artifact, and the companion proposal must let a type name external
+  context, which is a different widening.
 
 ## Forces
 
 - **A layout is a small language.** ADR 095 rejected external directory
   formats. The flat schema was the first draft of this language and has met
   its limits in completeness branches and the external boundary file. Keep
-  the vocabulary to what the analysis set needs: literal filenames, expected
-  type, a requiredness condition, two relation kinds.
-- **One directory type exists.** This is the YAGNI counterweight. The
-  proposal's warrant is that the analysis set already needs roles and an
-  in-artifact declaration source, and that the companion proposal cannot be
-  built without them.
+  the vocabulary to what the analysis set needs plus the one capability the
+  flat schema cannot express: literal relative paths that may descend,
+  expected type, a requiredness condition, two relation kinds.
+- **One directory type exists, and it is flat.** This is the YAGNI
+  counterweight. The proposal's warrant for roles and relations is that the
+  analysis set needs them and the companion proposal cannot be built without
+  them. The warrant for nested paths is thinner: no shipped type needs one
+  once the boundary moves inside `output/`. Nesting stays in the vocabulary
+  because a layout that cannot descend is only the schema's filename
+  properties renamed, and because ADR 095 already names it as the deferred
+  next step; its cost is one path join in the reader and the scoped
+  membership policy.
 - **Content identity is not layout.** Which members a frozen instance pins,
   and when, belongs to publication integrity and freezing, a concern larger
   than directory structure that ADR 095 and ADR 102 only begin. The layout
@@ -358,8 +384,13 @@ A candidate implementation must demonstrate that:
 - A directory type declares its members by path with roles, and the validator
   derives membership and requiredness from that declaration
   rather than from the schema's filename properties.
-- The boundary is written inside the artifact root and declared as a member,
-  with membership still direct children of the manifest's directory.
+- A member declared below the artifact root is found, typed and related like
+  a sibling member, with the direct-children rule amended by decision. With
+  no shipped type nesting, a test type demonstrates it.
+- Undeclared paths inside a declared subdirectory follow that type's scoped
+  membership policy and do not fail an open subtree.
+- The boundary is written inside the artifact root and declared as a flat
+  member of the analysis set.
 - A role's declared relations are applied by whole-set validation and are
   available to a member-level lookup by path.
 - Manifest construction and the analysis workflow's slot handling read the
