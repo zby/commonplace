@@ -77,7 +77,7 @@ input, so it is not listed.
 | check-synthesis | code | candidate, boundary, reports | accepts or refuses | |
 | verify-synthesis | model | synthesis, reports, record-verification, profile-verification | candidate synthesis-verification | 2 |
 | apply-synthesis-verification | code | candidate, its attempt record, the synthesis it was handed | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
-| assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md`, `ARTIFACT.yaml` with pins; accepts the overview against the members | – |
+| assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md` (the engine keeps `set/ARTIFACT.yaml` naming the type; publish pins the copy); accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
 
 Bounds are today's rounds plus one: three attempts where two correction

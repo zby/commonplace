@@ -143,9 +143,13 @@ They bind an implementation of this spec; they are not requirements.
   the job filling its role and every job that judges it; an output's or
   an attempt record's producer is its job; a judgment's is the job that
   records it; a refusal's are the jobs that judge its role. Code jobs run
-  to a fixed point before model readiness is computed, so a code producer
-  is never pending when model jobs are handed out and a correction loop
-  through an apply job cannot deadlock. Why: without the wait a
+  to a fixed point, in declaration order, before model readiness is
+  computed, so a code producer is never pending when model jobs are handed
+  out and a correction loop through an apply job cannot deadlock; the wait
+  is therefore applied to model producers only. Between code jobs it is
+  not applied: a code job declared before its code producer may run once
+  against stale input and again after it, which wastes a run but records
+  nothing wrong, so a job set should declare code jobs in dependency order. Why: without the wait a
   correction makes a transform and its verifier ready together, and the
   verifier runs once against stale state; the current engine avoids that
   through its round structure. This is a scheduling policy over ready
