@@ -63,8 +63,8 @@ def declaration(library: Path, run_dir: Path) -> str:
 
     This is a contract skeleton, not permission to use the current worker
     instructions with new-engine hand-outs. In particular, correction rounds,
-    untracked runtime context, disposition gating and verdict relations still
-    need the changes reported by :func:`contract_gaps`.
+    runtime ordering and publication still need the changes reported by
+    :func:`contract_gaps`.
     """
     library, run_dir = library.resolve(), run_dir.resolve()
     layout = _layout(library)

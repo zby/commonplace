@@ -59,23 +59,23 @@ layout:
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, reconciliation]
     profile-verification:
       path: profile-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [runtime, memory, epistemic]
+      cites: [runtime, memory, epistemic, memory-profile]
     synthesis-verification:
       path: synthesis-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, synthesis]
   required:
     always: [boundary, overview]
     by:
-      role: overview
+      role: boundary
       field: result-disposition
       values:
         complete: [runtime, memory, epistemic, reconciliation, memory-profile, synthesis, record-verification, profile-verification, synthesis-verification]
@@ -92,7 +92,7 @@ model writes a whole run, so the manifest carries it once; sets published
 before 2026-10-06 have no `worker`.
 
 The layout above declares the members. Every set has the boundary and the
-overview; a `complete` overview disposition adds the four reports, the
+overview; a `complete` boundary disposition adds the four reports, the
 memory profile, the synthesis and three verifications. Any other disposition
 admits no other member. Membership
 is closed. Each member keeps its own type and passes ordinary file
@@ -112,7 +112,9 @@ The set rule also checks that the manifest pins every member once it pins
 any, duplicate declarations, the overview's amendment index against the
 reconciliation, and the profile's comparison references. The three
 verification roles respectively require `verifies: records`, `profile` and
-`synthesis`. Their Blockers and Limits are `none` or Markdown lists; record
+`synthesis`. Their citation partners include the reconciliation, memory profile
+and synthesis respectively, alongside the reports declared in the layout.
+Their Blockers and Limits are `none` or Markdown lists; record
 blockers name the report owner. Every verification limit that cites IDs has
 at least one of those IDs in the synthesis's Limitations. This checks
 traceability, not whether the consequence is faithfully stated; review checks

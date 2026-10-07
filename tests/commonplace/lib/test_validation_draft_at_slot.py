@@ -114,16 +114,23 @@ def test_complete_requires_four_new_members_and_identity_is_from_boundary():
     layout = analysis_layout()
     new = {"synthesis", "record-verification", "profile-verification", "synthesis-verification"}
     docs = {"overview.md": document("# Entry\n", **{"result-disposition": "complete"}),
-            "boundary.md": document("# Boundary\n", **{"run-id": "R", "reviewed-boundary": "B"})}
+            "boundary.md": document("# Boundary\n", **{
+                "run-id": "R", "reviewed-boundary": "B", "result-disposition": "complete",
+            })}
     findings = layout_findings(layout, docs)
     assert new <= {f.role for f in findings if f.absent}
     for name in new:
         assert layout.path(name) == name + ".md"
         assert layout.roles[name].identity[0].role == "boundary"
         assert layout.roles[name].identity[0].fields == ("run-id", "reviewed-boundary")
-    assert layout.roles["profile-verification"].cites == ("runtime", "memory", "epistemic")
-    for name in new - {"profile-verification"}:
-        assert layout.roles[name].cites == ("boundary", "runtime", "memory", "epistemic")
+    assert layout.roles["profile-verification"].cites == ("runtime", "memory", "epistemic", "memory-profile")
+    assert layout.roles["synthesis"].cites == ("boundary", "runtime", "memory", "epistemic")
+    assert layout.roles["record-verification"].cites == (
+        "boundary", "runtime", "memory", "epistemic", "reconciliation",
+    )
+    assert layout.roles["synthesis-verification"].cites == (
+        "boundary", "runtime", "memory", "epistemic", "synthesis",
+    )
 
 
 @pytest.mark.parametrize("name,stage", [("record-verification", "records"),

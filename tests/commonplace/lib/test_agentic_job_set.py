@@ -138,10 +138,8 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
 
 def test_live_contract_gaps_are_explicit():
     gaps = contract_gaps(LIBRARY)
-    assert "missing verdict relation: record-verification:cites:reconciliation" in gaps
-    assert "missing verdict relation: profile-verification:cites:memory-profile" in gaps
-    assert "missing verdict relation: synthesis-verification:cites:synthesis" in gaps
-    assert any(gap.startswith("disposition:") for gap in gaps)
+    assert not any(gap.startswith("missing verdict relation:") for gap in gaps)
+    assert not any(gap.startswith("disposition:") for gap in gaps)
     assert any(gap.startswith("working set path:") for gap in gaps)
     assert any(gap.startswith("publication:") for gap in gaps)
 
