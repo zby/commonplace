@@ -42,9 +42,9 @@ running commands.
 Build the manifest of one `running` agentic-system analysis set.
 `manifest <run-state>` writes `output/ARTIFACT.yaml` pinning the set members
 present in `output/`; rerun it after any member edit.
-A complete analysis pins six members, including reconciliation and the separate memory profile;
-the overview links superseded records to that member and records record, profile and synthesis
-verifications.
+A complete analysis pins every declared member, including the synthesis and
+record, profile and synthesis verifications. The overview links to the members
+and indexes amended records without copying their text.
 
 ### commonplace-agentic-analysis-handoff
 
@@ -56,9 +56,9 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 Publication invokes the regular validator on the prospective complete run
 set, including quotation occurrence within attribution ranges and the existence
-of path-only source anchors at the frozen commit. Analysts use
-`commonplace-analysis-check` before submission; publication independently
-checks the assembled set.
+of path-only source anchors at the frozen commit. Analysts use draft-at-slot
+`commonplace-validate` before submission; publication independently checks the
+assembled set.
 
 Inspect a destination, prepare or publish the accepted analysis of one running
 agentic-system analysis. `inspect-destination` takes `--generated-destination`
@@ -118,6 +118,19 @@ A directory containing `ARTIFACT.yaml` receives set checks and ordinary member
 checks, grouped as one artifact. Explicit file validation stays file-scoped.
 See [directory artifacts](./validation-contract.md#directory-artifacts).
 
+Check a draft at its intended slot with
+`commonplace-validate <draft> --set <directory> --member <slot>`.
+The slot is a declared relative member path, not a job or role name. The draft
+replaces the incumbent in memory for every check in the invocation. Findings
+are restricted to that slot's role, with rule, location and repair text;
+absent-member findings are deliberately omitted for a working set. This mode
+writes nothing and refuses `--output`. A content pass is not job acceptance:
+the workflow adds separately labelled invocation residue. It establishes
+neither claim support nor analytical correctness. Member mode's default and
+`--full` output use the shared finding text; `--json` emits
+`commonplace.validation.member.v1` with each finding's repair and rendered text.
+Unverified evidence is reported as information but refuses this content check,
+as it does acceptance.
 
 Run deterministic validation on one artifact, collection, type surface,
 collection-landing set, redirect map, or the bounded workshop-and-task
@@ -135,24 +148,6 @@ already exist. The
 Audit `verbatim`-marked quotations over one or more Markdown files or
 directories, including unresolved pairings that do not fail ordinary
 validation.
-
-### commonplace-analysis-check
-
-Check an analysis draft with the validator acceptance applies to its job:
-`commonplace-analysis-check <run-state> <job> [draft]`. Use the supplied job
-name, including its round. The draft defaults to that job's output. The
-command prints independent refusals together, with locations and repairs;
-it never edits the draft, advances the run or counts an attempt. Exit 0 means
-pass, 1 means refusals, and 2 means the command could not check the draft.
-A pass establishes neither claim support nor analytical correctness.
-
-Quotation attributions may name only a frozen-source path. The check resolves
-that path at the run's revision, checks the passage under whitespace
-normalization, and proposes ranged attributions for ambiguity only when the
-range isolates the unchanged passage. Otherwise it asks for a longer quote.
-It appends counts to the job's `scratch/acceptance-checks.jsonl`; acceptance
-retains the same messages in the engine's records. General KB validation
-remains `commonplace-validate`.
 
 ### Generated indexes (no command)
 
@@ -223,10 +218,11 @@ changed startup instructions and configuration always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
 directory and environment. Without `--revision` it refuses a `HEAD` behind the
 default branch. It does not open or advance an analysis. The `step`, `report`,
-`start`, `resolve` and `release` commands, `commonplace-analysis-check` and
+`start`, `resolve` and `release` commands and
 `commonplace-agentic-analysis-handoff` refuse a run inside a Commonplace source
-checkout when they run another checkout's code or, except the check, from
-another working directory. See
+checkout when they run another checkout's code or from another working
+directory. Draft validation also uses the prepared worktree's local command
+environment. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
 `integrate-analysis <run>` commits a completed published set and any incumbent

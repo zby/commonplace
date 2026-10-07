@@ -11,6 +11,15 @@ status: accepted
 
 **Amended 2026-10-05:** [ADR 108](./108-declaring-analysts-correct-their-reports.md) moves record corrections to the declaring analysts and removes the memory return route. The separate reconciliation member, the record loop's limit and the three independent checks remain in force; the correction descriptions below record the prior decision.
 
+**Amended 2026-10-06:** The synthesis and all three independent verifications
+are declared retained members, pinned and published as authored. The overview
+is a code-written entry page with identity and disposition, the synthesis's
+description, links to every member, the amendment index and deterministic
+validation account. It copies no member sections. Earlier versions, correction
+answers and packets, change diffs, round checks and run state remain outside
+the set and are not published. The separate judgments and bounded loops remain
+in force.
+
 ## Context
 
 Record repair and public writing have different dependencies. A public author
@@ -29,16 +38,18 @@ supersessions and explicitly marked unresolved conflicts. An independent
 record judge checks the three analyst members and reconciliation before a
 separate author writes the public synthesis. A second independent judge checks
 that synthesis against its supporting records. The overview remains the entry
-point, with a code-written index of amended records and both judgments.
+point, with a code-written index of amended records and links to the
+synthesis and all three judgment members.
 
 Keep the record loop's two correction rounds and the memory return route.
 Allow one synthesis correction. A record fault found during synthesis checking
 is a limitation; if it cannot be stated faithfully without making the synthesis
 misleading, stop rather than reopen reconciliation.
 
-The synthesis author and judge load the overview type plus the shared source
-and record contracts. Reconciliation and record verification load the analyst
-and reconciliation types. Synthesis reads the reports as evidence without
+The synthesis author and judge load the synthesis type plus the shared source
+and record contracts; the judge also loads its verification type.
+Reconciliation and record verification load the analyst and reconciliation
+types. Synthesis reads the reports as evidence without
 loading their authoring contracts.
 
 ## Considered alternatives
@@ -54,8 +65,8 @@ follow. Bounded limitations or stopping preserve the phase boundary.
 
 **Append verification to reconciliation.** Readers would find amendments and
 their judgment together. It gives that member two author roles and makes the
-overview's completion account less direct. Keep both judgments at the entry
-point.
+overview's completion account less direct. Keep each judgment as a separate
+member linked from the entry point.
 
 The unresolved-conflict marker and separate record check are execution choices.
 Cited-record extracts and removing overlap between reconciliation and its
@@ -63,19 +74,20 @@ judge are deferred until trial evidence supports another change.
 
 ## Consequences
 
-Record corrections no longer rewrite public text. A complete set has five
-members, and every synthesis is checked independently. Extra synthesis and
+Record corrections no longer rewrite public text. A complete set retains
+all declared members, including the synthesis and three verifications, and
+every synthesis is checked independently. Extra synthesis and
 verification jobs cost calls even when records need no correction. Separating
 contracts reduces what public-writing workers must load, while retaining the
 whole reports as evidence.
 
 The workflow consumes judge blockers as scheduling authority. Validators and
-publication consume the five-member contract and amendment index with binding
+publication consume the declared layout and amendment index with binding
 force. Analysis workers consume their role-specific contracts as authoring
 instructions. Review rendering, handoff and comparison loaders consume the
 accepted members and manifest; transfer and landscape workers resolve amended
 records through reconciliation. Published reviews remain projections of the
-overview.
+overview, with the public synthesis and judgments reached through its links.
 
 This decision applies to new frozen-source analysis runs. Structural checks
 establish shape, identity and reference resolution; both semantic judgments

@@ -53,4 +53,5 @@ supporting record. Do not read an incumbent or reference profile.
 After blockers, read `previous-profile` and `verification` and correct only
 the profile; there are two correction rounds.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

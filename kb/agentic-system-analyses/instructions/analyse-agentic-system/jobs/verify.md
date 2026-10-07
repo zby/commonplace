@@ -98,4 +98,5 @@ Code continues only when Blockers is `none`. Otherwise it cuts each addressed
 analyst the blockers addressed to it, with the records they cite, then starts
 another reconciliation and verification; in the last round it stops the run.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

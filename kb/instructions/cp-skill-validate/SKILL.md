@@ -9,7 +9,21 @@ context: fork
 
 ## EXECUTE NOW
 
-Run the packaged validation command. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope. Run every check even after a failure, and report failure at the end:
+Run the packaged validation command. For a draft at an intended set member
+slot, use the supplied paths as separate arguments:
+
+```bash
+commonplace-validate <draft> --set <directory> --member <slot>
+```
+
+Quote each path as needed. The slot must be a declared relative member
+filename. This mode writes nothing, including no receipt or scratch log;
+do not use `--output`. It checks the candidate's content in the working set,
+not job acceptance. Acceptance may add labelled invocation residue. Report
+that distinction with a pass. Use `--json` for findings with explicit repair
+fields, or default/`--full` output for the shared rendered finding text.
+
+For ordinary targets, follow the script below. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope. Run every check even after a failure, and report failure at the end:
 
 ```bash
 if [ "$ARGUMENTS" = "all" ]; then
@@ -31,6 +45,7 @@ fi
 
 Prefer the narrowest target that covers the user's request. For write/edit workflows, validate the new or edited file paths explicitly; do not validate the whole KB unless the user asked for a full maintenance check.
 
+- Draft plus set directory and member slot: use draft-at-slot mode above
 - Note path or name: validate that specific note
 - Multiple note paths: validate those specific notes, one command per path if needed
 - Directory path or collection name: validate `.md` files under that directory, only when the edited set is directory-scoped

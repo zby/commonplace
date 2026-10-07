@@ -56,37 +56,26 @@ allOf:
           members: false
         additionalProperties: true
       headings:
-        description: "One H1 followed by five ordered overview sections; all three verification subheadings remain explicit in every disposition."
+        description: "One H1 followed by the entry page's three ordered sections."
         type: array
-        minItems: 11
+        minItems: 4
         prefixItems:
           - pattern: '^# [^#].+$'
         items:
           anyOf:
             - enum:
-                - "## Boundary and evidence"
-                - "## Source register"
-                - "## Bounded synthesis"
-                - "## Limitations"
-                - "## Verification and blockers"
+                - "## Members"
+                - "## Amendment index"
+                - "## Deterministic validation"
             - pattern: '^#{3,6} .+$'
         allOf:
-          - {contains: {const: "## Boundary and evidence"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Source register"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Bounded synthesis"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Limitations"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "## Verification and blockers"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Record verification"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Profile verification"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Synthesis verification"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Deterministic validation"}, minContains: 1, maxContains: 1}
-          - {contains: {const: "### Blockers"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Members"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Amendment index"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Deterministic validation"}, minContains: 1, maxContains: 1}
       body:
         allOf:
-          - description: "The five overview sections must appear in their canonical reading order."
-            pattern: '(?ms)^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
-          - description: "Verification subheadings must appear under Verification and blockers in canonical order."
-            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Record verification\s*$.*?^### Profile verification\s*$.*?^### Synthesis verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
+          - description: "The entry page sections appear in canonical reading order."
+            pattern: '(?ms)^## Members\s*$.*?^## Amendment index\s*$.*?^## Deterministic validation\s*$'
   - if:
       properties:
         frontmatter:

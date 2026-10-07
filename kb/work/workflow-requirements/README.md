@@ -49,8 +49,9 @@ publication do not notice.
 The line to hold when that happens: bookkeeping stays in code, because
 readiness, currency, cleanup, bounds and coverage are enforcement
 properties that only a deterministic interpreter can guarantee;
-interpretation is what moves. Which jobs run, in what order and batches,
-is the coordinator's already. When the direction is taken up, requirement
+interpretation is what moves. Which ready jobs run, in what order and
+batches, is the coordinator's already, within one engine-side rule: a job
+waits while a producer of its inputs is pending. When the direction is taken up, requirement
 5 and the decision "only code jobs judge" are the two places that name the
 operator where they should name the coordinator too.
 

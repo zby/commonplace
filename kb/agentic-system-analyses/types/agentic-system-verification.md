@@ -11,9 +11,10 @@ The judgment of an independent verifier on one stage of an analysis run. A
 run has three: the record verification judges the analyst reports and the
 reconciliation; the profile verification judges the memory profile against
 the accepted records; the synthesis verification judges the public synthesis
-against the records it cites. Each is a document in the run directory. Code
-reads its blockers to decide what happens next and copies its verification
-text into the overview's `## Verification and blockers`.
+against the records it cites. They are the set's `record-verification.md`,
+`profile-verification.md` and `synthesis-verification.md` members. Code reads
+their blockers to decide what happens next; the overview links each judgment
+without copying it.
 
 ## Frontmatter
 
@@ -29,7 +30,7 @@ text into the overview's `## Verification and blockers`.
 
 `## Verification` records what was checked and found: the routes, records,
 axes or statements examined, the dispositions, the conflicts checked, and the
-consequential limits. It is the verifier's account for the overview's readers.
+consequential limits. It is the verifier's retained account, linked from the overview.
 It contains no corrected text: the verifier marks and explains defects, and the
 owner of the defective text corrects it.
 
@@ -57,10 +58,10 @@ addressee.
 A **limit** is a local unresolved issue the analysis can be published with:
 its consequences can be stated, and the remaining conclusions hold. It names
 the full IDs it concerns, the issue, and which conclusions readers should
-withhold. The synthesis carries every limit into the overview's Limitations
+withhold. The synthesis carries every limit into its Limitations
 with those IDs; a limit on a profile value is admissible only where the value
 itself already expresses the uncertainty (`partial`, `not-determinable` or
-`uninspected`), because an overview caveat does not travel with an extracted
+`uninspected`), because a synthesis caveat does not travel with an extracted
 value. A disagreement between reports that the sources do not settle is a
 limit naming both positions.
 

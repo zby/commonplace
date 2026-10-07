@@ -29,43 +29,18 @@ inputs-commit: "{INPUTS_COMMIT}"
 
 # Example System agentic-system analysis
 
-## Boundary and evidence
+## Members
 
-Boundary record.
+- [Boundary](./boundary.md)
+- [Synthesis](./synthesis.md)
 
-## Source register
-
-| SRC-1 | Git | `https://example.invalid/example-system` | `{REVISION}` | implementation | README.md | anchors | none |
-
-## Bounded synthesis
-
-Synthesis.
-
-## Limitations
+## Amendment index
 
 None.
 
-## Verification and blockers
-
-### Record verification
+## Deterministic validation
 
 Passed.
-
-### Profile verification
-
-Passed.
-
-### Synthesis verification
-
-Passed.
-
-### Deterministic validation
-
-Passed.
-
-### Blockers
-
-None.
 '''
 
 
@@ -236,9 +211,9 @@ def test_overview_rejects_obsolete_manifest_metadata(tmp_path: Path) -> None:
 
 def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     content = overview_text()
-    content = content.replace("## Boundary and evidence", "## TEMP", 1)
-    content = content.replace("## Source register", "## Boundary and evidence", 1)
-    content = content.replace("## TEMP", "## Source register", 1)
+    content = content.replace("## Members", "## TEMP", 1)
+    content = content.replace("## Amendment index", "## Members", 1)
+    content = content.replace("## TEMP", "## Amendment index", 1)
     results = validate(tmp_path, "overview.md", content)
     assert any("canonical reading order" in failure for failure in results.fails)
 

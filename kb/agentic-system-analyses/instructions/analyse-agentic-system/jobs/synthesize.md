@@ -33,10 +33,11 @@ is the public account.
 ## Mission
 
 Write the synthesis to `output` under the supplied synthesis type, with
-`run-id` and the `reviewed-boundary` of `boundary` as its identity. Its
-`description`, Bounded synthesis and Limitations become the overview's, so
-the supplied overview type governs their content, and they must read without
-the members' context.
+`run-id` and the `reviewed-boundary` of `boundary` as its identity.
+Bounded synthesis and Limitations stay in the synthesis member and must
+read without the other members' context. The overview uses its `description`
+and links to it; it does not copy its sections. The supplied synthesis type
+governs their content.
 
 When you are done, every substantive statement cites the records that
 support it, as written and with superseded records resolved through the
@@ -58,4 +59,5 @@ every carried statement against the records and resolve each blocker by
 correcting the public text or stating its supported limit. This is the one
 synthesis correction round.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

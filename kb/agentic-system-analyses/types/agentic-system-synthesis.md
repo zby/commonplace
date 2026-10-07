@@ -1,35 +1,71 @@
 ---
 type: types/type-spec.md
 name: agentic-system-synthesis
-description: "The synthesizer's public account of one analysis run: the retrieval description, the bounded synthesis and the limitations that code assembles into the overview"
+description: "The synthesizer's public account of one analysis run: retrieval description, bounded synthesis and limitations, retained as a set member"
 schema: ./agentic-system-synthesis.schema.yaml
 ---
 
 # Agentic system synthesis
 
 The public account of one analysis run, written after the records have
-passed independent verification. Code copies its parts into the
-[overview](./agentic-system-analysis-overview.md): the frontmatter
-`description` becomes the overview's description, and `## Bounded synthesis`
-and `## Limitations` become the overview's sections of those names. The
-overview type fixes what those sections must contain and how they read; this
-type fixes the document the synthesizer writes and the verifier judges.
+passed independent verification. It is the set's `synthesis.md` member,
+linked from the [overview](./agentic-system-analysis-overview.md). The
+overview uses its retrieval description but does not copy its body.
 
 ## Frontmatter
 
 | Field | Required | Use |
 |---|---:|---|
 | `type` | Yes | `agentic-system-analyses/types/agentic-system-synthesis.md` |
-| `description` | Yes | One sentence on the system's mechanism and limits, 50 to 250 characters; it is the overview's retrieval description |
+| `description` | Yes | One sentence on the system's mechanism and limits, 50 to 250 characters; also the overview's retrieval description |
 | `run-id` | Yes | The run's ID |
 | `reviewed-boundary` | Yes | The run's immutable revision or capture identity |
 
-## Body
+## Bounded synthesis
 
-`## Bounded synthesis` and `## Limitations`, in that order and nothing else,
-with the content the overview type requires of them. Every record ID resolves
-in the accepted set, and relative links are written as they will resolve from
-`overview.md` in the set directory.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural
+characterization and claimed work, runtime map, only the discriminating
+mechanisms this target needs, scenario-relative assessment, and concrete
+evidence or system changes that would alter the assessment. Where the
+runtime report supports it, the synthesis states separately whether the
+system meets theory-builder conditions 1–4, whether criticism of a consumed
+theory improved the system's capacity for future action, whether the system
+is reflective or autonomous, and whether it is
+[self-improving](../../notes/definitions/self-improving-system.md) at the
+declared boundary, each at its own evidence status; these are independent
+properties, not a grade or a ladder. It is organized around the system's
+operational progression, not as concatenated analyst reports, and cites
+member records rather than restating them. It gives no product ranking,
+generic adoption advice, system-wide epistemic grade, Commonplace delta, or
+transfer recommendation. For learning and self-improvement findings it leads
+with the strongest supported contribution, including partial results, then
+states the unresolved question, at the level of the comparison actually
+performed. Supported positives coexist with unresolved included parts, naming
+missing facts and prevented conclusions locally. A positive witness warrants
+existence, not complete enumeration; an uninspected or inconclusive part is
+not an absent one. Several unestablished independent properties are not a
+bundled negative. Trace-fed durable updates alone do not establish improved
+capacity. Faithfully bounded uncertainty remains publishable; unsupported
+assertions or concealed coverage gaps do not.
+
+The Bounded synthesis must read without the members' context. State its
+evidence basis and boundary, and link the member records that support it so
+a reader can inspect the underlying account. Every record ID resolves in the
+members its layout role cites. Relative links resolve from `synthesis.md`
+in the set directory.
+
+## Limitations
+
+`## Limitations` contains one row per limitation:
+
+`limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it`
+
+Every `Unresolved conflict:` in the reconciliation appears here, and so does
+a record fault found during synthesis verification, with its prevented
+conclusion. Every limit declared by any of the three verification members
+is carried here with its IDs and analytical consequence. `none` means the
+whole set was checked and no limitation remains. A blocker also recorded in
+a verification still has its analytical consequence stated here.
 
 ## Template
 

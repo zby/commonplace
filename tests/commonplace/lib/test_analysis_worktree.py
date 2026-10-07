@@ -230,7 +230,25 @@ def test_command_environment_clears_inherited_python_overrides(tmp_path: Path, m
     assert env["PATH"].split(os.pathsep)[0] == str(tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin"))
 
 
-@pytest.mark.parametrize("wrong", ["module", "workflow", "validate", "check"])
+def test_installation_probe_requires_only_active_commands(tmp_path: Path, monkeypatch) -> None:
+    local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
+    found = {
+        "module": str(tmp_path / "src/commonplace/lib/agentic_workflow.py"),
+        "workflow": str(local_bin / "commonplace-workflow"),
+        "validate": str(local_bin / "commonplace-validate"),
+    }
+
+    def run(args, **kwargs):
+        if args[0] == "uv":
+            return ""
+        assert "analysis-check" not in args[-1]
+        return json.dumps(found)
+
+    monkeypatch.setattr(aw, "_run", run)
+    assert aw._install(tmp_path)["path-prefix"] == str(local_bin)
+
+
+@pytest.mark.parametrize("wrong", ["module", "workflow", "validate"])
 def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, monkeypatch, wrong: str) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
@@ -238,7 +256,6 @@ def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, 
         "module": str(tmp_path / "src/commonplace/lib/agentic_workflow.py"),
         "workflow": str(local_bin / "commonplace-workflow"),
         "validate": str(local_bin / "commonplace-validate"),
-        "check": str(local_bin / "commonplace-analysis-check"),
     }
     found[wrong] = "/shared/main/runtime"
     monkeypatch.setattr(aw, "_run", lambda args, **kwargs: "" if args[0] == "uv" else json.dumps(found))
@@ -274,17 +291,15 @@ def test_run_outside_a_source_checkout_is_not_bound(tmp_path: Path) -> None:
 
 def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys) -> None:
     import commonplace
-    from commonplace.cli.analysis_check import main as check_main
 
     run = fake_checkout(tmp_path / "worktree")
     (tmp_path / "worktree/.venv/bin").mkdir(parents=True)
     with pytest.raises(ValueError, match=r"runs code from .*; run it from .*worktree, calling the command in .*\.venv/bin/"):
         aw.require_run_code(run)
-    # Both callers refuse before touching the run.
+    # The workflow refuses before touching the run.
     monkeypatch.chdir(tmp_path / "worktree")
     assert main(["step", str(run)]) == 1
-    assert check_main([str(run), "memory-0"]) == 2
-    assert capsys.readouterr().err.count("runs code from") == 2
+    assert capsys.readouterr().err.count("runs code from") == 1
     assert list(run.iterdir()) == []
 
     monkeypatch.setattr(commonplace, "__file__", str(tmp_path / "worktree/src/commonplace/__init__.py"))

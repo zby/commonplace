@@ -1,5 +1,5 @@
 ---
-description: A frozen analysis directory whose layout declares its boundary, overview and reports, their relations, and completeness by disposition.
+description: A frozen analysis directory whose layout declares its products and judgments, their relations, and completeness by disposition.
 type: types/type-spec.md
 name: agentic-system-analysis-set
 schema: ./agentic-system-analysis-set.schema.yaml
@@ -48,13 +48,37 @@ layout:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
         - {from: memory, fields: [source-identity]}
       cites: [runtime, memory, epistemic]
+    synthesis:
+      path: synthesis.md
+      type: agentic-system-analyses/types/agentic-system-synthesis.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+      cites: [boundary, runtime, memory, epistemic]
+    record-verification:
+      path: record-verification.md
+      type: agentic-system-analyses/types/agentic-system-verification.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+      cites: [boundary, runtime, memory, epistemic]
+    profile-verification:
+      path: profile-verification.md
+      type: agentic-system-analyses/types/agentic-system-verification.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+      cites: [runtime, memory, epistemic]
+    synthesis-verification:
+      path: synthesis-verification.md
+      type: agentic-system-analyses/types/agentic-system-verification.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+      cites: [boundary, runtime, memory, epistemic]
   required:
     always: [boundary, overview]
     by:
       role: overview
       field: result-disposition
       values:
-        complete: [runtime, memory, epistemic, reconciliation, memory-profile]
+        complete: [runtime, memory, epistemic, reconciliation, memory-profile, synthesis, record-verification, profile-verification, synthesis-verification]
 ---
 
 # Agentic system analysis set
@@ -68,17 +92,17 @@ model writes a whole run, so the manifest carries it once; sets published
 before 2026-10-06 have no `worker`.
 
 The layout above declares the members. Every set has the boundary and the
-overview; a `complete` overview disposition adds the four reports and the
-memory profile, and any other disposition admits no other member. Membership
+overview; a `complete` overview disposition adds the four reports, the
+memory profile, the synthesis and three verifications. Any other disposition
+admits no other member. Membership
 is closed. Each member keeps its own type and passes ordinary file
 validation independently.
 
 The boundary is the run's first member and the source of its identity and
 source declarations. Every other member repeats its run and boundary
 identity; the overview repeats all of its boundary fields and its
-disposition. The overview's `Boundary and evidence` and `Source register`
-sections are a copy of the boundary's, which the set rule checks; the
-overview's register declares nothing. Each member's record references
+disposition. The overview is an entry page, not a copy of member accounts.
+It declares no sources or records. Each member's record references
 resolve against the members its layout role cites. The profile cites only
 the three analyst reports: it declares or annotates no records, contributes
 no new evidence, cites no source directly, and its source identity matches
@@ -86,9 +110,15 @@ the memory member.
 
 The set rule also checks that the manifest pins every member once it pins
 any, duplicate declarations, the overview's amendment index against the
-reconciliation, and the profile's comparison references. It requires no
-run-state file or frozen checkout. Source anchors and the memory analyst's
-provenance remain workflow checks.
+reconciliation, and the profile's comparison references. The three
+verification roles respectively require `verifies: records`, `profile` and
+`synthesis`. Their Blockers and Limits are `none` or Markdown lists; record
+blockers name the report owner. Every verification limit that cites IDs has
+at least one of those IDs in the synthesis's Limitations. This checks
+traceability, not whether the consequence is faithfully stated; review checks
+that meaning. Every member's quotations resolve against the boundary's frozen
+source; unavailable pinned bytes are reported as unverified. The set requires
+no run-state file. The memory analyst's provenance remains a workflow check.
 
 A working set starts with a manifest naming only the type, so it is
 recognized from its first member. Until code pins it, whole-set validation
@@ -96,5 +126,6 @@ reports the unpinned manifest and any absent required members, and checks
 relations among the members present.
 
 Run state pins the manifest bytes. Published sets are frozen; corrections
-require a new run. Working inputs and run state live outside the output
-directory.
+require a new run. Earlier member versions, answers, correction packets,
+change diffs, round set-check files and run state live outside the output
+directory and are never published.

@@ -66,4 +66,5 @@ analyst's; read its answers and changes to see what moved, and describe a
 declined blocker that concerns two reports as a disagreement with both
 positions.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

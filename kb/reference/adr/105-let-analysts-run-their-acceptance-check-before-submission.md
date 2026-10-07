@@ -1,5 +1,5 @@
 ---
-description: Analysts call the same read-only validator as acceptance, repair its findings locally, and quote frozen sources with path-only attributions
+description: Analysts validate drafts at their declared member slots, acceptance adds labelled invocation residue, and quotations use frozen-source path-only attributions
 type: reference/types/adr.md
 status: accepted
 ---
@@ -8,6 +8,9 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-10-04
+**Amended 2026-10-06:** One validation command checks drafts at declared member
+slots. Acceptance adds labelled invocation residue; a content pass is not job
+acceptance. The quotation decision remains in force.
 **Amends:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) for citation construction and authoring-time checking. Its normalization and uniqueness rules remain in force.
 
 ## Context
@@ -26,11 +29,19 @@ determine which occurrence supports a finding or whether the analysis is sound.
 
 ## Decision
 
-Expose each analysis job's acceptance validator through
-`commonplace-analysis-check`. Both callers use the same job constructors,
-checking functions and refusal messages. Obtain the validator without replaying
-the workflow. The command changes no draft, run state or attempt count; its
-only write is a measurement line in the job's scratch log.
+Expose the shared set-member judgment through `commonplace-validate`, with
+a positional draft, `--set <directory>` and `--member <slot>`. Membership is
+closed and positional. Replace the incumbent's bytes in memory for every
+check and report findings for the candidate's role. Deliberately drop absent
+members in a working instance; do not suppress failures generally. Validation
+writes nothing, including no scratch log, and never loads the workflow.
+
+Acceptance uses those same findings and repair text, plus labelled
+**invocation residue**: checks against the frozen checkout and run parameters,
+correction requests, predecessor reports and answers, current comparison
+version and run identity, and blockers after a failed round check. A content
+pass never claims job acceptance. Retire the separate check command, not a
+wrapper under its old name.
 
 Report independent failures together. Stop a dependent check when its required
 input cannot be parsed or resolved. Give every refusal a rule, output location
@@ -72,17 +83,17 @@ Text remains the anchor for now.
 machinery where fuller messages and a local check let the analyst act directly.
 Retry and repair limits remain unchanged.
 
-**Integrate immediately with `commonplace-validate`.** Desirable as a later
-command unification, but combining it with this change would enlarge the task.
-Checks remain functions of output and supplied context so integration does not
-require changing their judgments. The separate command's name, text output,
-exit statuses and JSONL scratch log are implementation choices.
+**Keep a separate acceptance-check wrapper.** Rejected in the amendment:
+loading workflow code and a job identity to validate member content keeps a
+second judgment surface. Invocation-dependent checks remain in acceptance,
+labelled separately, rather than becoming a validation command.
 
 ## Consequences
 
 Analysts receive the command and quotation form through shared worker rules,
 job instructions and the source contract, loaded as declared dependencies.
-Job constructors supply their validators to both the command and the engine.
+The CLI and job constructors consume one shared draft-at-slot validation API;
+the engine additionally consumes invocation residue.
 The shared citation parser supplies source identities to structural validation,
 frozen-source checks and publication. Source quotations and fenced examples
 stay outside record and ordinary-link scans. Maintainers find the command
@@ -104,14 +115,16 @@ registered run context, not to general KB citations lacking that context.
 the first few separately commissioned analyses, or earlier on repeated local
 failures, avoidable acceptance refusals, quotations not found near the old batch
 failure rate, hand-written ranges or revisions, confusion between mechanical
-and semantic success, or readers needing omitted ranges. Count check runs and
-refusals by rule from scratch logs, acceptance refusals from engine records,
-quotations written from accepted members, and missing or ambiguous passages
-per check. Reconsider draft completion or numbered source views when those
-observations warrant them.
+and semantic success, or readers needing omitted ranges. Record set findings
+delivered per run and job, findings concerning another
+member (expected zero), invocation-residue refusals by rule, and disagreements
+between self-check and acceptance for identical bytes. Validation does not
+write these measurements; the workflow retains them with acceptance evidence.
+Count quotations from accepted members and missing or ambiguous passages
+in retained findings. Reconsider draft completion or numbered source views
+when those observations warrant them.
 
-**TODO: integrate run-context checks with `commonplace-validate`.** Keep the
-checks callable outside the engine, with output and supplied run context as
-inputs. The later direction is one validation command for analysts, acceptance
-and maintainers. It does not move mechanical acceptance into an independent
-verification job, and it changes nothing about that job in this decision.
+Draft-at-slot validation and acceptance must agree on every shared finding
+for identical bytes, asserted by integration tests. This does not move
+mechanical acceptance into an independent verification job or establish that
+analysts use the check.

@@ -18,12 +18,16 @@ Produce a selective current account of the external mechanisms that matter to a 
   `kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`, with its
   run’s `../run-state.md`. Both `run-status` and `result-disposition` must be
   `complete`. The set is the authority for what the external system does: the
-  overview holds the boundary, source register, amendment index, synthesis and
-  limitations; `runtime.md` the runtime account and the records the runtime
-  pass declared; `memory.md` the memory findings, memory-declared records and
-  comparison profile; `epistemic.md` the five epistemic blocks;
-  `reconciliation.md` the amendments, supersessions and unresolved conflicts. Do not
-  reacquire or refresh its sources during this scan.
+  code-written `overview.md` holds identity, disposition, member links, the
+  amendment index and deterministic validation. `boundary.md` holds the
+  evidence boundary and source register; `runtime.md` the runtime account and
+  runtime-declared records; `memory.md` the memory findings and memory-declared
+  records; `epistemic.md` the five epistemic blocks; `reconciliation.md` the
+  amendments, supersessions and unresolved conflicts; `memory-profile.md` the
+  comparison profile; and `synthesis.md` the cross-lens account and limitations.
+  `record-verification.md`, `profile-verification.md` and
+  `synthesis-verification.md` retain the independent judgments. Do not reacquire
+  or refresh its sources during this scan.
 - An explicit current question, design problem, or priority. A generic request to find every difference is not a valid brief. If the user asks broadly what is interesting, state the bounded standing concern you will use before selecting findings.
 - Read access to the Commonplace artifacts needed to establish the current local analogue.
 - Explicit file-output authority when the result should be written. Without it, return the scan in the response.
@@ -49,12 +53,14 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
    supplied manifest path to match `run-state.artifact.path`. If the caller
    supplied a manifest SHA-256, require it to match
    `run-state.artifact.sha256` and the file's bytes. The handoff verifies the
-   manifest; then read the overview and every member it pins: the evidence
-   boundary and limitations in the overview, the relevant shared records in
-   the runtime and memory members, and the lens findings in the memory and
-   epistemic members, with amendments and unresolved conflicts in the
-   reconciliation member. Any validation, identity, or completion failure stops
-   the scan without findings; report the failure to the caller for correction
+   manifest; then read the overview and every member the manifest pins:
+   the evidence boundary and source register in `boundary.md`, the records and
+   lens findings in the analyst reports, amendments and unresolved conflicts
+   in `reconciliation.md`, the comparison profile in `memory-profile.md`, the
+   cross-lens findings and limitations in `synthesis.md`, and the three
+   verification judgments. Do not infer substantive findings from the overview.
+   Any validation, identity, or completion failure stops the scan without
+   findings; report the failure to the caller for correction
    through the main review workflow.
 1. **Fix the three substantive inputs and production provenance.** Copy the
    current interest brief exactly. Record the run ID, run-state path, source

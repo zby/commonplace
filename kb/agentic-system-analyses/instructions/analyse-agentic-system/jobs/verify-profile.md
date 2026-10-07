@@ -62,7 +62,7 @@ settles materiality.
 
 A limit on a profile value is admissible only where the affected axis or unit
 already expresses the uncertainty (`partial`, `not-determinable`,
-`uninspected`), since an overview caveat does not travel with an extracted
+`uninspected`), since a synthesis caveat does not travel with an extracted
 value. A faithfully stated evidence limit is neither. No profile-only record
 or source quotation can establish support;
 read the source only for the cited paths needed to resolve a named ambiguity,
@@ -71,4 +71,5 @@ supporting records.
 
 Code permits two profile corrections; blockers after the last stop the run.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

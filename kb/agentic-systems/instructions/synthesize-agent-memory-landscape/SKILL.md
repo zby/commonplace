@@ -22,20 +22,25 @@ in the response. Load the output collection's contract before writing there.
 The evidence inputs are current accepted sets enumerated from
 `kb/agentic-system-analyses/retained/<system-slug>/`. Use the shared current-set
 enumerator through the comparison tools; no separate review metadata selects
-or pins the population. Each set is six
-members: the overview holds the boundary, source register, amendment index,
-synthesis and limitations; `runtime.md` the runtime account and the records
-the runtime pass declared; `memory.md` the memory findings, memory-declared
-records; `memory-profile.md` the `memory-comparison` profile; `epistemic.md` the epistemic
-blocks; `reconciliation.md` holds amendments, supersessions and unresolved
-conflicts. Validate the artifact directory before reading its members. The accepted overview is the reader entry point. It cannot replace a missing
-member or comparison assessment.
+or pins the population. Each complete set has eleven members:
+`boundary.md` holds the evidence boundary and source register; `runtime.md`
+the runtime account and runtime-declared records; `memory.md` the memory
+findings and memory-declared records; `epistemic.md` the epistemic blocks;
+`reconciliation.md` the amendments, supersessions and unresolved conflicts;
+`memory-profile.md` the `memory-comparison` profile; and `synthesis.md` the
+cross-lens account and limitations. `record-verification.md`,
+`profile-verification.md` and `synthesis-verification.md` retain the independent
+judgments. The code-written `overview.md` holds identity, disposition, member
+links, the amendment index and deterministic validation. Validate the artifact
+directory before reading its members. The overview is the reader entry point,
+not a substitute for a member account or comparison assessment.
 
 Use `kb/agentic-system-analyses/types/agent-memory-profile.md` for the `memory-comparison`
 contract, `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
 `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for shared evidence and record
-conventions, and `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md` for overview
-content. Each matrix row preserves its source revision, run,
+conventions, `kb/agentic-system-analyses/types/agentic-system-analysis-set.md`
+for membership, and `kb/agentic-system-analyses/types/agentic-system-synthesis.md`
+for the cross-lens account. Each matrix row preserves its source revision, run,
 analysis cutoff, evidence tier, compared memory boundary, profile revision
 (`comparison_version`), and per-axis coverage assessment, supported value
 unions, per-value existence evidence, canonical records, and revision-2 unit
