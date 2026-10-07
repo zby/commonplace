@@ -90,8 +90,8 @@ budgets.
 
 **Opening.** `open` and `acquire` run on the first invocation. The boundary
 is handed out. Its check accepts it against the run metadata, the frozen
-source record and a clean checkout. Members not required under the
-boundary's disposition have no ready jobs (S7); a non-complete run goes
+source record and a clean checkout. Roles the type does not permit under
+the boundary's disposition have no ready jobs; a non-complete run goes
 straight to `assemble`.
 
 **Records.** `runtime` runs; its check accepts it. `memory` and `epistemic`
@@ -158,8 +158,8 @@ all items except S5 are resolved (requirement numbers inside the items
 predate the split of 5 into 5 to 7): S8 by requirement 2, which makes a
 model job's undeclared context untracked by design; S3 by requirement 3,
 which supplies a rerun with its previous output by identity; S7 by
-requirement 4, which leaves a job unready when the type does not require
-its member. S5, previous versions as reads, stays deferred with the change
+requirement 4, which leaves a job unready when the type does not permit
+its role. S5, previous versions as reads, stays deferred with the change
 diff it served. The items are
 kept as written for the record.
 

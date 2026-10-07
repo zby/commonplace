@@ -126,11 +126,15 @@ permits either; the hand-out can say which the workflow prefers. In both
 cases the second analyst has an open attempt, so it is neither printed as
 ready again nor touched by cleanup. [3, 4]
 
-**14. Non-complete disposition.** The boundary is accepted with a
-disposition other than complete. The analysis jobs read the boundary, but
-each produces a member for a role the type does not require given the
-members present, so none is ready. `assemble` is: its required acceptances cover
-only the boundary and the overview. [1, 4, 9]
+**14. Non-complete disposition.** The type discriminates on the boundary's
+disposition, which exists before any analysis job runs. Before the
+boundary is accepted every role is permitted and nothing but the boundary
+is ready. The boundary is accepted with a disposition other than complete;
+now the type permits only the boundary and the overview, so each analysis
+job produces a member for a role the type does not permit and none is
+ready. `assemble` is: its required acceptances cover only the boundary and
+the overview. Had the type discriminated on the overview, which `assemble`
+writes last, the gate could never close. [1, 4, 9]
 
 **15. Identical bytes after a refusal.** `V` refuses A. Attempt 2 reads
 the refusal and the worker hands back bytes identical to A. By content
