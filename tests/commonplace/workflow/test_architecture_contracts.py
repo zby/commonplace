@@ -1,0 +1,87 @@
+"""Contracts the architecture review asked the engine to state and enforce."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+import yaml
+
+from commonplace.workflow import DeclarationError, load_job_set, open_handouts
+from commonplace.workflow.store import RecordError
+from tests.commonplace.workflow.conftest import Coordinator, job_set
+
+
+@pytest.mark.parametrize("edit, message", [
+    (lambda d: d["jobs"][0].update(outputs="brief"), "outputs must be a list"),
+    (lambda d: d.update(jobs={"brief": {}}), "jobs must be a list"),
+    (lambda d: d["jobs"][0]["inputs"].update({"output": {"address": "file", "source": "/x"}}), "hand-out field"),
+    (lambda d: d["jobs"][0]["inputs"].update({"previous-brief": {"address": "file", "source": "/x"}}),
+     "hand-out field"),
+    (lambda d: d["jobs"][0].update(outputs=["brief", "brief"]), "unique"),
+])
+def test_declaration_shape(tmp_path: Path, edit, message) -> None:
+    data = job_set(tmp_path)
+    edit(data)
+    with pytest.raises(DeclarationError, match=message):
+        load_job_set(yaml.safe_dump(data))
+
+
+def test_an_interrupted_commit_leaves_its_judgments_invisible(coordinator: Coordinator, monkeypatch) -> None:
+    c = coordinator
+    c.through_brief()
+    from commonplace.workflow import store as store_module
+
+    real = store_module.RunStore._write_attempt
+
+    def die_before_completion(self, record):
+        if record["state"] == "completed" and record["job"] == "check-report":
+            raise KeyboardInterrupt("killed between judgments and the attempt record")
+        real(self, record)
+
+    monkeypatch.setattr(store_module.RunStore, "_write_attempt", die_before_completion)
+    with pytest.raises(KeyboardInterrupt):
+        c.advance(c.result("report", "report A\n", answers=""))
+    assert any((c.run_dir / "state" / "judgments").glob("*check-report*")), "the judgments were written"
+    monkeypatch.setattr(store_module.RunStore, "_write_attempt", real)
+    c.ran()
+    c.advance()
+    assert c.ran() == ["check-report"], "the uncommitted attempt does not count, so the check runs again"
+    assert c.member("report") == "report A\n"
+
+
+def test_open_handouts_survive_a_lost_response(coordinator: Coordinator) -> None:
+    c = coordinator
+    (lost,) = c.status.handouts
+    recovered = open_handouts(c.run_dir)
+    assert recovered == (lost,)
+
+
+def test_a_malformed_record_is_refused(coordinator: Coordinator) -> None:
+    c = coordinator
+    (handout,) = c.status.handouts
+    path = c.run_dir / "state" / "attempts" / f"{handout.attempt}.json"
+    record = json.loads(path.read_text(encoding="utf-8"))
+    record["state"] = "half-done"
+    path.write_text(json.dumps(record), encoding="utf-8")
+    with pytest.raises(RecordError, match="half-done"):
+        c.advance()
+
+
+def test_a_scope_with_two_partner_versions_is_refused(coordinator: Coordinator) -> None:
+    from commonplace.workflow.declaration import CodeJob, Input
+    from commonplace.workflow.state import CodeAttempt, Resolved, Run
+    from commonplace.workflow.store import RunStore
+
+    c = coordinator
+    c.through_records()
+    run = Run(RunStore(c.run_dir))
+    job = CodeJob("probe", {"a": Input("member", "report"), "b": Input("member", "report"),
+                            "s": Input("member", "summary")}, (), "x.y")
+    pins = {"a": Resolved("v1", b"", "report", "report"), "b": Resolved("v2", b"", "report", "report"),
+            "s": Resolved("s1", b"", "summary", "summary")}
+    attempt = CodeAttempt(run, job, pins)
+    attempt.judge("s", outcome="accepted", scope=("summary:cites:report",))
+    with pytest.raises(ValueError, match="2 versions of report"):
+        attempt.judgments({}, 1, "probe")

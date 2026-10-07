@@ -3,7 +3,7 @@
     commonplace-run start RUN JOB_SET.yaml [--param key=value ...]
     commonplace-run advance RUN [--completed ATTEMPT ...] [--failed ATTEMPT=REASON ...]
                                 [--model ID] [--effort LEVEL] [--json]
-    commonplace-run status RUN [--json]
+    commonplace-run status RUN [--json]          # also re-prints open hand-outs
     commonplace-run judge RUN --role ROLE --outcome accepted|refused
                           [--version V] [--scope RELATION ...] [--findings TEXT]
                           [--override JUDGMENT_ID ...] [--basis ROLE ...]
@@ -27,6 +27,7 @@ from commonplace.workflow import (
     RunStatus,
     advance,
     judge,
+    open_handouts,
     start_run,
 )
 from commonplace.workflow.engine import inspect
@@ -95,12 +96,13 @@ def _print_status(status: RunStatus, as_json: bool) -> None:
 
 def _print_inspection(view: dict, as_json: bool) -> None:
     if as_json:
-        print(json.dumps({**view, "refusals": [asdict(r) for r in view["refusals"]]}, indent=1))
+        print(json.dumps({**view, "refusals": [asdict(r) for r in view["refusals"]],
+                          "handouts": [asdict(h) for h in view["handouts"]]}, default=str, indent=1))
         return
     for role, version in view["members"].items():
         print(f"member {role}: {version[:12]}")
-    if view["open_attempts"]:
-        print("open: " + " ".join(view["open_attempts"]))
+    for handout in view["handouts"]:
+        print(f"open hand-out {handout.attempt} {handout.job}: {handout.prompt}")
     for refusal in view["refusals"]:
         first = refusal.findings.strip().splitlines()[:1]
         print(f"refusal {refusal.id} of {refusal.job} ({refusal.version[:12]}): {first[0] if first else ''}")
@@ -119,7 +121,9 @@ def main(argv: list[str] | None = None) -> int:
                         for a, reason in _pairs(arguments.failed, "--failed").items()]
             _print_status(advance(arguments.run, results=tuple(results)), arguments.json)
         elif arguments.command == "status":
-            _print_inspection(inspect(arguments.run), arguments.json)
+            view = inspect(arguments.run)
+            view["handouts"] = open_handouts(arguments.run)
+            _print_inspection(view, arguments.json)
         else:
             identifier = judge(
                 arguments.run, role=arguments.role, outcome=arguments.outcome, version=arguments.version,

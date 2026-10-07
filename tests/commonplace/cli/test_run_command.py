@@ -71,7 +71,8 @@ def test_status_and_judge(run: tuple[Path, Path], capsys: pytest.CaptureFixture[
     assert [r["job"] for r in view["refusals"]] == ["brief"]
     assert view["refusals"][0]["findings"] == "wrong system"
     assert main(["status", str(run_dir)]) == 0
-    assert "refusal " in capsys.readouterr().out
+    text = capsys.readouterr().out
+    assert "refusal " in text and "open hand-out" in text
 
     assert main(["judge", str(run_dir), "--role", "nowhere", "--outcome", "accepted"]) == 1
     assert "no role nowhere" in capsys.readouterr().err

@@ -22,6 +22,7 @@ from commonplace.workflow.engine import (
     Stop,
     advance,
     judge,
+    open_handouts,
     start_run,
 )
 
@@ -39,5 +40,6 @@ __all__ = [
     "advance",
     "judge",
     "load_job_set",
+    "open_handouts",
     "start_run",
 ]

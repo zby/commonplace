@@ -2,8 +2,14 @@
 
 The run directory holds `run.json`, the typed set under `set/`, and the
 engine's state under `state/`: versions by content digest, attempt and
-judgment records, and hand-out directories. Every record is written whole,
-by rename, so a reader sees either the old record or the new one.
+judgment records, and hand-out directories. Every file is written whole, by
+rename, so a reader sees either the old file or the new one.
+
+The store owns the commit protocol. An attempt is opened, then either
+committed with its outputs and judgments, or failed. A commit writes the
+judgments first and the attempt record last: the completed attempt record is
+what makes its judgments count, so an interruption between the two leaves
+judgments that every reader ignores.
 """
 
 from __future__ import annotations
@@ -13,7 +19,7 @@ import hashlib
 import json
 import os
 import shutil
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
@@ -93,13 +99,74 @@ class RunStore:
                 for path in sorted(directory.glob("*.json"))]
 
     def attempt_records(self) -> list[dict]:
-        return self._records(self.attempts)
+        records = self._records(self.attempts)
+        for record in records:
+            _check_attempt(record)
+        return records
 
     def judgment_records(self) -> list[dict]:
-        return self._records(self.judgments)
+        records = self._records(self.judgments)
+        for record in records:
+            _check_judgment(record)
+        return records
+
+    # Attempts and judgments
+
+    def handout_dir(self, attempt: str) -> Path:
+        return self.handouts / attempt
+
+    def open_attempt(self, record: dict) -> None:
+        """Record an attempt as open: handed out, not yet reported."""
+        self._write_attempt({**record, "state": "open"})
+
+    def commit_attempt(self, record: dict, judgments: Sequence[dict] = ()) -> None:
+        """Complete an attempt with its judgments; the attempt record goes last."""
+        for judgment in judgments:
+            _check_judgment(judgment)
+            self.write_json(self.judgments / f"{judgment['id']}.json", judgment)
+        self._write_attempt({**record, "state": "completed",
+                             "judgments": [judgment["id"] for judgment in judgments]})
+
+    def fail_attempt(self, record: dict, reason: str, **details: Any) -> None:
+        """Close an attempt as failed. A failed attempt records no inputs."""
+        self._write_attempt({**record, **details, "state": "failed", "pins": {}, "reason": reason})
+
+    def _write_attempt(self, record: dict) -> None:
+        _check_attempt(record)
+        self.write_json(self.attempts / f"{record['id']}.json", record)
 
     def remove(self, path: Path) -> None:
         if path.is_dir():
             shutil.rmtree(path)
         elif path.exists():
             path.unlink()
+
+
+class RecordError(ValueError):
+    """A record under `state/` that does not have the shape the engine writes."""
+
+
+ATTEMPT_STATES = ("open", "completed", "failed")
+ATTEMPT_FIELDS = ("id", "seq", "job", "kind", "state", "pins")
+JUDGMENT_FIELDS = ("id", "seq", "attempt", "job", "subject", "outcome", "installs",
+                   "scope", "findings", "overrides", "basis")
+
+
+def _check_attempt(record: Any) -> None:
+    missing = [field for field in ATTEMPT_FIELDS if not isinstance(record, dict) or field not in record]
+    if missing:
+        raise RecordError(f"attempt record {record.get('id') if isinstance(record, dict) else record!r} "
+                          f"lacks {', '.join(missing)}")
+    if record["state"] not in ATTEMPT_STATES:
+        raise RecordError(f"attempt record {record['id']}: state {record['state']!r} is not one of {ATTEMPT_STATES}")
+    if record["state"] == "completed" and "outputs" not in record:
+        raise RecordError(f"attempt record {record['id']}: a completed attempt names its outputs")
+
+
+def _check_judgment(record: Any) -> None:
+    missing = [field for field in JUDGMENT_FIELDS if not isinstance(record, dict) or field not in record]
+    if missing:
+        raise RecordError(f"judgment record {record.get('id') if isinstance(record, dict) else record!r} "
+                          f"lacks {', '.join(missing)}")
+    if record["outcome"] not in ("accepted", "refused"):
+        raise RecordError(f"judgment record {record['id']}: outcome {record['outcome']!r}")

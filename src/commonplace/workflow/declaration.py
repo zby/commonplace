@@ -22,6 +22,9 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
+HANDOUT_FIELDS = ("job", "attempt", "run-id", "output", "problem", "workspace", "scratch")
+HANDOUT_PREFIXES = ("output-", "previous-")
+"""Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
 """The input name under which a role-filling model job receives its refusals."""
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
@@ -143,8 +146,13 @@ def _job(raw: Any) -> Job:
     for key in raw_inputs:
         if not isinstance(key, str) or not NAME.fullmatch(key):
             raise DeclarationError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
+        if key in HANDOUT_FIELDS or key.startswith(HANDOUT_PREFIXES):
+            raise DeclarationError(f"job {name}: input name {key} collides with a hand-out field")
     inputs = {str(key): _input(name, str(key), value) for key, value in raw_inputs.items()}
-    outputs = tuple(raw.get("outputs", ()))
+    raw_outputs = raw.get("outputs", [])
+    if not isinstance(raw_outputs, list):
+        raise DeclarationError(f"job {name}: outputs must be a list of names")
+    outputs = tuple(raw_outputs)
     if not all(isinstance(output, str) and NAME.fullmatch(output) for output in outputs):
         raise DeclarationError(f"job {name}: output names must be letters, digits, '-' or '_'")
     if len(set(outputs)) != len(outputs):
@@ -167,8 +175,8 @@ def _job(raw: Any) -> Job:
                 isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
                 for k, v in parameters.items()):
             raise DeclarationError(f"job {name}: parameters must map names to one-line strings")
-        reserved = {"job", "attempt", "output", "problem", "scratch", *RUN_PLACEHOLDERS, *inputs}
-        clash = sorted(set(parameters) & reserved)
+        reserved = {*HANDOUT_FIELDS, *RUN_PLACEHOLDERS, *inputs}
+        clash = sorted(k for k in parameters if k in reserved or k.startswith(HANDOUT_PREFIXES))
         if clash:
             raise DeclarationError(f"job {name}: parameters {clash} collide with names the hand-out sets")
         for key, value in parameters.items():
@@ -201,7 +209,10 @@ def load_job_set(text: str, roles: Mapping[str, Any] | None = None) -> JobSet:
         raise DeclarationError(f"unknown keys {sorted(unknown)}")
     if not isinstance(data.get("type_spec"), str):
         raise DeclarationError("type_spec must name the set's type, relative to the KB root")
-    jobs = tuple(_job(raw) for raw in data.get("jobs") or ())
+    raw_jobs = data.get("jobs")
+    if not isinstance(raw_jobs, list):
+        raise DeclarationError("jobs must be a list")
+    jobs = tuple(_job(raw) for raw in raw_jobs)
     if not jobs:
         raise DeclarationError("a job set declares at least one job")
     job_set = JobSet(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
