@@ -59,16 +59,8 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    input when its job completes a newer output, and a required judgment
    input, which is present only while the judgment holds and its subject
    is its role's current member. A change
-   outside a job's inputs is not a signal.
-   A job is also not ready while a producer of one of its inputs is ready
-   or has an open attempt, so it waits for the run to settle upstream
-   instead of running once against inputs about to change. A member's
-   producers are the job filling its role and every job that judges it;
-   an output's or an attempt record's producer is its job; a judgment's is
-   the job that records it; a refusal's are the jobs that judge its role.
-   Code jobs run to a fixed point before model readiness is computed, so a
-   code producer is never pending when model jobs are handed out and a
-   correction loop through an apply job cannot deadlock.
+   outside a job's inputs is not a signal. Whether a ready job is run or
+   handed out at once is a scheduling decision, recorded under Decisions.
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    subject version, accepted or refused, with findings. The judgment
    records its basis, the job's pinned inputs, and its scope, the declared
@@ -144,6 +136,21 @@ They bind an implementation of this spec; they are not requirements.
   document, and a code job reads it and records the judgment. Why: a
   judgment's basis and scope must be exact, and a worker's reading is
   not; the apply jobs in the analysis mapping show the pattern.
+- **A ready job waits for pending producers of its inputs.** A job is not
+  run or handed out while a producer of one of its inputs is ready or has
+  an open attempt, so it waits for the run to settle upstream instead of
+  running once against inputs about to change. A member's producers are
+  the job filling its role and every job that judges it; an output's or
+  an attempt record's producer is its job; a judgment's is the job that
+  records it; a refusal's are the jobs that judge its role. Code jobs run
+  to a fixed point before model readiness is computed, so a code producer
+  is never pending when model jobs are handed out and a correction loop
+  through an apply job cannot deadlock. Why: without the wait a
+  correction makes a transform and its verifier ready together, and the
+  verifier runs once against stale state; the current engine avoids that
+  through its round structure. This is a scheduling policy over ready
+  jobs, not a change to what readiness means, which is why it is a
+  decision and not part of requirement 4.
 - **Bounds are for model jobs and never reset.** Every failure of a code
   job already stops the invocation with the operator in the loop; a count
   would only turn an environment problem into a dead run. A model job that
