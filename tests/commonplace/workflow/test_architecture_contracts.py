@@ -69,6 +69,34 @@ def test_a_malformed_record_is_refused(coordinator: Coordinator) -> None:
         c.advance()
 
 
+def test_code_attempt_exposes_fixed_read_only_run_metadata(coordinator: Coordinator, monkeypatch) -> None:
+    from commonplace.workflow.declaration import CodeJob
+    from commonplace.workflow.state import CodeAttempt, Run
+    from commonplace.workflow.store import RunStore
+
+    c = coordinator
+    run = Run(RunStore(c.run_dir))
+    attempt = CodeAttempt(run, CodeJob("probe", {}, (), "x.y"), {})
+    assert attempt.parameters == {"subject": "toy"}
+    with pytest.raises(TypeError):
+        attempt.parameters["subject"] = "changed"
+    with pytest.raises(AttributeError):
+        attempt.parameters = {}
+    assert run.parameters == {"subject": "toy"}
+    run.parameters["subject"] = "mutated internal view"
+    assert attempt.parameters == {"subject": "toy"}
+    assert attempt.run_dir == c.run_dir.resolve()
+    recorded_library = attempt.library
+    monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", "/not-the-recorded-library")
+    assert attempt.library == recorded_library
+    with pytest.raises(AttributeError):
+        attempt.run_dir = c.run_dir.parent
+    with pytest.raises(AttributeError):
+        attempt.library = c.run_dir.parent
+    with pytest.raises(KeyError, match="declares no input"):
+        attempt.read("run.json")
+
+
 def test_a_scope_with_two_partner_versions_is_refused(coordinator: Coordinator) -> None:
     from commonplace.workflow.declaration import CodeJob, Input
     from commonplace.workflow.state import CodeAttempt, Resolved, Run

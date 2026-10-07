@@ -12,6 +12,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
+from types import MappingProxyType
 
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
@@ -334,7 +335,23 @@ class CodeAttempt:
         self._run = run
         self._job = job
         self._pins = dict(pins)
+        self._parameters = MappingProxyType(dict(run.parameters))
         self._staged: list[dict] = []
+
+    @property
+    def parameters(self) -> Mapping[str, str]:
+        """The run parameters fixed at start, read-only and not rerun triggers."""
+        return self._parameters
+
+    @property
+    def run_dir(self) -> Path:
+        """The absolute run directory, for consumer-owned environment checks."""
+        return self._run.store.run_dir.resolve()
+
+    @property
+    def library(self) -> Path:
+        """The library root recorded at start, not the process's current library."""
+        return self._run.library
 
     def read(self, name: str) -> bytes | None:
         if name not in self._pins:
