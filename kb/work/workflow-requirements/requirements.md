@@ -73,9 +73,10 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    output makes it the current member of its declared role, one per role,
    safe to repeat. A judgment of any earlier version is recorded as
    evidence and moves nothing. The member stays when the acceptance stops
-   holding. A worker's output is a candidate until accepted.
+   holding. A role the type does not permit given the members present has
+   no member; its versions and judgments stay recorded. A worker's output is a candidate until accepted.
 7. **Refusal.** A job's refusals are one versioned, optional input of that
-   job, whose current version is the latest refusal of its latest
+   job, whether or not the job set declares it, whose current version is the latest refusal of its latest
    completed output, supplying the refused version by identity and the
    findings. An attempt that read a refusal has answered it; only a newer
    refusal makes the job ready again, and not one that a later acceptance
@@ -149,8 +150,10 @@ They bind an implementation of this spec; they are not requirements.
   an open attempt, so it waits for the run to settle upstream instead of
   running once against inputs about to change. A member's producers are
   the job filling its role and every job that judges it; an output's or
-  an attempt record's producer is its job; a judgment's is the job that
-  records it; a refusal's are the jobs that judge its role. Code jobs run
+  an attempt record's producer is its job; a judgment input's are the
+  model jobs filling its subject's role and the roles at its relation's
+  ends, the work behind the code job that records it. When every ready
+  job waits for another ready job, the invocation stops naming the cycle. Code jobs run
   to a fixed point, in declaration order, before model readiness is
   computed, so a code producer is never pending when model jobs are handed
   out and a correction loop through an apply job cannot deadlock; the wait
