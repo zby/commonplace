@@ -72,15 +72,15 @@ from commonplace.lib.analysis_worktree import preparation_for
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import Finding
 from commonplace.lib.note_parser import parse_document
+from commonplace.lib.reading_batches import (
+    READ_BATCH_BYTES,
+    reading_batches,
+    reading_ranges,
+)
 from commonplace.lib.validation import (
     ValidationRun,
     validate_draft_at_slot,
     validate_note,
-)
-from commonplace.workflow.reading import (
-    READ_BATCH_BYTES,
-    reading_batches,
-    reading_ranges,
 )
 from commonplace.workflow_legacy import (
     Blocked,

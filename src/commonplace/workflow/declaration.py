@@ -9,7 +9,7 @@ from __future__ import annotations
 import importlib
 import re
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +18,12 @@ import yaml
 ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
 RUN_PLACEHOLDERS = ("run", "run-id", "set", "workspace")
+NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
+"""Job, input, output and parameter names: they become file and record names."""
+RESERVED_JOBS = ("operator",)
+"""Job names the engine uses for its own records."""
+REFUSAL_INPUT = "refusal"
+"""The input name under which a role-filling model job receives its refusals."""
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
 OUTCOMES = ("accepted", "refused")
 
@@ -126,16 +132,23 @@ def _job(raw: Any) -> Job:
     if not isinstance(raw, dict):
         raise DeclarationError("each job must be a mapping")
     name = raw.get("name")
-    if not isinstance(name, str) or not name:
-        raise DeclarationError("each job needs a name")
+    if not isinstance(name, str) or not NAME.fullmatch(name):
+        raise DeclarationError(f"job name {name!r} must be letters, digits, '-' or '_'")
+    if name in RESERVED_JOBS:
+        raise DeclarationError(f"job name {name} is reserved for the engine's records")
     kind = raw.get("kind")
     raw_inputs = raw.get("inputs", {})
     if not isinstance(raw_inputs, dict):
         raise DeclarationError(f"job {name}: inputs must be a mapping")
+    for key in raw_inputs:
+        if not isinstance(key, str) or not NAME.fullmatch(key):
+            raise DeclarationError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
     inputs = {str(key): _input(name, str(key), value) for key, value in raw_inputs.items()}
     outputs = tuple(raw.get("outputs", ()))
-    if not all(isinstance(output, str) and output for output in outputs):
-        raise DeclarationError(f"job {name}: outputs must be names")
+    if not all(isinstance(output, str) and NAME.fullmatch(output) for output in outputs):
+        raise DeclarationError(f"job {name}: output names must be letters, digits, '-' or '_'")
+    if len(set(outputs)) != len(outputs):
+        raise DeclarationError(f"job {name}: output names must be unique")
     role = raw.get("role")
     if role is not None and not outputs:
         raise DeclarationError(f"job {name}: a role-filling job needs a primary output")
@@ -151,8 +164,9 @@ def _job(raw: Any) -> Job:
             raise DeclarationError(f"job {name}: bound must be a positive integer")
         parameters = raw.get("parameters") or {}
         if not isinstance(parameters, dict) or not all(
-                isinstance(k, str) and k and isinstance(v, str) for k, v in parameters.items()):
-            raise DeclarationError(f"job {name}: parameters must map names to strings")
+                isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
+                for k, v in parameters.items()):
+            raise DeclarationError(f"job {name}: parameters must map names to one-line strings")
         reserved = {"job", "attempt", "output", "problem", "scratch", *RUN_PLACEHOLDERS, *inputs}
         clash = sorted(set(parameters) & reserved)
         if clash:
@@ -190,9 +204,25 @@ def load_job_set(text: str, roles: Mapping[str, Any] | None = None) -> JobSet:
     jobs = tuple(_job(raw) for raw in data.get("jobs") or ())
     if not jobs:
         raise DeclarationError("a job set declares at least one job")
-    job_set = JobSet(Path(data["type_spec"]), jobs)
+    job_set = JobSet(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
     _check(job_set, roles)
     return job_set
+
+
+def _with_refusal(job: Job) -> Job:
+    """Give a role-filling model job its refusal input if the declaration did not.
+
+    A job's refusals are an input of that job whether or not it is declared;
+    without one, a refusal of its output could be recorded and never answered.
+    """
+    if not isinstance(job, ModelJob) or job.role is None:
+        return job
+    if any(spec.address == "refusal" and spec.source == job.name for spec in job.inputs.values()):
+        return job
+    if REFUSAL_INPUT in job.inputs:
+        raise DeclarationError(f"job {job.name}: input {REFUSAL_INPUT} is reserved for its refusals")
+    inputs = {**job.inputs, REFUSAL_INPUT: Input("refusal", job.name, required=False)}
+    return replace(job, inputs=inputs)
 
 
 def _check(job_set: JobSet, roles: Mapping[str, Any] | None) -> None:

@@ -21,9 +21,13 @@ from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.library import library_root
 from commonplace.lib.note_parser import parse_document
+from commonplace.lib.reading_batches import (
+    READ_BATCH_BYTES,
+    reading_batches,
+    reading_ranges,
+)
 
 from .declaration import PLACEHOLDER, CodeJob, Input, Job, ModelJob, load_job_set
-from .reading import READ_BATCH_BYTES, reading_batches, reading_ranges
 from .store import RunStore, canonical, digest
 
 MAX_CODE_RUNS = 10_000
@@ -146,24 +150,39 @@ class Run:
 
     # Members
 
+    def installed(self) -> dict[str, str]:
+        """The version each installing acceptance last put in a role."""
+        installed: dict[str, str] = {}
+        for judgment in self.judgments:
+            if judgment["installs"]:
+                installed[judgment["subject"]["role"]] = judgment["subject"]["version"]
+        return installed
+
     def members(self) -> dict[str, str]:
+        """Installed versions of the roles the type permits.
+
+        A role the disposition no longer permits has no member; its versions
+        and judgments stay recorded and return if the disposition does.
+        """
         if self._members is None:
-            members: dict[str, str] = {}
-            for judgment in self.judgments:
-                if judgment["installs"]:
-                    members[judgment["subject"]["role"]] = judgment["subject"]["version"]
-            self._members = members
+            installed = self.installed()
+            permitted = self._permitted_given(installed)
+            self._members = {role: version for role, version in installed.items()
+                             if permitted is None or role in permitted}
         return self._members
 
-    def permitted(self) -> set[str] | None:
+    def _permitted_given(self, members: Mapping[str, str]) -> set[str] | None:
         documents = {}
-        for role, version in self.members().items():
+        for role, version in members.items():
             document, _ = parse_document(self.store.get(version).decode("utf-8", errors="replace"))
             if document is not None:
                 documents[self.layout.path(role)] = document
         required, permitted = self.layout.requirement(documents)
         self._required = required
         return permitted
+
+    def permitted(self) -> set[str] | None:
+        return self._permitted_given(self.members())
 
     # Judgments
 
@@ -294,6 +313,17 @@ class Run:
                 names.add(spec.source.partition(":")[0])
             elif spec.address == "handed":
                 names.add(job.inputs[spec.source.partition(":")[0]].source)
+            elif spec.address == "judgment":
+                # The judging job is a code job, run to a fixed point; the
+                # pending work behind it is the model jobs filling the roles
+                # its judgment relates: the subject and the relation's ends.
+                roles = {spec.source}
+                if spec.relation:
+                    origin, _, partner = spec.relation.split(":")
+                    roles |= {origin, partner}
+                for role in roles:
+                    filler = self.jobs.filler(role)
+                    names.add(filler.name if filler else None)
         return {name for name in names
                 if name and name != job.name and isinstance(self.jobs.job(name), ModelJob)}
 
@@ -501,6 +531,8 @@ def judge(
         if not (store.versions / subject).is_file():
             raise ValueError(f"no version {subject} in this run")
         filler = run.jobs.filler(role)
+        if outcome == "refused" and not isinstance(filler, ModelJob):
+            raise ValueError(f"role {role} is filled by no model job, so nothing can answer a refusal of it")
         inputs = {"subject": Input("member", role)}
         pins = {"subject": Resolved(subject, store.get(subject), role, filler.name if filler else None)}
         for other in basis:
@@ -600,6 +632,13 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
             outputs[name] = store.put(path.read_bytes())
     if job.outputs[0] not in outputs:
         return fail("the worker reported a problem" if problem.strip() else "completed without its primary output")
+    for name, spec in job.inputs.items():
+        pinned = record["pins"].get(name, {}).get("version")
+        if spec.address == "file" and pinned is not None:
+            path = Path(spec.source) if Path(spec.source).is_absolute() else store.run_dir / spec.source
+            now = digest(path.read_bytes()) if path.is_file() else None
+            if now != pinned:
+                return fail(f"file input {name} changed while the attempt was open")
     refused = [pin["refused"] for pin in record["pins"].values() if pin.get("refused")]
     if outputs[job.outputs[0]] in refused:
         return fail("answered a refusal with the refused version unchanged")
@@ -722,16 +761,23 @@ def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
 def _open_model_attempts(run: Run) -> tuple[list[Handout], list[Stop]]:
     permitted = run.permitted()
     pending = _pending(run, permitted)
-    handouts, stops = [], []
+    handouts, stops, withheld = [], [], {}
     for job in run.jobs.jobs:
         if not isinstance(job, ModelJob) or job.name not in pending or run.open_attempt(job.name):
             continue
-        if run.producers(job) & pending:
+        waiting = run.producers(job) & pending
+        if waiting:
+            withheld[job.name] = waiting
             continue
         if job.bound is not None and run.attempt_count(job.name) >= job.bound:
             stops.append(Stop(f"bound of {job.bound} attempts exhausted", job.name))
             continue
         handouts.append(_open(run, job))
+    if withheld and not handouts and not stops and not any(
+            r["state"] == "open" for r in run.attempts.values()):
+        # Every ready job waits for another ready job: the wait is a cycle.
+        detail = "; ".join(f"{name} waits for {', '.join(sorted(on))}" for name, on in sorted(withheld.items()))
+        stops.append(Stop(f"scheduling stalled: {detail}"))
     return handouts, stops
 
 
