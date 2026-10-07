@@ -13,7 +13,7 @@ import pytest
 from commonplace.cli.workflow import main
 from commonplace.lib import analysis_worktree as aw
 from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
-from commonplace.workflow import Orchestrator
+from commonplace.workflow_legacy import Orchestrator
 
 
 def git(root: Path, *args: str) -> str:

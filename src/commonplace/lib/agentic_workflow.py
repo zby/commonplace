@@ -82,7 +82,7 @@ from commonplace.lib.validation import (
     agentic_set_member_link_failures,
     validate_note,
 )
-from commonplace.workflow import (
+from commonplace.workflow_legacy import (
     Blocked,
     Done,
     Job,

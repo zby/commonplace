@@ -11,9 +11,8 @@ from __future__ import annotations
 import pytest
 
 from commonplace.workflow import AttemptResult, start_run
-
-from .conftest import BLOCKED_BRIEF, Coordinator
-from .handlers import INTERRUPT_ENV
+from tests.commonplace.workflow.conftest import BLOCKED_BRIEF, Coordinator
+from tests.commonplace.workflow.handlers import INTERRUPT_ENV
 
 
 def refuse_report(c: Coordinator, reason: str = "r1") -> None:

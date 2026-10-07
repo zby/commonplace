@@ -41,7 +41,11 @@ def _enter(job: str) -> None:
 
 
 def _text(attempt: CodeAttempt, name: str) -> str | None:
-    data = attempt.read(name)
+    """An input's text; None when absent or not declared by this check."""
+    try:
+        data = attempt.read(name)
+    except KeyError:
+        return None
     return None if data is None else data.decode("utf-8")
 
 
@@ -66,7 +70,7 @@ def _check(job: str, role: str, partners: tuple[str, ...]) -> Handler:
         if problems:
             attempt.judge("candidate", outcome="refused", findings="\n".join(problems))
         else:
-            present = tuple(p for p in partners if attempt.read(p) is not None)
+            present = tuple(p for p in partners if _text(attempt, p) is not None)
             attempt.judge(
                 "candidate",
                 outcome="accepted",

@@ -8,9 +8,9 @@ import pytest
 
 from commonplace.cli.analysis_check import check_draft, main
 from commonplace.lib import agentic_publication
-from commonplace.workflow import Done, Orchestrator
+from commonplace.workflow_legacy import Done, Orchestrator
 from tests.commonplace.lib.test_agentic_workflow import Fixture
-from tests.commonplace.workflow.definitions import ScriptedAgent
+from tests.commonplace.workflow_legacy.definitions import ScriptedAgent
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 

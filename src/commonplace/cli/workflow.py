@@ -14,7 +14,7 @@ from commonplace.lib.analysis_worktree import (
     prepare_analysis,
     require_run_code,
 )
-from commonplace.workflow.shell import main as workflow_main
+from commonplace.workflow_legacy.shell import main as workflow_main
 
 
 def _require_bound_code(args: list[str]) -> None:

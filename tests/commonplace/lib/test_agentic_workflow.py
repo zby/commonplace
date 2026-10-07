@@ -29,7 +29,7 @@ from commonplace.lib.agentic_workflow import (
     boundary_refusals,
     reading_batches,
 )
-from commonplace.workflow import (
+from commonplace.workflow_legacy import (
     Blocked,
     Done,
     Handout,
@@ -38,7 +38,7 @@ from commonplace.workflow import (
     Recognition,
     Uncertain,
 )
-from commonplace.workflow.engine import render_prompt
+from commonplace.workflow_legacy.engine import render_prompt
 from tests.commonplace.lib.test_agentic_analysis import (
     REPO_ROOT,
     RETAINED_OVERVIEW,
@@ -57,7 +57,7 @@ from tests.commonplace.lib.test_agentic_analysis import (
     run_git,
     runtime_text,
 )
-from tests.commonplace.workflow.definitions import ScriptedAgent
+from tests.commonplace.workflow_legacy.definitions import ScriptedAgent
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -1653,7 +1653,7 @@ def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) ->
 
 
 def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None:
-    from commonplace.workflow import Orchestrator as Runs
+    from commonplace.workflow_legacy import Orchestrator as Runs
 
     token = "a" * 12
     tmp_path.with_name(tmp_path.name + ".preparation.json").write_text(json.dumps({
@@ -1672,7 +1672,7 @@ def test_start_allocates_the_run_id_under_the_state_root(tmp_path: Path) -> None
 
 
 def test_the_run_slug_is_the_repository_name_of_the_source(tmp_path: Path) -> None:
-    from commonplace.workflow import Orchestrator as Runs
+    from commonplace.workflow_legacy import Orchestrator as Runs
 
     token = "b" * 12
     tmp_path.with_name(tmp_path.name + ".preparation.json").write_text(json.dumps({

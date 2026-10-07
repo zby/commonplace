@@ -16,20 +16,21 @@ kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
 Nothing here runs a model. `Coordinator` writes the files a worker would
 write at the hand-out paths and reports attempt results.
 
-Semantics these tests fix where the workshop documents leave them open:
+Semantics these tests rely on, each now stated in the workshop documents:
 
 - `RunStatus.handouts` lists the attempts opened by that invocation;
   `open_attempts` lists every attempt still open.
-- PROPOSED (upstream wait): a job is not ready while a job producing one of
-  its inputs is ready or has an open attempt. A member's producers are the
-  job that fills its role and every job that judges it. Without this, a
-  report correction makes the summary and the verifier ready together and
-  the verifier runs against the stale summary. It also lets `assemble` wait
-  for the run to settle with optional inputs only, whatever the disposition.
-- PROPOSED (current subject): a judgment input is present only while the
-  judgment holds and its subject is its role's current member, matching the
-  coverage rule. Without this, `digest` runs on a report the verifier never
-  judged, because the apply job's basis holds handed versions that do not move.
+- The upstream-wait decision: a ready job is not run or handed out while a
+  producer of one of its inputs is ready or has an open attempt. A member's
+  producers are the job that fills its role and every job that judges it.
+  Without it, a report correction makes the summary and the verifier ready
+  together and the verifier runs against the stale summary. It also lets
+  `assemble` wait for the run to settle with optional inputs only, whatever
+  the disposition.
+- Requirement 4's current-subject rule: a judgment input is present only
+  while the judgment holds and its subject is its role's current member.
+  Without it, `digest` runs on a report the verifier never judged, because
+  the apply job's basis holds handed versions that do not move.
 - File inputs are absolute paths; the declaration's relative-path base is
   not specified.
 """
@@ -52,8 +53,7 @@ from commonplace.workflow import (
     advance,
     start_run,
 )
-
-from .handlers import INTERRUPT_ENV, LOG_ENV
+from tests.commonplace.workflow.handlers import INTERRUPT_ENV, LOG_ENV
 
 HANDLERS = "tests.commonplace.workflow.handlers"
 
@@ -148,7 +148,10 @@ def job_set(method: Path) -> dict:
                 "candidate": candidate("report"),
                 "brief": _member("brief"),
                 "contract": file("contract-report.md"),
-                "refusal": _optional("refusal", "report"),
+                # The refusal input lapses once the new candidate completes, so a
+                # check takes the refusal it answers from the attempt record.
+                "report-attempt": {"address": "attempt", "source": "report"},
+                "answered": _optional("handed", "report-attempt:refusal"),
                 "answers": _optional("output", "report:answers"),
             }),
             model("other", "other", {"brief": _member("brief"), "refusal": _optional("refusal", "other")},

@@ -1,54 +1,41 @@
-"""Code-scheduled workflows.
+"""Workflow engine: one command advances a run directory.
 
-A program runs a workflow definition, keeps all run state on disk, executes
-every step it can, and stops only where it needs a sub-agent. This package
-imports nothing from the rest of Commonplace.
-
-The shell is the `commonplace-workflow` command (`commonplace.workflow.shell`);
-see its module docstring.
+A run directory declares its job set through the metadata `start_run` writes.
+Each `advance` closes reported attempts, runs ready code jobs to a fixed
+point, and hands out ready model jobs for a coordinator to run. The design
+and its vocabulary are in kb/work/workflow-requirements/.
 """
 
-from commonplace.workflow.engine import (
-    REPORT_EVENTS,
-    Block,
-    Blocked,
-    Context,
-    Done,
-    Handout,
-    JobHandle,
-    Launch,
-    Orchestrator,
-    Recognition,
-    Report,
-    RunBusy,
-    StateError,
-    StepResult,
-    StopRun,
-    Uncertain,
-    Workflow,
-    load_definition,
+from commonplace.workflow.declaration import (
+    CodeJob,
+    DeclarationError,
+    Input,
+    JobSet,
+    ModelJob,
+    load_job_set,
 )
-from commonplace.workflow.job import DefinitionError, Job
+from commonplace.workflow.engine import (
+    AttemptResult,
+    CodeAttempt,
+    Handout,
+    RunStatus,
+    Stop,
+    advance,
+    start_run,
+)
 
 __all__ = [
-    "REPORT_EVENTS",
-    "Block",
-    "Blocked",
-    "Context",
-    "DefinitionError",
-    "Done",
+    "AttemptResult",
+    "CodeAttempt",
+    "CodeJob",
+    "DeclarationError",
     "Handout",
-    "Job",
-    "JobHandle",
-    "Launch",
-    "Orchestrator",
-    "Recognition",
-    "Report",
-    "RunBusy",
-    "StateError",
-    "StepResult",
-    "StopRun",
-    "Uncertain",
-    "Workflow",
-    "load_definition",
+    "Input",
+    "JobSet",
+    "ModelJob",
+    "RunStatus",
+    "Stop",
+    "advance",
+    "load_job_set",
+    "start_run",
 ]

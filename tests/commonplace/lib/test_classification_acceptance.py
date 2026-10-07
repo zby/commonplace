@@ -32,7 +32,7 @@ from commonplace.lib.agentic_workflow import (
     subsection,
     synthesis_refusals,
 )
-from commonplace.workflow.engine import render_prompt
+from commonplace.workflow_legacy.engine import render_prompt
 from scripts import analyze_matrix as stats
 from tests.commonplace.lib.test_agentic_analysis import (
     REPO_ROOT,

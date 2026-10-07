@@ -13,8 +13,8 @@ from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
 from commonplace.lib.analysis_worktree import require_run_code
 from commonplace.lib.library import checks_library
 from commonplace.lib.quote_matching import parse_blockquotes
-from commonplace.workflow.engine import load_definition
-from commonplace.workflow.store import RunStore, StateError
+from commonplace.workflow_legacy.engine import load_definition
+from commonplace.workflow_legacy.store import RunStore, StateError
 
 
 def check_draft(run_dir: Path, job_name: str, draft: Path | None = None) -> tuple[Path, list[str]]:

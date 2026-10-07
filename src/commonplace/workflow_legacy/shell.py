@@ -22,7 +22,7 @@ import json
 import sys
 from pathlib import Path
 
-from commonplace.workflow.engine import (
+from commonplace.workflow_legacy.engine import (
     REPORT_EVENTS,
     Blocked,
     Done,

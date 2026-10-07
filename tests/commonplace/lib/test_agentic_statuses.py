@@ -9,7 +9,7 @@ from commonplace.lib import agentic_publication
 from commonplace.lib.agentic_records import (
     conclusion_status_errors,
 )
-from commonplace.workflow import Done, Handout
+from commonplace.workflow_legacy import Done, Handout
 from tests.commonplace.lib.test_agentic_analysis import runtime_text
 from tests.commonplace.lib.test_agentic_workflow import (
     Fixture,

@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib.agentic_set import normalize_source_identity
-from commonplace.workflow import StopRun
+from commonplace.workflow_legacy import StopRun
 
 CHECKOUT_ROOT = "related-systems"
 GITHUB_REPOSITORY = re.compile(r"https://github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")

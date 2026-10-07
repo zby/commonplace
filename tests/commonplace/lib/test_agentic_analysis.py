@@ -1814,7 +1814,7 @@ def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
 
 def test_replacement_recognition_distinguishes_incumbent_from_interruption(tmp_path):
     from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
-    from commonplace.workflow import Recognition
+    from commonplace.workflow_legacy import Recognition
     spec, _, _ = rerun_publication_fixture(tmp_path)
     definition = AnalyseAgenticSystem({"system": "Example System", "source-identity": SOURCE, "model": "fixture-model"})
     definition.run_id = spec.run_state_path.parent.name
