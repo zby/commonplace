@@ -69,8 +69,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
             # A file is handed at its own path, so an instruction's relative
             # links still resolve. Its pinned version is recorded; a method
             # that changes mid-run makes the run unpublishable anyway.
-            source = Path(spec.source)
-            paths[name] = source if source.is_absolute() else store.run_dir / source
+            paths[name] = run.file_path(spec)
             continue
         path = directory / "inputs" / f"{name}.md"
         store.write_bytes(path, pinned.data)

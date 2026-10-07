@@ -16,7 +16,11 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    declared as inputs; so may a job's attempt record (3), with the latest
    completed one current, which carries the versions that attempt was
    handed. Instructions a model job follows and contracts a
-   check job applies are among its inputs. A job never has the role it
+   check job applies are among its inputs; a file input may name its path
+   relative to the library, resolved against the library the run was
+   started with, so a job set is a file that names no machine's paths. An
+   input may be presence-only: it orders the job after it and its version
+   is recorded, but it is never a rerun trigger. A job never has the role it
    writes as an input. The declaration is fixed; nothing adds a dependency
    at run time. Roles and their relations come from the set's type; a
    relation runs from an origin role to a partner role and is named by
@@ -59,7 +63,8 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    input when its job completes a newer output, and a required judgment
    input, which is present only while the judgment holds and its subject
    is its role's current member. A change
-   outside a job's inputs is not a signal. Whether a ready job is run or
+   outside a job's inputs is not a signal, nor is a change of a
+   presence-only input. Whether a ready job is run or
    handed out at once is a scheduling decision, recorded under Decisions.
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    subject version, accepted or refused, with findings. The judgment
@@ -148,6 +153,11 @@ They bind an implementation of this spec; they are not requirements.
   a worktree pinned to a commit, as analysis runs already do. Why: a
   snapshot would have to mirror every file an instruction links to, and
   the method tree is already frozen where it matters.
+- **Relation names are checked at start.** Every relation a judgment
+  input names must be declared by the type, with the input's role at one
+  end, or the run does not start. Why: an undeclared relation leaves the
+  input permanently absent, and the job gated on it would wait with no
+  stop to say why.
 - **Only code jobs judge.** A model job that wants a judgment writes a
   document, and a code job reads it and records the judgment. Why: a
   judgment's basis and scope must be exact, and a worker's reading is

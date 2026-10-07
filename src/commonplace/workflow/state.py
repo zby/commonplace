@@ -39,11 +39,12 @@ ABSENT = Resolved(None)
 
 def _spec(spec: Input) -> dict:
     return {"address": spec.address, "source": spec.source, "required": spec.required,
-            "relation": spec.relation, "outcome": spec.outcome}
+            "relation": spec.relation, "outcome": spec.outcome, "trigger": spec.trigger}
 
 
 def _input(raw: dict) -> Input:
-    return Input(raw["address"], raw["source"], raw.get("required", True), raw.get("relation"), raw.get("outcome"))
+    return Input(raw["address"], raw["source"], raw.get("required", True), raw.get("relation"),
+                 raw.get("outcome"), raw.get("trigger", True))
 
 
 class Run:
@@ -57,6 +58,7 @@ class Run:
         self.layout, self.relations = _parse_type(metadata["type"], metadata["type_spec"])
         self.type_spec = metadata["type_spec"]
         self.parameters = metadata.get("parameters", {})
+        self.library = Path(metadata["library"])
         self.jobs = load_job_set(metadata["declaration"], self.layout.roles)
         self.reload()
 
@@ -155,8 +157,7 @@ class Run:
     def resolve(self, name: str, inputs: Mapping[str, Input]) -> Resolved:
         spec = inputs[name]
         if spec.address == "file":
-            path = Path(spec.source)
-            path = path if path.is_absolute() else self.store.run_dir / path
+            path = self.file_path(spec)
             if not path.is_file():
                 return ABSENT
             data = path.read_bytes()
@@ -224,6 +225,11 @@ class Run:
             return Resolved(digest(data), data)
         raise ValueError(f"unknown address {spec.address}")
 
+    def file_path(self, spec: Input) -> Path:
+        """A file input's path: absolute as declared, else under the run's library root."""
+        path = Path(spec.source)
+        return path if path.is_absolute() else self.library / path
+
     # Readiness
 
     def ready(self, job: Job, permitted: set[str] | None) -> bool:
@@ -239,7 +245,8 @@ class Run:
         if last is None:
             return True
         return any(
-            resolved.version is not None and resolved.version != last["pins"].get(name, {}).get("version")
+            job.inputs[name].trigger and resolved.version is not None
+            and resolved.version != last["pins"].get(name, {}).get("version")
             for name, resolved in current.items()
         )
 

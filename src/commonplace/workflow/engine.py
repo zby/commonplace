@@ -21,7 +21,7 @@ from pathlib import Path
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
-from .declaration import CodeJob, Input, ModelJob, load_job_set
+from .declaration import CodeJob, Input, ModelJob, check_relations, load_job_set
 from .handouts import Handout, _open, handout_for
 from .state import CodeAttempt, Resolved, Run, _parse_type
 from .store import RunStore, digest
@@ -71,10 +71,12 @@ def start_run(run_dir: Path, job_set: Path, *, parameters: Mapping[str, str] | N
     if store.metadata.exists():
         raise FileExistsError(f"{run_dir} already holds a run")
     declaration = Path(job_set).read_text(encoding="utf-8")
+    library = library_root().resolve()
     type_spec = load_job_set(declaration).type_spec
-    type_text = (library_root() / type_spec).read_text(encoding="utf-8")
-    layout, _ = _parse_type(type_text, str(type_spec))
+    type_text = (library / type_spec).read_text(encoding="utf-8")
+    layout, relations = _parse_type(type_text, str(type_spec))
     jobs = load_job_set(declaration, layout.roles)
+    check_relations(jobs, [relation for _, _, relation in relations])
     given = dict(parameters or {})
     missing = sorted({name for job in jobs.jobs if isinstance(job, ModelJob)
                       for name in job.run_parameters()} - set(given))
@@ -84,6 +86,7 @@ def start_run(run_dir: Path, job_set: Path, *, parameters: Mapping[str, str] | N
         "job_set": str(Path(job_set).resolve()),
         "declaration": declaration,
         "type_spec": str(type_spec),
+        "library": str(library),
         "type": type_text,
         "parameters": dict(parameters or {}),
     })
@@ -250,7 +253,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     for name, spec in job.inputs.items():
         pinned = record["pins"].get(name, {}).get("version")
         if spec.address == "file" and pinned is not None:
-            path = Path(spec.source) if Path(spec.source).is_absolute() else store.run_dir / spec.source
+            path = run.file_path(spec)
             now = digest(path.read_bytes()) if path.is_file() else None
             if now != pinned:
                 return fail(f"file input {name} changed while the attempt was open")

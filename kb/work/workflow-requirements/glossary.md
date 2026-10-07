@@ -46,6 +46,7 @@ what it replaced; *decided* — settled by the operator.
 | A code job's function | handler | `CodeJob.handler` | A handler is the package function a code job runs, named by dotted path. | keep |
 | A model job's instruction file | instruction | `ModelJob.instruction` | The instruction is the input whose file the worker follows. | keep |
 | A declared dependency of a job | input | `Input`; field `inputs` | An input is something a job depends on, required or optional. | changed: was *read* (`Read`, `reads`), an action named as a class, documented as a view |
+| An input that orders without triggering | presence-only input | `Input.trigger = False` | A presence-only input must be present for its job to be ready, but its change never makes the job ready again. | added for ordering a job after work it reads only as context |
 | What an input resolves to | address | `Input.address` | The address says where the engine resolves an input when an attempt opens. | changed: was `kind`, then `view`, which rule 5 rejects |
 | Version an attempt was given, via its record | handed input | `address="handed"` | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
 | A job's limit on attempts | bound | `ModelJob.bound` | The bound is the most attempts a model job may make in the run. | decided: `bound` in spec and API, replacing `max_attempts` |

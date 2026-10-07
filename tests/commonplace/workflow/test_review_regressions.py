@@ -97,3 +97,41 @@ def test_a_disposition_change_retires_members_it_no_longer_permits(coordinator: 
     assert c.member("report") is None, "a role the disposition does not permit has no member"
     assert c.member("overview") is not None
     assert c.status.publishable
+
+
+def test_relative_file_inputs_resolve_against_the_library(tmp_path: Path, tmp_library: None,
+                                                          monkeypatch: pytest.MonkeyPatch) -> None:
+    def relative(jobs):
+        jobs["brief"]["inputs"]["instruction"]["source"] = "instructions/toy/brief.md"
+
+    c = custom_run(tmp_path, monkeypatch, relative)
+    assert c.handed() == {"brief"}
+    prompt = c.handout("brief").prompt.read_text(encoding="utf-8")
+    assert prompt.splitlines()[0] == f"Follow {tmp_path / 'kb' / 'instructions/toy/brief.md'} with:"
+
+
+def test_a_presence_only_input_orders_without_triggering(tmp_path: Path, tmp_library: None,
+                                                         monkeypatch: pytest.MonkeyPatch) -> None:
+    def after_report(jobs):
+        jobs["other"]["inputs"]["report-context"] = {"address": "member", "source": "report", "trigger": False}
+
+    c = custom_run(tmp_path, monkeypatch, after_report)
+    c.through_brief()
+    assert c.handed() == {"report"}, "other waits until the report is a member"
+    c.complete("report", "report A\n", answers="")
+    assert "other" in c.handed()
+    c.complete("other", "other O1\n")
+    c.complete("summary", "summary S1\n")
+    c.complete("verify", "block report: r1\n")
+    c.complete("report", "report B\n", answers="answered\n")
+    assert c.member("report") == "report B\n"
+    assert "other" not in c.handed(), "a changed presence-only input is not a rerun trigger"
+
+
+def test_an_undeclared_relation_is_refused_at_start(tmp_path: Path, tmp_library: None,
+                                                    monkeypatch: pytest.MonkeyPatch) -> None:
+    def typo(jobs):
+        jobs["digest"]["inputs"]["report-verified"]["relation"] = "verification:cites:reprot"
+
+    with pytest.raises(DeclarationError, match="not declared by the type"):
+        custom_run(tmp_path, monkeypatch, typo)

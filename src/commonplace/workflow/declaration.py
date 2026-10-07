@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import importlib
 import re
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
@@ -18,6 +18,7 @@ import yaml
 ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
 RUN_PLACEHOLDERS = ("run", "run-id", "set", "workspace")
+"""Values a parameter may substitute besides `param:<name>`, a run parameter."""
 NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
@@ -27,7 +28,6 @@ HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
 """The input name under which a role-filling model job receives its refusals."""
-"""Values a parameter may substitute besides `param:<name>`, a run parameter."""
 OUTCOMES = ("accepted", "refused")
 
 
@@ -37,13 +37,20 @@ class DeclarationError(ValueError):
 
 @dataclass(frozen=True)
 class Input:
-    """An input is something a job depends on, required or optional."""
+    """An input is something a job depends on, required or optional.
+
+    A file source may be relative; it is resolved against the library root
+    the run was started with. An input with `trigger` false orders the job
+    after it without making it a rerun trigger: it must be present for the
+    job to be ready, and its version is recorded, but a change is no signal.
+    """
 
     address: str
     source: str
     required: bool = True
     relation: str | None = None
     outcome: str | None = None
+    trigger: bool = True
 
 
 @dataclass(frozen=True)
@@ -107,7 +114,7 @@ def _input(job: str, name: str, raw: Any) -> Input:
     where = f"job {job}: input {name}"
     if not isinstance(raw, dict):
         raise DeclarationError(f"{where}: must be a mapping")
-    unknown = set(raw) - {"address", "source", "required", "relation", "outcome"}
+    unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "trigger"}
     if unknown:
         raise DeclarationError(f"{where}: unknown keys {sorted(unknown)}")
     address, source = raw.get("address"), raw.get("source")
@@ -128,7 +135,10 @@ def _input(job: str, name: str, raw: Any) -> Input:
         raise DeclarationError(f"{where}: only a judgment input has a relation or an outcome")
     if address in ("output", "handed") and source.count(":") != 1:
         raise DeclarationError(f"{where}: source must read <name>:<name>")
-    return Input(address, source, required, relation, outcome)
+    trigger = raw.get("trigger", True)
+    if not isinstance(trigger, bool):
+        raise DeclarationError(f"{where}: trigger must be true or false")
+    return Input(address, source, required, relation, outcome, trigger)
 
 
 def _job(raw: Any) -> Job:
@@ -234,6 +244,26 @@ def _with_refusal(job: Job) -> Job:
         raise DeclarationError(f"job {job.name}: input {REFUSAL_INPUT} is reserved for its refusals")
     inputs = {**job.inputs, REFUSAL_INPUT: Input("refusal", job.name, required=False)}
     return replace(job, inputs=inputs)
+
+
+def check_relations(job_set: JobSet, relations: Sequence[str]) -> None:
+    """Every relation a judgment input names must be one the type declares.
+
+    An undeclared relation would make the input permanently absent, and a
+    job gated on it would wait without any stop to say why.
+    """
+    declared = set(relations)
+    for job in job_set.jobs:
+        for name, spec in job.inputs.items():
+            if spec.address != "judgment" or spec.relation is None:
+                continue
+            if spec.relation not in declared:
+                raise DeclarationError(
+                    f"job {job.name}: input {name}: relation {spec.relation} is not declared by the type")
+            origin, _, partner = spec.relation.split(":")
+            if spec.source not in (origin, partner):
+                raise DeclarationError(
+                    f"job {job.name}: input {name}: role {spec.source} is at neither end of {spec.relation}")
 
 
 def _check(job_set: JobSet, roles: Mapping[str, Any] | None) -> None:
