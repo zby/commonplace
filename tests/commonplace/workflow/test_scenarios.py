@@ -426,3 +426,29 @@ def test_type_is_fixed_for_the_run(coordinator: Coordinator) -> None:
     type_file.write_text("not a type any more\n", encoding="utf-8")
     c.through_brief()
     assert "report" in c.handed(), "the run kept the type it started with"
+
+
+def test_check_job_refuses_to_run_on_a_moved_member(coordinator: Coordinator, monkeypatch) -> None:
+    c = coordinator
+    c.through_brief()
+    from commonplace.workflow import engine
+
+    real = engine._materialize
+    calls = {"n": 0}
+
+    def tamper_after_rebuild(run):
+        real(run)
+        calls["n"] += 1
+        brief = run.store.set_dir / "brief.md"
+        if brief.exists():
+            brief.write_text("changed behind the engine's back\n", encoding="utf-8")
+
+    monkeypatch.setattr(engine, "_materialize", tamper_after_rebuild)
+    c.ran()
+    c.advance(c.result("report", "report A\n", answers=""))
+    assert "pinned version of brief" in c.stop("check-report").reason
+    assert c.ran() == [], "the handler did not run"
+    monkeypatch.setattr(engine, "_materialize", real)
+    c.advance()
+    assert c.ran() == ["check-report"], "the next invocation rebuilds the set and runs the job"
+    assert c.member("report") == "report A\n"

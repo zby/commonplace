@@ -646,11 +646,31 @@ def _run_code_jobs(run: Run) -> Stop | None:
                     and run.ready(job, permitted) and not (run.producers(job) & pending)), None)
         if job is None:
             return None
+        # A handler may read the set directory (draft-at-slot validation does),
+        # so it must hold the current members when the job's inputs are pinned.
+        _materialize(run)
         stop = _run_code_job(run, job)
         run.reload()
         if stop is not None:
             return stop
     raise RuntimeError("code jobs did not reach a fixed point")
+
+
+def _moved_members(run: Run, job: CodeJob, pins: Mapping[str, Resolved]) -> list[str]:
+    """Member inputs whose file in `set/` is not the pinned version.
+
+    The set was rebuilt just before pinning, so a mismatch means something
+    outside the engine changed it, or an engine defect; the job must not run
+    against bytes its record would not describe.
+    """
+    moved = []
+    for name, spec in job.inputs.items():
+        if spec.address != "member" or pins[name].version is None:
+            continue
+        path = run.store.set_dir / run.layout.path(spec.source)
+        if not path.is_file() or digest(path.read_bytes()) != pins[name].version:
+            moved.append(spec.source)
+    return moved
 
 
 def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
@@ -663,6 +683,12 @@ def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
             store.put(pinned.data)
     record = {"id": attempt, "seq": seq, "job": job.name, "kind": "code",
               "pins": {name: pinned.pin() for name, pinned in pins.items()}}
+    moved = _moved_members(run, job, pins)
+    if moved:
+        reason = "the set directory does not hold the pinned version of " + ", ".join(moved)
+        record.update(state="failed", pins={}, reason=reason)
+        store.write_json(store.attempts / f"{attempt}.json", record)
+        return Stop(reason, job.name, attempt)
     code_attempt = CodeAttempt(run, job, pins)
     try:
         returned = job.resolve_handler()(code_attempt) or {}
