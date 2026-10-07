@@ -32,9 +32,10 @@ situations the spec must cover and names those it does not yet.
 ## API proposal
 
 [API design](./api-design.md) and the [Python sketch](./api_sketch.py) propose
-only the version-1 public boundary. They retain pinning and verdict provenance
-internally and explicitly defer general operator judgments and multiple semantic
-judges. These are proposed changes to the requirements, not adopted rules.
+the minimal public boundary under the updated requirements: one advancing
+call and one generic judgment primitive for code jobs and operator reports.
+Pinning and storage remain internal; the sketch does not add alternative
+currency or refusal-ownership rules.
 
 ## Related
 

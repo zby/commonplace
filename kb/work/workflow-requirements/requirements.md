@@ -60,13 +60,15 @@ specific to it.
    none, which are among those reads. It may name a refusal it overrides.
    It holds while its reads are at their recorded versions. Any job may
    judge, as may the operator from the command line.
-6. **Acceptance.** An acceptance makes the version the current member at
-   its declared slot, one per slot, safe to repeat. The member stays when
-   the acceptance stops holding. A worker's output is a candidate until
-   accepted.
+6. **Acceptance.** An acceptance of the producing job's latest completed
+   output makes it the current member at its declared slot, one per slot,
+   safe to repeat. A judgment of any earlier version is recorded as
+   evidence and moves nothing. The member stays when the acceptance stops
+   holding. A worker's output is a candidate until accepted.
 7. **Refusal.** A job's refusals are one versioned, optional read of that
-   job, whose current version is its latest refusal, supplying the refused
-   version by identity and the findings. An attempt that read a refusal
+   job, whose current version is the latest refusal of its latest
+   completed output, supplying the refused version by identity and the
+   findings. An attempt that read a refusal
    has answered it; only a newer refusal makes the job ready again, and
    not one that a later acceptance of the same version supersedes. An
    acceptance supersedes a refusal only when its scope includes the

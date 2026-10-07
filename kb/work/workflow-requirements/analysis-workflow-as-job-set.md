@@ -29,7 +29,10 @@ needs something the spec does not give, the need is reported under
 - **Apply jobs.** A verification is a model-written verdict document. A code
   job reads it and turns its blockers into refusals of the members they
   address, each scoped to the relation between the member and the
-  verification. Only code jobs judge; model jobs write documents.
+  verification. It reads the members at the versions the verification
+  names, not the current ones, so its judgments are about what the
+  verifier saw; pinned hand-outs make the two differ without any operator
+  involved (scenario 21). Only code jobs judge; model jobs write documents.
 - **Check jobs read the refusal they answer.** This makes a check rerun on
   every refusal and re-accept the standing version. Under scoped
   supersession that acceptance cancels nothing and resets nothing, so the

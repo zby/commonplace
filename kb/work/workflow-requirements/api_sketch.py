@@ -1,35 +1,37 @@
-"""Version-1 public API proposal; all behavior is deliberately `...`.
+"""Public API sketch for requirements.md; implementations deliberately use `...`.
 
-Not runtime code. See api-design.md for invariants and deferred features.
-The directory type supplies slots, relations and disposition requirements.
-No public storage records, hashes, judgment constructors or operator overrides.
+Not runtime code. The run metadata names a fixed job-set file, which names the
+set type. Attempts, versions and judgments live beside the typed output set.
+Storage records and currency calculations are not public APIs.
 """
 
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
 
 @dataclass(frozen=True)
 class Read:
-    """A named declared input, with absence recorded even when optional.
+    """A file/view resolved and pinned when an attempt opens.
 
-    file: a run-relative or explicitly absolute file path.
-    member: a type-declared member name.
-    candidate/verdict: 'producer-job:output-name'. Verdict reads additionally
-        track the producing input identities, even for identical verdict bytes.
-    acceptance: holding coverage for a member and the named relations.
-    findings: a member's current correction findings, managed by the engine.
-        Includes structural rejection and its designated verifier's findings.
+    file: run-relative or explicitly absolute path.
+    member: type-declared slot name.
+    output: 'producer-job:output-name', its current candidate/output version.
+    judgment: latest judgment addressed by member, relation and outcome.
+        A required judgment read is present only while that judgment holds.
+    refusal: producer-job name, its latest refusal with version and findings.
+
+    All views have content identity. Optional absence is recorded explicitly.
     """
 
-    kind: Literal["file", "member", "candidate", "verdict", "acceptance", "findings"]
+    kind: Literal["file", "member", "output", "judgment", "refusal"]
     source: str
     required: bool = True
-    relations: tuple[str, ...] = ()  # Only for acceptance reads.
+    relation: str | None = None  # Judgment address; None means unscoped.
+    outcome: Literal["accepted", "refused"] | None = None  # Judgment address.
 
 
 @dataclass(frozen=True)
@@ -37,10 +39,10 @@ class ModelJob:
     name: str
     reads: Mapping[str, Read]
     outputs: tuple[str, ...]
-    instruction: str  # Alias of a required declared file read.
-    max_attempts: int
-    member: str | None = None  # Disposition gate; one primary member output.
-    previous: bool = False  # Prior output in the prompt, pinned but not a trigger.
+    instruction: str  # Alias of a required file read.
+    member: str | None = None  # Type disposition gates a member producer.
+    max_attempts: int | None = None  # Optional run-wide bound, never reset.
+    # Previous attempt outputs are always supplied as pinned context, not reads.
 
 
 @dataclass(frozen=True)
@@ -49,78 +51,72 @@ class CodeJob:
     reads: Mapping[str, Read]
     outputs: tuple[str, ...]
     run: Callable[[CodeContext], Mapping[str, bytes]]
-    max_attempts: int
-    member: str | None = None  # Also gates checks of disposition-specific members.
+    member: str | None = None
+    # No bound: code-job failure stops the invocation for operator action.
 
 
 @dataclass(frozen=True)
 class JobSet:
+    """Declared in its own file under the workflow instructions.
+
+    A member-producing job's first output is its primary member output. Other
+    named outputs are auxiliary files. The type supplies slots and relations only;
+    it neither names producers nor points back to this declaration.
+    """
+
     type_spec: Path
     jobs: tuple[ModelJob | CodeJob, ...]
-    # One semantic apply job owns the complete verifier findings per member.
-    # Structural candidate checks are separate, not additional semantic owners.
-    verifier_owners: Mapping[str, str] = field(default_factory=dict)
 
 
 class CodeContext:
-    """Only declared, immutable attempt inputs are available here.
+    """Declared immutable reads and staged judgments for one code attempt.
 
-    Judgment calls stage changes; the engine commits them with returned output
-    bytes only after the handler succeeds. Raising leaves a failure record,
-    installs nothing and stops the invocation. Handlers are trusted, not sandboxed.
+    The handler returns named output bytes. Outputs and judgments commit
+    together, with the whole attempt record written last. Raising commits no
+    outputs or judgments, retains a failure record, and stops the invocation.
+    Handlers are trusted, not sandboxed; no live-directory reader is supplied.
     """
 
     def read(self, name: str) -> bytes | None:
-        """Read an input alias; None means an optional input was absent."""
+        """Read a declared input alias; None records optional absence."""
         ...
 
-    def accept_candidate(self, name: str, *, relations: tuple[str, ...]) -> None:
-        """Accept a candidate/verdict input at its producer's member slot.
-
-        Basis is the check's pinned reads. Covered partners must be declared.
-        Late acceptance never restores an obsolete candidate over a newer one.
-        """
-        ...
-
-    def refuse_candidate(self, name: str, *, findings: str) -> None:
-        """Reject this candidate structurally; its producer receives the findings."""
-        ...
-
-    def apply_verdict(
+    def judge(
         self,
-        name: str,
+        target: str,
         *,
-        scopes: Mapping[str, tuple[str, ...]],
-        findings: Mapping[str, str],
+        outcome: Literal["accepted", "refused"],
+        relations: tuple[str, ...] = (),
+        findings: str = "",
+        overrides: tuple[str, ...] = (),
     ) -> None:
-        """Translate a parsed verdict into judgments of the versions it saw.
+        """Stage a judgment of one exact version, against this attempt's reads.
 
-        `name` is a declared verdict input. Keys in scopes/findings are member
-        input aliases of its producing model job; scope values are relation
-        names of those members. An alias absent from findings is accepted;
-        a present alias is refused with nonempty findings. Findings keys must
-        be a subset of scopes. This is the owner's COMPLETE finding set, not
-        a patch. The handler parses the consumer's document format first.
+        target is a declared member/output input alias, or this job's primary
+        member output name (resolved from the bytes returned by the handler).
+        The member slot is resolved from the declaration. Covered relation
+        partners must be among the declared reads. Overrides name refusal IDs.
 
-        The engine supplies subject versions and basis from producer pins,
-        validates ownership/relations, and rejects invalid claims. Stale
-        verdicts remain historical; they neither settle nor restore replacements.
-        This does not structurally accept the verdict document itself.
+        Acceptance installs that version at its slot, including historical
+        versions. Refusal supplies its producer with the version and findings.
+        The engine knows nothing about structural checks or verdict documents;
+        consumer code parses documents and calls this same primitive.
         """
         ...
 
 
 @dataclass(frozen=True)
 class Completion:
-    """Report a hand-out by attempt ID, never infer completion from file presence.
+    """Close an open model attempt explicitly, using its original input pins.
 
-    finished captures the hand-out's staged outputs; failed retains a worker
-    problem; abandoned asserts the coordinator has stopped/joined the worker.
-    Failure and abandonment require a reason and consume the attempt budget.
+    finished captures the staged outputs; missing output makes it a failure.
+    failed closes a worker problem or abandonment with a nonempty reason.
+    A killed worker's attempt remains open until reported. The coordinator must
+    stop/join a worker before reporting abandonment as failed.
     """
 
     attempt: str
-    outcome: Literal["finished", "failed", "abandoned"]
+    outcome: Literal["finished", "failed"] = "finished"
     reason: str = ""
     runner: str | None = None
     model: str | None = None
@@ -128,10 +124,28 @@ class Completion:
 
 
 @dataclass(frozen=True)
+class OperatorJudgment:
+    """The command-line operator uses the same judgment primitive.
+
+    version is a retained version identity, not new bytes. Reads are explicitly
+    supplied basis files/views, pinned at this invocation; scope must be covered
+    by them. Accepting a historical version restores it at the member slot.
+    """
+
+    member: str
+    version: str
+    outcome: Literal["accepted", "refused"]
+    reads: Mapping[str, Read]
+    relations: tuple[str, ...] = ()
+    findings: str = ""
+    overrides: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class Handout:
     attempt: str
     job: str
-    prompt: Path  # Contains pinned input paths, optional absences and previous output.
+    prompt: Path  # Pinned reads, optional absences and previous attempt outputs.
     outputs: Mapping[str, Path]
     problem: Path
 
@@ -153,16 +167,21 @@ class Advance:
 
 def advance(
     directory: Path,
-    jobs: JobSet,
     *,
     completions: tuple[Completion, ...] = (),
+    judgments: tuple[OperatorJudgment, ...] = (),
 ) -> Advance:
-    """Validate declarations and completions under one coordinator lock.
+    """Load the fixed job set named in this run's opening metadata.
 
-    Capture reported completions with their opening pins; recover derived slots;
-    run ready code jobs to a fixed point; open all ready model attempts. Stop
-    on failure, uncertainty or exhausted bounds. Existing open attempts remain
-    visible, not presumed dead. Repeated identical completions are idempotent.
-    All storage, currency, coverage and recovery records are internal.
+    Under one coordinator lock, process reported completions and operator
+    judgments before readiness; re-materialize slots from acceptance records;
+    run ready code jobs to a fixed point; open all ready model attempts.
+    Stop on failure, uncertainty or an exhausted model bound. Existing open
+    attempts are left alone and reported. Completion retries are idempotent.
+
+    Currency is content-only. Refusal readiness and scoped supersession follow
+    requirement 7. Failed attempts record no reads and stay ready for a later
+    invocation. Type disposition gates member producers. Publication coverage
+    is the union of holding acceptances for current member versions.
     """
     ...

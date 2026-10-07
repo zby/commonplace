@@ -76,9 +76,10 @@ override of a check's refusal must name that refusal. And two effects the
 autonomous flow never produces: a refusal of a member whose acceptances
 all hold does not by itself block publication, since no acceptance's reads
 changed, so the operator should also hold publication or wait for the
-correction; and an acceptance of a historical version makes it the member
-again under requirement 6, so judging old versions is a restoration, not a
-note on the record. [5, 6, 7, 9]
+correction; and a judgment of a historical version is evidence only
+under requirement 6, so putting an old version back is an explicit
+restoration, recorded as a new acceptance of that version as the job's
+output, not a side effect of judging it. [5, 6, 7, 9]
 
 **10. Publication blocked by an acceptance that stopped holding.**
 Synthesis B replaced A. The synthesis verification was accepted against A,
@@ -178,6 +179,19 @@ worker can carry forward what still holds without the slot becoming a
 dependency the next acceptance would move. `verify-records` gets its
 previous verification the same way, which its instruction relies on.
 [3, 4]
+
+**21. A late verdict about a replaced version.** Two analysts are
+refused. The first is corrected and the agent advances: `reconcile` reruns
+and `V` is handed out pinned to the reports as they stand, including the
+second analyst's A. The second analyst's correction, running in parallel,
+finishes with B; the agent advances and `check-R` installs B. `V` then
+finishes with a verdict about A. The apply job reads the members at the
+versions `V` names, so its judgments are about A. An acceptance of A is
+evidence only, because A is not `R`'s latest completed output; B stays the
+member. A refusal of A is likewise not the refusal `R`'s read counts, so B
+is not thrown away. B has no acceptance against the verification, so the
+gates and publication wait; `V`'s reads changed, so `V` reruns and judges
+B. [3, 4, 6, 7]
 
 ## Not yet covered
 
