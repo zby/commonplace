@@ -8,6 +8,8 @@ from pathlib import Path
 import pytest
 
 from commonplace.cli.run import main
+from commonplace.workflow import CodeJob, UncertainEffectError
+from commonplace.workflow.store import RunStore
 from tests.commonplace.workflow.conftest import COMPLETE_BRIEF, toy_library
 from tests.commonplace.workflow.handlers import LOG_ENV
 
@@ -55,6 +57,37 @@ def test_failed_result_stops_and_keeps_the_job_ready(run: tuple[Path, Path], cap
     (stop,) = status["stops"]
     assert stop["job"] == "brief" and "no source at that revision" in stop["reason"]
     assert [h["job"] for h in advance_json(run_dir, capsys)["handouts"]] == ["brief"]
+
+
+@pytest.mark.parametrize("uncertain", (False, True))
+def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monkeypatch, uncertain):
+    run_dir, _ = run
+    (handout,) = advance_json(run_dir, capsys)["handouts"]
+    Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
+    original = CodeJob.resolve_handler
+
+    def fail(attempt):
+        error = UncertainEffectError if uncertain else ValueError
+        raise error("scripted external condition")
+
+    monkeypatch.setattr(CodeJob, "resolve_handler", lambda job: fail if job.name == "check-brief" else original(job))
+    status = advance_json(run_dir, capsys, "--completed", handout["attempt"])
+    (stop,) = status["stops"]
+    assert stop["uncertain"] is uncertain
+    (record,) = [r for r in RunStore(run_dir).attempt_records() if r["job"] == "check-brief"]
+    assert record["state"] == "failed" and record["uncertain"] is uncertain and record["pins"] == {}
+    assert main(["status", str(run_dir), "--json"]) == 0
+    view = json.loads(capsys.readouterr().out)
+    assert view["failed_attempts"] == [stop]
+    assert main(["status", str(run_dir)]) == 0
+    label = "uncertain effect" if uncertain else "stop"
+    assert f"{label} check-brief" in capsys.readouterr().out
+    monkeypatch.setattr(CodeJob, "resolve_handler", original)
+    advance_json(run_dir, capsys)
+    assert main(["status", str(run_dir), "--json"]) == 0
+    assert json.loads(capsys.readouterr().out)["failed_attempts"] == []
+    # The earlier failure remains evidence after recovery.
+    assert [r for r in RunStore(run_dir).attempt_records() if r["state"] == "failed"] == [record]
 
 
 def test_status_and_judge(run: tuple[Path, Path], capsys: pytest.CaptureFixture[str]) -> None:

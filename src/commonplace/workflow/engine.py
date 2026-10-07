@@ -43,6 +43,14 @@ class AttemptResult:
     effort: str | None = None
 
 
+class UncertainEffectError(RuntimeError):
+    """A consumer cannot establish an external effect's outcome; do not blindly repeat it.
+
+    Recognition and recovery stay in the consumer handler. The engine only
+    preserves this distinction in the failed attempt and operator reports.
+    """
+
+
 @dataclass(frozen=True)
 class Stop:
     """A stop names the job and attempt that ended the invocation."""
@@ -50,6 +58,7 @@ class Stop:
     reason: str
     job: str | None = None
     attempt: str | None = None
+    uncertain: bool = False
 
 
 @dataclass(frozen=True)
@@ -187,7 +196,12 @@ class RefusalInForce:
 
 
 def inspect(run_dir: Path) -> dict:
-    """A read-only view of a run: members, open attempts, refusals in force, publishability."""
+    """A read-only view including each job's latest attempt when it has failed.
+
+    Failure records preserve uncertain external effects without running their
+    recognizers. Bounds and scheduling stops are invocation results, not failed
+    attempts, and are not reconstructed here.
+    """
     store = RunStore(Path(run_dir))
     if not store.metadata.exists():
         raise FileNotFoundError(f"{run_dir} holds no run; start it first")
@@ -203,7 +217,13 @@ def inspect(run_dir: Path) -> dict:
         latest = [j for j in run.judgments if j["outcome"] == "refused"
                   and j["subject"]["producer"] == job.name and j["subject"]["version"] == output][-1]
         refusals.append(RefusalInForce(latest["id"], job.name, job.role, output or "", latest["findings"]))
+    latest = {}
+    for record in sorted(run.attempts.values(), key=lambda r: r["seq"]):
+        latest[record["job"]] = record
+    failures = [Stop(r["reason"], r["job"], r["id"], r.get("uncertain", False))
+                for r in latest.values() if r["state"] == "failed"]
     return {
+        "failed_attempts": failures,
         "members": dict(run.members()),
         "open_attempts": sorted(r["id"] for r in run.attempts.values() if r["state"] == "open"),
         "refusals": refusals,
@@ -363,8 +383,9 @@ def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
         judgments = code_attempt.judgments(outputs, seq, attempt)
     except Exception as error:  # noqa: BLE001 - a failing handler is a recorded failure
         reason = f"{type(error).__name__}: {error}"
-        store.fail_attempt(record, reason, trace="".join(traceback.format_exception(error)))
-        return Stop(reason, job.name, attempt)
+        uncertain = isinstance(error, UncertainEffectError)
+        store.fail_attempt(record, reason, uncertain=uncertain, trace="".join(traceback.format_exception(error)))
+        return Stop(reason, job.name, attempt, uncertain)
     store.commit_attempt({**record, "outputs": outputs}, judgments)
     return None
 

@@ -161,6 +161,8 @@ def _check_attempt(record: Any) -> None:
         raise RecordError(f"attempt record {record['id']}: state {record['state']!r} is not one of {ATTEMPT_STATES}")
     if record["state"] == "completed" and "outputs" not in record:
         raise RecordError(f"attempt record {record['id']}: a completed attempt names its outputs")
+    if "uncertain" in record and not isinstance(record["uncertain"], bool):
+        raise RecordError(f"attempt record {record['id']}: uncertain must be a boolean")
 
 
 def _check_judgment(record: Any) -> None:

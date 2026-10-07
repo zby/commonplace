@@ -25,6 +25,7 @@ from commonplace.workflow import (
     AttemptResult,
     DeclarationError,
     RunStatus,
+    Stop,
     advance,
     judge,
     open_handouts,
@@ -76,6 +77,12 @@ def _pairs(items: list[str], what: str) -> dict[str, str]:
     return pairs
 
 
+def _print_stop(stop: Stop) -> None:
+    where = " ".join(part for part in (stop.job, stop.attempt) if part)
+    label = "uncertain effect" if stop.uncertain else "stop"
+    print(f"{label} {where}: {stop.reason}")
+
+
 def _print_status(status: RunStatus, as_json: bool) -> None:
     if as_json:
         print(json.dumps(asdict(status), default=str, indent=1))
@@ -89,20 +96,22 @@ def _print_status(status: RunStatus, as_json: bool) -> None:
     if status.open_attempts:
         print("open: " + " ".join(status.open_attempts))
     for stop in status.stops:
-        where = " ".join(part for part in (stop.job, stop.attempt) if part)
-        print(f"stop {where}: {stop.reason}")
+        _print_stop(stop)
     print(f"publishable: {'yes' if status.publishable else 'no'}")
 
 
 def _print_inspection(view: dict, as_json: bool) -> None:
     if as_json:
         print(json.dumps({**view, "refusals": [asdict(r) for r in view["refusals"]],
+                          "failed_attempts": [asdict(s) for s in view["failed_attempts"]],
                           "handouts": [asdict(h) for h in view["handouts"]]}, default=str, indent=1))
         return
     for role, version in view["members"].items():
         print(f"member {role}: {version[:12]}")
     for handout in view["handouts"]:
         print(f"open hand-out {handout.attempt} {handout.job}: {handout.prompt}")
+    for stop in view["failed_attempts"]:
+        _print_stop(stop)
     for refusal in view["refusals"]:
         first = refusal.findings.strip().splitlines()[:1]
         print(f"refusal {refusal.id} of {refusal.job} ({refusal.version[:12]}): {first[0] if first else ''}")
