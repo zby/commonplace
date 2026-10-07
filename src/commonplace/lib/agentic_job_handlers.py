@@ -1,8 +1,9 @@
 """Ported analysis code jobs; the opt-in declaration binds them one at a time.
 
 Opening is read-only outside the engine's attempt commit. Acquisition owns its
-external-effect journal, but stays unbound until boundary hand-outs are ported.
-Checks, verdict application, assembly and publication are still fail-closed.
+external-effect journal. Boundary checks use only pinned candidate/criterion
+bytes; their binding stays fail-closed until downstream hand-outs are ported.
+Other checks, verdict application, assembly and publication remain fail-closed.
 This module does not switch the live analysis workflow or reinterpret its state.
 """
 
@@ -10,11 +11,13 @@ from __future__ import annotations
 
 import datetime
 import json
+import os
 import re
 import subprocess
 from pathlib import Path
 
 from commonplace.lib.agentic_acquisition import acquire_source
+from commonplace.lib.agentic_boundary import boundary_refusals
 from commonplace.lib.agentic_checkout import github_checkout_path
 from commonplace.lib.agentic_publication import (
     inspect_destination,
@@ -23,6 +26,7 @@ from commonplace.lib.agentic_publication import (
 )
 from commonplace.lib.agentic_set import (
     RETAINED_ROOT,
+    SET_TYPE,
     analysis_layout,
     normalize_source_identity,
     source_slug,
@@ -33,6 +37,8 @@ from commonplace.lib.analysis_worktree import (
     require_run_code,
     source_checkout,
 )
+from commonplace.lib.note_parser import parse_document
+from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow import CodeAttempt
 
 
@@ -123,6 +129,8 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         "source-revision": revision,
         "inputs-commit": commit,
         "run-date": datetime.datetime.now(datetime.UTC).date().isoformat(),
+        "command-path": str(repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
+        "capture-directory": str(run_dir / "sources"),
         "review-path": destination,
         "expected-incumbent-sha256": str(incumbent["expected_incumbent_sha256"]),
     }
@@ -132,32 +140,84 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
 def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     """Acquire from pinned opening metadata without launching an analyst.
 
-    This handler is tested with a code-only declaration. Keep the production
-    binding fail-closed until the next model job's hand-out is ported too.
+    Its next model job consumes the engine-specific boundary hand-out.
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """
     metadata_bytes = attempt.read("metadata")
-    if metadata_bytes is None:
-        raise ValueError("acquisition requires the opening metadata")
-    metadata = json.loads(metadata_bytes)
-    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
-        raise ValueError("acquisition opening metadata must name this run")
-    repo = source_checkout(attempt.run_dir)
-    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
-        raise ValueError("acquisition must use this run's analysis checkout and recorded library")
-    require_run_code(attempt.run_dir, cwd=Path.cwd())
-    commit = metadata.get("inputs-commit")
+    metadata, repo = _opened_environment(attempt, metadata_bytes, job="acquisition")
+    source = acquire_source(repo, attempt.run_dir, metadata_bytes)
+    _require_opened_method(repo, metadata, job="acquisition")
+    return {"source": source}
+
+
+def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
     preparation = preparation_for(repo)
     if metadata["run-id"].rsplit("-", 2)[-2:-1] != [preparation["token"]]:
-        raise ValueError("acquisition preparation token differs from the opened run")
+        raise ValueError(f"{job} preparation token differs from the opened run")
+    commit = metadata.get("inputs-commit")
     if _head(repo) != commit or preparation.get("commit") != commit:
-        raise ValueError("acquisition worktree differs from the opened preparation commit")
+        raise ValueError(f"{job} worktree differs from the opened preparation commit")
     require_publishable_worktree(repo)
     require_running_package_unchanged(commit)
-    source = acquire_source(repo, attempt.run_dir, metadata_bytes)
-    if _head(repo) != commit:
-        raise ValueError("analysis worktree HEAD changed during acquisition")
-    require_publishable_worktree(repo)
-    require_running_package_unchanged(commit)
-    return {"source": source}
+
+
+def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
+    if metadata_bytes is None:
+        raise ValueError(f"{job} requires the opening metadata")
+    metadata = json.loads(metadata_bytes)
+    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
+        raise ValueError(f"{job} opening metadata must name this run")
+    repo = source_checkout(attempt.run_dir)
+    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
+        raise ValueError(f"{job} must use this run's analysis checkout and recorded library")
+    require_run_code(attempt.run_dir, cwd=Path.cwd())
+    _require_opened_method(repo, metadata, job=job)
+    return metadata, repo
+
+
+def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Judge the pinned boundary, never a mutable set projection or hand-out file.
+
+    Content checks see a one-member snapshot at its intended set path. Invocation
+    checks bind its run identity and source to opening/acquisition. Self-citations
+    are content checks, not engine relations; no downstream coverage is claimed.
+    Keep this handler unbound until runtime hand-outs are ported.
+    """
+    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="boundary check")
+    candidate = attempt.read("candidate")
+    source_bytes = attempt.read("source")
+    if candidate is None or source_bytes is None:
+        raise ValueError("boundary check requires its candidate and acquisition result")
+    frozen = json.loads(source_bytes)
+    if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
+        raise ValueError("boundary check requires a Git source object or explicit JSON null")
+    # Only an accepted boundary establishes the capture pin. A declared member
+    # input preserves it across later corrections without a second source record.
+    incumbent_bytes = attempt.read("incumbent-boundary")
+    incumbent_source = None
+    if incumbent_bytes is not None:
+        incumbent, error = parse_document(incumbent_bytes.decode("utf-8"))
+        if incumbent is None or error:
+            raise ValueError("boundary check cannot read the incumbent boundary")
+        incumbent_source = (incumbent.frontmatter or {}).get("source")
+    findings = validate_draft_at_slot(
+        attempt.run_dir / "set", "boundary.md", candidate, repo_root=repo, members={},
+        manifest=f"type: {SET_TYPE}\n".encode(),
+    )
+    reasons = ["[set] " + finding.render() for finding in findings if not finding.info]
+    reasons += ["[invocation] " + reason for reason in boundary_refusals(
+        candidate, repo_root=repo, run_id=metadata["run-id"],
+        identity=metadata["source-identity"], frozen=frozen,
+        capture_directory=Path(metadata["capture-directory"]),
+    )]
+    if incumbent_source is not None and incumbent_source != frozen:
+        reasons += ["[incumbent] " + reason for reason in boundary_refusals(
+            candidate, repo_root=repo, run_id=metadata["run-id"],
+            identity=metadata["source-identity"], frozen=incumbent_source,
+        )]
+    _require_opened_method(repo, metadata, job="boundary check")
+    attempt.judge(
+        "candidate", outcome="refused" if reasons else "accepted", findings="\n".join(reasons),
+    )
+    return {}

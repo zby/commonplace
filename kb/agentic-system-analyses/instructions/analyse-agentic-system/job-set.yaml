@@ -1,15 +1,16 @@
 # Opt-in analysis migration declaration. NOT a runnable analysis workflow.
-# Only opening is bound. Every other code binding fails closed; the live skill
-# and CLI still use the legacy workflow. Do not launch workers from this job set.
-# Acquisition is implemented but stays unbound until boundary hand-outs are ported.
+# Opening/acquisition are bound, followed by an engine-specific boundary hand-out.
+# Boundary checking is implemented but stays unbound until runtime hand-outs are
+# ported. Other code bindings fail closed. The live skill/CLI remain legacy;
+# do not launch workers from this migration declaration.
 # File inputs are relative to the library root recorded by start_run.
 # Opening consumes fixed system, source-identity, source and optional
 # source-revision run parameters, not run.json. It requires a ready preparation
 # record and the token-bearing run ID; legacy state must use the legacy workflow.
 # Model contracts below are substantive authoring/judging inputs, not blanket
 # validation dependencies. Code checks own type/schema dependency closure.
-# Legacy round, requests/answers, previous-output and reading-order interfaces
-# still need porting before these instructions can consume engine hand-outs.
+# Downstream legacy round, requests/answers, previous-output and reading-order
+# interfaces still need porting before their instructions consume engine hand-outs.
 # Assembly/publication must check disposition-dependent coverage at BOTH ends;
 # optional coverage inputs express the alternatives, not permission to publish.
 # Publication reads assembly's pinned manifest, not a second working-set copy.
@@ -23,7 +24,7 @@ jobs:
   - metadata
 - name: acquire
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.acquire_analysis
   inputs:
     metadata: {address: output, source: 'open:metadata', required: true}
   outputs:
@@ -36,8 +37,8 @@ jobs:
   outputs:
   - boundary
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/boundary.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/fix-boundary.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     boundary-result-contract: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
@@ -47,7 +48,6 @@ jobs:
     refusal: {address: refusal, source: boundary, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: boundary.md
 - name: check-boundary
@@ -55,12 +55,16 @@ jobs:
   handler: commonplace.lib.agentic_job_set.unported
   inputs:
     candidate: {address: output, source: 'boundary:boundary', required: true}
+    # Preserve an already accepted capture when boundary prose is corrected.
+    # First acceptance changes this input once; the next check settles its basis.
+    incumbent-boundary: {address: member, source: boundary, required: false}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: boundary, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     source: {address: output, source: 'acquire:source', required: true}
     set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    note-type: {address: file, source: types/note.md}
     agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
     agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
     agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}

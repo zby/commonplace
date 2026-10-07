@@ -57,8 +57,18 @@ class DirectoryArtifact:
         }
 
 
-def member_paths(directory: Path, supplied_paths: Iterable[Path] = ()) -> tuple[Path, ...]:
-    """Visible direct Markdown children, including unpublished candidate files."""
+def member_paths(
+    directory: Path, supplied_paths: Iterable[Path] = (), *, names: Iterable[str] | None = None,
+) -> tuple[Path, ...]:
+    """Visible children, or an explicit snapshot's exact direct Markdown names."""
+    if names is not None:
+        paths = set()
+        for name in names:
+            if (not isinstance(name, str) or Path(name).name != name or "\\" in name
+                    or name.startswith(".") or not name.endswith(".md")):
+                raise ValueError(f"snapshot member must name a direct Markdown file: {name!r}")
+            paths.add(directory / name)
+        return tuple(sorted(paths))
     paths = set(directory.iterdir()) if directory.is_dir() else set()
     paths.update(path for path in supplied_paths if path.parent == directory)
     return tuple(sorted(
@@ -74,6 +84,7 @@ def load_directory_artifact(
     *,
     read: Callable[[Path], bytes],
     supplied_paths: Iterable[Path] = (),
+    member_names: Iterable[str] | None = None,
     parse: Callable[[Path], ParsedDocument],
 ) -> DirectoryArtifact:
     """Read the manifest and all members from one caller-owned byte snapshot."""
@@ -91,7 +102,7 @@ def load_directory_artifact(
     if not isinstance(metadata, dict):
         raise TypeError("manifest members must be a mapping")
     members = {}
-    for path in member_paths(directory, supplied_paths):
+    for path in member_paths(directory, supplied_paths, names=member_names):
         if path.is_symlink() or path.resolve().parent != directory.resolve():
             raise ValueError(f"member {path.name}: symlinks are not supported")
         member_content = read(path)

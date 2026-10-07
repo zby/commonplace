@@ -73,6 +73,50 @@ def test_overlay_filters_roles_and_never_writes(draft_set):
     assert all(f.repair and "Repair: " in f.render() for f in findings)
 
 
+def test_exact_snapshot_ignores_disk_members_and_manifest(draft_set):
+    root, output = draft_set
+    head = (output / "head.md").read_bytes()
+    candidate = b"---\ntype: types/note.md\nrun: expected\ndescription: Body\n---\n# Body\n"
+    (output / "head.md").write_bytes(head.replace(b"expected", b"wrong"))
+    (output / "body.md").write_text("not the candidate\n")
+    (output / "intruder.md").write_text("---\ntype: [bad\n---\n")
+    (output / "ARTIFACT.yaml").write_text("invalid: [manifest\n")
+    before = {path: path.read_bytes() for path in output.iterdir()}
+    findings = validate_draft_at_slot(
+        output, "body.md", candidate, repo_root=root, members={"head.md": head},
+        manifest=b"type: reports/types/set.md\n",
+    )
+    assert not findings
+    assert {path: path.read_bytes() for path in output.iterdir()} == before
+    findings = validate_draft_at_slot(
+        output, "body.md", candidate, repo_root=root,
+        members={"head.md": head.replace(b"expected", b"wrong")},
+        manifest=b"type: reports/types/set.md\n",
+    )
+    assert any("identity field" in f.message for f in findings)
+
+
+@pytest.mark.parametrize("name", ["../escape.md", ".hidden.md", "bad\\\\name.md", "not-markdown.json"])
+def test_snapshot_member_names_cannot_expand_scope(draft_set, name):
+    root, output = draft_set
+    with pytest.raises(ValueError, match="snapshot member"):
+        validate_draft_at_slot(
+            output, "body.md", b"# Body\n", repo_root=root,
+            members={name: b"# Intruder\n"}, manifest=b"type: reports/types/set.md\n",
+        )
+
+
+def test_snapshot_requires_its_manifest_and_refuses_unreadable_candidate(draft_set):
+    root, output = draft_set
+    with pytest.raises(ValueError, match="explicit manifest"):
+        validate_draft_at_slot(output, "body.md", b"# Body\n", repo_root=root, members={})
+    findings = validate_draft_at_slot(
+        output, "body.md", b"\xff", repo_root=root, members={},
+        manifest=b"type: reports/types/set.md\n",
+    )
+    assert findings and all(f.role == "body" for f in findings)
+
+
 def test_overlay_new_slot_and_candidate_file_failures(draft_set):
     root, output = draft_set
     draft = root / "candidate.md"

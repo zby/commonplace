@@ -41,6 +41,7 @@ from typing import Any
 
 import yaml
 
+from commonplace.lib.agentic_boundary import boundary_refusals
 from commonplace.lib.agentic_checkout import freeze_checkout, github_checkout_path
 from commonplace.lib.agentic_finalize import build_manifest, start_manifest
 from commonplace.lib.agentic_publication import (
@@ -201,75 +202,6 @@ def split(text: str) -> tuple[dict[str, Any], str]:
     if error is not None or document is None:
         raise ValueError(error or "cannot parse the file")
     return dict(document.frontmatter or {}), document.body
-
-
-def boundary_refusals(
-    path: Path, *, repo_root: Path, run_id: str, identity: str,
-    frozen: dict[str, Any] | None = None,
-) -> list[str]:
-    """Invocation-only checks against run parameters and pinned source bytes."""
-    refusals = []
-    try:
-        fields, _ = split(path.read_text(encoding="utf-8"))
-    except ValueError:
-        return refusals
-    if fields.get("run-id") != run_id:
-        refusals.append(f"member identity: run-id {fields.get('run-id')!r} does not match {run_id!r}")
-    source = fields.get("source")
-    if isinstance(source, dict):
-        if source.get("identity") != identity:
-            refusals.append(
-                f"source.identity must be `{identity}`, the run's source identity"
-            )
-        if frozen is not None and (
-            source != frozen or fields.get("reviewed-boundary") != frozen["revision"]
-        ):
-            refusals.append(
-                "source must be exactly the checkout code froze, and reviewed-boundary "
-                f"its commit `{frozen['revision']}`: {json.dumps(frozen)}"
-            )
-        refusals += frozen_source_refusals(source)
-    return refusals
-
-
-def frozen_source_refusals(source: dict[str, Any]) -> list[str]:
-    """The frozen source is what later jobs read: a Git checkout whose files
-    are exactly the recorded commit's, or a capture file with its digest."""
-    path = Path(str(source.get("path") or ""))
-    if not path.is_absolute():
-        return ["source.path must be the absolute path of the frozen source"]
-    if source.get("kind") == "capture":
-        if not path.is_file():
-            return [f"source.path {path} is not a file"]
-        if source.get("sha256") != digest(path):
-            return [f"source.sha256 must be the SHA-256 of the capture file: expected {digest(path)}"]
-        return []
-    revision = str(source.get("revision") or "")
-    if not re.fullmatch(r"[0-9a-f]{40}", revision):
-        return ["source.revision must be a full 40-hex commit"]
-
-    def git(*args: str) -> str | None:
-        result = subprocess.run(
-            ["git", "-C", str(path), *args],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        return result.stdout if result.returncode == 0 else None
-
-    head = git("rev-parse", "HEAD") if path.is_dir() else None
-    if head is None:
-        return [f"source.path {path} is not a Git checkout"]
-    if head.strip() != revision:
-        return [f"the checkout at {path} is not at source.revision"]
-    if git("status", "--porcelain"):
-        return [
-            (
-                f"the checkout at {path} does not hold exactly the commit's files; "
-                "a clone made without checkout lists them all as deleted"
-            )
-        ]
-    return []
 
 
 def member_refusals(path: Path, *, repo_root: Path) -> list[str]:

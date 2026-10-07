@@ -162,6 +162,8 @@ class ValidationRun:
     paths: tuple[Path, ...]
     collection: Path | None = None
     content_overrides: dict[Path, str | bytes] = field(default_factory=dict)
+    # Explicit snapshots replace discovery; unrelated on-disk members are not inputs.
+    member_snapshots: dict[Path, dict[str, bytes]] = field(default_factory=dict)
     _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
     _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
     _evaluating: list[Path] = field(default_factory=list, init=False)
@@ -187,6 +189,12 @@ class ValidationRun:
         )
         if self.collection is not None:
             self.collection = self.collection.resolve()
+        self.member_snapshots = {
+            path.resolve(): dict(members) for path, members in self.member_snapshots.items()
+        }
+        for directory, members in self.member_snapshots.items():
+            member_paths(directory, names=members)  # Reject escapes before adding byte overrides.
+            self.content_overrides.update({directory / name: data for name, data in members.items()})
         self.content_overrides = {
             path.resolve(): content for path, content in self.content_overrides.items()
         }
@@ -206,7 +214,8 @@ class ValidationRun:
         key = directory.resolve()
         if key not in self._artifacts:
             self._artifacts[key] = load_directory_artifact(
-                key, read=self.read_bytes, supplied_paths=self.content_overrides, parse=self.require_document,
+                key, read=self.read_bytes, supplied_paths=self.content_overrides,
+                member_names=self.member_snapshots.get(key), parse=self.require_document,
             )
         return self._artifacts[key]
 
@@ -472,7 +481,9 @@ class ValidationRun:
     def _validate_artifact(self, directory: Path) -> CheckResults:
         results = CheckResults("unknown")
         # A bad manifest must not suppress the ordinary member checks.
-        for path in member_paths(directory, self.content_overrides):
+        for path in member_paths(
+            directory, self.content_overrides, names=self.member_snapshots.get(directory.resolve()),
+        ):
             if path.is_symlink():
                 results.fails.append(f"[base] member {path.name}: symlinks are not supported")
                 continue
@@ -2052,7 +2063,8 @@ def run_validation(
 
 
 def validate_draft_at_slot(
-    directory: Path, slot: Path | str, candidate: Path, *, repo_root: Path,
+    directory: Path, slot: Path | str, candidate: Path | bytes, *, repo_root: Path,
+    members: dict[str, bytes] | None = None, manifest: bytes | None = None,
 ) -> list[Finding]:
     """Validate candidate bytes at a declared member slot, without writing.
 
@@ -2061,6 +2073,9 @@ def validate_draft_at_slot(
     see the replacement bytes everywhere and return only this member's role.
     No absent findings are suppressed. Manifest pinning is not a draft check:
     this judges member content and relations, not publication acceptance.
+    With ``members``, judge only that exact byte snapshot plus the candidate;
+    an explicit manifest is required and disk discovery is disabled. Otherwise
+    preserve the ordinary CLI's incumbent-overlay behavior.
     """
     directory = directory.resolve()
     intended = Path(slot)
@@ -2068,7 +2083,14 @@ def validate_draft_at_slot(
         intended = directory / intended
     if intended.parent != directory:
         raise ValueError("draft slot must be a direct member path")
-    run = ValidationRun(repo_root, (), content_overrides={intended: candidate.read_bytes()})
+    data = candidate.read_bytes() if isinstance(candidate, Path) else candidate
+    if members is not None and manifest is None:
+        raise ValueError("a member snapshot requires an explicit manifest")
+    snapshot = {} if members is None else {directory: {**members, intended.name: data}}
+    overrides = {intended: data}
+    if manifest is not None:
+        overrides[directory / MANIFEST_NAME] = manifest
+    run = ValidationRun(repo_root, (), content_overrides=overrides, member_snapshots=snapshot)
     if intended.is_symlink():
         raise ValueError("draft slot must not be a symlink")
     from commonplace.lib.directory_artifact import UniqueKeyLoader

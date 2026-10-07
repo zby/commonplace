@@ -1,6 +1,6 @@
 """Script the acquisition handler with local Git origins and code-only jobs.
 
-Production acquisition stays unbound until boundary hand-outs are translated.
+Acquisition tests use two code jobs; boundary tests reuse the local-only fixture.
 No workers, network sources, target execution, installations or publication.
 """
 
@@ -16,7 +16,11 @@ import yaml
 
 from commonplace.lib import agentic_acquisition, agentic_checkout
 from commonplace.lib.agentic_acquisition import JOURNAL
-from commonplace.lib.agentic_job_set import ACQUIRE_HANDLER, JOB_SET
+from commonplace.lib.agentic_job_set import (
+    ACQUIRE_HANDLER,
+    BOUNDARY_CHECK_HANDLER,
+    JOB_SET,
+)
 from commonplace.workflow import start_run
 from commonplace.workflow.engine import inspect
 from commonplace.workflow.store import RunStore
@@ -102,12 +106,16 @@ def acquisition(request, monkeypatch, tmp_path):
         IDENTITY if original_origin(value) == str(upstream) else original_origin(value)
     ))
 
-    def start(*, revision=None, identity=None):
-        # Script only the two code jobs. The actual declaration is unchanged:
-        # no incompatible legacy boundary instruction is handed out by this test.
+    def start(*, revision=None, identity=None, boundary=False, production=False):
+        # No actual workers. Boundary scripts bind its check only in a restricted
+        # declaration; the migration declaration blocks unported runtime hand-outs.
         data = yaml.safe_load((prepared.repo / "kb" / JOB_SET).read_text())
-        data["jobs"] = data["jobs"][:2]
+        if not production:
+            data["jobs"] = data["jobs"][:4 if boundary else 2]
         data["jobs"][1]["handler"] = ACQUIRE_HANDLER
+        if boundary:
+            assert not production
+            data["jobs"][3]["handler"] = BOUNDARY_CHECK_HANDLER
         declaration = tmp_path / "code-only-acquisition.yaml"
         declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
         parameters = dict(PARAMETERS)

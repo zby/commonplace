@@ -1,22 +1,24 @@
 """Drive the ported opening job in local Git fixtures, never an analysis run.
 
-The scripted coordinator stops at the still-unported acquisition job. No
+A restricted declaration stops at an explicitly unported acquisition job. No
 workers, external source acquisition, package installation or publication run.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
+import yaml
 
 import commonplace
 from commonplace.lib import agentic_job_handlers, agentic_publication
-from commonplace.lib.agentic_job_set import JOB_SET
+from commonplace.lib.agentic_job_set import HANDLER, JOB_SET
 from commonplace.workflow import start_run
 from commonplace.workflow.store import RunStore
 from tests.commonplace.workflow.conftest import Coordinator
@@ -55,8 +57,14 @@ class Prepared:
     def start(self, *, parameters=None, name=RUN_ID, library=None) -> Coordinator:
         self.monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(library or self.repo / "kb"))
         run_dir = self.repo / "kb/agentic-system-analyses/state" / name
-        start_run(run_dir, self.repo / "kb" / JOB_SET, parameters=PARAMETERS if parameters is None else parameters)
-        return Coordinator(run_dir, self.repo / "kb" / Path(JOB_SET).parent / "jobs", self.repo / "handlers.log")
+        # Opening tests must never acquire a source, even as later bindings land.
+        data = yaml.safe_load((self.repo / "kb" / JOB_SET).read_text())
+        data["jobs"] = data["jobs"][:2]
+        data["jobs"][1]["handler"] = HANDLER
+        declaration = self.repo.parent / "opening-only.yaml"
+        declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
+        start_run(run_dir, declaration, parameters=PARAMETERS if parameters is None else parameters)
+        return Coordinator(run_dir, declaration.parent, self.repo / "handlers.log")
 
 
 def output(c: Coordinator) -> dict:
@@ -117,6 +125,8 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
         "source-identity": "https://github.com/example/system",
         "source": PARAMETERS["source"], "source-revision": "a" * 40,
         "inputs-commit": prepared.commit, "run-date": metadata["run-date"],
+        "command-path": str(prepared.repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
+        "capture-directory": str(c.run_dir / "sources"),
         "review-path": "kb/agentic-system-analyses/retained/system/overview.md",
         "expected-incumbent-sha256": "absent",
     }

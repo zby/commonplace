@@ -1,8 +1,9 @@
 """Fail-closed bindings for the opt-in analysis migration declaration.
 
 The job set is library data beside the job instructions, not generated Python.
-No live workflow or CLI uses it yet. Opening is ported; the other bindings
-and adoption-gap checks stay fail-closed without workers or external effects.
+No live workflow or CLI uses it yet. Opening/acquisition and the boundary
+hand-out are ported. The next check binding remains fail-closed to prevent
+handing out unported runtime instructions.
 """
 
 from __future__ import annotations
@@ -31,12 +32,13 @@ MODEL_ROLES = {
 HANDLER = "commonplace.lib.agentic_job_set.unported"
 OPEN_HANDLER = "commonplace.lib.agentic_job_handlers.open_analysis"
 ACQUIRE_HANDLER = "commonplace.lib.agentic_job_handlers.acquire_analysis"
+BOUNDARY_CHECK_HANDLER = "commonplace.lib.agentic_job_handlers.check_boundary"
 
 
 def unported(_attempt):
     """Never turn a migration placeholder into a successful attempt."""
     raise NotImplementedError(
-        "analysis job-set migration skeleton: code handlers are not ported; "
+        "analysis job-set migration: remaining code handlers are not ported; "
         "do not launch workers or publish from this declaration"
     )
 
@@ -49,11 +51,11 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
     layout = parse_layout(document.frontmatter["layout"], where=SET_TYPE)
     gaps = [
         "working set path: legacy consumers use output/, new-engine runs use set/; port consumers before switching",
-        "worker protocol: port read-first ordering, input names, round/requests/answers and previous-output parameters",
+        "worker protocol: boundary is translated; port downstream ordering, input names, correction/answers and previous-output interfaces",
         "run-state: project new-engine attempts/stops and uncertain external effects",
         "publication: enforce disposition-dependent holding acceptance coverage, preserve incumbent checks and effect recovery",
-        "acquisition binding: the handler is ported; keep it unbound until boundary hand-outs are translated",
-        "handlers: member checks, set checks, verdict application and assembly remain unported",
+        "boundary check binding: implemented against pinned inputs; keep it unbound until runtime hand-outs are translated",
+        "handlers: downstream member checks, set checks, verdict application and assembly remain unported",
         "coverage: assembly/publication handlers must enforce disposition-dependent whole-set coverage",
         "memory provenance: implement the workflow check promised by the set type or remove the promise",
         "legacy runs: opening rejects legacy state; keep legacy consumers intact until an explicit retirement",

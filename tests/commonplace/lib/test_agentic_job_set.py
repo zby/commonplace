@@ -56,7 +56,14 @@ def test_graph_covers_real_roles_once(graph):
 def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, _ = graph
     assert jobs.job("open").inputs == {}
-    assert jobs.job("acquire").handler == HANDLER != ACQUIRE_HANDLER
+    assert jobs.job("acquire").handler == ACQUIRE_HANDLER
+    assert jobs.job("check-boundary").handler == HANDLER
+    boundary = jobs.job("boundary")
+    assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
+    assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
+    assert "run-state" not in boundary.parameters
+    incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
+    assert (incumbent.address, incumbent.source, incumbent.required) == ("member", "boundary", False)
     assert jobs.job("publish").inputs["manifest"].address == "output"
     for job in jobs.jobs:
         for name, spec in job.inputs.items():
@@ -170,7 +177,11 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
             "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
             *(layout.roles[role].type for role in roles),
         }
-        if name != "boundary":
+        if name == "boundary":
+            jobs_root = "agentic-system-analyses/instructions/analyse-agentic-system/"
+            expected -= {f"{jobs_root}jobs/boundary.md", f"{jobs_root}jobs/worker-rules.md"}
+            expected |= {f"{jobs_root}jobs-engine/fix-boundary.md", f"{jobs_root}jobs-engine/follow-worker-rules.md"}
+        else:
             expected.add(f"{shared}records.md")
         if name in ("boundary", "verify"):
             expected.add(f"{shared}boundary.md")
@@ -311,13 +322,14 @@ def test_live_contract_gaps_are_explicit():
     assert any(gap.startswith("publication:") for gap in gaps)
     assert not any(gap.startswith("opening:") for gap in gaps)
     assert any(gap.startswith("startup:") for gap in gaps)
-    assert any(gap.startswith("acquisition binding:") for gap in gaps)
+    assert not any(gap.startswith("acquisition binding:") for gap in gaps)
+    assert any(gap.startswith("boundary check binding:") for gap in gaps)
     assert any(gap.startswith("legacy runs:") for gap in gaps)
     assert not any(gap.startswith("runtime context:") for gap in gaps)
     assert not any(gap.startswith("check criteria:") for gap in gaps)
 
 
-def test_skeleton_stops_before_workers_or_external_effects(tmp_path, monkeypatch):
+def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"
     jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))
@@ -327,6 +339,11 @@ def test_skeleton_stops_before_workers_or_external_effects(tmp_path, monkeypatch
                 from commonplace.lib.agentic_job_handlers import open_analysis
 
                 assert job.handler == OPEN_HANDLER and job.resolve_handler() is open_analysis
+                continue
+            if job.name == "acquire":
+                from commonplace.lib.agentic_job_handlers import acquire_analysis
+
+                assert job.handler == ACQUIRE_HANDLER and job.resolve_handler() is acquire_analysis
                 continue
             assert job.handler == HANDLER
             assert job.resolve_handler() is unported
