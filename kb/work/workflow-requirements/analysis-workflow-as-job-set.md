@@ -32,7 +32,8 @@ which are kept as written.
   nothing of it. A declaration default could generate these pairs.
 - **Apply jobs.** A verification is a model-written verdict document. A code
   job reads it and turns its blockers into refusals of the members they
-  address, each with the member's relation to the verification as scope.
+  address, each scoped to the relation from the verification to that
+  member, such as `record-verification:cites:runtime`.
   Its inputs are the verifier's attempt record and the members that
   attempt was handed, not the current ones, so its judgments
   are about what the verifier saw and it reruns whenever the verifier
@@ -218,7 +219,12 @@ kept as written for the record.
 
 ## Type needs, not spec needs
 
-- Requirement 7 needs "relevant inputs" per member to be computable. The
+- Requirement 4 gates jobs on the roles the type permits given the members
+  present. The set type discriminates on the overview's result-disposition,
+  and the overview is written last, so the gate would never close. The
+  type must discriminate on the boundary, which carries the same field;
+  the overview copies it as an identity field already.
+- Requirement 9 needs "relevant inputs" per member to be computable. The
   layout declares identity and cites; the limits relation between the
   synthesis and its verification, the overview's amendment index against
   the reconciliation, and the profile's source identity against the memory
