@@ -10,15 +10,16 @@ blockers an apply job turns into refusals.
 **1. First attempt, accepted.** `R`'s required inputs are present; its
 refusal input is absent. Attempt 1 records both and writes candidate A.
 `check-R` reads A and accepts it with a scope of the relations its role
-declares. A is the
-member. Nothing is ready. [4, 5, 6]
+declares. A is the member. Nothing is ready. [4, 5, 6]
 
 **2. Refuse, correct, accept.** `V` refuses A with a blocker. `R`'s refusal
 input appeared, so `R` is ready. Attempt 2 reads the refusal, which supplies
 A and the findings, and writes B and `answers.md`, recording the refusal's
 version. B is now `R`'s latest completed output and has no refusal, so the
 refusal input has lapsed; an input that has lapsed has not changed, so
-`R` is not ready. `check-R` accepts B. Installing B changes the member,
+`R` is not ready. `check-R` reads `R`'s attempt record, which names the
+refusal attempt 2 was handed, compares `answers.md` with it, and accepts
+B. Installing B changes the member,
 but `R` has no input on its own role, so `R` stays quiet. Downstream
 inputs on the member changed, so `reconcile` and `V` rerun. `V` has no blocker; the apply
 job accepts the members against the new verification. [1, 4, 5, 6, 7]
@@ -46,9 +47,12 @@ each addressed by role, relation and outcome. While `V` still raises
 blockers, those acceptances do not exist, so `profile` is unready however
 many verifications have been written. When the apply job accepts the
 reports against a blocker-free verification, the inputs appear and
-`profile` is ready. If a report is later corrected, its acceptance stops
-holding; the required input has lapsed, and `profile` waits for the
-new acceptance instead of running once per verification. [1, 4, 6]
+`profile` is ready. If a report is later corrected, the acceptance of its
+old version still holds, since the apply job's basis is what the verifier
+was handed and that has not moved, but its subject is no longer the
+role's current member; the required input has lapsed, and `profile` waits
+for an acceptance of the new version instead of running once per
+verification. [1, 4, 6]
 
 **6. Upstream member replaced, downstream only re-judged.** `memory` was
 handed the runtime report as untracked context, not as an input. Runtime
@@ -83,12 +87,14 @@ operator refuses the current version with a reason, and the rerun decides
 what to carry forward. [5, 6, 7, 9]
 
 **10. Publication blocked by an acceptance that stopped holding.**
-Synthesis B replaced A. The synthesis verification was accepted against A,
-so that acceptance no longer holds. `verify-synthesis` reruns, because its
-input changed; until its new verification is accepted against B and B
-against it, the set lacks a holding acceptance covering the relation. In
-the mapping that acceptance is a required input of `publish`, so `publish`
-is not ready rather than refusing. [1, 4, 5, 9]
+Synthesis B replaced A. The synthesis verification was accepted against A.
+That acceptance still holds, since its basis is what the verifier was
+handed, but it covers nothing: the partner version in its basis is not the
+partner's current member. `verify-synthesis` reruns, because its input
+changed; until its new verification is accepted against B and B against
+it, the set lacks an acceptance covering the relation. In the mapping that
+acceptance is a required input of `publish`, so `publish` is not ready
+rather than refusing. [1, 4, 5, 9]
 
 **11. Worker reports a problem.** `R`'s worker writes the problem file
 instead of a candidate. The command stops naming `R` and the problem. The
@@ -104,9 +110,12 @@ code jobs and halfway through a third. The next invocation finds the two
 attempts' records and continues; the third left output without a record,
 which is disregarded and removed, and the job is still ready. If the kill
 fell between copying B into its role's file and recording the acceptance,
-the file's bytes have no record behind them: the member is whatever the latest
-acceptance names, holding or not, since requirement 6 keeps a member when
-its acceptance stops holding, and the file is re-materialized from it. No
+the file's bytes have no record behind them: the member is whatever the
+latest installing acceptance names, the latest acceptance of what was
+then the job's latest completed output, holding or not, since requirement
+6 keeps a member when its acceptance stops holding and makes a later
+acceptance of an earlier version evidence only; the file is
+re-materialized from it. No
 job runs twice unless an input changed. A publication left half-written is an
 external effect: the engine compares the retained manifest with the pinned
 one and finds it complete, absent or partial; only partial stops the
@@ -155,12 +164,15 @@ operator. [7]
 
 **17. A re-check does not supersede a refusal outside its scope.** `V`
 refuses A; the apply job records the refusal of the runtime report with
-`record-verification:cites:runtime` as its scope. `check-R` has that refusal as an input, so it
-reruns, finds unchanged A structurally sound, and accepts it on identity
-and citations. That scope does not include the refusal's, and the
-acceptance names no refusal it overrides, so the refusal stands and `R` is
-ready. The duplicate acceptance is harmless: safe to repeat, and it moves
-no count. [5, 7]
+`record-verification:cites:runtime` as its scope. Before `R` is handed
+out, a sibling report that A cites is corrected. That report is an input
+of `check-R`, so it reruns, finds unchanged A structurally sound, and
+accepts it on identity and citations. That scope does not include the
+refusal's, and the acceptance names no refusal it overrides, so the
+refusal stands and `R` is ready. The duplicate acceptance is harmless:
+safe to repeat, and it moves no count. `check-R` does not rerun on the
+refusal itself: the refusal it must answer reaches it through `R`'s
+attempt record, which changes only when `R` completes an attempt. [5, 7]
 
 **18. Input versions are fixed at hand-out.** `reconcile` is handed out
 while the reports are at version set 1; the hand-out pins those versions

@@ -57,7 +57,8 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    the recorded one; an input that has lapsed has not changed. Outputs
    and judgments are never removed, but an input can lapse: a refusal
    input when its job completes a newer output, and a required judgment
-   input, which is present only while the judgment holds. A change
+   input, which is present only while the judgment holds and its subject
+   is its role's current member. A change
    outside a job's inputs is not a signal.
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    subject version, accepted or refused, with findings. The judgment

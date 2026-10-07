@@ -41,11 +41,13 @@ which are kept as written.
   hand-outs make the two differ without any operator involved (scenarios
   21 and 22). The versions come from the engine's record, never from the
   verification's text. Only code jobs judge; model jobs write documents.
-- **Check jobs have the refusal they answer as an input.** This makes a check rerun on
-  every refusal and re-accept the standing version. Under scoped
-  supersession that acceptance cancels nothing and resets nothing, so the
-  rerun is a redundant record, not a defect. Dropping the input would need
-  another way to compare `answers.md` with the blockers.
+- **Check jobs take the refusal they answer from the producer's attempt
+  record.** The producer's refusal address lapses as soon as the new
+  candidate completes, and the latest refused judgment of the role may be
+  a late verdict about an older version (scenario 21); the attempt record
+  names the exact refusal the attempt was handed and changes only when an
+  attempt completes. So a check compares `answers.md` with the right
+  blockers and does not rerun on every refusal.
 
 ## Jobs
 
@@ -62,7 +64,7 @@ input, so it is not listed.
 | check-boundary | code | candidate, run-metadata, source.json, checkout state | accepts boundary against those, or refuses | |
 | runtime | model | boundary, refusal | candidate | 3 |
 | memory, epistemic | model | boundary, refusal; runtime as untracked context only (S8) | candidate, and `answers.md` on a rerun | 3 |
-| check-\<report\> | code | candidate, boundary, the reports it cites, answers, the refusal it answers (S4) | accepts the report against those; refuses when validation at its role fails, a declared record ID was dropped, or answers do not match the blockers | |
+| check-\<report\> | code | candidate, `R`'s attempt record, which names the refusal that attempt answered, boundary, the reports it cites, answers | accepts the report against those; refuses when validation at its role fails, a declared record ID was dropped, or answers do not match the blockers | |
 | reconcile | model | boundary, runtime, memory, epistemic, refusal | candidate reconciliation | 3 |
 | check-reconciliation | code | candidate, boundary, reports | accepts or refuses | |
 | verify-records | model | boundary, reports, reconciliation, answers | candidate record-verification | 3 |
