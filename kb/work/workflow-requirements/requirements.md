@@ -51,7 +51,7 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    either it has no completed attempt or some input has changed since its
    last completed one; 7 excepts one case. A job with an open attempt is
    not ready, nor is a job producing a member for a role that the type
-   does not require given the members present.
+   does not permit given the members present.
    An input changes when it appears or its current version differs from
    the recorded one; an input that has lapsed has not changed. Outputs
    and judgments are never removed, but an input can lapse: a refusal
