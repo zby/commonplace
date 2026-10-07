@@ -29,6 +29,29 @@ which maps the current workflow onto the spec and reports what the spec
 lacks, without changing it. [Scenarios](./scenarios.md) walks the
 situations the spec must cover and names those it does not yet.
 
+## Future direction: a movable boundary
+
+Not a requirement yet, recorded so the design does not close it off. The
+coordinator should be able to take over more of the run later, in the
+sense of [relaxing](../../notes/agentic-systems-interpret-underspecified-instructions.md):
+a code job's interpretation moved to the agent when the code's one
+projection becomes the bottleneck, and moved back when a pattern settles
+([codification and relaxing](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)).
+The spec already permits this without new machinery because its primitives
+are the same whoever invokes them: a judgment or an attempt result leaves
+one record whether a code job or the coordinator at the command line made
+it, so an apply job that parses a verification can be replaced by the
+coordinator reading it and judging, and the engine, the records and
+publication do not notice.
+
+The line to hold when that happens: bookkeeping stays in code, because
+readiness, currency, cleanup, bounds and coverage are enforcement
+properties that only a deterministic interpreter can guarantee;
+interpretation is what moves. Which jobs run, in what order and batches,
+is the coordinator's already. When the direction is taken up, requirement
+5 and the decision "only code jobs judge" are the two places that name the
+operator where they should name the coordinator too.
+
 ## API proposal
 
 [API design](./api-design.md) and the [Python sketch](./api_sketch.py) propose
