@@ -279,7 +279,16 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
                 return fail(f"file input {name} changed while the attempt was open")
     refused = [pin["refused"] for pin in record["pins"].values() if pin.get("refused")]
     if outputs[job.outputs[0]] in refused:
-        return fail("answered a refusal with the refused version unchanged")
+        previous = run.latest_completed(job.name)
+        previous_outputs = previous["outputs"] if previous is not None else {}
+        # An answer can reconcile a refusal without changing the subject. Only
+        # a produced auxiliary version counts; dropping a file is not an answer.
+        changed_auxiliary = previous is not None and any(
+            name in outputs and outputs[name] != previous_outputs.get(name)
+            for name in job.outputs[1:]
+        )
+        if not changed_auxiliary:
+            return fail("answered a refusal with the refused version unchanged and no new auxiliary version")
     store.commit_attempt({**record, "outputs": outputs, "model": result.model, "effort": result.effort})
     store.remove(directory)
     return None

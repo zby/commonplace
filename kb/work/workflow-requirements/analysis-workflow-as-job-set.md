@@ -107,12 +107,18 @@ with no blockers, accepts every report and the reconciliation against the
 verification. That second acceptance is what "records settled" means.
 
 **A correction round is nothing but the currency rule.** A refused report's
-job is ready again with the blocker as findings. Its rerun writes a new
+job is ready again with the blocker as findings. Its rerun writes the
 report and `answers.md`. The check compares the answers with the blocker
-and refuses a "corrected" answer whose report is byte-identical. Acceptance
-replaces the member. The reconciliation's input changed, so `reconcile`
-reruns; then `verify-records`, whose inputs changed too. The verification's
-earlier acceptance no longer holds and is replaced. The loop ends when
+and refuses a "corrected" answer whose report is byte-identical. An analyst
+may instead decline every blocker with evidence in changed answers and keep
+the report unchanged. The engine permits that completion; the check validates
+the answers and record preservation without overriding the verifier's refusal.
+The verifier declares answers as inputs, so changed answers rerun it even
+when the report and reconciliation do not change. Repeating the same answers
+with the same refused report fails and still consumes an attempt.
+Acceptance replaces the member. When report bytes change, the reconciliation's
+input changes, so `reconcile` reruns; then `verify-records`, whose inputs
+changed too. The verification's earlier acceptance no longer holds and is replaced. The loop ends when
 a verification has no blockers, or max attempts is reached. No packets, round
 numbers, set-check files or change diffs exist. The verifier reads the
 answers and its previous output (S3) and judges afresh, as its

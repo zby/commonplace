@@ -102,6 +102,17 @@ max attempts edits the fixed declaration, which is a method change and makes the
 run unpublishable. Further model work requires a new run; operator override
 acceptance remains a spec capability outside this sketch.
 
+An attempt answering a refusal may keep its primary output unchanged if it
+produces a changed auxiliary output, compared with its previous completed
+attempt. A newly present auxiliary version counts; an omitted output does
+not. With neither a changed primary nor a produced changed auxiliary version,
+the attempt fails. This permits an analyst to decline blockers with new
+answers while preserving the report. Consumer checks validate those answers;
+completion does not accept the report or supersede a refusal. A verifier
+must declare the answers as an input to reassess them despite an unchanged
+report. Checks that need to rerun for the new attempt declare its attempt
+record, as the analysis checks already do.
+
 An input that appears or differs from its recorded version is a readiness
 signal; one that lapses is not. A job waits while a producer of any of its
 inputs is ready or has an open attempt: the job filling the input's role

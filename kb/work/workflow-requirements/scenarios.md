@@ -148,15 +148,24 @@ ready. `assemble` is: its required acceptances cover only the boundary and
 the overview. Had the type discriminated on the overview, which `assemble`
 writes last, the gate could never close. [1, 4, 9]
 
-**15. Identical bytes after a refusal.** `V` refuses A. Attempt 2 reads
-the refusal and the worker hands back bytes identical to A. By content
-identity this is no new version, so no check reruns and no new judgment
-appears; were the attempt treated as answered, `R` would be unready and
-the run would stall with a refused member and nothing to do. Requirement 8
-instead treats it as a failed attempt: the command stops naming `R`, no
-inputs are recorded, so `R` stays ready, and the attempt counts. A worker
-that keeps returning A ends in a stop at max attempts with the right
-diagnosis: `R` answered its refusal without change. [4, 7, 8]
+**15. Unchanged result after a refusal.** `V` refuses A. Attempt 2 reads
+that refusal and returns A without producing a changed auxiliary output.
+Requirement 8 treats it as failed: the command stops naming `R`, no inputs
+are recorded, `R` stays ready, and the attempt counts. Repeated unchanged
+answers end in a stop at max attempts. Omitting an auxiliary output does
+not count as producing a new answer. [4, 7, 8]
+
+**15a. Decline a blocker without changing the report.** `R` returns A with
+changed answers declining the blockers and giving evidence for its findings.
+The attempt completes and counts toward max attempts; A keeps its version.
+`check-R` reads the producer's new attempt record, the exact refusal it was
+handed and the answers. It validates the decline under the consumer's
+contract; completion alone neither accepts A nor overrides `V`'s refusal.
+`V` declares the answers as an input, so it reruns even though A and the
+reconciliation remain byte-identical. Its apply job judges the versions it
+was handed. A fresh sufficient acceptance can supersede the refusal; another
+refusal can request another answer, subject to the unchanged attempt limit.
+An identical repeated answer is scenario 15, not a new reconciliation. [1, 3–8]
 
 **16. Structural acceptance does not replenish the budget.** A passes
 `check-R`, `V` refuses A, B passes `check-R`, `V` refuses B, and so on.

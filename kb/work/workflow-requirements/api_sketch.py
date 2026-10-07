@@ -219,6 +219,12 @@ def advance(
     or exhausted max attempts. Existing open attempts are left alone and
     reported. Repeated attempt results are idempotent.
 
+    Answering a refusal with the unchanged primary output completes only if
+    a produced auxiliary version differs from the previous completed attempt,
+    absence included. Omitting an auxiliary output is not a changed answer.
+    Consumer checks validate the answer; completion grants no acceptance or
+    override. Verifiers must declare auxiliary answers to reassess them.
+
     Currency is content-only. An input that appears or differs triggers
     readiness; one that lapses does not. Missing required inputs still block
     readiness. A job also waits while a producer of one of its inputs is

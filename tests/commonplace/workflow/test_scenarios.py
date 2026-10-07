@@ -301,11 +301,11 @@ def test_14_non_complete_disposition(coordinator: Coordinator) -> None:
     assert c.status.publishable
 
 
-def test_15_identical_bytes_after_a_refusal(coordinator: Coordinator) -> None:
+def test_15_unchanged_result_after_a_refusal(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
     refuse_report(c)
-    c.complete("report", "report A\n", answers="answered\n")
+    c.complete("report", "report A\n", answers="")
     c.stop("report")
     c.advance()
     assert "report" in c.handed()

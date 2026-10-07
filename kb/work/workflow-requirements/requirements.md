@@ -51,8 +51,9 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    records, so a role's file is re-materialized from them.
 4. **Versions, attempts and currency.** Every output keeps all its versions;
    one is current, and other jobs read only that one. Identity is by
-   content, so an identical rerun changes nothing downstream. Each run of a
-   job is an attempt, and it records the version of every input, absence
+   content, so an identical output changes nothing for consumers of that
+   output. Other outputs and the attempt record can change independently.
+   Each run of a job is an attempt, and it records the version of every input, absence
    included. A job is ready when its required inputs are present and
    either it has no completed attempt or some input has changed since its
    last completed one; 7 excepts one case. A job with an open attempt is
@@ -94,10 +95,15 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
 8. **Failure stays visible.** A job that cannot complete, whether the worker
    reported a problem, a code job failed, or an external effect's outcome
    cannot be established, leaves a record; the invocation stops and names
-   it, and the job is ready on the next invocation. An attempt that
-   answers a refusal with the refused version unchanged has failed. A
-   failed attempt records no inputs, so the job stays ready; it counts
-   toward max attempts.
+   it, and the job is ready on the next invocation. An attempt that answers
+   a refusal with the refused primary version unchanged and produces no
+   changed auxiliary output has failed. Compare each produced auxiliary
+   version with that job's previous completed attempt; a newly present
+   output counts as changed, but omitting an output does not. A changed
+   auxiliary output permits completion, not acceptance: consumer code checks
+   whether the answer resolves the refusal, and a downstream verifier must
+   declare that output as an input to reassess it. A failed attempt records
+   no inputs, so the job stays ready; every attempt counts toward max attempts.
 9. **Publication.** A set is publishable when every relation the type
    declares between its members is covered. A relation is covered by a
    holding acceptance of the current member at either end that has the
