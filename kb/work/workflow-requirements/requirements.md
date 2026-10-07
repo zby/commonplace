@@ -52,10 +52,11 @@ specific to it.
    is not ready, nor is a job producing a member that the type does not
    require given the members present.
    A read changes when it appears or its current version differs from the
-   recorded one. Outputs and judgments are never removed, so a read once
-   present stays present, with one exception: a required read of a
-   judgment is present only while the judgment holds. A change outside a
-   job's declared reads is not a signal.
+   recorded one; a read that has become absent has not changed. Outputs
+   and judgments are never removed, but a read can lapse: a refusal read
+   when its job completes a newer output, and a required read of a
+   judgment, which is present only while the judgment holds. A change
+   outside a job's declared reads is not a signal.
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    version, accepted or refused, with findings. The judgment records the
    reads the job used and names the declared relations it covers, possibly
@@ -86,8 +87,9 @@ specific to it.
    toward the bound.
 9. **Publication.** A set is publishable when every member has holding
    acceptances whose scopes together cover every relation the type
-   declares for it. A code job checks this and copies the current versions
-   out, pinned.
+   declares for it; an acceptance covers a relation only if the partner
+   version it read is the partner's current member. A code job checks
+   this and copies the current versions out, pinned.
 
 ## Open
 
@@ -109,10 +111,14 @@ They bind an implementation of this spec; they are not requirements.
   as it stands at every moment, publication is a plain copy, and no
   consumer needs an exclusion rule.
 - **The job set is its own file, named by the run, naming the type.** It
-  lives under the workflow's instructions beside the worker instructions
-  it refers to; the run's metadata, written at opening, names the job set
-  it runs, which fixes the declaration for the run. The type knows nothing
-  about producers. Why: a type says what a set is and a job set says how
+  is a declaration file, not code, under the workflow's instructions
+  beside the worker instructions it refers to: jobs, reads, outputs and
+  bounds, with each code job naming its handler by dotted path into the
+  package. The run's metadata, written at opening, names the job set it
+  runs, which fixes the declaration for the run. The type knows nothing
+  about producers. The instruction trees install as shared data, not as
+  Python, which is why handlers live in the package and the file only
+  names them. Why: a type says what a set is and a job set says how
   one is made; they change for different reasons, type specs are shared
   library artifacts, and one type may have several job sets, such as a
   production and a test configuration.
@@ -120,9 +126,12 @@ They bind an implementation of this spec; they are not requirements.
   document, and a code job reads it and records the judgment. Why: a
   judgment's reads and scope must be exact, and a worker's reads are not;
   the apply jobs in the analysis mapping show the pattern.
-- **Code jobs carry no bound.** Every failure of a code job already stops
-  the invocation with the operator in the loop; a count would only turn an
-  environment problem into a dead run. Bounds are for model jobs.
+- **Bounds are for model jobs and never reset.** Every failure of a code
+  job already stops the invocation with the operator in the loop; a count
+  would only turn an environment problem into a dead run. A model job that
+  exhausts its bound gets no further attempt: the operator's recourse is an
+  override acceptance of its latest output, or raising the bound in the
+  declaration, which is a method change. This is deliberate.
 - **Completion is reported, never inferred.** The orchestrating agent
   reports a model job finished; the command closes the attempt then and
   advances, which runs the check job. The validator never registers

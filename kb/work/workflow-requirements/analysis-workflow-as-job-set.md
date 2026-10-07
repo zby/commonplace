@@ -145,7 +145,8 @@ Each item names the need, where the mapping hit it, a proposed change, and
 the fallback inside the current spec. **Status after the 2026-10-07
 amendment** (judgments are declarable reads; reads are required or
 optional; a job's refusals are one versioned read whose current version is
-its latest refusal, so a read once present never disappears):
+the latest refusal of its latest completed output, and a read that has
+become absent has not changed):
 all items except S5 are resolved (requirement numbers inside the items
 predate the split of 5 into 5 to 7): S8 by requirement 2, which makes a
 model job's undeclared context untracked by design; S3 by requirement 3,

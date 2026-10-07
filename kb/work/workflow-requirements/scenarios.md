@@ -15,10 +15,10 @@ member. Nothing is ready. [4, 5, 6]
 **2. Refuse, correct, accept.** `V` refuses A with a blocker. `R`'s refusal
 read appeared, so `R` is ready. Attempt 2 reads the refusal, which supplies
 A and the findings, and writes B and `answers.md`, recording the refusal's
-version. While B awaits judgment the refusal read is unchanged, so `R` is
-not ready. `check-R` accepts B. Installing B changes the slot, but the
-refusal still names A by identity and `R` reads no slot of its own, so its
-recorded reads are unchanged and `R` stays quiet. Downstream reads of the
+version. B is now `R`'s latest completed output and has no refusal, so the
+refusal read is absent; a read that has become absent has not changed, so
+`R` is not ready. `check-R` accepts B. Installing B changes the slot, but
+`R` reads no slot of its own, so `R` stays quiet. Downstream reads of the
 member changed, so `reconcile` and `V` rerun. `V` has no blocker; the apply
 job accepts the members against the new verification. [1, 4, 5, 6, 7]
 
@@ -77,9 +77,9 @@ autonomous flow never produces: a refusal of a member whose acceptances
 all hold does not by itself block publication, since no acceptance's reads
 changed, so the operator should also hold publication or wait for the
 correction; and a judgment of a historical version is evidence only
-under requirement 6, so putting an old version back is an explicit
-restoration, recorded as a new acceptance of that version as the job's
-output, not a side effect of judging it. [5, 6, 7, 9]
+under requirement 6. Putting an old version back is not supported: the
+operator refuses the current version with a reason, and the rerun decides
+what to carry forward. [5, 6, 7, 9]
 
 **10. Publication blocked by an acceptance that stopped holding.**
 Synthesis B replaced A. The synthesis verification was accepted against A,
@@ -189,9 +189,11 @@ finishes with a verdict about A. The apply job reads `V`'s attempt record
 and the members at the versions it pinned, so its judgments are about A. An acceptance of A is
 evidence only, because A is not `R`'s latest completed output; B stays the
 member. A refusal of A is likewise not the refusal `R`'s read counts, so B
-is not thrown away. B has no acceptance against the verification, so the
-gates and publication wait; `V`'s reads changed, so `V` reruns and judges
-B. [3, 4, 6, 7]
+is not thrown away. The verification's acceptance against A still holds,
+since the pinned read has not moved, but it covers nothing: the partner
+version it read is not the partner's current member. B has no acceptance
+against the verification, so the gates and publication wait; `V`'s reads
+changed, so `V` reruns and judges B. [3, 4, 6, 7, 9]
 
 **22. Identical verdict text about different inputs.** `V` reruns on B
 and writes the same "no blockers" bytes it wrote about A. By content
