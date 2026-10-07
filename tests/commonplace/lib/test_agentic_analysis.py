@@ -441,45 +441,17 @@ inputs-commit: {inputs_commit}
 
 # Example System agentic-system analysis
 
-## Boundary and evidence
+## Members
 
-Fixture boundary at `{revision}`.
+{chr(10).join(f'- [{name}]({name})' for name in SET_NAMES if name != 'overview.md')}
 
-## Source register
-
-| SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md` | none |
+## Amendment index
 
 {amendment_index(members['reconciliation.md'].read_text())}
 
-## Bounded synthesis
-
-Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.
-
-## Limitations
-
-None.
-
-## Verification and blockers
-
-### Record verification
+## Deterministic validation
 
 Passed.
-
-### Profile verification
-
-Profile passes.
-
-### Synthesis verification
-
-Passed.
-
-### Deterministic validation
-
-Passed.
-
-### Blockers
-
-none
 """
 
 
@@ -528,6 +500,48 @@ def write_set(run_dir: Path, revision: str, *, source_path: Path | None = None) 
         "epistemic.md": write(run_dir / "output/epistemic.md", epistemic_text(revision)),
         "reconciliation.md": write(run_dir / "output/reconciliation.md", reconciliation_text(revision)),
     }
+    write(run_dir / "output/synthesis.md", f'''---
+type: agentic-system-analyses/types/agentic-system-synthesis.md
+description: "Fixture synthesis retains supported object and route conclusions at the frozen boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+---
+
+# Example System synthesis
+
+## Bounded synthesis
+
+Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.
+
+## Limitations
+
+None.
+''')
+    for stage, name in (("records", "record-verification.md"),
+                        ("profile", "profile-verification.md"),
+                        ("synthesis", "synthesis-verification.md")):
+        write(run_dir / "output" / name, f'''---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent fixture verification of the accepted {stage} at the frozen boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+verifies: {stage}
+---
+
+# Example System {stage} verification
+
+## Verification
+
+Passed.
+
+## Blockers
+
+none
+
+## Limits
+
+none
+''')
     overview = write(run_dir / "output/overview.md", overview_text(revision, members))
     repin(run_dir / "output")
     return overview
@@ -620,6 +634,12 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     boundary_values["reviewed-boundary"] = values["source"]["revision"]
     boundary_values["source"] = dict(values["source"])
     replace_frontmatter(boundary, boundary_values)
+    source = values["source"]
+    boundary.write_text(re.sub(
+        r"(?m)^\| SRC-1 \|.*$",
+        f"| SRC-1 | {source['kind']} | `{source['identity']}` | `{source['revision']}` | implementation | README.md | `README.md` | none |",
+        boundary.read_text(),
+    ))
     profile = run_dir / "output/memory-profile.md"
     replace_frontmatter(profile, {**frontmatter(profile),
                                  "source-identity": values["source"]["identity"],
@@ -641,7 +661,7 @@ def sync_set(tmp_path: Path, values: dict) -> None:
 
 def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
     """Move every set document and the review to another boundary."""
-    for path in (*(output_path(run_dir, name) for name in ("boundary.md", "overview.md", *MEMBER_TYPES)),
+    for path in (*(output_path(run_dir, name) for name in SET_NAMES),
                  tmp_path / REVIEW_PATH):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
@@ -804,15 +824,15 @@ def test_complete_state_rejects_an_invalid_member_pinned_by_the_manifest(tmp_pat
     assert any("member runtime.md" in item for item in results.fails)
 
 
-def test_complete_state_rejects_generated_review_from_another_source(
+def test_complete_state_rejects_generated_review_from_another_system(
     tmp_path: Path,
 ) -> None:
     state = valid_run_state(tmp_path)
     values = frontmatter(state)
     generated = tmp_path / values["generated-review"]["path"]  # type: ignore[index]
     content = generated.read_text(encoding="utf-8").replace(
-        "https://example.invalid/example-system",
-        "https://example.invalid/another-system",
+        'system: "Example System"',
+        'system: "Another System"',
     )
     generated.write_text(content, encoding="utf-8")
     values["generated-review"]["sha256"] = digest(generated)  # type: ignore[index]
@@ -1293,9 +1313,7 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
 def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: str, error: str | None) -> None:
     """A link out of output/ resolves in the run directory but breaks once retained."""
     overview = member_fixture(tmp_path) / "output/overview.md"
-    overview.write_text(overview.read_text().replace(
-        "Fixture synthesis over", f"Read {link}. Fixture synthesis over"
-    ))
+    overview.write_text(overview.read_text() + f"\nRead {link}.\n")
     fails = validation.validate_note(overview, repo_root=tmp_path).fails
     if error is None:
         assert fails == []
@@ -1730,8 +1748,10 @@ def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disp
     boundary.write_text(boundary.read_text() + "\n## Not reached\n\nFixture analysis was not reached.\n")
     overview.write_text(re.sub(r"(?m)^Amended or superseded records:.*\n", "",
         re.sub(r"(?:RT|MEM|EPI)-(?:OBJ|RTE|CMP|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}", "not evaluated", overview.read_text())))
-    for name in MEMBER_TYPES:
-        (directory / name).unlink()
+    for name in SET_NAMES:
+        if name not in {"boundary.md", "overview.md"}:
+            (directory / name).unlink()
+    overview.write_text(re.sub(r"(?m)^- \[(?!boundary\.md\]).*\]\(.*\)\n?", "", overview.read_text()))
     repin(directory)
     assert not validation.ValidationRun(tmp_path, ()).validate(directory).fails
     with pytest.raises(ValueError, match="requires a complete"):
@@ -1830,8 +1850,6 @@ def test_replacement_recognition_distinguishes_incumbent_from_interruption(tmp_p
 
 
 def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) -> None:
-    from commonplace.lib.agentic_workflow import set_role_refusals
-
     run_dir = member_fixture(tmp_path)
     output = run_dir / "output"
     epistemic = output / "epistemic.md"
@@ -1840,23 +1858,19 @@ def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) ->
     candidate = write(run_dir / "runtime-report-1.md",
                       (output / "runtime.md").read_text().replace(f"run-id: {RUN_ID}", "run-id: AAS-2026-09-04-other-01"))
 
-    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="runtime")
+    findings = validation.validate_draft_at_slot(output, "runtime.md", candidate, repo_root=tmp_path)
 
-    assert refusals == [(
-        f"[set] runtime.md: identity field run-id 'AAS-2026-09-04-other-01' does not match boundary.md; "
+    assert all(finding.role == "runtime" for finding in findings)
+    assert [finding.message for finding in findings if not finding.info and not finding.warn] == [(
+        f"runtime.md: identity field run-id 'AAS-2026-09-04-other-01' does not match boundary.md; "
         f"expected '{RUN_ID}'"
     )]
-    assert any("EPI-OBJ-dangling" in refusal for refusal in
-               set_role_refusals(epistemic, run_dir=run_dir, repo_root=tmp_path, role="epistemic"))
+    assert any("EPI-OBJ-dangling" in finding.message for finding in
+               validation.validate_draft_at_slot(output, "epistemic.md", epistemic, repo_root=tmp_path))
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
 def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path: Path) -> None:
-    from commonplace.lib.agentic_workflow import (
-        cited_reference_refusals,
-        set_role_refusals,
-    )
-
     run_dir = member_fixture(tmp_path)
     output = run_dir / "output"
     runtime = output / "runtime.md"
@@ -1865,36 +1879,36 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
     ))
     candidate = write(run_dir / "memory-candidate.md",
                       (output / "memory.md").read_text() + "\nSee RT-OBJ-store.\n")
-    verification = write(run_dir / "verification.md", "# Verification\n\nSee RT-OBJ-store.\n")
+    verification = write(run_dir / "verification.md",
+                         (output / "record-verification.md").read_text() + "\nSee RT-OBJ-store.\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
 
-    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory")
-    assert any("memory.md: ambiguous record RT-OBJ-store" in refusal for refusal in refusals)
-    refusals = cited_reference_refusals(verification, run_dir=run_dir, repo_root=tmp_path)
-    assert any("verification.md: ambiguous record RT-OBJ-store" in refusal for refusal in refusals)
+    findings = validation.validate_draft_at_slot(output, "memory.md", candidate, repo_root=tmp_path)
+    assert any("memory.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
+    findings = validation.validate_draft_at_slot(output, "record-verification.md", verification, repo_root=tmp_path)
+    assert any("record-verification.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
 def test_profile_rejects_missing_identity_source_without_requiring_whole_set(tmp_path: Path) -> None:
-    from commonplace.lib.agentic_workflow import set_role_refusals
-
     run_dir = member_fixture(tmp_path)
     output = run_dir / "output"
     candidate = write(run_dir / "profile-candidate.md", (output / "memory-profile.md").read_text()
                       .replace("MEM-OBJ-store", "RT-OBJ-store")
                       .replace(SOURCE, "https://example.invalid/unrelated"))
+    memory_content = (output / "memory.md").read_text()
     (output / "memory.md").unlink()
-    refusals = set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory-profile")
-    assert refusals == [(
-        "[set] memory-profile.md: cannot check identity fields source-identity; "
+    findings = validation.validate_draft_at_slot(output, "memory-profile.md", candidate, repo_root=tmp_path)
+    assert [finding.message for finding in findings if not finding.info and not finding.warn] == [(
+        "memory-profile.md: cannot check identity fields source-identity; "
         "source member memory.md is absent"
     )]
     # Restore just the identity source. An unrelated absent member is not a
     # candidate failure when no applicable check needs it.
-    write(output / "memory.md", "---\ntype: agentic-system-analyses/types/agent-memory-analysis-report.md\n"
-          "source-identity: https://example.invalid/unrelated\n---\n# Memory\n")
+    write(output / "memory.md", memory_content.replace(SOURCE, "https://example.invalid/unrelated"))
     (output / "epistemic.md").unlink()
-    assert set_role_refusals(candidate, run_dir=run_dir, repo_root=tmp_path, role="memory-profile") == []
+    findings = validation.validate_draft_at_slot(output, "memory-profile.md", candidate, repo_root=tmp_path)
+    assert not [finding for finding in findings if not finding.info and not finding.warn]
 
 
 def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
@@ -1907,8 +1921,6 @@ def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
 
 
 def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_path: Path) -> None:
-    from commonplace.lib.agentic_workflow import set_role_refusals
-
     run_dir = member_fixture(tmp_path)  # its boundary pins a checkout that is not here
     output = run_dir / "output"
 
@@ -1917,5 +1929,6 @@ def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_pa
     assert checked.fails == []
     assert any("memory.md:" in info and "quotations unverified, source unavailable" in info
                for info in checked.infos)
-    refusals = set_role_refusals(output / "memory.md", run_dir=run_dir, repo_root=tmp_path, role="memory")
-    assert any("quotations unverified" in refusal for refusal in refusals)
+    findings = validation.validate_draft_at_slot(output, "memory.md", output / "memory.md", repo_root=tmp_path)
+    assert any(finding.info and "quotations unverified" in finding.message for finding in findings)
+    assert not [finding for finding in findings if not finding.info and not finding.warn]

@@ -493,8 +493,8 @@ class ValidationRun:
                 results.passes.append("[schema] directory artifact requirements satisfied")
             findings = self.artifact_findings(directory)
             for finding in findings:
-                (results.infos if finding.info else results.fails).append(
-                    f"[type: {profile.type_name}] {finding.message}")
+                (results.infos if finding.info else results.warns if finding.warn else results.fails).append(
+                    f"[type: {profile.type_name}] {finding.render()}")
             failing = [finding for finding in findings if not finding.info]
             if not failing and (profile.layout is not None or _DIRECTORY_TYPE_RULES.get(profile.type_path)):
                 results.passes.append(f"[type: {profile.type_name}] members, roles and relations satisfied")
@@ -1037,6 +1037,63 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
+@type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
+def _agentic_boundary_register_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """The register's shape and identity are content, not invocation checks."""
+    from collections import Counter
+
+    from commonplace.lib.agentic_records import (
+        source_register_ids,
+        source_register_rows,
+    )
+
+    body = parsed.document.body
+    rows = source_register_rows(body)
+    errors = [
+        f"source register: {row[0]} needs all eight columns from the boundary contract"
+        for row in rows if len(row) != 8
+    ]
+    errors.extend(
+        f"duplicate source declaration: {identifier}; keep one row per source ID "
+        "and separate evidence layers and scopes within that row"
+        for identifier, count in Counter(source_register_ids(body)).items() if count > 1
+    )
+    source = (parsed.document.frontmatter or {}).get("source")
+    if isinstance(source, dict):
+        expected = tuple(str(source.get(field) or "") for field in ("kind", "identity", "revision"))
+        if not any(
+            len(row) == 8 and tuple(cell.strip("`") for cell in row[1:4]) == expected
+            for row in rows
+        ):
+            errors.append(
+                "source register must declare the frozen source in a SRC-* row: "
+                f"kind `{expected[0]}`, identity `{expected[1]}`, revision or capture `{expected[2]}`"
+            )
+    results.fails.extend(errors)
+    if not errors:
+        results.passes.append("source register: eight-column rows, unique IDs and frozen source checked")
+
+
+@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
+def _agentic_reconciliation_amendment_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.agentic_records import value_amendments
+
+    errors = [
+        "value amendment: reconciliation states connections between reports and does "
+        "not replace a record's value; describe the disagreement with both records and "
+        "their evidence, or use `Amendment: <ID> is superseded by <IDs>` for an "
+        f"identity judgment: {line[:120]}"
+        for line in value_amendments(parsed.document.body)
+    ]
+    results.fails.extend(errors)
+    if not errors:
+        results.passes.append("reconciliation amendments: only identity supersessions")
+
+
 @type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
@@ -1108,6 +1165,9 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-verification.md")
+@type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
+@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
 def _agentic_set_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1991,12 +2051,61 @@ def run_validation(
     ).evaluate()
 
 
+def validate_draft_at_slot(
+    directory: Path, slot: Path | str, candidate: Path, *, repo_root: Path,
+) -> list[Finding]:
+    """Validate candidate bytes at a declared member slot, without writing.
+
+    ``slot`` is a filename or the absolute intended member path. Ordinary
+    file checks use that intended path (including link resolution); set checks
+    see the replacement bytes everywhere and return only this member's role.
+    No absent findings are suppressed. Manifest pinning is not a draft check:
+    this judges member content and relations, not publication acceptance.
+    """
+    directory = directory.resolve()
+    intended = Path(slot)
+    if not intended.is_absolute():
+        intended = directory / intended
+    if intended.parent != directory:
+        raise ValueError("draft slot must be a direct member path")
+    run = ValidationRun(repo_root, (), content_overrides={intended: candidate.read_bytes()})
+    if intended.is_symlink():
+        raise ValueError("draft slot must not be a symlink")
+    from commonplace.lib.directory_artifact import UniqueKeyLoader
+
+    manifest = yaml.load(run.read_bytes(directory / MANIFEST_NAME), Loader=UniqueKeyLoader)
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("type"), str):
+        raise TypeError("artifact manifest needs a mapping with a string type")
+    # Published pins describe incumbent bytes, not a hypothetical replacement.
+    # Strip them in memory so every relation sees the draft, even on replay.
+    run.content_overrides[directory / MANIFEST_NAME] = yaml.safe_dump({
+        key: value for key, value in manifest.items() if key != "members"
+    })
+    run._bytes.pop(directory / MANIFEST_NAME, None)
+    layout = resolve_type(
+        directory / MANIFEST_NAME, manifest, repo_root=run.repo_root,
+        load_frontmatter=run.load_frontmatter,
+    ).layout
+    role = layout.role_at(intended.name) if layout is not None else None
+    if role is None:
+        raise ValueError(f"{intended.name}: no declared layout role")
+    result = run.validate(intended)
+    findings = [
+        Finding(role.name, f"{intended.name}: {message}", info=severity == "infos", warn=severity == "warns")
+        for severity in ("fails", "warns", "infos") for message in getattr(result, severity)
+    ]
+    try:
+        findings += [finding for finding in run.artifact_findings(directory) if finding.role == role.name]
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        findings.append(Finding(role.name, f"{intended.name}: set input cannot be checked: {exc}"))
+    return findings
+
+
 @directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
 def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
     """Relations the layout names but code must compute, over the members present."""
     from commonplace.lib.agentic_records import (
         amendment_index,
-        section,
         set_declarations,
         set_record_findings,
     )
@@ -2023,23 +2132,20 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
         role = layout.role_at(name) if name else None
         findings.append(Finding(role.name if role else None, message))
 
-    boundary, overview = documents.get("boundary"), documents.get("overview")
+    overview = documents.get("overview")
     reconciliation = documents.get("reconciliation")
     index = amendment_index(reconciliation.body) if reconciliation is not None else None
-    if boundary is not None and overview is not None:
-        copied = section(overview.body, "Boundary and evidence").strip()
-        if copied != section(boundary.body, "Boundary and evidence").strip():
-            findings.append(Finding("overview", f"{layout.path('overview')}: Boundary and evidence "
-                                                f"is not the copy of {sources}"))
-        register = section(boundary.body, "Source register").strip()
-        expected = {register} if index is None else {register, f"{register}\n\n{index}"}
-        if section(overview.body, "Source register").strip() not in expected:
-            findings.append(Finding("overview", f"{layout.path('overview')}: Source register is not the copy "
-                                                f"of {sources}" + ("" if index is None else " with the amendment index")))
     if index is not None and overview is not None and index not in overview.body.splitlines():
         findings.append(Finding("overview", "overview amendment index does not match reconciliation"))
+    if overview is not None:
+        links = {link.split('#', 1)[0].removeprefix('./') for link in overview.links}
+        for name in documents:
+            if name != "overview" and layout.path(name) not in links:
+                findings.append(Finding("overview", f"{layout.path('overview')}: missing member link to {layout.path(name)}",
+                                        repair="link every present member from the overview's Members section"))
 
     findings += _set_quotation_findings(artifact, layout, documents)
+    findings += _verification_findings(layout, documents)
 
     profile = documents.get("memory-profile")
     if profile is not None:
@@ -2059,6 +2165,51 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
             identity = (memory.frontmatter or {}).get("source-identity", "")
             if artifact.path.name != source_slug(identity, (overview.frontmatter or {}).get("system", "")):
                 findings.append(Finding(None, "current directory name does not match its source"))
+    return findings
+
+
+def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
+    """Stage identity, list grammar and carried limits; meaning remains review."""
+    from commonplace.lib.agentic_records import record_references, section
+
+    findings = []
+    synthesis = documents.get("synthesis")
+    limitations = record_references(section(synthesis.body, "Limitations")) if synthesis else set()
+    for name, stage in (("record-verification", "records"),
+                        ("profile-verification", "profile"),
+                        ("synthesis-verification", "synthesis")):
+        document = documents.get(name)
+        if document is None:
+            continue
+        path = layout.path(name)
+        actual = (document.frontmatter or {}).get("verifies")
+        if actual != stage:
+            findings.append(Finding(name, f"{path}: verifies {actual!r} does not match {stage!r}"))
+        for title in ("Blockers", "Limits"):
+            text = section(document.body, title).strip()
+            if text == "none":
+                continue
+            lines = [line for line in text.splitlines() if line.strip()]
+            valid = lines and lines[0].startswith("- ") and all(
+                line.startswith(("- ", " ", "\t")) for line in lines
+            )
+            if not valid:
+                findings.append(Finding(name, f"{path}: {title} must be exactly none or a Markdown list",
+                                        repair=f"write none or one '- ' entry per {title.lower()} finding; indent continuation lines"))
+                continue
+            entries = re.split(r"(?m)^- ", text)[1:]
+            if title == "Blockers" and stage == "records":
+                for entry in entries:
+                    if not re.match(r"(?:runtime|memory|epistemic|reconciliation):", entry):
+                        findings.append(Finding(name, f"{path}: record blocker has no report addressee",
+                                                repair="start each blocker with runtime:, memory:, epistemic: or reconciliation:"))
+            if title == "Limits" and synthesis is not None:
+                for entry in entries:
+                    cited = record_references(entry)
+                    if cited and not cited & limitations:
+                        findings.append(Finding("synthesis", f"{layout.path('synthesis')}: limit not carried: "
+                                                f"Limitations names none of {', '.join(sorted(cited))} "
+                                                f"for the limit {path} declares: {entry.splitlines()[0][:100]}"))
     return findings
 
 

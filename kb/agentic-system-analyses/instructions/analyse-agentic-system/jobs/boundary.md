@@ -92,8 +92,9 @@ record source paths in the register. Later analysts retain quotations.
 ## Output
 
 Write the boundary to `output` under the supplied boundary type, with `run-id`
-as its identity. Its two sections follow the boundary contract and go into the
-overview unchanged. For a `blocked` or `out-of-scope` disposition, add
+as its identity. Its two sections follow the boundary contract and remain
+in the boundary member; the overview links to it without copying them.
+For a `blocked` or `out-of-scope` disposition, add
 `## Not reached`, saying what was not reached, why, and which conclusion that
 prevents.
 
@@ -101,4 +102,5 @@ When you freeze a source, `source.identity` is exactly the
 `source-identity`; the output is refused otherwise. If the source you can
 freeze has another identity, you cannot finish: write the problem report.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.

@@ -60,5 +60,7 @@ When `round = correction`, follow **Correct a report after verification** in
 the supplied worker rules; this instruction still governs the report's
 content.
 
-Run the acceptance check before submitting; a check result and the
-conclusions it prevents belong under Limitations and checks.
+Run the draft-at-slot content check in the worker rules before submitting;
+its result and the conclusions it prevents belong under Limitations and
+checks. A pass does not establish job acceptance; code also checks invocation
+residue.

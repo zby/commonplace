@@ -25,9 +25,11 @@ from commonplace.lib.agentic_set import normalize_source_identity
 from commonplace.lib.agentic_workflow import (
     READ_BATCH_BYTES,
     AnalyseAgenticSystem,
-    blockers_refusals,
     boundary_refusals,
+    member_refusals,
     reading_batches,
+    set_role_refusals,
+    slot,
 )
 from commonplace.workflow import (
     Blocked,
@@ -437,8 +439,22 @@ def test_complete_run_publishes_and_replays_to_done(fixture: Fixture) -> None:
     assert manifest["worker"] == {"model": "fixture-model", "effort": "high"}
     assert json.loads((fixture.run_dir / "run-metadata.json").read_text())["model"] == "fixture-model"
 
+    copied = {
+        "synthesis.md": "synthesis-0.md",
+        "record-verification.md": "verification-0.md",
+        "profile-verification.md": "profile-verification-0.md",
+        "synthesis-verification.md": "synthesis-verification-0.md",
+    }
+    for name, version in copied.items():
+        assert (output / name).read_bytes() == (fixture.run_dir / version).read_bytes()
+        assert review.with_name(name).read_bytes() == (output / name).read_bytes()
+        assert name in manifest["members"]
+    copy_state = {name: ((output / name).read_bytes(), (output / name).stat().st_mtime_ns)
+                  for name in copied}
     before = state_path.read_bytes(), state_path.stat().st_mtime_ns
     assert isinstance(scripted.orchestrator.step(), Done)
+    assert {name: ((output / name).read_bytes(), (output / name).stat().st_mtime_ns)
+            for name in copied} == copy_state
     assert (state_path.read_bytes(), state_path.stat().st_mtime_ns) == before
     assert definition.publications == 1
     # Replay renders the candidate again, byte for byte what was published,
@@ -524,7 +540,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
     attempt, prompt = prompt_of(scripted.round(), job_name)
     assert attempt == 2
     assert f"identity field {field}" in prompt
-    assert "rule member identity" in prompt
+    assert "[set]" in prompt and "Repair:" in prompt
     assert f"run-id = {RUN_ID}\n" in prompt
     assert "reconcile-0" not in scripted.launched
     assert isinstance(scripted.run()[-1], Done)
@@ -536,7 +552,7 @@ def test_analyst_identity_is_refused_while_the_member_can_be_repaired(
 
 @pytest.mark.slow
 @pytest.mark.parametrize("source_first", [True])
-def test_supersession_index_is_inside_source_register_in_either_boundary_order(
+def test_supersession_index_is_separate_from_boundary_in_either_order(
     fixture: Fixture, source_first: bool,
 ) -> None:
     boundary = fixture.boundary()
@@ -554,19 +570,20 @@ def test_supersession_index_is_inside_source_register_in_either_boundary_order(
     )
     assert isinstance(scripted.run()[-1], Done)
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
-    match = re.search(r"(?ms)^## Source register\n(.*?)(?=^## |\Z)", overview)
+    match = re.search(r"(?ms)^## Amendment index\n(.*?)(?=^## |\Z)", overview)
     assert match is not None
     index = "Amended or superseded records: EPI-OBJ-store; [reconciliation](reconciliation.md)."
     assert overview.count(index) == 1
-    assert row in match[1]
-    assert match[1].index(row) < match[1].index(index)
+    assert row not in overview
+    assert index in match[1]
+    assert "[Boundary](./boundary.md)" in overview
 
 
 # 2. An out-of-scope boundary
 
 
 @pytest.mark.slow
-def test_out_of_scope_boundary_closes_with_an_overview_only_set(
+def test_out_of_scope_boundary_closes_with_boundary_and_entry(
     fixture: Fixture,
 ) -> None:
     scripted, definition = agent(
@@ -614,9 +631,9 @@ def test_synthesis_blockers_correct_public_text_without_reopening_records(fixtur
     assert [name for name in scripted.launched if name.startswith("synthesize")] == ["synthesize", "synthesize-1"]
     prompt = last_prompt(fixture, "synthesize-1")
     assert "previous-synthesis =" in prompt and "synthesis-verification-0.md" in prompt
-    assert "MEM-OBJ-store has a scope gap" in (fixture.public_path).read_text()
-    assert "### Record verification" in (fixture.run_dir / "output/overview.md").read_text()
-    assert "### Synthesis verification" in (fixture.run_dir / "output/overview.md").read_text()
+    assert "MEM-OBJ-store has a scope gap" in fixture.public_path.with_name("synthesis.md").read_text()
+    assert "[Record verification](./record-verification.md)" in fixture.public_path.read_text()
+    assert "[Synthesis verification](./synthesis-verification.md)" in fixture.public_path.read_text()
 
 
 @pytest.mark.slow
@@ -641,7 +658,7 @@ def test_synthesis_with_an_undeclared_record_is_refused(fixture: Fixture) -> Non
     drive_to(scripted, "synthesize")
     attempt, prompt = prompt_of(scripted.round(), "synthesize")
     assert attempt == 2
-    assert "[set] synthesis-0.md: unresolved record RT-OBJ-missing" in prompt
+    assert "[set] synthesis.md: unresolved record RT-OBJ-missing" in prompt
 
 
 @pytest.mark.slow
@@ -722,7 +739,8 @@ def test_a_blocker_addressed_to_an_analyst_corrects_that_report(fixture: Fixture
     assert (retained / "epistemic.md").read_text(encoding="utf-8") == corrected
     assert sorted(path.name for path in retained.iterdir()) == sorted(
         ["ARTIFACT.yaml", "boundary.md", "epistemic.md", "memory.md", "memory-profile.md",
-         "overview.md", "reconciliation.md", "runtime.md"])
+         "overview.md", "reconciliation.md", "runtime.md", "synthesis.md",
+         "record-verification.md", "profile-verification.md", "synthesis-verification.md"])
     assert definition.publications == 1
     # A replay rewrites the current versions in the same order and changes nothing.
     assert isinstance(scripted.orchestrator.step(), Done)
@@ -837,7 +855,7 @@ def test_a_refused_correction_leaves_the_current_report(
 
 
 @pytest.mark.slow
-def test_a_declared_limit_must_reach_the_overview_limitations(fixture: Fixture) -> None:
+def test_a_declared_limit_must_reach_the_synthesis_limitations(fixture: Fixture) -> None:
     limit = "- MEM-OBJ-store: its deployment use was not inspected; withhold conclusions about runtime reuse."
     limited = fixture.verification(limits=limit)
     carried = fixture.synthesis(limitations="MEM-OBJ-store: deployment use uninspected; runtime reuse is not established.")
@@ -856,8 +874,10 @@ def test_a_declared_limit_must_reach_the_overview_limitations(fixture: Fixture) 
     assert isinstance(scripted.run()[-1], Done)
     assert definition.publications == 1
     overview = (fixture.run_dir / "output/overview.md").read_text(encoding="utf-8")
-    assert "Limits carried into Limitations:" in overview and limit in overview
-    assert "deployment use uninspected" in overview
+    assert limit not in overview
+    assert "deployment use uninspected" not in overview
+    assert limit in (fixture.run_dir / slot("record-verification")).read_text()
+    assert "deployment use uninspected" in (fixture.run_dir / slot("synthesis")).read_text()
     assert "profile-verification =" in last_prompt(fixture, "verify-synthesis")
 
 
@@ -872,7 +892,7 @@ def test_limits_are_none_or_a_list(fixture: Fixture) -> None:
     attempt, prompt = prompt_of(scripted.round(), "verify-0")
 
     assert attempt == 2
-    assert "`## Limits` must be exactly `none` or a Markdown list" in prompt
+    assert "Limits must be exactly none or a Markdown list" in prompt
     assert isinstance(scripted.run()[-1], Done)
 
 
@@ -889,7 +909,7 @@ def test_a_blocker_without_an_addressee_is_refused(fixture: Fixture) -> None:
     attempt, prompt = prompt_of(scripted.round(), "verify-0")
 
     assert attempt == 2
-    assert prompt.count("blocker addressee: start each blocker with `runtime:`") == 2
+    assert prompt.count("record blocker has no report addressee") == 2
     assert "runtime-1" not in scripted.launched
     assert isinstance(scripted.run()[-1], Done)
     assert "runtime-1" in scripted.launched
@@ -990,12 +1010,18 @@ def test_boundary_source_register_checks_unique_ids_across_layers(fixture: Fixtu
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(boundary, encoding="utf-8")
 
-    refusals = boundary_refusals(path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE)
+    refusals = boundary_content_findings(fixture, path)
 
-    assert refusals == ([
-        ("duplicate source declaration: SRC-1; keep one row per source ID "
-         "and separate evidence layers and scopes within that row")
-    ] if duplicate else [])
+    assert bool(refusals) is duplicate
+    if duplicate:
+        assert any("duplicate source declaration: SRC-1" in reason for reason in refusals)
+
+
+def boundary_content_findings(fixture: Fixture, path: Path) -> list[str]:
+    from commonplace.lib.agentic_finalize import start_manifest
+
+    start_manifest(fixture.run_dir)
+    return set_role_refusals(path, run_dir=fixture.run_dir, repo_root=fixture.root, role="boundary")
 
 
 def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
@@ -1010,8 +1036,7 @@ def test_boundary_with_an_unquoted_date_is_refused(fixture: Fixture) -> None:
     assert "analysis-cutoff: 2026-09-04\n" in path.read_text(encoding="utf-8")
 
     assert (
-        boundary_refusals(path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE)
-        != []
+        member_refusals(path, repo_root=fixture.root) != []
     )
 
 
@@ -1026,7 +1051,7 @@ def test_boundary_cutoff_uses_the_overview_date_format(fixture: Fixture, cutoff:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(fixture.boundary(**{"analysis-cutoff": cutoff}), encoding="utf-8")
 
-    refusals = boundary_refusals(path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE)
+    refusals = member_refusals(path, repo_root=fixture.root)
 
     assert refusals == ([] if valid else [f"[schema] frontmatter.analysis-cutoff: '{cutoff}' is not a 'date'"])
 
@@ -1053,7 +1078,7 @@ def test_boundary_register_must_declare_the_frozen_source(fixture: Fixture, defe
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(boundary.replace(row, replacement), encoding="utf-8")
 
-    refusals = boundary_refusals(path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE)
+    refusals = boundary_content_findings(fixture, path)
 
     assert any("source register must declare the frozen source" in reason for reason in refusals)
     assert any(f"identity `{SOURCE}`, revision or capture `{fixture.revision}`" in reason for reason in refusals)
@@ -1185,13 +1210,13 @@ def test_the_description_and_synthesis_become_the_public_review(
     assert review_path.read_bytes() == overview.read_bytes()
     assert frontmatter(review_path)["evidence-tier"] == "code-grounded"
     assert frontmatter(review_path)["analysis-cutoff"] == "2026-09-04"
-    assert "Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call." in review
-    assert "## Limitations\n\nNone.\n" in review
-    assert "[the runtime member](./runtime.md#routes)" in review
-    assert "[the overview](overview.md)" in review
-    assert "[the project](https://example.invalid/example-system)" in review
-    assert "[Limitations](#limitations)" in review
-    # Every rewritten link resolves once the set is retained.
+    assert "## Bounded synthesis" not in review
+    assert "## Limitations" not in review
+    assert "[Synthesis](./synthesis.md)" in review
+    retained_synthesis = review_path.with_name("synthesis.md")
+    assert retained_synthesis.read_text() == linked
+    assert "[the runtime member](./runtime.md#routes)" in retained_synthesis.read_text()
+    # The entry's links resolve once the set is retained.
     assert validation.validate_note(review_path, repo_root=fixture.root).warns == []
 
 
@@ -1239,8 +1264,17 @@ def test_a_named_blocker_starts_another_reconciliation_round(fixture: Fixture) -
         ("- RT-RTE-model-call is never traced.\nRT-OBJ-store is thin.", False),
     ],
 )
-def test_blockers_are_none_or_a_list(blockers: str, accepted: bool) -> None:
-    assert (blockers_refusals(blockers) == []) is accepted
+def test_blockers_are_none_or_a_list(fixture: Fixture, blockers: str, accepted: bool) -> None:
+    from commonplace.lib.agentic_finalize import start_manifest
+
+    start_manifest(fixture.run_dir)
+    (fixture.run_dir / slot("boundary")).write_text(fixture.boundary())
+    (fixture.run_dir / slot("runtime")).write_text(runtime_text(fixture.revision))
+    candidate = fixture.run_dir / "draft.md"
+    candidate.write_text(fixture.verification(blockers, title="Profile verification"))
+    refusals = set_role_refusals(candidate, run_dir=fixture.run_dir,
+                                 repo_root=fixture.root, role="profile-verification")
+    assert (refusals == []) is accepted
 
 
 @pytest.mark.slow
@@ -1606,7 +1640,9 @@ def source_refusals(fixture: Fixture, **source: object) -> list[str]:
     path = fixture.run_dir / "jobs/boundary/boundary.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(fixture.boundary(source=frozen), encoding="utf-8")
-    return boundary_refusals(path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE)
+    return member_refusals(path, repo_root=fixture.root) + boundary_content_findings(fixture, path) + boundary_refusals(
+        path, repo_root=fixture.root, run_id=RUN_ID, identity=SOURCE,
+    )
 
 
 def test_a_git_source_without_a_path_is_refused(fixture: Fixture) -> None:
@@ -1634,11 +1670,11 @@ def test_a_clone_without_checked_out_files_is_refused(fixture: Fixture) -> None:
     assert "does not hold exactly the commit's files" in refusal
 
 
-# 8. The verification is validated as overview text
+# 8. The verification is validated at its own member slot
 
 
 @pytest.mark.slow
-def test_a_verification_the_overview_cannot_hold_is_refused(fixture: Fixture) -> None:
+def test_a_verification_with_a_prose_line_anchor_is_refused(fixture: Fixture) -> None:
     ranged = fixture.verification().replace(
         "Passed:", "Passed at `README.md:1`:"
     )
@@ -1751,8 +1787,8 @@ def test_each_job_declares_the_contracts_it_writes_or_judges(fixture: Fixture) -
         "verify-0": set(types) - {"overview", "profile", "synthesis"},
         "profile": {"sources", "records", "profile"},
         "verify-profile": {"sources", "records", "profile", "verification"},
-        "synthesize": {"sources", "records", "overview", "synthesis"},
-        "verify-synthesis": {"sources", "records", "overview", "synthesis", "verification"},
+        "synthesize": {"sources", "records", "synthesis"},
+        "verify-synthesis": {"sources", "records", "synthesis", "verification"},
     }
     jobs = {
         "boundary": definition.boundary_job(fixture.run_dir),
@@ -1872,6 +1908,13 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             "run-id": RUN_ID,
             "run-state": str(run / "run-state.md"),
             "job": job.name,
+            "validation-set": str(run / "output"),
+            "validation-member": agentic_set.analysis_layout().path({
+                "boundary": "boundary", "runtime": "runtime", "memory": "memory",
+                "epistemic": "epistemic", "reconcile": "reconciliation",
+                "verify": "record-verification", "synthesize": "synthesis",
+                "verify-synthesis": "synthesis-verification",
+            }[kind]),
             "output": str(job.output_path(run)),
             "problem": str(job.problem_path(run)),
             "workspace": str(run / "jobs" / job.name) + "/",
@@ -1880,7 +1923,7 @@ def test_invocations_resolve_each_jobs_inputs_and_round(
             **{key: (value if key == "round" else str(run / value)) for key, value in expected.items()},
         }
         path_values = [value for key, value in values.items()
-                       if key not in {"system", "run-id", "job", "round", "source-identity"}]
+                       if key not in {"system", "run-id", "job", "round", "source-identity", "validation-member"}]
         assert all(Path(path).is_absolute() for path in [method, *first_reads, *path_values])
         files = {str(run / value) for key, value in expected.items() if key not in {"round", "answers"}}
         assert set(job.inputs) == {method, *first_reads, *files}
@@ -2025,7 +2068,7 @@ def test_profile_correction_preserves_accepted_records(fixture: Fixture) -> None
     assert [n for n in scripted.launched if n.startswith("reconcile-")] == ["reconcile-0"]
     assert (fixture.run_dir / "output/memory.md").read_bytes() == (fixture.run_dir / "memory-report-0.md").read_bytes()
     assert (fixture.public_path.parent / "memory-profile.md").read_text() == corrected
-    assert "### Profile verification" in fixture.public_path.read_text()
+    assert "[Profile verification](./profile-verification.md)" in fixture.public_path.read_text()
     prompt = last_prompt(fixture, "profile-1")
     assert "previous-profile =" in prompt and "profile-verification-0.md" in prompt
 

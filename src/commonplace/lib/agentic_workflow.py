@@ -57,10 +57,6 @@ from commonplace.lib.agentic_records import (
     record_declaration,
     record_references,
     section,
-    set_record_findings,
-    source_register_ids,
-    source_register_rows,
-    value_amendments,
 )
 from commonplace.lib.agentic_set import (
     OUTPUT_DIR,
@@ -76,10 +72,9 @@ from commonplace.lib.analysis_worktree import preparation_for
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import Finding
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.quote_matching import ranged_prose_anchors
 from commonplace.lib.validation import (
     ValidationRun,
-    agentic_set_member_link_failures,
+    validate_draft_at_slot,
     validate_note,
 )
 from commonplace.workflow import (
@@ -106,7 +101,6 @@ BOUNDARY_CONTRACT = "../../agentic-analysis-boundary.md"
 BOUNDARY_TYPE = f"{TYPES}/agentic-system-boundary.md"
 SOURCES_CONTRACT = "../../agentic-analysis-sources.md"
 RECORDS_CONTRACT = "../../agentic-analysis-records.md"
-OVERVIEW_CONTRACT = f"{TYPES}/agentic-system-analysis-overview.md"
 RUNTIME_CONTRACT = f"{TYPES}/agentic-system-runtime-report.md"
 PROFILE_CONTRACT = f"{TYPES}/agent-memory-profile.md"
 MEMORY_CONTRACT = f"{TYPES}/agent-memory-analysis-report.md"
@@ -123,7 +117,7 @@ RECORD_CONTRACTS = (
     EPISTEMIC_CONTRACT,
     RECONCILIATION_CONTRACT,
 )
-SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, OVERVIEW_CONTRACT, SYNTHESIS_CONTRACT)
+SYNTHESIS_CONTRACTS = (SOURCES_CONTRACT, RECORDS_CONTRACT, SYNTHESIS_CONTRACT)
 
 OPENING = "opening.json"
 RUN_METADATA = "run-metadata.json"
@@ -156,7 +150,8 @@ type's `record-prefix`."""
 ANALYSTS = tuple(ANALYST_SPECS)
 RECORD_ROLES = (*ANALYSTS, "reconciliation")
 """The set roles whose records the round-close check judges."""
-LATER_ROLES = ("memory-profile", "overview")
+LATER_ROLES = ("record-verification", "memory-profile", "profile-verification",
+               "synthesis", "synthesis-verification", "overview")
 """The set roles written after the record rounds close."""
 ADDRESSEES = (*ANALYSTS, "reconciliation")
 """Who a record-verification blocker can be addressed to."""
@@ -253,46 +248,16 @@ def split(text: str) -> tuple[dict[str, Any], str]:
     return dict(document.frontmatter or {}), document.body
 
 
-def headings(body: str, level: int) -> list[str]:
-    marker = "#" * level
-    return re.findall(rf"(?m)^{marker} (.+?)[ \t]*$", body)
-
-
-def subsection(body: str, title: str) -> str:
-    """The text under one level-three heading, or empty when it is absent."""
-    match = re.search(rf"(?ms)^### {re.escape(title)}[ \t]*\n(.*?)(?=^##+ |\Z)", body)
-    return match[1].strip() if match else ""
-
-
-def require_sections(body: str, level: int, wanted: Sequence[str]) -> list[str]:
-    present = headings(body, level)
-    marker = "#" * level
-    refusals = [
-        f"missing section `{marker} {title}`"
-        for title in wanted
-        if title not in present
-    ]
-    refusals += [
-        f"section `{marker} {title}` is empty"
-        for title in wanted
-        if title in present
-        and not (
-            section(body, title) if level == 2 else subsection(body, title)
-        ).strip()
-    ]
-    return refusals
-
-
 def boundary_refusals(
     path: Path, *, repo_root: Path, run_id: str, identity: str,
     frozen: dict[str, Any] | None = None,
 ) -> list[str]:
-    """A valid boundary of this run whose frozen source is the run's."""
-    refusals = member_refusals(path, repo_root=repo_root)
+    """Invocation-only checks against run parameters and pinned source bytes."""
+    refusals = []
     try:
-        fields, body = split(path.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return refusals + [f"boundary.md does not parse: {error}"]
+        fields, _ = split(path.read_text(encoding="utf-8"))
+    except ValueError:
+        return refusals
     if fields.get("run-id") != run_id:
         refusals.append(f"member identity: run-id {fields.get('run-id')!r} does not match {run_id!r}")
     source = fields.get("source")
@@ -309,31 +274,6 @@ def boundary_refusals(
                 f"its commit `{frozen['revision']}`: {json.dumps(frozen)}"
             )
         refusals += frozen_source_refusals(source)
-        refusals += source_register_refusals(body, source=frozen or source)
-    refusals += [
-        f"duplicate source declaration: {identifier}; keep one row per source ID "
-        "and separate evidence layers and scopes within that row"
-        for identifier, count in Counter(source_register_ids(body)).items() if count > 1
-    ]
-    return refusals
-
-
-def source_register_refusals(body: str, *, source: dict[str, Any]) -> list[str]:
-    """The register declares the source whose identity the run can verify."""
-    rows = source_register_rows(body)
-    expected = tuple(str(source.get(field) or "") for field in ("kind", "identity", "revision"))
-    refusals = [
-        f"source register: {row[0]} needs all eight columns from the boundary contract"
-        for row in rows if len(row) != 8
-    ]
-    if not any(
-        len(row) == 8 and tuple(cell.strip("`") for cell in row[1:4]) == expected
-        for row in rows
-    ):
-        refusals.append(
-            "source register must declare the frozen source in a SRC-* row: "
-            f"kind `{expected[0]}`, identity `{expected[1]}`, revision or capture `{expected[2]}`"
-        )
     return refusals
 
 
@@ -402,12 +342,17 @@ def refusal_rule(reason: str) -> str:
     return "job contract"
 
 
+def validation_reasons(validator: Callable[[Path], Sequence[str]], path: Path) -> list[str]:
+    """Materialize raw reasons, including malformed-input refusals."""
+    try:
+        return list(validator(path))
+    except (OSError, ValueError, KeyError) as error:
+        return [f"validation input: {error}; correct malformed output or report a missing supplied input to the coordinator"]
+
+
 def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) -> list[str]:
     """Address the same mechanical findings to either caller, never edit output."""
-    try:
-        reasons = validator(path)
-    except (OSError, ValueError, KeyError) as error:
-        reasons = [f"validation input: {error}; correct malformed output or report a missing supplied input to the coordinator"]
+    reasons = validation_reasons(validator, path)
     repairs = {
         "unresolved record": "check the named declaration and use its full ID; reconsider the reference if no declaration supports it",
         "duplicate": "keep one declaration or field per identity; give distinct records distinct names",
@@ -419,20 +364,49 @@ def actionable_refusals(validator: Callable[[Path], Sequence[str]], path: Path) 
         "invalid architectural status": "use a registered architectural status from the epistemic contract",
         "structural failures require": "write the supplied structural failures as explicit blockers",
     }
-    findings = []
-    # An identical reason repeated adds nothing the analyst can act on.
-    for reason, count in Counter(reasons).items():
+    # Preserve every set finding byte-for-byte, including repeated findings.
+    # Only invocation residue is coalesced; it has no standalone caller.
+    findings = [reason for reason in reasons if reason.startswith(SET_LABEL)]
+    for reason, count in Counter(reason for reason in reasons if not reason.startswith(SET_LABEL)).items():
         if count > 1:
             reason += f" ({count} identical findings)"
         repair = next((value for key, value in repairs.items() if key in reason),
                       "correct the named field, section or citation to satisfy the stated rule and the supplied job/type contract")
         rule = refusal_rule(reason)
-        findings.append(f"{path.name}: rule {rule}: {reason}\nRepair: {repair}")
+        findings.append(f"[job residue] {path.name}: rule {rule}: {reason}\nRepair: {repair}")
     return findings
 
 
 SET_LABEL = "[set] "
 """Marks a refusal that is the set type's finding, as distinct from a workflow check."""
+MEASUREMENTS = "acceptance-measurements"
+"""Coordinator-owned, replay-safe judgments; outside both output and engine state."""
+
+
+class SetRefusal(str):
+    """Keep a finding's role beside its unchanged delivered text."""
+
+    role: str | None
+
+    def __new__(cls, finding: Finding):
+        value = super().__new__(cls, SET_LABEL + finding.render())
+        value.role = finding.role
+        return value
+
+
+def compare_selfcheck(
+    measurement: Mapping[str, Any], *, candidate_sha256: str, findings: Sequence[str],
+) -> bool | None:
+    """Return disagreement, or None for different bytes.
+
+    Supply the selfcheck's retained digest and rendered failing set findings
+    (without the acceptance-only [set] label). Validation writes no log, so
+    the coordinator must retain that observation separately. Same bytes do
+    not establish same sibling/source context; a disagreement needs triage.
+    """
+    if candidate_sha256 != measurement["candidate-sha256"]:
+        return None
+    return list(findings) != [text.removeprefix(SET_LABEL) for text in measurement["set-findings"]]
 
 
 def set_findings(
@@ -448,80 +422,17 @@ def set_findings(
     overrides: dict[Path, str | bytes] = {output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE})}
     if candidate is not None:
         assert role is not None
-        overrides[output / analysis_layout().path(role)] = candidate.read_bytes()
+        return validate_draft_at_slot(
+            output, analysis_layout().path(role), candidate, repo_root=repo_root,
+        )
     return ValidationRun(repo_root, (), content_overrides=overrides).artifact_findings(output)
 
 
 def set_role_refusals(path: Path, *, run_dir: Path, repo_root: Path, role: str) -> list[str]:
     """The set's findings for one role, with ``path`` as that role's document."""
-    try:
-        findings = set_findings(run_dir, repo_root=repo_root, role=role, candidate=path)
-    except (OSError, UnicodeError, ValueError, TypeError) as error:
-        return [f"{SET_LABEL}a set document does not parse: {error}"]
-    return [SET_LABEL + finding.message for finding in findings if finding.role == role]
-
-
-def cited_reference_refusals(path: Path, *, run_dir: Path, repo_root: Path, scope: str = "overview") -> list[str]:
-    """A document outside the set, such as a verification or the synthesis,
-    cites only records the ``scope`` role may cite, read from the working set."""
-    output = run_dir / OUTPUT_DIR
-    layout = analysis_layout()
-    run = ValidationRun(repo_root, (), content_overrides={
-        output / MANIFEST_NAME: yaml.safe_dump({"type": SET_TYPE}),
-    })
-    try:
-        artifact = run.artifact(output)
-        _, body = split(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, ValueError, TypeError) as error:
-        return [f"{SET_LABEL}a set document does not parse: {error}"]
-    cited = [layout.path(role) for role in layout.roles[scope].cites]
-    bodies = {name: artifact.members[name].document.body for name in cited if name in artifact.members}
-    _, findings = set_record_findings(layout.path("boundary"), {**bodies, path.name: body},
-                                      cites={path.name: cited})
-    return [SET_LABEL + message for name, message in findings if name == path.name]
-
-
-def pass_refusals(
-    path: Path, *, repo_root: Path, set_check: Callable[[Path], list[str]],
-) -> list[str]:
-    """The output of an analyst, which declares records: a valid member, whose
-    own validation checks its declaration prefix, and whose identity, record
-    references and quotations hold in the set so far. The set resolves
-    quotations against the boundary's frozen source, which a run must hold."""
-    return member_refusals(path, repo_root=repo_root) + set_check(path)
-
-
-def identity_refusals(metadata: Mapping[str, Any], *, run_id: str, boundary_fields: Mapping[str, Any]) -> list[str]:
-    """A set member names the run and the frozen boundary it belongs to."""
-    identities = (("run-id", run_id), ("reviewed-boundary", boundary_fields.get("reviewed-boundary")))
-    return [
-        f"member identity: {field} {metadata.get(field)!r} does not match {expected!r}"
-        for field, expected in identities if metadata.get(field) != expected
-    ]
-
-
-def reconcile_refusals(
-    path: Path,
-    *,
-    repo_root: Path,
-    set_check: Callable[[Path], list[str]],
-) -> list[str]:
-    """A valid reconciliation member of this run, with no value amendment, and
-    every record it cites declared in the set it will make."""
-    refusals = member_refusals(path, repo_root=repo_root)
-    try:
-        _, body = split(path.read_text(encoding="utf-8"))
-    except (ValueError, OSError) as error:
-        return refusals + [str(error)]
-    refusals.extend(
-        "value amendment: reconciliation states connections between reports and does "
-        "not replace a record's value; describe the disagreement with both records and "
-        "their evidence, or use `Amendment: <ID> is superseded by <IDs>` for an "
-        f"identity judgment: {line[:120]}"
-        for line in value_amendments(body)
-    )
-    refusals.extend(source_anchor_refusals(body))
-    return refusals + set_check(path)
+    findings = set_findings(run_dir, repo_root=repo_root, role=role, candidate=path)
+    return [SetRefusal(finding) for finding in findings
+            if finding.role == role and not finding.absent and not finding.warn]
 
 
 def blocker_entries(blockers: str) -> list[str]:
@@ -537,16 +448,6 @@ def blocker_addressees(blockers: str) -> list[str]:
         match = re.match(r"- ([a-z]+): \S", line)
         found.append(match[1] if match and match[1] in ADDRESSEES else "")
     return found
-
-
-def addressee_refusals(blockers: str) -> list[str]:
-    return [
-        "blocker addressee: start each blocker with `runtime:`, `memory:`, `epistemic:` "
-        "or `reconciliation:`, naming the one report whose text must change; write a "
-        f"blocker that concerns two reports as two blockers: {line[:120]}"
-        for line, addressee in zip(blocker_entries(blockers), blocker_addressees(blockers), strict=True)
-        if not addressee
-    ]
 
 
 def correction_refusals(
@@ -646,105 +547,6 @@ def render_changes(member: str, previous: str, current: str, old: str, new: str)
     )
 
 
-def blockers_refusals(blockers: str) -> list[str]:
-    """Blockers are exactly `none`, or a Markdown list: every non-blank line
-    starts an entry with `- ` or continues one with indentation."""
-    if blockers == "none":
-        return []
-    lines = [line for line in blockers.splitlines() if line.strip()]
-    if lines and lines[0].startswith("- ") and all(
-        line.startswith(("- ", " ", "\t")) for line in lines
-    ):
-        return []
-    return [
-        (
-            "`### Blockers` must be exactly `none` or a Markdown list whose "
-            "entries start with `- `"
-        )
-    ]
-
-
-def source_anchor_refusals(text: str) -> list[str]:
-    return [
-        f"source anchor at line {line}: {anchor} carries a line range; cite the path"
-        for line, anchor in ranged_prose_anchors(text)
-    ]
-
-
-def limits_of(verification: str) -> list[str]:
-    """The limits a verification declares, each with its continuation lines."""
-    text = section(split(verification)[1], "Limits").strip()
-    return [] if text == "none" else blocker_texts(text)
-
-
-def carried_limit_refusals(synthesis_body: str, verifications: Sequence[Path]) -> list[str]:
-    """Every limit a verification declared names a record the Limitations
-    section mentions. Code checks the ID, not that the consequence is stated."""
-    limitations = record_references(section(synthesis_body, "Limitations"))
-    refusals = []
-    for path in verifications:
-        if not path.is_file():
-            continue
-        for limit in limits_of(path.read_text(encoding="utf-8")):
-            cited = record_references(limit)
-            if cited and not cited & limitations:
-                refusals.append(
-                    f"limit not carried: Limitations names none of {', '.join(sorted(cited))} "
-                    f"for the limit {path.name} declares: {limit.splitlines()[0][:100]}"
-                )
-    return refusals
-
-
-def synthesis_refusals(
-    path: Path, *, repo_root: Path, run_id: str, boundary: Path,
-    references: Callable[[Path], list[str]], verifications: Sequence[Path] = (),
-) -> list[str]:
-    """A valid synthesis of this run whose links resolve from the overview and
-    whose Limitations carry every declared limit."""
-    refusals = member_refusals(path, repo_root=repo_root)
-    text = path.read_text(encoding="utf-8")
-    document, error = parse_document(text)
-    if error or document is None:
-        return refusals + [f"synthesis does not parse: {error}"]
-    try:
-        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
-    except (ValueError, OSError) as error:
-        return refusals + [str(error)]
-    refusals += identity_refusals(dict(document.frontmatter or {}), run_id=run_id, boundary_fields=boundary_fields)
-    # Synthesis is written beside output/, then assembled into overview.md.
-    refusals += agentic_set_member_link_failures(path.parent / slot("overview"), document.links)
-    refusals += carried_limit_refusals(document.body, verifications)
-    return refusals + references(path)
-
-
-def verification_refusals(
-    path: Path, *, repo_root: Path, run_id: str, boundary: Path, verifies: str,
-) -> list[str]:
-    """A valid verification of this run and stage, with well-formed blockers."""
-    refusals = member_refusals(path, repo_root=repo_root)
-    try:
-        metadata, body = split(path.read_text(encoding="utf-8"))
-        boundary_fields, _ = split(boundary.read_text(encoding="utf-8"))
-    except (ValueError, OSError) as error:
-        return refusals + [str(error)]
-    refusals += identity_refusals(metadata, run_id=run_id, boundary_fields=boundary_fields)
-    if metadata.get("verifies") != verifies:
-        refusals.append(f"member identity: verifies {metadata.get('verifies')!r} does not match {verifies!r}")
-    refusals += blockers_refusals(section(body, "Blockers").strip())
-    refusals += [reason.replace("### Blockers", "## Limits") for reason in blockers_refusals(section(body, "Limits").strip())]
-    return refusals
-
-
-def verified(verification: str) -> str:
-    """A verification's account, for the overview, with the limits it declared."""
-    body = split(verification)[1]
-    account = section(body, "Verification").strip()
-    limits = section(body, "Limits").strip()
-    if limits and limits != "none":
-        account += "\n\nLimits carried into Limitations:\n\n" + limits
-    return account
-
-
 def one_line(text: str) -> str:
     return " ".join(text.split())
 
@@ -807,6 +609,7 @@ class AnalyseAgenticSystem(Workflow):
             str(self.params["source-identity"])
         )
         self.job_destinations: dict[str, Path] = {}
+        self.job_measurements: dict[str, dict[str, Any]] = {}
         model = self.params.get("model")
         if not isinstance(model, str) or not model.strip():
             raise ValueError(
@@ -814,7 +617,6 @@ class AnalyseAgenticSystem(Workflow):
                 "workflow's workers, such as claude-fable-5-1 or gpt-6.1-sol"
             )
         self.source_revision = self.params.get("source-revision")
-        self._checking = False
         if self.source_revision is not None and (
             not isinstance(self.source_revision, str)
             or re.fullmatch(r"[0-9a-f]{40}", self.source_revision) is None
@@ -868,11 +670,11 @@ class AnalyseAgenticSystem(Workflow):
 
         start_manifest(run_dir)
         self.run_job(ctx, self.boundary_job(run_dir, frozen))
-        fields, boundary_body = split((run_dir / slot("boundary")).read_text(encoding="utf-8"))
+        fields, _ = split((run_dir / slot("boundary")).read_text(encoding="utf-8"))
         self.write_run_state(run_dir, opening, fields)
 
         if fields["result-disposition"] != "complete":
-            self.close_without_analysis(run_dir, opening, fields, boundary_body)
+            self.close_without_analysis(run_dir, opening, fields)
             return
 
         versions = dict.fromkeys(ANALYSTS, 0)
@@ -899,19 +701,22 @@ class AnalyseAgenticSystem(Workflow):
 
         for profile_round in range(self.profile_correction_rounds + 1):
             self.run_job(ctx, self.profile_job(run_dir, profile_round))
+            self.replace(run_dir / slot("memory-profile"), (run_dir / round_file("profile", profile_round)).read_bytes())
             self.run_job(ctx, self.profile_verification_job(run_dir, profile_round))
+            self.replace(run_dir / slot("profile-verification"), (run_dir / round_file("profile-verification", profile_round)).read_bytes())
             profile_verification = (run_dir / round_file("profile-verification", profile_round)).read_text(encoding="utf-8")
             blockers = section(split(profile_verification)[1], "Blockers").strip()
             if blockers == "none":
                 break
             if profile_round == self.profile_correction_rounds:
                 raise StopRun("the profile verification of the last round names blockers: " + blockers)
-        atomic_write(run_dir / slot("memory-profile"), (run_dir / round_file("profile", profile_round)).read_bytes())
 
         judged = (round_file("verification", round_), round_file("profile-verification", profile_round))
         for synthesis_round in range(self.synthesis_correction_rounds + 1):
             self.run_job(ctx, self.synthesis_job(run_dir, synthesis_round, judged))
+            self.replace(run_dir / slot("synthesis"), (run_dir / round_file("synthesis", synthesis_round)).read_bytes())
             self.run_job(ctx, self.synthesis_verification_job(run_dir, synthesis_round, judged))
+            self.replace(run_dir / slot("synthesis-verification"), (run_dir / round_file("synthesis-verification", synthesis_round)).read_bytes())
             synthesis_verification = (run_dir / round_file("synthesis-verification", synthesis_round)).read_text(encoding="utf-8")
             blockers = section(split(synthesis_verification)[1], "Blockers").strip()
             if blockers == "none":
@@ -919,8 +724,7 @@ class AnalyseAgenticSystem(Workflow):
             if synthesis_round == self.synthesis_correction_rounds:
                 raise StopRun("the synthesis verification of the last round names blockers: " + blockers)
 
-        self.assemble(run_dir, opening, fields, boundary_body, synthesis_round,
-                      verification, profile_verification, synthesis_verification)
+        self.assemble(run_dir, opening, fields)
         self.validate_set(run_dir)
 
         spec = PublicationSpec(
@@ -938,74 +742,6 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     # Jobs
-
-    def acceptance_job(self, run_dir: Path, name: str) -> Job:
-        """Obtain a job's existing validator without replay or file writes.
-
-        Job constructors own the contexts at both call sites. This builds only
-        the job value, without rendering its prompt or making its workspace.
-        """
-        self.repo = self.repo_root(run_dir)
-        self.run_id = run_dir.name
-        self.jobs_dir = self.repo / JOBS
-        self._checking = True
-        try:
-            if name == "boundary":
-                frozen_path = run_dir / FROZEN_SOURCE
-                frozen = json.loads(frozen_path.read_text()) if frozen_path.exists() else None
-                return self.boundary_job(run_dir, frozen)
-            if name == "profile":
-                return self.profile_job(run_dir, 0)
-            if name == "verify-profile":
-                return self.profile_verification_job(run_dir, 0)
-            if name in ("synthesize", "verify-synthesis"):
-                return self.synthesis_stage_job(run_dir, name, 0)
-            match = re.fullmatch(r"(runtime|memory|epistemic|reconcile|verify|profile|verify-profile|synthesize|verify-synthesis)-(\d+)", name)
-            if match is None:
-                raise ValueError(f"unknown analysis job {name!r}; use the supplied job name")
-            kind, round_ = match[1], int(match[2])
-            if kind in ANALYSTS:
-                return self.analyst_job(run_dir, kind, round_)
-            if kind == "reconcile":
-                # The round number does not say which versions the job was
-                # given. Its supplied invocation does.
-                supplied = self.supplied(run_dir, name)
-                versions = {member: self.supplied_round(name, supplied, member, "report") for member in ANALYSTS}
-                return self.reconcile_job(run_dir, round_, versions, ())
-            if kind == "verify":
-                text = (run_dir / round_file("set-check", round_)).read_text()
-                failures = [line[2:] for line in text.splitlines() if line.startswith("- ")]
-                return self.verification_job(run_dir, round_, dict.fromkeys(ANALYSTS, 0), (), validator=partial(self.record_verification_refusals, run_dir, failures=failures))
-            if kind in ("synthesize", "verify-synthesis"):
-                return self.synthesis_stage_job(run_dir, name, round_)
-            constructors = {"profile": self.profile_job, "verify-profile": self.profile_verification_job}
-            return constructors[kind](run_dir, round_)
-        finally:
-            self._checking = False
-
-    def synthesis_stage_job(self, run_dir: Path, name: str, round_: int) -> Job:
-        """A synthesis-stage job as it was handed out: its supplied invocation
-        names the verifications whose limits it must carry."""
-        supplied = self.supplied(run_dir, name)
-        judged = (Path(supplied.get("record-verification", "")).name,
-                  Path(supplied.get("profile-verification", "")).name)
-        builder = self.synthesis_job if name.startswith("synthesize") else self.synthesis_verification_job
-        return builder(run_dir, round_, judged)
-
-    @staticmethod
-    def supplied(run_dir: Path, name: str) -> dict[str, str]:
-        """The `key = value` lines of the invocation a job was handed."""
-        prompt = (run_dir / "workflow-state/jobs" / name / "prompt.md").read_text()
-        invocation = prompt.split("\n## Input reading batches", 1)[0]
-        return dict(re.findall(r"(?m)^([a-z-]+) = (.+)$", invocation))
-
-    @staticmethod
-    def supplied_round(name: str, supplied: Mapping[str, str], key: str, kind: str) -> int:
-        """The round in a supplied `<...>-<kind>-<n>.md` or `<kind>-<n>.md` path."""
-        found = re.search(rf"(?:^|-){kind}-(\d+)\.md$", Path(supplied.get(key, "")).name)
-        if found is None:
-            raise ValueError(f"{name}: missing supplied {key} input; report the invocation to the coordinator")
-        return int(found[1])
 
     def run_analysts(
         self, ctx, run_dir: Path, members: Sequence[str], versions: Mapping[str, int],
@@ -1083,7 +819,18 @@ class AnalyseAgenticSystem(Workflow):
         Workers own their job directory; canonical run files and the assembled
         set remain coordinator-owned. Copying is replay-safe and byte-exact.
         """
-        ctx.agent(job).wait()
+        # The validator only captures in memory. Persist from coordinator code
+        # before wait ends a refused path, and before the engine moves its output.
+        # Clear stale captures when no validator is called (missing output,
+        # changed inputs, or a problem report).
+        self.job_measurements.pop(job.name, None)
+        handle = ctx.agent(job)
+        measurement = self.job_measurements.pop(job.name, None)
+        if measurement is not None:
+            content = (json.dumps(measurement, sort_keys=True, indent=2) + "\n").encode("utf-8")
+            key = sha256(content).hexdigest()
+            self.replace(ctx.run_dir / MEASUREMENTS / job.name / f"{key}.json", content)
+        handle.wait()
         destination = self.job_destinations[job.name]
         content = job.output_path(ctx.run_dir).read_bytes()
         if not destination.is_file() or destination.read_bytes() != content:
@@ -1095,6 +842,7 @@ class AnalyseAgenticSystem(Workflow):
         name: str,
         output: str,
         *,
+        role: str,
         reads: Mapping[str, str],
         instruction: str | None = None,
         extra: Sequence[str] = (),
@@ -1110,9 +858,7 @@ class AnalyseAgenticSystem(Workflow):
         names the coordinator-owned accepted copy used by downstream readers.
         """
         run_dir = run_dir.resolve()
-        validator = partial(actionable_refusals, validator) if validator is not None else None
-        if self._checking:
-            return Job(name=name, prompt="", output=f"jobs/{name}/{Path(output).name}", validator=validator)
+        validator = self.measured_validator(name, role, run_dir, validator) if validator is not None else None
         instruction = instruction or name
         method = [f"{instruction}.md", "../../../COLLECTION.md", "worker-rules.md"]
         method_paths = [str((self.jobs_dir / file).resolve()) for file in (*method, *extra)]
@@ -1135,6 +881,8 @@ class AnalyseAgenticSystem(Workflow):
             **(parameters or {}),
             "run-state": str(run_dir / RUN_STATE),
             "job": name,
+            "validation-set": str(run_dir / OUTPUT_DIR),
+            "validation-member": analysis_layout().path(role),
             **self.command_path(run_dir),
             **input_paths,
             "output": str(job.output_path(run_dir)),
@@ -1172,6 +920,43 @@ class AnalyseAgenticSystem(Workflow):
             lines += ["", "source:", fence, source, fence]
         return replace(job, prompt="\n".join(lines) + "\n")
 
+    def measured_validator(
+        self, name: str, role: str, run_dir: Path,
+        validator: Callable[[Path], Sequence[str]],
+    ) -> Callable[[Path], list[str]]:
+        """Capture exactly one validation's raw counts and delivered text, no IO writes.
+
+        These are validator judgments, not engine acceptance or attempt history:
+        the engine may refuse changed inputs without calling the validator.
+        Content-addressed records retain changed judgments of the same bytes,
+        but deliberately do not count identical replay observations as attempts.
+        """
+        def judge(path: Path) -> list[str]:
+            candidate_sha256 = digest(path)
+            reasons = validation_reasons(validator, path)
+            rendered = actionable_refusals(lambda _: reasons, path)
+            if digest(path) != candidate_sha256:
+                raise ValueError("candidate bytes changed during validation")
+            set_reasons = [reason for reason in reasons if reason.startswith(SET_LABEL)]
+            roles = [getattr(reason, "role", None) for reason in set_reasons]
+            self.job_measurements[name] = {
+                "version": 1,
+                "run-id": run_dir.name,
+                "job": name,
+                "role": role,
+                "candidate-sha256": candidate_sha256,
+                "findings": rendered,
+                "set-findings": [reason for reason in rendered if reason.startswith(SET_LABEL)],
+                "set-finding-roles": roles,
+                "another-member-count": sum(found is not None and found != role for found in roles),
+                "unattributed-set-finding-count": roles.count(None),
+                "residue-rule-counts": dict(Counter(
+                    refusal_rule(reason) for reason in reasons if not reason.startswith(SET_LABEL)
+                )),
+            }
+            return rendered
+        return judge
+
     def boundary_job(self, run_dir: Path, frozen: dict[str, Any] | None = None) -> Job:
         frozen_parameters = {} if frozen is None else {
             "source-revision": frozen["revision"], "source-path": frozen["path"],
@@ -1180,15 +965,17 @@ class AnalyseAgenticSystem(Workflow):
             run_dir,
             "boundary",
             slot("boundary"),
-            reads={"opening": RUN_METADATA},
+            role="boundary", reads={"opening": RUN_METADATA},
             extra=(BOUNDARY_CONTRACT, SOURCES_CONTRACT, BOUNDARY_TYPE),
             parameters={
                 "source-identity": one_line(self.source_identity),
                 **frozen_parameters,
             },
             source=str(self.params["source"]),
-            validator=partial(
-                boundary_refusals, repo_root=self.repo, run_id=run_dir.name,
+            validator=lambda path: set_role_refusals(
+                path, run_dir=run_dir, repo_root=self.repo, role="boundary",
+            ) + boundary_refusals(
+                path, repo_root=self.repo, run_id=run_dir.name,
                 identity=self.source_identity, frozen=frozen,
             ),
         )
@@ -1212,18 +999,14 @@ class AnalyseAgenticSystem(Workflow):
             parameters["answers"] = str(run_dir / "jobs" / name / ANSWERS_NAME)
         else:
             reads.update({read: report(read, 0) for read in spec["reads"]})
-        checks = [partial(
-            pass_refusals,
-            repo_root=self.repo,
-            set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=member),
-        )]
+        checks = [partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=member)]
         if round_:
             checks.append(partial(
                 correction_refusals, member=member,
                 previous=run_dir / reads["previous-report"], packet=run_dir / reads["requests"],
             ))
         return self.job(
-            run_dir, name, report(member, round_), reads=reads, instruction=member,
+            run_dir, name, report(member, round_), role=member, reads=reads, instruction=member,
             extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, spec["contract"]),
             parameters=parameters,
             validator=lambda path: [reason for check in checks for reason in check(path)],
@@ -1251,15 +1034,11 @@ class AnalyseAgenticSystem(Workflow):
             run_dir,
             f"reconcile-{round_}",
             reconciliation(round_),
-            reads=reads,
+            role="reconciliation", reads=reads,
             instruction="reconcile",
             extra=RECORD_CONTRACTS,
             parameters={"round": "after-blockers" if round_ else "first"},
-            validator=partial(
-                reconcile_refusals,
-                repo_root=self.repo,
-                set_check=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role="reconciliation"),
-            ),
+            validator=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role="reconciliation"),
         )
 
     def record_check(self, run_dir: Path) -> list[str]:
@@ -1278,7 +1057,7 @@ class AnalyseAgenticSystem(Workflow):
             name = layout.path(role)
             failures.extend(f"{name}: {failure}" for failure in member_refusals(output / name, repo_root=self.repo))
         failures.extend(
-            SET_LABEL + finding.message for finding in set_findings(run_dir, repo_root=self.repo)
+            SET_LABEL + finding.render() for finding in set_findings(run_dir, repo_root=self.repo)
             if not finding.absent and finding.role not in LATER_ROLES
         )
         return failures
@@ -1298,13 +1077,13 @@ class AnalyseAgenticSystem(Workflow):
             run_dir, round_, versions, corrected,
             validator=partial(self.record_verification_refusals, run_dir, failures=failures),
         ))
+        self.replace(run_dir / slot("record-verification"), (run_dir / round_file("verification", round_)).read_bytes())
         return (run_dir / round_file("verification", round_)).read_text(encoding="utf-8")
 
     def verifier_refusals(self, run_dir: Path, verifies: str) -> Callable[[Path], list[str]]:
-        return partial(
-            verification_refusals, repo_root=self.repo, run_id=run_dir.name,
-            boundary=run_dir / slot("boundary"), verifies=verifies,
-        )
+        role = {"records": "record-verification", "profile": "profile-verification",
+                "synthesis": "synthesis-verification"}[verifies]
+        return partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role=role)
 
     def verification_job(
         self, run_dir: Path, round_: int, versions: Mapping[str, int],
@@ -1319,7 +1098,7 @@ class AnalyseAgenticSystem(Workflow):
             reads.update(self.correction_reads(corrected, versions))
         return self.job(
             run_dir, f"verify-{round_}", round_file("verification", round_),
-            reads=reads, instruction="verify",
+            role="record-verification", reads=reads, instruction="verify",
             extra=(*RECORD_CONTRACTS, BOUNDARY_CONTRACT, VERIFICATION_CONTRACT),
             validator=validator, parameters={"round": "after-blockers" if round_ else "first"},
         )
@@ -1332,9 +1111,7 @@ class AnalyseAgenticSystem(Workflow):
             return refusals
         if failures and blockers == "none":
             refusals.append("structural failures require explicit blockers")
-        if not blockers_refusals(blockers):
-            refusals += addressee_refusals(blockers)
-        return refusals + cited_reference_refusals(path, run_dir=run_dir, repo_root=self.repo)
+        return refusals
 
     def profile_job(self, run_dir: Path, round_: int) -> Job:
         reads = {"boundary": slot("boundary"), "runtime": slot("runtime"), "memory": slot("memory"),
@@ -1344,15 +1121,18 @@ class AnalyseAgenticSystem(Workflow):
                           "verification": round_file("profile-verification", round_ - 1)})
         return self.job(
             run_dir, "profile" if round_ == 0 else f"profile-{round_}",
-            round_file("profile", round_), reads=reads, instruction="profile",
+            round_file("profile", round_), role="memory-profile", reads=reads, instruction="profile",
             extra=(SOURCES_CONTRACT, RECORDS_CONTRACT, PROFILE_CONTRACT),
             parameters={"round": "after-blockers" if round_ else "first"},
             validator=partial(self.profile_refusals, run_dir),
         )
 
     def profile_refusals(self, run_dir: Path, path: Path) -> list[str]:
-        refusals = member_refusals(path, repo_root=self.repo)
-        metadata, _ = split(path.read_text(encoding="utf-8"))
+        refusals = set_role_refusals(path, run_dir=run_dir, repo_root=self.repo, role="memory-profile")
+        try:
+            metadata, _ = split(path.read_text(encoding="utf-8"))
+        except ValueError:
+            return refusals
         # Require the current write contract only at scheduled job acceptance.
         # Immutable set and finalization readers still interpret retained v1.
         comparison = metadata.get("memory-comparison")
@@ -1363,12 +1143,12 @@ class AnalyseAgenticSystem(Workflow):
         if metadata.get("source-identity") != self.source_identity:
             refusals.append(f"profile identity: source-identity {metadata.get('source-identity')!r} "
                             f"does not match the run's expected {self.source_identity!r}")
-        return refusals + set_role_refusals(path, run_dir=run_dir, repo_root=self.repo, role="memory-profile")
+        return refusals
 
     def profile_verification_job(self, run_dir: Path, round_: int) -> Job:
         return self.job(
             run_dir, "verify-profile" if round_ == 0 else f"verify-profile-{round_}",
-            round_file("profile-verification", round_),
+            round_file("profile-verification", round_), role="profile-verification",
             reads={"profile": round_file("profile", round_), "boundary": slot("boundary"),
                    "runtime": slot("runtime"), "memory": slot("memory"), "epistemic": slot("epistemic"),
                    "reconciliation": slot("reconciliation")},
@@ -1378,8 +1158,7 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def profile_verification_refusals(self, run_dir: Path, path: Path) -> list[str]:
-        return self.verifier_refusals(run_dir, "profile")(path) + cited_reference_refusals(
-            path, run_dir=run_dir, repo_root=self.repo)
+        return self.verifier_refusals(run_dir, "profile")(path)
 
     def synthesis_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
         """The synthesizer reads the accepted members and the final record and
@@ -1392,13 +1171,10 @@ class AnalyseAgenticSystem(Workflow):
                           "verification": round_file("synthesis-verification", round_ - 1)})
         return self.job(
             run_dir, "synthesize" if round_ == 0 else f"synthesize-{round_}",
-            round_file("synthesis", round_), reads=reads, instruction="synthesize",
+            round_file("synthesis", round_), role="synthesis", reads=reads, instruction="synthesize",
             extra=SYNTHESIS_CONTRACTS,
             parameters={"round": "after-blockers" if round_ else "first"},
-            validator=partial(synthesis_refusals, repo_root=self.repo, run_id=run_dir.name,
-                              boundary=run_dir / slot("boundary"),
-                              verifications=tuple(run_dir / name for name in judged if name),
-                              references=partial(cited_reference_refusals, run_dir=run_dir, repo_root=self.repo)),
+            validator=partial(set_role_refusals, run_dir=run_dir, repo_root=self.repo, role="synthesis"),
         )
 
     @staticmethod
@@ -1410,7 +1186,7 @@ class AnalyseAgenticSystem(Workflow):
     def synthesis_verification_job(self, run_dir: Path, round_: int, judged: tuple[str, str] = ("", "")) -> Job:
         return self.job(
             run_dir, "verify-synthesis" if round_ == 0 else f"verify-synthesis-{round_}",
-            round_file("synthesis-verification", round_),
+            round_file("synthesis-verification", round_), role="synthesis-verification",
             reads={"synthesis": round_file("synthesis", round_), "boundary": slot("boundary"),
                    "runtime": slot("runtime"), "memory": slot("memory"), "epistemic": slot("epistemic"),
                    "reconciliation": slot("reconciliation"), **self.judged_reads(judged)},
@@ -1419,8 +1195,7 @@ class AnalyseAgenticSystem(Workflow):
         )
 
     def synthesis_verification_refusals(self, run_dir: Path, round_: int, path: Path) -> list[str]:
-        return self.verifier_refusals(run_dir, "synthesis")(path) + cited_reference_refusals(
-            path, run_dir=run_dir, repo_root=self.repo)
+        return self.verifier_refusals(run_dir, "synthesis")(path)
 
     # Steps that code executes
 
@@ -1593,14 +1368,11 @@ class AnalyseAgenticSystem(Workflow):
 
     def assemble(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
-        boundary_body: str, round_: int, record_verification: str,
-        profile_verification: str, synthesis_verification: str,
     ) -> None:
         """Render the final overview after all three independent checks pass."""
-        write_file(run_dir / slot("overview"), self.render_overview(
-            run_dir, opening, fields, boundary_body, round_,
-            record_verification, profile_verification, synthesis_verification,
-        ))
+        self.replace(run_dir / slot("overview"), self.render_overview(
+            run_dir, opening, fields,
+        ).encode("utf-8"))
         build_manifest(run_dir)
 
     def overview_frontmatter(
@@ -1627,12 +1399,18 @@ class AnalyseAgenticSystem(Workflow):
             "inputs-commit": opening["inputs-commit"],
         }
 
-    def overview_body(self, boundary_body: str, rest: str) -> str:
+    def overview_body(self, run_dir: Path, fields: Mapping[str, Any], index: str) -> str:
+        """Entry navigation only; authored accounts remain in their own slots."""
+        members = "\n".join(
+            f"- [{role.name.replace('-', ' ').capitalize()}](./{role.path})"
+            for role in analysis_layout().roles.values()
+            if role.name != "overview" and (run_dir / OUTPUT_DIR / role.path).is_file()
+        )
         return (
             f"# {self.params['system']} agentic-system analysis\n\n"
-            f"## Boundary and evidence\n\n{section(boundary_body, 'Boundary and evidence').strip()}\n\n"
-            f"## Source register\n\n{section(boundary_body, 'Source register').strip()}\n\n"
-            f"{rest.strip()}\n"
+            f"## Members\n\nDisposition: `{fields['result-disposition']}`.\n\n{members}\n\n"
+            f"## Amendment index\n\n{index}\n\n"
+            f"## Deterministic validation\n\n{self.validation_text(run_dir)}\n"
         )
 
     def validation_text(self, run_dir: Path) -> str:
@@ -1645,31 +1423,12 @@ class AnalyseAgenticSystem(Workflow):
 
     def render_overview(
         self, run_dir: Path, opening: dict[str, Any], fields: dict[str, Any],
-        boundary_body: str, round_: int, record_verification: str,
-        profile_verification: str, synthesis_verification: str,
     ) -> str:
-        synthesis_fields, synthesis = split((run_dir / round_file("synthesis", round_)).read_text(encoding="utf-8"))
+        synthesis_fields, _ = split((run_dir / slot("synthesis")).read_text(encoding="utf-8"))
         index = amendment_index((run_dir / slot("reconciliation")).read_text(encoding="utf-8"))
-        rest = (
-            f"## Bounded synthesis\n\n{section(synthesis, 'Bounded synthesis').strip()}\n\n"
-            f"## Limitations\n\n{section(synthesis, 'Limitations').strip()}\n\n"
-            "## Verification and blockers\n\n"
-            f"### Record verification\n\n{verified(record_verification)}\n\n"
-            f"### Profile verification\n\n{verified(profile_verification)}\n\n"
-            f"### Synthesis verification\n\n{verified(synthesis_verification)}\n\n"
-            f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
-            "### Blockers\n\nnone\n"
-        )
-        # Insert within the Source register regardless of the boundary's section order.
-        boundary_with_index = re.sub(
-            r"(?ms)^## Source register[ \t]*\n.*?(?=^## |\Z)",
-            lambda match: match[0].rstrip() + "\n\n" + index + "\n\n",
-            boundary_body,
-            count=1,
-        )
         return dump_frontmatter(
             self.overview_frontmatter(opening, fields, one_line(str(synthesis_fields["description"]))),
-            self.overview_body(boundary_with_index, rest),
+            self.overview_body(run_dir, fields, index),
         )
 
     def close_without_analysis(
@@ -1677,26 +1436,13 @@ class AnalyseAgenticSystem(Workflow):
         run_dir: Path,
         opening: dict[str, Any],
         fields: dict[str, Any],
-        boundary_body: str,
     ) -> None:
-        """A blocked or out-of-scope run: an overview-only set, no publication."""
-        reason = section(boundary_body, "Not reached").strip()
-        not_reached = f"Not reached. {reason}"
-        rest = (
-            f"## Bounded synthesis\n\n{not_reached}\n\n"
-            f"## Limitations\n\n{reason}\n\n"
-            "## Verification and blockers\n\n"
-            f"### Record verification\n\n{not_reached}\n\n"
-            f"### Profile verification\n\n{not_reached}\n\n"
-            f"### Synthesis verification\n\n{not_reached}\n\n"
-            f"### Deterministic validation\n\n{self.validation_text(run_dir)}\n\n"
-            f"### Blockers\n\n{reason}\n"
-        )
+        """A blocked or out-of-scope run: boundary and entry, no publication."""
         write_file(
             run_dir / slot("overview"),
             dump_frontmatter(
                 self.overview_frontmatter(opening, fields),
-                self.overview_body(boundary_body, rest),
+                self.overview_body(run_dir, fields, "Amended or superseded records: none"),
             ),
         )
         build_manifest(run_dir)

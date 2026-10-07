@@ -2,9 +2,14 @@
 
 The matrix builder, table renderer and analyzer enumerate current accepted sets
 under `kb/agentic-system-analyses/retained/<system-slug>/` through the same
-library function as the site. The accepted overview supplies the entry point,
-boundary and synthesis. The manifest, `ARTIFACT.yaml`, pins every member.
-Readers validate membership and take the comparison profile from `memory-profile.md`.
+library function as the site. The code-written overview supplies the entry
+point, identity, disposition, member links, amendment index and deterministic
+validation. The evidence boundary and source register live in `boundary.md`;
+the cross-lens account and limitations live in `synthesis.md`. A complete set
+also retains the analyst reports, reconciliation, memory profile and three
+independent verification judgments. The manifest, `ARTIFACT.yaml`, pins every
+member. Readers validate membership and take the comparison profile from
+`memory-profile.md`.
 They reject duplicate sources and directory names that disagree with sources.
 Old `agentic-systems/reports/` and the new `retained-archive/` do not participate
 in current validation or comparison. No local run state, source checkout,

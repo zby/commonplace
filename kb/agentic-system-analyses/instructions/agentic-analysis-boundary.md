@@ -8,9 +8,9 @@ description: "Boundary contract for agentic analyses: the meaning of the boundar
 This contract gives the meaning of a run's boundary: the fields, what
 Boundary and evidence states, and the form of the Source register. The
 [boundary type](../types/agentic-system-boundary.md) fixes the document the
-boundary job writes; the overview carries the same fields and sections. The
-[source contract](./agentic-analysis-sources.md), which every worker reads,
-supplies the evidence layers and their limits. The boundary job and the record
+boundary job writes; the overview links to this member without copying its
+sections. The [source contract](./agentic-analysis-sources.md), which every
+worker reads, supplies the evidence layers and their limits. The boundary job and the record
 verifier read this contract.
 
 ## Boundary and classification

@@ -57,6 +57,30 @@ class Finding:
     message: str
     absent: bool = False
     info: bool = False
+    repair: str = ""
+    warn: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.repair:
+            repairs = {
+                "unresolved record": "use the full ID of a declaration in this role's citation scope; remove unsupported references",
+                "duplicate": "keep one declaration per ID and give distinct records distinct names",
+                "required member is absent": "supply the member at its declared path",
+                "identity field": "use the expected identity value from the named source member",
+                "source member": "supply the named source member before checking this dependent identity",
+                "does not match": "use the expected value shown for this slot",
+                "unverified": "make the boundary's pinned source bytes available and check again",
+                "limit not carried": "carry the named limit and its affected IDs into synthesis Limitations",
+                "missing field": "supply the named field with an answer or an explicit evidence limit",
+            }
+            object.__setattr__(self, "repair", next(
+                (text for phrase, text in repairs.items() if phrase in self.message),
+                "correct the named field, section or citation to satisfy the stated rule and supplied type contract",
+            ))
+
+    def render(self) -> str:
+        """Identical diagnostic text for self-check and workflow acceptance."""
+        return f"{self.message}\nRepair: {self.repair}"
 
 
 @dataclass(frozen=True)

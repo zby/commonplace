@@ -19,8 +19,10 @@ Every job uses these parameters; its instruction defines additional ones:
 |---|---|
 | `system` | Source-native system name |
 | `run-id` | Exact run identity; copy unchanged when the member type requires it |
-| `run-state` | Absolute path passed to the acceptance check; not an evidence input |
-| `job` | Exact job name passed to the acceptance check |
+| `run-state` | Absolute path of the run state; not an evidence input |
+| `job` | Exact job name |
+| `validation-set` | Absolute path of the working set directory for the content check |
+| `validation-member` | Declared relative member slot for this job's result |
 | `command-path` | Directory of this run's `commonplace-*` commands, when supplied |
 | `output` | Absolute path for the completed result |
 | `problem` | Absolute path for the reason the job cannot finish |
@@ -95,7 +97,7 @@ evidence for keeping the finding>`, one per blocker addressed to your report.
 
 ## Commands
 
-Run acceptance commands separately and inspect each exit status, or chain
+Run validation commands separately and inspect each exit status, or chain
 dependent commands with `&&`. Shell pipelines need `set -o pipefail`. When
 wrapping tool calls, retain status and stderr as well as stdout; a later
 successful command does not clear an earlier failure. State a check's result
@@ -126,7 +128,7 @@ the command or outer tool delivery is truncated, repeat that range with a
 smaller range before advancing. Raising only the inner token limit does
 not raise the outer delivery limit. Apply the same pattern to source
 searches and reads. Use one command per call for file preparation and
-acceptance checks, or `&&` when they must share a shell invocation.
+content checks, or `&&` when they must share a shell invocation.
 
 ## Sources
 
@@ -151,11 +153,20 @@ file.
 ## Check and quotation
 
 Before submitting, run
-`commonplace-analysis-check <run-state> <job> <output>` with the supplied values.
-When `command-path` is supplied, call the command in that directory.
-Repair refusals and rerun until it passes. It shares acceptance checks,
-changes no output or run state, and logs counts in `scratch`.
-A pass establishes form and occurrence, not the correctness of findings.
+`commonplace-validate <output> --set <validation-set> --member <validation-member>`
+with the supplied values. When `command-path` is supplied, call the command
+in that directory. Repair findings and rerun until the content check passes.
+Validation replaces the incumbent only in memory for this invocation, reports
+findings for your slot, deliberately drops absent-member findings during the
+run, and writes nothing. It does not log counts in `scratch`.
+
+A content pass is not job acceptance. Acceptance adds **invocation residue**:
+checks that depend on the frozen checkout and run parameters, correction
+requests, predecessor reports and answers, the current comparison version,
+or blockers after a failed round check. Code labels these separately from
+set findings. A content pass establishes form and quotation occurrence, not
+claim support or analytical correctness. Report it as a content check, never
+as an acceptance pass.
 
 Quotations take the form the source contract gives. Omit revisions; the run
 fixes them. For ambiguity, select by printed context and paste a proposed

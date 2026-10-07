@@ -9,9 +9,9 @@ the independent verifier; no toy source classifier stands in for it.
 
 import csv
 import json
+import re
 from copy import deepcopy
 from dataclasses import dataclass
-from functools import partial
 from io import StringIO
 from pathlib import Path
 
@@ -25,13 +25,8 @@ from commonplace.lib.agentic_records import (
     section,
     set_record_errors,
 )
-from commonplace.lib.agentic_workflow import (
-    AnalyseAgenticSystem,
-    blockers_refusals,
-    cited_reference_refusals,
-    subsection,
-    synthesis_refusals,
-)
+from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow.engine import render_prompt
 from scripts import analyze_matrix as stats
 from tests.commonplace.lib.test_agentic_analysis import (
@@ -260,9 +255,9 @@ def loaded_packet(job, run):
     (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
     (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
     (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
-    (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported value or an unjustified coverage claim", "semantic verification judges support", "unresolved included part"]),
+    (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported emitted value or evidence strength", "semantic verification judges support", "unresolved included parts", "complete-coverage assessment"]),
     (lambda d, r: d.synthesis_job(r, 0), ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
-    (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "explicit faithful uncertainty is not", "bundled negative"]),
+    (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "faithful uncertainty is neither a blocker nor a limit", "bundled negative"]),
 ])
 def test_semantic_rules_reach_operative_job_packets(tmp_path, builder, phrases):
     packet = loaded_packet(builder(workflow(tmp_path), tmp_path), tmp_path).lower()
@@ -294,7 +289,9 @@ def test_self_improvement_test_is_delivered_by_real_job_composition(tmp_path, bu
     assert f"- {contract}" in prompt.split("## Input reading batches", 1)[0]
     assert str(contract) in prompt.split("Read-first:", 1)[1].split("Task inputs:", 1)[0]
     packet = loaded_packet(job, tmp_path)
-    test = subsection(contract.read_text(), "Self-improvement attribution")
+    match = re.search(r"(?ms)^### Self-improvement attribution[ \t]*\n(.*?)(?=^##+ |\Z)", contract.read_text())
+    assert match is not None
+    test = match[1].strip()
     operative = " ".join(test.split())
     assert operative in packet
     for phrase in (
@@ -344,22 +341,33 @@ def test_case11_unsupported_negative_and_reference_defects_are_really_rejected()
         sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
 
 
-def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_path):
+def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_path, tmp_library):
     profile, bodies = materialize({"curation_operations": axis(Part(
         "named-synthesis", "Prompt request only", "A prompt requests synthesis; no generated claim is available.", ("synthesize",)))})
     # Deliberately wrong semantic finding, but legal vocabulary and references.
     # Passing these checks is NOT acceptance of its source support.
     comparison_schema().validate(profile)
     sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
+    directory = member_fixture(tmp_path) / "output"
+    memory = directory / "memory.md"
+    memory.write_text(memory.read_text().replace(
+        "## Write side", bodies["memory.md"].removeprefix("## Shared records\n\n") + "## Write side",
+    ))
     verdict = tmp_path / "verifier.md"
     expected_blocker = "- curation_operations: MEM-RTE-named-synthesis does not establish a new claim; remove synthesize or provide an accepted supporting record."
-    verdict.write_text("## Verification\n\nSynthetic expected finding: requested behavior is not implementation.\n\n## Blockers\n\n" + expected_blocker + "\n")
-    # The blocker grammar is the part a scripted check can judge; the type and identity are not in play here.
-    assert blockers_refusals(section(verdict.read_text(), "Blockers").strip()) == []
+    template = (directory / "profile-verification.md").read_text()
+    verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
+    # Public validation judges list grammar and identity, not semantic support.
+    findings = validate_draft_at_slot(directory, "profile-verification.md", verdict, repo_root=tmp_path)
+    assert not [finding for finding in findings if not finding.info and not finding.warn]
+    verdict.write_text(verdict.read_text().replace(expected_blocker, expected_blocker.removeprefix("- ")))
+    assert any("Blockers must be exactly none or a Markdown list" in finding.message
+               for finding in validate_draft_at_slot(directory, "profile-verification.md", verdict, repo_root=tmp_path))
+    verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert set_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
     packet = loaded_packet(workflow(tmp_path).profile_verification_job(tmp_path, 0), tmp_path)
-    assert "an unsupported value or an unjustified coverage claim" in packet
+    assert "an unsupported emitted value or evidence strength" in packet
 
 
 def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):
@@ -435,24 +443,23 @@ def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_
         "| Initial admission control inaccessible | MEM-OBJ-store | synthetic fixture | Complete write-agency coverage is prevented | Initial admission policy |\n")
     candidate = directory.parent / "synthesis.md"
     candidate.write_text(synthesis)
-    check = partial(synthesis_refusals, repo_root=tmp_path, run_id=overview_fields["run-id"],
-                    boundary=directory / "boundary.md",
-                    references=partial(cited_reference_refusals, run_dir=directory.parent, repo_root=tmp_path))
+    def check(path):
+        return [finding.message for finding in validate_draft_at_slot(
+            directory, "synthesis.md", path, repo_root=tmp_path,
+        ) if not finding.info and not finding.warn]
+
     assert check(candidate) == []
     candidate.write_text(synthesis.replace("MEM-OBJ-store retains", "MEM-OBJ-undeclared retains"))
     assert any("unresolved record MEM-OBJ-undeclared" in error for error in check(candidate))
     candidate.write_text(synthesis)
-    overview = directory / "overview.md"
-    text = overview.read_text()
-    start = text.index("## Bounded synthesis")
-    end = text.index("## Verification and blockers")
-    overview.write_text(text[:start] + synthesis[synthesis.index("## Bounded synthesis"):] + "\n" + text[end:])
+    public_synthesis = directory / "synthesis.md"
+    public_synthesis.write_text(synthesis)
     repin(directory)
     assert validation.validate_note(directory, repo_root=tmp_path).fails == []
     # Explicit uncertainty remains publishable text, with four separate scopes,
     # not an aggregate negative. Structural validation is not semantic review.
     for property_ in ("Learning", "Reflection", "Autonomy", "Self-improvement"):
-        assert f"{property_} is not established" in overview.read_text()
+        assert f"{property_} is not established" in public_synthesis.read_text()
 
 
 def test_reconciliation_cannot_hide_an_unresolved_record():

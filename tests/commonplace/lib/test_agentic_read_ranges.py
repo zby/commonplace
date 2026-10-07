@@ -55,7 +55,7 @@ def test_invocation_names_ranges_for_oversized_method_and_task_inputs(tmp_path: 
     })
     definition.jobs_dir = tmp_path
 
-    job = definition.job(tmp_path, "runtime", "result.md", reads={"boundary": "boundary.md"})
+    job = definition.job(tmp_path, "runtime", "result.md", role="runtime", reads={"boundary": "boundary.md"})
 
     for path in (rules, task):
         spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))

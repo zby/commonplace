@@ -135,8 +135,7 @@ def _install(worktree: Path) -> dict[str, str]:
             "import json, shutil; import commonplace.lib.agentic_workflow as m; "
             "print(json.dumps({'module': m.__file__, "
             "'workflow': shutil.which('commonplace-workflow'), "
-            "'validate': shutil.which('commonplace-validate'), "
-            "'check': shutil.which('commonplace-analysis-check')}))"
+            "'validate': shutil.which('commonplace-validate')}))"
         )],
         cwd=worktree,
         env=env,
@@ -146,7 +145,7 @@ def _install(worktree: Path) -> dict[str, str]:
         expected = worktree / "src/commonplace/lib/agentic_workflow.py"
         if Path(found["module"]).resolve() != expected.resolve():
             raise ValueError("the installed package resolves outside the analysis worktree")
-        for key in ("workflow", "validate", "check"):
+        for key in ("workflow", "validate"):
             # Resolve the directory, not the executable: uv may use symlinks.
             if not found[key] or Path(found[key]).parent.resolve() != bin_dir.resolve():
                 raise ValueError(f"{key} command resolves outside the local environment")

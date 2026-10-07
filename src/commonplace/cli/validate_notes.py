@@ -30,6 +30,7 @@ from commonplace.lib.validation import (
     ValidationRunResults,
     run_validation,
     validate_collection_landings,
+    validate_draft_at_slot,
     validate_redirect_map,
 )
 
@@ -579,6 +580,47 @@ def _print_full_collection_report(
     print("\n===")
 
 
+def check_member_draft(
+    candidate: Path, *, directory: Path, slot: Path, repo_root: Path,
+    json_output: bool = False,
+) -> int:
+    """Print the shared member findings, not an invocation acceptance verdict."""
+    if slot.is_absolute() or len(slot.parts) != 1 or slot.name in {".", ".."}:
+        raise ValueError("--member must be a declared relative member filename")
+    findings = [
+        finding for finding in validate_draft_at_slot(
+            directory, slot, candidate, repo_root=repo_root,
+        ) if not finding.absent
+    ]
+    # Match acceptance: warnings do not refuse, but unverified evidence does.
+    refused = any(not finding.warn for finding in findings)
+    if json_output:
+        print(json.dumps({
+            "schema": "commonplace.validation.member.v1",
+            "status": "failed" if refused else "success",
+            "draft": str(candidate.resolve()),
+            "set": str(directory.resolve()),
+            "member": slot.as_posix(),
+            "scope": "member content; invocation residue not checked",
+            "diagnostics": [
+                {
+                    "role": finding.role,
+                    "severity": "warning" if finding.warn else "info" if finding.info else "failure",
+                    "reason": finding.message,
+                    "repair": finding.repair,
+                    "text": "[set] " + finding.render(),
+                } for finding in findings
+            ],
+        }, indent=2, sort_keys=True))
+    else:
+        for finding in findings:
+            print(("WARN: " if finding.warn else "") + "[set] " + finding.render())
+        if not refused:
+            print("Member content check passes; invocation residue not checked. "
+                  "This is not job acceptance or claim support.")
+    return int(refused)
+
+
 @checks_library
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -599,6 +641,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Atomically save the exact --json stdout bytes to this file path; its parent directory must exist.",
     )
     parser.add_argument(
+        "--set", dest="set_directory", type=Path,
+        help="Working artifact directory in which to check the positional draft (requires --member).",
+    )
+    parser.add_argument(
+        "--member", type=Path,
+        help="Declared relative member slot for the positional draft (requires --set; writes nothing).",
+    )
+    parser.add_argument(
         "target",
         help=(
             "directory, note path or name, types, landings, redirects, "
@@ -606,10 +656,24 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
+    if (args.set_directory is None) != (args.member is None):
+        parser.error("--set and --member must be supplied together")
+    if args.member is not None and args.output is not None:
+        parser.error("draft-at-slot validation writes nothing; --output is not allowed")
     if args.output is not None and not args.json:
         parser.error("--output requires --json")
 
     repo_root = Path.cwd().resolve()
+
+    if args.member is not None:
+        try:
+            return check_member_draft(
+                Path(args.target), directory=args.set_directory, slot=args.member,
+                repo_root=repo_root, json_output=args.json,
+            )
+        except (OSError, UnicodeError, ValueError, TypeError) as exc:
+            print(f"member validation: {exc}", file=sys.stderr)
+            return 2
 
     if args.target == "lifecycle":
         report = build_lifecycle_report(repo_root=repo_root)

@@ -61,4 +61,5 @@ When `round = correction`, follow **Correct a report after verification** in
 the supplied worker rules; this instruction still governs the report's
 content.
 
-Run the acceptance check before submitting.
+Run the draft-at-slot content check in the worker rules before submitting.
+A pass does not establish job acceptance; code also checks invocation residue.
