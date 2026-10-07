@@ -13,6 +13,7 @@ from commonplace.lib.agentic_job_set import (
     HANDLER,
     JOB_SET,
     MODEL_ROLES,
+    OPEN_HANDLER,
     RECORDS,
     REPORTS,
     contract_gaps,
@@ -306,7 +307,8 @@ def test_live_contract_gaps_are_explicit():
     assert not any(gap.startswith("disposition:") for gap in gaps)
     assert any(gap.startswith("working set path:") for gap in gaps)
     assert any(gap.startswith("publication:") for gap in gaps)
-    assert any(gap.startswith("opening:") for gap in gaps)
+    assert not any(gap.startswith("opening:") for gap in gaps)
+    assert any(gap.startswith("startup:") for gap in gaps)
     assert any(gap.startswith("legacy runs:") for gap in gaps)
     assert not any(gap.startswith("runtime context:") for gap in gaps)
     assert not any(gap.startswith("check criteria:") for gap in gaps)
@@ -318,6 +320,11 @@ def test_skeleton_stops_before_workers_or_external_effects(tmp_path, monkeypatch
     jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))
     for job in jobs.jobs:
         if isinstance(job, CodeJob):
+            if job.name == "open":
+                from commonplace.lib.agentic_job_handlers import open_analysis
+
+                assert job.handler == OPEN_HANDLER and job.resolve_handler() is open_analysis
+                continue
             assert job.handler == HANDLER
             assert job.resolve_handler() is unported
             with pytest.raises(NotImplementedError, match="handlers are not ported"):
@@ -329,6 +336,6 @@ def test_skeleton_stops_before_workers_or_external_effects(tmp_path, monkeypatch
     assert not status.handouts and not status.open_attempts and not status.publishable
     assert len(status.stops) == 1
     assert status.stops[0].job == "open"
-    assert "handlers are not ported" in status.stops[0].reason
+    assert "requires a nonempty source-identity run parameter" in status.stops[0].reason
     assert not (tmp_path / "related-systems").exists()
     assert not (tmp_path / "retained").exists()

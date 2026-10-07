@@ -1,8 +1,8 @@
 """Fail-closed bindings for the opt-in analysis migration declaration.
 
 The job set is library data beside the job instructions, not generated Python.
-No live workflow or CLI uses it yet. These bindings and adoption-gap checks
-support declaration tests without workers, sources or publication effects.
+No live workflow or CLI uses it yet. Opening is ported; the other bindings
+and adoption-gap checks stay fail-closed without workers or external effects.
 """
 
 from __future__ import annotations
@@ -29,6 +29,7 @@ MODEL_ROLES = {
     "verify-synthesis": "synthesis-verification",
 }
 HANDLER = "commonplace.lib.agentic_job_set.unported"
+OPEN_HANDLER = "commonplace.lib.agentic_job_handlers.open_analysis"
 
 
 def unported(_attempt):
@@ -48,13 +49,13 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
     gaps = [
         "working set path: legacy consumers use output/, new-engine runs use set/; port consumers before switching",
         "worker protocol: port read-first ordering, input names, round/requests/answers and previous-output parameters",
-        "opening: supply a public code-attempt run-parameter API and port repository/package checks",
         "run-state: project new-engine attempts/stops and uncertain external effects",
         "publication: enforce disposition-dependent holding acceptance coverage, preserve incumbent checks and effect recovery",
-        "handlers: opening/acquisition, member checks, set checks, verdict application and assembly remain unported",
+        "handlers: acquisition, member checks, set checks, verdict application and assembly remain unported",
         "coverage: assembly/publication handlers must enforce disposition-dependent whole-set coverage",
         "memory provenance: implement the workflow check promised by the set type or remove the promise",
-        "legacy runs: explicitly preserve resumability or reject legacy state; never reinterpret it as engine state",
+        "legacy runs: opening rejects legacy state; keep legacy consumers intact until an explicit retirement",
+        "startup: port run allocation and binding checks in preparation/CLI consumers before a production switch",
     ]
     if layout.required.by_role != "boundary":
         gaps.append("disposition: the layout discriminator must be available before overview assembly")

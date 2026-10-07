@@ -1,8 +1,10 @@
 # Opt-in analysis migration declaration. NOT a runnable analysis workflow.
-# Every code handler fails closed; the live skill and CLI still use the legacy workflow.
+# Only opening is ported. Every other code handler fails closed; the live skill
+# and CLI still use the legacy workflow. Do not launch workers from this job set.
 # File inputs are relative to the library root recorded by start_run.
-# Run parameters (currently system) are fixed at start; open will consume those,
-# not run.json. Its repository/package checks and parameter API remain to be ported.
+# Opening consumes fixed system, source-identity, source and optional
+# source-revision run parameters, not run.json. It requires a ready preparation
+# record and the token-bearing run ID; legacy state must use the legacy workflow.
 # Model contracts below are substantive authoring/judging inputs, not blanket
 # validation dependencies. Code checks own type/schema dependency closure.
 # Legacy round, requests/answers, previous-output and reading-order interfaces
@@ -14,7 +16,7 @@ type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
 jobs:
 - name: open
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.open_analysis
   inputs: {}
   outputs:
   - metadata
