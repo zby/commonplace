@@ -32,7 +32,9 @@ situations the spec must cover and names those it does not yet.
 ## Future direction: a movable boundary
 
 Not a requirement yet, recorded so the design does not close it off. The
-coordinator should be able to take over more of the run later, in the
+coordinator, the agent that calls the command and runs the workers (see
+the [glossary](./glossary.md)), should be able to take over more of the
+run later, in the
 sense of [relaxing](../../notes/agentic-systems-interpret-underspecified-instructions.md):
 a code job's interpretation moved to the agent when the code's one
 projection becomes the bottleneck, and moved back when a pattern settles
