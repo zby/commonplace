@@ -17,6 +17,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.library import library_root
 from commonplace.lib.note_parser import parse_document
@@ -106,7 +107,10 @@ class Run:
     def __init__(self, store: RunStore) -> None:
         self.store = store
         metadata = store.read_metadata()
-        self.layout, self.relations = _load_type(load_job_set(metadata["declaration"]).type_spec)
+        # The type is fixed for the run like the declaration: read from run.json,
+        # never from the library, so a later edit or another checkout changes nothing.
+        self.layout, self.relations = _parse_type(metadata["type"], metadata["type_spec"])
+        self.type_spec = metadata["type_spec"]
         self.jobs = load_job_set(metadata["declaration"], self.layout.roles)
         self.reload()
 
@@ -295,9 +299,11 @@ class Run:
 
     def publishable(self) -> bool:
         members = self.members()
-        self.permitted()
+        permitted = self.permitted()
         if not self._required <= set(members):
             return False
+        if permitted is not None and not set(members) <= permitted:
+            return False  # A member left over from before the disposition changed.
         return all(self.covered(relation, origin, partner)
                    for origin, partner, relation in self.relations
                    if origin in members and partner in members)
@@ -318,12 +324,11 @@ class Run:
         return False
 
 
-def _load_type(type_spec: Path) -> tuple[Layout, list[tuple[str, str, str]]]:
-    path = library_root() / type_spec
-    document, error = parse_document(path.read_text(encoding="utf-8"))
+def _parse_type(text: str, where: str) -> tuple[Layout, list[tuple[str, str, str]]]:
+    document, error = parse_document(text)
     if document is None or not document.frontmatter or "layout" not in document.frontmatter:
-        raise ValueError(f"{path}: not a type with a layout ({error or 'no layout'})")
-    layout = parse_layout(document.frontmatter["layout"], where=f"{path}: layout")
+        raise ValueError(f"{where}: not a type with a layout ({error or 'no layout'})")
+    layout = parse_layout(document.frontmatter["layout"], where=f"{where}: layout")
     relations = []
     for role in layout.roles.values():
         for partner in role.cites:
@@ -425,11 +430,15 @@ def start_run(run_dir: Path, job_set: Path, *, parameters: Mapping[str, str] | N
     if store.metadata.exists():
         raise FileExistsError(f"{run_dir} already holds a run")
     declaration = Path(job_set).read_text(encoding="utf-8")
-    layout, _ = _load_type(load_job_set(declaration).type_spec)
+    type_spec = load_job_set(declaration).type_spec
+    type_text = (library_root() / type_spec).read_text(encoding="utf-8")
+    layout, _ = _parse_type(type_text, str(type_spec))
     load_job_set(declaration, layout.roles)
     store.create({
         "job_set": str(Path(job_set).resolve()),
         "declaration": declaration,
+        "type_spec": str(type_spec),
+        "type": type_text,
         "parameters": dict(parameters or {}),
     })
 
@@ -603,9 +612,15 @@ def _sweep(run: Run) -> None:
 
 
 def _materialize(run: Run) -> None:
-    """Make `set/` hold exactly the members, from the acceptance records."""
+    """Make `set/` hold exactly the members and the manifest, from the records.
+
+    The manifest is the directory artifact's, not a member: the engine writes
+    it naming only the type, as a working set's is. Pinning member digests is
+    publication's, which copies the set out.
+    """
     members = run.members()
     wanted = {run.layout.path(role): version for role, version in members.items()}
+    wanted[MANIFEST_NAME] = run.store.put(f"type: {run.type_spec}\n".encode())
     set_dir = run.store.set_dir
     set_dir.mkdir(parents=True, exist_ok=True)
     for path in set_dir.iterdir():

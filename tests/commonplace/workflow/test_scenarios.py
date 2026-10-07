@@ -408,3 +408,21 @@ def test_22_identical_verdict_text_about_different_inputs(coordinator: Coordinat
     c.complete("verify", "no blockers\n")
     assert "apply-verification" in c.ran(), "the verifier's attempt record changed"
     assert "digest" in c.handed()
+
+
+def test_manifest_survives_materialization(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_brief()
+    manifest = c.run_dir / "set" / "ARTIFACT.yaml"
+    assert manifest.read_text(encoding="utf-8") == "type: types/toy-set.md\n"
+    manifest.write_text("type: something/else.md\n", encoding="utf-8")
+    c.advance()
+    assert manifest.read_text(encoding="utf-8") == "type: types/toy-set.md\n"
+
+
+def test_type_is_fixed_for_the_run(coordinator: Coordinator) -> None:
+    c = coordinator
+    type_file = c.method.parent.parent / "types" / "toy-set.md"
+    type_file.write_text("not a type any more\n", encoding="utf-8")
+    c.through_brief()
+    assert "report" in c.handed(), "the run kept the type it started with"
