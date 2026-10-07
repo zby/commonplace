@@ -102,8 +102,6 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
 
 - **Acceptances that stopped holding.** Reported every invocation, or at
   publication.
-- **Hand-out form.** How a prompt presents present and absent optional
-  inputs.
 
 ## Decisions
 
@@ -132,6 +130,16 @@ They bind an implementation of this spec; they are not requirements.
   one is made; they change for different reasons, type specs are shared
   library artifacts, and one type may have several job sets, such as a
   production and a test configuration.
+- **The hand-out keeps the analysis workers' shape.** A prompt names the
+  instruction, then lists `name = value` lines for the job, its declared
+  parameters, every input (or `absent`), the outputs, the problem file,
+  the workspace and any previous output, then reading batches over the
+  inputs. File inputs are handed at their own path so relative links in
+  instructions resolve; engine-held versions are copied into the
+  hand-out. Parameters are plain strings with `{run}`, `{run-id}`, `{set}`,
+  `{workspace}` and `{param:<name>}` substituted; no template language.
+  Why: the analysis instructions already follow this shape, so they port
+  unchanged.
 - **Only code jobs judge.** A model job that wants a judgment writes a
   document, and a code job reads it and records the judgment. Why: a
   judgment's basis and scope must be exact, and a worker's reading is
