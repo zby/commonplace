@@ -21,6 +21,7 @@ from commonplace.workflow.engine import (
     RunStatus,
     Stop,
     advance,
+    judge,
     start_run,
 )
 
@@ -36,6 +37,7 @@ __all__ = [
     "RunStatus",
     "Stop",
     "advance",
+    "judge",
     "load_job_set",
     "start_run",
 ]

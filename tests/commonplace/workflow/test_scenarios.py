@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import pytest
 
-from commonplace.workflow import AttemptResult, start_run
+from commonplace.workflow import AttemptResult, judge, start_run
 from tests.commonplace.workflow.conftest import BLOCKED_BRIEF, Coordinator
 from tests.commonplace.workflow.handlers import INTERRUPT_ENV
 
@@ -147,9 +147,45 @@ def test_08_criteria_change(coordinator: Coordinator) -> None:
     assert not c.status.publishable
 
 
-@pytest.mark.skip(reason="operator entry points are outside the API sketch by request")
-def test_09_operator_intervention() -> None:
-    ...
+def test_09_operator_refusal_makes_the_producer_ready(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_publication()
+    judge(c.run_dir, role="report", outcome="refused", findings="the operator wants a second look")
+    c.advance()
+    assert "report" in c.handed(), "an operator refusal is an ordinary refusal"
+    assert "the operator wants a second look" in c.reachable(c.handout("report"))
+    # Scenario 9's caveat: the refusal changed no acceptance's basis, so the set
+    # still counts as publishable; the operator holds publication or waits.
+    assert c.status.publishable
+
+
+def test_09_operator_override_names_the_refusal(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_publication()
+    c.edit_method("contract-report.md", "forbid: report A\n")
+    c.advance()
+    assert "report" in c.handed(), "the check refused A under the new contract"
+    from commonplace.workflow.engine import inspect
+
+    refusal = next(r for r in inspect(c.run_dir)["refusals"] if r.job == "report")
+    judge(c.run_dir, role="report", outcome="accepted", scope=("report:cites:brief",), basis=("brief",),
+          overrides=(refusal.id,), findings="the operator accepts A as it stands")
+    c.advance()
+    assert c.member("report") == "report A\n"
+    assert c.handout("report").attempt in c.status.open_attempts, "an open hand-out is not recalled"
+    assert "report" not in c.handed(), "the superseded refusal does not make R ready again"
+
+
+def test_09_judging_history_is_evidence_only(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_records()
+    refuse_report(c)
+    c.complete("report", "report B\n", answers="answered\n")
+    from commonplace.workflow.store import digest
+
+    judge(c.run_dir, role="report", outcome="accepted", version=digest(b"report A\n"))
+    c.advance()
+    assert c.member("report") == "report B\n", "an acceptance of an earlier version moves nothing"
 
 
 def test_10_publication_blocked_by_an_acceptance_that_stopped_holding(coordinator: Coordinator) -> None:
@@ -172,7 +208,7 @@ def test_11_worker_reports_a_problem(coordinator: Coordinator) -> None:
         handout = c.handout("report")
         handout.problem.write_text("the source is unreadable\n", encoding="utf-8")
         c.fail("report", "worker reported a problem")
-        c.stop("report")
+        assert "the source is unreadable" in c.stop("report").reason, "the problem text is the record"
         c.advance()
     assert "report" not in c.handed(), "three failed attempts exhaust the bound"
     c.stop("report")

@@ -314,8 +314,8 @@ class Coordinator:
         return self.status
 
 
-@pytest.fixture
-def coordinator(tmp_path: Path, tmp_library: None, monkeypatch: pytest.MonkeyPatch) -> Iterator[Coordinator]:
+def toy_library(tmp_path: Path) -> tuple[Path, Path]:
+    """Write the toy type and job set under tmp_path/kb; return (declaration, method dir)."""
     kb = tmp_path / "kb"
     types = kb / "types"
     types.mkdir(parents=True)
@@ -329,6 +329,12 @@ def coordinator(tmp_path: Path, tmp_library: None, monkeypatch: pytest.MonkeyPat
     (method / "contract-report.md").write_text("# Report contract\n", encoding="utf-8")
     declaration = method / "jobs.yaml"
     declaration.write_text(yaml.safe_dump(job_set(method), sort_keys=False), encoding="utf-8")
+    return declaration, method
+
+
+@pytest.fixture
+def coordinator(tmp_path: Path, tmp_library: None, monkeypatch: pytest.MonkeyPatch) -> Iterator[Coordinator]:
+    declaration, method = toy_library(tmp_path)
 
     log = tmp_path / "handlers.log"
     monkeypatch.setenv(LOG_ENV, str(log))

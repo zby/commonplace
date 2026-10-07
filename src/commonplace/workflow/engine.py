@@ -453,6 +453,96 @@ def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunSta
         return _status(run, handouts, stops)
 
 
+def judge(
+    run_dir: Path,
+    *,
+    role: str,
+    outcome: str,
+    version: str | None = None,
+    scope: tuple[str, ...] = (),
+    findings: str = "",
+    overrides: tuple[str, ...] = (),
+    basis: tuple[str, ...] = (),
+) -> str:
+    """Record an operator's judgment of a role's member and return its id.
+
+    The subject is the role's current member unless `version` names an
+    earlier one, which is then evidence only. `basis` names further roles
+    whose current members the judgment rests on; a scoped relation needs
+    its partner among them. The record is the same as a code job's: an
+    attempt by the job `operator`, completed, with the judgment inside.
+    """
+    store = RunStore(Path(run_dir))
+    if not store.metadata.exists():
+        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    with store.lock():
+        run = Run(store)
+        if role not in run.layout.roles:
+            raise ValueError(f"the type declares no role {role}")
+        subject = version or run.members().get(role)
+        if subject is None:
+            raise ValueError(f"role {role} has no member to judge")
+        if not (store.versions / subject).is_file():
+            raise ValueError(f"no version {subject} in this run")
+        filler = run.jobs.filler(role)
+        inputs = {"subject": Input("member", role)}
+        pins = {"subject": Resolved(subject, store.get(subject), role, filler.name if filler else None)}
+        for other in basis:
+            inputs[other] = Input("member", other)
+            pins[other] = run.resolve(other, inputs)
+            if pins[other].version is None:
+                raise ValueError(f"role {other} has no member to rest on")
+        seq = store.next_seq()
+        attempt = f"{seq:06d}-operator"
+        code_attempt = CodeAttempt(run, CodeJob("operator", inputs, (), "operator"), pins)
+        code_attempt.judge("subject", outcome=outcome, scope=scope, findings=findings, overrides=overrides)
+        judgments = code_attempt.judgments({}, seq, attempt)
+        for judgment in judgments:
+            store.write_json(store.judgments / f"{judgment['id']}.json", judgment)
+        store.write_json(store.attempts / f"{attempt}.json", {
+            "id": attempt, "seq": seq, "job": "operator", "kind": "operator", "state": "completed",
+            "pins": {name: pinned.pin() for name, pinned in pins.items()},
+            "outputs": {}, "judgments": [j["id"] for j in judgments],
+        })
+        return judgments[0]["id"]
+
+
+@dataclass(frozen=True)
+class RefusalInForce:
+    """A refusal that currently makes its producer ready: what `status` lists."""
+
+    id: str
+    job: str
+    role: str | None
+    version: str
+    findings: str
+
+
+def inspect(run_dir: Path) -> dict:
+    """A read-only view of a run: members, open attempts, refusals in force, publishability."""
+    store = RunStore(Path(run_dir))
+    if not store.metadata.exists():
+        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    run = Run(store)
+    refusals = []
+    for job in run.jobs.jobs:
+        if not isinstance(job, ModelJob):
+            continue
+        resolved = run.resolve("refusal", {"refusal": Input("refusal", job.name, required=False)})
+        if resolved.version is None:
+            continue
+        output = run.latest_output(job)
+        latest = [j for j in run.judgments if j["outcome"] == "refused"
+                  and j["subject"]["producer"] == job.name and j["subject"]["version"] == output][-1]
+        refusals.append(RefusalInForce(latest["id"], job.name, job.role, output or "", latest["findings"]))
+    return {
+        "members": dict(run.members()),
+        "open_attempts": sorted(r["id"] for r in run.attempts.values() if r["state"] == "open"),
+        "refusals": refusals,
+        "publishable": run.publishable(),
+    }
+
+
 def _status(run: Run, handouts, stops) -> RunStatus:
     run.reload()
     _materialize(run)
@@ -469,9 +559,16 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
         return None  # Repeated results are idempotent.
     job = run.jobs.job(record["job"])
     directory = store.handouts / record["id"]
+    problem_path = directory / "problem.md"
+    problem = problem_path.read_text(encoding="utf-8", errors="replace") if problem_path.is_file() else ""
 
     def fail(reason: str) -> Stop:
-        record.update(state="failed", pins={}, reason=reason, model=result.model, effort=result.effort)
+        # The worker's problem text is the failure's record; the hand-out
+        # directory it was written in does not survive the attempt.
+        if problem.strip():
+            reason = f"{reason}; the worker wrote: {problem.strip()}"
+        record.update(state="failed", pins={}, reason=reason, problem=problem,
+                      model=result.model, effort=result.effort)
         store.write_json(store.attempts / f"{record['id']}.json", record)
         store.remove(directory)
         return Stop(reason, job.name, record["id"])
@@ -486,7 +583,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
         if path.is_file():
             outputs[name] = store.put(path.read_bytes())
     if job.outputs[0] not in outputs:
-        return fail("completed without its primary output")
+        return fail("the worker reported a problem" if problem.strip() else "completed without its primary output")
     refused = [pin["refused"] for pin in record["pins"].values() if pin.get("refused")]
     if outputs[job.outputs[0]] in refused:
         return fail("answered a refusal with the refused version unchanged")

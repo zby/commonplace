@@ -240,6 +240,26 @@ uncertain outcome or a stop-only block. The agent orchestrator's side is
 `kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
 design is still a proposal: `kb/reference/proposals/code-scheduled-workflows.md`.
 
+### commonplace-run
+
+Advance a run directory under the new workflow engine, the one specified in
+`kb/work/workflow-requirements/`; the analysis workflow still runs on
+`commonplace-workflow` until it migrates. `start <run> <job-set.yaml>` writes
+the run's metadata, fixing the declaration for the run; `--param key=value`
+records run parameters. `advance <run>` closes the attempts reported with
+`--completed <attempt>` and `--failed <attempt>=<reason>` (`--model` and
+`--effort` name the worker), runs every ready code job, hands out every ready
+model job, and prints the hand-outs, open attempts, stops and whether the set
+is publishable; `--json` prints the same as data. `status <run>` lists the
+members, open attempts and the refusals in force with their identifiers.
+`judge <run> --role <role> --outcome accepted|refused` records an operator
+judgment of a role's member: `--findings` carries the reason, `--scope`
+names covered relations with their partners among `--basis` roles,
+`--override` names a refusal the acceptance cancels, and `--version` judges an
+earlier version as evidence only. An operator's judgment leaves the same
+record as a code job's; a refusal of a member whose acceptances all hold does
+not by itself block publication.
+
 ## Review system
 
 Review execution composes selection, job creation, an external worker, and
