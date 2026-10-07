@@ -30,6 +30,7 @@ MODEL_ROLES = {
 }
 HANDLER = "commonplace.lib.agentic_job_set.unported"
 OPEN_HANDLER = "commonplace.lib.agentic_job_handlers.open_analysis"
+ACQUIRE_HANDLER = "commonplace.lib.agentic_job_handlers.acquire_analysis"
 
 
 def unported(_attempt):
@@ -51,7 +52,8 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
         "worker protocol: port read-first ordering, input names, round/requests/answers and previous-output parameters",
         "run-state: project new-engine attempts/stops and uncertain external effects",
         "publication: enforce disposition-dependent holding acceptance coverage, preserve incumbent checks and effect recovery",
-        "handlers: acquisition, member checks, set checks, verdict application and assembly remain unported",
+        "acquisition binding: the handler is ported; keep it unbound until boundary hand-outs are translated",
+        "handlers: member checks, set checks, verdict application and assembly remain unported",
         "coverage: assembly/publication handlers must enforce disposition-dependent whole-set coverage",
         "memory provenance: implement the workflow check promised by the set type or remove the promise",
         "legacy runs: opening rejects legacy state; keep legacy consumers intact until an explicit retirement",

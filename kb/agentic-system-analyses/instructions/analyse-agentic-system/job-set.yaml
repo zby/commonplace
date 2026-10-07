@@ -1,6 +1,7 @@
 # Opt-in analysis migration declaration. NOT a runnable analysis workflow.
-# Only opening is ported. Every other code handler fails closed; the live skill
+# Only opening is bound. Every other code binding fails closed; the live skill
 # and CLI still use the legacy workflow. Do not launch workers from this job set.
+# Acquisition is implemented but stays unbound until boundary hand-outs are ported.
 # File inputs are relative to the library root recorded by start_run.
 # Opening consumes fixed system, source-identity, source and optional
 # source-revision run parameters, not run.json. It requires a ready preparation

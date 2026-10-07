@@ -10,6 +10,7 @@ import pytest
 import yaml
 
 from commonplace.lib.agentic_job_set import (
+    ACQUIRE_HANDLER,
     HANDLER,
     JOB_SET,
     MODEL_ROLES,
@@ -55,6 +56,7 @@ def test_graph_covers_real_roles_once(graph):
 def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, _ = graph
     assert jobs.job("open").inputs == {}
+    assert jobs.job("acquire").handler == HANDLER != ACQUIRE_HANDLER
     assert jobs.job("publish").inputs["manifest"].address == "output"
     for job in jobs.jobs:
         for name, spec in job.inputs.items():
@@ -309,6 +311,7 @@ def test_live_contract_gaps_are_explicit():
     assert any(gap.startswith("publication:") for gap in gaps)
     assert not any(gap.startswith("opening:") for gap in gaps)
     assert any(gap.startswith("startup:") for gap in gaps)
+    assert any(gap.startswith("acquisition binding:") for gap in gaps)
     assert any(gap.startswith("legacy runs:") for gap in gaps)
     assert not any(gap.startswith("runtime context:") for gap in gaps)
     assert not any(gap.startswith("check criteria:") for gap in gaps)

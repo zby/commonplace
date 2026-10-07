@@ -1,7 +1,8 @@
 """Ported analysis code jobs; the opt-in declaration binds them one at a time.
 
-Opening is read-only outside the engine's attempt commit. Acquisition, checks,
-verdict application, assembly and publication are still fail-closed bindings.
+Opening is read-only outside the engine's attempt commit. Acquisition owns its
+external-effect journal, but stays unbound until boundary hand-outs are ported.
+Checks, verdict application, assembly and publication are still fail-closed.
 This module does not switch the live analysis workflow or reinterpret its state.
 """
 
@@ -13,6 +14,7 @@ import re
 import subprocess
 from pathlib import Path
 
+from commonplace.lib.agentic_acquisition import acquire_source
 from commonplace.lib.agentic_checkout import github_checkout_path
 from commonplace.lib.agentic_publication import (
     inspect_destination,
@@ -125,3 +127,37 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         "expected-incumbent-sha256": str(incumbent["expected_incumbent_sha256"]),
     }
     return {"metadata": (json.dumps(record, indent=2) + "\n").encode("utf-8")}
+
+
+def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Acquire from pinned opening metadata without launching an analyst.
+
+    This handler is tested with a code-only declaration. Keep the production
+    binding fail-closed until the next model job's hand-out is ported too.
+    Git results are frozen source objects; JSON null means the boundary still
+    has to establish a non-Git capture, not that a source check succeeded.
+    """
+    metadata_bytes = attempt.read("metadata")
+    if metadata_bytes is None:
+        raise ValueError("acquisition requires the opening metadata")
+    metadata = json.loads(metadata_bytes)
+    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
+        raise ValueError("acquisition opening metadata must name this run")
+    repo = source_checkout(attempt.run_dir)
+    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
+        raise ValueError("acquisition must use this run's analysis checkout and recorded library")
+    require_run_code(attempt.run_dir, cwd=Path.cwd())
+    commit = metadata.get("inputs-commit")
+    preparation = preparation_for(repo)
+    if metadata["run-id"].rsplit("-", 2)[-2:-1] != [preparation["token"]]:
+        raise ValueError("acquisition preparation token differs from the opened run")
+    if _head(repo) != commit or preparation.get("commit") != commit:
+        raise ValueError("acquisition worktree differs from the opened preparation commit")
+    require_publishable_worktree(repo)
+    require_running_package_unchanged(commit)
+    source = acquire_source(repo, attempt.run_dir, metadata_bytes)
+    if _head(repo) != commit:
+        raise ValueError("analysis worktree HEAD changed during acquisition")
+    require_publishable_worktree(repo)
+    require_running_package_unchanged(commit)
+    return {"source": source}
