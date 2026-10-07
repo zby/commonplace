@@ -1,0 +1,1048 @@
+# Opt-in analysis migration declaration. NOT a runnable analysis workflow.
+# Every code handler fails closed; the live skill and CLI still use the legacy workflow.
+# File inputs are relative to the library root recorded by start_run.
+# Run parameters (currently system) are fixed at start; open will consume those,
+# not run.json. Its repository/package checks and parameter API remain to be ported.
+# Model contracts below are substantive authoring/judging inputs, not blanket
+# validation dependencies. Code checks own type/schema dependency closure.
+# Legacy round, requests/answers, previous-output and reading-order interfaces
+# still need porting before these instructions can consume engine hand-outs.
+# Assembly/publication must check disposition-dependent coverage at BOTH ends;
+# optional coverage inputs express the alternatives, not permission to publish.
+# Publication reads assembly's pinned manifest, not a second working-set copy.
+type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
+jobs:
+- name: open
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs: {}
+  outputs:
+  - metadata
+- name: acquire
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
+  outputs:
+  - source
+- name: boundary
+  kind: model
+  role: boundary
+  instruction: instruction
+  bound: 2
+  outputs:
+  - boundary
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/boundary.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    boundary-result-contract: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
+    opening: {address: output, source: 'open:metadata', required: true}
+    source: {address: output, source: 'acquire:source', required: true}
+    refusal: {address: refusal, source: boundary, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: boundary.md
+- name: check-boundary
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'boundary:boundary', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: boundary, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    source: {address: output, source: 'acquire:source', required: true}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: runtime
+  kind: model
+  role: runtime
+  instruction: instruction
+  bound: 3
+  outputs:
+  - report
+  - answers
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/runtime.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    boundary: {address: member, source: boundary, required: true}
+    refusal: {address: refusal, source: runtime, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: runtime.md
+- name: check-runtime
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'runtime:report', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: runtime, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    epistemic: {address: member, source: epistemic, required: false}
+    memory: {address: member, source: memory, required: false}
+    answers: {address: output, source: 'runtime:answers', required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: memory
+  kind: model
+  role: memory
+  instruction: instruction
+  bound: 3
+  outputs:
+  - report
+  - answers
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    boundary: {address: member, source: boundary, required: true}
+    refusal: {address: refusal, source: memory, required: false}
+    runtime: {address: member, source: runtime, trigger: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: memory.md
+- name: check-memory
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'memory:report', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: memory, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    epistemic: {address: member, source: epistemic, required: false}
+    runtime: {address: member, source: runtime, required: false}
+    answers: {address: output, source: 'memory:answers', required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: epistemic
+  kind: model
+  role: epistemic
+  instruction: instruction
+  bound: 3
+  outputs:
+  - report
+  - answers
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/epistemic.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    boundary: {address: member, source: boundary, required: true}
+    refusal: {address: refusal, source: epistemic, required: false}
+    runtime: {address: member, source: runtime, trigger: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: epistemic.md
+- name: check-epistemic
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'epistemic:report', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: epistemic, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    memory: {address: member, source: memory, required: false}
+    runtime: {address: member, source: runtime, required: false}
+    answers: {address: output, source: 'epistemic:answers', required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: reconcile
+  kind: model
+  role: reconciliation
+  instruction: instruction
+  bound: 3
+  outputs:
+  - reconciliation
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    refusal: {address: refusal, source: reconcile, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: reconciliation.md
+- name: check-reconcile
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'reconcile:reconciliation', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: reconcile, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    epistemic: {address: member, source: epistemic, required: false}
+    memory: {address: member, source: memory, required: false}
+    runtime: {address: member, source: runtime, required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: set-check
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  outputs:
+  - findings
+  inputs:
+    boundary: {address: member, source: boundary}
+    runtime: {address: member, source: runtime}
+    memory: {address: member, source: memory}
+    epistemic: {address: member, source: epistemic}
+    reconciliation: {address: member, source: reconciliation}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+- name: verify
+  kind: model
+  role: record-verification
+  instruction: instruction
+  bound: 3
+  outputs:
+  - verification
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
+    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    record-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    runtime-answers: {address: output, source: 'runtime:answers', required: false}
+    memory-answers: {address: output, source: 'memory:answers', required: false}
+    epistemic-answers: {address: output, source: 'epistemic:answers', required: false}
+    refusal: {address: refusal, source: verify, required: false}
+    set-check: {address: output, source: 'set-check:findings'}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: record-verification.md
+- name: apply-verify
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'verify:verification', required: true}
+    verifier-attempt: {address: attempt, source: verify, required: true}
+    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    record-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    set-check-seen: {address: handed, source: 'verifier-attempt:set-check'}
+  outputs: []
+- name: profile
+  kind: model
+  role: memory-profile
+  instruction: instruction
+  bound: 3
+  outputs:
+  - profile
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/profile.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:cites:runtime', outcome: accepted}
+    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:cites:memory', outcome: accepted}
+    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:cites:epistemic', outcome: accepted}
+    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    refusal: {address: refusal, source: profile, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: memory-profile.md
+- name: check-profile
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'profile:profile', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: profile, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    epistemic: {address: member, source: epistemic, required: false}
+    memory: {address: member, source: memory, required: false}
+    runtime: {address: member, source: runtime, required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-profile-type: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agent-memory-profile-schema: {address: file, source: agentic-system-analyses/types/agent-memory-profile.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: verify-profile
+  kind: model
+  role: profile-verification
+  instruction: instruction
+  bound: 3
+  outputs:
+  - verification
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-profile.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    profile-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    profile: {address: member, source: memory-profile, required: true}
+    refusal: {address: refusal, source: verify-profile, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: profile-verification.md
+- name: apply-verify-profile
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'verify-profile:verification', required: true}
+    verifier-attempt: {address: attempt, source: verify-profile, required: true}
+    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-profile-type: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    profile-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agent-memory-profile-schema: {address: file, source: agentic-system-analyses/types/agent-memory-profile.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: synthesize
+  kind: model
+  role: synthesis
+  instruction: instruction
+  bound: 2
+  outputs:
+  - synthesis
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/synthesize.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    memory-profile: {address: member, source: memory-profile, required: true}
+    record-verification: {address: member, source: record-verification, required: true}
+    profile-verification: {address: member, source: profile-verification, required: true}
+    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:cites:runtime', outcome: accepted}
+    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:cites:memory', outcome: accepted}
+    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:cites:epistemic', outcome: accepted}
+    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    profile-verified: {address: judgment, source: memory-profile, required: true, relation: 'profile-verification:cites:memory-profile', outcome: accepted}
+    refusal: {address: refusal, source: synthesize, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: synthesis.md
+- name: check-synthesize
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'synthesize:synthesis', required: true}
+    metadata: {address: output, source: 'open:metadata', required: true}
+    producer-attempt: {address: attempt, source: synthesize, required: true}
+    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
+    boundary: {address: member, source: boundary, required: true}
+    epistemic: {address: member, source: epistemic, required: false}
+    memory: {address: member, source: memory, required: false}
+    runtime: {address: member, source: runtime, required: false}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    synthesis-type: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-synthesis-schema: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: verify-synthesis
+  kind: model
+  role: synthesis-verification
+  instruction: instruction
+  bound: 2
+  outputs:
+  - verification
+  inputs:
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    synthesis-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    memory: {address: member, source: memory, required: true}
+    epistemic: {address: member, source: epistemic, required: true}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    synthesis: {address: member, source: synthesis, required: true}
+    record-verification: {address: member, source: record-verification, required: true}
+    profile-verification: {address: member, source: profile-verification, required: true}
+    refusal: {address: refusal, source: verify-synthesis, required: false}
+  parameters:
+    system: '{param:system}'
+    run-state: '{run}/run-state.md'
+    validation-set: '{set}'
+    validation-member: synthesis-verification.md
+- name: apply-verify-synthesis
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    candidate: {address: output, source: 'verify-synthesis:verification', required: true}
+    verifier-attempt: {address: attempt, source: verify-synthesis, required: true}
+    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    synthesis-seen: {address: handed, source: 'verifier-attempt:synthesis', required: true}
+    record-verification-seen: {address: handed, source: 'verifier-attempt:record-verification', required: true}
+    profile-verification-seen: {address: handed, source: 'verifier-attempt:profile-verification', required: true}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    profile-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    record-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    synthesis-type: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    synthesis-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-synthesis-schema: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml}
+    agentic-system-verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+  outputs: []
+- name: assemble
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
+    boundary: {address: member, source: boundary, required: true}
+    runtime: {address: member, source: runtime, required: false}
+    memory: {address: member, source: memory, required: false}
+    epistemic: {address: member, source: epistemic, required: false}
+    reconciliation: {address: member, source: reconciliation, required: false}
+    memory-profile: {address: member, source: memory-profile, required: false}
+    synthesis: {address: member, source: synthesis, required: false}
+    record-verification: {address: member, source: record-verification, required: false}
+    profile-verification: {address: member, source: profile-verification, required: false}
+    synthesis-verification: {address: member, source: synthesis-verification, required: false}
+    coverage-runtime-cites-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
+    coverage-runtime-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
+    coverage-runtime-cites-memory-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:memory', outcome: accepted}
+    coverage-runtime-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'runtime:cites:memory', outcome: accepted}
+    coverage-runtime-cites-epistemic-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
+    coverage-runtime-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
+    coverage-runtime-identity-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:identity:boundary', outcome: accepted}
+    coverage-runtime-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:identity:boundary',
+      outcome: accepted}
+    coverage-memory-cites-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:boundary', outcome: accepted}
+    coverage-memory-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:cites:boundary', outcome: accepted}
+    coverage-memory-cites-runtime-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:runtime', outcome: accepted}
+    coverage-memory-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory:cites:runtime', outcome: accepted}
+    coverage-memory-cites-epistemic-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
+    coverage-memory-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
+    coverage-memory-identity-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:identity:boundary', outcome: accepted}
+    coverage-memory-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:identity:boundary', outcome: accepted}
+    coverage-epistemic-cites-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:boundary',
+      outcome: accepted}
+    coverage-epistemic-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:cites:boundary', outcome: accepted}
+    coverage-epistemic-cites-runtime-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
+    coverage-epistemic-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
+    coverage-epistemic-cites-memory-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
+    coverage-epistemic-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
+    coverage-epistemic-identity-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:identity:boundary',
+      outcome: accepted}
+    coverage-epistemic-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:identity:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:cites:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-runtime-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:runtime',
+      outcome: accepted}
+    coverage-reconciliation-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'reconciliation:cites:runtime',
+      outcome: accepted}
+    coverage-reconciliation-cites-memory-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:memory',
+      outcome: accepted}
+    coverage-reconciliation-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'reconciliation:cites:memory',
+      outcome: accepted}
+    coverage-reconciliation-cites-epistemic-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:epistemic',
+      outcome: accepted}
+    coverage-reconciliation-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'reconciliation:cites:epistemic',
+      outcome: accepted}
+    coverage-reconciliation-identity-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:identity:boundary',
+      outcome: accepted}
+    coverage-reconciliation-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-cites-runtime-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:runtime',
+      outcome: accepted}
+    coverage-memory-profile-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory-profile:cites:runtime',
+      outcome: accepted}
+    coverage-memory-profile-cites-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:memory',
+      outcome: accepted}
+    coverage-memory-profile-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:cites:memory',
+      outcome: accepted}
+    coverage-memory-profile-cites-epistemic-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:epistemic',
+      outcome: accepted}
+    coverage-memory-profile-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory-profile:cites:epistemic',
+      outcome: accepted}
+    coverage-memory-profile-identity-boundary-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory-profile:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-identity-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:memory',
+      outcome: accepted}
+    coverage-memory-profile-identity-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:identity:memory',
+      outcome: accepted}
+    coverage-synthesis-cites-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:boundary',
+      outcome: accepted}
+    coverage-synthesis-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:cites:boundary', outcome: accepted}
+    coverage-synthesis-cites-runtime-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
+    coverage-synthesis-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
+    coverage-synthesis-cites-memory-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
+    coverage-synthesis-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
+    coverage-synthesis-cites-epistemic-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-identity-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:identity:boundary',
+      outcome: accepted}
+    coverage-synthesis-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:identity:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:cites:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-runtime-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:runtime',
+      outcome: accepted}
+    coverage-record-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'record-verification:cites:runtime',
+      outcome: accepted}
+    coverage-record-verification-cites-memory-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:memory',
+      outcome: accepted}
+    coverage-record-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'record-verification:cites:memory',
+      outcome: accepted}
+    coverage-record-verification-cites-epistemic-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-record-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'record-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-record-verification-cites-reconciliation-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    coverage-record-verification-cites-reconciliation-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    coverage-record-verification-identity-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:identity:boundary',
+      outcome: accepted}
+    coverage-record-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:identity:boundary',
+      outcome: accepted}
+    coverage-profile-verification-cites-runtime-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:runtime',
+      outcome: accepted}
+    coverage-profile-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'profile-verification:cites:runtime',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:memory',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'profile-verification:cites:memory',
+      outcome: accepted}
+    coverage-profile-verification-cites-epistemic-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-profile-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'profile-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-profile-verification: {address: judgment, source: profile-verification, required: false,
+      relation: 'profile-verification:cites:memory-profile', outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'profile-verification:cites:memory-profile',
+      outcome: accepted}
+    coverage-profile-verification-identity-boundary-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:identity:boundary',
+      outcome: accepted}
+    coverage-profile-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'profile-verification:identity:boundary',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:boundary', outcome: accepted}
+    coverage-synthesis-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:cites:boundary',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-runtime-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:runtime', outcome: accepted}
+    coverage-synthesis-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis-verification:cites:runtime',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-memory-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:memory', outcome: accepted}
+    coverage-synthesis-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis-verification:cites:memory',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-epistemic-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:epistemic', outcome: accepted}
+    coverage-synthesis-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-synthesis-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:synthesis', outcome: accepted}
+    coverage-synthesis-verification-cites-synthesis-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis-verification:cites:synthesis',
+      outcome: accepted}
+    coverage-synthesis-verification-identity-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:identity:boundary', outcome: accepted}
+    coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
+      outcome: accepted}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-profile-type: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    overview-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.md}
+    profile-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    record-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    synthesis-type: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    synthesis-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agent-memory-profile-schema: {address: file, source: agentic-system-analyses/types/agent-memory-profile.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-synthesis-schema: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml}
+    agentic-system-verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    boundary-accepted: {address: judgment, source: boundary, outcome: accepted, required: true}
+    runtime-accepted: {address: judgment, source: runtime, outcome: accepted, required: false}
+    memory-accepted: {address: judgment, source: memory, outcome: accepted, required: false}
+    epistemic-accepted: {address: judgment, source: epistemic, outcome: accepted, required: false}
+    reconciliation-accepted: {address: judgment, source: reconciliation, outcome: accepted, required: false}
+    memory-profile-accepted: {address: judgment, source: memory-profile, outcome: accepted, required: false}
+    synthesis-accepted: {address: judgment, source: synthesis, outcome: accepted, required: false}
+    record-verification-accepted: {address: judgment, source: record-verification, outcome: accepted, required: false}
+    profile-verification-accepted: {address: judgment, source: profile-verification, outcome: accepted, required: false}
+    synthesis-verification-accepted: {address: judgment, source: synthesis-verification, outcome: accepted, required: false}
+  outputs:
+  - overview
+  - manifest
+  role: overview
+- name: publish
+  kind: code
+  handler: commonplace.lib.agentic_job_set.unported
+  inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
+    boundary: {address: member, source: boundary, required: true}
+    overview: {address: member, source: overview, required: true}
+    runtime: {address: member, source: runtime, required: false}
+    memory: {address: member, source: memory, required: false}
+    epistemic: {address: member, source: epistemic, required: false}
+    reconciliation: {address: member, source: reconciliation, required: false}
+    memory-profile: {address: member, source: memory-profile, required: false}
+    synthesis: {address: member, source: synthesis, required: false}
+    record-verification: {address: member, source: record-verification, required: false}
+    profile-verification: {address: member, source: profile-verification, required: false}
+    synthesis-verification: {address: member, source: synthesis-verification, required: false}
+    coverage-overview-cites-boundary-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:boundary', outcome: accepted}
+    coverage-overview-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'overview:cites:boundary', outcome: accepted}
+    coverage-overview-cites-runtime-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:runtime', outcome: accepted}
+    coverage-overview-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'overview:cites:runtime', outcome: accepted}
+    coverage-overview-cites-memory-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:memory', outcome: accepted}
+    coverage-overview-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'overview:cites:memory', outcome: accepted}
+    coverage-overview-cites-epistemic-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:epistemic', outcome: accepted}
+    coverage-overview-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'overview:cites:epistemic',
+      outcome: accepted}
+    coverage-overview-identity-boundary-overview: {address: judgment, source: overview, required: false, relation: 'overview:identity:boundary',
+      outcome: accepted}
+    coverage-overview-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'overview:identity:boundary',
+      outcome: accepted}
+    coverage-runtime-cites-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
+    coverage-runtime-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
+    coverage-runtime-cites-memory-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:memory', outcome: accepted}
+    coverage-runtime-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'runtime:cites:memory', outcome: accepted}
+    coverage-runtime-cites-epistemic-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
+    coverage-runtime-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
+    coverage-runtime-identity-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:identity:boundary', outcome: accepted}
+    coverage-runtime-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:identity:boundary',
+      outcome: accepted}
+    coverage-memory-cites-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:boundary', outcome: accepted}
+    coverage-memory-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:cites:boundary', outcome: accepted}
+    coverage-memory-cites-runtime-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:runtime', outcome: accepted}
+    coverage-memory-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory:cites:runtime', outcome: accepted}
+    coverage-memory-cites-epistemic-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
+    coverage-memory-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
+    coverage-memory-identity-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:identity:boundary', outcome: accepted}
+    coverage-memory-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:identity:boundary', outcome: accepted}
+    coverage-epistemic-cites-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:boundary',
+      outcome: accepted}
+    coverage-epistemic-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:cites:boundary', outcome: accepted}
+    coverage-epistemic-cites-runtime-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
+    coverage-epistemic-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
+    coverage-epistemic-cites-memory-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
+    coverage-epistemic-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
+    coverage-epistemic-identity-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:identity:boundary',
+      outcome: accepted}
+    coverage-epistemic-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:identity:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:cites:boundary',
+      outcome: accepted}
+    coverage-reconciliation-cites-runtime-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:runtime',
+      outcome: accepted}
+    coverage-reconciliation-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'reconciliation:cites:runtime',
+      outcome: accepted}
+    coverage-reconciliation-cites-memory-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:memory',
+      outcome: accepted}
+    coverage-reconciliation-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'reconciliation:cites:memory',
+      outcome: accepted}
+    coverage-reconciliation-cites-epistemic-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:epistemic',
+      outcome: accepted}
+    coverage-reconciliation-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'reconciliation:cites:epistemic',
+      outcome: accepted}
+    coverage-reconciliation-identity-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:identity:boundary',
+      outcome: accepted}
+    coverage-reconciliation-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-cites-runtime-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:runtime',
+      outcome: accepted}
+    coverage-memory-profile-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory-profile:cites:runtime',
+      outcome: accepted}
+    coverage-memory-profile-cites-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:memory',
+      outcome: accepted}
+    coverage-memory-profile-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:cites:memory',
+      outcome: accepted}
+    coverage-memory-profile-cites-epistemic-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:epistemic',
+      outcome: accepted}
+    coverage-memory-profile-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory-profile:cites:epistemic',
+      outcome: accepted}
+    coverage-memory-profile-identity-boundary-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory-profile:identity:boundary',
+      outcome: accepted}
+    coverage-memory-profile-identity-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:memory',
+      outcome: accepted}
+    coverage-memory-profile-identity-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:identity:memory',
+      outcome: accepted}
+    coverage-synthesis-cites-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:boundary',
+      outcome: accepted}
+    coverage-synthesis-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:cites:boundary', outcome: accepted}
+    coverage-synthesis-cites-runtime-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
+    coverage-synthesis-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
+    coverage-synthesis-cites-memory-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
+    coverage-synthesis-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
+    coverage-synthesis-cites-epistemic-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-identity-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:identity:boundary',
+      outcome: accepted}
+    coverage-synthesis-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:identity:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:cites:boundary',
+      outcome: accepted}
+    coverage-record-verification-cites-runtime-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:runtime',
+      outcome: accepted}
+    coverage-record-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'record-verification:cites:runtime',
+      outcome: accepted}
+    coverage-record-verification-cites-memory-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:memory',
+      outcome: accepted}
+    coverage-record-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'record-verification:cites:memory',
+      outcome: accepted}
+    coverage-record-verification-cites-epistemic-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-record-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'record-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-record-verification-cites-reconciliation-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    coverage-record-verification-cites-reconciliation-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'record-verification:cites:reconciliation',
+      outcome: accepted}
+    coverage-record-verification-identity-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:identity:boundary',
+      outcome: accepted}
+    coverage-record-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:identity:boundary',
+      outcome: accepted}
+    coverage-profile-verification-cites-runtime-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:runtime',
+      outcome: accepted}
+    coverage-profile-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'profile-verification:cites:runtime',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:memory',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'profile-verification:cites:memory',
+      outcome: accepted}
+    coverage-profile-verification-cites-epistemic-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-profile-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'profile-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-profile-verification: {address: judgment, source: profile-verification, required: false,
+      relation: 'profile-verification:cites:memory-profile', outcome: accepted}
+    coverage-profile-verification-cites-memory-profile-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'profile-verification:cites:memory-profile',
+      outcome: accepted}
+    coverage-profile-verification-identity-boundary-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:identity:boundary',
+      outcome: accepted}
+    coverage-profile-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'profile-verification:identity:boundary',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:boundary', outcome: accepted}
+    coverage-synthesis-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:cites:boundary',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-runtime-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:runtime', outcome: accepted}
+    coverage-synthesis-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis-verification:cites:runtime',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-memory-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:memory', outcome: accepted}
+    coverage-synthesis-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis-verification:cites:memory',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-epistemic-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:epistemic', outcome: accepted}
+    coverage-synthesis-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis-verification:cites:epistemic',
+      outcome: accepted}
+    coverage-synthesis-verification-cites-synthesis-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:cites:synthesis', outcome: accepted}
+    coverage-synthesis-verification-cites-synthesis-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis-verification:cites:synthesis',
+      outcome: accepted}
+    coverage-synthesis-verification-identity-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
+      relation: 'synthesis-verification:identity:boundary', outcome: accepted}
+    coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
+      outcome: accepted}
+    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
+    boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
+    epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
+    memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-profile-type: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    overview-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.md}
+    profile-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    record-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    runtime-type: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
+    synthesis-type: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
+    synthesis-verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    agent-memory-analysis-report-schema: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml}
+    agent-memory-profile-schema: {address: file, source: agentic-system-analyses/types/agent-memory-profile.schema.yaml}
+    agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
+    agentic-system-analysis-set-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.schema.yaml}
+    agentic-system-boundary-schema: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.schema.yaml}
+    agentic-system-epistemic-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml}
+    agentic-system-reconciliation-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    agentic-system-runtime-report-schema: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml}
+    agentic-system-synthesis-schema: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml}
+    agentic-system-verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
+    note-base-schema: {address: file, source: types/note-base.schema.yaml}
+    note-schema: {address: file, source: types/note.schema.yaml}
+    sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
+    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
+    boundary-accepted: {address: judgment, source: boundary, outcome: accepted, required: true}
+    overview-accepted: {address: judgment, source: overview, outcome: accepted, required: true}
+    runtime-accepted: {address: judgment, source: runtime, outcome: accepted, required: false}
+    memory-accepted: {address: judgment, source: memory, outcome: accepted, required: false}
+    epistemic-accepted: {address: judgment, source: epistemic, outcome: accepted, required: false}
+    reconciliation-accepted: {address: judgment, source: reconciliation, outcome: accepted, required: false}
+    memory-profile-accepted: {address: judgment, source: memory-profile, outcome: accepted, required: false}
+    synthesis-accepted: {address: judgment, source: synthesis, outcome: accepted, required: false}
+    record-verification-accepted: {address: judgment, source: record-verification, outcome: accepted, required: false}
+    profile-verification-accepted: {address: judgment, source: profile-verification, outcome: accepted, required: false}
+    synthesis-verification-accepted: {address: judgment, source: synthesis-verification, outcome: accepted, required: false}
+    manifest: {address: output, source: 'assemble:manifest'}
+  outputs: []
