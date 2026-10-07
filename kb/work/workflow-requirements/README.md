@@ -33,9 +33,12 @@ situations the spec must cover and names those it does not yet.
 
 [API design](./api-design.md) and the [Python sketch](./api_sketch.py) propose
 the minimal public boundary under the updated requirements: one advancing
-call and one generic judgment primitive for code jobs and operator reports.
-Pinning and storage remain internal; the sketch does not add alternative
-currency or refusal-ownership rules.
+call and one generic judgment primitive for code jobs. Operator entry points
+are omitted from the sketch by request. The declaration is data, with package
+handlers named by dotted path. Pinning and storage remain internal; the sketch
+does not add alternative currency or refusal-ownership rules.
+[Glossary](./glossary.md) sets one word per concept for the spec and the
+API together; it is applied to every file here.
 
 ## Related
 

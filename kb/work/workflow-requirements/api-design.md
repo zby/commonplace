@@ -3,66 +3,107 @@
 The [Python sketch](./api_sketch.py) expresses the updated
 [requirements](./requirements.md) through a small public boundary. Behavior
 is `...`; it is not a working engine or a complete analysis job declaration.
-The requirements govern it. This revision removes the previous sketch's
-alternative currency, refusal-ownership and acceptance policies.
+The requirements govern its scheduling and judgment semantics. Names follow
+the [glossary](./glossary.md). Operator entry points are omitted from this
+sketch by request; that omission does not remove the command-line capability
+from the requirements.
 
 ## Public boundary
 
-- `JobSet`, `ModelJob`, `CodeJob` and `Read` declare jobs and file dependencies.
-- `advance(directory, completions=..., judgments=...)` is the coordinator call.
-  It loads the job-set file named by the run's opening metadata.
-- `CodeContext.read()` reads a pinned declared input.
-- `CodeContext.judge()` stages acceptance or refusal of an exact version,
-  with findings, covered relations and optional explicit refusal overrides.
-- `Completion` reports finished or failed model attempts with worker identity.
-- `OperatorJudgment` carries the same judgment primitive from the command line.
-- `Handout`, `Stop` and `Advance` report work and state to the coordinator.
+- `JobSet`, `ModelJob`, `CodeJob` and `Input` describe the declaration-file schema.
+- `advance(run_dir, results=...)` runs one invocation and returns a
+  `RunStatus`. It loads the job-set file named by the run's opening metadata.
+- `CodeAttempt.read()` reads a pinned input by name.
+- `CodeAttempt.judge()` stages acceptance or refusal of one subject version,
+  with findings, a scope of covered relations and optional explicit refusal
+  overrides.
+- `AttemptResult` closes an open model attempt as completed or failed, with
+  worker identity.
+- `Handout`, `Stop` and `RunStatus` report work and state to the coordinator.
 
 There is no public engine object, storage API, pin constructor, verdict parser
-or specialized structural-check method. Code handlers return named output
-bytes; judgments and outputs commit together only after a handler succeeds.
-An operator supplies a retained subject identity and explicit basis reads,
-not an instruction to silently approve whatever is current.
+or specialized structural-check method. Handlers return named output bytes;
+judgments and outputs commit together only after a handler succeeds.
+Operator request records and command-line judgment entry points are not part
+of this sketch. Code jobs retain explicit scoped overrides through `judge()`.
 
 ## Declaration and type separation
 
-The job set is its own file under the workflow's instructions. It names the
-type, and the run metadata names the job set. The type supplies slots,
-relations and disposition requirements but knows nothing of producers.
-Loading and validating the declaration are internal to `advance()`.
+The job set is a declaration file, not executable code, under the workflow's
+instructions. It names the type, and the run metadata names the job set.
+Code jobs name package handlers by dotted path; a handler receives a
+`CodeAttempt` and returns named output bytes. The Python dataclasses show the
+loaded schema, not a Python configuration format. The serialization format
+is not selected here.
 
-Each member-producing job identifies its member; its first output is the
-primary member output, with any remaining outputs auxiliary. A code check
-can judge a member-producing candidate it reads, while assembly can judge
-its own returned primary output. Both use the same `judge()` operation.
-The implementation must reject ambiguous output ownership and self-reads.
+Instruction trees install as shared data, while handlers live in the
+package. The type supplies roles, relations and disposition requirements but
+knows nothing of producers. A relation is named by its kind and partner role,
+such as `cites:runtime`. Loading and validating the declaration are internal
+to `advance()`.
 
-Reads include ordinary files, members, job outputs, judgments addressed by
-member/relation/outcome, and a producer's latest refusal. Required and
-optional reads record presence or absence. A required judgment read is
-available only while the judgment holds. Workers can read additional context,
-but it is not authoritative, tracked or a currency signal.
+Each role-filling job names its role; its first output is the primary
+output, with any remaining outputs auxiliary. A check job can judge a
+candidate among its inputs, while assembly can judge its own returned
+primary output. Both use the same `judge()` operation. The implementation
+must reject ambiguous output ownership and a job with its own role as input.
+
+Each input has a view: a file, a member, a job's latest completed output, a
+latest completed attempt record, a version that record says was handed, a
+judgment addressed by role, relation and outcome, or a producer's current
+refusal. Required and optional inputs record presence or absence. A required
+judgment input is present only while the judgment holds. Workers can read
+untracked context, but it is not authoritative, tracked or a currency
+signal.
+
+A handed input names an attempt input and the producer's input name. For
+example, an apply job can declare:
+
+```python
+inputs={
+    "verdict": Input("output", "verify-records:verdict"),
+    "verification-attempt": Input("attempt", "verify-records"),
+    "runtime-seen": Input("handed", "verification-attempt:runtime"),
+}
+```
+
+`attempt.read("runtime-seen")` returns the bytes the verifier saw, and
+`attempt.judge("runtime-seen", ...)` takes that exact member version as its
+subject. The engine keeps the version's role internally. This adds no
+public pin-construction or historical-storage method. The route is static;
+only the attempt record selecting the version changes.
 
 ## Attempts and currency
 
-Hand-outs pin declared reads and always supply any previous attempt outputs
-by identity as context. There is no opt-in previous-output flag. Completion
-records opening pins, not the inputs current when completion is reported.
-An open model attempt is closed only by an explicit report. Reporting no
-output closes it as failed; a killed worker is not silently cleaned up or
-reissued while its attempt remains open.
+Hand-outs pin every input and always supply the previous output by identity;
+it is not an input. There is no opt-in previous-output flag. A completed
+attempt records the versions pinned at opening, not those current when its
+result is reported. An open model attempt is closed only by an attempt
+result. A result with no output closes it as failed; a killed worker is not
+silently cleaned up or reissued while its attempt remains open.
 
-All ordinary output identity and downstream currency are content-based.
-There is no special verdict currency rule. Model bounds are optional and
-never reset; identical and failed attempts count. Code jobs have no bounds.
-Failures retain diagnostics, record no reads, stop the invocation, and leave
-the job ready for a later invocation.
+All output identity and downstream currency are content-based. There is no
+special verdict currency rule. Bounds are optional and never reset;
+identical and failed attempts count. Code jobs have no bounds. Failures
+retain diagnostics, record no inputs, stop the invocation, and leave the job
+ready for a later invocation. An exhausted bound prevents a further attempt
+in this run; neither an acceptance nor an invocation resets it. Raising the
+bound edits the fixed declaration, which is a method change and makes the
+run unpublishable. Further model work requires a new run; operator override
+acceptance remains a spec capability outside this sketch.
 
-The engine supplies each producer's latest refusal, including the refused
-version and findings. Reading it answers it; only a newer nonsuperseded
-refusal triggers another correction. Supersession requires sufficient scope
-or an explicit override. There is no designated-verifier ownership map or
-aggregation of arbitrary outstanding findings beyond the requirement's
+An input that appears or differs from its recorded version is a readiness
+signal; one that lapses is not. Missing required inputs still block
+readiness. A producer's refusal input lapses after a newer output without
+scheduling another correction.
+
+The engine supplies each producer's latest refusal of its latest completed
+output, including the refused version, the findings and the refusal's
+identity. Historical refusals stay as evidence but do not enter that
+producer's refusal input. Reading it answers it; only a newer, unsuperseded
+refusal triggers another correction. Supersession requires a sufficient
+scope or an explicit override. There is no designated-verifier ownership
+map or aggregation of outstanding findings beyond the requirement's
 latest-refusal view.
 
 ## Judgments and publication
@@ -70,19 +111,22 @@ latest-refusal view.
 Only code jobs judge autonomously. A model-written verification is a document;
 consumer code parses it and calls `judge()` for each applicable member.
 The engine does not distinguish structural acceptance from semantic
-acceptance. Every judgment records the judging job's pinned declared reads.
-Covered relation partners must be among them.
+acceptance. Every judgment records the judging attempt's pinned inputs as
+its basis. Partners of the relations in its scope must be in the basis.
 
-An acceptance installs its subject version at the member slot, including a
-historical version. The member stays when its acceptance stops holding.
-This sketch does not add a no-restoration policy. Operator interventions
-have the same effects and must be deliberate.
+An acceptance installs its subject only when that version is the producing
+job's latest completed output. A judgment of any earlier version is evidence
+only: it moves no member and cannot supply a refusal of the latest output.
+The member stays when its acceptance stops holding.
 
-Publication remains a code job. It checks that holding acceptance scopes
-cover every relation declared for each required current member and copies
-pinned current versions. The type's disposition determines required members
-and gates their producers. State, attempts, versions, judgments and prompts
-remain siblings of the typed output directory, never members.
+Publication remains a code job. It checks that the scopes of holding
+acceptances cover every relation declared for each required role. A
+relation is covered only when the partner version in the basis is the
+partner's current member; a holding acceptance whose basis has a handed,
+historical partner is not sufficient. The job copies the current members,
+pinned. The type's disposition determines required roles and gates the jobs
+that fill them. State, attempts, versions, judgments and prompts remain
+siblings of `set/`, never members.
 
 External-effect recognition remains consumer-owned. Acquisition and
 publication must establish whether an interrupted effect completed before
@@ -91,23 +135,24 @@ omits a reusable effect-adapter protocol, not this recovery obligation.
 
 ## Remaining design checks
 
-The sketch follows the spec rather than silently repairing it. In particular,
-pinning a verifier's attempt inputs does not by itself make an apply job's
-current member reads equal to the versions that verifier saw. The consumer
-mapping still needs an explicit rule preventing a late verdict about A from
-being applied as a judgment of B. A special evidence currency rule or
-historical non-installing acceptance would change the spec and is not added
-here.
+The apply jobs must declare the verifier's attempt record and the member
+versions it was handed, as the updated mapping requires. Scenario 21 then
+judges A without restoring it over B or delivering A's refusal as B's
+refusal input. In scenario 22, identical verdict bytes about B still rerun
+the apply job because its attempt-record input changed. Ordinary transforms
+retain content-only early cutoff.
 
-The complete job declaration should also exercise interrupted code recovery,
-completion replay, scoped refusal supersession, disposition changes and
-unioned publication coverage. These are future test obligations, not passing
-test results.
+The complete declaration should exercise these scenarios, interrupted code
+recovery, repeated attempt results, scoped refusal supersession, disposition
+changes and unioned publication coverage. These are future test
+obligations, not passing test results.
 
 ## Delayed public features
 
 Storage adapters, configurable declaration discovery, generic external-effect
 protocols, automatic check-pair generation, decorator DSLs, public pin records,
-historical-read APIs and diff generation remain outside this sketch. Operator
-judgments and scoped overrides are not deferred: the updated spec requires
-them.
+arbitrary historical-version lookup and diff generation remain outside this
+sketch. Handed inputs are included because the spec and first consumer
+require them. Operator entry points remain outside this sketch by request,
+although the spec still requires them. Scoped overrides remain available to
+code jobs.

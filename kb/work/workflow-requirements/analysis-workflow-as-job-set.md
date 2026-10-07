@@ -6,68 +6,74 @@ implementation of 2026-10-07 (`src/commonplace/lib/agentic_workflow.py` and
 the set type's layout). The spec is not changed here; where the mapping
 needs something the spec does not give, the need is reported under
 [Spec needs](#spec-needs) with a fallback that stays inside the spec.
+Words follow the [glossary](./glossary.md), except in the Spec needs items,
+which are kept as written.
 
 ## Conventions
 
-- **Directory.** The run directory `state/<run-id>/`. Its `output/` is the
+- **Directory.** The run directory `state/<run-id>/`. Its `set/` is the
   typed set; state, versions and candidates live beside it. The job set is
   a file under the workflow's instructions that names the set type, and
   the run's metadata names the job set, as the spec's decisions require.
-- **Member.** The current accepted version at a slot in `output/`. A model
+- **Member.** The current accepted version of a role in `set/`. A model
   job's output is a candidate until a code job accepts it.
-- **Reads.** A job's declared reads are current members or run files. They
-  are the rerun triggers of requirement 4. Method files (the job's
-  instruction, worker rules, contracts) are reads of every model job, so a
+- **Inputs.** A job's inputs are current members, run files or engine
+  views such as refusals and attempt records. They are the rerun triggers
+  of requirement 4. Method files (the job's instruction, worker rules,
+  contracts) are inputs of every model job, so a
   method edit reruns the job, following the criteria rule.
 - **Check jobs.** Every member-producing model job has a paired code job
-  that reads the candidate, the members its role relates to and the type
-  contracts it applies, validates the candidate at its slot, and accepts
-  it against those reads, naming the relations it checked, or refuses it
-  with the findings. Declaring the contracts as reads is what makes a
-  criteria edit rerun the check and stop the old acceptance holding. This is the one judging pattern; the engine knows
+  whose inputs are the candidate, the members its role relates to and the
+  type contracts it applies. It validates the candidate at its role and
+  accepts it with those inputs as basis and the relations it checked as
+  scope, or refuses it with the findings. Declaring the contracts as
+  inputs is what makes a criteria edit rerun the check and stop the old
+  acceptance holding. This is the one judging pattern; the engine knows
   nothing of it. A declaration default could generate these pairs.
 - **Apply jobs.** A verification is a model-written verdict document. A code
   job reads it and turns its blockers into refusals of the members they
-  address, each scoped to the relation between the member and the
-  verification. It reads the verifier's attempt record and the members at
-  the versions that record pinned, not the current ones, so its judgments
+  address, each with the member's relation to the verification as scope.
+  Its inputs are the verifier's attempt record and the members that
+  attempt was handed, not the current ones, so its judgments
   are about what the verifier saw and it reruns whenever the verifier
   judged different inputs, even to identical verdict text; pinned
   hand-outs make the two differ without any operator involved (scenarios
   21 and 22). The versions come from the engine's record, never from the
   verification's text. Only code jobs judge; model jobs write documents.
-- **Check jobs read the refusal they answer.** This makes a check rerun on
+- **Check jobs have the refusal they answer as an input.** This makes a check rerun on
   every refusal and re-accept the standing version. Under scoped
   supersession that acceptance cancels nothing and resets nothing, so the
-  rerun is a redundant record, not a defect. Dropping the read would need
+  rerun is a redundant record, not a defect. Dropping the input would need
   another way to compare `answers.md` with the blockers.
 
 ## Jobs
 
-Members are named by role. `+prev` means the job's own previous version
-(S3). `findings` means the refusal findings the engine supplies to a rerun.
+Members are named by role. `refusal` is the job's refusal input, which
+supplies the refused version and findings to a rerun. Every model job's
+hand-out also carries its previous output (requirement 3); that is not an
+input, so it is not listed.
 
-| Job | Kind | Reads | Writes or judges | Bound |
+| Job | Kind | Inputs | Writes or judges | Bound |
 |---|---|---|---|---|
 | open | code | run parameters, repository state | `run-metadata.json`; refuses to start on an unpublishable worktree or changed package | – |
 | acquire | code | run-metadata | `source.json`; external effect: frozen checkout under `related-systems/` | – |
 | boundary | model | run-metadata, source.json, source text | candidate boundary | 2 |
 | check-boundary | code | candidate, run-metadata, source.json, checkout state | accepts boundary against those, or refuses | |
-| runtime | model | boundary, findings | candidate | 3 |
-| memory, epistemic | model | boundary, findings; runtime as context only (S8) | candidate, and `answers.md` on a rerun | 3 |
-| check-\<report\> | code | candidate, boundary, the reports it cites, answers, the refusal it answers (S4) | accepts the report against those; refuses when the slot check fails, a declared record ID was dropped, or answers do not match the blockers | |
-| reconcile | model | boundary, runtime, memory, epistemic, findings, +prev | candidate reconciliation | 3 |
+| runtime | model | boundary, refusal | candidate | 3 |
+| memory, epistemic | model | boundary, refusal; runtime as untracked context only (S8) | candidate, and `answers.md` on a rerun | 3 |
+| check-\<report\> | code | candidate, boundary, the reports it cites, answers, the refusal it answers (S4) | accepts the report against those; refuses when validation at its role fails, a declared record ID was dropped, or answers do not match the blockers | |
+| reconcile | model | boundary, runtime, memory, epistemic, refusal | candidate reconciliation | 3 |
 | check-reconciliation | code | candidate, boundary, reports | accepts or refuses | |
-| verify-records | model | boundary, reports, reconciliation, answers, +prev | candidate record-verification | 3 |
-| apply-record-verification | code | candidate, its attempt record, reports, reconciliation at the pinned versions | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
-| profile | model | boundary, reports, reconciliation, findings, +prev; required: each report and the reconciliation accepted against record-verification | candidate memory-profile | 3 |
-| check-profile | code | candidate, boundary, memory, reports | accepts or refuses; comparison version and source identity are part of the slot check | |
-| verify-profile | model | memory-profile, reports, +prev | candidate profile-verification | 3 |
-| apply-profile-verification | code | candidate, its attempt record, memory-profile at the pinned versions | accepts the verification; refuses the profile on blockers; accepts the profile against the verification otherwise | |
-| synthesize | model | boundary, reports, reconciliation, record-verification, profile-verification, findings, +prev; required: the record acceptances above and memory-profile accepted against profile-verification | candidate synthesis | 2 |
+| verify-records | model | boundary, reports, reconciliation, answers | candidate record-verification | 3 |
+| apply-record-verification | code | candidate, its attempt record, the reports and reconciliation it was handed | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
+| profile | model | boundary, reports, reconciliation, refusal; required: each report and the reconciliation accepted against record-verification | candidate memory-profile | 3 |
+| check-profile | code | candidate, boundary, memory, reports | accepts or refuses; comparison version and source identity are part of validation at its role | |
+| verify-profile | model | memory-profile, reports | candidate profile-verification | 3 |
+| apply-profile-verification | code | candidate, its attempt record, the memory-profile it was handed | accepts the verification; refuses the profile on blockers; accepts the profile against the verification otherwise | |
+| synthesize | model | boundary, reports, reconciliation, record-verification, profile-verification, refusal; required: the record acceptances above and memory-profile accepted against profile-verification | candidate synthesis | 2 |
 | check-synthesis | code | candidate, boundary, reports | accepts or refuses | |
-| verify-synthesis | model | synthesis, reports, record-verification, profile-verification, +prev | candidate synthesis-verification | 2 |
-| apply-synthesis-verification | code | candidate, its attempt record, synthesis at the pinned versions | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
+| verify-synthesis | model | synthesis, reports, record-verification, profile-verification | candidate synthesis-verification | 2 |
+| apply-synthesis-verification | code | candidate, its attempt record, the synthesis it was handed | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
 | assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md`, `ARTIFACT.yaml` with pins; accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
 
@@ -89,7 +95,8 @@ boundary's disposition have no ready jobs (S7); a non-complete run goes
 straight to `assemble`.
 
 **Records.** `runtime` runs; its check accepts it. `memory` and `epistemic`
-run with the runtime report exposed as context, not as a read (S8).
+run with the runtime report exposed as untracked context, not as an
+input (S8).
 `reconcile` runs once the three reports are members, then `verify-records`.
 `apply-record-verification` accepts the verification against the reports
 and reconciliation it judged, then either refuses the addressed members or,
@@ -100,16 +107,16 @@ verification. That second acceptance is what "records settled" means.
 job is ready again with the blocker as findings. Its rerun writes a new
 report and `answers.md`. The check compares the answers with the blocker
 and refuses a "corrected" answer whose report is byte-identical. Acceptance
-replaces the member. The reconciliation's read changed, so `reconcile`
-reruns; then `verify-records`, whose reads changed too. The verification's
+replaces the member. The reconciliation's input changed, so `reconcile`
+reruns; then `verify-records`, whose inputs changed too. The verification's
 earlier acceptance no longer holds and is replaced. The loop ends when
 a verification has no blockers, or a bound is hit. No packets, round
 numbers, set-check files or change diffs exist. The verifier reads the
-answers and its own previous version (S3) and judges afresh, as its
+answers and its previous output (S3) and judges afresh, as its
 instruction says today.
 
 **A blocker addressed to the reconciliation** refuses the reconciliation
-only. Its rerun reads the unchanged reports and the findings.
+only. Its rerun reads the unchanged reports and the refusal.
 
 **Profile and synthesis** follow the same pattern with one verification
 each. The synthesis loop carries the type's limits relation: the apply job
@@ -132,7 +139,7 @@ job's judgment.
 
 Round counters and versioned filenames at the run root; the request
 packet, change diffs and `set-check-<n>.md`; the `LATER_ROLES` filter and
-the type-only manifest override, since checks read declared members only;
+the type-only manifest override, since checks read their declared inputs only;
 the engine's retry and repair limits and `StopRun`; the verifier residue
 that structural failures need explicit blockers, since structurally
 refused candidates never become members; the `acceptance-measurements`
