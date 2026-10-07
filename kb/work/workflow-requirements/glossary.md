@@ -35,7 +35,7 @@ what it replaced; *decided* — settled by the operator.
 | A declared position in the set | role | `ModelJob.role`, `CodeJob.role` | A role is a position the type declares, with a path and relations. | changed: the spec says *slot*, the sketch says *member* and *slot name*, the type layout says `roles` |
 | The accepted version in a role | member | — | A member is the version currently installed in a role. | keep; stop using it for the role itself |
 | A declared link between two roles | relation | `"verification:cites:runtime"` | A relation is a link the type declares from an origin role to a partner role, of a kind such as `identity` or `cites`. | decided: `<origin>:<kind>:<partner>`, replacing `<kind>:<partner>`; see [Relation](#relation) |
-| Whether the set's disposition requires a role | required role | — | A required role is one the type requires given the members present. | keep (spec: "member the type does not require") |
+| Whether the set's disposition permits a role | permitted role | — | A permitted role is one the type permits given the members present; a job filling any other role is not ready. | changed: was *required role*; requiring admits only `always` roles until the discriminating member exists, so no complete run could start |
 
 ## Declaration
 
