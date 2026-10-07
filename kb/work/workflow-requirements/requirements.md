@@ -141,6 +141,13 @@ They bind an implementation of this spec; they are not requirements.
   `{workspace}` and `{param:<name>}` substituted; no template language.
   Why: the analysis instructions already follow this shape, so they port
   unchanged.
+- **File inputs are checked, not snapshotted.** A file input is handed at
+  its own path and its digest is pinned at hand-out; completing the
+  attempt fails if the file then differs. A change reverted before
+  completion is not detected. Runs that need the stronger guarantee run in
+  a worktree pinned to a commit, as analysis runs already do. Why: a
+  snapshot would have to mirror every file an instruction links to, and
+  the method tree is already frozen where it matters.
 - **Only code jobs judge.** A model job that wants a judgment writes a
   document, and a code job reads it and records the judgment. Why: a
   judgment's basis and scope must be exact, and a worker's reading is
