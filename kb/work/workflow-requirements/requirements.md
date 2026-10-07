@@ -19,8 +19,9 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    check job applies are among its inputs. A job never has the role it
    writes as an input. The declaration is fixed; nothing adds a dependency
    at run time. Roles and their relations come from the set's type; a
-   relation is named by its kind and partner role, such as `cites:runtime`.
-   The job set adds only who produces what from what.
+   relation runs from an origin role to a partner role and is named by
+   both ends and its kind, such as `verification:cites:runtime`. The job
+   set adds only who produces what from what.
 2. **Two kinds of job.** A code job runs under the command and reads only
    its inputs. A model job is handed out as a prompt and an expected output
    path; the command never calls a model. Its inputs are authoritative and
@@ -61,8 +62,9 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    subject version, accepted or refused, with findings. The judgment
    records its basis, the job's pinned inputs, and its scope, the declared
-   relations it covers, possibly none, whose partners are in its basis. It
-   may name a refusal it overrides. It holds while its basis is at its
+   relations it covers, possibly none. The subject's role is at one end of
+   each relation in the scope, and the version at the other end is in the
+   basis. It may name a refusal it overrides. It holds while its basis is at its
    recorded versions. Any job may judge, as may the operator from the
    command line.
 6. **Acceptance.** An acceptance of the producing job's latest completed
@@ -87,11 +89,12 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    answers a refusal with the refused version unchanged has failed. A
    failed attempt records no inputs, so the job stays ready; it counts
    toward the bound.
-9. **Publication.** A set is publishable when every member has holding
-   acceptances whose scopes together cover every relation the type
-   declares for its role; an acceptance covers a relation only if the
-   partner version in its basis is the partner's current member. A code
-   job checks this and copies the current versions out, pinned.
+9. **Publication.** A set is publishable when every relation the type
+   declares between its members is covered. A relation is covered by a
+   holding acceptance of the current member at either end that has the
+   relation in its scope and the current member at the other end in its
+   basis. A code job checks this and copies the current versions out,
+   pinned.
 
 ## Open
 
@@ -116,8 +119,11 @@ They bind an implementation of this spec; they are not requirements.
   is a declaration file, not code, under the workflow's instructions
   beside the worker instructions it refers to: jobs, inputs, outputs and
   bounds, with each code job naming its handler by dotted path into the
-  package. The run's metadata, written at opening, names the job set it
-  runs, which fixes the declaration for the run. The type knows nothing
+  package. A run is started by an operation of its own, which writes the
+  run's metadata naming the job set and the run parameters and fixes the
+  declaration for the run; every later invocation loads the job set from
+  that metadata. A job set's first code job, such as `open`, is then an
+  ordinary job with the metadata as an input. The type knows nothing
   about producers. The instruction trees install as shared data, not as
   Python, which is why handlers live in the package and the file only
   names them. Why: a type says what a set is and a job set says how

@@ -54,7 +54,7 @@ new acceptance instead of running once per verification. [1, 4, 6]
 handed the runtime report as untracked context, not as an input. Runtime
 is corrected. `memory` is not ready, because none of its inputs changed.
 `check-memory` has the runtime member as an input, so it reruns, and
-either re-accepts the memory report with `cites:runtime` in scope or refuses it with a
+either re-accepts the memory report with `memory:cites:runtime` in scope or refuses it with a
 finding, which then makes `memory` ready. Model cost is paid only when a
 check fails. The same holds for AGENTS.md, skills and anything else the
 worker read beyond its declaration. [2, 4, 5, 6]
@@ -155,7 +155,7 @@ operator. [7]
 
 **17. A re-check does not supersede a refusal outside its scope.** `V`
 refuses A; the apply job records the refusal of the runtime report with
-`cites:runtime` from the record verification as its scope. `check-R` has that refusal as an input, so it
+`record-verification:cites:runtime` as its scope. `check-R` has that refusal as an input, so it
 reruns, finds unchanged A structurally sound, and accepts it on identity
 and citations. That scope does not include the refusal's, and the
 acceptance names no refusal it overrides, so the refusal stands and `R` is

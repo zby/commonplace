@@ -1,7 +1,7 @@
 """Public API sketch for requirements.md; implementations deliberately use `...`.
 
-Not runtime code. The run metadata names a fixed job-set file, which names the
-set type. Attempts, versions and judgments live beside the typed set.
+Not runtime code. start_run() writes run metadata naming a fixed job-set file,
+which names the set type. Attempts, versions and judgments live beside the typed set.
 Job declarations below describe the data-file schema, not executable Python
 configuration. Operator entry points are outside this sketch by request.
 Storage records and currency calculations are not public APIs.
@@ -49,7 +49,7 @@ class Input:
     address: Literal["file", "member", "output", "attempt", "handed", "judgment", "refusal"]
     source: str
     required: bool = True
-    relation: str | None = None  # Judgment address, '<kind>:<partner role>'.
+    relation: str | None = None  # Judgment address, '<origin>:<kind>:<partner>'.
     outcome: Literal["accepted", "refused"] | None = None  # Judgment address.
 
 
@@ -121,10 +121,11 @@ class CodeAttempt:
         subject is the name of a declared member, output or handed input, or
         this job's primary output name (resolved from the bytes the handler
         returns). The role is resolved from the declaration. Scope names
-        relations as '<kind>:<partner role>', whose partners must be in the
-        basis. Overrides name refusal identities. For publication, a relation
-        is covered only when the partner version in the basis is that
-        partner's current member; handed versions alone cannot supply coverage.
+        relations as '<origin>:<kind>:<partner>'; the subject's role is at one
+        end of each, and the version at the other end must be in the basis.
+        Overrides name refusal identities. For publication, a relation is
+        covered only when the version at the other end is that role's current
+        member; handed versions alone cannot supply coverage.
 
         Acceptance installs only the producing job's latest completed output.
         A judgment of an earlier version is evidence only and moves nothing;
@@ -184,6 +185,22 @@ class RunStatus:
     publishable: bool
 
 
+def start_run(
+    run_dir: Path,
+    job_set: Path,
+    *,
+    parameters: Mapping[str, str] | None = None,
+) -> None:
+    """Start a run: write metadata naming the job set and the run parameters.
+
+    The metadata fixes the declaration for the run; every later invocation
+    loads the job set from it. The job set's first code job, such as `open`,
+    has the metadata as an input like any other. Starting an existing run
+    is an error.
+    """
+    ...
+
+
 def advance(
     run_dir: Path,
     *,
@@ -191,7 +208,7 @@ def advance(
 ) -> RunStatus:
     """Run one invocation over the run directory and return its run status.
 
-    Load the fixed job set named in this run's opening metadata. Editing its
+    Load the fixed job set named in the metadata that start_run() wrote. Editing its
     bounds grants no further attempts in this run; a changed declaration is
     a method change and makes the run unpublishable.
 
@@ -207,8 +224,9 @@ def advance(
     7. Failed attempts record no inputs and stay ready for a later
     invocation. Type disposition gates role-filling jobs. Bounds never reset
     or increase within the run; another model attempt requires a new run.
-    Publication coverage is the union of holding acceptances of current
-    members, counting a relation only when its partner in the basis is the
-    partner's current member.
+    A relation is covered by a holding acceptance of the current member at
+    either end with the relation in scope and the other end's current
+    member in its basis; publication requires every declared relation
+    between the members to be covered.
     """
     ...

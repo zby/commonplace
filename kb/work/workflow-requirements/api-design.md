@@ -11,8 +11,11 @@ from the requirements.
 ## Public boundary
 
 - `JobSet`, `ModelJob`, `CodeJob` and `Input` describe the declaration-file schema.
+- `start_run(run_dir, job_set, parameters=...)` starts a run: it writes the
+  run metadata naming the job set and parameters, which fixes the
+  declaration for the run.
 - `advance(run_dir, results=...)` runs one invocation and returns a
-  `RunStatus`. It loads the job-set file named by the run's opening metadata.
+  `RunStatus`. It loads the job-set file named by the run metadata.
 - `CodeAttempt.read()` reads a pinned input by name.
 - `CodeAttempt.judge()` stages acceptance or refusal of one subject version,
   with findings, a scope of covered relations and optional explicit refusal
@@ -38,9 +41,11 @@ is not selected here.
 
 Instruction trees install as shared data, while handlers live in the
 package. The type supplies roles, relations and disposition requirements but
-knows nothing of producers. A relation is named by its kind and partner role,
-such as `cites:runtime`. Loading and validating the declaration are internal
-to `advance()`.
+knows nothing of producers. A relation runs from an origin role to a partner
+role and is named by both ends and its kind, such as
+`verification:cites:runtime`. Loading and validating the declaration are
+internal to `advance()`. The first job, such as `open`, is an ordinary code
+job whose input is the run metadata that `start_run()` wrote.
 
 Each role-filling job names its role; its first output is the primary
 output, with any remaining outputs auxiliary. A check job can judge a
@@ -112,18 +117,20 @@ Only code jobs judge autonomously. A model-written verification is a document;
 consumer code parses it and calls `judge()` for each applicable member.
 The engine does not distinguish structural acceptance from semantic
 acceptance. Every judgment records the judging attempt's pinned inputs as
-its basis. Partners of the relations in its scope must be in the basis.
+its basis. The subject's role is at one end of every relation in its scope,
+and the version at the other end must be in the basis.
 
 An acceptance installs its subject only when that version is the producing
 job's latest completed output. A judgment of any earlier version is evidence
 only: it moves no member and cannot supply a refusal of the latest output.
 The member stays when its acceptance stops holding.
 
-Publication remains a code job. It checks that the scopes of holding
-acceptances cover every relation declared for each required role. A
-relation is covered only when the partner version in the basis is the
-partner's current member; a holding acceptance whose basis has a handed,
-historical partner is not sufficient. The job copies the current members,
+Publication remains a code job. It checks that every relation the type
+declares between the members is covered. A relation is covered by a
+holding acceptance of the current member at either end that has the
+relation in its scope and the current member at the other end in its
+basis; a holding acceptance whose basis has a handed, historical version
+at the other end is not sufficient. The job copies the current members,
 pinned. The type's disposition determines required roles and gates the jobs
 that fill them. State, attempts, versions, judgments and prompts remain
 siblings of `set/`, never members.

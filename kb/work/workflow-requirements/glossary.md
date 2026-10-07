@@ -34,7 +34,7 @@ what it replaced; *decided* — settled by the operator.
 | The type of the set | type | `JobSet.type_spec` | The type declares the set's roles, relations and required members. | keep |
 | A declared position in the set | role | `ModelJob.role`, `CodeJob.role` | A role is a position the type declares, with a path and relations. | changed: the spec says *slot*, the sketch says *member* and *slot name*, the type layout says `roles` |
 | The accepted version in a role | member | — | A member is the version currently installed in a role. | keep; stop using it for the role itself |
-| A declared link between two roles | relation | `"cites:runtime"` | A relation is a link the type declares from one role to another, of a kind such as `identity` or `cites`. | decided: `<kind>:<partner role>`; see [Relation](#relation) |
+| A declared link between two roles | relation | `"verification:cites:runtime"` | A relation is a link the type declares from an origin role to a partner role, of a kind such as `identity` or `cites`. | decided: `<origin>:<kind>:<partner>`, replacing `<kind>:<partner>`; see [Relation](#relation) |
 | Whether the set's disposition requires a role | required role | — | A required role is one the type requires given the members present. | keep (spec: "member the type does not require") |
 
 ## Declaration
@@ -56,6 +56,7 @@ what it replaced; *decided* — settled by the operator.
 
 | Concept | Word | API name | First sentence | Status |
 |---|---|---|---|---|
+| Creating a run | start | `start_run()` | Starting a run writes the metadata that names its job set and parameters. | added: no operation created a run, so nothing could name the job set that `advance()` loads |
 | One call of the command | invocation | `advance()` | An invocation runs ready code jobs and hands out ready model jobs. | keep the function; drop *round*, which the decisions use for the same thing |
 | What an invocation returns | run status | `RunStatus` | The run status lists hand-outs, open attempts, stops and publishability after an invocation. | changed: was `Advance`, the same word as the function |
 | The agent calling the command | coordinator | — | The coordinator calls the command, runs workers and reports their attempts. | changed: spec says *orchestrating agent* and *agent* |
@@ -87,17 +88,23 @@ what it replaced; *decided* — settled by the operator.
 | Cancelling a refusal explicitly | override | `judge(…, overrides=…)` | An override names a refusal the acceptance cancels. | keep; refusal identity must be exposed, see below |
 | A rerun having read a refusal | answers | — | An attempt answers the refusal it read. | keep |
 | A judgment's reasons | findings | `findings` | — | keep |
-| Coverage for publication | covers | — | An acceptance covers a relation when the partner version in its basis is the partner's current member. | keep |
+| Coverage for publication | covers | — | A holding acceptance of the current member at one end covers a relation when the current member at the other end is in its basis. | keep |
 
 ## Relation
 
 A relation needs a name before `scope` can be typed. The type layout has
 two relation kinds, `identity` and `cites`, and one pair of roles can have
 both: the runtime report has an identity relation to the boundary and also
-cites it. So the partner role alone does not name a relation.
+cites it. So the partner role alone does not name a relation. Nor do kind
+and partner: an apply job refuses the runtime report under the relation
+from the verification to it, and `cites:runtime` would read as runtime
+citing itself.
 
-Decision: a relation is named `<kind>:<partner role>`, such as
-`cites:runtime`. The three prose relations (synthesis limits, amendment
+Decision: a relation is named `<origin>:<kind>:<partner>`, such as
+`verification:cites:runtime`. A judgment may scope any declared relation
+its subject's role is at either end of. A relation is covered by a holding
+acceptance of the current member at either end whose basis has the current
+member at the other end. The three prose relations (synthesis limits, amendment
 index, profile source identity) need kinds when they are declared.
 
 ## Notes
