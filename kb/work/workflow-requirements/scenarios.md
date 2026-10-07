@@ -185,13 +185,25 @@ refused. The first is corrected and the agent advances: `reconcile` reruns
 and `V` is handed out pinned to the reports as they stand, including the
 second analyst's A. The second analyst's correction, running in parallel,
 finishes with B; the agent advances and `check-R` installs B. `V` then
-finishes with a verdict about A. The apply job reads the members at the
-versions `V` names, so its judgments are about A. An acceptance of A is
+finishes with a verdict about A. The apply job reads `V`'s attempt record
+and the members at the versions it pinned, so its judgments are about A. An acceptance of A is
 evidence only, because A is not `R`'s latest completed output; B stays the
 member. A refusal of A is likewise not the refusal `R`'s read counts, so B
 is not thrown away. B has no acceptance against the verification, so the
 gates and publication wait; `V`'s reads changed, so `V` reruns and judges
 B. [3, 4, 6, 7]
+
+**22. Identical verdict text about different inputs.** `V` reruns on B
+and writes the same "no blockers" bytes it wrote about A. By content
+identity the verification is the same version, so a job reading only the
+verification would see no change and B would never be accepted against
+it. The apply job also reads `V`'s attempt record, which is a new one
+with B among its pinned versions, so the apply job reruns, judges B, and
+accepts it against the verification. `reconcile` producing identical
+bytes in scenario 7 still changes nothing downstream, because `V` reads
+the reconciliation, not `reconcile`'s attempt record: a transform's
+identical output is early cutoff, a judgment about different inputs is
+not. [1, 3, 4, 6]
 
 ## Not yet covered
 

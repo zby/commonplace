@@ -29,10 +29,13 @@ needs something the spec does not give, the need is reported under
 - **Apply jobs.** A verification is a model-written verdict document. A code
   job reads it and turns its blockers into refusals of the members they
   address, each scoped to the relation between the member and the
-  verification. It reads the members at the versions the verification
-  names, not the current ones, so its judgments are about what the
-  verifier saw; pinned hand-outs make the two differ without any operator
-  involved (scenario 21). Only code jobs judge; model jobs write documents.
+  verification. It reads the verifier's attempt record and the members at
+  the versions that record pinned, not the current ones, so its judgments
+  are about what the verifier saw and it reruns whenever the verifier
+  judged different inputs, even to identical verdict text; pinned
+  hand-outs make the two differ without any operator involved (scenarios
+  21 and 22). The versions come from the engine's record, never from the
+  verification's text. Only code jobs judge; model jobs write documents.
 - **Check jobs read the refusal they answer.** This makes a check rerun on
   every refusal and re-accept the standing version. Under scoped
   supersession that acceptance cancels nothing and resets nothing, so the
@@ -56,15 +59,15 @@ Members are named by role. `+prev` means the job's own previous version
 | reconcile | model | boundary, runtime, memory, epistemic, findings, +prev | candidate reconciliation | 3 |
 | check-reconciliation | code | candidate, boundary, reports | accepts or refuses | |
 | verify-records | model | boundary, reports, reconciliation, answers, +prev | candidate record-verification | 3 |
-| apply-record-verification | code | candidate, reports, reconciliation | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
+| apply-record-verification | code | candidate, its attempt record, reports, reconciliation at the pinned versions | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
 | profile | model | boundary, reports, reconciliation, findings, +prev; required: each report and the reconciliation accepted against record-verification | candidate memory-profile | 3 |
 | check-profile | code | candidate, boundary, memory, reports | accepts or refuses; comparison version and source identity are part of the slot check | |
 | verify-profile | model | memory-profile, reports, +prev | candidate profile-verification | 3 |
-| apply-profile-verification | code | candidate, memory-profile | accepts the verification; refuses the profile on blockers; accepts the profile against the verification otherwise | |
+| apply-profile-verification | code | candidate, its attempt record, memory-profile at the pinned versions | accepts the verification; refuses the profile on blockers; accepts the profile against the verification otherwise | |
 | synthesize | model | boundary, reports, reconciliation, record-verification, profile-verification, findings, +prev; required: the record acceptances above and memory-profile accepted against profile-verification | candidate synthesis | 2 |
 | check-synthesis | code | candidate, boundary, reports | accepts or refuses | |
 | verify-synthesis | model | synthesis, reports, record-verification, profile-verification, +prev | candidate synthesis-verification | 2 |
-| apply-synthesis-verification | code | candidate, synthesis | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
+| apply-synthesis-verification | code | candidate, its attempt record, synthesis at the pinned versions | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
 | assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md`, `ARTIFACT.yaml` with pins; accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
 

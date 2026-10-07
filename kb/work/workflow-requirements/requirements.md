@@ -13,7 +13,9 @@ specific to it.
    files it reads, required or optional, and the files it writes.
    Dependencies are those files. Judgments (5) are files addressed by
    member, relation and outcome, with the latest one current, and may be
-   declared as reads. Instructions a model job follows and contracts a
+   declared as reads; so may a job's attempt record (3), with the latest
+   completed one current, which carries the versions that attempt was
+   handed. Instructions a model job follows and contracts a
    check job applies are among its reads. A job never reads the slot it
    writes. The declaration is fixed; nothing adds a dependency at run time.
    Members and their relations come from the directory's type; the job set
