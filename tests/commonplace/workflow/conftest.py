@@ -107,13 +107,13 @@ def job_set(method: Path) -> dict:
     def file(name: str) -> dict:
         return {"address": "file", "source": str(method / name)}
 
-    def model(name: str, role: str, inputs: dict, outputs: list[str], bound: int) -> dict:
+    def model(name: str, role: str, inputs: dict, outputs: list[str], max_attempts: int) -> dict:
         return {
             "name": name,
             "kind": "model",
             "role": role,
             "instruction": "instruction",
-            "max_attempts": bound,
+            "max_attempts": max_attempts,
             "outputs": outputs,
             "inputs": {"instruction": file(f"{name}.md"), **inputs},
         }
@@ -140,10 +140,10 @@ def job_set(method: Path) -> dict:
     return {
         "type_spec": "types/toy-set.md",
         "jobs": [
-            model("brief", "brief", {}, ["brief"], bound=2),
+            model("brief", "brief", {}, ["brief"], max_attempts=2),
             code("check-brief", "check_brief", {"candidate": candidate("brief")}),
             {**model("report", "report", {"brief": _member("brief"), "refusal": _optional("refusal", "report")},
-                     ["report", "answers"], bound=3),
+                     ["report", "answers"], max_attempts=3),
              "parameters": {"system": "{param:subject}", "validation-member": "{set}/report.md"}},
             code("check-report", "check_report", {
                 "candidate": candidate("report"),
@@ -156,7 +156,7 @@ def job_set(method: Path) -> dict:
                 "answers": _optional("output", "report:answers"),
             }),
             model("other", "other", {"brief": _member("brief"), "refusal": _optional("refusal", "other")},
-                  ["other"], bound=3),
+                  ["other"], max_attempts=3),
             code("check-other", "check_other", {
                 "candidate": candidate("other"),
                 "brief": _member("brief"),
@@ -166,7 +166,7 @@ def job_set(method: Path) -> dict:
                 "report": _member("report"),
                 "other": _member("other"),
                 "refusal": _optional("refusal", "summary"),
-            }, ["summary"], bound=3),
+            }, ["summary"], max_attempts=3),
             code("check-summary", "check_summary", {
                 "candidate": candidate("summary"),
                 "report": _member("report"),
@@ -176,7 +176,7 @@ def job_set(method: Path) -> dict:
                 "report": _member("report"),
                 "other": _member("other"),
                 "summary": _member("summary"),
-            }, ["verification"], bound=3),
+            }, ["verification"], max_attempts=3),
             code("apply-verification", "apply_verification", {
                 "verdict": {"address": "output", "source": "verify:verification"},
                 "verification-attempt": {"address": "attempt", "source": "verify"},
@@ -188,7 +188,7 @@ def job_set(method: Path) -> dict:
                 "report": _member("report"),
                 "other": _member("other"),
                 **accepted_by_verification,
-            }, ["digest"], bound=2),
+            }, ["digest"], max_attempts=2),
             code("check-digest", "check_digest", {
                 "candidate": candidate("digest"),
                 "report": _member("report"),

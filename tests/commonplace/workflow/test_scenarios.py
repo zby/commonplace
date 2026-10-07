@@ -71,7 +71,7 @@ def test_03_verifier_waits_for_a_refused_producer(coordinator: Coordinator) -> N
     assert "verify" not in c.handed(), "the summary job is ready"
 
 
-def test_04_second_refusal_and_the_bound(coordinator: Coordinator) -> None:
+def test_04_second_refusal_and_max_attempts(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
     refuse_report(c, "r1")
@@ -210,7 +210,7 @@ def test_11_worker_reports_a_problem(coordinator: Coordinator) -> None:
         c.fail("report", "worker reported a problem")
         assert "the source is unreadable" in c.stop("report").reason, "the problem text is the record"
         c.advance()
-    assert "report" not in c.handed(), "three failed attempts exhaust the bound"
+    assert "report" not in c.handed(), "three failed attempts exhaust max attempts"
     c.stop("report")
 
 
@@ -311,7 +311,7 @@ def test_15_identical_bytes_after_a_refusal(coordinator: Coordinator) -> None:
     assert "report" in c.handed()
 
 
-def test_16_structural_acceptance_does_not_replenish_the_bound(coordinator: Coordinator) -> None:
+def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
     for version, summary in (("B", "S2"), ("C", "S3")):
