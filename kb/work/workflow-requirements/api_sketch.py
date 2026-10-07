@@ -21,7 +21,7 @@ class Input:
     """An input is something a job depends on, required or optional.
 
     The engine resolves it to one version when an attempt opens and pins it.
-    `view` names what it resolves to:
+    `address` names what it resolves to:
 
     file: run-relative or explicitly absolute path.
     member: the current member of a type-declared role.
@@ -38,7 +38,7 @@ class Input:
         output, with the refused version, the findings and the refusal's
         identity, which an override names; never a historical refusal.
 
-    All views have content identity. Optional absence is recorded explicitly.
+    All addresses resolve to content identity. Optional absence is recorded explicitly.
     An input that lapses has not changed and schedules no rerun. A refusal
     input lapses after a newer output; a required judgment input lapses when
     the judgment stops holding. Handed inputs require a declared attempt
@@ -46,7 +46,7 @@ class Input:
     fallback to the current member.
     """
 
-    view: Literal["file", "member", "output", "attempt", "handed", "judgment", "refusal"]
+    address: Literal["file", "member", "output", "attempt", "handed", "judgment", "refusal"]
     source: str
     required: bool = True
     relation: str | None = None  # Judgment address, '<kind>:<partner role>'.

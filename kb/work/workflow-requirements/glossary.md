@@ -46,8 +46,8 @@ what it replaced; *decided* — settled by the operator.
 | A code job's function | handler | `CodeJob.handler` | A handler is the package function a code job runs, named by dotted path. | keep |
 | A model job's instruction file | instruction | `ModelJob.instruction` | The instruction is the input whose file the worker follows. | keep |
 | A declared dependency of a job | input | `Input`; field `inputs` | An input is something a job depends on, required or optional. | changed: was *read* (`Read`, `reads`), an action named as a class, documented as a view |
-| What an input resolves to | view | `Input.view` | The view says what the engine resolves an input to when an attempt opens. | changed: was `kind` |
-| Version an attempt was given, via its record | handed view | `view="handed"` | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
+| What an input resolves to | address | `Input.address` | The address says where the engine resolves an input when an attempt opens. | changed: was `kind`, then `view`, which rule 5 rejects |
+| Version an attempt was given, via its record | handed input | `address="handed"` | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
 | A job's limit on attempts | bound | `ModelJob.bound` | The bound is the most attempts a model job may make in the run. | decided: `bound` in spec and API, replacing `max_attempts` |
 | A job's produced files | output | `outputs` | An output is a file a job writes; the first is its primary output. | keep, once the set directory no longer uses the word |
 | An output not yet accepted | candidate | — | A candidate is an output not installed as a member. A status, not a separate thing. | keep in prose; no API name |
@@ -63,7 +63,7 @@ what it replaced; *decided* — settled by the operator.
 | One run of a job | attempt | `attempt: str` | An attempt is one run of a job against inputs pinned when it opens. | keep |
 | An attempt's states | open, completed, failed | — | An attempt is open until reported; it closes completed or failed. | changed: the sketch says *finished*, the spec *completed*; use *completed* |
 | The coordinator's report closing an attempt | attempt result | `AttemptResult` | An attempt result closes one open attempt as completed or failed. | changed: was `Completion`, which also closes failures; *Report* collides with analyst reports |
-| The record written last for an attempt | attempt record | `view="attempt"` | An attempt record is the closed attempt with the versions it was handed. | keep |
+| The record written last for an attempt | attempt record | `address="attempt"` | An attempt record is the closed attempt with the versions it was handed. | keep |
 | Fixing an input's version at open | pin | — | Pinning fixes the version of every input when an attempt opens. | keep as internal verb; no API name |
 | What a hand-out gives a worker | hand-out | `Handout` | A hand-out is an open model attempt's prompt and output paths. | keep |
 | Previous attempt's output in a hand-out | previous output | — | The previous output is supplied by identity and is not an input. | changed: the spec calls it *context*, colliding with untracked context |
@@ -82,7 +82,7 @@ what it replaced; *decided* — settled by the operator.
 | The inputs a judgment records | basis | — | The basis is the judging attempt's pinned inputs. | changed: the spec says "the reads the job used" |
 | The relations a judgment covers | scope | `judge(…, scope=…)` | The scope is the relations a judgment covers, all among its basis. | changed: the sketch says `relations`, the design text *scopes*, the spec both |
 | A judgment remaining valid | holds | — | A judgment holds while its basis is at its recorded versions. | keep |
-| An input no longer present | lapses | — | An input lapses when its view no longer resolves; lapsing is not a change. | keep |
+| An input no longer present | lapses | — | An input lapses when its address no longer resolves; lapsing is not a change. | keep |
 | Cancelling a refusal implicitly | supersede | — | An acceptance supersedes a refusal whose scope its own includes. | keep |
 | Cancelling a refusal explicitly | override | `judge(…, overrides=…)` | An override names a refusal the acceptance cancels. | keep; refusal identity must be exposed, see below |
 | A rerun having read a refusal | answers | — | An attempt answers the refusal it read. | keep |
@@ -104,7 +104,7 @@ index, profile source identity) need kinds when they are declared.
 
 - **The set directory.** Historical runs are unaffected by `set/`: a
   retained set holds the members directly, not the directory name.
-- **Refusal identity.** The refusal view now carries the refusal's
+- **Refusal identity.** The refusal address now carries the refusal's
   identity, which `overrides` names.
 - **Read as a verb.** `CodeAttempt.read(name)` stays: it is an action on an
   input, which is now a noun of its own.

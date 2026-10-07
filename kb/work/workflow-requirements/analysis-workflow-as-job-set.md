@@ -18,7 +18,7 @@ which are kept as written.
 - **Member.** The current accepted version of a role in `set/`. A model
   job's output is a candidate until a code job accepts it.
 - **Inputs.** A job's inputs are current members, run files or engine
-  views such as refusals and attempt records. They are the rerun triggers
+  addresses such as refusals and attempt records. They are the rerun triggers
   of requirement 4. Method files (the job's instruction, worker rules,
   contracts) are inputs of every model job, so a
   method edit reruns the job, following the criteria rule.
