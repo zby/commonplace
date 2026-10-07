@@ -142,8 +142,9 @@ def job_set(method: Path) -> dict:
         "jobs": [
             model("brief", "brief", {}, ["brief"], bound=2),
             code("check-brief", "check_brief", {"candidate": candidate("brief")}),
-            model("report", "report", {"brief": _member("brief"), "refusal": _optional("refusal", "report")},
-                  ["report", "answers"], bound=3),
+            {**model("report", "report", {"brief": _member("brief"), "refusal": _optional("refusal", "report")},
+                     ["report", "answers"], bound=3),
+             "parameters": {"system": "{param:subject}", "validation-member": "{set}/report.md"}},
             code("check-report", "check_report", {
                 "candidate": candidate("report"),
                 "brief": _member("brief"),

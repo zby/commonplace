@@ -22,7 +22,8 @@ from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.library import library_root
 from commonplace.lib.note_parser import parse_document
 
-from .declaration import CodeJob, Input, Job, ModelJob, load_job_set
+from .declaration import PLACEHOLDER, CodeJob, Input, Job, ModelJob, load_job_set
+from .reading import READ_BATCH_BYTES, reading_batches, reading_ranges
 from .store import RunStore, canonical, digest
 
 MAX_CODE_RUNS = 10_000
@@ -111,6 +112,7 @@ class Run:
         # never from the library, so a later edit or another checkout changes nothing.
         self.layout, self.relations = _parse_type(metadata["type"], metadata["type_spec"])
         self.type_spec = metadata["type_spec"]
+        self.parameters = metadata.get("parameters", {})
         self.jobs = load_job_set(metadata["declaration"], self.layout.roles)
         self.reload()
 
@@ -433,7 +435,12 @@ def start_run(run_dir: Path, job_set: Path, *, parameters: Mapping[str, str] | N
     type_spec = load_job_set(declaration).type_spec
     type_text = (library_root() / type_spec).read_text(encoding="utf-8")
     layout, _ = _parse_type(type_text, str(type_spec))
-    load_job_set(declaration, layout.roles)
+    jobs = load_job_set(declaration, layout.roles)
+    given = dict(parameters or {})
+    missing = sorted({name for job in jobs.jobs if isinstance(job, ModelJob)
+                      for name in job.run_parameters()} - set(given))
+    if missing:
+        raise ValueError(f"the job set substitutes run parameters not given: {', '.join(missing)}")
     store.create({
         "job_set": str(Path(job_set).resolve()),
         "declaration": declaration,
@@ -728,39 +735,86 @@ def _open_model_attempts(run: Run) -> tuple[list[Handout], list[Stop]]:
     return handouts, stops
 
 
+def _substitute(value: str, values: Mapping[str, str], parameters: Mapping[str, str]) -> str:
+    def one(match) -> str:
+        name = match.group(1)
+        if name.startswith("param:"):
+            return parameters[name.removeprefix("param:")]
+        return values[name]
+    return PLACEHOLDER.sub(one, value)
+
+
 def _open(run: Run, job: ModelJob) -> Handout:
+    """Open an attempt and write its hand-out prompt.
+
+    The prompt keeps the shape the analysis workers already follow: one line
+    naming the instruction, then `name = value` lines for the job, its
+    parameters, every input, the outputs, the problem file and the workspace,
+    then reading batches over the inputs.
+    """
     store = run.store
     seq = store.next_seq()
     attempt = f"{seq:06d}-{job.name}"
     directory = store.handouts / attempt
+    scratch = directory / "scratch"
+    scratch.mkdir(parents=True, exist_ok=True)
+    (directory / "outputs").mkdir(parents=True, exist_ok=True)
     pins = {name: run.resolve(name, job.inputs) for name in job.inputs}
-    lines = [f"# Hand-out: {job.name}, attempt {attempt}", ""]
-    inputs = []
+    paths: dict[str, Path | None] = {}
     for name, pinned in pins.items():
         if pinned.data is None:
-            inputs.append(f"- {name}: absent")
+            paths[name] = None
             continue
         store.put(pinned.data)
+        spec = job.inputs[name]
+        if spec.address == "file":
+            # A file is handed at its own path, so an instruction's relative
+            # links still resolve. Its pinned version is recorded; a method
+            # that changes mid-run makes the run unpublishable anyway.
+            source = Path(spec.source)
+            paths[name] = source if source.is_absolute() else store.run_dir / source
+            continue
         path = directory / "inputs" / f"{name}.md"
         store.write_bytes(path, pinned.data)
-        inputs.append(f"- {name}: {path}")
-    lines += [f"Follow the instruction in {directory / 'inputs' / f'{job.instruction}.md'}.", "",
-              "## Inputs", "", *inputs, ""]
+        paths[name] = path
+    outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
+    problem = directory / "problem.md"
+    run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
+                  "set": str(store.set_dir), "workspace": f"{directory}/"}
+    values = {"job": job.name, "attempt": attempt, "run-id": store.run_dir.name}
+    values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
+    values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name != job.instruction}
+    values["output"] = str(outputs[job.outputs[0]])
+    values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
+    values |= {"problem": str(problem), "workspace": f"{directory}/", "scratch": f"{scratch}/"}
     previous = run.latest_completed(job.name)
     if previous is not None:
-        lines += ["## Previous output", ""]
         for name, version in previous["outputs"].items():
             path = directory / "previous" / f"{name}.md"
             store.write_bytes(path, store.get(version))
-            lines.append(f"- {name}: {path}")
-        lines.append("")
-    outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
-    (directory / "outputs").mkdir(parents=True, exist_ok=True)
-    problem = directory / "problem.md"
-    lines += ["## Write", "", *(f"- {name}: {path}" for name, path in outputs.items()), "",
-              f"If you cannot produce the output, write the problem to {problem}.", ""]
+            values[f"previous-{name}"] = str(path)
+    instruction = paths[job.instruction]
+    lines = [f"Follow {instruction} with:", *(f"{key} = {value}" for key, value in values.items())]
+    readable = [str(path) for name, path in paths.items() if path is not None and name != job.instruction]
+    readable += [value for key, value in values.items() if key.startswith("previous-")]
+    if readable:
+        lines += ["", "## Input reading batches", "",
+                  f"Read the named job instruction {instruction} before these reading batches.", "",
+                  ("Load inputs in these batches to avoid truncated reads. Use one tool "
+                   "call per batch, return the complete command result, and recover any "
+                   "truncation before continuing. Read oversized files in bounded ranges."), ""]
+        lines += [f"{number}. " + ", ".join(batch) for number, batch in enumerate(reading_batches(readable), 1)]
+        oversized = [Path(path) for path in readable if Path(path).stat().st_size > READ_BATCH_BYTES]
+        if oversized:
+            lines += ["", "Oversized-file ranges:",
+                      ("Read each range in a separate tool call. A single oversized line "
+                       "still needs a smaller read if delivery is truncated.")]
+            for path in oversized:
+                spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))
+                lines.append(f"- {path}: lines {spans}")
+    lines += ["", "If you cannot produce the output, write the problem to the problem path."]
     prompt = directory / "prompt.md"
-    store.write_bytes(prompt, "\n".join(lines).encode("utf-8"))
+    store.write_bytes(prompt, ("\n".join(lines) + "\n").encode("utf-8"))
     store.write_json(store.attempts / f"{attempt}.json", {
         "id": attempt, "seq": seq, "job": job.name, "kind": "model", "state": "open",
         "pins": {name: pinned.pin() for name, pinned in pins.items()},

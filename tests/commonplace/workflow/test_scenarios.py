@@ -452,3 +452,46 @@ def test_check_job_refuses_to_run_on_a_moved_member(coordinator: Coordinator, mo
     c.advance()
     assert c.ran() == ["check-report"], "the next invocation rebuilds the set and runs the job"
     assert c.member("report") == "report A\n"
+
+
+def test_handout_prompt_keeps_the_legacy_shape(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_brief()
+    handout = c.handout("report")
+    prompt = handout.prompt.read_text(encoding="utf-8").splitlines()
+    assert prompt[0] == f"Follow {c.method / 'report.md'} with:", "the instruction is handed at its own path"
+    values = dict(line.split(" = ", 1) for line in prompt if " = " in line)
+    assert values["system"] == "toy"
+    assert values["validation-member"] == str(c.run_dir / "set" / "report.md")
+    assert values["output"] == str(handout.outputs["report"])
+    assert values["output-answers"] == str(handout.outputs["answers"])
+    assert values["refusal"] == "absent"
+    assert values["problem"] == str(handout.problem)
+    assert values["scratch"].endswith("/scratch/")
+    assert "## Input reading batches" in prompt
+    assert any(line.startswith("1. ") and values["brief"] in line for line in prompt)
+
+
+def test_start_refuses_missing_run_parameters(tmp_path, tmp_library) -> None:
+    from tests.commonplace.workflow.conftest import toy_library
+
+    declaration, _ = toy_library(tmp_path)
+    with pytest.raises(ValueError, match="run parameters not given: subject"):
+        start_run(tmp_path / "runs" / "bare", declaration)
+
+
+def test_declaration_rejects_unknown_placeholders() -> None:
+    from commonplace.workflow import DeclarationError, load_job_set
+
+    text = """
+type_spec: types/toy-set.md
+jobs:
+  - name: j
+    kind: model
+    instruction: i
+    outputs: [o]
+    inputs: {i: {address: file, source: /x}}
+    parameters: {where: "{nowhere}"}
+"""
+    with pytest.raises(DeclarationError, match="unknown placeholder"):
+        load_job_set(text)

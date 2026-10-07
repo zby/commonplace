@@ -7,14 +7,18 @@ code: code jobs name their handlers by dotted path into the package.
 from __future__ import annotations
 
 import importlib
+import re
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal")
+PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
+RUN_PLACEHOLDERS = ("run", "run-id", "set", "workspace")
+"""Values a parameter may substitute besides `param:<name>`, a run parameter."""
 OUTCOMES = ("accepted", "refused")
 
 
@@ -43,6 +47,12 @@ class ModelJob:
     instruction: str
     role: str | None = None
     bound: int | None = None
+    parameters: Mapping[str, str] = field(default_factory=dict)
+
+    def run_parameters(self) -> set[str]:
+        """The run parameters this job's parameters substitute."""
+        return {name.removeprefix("param:") for value in self.parameters.values()
+                for name in PLACEHOLDER.findall(value) if name.startswith("param:")}
 
 
 @dataclass(frozen=True)
@@ -130,7 +140,7 @@ def _job(raw: Any) -> Job:
     if role is not None and not outputs:
         raise DeclarationError(f"job {name}: a role-filling job needs a primary output")
     if kind == "model":
-        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "bound"}
+        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "bound", "parameters"}
         instruction = raw.get("instruction")
         if instruction not in inputs or inputs[instruction].address != "file" or not inputs[instruction].required:
             raise DeclarationError(f"job {name}: instruction must name a required file input")
@@ -139,7 +149,20 @@ def _job(raw: Any) -> Job:
         bound = raw.get("bound")
         if bound is not None and (not isinstance(bound, int) or bound < 1):
             raise DeclarationError(f"job {name}: bound must be a positive integer")
-        job: Job = ModelJob(name, inputs, outputs, instruction, role, bound)
+        parameters = raw.get("parameters") or {}
+        if not isinstance(parameters, dict) or not all(
+                isinstance(k, str) and k and isinstance(v, str) for k, v in parameters.items()):
+            raise DeclarationError(f"job {name}: parameters must map names to strings")
+        reserved = {"job", "attempt", "output", "problem", "scratch", *RUN_PLACEHOLDERS, *inputs}
+        clash = sorted(set(parameters) & reserved)
+        if clash:
+            raise DeclarationError(f"job {name}: parameters {clash} collide with names the hand-out sets")
+        for key, value in parameters.items():
+            for placeholder in PLACEHOLDER.findall(value):
+                if placeholder not in RUN_PLACEHOLDERS and not (
+                        placeholder.startswith("param:") and placeholder != "param:"):
+                    raise DeclarationError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
+        job: Job = ModelJob(name, inputs, outputs, instruction, role, bound, dict(parameters))
     elif kind == "code":
         allowed = {"name", "kind", "inputs", "outputs", "handler", "role"}
         handler = raw.get("handler")
