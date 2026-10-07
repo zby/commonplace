@@ -40,9 +40,10 @@ class Input:
     """An input is something a job depends on, required or optional.
 
     A file source may be relative; it is resolved against the library root
-    the run was started with. An input with `trigger` false orders the job
-    after it without making it a rerun trigger: it must be present for the
-    job to be ready, and its version is recorded, but a change is no signal.
+    the run was started with. An order-only input, as in Make's order-only
+    prerequisites, orders the job after it without making it a rerun
+    trigger: it must be present for the job to be ready, and its version is
+    recorded, but a change is no signal.
     """
 
     address: str
@@ -50,7 +51,7 @@ class Input:
     required: bool = True
     relation: str | None = None
     outcome: str | None = None
-    trigger: bool = True
+    order_only: bool = False
 
 
 @dataclass(frozen=True)
@@ -62,7 +63,7 @@ class ModelJob:
     outputs: tuple[str, ...]
     instruction: str
     role: str | None = None
-    bound: int | None = None
+    max_attempts: int | None = None
     parameters: Mapping[str, str] = field(default_factory=dict)
 
     def run_parameters(self) -> set[str]:
@@ -114,7 +115,7 @@ def _input(job: str, name: str, raw: Any) -> Input:
     where = f"job {job}: input {name}"
     if not isinstance(raw, dict):
         raise DeclarationError(f"{where}: must be a mapping")
-    unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "trigger"}
+    unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "order_only"}
     if unknown:
         raise DeclarationError(f"{where}: unknown keys {sorted(unknown)}")
     address, source = raw.get("address"), raw.get("source")
@@ -135,10 +136,10 @@ def _input(job: str, name: str, raw: Any) -> Input:
         raise DeclarationError(f"{where}: only a judgment input has a relation or an outcome")
     if address in ("output", "handed") and source.count(":") != 1:
         raise DeclarationError(f"{where}: source must read <name>:<name>")
-    trigger = raw.get("trigger", True)
-    if not isinstance(trigger, bool):
-        raise DeclarationError(f"{where}: trigger must be true or false")
-    return Input(address, source, required, relation, outcome, trigger)
+    order_only = raw.get("order_only", False)
+    if not isinstance(order_only, bool):
+        raise DeclarationError(f"{where}: order_only must be true or false")
+    return Input(address, source, required, relation, outcome, order_only)
 
 
 def _job(raw: Any) -> Job:
@@ -171,15 +172,15 @@ def _job(raw: Any) -> Job:
     if role is not None and not outputs:
         raise DeclarationError(f"job {name}: a role-filling job needs a primary output")
     if kind == "model":
-        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "bound", "parameters"}
+        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "max_attempts", "parameters"}
         instruction = raw.get("instruction")
         if instruction not in inputs or inputs[instruction].address != "file" or not inputs[instruction].required:
             raise DeclarationError(f"job {name}: instruction must name a required file input")
         if not outputs:
             raise DeclarationError(f"job {name}: a model job needs an output")
-        bound = raw.get("bound")
-        if bound is not None and (not isinstance(bound, int) or bound < 1):
-            raise DeclarationError(f"job {name}: bound must be a positive integer")
+        max_attempts = raw.get("max_attempts")
+        if max_attempts is not None and (not isinstance(max_attempts, int) or max_attempts < 1):
+            raise DeclarationError(f"job {name}: max_attempts must be a positive integer")
         parameters = raw.get("parameters") or {}
         if not isinstance(parameters, dict) or not all(
                 isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
@@ -194,7 +195,7 @@ def _job(raw: Any) -> Job:
                 if placeholder not in RUN_PLACEHOLDERS and not (
                         placeholder.startswith("param:") and placeholder != "param:"):
                     raise DeclarationError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
-        job: Job = ModelJob(name, inputs, outputs, instruction, role, bound, dict(parameters))
+        job: Job = ModelJob(name, inputs, outputs, instruction, role, max_attempts, dict(parameters))
     elif kind == "code":
         allowed = {"name", "kind", "inputs", "outputs", "handler", "role"}
         handler = raw.get("handler")

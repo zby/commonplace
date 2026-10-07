@@ -93,12 +93,12 @@ result. A result with no output closes it as failed; a killed worker is not
 silently cleaned up or reissued while its attempt remains open.
 
 All output identity and downstream currency are content-based. There is no
-special verdict currency rule. Bounds are optional and never reset;
-identical and failed attempts count. Code jobs have no bounds. Failures
+special verdict currency rule. Max attempts are optional and never reset;
+identical and failed attempts count. Code jobs have no max attempts. Failures
 retain diagnostics, record no inputs, stop the invocation, and leave the job
-ready for a later invocation. An exhausted bound prevents a further attempt
-in this run; neither an acceptance nor an invocation resets it. Raising the
-bound edits the fixed declaration, which is a method change and makes the
+ready for a later invocation. Exhausted max attempts prevent a further attempt
+in this run; neither an acceptance nor an invocation resets them. Raising
+max attempts edits the fixed declaration, which is a method change and makes the
 run unpublishable. Further model work requires a new run; operator override
 acceptance remains a spec capability outside this sketch.
 

@@ -40,12 +40,12 @@ ABSENT = Resolved(None)
 
 def _spec(spec: Input) -> dict:
     return {"address": spec.address, "source": spec.source, "required": spec.required,
-            "relation": spec.relation, "outcome": spec.outcome, "trigger": spec.trigger}
+            "relation": spec.relation, "outcome": spec.outcome, "order_only": spec.order_only}
 
 
 def _input(raw: dict) -> Input:
     return Input(raw["address"], raw["source"], raw.get("required", True), raw.get("relation"),
-                 raw.get("outcome"), raw.get("trigger", True))
+                 raw.get("outcome"), raw.get("order_only", False))
 
 
 class Run:
@@ -234,7 +234,7 @@ class Run:
     # Readiness
 
     def ready(self, job: Job, permitted: set[str] | None) -> bool:
-        """Ready by inputs alone, before the upstream wait and the bound."""
+        """Ready by inputs alone, before the upstream wait and max attempts."""
         if self.open_attempt(job.name) is not None:
             return False
         if job.role is not None and permitted is not None and job.role not in permitted:
@@ -246,7 +246,7 @@ class Run:
         if last is None:
             return True
         return any(
-            job.inputs[name].trigger and resolved.version is not None
+            not job.inputs[name].order_only and resolved.version is not None
             and resolved.version != last["pins"].get(name, {}).get("version")
             for name, resolved in current.items()
         )

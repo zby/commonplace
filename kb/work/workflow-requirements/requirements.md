@@ -19,8 +19,9 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    check job applies are among its inputs; a file input may name its path
    relative to the library, resolved against the library the run was
    started with, so a job set is a file that names no machine's paths. An
-   input may be presence-only: it orders the job after it and its version
-   is recorded, but it is never a rerun trigger. A job never has the role it
+   input may be order-only, in the sense of Make's order-only
+   prerequisites: it orders the job after it and its version is recorded,
+   but it is never a rerun trigger. A job never has the role it
    writes as an input. The declaration is fixed; nothing adds a dependency
    at run time. Roles and their relations come from the set's type; a
    relation runs from an origin role to a partner role and is named by
@@ -64,15 +65,15 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    input, which is present only while the judgment holds and its subject
    is its role's current member. A change
    outside a job's inputs is not a signal, nor is a change of a
-   presence-only input. Whether a ready job is run or
+   order-only input. Whether a ready job is run or
    handed out at once is a scheduling decision, recorded under Decisions.
 5. **Judgments.** The one engine primitive: a job records a judgment of a
    subject version, accepted or refused, with findings. The judgment
    records its basis, the job's pinned inputs, and its scope, the declared
    relations it covers, possibly none. The subject's role is at one end of
    each relation in the scope, and the version at the other end is in the
-   basis. It may name a refusal it overrides. It holds while its basis is at its
-   recorded versions. Any job may judge, as may the operator from the
+   basis. It may name a refusal it overrides. It holds, or is up to date,
+   while its basis is at its recorded versions; otherwise it is stale. Any job may judge, as may the operator from the
    command line.
 6. **Acceptance.** An acceptance of the producing job's latest completed
    output makes it the current member of its declared role, one per role,
@@ -87,16 +88,16 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    refusal makes the job ready again, and not one that a later acceptance
    of the same version supersedes. An acceptance supersedes a refusal only
    when its scope includes the refusal's scope or it names that refusal as
-   overridden. The job set may bound how many attempts a job makes in the
-   run, identical and failed attempts included, before the command stops;
-   a bound never resets.
+   overridden. The job set may set a job's max attempts: how many attempts it
+   makes in the run, identical and failed attempts included, before the
+   command stops; the count never resets.
 8. **Failure stays visible.** A job that cannot complete, whether the worker
    reported a problem, a code job failed, or an external effect's outcome
    cannot be established, leaves a record; the invocation stops and names
    it, and the job is ready on the next invocation. An attempt that
    answers a refusal with the refused version unchanged has failed. A
    failed attempt records no inputs, so the job stays ready; it counts
-   toward the bound.
+   toward max attempts.
 9. **Publication.** A set is publishable when every relation the type
    declares between its members is covered. A relation is covered by a
    holding acceptance of the current member at either end that has the
@@ -106,7 +107,7 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
 
 ## Open
 
-- **Acceptances that stopped holding.** Reported every invocation, or at
+- **Stale acceptances.** Reported every invocation, or at
   publication.
 
 ## Decisions
@@ -124,7 +125,7 @@ They bind an implementation of this spec; they are not requirements.
 - **The job set is its own file, named by the run, naming the type.** It
   is a declaration file, not code, under the workflow's instructions
   beside the worker instructions it refers to: jobs, inputs, outputs and
-  bounds, with each code job naming its handler by dotted path into the
+  max attempts, with each code job naming its handler by dotted path into the
   package. A run is started by an operation of its own, which writes the
   run's metadata naming the job set and the run parameters and fixes the
   declaration for the run; every later invocation loads the job set from
@@ -183,12 +184,12 @@ They bind an implementation of this spec; they are not requirements.
   through its round structure. This is a scheduling policy over ready
   jobs, not a change to what readiness means, which is why it is a
   decision and not part of requirement 4.
-- **Bounds are for model jobs and never reset.** Every failure of a code
+- **Max attempts are for model jobs and never reset.** Every failure of a code
   job already stops the invocation with the operator in the loop; a count
   would only turn an environment problem into a dead run. A model job that
-  exhausts its bound gets no further attempt in this run: the operator's
+  exhausts its max attempts gets no further attempt in this run: the operator's
   recourse is an override acceptance of its latest output, or a new run.
-  Raising the bound is a method change; the declaration is fixed for the
+  Raising max attempts is a method change; the declaration is fixed for the
   run and the run would be unpublishable against a changed method. This is
   deliberate.
 - **Completion is reported, never inferred.** The coordinator reports a
@@ -200,7 +201,7 @@ They bind an implementation of this spec; they are not requirements.
 - **Completing is final for the attempt.** A change of mind after
   completing, for example to fix warnings the check printed, is a refusal
   of the submitted version by the coordinator, with a reason, and a new
-  attempt that counts toward the bound. Why: any submission can be
+  attempt that counts toward max attempts. Why: any submission can be
   regretted, so no moment of registration avoids this; making regret an
   ordinary refusal keeps one path and one record for every rerun.
 - **Attempt results ride on the advancing call.** Attempt results are

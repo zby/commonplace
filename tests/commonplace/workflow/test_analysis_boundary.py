@@ -319,7 +319,7 @@ def test_boundary_unchanged_refusal_answer_fails_and_bound_does_not_reset(bounda
     assert len(RunStore(a.coordinator.run_dir).judgment_records()) == 1
     status = a.coordinator.advance()
     assert not status.handouts and status.stops[0].job == "boundary"
-    assert "bound" in status.stops[0].reason
+    assert "max attempts" in status.stops[0].reason
 
 
 def test_migration_declaration_stops_before_legacy_runtime_handout(acquisition):

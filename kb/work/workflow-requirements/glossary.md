@@ -46,10 +46,10 @@ what it replaced; *decided* — settled by the operator.
 | A code job's function | handler | `CodeJob.handler` | A handler is the package function a code job runs, named by dotted path. | keep |
 | A model job's instruction file | instruction | `ModelJob.instruction` | The instruction is the input whose file the worker follows. | keep |
 | A declared dependency of a job | input | `Input`; field `inputs` | An input is something a job depends on, required or optional. | changed: was *read* (`Read`, `reads`), an action named as a class, documented as a view |
-| An input that orders without triggering | presence-only input | `Input.trigger = False` | A presence-only input must be present for its job to be ready, but its change never makes the job ready again. | added for ordering a job after work it reads only as context |
+| An input that orders without triggering | order-only input | `Input.order_only` | An order-only input must be present for its job to be ready, but its change never makes the job ready again. | borrowed: GNU Make's order-only prerequisites, same meaning; was *presence-only* (`trigger: false`) |
 | What an input resolves to | address | `Input.address` | The address says where the engine resolves an input when an attempt opens. | changed: was `kind`, then `view`, which rule 5 rejects |
 | Version an attempt was given, via its record | handed input | `address="handed"` | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
-| A job's limit on attempts | bound | `ModelJob.bound` | The bound is the most attempts a model job may make in the run. | decided: `bound` in spec and API, replacing `max_attempts` |
+| A job's limit on attempts | max attempts | `ModelJob.max_attempts` | Max attempts is the most attempts a model job may make in the run, the first included. | borrowed: Temporal, Prefect and Airflow use it with this meaning, the first attempt counted; was *bound*, earlier `max_attempts` |
 | A job's produced files | output | `outputs` | An output is a file a job writes; the first is its primary output. | keep, once the set directory no longer uses the word |
 | An output not yet accepted | candidate | — | A candidate is an output not installed as a member. A status, not a separate thing. | keep in prose; no API name |
 
@@ -84,6 +84,8 @@ what it replaced; *decided* — settled by the operator.
 | The inputs a judgment records | basis | — | The basis is the judging attempt's pinned inputs. | changed: the spec says "the reads the job used" |
 | The relations a judgment covers | scope | `judge(…, scope=…)` | The scope is the relations a judgment covers, all among its basis. | changed: the sketch says `relations`, the design text *scopes*, the spec both |
 | A judgment remaining valid | holds | — | A judgment holds while its basis is at its recorded versions. | keep |
+| A judgment that holds, and one that does not | up to date, stale | — | A judgment is up to date while it holds and stale once an input in its basis has moved. | borrowed: build systems and Make use both words for derived results against their inputs |
+| The versions a judgment or attempt recorded | lineage | — | Lineage is the record of which versions an attempt used and which judgment rests on them. | borrowed: data platforms and W3C PROV's *used* relation; the word for the record, not a new mechanism |
 | An input no longer present | lapses | — | An input lapses when its address no longer resolves; lapsing is not a change. | keep |
 | Cancelling a refusal implicitly | supersede | — | An acceptance supersedes a refusal whose scope its own includes. | keep |
 | Cancelling a refusal explicitly | override | `judge(…, overrides=…)` | An override names a refusal the acceptance cancels. | keep; refusal identity must be exposed, see below |
@@ -107,6 +109,24 @@ its subject's role is at either end of. A relation is covered by a holding
 acceptance of the current member at either end whose basis has the current
 member at the other end. The three prose relations (synthesis limits, amendment
 index, profile source identity) need kinds when they are declared.
+
+## Borrowed vocabulary
+
+Established terms are borrowed only where their meaning matches exactly;
+a near-match misleads an agent more than a coined word (method rule 5).
+
+- **Kept as ours.** *Candidate* (an output not yet accepted; as in a release
+  candidate), *member*, *role*, *set*, *judgment*, *acceptance*, *refusal*,
+  *scope*, *hand-out*, *attempt* (also Temporal's word) and *job set*. ETL
+  vocabulary has no exact counterpart, and *DAG* would be wrong: correction
+  loops are cycles.
+- **Pattern, not vocabulary.** Candidate, check and acceptance follow the
+  write-audit-publish pattern of data engineering. Its *publish* is our
+  *acceptance*, not our *publication*, so its words are not adopted.
+- **Rejected.** Dagster's and dbt's *asset* and *materialization* (a
+  materialization is a value at once, or a storage strategy), Airflow's
+  *executor* for the coordinator (it never judges), and *XCom*, *sensor* and
+  *backfill*, which name nothing here.
 
 ## Notes
 

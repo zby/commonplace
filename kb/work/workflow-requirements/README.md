@@ -47,7 +47,7 @@ coordinator reading it and judging, and the engine, the records and
 publication do not notice.
 
 The line to hold when that happens: bookkeeping stays in code, because
-readiness, currency, cleanup, bounds and coverage are enforcement
+readiness, currency, cleanup, attempt limits and coverage are enforcement
 properties that only a deterministic interpreter can guarantee;
 interpretation is what moves. Which ready jobs run, in what order and
 batches, is the coordinator's already, within one engine-side rule: a job

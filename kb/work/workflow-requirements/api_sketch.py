@@ -51,6 +51,7 @@ class Input:
     required: bool = True
     relation: str | None = None  # Judgment address, '<origin>:<kind>:<partner>'.
     outcome: Literal["accepted", "refused"] | None = None  # Judgment address.
+    order_only: bool = False  # Required for readiness, recorded, never a rerun trigger.
 
 
 @dataclass(frozen=True)
@@ -62,7 +63,7 @@ class ModelJob:
     outputs: tuple[str, ...]
     instruction: str  # Name of a required file input.
     role: str | None = None  # The role its primary output fills; disposition gates it.
-    bound: int | None = None  # Most attempts in the run; never reset.
+    max_attempts: int | None = None  # Most attempts in the run; never reset.
     # The previous output is always supplied by identity; it is not an input.
 
 
@@ -75,7 +76,7 @@ class CodeJob:
     outputs: tuple[str, ...]
     handler: str  # Dotted package path; handler(attempt) returns named output bytes.
     role: str | None = None
-    # No bound: code-job failure stops the invocation.
+    # No max attempts: code-job failure stops the invocation.
 
 
 @dataclass(frozen=True)
@@ -209,13 +210,13 @@ def advance(
     """Run one invocation over the run directory and return its run status.
 
     Load the fixed job set named in the metadata that start_run() wrote. Editing its
-    bounds grants no further attempts in this run; a changed declaration is
+    max attempts grants no further attempts in this run; a changed declaration is
     a method change and makes the run unpublishable.
 
     Under one coordinator lock, close reported attempts before readiness;
     re-materialize members from acceptance records; run ready code jobs to a
     fixed point; open all ready model attempts. Stop on failure, uncertainty
-    or an exhausted bound. Existing open attempts are left alone and
+    or exhausted max attempts. Existing open attempts are left alone and
     reported. Repeated attempt results are idempotent.
 
     Currency is content-only. An input that appears or differs triggers
@@ -224,7 +225,7 @@ def advance(
     ready or has an open attempt; code jobs run to a fixed point first, so
     only pending model jobs hold others back. Refusal readiness and scoped supersession follow requirement
     7. Failed attempts record no inputs and stay ready for a later
-    invocation. Type disposition gates role-filling jobs. Bounds never reset
+    invocation. Type disposition gates role-filling jobs. Max attempts never reset
     or increase within the run; another model attempt requires a new run.
     A relation is covered by a holding acceptance of the current member at
     either end with the relation in scope and the other end's current

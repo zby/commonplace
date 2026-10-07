@@ -113,7 +113,7 @@ def job_set(method: Path) -> dict:
             "kind": "model",
             "role": role,
             "instruction": "instruction",
-            "bound": bound,
+            "max_attempts": bound,
             "outputs": outputs,
             "inputs": {"instruction": file(f"{name}.md"), **inputs},
         }

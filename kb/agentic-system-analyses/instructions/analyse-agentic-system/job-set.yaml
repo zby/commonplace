@@ -33,7 +33,7 @@ jobs:
   kind: model
   role: boundary
   instruction: instruction
-  bound: 2
+  max_attempts: 2
   outputs:
   - boundary
   inputs:
@@ -77,7 +77,7 @@ jobs:
   kind: model
   role: runtime
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - report
   - answers
@@ -127,7 +127,7 @@ jobs:
   kind: model
   role: memory
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - report
   - answers
@@ -140,7 +140,7 @@ jobs:
     memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
     boundary: {address: member, source: boundary, required: true}
     refusal: {address: refusal, source: memory, required: false}
-    runtime: {address: member, source: runtime, trigger: false}
+    runtime: {address: member, source: runtime, order_only: true}
   parameters:
     system: '{param:system}'
     run-state: '{run}/run-state.md'
@@ -178,7 +178,7 @@ jobs:
   kind: model
   role: epistemic
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - report
   - answers
@@ -191,7 +191,7 @@ jobs:
     epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     boundary: {address: member, source: boundary, required: true}
     refusal: {address: refusal, source: epistemic, required: false}
-    runtime: {address: member, source: runtime, trigger: false}
+    runtime: {address: member, source: runtime, order_only: true}
   parameters:
     system: '{param:system}'
     run-state: '{run}/run-state.md'
@@ -229,7 +229,7 @@ jobs:
   kind: model
   role: reconciliation
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - reconciliation
   inputs:
@@ -314,7 +314,7 @@ jobs:
   kind: model
   role: record-verification
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - verification
   inputs:
@@ -380,7 +380,7 @@ jobs:
   kind: model
   role: memory-profile
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - profile
   inputs:
@@ -440,7 +440,7 @@ jobs:
   kind: model
   role: profile-verification
   instruction: instruction
-  bound: 3
+  max_attempts: 3
   outputs:
   - verification
   inputs:
@@ -501,7 +501,7 @@ jobs:
   kind: model
   role: synthesis
   instruction: instruction
-  bound: 2
+  max_attempts: 2
   outputs:
   - synthesis
   inputs:
@@ -565,7 +565,7 @@ jobs:
   kind: model
   role: synthesis-verification
   instruction: instruction
-  bound: 2
+  max_attempts: 2
   outputs:
   - verification
   inputs:

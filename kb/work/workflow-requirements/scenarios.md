@@ -39,7 +39,7 @@ refusal's supersedes it, and `R` is no longer ready. [4, 7]
 
 **4. Second refusal of the correction.** `V` refuses B. `R`'s refusal input
 has a new version, which is a change. Attempt 3 reads it. If the job set
-bounds `R` at three attempts in the run, attempt 3 is the last; a further
+sets `R`'s max attempts to three, attempt 3 is the last; a further
 refusal would call for a fourth, and the command stops naming `R` instead.
 The structural acceptances of A and B along the way do not reset the
 count. [4, 7]
@@ -89,7 +89,7 @@ under requirement 6. Putting an old version back is not supported: the
 operator refuses the current version with a reason, and the rerun decides
 what to carry forward. [5, 6, 7, 9]
 
-**10. Publication blocked by an acceptance that stopped holding.**
+**10. Publication blocked by a stale acceptance.**
 Synthesis B replaced A. The synthesis verification was accepted against A.
 That acceptance still holds, since its basis is what the verifier was
 handed, but it covers nothing: the partner version in its basis is not the
@@ -104,7 +104,7 @@ instead of a candidate. The command stops naming `R` and the problem. The
 failed attempt records no inputs, so `R` is still ready: after the operator
 has acted, the next invocation hands it out again, and if the problem
 recurs the command stops again. No version is produced, but the attempt
-counts toward the bound, so repeated failure ends in a stop at the bound
+counts toward max attempts, so repeated failure ends in a stop at max attempts
 rather than an operator noticing the repetition. A code job that raises
 behaves the same way. [4, 7, 8]
 
@@ -155,12 +155,12 @@ appears; were the attempt treated as answered, `R` would be unready and
 the run would stall with a refused member and nothing to do. Requirement 8
 instead treats it as a failed attempt: the command stops naming `R`, no
 inputs are recorded, so `R` stays ready, and the attempt counts. A worker
-that keeps returning A ends in a stop at the bound with the right
+that keeps returning A ends in a stop at max attempts with the right
 diagnosis: `R` answered its refusal without change. [4, 7, 8]
 
 **16. Structural acceptance does not replenish the budget.** A passes
 `check-R`, `V` refuses A, B passes `check-R`, `V` refuses B, and so on.
-Each structural pass is an acceptance, but the bound counts attempts in
+Each structural pass is an acceptance, but max attempts counts attempts in
 the run and never resets, so after the third attempt the command stops
 naming `R`. The verifier's findings for A and B are on record for the
 operator. [7]

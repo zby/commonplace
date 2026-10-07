@@ -401,8 +401,8 @@ def _open_model_attempts(run: Run) -> tuple[list[Handout], list[Stop]]:
         if waiting:
             withheld[job.name] = waiting
             continue
-        if job.bound is not None and run.attempt_count(job.name) >= job.bound:
-            stops.append(Stop(f"bound of {job.bound} attempts exhausted", job.name))
+        if job.max_attempts is not None and run.attempt_count(job.name) >= job.max_attempts:
+            stops.append(Stop(f"max attempts ({job.max_attempts}) exhausted", job.name))
             continue
         handouts.append(_open(run, job))
     if withheld and not handouts and not stops and not any(

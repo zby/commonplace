@@ -66,7 +66,7 @@ members; writing a candidate does not install it.
 If refusal findings are supplied, repair those defects and their consequences
 against the frozen source, preserving unrelated work. Use the supplied
 previous output as the baseline, not a mutable member copy. Do not repeat the
-whole analysis. The engine's attempt bound does not reset after acceptance.
+whole analysis. The engine's max attempts do not reset after acceptance.
 
 ## Inspect sources, not target execution
 

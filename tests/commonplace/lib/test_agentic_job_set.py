@@ -50,7 +50,7 @@ def test_graph_covers_real_roles_once(graph):
     for job in models:
         refusal = job.inputs["refusal"]
         assert (refusal.address, refusal.source, refusal.required) == ("refusal", job.name, False)
-        assert job.bound == (2 if job.name in ("boundary", "synthesize", "verify-synthesis") else 3)
+        assert job.max_attempts == (2 if job.name in ("boundary", "synthesize", "verify-synthesis") else 3)
 
 
 def test_declared_file_inputs_are_portable_library_paths(graph):
@@ -154,8 +154,8 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
     # Runtime must be present initially but its version is not a rerun trigger.
     for name in ("memory", "epistemic"):
         runtime = jobs.job(name).inputs["runtime"]
-        assert (runtime.address, runtime.source, runtime.required, runtime.trigger) == (
-            "member", "runtime", True, False,
+        assert (runtime.address, runtime.source, runtime.required, runtime.order_only) == (
+            "member", "runtime", True, True,
         )
 
 

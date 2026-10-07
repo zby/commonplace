@@ -110,10 +110,10 @@ def test_relative_file_inputs_resolve_against_the_library(tmp_path: Path, tmp_li
     assert prompt.splitlines()[0] == f"Follow {tmp_path / 'kb' / 'instructions/toy/brief.md'} with:"
 
 
-def test_a_presence_only_input_orders_without_triggering(tmp_path: Path, tmp_library: None,
+def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_library: None,
                                                          monkeypatch: pytest.MonkeyPatch) -> None:
     def after_report(jobs):
-        jobs["other"]["inputs"]["report-context"] = {"address": "member", "source": "report", "trigger": False}
+        jobs["other"]["inputs"]["report-context"] = {"address": "member", "source": "report", "order_only": True}
 
     c = custom_run(tmp_path, monkeypatch, after_report)
     c.through_brief()
@@ -125,7 +125,7 @@ def test_a_presence_only_input_orders_without_triggering(tmp_path: Path, tmp_lib
     c.complete("verify", "block report: r1\n")
     c.complete("report", "report B\n", answers="answered\n")
     assert c.member("report") == "report B\n"
-    assert "other" not in c.handed(), "a changed presence-only input is not a rerun trigger"
+    assert "other" not in c.handed(), "a changed order-only input is not a rerun trigger"
 
 
 def test_an_undeclared_relation_is_refused_at_start(tmp_path: Path, tmp_library: None,

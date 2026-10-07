@@ -56,7 +56,7 @@ supplies the refused version and findings to a rerun. Every model job's
 hand-out also carries its previous output (requirement 3); that is not an
 input, so it is not listed.
 
-| Job | Kind | Inputs | Writes or judges | Bound |
+| Job | Kind | Inputs | Writes or judges | Max attempts |
 |---|---|---|---|---|
 | open | code | run parameters, repository state | `run-metadata.json`; refuses to start on an unpublishable worktree or changed package | – |
 | acquire | code | run-metadata | `source.json`; external effect: frozen checkout under `related-systems/` | – |
@@ -80,13 +80,13 @@ input, so it is not listed.
 | assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md` (the engine keeps `set/ARTIFACT.yaml` naming the type; publish pins the copy); accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
 
-Bounds are today's rounds plus one: three attempts where two correction
+Max attempts are today's rounds plus one: three attempts where two correction
 rounds exist, two where one does, two for the boundary to allow one retry.
-Code jobs carry none; each failure stops the invocation. Bounds count
+Code jobs carry none; each failure stops the invocation. Attempts count
 attempts in the run and never reset, so a structural acceptance between
-corrections does not replenish them. Exceeding a bound stops the
+corrections does not replenish them. Exceeding max attempts stops the
 command, replacing `StopRun`. Structural refusals and verifier blockers now
-share one bound per job; today they draw on separate engine and workflow
+share one attempt limit per job; today they draw on separate engine and workflow
 budgets.
 
 ## How a run proceeds
@@ -113,7 +113,7 @@ and refuses a "corrected" answer whose report is byte-identical. Acceptance
 replaces the member. The reconciliation's input changed, so `reconcile`
 reruns; then `verify-records`, whose inputs changed too. The verification's
 earlier acceptance no longer holds and is replaced. The loop ends when
-a verification has no blockers, or a bound is hit. No packets, round
+a verification has no blockers, or max attempts is reached. No packets, round
 numbers, set-check files or change diffs exist. The verifier reads the
 answers and its previous output (S3) and judges afresh, as its
 instruction says today.
