@@ -23,6 +23,10 @@ from the requirements.
 - `AttemptResult` closes an open model attempt as completed or failed, with
   worker identity.
 - `Handout`, `Stop` and `RunStatus` report work and state to the coordinator.
+  `RunStatus.handouts` lists the attempts that invocation opened;
+  `open_attempts` lists every attempt still open, whenever it was opened.
+- `start_run()` on a run directory that already holds a run raises
+  `FileExistsError`.
 
 There is no public engine object, storage API, pin constructor, verdict parser
 or specialized structural-check method. Handlers return named output bytes;
@@ -37,7 +41,8 @@ instructions. It names the type, and the run metadata names the job set.
 Code jobs name package handlers by dotted path; a handler receives a
 `CodeAttempt` and returns named output bytes. The Python dataclasses show the
 loaded schema, not a Python configuration format. The serialization format
-is not selected here.
+is not selected here. File inputs name absolute paths; a base for relative
+paths is not specified.
 
 Instruction trees install as shared data, while handlers live in the
 package. The type supplies roles, relations and disposition requirements but
@@ -98,7 +103,11 @@ run unpublishable. Further model work requires a new run; operator override
 acceptance remains a spec capability outside this sketch.
 
 An input that appears or differs from its recorded version is a readiness
-signal; one that lapses is not. Missing required inputs still block
+signal; one that lapses is not. A job waits while a producer of any of its
+inputs is ready or has an open attempt: the job filling the input's role
+and every job that judges it, the job writing an output or attempt record,
+and the job recording a judgment. Code jobs run to a fixed point first, so
+only pending model jobs hold others back. Missing required inputs still block
 readiness. A producer's refusal input lapses after a newer output without
 scheduling another correction.
 

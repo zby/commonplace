@@ -23,7 +23,7 @@ class Input:
     The engine resolves it to one version when an attempt opens and pins it.
     `address` names what it resolves to:
 
-    file: run-relative or explicitly absolute path.
+    file: an absolute path; a base for relative paths is not specified.
     member: the current member of a type-declared role.
     output: 'producer-job:output-name', the producer's latest completed output.
     attempt: producer-job name, its latest completed attempt record, including
@@ -179,8 +179,8 @@ class Stop:
 class RunStatus:
     """The run status lists hand-outs, open attempts, stops and publishability."""
 
-    handouts: tuple[Handout, ...]
-    open_attempts: tuple[str, ...]
+    handouts: tuple[Handout, ...]  # Attempts this invocation opened.
+    open_attempts: tuple[str, ...]  # Every attempt still open, whenever opened.
     stops: tuple[Stop, ...]
     publishable: bool
 
@@ -195,8 +195,8 @@ def start_run(
 
     The metadata fixes the declaration for the run; every later invocation
     loads the job set from it. The job set's first code job, such as `open`,
-    has the metadata as an input like any other. Starting an existing run
-    is an error.
+    has the metadata as an input like any other. Starting a run directory
+    that already holds a run raises FileExistsError.
     """
     ...
 
@@ -220,7 +220,9 @@ def advance(
 
     Currency is content-only. An input that appears or differs triggers
     readiness; one that lapses does not. Missing required inputs still block
-    readiness. Refusal readiness and scoped supersession follow requirement
+    readiness. A job also waits while a producer of one of its inputs is
+    ready or has an open attempt; code jobs run to a fixed point first, so
+    only pending model jobs hold others back. Refusal readiness and scoped supersession follow requirement
     7. Failed attempts record no inputs and stay ready for a later
     invocation. Type disposition gates role-filling jobs. Bounds never reset
     or increase within the run; another model attempt requires a new run.

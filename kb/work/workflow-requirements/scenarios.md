@@ -21,18 +21,21 @@ refusal input has lapsed; an input that has lapsed has not changed, so
 refusal attempt 2 was handed, compares `answers.md` with it, and accepts
 B. Installing B changes the member,
 but `R` has no input on its own role, so `R` stays quiet. Downstream
-inputs on the member changed, so `reconcile` and `V` rerun. `V` has no blocker; the apply
-job accepts the members against the new verification. [1, 4, 5, 6, 7]
+inputs on the member changed, so `reconcile` reruns; `V`'s inputs changed
+too, but it waits while `reconcile`, a producer of its input, is ready,
+and runs once the new reconciliation is accepted. `V` has no blocker; the
+apply job accepts the members against the new verification. [1, 4, 5, 6, 7]
 
-**3. Refusal not repeated before the rerun.** `V` refuses A. Before `R` is
-handed out, another member's correction reruns `V`, and the new
-verification does not repeat the blocker. Two cases. If the new
-verification has no blockers at all, the apply job accepts A against it;
-that later acceptance of the same version supersedes the refusal, and `R`
-is no longer ready: the verifier has withdrawn the finding by accepting A.
-If blockers remain on other members, nothing accepts A, the refusal stands
-unread, and `R` reruns. One attempt is spent on a finding not repeated;
-accepted, since no judgment has withdrawn it. [4, 7]
+**3. The verifier waits for a refused producer.** `V` refuses A and a
+sibling report together. Both analysts are handed out. The sibling's
+correction completes first and is accepted, but `reconcile` and `V` do
+not run: `R`, a producer of their inputs, has an open attempt. Only when
+`R` completes does `reconcile` run, and `V` after it. So a verifier never
+reruns before a refused producer has answered, and the case of a
+refusal withdrawn before its rerun does not arise in the autonomous
+flow. Were it to arise, through an operator's judgment, the rule stands:
+a later acceptance of the same version whose scope includes the
+refusal's supersedes it, and `R` is no longer ready. [4, 7]
 
 **4. Second refusal of the correction.** `V` refuses B. `R`'s refusal input
 has a new version, which is a change. Attempt 3 reads it. If the job set
@@ -128,12 +131,12 @@ died with attempts open is closed the same way by the next session or the
 operator. [3, 4, 6, 8]
 
 **13. Parallel hand-outs.** Two analysts are refused by the same verification.
-Both are printed as ready. If the coordinator runs one and calls again, `reconcile` is
-ready after the first acceptance and runs; it runs again after the second.
-Running both before calling again avoids the extra attempt. The spec
-permits either; the hand-out can say which the workflow prefers. In both
-cases the second analyst has an open attempt, so it is neither printed as
-ready again nor touched by cleanup. [3, 4]
+Both are handed out in one invocation. If the coordinator completes one and
+calls again, the first correction is accepted, but `reconcile` waits: the
+second analyst, a producer of its input, has an open attempt. It runs
+once, after the second correction is accepted, whether the coordinator
+reports the two results together or apart. The second analyst's open
+attempt is neither handed out again nor touched by cleanup. [3, 4]
 
 **14. Non-complete disposition.** The type discriminates on the boundary's
 disposition, which exists before any analysis job runs. Before the
@@ -162,17 +165,17 @@ the run and never resets, so after the third attempt the command stops
 naming `R`. The verifier's findings for A and B are on record for the
 operator. [7]
 
-**17. A re-check does not supersede a refusal outside its scope.** `V`
-refuses A; the apply job records the refusal of the runtime report with
-`record-verification:cites:runtime` as its scope. Before `R` is handed
-out, a sibling report that A cites is corrected. That report is an input
-of `check-R`, so it reruns, finds unchanged A structurally sound, and
-accepts it on identity and citations. That scope does not include the
-refusal's, and the acceptance names no refusal it overrides, so the
-refusal stands and `R` is ready. The duplicate acceptance is harmless:
-safe to repeat, and it moves no count. `check-R` does not rerun on the
-refusal itself: the refusal it must answer reaches it through `R`'s
-attempt record, which changes only when `R` completes an attempt. [5, 7]
+**17. A re-check waits for the refused producer.** `V` refuses A; the
+apply job records the refusal of the runtime report with
+`record-verification:cites:runtime` as its scope, and `R` is ready. A
+sibling report that A cites is corrected, so an input of `check-R`
+changed, but `check-R` waits: `R`, the producer of its candidate, is
+ready. No redundant re-acceptance of A is recorded. When `R` completes B,
+`check-R` runs once, reads `R`'s attempt record, which names the refusal
+that attempt answered, and judges B against the current sibling. Had a
+re-check of A run, as an operator's command could make one, its
+acceptance would not supersede the refusal: its scope does not include
+the refusal's and it names no refusal it overrides. [4, 5, 7]
 
 **18. Input versions are fixed at hand-out.** `reconcile` is handed out
 while the reports are at version set 1; the hand-out pins those versions
@@ -198,12 +201,13 @@ dependency the next acceptance would move. `verify-records` gets its
 previous verification the same way, which its instruction relies on.
 [3, 4]
 
-**21. A late verdict about a replaced version.** Two analysts are
-refused. The first is corrected and the coordinator advances: `reconcile` reruns
-and `V` is handed out pinned to the reports as they stand, including the
-second analyst's A. The second analyst's correction, running in parallel,
-completes with B; the coordinator advances and `check-R` installs B. `V`
-then completes with a verdict about A. The apply job's inputs are `V`'s attempt record
+**21. A late verdict about a replaced version.** `V` is handed out
+pinned to the reports as they stand, including `R`'s A. While `V` is open,
+a contract that `check-R` applies is edited; `check-R` refuses A, and `R`
+becomes ready. The upstream wait does not hold `R` back, since `V`
+produces none of `R`'s inputs, and it cannot recall `V`'s open attempt.
+`R` completes with B; the coordinator advances and `check-R` installs B.
+`V` then completes with a verdict about A. The apply job's inputs are `V`'s attempt record
 and the members it was handed, so its judgments are about A. An
 acceptance of A is evidence only, because A is not `R`'s latest completed output; B stays the
 member. A refusal of A is likewise not the refusal `R`'s input counts, so B
@@ -211,7 +215,8 @@ is not thrown away. The verification's acceptance against A still holds,
 since its handed input has not moved, but it covers nothing: the partner
 version in its basis is not the partner's current member. B has no acceptance
 against the verification, so the gates and publication wait; `V`'s inputs
-changed, so `V` reruns and judges B. [3, 4, 6, 7, 9]
+changed, so once `reconcile` has rerun on B, `V` reruns and judges B.
+[3, 4, 6, 7, 9]
 
 **22. Identical verdict text about different inputs.** `V` reruns on B
 and writes the same "no blockers" bytes it wrote about A. By content
