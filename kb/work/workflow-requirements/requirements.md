@@ -129,9 +129,11 @@ They bind an implementation of this spec; they are not requirements.
 - **Bounds are for model jobs and never reset.** Every failure of a code
   job already stops the invocation with the operator in the loop; a count
   would only turn an environment problem into a dead run. A model job that
-  exhausts its bound gets no further attempt: the operator's recourse is an
-  override acceptance of its latest output, or raising the bound in the
-  declaration, which is a method change. This is deliberate.
+  exhausts its bound gets no further attempt in this run: the operator's
+  recourse is an override acceptance of its latest output, or a new run.
+  Raising the bound is a method change; the declaration is fixed for the
+  run and the run would be unpublishable against a changed method. This is
+  deliberate.
 - **Completion is reported, never inferred.** The orchestrating agent
   reports a model job finished; the command closes the attempt then and
   advances, which runs the check job. The validator never registers
