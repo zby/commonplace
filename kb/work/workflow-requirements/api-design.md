@@ -92,14 +92,16 @@ attempt can compare a candidate with its delivered baseline without reading a
 mutable member or adding a self-input. There is no opt-in previous-output flag. A completed
 attempt records the versions pinned at opening, not those current when its
 result is reported. An open model attempt is closed only by an attempt
-result. A result with no output closes it as failed; a killed worker is not
-silently cleaned up or reissued while its attempt remains open.
+result. The first closure wins even when a batch contains duplicate or
+conflicting results. A result with no output closes it as failed; a killed
+worker is not silently cleaned up or reissued while its attempt remains open.
 
 All output identity and downstream currency are content-based. There is no
 special verdict currency rule. Max attempts are optional and never reset;
 identical and failed attempts count. Code jobs have no max attempts. Failures
 retain diagnostics, record no inputs, stop the invocation, and leave the job
-ready for a later invocation. Exhausted max attempts prevent a further attempt
+ready for a later invocation, even if inputs revert to those of an earlier
+completion. Required inputs and role permission still apply. Exhausted max attempts prevent a further attempt
 in this run; neither an acceptance nor an invocation resets them. Raising
 max attempts edits the fixed declaration, which is a method change and makes the
 run unpublishable. Further model work requires a new run; operator override
@@ -153,6 +155,15 @@ the mapping's historical apply behavior; it adds no primitive or schema field.
 Judgment subjects, installation, scope, supersession and explicit overrides
 retain their existing semantics. Completion and scheduling grant no semantic
 acceptance or automatic override.
+
+A separate ordering exception lets a code check consume a new completed primary
+candidate before a ready downstream model that requires its role as an order-only
+member input. The check must not have consumed that candidate in its last
+completion. All dependencies on the downstream model must be optional members;
+required members, live judgment gates and open downstream attempts retain the
+wait. The check uses the existing peer bytes, not future output, and rechecks
+when the peer changes. This installs or refuses the new upstream candidate
+before the downstream hand-out can pin an older accepted version.
 
 The engine supplies each producer's latest refusal of its latest completed
 output, including the refused version, the findings and the refusal's

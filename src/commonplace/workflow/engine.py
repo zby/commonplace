@@ -108,8 +108,13 @@ def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunSta
         raise FileNotFoundError(f"{run_dir} holds no run; start it first")
     with store.lock():
         run = Run(store)
-        stops = [stop for result in results if (stop := _close(run, result)) is not None]
-        run.reload()
+        stops = []
+        for result in results:
+            if (stop := _close(run, result)) is not None:
+                stops.append(stop)
+            # Closure is final: later results, even conflicting ones in this
+            # batch, must see the closed record just as a later invocation does.
+            run.reload()
         _sweep(run)
         if stops:
             return _status(run, (), stops)
@@ -244,7 +249,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     if record is None:
         raise ValueError(f"no attempt {result.attempt} in this run")
     if record["state"] != "open":
-        return None  # Repeated results are idempotent.
+        return None  # First closure wins, including conflicting later reports.
     job = run.jobs.job(record["job"])
     directory = store.handout_dir(record["id"])
     problem_path = directory / "problem.md"
@@ -335,7 +340,9 @@ def _run_code_jobs(run: Run) -> Stop | None:
         permitted = run.permitted()
         pending = _pending(run, permitted)
         job = next((job for job in run.jobs.jobs if isinstance(job, CodeJob)
-                    and run.ready(job, permitted) and not (run.producers(job) & pending)), None)
+                    and run.ready(job, permitted)
+                    and all(run.checks_before_downstream(job, run.jobs.job(peer))
+                            for peer in run.producers(job) & pending)), None)
         if job is None:
             return None
         # A handler may read the set directory (draft-at-slot validation does),

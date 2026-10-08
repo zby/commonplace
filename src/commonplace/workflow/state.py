@@ -242,6 +242,12 @@ class Run:
         current = {name: self.resolve(name, job.inputs) for name in job.inputs}
         if any(spec.required and current[name].version is None for name, spec in job.inputs.items()):
             return False
+        latest = max((r for r in self.attempts.values() if r["job"] == job.name),
+                     key=lambda r: r["seq"], default=None)
+        if latest is not None and latest["state"] == "failed":
+            # Failure requires a retry even if inputs reverted to those of an
+            # earlier completion. Presence and permission checks still apply.
+            return True
         last = self.latest_completed(job.name)
         if last is None:
             return True
@@ -295,6 +301,41 @@ class Run:
                 filler = self.jobs.filler(role)
                 names.add(filler.name if filler else None)
         return {name for name in names if name}
+
+    def checks_before_downstream(self, job: CodeJob, peer: ModelJob) -> bool:
+        """Prioritize a new upstream candidate over a ready optional downstream peer.
+
+        Only the wait is waived: the check still pins the current peer member,
+        and a later peer version makes that basis stale. Historical handed
+        subjects have a separate exception in `producers`.
+        """
+        if self.open_attempt(peer.name) is not None:
+            return False
+        peer_inputs = [spec for spec in job.inputs.values()
+                       if peer.name in self._input_producers(job, spec)]
+        if not peer_inputs or any(
+            spec.address != "member" or spec.required for spec in peer_inputs
+        ):
+            return False
+        last = self.latest_completed(job.name)
+        for name, spec in job.inputs.items():
+            if spec.address != "output":
+                continue
+            producer, _, output = spec.source.partition(":")
+            upstream = self.jobs.job(producer)
+            if (not isinstance(upstream, ModelJob) or upstream.role is None
+                    or self.jobs.filler(upstream.role) != upstream
+                    or output != upstream.outputs[0]):
+                continue
+            candidate = self.latest_output(upstream)
+            if candidate is None or (last is not None
+                    and last["pins"].get(name, {}).get("version") == candidate):
+                continue
+            if any(dependency.address == "member" and dependency.required
+                   and dependency.order_only and dependency.source == upstream.role
+                   for dependency in peer.inputs.values()):
+                return True
+        return False
 
     def _consumes_completed_subjects(self, job: Job, producer: Job) -> bool:
         """A code consumer of handed members can apply completed work before a rerun.

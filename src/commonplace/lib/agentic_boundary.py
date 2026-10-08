@@ -44,17 +44,26 @@ def boundary_refusals(
                 f"its commit `{frozen['revision']}`: {json.dumps(frozen)}"
             )
     if isinstance(source, dict):
+        # Authorize the declared source before inspecting its bytes or running Git.
+        # Other member errors (run-id or reviewed-boundary) do not make a source
+        # that matches the pin unsafe to inspect for independent diagnostics.
+        authorized = frozen is None or source == frozen
         if frozen is None and capture_directory is not None:
             if source.get("kind") != "capture":
                 refusals.append("a non-Git acquisition requires a capture, not a worker-acquired Git checkout")
+                authorized = False
             else:
-                if not Path(str(source.get("path") or "")).is_relative_to(capture_directory):
+                path = Path(str(source.get("path") or ""))
+                if not path.is_absolute() or ".." in path.parts or not path.is_relative_to(capture_directory):
                     refusals.append(f"capture source.path must be in the supplied capture-directory: {capture_directory}")
+                    authorized = False
                 if fields.get("reviewed-boundary") != source.get("revision"):
                     refusals.append("reviewed-boundary must be the frozen capture's label")
         if source.get("identity") != identity:
             refusals.append(f"source.identity must be `{identity}`, the run's source identity")
-        refusals += frozen_source_refusals(source)
+            authorized = False
+        if authorized:
+            refusals += frozen_source_refusals(source)
     return refusals
 
 

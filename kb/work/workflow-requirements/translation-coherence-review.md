@@ -84,6 +84,45 @@ subject judgments. No mutable peer is substituted into a historical judgment.
 Technical basis: `agentic_engine_report.py`, `workflow/state.py` and the report
 regression in `test_completed_handed_scheduling.py`.
 
+### Completion, retries and downstream ordering
+
+The first closure of a model attempt is final within a result batch as well as
+across invocations. A later duplicate cannot replace completion with failure.
+The latest failed attempt remains retryable even if inputs revert to an earlier
+successful baseline; presence, role permission and attempt limits still apply.
+
+A newly completed upstream candidate is checked before a ready downstream model
+that requires its role as an order-only input. This narrow exception applies only
+to optional peer-member waits and an unconsumed candidate. Open downstream
+attempts, required peers and live judgment gates retain their waits. The check
+records existing peer bytes and rechecks when they change. It does not judge a
+future peer or grant semantic acceptance merely by scheduling the check.
+
+Technical basis: `workflow/engine.py`, `workflow/state.py` and
+`tests/commonplace/workflow/test_engine_review_fixes.py`.
+
+### Preliminary guards can prevent publication recovery
+
+An interrupted replacement can leave tracked deletions that the worktree guard
+rejects before journal reconciliation. If preliminary publication checks fail
+while an effect journal exists, the invocation reports an uncertain effect:
+exact-tree reconciliation has not established the outcome. Checks remain enforced
+and evidence is preserved. A journal's state label alone does not prove recovery;
+a rollback verified by the effect handler retains ordinary-failure semantics.
+
+Technical basis: `agentic_job_publication.py` and actual-handler interruption
+regressions in `tests/commonplace/workflow/test_analysis_publication.py`.
+
+### Rejected sources and boundary links
+
+Boundary invocation checks authorize source identity, frozen pins and capture
+containment before reading source bytes or invoking Git. A rejected source is
+not inspected for additional integrity diagnostics. Boundary members also use
+the same relocation-safe link rule as the other published members.
+
+Technical basis: `agentic_boundary.py`, `validation.py` and
+`tests/commonplace/lib/test_analysis_boundary_review_fixes.py`.
+
 ## Reviewed invariants
 
 - A valid blocker-bearing verifier document is not acceptance of its subject.
@@ -103,7 +142,9 @@ regression in `test_completed_handed_scheduling.py`.
   coordinator-reported model/effort, not an opening-model guess.
 - Publication binds exact members and manifest, rechecks source/preparation/code
   and incumbent identity, and recognizes effects by exact trees and archive.
-  Partial or changed effects remain uncertain. Non-complete sets remain local.
+  Partial or changed effects remain uncertain, including when preliminary guards
+  block journal reconciliation. Verified rollback remains an ordinary failure.
+  Non-complete sets remain local.
 
 ## Limits retained rather than hidden
 

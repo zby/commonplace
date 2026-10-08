@@ -55,8 +55,8 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    output. Other outputs and the attempt record can change independently.
    Each run of a job is an attempt, and it records the version of every input, absence
    included. A job is ready when its required inputs are present and
-   either it has no completed attempt or some input has changed since its
-   last completed one; 7 excepts one case. A job with an open attempt is
+   either its latest attempt failed, it has no completed attempt, or some input
+   has changed since its last completed one; 7 excepts one input-change case. A job with an open attempt is
    not ready, nor is a job producing a member for a role that the type
    does not permit given the members present.
    An input changes when it appears or its current version differs from
@@ -183,8 +183,16 @@ They bind an implementation of this spec; they are not requirements.
   dependency on the exempt producer must be that completed attempt, its outputs
   or its handed inputs. Live member/judgment dependencies and a check reading
   only its own answered refusal retain the wait. This changes scheduling, not
-  readiness, subjects, installation or refusal supersession. When every ready
-  job waits for another ready job, the invocation stops naming the cycle. Code jobs run
+  readiness, subjects, installation or refusal supersession. A second narrow
+  exception checks a newly completed upstream primary candidate before handing
+  out a downstream model that requires that role as an order-only input. Only
+  optional member dependencies on that downstream model may bypass the wait;
+  an open downstream attempt, required member or live judgment gate still blocks
+  it. The check must not have consumed that candidate in its last completion.
+  It pins the existing peer bytes, and rechecks when those bytes change. This
+  avoids handing out the old upstream member merely because its check waited
+  for the downstream consumer. When every ready job waits for another ready
+  job, the invocation stops naming the cycle. Code jobs run
   to a fixed point, in declaration order, before model readiness is
   computed, so a code producer is never pending when model jobs are handed
   out and a correction loop through an apply job cannot deadlock; the wait
@@ -211,7 +219,8 @@ They bind an implementation of this spec; they are not requirements.
   anything, so a worker may run it as often as it likes and keep editing
   after a pass. Why: a passing check is an answer to "would this pass?",
   not a statement that the work is done; only the worker's side knows that.
-- **Completing is final for the attempt.** A change of mind after
+- **Completing is final for the attempt.** The first closure wins, including
+  conflicting or duplicate results in the same batch or later calls. A change of mind after
   completing, for example to fix warnings the check printed, is a refusal
   of the submitted version by the coordinator, with a reason, and a new
   attempt that counts toward max attempts. Why: any submission can be

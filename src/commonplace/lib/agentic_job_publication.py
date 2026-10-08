@@ -374,8 +374,8 @@ def _publish_effect(*, run_dir: Path, destination: Path, archive_root: Path,
     return {"state": "published", "destination": str(destination), "members": intent["new"]}
 
 
-def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Publish a pinned complete set, or close a non-complete set without public mutation."""
+def _prepare_publication(attempt: CodeAttempt):
+    """Check pinned inputs and environment before journal reconciliation or mutation."""
     layout, _, members, boundary = _snapshot(attempt, overview=True)
     metadata, repo = _environment(attempt, boundary, job="publication")
     worker = _provenance(attempt, members)
@@ -391,10 +391,32 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     if boundary.frontmatter["result-disposition"] != "complete":
         if os.path.lexists(attempt.run_dir / JOURNAL):
             raise UncertainEffectError("non-complete set has a publication effect journal")
-        return {}  # Accepted set remains local; no retained or archive output.
+        return None  # Accepted set remains local; no retained or archive output.
     destination = repo / RETAINED_ROOT / source_slug(metadata["source-identity"], metadata["system"])
     if metadata["review-path"] != (destination / layout.path("overview")).relative_to(repo).as_posix():
         raise ValueError("opened publication destination differs from the canonical source path")
+
+    return metadata, repo, destination, {MANIFEST_NAME: manifest, **files}
+
+
+def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Publish a pinned complete set, or close a non-complete set without public mutation."""
+    try:
+        prepared = _prepare_publication(attempt)
+    except UncertainEffectError:
+        raise
+    except Exception as error:
+        # A guard can fail because an earlier attempt moved tracked files. Until
+        # exact-tree reconciliation runs, even a rolled-back journal's label is
+        # not proof of the current outcome. Preserve all evidence and the guard.
+        if os.path.lexists(attempt.run_dir / JOURNAL):
+            raise UncertainEffectError(
+                f"cannot establish publication outcome: preliminary checks failed: {error}"
+            ) from error
+        raise
+    if prepared is None:
+        return {}
+    metadata, repo, destination, files = prepared
 
     def inspect_incumbent():
         decision = inspect_destination(repo_root=repo, generated_destination=metadata["review-path"],
@@ -405,6 +427,6 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     # The engine already holds the per-run lock. Never take it inside this lock.
     with publication_lock(repo):
         _publish_effect(run_dir=attempt.run_dir, destination=destination, archive_root=repo / ARCHIVE_ROOT,
-                        files={MANIFEST_NAME: manifest, **files}, identity=metadata["source-identity"],
+                        files=files, identity=metadata["source-identity"],
                         expected=metadata["expected-incumbent-sha256"], inspect_incumbent=inspect_incumbent)
     return {}

@@ -1218,6 +1218,7 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
 @type_rule("agentic-system-analyses/types/agent-memory-profile.md")
+@type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
 def _agentic_set_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

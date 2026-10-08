@@ -6,6 +6,7 @@ a narrow non-complete snapshot also exercises the real bounded adapter.
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -432,6 +433,118 @@ def test_engine_records_uncertain_effect_as_stop_without_committing_outputs(tmp_
     assert "outputs" not in record
     assert (args["destination"] / "memory.md").read_bytes() == b"unknown external bytes"
     assert not (store.run_dir / "output").exists()
+
+
+@pytest.mark.parametrize("interruption", ["archive", "rollback"])
+def test_real_handler_recovery_preserves_guard_and_engine_classification(
+        tmp_path, scripted, monkeypatch, interruption):
+    from commonplace.lib.agentic_publication import require_publishable_worktree
+    from commonplace.workflow import CodeAttempt, advance
+
+    attempt = assembled_publish_attempt(tmp_path, scripted)
+    repo = attempt.run_dir.parent
+    destination = repo / publication.RETAINED_ROOT / publication.source_slug(
+        attempt.metadata["source-identity"], attempt.metadata["system"])
+    attempt.metadata["review-path"] = (destination / "overview.md").relative_to(repo).as_posix()
+    old_id = "AAS-2026-10-06-example-0123456789ab-01"
+    old = {"overview.md": doc({"run-id": old_id}), "memory.md": b"old memory\r\n"}
+    destination.mkdir(parents=True)
+    for name, data in old.items():
+        (destination / name).write_bytes(data)
+    attempt.metadata["expected-incumbent-sha256"] = publication._digest(old["overview.md"])
+
+    # A temporary Git index and HEAD tree make the incumbent genuinely tracked.
+    # No commit is created, even in this fixture repository.
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=repo, check=True,
+                              capture_output=True, text=True).stdout.strip()
+
+    git("init", "-q")
+    (repo / ".git/info/exclude").write_text("kb/agentic-system-analyses/state/\n")
+    git("add", str(destination.relative_to(repo)))
+    tree = git("write-tree")
+    # Git status accepts a tree as HEAD for this isolated worktree guard fixture.
+    (repo / ".git" / "HEAD").write_text(tree + "\n")
+    require_publishable_worktree(repo)
+
+    def environment(current, boundary, **kwargs):
+        require_publishable_worktree(repo)
+        return attempt.metadata, repo
+
+    monkeypatch.setattr(publication, "_environment", environment)
+    monkeypatch.setattr(publication, "inspect_destination", lambda **kwargs: {
+        "expected_incumbent_sha256": attempt.metadata["expected-incumbent-sha256"],
+    })
+    write = publication.atomic_write
+
+    def interrupt(path, data):
+        if path.name == "ARTIFACT.yaml":
+            if interruption == "archive":
+                raise KeyboardInterrupt("interrupted after archive")
+            raise OSError("resolved write failure")
+        write(path, data)
+
+    monkeypatch.setattr(publication, "atomic_write", interrupt)
+    error = KeyboardInterrupt if interruption == "archive" else OSError
+    with pytest.raises(error):
+        publication.publish_analysis(attempt)
+    journal = attempt.run_dir / publication.JOURNAL
+    journal_bytes = journal.read_bytes()
+    archive = repo / publication.ARCHIVE_ROOT / old_id
+    if interruption == "archive":
+        assert publication._tree(destination) == {}
+        assert publication._tree(archive) == old
+        with pytest.raises(ValueError, match="tracked files with local changes"):
+            require_publishable_worktree(repo)
+    else:
+        assert publication._tree(destination) == old
+        assert not archive.exists()
+        assert json.loads(journal_bytes)["state"] == "rolled-back"
+        require_publishable_worktree(repo)
+
+    # Run the actual registered handler through the engine, with fixture pinned
+    # inputs and scripted content validation, not an effect-only replacement.
+    store = RunStore(attempt.run_dir)
+    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE,
+                  "library": str(ROOT / "kb"), "parameters": {},
+                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
+                      {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
+                       "handler": "commonplace.lib.agentic_job_publication.publish_analysis"}]})})
+    monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))
+    status = advance(store.run_dir)
+    assert len(status.stops) == 1
+    uncertain = interruption == "archive"
+    assert status.stops[0].uncertain == uncertain
+    record = store.attempt_records()[0]
+    assert record["state"] == "failed" and record["uncertain"] == uncertain
+    assert not record["pins"] and "outputs" not in record
+    report = engine_run_report(store.run_dir, status=status)
+    assert report["failed-attempts"][0]["uncertain"] == uncertain
+    if uncertain:
+        assert report["state"] == "uncertain"
+        assert journal.read_bytes() == journal_bytes
+        assert publication._tree(destination) == {}
+        assert publication._tree(archive) == old
+    else:
+        assert publication._tree(destination) == old
+        # A resolved rollback remains an ordinary failure, and can retry.
+        monkeypatch.setattr(publication, "atomic_write", write)
+        assert publication.publish_analysis(attempt) == {}
+
+
+@pytest.mark.parametrize("journal", [None, b'{"state": "rolled-back"}', b"malformed"])
+def test_preliminary_failure_requires_journal_to_be_uncertain(tmp_path, journal):
+    attempt = Attempt(tmp_path)
+    attempt.inputs["set-type"] = None
+    if journal is not None:
+        path = attempt.run_dir / publication.JOURNAL
+        path.parent.mkdir()
+        path.write_bytes(journal)
+    expected = ValueError if journal is None else UncertainEffectError
+    with pytest.raises(expected, match="pinned set type"):
+        publication.publish_analysis(attempt)
+    if journal is not None:
+        assert path.read_bytes() == journal
 
 
 def test_environment_rechecks_the_declared_capture_identity(tmp_path, monkeypatch):
