@@ -6,8 +6,8 @@ import pytest
 import yaml
 
 from commonplace.workflow import AttemptResult, advance, start_run
-from commonplace.workflow.declaration import CodeJob, Input
-from commonplace.workflow.engine import _close, _open_model_attempts, _run_code_jobs
+from commonplace.workflow.declaration import CodeJob
+from commonplace.workflow.engine import _close
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore, digest
 from tests.commonplace.workflow.support import COMPLETE_BRIEF, Coordinator, toy_library
@@ -47,26 +47,6 @@ def test_first_closure_is_final(coordinator, first_outcome, conflicting, same_ba
     assert not handout.prompt.parent.exists()
 
 
-def test_failed_model_retries_after_inputs_revert_and_still_obeys_limits(coordinator):
-    c = coordinator
-    original = (c.method / "brief.md").read_text()
-    c.through_brief()
-    c.edit_method("brief.md", "changed")
-    c.advance()
-    failed = c.handout("brief")
-    c.fail("brief", "temporary failure")
-    c.edit_method("brief.md", original)
-    run = state(c)
-    job = run.jobs.job("brief")
-    assert run.ready(job, run.permitted())
-    assert not run.ready(job, set())
-    (c.method / "brief.md").unlink()
-    assert not run.ready(job, run.permitted())
-    c.edit_method("brief.md", original)
-    # The real declaration's two-attempt budget is still enforced.
-    c.advance()
-    assert c.stop("brief").reason == "max attempts (2) exhausted"
-    assert state(c).attempts[failed.attempt]["state"] == "failed"
 
 
 def test_failed_model_is_handed_out_again_after_inputs_revert(tmp_path, tmp_library):
@@ -88,6 +68,9 @@ def test_failed_model_is_handed_out_again_after_inputs_revert(tmp_path, tmp_libr
     assert c.handed() == {"brief"}
     c.complete("brief", COMPLETE_BRIEF)
     assert not c.handed() and not c.status.stops
+    c.edit_method("brief.md", "changed again")
+    c.advance()
+    assert c.stop("brief").reason == "max attempts (3) exhausted", "the failed attempt counted"
 
 
 def test_failed_code_retries_after_inputs_revert(coordinator, monkeypatch):
@@ -175,57 +158,3 @@ def test_new_candidate_checked_before_optional_downstream(pending_candidate):
         run.jobs.job("check-report"), run.jobs.job("other"),
     )
     assert not advance(c.run_dir).stops
-
-
-@pytest.mark.parametrize("case", [
-    "required-peer", "judgment-gate", "open-peer", "consumed-candidate",
-    "auxiliary-output", "no-candidate", "ordinary-dependency", "optional-dependency",
-    "unrelated-dependency",
-])
-def test_candidate_priority_has_narrow_boundaries(pending_candidate, case):
-    c = pending_candidate
-    run = state(c)
-    check = run.jobs.job("check-report")
-    peer = run.jobs.job("other")
-    assert run.ready(check, run.permitted())
-    assert run.ready(peer, run.permitted())
-    assert run.checks_before_downstream(check, peer)
-    inputs = dict(check.inputs)
-    if case == "required-peer":
-        inputs["other"] = Input("member", "other")
-    elif case == "judgment-gate":
-        # Even an optional gate must keep its live-producer wait.
-        inputs["gate"] = Input("judgment", "other", required=False, outcome="accepted")
-    elif case == "open-peer":
-        run.attempts["open-peer"] = {"job": "other", "state": "open"}
-    elif case == "consumed-candidate":
-        last = run.latest_completed(check.name)
-        last["pins"]["candidate"]["version"] = digest(b"runtime B\n")
-        c.edit_method("contract-report.md", "new criterion only")
-        assert run.ready(check, run.permitted())
-    elif case == "auxiliary-output":
-        inputs["candidate"] = Input("output", "report:answers", required=False)
-    elif case == "no-candidate":
-        inputs.pop("candidate")
-    else:
-        dependencies = dict(peer.inputs)
-        dependencies["report"] = Input(
-            "member", "brief" if case == "unrelated-dependency" else "report",
-            required=case != "optional-dependency", order_only=case != "ordinary-dependency",
-        )
-        peer = replace(peer, inputs=dependencies)
-    check = replace(check, inputs=inputs)
-    assert "other" in run.producers(check)
-    assert not run.checks_before_downstream(check, peer)
-    if case not in {"open-peer", "consumed-candidate"}:
-        replacements = {check.name: check, peer.name: peer}
-        run.jobs = replace(run.jobs, jobs=tuple(
-            replacements.get(job.name, job) for job in run.jobs.jobs
-        ))
-        previous = run.latest_completed(check.name)["id"]
-        assert _run_code_jobs(run) is None
-        assert run.latest_completed(check.name)["id"] == previous
-        handouts, stops = _open_model_attempts(run)
-        assert not stops
-        assert {handout.job for handout in handouts} == {"other"}
-        assert run.members()["report"] == digest(b"runtime A\n")

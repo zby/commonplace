@@ -5,14 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-import yaml
 
-from commonplace.workflow import DeclarationError, judge, load_job_set
+from commonplace.workflow import DeclarationError, judge
 from tests.commonplace.workflow.support import (
     BLOCKED_BRIEF,
     Coordinator,
     custom_run,
-    job_set,
 )
 
 
@@ -23,19 +21,6 @@ def test_a_file_input_edited_while_open_fails_the_attempt(coordinator: Coordinat
     assert "file input instruction changed" in c.stop("brief").reason
     c.advance()
     assert c.handed() == {"brief"}, "the job is handed out again under the new instruction"
-
-
-@pytest.mark.parametrize("edit", [
-    lambda d: d["jobs"][0].update(name="group/brief"),
-    lambda d: d["jobs"][0].update(name="operator"),
-    lambda d: d["jobs"][0].update(outputs=["../brief"]),
-    lambda d: d["jobs"][0]["inputs"].update({"a/b": {"address": "file", "source": "/x"}}),
-])
-def test_filesystem_names_are_checked(tmp_path: Path, edit) -> None:
-    data = job_set(tmp_path)
-    edit(data)
-    with pytest.raises(DeclarationError):
-        load_job_set(yaml.safe_dump(data))
 
 
 def test_an_operator_refusal_reaches_a_job_that_declared_no_refusal_input(coordinator: Coordinator) -> None:

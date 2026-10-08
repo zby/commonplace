@@ -153,39 +153,36 @@ def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     assert run.open_attempt("report") is not None
 
 
-@pytest.mark.parametrize("extra", [
-    Input("member", "verification", required=False),
-    Input("judgment", "report", required=False,
-          relation="verification:cites:report", outcome="accepted"),
-    Input("refusal", "verify", required=False),
-    Input("handed", "verification-attempt:undeclared", required=False),
+@pytest.mark.parametrize("variant", [
+    "live-member", "live-judgment", "live-refusal", "undeclared-handed",
+    "outputs-only", "order-only-record", "model-consumer",
 ])
-def test_live_or_undeclared_dependency_prevents_exemption(late_run, extra):
-    c, old = late_run
-    c.advance(c.result_for(old, "no blockers\n"))
-    run = run_state(c)
-    apply = run.jobs.job("apply-verification")
-    assert "verify" not in run.producers(apply)
-    guarded = replace(apply, inputs={**apply.inputs, "extra": extra})
-    assert "verify" in run.producers(guarded)
-
-
-def test_unpinned_output_and_model_consumers_keep_waiting(late_run):
+def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, variant):
     c, old = late_run
     run = run_state(c)
     apply = run.jobs.job("apply-verification")
     assert "verify" in run.producers(apply), "no completed record exists yet"
     c.advance(c.result_for(old, "no blockers\n"))
     run = run_state(c)
-    output_only = replace(apply, inputs={"verdict": apply.inputs["verdict"]})
-    assert "verify" in run.producers(output_only)
-    order_only_record = replace(apply, inputs={
-        **apply.inputs,
-        "verification-attempt": replace(apply.inputs["verification-attempt"], order_only=True),
-    })
-    assert "verify" in run.producers(order_only_record)
-    model_consumer = replace(run.jobs.job("digest"), inputs=apply.inputs)
-    assert "verify" in run.producers(model_consumer)
+    assert "verify" not in run.producers(apply)
+    extra = {
+        "live-member": Input("member", "verification", required=False),
+        "live-judgment": Input("judgment", "report", required=False,
+                               relation="verification:cites:report", outcome="accepted"),
+        "live-refusal": Input("refusal", "verify", required=False),
+        "undeclared-handed": Input("handed", "verification-attempt:undeclared", required=False),
+    }
+    guarded = {
+        **{name: replace(apply, inputs={**apply.inputs, "extra": value}) for name, value in extra.items()},
+        "outputs-only": replace(apply, inputs={"verdict": apply.inputs["verdict"]}),
+        "order-only-record": replace(apply, inputs={
+            **apply.inputs,
+            "verification-attempt": replace(apply.inputs["verification-attempt"], order_only=True),
+        }),
+        "model-consumer": replace(run.jobs.job("digest"), inputs=apply.inputs),
+    }[variant]
+    assert "verify" in run.producers(guarded)
     # Exemption is per producer, not a waiver for independent live dependencies.
     mixed = replace(apply, inputs={**apply.inputs, "report-now": Input("member", "report")})
     assert run.producers(mixed) == {"report"}
+

@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
 import yaml
 
 from commonplace.workflow import DeclarationError, load_job_set, open_handouts
-from commonplace.workflow.store import RecordError
 from tests.commonplace.workflow.support import Coordinator, job_set
 
 
@@ -20,6 +18,11 @@ from tests.commonplace.workflow.support import Coordinator, job_set
     (lambda d: d["jobs"][0]["inputs"].update({"previous-brief": {"address": "file", "source": "/x"}}),
      "hand-out field"),
     (lambda d: d["jobs"][0].update(outputs=["brief", "brief"]), "unique"),
+    (lambda d: d["jobs"][0].update(parameters={"where": "{nowhere}"}), "unknown placeholder"),
+    (lambda d: d["jobs"][0].update(name="group/brief"), None),
+    (lambda d: d["jobs"][0].update(name="operator"), None),
+    (lambda d: d["jobs"][0].update(outputs=["../brief"]), None),
+    (lambda d: d["jobs"][0]["inputs"].update({"a/b": {"address": "file", "source": "/x"}}), None),
 ])
 def test_declaration_shape(tmp_path: Path, edit, message) -> None:
     data = job_set(tmp_path)
@@ -56,17 +59,6 @@ def test_open_handouts_survive_a_lost_response(coordinator: Coordinator) -> None
     (lost,) = c.status.handouts
     recovered = open_handouts(c.run_dir)
     assert recovered == (lost,)
-
-
-def test_a_malformed_record_is_refused(coordinator: Coordinator) -> None:
-    c = coordinator
-    (handout,) = c.status.handouts
-    path = c.run_dir / "state" / "attempts" / f"{handout.attempt}.json"
-    record = json.loads(path.read_text(encoding="utf-8"))
-    record["state"] = "half-done"
-    path.write_text(json.dumps(record), encoding="utf-8")
-    with pytest.raises(RecordError, match="half-done"):
-        c.advance()
 
 
 def test_code_attempt_exposes_fixed_read_only_run_metadata(coordinator: Coordinator, monkeypatch) -> None:

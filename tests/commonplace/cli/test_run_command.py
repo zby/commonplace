@@ -38,9 +38,14 @@ def test_start_refuses_a_second_start(run: tuple[Path, Path], capsys: pytest.Cap
 
 def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pytest.CaptureFixture[str]) -> None:
     run_dir, _ = run
-    status = advance_json(run_dir, capsys)
-    (handout,) = status["handouts"]
+    (handout,) = advance_json(run_dir, capsys)["handouts"]
     assert handout["job"] == "brief"
+    Path(handout["problem"]).write_text("no source at that revision\n", encoding="utf-8")
+    status = advance_json(run_dir, capsys, "--failed", f"{handout['attempt']}=worker gave up")
+    (stop,) = status["stops"]
+    assert stop["job"] == "brief" and "no source at that revision" in stop["reason"]
+    (handout,) = advance_json(run_dir, capsys)["handouts"]
+    assert handout["job"] == "brief", "a failed attempt leaves the job ready"
     Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
 
     assert main(["advance", str(run_dir), "--completed", handout["attempt"], "--model", "m", "--effort", "e"]) == 0
@@ -49,14 +54,6 @@ def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pyt
     assert text.rstrip().endswith("publishable: no")
 
 
-def test_failed_result_stops_and_keeps_the_job_ready(run: tuple[Path, Path], capsys: pytest.CaptureFixture[str]) -> None:
-    run_dir, _ = run
-    (handout,) = advance_json(run_dir, capsys)["handouts"]
-    Path(handout["problem"]).write_text("no source at that revision\n", encoding="utf-8")
-    status = advance_json(run_dir, capsys, "--failed", f"{handout['attempt']}=worker gave up")
-    (stop,) = status["stops"]
-    assert stop["job"] == "brief" and "no source at that revision" in stop["reason"]
-    assert [h["job"] for h in advance_json(run_dir, capsys)["handouts"]] == ["brief"]
 
 
 @pytest.mark.parametrize("uncertain", (False, True))

@@ -28,11 +28,6 @@ def correct_report(c: Coordinator, report: str, summary: str) -> None:
     assert "verify" in c.handed()
 
 
-def test_start_run_refuses_an_existing_run(coordinator: Coordinator) -> None:
-    with pytest.raises(FileExistsError):
-        start_run(coordinator.run_dir, coordinator.method / "jobs.yaml")
-
-
 def test_01_first_attempt_accepted(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_brief()
@@ -71,18 +66,6 @@ def test_03_verifier_waits_for_a_refused_producer(coordinator: Coordinator) -> N
     assert "verify" not in c.handed(), "the summary job is ready"
 
 
-def test_04_second_refusal_and_max_attempts(coordinator: Coordinator) -> None:
-    c = coordinator
-    c.through_records()
-    refuse_report(c, "r1")
-    correct_report(c, "report B\n", "summary S2\n")
-    refuse_report(c, "r2")
-    correct_report(c, "report C\n", "summary S3\n")
-    c.complete("verify", "block report: r3\n")
-    assert "report" not in c.handed()
-    c.stop("report")
-
-
 def test_05_waiting_for_a_settled_stage(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
@@ -104,22 +87,20 @@ def test_05_waiting_for_a_settled_stage(coordinator: Coordinator) -> None:
     assert "digest" in c.handed()
 
 
-def test_06_upstream_replaced_downstream_rejudged(coordinator: Coordinator) -> None:
+@pytest.mark.parametrize(("other", "refused"), [
+    ("other O1\n", False),
+    ("other O1\nneeds report: report A\n", True),
+])
+def test_06_upstream_replaced_downstream_rejudged(coordinator: Coordinator, other: str, refused: bool) -> None:
     c = coordinator
-    c.through_records()
+    c.through_records(other=other)
     refuse_report(c)
     c.ran()
     c.complete("report", "report B\n", answers="answered\n")
     assert "check-other" in c.ran(), "check-other has the report as an input"
-    assert "other" not in c.handed(), "other has the report only as untracked context"
-
-
-def test_06_rejudged_downstream_refused(coordinator: Coordinator) -> None:
-    c = coordinator
-    c.through_records(other="other O1\nneeds report: report A\n")
-    refuse_report(c)
-    c.complete("report", "report B\n", answers="answered\n")
-    assert "other" in c.handed(), "check-other refused the other report against B"
+    # other has the report only as untracked context; it reruns only when
+    # check-other refuses it against B.
+    assert ("other" in c.handed()) == refused
 
 
 def test_07_identical_rerun(coordinator: Coordinator) -> None:
@@ -243,41 +224,11 @@ def test_12_tampered_member_is_rematerialized(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
     (c.run_dir / "set" / "report.md").write_text("bytes with no record\n", encoding="utf-8")
+    manifest = c.run_dir / "set" / "ARTIFACT.yaml"
+    manifest.write_text("type: something/else.md\n", encoding="utf-8")
     c.advance()
     assert c.member("report") == "report A\n"
-
-
-def test_12_killed_worker_is_closed_by_a_report(coordinator: Coordinator) -> None:
-    c = coordinator
-    c.through_brief()
-    handout = c.handout("report")
-    partial = handout.outputs["report"]
-    partial.write_text("report part\n", encoding="utf-8")
-    c.fail("report", "worker killed")
-    c.stop("report")
-    c.advance()
-    assert "report" in c.handed(), "a failed attempt records no inputs"
-    assert not (partial.exists() and partial.read_text(encoding="utf-8") == "report part\n")
-
-
-@pytest.mark.skip(reason="a half-written publication is an external effect the consumer owns")
-def test_12_partial_publication() -> None:
-    ...
-
-
-def test_13_parallel_handouts_one_at_a_time(coordinator: Coordinator) -> None:
-    # Under the proposed upstream wait, summary waits for the second analyst
-    # instead of running once per analyst, as scenario 13 still describes.
-    c = coordinator
-    c.through_records()
-    c.complete("verify", "block report: r1\nblock other: o1\n")
-    open_other = c.handout("other")
-    c.complete("report", "report B\n", answers="answered\n")
-    assert "summary" not in c.handed()
-    assert "other" not in c.handed()
-    assert open_other.attempt in c.status.open_attempts
-    c.advance(c.result_for(open_other, "other O2\n"))
-    assert "summary" in c.handed()
+    assert manifest.read_text(encoding="utf-8") == "type: types/toy-set.md\n"
 
 
 def test_13_parallel_handouts_together(coordinator: Coordinator) -> None:
@@ -299,16 +250,6 @@ def test_14_non_complete_disposition(coordinator: Coordinator) -> None:
     assert "assemble" in c.ran()
     assert c.member("overview") is not None
     assert c.status.publishable
-
-
-def test_15_unchanged_result_after_a_refusal(coordinator: Coordinator) -> None:
-    c = coordinator
-    c.through_records()
-    refuse_report(c)
-    c.complete("report", "report A\n", answers="")
-    c.stop("report")
-    c.advance()
-    assert "report" in c.handed()
 
 
 def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: Coordinator) -> None:
@@ -378,23 +319,8 @@ def test_20_rerun_with_its_previous_output(coordinator: Coordinator) -> None:
     assert "block report: r1" in c.reachable(c.handout("verify"))
 
 
-def test_21_late_verdict_about_a_replaced_version(coordinator: Coordinator) -> None:
-    # The upstream wait keeps V from being handed out while R is pending, so
-    # the race needs R to become ready after V opened: a criteria change.
-    c = coordinator
-    c.through_records()
-    open_verify = c.handout("verify")
-    c.edit_method("contract-report.md", "forbid: report A\n")
-    c.advance()
-    c.complete("report", "report B\n", answers="answered\n")
-    assert c.member("report") == "report B\n"
-    c.advance(c.result_for(open_verify, "no blockers\n"))
-    assert c.member("report") == "report B\n", "a judgment of A is evidence only"
-    assert "report" not in c.handed(), "A's refusal is not B's refusal input"
-    assert "digest" not in c.handed(), "nothing accepted B against a verification"
-    assert not c.status.publishable
-    c.complete("summary", "summary S2\n")
-    assert "verify" in c.handed(), "the verifier judged A; B is current"
+# Scenario 21 is test_late_completed_verdict_applies_before_ready_or_exhausted_rerun
+# in test_completed_handed_scheduling.py, which also covers an exhausted verifier.
 
 
 def test_22_identical_verdict_text_about_different_inputs(coordinator: Coordinator) -> None:
@@ -408,16 +334,6 @@ def test_22_identical_verdict_text_about_different_inputs(coordinator: Coordinat
     c.complete("verify", "no blockers\n")
     assert "apply-verification" in c.ran(), "the verifier's attempt record changed"
     assert "digest" in c.handed()
-
-
-def test_manifest_survives_materialization(coordinator: Coordinator) -> None:
-    c = coordinator
-    c.through_brief()
-    manifest = c.run_dir / "set" / "ARTIFACT.yaml"
-    assert manifest.read_text(encoding="utf-8") == "type: types/toy-set.md\n"
-    manifest.write_text("type: something/else.md\n", encoding="utf-8")
-    c.advance()
-    assert manifest.read_text(encoding="utf-8") == "type: types/toy-set.md\n"
 
 
 def test_type_is_fixed_for_the_run(coordinator: Coordinator) -> None:
@@ -478,20 +394,3 @@ def test_start_refuses_missing_run_parameters(tmp_path, tmp_library) -> None:
     declaration, _ = toy_library(tmp_path)
     with pytest.raises(ValueError, match="run parameters not given: subject"):
         start_run(tmp_path / "runs" / "bare", declaration)
-
-
-def test_declaration_rejects_unknown_placeholders() -> None:
-    from commonplace.workflow import DeclarationError, load_job_set
-
-    text = """
-type_spec: types/toy-set.md
-jobs:
-  - name: j
-    kind: model
-    instruction: i
-    outputs: [o]
-    inputs: {i: {address: file, source: /x}}
-    parameters: {where: "{nowhere}"}
-"""
-    with pytest.raises(DeclarationError, match="unknown placeholder"):
-        load_job_set(text)

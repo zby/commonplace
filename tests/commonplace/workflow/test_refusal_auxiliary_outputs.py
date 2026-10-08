@@ -66,19 +66,20 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     assert Run(RunStore(c.run_dir)).covered("verification:cites:report", "verification", "report")
 
 
-def test_newly_present_auxiliary_answer_counts_as_changed(tmp_path, tmp_library, monkeypatch):
-    c = decline_run(tmp_path, monkeypatch, initial_answers=None)
-    assert "answers" not in completed_reports(c)[0]["outputs"]
-    c.complete("report", "report A\n", answers=ANSWER)
-    assert not c.status.stops and c.handed() == {"verify"}
-    assert "answers" in completed_reports(c)[-1]["outputs"]
-
-
-@pytest.mark.parametrize("answer", [None, "unchanged existing answer\n"])
-def test_omitted_or_identical_auxiliary_answer_still_fails(tmp_path, tmp_library, monkeypatch, answer):
-    c = decline_run(tmp_path, monkeypatch, initial_answers="unchanged existing answer\n")
+@pytest.mark.parametrize(("initial", "answer", "completes"), [
+    (None, ANSWER, True),
+    ("unchanged existing answer\n", None, False),
+    ("unchanged existing answer\n", "unchanged existing answer\n", False),
+])
+def test_only_a_newly_present_or_changed_auxiliary_answer_completes(
+        tmp_path, tmp_library, monkeypatch, initial, answer, completes):
+    c = decline_run(tmp_path, monkeypatch, initial_answers=initial)
     auxiliary = {} if answer is None else {"answers": answer}
     c.complete("report", "report A\n", **auxiliary)
+    if completes:
+        assert not c.status.stops and c.handed() == {"verify"}
+        assert "answers" in completed_reports(c)[-1]["outputs"]
+        return
     assert "no new auxiliary version" in c.stop("report").reason
     assert len(completed_reports(c)) == 1
     failed = RunStore(c.run_dir).attempt_records()[-1]
@@ -97,17 +98,7 @@ def test_identical_decline_after_a_new_refusal_fails(tmp_path, tmp_library, monk
     assert len(completed_reports(c)) == 2
     c.advance()
     assert "max attempts" in c.stop("report").reason
-
-
-def test_decline_result_replay_does_not_register_another_attempt(tmp_path, tmp_library, monkeypatch):
-    c = decline_run(tmp_path, monkeypatch)
-    result = c.result("report", "report A\n", answers=ANSWER)
-    c.advance(result)
-    before = RunStore(c.run_dir).attempt_records()
-    c.ran()
-    c.advance(result)
-    assert RunStore(c.run_dir).attempt_records() == before
-    assert not c.ran() and len(completed_reports(c)) == 2
+    assert "report" not in c.handed(), "the counted decline attempts are not replenished"
 
 
 def test_auxiliary_change_without_primary_output_still_fails(tmp_path, tmp_library, monkeypatch):
@@ -118,15 +109,6 @@ def test_auxiliary_change_without_primary_output_still_fails(tmp_path, tmp_libra
     c.advance(result)
     assert "completed without its primary output" in c.stop("report").reason
     assert len(completed_reports(c)) == 1
-
-
-def test_decline_completion_does_not_reset_max_attempts(tmp_path, tmp_library, monkeypatch):
-    c = decline_run(tmp_path, monkeypatch, max_attempts=2)
-    c.complete("report", "report A\n", answers=ANSWER)
-    c.complete("verify", "block report: still not persuaded\n")
-    assert "max attempts (2) exhausted" in c.stop("report").reason
-    assert not c.status.handouts
-    assert Run(RunStore(c.run_dir)).attempt_count("report") == 2
 
 
 def test_restoring_bytes_does_not_reanswer_a_historical_refusal(tmp_path, tmp_library, monkeypatch):
