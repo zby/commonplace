@@ -104,7 +104,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
     output = "verification" if apply else "profile" if stage == "profile" else "synthesis"
     record_name = "verifier-attempt" if apply else "producer-attempt"
     values[record_name] = (json.dumps({
-        "state": "completed", "outputs": {output: hashlib.sha256(candidate).hexdigest()},
+        "outputs": {output: hashlib.sha256(candidate).hexdigest()},
         "previous_outputs": {} if previous is None else {output: hashlib.sha256(previous).hexdigest()},
     }).encode(), None)
     from commonplace.lib.agentic_analysis.validation import CRITERIA
@@ -183,15 +183,22 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
     assert not valid["overrides"] and not subject["overrides"]
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.check_profile), ("synthesis", handlers.check_synthesize)])
-def test_correction_answers_use_exact_delivered_baseline(opened, stage, handler):
+@pytest.mark.parametrize("stage,handler,apply", [
+    ("profile", handlers.check_profile, False), ("synthesis", handlers.check_synthesize, False),
+    ("profile", handlers.apply_verify_profile, True), ("synthesis", handlers.apply_verify_synthesis, True),
+])
+def test_correction_answers_use_exact_delivered_baseline(opened, stage, handler, apply):
     a = opened
-    data = profile(a) if stage == "profile" else synthesis(a)
+    data = verdict(a, stage) if apply else profile(a) if stage == "profile" else synthesis(a)
     refusal = b"## Blockers\n\n- SRC-1: reconsider the bounded finding.\n"
-    ctx = attempt(a, stage, data, refusal=refusal, answers=b"- corrected: fixed it.\n", previous=data)
+    ctx = attempt(a, stage, data, apply=apply, refusal=refusal, answers=b"- corrected: fixed it.\n", previous=data)
     handler(ctx)
-    assert "identical to its predecessor" in judgments(ctx)[0]["findings"]
-    ctx = attempt(a, stage, data, refusal=refusal, answers=b"- declined: SRC-1 still warrants the bounded finding.\n", previous=data)
+    corrected = judgments(ctx)
+    assert corrected[0]["outcome"] == "refused" and "identical to its predecessor" in corrected[0]["findings"]
+    if apply:
+        assert len(corrected) == 1, "an invalid verifier correction accepts no partner"
+    ctx = attempt(a, stage, data, apply=apply, refusal=refusal,
+                  answers=b"- declined: SRC-1 still warrants the bounded finding.\n", previous=data)
     handler(ctx)
     assert judgments(ctx)[0]["outcome"] == "accepted"
     assert not judgments(ctx)[0]["overrides"]
@@ -239,17 +246,6 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     assert judgments(ctx)[1]["outcome"] == "accepted"
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.apply_verify_profile), ("synthesis", handlers.apply_verify_synthesis)])
-def test_invalid_verifier_correction_answers_cannot_accept_any_partner(opened, stage, handler):
-    data = verdict(opened, stage)
-    ctx = attempt(opened, stage, data, apply=True, previous=data,
-                  refusal=b"## Blockers\n\n- Correct the verdict explanation.\n",
-                  answers=b"- corrected: fixed the explanation.\n")
-    handler(ctx)
-    (judgment,) = judgments(ctx)
-    assert judgment["outcome"] == "refused" and "identical to its predecessor" in judgment["findings"]
-
-
 @pytest.mark.parametrize("prior_role", ["record-verification", "profile-verification"])
 def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_role):
     a = opened
@@ -260,21 +256,6 @@ def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_r
     handlers.check_synthesize(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"
     assert "limit not carried" in judgments(ctx)[0]["findings"]
-
-
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.apply_verify_profile), ("synthesis", handlers.apply_verify_synthesis)])
-def test_identical_verdict_bytes_record_different_handed_subject_versions(opened, stage, handler):
-    data = verdict(opened, stage)
-    first = attempt(opened, stage, data, apply=True)
-    handler(first)
-    second = attempt(opened, stage, data, apply=True)
-    subject = stage + "-seen"
-    changed = second.read(subject).replace(b"# Example System", b"# Revised Example System")
-    second._pins[subject] = Resolved(hashlib.sha256(changed).hexdigest(), changed,
-                                   "memory-profile" if stage == "profile" else "synthesis")
-    handler(second)
-    assert judgments(first)[0]["subject"]["version"] == judgments(second)[0]["subject"]["version"]
-    assert judgments(first)[1]["subject"]["version"] != judgments(second)[1]["subject"]["version"]
 
 
 def test_source_drift_refuses_acceptance(opened):

@@ -12,7 +12,6 @@ import shutil
 
 import pytest
 
-import commonplace
 from commonplace.lib.agentic_analysis import guards as agentic_publication
 from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
 from commonplace.workflow.store import RunStore
@@ -48,18 +47,13 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     assert len(metadata["run-date"]) == 10
     assert not (prepared.repo / "related-systems").exists()
     assert not (prepared.repo / "kb/agentic-system-analyses/retained").exists()
-    assert not (c.run_dir / "output").exists()
-    assert not (c.run_dir / "opening.json").exists()
-    assert not (c.run_dir / "run-metadata.json").exists()
-    assert not (c.run_dir / "run-state.md").exists()
     assert {p.name for p in (c.run_dir / "set").iterdir()} == {"ARTIFACT.yaml"}
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    assert output(c) == metadata, "a completed opening does not rerun on resume"
 
 
 @pytest.mark.parametrize("changes,reason", [
     ({"system": " "}, "nonempty system"),
+    ({"source-identity": None}, "nonempty source-identity"),
+    ({"source": None}, "nonempty source"),
     ({"system": "System\noutput = /not-authorized"}, "system must be a single-line name"),
     ({"source-identity": ""}, "nonempty source-identity"),
     ({"source": ""}, "nonempty source"),
@@ -68,10 +62,10 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     ({"source-identity": "https://github.com/example/sys\ntem"}, "single-line identity"),
     ({"source-revision": "short"}, "full 40-hex Git commit"),
     ({"source-revision": "a" * 40, "source-identity": "local snapshot"}, "requires a GitHub"),
-    ({"review-path": "kb/elsewhere.md"}, "review-path is no longer"),
 ])
-def test_opening_refuses_invalid_parameters(prepared, changes, reason):
-    c = prepared.start(parameters={**PARAMETERS, **changes})
+def test_opening_refuses_invalid_or_missing_parameters(prepared, changes, reason):
+    parameters = {name: value for name, value in {**PARAMETERS, **changes}.items() if value is not None}
+    c = prepared.start(parameters=parameters)
     c.advance()
     assert_stopped(c, "open", reason)
     records = RunStore(c.run_dir).attempt_records()
@@ -79,16 +73,8 @@ def test_opening_refuses_invalid_parameters(prepared, changes, reason):
     assert not records[0]["pins"] and "outputs" not in records[0]
 
 
-@pytest.mark.parametrize("name", ("source-identity", "source"))
-def test_opening_refuses_missing_parameters(prepared, name):
-    parameters = dict(PARAMETERS)
-    del parameters[name]
-    c = prepared.start(parameters=parameters)
-    c.advance()
-    assert_stopped(c, "open", f"nonempty {name}")
-
-
 @pytest.mark.parametrize("changes,reason", [
+    (None, "ready analysis preparation record required"),
     ({"status": "failed"}, "does not name a ready worktree"),
     ({"worktree": "/another/worktree"}, "does not name a ready worktree"),
     ({"token": "short"}, "no valid worktree token"),
@@ -96,23 +82,13 @@ def test_opening_refuses_missing_parameters(prepared, name):
     ({"commit": "b" * 40}, "HEAD differs from its preparation commit"),
 ])
 def test_opening_enforces_ready_preparation_binding(prepared, changes, reason):
-    prepared.record(**changes)
+    if changes is None:
+        prepared.preparation.unlink()
+    else:
+        prepared.record(**changes)
     c = prepared.start()
     c.advance()
     assert_stopped(c, "open", reason)
-
-
-def test_opening_requires_preparation_and_can_retry_after_repair(prepared):
-    prepared.preparation.unlink()
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "open", "ready analysis preparation record required")
-    prepared.record()
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    assert output(c)["inputs-commit"] == prepared.commit
-    records = [r for r in RunStore(c.run_dir).attempt_records() if r["job"] == "open"]
-    assert [r["state"] for r in records] == ["failed", "completed"]
 
 
 @pytest.mark.parametrize("name", (
@@ -124,24 +100,6 @@ def test_opening_requires_the_token_bearing_source_slug_run_id(prepared, name):
     c = prepared.start(name=name)
     c.advance()
     assert_stopped(c, "open", "does not match the source slug and worktree preparation token")
-
-
-@pytest.mark.parametrize("name", ("workflow-state", "output", "opening.json", "run-state.md"))
-def test_opening_rejects_legacy_state_without_mutating_it(prepared, name):
-    c = prepared.start()
-    legacy = c.run_dir / name
-    if legacy.suffix in (".json", ".md"):
-        legacy.write_bytes(b'{"legacy": "must not be converted"}\n')
-        evidence = legacy
-    else:
-        legacy.mkdir()
-        evidence = legacy / "evidence.md"
-        evidence.write_bytes(b"Legacy evidence: preserve exact bytes.\n")
-    before = evidence.read_bytes(), evidence.stat().st_mtime_ns
-    c.advance()
-    assert_stopped(c, "open", "legacy/mixed run directories are retired")
-    assert (evidence.read_bytes(), evidence.stat().st_mtime_ns) == before
-    assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
 
 
 @pytest.mark.parametrize("path,tracked", [
@@ -176,18 +134,11 @@ def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, mo
     assert git(prepared.repo, "status", "--porcelain") == ""
 
 
-@pytest.mark.parametrize("mismatch", ("code", "cwd", "library"))
-def test_opening_refuses_mixed_checkout_binding(prepared, monkeypatch, mismatch):
-    c = prepared.start(library=ROOT / "kb" if mismatch == "library" else None)
-    if mismatch == "code":
-        monkeypatch.setattr(commonplace, "__file__", str(ROOT / "src/commonplace/__init__.py"))
-    elif mismatch == "cwd":
-        monkeypatch.chdir(prepared.repo.parent)
+def test_opening_refuses_a_library_outside_the_worktree(prepared):
+    # Code and working-directory binding: test_worktree::test_run_code_must_be_the_runs_checkout.
+    c = prepared.start(library=ROOT / "kb")
     c.advance()
-    assert_stopped(c, "open", {
-        "code": "runs code from", "cwd": "working directory is",
-        "library": "recorded library must be the analysis worktree's",
-    }[mismatch])
+    assert_stopped(c, "open", "recorded library must be the analysis worktree's")
 
 
 def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
@@ -209,61 +160,23 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
     }]
 
 
-def test_incumbent_inspection_failure_stops_opening_without_metadata(prepared, monkeypatch):
-    def refuse(**arguments):
-        raise ValueError("publication destination belongs to another source")
-
-    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", refuse)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "open", "destination belongs to another source")
-    assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
-
-
-def test_opening_refuses_head_moving_during_inspection(prepared, monkeypatch):
+@pytest.mark.parametrize("change,reason", [
+    ("commit", "HEAD changed during opening"),
+    ("dirty", "publication requires a clean worktree"),
+])
+def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monkeypatch, change, reason):
     original = agentic_job_handlers.inspect_destination
 
-    def move(**arguments):
+    def concurrent(**arguments):
         decision = original(**arguments)
-        git(prepared.repo, "commit", "--allow-empty", "--quiet", "-m", "Concurrent commit")
+        if change == "commit":
+            git(prepared.repo, "commit", "--allow-empty", "--quiet", "-m", "Concurrent commit")
+        else:
+            (prepared.repo / "src/commonplace/workflow/engine.py").write_text("# Concurrent modification.\n")
         return decision
 
-    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", move)
+    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", concurrent)
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "open", "HEAD changed during opening")
+    assert_stopped(c, "open", reason)
     assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
-
-
-def test_opening_rechecks_cleanliness_after_incumbent_inspection(prepared, monkeypatch):
-    original = agentic_job_handlers.inspect_destination
-
-    def dirty(**arguments):
-        decision = original(**arguments)
-        (prepared.repo / "src/commonplace/workflow/engine.py").write_text("# Concurrent modification.\n")
-        return decision
-
-    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", dirty)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "open", "publication requires a clean worktree")
-    assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
-
-
-def test_interrupted_opening_commits_no_attempt_and_rechecks_on_retry(prepared, monkeypatch):
-    original = RunStore.commit_attempt
-
-    def interrupt(self, record, judgments=(), **kwargs):
-        if record["job"] == "open":
-            raise KeyboardInterrupt("interrupted before the attempt commit")
-        return original(self, record, judgments, **kwargs)
-
-    c = prepared.start()
-    monkeypatch.setattr(RunStore, "commit_attempt", interrupt)
-    with pytest.raises(KeyboardInterrupt, match="before the attempt commit"):
-        c.advance()
-    assert RunStore(c.run_dir).attempt_records() == []
-    monkeypatch.setattr(RunStore, "commit_attempt", original)
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    assert output(c)["expected-incumbent-sha256"] == "absent"

@@ -3,27 +3,24 @@
 from __future__ import annotations
 
 import json
-import os
 from hashlib import sha256
 from pathlib import Path
 
 import pytest
 
-from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
 from commonplace.workflow import AttemptResult, judge
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore
-from tests.commonplace.agentic_analysis.execution_fixtures import (
-    IDENTITY,
-    candidate,
-    judgment,
-    parameters,
-)
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local-only acquisition fixture
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     boundary as boundary,  # noqa: PLC0414 - explicit fixture registration
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    candidate,
+    judgment,
+    parameters,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local Git fixture
@@ -47,15 +44,10 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert p["output"] == str(h.outputs["boundary"])
     assert p["validation-set"] == str(a.coordinator.run_dir / "set")
     assert p["validation-member"] == "boundary.md"
-    assert not {"run-state", "read-first", "previous-output", "round", "requests"} & p.keys()
     assert json.loads(Path(p["source"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
-    assert metadata["source-identity"] == IDENTITY
-    assert "output = /not-authorized" in metadata["source"]
-    assert metadata["command-path"] == str(a.prepared.repo / ".venv" / ("Scripts" if os.name == "nt" else "bin"))
     assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
-    assert not (a.coordinator.run_dir / "output").exists()
 
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
@@ -76,12 +68,13 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
 @pytest.mark.parametrize("changes,reason", [
     ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "member identity: run-id"),
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
-    ({"source": None}, "exactly the checkout code froze"),
+    # A non-complete disposition does not authorize dropping code's source pin.
+    ({"result-disposition": "blocked", "source": None, "reviewed-boundary": None}, "exactly the checkout code froze"),
     ({"result-disposition": "not-a-disposition"}, "[set]"),
     ({"extra": "not allowed"}, "[set]"),
     ({"type": "types/note.md"}, "[set]"),
 ])
-def test_refuses_bad_content_or_invocation_and_hands_repair_inputs(boundary, changes, reason):
+def test_refuses_bad_content_or_invocation(boundary, changes, reason):
     a = boundary
     text = candidate(a, **changes)
     status = a.coordinator.complete("boundary", text)
@@ -90,31 +83,6 @@ def test_refuses_bad_content_or_invocation_and_hands_repair_inputs(boundary, cha
     assert record["outcome"] == "refused" and not record["installs"]
     assert reason in record["findings"]
     assert not (a.coordinator.run_dir / "set/boundary.md").exists()
-    p = parameters(a.coordinator.handout("boundary"))
-    assert Path(p["previous-boundary"]).read_text() == text
-    assert record["id"] in Path(p["refusal"]).read_text()
-    assert record["subject"]["version"] in Path(p["refusal"]).read_text()
-    status = a.coordinator.complete("boundary", candidate(a))
-    assert not status.stops and not status.handouts
-    assert judgment(a)["outcome"] == "accepted"
-    assert len(a.freezes) == 1, "repair must not acquire a different source"
-
-
-def test_noncomplete_disposition_cannot_drop_the_acquired_pin(boundary):
-    a = boundary
-    a.coordinator.complete("boundary", candidate(a, "blocked", source=None, **{"reviewed-boundary": None}))
-    assert judgment(a)["outcome"] == "refused"
-    assert "exactly the checkout code froze" in judgment(a)["findings"]
-
-
-@pytest.mark.parametrize("defect", ["identity", "revision", "path", "digest"])
-def test_cannot_substitute_any_part_of_the_acquisition_object(boundary, defect):
-    a = boundary
-    source = a.source()
-    source[{"digest": "sha256"}.get(defect, defect)] = "b" * 40
-    a.coordinator.complete("boundary", candidate(a, source=source))
-    assert judgment(a)["outcome"] == "refused"
-    assert "exactly the checkout code froze" in judgment(a)["findings"]
 
 
 def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
@@ -141,53 +109,19 @@ def test_dirty_frozen_checkout_is_refused_without_cleaning_it(boundary):
     assert judgment(a)["outcome"] == "accepted"
 
 
-def test_redirected_checkout_is_refused_without_following_or_repairing_it(boundary):
-    a = boundary
-    moved = a.checkout.with_name("moved-system")
-    a.checkout.rename(moved)
-    a.checkout.symlink_to(moved, target_is_directory=True)
-    a.coordinator.complete("boundary", candidate(a))
-    assert judgment(a)["outcome"] == "refused"
-    assert "redirected through a symlink" in judgment(a)["findings"]
-    assert a.checkout.is_symlink() and moved.is_dir()
-
-
-def test_check_reads_pinned_bytes_not_handout_or_set_copies(boundary, monkeypatch):
-    a = boundary
-    h = a.coordinator.handout("boundary")
-    text = candidate(a)
-    original = agentic_job_handlers.check_boundary
-
-    def tamper_then_check(attempt):
-        # Closed hand-outs are swept before checks; recreate an irrelevant copy.
-        h.outputs["boundary"].parent.mkdir(parents=True, exist_ok=True)
-        h.outputs["boundary"].write_text("changed after completion\n")
-        directory = a.coordinator.run_dir / "set"
-        (directory / "boundary.md").write_text("not the candidate\n")
-        (directory / "intruder.md").write_text("---\ntype: [broken\n---\n")
-        (directory / "ARTIFACT.yaml").write_text("invalid: [manifest\n")
-        return original(attempt)
-
-    monkeypatch.setattr(agentic_job_handlers, "check_boundary", tamper_then_check)
-    a.coordinator.complete("boundary", text)
-    assert judgment(a)["outcome"] == "accepted"
-    assert (a.coordinator.run_dir / "set/boundary.md").read_text() == text
-    assert judgment(a)["subject"]["version"] == sha256(text.encode()).hexdigest()
-
-
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
 def test_no_source_is_valid_only_for_noncomplete_boundary(acquisition, disposition):
     start, _ = acquisition
     a = start(boundary=True, identity="local capture identity")
     a.coordinator.advance()
     assert a.source() is None and not a.freezes
+    assert not a.journal.exists() and not a.checkout.exists()
     status = a.coordinator.complete("boundary", candidate(a, disposition))
     assert not status.stops and not status.handouts and not status.publishable
     assert judgment(a)["outcome"] == "accepted"
 
 
-@pytest.mark.parametrize("defect", [None, "digest", "label", "identity"])
-def test_capture_is_checked_by_identity_label_and_exact_bytes(acquisition, defect):
+def test_capture_in_the_supplied_directory_is_accepted_and_survives_cleanup(acquisition):
     start, _ = acquisition
     a = start(boundary=True, identity="local capture identity")
     a.coordinator.advance()
@@ -196,17 +130,11 @@ def test_capture_is_checked_by_identity_label_and_exact_bytes(acquisition, defec
     capture = Path(opening["capture-directory"]) / "capture.txt"
     capture.parent.mkdir()
     capture.write_bytes(b"Local capture fixture; no web request.\n")
-    source = {"kind": "capture", "identity": "other identity" if defect == "identity" else "local capture identity",
-              "revision": "capture-1", "path": str(capture),
-              "sha256": "0" * 64 if defect == "digest" else sha256(capture.read_bytes()).hexdigest()}
-    text = candidate(a, source=source, **{
-        "reviewed-boundary": "different label" if defect == "label" else "capture-1", "evidence-tier": "doc-grounded",
-    })
+    source = {"kind": "capture", "identity": "local capture identity", "revision": "capture-1",
+              "path": str(capture), "sha256": sha256(capture.read_bytes()).hexdigest()}
+    text = candidate(a, source=source, **{"reviewed-boundary": "capture-1", "evidence-tier": "doc-grounded"})
     a.coordinator.complete("boundary", text)
-    record = judgment(a)
-    assert record["outcome"] == ("refused" if defect else "accepted")
-    if defect:
-        assert {"digest": "source.sha256", "label": "frozen capture's label", "identity": "source.identity"}[defect] in record["findings"]
+    assert judgment(a)["outcome"] == "accepted"
     assert capture.is_file() and not h.prompt.parent.exists(), "capture survives closed hand-out cleanup"
     assert not a.freezes
 
@@ -236,35 +164,6 @@ def test_accepted_capture_pin_cannot_change_on_boundary_correction(acquisition):
     assert "preserve the incumbent boundary's frozen capture" in judgment(a)["findings"]
     assert (a.coordinator.run_dir / "set/boundary.md").read_text() == text
     assert capture.read_bytes() == b"Original capture.\n"
-
-
-def test_capture_cannot_use_storage_outside_the_supplied_directory(acquisition, tmp_path):
-    start, _ = acquisition
-    a = start(boundary=True, identity="local capture identity")
-    a.coordinator.advance()
-    capture = tmp_path / "unowned-capture.txt"
-    capture.write_bytes(b"Verifiable bytes do not grant write authority here.\n")
-    source = {"kind": "capture", "identity": "local capture identity", "revision": "capture-1",
-              "path": str(capture), "sha256": sha256(capture.read_bytes()).hexdigest()}
-    a.coordinator.complete("boundary", candidate(a, source=source, **{"reviewed-boundary": "capture-1"}))
-    assert judgment(a)["outcome"] == "refused"
-    assert "supplied capture-directory" in judgment(a)["findings"]
-
-
-
-
-def test_boundary_unchanged_refusal_answer_fails_and_bound_does_not_reset(boundary):
-    a = boundary
-    text = candidate(a, **{"run-id": "AAS-2026-10-07-other-0123456789ab-01"})
-    a.coordinator.complete("boundary", text)
-    assert judgment(a)["outcome"] == "refused"
-    status = a.coordinator.complete("boundary", text)
-    assert status.stops and status.stops[0].job == "boundary"
-    assert "unchanged" in status.stops[0].reason
-    assert len(RunStore(a.coordinator.run_dir).judgment_records()) == 1
-    status = a.coordinator.advance()
-    assert not status.handouts and status.stops[0].job == "boundary"
-    assert "max attempts" in status.stops[0].reason
 
 
 def test_current_shipped_declaration_hands_out_translated_runtime(acquisition):

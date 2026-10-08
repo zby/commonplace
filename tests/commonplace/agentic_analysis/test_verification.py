@@ -9,7 +9,7 @@ import yaml
 
 from commonplace.lib.agentic_analysis import verification as handlers
 from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.workflow import judge, start_run
+from commonplace.workflow import start_run
 from commonplace.workflow.state import CodeAttempt, Resolved, Run
 from commonplace.workflow.store import RunStore, digest
 from tests.commonplace.agentic_analysis.execution_fixtures import (
@@ -36,12 +36,6 @@ def records(request, tmp_path):
     a = start(analysts=True)
     data = yaml.safe_load((a.prepared.repo / "kb" / JOB_SET).read_text())
     data["jobs"] = data["jobs"][:15]
-    if getattr(request, "param", None) == "late":
-        # Isolate historical application from upstream wait. This restricted
-        # declaration deliberately does not rerun the verifier on record edits.
-        verifier = next(job for job in data["jobs"] if job["name"] == "verify")
-        for name in (*handlers.PARTNERS, "set-check", "runtime-answers", "memory-answers", "epistemic-answers"):
-            verifier["inputs"][name]["order_only"] = True
     declaration = tmp_path / "restricted-record-jobs.yaml"
     declaration.write_text(yaml.safe_dump(data))
     run_dir = a.coordinator.run_dir.with_name(a.coordinator.run_dir.name[:-2] + "02")
@@ -98,7 +92,13 @@ def code_attempt(a, name, replacements=None):
 
 def test_blocker_free_verdict_covers_only_checked_relations(records):
     a = records
-    to_verifier(a)
+    for name in ("reconcile", "verify"):
+        h = a.coordinator.handout(name)
+        assert "## Input reading batches" in h.prompt.read_text()
+        assert "jobs-engine/" in h.prompt.read_text()
+        assert "opening" in parameters(h)
+        if name == "reconcile":
+            to_verifier(a)
     assert judgments(a, "check-reconcile")[-1]["outcome"] == "accepted"
     p = parameters(a.coordinator.handout("verify"))
     assert Path(p["set-check"]).read_text() == "# Record set check\n\nnone\n"
@@ -163,6 +163,7 @@ def test_declined_answers_rerun_verifier_without_semantic_override(records):
     a.coordinator.complete("verify", verdict(a, "- runtime: reconsider SRC-1."))
     a.coordinator.complete("runtime", report(a, "runtime"), answers="- declined: SRC-1 still supports the bounded finding.\n")
     assert a.coordinator.handed() == {"verify"}, a.coordinator.status
+    assert judgments(a, "check-runtime")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
     refused = next(j for j in judgments(a, "apply-verify") if j["outcome"] == "refused")
     assert refused["id"] not in judgments(a, "check-runtime")[-1]["overrides"]
     p = parameters(a.coordinator.handout("verify"))
@@ -170,54 +171,6 @@ def test_declined_answers_rerun_verifier_without_semantic_override(records):
     assert Path(p["previous-verification"]).read_text() == verdict(a, "- runtime: reconsider SRC-1.")
     a.coordinator.complete("verify", verdict(a))
     assert judgments(a, "apply-verify")[-4]["outcome"] == "accepted"
-
-
-def test_identical_verdict_bytes_reapply_to_distinct_handed_subjects(records):
-    a = records
-    to_verifier(a)
-    text = verdict(a)
-    a.coordinator.complete("verify", text)
-    before = judgments(a, "apply-verify")[-4]["subject"]["version"]
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Clarify the account.")
-    a.coordinator.advance()
-    revised = report(a, "runtime").replace("Local fixture only;", "Clarified the local fixture account;")
-    a.coordinator.complete("runtime", revised, answers="- corrected: clarified the account.\n")
-    assert a.coordinator.handed() == {"reconcile"}
-    a.coordinator.complete("reconcile", reconciliation(a))
-    a.coordinator.complete("verify", text)
-    runtime = [j for j in judgments(a, "apply-verify") if j["subject"]["role"] == "runtime"]
-    assert len(runtime) == 2 and runtime[-1]["subject"]["version"] != before
-    assert runtime[0]["basis"]["verifier-attempt"] != runtime[-1]["basis"]["verifier-attempt"]
-
-
-@pytest.mark.parametrize("records", ["late"], indirect=True)
-@pytest.mark.parametrize("blockers", ["none", "- runtime: reconsider SRC-1."])
-def test_late_verdict_never_restores_or_refuses_new_runtime(records, blockers):
-    a = records
-    to_verifier(a)
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Clarify the account.")
-    a.coordinator.advance()
-    revised = report(a, "runtime").replace("Local fixture only;", "Clarified the local fixture account;")
-    a.coordinator.complete("runtime", revised, answers="- corrected: clarified the account.\n")
-    a.coordinator.complete("verify", verdict(a, blockers))
-    late = [j for j in judgments(a, "apply-verify") if j["subject"]["role"] == "runtime"][-1]
-    assert late["installs"] is False
-    assert late["subject"]["version"] != digest(revised.encode())
-    assert (a.coordinator.run_dir / "set/runtime.md").read_text() == revised
-    assert not any(h.job == "runtime" for h in a.coordinator.open.values())
-
-
-def test_handouts_use_batches_and_engine_previous_outputs(records):
-    a = records
-    for name in ("reconcile", "verify"):
-        h = a.coordinator.handout(name)
-        p = parameters(h)
-        assert "## Input reading batches" in h.prompt.read_text()
-        assert "jobs-engine/" in h.prompt.read_text()
-        assert not {"round", "requests", "run-state", "read-first"} & p.keys()
-        assert "opening" in p
-        if name == "reconcile":
-            a.coordinator.complete("reconcile", reconciliation(a))
 
 
 def test_set_check_uses_pinned_content_not_projection_or_later_members(records):

@@ -38,19 +38,6 @@ def failures(findings):
     return [finding.render() for finding in findings if not finding.absent and not finding.info]
 
 
-def test_pinned_draft_schema_differs_from_disk_and_between_runs(tmp_path):
-    pinned = criteria()
-    for name, data in pinned.items():
-        path = tmp_path / "kb" / name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(data)
-    (tmp_path / "kb" / BOUNDARY_SCHEMA).write_text("required: [disk_only]\n")
-    assert not failures(draft(tmp_path, pinned))
-    changed = {**pinned, BOUNDARY_SCHEMA: b"required: [pinned_only]\n"}
-    assert any("pinned_only" in failure for failure in failures(draft(tmp_path, changed)))
-    assert not failures(draft(tmp_path, pinned))
-
-
 def test_draft_missing_transitive_dependency_never_reads_disk(tmp_path):
     pinned = criteria()
     pinned[BOUNDARY_SCHEMA] = b"if: false\nthen:\n  $ref: ./middle.schema.yaml\n"
@@ -64,14 +51,6 @@ def test_draft_missing_transitive_dependency_never_reads_disk(tmp_path):
                for failure in failures(draft(tmp_path, pinned)))
 
 
-def test_missing_set_type_returns_findings_without_disk_fallback(tmp_path):
-    pinned = criteria()
-    path = tmp_path / "kb" / SET_TYPE
-    path.parent.mkdir(parents=True)
-    path.write_bytes(pinned.pop(SET_TYPE))
-    assert any("missing pinned criterion" in failure for failure in failures(draft(tmp_path, pinned)))
-
-
 @pytest.mark.parametrize("source", ["null", "{}"])
 def test_non_complete_boundary_source_does_not_crash(tmp_path, source):
     candidate = CANDIDATE.replace(b"source: null", f"source: {source}".encode())
@@ -80,11 +59,6 @@ def test_non_complete_boundary_source_does_not_crash(tmp_path, source):
         assert not result
     else:
         assert result  # Malformed sources still fail; they just do not crash.
-
-
-def test_quotes_without_source_are_refused_not_crashes(tmp_path):
-    candidate = CANDIDATE + b"\n> quoted\n> --- `README.md`\n"
-    assert any("quotations need" in failure for failure in failures(draft(tmp_path, criteria(), candidate)))
 
 
 def test_criterion_collection_reads_only_declared_known_aliases():

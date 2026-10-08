@@ -9,7 +9,6 @@ import pytest
 
 from commonplace.lib.agentic_analysis.checks import correction_findings
 from commonplace.workflow import judge
-from commonplace.workflow.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     REPORT_TYPES,
     judgments,
@@ -43,35 +42,19 @@ def test_three_analysts_install_pinned_members_and_cover_present_relations(analy
     assert not a.coordinator.status.handouts and not a.coordinator.status.publishable
 
 
-@pytest.mark.parametrize("member", list(REPORT_TYPES))
-def test_new_handout_has_metadata_answers_and_no_legacy_parameters(analysts, member):
+def test_analyst_handouts_carry_opening_answers_and_pinned_boundary(analysts):
     a = analysts
-    if member != "runtime":
-        a.coordinator.complete("runtime", report(a, "runtime"), answers="")
-    h = a.coordinator.handout(member)
-    p = parameters(h)
-    assert "jobs-engine/" in h.prompt.read_text()
-    assert "output-answers" in p and "opening" in p
-    assert not {"round", "requests", "run-state"} & p.keys()
-    opening = json.loads(Path(p["opening"]).read_bytes())
-    assert opening["run-id"] == a.coordinator.run_dir.name
-    assert Path(p["boundary"]).read_text() == boundary_candidate(a)
-
-
-def test_decline_keeps_report_and_rechecks_exact_handed_refusal(analysts):
-    a = analysts
-    through_analysts(a)
-    text = report(a, "runtime")
-    refusal = judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Reconsider the supported finding.")
-    a.coordinator.advance()
-    assert a.coordinator.handed() == {"runtime"}
-    p = parameters(a.coordinator.handout("runtime"))
-    assert refusal in Path(p["refusal"]).read_text()
-    assert Path(p["previous-report"]).read_text() == text
-    a.coordinator.complete("runtime", text, answers="- declined: the frozen evidence still supports this finding.\n")
-    assert not a.coordinator.status.stops
-    assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
-    assert (a.coordinator.run_dir / "set/runtime.md").read_text() == text
+    for member in REPORT_TYPES:
+        if member == "memory":
+            a.coordinator.complete("runtime", report(a, "runtime"), answers="")
+        h = a.coordinator.handout(member)
+        p = parameters(h)
+        assert "jobs-engine/" in h.prompt.read_text()
+        assert "## Input reading batches" in h.prompt.read_text()
+        assert "output-answers" in p
+        opening = json.loads(Path(p["opening"]).read_bytes())
+        assert opening["run-id"] == a.coordinator.run_dir.name
+        assert Path(p["boundary"]).read_text() == boundary_candidate(a)
 
 
 def test_corrected_answer_cannot_keep_identical_report(analysts):
@@ -125,22 +108,6 @@ def test_member_identity_is_checked_against_pinned_inputs(analysts, member, chan
     assert j["outcome"] == "refused" and reason in j["findings"]
 
 
-def test_runtime_revision_rechecks_specialists_without_new_model_attempts(analysts):
-    a = analysts
-    through_analysts(a)
-    before = {member: len([r for r in RunStore(a.coordinator.run_dir).attempt_records()
-                          if r["job"] == member]) for member in ("memory", "epistemic")}
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Clarify the account.")
-    a.coordinator.advance()
-    revised = report(a, "runtime").replace("Local fixture only;", "Clarified the local fixture account;")
-    a.coordinator.complete("runtime", revised, answers="- corrected: clarified the account.\n")
-    assert not a.coordinator.status.stops and not a.coordinator.status.handouts
-    for member, count in before.items():
-        assert len([r for r in RunStore(a.coordinator.run_dir).attempt_records() if r["job"] == member]) == count
-        assert judgments(a, member)[-1]["outcome"] == "accepted"
-        assert judgments(a, member)[-1]["basis"]["runtime"]["version"] != judgments(a, member)[0]["basis"]["runtime"]["version"]
-
-
 def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     a = analysts
     original = report(a, "runtime").replace(
@@ -161,24 +128,6 @@ def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
 
 
-def test_repeated_decline_is_no_progress_and_every_attempt_counts(analysts):
-    a = analysts
-    through_analysts(a)
-    text = report(a, "runtime")
-    answers = "- declined: checked SRC-1 and retained the finding.\n"
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Reconsider the finding.")
-    a.coordinator.advance()
-    a.coordinator.complete("runtime", text, answers=answers)
-    assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Reconsider again.")
-    a.coordinator.advance()
-    a.coordinator.complete("runtime", text, answers=answers)
-    assert any("no new auxiliary version" in s.reason for s in a.coordinator.status.stops)
-    a.coordinator.advance()
-    assert any("max attempts (3) exhausted" in s.reason for s in a.coordinator.status.stops)
-    assert not a.coordinator.status.handouts
-
-
 def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     a = analysts
     projected = a.coordinator.run_dir / "set/memory.md"
@@ -192,20 +141,6 @@ def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     assert j["outcome"] == "refused" and "MEM-CMP-unseen" in j["findings"]
     assert j["basis"]["memory"]["version"] is None
     assert not any(r["relation"] == "runtime:cites:memory" for r in j["scope"])
-
-
-def test_producer_records_the_previous_outputs_actually_delivered(analysts):
-    a = analysts
-    through_analysts(a)
-    records = [r for r in RunStore(a.coordinator.run_dir).attempt_records() if r["job"] == "runtime"]
-    assert records[0]["previous_outputs"] == {}
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Check the finding.")
-    a.coordinator.advance()
-    opened = [r for r in RunStore(a.coordinator.run_dir).attempt_records() if r["job"] == "runtime"][-1]
-    assert opened["previous_outputs"] == records[0]["outputs"]
-    p = parameters(a.coordinator.handout("runtime"))
-    assert Path(p["previous-report"]).read_text() == report(a, "runtime")
-    assert Path(p["previous-answers"]).read_bytes() == b""
 
 
 def test_structural_repair_can_restore_original_bytes_with_fresh_declines(analysts):

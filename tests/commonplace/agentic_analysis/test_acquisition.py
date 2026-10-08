@@ -118,14 +118,6 @@ def test_preflight_failure_changes_no_source_and_records_no_effect(acquisition, 
         assert (a.checkout / "KEEP.md").read_bytes() == b"Preserve this local change.\n"
 
 
-def test_non_git_source_is_explicitly_left_for_the_boundary(acquisition):
-    start, _ = acquisition
-    a = start(identity="local capture fixture")
-    assert not a.advance().stops
-    assert a.source() is None
-    assert not a.freezes and not a.journal.exists() and not a.checkout.exists()
-
-
 def test_unavailable_explicit_commit_is_an_ordinary_retryable_failure(acquisition):
     start, _ = acquisition
     a = start(revision="0" * 40)
@@ -156,11 +148,19 @@ def test_interrupted_intent_with_no_installed_checkout_is_safe_to_retry(acquisit
     assert len(a.freezes) == 1 and a.source()["kind"] == "git"
 
 
-@pytest.mark.parametrize("requested", (False, True))
-def test_interrupted_new_clone_is_recognized_without_refetching(acquisition, monkeypatch, requested):
+@pytest.mark.parametrize("case", ("new-default", "new-requested", "existing-requested"))
+def test_interrupted_installation_is_recognized_without_refetching(acquisition, monkeypatch, case):
     start, upstream = acquisition
-    revision = git(upstream, "rev-parse", "HEAD")
-    a = start(revision=revision if requested else None)
+    initial = git(upstream, "rev-parse", "HEAD")
+    if case == "existing-requested":
+        revision = advance_upstream(upstream)
+        a = start(revision=revision)
+        a.checkout.parent.mkdir()
+        git(a.prepared.repo, "clone", "--quiet", str(upstream), str(a.checkout))
+        git(a.checkout, "checkout", "--quiet", "--detach", initial)
+    else:
+        revision = initial
+        a = start(revision=revision if case == "new-requested" else None)
     original = agentic_acquisition._write_journal
 
     def interrupt(path, record):
@@ -172,7 +172,8 @@ def test_interrupted_new_clone_is_recognized_without_refetching(acquisition, mon
     with pytest.raises(KeyboardInterrupt):
         a.advance()
     assert json.loads(a.journal.read_text())["state"] == "started"
-    advance_upstream(upstream)
+    if case != "existing-requested":
+        advance_upstream(upstream)  # The installed result, not the new tip, is recognized.
     monkeypatch.setattr(agentic_acquisition, "_write_journal", original)
     assert not a.advance().stops
     assert a.source()["revision"] == revision
@@ -204,8 +205,6 @@ def test_interrupted_existing_default_snapshot_stops_as_uncertain(acquisition, m
     a.stop("which default-branch snapshot", uncertain=True)
     assert len(a.freezes) == 1
     assert (a.journal.read_bytes(), a.checkout.joinpath(".git/HEAD").read_bytes()) == before
-
-
 
 
 def test_completion_journal_write_failure_is_visible_as_uncertain(acquisition, monkeypatch):
@@ -245,29 +244,6 @@ def test_completed_journal_recovers_a_lost_attempt_without_moving_the_pin(acquis
     assert not any(r["job"] == "acquire" for r in RunStore(a.coordinator.run_dir).attempt_records())
     advance_upstream(upstream)
     monkeypatch.setattr(RunStore, "commit_attempt", original)
-    assert not a.advance().stops
-    assert a.source()["revision"] == revision and len(a.freezes) == 1
-
-
-def test_interrupted_pinned_existing_checkout_is_recognized(acquisition, monkeypatch):
-    start, upstream = acquisition
-    initial = git(upstream, "rev-parse", "HEAD")
-    revision = advance_upstream(upstream)
-    a = start(revision=revision)
-    a.checkout.parent.mkdir()
-    git(a.prepared.repo, "clone", "--quiet", str(upstream), str(a.checkout))
-    git(a.checkout, "checkout", "--quiet", "--detach", initial)
-    original = agentic_acquisition._write_journal
-
-    def interrupt(path, record):
-        if record["state"] == "completed":
-            raise KeyboardInterrupt()
-        original(path, record)
-
-    monkeypatch.setattr(agentic_acquisition, "_write_journal", interrupt)
-    with pytest.raises(KeyboardInterrupt):
-        a.advance()
-    monkeypatch.setattr(agentic_acquisition, "_write_journal", original)
     assert not a.advance().stops
     assert a.source()["revision"] == revision and len(a.freezes) == 1
 
