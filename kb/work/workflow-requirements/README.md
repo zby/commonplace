@@ -87,8 +87,9 @@ remains deferred.
 
 [Consumer surface](./consumer-surface.md) reviews the boundary between the
 engine and the analysis package: which handler needs are legitimate, which
-checks re-prove engine invariants, and two requirement-level questions about
-the type's source of truth and publication coverage.
+checks re-prove engine invariants, and two requirement-level resolutions,
+settled 2026-10-08: the set type is fixed for the run, and coverage is an
+engine-derived input rather than a handler recomputation.
 
 ## Related
 
