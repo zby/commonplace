@@ -21,9 +21,9 @@ from commonplace.lib.agentic_analysis.handlers import (
     _opened_environment,
     _require_opened_method,
 )
+from commonplace.lib.agentic_analysis.records import section
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.agentic_analysis.validation import criterion_bytes
-from commonplace.lib.agentic_records import section
-from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow import CodeAttempt

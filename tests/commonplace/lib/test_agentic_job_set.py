@@ -19,7 +19,7 @@ from commonplace.lib.agentic_analysis.declaration import (
     RECORDS,
     REPORTS,
 )
-from commonplace.lib.agentic_set import SET_TYPE
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.workflow import CodeJob, ModelJob, advance, load_job_set, start_run

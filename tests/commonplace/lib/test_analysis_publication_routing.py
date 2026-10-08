@@ -12,7 +12,7 @@ import yaml
 
 from commonplace.lib.agentic_analysis import guards
 from commonplace.lib.agentic_analysis import publication as engine
-from commonplace.lib.agentic_set import SET_TYPE, source_slug
+from commonplace.lib.agentic_analysis.sets import SET_TYPE, source_slug
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.workflow.state import _parse_type
 

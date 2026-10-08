@@ -4,8 +4,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.agentic_analysis.validation import CRITERIA, criterion_bytes
-from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.lib.validation import validate_draft_at_slot
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"

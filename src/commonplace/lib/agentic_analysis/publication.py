@@ -27,14 +27,14 @@ from commonplace.lib.agentic_analysis.handlers import (
     _opened_environment,
     _require_opened_method,
 )
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
-from commonplace.lib.agentic_records import amendment_index
-from commonplace.lib.agentic_set import (
+from commonplace.lib.agentic_analysis.records import amendment_index
+from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     SET_TYPE,
     source_slug,
 )
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_analysis_set

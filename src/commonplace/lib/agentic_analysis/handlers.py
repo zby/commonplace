@@ -29,6 +29,13 @@ from commonplace.lib.agentic_analysis.guards import (
     require_publishable_worktree,
     require_running_package_unchanged,
 )
+from commonplace.lib.agentic_analysis.sets import (
+    RETAINED_ROOT,
+    SET_TYPE,
+    analysis_layout,
+    normalize_source_identity,
+    source_slug,
+)
 from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.agentic_analysis.worktree import (
     STATE_ROOT,
@@ -36,13 +43,6 @@ from commonplace.lib.agentic_analysis.worktree import (
     reject_legacy_run,
     require_run_code,
     source_checkout,
-)
-from commonplace.lib.agentic_set import (
-    RETAINED_ROOT,
-    SET_TYPE,
-    analysis_layout,
-    normalize_source_identity,
-    source_slug,
 )
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document

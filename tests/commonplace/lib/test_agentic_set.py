@@ -1,4 +1,4 @@
-from commonplace.lib import agentic_set
+from commonplace.lib.agentic_analysis import sets as agentic_set
 from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.note_parser import parse_document
 

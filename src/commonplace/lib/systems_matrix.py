@@ -10,8 +10,8 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_records import declared_ids, is_absence
-from commonplace.lib.agentic_set import analysis_layout, current_analyses
+from commonplace.lib.agentic_analysis.records import declared_ids, is_absence
+from commonplace.lib.agentic_analysis.sets import analysis_layout, current_analyses
 
 __all__ = [
     "AXES",

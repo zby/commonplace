@@ -2,6 +2,8 @@
 
 import ast
 import importlib
+import subprocess
+import sys
 from pathlib import Path
 
 import commonplace
@@ -15,11 +17,20 @@ PACKAGE = Path(commonplace.__file__).resolve().parent
 def test_retired_execution_modules_are_absent():
     assert not (PACKAGE / "workflow_legacy").exists()
     for name in ("agentic_workflow", "agentic_finalize", "agentic_analysis",
-                 "agentic_publication", "analysis_worktree"):
+                 "agentic_publication", "analysis_worktree",
+                 "agentic_set", "agentic_records", "agentic_ledger"):
         assert not (PACKAGE / "lib" / f"{name}.py").exists()
     assert not list((PACKAGE / "lib").glob("agentic_job_*.py"))
     for name in ("finalize", "handoff", "publication"):
         assert not (PACKAGE / "cli" / f"agentic_analysis_{name}.py").exists()
+
+
+def test_data_modules_import_without_workflow_execution():
+    subprocess.run([
+        sys.executable, "-c",
+        ("import sys; from commonplace.lib.agentic_analysis import sets, records, ledger; "
+         "assert 'commonplace.workflow' not in sys.modules"),
+    ], check=True)
 
 
 def test_generic_engine_does_not_import_the_analysis_consumer():

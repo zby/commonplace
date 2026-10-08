@@ -16,7 +16,7 @@ from io import StringIO
 import pytest
 
 from commonplace.lib import systems_matrix as sm
-from commonplace.lib.agentic_records import (
+from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     conclusion_status_errors,
     route_field_errors,
@@ -226,7 +226,7 @@ def declared_packet(job_name):
     from pathlib import Path
 
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.lib.agentic_set import analysis_layout
+    from commonplace.lib.agentic_analysis.sets import analysis_layout
     from commonplace.workflow import load_job_set
 
     library = Path(__file__).resolve().parents[3] / "kb"

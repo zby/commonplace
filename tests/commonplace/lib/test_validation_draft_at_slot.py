@@ -4,7 +4,7 @@ from hashlib import sha256
 import pytest
 import yaml
 
-from commonplace.lib.agentic_set import analysis_layout
+from commonplace.lib.agentic_analysis.sets import analysis_layout
 from commonplace.lib.directory_artifact import ArtifactMember, DirectoryArtifact
 from commonplace.lib.directory_layout import layout_findings
 from commonplace.lib.note_parser import parse_document

@@ -12,7 +12,7 @@ import uuid
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_set import (
+from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     normalize_source_identity,

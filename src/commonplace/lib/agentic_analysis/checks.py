@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import re
 
-from commonplace.lib.agentic_records import declared_ids, section
+from commonplace.lib.agentic_analysis.records import declared_ids, section
 
 
 def correction_blockers(refusal: bytes | None, member: str) -> str:

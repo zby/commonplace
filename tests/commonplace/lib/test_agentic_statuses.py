@@ -2,7 +2,7 @@
 
 import pytest
 
-from commonplace.lib.agentic_records import (
+from commonplace.lib.agentic_analysis.records import (
     conclusion_status_errors,
 )
 from commonplace.lib.validation import validate_draft_at_slot

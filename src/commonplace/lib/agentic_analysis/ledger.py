@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-from commonplace.lib.agentic_records import section
+from commonplace.lib.agentic_analysis.records import section
 from commonplace.lib.note_parser import blank_fenced_code_blocks
 
 ROUTE_FUNCTIONS = frozenset({

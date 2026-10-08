@@ -14,7 +14,7 @@ import yaml
 
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis.report import engine_run_report
-from commonplace.lib.agentic_set import SET_TYPE
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.workflow import RunStatus, Stop, UncertainEffectError
 from commonplace.workflow.state import _parse_type
 from commonplace.workflow.store import RunStore

@@ -7,7 +7,7 @@ import pytest
 import yaml
 
 from commonplace.lib.agentic_analysis import boundary as agentic_boundary
-from commonplace.lib.agentic_set import SET_TYPE
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import (
     ValidationRun,

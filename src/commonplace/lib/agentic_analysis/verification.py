@@ -15,13 +15,13 @@ from commonplace.lib.agentic_analysis.handlers import (
     _opened_environment,
     _require_opened_method,
 )
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
-from commonplace.lib.agentic_records import (
+from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
     section,
 )
-from commonplace.lib.agentic_set import SET_TYPE
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document

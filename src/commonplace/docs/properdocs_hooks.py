@@ -108,7 +108,7 @@ def on_files(files, config):
 
     collection = docs_dir / "agentic-system-analyses"
     if collection.is_dir():
-        from commonplace.lib.agentic_set import current_analyses
+        from commonplace.lib.agentic_analysis.sets import current_analyses
         lines = ["# Current agentic-system analyses", "",
                  "| System | Description | Boundary | Run | Date | Evidence |", "|---|---|---|---|---|---|"]
         for member_set in current_analyses(root):

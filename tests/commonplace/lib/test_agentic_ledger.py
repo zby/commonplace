@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib.agentic_ledger import epistemic_ledger_errors
+from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 from commonplace.lib.validation import validate_note
 from tests.commonplace.lib.test_agentic_analysis import member_fixture
 

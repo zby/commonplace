@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from commonplace.lib.agentic_records import (
+from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     annotated_ids,
     declared_ids,
@@ -71,7 +71,7 @@ def test_annotation_fields_are_not_required() -> None:
 def test_route_field_labels_match_the_delivered_contract() -> None:
     from pathlib import Path
 
-    from commonplace.lib.agentic_records import ROUTE_FIELDS
+    from commonplace.lib.agentic_analysis.records import ROUTE_FIELDS
 
     contract = (Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/"
                 "agentic-analysis-records.md").read_text()
@@ -332,7 +332,7 @@ def test_ambiguous_references_belong_to_the_citing_document(split_declarations: 
     }
     if not split_declarations:
         bodies["memory.md"] += "\n#### MEM-OBJ-store — Duplicate object\n"
-    from commonplace.lib.agentic_records import set_record_findings
+    from commonplace.lib.agentic_analysis.records import set_record_findings
 
     _, findings = set_record_findings("boundary.md", bodies, cites={
         "candidate.md": ["memory.md", "epistemic.md"],
@@ -353,7 +353,7 @@ def test_ambiguous_references_belong_to_the_citing_document(split_declarations: 
 
 
 def test_duplicate_source_reference_is_ambiguous_for_its_consumer() -> None:
-    from commonplace.lib.agentic_records import set_record_findings
+    from commonplace.lib.agentic_analysis.records import set_record_findings
 
     _, findings = set_record_findings("boundary.md", {
         "boundary.md": "## Source register\n\n| SRC-1 | First |\n| SRC-1 | Second |\n",

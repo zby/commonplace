@@ -1089,7 +1089,7 @@ def _agentic_boundary_register_rule(
     """The register's shape and identity are content, not invocation checks."""
     from collections import Counter
 
-    from commonplace.lib.agentic_records import (
+    from commonplace.lib.agentic_analysis.records import (
         source_register_ids,
         source_register_rows,
     )
@@ -1125,7 +1125,7 @@ def _agentic_boundary_register_rule(
 def _agentic_reconciliation_amendment_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_records import value_amendments
+    from commonplace.lib.agentic_analysis.records import value_amendments
 
     errors = [
         "value amendment: reconciliation states connections between reports and does "
@@ -1146,7 +1146,7 @@ def _agentic_reconciliation_amendment_rule(
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_records import (
+    from commonplace.lib.agentic_analysis.records import (
         conclusion_status_errors,
         record_reference_errors,
         route_field_errors,
@@ -1232,7 +1232,7 @@ def _record_prefix_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     """A report declares records only under its type's ``record-prefix``."""
-    from commonplace.lib.agentic_records import declared_ids
+    from commonplace.lib.agentic_analysis.records import declared_ids
 
     assert parsed.profile.type_doc_path is not None
     prefix = run.load_frontmatter(parsed.profile.type_doc_path).data.get("record-prefix")
@@ -1255,7 +1255,7 @@ def _record_prefix_rule(
 def _memory_report_pending_check_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_records import section
+    from commonplace.lib.agentic_analysis.records import section
     from commonplace.lib.note_parser import blank_fenced_code_blocks
 
     checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
@@ -1267,7 +1267,7 @@ def _memory_report_pending_check_rule(
 def _epistemic_ledger_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_ledger import epistemic_ledger_errors
+    from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 
     errors = epistemic_ledger_errors(parsed.document.body)
     results.fails.extend(errors)
@@ -1280,7 +1280,7 @@ def _memory_profile_local_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     """The profile's own content; its references resolve in the set rule."""
-    from commonplace.lib.agentic_records import annotated_ids, declared_ids
+    from commonplace.lib.agentic_analysis.records import annotated_ids, declared_ids
 
     if re.search(r"(?m)^> ?", parsed.document.body):
         results.fails.append("memory profile cannot add source quotations")
@@ -1814,7 +1814,7 @@ def validate_pinned_analysis_set(
     guards; they do not authorize external content reads. Warnings are returned,
     not silently promoted to success. A caller must reject nonempty fails.
     """
-    from commonplace.lib.agentic_set import SET_TYPE
+    from commonplace.lib.agentic_analysis.sets import SET_TYPE
 
     repo = repo.resolve()
     directory = intended_set_path if intended_set_path.is_absolute() else repo / intended_set_path
@@ -2243,12 +2243,12 @@ def validate_draft_at_slot(
 @directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
 def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
     """Relations the layout names but code must compute, over the members present."""
-    from commonplace.lib.agentic_records import (
+    from commonplace.lib.agentic_analysis.records import (
         amendment_index,
         set_declarations,
         set_record_findings,
     )
-    from commonplace.lib.agentic_set import RETAINED_ROOT, source_slug
+    from commonplace.lib.agentic_analysis.sets import RETAINED_ROOT, source_slug
     from commonplace.lib.systems_matrix import validate_comparison
 
     if layout is None:
@@ -2309,7 +2309,7 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
 
 def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
     """Stage identity, list grammar and carried limits; meaning remains review."""
-    from commonplace.lib.agentic_records import record_references, section
+    from commonplace.lib.agentic_analysis.records import record_references, section
 
     findings = []
     synthesis = documents.get("synthesis")
@@ -2385,7 +2385,7 @@ class _FrozenGitObjects:
         return self.pin.attribution_error(citation)
 
     def read(self, citation, *, text: bool = True):
-        from commonplace.lib.agentic_set import is_normalized_relative
+        from commonplace.lib.agentic_analysis.sets import is_normalized_relative
         from commonplace.lib.quote_grounding import SourceText
         from commonplace.lib.quote_matching import git_citation_path
 

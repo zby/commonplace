@@ -18,7 +18,7 @@ from hashlib import sha256
 from pathlib import Path
 
 from commonplace.lib.agentic_analysis import checkout
-from commonplace.lib.agentic_set import normalize_source_identity
+from commonplace.lib.agentic_analysis.sets import normalize_source_identity
 from commonplace.workflow import UncertainEffectError
 
 JOURNAL = "effects/acquire.json"

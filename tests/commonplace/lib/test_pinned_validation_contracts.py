@@ -144,7 +144,7 @@ def test_public_adapter_missing_substantive_criterion(tmp_path):
 def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path):
     from hashlib import sha256
 
-    from commonplace.lib.agentic_set import SET_TYPE
+    from commonplace.lib.agentic_analysis.sets import SET_TYPE
 
     # Keep the shipped layout, but use minimal schemas to isolate the adapter.
     library = Path(__file__).resolve().parents[3] / "kb"

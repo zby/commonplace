@@ -10,8 +10,9 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import agentic_set, systems_matrix, validation
-from commonplace.lib.agentic_records import amendment_index
+from commonplace.lib import systems_matrix, validation
+from commonplace.lib.agentic_analysis import sets as agentic_set
+from commonplace.lib.agentic_analysis.records import amendment_index
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
