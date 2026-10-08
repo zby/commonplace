@@ -83,6 +83,13 @@ rejected without deleting retained data. This adoption decision does not supply
 the missing end-to-end proof or establish production fitness. YAML compaction
 remains deferred.
 
+## Consumer surface
+
+[Consumer surface](./consumer-surface.md) reviews the boundary between the
+engine and the analysis package: which handler needs are legitimate, which
+checks re-prove engine invariants, and two requirement-level questions about
+the type's source of truth and publication coverage.
+
 ## Related
 
 - [Code-scheduled workflows](../../reference/proposals/code-scheduled-workflows.md)
