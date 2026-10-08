@@ -1,98 +1,229 @@
-"""A completed publication merges once; a stale sibling keeps main intact."""
-
+"""Scripted completion evidence and temporary Git fixtures, not real analyses."""
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
+from hashlib import sha256
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
-from commonplace.lib.analysis_worktree import integrate_analysis
+from commonplace.lib.agentic_analysis import publication
+from commonplace.lib.agentic_analysis import worktree as aw
+from commonplace.lib.agentic_analysis.declaration import JOB_SET
+from commonplace.workflow import state
+from commonplace.workflow.state import Resolved
+from commonplace.workflow.store import RunStore
 
 
 def git(root: Path, *args: str) -> str:
-    return subprocess.run(
-        ["git", "-C", str(root), *args], check=True, capture_output=True, text=True
-    ).stdout.strip()
+    return subprocess.run(["git", "-C", str(root), *args], check=True,
+                          capture_output=True, text=True).stdout.strip()
 
 
-def overview(run_id: str, method: str = "") -> str:
-    return (
-        "---\n"
-        f"run-id: {run_id}\n"
-        f"inputs-commit: {method}\n"
-        "reviewed-boundary: source-123\n"
-        "---\n\n# Overview\n"
+@pytest.fixture
+def proof(tmp_path, monkeypatch):
+    """Only the engine/validation boundary is scripted; tree checks use real bytes."""
+    root = tmp_path / "repo"
+    root.mkdir()
+    git(root, "init", "-b", "main")
+    git(root, "config", "user.email", "test@example.com")
+    git(root, "config", "user.name", "Test")
+    (root / ".gitignore").write_text("kb/agentic-system-analyses/state/\n")
+    declaration = root / "kb" / JOB_SET
+    declaration.parent.mkdir(parents=True)
+    declaration.write_text("scripted declaration\n")
+    (root / "kb/type.md").write_text("scripted type\n")
+    git(root, "add", ".")
+    git(root, "commit", "-m", "Fixture method")
+    method = git(root, "rev-parse", "HEAD")
+    run = root / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
+    store = RunStore(run)
+    store.create({"declaration": declaration.read_text(), "job_set": str(declaration),
+                  "type": "scripted type\n", "type_spec": "type.md"})
+    destination = root / aw.RETAINED_ROOT / "example"
+    destination.mkdir(parents=True)
+    files = {"overview.md": (f"---\nrun-id: {run.name}\ninputs-commit: {method}\n"
+                             "result-disposition: complete\nreviewed-boundary: revision\n---\n").encode(),
+             "ARTIFACT.yaml": b"fixture manifest\n", "boundary.md": b"fixture boundary\n"}
+    for name, data in files.items():
+        (destination / name).write_bytes(data)
+    pin = Resolved(sha256(b"input").hexdigest(), b"input")
+    job = SimpleNamespace(name="publish", handler="commonplace.lib.agentic_analysis.publication.publish_analysis",
+                          inputs={"input": None})
+    complete = {"id": "000001-publish", "seq": 1, "job": "publish", "kind": "code",
+                "state": "completed", "pins": {"input": pin.pin()}, "outputs": {}}
+    engine = SimpleNamespace(
+        jobs=SimpleNamespace(jobs=[job], job=lambda name: job),
+        attempts={complete["id"]: complete}, parameters={"system": "Example", "source": "fixture", "source-identity": "identity"},
+        latest_completed=lambda name: complete, publishable=lambda: True,
+        ready=lambda *args: False, permitted=lambda: None, resolve=lambda *args: pin,
     )
+    monkeypatch.setattr(state, "Run", lambda store: engine)
+    monkeypatch.setattr(state, "CodeAttempt", lambda *args: None)
+    opened = {"run-id": run.name, "inputs-commit": method, **engine.parameters,
+              "expected-incumbent-sha256": "absent"}
+    prepared = (opened, root, destination, files)
+    monkeypatch.setattr(publication, "_prepare_publication", lambda attempt: prepared)
+    journal = {"version": 1, "run-id": run.name, "destination": str(destination),
+               "source-identity": "identity", "expected": "absent", "new": publication._hashes(files),
+               "old": None, "archive": None, "state": "completed"}
+    path = run / publication.JOURNAL
+    path.parent.mkdir()
+    path.write_text(json.dumps(journal))
+    return SimpleNamespace(root=root, method=method, run=run, destination=destination,
+                           files=files, engine=engine, journal=journal, journal_path=path, opened=opened)
 
 
-def prepared_run(origin: Path, method: str, token: str) -> tuple[Path, str]:
-    tree = origin / ".commonplace/worktrees" / token
-    tree.parent.mkdir(parents=True, exist_ok=True)
-    git(origin, "worktree", "add", "--quiet", "--detach", str(tree), method)
-    record = {"status": "ready", "worktree": str(tree), "origin": str(origin),
-              "commit": method, "token": token}
-    tree.with_name(tree.name + ".preparation.json").write_text(json.dumps(record))
-    run_id = f"AAS-2026-10-05-example-{token}-01"
-    state = tree / "kb/agentic-system-analyses/state" / run_id
-    state.mkdir(parents=True)
-    destination = "kb/agentic-system-analyses/retained/example/overview.md"
-    (state / "run-state.md").write_text(
-        "---\n"
-        f"run-id: {run_id}\n"
-        "run-status: complete\n"
-        f"generated-review:\n  path: {destination}\n"
-        "---\n\n# Run\n"
-    )
-    retained = tree / "kb/agentic-system-analyses/retained/example"
-    archived = tree / "kb/agentic-system-analyses/retained-archive/AAS-2026-10-04-example-01"
-    archived.parent.mkdir(parents=True)
-    retained.rename(archived)
-    retained.mkdir()
-    (retained / "overview.md").write_text(overview(run_id, method))
-    (retained / "ARTIFACT.yaml").write_text(f"run: {run_id}\n")
-    return state, run_id
+def verify(proof):
+    return aw._integration_publication(proof.run, proof.root, proof.method)
 
 
-def test_replacement_merges_and_stale_sibling_conflicts(tmp_path: Path) -> None:
-    origin = tmp_path / "origin"
-    origin.mkdir()
-    git(origin, "init", "--quiet", "-b", "main")
-    git(origin, "config", "user.email", "test@example.com")
-    git(origin, "config", "user.name", "Test")
-    (origin / ".gitignore").write_text(".commonplace/\nkb/agentic-system-analyses/state/\n")
-    retained = origin / "kb/agentic-system-analyses/retained/example"
-    retained.mkdir(parents=True)
-    (retained / "overview.md").write_text(overview("AAS-2026-10-04-example-01", "old"))
-    (retained / "ARTIFACT.yaml").write_text("run: old\n")
-    git(origin, "add", ".gitignore", "kb/agentic-system-analyses/retained/example")
-    git(origin, "commit", "--quiet", "-m", "Method")
-    method = git(origin, "rev-parse", "HEAD")
-    first, first_id = prepared_run(origin, method, "a" * 12)
-    second, second_id = prepared_run(origin, method, "b" * 12)
+def test_exact_publication_proof_is_read_only(proof):
+    before = proof.journal_path.read_bytes()
+    assert verify(proof) == ([proof.destination.relative_to(proof.root).as_posix()], "revision")
+    assert proof.journal_path.read_bytes() == before
+    assert git(proof.root, "diff", "--cached", "--name-only") == ""
 
-    merged = integrate_analysis(first, model="test-model")
-    assert merged == git(origin, "rev-parse", "HEAD")
-    assert first_id in (retained / "overview.md").read_text()
-    assert (origin / "kb/agentic-system-analyses/retained-archive/AAS-2026-10-04-example-01/overview.md").is_file()
-    assert git(first.parents[3], "show", "-s", "--format=%B", f"analysis/{first_id}").endswith("Model: test-model")
 
-    before = git(origin, "rev-parse", "HEAD")
-    with pytest.raises(ValueError, match="publication branch kept"):
-        integrate_analysis(second)
-    assert git(origin, "rev-parse", "HEAD") == before
-    assert first_id in (retained / "overview.md").read_text()
-    assert git(second.parents[3], "rev-parse", f"analysis/{second_id}")
-    assert second.is_dir()
-    assert not (origin / ".git/MERGE_HEAD").exists()
+@pytest.mark.parametrize("change", ["changed", "extra", "missing", "symlink", "manifest"])
+def test_exact_retained_tree_required(proof, change):
+    path = proof.destination / ("ARTIFACT.yaml" if change == "manifest" else "boundary.md")
+    if change == "missing":
+        path.unlink()
+    elif change == "extra":
+        (proof.destination / "extra.md").write_text("unowned")
+    elif change == "symlink":
+        path.unlink()
+        path.symlink_to(proof.journal_path)
+    else:
+        path.write_text("changed")
+    with pytest.raises((ValueError, publication.UncertainEffectError)):
+        verify(proof)
+    assert git(proof.root, "diff", "--cached", "--name-only") == ""
 
-    third, third_id = prepared_run(origin, method, "c" * 12)
-    (third.parents[3] / ".gitignore").write_text("changed startup rules\n")
-    with pytest.raises(ValueError, match="tracked changes outside publication paths"):
-        integrate_analysis(third)
-    assert git(origin, "rev-parse", "HEAD") == before
-    assert subprocess.run(
-        ["git", "show-ref", "--verify", "--quiet", f"refs/heads/analysis/{third_id}"],
-        cwd=origin, check=False,
-    ).returncode != 0
+
+@pytest.mark.parametrize("field,value", [("state", "started"), ("state", "rolled-back"),
+                                         ("run-id", "other"), ("source-identity", "other"),
+                                         ("expected", "wrong"), ("new", {}), ("archive", "elsewhere")])
+def test_journal_label_and_identity_are_not_proof(proof, field, value):
+    proof.journal[field] = value
+    proof.journal_path.write_text(json.dumps(proof.journal))
+    with pytest.raises(ValueError):
+        verify(proof)
+
+
+@pytest.mark.parametrize("case", ["unpublished", "uncovered", "open", "failed", "uncertain", "stale", "changed-pin", "local"])
+def test_engine_completion_is_required_independently(proof, monkeypatch, case):
+    if case == "unpublished":
+        proof.engine.latest_completed = lambda name: None
+    elif case == "uncovered":
+        proof.engine.publishable = lambda: False
+    elif case in ("open", "failed", "uncertain"):
+        record = next(iter(proof.engine.attempts.values()))
+        record["state"] = "open" if case == "open" else "failed"
+        record["uncertain"] = case == "uncertain"
+    elif case == "stale":
+        proof.engine.ready = lambda *args: True
+    elif case == "changed-pin":
+        proof.engine.resolve = lambda *args: Resolved(sha256(b"changed").hexdigest(), b"changed")
+    else:
+        monkeypatch.setattr(publication, "_prepare_publication", lambda attempt: None)
+    with pytest.raises(ValueError):
+        verify(proof)
+
+
+def test_archive_must_equal_the_git_incumbent_not_only_journal(proof):
+    old_id = "AAS-2025-01-01-example-01"
+    old = {"overview.md": f"---\nrun-id: {old_id}\n---\n".encode(), "boundary.md": b"old boundary\n"}
+    for path in proof.destination.iterdir():
+        path.unlink()
+    for name, data in old.items():
+        (proof.destination / name).write_bytes(data)
+    git(proof.root, "add", str(proof.destination))
+    git(proof.root, "commit", "-m", "Fixture incumbent")
+    proof.method = git(proof.root, "rev-parse", "HEAD")
+    proof.opened["inputs-commit"] = proof.method
+    proof.opened["expected-incumbent-sha256"] = sha256(old["overview.md"]).hexdigest()
+    proof.files["overview.md"] = (f"---\nrun-id: {proof.run.name}\ninputs-commit: {proof.method}\n"
+                                  "result-disposition: complete\nreviewed-boundary: revision\n---\n").encode()
+    archive = proof.root / aw.ARCHIVE_ROOT / old_id
+    archive.parent.mkdir(parents=True)
+    proof.destination.rename(archive)
+    proof.destination.mkdir()
+    for name, data in proof.files.items():
+        (proof.destination / name).write_bytes(data)
+    proof.journal.update(old=publication._hashes(old), archive=str(archive),
+                         expected=proof.opened["expected-incumbent-sha256"], new=publication._hashes(proof.files))
+    proof.journal_path.write_text(json.dumps(proof.journal))
+    assert len(verify(proof)[0]) == 2
+    (archive / "boundary.md").write_bytes(b"changed archive")
+    # Even rewriting journal old hashes cannot launder an altered incumbent.
+    proof.journal["old"]["boundary.md"] = sha256(b"changed archive").hexdigest()
+    proof.journal_path.write_text(json.dumps(proof.journal))
+    with pytest.raises(ValueError, match="method commit"):
+        verify(proof)
+
+
+@pytest.mark.parametrize("case", ["success", "staged", "outside", "dirty-origin", "stale-origin", "conflict"])
+def test_integration_git_actions_are_scoped_and_merge(proof, monkeypatch, tmp_path, case):
+    """Exercise Git transfer separately from the proof fixture; no real publication."""
+    origin = proof.root
+    tree = tmp_path / "analysis"
+    git(origin, "worktree", "add", "--detach", str(tree), proof.method)
+    destination = tree / proof.destination.relative_to(origin)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(proof.destination, destination)
+    shutil.rmtree(proof.destination)
+    run = tree / proof.run.relative_to(origin)
+    run.mkdir(parents=True)
+    (run / "run.json").write_text("{}")
+    (run / "state").mkdir()
+    preparation = {"status": "ready", "worktree": str(tree), "origin": str(origin),
+                   "commit": proof.method, "token": "abcdefabcdef"}
+    tree.with_name(tree.name + ".preparation.json").write_text(json.dumps(preparation))
+    monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
+    monkeypatch.setattr(aw, "_integration_publication", lambda *args: ([destination.relative_to(tree).as_posix()], "revision"))
+    if case == "staged":
+        git(tree, "add", str(destination))
+    elif case == "outside":
+        (tree / "kb/type.md").write_text("unexpected method change")
+    elif case == "dirty-origin":
+        (origin / "kb/type.md").write_text("operator work")
+    elif case == "stale-origin":
+        target = origin / destination.relative_to(tree)
+        target.mkdir(parents=True)
+        (target / "overview.md").write_text("newer publication")
+        git(origin, "add", str(target))
+        git(origin, "commit", "-m", "Fixture concurrent publication")
+    elif case == "conflict":
+        real_run = subprocess.run
+
+        def concurrent_merge(args, **kwargs):
+            if args[:3] == ["git", "merge", "--no-ff"]:
+                target = origin / destination.relative_to(tree)
+                target.mkdir(parents=True)
+                (target / "overview.md").write_text("racing publication")
+                git(origin, "add", str(target))
+                git(origin, "commit", "-m", "Fixture racing publication")
+            return real_run(args, **kwargs)
+
+        monkeypatch.setattr(subprocess, "run", concurrent_merge)
+    if case != "success":
+        before = git(tree, "diff", "--cached", "--name-only")
+        with pytest.raises(ValueError):
+            aw.integrate_analysis(run)
+        if case == "conflict":
+            assert not (origin / ".git/MERGE_HEAD").exists()
+            assert git(tree, "branch", "--show-current") == f"analysis/{run.name}"
+        else:
+            assert git(tree, "diff", "--cached", "--name-only") == before
+            assert git(tree, "branch", "--show-current") == ""
+        return
+    result = aw.integrate_analysis(run)
+    assert result == git(origin, "rev-parse", "HEAD")
+    assert (origin / destination.relative_to(tree) / "overview.md").read_bytes() == proof.files["overview.md"]
+    changed = git(tree, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()
+    assert changed and all(name.startswith(destination.relative_to(tree).as_posix() + "/") for name in changed)

@@ -2,10 +2,12 @@
 
 ## Decision and scope
 
-The opt-in translation has handlers and declared inputs through assembly and
-publication. Keep the live CLI and analysis skill on the legacy workflow. Do not
-compact YAML or claim production readiness. The operator requested this review
-instead of the planned end-to-end proof. That proof was not run.
+The translation has handlers and declared inputs through assembly and
+publication. The operator subsequently authorized deletion of the old engine and
+the new-only CLI/skill path. This review records the earlier coherence work, not
+proof gained from that routing change. Do not compact YAML or claim production
+readiness. The operator requested this review instead of the planned end-to-end
+proof. That proof was not run.
 
 Review the contracts and mechanisms, not only test counts. The review covered
 worker loading, criterion and member snapshots, correction answers, semantic
@@ -32,7 +34,7 @@ Tests cover differing disk/pinned schemas, inactive transitive references,
 cross-run cache isolation, missing dependencies and exact member snapshots.
 
 Technical basis: `src/commonplace/lib/type_resolver.py`,
-`src/commonplace/lib/validation.py`, `agentic_job_validation.py`,
+`src/commonplace/lib/validation.py`, `agentic_analysis/validation.py`,
 `tests/commonplace/lib/test_pinned_validation_contracts.py` and
 `tests/commonplace/workflow/test_analysis_pinned_drafts.py`.
 
@@ -57,21 +59,23 @@ Technical basis: `workflow/state.py`,
 ### Per-run locking did not coordinate publishers
 
 A run lock did not prevent another run's publisher from changing a destination
-between recognition and rename/removal. Both publishers now share a repository
+between recognition and rename/removal. Publisher invocations share a repository
 publication lock covering incumbent checks, recognition, mutation and rollback.
 Non-cooperating writers remain an authority-level exclusion requirement.
 
-Technical basis: `agentic_publication.publication_lock`,
-`agentic_job_publication.publish_analysis`, and publication/routing tests.
+Technical basis: `agentic_analysis.guards.publication_lock`,
+`agentic_analysis.publication.publish_analysis`, and publication/routing tests.
 
 ### Legacy finalization could create a second working set
 
-Legacy manifest creation now rejects engine/mixed directories before writing.
-The set type distinguishes legacy `output/` from new-engine `set/`. Assembly
-supplies the published exact-byte manifest separately from the engine's type-only
-working projection. It does not manufacture legacy state or an `output/` twin.
+The review originally added engine/mixed-directory rejection to legacy manifest
+creation. Retirement removes that command rather than retaining an adapter.
+The active CLI rejects old/mixed runs; assembly supplies the published exact-byte
+manifest separately from the engine's type-only `set/` projection. It does not
+manufacture legacy state or an `output/` twin. Old retained data remains evidence.
 
-Technical basis: `agentic_finalize.py`, set type and routing tests.
+Current basis: `src/commonplace/lib/agentic_analysis/worktree.py`, set type and
+routing tests.
 
 ### Holding historical judgments were easy to misread as current-set verification
 
@@ -81,7 +85,7 @@ historical evidence, not verification of the new peer. Reporting now exposes
 still requires current endpoint versions, and stage gates retain all required
 subject judgments. No mutable peer is substituted into a historical judgment.
 
-Technical basis: `agentic_engine_report.py`, `workflow/state.py` and the report
+Technical basis: `agentic_analysis/report.py`, `workflow/state.py` and the report
 regression in `test_completed_handed_scheduling.py`.
 
 ### Completion, retries and downstream ordering
@@ -110,7 +114,7 @@ exact-tree reconciliation has not established the outcome. Checks remain enforce
 and evidence is preserved. A journal's state label alone does not prove recovery;
 a rollback verified by the effect handler retains ordinary-failure semantics.
 
-Technical basis: `agentic_job_publication.py` and actual-handler interruption
+Technical basis: `agentic_analysis/publication.py` and actual-handler interruption
 regressions in `tests/commonplace/workflow/test_analysis_publication.py`.
 
 ### Rejected sources and boundary links
@@ -120,7 +124,7 @@ containment before reading source bytes or invoking Git. A rejected source is
 not inspected for additional integrity diagnostics. Boundary members also use
 the same relocation-safe link rule as the other published members.
 
-Technical basis: `agentic_boundary.py`, `validation.py` and
+Technical basis: `agentic_analysis/boundary.py`, `validation.py` and
 `tests/commonplace/lib/test_analysis_boundary_review_fixes.py`.
 
 ## Reviewed invariants
@@ -169,9 +173,13 @@ Technical basis: `agentic_boundary.py`, `validation.py` and
    and undeclared quotation dependencies fail rather than silently pass.
 8. The retained manifest still permits one model/effort identity for a run.
    Heterogeneous-worker publication requires an adopted provenance contract.
-9. New reporting is separate from legacy round state and is not a filesystem
-   completion audit. The production CLI/skill are intentionally not switched.
+9. Reporting is separate from legacy round state and is not a filesystem
+   completion audit. `report-analysis` distinguishes completed local dispositions
+   from a completed publication job; integration independently verifies exact
+   evidence. Invocation-specific scheduling stops remain in the advance result.
 
-The remaining step is an explicitly authorized adoption decision with the
-requested verification boundary. This review must not be represented as the
-end-to-end proof it replaced.
+Retirement authorizes the new-only route, not a stronger verification claim.
+Old run directories are explicitly rejected and retained data is preserved.
+Independently chosen old-evidence handling needs an archived method checkout;
+there is no compatibility adapter in the new tree. This review must not be
+represented as the end-to-end proof it replaced.

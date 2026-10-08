@@ -14,9 +14,11 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import agentic_acquisition, agentic_checkout
-from commonplace.lib.agentic_acquisition import JOURNAL
-from commonplace.lib.agentic_job_set import (
+from commonplace.lib.agentic_analysis import acquisition as agentic_acquisition
+from commonplace.lib.agentic_analysis import checkout as agentic_checkout
+from commonplace.lib.agentic_analysis.acquisition import JOURNAL
+from commonplace.lib.agentic_analysis.checkout import CheckoutError
+from commonplace.lib.agentic_analysis.declaration import (
     ACQUIRE_HANDLER,
     ANALYST_CHECK_HANDLERS,
     BOUNDARY_CHECK_HANDLER,
@@ -37,6 +39,15 @@ from tests.commonplace.workflow.test_analysis_opening import (
 )
 
 IDENTITY = "https://github.com/example/system"
+
+
+def test_checkout_refusal_is_a_domain_value_error_without_side_effects(tmp_path):
+    path = tmp_path / "not-a-checkout"
+    path.write_bytes(b"keep this file")
+    with pytest.raises(CheckoutError, match="not a Git checkout") as raised:
+        agentic_checkout.refreeze(path, origin="https://example.invalid/source", revision="a" * 40)
+    assert isinstance(raised.value, ValueError)
+    assert path.read_bytes() == b"keep this file"
 
 
 @dataclass

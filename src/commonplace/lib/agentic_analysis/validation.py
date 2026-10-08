@@ -1,4 +1,4 @@
-"""Collect only declared criterion bytes for the opt-in analysis validators."""
+"""Collect only declared criterion bytes for analysis validators."""
 from __future__ import annotations
 
 from commonplace.workflow import CodeAttempt

@@ -49,10 +49,11 @@ publication do not notice.
 The line to hold when that happens: bookkeeping stays in code, because
 readiness, currency, cleanup, attempt limits and coverage are enforcement
 properties that only a deterministic interpreter can guarantee;
-interpretation is what moves. Which ready jobs run, in what order and
-batches, is the coordinator's already, within one engine-side rule: a job
-waits while a producer of its inputs is pending, except a code consumer applying
-completed work to immutable handed subjects as specified in scenario 21.
+interpretation is what moves. In the active analysis path, code owns scheduling
+and hands out each ready round; the coordinator launches all handed-out workers
+and settles the round before advancing. A job waits while a producer of its
+inputs is pending, except a code consumer applying completed work to immutable
+handed subjects as specified in scenario 21.
 When the direction is taken up, requirement
 5 and the decision "only code jobs judge" are the two places that name the
 operator where they should name the coordinator too.
@@ -71,18 +72,22 @@ API together; it is applied to every file here.
 ## Translation review
 
 [Translation coherence review](./translation-coherence-review.md) records the
-integrated opt-in handlers, fixed invariant defects and remaining limits.
+integrated handlers, fixed invariant defects and remaining limits.
 [Publication consumer boundary](./publication-consumer-handoff.md) describes
 pinned validation, provenance, effects, coordination and format separation.
 The operator requested coherence review instead of the planned end-to-end proof.
-The live CLI and skill remain legacy; no production switch or YAML compaction
-follows from handler bindings or fixture counts.
+The operator subsequently authorized retirement of the old engine and a new-only
+CLI/skill route. `commonplace-workflow` now prepares, starts, reports and integrates
+analyses; `commonplace-run` advances the active job set. Old run directories are
+rejected without deleting retained data. This adoption decision does not supply
+the missing end-to-end proof or establish production fitness. YAML compaction
+remains deferred.
 
 ## Related
 
 - [Code-scheduled workflows](../../reference/proposals/code-scheduled-workflows.md)
-  and its [workshop](../code-scheduled-workflows/README.md): the current
+  and its [workshop](../code-scheduled-workflows/README.md): the retired
   engine's design and build.
 - [Record acceptance reads and judged versions](../../reference/proposals/record-acceptance-reads-and-judged-versions.md):
   the replay defect that prompted this workshop, and the repair proposed
-  within the current engine.
+  within the engine then in use.

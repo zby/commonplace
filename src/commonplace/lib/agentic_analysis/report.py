@@ -71,7 +71,7 @@ def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict
         state = "uncertain" if uncertain else "stopped" if (failures or stops or exhausted) else "running"
         publication = next((job for job in run.jobs.jobs
                             if getattr(job, "handler", None)
-                            == "commonplace.lib.agentic_job_publication.publish_analysis"), None)
+                            == "commonplace.lib.agentic_analysis.publication.publish_analysis"), None)
         if (state == "running" and publication is not None and view["publishable"]
                 and not view["open_attempts"] and run.latest_completed(publication.name) is not None
                 and not run.ready(publication, run.permitted())):

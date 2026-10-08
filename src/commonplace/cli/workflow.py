@@ -1,4 +1,4 @@
-"""Commonplace setup around the independent code-scheduled workflow shell."""
+"""Prepared analysis lifecycle; generic engine operations live in commonplace-run."""
 
 from __future__ import annotations
 
@@ -8,81 +8,79 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.lib.analysis_worktree import (
+from commonplace.lib.agentic_analysis.worktree import (
     command_environment,
     integrate_analysis,
     prepare_analysis,
-    require_run_code,
+    reject_legacy_run,
+    start_analysis,
 )
-from commonplace.workflow_legacy.shell import main as workflow_main
-
-
-def _require_bound_code(args: list[str]) -> None:
-    """A run in a source checkout is advanced only by that checkout's code."""
-    cwd = Path.cwd()
-    if args[:1] == ["start"]:
-        run = Path(args[args.index("--run") + 1]) if "--run" in args[:-1] else cwd
-    elif len(args) > 1 and args[0] in ("step", "report", "resolve", "release"):
-        run = Path(args[1])
-    else:
-        return
-    require_run_code(run, cwd=cwd)
+from commonplace.workflow import UncertainEffectError
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = list(sys.argv[1:] if argv is None else argv)
-    if args[:1] == ["integrate-analysis"]:
-        parser = argparse.ArgumentParser(
-            prog="commonplace-workflow integrate-analysis",
-            description="Commit a completed analysis in its worktree and merge its publication into main.",
-        )
-        parser.add_argument("run", type=Path)
-        parser.add_argument("--model", help="model ID for the agent commit trailer")
-        arguments = parser.parse_args(args[1:])
-        try:
-            print(integrate_analysis(arguments.run, model=arguments.model))
-        except (ValueError, OSError) as error:
-            print(str(error), file=sys.stderr)
-            return 1
-        return 0
-    if not args or args[0] != "prepare-analysis":
-        if args in (["--help"], ["-h"]):
-            print("Additional Commonplace commands: prepare-analysis, integrate-analysis\n")
-        try:
-            _require_bound_code(args)
-        except ValueError as error:
-            print(str(error), file=sys.stderr)
-            return 1
-        return workflow_main(args)
-    parser = argparse.ArgumentParser(
-        prog="commonplace-workflow prepare-analysis",
-        description="Prepare a commit-bound Commonplace worktree and local commands, optionally launching a fresh harness.",
-    )
-    parser.add_argument("--name", required=True, help="lowercase system label")
-    parser.add_argument("--revision", help="committed method revision (default: HEAD, refused when behind the default branch)")
-    parser.add_argument("--worktree", type=Path, help="new destination (default: ignored .commonplace/worktrees/)")
-    parser.add_argument("--allow-dirty-origin", action="store_true", help="exclude unrelated uncommitted changes; startup changes still stop preparation")
-    parser.add_argument("launch", nargs=argparse.REMAINDER, help="optional harness command after --")
-    arguments = parser.parse_args(args[1:])
+    parser = argparse.ArgumentParser(prog="commonplace-workflow", description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+    prepare = commands.add_parser("prepare-analysis", help="prepare a commit-bound worktree and local commands")
+    prepare.add_argument("--name", required=True)
+    prepare.add_argument("--revision")
+    prepare.add_argument("--worktree", type=Path)
+    prepare.add_argument("--allow-dirty-origin", action="store_true")
+    prepare.add_argument("launch", nargs=argparse.REMAINDER, help="optional fresh harness command after --")
+    start = commands.add_parser("start-analysis", help="allocate a run without advancing or acquiring sources")
+    start.add_argument("--system", required=True)
+    start.add_argument("--source-identity", required=True)
+    start.add_argument("--source", required=True)
+    start.add_argument("--source-revision")
+    integrate = commands.add_parser("integrate-analysis", help="commit exact published bytes and merge into main")
+    integrate.add_argument("run", type=Path)
+    integrate.add_argument("--model")
+    report = commands.add_parser("report-analysis", help="print engine evidence as JSON, not a publication audit")
+    report.add_argument("run", type=Path)
+    arguments = parser.parse_args(sys.argv[1:] if argv is None else argv)
     try:
-        launch = arguments.launch
-        if launch[:1] == ["--"]:
-            launch = launch[1:]
-        preparation = prepare_analysis(
-            Path.cwd(), name=arguments.name,
-            allow_dirty_origin=arguments.allow_dirty_origin,
-            revision=arguments.revision, worktree=arguments.worktree,
-        )
-        print(json.dumps(preparation, indent=2), flush=True)
-        if launch:
-            worktree = Path(str(preparation["worktree"]))
-            try:
-                return subprocess.run(
-                    launch, cwd=worktree, env=command_environment(worktree), check=False
-                ).returncode
-            except OSError as error:
-                raise ValueError(f"could not launch {launch[0]}: {error}; prepared worktree retained") from error
-    except (ValueError, OSError) as error:
+        if arguments.command == "start-analysis":
+            print(start_analysis(Path.cwd(), system=arguments.system, source_identity=arguments.source_identity,
+                                 source=arguments.source, source_revision=arguments.source_revision))
+        elif arguments.command == "integrate-analysis":
+            print(integrate_analysis(arguments.run, model=arguments.model))
+        elif arguments.command == "report-analysis":
+            from commonplace.lib.agentic_analysis.report import render_engine_run_report
+
+            reject_legacy_run(arguments.run)
+            rendered = json.loads(render_engine_run_report(arguments.run))
+            if rendered["state"] == "completed":
+                from commonplace.lib.note_parser import parse_document
+                from commonplace.workflow.store import RunStore
+
+                version = rendered["members"].get("boundary")
+                if version is None:
+                    raise ValueError("completed analysis has no boundary member")
+                document, error = parse_document(RunStore(arguments.run).get(version).decode("utf-8"))
+                if error or document is None or not document.frontmatter:
+                    raise ValueError("completed analysis has an unreadable boundary member")
+                disposition = document.frontmatter.get("result-disposition")
+                if disposition not in ("complete", "blocked", "out-of-scope"):
+                    raise ValueError("completed analysis has no classified disposition")
+                rendered["result-disposition"] = disposition
+                rendered["completion"] = "local" if disposition != "complete" else "publication-job-completed"
+            print(json.dumps(rendered, indent=2, sort_keys=True))
+        else:
+            preparation = prepare_analysis(
+                Path.cwd(), name=arguments.name, allow_dirty_origin=arguments.allow_dirty_origin,
+                revision=arguments.revision, worktree=arguments.worktree,
+            )
+            print(json.dumps(preparation, indent=2), flush=True)
+            launch = arguments.launch
+            if launch[:1] == ["--"]:
+                launch = launch[1:]
+            if launch:
+                worktree = Path(str(preparation["worktree"]))
+                try:
+                    return subprocess.run(launch, cwd=worktree, env=command_environment(worktree), check=False).returncode
+                except OSError as error:
+                    raise ValueError(f"could not launch {launch[0]}: {error}; prepared worktree retained") from error
+    except (ValueError, OSError, KeyError, TypeError, UncertainEffectError) as error:
         print(str(error), file=sys.stderr)
         return 1
     return 0

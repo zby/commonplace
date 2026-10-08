@@ -3,7 +3,7 @@ name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agent runtime, orchestration system, agent operating layer, agent memory/knowledge/context-engineering system, or narrower model-dependent operational mechanism from inspectable sources."
 type: types/instruction.md
 user-invocable: true
-argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents), optional Git commit and public review path"
+argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents), optional Git commit"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 model: opus
 ---
@@ -67,22 +67,26 @@ it; do not reinstall the shared user-level tool to point at the run.
 Keep the worktree's code, method files, lockfile and environment unchanged
 until the run finishes; develop and merge method changes elsewhere. On resume,
 use the same worktree and command directory before following the
-worker-recovery rules. A `complete` run stays in this worktree until the
-operator separately authorizes integration. From the origin checkout on
-`main`, use its `commonplace-workflow integrate-analysis <run>` command after
-the handoff; an agent also supplies `--model <model-id>`. The command commits
+worker-recovery rules. A completed published run stays in this worktree until the
+operator separately authorizes integration. Keep using the prepared worktree's
+command directory and working directory for
+`commonplace-workflow integrate-analysis <run>` after the report; its recorded
+origin checkout must be clean and on `main`. An agent also supplies
+`--model <model-id>`. The command commits
 the publication on `analysis/<run-id>` from the method commit and merges that
 branch into `main`. If Git reports a conflict, the command aborts the merge,
 keeps the branch and worktree, and stops for the operator. Do not copy the
 retained set into `main`.
 
 Worktree removal is a separate operator decision. It is permitted only when
-every run in it is `complete` and merged into `main`, no integration branch
-awaits a merge or conflict decision, and every audit has extracted its
+every run in it has completed with verified publication merged into `main`, no
+integration branch awaits a merge or conflict decision, and every audit has extracted its
 evidence record or the operator has said none needs it. Then use `git worktree
 remove`, remove the sibling preparation record, and delete merged analysis
 branches. Never remove a worktree containing a `failed` run through this
-routine: failures, rejected outputs and traces are evidence. Disposing of
+routine: failures, rejected outputs and traces are evidence. Completed local
+blocked/out-of-scope results also need a separate disposition decision, not this
+published-run cleanup route. Disposing of
 such evidence needs a separate explicit operator decision after reviewing
 the failure and any uncertain public state. Removal is never automatic.
 
@@ -92,48 +96,69 @@ skill there. This session then stops after preparation.
 
 ## 1. Open the run
 
-1. The run pins the worktree's method commit when it opens, and publication requires it unchanged.
-2. From the worktree root, start the run:
+From the prepared worktree root, using its command directory, allocate the run:
 
-   ```bash
-   commonplace-workflow start commonplace.lib.agentic_workflow:AnalyseAgenticSystem \
-     --param system="<source-native system name>" \
-     --param source-identity="<stable source identity, e.g. https://github.com/owner/repo>" \
-     --param source="<the caller's source input, as given>" \
-     --param model="<the exact identifier of the model you are, e.g. claude-fable-5-1>" \
-     --param effort="<your reasoning-effort setting, when your harness reports one>"
-   ```
+```bash
+commonplace-workflow start-analysis \
+  --system "<source-native system name>" \
+  --source-identity "<stable source identity, e.g. https://github.com/owner/repo>" \
+  --source "<the caller's source input, as given>"
+```
 
-   `model` is the model that runs this workflow's workers; code records it
-   and `effort` in the run's metadata and in the published manifest as run
-   evidence. Omit `--param effort` when your harness reports no setting.
+Code normalizes the source identity and allocates
+`AAS-<date>-<source-slug>-<worktree-token>-<nn>` under
+`kb/agentic-system-analyses/state/`. The token comes from the ready preparation
+record, including with `--worktree`. The source slug determines the stable
+publication directory; there is no public-path override. The command pins the
+job-set declaration and prints the run path. It does not advance, acquire sources
+or launch workers. The first advance opens the analysis and pins the prepared
+method commit; publication requires it unchanged.
 
-   Code normalizes the source identity (no surrounding whitespace, trailing `/` or trailing `.git`; a lowercase URL scheme and host), and the run uses that form throughout. The run ID has the form `AAS-<date>-<source-slug>-<worktree-token>-<nn>`; the slug comes from the source identity's last path segment (the repository name for a GitHub URL), or from the system name when the identity is not a URL. The token comes from the ready preparation record, including with `--worktree`. Publication uses the source slug as its stable directory; `review-path` is no longer a parameter. The command allocates the run ID and prints the run directory, `kb/agentic-system-analyses/state/<run-id>`.
+For a GitHub source, add `--source-revision <full 40-hex commit>` when the caller
+requests a revision or asks to keep the existing checkout's commit. For the
+latter, read `git -C <checkout> rev-parse HEAD` and pass that full commit. The
+option requires a GitHub identity. During advance, code freezes
+`related-systems/<owner>--<repo>/` before the boundary job. Without a revision it
+clones a missing checkout or fetches a clean existing one and detaches it at the
+default branch tip. With a revision it uses that commit. A dirty checkout,
+foreign origin or unavailable commit stops the run for the operator.
 
-   For a GitHub source, code freezes `related-systems/<owner>--<repo>/`
-   before the boundary job. Without a revision it clones a missing checkout,
-   or fetches an existing clean one, and detaches it at the tip of the
-   default branch. Add `--param source-revision=<full 40-hex commit>` when
-   the caller requests that revision or asks to keep the existing checkout's
-   commit; for the latter, read `git -C <checkout> rev-parse HEAD` and pass
-   that full commit. A missing checkout is then cloned at that commit, and a
-   clean existing one is moved to it. A dirty checkout, a foreign origin, or
-   an unavailable commit stops the run for the operator. The option requires
-   a GitHub identity.
+Do not supply an opening-model guess. Record the actual worker model and effort
+with each completed result through `commonplace-run advance --completed …
+--model … --effort …`. Omit effort only when the harness reports no setting.
+The retained manifest still requires one consistent worker model/effort identity
+across the run; heterogeneous-worker publication is not supported.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 
 ## 2. Drive the run
 
-Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = the directory `start` printed. The run is new: you started it in this session.
+Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = the path `start-analysis` printed. The run is new: you started it in this session.
 
 ## 3. Report
 
-When `step` gives `done`, run `commonplace-agentic-analysis-handoff <run>/run-state.md` and include its output unchanged in your final response. After a published analysis, add that outputs under `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate authority, and a prior landscape synthesis is historical unless refreshed under separate authority.
+Run `commonplace-workflow report-analysis <run>` and include its JSON output
+unchanged in the final response, together with any stops from the last advance.
+The report does not reconstruct invocation-specific scheduling stops or audit
+retained files. `publishable` is engine coverage, not proof of publication.
+`state: completed` means the bound publication job completed on current inputs.
+For `blocked` or `out-of-scope` dispositions, `completion: local` means no retained
+publication. `completion: publication-job-completed` is still not a fresh
+filesystem audit; separately authorized integration independently verifies exact
+evidence before committing.
 
-When the run stopped, the loop's stop report is your final response; do not run the handoff. A blocked step records `run-status: blocked` when repair is permitted and `run-status: stopped` when it permits only stopping. An uncertain effect records `run-status: uncertain`. The operator repairs or resolves the condition and a later session resumes the loop. Set `run-status: failed` with one concise reason only when abandoning the run or when publication left public state uncertain. Never resume a failed run; use a new run ID.
+If the loop stops or reports an uncertain effect, preserve its evidence and give
+the operator the exact command output and error. Do not edit engine state or
+claim completion. After a published analysis, add that outputs under
+`kb/agentic-systems/comparisons/` are stale unless rebuilt under separate
+authority, and a prior landscape synthesis is historical unless refreshed under
+separate authority. Transfer scans and landscape synthesis need separate
+commissions; this run does not launch them.
 
-A transfer scan is separate: run [`scan-agentic-system-transfer`](../../../instructions/scan-agentic-system-transfer/SKILL.md) only when separately commissioned and only after the complete run state validates.
+Old or mixed run directories are explicitly rejected. Preserve their retained
+data and failed-run evidence. If the operator independently chooses to handle
+old evidence, that requires its archived method checkout and command environment;
+there is no compatibility adapter or legacy execution route in this tree.
 
 ---
 

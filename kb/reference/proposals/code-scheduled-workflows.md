@@ -10,7 +10,7 @@ type: reference/types/design-proposal.md
 ## Current state (as of 2026-09-29)
 
 - The analysis skill is 518 lines. Its schedule is prose: open the run, freeze sources, runtime baseline, scoping, memory specialist, epistemic lens, reconciliation, set writing, publication. The skill runs in one forked coordinator context (`context: fork`).
-- The memory specialist is the one mandatory fresh worker. The coordinator writes `memory-input.md`, hashes it, and launches a worker under [Analyse memory and context as the memory analyst](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md) with `memory-report.md` as its sole output. The epistemic lens may run locally or in a worker.
+- The memory specialist is the one mandatory fresh worker. The coordinator writes `memory-input.md`, hashes it, and launches a worker under [Analyse memory and context as the memory analyst](https://github.com/zby/commonplace/blob/866ac51a4/kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md) with `memory-report.md` as its sole output. The epistemic lens may run locally or in a worker.
 - Error recovery is the coordinator's. The skill's failure rule tells it to keep a correctable failure in `running` state, fix the candidate or member, and repeat the failed check. The skill forbids a phase ledger, packet, correction log, retry log or validation receipt. A failed run is not resumed; a new run ID replaces it.
 - At this dated anchor, mechanical steps were moving into commands. Opening
   and required route fields were separate proposals; their implemented choices

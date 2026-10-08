@@ -4,8 +4,8 @@ The journal belongs to the acquisition effect, not to the engine's attempt
 state or the typed set. It records intent before mutation and the source
 before the engine commits an output. A retry never silently selects a new
 revision when a completed or uncertain acquisition may already have selected
-one. Git operations reuse the existing checkout primitive; legacy consumers
-are unchanged. Non-Git sources remain the boundary worker's responsibility.
+one. Git operations use the checkout primitive. Non-Git sources remain the
+boundary worker's responsibility.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ import tempfile
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib import agentic_checkout as checkout
+from commonplace.lib.agentic_analysis import checkout
 from commonplace.lib.agentic_set import normalize_source_identity
 from commonplace.workflow import UncertainEffectError
 

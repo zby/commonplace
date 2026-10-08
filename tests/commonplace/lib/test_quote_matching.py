@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
 from commonplace.lib.hashing import content_sha256_for_text
+from commonplace.lib.quote_grounding import CapturePin, GitPin, resolve_citations
 from commonplace.lib.quote_matching import match_quote, parse_blockquotes
 from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.validation import CheckResults, validate_ingest_quotes
@@ -68,10 +68,10 @@ def test_three_verifiers_agree_on_same_quote_and_region(tmp_path: Path, body, ex
     checks = CheckResults(note_type="ingest-report")
     validate_ingest_quotes(checks, content, snapshot.parent.parent / "source.ingest.md")
     assert (not checks.fails) is expected
-    _, failures = verify_quote_anchors(
-        attributed, source=SourceIdentity("capture", "doc", digest, snapshot, digest)
+    resolutions = resolve_citations(
+        parse_blockquotes(attributed), CapturePin("doc", digest, snapshot, digest), kind="code"
     )
-    assert (not failures) is expected
+    assert (resolutions[0].status == "match") is expected
     kb_source = tmp_path / "source.md"
     kb_source.write_text(body)
     result = verify_content(
@@ -83,14 +83,14 @@ def test_three_verifiers_agree_on_same_quote_and_region(tmp_path: Path, body, ex
 def test_wrong_capture_binding_is_source_error(tmp_path):
     snapshot = tmp_path / "source.md"
     snapshot.write_text("one")
-    _, failures = verify_quote_anchors(
-        "> one\n> --- `source.md` @ `sha256:wrong`",
-        source=SourceIdentity(
-            "capture", "doc", "capture", snapshot, content_sha256_for_text("one")
-        ),
+    result, = resolve_citations(
+        parse_blockquotes("> one\n> --- `source.md` @ `sha256:wrong`"),
+        CapturePin("doc", "capture", snapshot, content_sha256_for_text("one")),
+        kind="code",
     )
-    assert "source error" in failures[0]
-    assert "does not occur" not in failures[0]
+    assert result.status == "mismatch"
+    assert "source error" in result.detail
+    assert "does not occur" not in result.detail
 
 
 def test_inline_backticks_do_not_hide_later_fabricated_quote(tmp_path):
@@ -99,11 +99,11 @@ def test_inline_backticks_do_not_hide_later_fabricated_quote(tmp_path):
     digest = content_sha256_for_text("real quote")
     attribution = f"> --- `{snapshot}` @ `sha256:{digest}`\n"
     content = "> real quote\n" + attribution + "\n```example```\n\n> fabricated\n" + attribution
-    passes, failures = verify_quote_anchors(
-        content, source=SourceIdentity("capture", "doc", digest, snapshot, digest)
+    resolutions = resolve_citations(
+        parse_blockquotes(content), CapturePin("doc", digest, snapshot, digest), kind="code"
     )
-    assert len(passes) == 1
-    assert len(failures) == 1 and "does not occur" in failures[0]
+    assert [result.status for result in resolutions] == ["match", "mismatch"]
+    assert "does not occur" in resolutions[1].detail
 
 
 def test_malformed_attribution_url_is_a_diagnostic(tmp_path):
@@ -115,10 +115,11 @@ def test_malformed_attribution_url_is_a_diagnostic(tmp_path):
     checks = CheckResults(note_type="agentic-system-analysis-result")
     validate_quote_citations(checks, content)
     assert any("invalid attribution URL" in message for message in checks.warns)
-    _, failures = verify_quote_anchors(
-        content, source=SourceIdentity("git", "https://github.com/a/b", "abc", tmp_path, None)
+    result, = resolve_citations(
+        parse_blockquotes(content), GitPin("https://github.com/a/b", "abc", tmp_path),
+        kind="code",
     )
-    assert len(failures) == 1 and "source error" in failures[0]
+    assert result.status == "mismatch" and "source error" in result.detail
 
 
 @pytest.mark.parametrize("wrapper", ["{}", "<{}>", "[source]({})", "`{}`"])
@@ -133,10 +134,10 @@ def test_structural_and_source_checks_accept_registered_urls(tmp_path, wrapper):
     results = CheckResults(note_type="agentic-system-analysis-result")
     validate_quote_citations(results, content)
     assert not results.warns
-    _, errors = verify_quote_anchors(
-        content, source=SourceIdentity("capture", identity, "capture", source, digest),
+    result, = resolve_citations(
+        parse_blockquotes(content), CapturePin(identity, "capture", source, digest), kind="code",
     )
-    assert not errors
+    assert result.status == "match"
 
 
 @pytest.mark.parametrize("attribution", ["[source](README.md)"])
@@ -175,8 +176,8 @@ def test_capture_attribution_identifies_registered_source(tmp_path, attribution,
     snapshot = tmp_path / "source.md"
     snapshot.write_text("quote")
     digest = content_sha256_for_text("quote")
-    _, failures = verify_quote_anchors(
-        "> quote\n> --- " + attribution.format(digest=digest),
-        source=SourceIdentity("capture", "https://example.com/paper", "capture", snapshot, digest),
+    result, = resolve_citations(
+        parse_blockquotes("> quote\n> --- " + attribution.format(digest=digest)),
+        CapturePin("https://example.com/paper", "capture", snapshot, digest), kind="code",
     )
-    assert (not failures) is expected
+    assert (result.status == "match") is expected

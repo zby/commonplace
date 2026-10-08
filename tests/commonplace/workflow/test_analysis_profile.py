@@ -12,7 +12,7 @@ import json
 import pytest
 import yaml
 
-from commonplace.lib import agentic_job_profile as handlers
+from commonplace.lib.agentic_analysis import profile as handlers
 from commonplace.lib.systems_matrix import AXES
 from commonplace.workflow import CodeAttempt, CodeJob, Input
 from commonplace.workflow.state import Resolved, Run
@@ -107,7 +107,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         "state": "completed", "outputs": {output: hashlib.sha256(candidate).hexdigest()},
         "previous_outputs": {} if previous is None else {output: hashlib.sha256(previous).hexdigest()},
     }).encode(), None)
-    from commonplace.lib.agentic_job_validation import CRITERIA
+    from commonplace.lib.agentic_analysis.validation import CRITERIA
 
     for name, path in CRITERIA.items():
         file = run.library / path

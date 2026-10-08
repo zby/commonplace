@@ -16,13 +16,13 @@ type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
 jobs:
 - name: open
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.open_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.open_analysis
   inputs: {}
   outputs:
   - metadata
 - name: acquire
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.acquire_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
   inputs:
     metadata: {address: output, source: 'open:metadata', required: true}
   outputs:
@@ -50,7 +50,7 @@ jobs:
     validation-member: boundary.md
 - name: check-boundary
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.check_boundary
+  handler: commonplace.lib.agentic_analysis.handlers.check_boundary
   inputs:
     candidate: {address: output, source: 'boundary:boundary', required: true}
     # Preserve an already accepted capture when boundary prose is corrected.
@@ -95,7 +95,7 @@ jobs:
     validation-member: runtime.md
 - name: check-runtime
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.check_runtime
+  handler: commonplace.lib.agentic_analysis.handlers.check_runtime
   inputs:
     candidate: {address: output, source: 'runtime:report', required: true}
     incumbent-report: {address: member, source: runtime, required: false}
@@ -148,7 +148,7 @@ jobs:
     validation-member: memory.md
 - name: check-memory
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.check_memory
+  handler: commonplace.lib.agentic_analysis.handlers.check_memory
   inputs:
     candidate: {address: output, source: 'memory:report', required: true}
     incumbent-report: {address: member, source: memory, required: false}
@@ -201,7 +201,7 @@ jobs:
     validation-member: epistemic.md
 - name: check-epistemic
   kind: code
-  handler: commonplace.lib.agentic_job_handlers.check_epistemic
+  handler: commonplace.lib.agentic_analysis.handlers.check_epistemic
   inputs:
     candidate: {address: output, source: 'epistemic:report', required: true}
     incumbent-report: {address: member, source: epistemic, required: false}
@@ -258,7 +258,7 @@ jobs:
     validation-member: reconciliation.md
 - name: check-reconcile
   kind: code
-  handler: commonplace.lib.agentic_job_verification.check_reconcile
+  handler: commonplace.lib.agentic_analysis.verification.check_reconcile
   inputs:
     candidate: {address: output, source: 'reconcile:reconciliation', required: true}
     metadata: {address: output, source: 'open:metadata', required: true}
@@ -288,7 +288,7 @@ jobs:
   outputs: []
 - name: set-check
   kind: code
-  handler: commonplace.lib.agentic_job_verification.set_check
+  handler: commonplace.lib.agentic_analysis.verification.set_check
   outputs:
   - findings
   inputs:
@@ -351,7 +351,7 @@ jobs:
     validation-member: record-verification.md
 - name: apply-verify
   kind: code
-  handler: commonplace.lib.agentic_job_verification.apply_verify
+  handler: commonplace.lib.agentic_analysis.verification.apply_verify
   inputs:
     metadata: {address: output, source: 'open:metadata', required: true}
     candidate: {address: output, source: 'verify:verification', required: true}
@@ -415,7 +415,7 @@ jobs:
     validation-member: memory-profile.md
 - name: check-profile
   kind: code
-  handler: commonplace.lib.agentic_job_profile.check_profile
+  handler: commonplace.lib.agentic_analysis.profile.check_profile
   inputs:
     candidate: {address: output, source: 'profile:profile', required: true}
     answers: {address: output, source: 'profile:answers', required: false}
@@ -479,7 +479,7 @@ jobs:
     validation-member: profile-verification.md
 - name: apply-verify-profile
   kind: code
-  handler: commonplace.lib.agentic_job_profile.apply_verify_profile
+  handler: commonplace.lib.agentic_analysis.profile.apply_verify_profile
   inputs:
     metadata: {address: output, source: 'open:metadata', required: true}
     answers: {address: output, source: 'verify-profile:answers', required: false}
@@ -551,7 +551,7 @@ jobs:
     validation-member: synthesis.md
 - name: check-synthesize
   kind: code
-  handler: commonplace.lib.agentic_job_profile.check_synthesize
+  handler: commonplace.lib.agentic_analysis.profile.check_synthesize
   inputs:
     candidate: {address: output, source: 'synthesize:synthesis', required: true}
     answers: {address: output, source: 'synthesize:answers', required: false}
@@ -621,7 +621,7 @@ jobs:
     validation-member: synthesis-verification.md
 - name: apply-verify-synthesis
   kind: code
-  handler: commonplace.lib.agentic_job_profile.apply_verify_synthesis
+  handler: commonplace.lib.agentic_analysis.profile.apply_verify_synthesis
   inputs:
     metadata: {address: output, source: 'open:metadata', required: true}
     answers: {address: output, source: 'verify-synthesis:answers', required: false}
@@ -662,7 +662,7 @@ jobs:
   outputs: []
 - name: assemble
   kind: code
-  handler: commonplace.lib.agentic_job_publication.assemble_analysis
+  handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
   inputs:
     source: {address: output, source: 'acquire:source', required: true}
     boundary-attempt: {address: attempt, source: boundary, required: true}
@@ -885,7 +885,7 @@ jobs:
   role: overview
 - name: publish
   kind: code
-  handler: commonplace.lib.agentic_job_publication.publish_analysis
+  handler: commonplace.lib.agentic_analysis.publication.publish_analysis
   inputs:
     source: {address: output, source: 'acquire:source', required: true}
     boundary-attempt: {address: attempt, source: boundary, required: true}

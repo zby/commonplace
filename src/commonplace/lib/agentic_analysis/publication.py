@@ -1,7 +1,7 @@
 """Pinned new-engine assembly and publication; never manufacture legacy state.
 
-Bindings remain opt-in. Whole-set validation uses closed criterion and member
-snapshots and refuses missing dependencies. Effect recovery
+Whole-set validation uses closed criterion and member snapshots and refuses
+missing dependencies. Effect recovery
 is independent of engine attempt commits and never infers success from an overview
 alone. Only complete dispositions replace a public set.
 """
@@ -17,17 +17,17 @@ from pathlib import Path
 
 import yaml
 
-from commonplace.lib.agentic_boundary import boundary_refusals
-from commonplace.lib.agentic_job_handlers import (
-    _opened_environment,
-    _require_opened_method,
-)
-from commonplace.lib.agentic_job_validation import criterion_bytes
-from commonplace.lib.agentic_publication import (
+from commonplace.lib.agentic_analysis.boundary import boundary_refusals
+from commonplace.lib.agentic_analysis.guards import (
     atomic_write,
     inspect_destination,
     publication_lock,
 )
+from commonplace.lib.agentic_analysis.handlers import (
+    _opened_environment,
+    _require_opened_method,
+)
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.agentic_records import amendment_index
 from commonplace.lib.agentic_set import (
     ARCHIVE_ROOT,

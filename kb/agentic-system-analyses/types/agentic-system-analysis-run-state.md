@@ -1,18 +1,24 @@
 ---
 type: types/type-spec.md
 name: agentic-system-analysis-run-state
-description: Minimal completion state for one rerunnable agentic-system analysis
+description: Historical completion-record schema for retired analysis runs; not authored or consumed by the current workflow
 schema: ./agentic-system-analysis-run-state.schema.yaml
 ---
 
 # Agentic system analysis run state
 
-## Authoring Instructions
+## Historical scope
 
-Use this type only for
-`kb/agentic-system-analyses/state/<run-id>/run-state.md`. The owning
-workflow is `kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md`,
-which writes the record; no worker edits it.
+Retained only to interpret existing evidence. Do not author new instances.
+The current [analysis workflow](../instructions/analyse-agentic-system/SKILL.md)
+uses engine attempts, judgments and effect journals, and rejects legacy run
+directories. The legacy run-state verification rule and execution code have
+been removed; ordinary schema validation is not proof of historical completion.
+
+## Historical record contract
+
+The retired workflow wrote this type only at
+`kb/agentic-system-analyses/state/<run-id>/run-state.md`; workers did not edit it.
 
 The record states what later consumers need and nothing else:
 
@@ -35,26 +41,26 @@ boundary is accepted, else `null`.
 or `capture`), `identity` (the stable repository or capture identity),
 `revision` (a full commit, or a version or capture label), `path` (the absolute
 checkout or capture file; `path`, not `root`) and `sha256` (`null` for Git, the
-capture's content digest otherwise). The validator checks that the commit or
-capture exists at that path while the record exists.
+capture's content digest otherwise). The retired workflow validator checked
+that the commit or capture existed at that path.
 
 `artifact` and `generated-review` are `null` until the run completes; then each
 is a mapping of a normalized repository-relative `kb/` path and the SHA-256 of
 the bytes there. `artifact` names the accepted manifest,
 `kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`, whose
 [set type](./agentic-system-analysis-set.md) selects membership from the
-overview's disposition. `generated-review` names the published overview under
+boundary's disposition. `generated-review` names the published overview under
 `kb/agentic-system-analyses/retained/<system-slug>/`; a blocked or
 out-of-scope run has no public output and leaves it `null`.
 
 The `## Run` prose records the destination inspection's expected incumbent
 digest, or `absent`. The `## Outcome` prose records the last workflow outcome.
 
-Validation of a complete record checks the manifest, run and boundary identity
+The retired complete-record verification checked the manifest, run and boundary identity
 across members, the memory member's source identity, the shared set checks
 including cross-member record resolution, and every member's source and quote
-anchors. These checks establish identity and structure; they impose no quote
-minimum and do not certify any analyst's semantic judgments.
+anchors. Those checks established identity and structure, imposed no quote
+minimum, and did not certify any analyst's semantic judgments.
 
 ## Template
 

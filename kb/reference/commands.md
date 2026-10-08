@@ -37,69 +37,6 @@ running commands.
 
 ## Validation and indexing
 
-### commonplace-agentic-analysis-finalize
-
-Build the manifest of one `running` agentic-system analysis set.
-`manifest <run-state>` writes `output/ARTIFACT.yaml` pinning the set members
-present in `output/`; rerun it after any member edit.
-A complete analysis pins every declared member, including the synthesis and
-record, profile and synthesis verifications. The overview links to the members
-and indexes amended records without copying their text.
-
-### commonplace-agentic-analysis-handoff
-
-Validate one `complete` agentic-system analysis run state and render its
-Markdown operator handoff from the frozen source and current output identities.
-The command is read-only. It refuses a running, failed, or invalid run.
-
-### commonplace-agentic-analysis-publication
-
-Publication invokes the regular validator on the prospective complete run
-set, including quotation occurrence within attribution ranges and the existence
-of path-only source anchors at the frozen commit. Analysts use draft-at-slot
-`commonplace-validate` before submission; publication independently checks the
-assembled set.
-
-Inspect a destination, prepare or publish the accepted analysis of one running
-agentic-system analysis. `inspect-destination` takes `--generated-destination`
-and `--source-identity`; it returns a replacement decision and incumbent digest
-without emitting prior review prose or descriptions. Both `prepare` and
-`publish` require that digest through `--expected-incumbent-sha256` (`absent`
-for a vacant destination). Destination drift requires a new inspection.
-
-All three operations require a worktree that is clean outside the workflow's
-output locations: no staged change or modified tracked file, and no untracked
-file under `kb/`, except that `kb/agentic-system-analyses/retained-archive/` and
-`kb/agentic-system-analyses/retained/` may hold untracked files and
-unstaged modifications of tracked files, where a sibling run's uncommitted
-publication may sit; ignored paths never count. `prepare` and `publish` also
-require the overview's `inputs-commit` to be an ancestor of or equal to HEAD
-with the method paths unchanged between them, so the commit identifies the
-method the run used. The method paths are the `METHOD_PATHS` constant in
-`src/commonplace/lib/agentic_publication.py`. They also require the source
-of the running `commonplace` package, which may come from another checkout
-than the one publishing (an editable install run inside a batch worktree),
-to have no committed, staged, modified or untracked difference under
-`src/commonplace/` from `inputs-commit`. All three errors name the
-offending paths.
-
-An incumbent is a complete current set of the same source. Its manifest pins
-every member. All current sets are checked for duplicate source identities and
-directory names that disagree with their sources before choosing a replacement.
-`prepare` and `publish` take `--generated-candidate` naming the accepted
-`output/overview.md`, `--generated-destination` naming
-`kb/agentic-system-analyses/retained/<system-slug>/overview.md`, and the expected
-incumbent digest. There is no second review projection.
-
-`prepare` validates the prospective complete run state without public writes.
-`publish` rechecks exact incumbent bytes, moves an existing set unchanged to
-`retained-archive/<its-run-id>/`, copies the accepted manifest and members
-unchanged into the stable directory, and writes run state last. Run state pins
-the working manifest and public overview; the manifest pins every member.
-A replacement requires a new run ID and a vacant archive destination. Ordinary
-I/O failures restore the old set and run state. Abrupt interruptions remain
-detectable partial publications requiring separately authorized recovery.
-
 ### commonplace-status
 
 Show one compact, read-only situation report assembled from project and command
@@ -217,41 +154,58 @@ analysis run IDs. It excludes uncommitted origin changes only with
 changed startup instructions and configuration always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
 directory and environment. Without `--revision` it refuses a `HEAD` behind the
-default branch. It does not open or advance an analysis. The `step`, `report`,
-`start`, `resolve` and `release` commands and
-`commonplace-agentic-analysis-handoff` refuse a run inside a Commonplace source
-checkout when they run another checkout's code or from another working
-directory. Draft validation also uses the prepared worktree's local command
-environment. See
+default branch. It does not open or advance an analysis. Analysis mutation
+commands require the prepared checkout and its local executing code. Draft
+validation also uses that command environment. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
-`integrate-analysis <run>` commits a completed published set and any incumbent
-archive on an analysis branch, then merges that branch into `main` after
-separate operator authorization. A conflict leaves the branch and worktree
-for review while `main` stays unchanged. An agent supplies `--model <model-id>`
-for its commit trailer.
+`start-analysis --system <name> --source-identity <identity> --source <input>`
+allocates a token-bearing run ID, pins the active job-set declaration, and
+prints its path without advancing or acquiring sources. Optional
+`--source-revision <full-40-hex-commit>` requires a GitHub identity. Worker
+provenance is not an opening parameter: report actual model/effort with
+completed results through `commonplace-run advance`.
 
-Run a code-scheduled workflow. `start <package.module:ClassName>` creates a
-run where the definition says its runs go, allocating a free name, and prints
-its directory; `--run <dir>` names the directory instead; `step <run>` advances it and prints the outcome (`launch`, `done`,
-`blocked` or `uncertain`); `report <run> <event>` records a failed launch, a
-repair or a stop. `resolve` and `release` are the operator's commands after an
-uncertain outcome or a stop-only block. The agent orchestrator's side is
-`kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`. The
-design is still a proposal: `kb/reference/proposals/code-scheduled-workflows.md`.
+`report-analysis <run>` emits JSON engine evidence without changing logical
+state (locking may create a lock file). It distinguishes completed local
+`blocked`/`out-of-scope` dispositions from completion of the publication job.
+It reports attempts, failures, exhausted jobs, refusals and canonical peer drift;
+journal labels are unverified, and invocation-specific stops require the
+original advance result. It is not a retained-filesystem audit or an old-style
+handoff command.
+
+`integrate-analysis <run>` independently verifies engine completion, current
+coverage, exact pinned publication inputs, retained bytes, journal and archive
+evidence. After separate operator authorization it commits the published set and
+incumbent archive on an analysis branch and merges into `main`. A conflict
+leaves the branch and worktree for review while `main` stays unchanged. An agent
+supplies `--model <model-id>` for its commit trailer.
+
+These four subcommands are the entire analysis lifecycle surface. Scheduling
+and result submission belong to `commonplace-run`; assembly and publication are
+bound code jobs, not standalone commands. Old/mixed run directories are rejected,
+not converted. Retained data is preserved. Independently chosen handling of old
+evidence requires its archived method checkout; this tree has no compatibility
+adapter. See the
+[run driver](../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md)
+for coordination and stop rules.
 
 ### commonplace-run
 
-Advance a run directory under the new workflow engine, the one specified in
-`kb/work/workflow-requirements/`; the analysis workflow still runs on
-`commonplace-workflow` until it migrates. `start <run> <job-set.yaml>` writes
+Run the generic job-set engine, including the active analysis workflow.
+`start <run> <job-set.yaml>` writes
 the run's metadata, fixing the declaration for the run; `--param key=value`
 records run parameters. `advance <run>` closes the attempts reported with
 `--completed <attempt>` and `--failed <attempt>=<reason>` (`--model` and
-`--effort` name the worker), runs every ready code job, hands out every ready
-model job, and prints the hand-outs, open attempts, stops and whether the set
-is publishable; `--json` prints the same as data. `status <run>` lists the
-members, open attempts and the refusals in force with their identifiers.
+`--effort` record the actual worker identity on those results), runs every ready
+code job, hands out every ready model job, and prints the exact prompt paths,
+open attempts, stops and whether the set is publishable; `--json` prints the
+same as data. The coordinator launches fresh workers without parent conversation
+and settles all round handouts before advancing. The analysis manifest still
+requires one consistent worker model/effort identity.
+`status <run>` lists members, open handouts with their original prompt paths,
+failed attempts and refusals with identifiers; use it before resuming.
+Publishability means engine coverage, not publication or content validation.
 `judge <run> --role <role> --outcome accepted|refused` records an operator
 judgment of a role's member: `--findings` carries the reason, `--scope`
 names covered relations with their partners among `--basis` roles,

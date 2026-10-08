@@ -19,12 +19,10 @@ if TYPE_CHECKING:
 from commonplace.lib.note_parser import ParsedDocument
 
 SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
-OUTPUT_DIR = "output"
 
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
 REVIEWS_ROOT = PurePosixPath(RETAINED_ROOT.as_posix())
 ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
-RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
 
 
 def analysis_layout() -> Layout:
@@ -47,16 +45,6 @@ def _spec_at(library: str, type_path: str) -> dict[str, Any]:
 @cache
 def _layout_at(library: str) -> Layout:
     return parse_layout(_spec_at(library, SET_TYPE).get("layout"), where=f"{SET_TYPE}: layout")
-
-
-def record_prefix(role: str) -> str:
-    """The ID prefix a role's records carry: its type's ``record-prefix``."""
-    from commonplace.lib.library import library_root
-
-    prefix = _spec_at(str(library_root()), analysis_layout().roles[role].type).get("record-prefix")
-    if not isinstance(prefix, str) or not prefix:
-        raise ValueError(f"the {role} role's type declares no record-prefix")
-    return prefix
 
 
 def is_normalized_relative(value: str) -> bool:

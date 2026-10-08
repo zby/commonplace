@@ -9,13 +9,13 @@ from __future__ import annotations
 
 import json
 
-from commonplace.lib.agentic_boundary import frozen_source_refusals
-from commonplace.lib.agentic_job_checks import refusal_findings
-from commonplace.lib.agentic_job_handlers import (
+from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
+from commonplace.lib.agentic_analysis.checks import refusal_findings
+from commonplace.lib.agentic_analysis.handlers import (
     _opened_environment,
     _require_opened_method,
 )
-from commonplace.lib.agentic_job_validation import criterion_bytes
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.agentic_records import (
     record_declaration,
     record_references,

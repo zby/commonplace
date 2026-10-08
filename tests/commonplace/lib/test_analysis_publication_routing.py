@@ -1,4 +1,4 @@
-"""Publication routing and cooperating-writer coordination in temporary trees only."""
+"""Cooperating analysis publishers in temporary trees only."""
 from __future__ import annotations
 
 import fcntl
@@ -10,9 +10,8 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from commonplace.lib import agentic_finalize as finalize
-from commonplace.lib import agentic_job_publication as engine
-from commonplace.lib import agentic_publication as legacy
+from commonplace.lib.agentic_analysis import guards
+from commonplace.lib.agentic_analysis import publication as engine
 from commonplace.lib.agentic_set import SET_TYPE, source_slug
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.workflow.state import _parse_type
@@ -26,86 +25,47 @@ def assert_locked(repo):
         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
 
-@pytest.mark.parametrize("operation", [finalize.start_manifest, finalize.build_manifest])
-@pytest.mark.parametrize("marker", ["run.json", "state", "both", "mixed"])
-def test_legacy_manifest_refuses_engine_before_creating_or_changing_twin(tmp_path, operation, marker):
-    run = tmp_path / "run"
-    run.mkdir()
-    if marker != "state":
-        (run / "run.json").write_text("{}")
-    if marker in ("state", "both", "mixed"):
-        (run / "state").mkdir()
-    (run / "set").mkdir()
-    (run / "set" / MANIFEST_NAME).write_bytes(b"engine manifest")
-    if marker == "mixed":
-        (run / "output").mkdir()
-        (run / "output" / MANIFEST_NAME).write_bytes(b"legacy manifest")
-    before = {path.relative_to(run): path.read_bytes() for path in run.rglob("*") if path.is_file()}
-    with pytest.raises(ValueError, match="new-engine or mixed"):
-        operation(run)
-    assert {path.relative_to(run): path.read_bytes() for path in run.rglob("*") if path.is_file()} == before
-    assert (run / "output").exists() == (marker == "mixed")
-    assert not (run / "run-state.md").exists()
-
-
-def legacy_fixture(repo):
-    state = repo / "legacy-run/run-state.md"
-    state.parent.mkdir()
-    state.write_bytes(b"old state")
-    retained = repo / "kb/agentic-system-analyses/retained/legacy"
-    spec = legacy.PublicationSpec(repo, state, state.parent / "output/overview.md",
-                                  "kb/agentic-system-analyses/retained/legacy/overview.md", "absent")
-    checked = SimpleNamespace(
-        spec=spec, final_state_text="completed state", generated_bytes=b"overview",
-        retained_paths={MANIFEST_NAME: retained / MANIFEST_NAME},
-        incumbent=legacy._Incumbent(),
-        member_set=SimpleNamespace(artifact=SimpleNamespace(content=b"manifest"),
-                                   documents=[SimpleNamespace(name="overview.md", content=b"overview")]),
-    )
-    return spec, checked
-
-
-def engine_fixture(repo, monkeypatch):
-    run = repo / "engine-run"
+def engine_fixture(repo, monkeypatch, name="fixture"):
+    run = repo / f"engine-run-{name}"
     run.mkdir()
     layout, _ = _parse_type((ROOT / "kb" / SET_TYPE).read_text(), SET_TYPE)
-    identity = "https://example.invalid/fixture"
-    destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, "Fixture")
+    identity = f"https://example.invalid/{name}"
+    destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, name)
     members = {"boundary": b"boundary", "overview": b"overview"}
     worker = {"model": "fixture/model"}
     manifest = engine._manifest(layout, members, worker)
-    metadata = {"system": "Fixture", "source-identity": identity,
+    metadata = {"system": name, "source-identity": identity,
                 "review-path": (destination / "overview.md").relative_to(repo).as_posix(),
                 "expected-incumbent-sha256": "absent"}
-    attempt = SimpleNamespace(run_dir=run, read=lambda name: manifest if name == "manifest" else None)
+    attempt = SimpleNamespace(run_dir=run, metadata=metadata,
+                              read=lambda key: manifest if key == "manifest" else None)
     monkeypatch.setattr(engine, "_snapshot", lambda *a, **kw: (
         layout, (), members, SimpleNamespace(frontmatter={"result-disposition": "complete"})))
-    monkeypatch.setattr(engine, "_environment", lambda *a, **kw: (metadata, repo))
+    monkeypatch.setattr(engine, "_environment", lambda current, *a, **kw: (current.metadata, repo))
     monkeypatch.setattr(engine, "_provenance", lambda *a: worker)
     monkeypatch.setattr(engine, "validate_pinned_set", lambda *a, **kw: None)
     monkeypatch.setattr(engine, "_require_opened_method", lambda *a, **kw: None)
     return attempt, destination
 
 
-def test_legacy_and_engine_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatch):
-    spec, checked = legacy_fixture(tmp_path)
-    attempt, destination = engine_fixture(tmp_path, monkeypatch)
+def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatch):
+    first, first_destination = engine_fixture(tmp_path, monkeypatch, "first")
+    second, second_destination = engine_fixture(tmp_path, monkeypatch, "second")
     validating, release, waiting, inspecting = Event(), Event(), Event(), Event()
     original_lock = engine.publication_lock
 
     def enter_lock(repo):
-        waiting.set()
+        if validating.is_set():
+            waiting.set()
         return original_lock(repo)
-
-    def check_set(_):
-        assert_locked(tmp_path)
-        validating.set()
-        assert release.wait(5)
-        return checked
 
     def inspect(**kw):
         assert_locked(tmp_path)
-        inspecting.set()
+        if kw["generated_destination"] == first.metadata["review-path"]:
+            validating.set()
+            assert release.wait(5)
+        else:
+            inspecting.set()
         return {"expected_incumbent_sha256": "absent"}
 
     original_record = engine._write_record
@@ -114,35 +74,42 @@ def test_legacy_and_engine_publishers_share_lock_across_runs_and_destinations(tm
         assert_locked(tmp_path)  # Both started and completed journal writes.
         original_record(path, value)
 
-    monkeypatch.setattr(legacy, "_check_set", check_set)
     monkeypatch.setattr(engine, "publication_lock", enter_lock)
     monkeypatch.setattr(engine, "inspect_destination", inspect)
     monkeypatch.setattr(engine, "_write_record", record)
     with ThreadPoolExecutor(max_workers=2) as pool:
-        old = pool.submit(legacy.publish_publication, spec)
+        first_result = pool.submit(engine.publish_analysis, first)
         try:
             assert validating.wait(5)
-            new = pool.submit(engine.publish_analysis, attempt)
+            second_result = pool.submit(engine.publish_analysis, second)
             assert waiting.wait(5)
             assert not inspecting.wait(0.1)
-            assert not destination.exists()
+            assert not first_destination.exists()
+            assert not second_destination.exists()
         finally:
             release.set()
-        assert old.result(timeout=5).cleanup_warnings == ()
-        assert new.result(timeout=5) == {}
+        assert first_result.result(timeout=5) == {}
+        assert second_result.result(timeout=5) == {}
     assert inspecting.is_set()
-    assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == SET_TYPE
-    assert (destination / "overview.md").read_bytes() == b"overview"
+    for destination in (first_destination, second_destination):
+        assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == SET_TYPE
+        assert (destination / "overview.md").read_bytes() == b"overview"
     # Replay recognition, not only fresh incumbent inspection, holds the lock.
+    original_effect = engine._publish_effect
+
+    def replay(**kwargs):
+        assert_locked(tmp_path)
+        return original_effect(**kwargs)
+
+    monkeypatch.setattr(engine, "_publish_effect", replay)
     monkeypatch.setattr(engine, "inspect_destination", lambda **kw: pytest.fail("replay reinspected"))
-    assert engine.publish_analysis(attempt) == {}
-    with legacy.publication_lock(tmp_path):
+    assert engine.publish_analysis(second) == {}
+    with guards.publication_lock(tmp_path):
         assert_locked(tmp_path)
 
 
-@pytest.mark.parametrize("publisher", ["legacy", "engine"])
-def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypatch, publisher):
-    original_write = legacy.atomic_write
+def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypatch):
+    original_write = guards.atomic_write
 
     def write(path, data):
         assert_locked(tmp_path)
@@ -150,32 +117,21 @@ def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypat
             raise OSError("fixture write failure")
         original_write(path, data)
 
-    original_remove = legacy.shutil.rmtree
+    original_remove = engine.shutil.rmtree
 
     def remove(path):
         assert_locked(tmp_path)
         original_remove(path)
 
-    monkeypatch.setattr(legacy.shutil, "rmtree", remove)
-    if publisher == "legacy":
-        spec, checked = legacy_fixture(tmp_path)
-        monkeypatch.setattr(legacy, "_check_set", lambda _: (assert_locked(tmp_path), checked)[1])
-        monkeypatch.setattr(legacy, "atomic_write", write)
-        publish = lambda: legacy.publish_publication(spec)
-        destination = checked.retained_paths[MANIFEST_NAME].parent
-    else:
-        attempt, destination = engine_fixture(tmp_path, monkeypatch)
-        monkeypatch.setattr(engine, "inspect_destination", lambda **kw: {
-            "expected_incumbent_sha256": "absent"})
-        monkeypatch.setattr(engine, "atomic_write", write)
-        publish = lambda: engine.publish_analysis(attempt)
+    monkeypatch.setattr(engine.shutil, "rmtree", remove)
+    attempt, destination = engine_fixture(tmp_path, monkeypatch)
+    monkeypatch.setattr(engine, "inspect_destination", lambda **kw: {
+        "expected_incumbent_sha256": "absent"})
+    monkeypatch.setattr(engine, "atomic_write", write)
     with pytest.raises(OSError, match="fixture write failure"):
-        publish()
+        engine.publish_analysis(attempt)
     assert not destination.exists()
-    if publisher == "legacy":
-        assert spec.run_state_path.read_bytes() == b"old state"
-    else:
-        assert b'"rolled-back"' in (attempt.run_dir / engine.JOURNAL).read_bytes()
+    assert b'"rolled-back"' in (attempt.run_dir / engine.JOURNAL).read_bytes()
     with open(tmp_path / LOCK_PATH, "a") as handle:
         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
         fcntl.flock(handle, fcntl.LOCK_UN)

@@ -11,14 +11,17 @@ from __future__ import annotations
 import hashlib
 import json
 
-from commonplace.lib.agentic_boundary import frozen_source_refusals
-from commonplace.lib.agentic_job_checks import correction_findings, refusal_findings
-from commonplace.lib.agentic_job_handlers import (
+from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
+from commonplace.lib.agentic_analysis.checks import (
+    correction_findings,
+    refusal_findings,
+)
+from commonplace.lib.agentic_analysis.handlers import (
     _analysis_layout,
     _opened_environment,
     _require_opened_method,
 )
-from commonplace.lib.agentic_job_validation import criterion_bytes
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.agentic_records import section
 from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.lib.note_parser import parse_document

@@ -1,106 +1,104 @@
 ---
-description: "Use when acting as the agent orchestrator of a code-scheduled workflow run: run `step`, launch the jobs it names, handle blocks, and report events. The workflow's skill supplies the run directory."
+description: "Use when coordinating a prepared analysis run: advance the engine, launch its printed handouts in fresh contexts, report attempt results, and stop on unresolved failures."
 type: types/instruction.md
 ---
 
 # Drive a code-scheduled run
 
-Code decides what runs next and judges every result. You launch the workers it names and report what only you can see. Keep only the run directory; everything else is on disk.
+Let code schedule and judge the analysis; launch only its handed-out workers and
+report their completion or failure without doing their work.
 
-`<run>` below is the run directory.
+`<run>` is the path printed by `start-analysis`. Run every command from the
+prepared worktree with its command directory, as required by
+[isolated run setup](./SKILL.md#isolated-run-setup). Use
+`<path-prefix>/commonplace-run` and `<path-prefix>/commonplace-workflow` below.
+Keep code, method files, lockfile and environment unchanged throughout the run.
 
-For `analyse-agentic-system`, run every command below from the worktree and
-command directory of [isolated run setup](./SKILL.md#isolated-run-setup): write
-`<path-prefix>/commonplace-workflow` where this file writes
-`commonplace-workflow`. Use the same worktree on resume. Do not switch
-installations or update the run's code or method files while workers are active.
+## Advance and launch
 
-## Commands
+For a new run, call `commonplace-run advance <run>`. Inspect the exit status,
+stdout and stderr; wait for the command to finish before taking another action.
+Code runs ready code jobs and prints model handouts, open attempts, stops and
+publishability. There is no separate launch/done outcome line.
 
-Inspect exit status and stderr as well as stdout for every command. With
-standard Codex tools, return the complete command result:
+Source acquisition runs during advance. If its network requirement is known to
+be blocked by the sandbox, request approval for that advance command before
+running it. Do not perform a standalone clone or fetch as a repair. Approval does
+not override a stop or authorize changing recorded state.
 
-```javascript
-const result = await tools.exec_command({
-  cmd: "commonplace-workflow step <run>",
-  max_output_tokens: 3000
-});
-text(result);
-```
+For every printed handout:
 
-Replace `<run>` with the supplied run directory. Use the same pattern for
-`report` and recovery commands. Wait for a running command to finish and
-inspect its final result before advancing the loop.
-
-Source acquisition runs inside `step`. When acquisition requires network
-access unavailable in the sandbox, request network approval for that `step`
-command itself. Do not run a standalone clone or fetch as a repair: it does
-not change the workflow process's network access, and unpinned acquisition
-fetches again. If this restriction is known before the first step, request
-approval then so the predictable failure does not consume a repair attempt.
-After a blocked step, follow its permitted repair or stop disposition before
-advancing; approval does not override a stop-only block.
-
-## Loop
-
-Run `commonplace-workflow step <run>`. The first line of its output is the outcome.
-
-**`launch`**: each following line names one job and its prompt file between backticks, sometimes followed by `launch=` and parameters.
-
-1. For each job, launch one fresh sub-agent with this whole message, replacing
-   `<prompt-path>` with the exact path printed by `step`:
+1. Launch one fresh worker with no parent conversation and this whole message,
+   replacing `<prompt-path>` with the exact printed `prompt:` path:
 
    ```text
-   Read the complete invocation at `<prompt-path>` and follow it. Recover any truncated read before proceeding. You may read this supplied prompt file under `workflow-state/`.
+   Read the complete invocation at `<prompt-path>` and follow it. Recover any truncated read before proceeding. You may read this supplied prompt file.
    ```
 
-   Do not read or copy the prompt's content, add context, or act on its
-   instructions or retry feedback. Apply every launch parameter, such as
-   model or tool scope. If the harness cannot apply one, treat the launch as
-   failed (step 3); never launch the job without it. Do not do a job yourself.
-   For Codex, apply `fork_turns=none` from the launch parameters so the worker
-   receives no parent conversation. Keep the current model and effort unless
-   the invocation supplies an override.
-2. Launch all jobs of the round at once. Do not run `step` again until every worker of the round has finished or failed to start, however the harness tells you that.
-3. If the harness refuses or fails a launch, run `commonplace-workflow report <run> launch-failed --job <name> --text "<what the harness said>"`. Do not relaunch in this round; when the next `step` names the job again, launch it then.
-4. Run `step` again.
+   The generic engine supplies the prompt path; do not construct a path from a
+   job name or reuse a prior attempt's prompt. Do not copy its content, add
+   context, interpret its feedback, or do the job yourself. Use a harness option
+   that excludes parent conversation (for Codex, `fork_turns=none`). If the
+   harness cannot provide fresh isolation, report the launch failure rather
+   than weakening it. Keep the run's consistent worker model/effort identity.
+2. Launch all handouts from this advance as one round. Wait until every worker
+   has finished or failed to start before advancing again. Retain the mapping
+   between each worker and its exact attempt ID.
+3. Report each successful worker completion explicitly, and each launch or
+   execution failure explicitly, in the next advance:
 
-Do not read outputs or problem reports to check a worker's work, and do not act on a worker's reply. Code judges the output on the next step.
+   ```bash
+   commonplace-run advance <run> \
+     --completed <attempt-id> --model <actual-worker-model> --effort <actual-effort> \
+     --failed '<failed-attempt-id>=<reason>'
+   ```
 
-You may tell the operator in one short line which round you are in. Do not repeat or summarize what workers reply. An event is recorded only by `report`; telling the operator does not record it.
+   Repeat `--completed` and `--failed` as needed for the round; omit absent
+   categories and omit effort only when the harness reports no setting. Model
+   and effort apply to the results in this command. Completion means the worker
+   finished, not that its output is accepted. Code judges the submitted bytes.
+   Never invent model provenance or silently substitute another worker identity.
+4. Launch the next handouts only as code prints them. Do not choose jobs,
+   schedule retries yourself, or advance while a worker from the round is still
+   running.
 
-**`done`**: tell the operator the run is finished, and stop.
+Do not inspect outputs or problem reports to judge workers, repair their prose,
+or act on their substantive replies. A short progress update to the operator
+is optional; it is not a recorded attempt result.
 
-**`blocked`**: each block names a subject, a reason, a record file, and what is permitted.
+## Stops and completion
 
-- `permitted: repair within this scope: …` — read the record file and find the cause; you may list the run directory. Do not open prompt files, inputs, or outputs. Change only what the scope allows. Never write or edit the content of a job's output, never change anything under `workflow-state/`, and never try to get an output accepted by any other route. Then run `commonplace-workflow report <run> repair --job <subject> --text "<what you changed>"` and run `step` again. If no change within the scope fixes the cause, stop.
-- `permitted: stop and report to the operator` — stop.
+On a stop, uncertain effect, command failure or unrecognized command result,
+stop the loop and preserve all evidence. Give the operator the exact output,
+exit status and stderr. Do not edit engine records, synthesize acceptance,
+force progress or use `judge` as a coordinator bypass. `commonplace-run judge`
+is an operator judgment surface, not routine worker-result submission.
+Recovery needs a separate operator decision; do not treat a journal label as
+proof that an external effect happened or was rolled back.
 
-Handle every block of the outcome before running `step` again. If any block permits only stopping, stop.
+When advance returns no handouts or open attempts, inspect
+`commonplace-workflow report-analysis <run>`. If it reports `completed`, return
+its output under the skill's reporting rules. A local blocked/out-of-scope result
+is not publication. If it is not completed, report the unresolved state rather
+than repeatedly advancing or declaring success. `publishable: yes` alone is not
+completion or a retained-filesystem audit. Preserve the last advance output:
+its invocation-specific stops are not reconstructed by the later report.
 
-**`uncertain`**: an effect may or may not have taken place. Stop.
+## Resume without duplicate workers
 
-## Stopping
+Before advancing a run from an earlier session, call
+`commonplace-run status <run>`. It reprints open handouts with their original
+attempt IDs and prompt paths. Confirm that prior workers have stopped before
+launching replacements or closing attempts; ask the operator if this is unknown,
+and stop if confirmation is unavailable.
 
-Run `commonplace-workflow report <run> stop --text "<why, in one line>"`. If a block on a job caused the stop, add `--job <subject>`.
+For each open attempt, explicitly settle whether its worker completed, failed,
+or never ran. Report completed and failed attempts through the result flags
+above. An unlaunched handout may be launched using its exact printed prompt once
+no earlier worker can still write it. Do not assume that missing output means
+failure or that existing output proves completion. Finish all open handouts of
+the round before the next advance. Never fabricate result events to clear them.
 
-Then give the operator the output of the last `step` exactly as it was printed, not a summary. It holds the paths of the records the operator needs.
-
-`resolve` and `release` are the operator's commands; do not run them.
-
-## When the command itself fails
-
-`step` exits with status 1 and a message on standard error:
-
-- **the run is busy**: another `step` is running on this run. Do not start a second loop; tell the operator.
-- **the run's state cannot be trusted**, or **not a run**: tell the operator. Do not repair anything under `workflow-state/`.
-
-If `step` ends any other way, with another status or without an outcome line, do not run `step` again. Stop as the Stopping section says, and give the operator the exit status with everything `step` printed.
-
-## Resuming
-
-Before your first `step` in a session, settle whether the run is new. It is new if you started it yourself in this session, or if the operator told you that no step has run on it. Then run `step`.
-
-Otherwise do not run `step` yet. Ask the operator whether every worker of the earlier session has stopped, and run `step` only after the operator says so. If you cannot ask, stop. A worker still running from an earlier session would write into a round it does not belong to.
-
-After a resume, a job that was handed out before the interruption may come back as a retry whose prompt says the previous attempt wrote no output. This is expected: code cannot tell a worker that never ran from one that wrote nothing. Launch it as any other job. Two such hand-outs block the job.
+Old or mixed run directories are rejected, not resumed or converted. Preserve
+them; independently authorized old-evidence handling needs the archived method
+checkout. This driver has no compatibility route.

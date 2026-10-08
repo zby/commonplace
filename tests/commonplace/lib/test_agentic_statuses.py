@@ -1,24 +1,29 @@
 """Reject the status defects that previously consumed semantic correction rounds."""
 
-import re
-from pathlib import Path
-
 import pytest
 
-from commonplace.lib import agentic_publication
 from commonplace.lib.agentic_records import (
     conclusion_status_errors,
 )
-from commonplace.workflow_legacy import Done, Handout
-from tests.commonplace.lib.test_agentic_analysis import runtime_text
-from tests.commonplace.lib.test_agentic_workflow import (
-    Fixture,
-    agent,
-    drive_to,
-    prompt_of,
-)
+from commonplace.lib.validation import validate_draft_at_slot
+from tests.commonplace.lib.test_agentic_analysis import member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
+
+
+def test_member_validator_rejects_and_accepts_corrected_status(tmp_path):
+    directory = member_fixture(tmp_path) / "set"
+    runtime = directory / "runtime.md"
+    valid = runtime.read_text()
+    runtime.write_text(valid.replace(
+        "- implementation conclusion status: wired",
+        "- operation conclusion status: unobserved",
+    ))
+    findings = validate_draft_at_slot(directory, "runtime.md", runtime, repo_root=tmp_path)
+    assert any("conclusion status" in finding.message for finding in findings if not finding.info)
+    runtime.write_text(valid)
+    findings = validate_draft_at_slot(directory, "runtime.md", runtime, repo_root=tmp_path)
+    assert not [finding for finding in findings if not finding.info and not finding.warn]
 
 
 def route(fields: str, prefix: str = "RT-") -> str:
@@ -65,35 +70,3 @@ def test_layers_remain_separate_and_ordinary_unobserved_prose_is_allowed() -> No
 def test_excerpts_and_other_records_cannot_supply_a_route_status(other: str) -> None:
     errors = conclusion_status_errors(route(other))
     assert any("RTE-model-call: missing labelled field" in error for error in errors)
-
-
-@pytest.mark.slow
-def test_status_defects_are_repaired_before_reconciliation(
-    tmp_path: Path, monkeypatch,
-) -> None:
-    defect = "- operation conclusion status: unobserved"
-    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
-    fixture = Fixture(tmp_path)
-    valid = runtime_text(fixture.revision)
-    invalid = valid.replace("- implementation conclusion status: wired", defect)
-
-    def runtime(handout: Handout) -> None:
-        if handout.attempt == 1:
-            text = invalid
-        else:
-            prompt = handout.prompt_path.read_text(encoding="utf-8")
-            preserved = Path(re.search(r"^previous-output = (.+)$", prompt, re.MULTILINE)[1])
-            text = preserved.read_text(encoding="utf-8")
-            assert text == invalid
-            text = text.replace(defect, "- implementation conclusion status: wired")
-            assert text == valid
-        handout.output_path.write_text(text, encoding="utf-8")
-
-    scripted, definition = agent(fixture, **{"runtime-0": runtime})
-    drive_to(scripted, "runtime-0")
-    attempt, prompt = prompt_of(scripted.round(), "runtime-0")
-    assert attempt == 2 and "conclusion status:" in prompt
-    assert isinstance(scripted.run()[-1], Done)
-    assert scripted.launched.count("runtime-0") == 2
-    assert scripted.launched.count("reconcile-0") == 1
-    assert definition.publications == 1

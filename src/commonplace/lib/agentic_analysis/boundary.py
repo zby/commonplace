@@ -1,4 +1,4 @@
-"""Boundary invocation checks shared by the legacy and new analysis consumers."""
+"""Boundary invocation and frozen-source checks for analysis consumers."""
 
 from __future__ import annotations
 

@@ -17,7 +17,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_publication import atomic_write
+from commonplace.lib.agentic_analysis.guards import atomic_write
 from commonplace.lib.systems_matrix import csv_text, load_results
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

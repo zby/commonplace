@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib.agentic_job_set import (
+from commonplace.lib.agentic_analysis.declaration import (
     ACQUIRE_HANDLER,
     ANALYST_CHECK_HANDLERS,
     BOUNDARY_CHECK_HANDLER,
@@ -18,8 +18,6 @@ from commonplace.lib.agentic_job_set import (
     OPEN_HANDLER,
     RECORDS,
     REPORTS,
-    contract_gaps,
-    unported,
 )
 from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
@@ -40,15 +38,15 @@ ENGINE_INSTRUCTIONS = {
 INTEGRATED_HANDLERS = {
     "open": OPEN_HANDLER, "acquire": ACQUIRE_HANDLER, "check-boundary": BOUNDARY_CHECK_HANDLER,
     **{f"check-{role}": handler for role, handler in ANALYST_CHECK_HANDLERS.items()},
-    **{name: f"commonplace.lib.agentic_job_verification.{function}" for name, function in (
+    **{name: f"commonplace.lib.agentic_analysis.verification.{function}" for name, function in (
         ("check-reconcile", "check_reconcile"), ("set-check", "set_check"), ("apply-verify", "apply_verify"),
     )},
-    **{name: f"commonplace.lib.agentic_job_profile.{function}" for name, function in (
+    **{name: f"commonplace.lib.agentic_analysis.profile.{function}" for name, function in (
         ("check-profile", "check_profile"), ("check-synthesize", "check_synthesize"),
         ("apply-verify-profile", "apply_verify_profile"), ("apply-verify-synthesis", "apply_verify_synthesis"),
     )},
-    "assemble": "commonplace.lib.agentic_job_publication.assemble_analysis",
-    "publish": "commonplace.lib.agentic_job_publication.publish_analysis",
+    "assemble": "commonplace.lib.agentic_analysis.publication.assemble_analysis",
+    "publish": "commonplace.lib.agentic_analysis.publication.publish_analysis",
 }
 
 
@@ -339,26 +337,6 @@ def test_publication_requires_holding_acceptances_not_every_possible_member(engi
     assert job.handler == INTEGRATED_HANDLERS["publish"]
 
 
-def test_live_contract_gaps_are_explicit():
-    gaps = contract_gaps(LIBRARY)
-    assert not any(gap.startswith("missing verdict relation:") for gap in gaps)
-    assert not any(gap.startswith("disposition:") for gap in gaps)
-    assert any(gap.startswith("working set path:") for gap in gaps)
-    assert any(gap.startswith("publication coordination:") for gap in gaps)
-    assert any(gap.startswith("live routing:") for gap in gaps)
-    assert any(gap.startswith("verification:") for gap in gaps)
-    assert any("coherence review completed" in gap for gap in gaps)
-    assert not any(gap.startswith("opening:") for gap in gaps)
-    assert any(gap.startswith("startup:") for gap in gaps)
-    assert not any(gap.startswith("acquisition binding:") for gap in gaps)
-    assert not any(gap.startswith(prefix) for gap in gaps for prefix in (
-        "analyst check bindings:", "handlers:", "worker protocol:", "memory provenance:", "coverage:",
-    ))
-    assert any(gap.startswith("legacy runs:") for gap in gaps)
-    assert not any(gap.startswith("runtime context:") for gap in gaps)
-    assert not any(gap.startswith("check criteria:") for gap in gaps)
-
-
 def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"
@@ -367,9 +345,6 @@ def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatc
         if isinstance(job, CodeJob):
             assert job.handler == INTEGRATED_HANDLERS[job.name]
             assert callable(job.resolve_handler())
-            assert job.resolve_handler() is not unported
-    with pytest.raises(NotImplementedError, match="handlers are not ported"):
-        unported(object())
     start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
     status = advance(run_dir)
     assert not status.handouts and not status.open_attempts and not status.publishable

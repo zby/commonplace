@@ -84,9 +84,9 @@ layout:
 # Agentic system analysis set
 
 A directory artifact in the agentic-system-analyses collection's `retained/`
-area or a local working run. The opt-in engine uses `state/<run-id>/set/` as
-its sole working set; the live legacy skill and CLI still use
-`state/<run-id>/output/`. These are distinct run formats, not mirrored paths.
+area or a local working run. The engine uses `state/<run-id>/set/` as
+its sole working set. Historical runs used `output/`; their execution format
+is retired and is not converted or mirrored by the current workflow.
 `ARTIFACT.yaml` selects this type. In a finished set it records a SHA-256 for every member and
 names the worker that produced the run under `worker`: the exact `model`
 identifier and, when the harness reports one, its reasoning `effort`. One
@@ -129,12 +129,9 @@ recognized from its first member. Until code pins it, whole-set validation
 reports the unpinned manifest and any absent required members, and checks
 relations among the members present.
 
-The opt-in engine keeps a type-only working manifest in `set/`; assembly
-returns an exact-byte pinned manifest that publication consumes as an engine
-output, not a second mutable projection. Legacy run state pins its output
-manifest bytes. Published sets are frozen; corrections require a new run.
-Earlier member versions, answers, attempts, judgments, effect journals and
-prompts live outside `set/` and are never published. Legacy correction packets,
-change diffs, round set-check files and run state likewise stay outside
-`output/`. The opt-in engine does not manufacture legacy run-state or an
-`output/` twin.
+The engine keeps a type-only working manifest in `set/`; assembly returns an
+exact-byte pinned manifest that publication consumes as an engine output, not a
+second mutable projection. Published sets are frozen; corrections require a new
+run. Earlier member versions, answers, attempts, judgments, effect journals and
+prompts live outside `set/` and are never published. Historical run-state files
+are evidence only; the current workflow neither writes nor consumes them.

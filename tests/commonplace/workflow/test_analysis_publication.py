@@ -12,8 +12,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import agentic_job_publication as publication
-from commonplace.lib.agentic_engine_report import engine_run_report
+from commonplace.lib.agentic_analysis import publication
+from commonplace.lib.agentic_analysis.report import engine_run_report
 from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.workflow import RunStatus, Stop, UncertainEffectError
 from commonplace.workflow.state import _parse_type
@@ -419,7 +419,7 @@ def test_engine_records_uncertain_effect_as_stop_without_committing_outputs(tmp_
                   "library": str(ROOT / "kb"), "parameters": {},
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
-                       "handler": "commonplace.lib.agentic_job_publication.publish_analysis"}]})})
+                       "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
 
     def scripted_effect_only(attempt):
         publication._publish_effect(**args)
@@ -438,7 +438,7 @@ def test_engine_records_uncertain_effect_as_stop_without_committing_outputs(tmp_
 @pytest.mark.parametrize("interruption", ["archive", "rollback"])
 def test_real_handler_recovery_preserves_guard_and_engine_classification(
         tmp_path, scripted, monkeypatch, interruption):
-    from commonplace.lib.agentic_publication import require_publishable_worktree
+    from commonplace.lib.agentic_analysis.guards import require_publishable_worktree
     from commonplace.workflow import CodeAttempt, advance
 
     attempt = assembled_publish_attempt(tmp_path, scripted)
@@ -509,7 +509,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
                   "library": str(ROOT / "kb"), "parameters": {},
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
-                       "handler": "commonplace.lib.agentic_job_publication.publish_analysis"}]})})
+                       "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
     monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))
     status = advance(store.run_dir)
     assert len(status.stops) == 1

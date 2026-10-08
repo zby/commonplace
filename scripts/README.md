@@ -40,7 +40,7 @@ Two mechanical helpers support it:
 Each helper has `--help`. Neither helper assigns scenario verdicts or advances
 the test sequence.
 
-## Analyst trials
+## Synthesis distinction pilot
 
 For the frozen synthesis/review wording pilot, see
 [synthesis distinction experiment](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/README.md).
@@ -50,31 +50,6 @@ The helper launches no models and does not alter a live analysis run.
 `python3 scripts/run_synthesis_distinction_job.py --help` describes the
 isolated single-packet launcher and its predeclared limits; see the
 [execution preflight](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/execution-preflight.md).
-
-Rerun one analyst of a recorded analysis run (the runtime, memory or
-epistemic analyst) on that run's frozen inputs, to test a change to its
-instructions or to compare models:
-
-```bash
-uv run python scripts/analyst_trial.py prepare \
-  kb/agentic-system-analyses/state/<recorded-run> memory --label luna
-```
-
-It creates `kb/agentic-system-analyses/state/AAS-<today>-trial-<analyst>[-<label>]-<system>-<nn>/`
-(named like a run because the run-state schema requires one), copies the
-recorded run's `boundary.md`, `opening.json`, `run-state.md` (set back to
-running) and, for the memory and epistemic analysts, `runtime-report-0.md`,
-and writes `prompt.md` from the current workflow code. Read `prompt.md` and send its
-content unchanged as the analyst's whole message, with the repository root
-as working directory. Instruction files are read from the working tree,
-so edits need no commit. `trial.json` records the recorded run and the
-SHA-256 of every declared file dependency, independently of prompt formatting.
-A missing or unreadable dependency fails preparation. This record is not a
-snapshot of the worker's complete runtime context. The
-script launches nothing and judges nothing: check the output with the
-analyst's validator or by reading it. Trials read the recorded run's source
-checkout, so do not run trials pinned to different commits of one
-repository at the same time.
 
 ## X likes reading inbox
 

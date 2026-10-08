@@ -14,11 +14,6 @@ import yaml
 from jsonschema.exceptions import ValidationError
 
 from commonplace.lib import frontmatter
-from commonplace.lib.agentic_analysis import (
-    AGENTIC_ANALYSIS_RUN_TYPE,
-    parse_agentic_analysis_run_state,
-    verify_agentic_analysis_run_state,
-)
 from commonplace.lib.directory_artifact import (
     MANIFEST_NAME,
     DirectoryArtifact,
@@ -1525,28 +1520,6 @@ def validate_full_pass_report(
         )
     else:
         results.passes.append("resolution projection: body matches frontmatter")
-
-
-@type_rule(AGENTIC_ANALYSIS_RUN_TYPE)
-def validate_agentic_analysis_run_state(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """Verify the source and output identities of one analysis run."""
-    try:
-        state = parse_agentic_analysis_run_state(
-            parsed.path, parsed.document, repo_root=run.repo_root
-        )
-    except ValueError as exc:
-        results.fails.append(f"agentic-system analysis run state: {exc}")
-        return
-
-    passes, failures = verify_agentic_analysis_run_state(state, run=run)
-    results.passes.extend(passes)
-    results.fails.extend(failures)
-    if not failures:
-        results.passes.append(
-            f"run state: {state.status} source and output identities verified"
-        )
 
 
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:

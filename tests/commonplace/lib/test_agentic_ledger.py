@@ -73,7 +73,7 @@ def test_empty_ledger_has_an_explicit_disposition() -> None:
 
 @pytest.mark.usefixtures("tmp_library")
 def test_standing_validation_rejects_ledger_defects(tmp_path: Path) -> None:
-    report = member_fixture(tmp_path) / "output/epistemic.md"
+    report = member_fixture(tmp_path) / "set/epistemic.md"
     text = report.read_text()
     start = text.index("## Authority-route ledger")
     end = text.index("## System-claim versus route comparison")
@@ -87,7 +87,7 @@ def test_standing_validation_rejects_ledger_defects(tmp_path: Path) -> None:
 
 @pytest.mark.usefixtures("tmp_library")
 def test_complete_memory_report_cannot_retain_pending_validation(tmp_path: Path) -> None:
-    report = member_fixture(tmp_path) / "output/memory.md"
+    report = member_fixture(tmp_path) / "set/memory.md"
     original = report.read_text()
     report.write_text(original + "\nValidation: pending.\n")
     assert any("memory checks" in error for error in validate_note(report, repo_root=tmp_path).fails)

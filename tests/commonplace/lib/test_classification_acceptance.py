@@ -3,17 +3,15 @@
 Everything here is synthetic, not evidence about any external system. Expected
 semantic findings are authored fixture judgments. Real checks below establish
 shape, canonical references, projection and public-text contracts, NOT that a
-record proves its classification. Packet tests keep that judgment assigned to
-the independent verifier; no toy source classifier stands in for it.
+record proves its classification. Declared-input tests keep that judgment
+assigned to the independent verifier; no toy source classifier stands in for it.
 """
 
 import csv
 import json
-import re
 from copy import deepcopy
 from dataclasses import dataclass
 from io import StringIO
-from pathlib import Path
 
 import pytest
 
@@ -25,12 +23,9 @@ from commonplace.lib.agentic_records import (
     section,
     set_record_errors,
 )
-from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
 from commonplace.lib.validation import validate_draft_at_slot
-from commonplace.workflow_legacy.engine import render_prompt
 from scripts import analyze_matrix as stats
 from tests.commonplace.lib.test_agentic_analysis import (
-    REPO_ROOT,
     frontmatter,
     member_fixture,
     repin,
@@ -226,76 +221,54 @@ def test_plan_classifications_retain_fixture_findings_and_limits(specification, 
     assert profile == before
 
 
-ZERO = {"runtime": 0, "memory": 0, "epistemic": 0}
+def declared_packet(job_name):
+    """Inspect declared model inputs without executing jobs or manufacturing handouts."""
+    from pathlib import Path
 
+    from commonplace.lib.agentic_analysis.declaration import JOB_SET
+    from commonplace.lib.agentic_set import analysis_layout
+    from commonplace.workflow import load_job_set
 
-def workflow(tmp_path):
-    definition = AnalyseAgenticSystem({"system": "Synthetic acceptance fixture", "source-identity": "synthetic", "model": "fixture-model"})
-    definition.repo = REPO_ROOT
-    definition.jobs_dir = REPO_ROOT / "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs"
-    return definition
-
-
-def loaded_packet(job, run):
-    """Follow actual declared loading paths, not incidental workshop/background links."""
-    prompt = render_prompt(job, run, ())
-    assert job.prompt_is_complete
-    paths = [Path(path) for path in job.inputs if Path(path).is_file()]
+    library = Path(__file__).resolve().parents[3] / "kb"
+    declaration = load_job_set((library / JOB_SET).read_text(), analysis_layout().roles)
+    job = declaration.job(job_name)
+    paths = [library / item.source for item in job.inputs.values() if item.address == "file"]
     assert paths
-    for path in paths:
-        assert str(path) in prompt
-        assert path.is_absolute()
     assert not any("kb/work/" in str(path) for path in paths)
     return " ".join(" ".join(path.read_text().split()) for path in paths)
 
 
-@pytest.mark.parametrize("builder, phrases", [
-    (lambda d, r: d.analyst_job(r, "memory", 0), ["generic caller identity does not establish human control", "implemented transformation", "the missing fact, inspection/access limit and"]),
-    (lambda d, r: d.analyst_job(r, "epistemic", 0), ["checking is never", "improved capacity", "independent claims"]),
-    (lambda d, r: d.reconcile_job(r, 0, ZERO, ()), ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
-    (lambda d, r: d.verification_job(r, 0, ZERO, ()), ["unsupported claims or concealed gaps", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
-    (lambda d, r: d.profile_job(r, 0), ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
-    (lambda d, r: d.profile_verification_job(r, 0), ["an unsupported emitted value or evidence strength", "semantic verification judges support", "unresolved included parts", "complete-coverage assessment"]),
-    (lambda d, r: d.synthesis_job(r, 0), ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
-    (lambda d, r: d.synthesis_verification_job(r, 0), ["structural acceptance does not establish support", "faithful uncertainty is neither a blocker nor a limit", "bundled negative"]),
+@pytest.mark.parametrize("job_name, phrases", [
+    ("memory", ["generic caller identity does not establish human control", "implemented transformation", "the missing fact, inspection/access limit and"]),
+    ("epistemic", ["checking is never", "improved capacity", "independent claims"]),
+    ("reconcile", ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
+    ("verify", ["unsupported claims, evidence strengths, absence or completeness claims require correction", "judge coverage against the frozen repository tree, not just listed anchors", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
+    ("profile", ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
+    ("verify-profile", ["an unsupported emitted value or strength", "semantic verification judges support", "unresolved included parts", "inventory coverage is independent of positive witnesses"]),
+    ("synthesize", ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
+    ("verify-synthesis", ["structural acceptance does not establish support", "faithful uncertainty is neither blocker nor limit", "bundled negative"]),
 ])
-def test_semantic_rules_reach_operative_job_packets(tmp_path, builder, phrases):
-    packet = loaded_packet(builder(workflow(tmp_path), tmp_path), tmp_path).lower()
+def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
+    packet = declared_packet(job_name).lower()
     for phrase in phrases:
         assert phrase in packet
 
 
-@pytest.mark.parametrize("builder", [
-    pytest.param(lambda d, r: d.analyst_job(r, "runtime", 0), id="runtime"),
-    pytest.param(lambda d, r: d.analyst_job(r, "memory", 0), id="memory"),
-    pytest.param(lambda d, r: d.analyst_job(r, "memory", 1), id="memory-correction"),
-    pytest.param(lambda d, r: d.analyst_job(r, "runtime", 1), id="runtime-correction"),
-    pytest.param(lambda d, r: d.analyst_job(r, "epistemic", 1), id="epistemic-correction"),
-    pytest.param(lambda d, r: d.analyst_job(r, "epistemic", 0), id="epistemic"),
-    pytest.param(lambda d, r: d.reconcile_job(r, 0, ZERO, ()), id="reconcile"),
-    pytest.param(lambda d, r: d.verification_job(r, 0, ZERO, ()), id="verify"),
-    pytest.param(lambda d, r: d.profile_job(r, 0), id="profile"),
-    pytest.param(lambda d, r: d.profile_verification_job(r, 0), id="verify-profile"),
-    pytest.param(lambda d, r: d.synthesis_job(r, 0), id="synthesize"),
-    pytest.param(lambda d, r: d.synthesis_verification_job(r, 0), id="verify-synthesis"),
+@pytest.mark.parametrize("job_name", [
+    "runtime", "memory", "epistemic", "reconcile", "verify", "profile",
+    "verify-profile", "synthesize", "verify-synthesis",
 ])
-def test_self_improvement_test_is_delivered_by_real_job_composition(tmp_path, builder):
-    job = builder(workflow(tmp_path), tmp_path)
-    contract = (REPO_ROOT / "kb/agentic-system-analyses/instructions/agentic-analysis-records.md").resolve()
-    # The operative test must be in an explicitly loaded dependency, not merely
-    # linked from a packet or found by searching all repository Markdown.
-    assert str(contract) in job.inputs
-    prompt = render_prompt(job, tmp_path, ())
-    assert f"- {contract}" in prompt.split("## Input reading batches", 1)[0]
-    assert str(contract) in prompt.split("Read-first:", 1)[1].split("Task inputs:", 1)[0]
-    packet = loaded_packet(job, tmp_path)
+def test_self_improvement_test_reaches_declared_job_inputs(job_name):
+    import re
+    from pathlib import Path
+
+    contract = Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/agentic-analysis-records.md"
     match = re.search(r"(?ms)^### Self-improvement attribution[ \t]*\n(.*?)(?=^##+ |\Z)", contract.read_text())
     assert match is not None
-    test = match[1].strip()
-    operative = " ".join(test.split())
-    assert operative in packet
+    operative = " ".join(match[1].strip().split())
+    assert operative in declared_packet(job_name)
     for phrase in (
-        "own behavior-determining organization",  # link text is checked below
+        "own behavior-determining organization",
         "not merely improvement of an external work product",
         "boundary, assessment horizon and improvement objective",
         "specifiable independently of the change",
@@ -310,10 +283,10 @@ def test_self_improvement_test_is_delivered_by_real_job_composition(tmp_path, bu
         "a separate evaluator or rejection gate",
         "adds no universal assessment obligation",
     ):
-        # Normalize only the definition link markup, not the operative prose.
         assert phrase in operative.replace(
             "[behavior-determining organization](../../notes/definitions/behavior-determining-organization.md)",
-            "behavior-determining organization")
+            "behavior-determining organization",
+        )
 
 
 def test_case11_unsupported_negative_and_reference_defects_are_really_rejected():
@@ -348,7 +321,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     # Passing these checks is NOT acceptance of its source support.
     comparison_schema().validate(profile)
     sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
-    directory = member_fixture(tmp_path) / "output"
+    directory = member_fixture(tmp_path) / "set"
     memory = directory / "memory.md"
     memory.write_text(memory.read_text().replace(
         "## Write side", bodies["memory.md"].removeprefix("## Shared records\n\n") + "## Write side",
@@ -366,8 +339,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert set_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
-    packet = loaded_packet(workflow(tmp_path).profile_verification_job(tmp_path, 0), tmp_path)
-    assert "an unsupported emitted value or evidence strength" in packet
+    assert "an unsupported emitted value or strength" in declared_packet("verify-profile").lower()
 
 
 def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):
@@ -413,7 +385,7 @@ def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch
 def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_library):
     from commonplace.lib import validation
 
-    directory = member_fixture(tmp_path) / "output"
+    directory = member_fixture(tmp_path) / "set"
     profile, _ = materialize({})
     memory = directory / "memory.md"
     memory.write_text(memory.read_text().replace(

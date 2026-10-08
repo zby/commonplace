@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace.lib.agentic_job_validation import CRITERIA, criterion_bytes
+from commonplace.lib.agentic_analysis.validation import CRITERIA, criterion_bytes
 from commonplace.lib.agentic_set import SET_TYPE
 from commonplace.lib.validation import validate_draft_at_slot
 
@@ -137,15 +137,15 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
 
 
 @pytest.mark.parametrize("module,role", [
-    ("agentic_job_profile", "memory-profile"),
-    ("agentic_job_profile", "synthesis-verification"),
-    ("agentic_job_verification", "reconciliation"),
-    ("agentic_job_verification", "record-verification"),
+    ("profile", "memory-profile"),
+    ("profile", "synthesis-verification"),
+    ("verification", "reconciliation"),
+    ("verification", "record-verification"),
 ])
 def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, monkeypatch, module, role):
     import importlib
 
-    handlers = importlib.import_module("commonplace.lib." + module)
+    handlers = importlib.import_module("commonplace.lib.agentic_analysis." + module)
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
@@ -160,7 +160,7 @@ def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, 
 
     monkeypatch.setattr(handlers, "validate_draft_at_slot", validate)
     snapshot = {"boundary.md": boundary}
-    if module == "agentic_job_profile":
+    if module == "profile":
         handlers._content(attempt, tmp_path, role, CANDIDATE, snapshot)
     else:
         monkeypatch.setattr(handlers, "frozen_source_refusals", lambda _: [])
@@ -173,7 +173,7 @@ def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, 
 
 
 def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_path, monkeypatch):
-    from commonplace.lib import agentic_job_handlers as handlers
+    from commonplace.lib.agentic_analysis import handlers
 
     pinned = criteria()
     declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
@@ -195,7 +195,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
 
 
 def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, monkeypatch):
-    from commonplace.lib import agentic_job_verification as handlers
+    from commonplace.lib.agentic_analysis import verification as handlers
     from commonplace.lib.validation import CheckResults
 
     pinned = criteria()

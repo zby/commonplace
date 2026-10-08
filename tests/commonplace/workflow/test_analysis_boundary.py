@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import agentic_job_handlers
+from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
 from commonplace.workflow import AttemptResult, judge
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore

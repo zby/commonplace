@@ -1,6 +1,6 @@
 """Drive the ported opening job in local Git fixtures, never an analysis run.
 
-A restricted declaration stops at an explicitly unported acquisition job. No
+A restricted declaration stops at a test-owned acquisition handler. No
 workers, external source acquisition, package installation or publication run.
 """
 
@@ -17,8 +17,9 @@ import pytest
 import yaml
 
 import commonplace
-from commonplace.lib import agentic_job_handlers, agentic_publication
-from commonplace.lib.agentic_job_set import HANDLER, JOB_SET
+from commonplace.lib.agentic_analysis import guards as agentic_publication
+from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
+from commonplace.lib.agentic_analysis.declaration import JOB_SET
 from commonplace.workflow import start_run
 from commonplace.workflow.store import RunStore
 from tests.commonplace.workflow.conftest import Coordinator
@@ -60,7 +61,7 @@ class Prepared:
         # Opening tests must never acquire a source, even as later bindings land.
         data = yaml.safe_load((self.repo / "kb" / JOB_SET).read_text())
         data["jobs"] = data["jobs"][:2]
-        data["jobs"][1]["handler"] = HANDLER
+        data["jobs"][1]["handler"] = "tests.commonplace.workflow.handlers.stop_before_acquisition"
         declaration = self.repo.parent / "opening-only.yaml"
         declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
         start_run(run_dir, declaration, parameters=PARAMETERS if parameters is None else parameters)
@@ -98,9 +99,9 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
     shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")
     (repo / "kb/reference").mkdir(parents=True)
     shutil.copy2(ROOT / "kb/reference/validation-contract.md", repo / "kb/reference/validation-contract.md")
-    (repo / "src/commonplace/lib").mkdir(parents=True)
+    (repo / "src/commonplace/workflow").mkdir(parents=True)
     (repo / "src/commonplace/__init__.py").write_text("# Local package binding fixture.\n")
-    (repo / "src/commonplace/lib/agentic_workflow.py").write_text("# Source-checkout marker.\n")
+    (repo / "src/commonplace/workflow/engine.py").write_text("# Source-checkout marker.\n")
     (repo / ".gitignore").write_text("kb/agentic-system-analyses/state/\nrelated-systems/\n")
     git(repo, "init", "--quiet")
     git(repo, "config", "user.name", "Fixture")
@@ -213,11 +214,11 @@ def test_opening_requires_the_token_bearing_source_slug_run_id(prepared, name):
     assert_stopped(c, "open", "does not match the source slug and worktree preparation token")
 
 
-@pytest.mark.parametrize("name", ("workflow-state", "output", "opening.json"))
+@pytest.mark.parametrize("name", ("workflow-state", "output", "opening.json", "run-state.md"))
 def test_opening_rejects_legacy_state_without_mutating_it(prepared, name):
     c = prepared.start()
     legacy = c.run_dir / name
-    if name.endswith(".json"):
+    if legacy.suffix in (".json", ".md"):
         legacy.write_bytes(b'{"legacy": "must not be converted"}\n')
         evidence = legacy
     else:
@@ -226,13 +227,13 @@ def test_opening_rejects_legacy_state_without_mutating_it(prepared, name):
         evidence.write_bytes(b"Legacy evidence: preserve exact bytes.\n")
     before = evidence.read_bytes(), evidence.stat().st_mtime_ns
     c.advance()
-    assert_stopped(c, "open", "legacy analysis state cannot be opened")
+    assert_stopped(c, "open", "legacy/mixed run directories are retired")
     assert (evidence.read_bytes(), evidence.stat().st_mtime_ns) == before
     assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
 
 
 @pytest.mark.parametrize("path,tracked", [
-    ("src/commonplace/lib/agentic_workflow.py", True),
+    ("src/commonplace/workflow/engine.py", True),
     ("kb/untracked.md", False),
 ])
 def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
@@ -254,7 +255,7 @@ def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
 def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, monkeypatch):
     other = prepared.repo.with_name("running-package")
     shutil.copytree(prepared.repo, other)
-    (other / "src/commonplace/lib/agentic_workflow.py").write_text("# Different executing code.\n")
+    (other / "src/commonplace/workflow/engine.py").write_text("# Different executing code.\n")
     monkeypatch.setattr(agentic_publication, "running_package_root", lambda: other)
     c = prepared.start()
     c.advance()
@@ -327,7 +328,7 @@ def test_opening_rechecks_cleanliness_after_incumbent_inspection(prepared, monke
 
     def dirty(**arguments):
         decision = original(**arguments)
-        (prepared.repo / "src/commonplace/lib/agentic_workflow.py").write_text("# Concurrent modification.\n")
+        (prepared.repo / "src/commonplace/workflow/engine.py").write_text("# Concurrent modification.\n")
         return decision
 
     monkeypatch.setattr(agentic_job_handlers, "inspect_destination", dirty)

@@ -12,7 +12,7 @@ type: reference/types/design-proposal.md
 The [agentic-system analysis skill](../../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
 requires frozen sources, supporting quotations and a separate judgment that
 the passage supports its attached finding. Line ranges are optional navigation.
-The [source-check command](../../commands.md#commonplace-agentic-analysis-publication)
+The [source-check command](https://github.com/zby/commonplace/blob/866ac51a4/kb/reference/commands.md#commonplace-agentic-analysis-publication)
 checks reports before publication, and publication repeats source verification.
 
 Three checkers verify quotations. Each has its own citation parser and source
@@ -23,7 +23,7 @@ substring of the normalized source region.
 |---|---|---|---|
 | General KB `verbatim` citation | [quote_verification.py](../../../../src/commonplace/lib/quote_verification.py): quoted span plus `verbatim` marker plus link in one paragraph; linked Markdown file, restricted to the `## Quotes` section when the target is an ingest ([ADR 082](../../adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)) | NFKC, typography, `**`/`__` emphasis stripped, whitespace collapsed | 50 citations in 13 files; every target is an ingest |
 | Ingest `Source extract (verbatim)` | [validation.py](../../../../src/commonplace/lib/validation.py) `validate_ingest_quotes`: list item; name-paired snapshot whose checksum matches `snapshot_sha256`; skipped when the snapshot is absent or differs | same as above | 822 extracts in 158 ingests; 155 snapshots present locally, all matching |
-| Agentic-analysis attributed blockquote | [agentic_analysis.py](../../../../src/commonplace/lib/agentic_analysis.py) `_verify_quote_anchors`: blockquote plus `> ---` attribution; git blob at the recorded commit, or checksum-pinned capture | whitespace collapsed only | 1,592 quotes in 44 retained results; 1,528 in the local `path @ commit` form, none of those carrying a line range |
+| Agentic-analysis attributed blockquote | [agentic_analysis.py](https://github.com/zby/commonplace/blob/866ac51a4/src/commonplace/lib/agentic_analysis.py) `_verify_quote_anchors`: blockquote plus `> ---` attribution; git blob at the recorded commit, or checksum-pinned capture | whitespace collapsed only | 1,592 quotes in 44 retained results; 1,528 in the local `path @ commit` form, none of those carrying a line range |
 
 Every ingest extract also carries a free-form `Source location` sub-item
 written by the [grounding skill](../../../instructions/cp-skill-ground/SKILL.md).

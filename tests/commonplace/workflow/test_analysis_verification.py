@@ -7,8 +7,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import agentic_job_verification as handlers
-from commonplace.lib.agentic_job_set import (
+from commonplace.lib.agentic_analysis import verification as handlers
+from commonplace.lib.agentic_analysis.declaration import (
     ANALYST_CHECK_HANDLERS,
     BOUNDARY_CHECK_HANDLER,
     JOB_SET,
@@ -30,7 +30,7 @@ from tests.commonplace.workflow.test_analysis_boundary import (
 from tests.commonplace.workflow.test_analysis_boundary import parameters
 from tests.commonplace.workflow.test_analysis_opening import PARAMETERS
 
-MODULE = "commonplace.lib.agentic_job_verification."
+MODULE = "commonplace.lib.agentic_analysis.verification."
 
 
 @pytest.fixture

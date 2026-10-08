@@ -1,15 +1,16 @@
 # Publication consumer boundary
 
-Keep the live CLI and skill on the legacy workflow. The opt-in declaration now
-binds new-engine assembly and publication, but binding is not adoption evidence.
-The operator requested an overall coherence review instead of the end-to-end
-proof. That proof and a production switch are not authorized by these fixtures.
+The operator authorized retirement of the old engine and the new-only CLI/skill
+path. The active declaration binds assembly and publication; routing to it does
+not establish production fitness. The operator requested an overall coherence
+review instead of the end-to-end proof, which remains unperformed.
 See [coherence review](./translation-coherence-review.md) for the remaining limits.
 YAML compaction remains deferred.
 
 ## Inputs and content checks
 
-`agentic_job_publication.assemble_analysis` and `publish_analysis` require:
+`commonplace.lib.agentic_analysis.publication.assemble_analysis` and
+`publish_analysis` require:
 
 - Opening metadata, pinned acquisition result and classified boundary.
 - Exact permitted members and holding acceptances of their current versions.
@@ -36,15 +37,21 @@ verifiers retain that responsibility.
 
 `set/` is the sole new-engine set. Assembly's exact-byte manifest is an engine
 output; publication consumes it, not the type-only working projection. No
-persistent `output/` twin is created. Legacy manifest consumers reject engine or
-mixed directories before writing. Legacy publication is not used as an adapter.
+persistent `output/` twin is created. The CLI rejects old or mixed directories;
+legacy finalize, handoff and publication commands are removed. Retained data is
+preserved. Independently chosen handling of old evidence needs its archived
+method checkout; the new tree has no compatibility adapter.
 
-`agentic_engine_report` reports new-engine attempts, failures, stops, exhausted
-jobs, holding judgments and canonical peer drift separately from legacy rounds.
+`commonplace-workflow report-analysis` uses `agentic_analysis.report` to report
+attempts, failures, exhausted jobs, holding judgments and canonical peer drift.
 Journal states are explicitly unverified. Its logical read-only operation may
 create a lock file. `completed` means a current completed bound publication
-attempt, not a fresh retained-filesystem audit. Invocation-specific scheduling
-stops require the returned `RunStatus`.
+attempt, not a fresh retained-filesystem audit. The CLI distinguishes
+`completion: local` for blocked/out-of-scope dispositions from
+`completion: publication-job-completed`. Integration independently verifies
+exact publication inputs, retained bytes, journal and archive evidence before
+committing. Invocation-specific scheduling stops require the returned
+`RunStatus`; retain the original advance output.
 
 ## Effects and coordination
 
@@ -58,7 +65,7 @@ completion. Exact old bytes without an archive permit retry. Partial, changed or
 mismatched effects remain uncertain; do not clean them blindly. Ordinary failures
 restore the old tree. Uncertainty becomes an engine failed attempt and Stop.
 
-Both legacy and new publishers acquire the shared repository publication lock
+The active publisher acquires the shared repository publication lock
 under the ignored analysis state root, after any per-run lock. It covers incumbent
 validation, recognition, mutation and rollback. These guarantees cover
 cooperating publishers using the same repository root. Authority must exclude

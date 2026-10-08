@@ -5,34 +5,48 @@ type: types/instruction.md
 
 # Publish an accepted analysis
 
-Expose one accepted analysis per source while preserving exact accepted bytes.
-Only the coordinator loads this instruction. Analyst obligations end at their
-accepted output. No regeneration or Git authority follows from this instruction.
+Expose one accepted complete analysis per source while preserving exact accepted
+bytes. Only the coordinator loads this instruction. Analyst obligations end at
+their assigned outputs. No regeneration or Git authority follows from this
+instruction.
 
-Use `commonplace-agentic-analysis-publication` through the run driver. It
-validates the complete set, frozen source, method commit, member hashes and
-expected incumbent identity before changing a public path. The accepted
-`output/overview.md` is the candidate. There is no separate review projection.
+Let the bound assembly and publication jobs run through `commonplace-run advance`
+in the prepared worktree. They require exact members, current acceptance and
+relation coverage, pinned validation criteria, completed producer provenance,
+frozen source and unchanged method/code. Assembly produces the exact-byte
+manifest separately from the engine's type-only working projection in `set/`.
+Publication consumes the pinned manifest and members, not a second `output/` set.
+There is no standalone finalize, handoff or publication command.
 
-Publish to `retained/<source-slug>/`; the slug is the run-ID source slug. Move
-an incumbent unchanged to `retained-archive/<its-run-id>/`, then copy the
-accepted manifest and members unchanged. Complete run state pins the working
-manifest and published overview. The manifest pins every member. After the
-handoff and separate operator authorization, run `commonplace-workflow
-integrate-analysis <run>` from the origin checkout on `main` (an agent adds
-`--model <model-id>`). It stages only the changed retained set and its archive,
-commits them together on `analysis/<run-id>` from the method commit, then
-merges that branch into `main`. It refuses unrelated tracked changes or
-pre-existing staged changes in the worktree, and refuses a method commit that
-is not an ancestor of `main`. A merge conflict is aborted; keep the branch and
-worktree for an operator decision. Do not copy the set or choose a side of a
-conflict automatically.
+A `complete` disposition publishes to `retained/<source-slug>/`. An incumbent
+moves unchanged to `retained-archive/<its-run-id>/`, then the accepted manifest
+and members are copied unchanged. `blocked` and `out-of-scope` dispositions
+complete locally without retained mutation. Use `commonplace-workflow
+report-analysis <run>` to distinguish these results. Its `completed` state means
+the bound job completed on current inputs; neither that state nor engine
+publishability is a fresh audit of retained files.
 
-Ordinary I/O failures restore the incumbent and previous run state. An abrupt
-interruption may leave a partial directory or an archive with no current set.
-Treat uncertain publication as stopped evidence. Inspect both areas; restore
-the old set or finish the exact accepted copy under separate recovery authority.
-Never resume an old-method run by changing its method commit.
+After the report and separate operator authorization, run
+`commonplace-workflow integrate-analysis <run>` with the prepared worktree's
+command directory and working directory; its recorded origin must be clean and
+on `main` (an agent adds `--model <model-id>`). Integration independently checks
+current completion and coverage, exact pinned publication inputs, retained bytes,
+publication journal and archive evidence. It stages only the changed retained
+set and its archive, commits them on `analysis/<run-id>` from the method commit,
+and merges that branch into `main`. It refuses unrelated tracked changes or
+pre-existing staging in the worktree and a method commit not ancestral to
+`main`. A merge conflict is aborted; preserve the branch and worktree for the
+operator. Do not copy the set or choose a conflict side automatically.
+
+Publication journals record exact trees before mutation. A shared repository
+lock coordinates cooperating publishers; exclude non-cooperating writers from
+the destination. Ordinary failures restore the incumbent. Abrupt interruption
+or failed preliminary guards can leave an uncertain effect. Stop and preserve
+the evidence for separately authorized recovery; a journal's state label does
+not establish the filesystem outcome. Never edit state to claim completion.
+Old/mixed run directories are rejected. Keep old retained data; independently
+chosen old-evidence handling requires its archived method checkout, not an
+adapter in this tree.
 
 The site and comparison tools use the shared current-set enumerator. It rejects
 partial sets, duplicate sources and directory names that disagree with source

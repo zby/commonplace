@@ -31,6 +31,11 @@ Handler = Callable[[CodeAttempt], Mapping[str, bytes]]
 VERIFIED = ("report", "other", "summary")
 
 
+def stop_before_acquisition(_attempt):
+    """Opening-only fixtures must never acquire sources or launch workers."""
+    raise NotImplementedError("acquisition handlers are not ported in this opening-only fixture")
+
+
 def _enter(job: str) -> None:
     log = os.environ.get(LOG_ENV)
     if log:

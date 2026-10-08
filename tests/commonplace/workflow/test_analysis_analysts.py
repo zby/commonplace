@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib.agentic_job_checks import correction_findings
+from commonplace.lib.agentic_analysis.checks import correction_findings
 from commonplace.workflow import judge
 from commonplace.workflow.store import RunStore
 from tests.commonplace.workflow.test_analysis_acquisition import (

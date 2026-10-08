@@ -10,10 +10,9 @@ from pathlib import Path
 
 import pytest
 
+from commonplace.cli.run import main as run_main
 from commonplace.cli.workflow import main
-from commonplace.lib import analysis_worktree as aw
-from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
-from commonplace.workflow_legacy import Orchestrator
+from commonplace.lib.agentic_analysis import worktree as aw
 
 
 def git(root: Path, *args: str) -> str:
@@ -34,7 +33,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "AGENTS.md": "Committed instructions\n",
         "pyproject.toml": '[project]\nname = "llm-commonplace"\n',
         "uv.lock": "version = 1\n",
-        "src/commonplace/lib/agentic_workflow.py": "# committed runtime\n",
+        "src/commonplace/workflow/engine.py": "# committed runtime\n",
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
     }
@@ -160,22 +159,24 @@ def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Pa
         aw.preparation_for(destination)
 
 
-def test_analysis_start_uses_explicit_base_and_open_rejects_wrong_token(origin: Path, tmp_path: Path) -> None:
+def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path: Path, monkeypatch) -> None:
+    import commonplace.workflow
+    from commonplace.lib.agentic_analysis.declaration import JOB_SET
+
     prepared = aw.prepare_analysis(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
-    params = {"system": "Example", "source-identity": "https://example.com/example", "source": "local", "model": "fixture-model"}
-    definition = "commonplace.lib.agentic_workflow:AnalyseAgenticSystem"
-    started = Orchestrator.start(definition, params, base=tree)
-    assert started.run_dir.name.endswith(f"-{prepared['token']}-01")
-    assert aw.preparation_for(tree)["token"] == prepared["token"]
-
-    wrong = tree / "kb/agentic-system-analyses/state/AAS-2026-10-05-example-000000000000-02"
-    wrong.mkdir()
-    workflow = AnalyseAgenticSystem(params)
-    workflow.repo = tree
-    workflow.run_id = wrong.name
-    with pytest.raises(ValueError, match="preparation token"):
-        workflow.open(wrong)
+    calls = []
+    monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
+    monkeypatch.setattr(commonplace.workflow, "start_run", lambda *args, **kwargs: calls.append((args, kwargs)))
+    monkeypatch.setattr(commonplace.workflow, "advance", lambda *args, **kwargs: pytest.fail("must not advance"))
+    params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository"}
+    first = aw.start_analysis(tree, **params)
+    second = aw.start_analysis(tree, **params)
+    assert first.name.endswith(f"-{prepared['token']}-01")
+    assert second.name.endswith(f"-{prepared['token']}-02")
+    assert calls[0][0] == (first, tree / "kb" / JOB_SET)
+    assert calls[0][1]["parameters"]["source-identity"] == "https://github.com/Example/Repo"
+    assert list(first.iterdir()) == []
 
 
 def test_failed_installation_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys) -> None:
@@ -233,8 +234,9 @@ def test_command_environment_clears_inherited_python_overrides(tmp_path: Path, m
 def test_installation_probe_requires_only_active_commands(tmp_path: Path, monkeypatch) -> None:
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
-        "module": str(tmp_path / "src/commonplace/lib/agentic_workflow.py"),
+        "module": str(tmp_path / aw.RUNTIME_MARKER),
         "workflow": str(local_bin / "commonplace-workflow"),
+        "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
 
@@ -248,13 +250,14 @@ def test_installation_probe_requires_only_active_commands(tmp_path: Path, monkey
     assert aw._install(tmp_path)["path-prefix"] == str(local_bin)
 
 
-@pytest.mark.parametrize("wrong", ["module", "workflow", "validate"])
+@pytest.mark.parametrize("wrong", ["module", "workflow", "run", "validate"])
 def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, monkeypatch, wrong: str) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
-        "module": str(tmp_path / "src/commonplace/lib/agentic_workflow.py"),
+        "module": str(tmp_path / aw.RUNTIME_MARKER),
         "workflow": str(local_bin / "commonplace-workflow"),
+        "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
     found[wrong] = "/shared/main/runtime"
@@ -298,7 +301,7 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
         aw.require_run_code(run)
     # The workflow refuses before touching the run.
     monkeypatch.chdir(tmp_path / "worktree")
-    assert main(["step", str(run)]) == 1
+    assert run_main(["advance", str(run)]) == 1
     assert capsys.readouterr().err.count("runs code from") == 1
     assert list(run.iterdir()) == []
 
@@ -308,10 +311,35 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
         aw.require_run_code(run, cwd=tmp_path)
 
 
-def test_invocation_names_the_command_directory_only_for_a_local_environment(tmp_path: Path, monkeypatch) -> None:
-    from commonplace.lib.agentic_workflow import AnalyseAgenticSystem
+@pytest.mark.parametrize("command", ["start", "step", "report", "resolve", "release"])
+def test_workflow_cli_has_no_legacy_shell_route(command: str) -> None:
+    with pytest.raises(SystemExit) as error:
+        main([command])
+    assert error.value.code == 2
 
-    run = fake_checkout(tmp_path)
-    assert AnalyseAgenticSystem.command_path(run) == {}
-    monkeypatch.setattr(sys, "prefix", str(tmp_path / ".venv"))
-    assert AnalyseAgenticSystem.command_path(run) == {"command-path": str(tmp_path / ".venv/bin") + "/"}
+
+@pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
+def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
+    from commonplace.lib.agentic_analysis import report
+    from commonplace.workflow.store import RunStore
+
+    store = RunStore(tmp_path)
+    version = store.put(f"---\nresult-disposition: {disposition}\n---\n".encode())
+    monkeypatch.setattr(report, "render_engine_run_report", lambda run: json.dumps({
+        "state": "completed", "members": {"boundary": version}, "effects": {"publish": {"verified": False}},
+    }))
+    assert main(["report-analysis", str(tmp_path)]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["result-disposition"] == disposition
+    assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
+    assert result["effects"]["publish"]["verified"] is False
+
+
+@pytest.mark.parametrize("marker", ["workflow-state", "output", "opening.json", "run-state.md"])
+@pytest.mark.parametrize("command", ["advance", "status", "judge", "start"])
+def test_generic_cli_rejects_legacy_and_mixed(tmp_path: Path, capsys, marker: str, command: str) -> None:
+    (tmp_path / marker).touch()
+    (tmp_path / "run.json").write_text("{}")
+    extra = ["--role", "boundary", "--outcome", "accepted"] if command == "judge" else ["missing.yaml"] if command == "start" else []
+    assert run_main([command, str(tmp_path), *extra]) == 1
+    assert "legacy/mixed" in capsys.readouterr().err

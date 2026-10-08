@@ -1,10 +1,8 @@
-"""Ported analysis code jobs; the opt-in declaration binds them one at a time.
+"""Analysis opening, acquisition, boundary and analyst-check handlers.
 
 Opening is read-only outside the engine's attempt commit. Acquisition owns its
-external-effect journal. Boundary checks use only pinned candidate/criterion
-bytes; their binding stays fail-closed until downstream hand-outs are ported.
-Other checks, verdict application, assembly and publication remain fail-closed.
-This module does not switch the live analysis workflow or reinterpret its state.
+external-effect journal. Checks use pinned candidate and criterion bytes;
+invocation and environment guards remain separate from content validation.
 """
 
 from __future__ import annotations
@@ -16,15 +14,28 @@ import re
 import subprocess
 from pathlib import Path
 
-from commonplace.lib.agentic_acquisition import acquire_source
-from commonplace.lib.agentic_boundary import boundary_refusals, frozen_source_refusals
-from commonplace.lib.agentic_checkout import github_checkout_path
-from commonplace.lib.agentic_job_checks import correction_findings, refusal_findings
-from commonplace.lib.agentic_job_validation import criterion_bytes
-from commonplace.lib.agentic_publication import (
+from commonplace.lib.agentic_analysis.acquisition import acquire_source
+from commonplace.lib.agentic_analysis.boundary import (
+    boundary_refusals,
+    frozen_source_refusals,
+)
+from commonplace.lib.agentic_analysis.checkout import github_checkout_path
+from commonplace.lib.agentic_analysis.checks import (
+    correction_findings,
+    refusal_findings,
+)
+from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
     require_publishable_worktree,
     require_running_package_unchanged,
+)
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
+from commonplace.lib.agentic_analysis.worktree import (
+    STATE_ROOT,
+    preparation_for,
+    reject_legacy_run,
+    require_run_code,
+    source_checkout,
 )
 from commonplace.lib.agentic_set import (
     RETAINED_ROOT,
@@ -32,12 +43,6 @@ from commonplace.lib.agentic_set import (
     analysis_layout,
     normalize_source_identity,
     source_slug,
-)
-from commonplace.lib.analysis_worktree import (
-    STATE_ROOT,
-    preparation_for,
-    require_run_code,
-    source_checkout,
 )
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
@@ -67,8 +72,8 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     worktree cleanliness and incumbent all pass the existing opening guards.
     No source is acquired and no legacy opening/run-state/output copy is made.
 
-    Legacy state is rejected here, not converted. It remains resumable through
-    its own workflow and command environment until a later explicit retirement.
+    Legacy state is rejected, not converted. Its engine is retired; preserved
+    run directories are historical evidence, not inputs to this workflow.
     New-engine analysis runs require a ready token-bearing preparation record.
     """
     parameters = attempt.parameters
@@ -94,12 +99,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
             raise ValueError("source-revision requires a GitHub repository identity")
 
     run_dir = attempt.run_dir
-    legacy = [name for name in ("workflow-state", "output", "opening.json") if (run_dir / name).exists()]
-    if legacy:
-        raise ValueError(
-            "legacy analysis state cannot be opened by the new engine: " + ", ".join(legacy)
-            + "; resume it with its legacy workflow, or start a separate new-engine run"
-        )
+    reject_legacy_run(run_dir)
     repo = source_checkout(run_dir)
     if repo is None or run_dir.parent != repo / STATE_ROOT:
         raise ValueError(f"a new-engine analysis run must be directly under its checkout's {STATE_ROOT}")

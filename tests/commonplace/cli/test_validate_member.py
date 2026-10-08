@@ -10,7 +10,7 @@ import yaml
 from commonplace.cli import validate_notes
 from commonplace.lib.directory_layout import Finding
 from commonplace.lib.validation import validate_draft_at_slot
-from tests.commonplace.lib.test_agentic_workflow import Fixture
+from tests.commonplace.lib.test_agentic_analysis import member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -110,9 +110,9 @@ def test_clean_draft_is_only_a_content_pass(tmp_path, monkeypatch, capsys):
 
 
 @pytest.mark.parametrize("flags", [
-    ["--set", "output"],
+    ["--set", "set"],
     ["--member", "main.md"],
-    ["--set", "output", "--member", "main.md", "--json", "--output", "receipt.json"],
+    ["--set", "set", "--member", "main.md", "--json", "--output", "receipt.json"],
 ])
 def test_invalid_flag_combinations_refuse_before_library_call(tmp_path, monkeypatch, flags):
     monkeypatch.chdir(tmp_path)
@@ -126,7 +126,7 @@ def test_invalid_flag_combinations_refuse_before_library_call(tmp_path, monkeypa
 @pytest.mark.parametrize("slot", ["../main.md", "/tmp/main.md", "child/main.md", "."])
 def test_slot_must_be_relative_and_direct(tmp_path, monkeypatch, capsys, slot):
     monkeypatch.chdir(tmp_path)
-    assert validate_notes.main(["draft.md", "--set", "output", "--member", slot]) == 2
+    assert validate_notes.main(["draft.md", "--set", "set", "--member", slot]) == 2
     assert "relative member filename" in capsys.readouterr().err
 
 
@@ -143,76 +143,28 @@ def test_unknown_slot_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, c
     assert "member validation:" in capsys.readouterr().err
 
 
-@pytest.mark.slow
-@pytest.mark.parametrize("correction", ["none", "blockers", "corrected"])
-def test_scheduled_jobs_cli_findings_equal_acceptance_set_findings(
-    tmp_path, monkeypatch, capsys, correction,
-):
-    """Assert parity for every emitted handout, excluding labelled job residue."""
-    from commonplace.lib import agentic_publication
-    from commonplace.workflow_legacy import Done, Orchestrator
-    from tests.commonplace.workflow_legacy.definitions import ScriptedAgent
-
-    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: tmp_path)
+@pytest.mark.parametrize("slot", [
+    "boundary.md", "runtime.md", "memory.md", "epistemic.md", "reconciliation.md",
+    "memory-profile.md", "record-verification.md", "profile-verification.md",
+    "synthesis.md", "synthesis-verification.md", "overview.md",
+])
+def test_analysis_member_cli_matches_shared_validator(tmp_path, monkeypatch, capsys, slot):
+    """Validate each declared member directly, without executing workflow jobs."""
+    directory = member_fixture(tmp_path) / "set"
+    candidate = tmp_path / "draft.md"
     monkeypatch.chdir(tmp_path)
-    fixture = Fixture(tmp_path)
-    orchestrator = Orchestrator.create(
-        fixture.run_dir,
-        "tests.commonplace.lib.test_agentic_workflow:CountsPublication",
-        fixture.params(),
-    )
-    definition = orchestrator.workflow
-    jobs = {}
-    original_job = definition.job
-
-    def remember(*args, **kwargs):
-        job = original_job(*args, **kwargs)
-        jobs[job.name] = job
-        return job
-
-    monkeypatch.setattr(definition, "job", remember)
-    originals = fixture.workers()
-    if correction == "blockers":
-        originals["verify-0"] = fixture.writes(lambda _: fixture.verification(
-            "- reconciliation: Recheck this fixture finding."))
-    if correction == "corrected":
-        originals["verify-0"] = fixture.writes(lambda _: fixture.verification(
-            "- runtime: Recheck RT-OBJ-store.\n- memory: Recheck MEM-OBJ-store.\n"
-            "- epistemic: Recheck EPI-OBJ-store."))
-    observed = set()
-
-    def wrap(worker):
-        def run(handout):
-            worker(handout)
-            job = jobs[handout.name]
-            parameters = dict(
-                line.split(" = ", 1) for line in job.prompt.splitlines() if " = " in line
-            )
-            # These are machine interfaces, not paths reconstructed from job names.
-            directory = Path(parameters["validation-set"])
-            slot = parameters["validation-member"]
-            draft = handout.output_path
-            original = draft.read_bytes()
-            for content in (b"invalid draft\\n", original):
-                draft.write_bytes(content)
-                expected = [
-                    reason for reason in job.validator(draft) if reason.startswith("[set] ")
-                ]
-                before = snapshot(fixture.run_dir)
-                capsys.readouterr()
-                validate_notes.main([str(draft), "--set", str(directory), "--member", slot, "--json"])
-                payload = json.loads(capsys.readouterr().out)
-                actual = [
-                    item["text"] for item in payload["diagnostics"] if item["severity"] != "warning"
-                ]
-                assert actual == expected, handout.name
-                assert snapshot(fixture.run_dir) == before
-            observed.add(handout.name)
-        return run
-
-    scripted = ScriptedAgent(orchestrator, {name: wrap(worker) for name, worker in originals.items()})
-    assert isinstance(scripted.run()[-1], Done)
-    assert observed == set(scripted.launched)
+    for content in ("invalid draft\n", (directory / slot).read_text()):
+        candidate.write_text(content)
+        expected = validate_draft_at_slot(directory, slot, candidate, repo_root=tmp_path)
+        before = snapshot(tmp_path)
+        validate_notes.main([
+            str(candidate), "--set", str(directory), "--member", slot, "--json",
+        ])
+        payload = json.loads(capsys.readouterr().out)
+        assert [item["text"] for item in payload["diagnostics"]] == [
+            "[set] " + finding.render() for finding in expected if not finding.absent
+        ]
+        assert snapshot(tmp_path) == before
 
 
 def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeypatch, capsys):
@@ -223,7 +175,7 @@ def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeyp
     ]
     monkeypatch.setattr(validate_notes, "validate_draft_at_slot", lambda *a, **kw: findings)
     assert validate_notes.check_member_draft(
-        tmp_path / "draft.md", directory=tmp_path / "output", slot=Path("main.md"), repo_root=tmp_path,
+        tmp_path / "draft.md", directory=tmp_path / "set", slot=Path("main.md"), repo_root=tmp_path,
     ) == 1
     output = capsys.readouterr().out
     assert "absent" not in output

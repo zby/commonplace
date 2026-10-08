@@ -22,11 +22,14 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib.agentic_set import normalize_source_identity
-from commonplace.workflow_legacy import StopRun
 
 CHECKOUT_ROOT = "related-systems"
 GITHUB_REPOSITORY = re.compile(r"https://github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")
 SSH_GITHUB = re.compile(r"git@github\.com:(.+)")
+
+
+class CheckoutError(ValueError):
+    """The requested source checkout cannot be acquired safely."""
 
 
 def github_checkout_path(identity: str) -> Path | None:
@@ -78,7 +81,7 @@ def freeze_checkout(
     else:
         commit = clone(repo_root, path, origin=origin, revision=revision)
     if output(path, "rev-parse", "HEAD") != commit or output(path, "status", "--porcelain"):
-        raise StopRun(f"the checkout at {path} is not exactly the files of {commit}")
+        raise CheckoutError(f"the checkout at {path} is not exactly the files of {commit}")
     return {
         "kind": "git",
         "identity": normalize_source_identity(identity),
@@ -91,12 +94,12 @@ def freeze_checkout(
 def refreeze(path: Path, *, origin: str, revision: str | None) -> str:
     top = git(path, "rev-parse", "--show-toplevel") if path.is_dir() else None
     if top is None or top.returncode != 0 or Path(top.stdout.strip()) != path.resolve():
-        raise StopRun(f"{path} exists but is not a Git checkout; move it aside")
+        raise CheckoutError(f"{path} exists but is not a Git checkout; move it aside")
     remote = git(path, "remote", "get-url", "origin")
     if remote.returncode != 0 or canonical_origin(remote.stdout) != canonical_origin(origin):
-        raise StopRun(f"the checkout at {path} does not have the origin {origin}")
+        raise CheckoutError(f"the checkout at {path} does not have the origin {origin}")
     if output(path, "status", "--porcelain"):
-        raise StopRun(
+        raise CheckoutError(
             f"the checkout at {path} has local changes or untracked files; "
             "the operator must keep or discard them"
         )
@@ -118,12 +121,12 @@ def require_commit(path: Path, commit: str, *, origin: str) -> None:
         git(path, "cat-file", "-e", f"{commit}^{{commit}}").returncode != 0
         and git(path, "fetch", "--quiet", "origin", commit).returncode != 0
     ):
-        raise StopRun(f"the requested commit {commit} is not available from {origin}")
+        raise CheckoutError(f"the requested commit {commit} is not available from {origin}")
 
 
 def clone(repo_root: Path, path: Path, *, origin: str, revision: str | None) -> str:
     if git(repo_root, "check-ignore", "-q", f"{CHECKOUT_ROOT}/").returncode != 0:
-        raise StopRun(f"{CHECKOUT_ROOT}/ is not ignored by the repository at {repo_root}")
+        raise CheckoutError(f"{CHECKOUT_ROOT}/ is not ignored by the repository at {repo_root}")
     path.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=f".{path.name}-", dir=path.parent))
     try:
