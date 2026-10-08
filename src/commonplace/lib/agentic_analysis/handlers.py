@@ -13,38 +13,37 @@ import os
 import re
 import subprocess
 from dataclasses import replace
+from hashlib import sha256
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis.acquisition import acquire_source
-from commonplace.lib.agentic_analysis.boundary import (
-    boundary_refusals,
+from commonplace.lib.agentic_analysis.boundary import boundary_refusals
+from commonplace.lib.agentic_analysis.guards import (
+    inspect_destination,
+    require_publishable_worktree,
 )
-from commonplace.lib.agentic_analysis.candidate import (
+from commonplace.lib.agentic_analysis.records import declared_ids
+from commonplace.lib.agentic_analysis.sets import (
+    RETAINED_ROOT,
+    analysis_layout,
+    source_slug,
+)
+from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
+from commonplace.lib.note_parser import parse_document
+from commonplace.lib.source_identity import normalize_source_identity
+from commonplace.setrun.checks import (
     answer_reasons,
     candidate,
     content_reasons,
     judge,
     review,
 )
-from commonplace.lib.agentic_analysis.checkout import github_checkout_path
-from commonplace.lib.agentic_analysis.guards import (
-    inspect_destination,
-    require_publishable_worktree,
-    require_running_package_unchanged,
-)
-from commonplace.lib.agentic_analysis.sets import (
-    RETAINED_ROOT,
-    analysis_layout,
-    normalize_source_identity,
-    source_slug,
-)
-from commonplace.lib.agentic_analysis.worktree import (
-    STATE_ROOT,
+from commonplace.setrun.isolation import (
     preparation_for,
     require_run_code,
+    require_running_package_unchanged,
     source_checkout,
 )
-from commonplace.lib.note_parser import parse_document
+from commonplace.setrun.sources import acquire, github_checkout_path
 from commonplace.workflow import CodeAttempt
 
 ANALYSTS = ("runtime", "memory", "epistemic")
@@ -142,8 +141,16 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """
-    _, repo = _locate(attempt)
-    return {"source": acquire_source(repo, attempt.run_dir, attempt.read("metadata"))}
+    metadata_bytes = attempt.read("metadata")
+    metadata, repo = _locate(attempt)
+    identity = metadata.get("source-identity")
+    revision = metadata.get("source-revision")
+    if not isinstance(identity, str) or not identity or normalize_source_identity(identity) != identity:
+        raise ValueError("opening metadata must carry the normalized source identity")
+    if revision is not None and (not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision)):
+        raise ValueError("opening metadata source-revision must be a full 40-hex commit")
+    return {"source": acquire(repo, attempt.run_dir, identity=identity, revision=revision,
+                              inputs_digest=sha256(metadata_bytes).hexdigest())}
 
 
 def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
@@ -218,10 +225,19 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
 
 
 def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
-    check = candidate(attempt, member, ("boundary", *(role for role in ANALYSTS if role != member)))
-    reasons = review(check) + answer_reasons(
-        check, record="producer-attempt", output="report", incumbent="incumbent-report",
-    )
+    check = candidate(attempt, member, ("boundary", *(role for role in ANALYSTS if role != member)),
+                      source_role="boundary")
+    reasons = review(check) + answer_reasons(check, record="producer-attempt", output="report")
+    # Other reports cite these IDs, so a corrected report keeps every one.
+    incumbent = attempt.read("incumbent-report")
+    if incumbent is not None:
+        dropped = sorted(set(declared_ids(incumbent.decode("utf-8")))
+                         - set(declared_ids(check.data.decode("utf-8", errors="replace"))))
+        if dropped:
+            reasons.append(
+                "[correction] record declarations: keep every record the accepted predecessor declared: "
+                + ", ".join(dropped) + "; correct its finding without changing its referent"
+            )
     # The memory report is the source of the profile's source identity.
     if member == "memory" and check.fields:
         opened = _locate(attempt)[0]["source-identity"]

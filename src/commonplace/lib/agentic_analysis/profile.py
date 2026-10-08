@@ -1,4 +1,4 @@
-"""Opt-in profile/synthesis checks and application of exact handed verdicts.
+"""Profile/synthesis checks and application of exact handed verdicts.
 
 Content is checked against declared byte snapshots, never mutable set members.
 Semantic support and completeness are the independent verifier's judgment;
@@ -8,15 +8,14 @@ The declaration must supply all criterion files read by content validation.
 
 from __future__ import annotations
 
-from commonplace.lib.agentic_analysis.candidate import (
+from commonplace.lib.note_parser import parse_document, section
+from commonplace.setrun.checks import (
     answer_reasons,
     candidate,
     content_reasons,
     judge,
     review,
 )
-from commonplace.lib.agentic_analysis.records import section
-from commonplace.lib.note_parser import parse_document
 from commonplace.workflow import CodeAttempt
 
 _RECORDS = ("boundary", "runtime", "memory", "epistemic", "reconciliation")
@@ -25,7 +24,7 @@ _PRIOR_VERDICTS = ("record-verification", "profile-verification")
 
 def _check(attempt: CodeAttempt, *, role: str, output: str) -> dict[str, bytes]:
     roles = _RECORDS if role == "memory-profile" else (*_RECORDS, *_PRIOR_VERDICTS)
-    check = candidate(attempt, role, roles)
+    check = candidate(attempt, role, roles, source_role="boundary")
     # These stages declare no records. Record preservation applies to analysts;
     # retaining supported profile values and prose is judged semantically.
     reasons = review(check) + answer_reasons(check, record="producer-attempt", output=output)
@@ -54,7 +53,7 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
     roles = (*_RECORDS, subject_role)
     if stage == "synthesis":
         roles += _PRIOR_VERDICTS
-    check = candidate(attempt, role, roles, seen=True)
+    check = candidate(attempt, role, roles, seen=True, source_role="boundary")
     reasons = review(check) + answer_reasons(check, record="verifier-attempt", output="verification")
     # Content acceptance of the verdict cannot cover the semantic gate of its
     # subject. Only the separate blocker-free subject acceptance covers that.

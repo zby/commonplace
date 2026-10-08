@@ -12,8 +12,8 @@ import shutil
 
 import pytest
 
-from commonplace.lib.agentic_analysis import guards as agentic_publication
 from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
+from commonplace.setrun import isolation
 from commonplace.workflow.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
@@ -74,7 +74,7 @@ def test_opening_refuses_invalid_or_missing_parameters(prepared, changes, reason
 
 
 @pytest.mark.parametrize("changes,reason", [
-    (None, "ready analysis preparation record required"),
+    (None, "ready worktree preparation record required"),
     ({"status": "failed"}, "does not name a ready worktree"),
     ({"worktree": "/another/worktree"}, "does not name a ready worktree"),
     ({"token": "short"}, "no valid worktree token"),
@@ -126,7 +126,7 @@ def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, mo
     other = prepared.repo.with_name("running-package")
     shutil.copytree(prepared.repo, other)
     (other / "src/commonplace/workflow/engine.py").write_text("# Different executing code.\n")
-    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: other)
+    monkeypatch.setattr(isolation, "running_package_root", lambda: other)
     c = prepared.start()
     c.advance()
     assert_stopped(c, "open", "running commonplace source")

@@ -10,7 +10,6 @@ from __future__ import annotations
 import json
 import os
 import re
-import shutil
 from collections.abc import Mapping
 from hashlib import sha256
 from pathlib import Path
@@ -19,7 +18,6 @@ import yaml
 
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
-    atomic_write,
     inspect_destination,
     publication_lock,
 )
@@ -32,13 +30,13 @@ from commonplace.lib.agentic_analysis.records import amendment_index
 from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
-    SET_TYPE,
     source_slug,
 )
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_analysis_set
+from commonplace.setrun.checks import criterion_bytes
+from commonplace.setrun.effects import hashes, install_tree
 from commonplace.workflow import CodeAttempt, UncertainEffectError
 
 JOURNAL = "effects/publish.json"
@@ -145,9 +143,10 @@ def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[st
         raise ValueError("pinned set validation warnings require review: " + "; ".join(result.warns))
 
 
-def _manifest(layout, members: Mapping[str, bytes], worker: dict) -> bytes:
+def _manifest(attempt: CodeAttempt, members: Mapping[str, bytes], worker: dict) -> bytes:
+    layout = attempt.layout
     return yaml.safe_dump({
-        "type": SET_TYPE,
+        "type": attempt.type_spec,
         "members": {layout.path(role): {"sha256": _digest(data)} for role, data in members.items()},
         "worker": worker,
     }, sort_keys=False).encode("utf-8")
@@ -207,7 +206,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     overview = ("---\n" + yaml.safe_dump(frontmatter, sort_keys=False, allow_unicode=True)
                 + "---\n\n" + body).encode("utf-8")
     complete = {**members, "overview": overview}
-    manifest = _manifest(layout, complete, worker)
+    manifest = _manifest(attempt, complete, worker)
     validate_pinned_set(attempt, repo=repo,
                         members={layout.path(r): b for r, b in complete.items()}, manifest=manifest)
     scope = tuple(relation for origin, partner, relation in relations
@@ -217,135 +216,12 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     return {"overview": overview, "manifest": manifest}
 
 
-def _tree(path: Path) -> dict[str, bytes] | None:
-    if not os.path.lexists(path):
-        return None
-    if path.resolve() != path or not path.is_dir():
-        raise UncertainEffectError(f"publication tree redirects or is not a directory: {path}")
-    result = {}
-    for file in path.iterdir():
-        if not file.is_file() or file.is_symlink():
-            raise UncertainEffectError(f"unexpected publication tree entry: {file}")
-        result[file.name] = file.read_bytes()
-    return result
-
-
-def _hashes(tree: Mapping[str, bytes] | None):
-    return None if tree is None else {name: _digest(data) for name, data in sorted(tree.items())}
-
-
-def _safe(path: Path) -> Path:
-    if path.resolve() != path:
-        raise UncertainEffectError(f"publication path must not traverse symlinks: {path}")
-    return path
-
-
-def _write_record(path: Path, record: dict) -> None:
-    atomic_write(path, (json.dumps(record, sort_keys=True, indent=2) + "\n").encode())
-
-
-def _publish_effect(*, run_dir: Path, destination: Path, archive_root: Path,
-                    files: Mapping[str, bytes], expected: str, identity: str,
-                    inspect_incumbent) -> dict:
-    """Install exact bytes or recognize a journaled result; partial effects Stop.
-
-    Caller holds publication_lock after any per-run engine lock, through journal
-    recognition, incumbent inspection, mutation and rollback. Byte guards preserve
-    detected unexpected writes, but cannot prevent TOCTOU from non-cooperating
-    writers: those still require authority-level exclusivity.
-    """
-    destination, archive_root = _safe(destination), _safe(archive_root)
-    journal = _safe(run_dir / JOURNAL)
-    intent = {"version": 1, "run-id": run_dir.name, "destination": str(destination),
-              "source-identity": identity, "expected": expected, "new": _hashes(files)}
-    if journal.exists():
-        try:
-            record = json.loads(journal.read_bytes())
-            if (not isinstance(record, dict) or any(record.get(k) != v for k, v in intent.items())
-                    or set(record) != {*intent, "old", "archive", "state"}
-                    or record["state"] not in ("started", "completed", "rolled-back")):
-                raise ValueError("journal input identity or structure differs")
-            old = record["old"]
-            if old is not None and (not isinstance(old, dict) or "overview.md" not in old
-                    or any(Path(name).name != name or not re.fullmatch(r"[0-9a-f]{64}", str(value))
-                           for name, value in old.items())):
-                raise ValueError("invalid old tree identity")
-            if ("absent" if old is None else old["overview.md"]) != expected:
-                raise ValueError("old tree differs from opened incumbent")
-            if (old is None) != (record["archive"] is None):
-                raise ValueError("archive and old tree disagree")
-            archive = Path(record["archive"]) if record["archive"] else None
-            if archive is not None and (archive.parent != archive_root or archive.name in ("", ".", "..")):
-                raise ValueError("invalid archive path")
-            now = _hashes(_tree(destination))
-            archived = _hashes(_tree(_safe(archive))) if archive else None
-            if now == intent["new"] and (old is None or archived == old):
-                _write_record(journal, {**record, "state": "completed"})
-                return {"state": "published", "destination": str(destination), "members": intent["new"]}
-            if record["state"] == "completed":
-                raise ValueError("completed publication no longer has its exact bytes")
-            if now != old or archived is not None:
-                raise ValueError("interrupted publication is not its exact old or completed state")
-        except (OSError, ValueError, TypeError, KeyError) as error:
-            raise UncertainEffectError(f"cannot establish publication outcome: {error}") from error
-    else:
-        record = None
-    # Full incumbent validation and source ownership precede any effect.
-    inspect_incumbent()
-    old_tree = _tree(destination)
-    actual = "absent" if old_tree is None else _digest(old_tree.get("overview.md", b""))
-    if actual != expected:
-        raise ValueError("publication destination changed since opening inspection")
-    archive = None
-    if old_tree is not None:
-        old_id = _document(old_tree["overview.md"]).frontmatter.get("run-id")
-        if not isinstance(old_id, str) or not re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) or old_id == run_dir.name:
-            raise ValueError("replacement requires a different valid incumbent run ID")
-        archive = _safe(archive_root / old_id)
-        if os.path.lexists(archive):
-            raise ValueError("archive destination already exists")
-    if record is not None and (record["old"] != _hashes(old_tree)
-                               or record["archive"] != (str(archive) if archive else None)):
-        raise UncertainEffectError("incumbent differs from journaled starting bytes")
-    record = {**intent, "old": _hashes(old_tree), "archive": str(archive) if archive else None, "state": "started"}
-    _write_record(journal, record)
-    moved = created = False
-    try:
-        if _tree(destination) != old_tree:
-            raise ValueError("incumbent changed before mutation")
-        if archive:
-            archive.parent.mkdir(parents=True, exist_ok=True)
-            destination.rename(archive)
-            moved = True
-        destination.mkdir(parents=True, exist_ok=False)
-        created = True
-        for name, data in files.items():
-            if Path(name).name != name or name in (".", ".."):
-                raise ValueError("publication members must be direct files")
-            atomic_write(destination / name, data)
-        if _tree(destination) != dict(files):
-            raise UncertainEffectError("installed publication bytes differ")
-        _write_record(journal, {**record, "state": "completed"})
-    except Exception as error:
-        try:
-            if created:
-                partial = _tree(destination)
-                if partial is None or any(name not in files or data != files[name] for name, data in partial.items()):
-                    raise ValueError("new tree has unexpected bytes; preserve it")
-                shutil.rmtree(destination)
-            if moved:
-                if _hashes(_tree(archive)) != record["old"]:
-                    raise ValueError("archive changed; preserve it")
-                if os.path.lexists(destination):
-                    raise ValueError("destination reappeared; preserve it and the archive")
-                archive.rename(destination)
-            if _tree(destination) != old_tree:
-                raise ValueError("old state was not restored")
-            _write_record(journal, {**record, "state": "rolled-back"})
-        except Exception as rollback:  # noqa: BLE001 - any rollback failure leaves an uncertain effect
-            raise UncertainEffectError(f"publication failed ({error}); rollback uncertain ({rollback})") from error
-        raise
-    return {"state": "published", "destination": str(destination), "members": intent["new"]}
+def _archive_name(incumbent: Mapping[str, bytes], run_id: str) -> str:
+    """An incumbent set is archived under its own run ID, never this run's."""
+    old_id = _document(incumbent["overview.md"]).frontmatter.get("run-id")
+    if not isinstance(old_id, str) or not re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) or old_id == run_id:
+        raise ValueError("replacement requires a different valid incumbent run ID")
+    return old_id
 
 
 def _prepare_publication(attempt: CodeAttempt):
@@ -357,7 +233,7 @@ def _prepare_publication(attempt: CodeAttempt):
     if manifest is None:
         raise ValueError("publication requires assembly's pinned manifest")
     supplied = yaml.load(manifest, Loader=UniqueKeyLoader)
-    if supplied != yaml.safe_load(_manifest(layout, members, worker)):
+    if supplied != yaml.safe_load(_manifest(attempt, members, worker)):
         raise ValueError("assembly manifest does not pin these exact members and provenance")
     files = {layout.path(role): data for role, data in members.items()}
     validate_pinned_set(attempt, repo=repo, members=files, manifest=manifest)
@@ -400,10 +276,13 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
 
     # The engine already holds the per-run lock. Never take it inside this lock.
     with publication_lock(repo):
-        _publish_effect(run_dir=attempt.run_dir, destination=destination, archive_root=repo / ARCHIVE_ROOT,
-                        files=files, identity=metadata["source-identity"],
-                        expected=metadata["expected-incumbent-sha256"], inspect_incumbent=inspect_incumbent)
-    return {"receipt": _receipt(published=True, destination=str(destination), members=_hashes(files),
+        install_tree(journal=attempt.run_dir / JOURNAL, destination=destination,
+                     archive_root=repo / ARCHIVE_ROOT, files=files, anchor="overview.md",
+                     expected=metadata["expected-incumbent-sha256"],
+                     identity={"run-id": attempt.run_dir.name, "source-identity": metadata["source-identity"]},
+                     archive_name=lambda old: _archive_name(old, attempt.run_dir.name),
+                     inspect_incumbent=inspect_incumbent)
+    return {"receipt": _receipt(published=True, destination=str(destination), members=hashes(files),
                                 **{name: metadata.get(name) for name in RECEIPT_PINS})}
 
 

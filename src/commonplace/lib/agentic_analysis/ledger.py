@@ -4,8 +4,7 @@ from __future__ import annotations
 
 import re
 
-from commonplace.lib.agentic_analysis.records import section
-from commonplace.lib.note_parser import blank_fenced_code_blocks
+from commonplace.lib.note_parser import blank_fenced_code_blocks, section
 
 ROUTE_FUNCTIONS = frozenset({
     "content transformation", "check/evidence production", "disposition/acceptance",

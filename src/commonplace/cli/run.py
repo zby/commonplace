@@ -21,9 +21,7 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis.worktree import (
-    require_run_code,
-)
+from commonplace.setrun.isolation import require_run_code
 from commonplace.workflow import (
     AttemptResult,
     DeclarationError,

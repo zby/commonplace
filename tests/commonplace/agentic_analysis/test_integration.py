@@ -14,6 +14,7 @@ from commonplace import workflow
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis import worktree as aw
 from commonplace.lib.agentic_analysis.declaration import JOB_SET
+from commonplace.setrun import effects
 from commonplace.workflow.store import RunStore
 
 
@@ -53,7 +54,7 @@ def proof(tmp_path, monkeypatch):
     view = {"declaration": {"job_set": str(declaration), "sha256": sha256(declaration.read_bytes()).hexdigest(),
                             "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
             "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
-    receipt = {"published": True, "destination": str(destination), "members": publication._hashes(files),
+    receipt = {"published": True, "destination": str(destination), "members": effects.hashes(files),
                "run-id": run.name, "inputs-commit": method, **parameters, "source-revision": None,
                "expected-incumbent-sha256": "absent"}
     engine = SimpleNamespace(view=view, receipt=receipt, current=True)
@@ -128,7 +129,7 @@ def test_archive_must_equal_the_git_incumbent(proof):
     proof.destination.mkdir()
     for name, data in proof.files.items():
         (proof.destination / name).write_bytes(data)
-    proof.receipt["members"] = publication._hashes(proof.files)
+    proof.receipt["members"] = effects.hashes(proof.files)
     assert len(verify(proof)[0]) == 2
     (archive / "boundary.md").write_bytes(b"changed archive")
     with pytest.raises(ValueError, match="exact incumbent"):

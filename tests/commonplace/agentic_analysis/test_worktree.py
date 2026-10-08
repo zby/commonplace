@@ -13,6 +13,7 @@ import pytest
 from commonplace.cli.run import main as run_main
 from commonplace.cli.workflow import main
 from commonplace.lib.agentic_analysis import worktree as aw
+from commonplace.setrun import isolation as iso
 
 
 def git(root: Path, *args: str) -> str:
@@ -46,7 +47,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
     (skills / "worker").symlink_to("../../kb/instructions/worker", target_is_directory=True)
     git(root, "add", ".")
     git(root, "commit", "--quiet", "-m", "Seed")
-    monkeypatch.setattr(aw, "_install", lambda tree: {
+    monkeypatch.setattr(iso, "_install", lambda tree: {
         "python": str(tree / ".venv/bin/python3"),
         "path-prefix": str(tree / ".venv/bin"),
     })
@@ -56,7 +57,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
 def test_dirty_origin_is_refused_without_creating_a_worktree(origin: Path) -> None:
     (origin / "note.md").write_text("Pending edit\n")
     with pytest.raises(ValueError, match="--allow-dirty-origin"):
-        aw.prepare_analysis(origin, name="example")
+        iso.prepare_worktree(origin, name="example")
     assert not (origin / ".commonplace").exists()
 
 
@@ -67,7 +68,7 @@ def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(orig
     (origin / "untracked.md").write_text("Not in the analysis\n")
     before = git(origin, "status", "--porcelain")
 
-    prepared = aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
+    prepared = iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)
     tree = Path(str(prepared["worktree"]))
 
     assert tree.parent == origin / ".commonplace/worktrees"
@@ -77,7 +78,7 @@ def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(orig
     assert prepared["status"] == "ready"
     assert len(prepared["token"]) == 12
     assert tree.name.endswith("-" + prepared["token"])
-    assert aw.preparation_for(tree) == prepared
+    assert iso.preparation_for(tree) == prepared
     assert (tree / "note.md").read_text() == "Committed note\n"
     assert not (tree / "untracked.md").exists()
     assert git(tree, "status", "--porcelain") == ""
@@ -127,10 +128,10 @@ def _startup_change(origin: Path, kind: str) -> Path | None:
 def test_startup_changes_are_never_omitted(origin: Path, kind: str) -> None:
     changed = _startup_change(origin, kind)
     if changed is None:
-        assert aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
+        assert iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
         return
     with pytest.raises(ValueError, match="startup instructions or configuration") as error:
-        aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
+        iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)
     assert changed.relative_to(origin).as_posix() in str(error.value)
     assert not (origin / ".commonplace").exists()
 
@@ -141,33 +142,33 @@ def test_selected_revision_must_match_the_origins_startup_instructions(origin: P
     git(origin, "add", "AGENTS.md")
     git(origin, "commit", "--quiet", "-m", "Change startup instructions")
     with pytest.raises(ValueError, match="AGENTS.md"):
-        aw.prepare_analysis(origin, name="example", revision=old, allow_dirty_origin=True)
+        iso.prepare_worktree(origin, name="example", revision=old, allow_dirty_origin=True)
 
 
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:
     destination = tmp_path / "existing"
     destination.mkdir()
     with pytest.raises(ValueError, match="already exists"):
-        aw.prepare_analysis(origin, name="example", worktree=destination)
+        iso.prepare_worktree(origin, name="example", worktree=destination)
 
 
 def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Path, tmp_path: Path) -> None:
     destination = tmp_path / "chosen"
-    prepared = aw.prepare_analysis(origin, name="example", worktree=destination)
+    prepared = iso.prepare_worktree(origin, name="example", worktree=destination)
     assert len(prepared["token"]) == 12
     record_path = Path(str(prepared["record"]))
     record = json.loads(record_path.read_text())
     record["worktree"] = str(origin)
     record_path.write_text(json.dumps(record))
     with pytest.raises(ValueError, match="does not name"):
-        aw.preparation_for(destination)
+        iso.preparation_for(destination)
 
 
 def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path: Path, monkeypatch) -> None:
     import commonplace.workflow
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
 
-    prepared = aw.prepare_analysis(origin, name="example", worktree=tmp_path / "chosen")
+    prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
     calls = []
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
@@ -193,7 +194,7 @@ def test_failed_setup_is_recorded_and_never_launched(origin: Path, monkeypatch, 
             raise ValueError("installation failed")
         (origin / "AGENTS.md").write_text("Changed during setup\n")
         return {}
-    monkeypatch.setattr(aw, "_install", install)
+    monkeypatch.setattr(iso, "_install", install)
     monkeypatch.chdir(origin)
     assert main(["prepare-analysis", "--name", "example", "--", "must-not-launch"]) == 1
     assert message in capsys.readouterr().err
@@ -230,19 +231,19 @@ def test_installation_probe_requires_worktree_local_commands(tmp_path: Path, mon
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
-        "module": str(tmp_path / aw.RUNTIME_MARKER),
+        "module": str(tmp_path / iso.RUNTIME_MARKER),
         "workflow": str(local_bin / "commonplace-workflow"),
         "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
     if wrong is not None:
         found[wrong] = "/shared/main/runtime"
-    monkeypatch.setattr(aw, "_run", lambda args, **kwargs: "" if args[0] == "uv" else json.dumps(found))
+    monkeypatch.setattr(iso, "run_command", lambda args, **kwargs: "" if args[0] == "uv" else json.dumps(found))
     if wrong is None:
-        assert aw._install(tmp_path)["path-prefix"] == str(local_bin)
+        assert iso._install(tmp_path)["path-prefix"] == str(local_bin)
         return
     with pytest.raises(ValueError, match="outside"):
-        aw._install(tmp_path)
+        iso._install(tmp_path)
 
 
 def test_implicit_head_behind_the_default_branch_is_refused(origin: Path) -> None:
@@ -252,14 +253,14 @@ def test_implicit_head_behind_the_default_branch_is_refused(origin: Path) -> Non
     git(origin, "commit", "--quiet", "-am", "Later")
     git(origin, "checkout", "--quiet", "--detach", first)
     with pytest.raises(ValueError, match="1 commits behind main"):
-        aw.prepare_analysis(origin, name="example")
+        iso.prepare_worktree(origin, name="example")
     assert not (origin / ".commonplace").exists()
     # A deliberate selection of the same revision is the operator's choice.
-    assert aw.prepare_analysis(origin, name="example", revision=first)["commit"] == first
+    assert iso.prepare_worktree(origin, name="example", revision=first)["commit"] == first
 
 
 def fake_checkout(root: Path) -> Path:
-    marker = root / aw.RUNTIME_MARKER
+    marker = root / iso.RUNTIME_MARKER
     marker.parent.mkdir(parents=True)
     marker.write_text("")
     run = root / "kb/agentic-system-analyses/state/AAS-2026-01-01-example-01"
@@ -292,12 +293,12 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
 def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
     from hashlib import sha256
 
-    from commonplace.lib.agentic_analysis import report
+    from commonplace.setrun import report
 
     boundary = f"---\nresult-disposition: {disposition}\n---\n".encode()
     (tmp_path / "set").mkdir()
     (tmp_path / "set" / "boundary.md").write_bytes(boundary)
-    monkeypatch.setattr(report, "render_engine_run_report", lambda run: json.dumps({
+    monkeypatch.setattr(report, "render_engine_run_report", lambda run, **kw: json.dumps({
         "state": "completed", "set": str(tmp_path / "set"), "members": {"boundary": sha256(boundary).hexdigest()},
         "effects": {"publish": {"verified": False}},
     }))

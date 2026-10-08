@@ -8,12 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis.worktree import (
-    command_environment,
-    integrate_analysis,
-    prepare_analysis,
-    start_analysis,
-)
+from commonplace.lib.agentic_analysis.worktree import integrate_analysis, start_analysis
+from commonplace.setrun.isolation import command_environment, prepare_worktree
 from commonplace.workflow import UncertainEffectError
 
 
@@ -44,9 +40,9 @@ def main(argv: list[str] | None = None) -> int:
         elif arguments.command == "integrate-analysis":
             print(integrate_analysis(arguments.run, model=arguments.model))
         elif arguments.command == "report-analysis":
-            from commonplace.lib.agentic_analysis.report import render_engine_run_report
+            from commonplace.setrun.report import render_engine_run_report
 
-            rendered = json.loads(render_engine_run_report(arguments.run))
+            rendered = json.loads(render_engine_run_report(arguments.run, final_job="publish"))
             if rendered["state"] == "completed":
                 from hashlib import sha256
 
@@ -69,7 +65,7 @@ def main(argv: list[str] | None = None) -> int:
                 rendered["completion"] = "local" if disposition != "complete" else "publication-job-completed"
             print(json.dumps(rendered, indent=2, sort_keys=True))
         else:
-            preparation = prepare_analysis(
+            preparation = prepare_worktree(
                 Path.cwd(), name=arguments.name, allow_dirty_origin=arguments.allow_dirty_origin,
                 revision=arguments.revision, worktree=arguments.worktree,
             )

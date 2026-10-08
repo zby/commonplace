@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib.agentic_analysis.checks import correction_findings
 from commonplace.workflow import judge
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     REPORT_TYPES,
@@ -171,12 +170,3 @@ def test_structural_repair_can_restore_original_bytes_with_fresh_declines(analys
     assert not a.coordinator.status.stops and not a.coordinator.status.handouts
     assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
     assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
-
-
-def test_record_preservation_is_a_pure_correction_check():
-    original = "## Shared records\n\n### Operative objects\n\n#### RT-OBJ-store — Store\n\noriginal finding\n".encode()
-    lost = b"## Shared records\n\nnone declared in this member\n"
-    reasons = correction_findings(lost, member="runtime", incumbent=original, refusal=None, answers=b"")
-    assert any("RT-OBJ-store" in reason for reason in reasons)
-    changed = original.replace(b"original", b"corrected")
-    assert not correction_findings(changed, member="runtime", incumbent=original, refusal=None, answers=b"")

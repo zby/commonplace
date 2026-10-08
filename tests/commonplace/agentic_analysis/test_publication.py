@@ -13,8 +13,9 @@ import pytest
 import yaml
 
 from commonplace.lib.agentic_analysis import publication
-from commonplace.lib.agentic_analysis.report import engine_run_report
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.setrun import effects
+from commonplace.setrun.report import engine_run_report
 from commonplace.workflow import RunStatus, Stop, UncertainEffectError
 from commonplace.workflow.state import _parse_type
 from commonplace.workflow.store import RunStore
@@ -35,6 +36,7 @@ class Attempt:
         self.library = tmp_path / "kb"
         # The set type a run fixes at start, as CodeAttempt exposes it.
         self.type_text = (ROOT / "kb" / SET_TYPE).read_text()
+        self.type_spec = SET_TYPE
         layout, relations = _parse_type(self.type_text, SET_TYPE)
         self.layout, self.relations = layout, tuple(relations)
         self.inputs = {}
@@ -158,7 +160,7 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
     monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
     outputs = publication.assemble_analysis(attempt)
     attempt.inputs.update(outputs)
-    monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must remain local"))
+    monkeypatch.setattr(publication, "install_tree", lambda **kw: pytest.fail("must remain local"))
     assert json.loads(publication.publish_analysis(attempt)["receipt"]) == {"published": False}
     assert not (tmp_path / "kb/agentic-system-analyses/retained").exists()
     assert not (attempt.run_dir / "output").exists()
@@ -190,127 +192,6 @@ def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted
         publication.publish_analysis(attempt)
 
 
-def effect(tmp_path, *, incumbent=False):
-    run = tmp_path / RUN_ID
-    run.mkdir()
-    destination = tmp_path / "retained" / "example"
-    archive = tmp_path / "archive"
-    old = {"overview.md": doc({"run-id": "AAS-2026-10-06-example-0123456789ab-01"}),
-           "ARTIFACT.yaml": b"old manifest\n", "memory.md": b"old memory\r\n"}
-    if incumbent:
-        destination.mkdir(parents=True)
-        for name, data in old.items():
-            (destination / name).write_bytes(data)
-    new = {"ARTIFACT.yaml": b"new manifest\n", "overview.md": b"new overview\r\n", "memory.md": b"new memory\n"}
-    args = {"run_dir": run, "destination": destination, "archive_root": archive, "files": new,
-            "expected": publication._digest(old["overview.md"]) if incumbent else "absent",
-            "identity": "fixture/source", "inspect_incumbent": lambda: None}
-    return args, old
-
-
-@pytest.mark.parametrize("incumbent", [False, True])
-def test_exact_byte_effect_and_replay(tmp_path, incumbent):
-    args, old = effect(tmp_path, incumbent=incumbent)
-    first = publication._publish_effect(**args)
-    assert publication._tree(args["destination"]) == args["files"]
-    if incumbent:
-        assert publication._tree(args["archive_root"] / "AAS-2026-10-06-example-0123456789ab-01") == old
-    args["inspect_incumbent"] = lambda: pytest.fail("recognizable replay must not reinspect the new incumbent")
-    assert publication._publish_effect(**args) == first
-    assert json.loads((args["run_dir"] / publication.JOURNAL).read_bytes())["state"] == "completed"
-
-
-def test_incumbent_guard_has_no_effect(tmp_path):
-    args, old = effect(tmp_path, incumbent=True)
-    args["expected"] = "f" * 64
-    with pytest.raises(ValueError, match="changed since"):
-        publication._publish_effect(**args)
-    assert publication._tree(args["destination"]) == old
-    assert not (args["run_dir"] / publication.JOURNAL).exists()
-
-
-def test_failed_write_rolls_back_exact_old_tree_and_retries(tmp_path, monkeypatch):
-    args, old = effect(tmp_path, incumbent=True)
-    original = publication.atomic_write
-
-    def fail_member(path, data):
-        if path.name == "memory.md":
-            raise OSError("scripted member failure")
-        original(path, data)
-
-    monkeypatch.setattr(publication, "atomic_write", fail_member)
-    with pytest.raises(OSError, match="scripted"):
-        publication._publish_effect(**args)
-    assert publication._tree(args["destination"]) == old
-    assert json.loads((args["run_dir"] / publication.JOURNAL).read_bytes())["state"] == "rolled-back"
-    monkeypatch.setattr(publication, "atomic_write", original)
-    publication._publish_effect(**args)
-    assert publication._tree(args["destination"]) == args["files"]
-
-
-@pytest.mark.parametrize("point", ["before-effect", "after-move", "after-install"])
-def test_interrupted_effect_recognition(tmp_path, monkeypatch, point):
-    args, old = effect(tmp_path, incumbent=True)
-    original = publication._write_record
-    write = publication.atomic_write
-
-    def interrupt(path, record):
-        if record["state"] == ("completed" if point == "after-install" else "started"):
-            original(path, record) if point == "before-effect" else None
-            if point != "after-move":
-                raise KeyboardInterrupt("scripted interrupt")
-        original(path, record)
-
-    def interrupt_member(path, data):
-        if point == "after-move" and path.name == "ARTIFACT.yaml":
-            raise KeyboardInterrupt("scripted interrupt")
-        write(path, data)
-
-    monkeypatch.setattr(publication, "_write_record", interrupt)
-    monkeypatch.setattr(publication, "atomic_write", interrupt_member)
-    with pytest.raises(KeyboardInterrupt):
-        publication._publish_effect(**args)
-    monkeypatch.setattr(publication, "_write_record", original)
-    monkeypatch.setattr(publication, "atomic_write", write)
-    if point == "after-move":
-        with pytest.raises(UncertainEffectError, match="interrupted publication"):
-            publication._publish_effect(**args)
-        assert publication._tree(args["destination"]) == {}
-        assert publication._tree(args["archive_root"] / "AAS-2026-10-06-example-0123456789ab-01") == old
-    else:
-        publication._publish_effect(**args)
-        assert publication._tree(args["destination"]) == args["files"]
-
-
-def test_changed_journal_inputs_and_changed_completed_bytes_stop(tmp_path):
-    args, _ = effect(tmp_path)
-    publication._publish_effect(**args)
-    args["files"] = {**args["files"], "memory.md": b"different pin"}
-    with pytest.raises(UncertainEffectError, match="identity"):
-        publication._publish_effect(**args)
-    args["files"]["memory.md"] = b"new memory\n"
-    (args["destination"] / "memory.md").write_bytes(b"unexpected mutation")
-    with pytest.raises(UncertainEffectError, match="completed publication"):
-        publication._publish_effect(**args)
-
-
-def test_rollback_failure_is_uncertain_and_preserves_evidence(tmp_path, monkeypatch):
-    args, _ = effect(tmp_path, incumbent=True)
-    original = publication.atomic_write
-
-    def fail(path, data):
-        if path.name == "memory.md":
-            raise OSError("cannot write member")
-        original(path, data)
-
-    monkeypatch.setattr(publication, "atomic_write", fail)
-    monkeypatch.setattr(publication.shutil, "rmtree", lambda path: (_ for _ in ()).throw(OSError("cannot rollback")))
-    with pytest.raises(UncertainEffectError, match="rollback uncertain"):
-        publication._publish_effect(**args)
-    assert (args["run_dir"] / publication.JOURNAL).exists()
-    assert args["archive_root"].exists()
-
-
 def test_engine_report_is_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
     type_text = (ROOT / "kb" / SET_TYPE).read_text()
@@ -323,7 +204,7 @@ def test_engine_report_is_uncertain_without_recovery(tmp_path):
     (store.run_dir / "effects").mkdir()
     (store.run_dir / publication.JOURNAL).write_text('{"state": "completed"}')
     status = RunStatus((), (), (Stop("uncertain effect", "publish", "000001-publish", True),), False)
-    report = engine_run_report(store.run_dir, status=status)
+    report = engine_run_report(store.run_dir, final_job="publish", status=status)
     assert report["state"] == "uncertain"
     assert report["effects"]["publish"] == {"journal-state": "completed", "verified": False}
     assert report["failed-attempts"][0]["uncertain"]
@@ -370,7 +251,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     monkeypatch.setattr(publication, "inspect_destination", lambda **kwargs: {
         "expected_incumbent_sha256": attempt.metadata["expected-incumbent-sha256"],
     })
-    write = publication.atomic_write
+    write = effects.atomic_write
 
     def interrupt(path, data):
         if path.name == "ARTIFACT.yaml":
@@ -379,7 +260,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
             raise OSError("resolved write failure")
         write(path, data)
 
-    monkeypatch.setattr(publication, "atomic_write", interrupt)
+    monkeypatch.setattr(effects, "atomic_write", interrupt)
     error = KeyboardInterrupt if interruption == "archive" else OSError
     with pytest.raises(error):
         publication.publish_analysis(attempt)
@@ -387,12 +268,12 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     journal_bytes = journal.read_bytes()
     archive = repo / publication.ARCHIVE_ROOT / old_id
     if interruption == "archive":
-        assert publication._tree(destination) == {}
-        assert publication._tree(archive) == old
+        assert effects.tree(destination) == {}
+        assert effects.tree(archive) == old
         with pytest.raises(ValueError, match="tracked files with local changes"):
             require_publishable_worktree(repo)
     else:
-        assert publication._tree(destination) == old
+        assert effects.tree(destination) == old
         assert not archive.exists()
         assert json.loads(journal_bytes)["state"] == "rolled-back"
         require_publishable_worktree(repo)
@@ -413,17 +294,17 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     record = store.attempt_records()[0]
     assert record["state"] == "failed" and record["uncertain"] == uncertain
     assert not record["pins"] and "outputs" not in record
-    report = engine_run_report(store.run_dir, status=status)
+    report = engine_run_report(store.run_dir, final_job="publish", status=status)
     assert report["failed-attempts"][0]["uncertain"] == uncertain
     if uncertain:
         assert report["state"] == "uncertain"
         assert journal.read_bytes() == journal_bytes
-        assert publication._tree(destination) == {}
-        assert publication._tree(archive) == old
+        assert effects.tree(destination) == {}
+        assert effects.tree(archive) == old
     else:
-        assert publication._tree(destination) == old
+        assert effects.tree(destination) == old
         # A resolved rollback remains an ordinary failure, and can retry.
-        monkeypatch.setattr(publication, "atomic_write", write)
+        monkeypatch.setattr(effects, "atomic_write", write)
         assert json.loads(publication.publish_analysis(attempt)["receipt"])["published"] is True
 
 
@@ -460,14 +341,3 @@ def test_environment_rechecks_the_declared_capture_identity(tmp_path, monkeypatc
     capture.write_bytes(b"changed local fixture bytes")
     with pytest.raises(ValueError, match="SHA-256"):
         publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
-
-
-def test_effect_rejects_symlinked_destination_without_mutation(tmp_path):
-    args, _ = effect(tmp_path)
-    external = tmp_path / "external"
-    external.mkdir()
-    args["destination"].parent.mkdir()
-    args["destination"].symlink_to(external, target_is_directory=True)
-    with pytest.raises(UncertainEffectError, match="symlinks"):
-        publication._publish_effect(**args)
-    assert list(external.iterdir()) == []

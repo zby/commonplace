@@ -13,6 +13,7 @@ from commonplace.lib.validation import (
     validate_draft_at_slot,
     validate_pinned_analysis_set,
 )
+from commonplace.setrun import sources
 
 IDENTITY = "https://example.invalid/source"
 REVISION = "a" * 40
@@ -78,7 +79,7 @@ def test_unauthorized_source_is_refused_before_inspection(tmp_path, monkeypatch,
     with monkeypatch.context() as patch:
         for name in ("read_bytes", "read_text", "is_file", "is_dir", "is_symlink", "resolve"):
             patch.setattr(Path, name, forbidden)
-        patch.setattr(agentic_boundary.subprocess, "run", forbidden)
+        patch.setattr(sources.subprocess, "run", forbidden)
         reasons = check(data, tmp_path, **options)
     assert reasons and not calls
     if mode == "frozen":
@@ -111,7 +112,7 @@ def test_canonical_guard_prevents_reads_and_git(tmp_path, monkeypatch, guard):
         raise AssertionError("redirected source read")
 
     monkeypatch.setattr(Path, "read_bytes", forbidden)
-    monkeypatch.setattr(agentic_boundary.subprocess, "run", forbidden)
+    monkeypatch.setattr(sources.subprocess, "run", forbidden)
     assert check(boundary(source), tmp_path, capture_directory=captures)
     # Frozen and legacy callers retain the canonical-path guard too.
     assert check(boundary(source), tmp_path, frozen=source)

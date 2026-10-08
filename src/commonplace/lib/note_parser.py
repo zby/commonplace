@@ -192,3 +192,9 @@ def _parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:
         ),
         None,
     )
+
+
+def section(body: str, title: str) -> str:
+    """The text under one level-two heading, or empty when the heading is absent."""
+    match = re.search(rf"(?ms)^## {re.escape(title)}[ \t]*\n(.*?)(?=^## |\Z)", body)
+    return match[1] if match else ""

@@ -1255,8 +1255,7 @@ def _record_prefix_rule(
 def _memory_report_pending_check_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_analysis.records import section
-    from commonplace.lib.note_parser import blank_fenced_code_blocks
+    from commonplace.lib.note_parser import blank_fenced_code_blocks, section
 
     checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
     if re.search(r"(?im)^[ \t]*(?:\*\*)?Validation(?:\*\*)?:[ \t]*(?:`|\*\*)?pending\b", checks):
@@ -2309,7 +2308,8 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
 
 def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
     """Stage identity, list grammar and carried limits; meaning remains review."""
-    from commonplace.lib.agentic_analysis.records import record_references, section
+    from commonplace.lib.agentic_analysis.records import record_references
+    from commonplace.lib.note_parser import section
 
     findings = []
     synthesis = documents.get("synthesis")

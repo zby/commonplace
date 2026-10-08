@@ -383,6 +383,35 @@ parser, and trim the instruction restatements to their job-specific parts.
 No requirement or engine change. The effect is small, about 30 lines of
 code: the protocol is mostly legitimate domain logic.
 
+## Layers
+
+The generic checks are neither engine nor analysis, so they have their own
+package between the two (2026-10-09):
+
+- `commonplace.workflow`, the engine, unchanged. It knows nothing of
+  validation, Git or files outside its store.
+- `commonplace.setrun`, what any consumer of a typed set reuses: candidate
+  checks and the correction protocol (`checks`), frozen external sources and
+  their acquisition (`sources`), the journaled directory install
+  (`effects`), commit-bound worktrees and branch-and-merge transfer
+  (`isolation`), and the run report (`report`). It depends on the engine and
+  `commonplace.lib`, never on a consumer; a test enforces that.
+- `commonplace.lib.agentic_analysis`, the domain: the handlers the
+  declaration names, record and ledger rules, boundary semantics, assembly,
+  the publication proof, and the paths, run naming and role names it passes
+  to `setrun` as arguments.
+
+The set type reaches the checks from the run (`CodeAttempt.type_spec`), not
+a constant. A structural refusal now carries every section of the answered
+refusal except Findings and Blockers, so `setrun` names no analysis
+section. The analysis data modules (`sets`, `records`, `ledger`) must import
+without the engine, so the helpers they share with `setrun` moved to
+`commonplace.lib` (`note_parser.section`, `source_identity`).
+
+Deferred: `lib/validation.py` still holds the analysis type rules and
+imports the analysis modules lazily. Registering those rules from the
+analysis side is a separate restructure.
+
 ## Outside the handler surface
 
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path

@@ -17,10 +17,10 @@ import pytest
 import yaml
 
 import commonplace
-from commonplace.lib.agentic_analysis import checkout as agentic_checkout
-from commonplace.lib.agentic_analysis import guards as agentic_publication
-from commonplace.lib.agentic_analysis.acquisition import JOURNAL
 from commonplace.lib.agentic_analysis.declaration import JOB_SET
+from commonplace.setrun import isolation
+from commonplace.setrun import sources as agentic_checkout
+from commonplace.setrun.sources import JOURNAL
 from commonplace.workflow import start_run
 from commonplace.workflow.store import RunStore
 from tests.commonplace.workflow.support import Coordinator
@@ -126,7 +126,7 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
     # Exercise the real binding/package guards against this scripted checkout,
     # without installing or importing a second package in the test process.
     monkeypatch.setattr(commonplace, "__file__", str(repo / "src/commonplace/__init__.py"))
-    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: repo)
+    monkeypatch.setattr(isolation, "running_package_root", lambda: repo)
     return fixture
 
 

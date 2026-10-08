@@ -15,6 +15,7 @@ from commonplace.lib.agentic_analysis import guards
 from commonplace.lib.agentic_analysis import publication as engine
 from commonplace.lib.agentic_analysis.sets import SET_TYPE, source_slug
 from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.setrun import effects
 from commonplace.workflow.state import _parse_type
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -34,11 +35,11 @@ def engine_fixture(repo, monkeypatch, name="fixture"):
     destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, name)
     members = {"boundary": b"boundary", "overview": b"overview"}
     worker = {"model": "fixture/model"}
-    manifest = engine._manifest(layout, members, worker)
+    manifest = engine._manifest(SimpleNamespace(layout=layout, type_spec=SET_TYPE), members, worker)
     metadata = {"system": name, "source-identity": identity,
                 "review-path": (destination / "overview.md").relative_to(repo).as_posix(),
                 "expected-incumbent-sha256": "absent"}
-    attempt = SimpleNamespace(run_dir=run, metadata=metadata,
+    attempt = SimpleNamespace(run_dir=run, metadata=metadata, layout=layout, type_spec=SET_TYPE,
                               read=lambda key: manifest if key == "manifest" else None)
     monkeypatch.setattr(engine, "_snapshot", lambda *a, **kw: (
         layout, (), members, SimpleNamespace(frontmatter={"result-disposition": "complete"})))
@@ -69,7 +70,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
             inspecting.set()
         return {"expected_incumbent_sha256": "absent"}
 
-    original_record = engine._write_record
+    original_record = effects.write_json
 
     def record(path, value):
         assert_locked(tmp_path)  # Both started and completed journal writes.
@@ -77,7 +78,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
 
     monkeypatch.setattr(engine, "publication_lock", enter_lock)
     monkeypatch.setattr(engine, "inspect_destination", inspect)
-    monkeypatch.setattr(engine, "_write_record", record)
+    monkeypatch.setattr(effects, "write_json", record)
     with ThreadPoolExecutor(max_workers=2) as pool:
         first_result = pool.submit(engine.publish_analysis, first)
         try:
@@ -96,13 +97,13 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
         assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == SET_TYPE
         assert (destination / "overview.md").read_bytes() == b"overview"
     # Replay recognition, not only fresh incumbent inspection, holds the lock.
-    original_effect = engine._publish_effect
+    original_effect = engine.install_tree
 
     def replay(**kwargs):
         assert_locked(tmp_path)
         return original_effect(**kwargs)
 
-    monkeypatch.setattr(engine, "_publish_effect", replay)
+    monkeypatch.setattr(engine, "install_tree", replay)
     monkeypatch.setattr(engine, "inspect_destination", lambda **kw: pytest.fail("replay reinspected"))
     assert json.loads(engine.publish_analysis(second)["receipt"])["published"] is True
     with guards.publication_lock(tmp_path):
@@ -110,7 +111,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
 
 
 def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypatch):
-    original_write = guards.atomic_write
+    original_write = effects.atomic_write
 
     def write(path, data):
         assert_locked(tmp_path)
@@ -118,17 +119,17 @@ def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypat
             raise OSError("fixture write failure")
         original_write(path, data)
 
-    original_remove = engine.shutil.rmtree
+    original_remove = effects.shutil.rmtree
 
     def remove(path):
         assert_locked(tmp_path)
         original_remove(path)
 
-    monkeypatch.setattr(engine.shutil, "rmtree", remove)
+    monkeypatch.setattr(effects.shutil, "rmtree", remove)
     attempt, destination = engine_fixture(tmp_path, monkeypatch)
     monkeypatch.setattr(engine, "inspect_destination", lambda **kw: {
         "expected_incumbent_sha256": "absent"})
-    monkeypatch.setattr(engine, "atomic_write", write)
+    monkeypatch.setattr(effects, "atomic_write", write)
     with pytest.raises(OSError, match="fixture write failure"):
         engine.publish_analysis(attempt)
     assert not destination.exists()

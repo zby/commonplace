@@ -27,10 +27,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Literal, Protocol
 
-from commonplace.lib.agentic_analysis.sets import (
-    is_normalized_relative,
-    normalize_source_identity,
-)
+from commonplace.lib.agentic_analysis.sets import is_normalized_relative
 from commonplace.lib.quote_generation import MAX_QUOTE_OCCURRENCES, quote_occurrences
 from commonplace.lib.quote_matching import (
     Citation,
@@ -38,6 +35,7 @@ from commonplace.lib.quote_matching import (
     git_citation_path,
     match_quote,
 )
+from commonplace.lib.source_identity import normalize_source_identity
 
 Status = Literal["match", "mismatch", "unverified"]
 

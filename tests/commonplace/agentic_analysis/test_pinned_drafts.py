@@ -5,8 +5,8 @@ from types import SimpleNamespace
 import pytest
 
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.validation import validate_draft_at_slot
+from commonplace.setrun.checks import criterion_bytes
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 BOUNDARY_TYPE = "agentic-system-analyses/types/agentic-system-boundary.md"
@@ -30,7 +30,8 @@ def fixed_type(**kwargs):
     """An attempt double carrying the set type a run fixes at start."""
     from commonplace.lib.agentic_analysis.sets import analysis_layout
 
-    return SimpleNamespace(type_text=(LIBRARY / SET_TYPE).read_text(), layout=analysis_layout(), **kwargs)
+    return SimpleNamespace(type_text=(LIBRARY / SET_TYPE).read_text(), type_spec=SET_TYPE,
+                           layout=analysis_layout(), **kwargs)
 
 
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
@@ -99,7 +100,7 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
 
 
 def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_source(tmp_path, monkeypatch):
-    from commonplace.lib.agentic_analysis import candidate as module
+    from commonplace.setrun import checks as module
 
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
@@ -117,7 +118,7 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
     monkeypatch.setattr(module, "checkout", lambda _: tmp_path)
     monkeypatch.setattr(module, "validate_draft_at_slot", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
-    check = module.candidate(attempt, "reconciliation", ("boundary",))
+    check = module.candidate(attempt, "reconciliation", ("boundary",), source_role="boundary")
     assert module.review(check) == []
     args, kwargs = seen[0]
     assert args[2] == CANDIDATE
@@ -127,7 +128,8 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
 
 
 def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_path, monkeypatch):
-    from commonplace.lib.agentic_analysis import candidate, handlers
+    from commonplace.lib.agentic_analysis import handlers
+    from commonplace.setrun import checks as candidate
 
     pinned = criteria()
     declared = {}

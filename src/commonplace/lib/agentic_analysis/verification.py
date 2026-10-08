@@ -1,4 +1,4 @@
-"""Opt-in reconciliation checks and record verdict application, not CLI bindings.
+"""Reconciliation checks, the record set check and record verdict application.
 
 Snapshots are made solely from declared inputs. Structural checks cover content
 relations; only a valid, blocker-free verifier verdict settles semantic gates.
@@ -8,27 +8,27 @@ from __future__ import annotations
 
 import json
 
-from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
-from commonplace.lib.agentic_analysis.candidate import (
-    MANIFEST,
-    candidate,
-    checkout,
-    frozen_source,
-    judge,
-    review,
-    snapshot,
-)
-from commonplace.lib.agentic_analysis.checks import blocker_entries
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
-    section,
 )
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.note_parser import section
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import ValidationRun
+from commonplace.setrun.checks import (
+    blocker_entries,
+    candidate,
+    checkout,
+    criterion_bytes,
+    frozen_source,
+    judge,
+    manifest,
+    review,
+    snapshot,
+)
+from commonplace.setrun.sources import frozen_source_refusals
 from commonplace.workflow import CodeAttempt
 
 ANALYSTS = ("runtime", "memory", "epistemic")
@@ -38,7 +38,7 @@ PARTNERS = ("boundary", *RECORDS)
 
 def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
     """Check reconciliation content against pinned reports, without semantic acceptance."""
-    check = candidate(attempt, "reconciliation", ("boundary", *ANALYSTS))
+    check = candidate(attempt, "reconciliation", ("boundary", *ANALYSTS), source_role="boundary")
     judge(check, review(check))
     return {}
 
@@ -46,10 +46,10 @@ def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
 def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     """Set_check returns record content and relation findings from one pinned snapshot."""
     members = snapshot(attempt, PARTNERS)
-    source = frozen_source(attempt, members)
+    source = frozen_source(attempt, members, "boundary")
     directory = (attempt.run_dir / "set").resolve()
     run = ValidationRun(
-        checkout(attempt), (), content_overrides={directory / MANIFEST_NAME: MANIFEST},
+        checkout(attempt), (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
         member_snapshots={directory: members},
         criteria=CriterionSnapshot(kb_root(checkout(attempt)), criterion_bytes(attempt)),
         frozen_source=source,
@@ -112,7 +112,7 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     delivery. No explicit overrides or current-member discovery are used here.
     """
     producer = json.loads(attempt.read("verifier-attempt"))
-    check = candidate(attempt, "record-verification", PARTNERS, seen=True)
+    check = candidate(attempt, "record-verification", PARTNERS, seen=True, source_role="boundary")
     # Validation refuses Blockers that are not none or addressed list entries.
     reasons = review(check)
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))

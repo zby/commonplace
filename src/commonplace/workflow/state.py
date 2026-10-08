@@ -509,6 +509,11 @@ class CodeAttempt:
         return self._run.type_text
 
     @property
+    def type_spec(self) -> str:
+        """The set type's library path recorded at start, for keying its text."""
+        return self._run.type_spec
+
+    @property
     def run_dir(self) -> Path:
         """The absolute run directory, for consumer-owned environment checks."""
         return self._run.store.run_dir.resolve()

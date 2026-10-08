@@ -10,9 +10,9 @@ import json
 
 import pytest
 
-from commonplace.lib.agentic_analysis import acquisition as agentic_acquisition
-from commonplace.lib.agentic_analysis import checkout as agentic_checkout
-from commonplace.lib.agentic_analysis.checkout import CheckoutError
+from commonplace.setrun import sources as agentic_acquisition
+from commonplace.setrun import sources as agentic_checkout
+from commonplace.setrun.sources import CheckoutError
 from commonplace.workflow.engine import inspect
 from commonplace.workflow.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (

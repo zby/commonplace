@@ -109,11 +109,11 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
 
 
 def test_report_separates_holding_historical_basis_from_canonical_currency(late_run):
-    from commonplace.lib.agentic_analysis.report import engine_run_report
+    from commonplace.setrun.report import engine_run_report
 
     c, old = late_run
     c.advance(c.result_for(old, "no blockers\n"))
-    view = engine_run_report(c.run_dir, status=c.status)
+    view = engine_run_report(c.run_dir, final_job="publish", status=c.status)
     report_drift = [entry for entry in view["canonical-peer-drift"] if entry["role"] == "report"]
     assert report_drift
     assert all(entry["handed"] == digest(b"report A\n") for entry in report_drift)

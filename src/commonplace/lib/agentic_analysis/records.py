@@ -7,6 +7,8 @@ from collections import Counter
 from collections.abc import Mapping, Sequence
 from difflib import get_close_matches
 
+from commonplace.lib.note_parser import section
+
 # A record ID carries the prefix of the analyst that established it, for the
 # life of the set: `RT-`, `MEM-`, or `EPI-`. Archived results written with
 # bare runtime IDs are not read by current code.
@@ -84,12 +86,6 @@ def _analysis_prose(body: str) -> str:
             continue
         lines.append(line)
     return "\n".join(lines) + "\n"
-
-
-def section(body: str, title: str) -> str:
-    """The text under one level-two heading, or empty when the heading is absent."""
-    match = re.search(rf"(?ms)^## {re.escape(title)}[ \t]*\n(.*?)(?=^## |\Z)", body)
-    return match[1] if match else ""
 
 
 def declared_ids(body: str) -> list[str]:
