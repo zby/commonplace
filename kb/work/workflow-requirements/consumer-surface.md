@@ -225,14 +225,48 @@ declaring job's own role is excluded from the required roles and from the
 member acceptances as well as from the relations, so `assemble` does not
 wait for the overview it writes.
 
+## Criteria declarations
+
+After the steps above, `job-set.yaml` (775 lines) declares 316 file inputs
+over 55 distinct files. The same contracts, type specs and schemas recur on
+up to 23 jobs: `agentic-analysis-sources.md` 23 times, each analyst type and
+schema 12 times. Every check job lists its candidate's type closure by hand,
+and two declaration tests verify that each list is closed under schema
+`$ref`s. `agentic_analysis/validation.py` repeats the alias-to-path mapping
+as a `CRITERIA` table so that a handler can hand the validator its pinned
+bytes keyed by library path. The validator fails closed on a missing file,
+so an incomplete list is a refused member, not a silent pass.
+
+Scenario 8 fixes what any change must keep: each criterion stays a live
+file input of the job that applies it, pinned at hand-out, a rerun trigger,
+and part of the judgment's basis.
+
+Two shapes keep that:
+
+- **Named groups in the declaration.** The job set declares groups of
+  library paths once, and a job lists the groups it applies. The loader
+  expands each group into ordinary file inputs, so pinning, currency and
+  bases are unchanged and the engine learns nothing about types or
+  schemas. A code attempt returns its pinned file inputs keyed by library
+  path, which replaces the `CRITERIA` table. The closure tests then check
+  the groups, not every job.
+- **Engine-derived closure.** A job names the roles whose types it applies,
+  and the engine pins each type spec, its schema and their `$ref` closure.
+  This removes the lists and the closure tests, but the engine would parse
+  schema references, which is validator knowledge, and a criterion a job
+  depends on would no longer be visible in the declaration.
+
+**Recommendation:** named groups. They remove the repetition without moving
+validator knowledge into the engine, keep every dependency readable in the
+declaration, and change no requirement: requirement 1 already makes
+contracts inputs, and a group is declaration syntax for several of them.
+The Decision on the job-set file gains the group syntax; the API design
+gains the path-keyed read of pinned file inputs. Estimated effect: about
+300 lines of input declarations become about 60 lines of groups and a few
+references per job.
+
 ## Outside the handler surface
 
-- **Criteria declarations.** `job-set.yaml` has 329 file inputs, mostly the
-  same type and schema files repeated per check job, and
-  `agentic_analysis/validation.py` mirrors their names in a `CRITERIA` table.
-  A per-job criteria group in the declaration would shrink the file more than
-  any change above, and it is the one item that touches scenario 8's
-  live-criteria behaviour. It needs a section of its own, not a deferral.
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path
   containment) are ordinary refactoring, not engine design.
 
