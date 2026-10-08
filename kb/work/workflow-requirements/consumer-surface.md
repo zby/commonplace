@@ -209,9 +209,18 @@ acceptance of every member. These differ for a member with no relation to
 another present member, such as a blocked disposition holding only a
 boundary: its acceptance can go stale while the member stays (requirement
 6), and the engine calls the set publishable where the handler refuses.
-**Resolution:** the stricter reading. A set is publishable when some
-holding acceptance exists for each current member and every relation
-between members is covered. Requirement 9 states both conditions.
+**Resolution:** the stricter reading. A set is publishable when every role
+the disposition requires is present, some holding acceptance exists for
+each current member, and every relation between members is covered.
+Requirement 9 states all three conditions. The first is not implied by the
+other two: with only an accepted complete-disposition boundary, coverage
+among present members holds trivially, and only the pending-producer wait,
+a scheduling accident, would keep `assemble` off a partial set.
+
+A coverage input applies all three conditions to the derived scope: the
+declaring job's own role is excluded from the required roles and from the
+member acceptances as well as from the relations, so `assemble` does not
+wait for the overview it writes.
 
 ## Outside the handler surface
 
@@ -254,6 +263,7 @@ Done when:
 - `job-set.yaml` has no `coverage-*` or `*-accepted` inputs, and `assemble`
   is not ready, rather than failing, while a relation is uncovered;
 - scenarios 8 and 10, the blocked-disposition gap, the unchanged re-recorded
-  verdict and the stuck-run state are tests;
+  verdict, the stuck-run state, and a complete-disposition run with only the
+  boundary accepted, where `assemble` is not ready, are tests;
 - the handler layer's line count is reported against the expectation,
   separately from integration and support.
