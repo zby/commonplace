@@ -18,7 +18,8 @@ from the requirements.
   `RunStatus`. It loads the job-set file named by the run metadata.
 - `CodeAttempt.read()` reads a pinned input by name. `CodeAttempt.layout`,
   `.relations` and `.type_text` give the set type fixed at start, as
-  `.parameters` gives the run parameters.
+  `.parameters` gives the run parameters. `CodeAttempt.read_files()` returns
+  the pinned file inputs under the library, keyed by library path.
 - `CodeAttempt.judge()` stages acceptance or refusal of one subject version,
   with findings, a scope of covered relations and optional explicit refusal
   overrides.

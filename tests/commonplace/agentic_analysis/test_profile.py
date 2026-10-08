@@ -109,16 +109,20 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         "outputs": {output: hashlib.sha256(candidate).hexdigest()},
         "previous_outputs": {} if previous is None else {output: hashlib.sha256(previous).hexdigest()},
     }).encode(), None)
-    from commonplace.lib.agentic_analysis.validation import CRITERIA
-
-    for name, path in CRITERIA.items():
-        file = run.library / path
-        if file.is_file():
-            values[name] = (file.read_bytes(), None)
     inputs = {name: Input("member" if role else "output", role or name, required=False)
               for name, (_, role) in values.items()}
     pins = {name: Resolved(hashlib.sha256(data).hexdigest() if data is not None else None, data, role)
             for name, (data, role) in values.items()}
+    # Every criterion the shipped declaration's jobs apply, pinned as a file input.
+    from commonplace.lib.agentic_analysis.declaration import JOB_SET
+    from commonplace.workflow import load_job_set
+
+    for declared in load_job_set((run.library / JOB_SET).read_text()).jobs:
+        for name, spec in declared.inputs.items():
+            if spec.address == "file" and name not in inputs:
+                data = (run.library / spec.source).read_bytes()
+                inputs[name] = spec
+                pins[name] = Resolved(hashlib.sha256(data).hexdigest(), data)
     job = CodeJob("scripted-profile", inputs, (), "unused")
     return CodeAttempt(run, job, pins)
 

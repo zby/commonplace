@@ -523,6 +523,16 @@ class CodeAttempt:
             raise KeyError(f"job {self._job.name} declares no input {name}")
         return self._pins[name].data
 
+    def read_files(self) -> dict[str, bytes]:
+        """The pinned file inputs under the library, keyed by library path."""
+        files: dict[str, bytes] = {}
+        for name, spec in self._job.inputs.items():
+            data = self._pins[name].data
+            if spec.address != "file" or Path(spec.source).is_absolute() or data is None:
+                continue
+            files[Path(spec.source).as_posix()] = data
+        return files
+
     def judge(self, subject: str, *, outcome: str, scope: tuple[str, ...] = (),
               findings: str = "", overrides: tuple[str, ...] = ()) -> None:
         if outcome not in ("accepted", "refused"):

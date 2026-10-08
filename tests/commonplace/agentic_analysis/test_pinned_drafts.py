@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
-from commonplace.lib.agentic_analysis.validation import CRITERIA, criterion_bytes
+from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.validation import validate_draft_at_slot
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
@@ -68,30 +68,10 @@ def test_non_complete_boundary_source_does_not_crash(tmp_path, source):
         assert result  # Malformed sources still fail; they just do not crash.
 
 
-def test_criterion_collection_reads_only_declared_known_aliases():
-    calls = []
-    data = {"boundary-type": b"pinned", "note-schema": b"schema", "unrelated": b"not a criterion"}
-
-    def read(alias):
-        calls.append(alias)
-        if alias not in data:
-            raise KeyError(alias)
-        return data[alias]
-
-    result = criterion_bytes(fixed_type(read=read))
-    assert result == {**{CRITERIA[alias]: data[alias] for alias in ("boundary-type", "note-schema")},
-                      SET_TYPE: (LIBRARY / SET_TYPE).read_bytes()}
-    assert set(calls) == set(CRITERIA) - {"set-type"}, "the set type is fixed, never read as an input"
-
-
-def test_conflicting_criterion_aliases_are_rejected():
-    def read(alias):
-        if alias in ("record-verification-type", "profile-verification-type"):
-            return alias.encode()
-        raise KeyError(alias)
-
-    with pytest.raises(ValueError, match="conflicting pinned criterion aliases"):
-        criterion_bytes(fixed_type(read=read))
+def test_criteria_are_the_pinned_library_files_plus_the_fixed_set_type():
+    files = {BOUNDARY_TYPE: b"pinned", "types/note.schema.yaml": b"schema"}
+    result = criterion_bytes(fixed_type(read_files=lambda: dict(files)))
+    assert result == {**files, SET_TYPE: (LIBRARY / SET_TYPE).read_bytes()}
 
 
 def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
@@ -132,8 +112,9 @@ def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, 
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
-    declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
-    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias])
+    declared = {}
+    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     seen = []
 
     def validate(*args, **kwargs):
@@ -158,11 +139,12 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     from commonplace.lib.agentic_analysis import handlers
 
     pinned = criteria()
-    declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
+    declared = {}
+    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
     declared.update({"candidate": CANDIDATE, "source": b"null", "metadata": b"{}",
                      "incumbent-boundary": None})
     judgments = []
-    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias],
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files),
                               judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
     monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: (metadata, tmp_path))
@@ -180,9 +162,10 @@ def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, mon
     from commonplace.lib.validation import CheckResults
 
     pinned = criteria()
-    declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
+    declared = {}
+    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
     declared["metadata"] = b"{}"
-    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias])
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     source = {"kind": "capture", "identity": "fixture", "revision": "fixture", "path": str(tmp_path)}
     snapshot = {"boundary.md": b"pinned boundary"}
     monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: ({}, tmp_path))

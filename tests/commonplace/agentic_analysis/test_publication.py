@@ -38,6 +38,7 @@ class Attempt:
         layout, relations = _parse_type(self.type_text, SET_TYPE)
         self.layout, self.relations = layout, tuple(relations)
         self.inputs = {}
+        self.files = {}
         boundary_fields = {"run-id": RUN_ID, "result-disposition": disposition,
                            "target-class": None, "boundary-kind": None, "reviewed-boundary": None,
                            "analysis-cutoff": None, "evidence-tier": None}
@@ -67,6 +68,9 @@ class Attempt:
     def read(self, name):
         return self.inputs[name]  # Undeclared means error, never disk fallback.
 
+    def read_files(self):
+        return dict(self.files)  # Pinned criteria by library path; none means none.
+
     def judge(self, subject, **kwargs):
         self.judgments.append((subject, kwargs))
 
@@ -84,18 +88,18 @@ def pinned_criteria(attempt):
     """Shipped layout with minimal schemas, like pinned_validation_contracts.
 
     This isolates the adapter, not the substantive shipped analysis criteria.
-    All type/schema bytes still travel through declared criterion aliases.
+    All type/schema bytes still travel as pinned files keyed by library path.
     """
-    for alias in ("collection", "validation-contract"):
-        attempt.inputs[alias] = b"# Fixture contract\n"
-    attempt.inputs["agentic-system-analysis-set-schema"] = b"type: object\n"
-    for alias, name in (("type-spec", "type-spec"), ("boundary-type", "agentic-system-boundary"),
-                        ("overview-type", "agentic-system-analysis-overview")):
-        schema = name + ".schema.yaml"
-        attempt.inputs[alias] = (f"---\ntype: types/type-spec.md\nname: {name}\n"
-                                 f"description: Pinned fixture\nschema: ./{schema}\n---\n# Fixture\n").encode()
-        schema_alias = "type-spec-schema" if alias == "type-spec" else name + "-schema"
-        attempt.inputs[schema_alias] = b"type: object\n"
+    types = "agentic-system-analyses/types/"
+    for path in ("agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md"):
+        attempt.files[path] = b"# Fixture contract\n"
+    attempt.files[types + "agentic-system-analysis-set.schema.yaml"] = b"type: object\n"
+    for spec, name in (("types/type-spec.md", "type-spec"),
+                       (types + "agentic-system-boundary.md", "agentic-system-boundary"),
+                       (types + "agentic-system-analysis-overview.md", "agentic-system-analysis-overview")):
+        attempt.files[spec] = (f"---\ntype: types/type-spec.md\nname: {name}\n"
+                               f"description: Pinned fixture\nschema: ./{name}.schema.yaml\n---\n# Fixture\n").encode()
+        attempt.files[spec.removesuffix(".md") + ".schema.yaml"] = b"type: object\n"
 
 
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope", "complete"])
@@ -137,7 +141,8 @@ def test_validation_failure_prevents_overview_acceptance(tmp_path, monkeypatch, 
     attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
     if defect == "content":
         pinned_criteria(attempt)
-        attempt.inputs["agentic-system-boundary-schema"] = b"required: [missing-fixture-field]\n"
+        attempt.files["agentic-system-analyses/types/agentic-system-boundary.schema.yaml"] = (
+            b"required: [missing-fixture-field]\n")
     monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
     with pytest.raises(ValueError, match=reason):
         publication.assemble_analysis(attempt)

@@ -154,6 +154,16 @@ They bind an implementation of this spec; they are not requirements.
   `{workspace}` and `{param:<name>}` substituted; no template language.
   Why: the analysis instructions already follow this shape, so they port
   unchanged.
+- **Criteria groups are declaration syntax.** A job set may declare named
+  groups, each mapping input names to library paths, and a job lists the
+  groups it applies. The loader expands each group into ordinary file
+  inputs, so pinning, currency and bases are those of file inputs; a
+  name a job declares itself must agree with any group that also gives
+  it. A code attempt returns its pinned library file inputs keyed by path,
+  so a handler passes criteria to a validator without its own name table.
+  Why: the analysis checks repeated the same type closures on many jobs,
+  and scenario 8 needs every criterion to stay a live input of the job
+  that applies it, which expansion keeps.
 - **Code jobs see the fixed type, not a file of it.** A code attempt
   exposes the run's layout and relations and the fixed type text, so a
   handler never declares the set type as a file input. Member types,

@@ -223,20 +223,54 @@ def load_job_set(text: str, roles: Mapping[str, Any] | None = None) -> JobSet:
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
         raise DeclarationError("a job set must be a mapping")
-    unknown = set(data) - {"type_spec", "jobs"}
+    unknown = set(data) - {"type_spec", "criteria", "jobs"}
     if unknown:
         raise DeclarationError(f"unknown keys {sorted(unknown)}")
+    groups = _criteria_groups(data.get("criteria", {}))
     if not isinstance(data.get("type_spec"), str):
         raise DeclarationError("type_spec must name the set's type, relative to the KB root")
     raw_jobs = data.get("jobs")
     if not isinstance(raw_jobs, list):
         raise DeclarationError("jobs must be a list")
-    jobs = tuple(_job(raw) for raw in raw_jobs)
+    jobs = tuple(_job(_expand_criteria(raw, groups)) for raw in raw_jobs)
     if not jobs:
         raise DeclarationError("a job set declares at least one job")
     job_set = JobSet(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
     _check(job_set, roles)
     return job_set
+
+
+def _criteria_groups(raw: Any) -> dict[str, dict[str, str]]:
+    """Named groups of file inputs: each maps input names to library paths."""
+    if not isinstance(raw, dict):
+        raise DeclarationError("criteria must map group names to input mappings")
+    groups = {}
+    for name, members in raw.items():
+        if (not isinstance(name, str) or not NAME.fullmatch(name) or not isinstance(members, dict)
+                or not members or not all(isinstance(k, str) and isinstance(v, str) for k, v in members.items())):
+            raise DeclarationError(f"criteria group {name!r} must map input names to library paths")
+        groups[name] = dict(members)
+    return groups
+
+
+def _expand_criteria(raw: Any, groups: Mapping[str, Mapping[str, str]]) -> Any:
+    """Replace a job's `criteria` list with the file inputs its groups name."""
+    if not isinstance(raw, dict) or "criteria" not in raw:
+        return raw
+    name = raw.get("name")
+    listed = raw["criteria"]
+    if not isinstance(listed, list) or not all(isinstance(group, str) for group in listed):
+        raise DeclarationError(f"job {name}: criteria must list group names")
+    inputs = dict(raw.get("inputs") or {})
+    for group in listed:
+        if group not in groups:
+            raise DeclarationError(f"job {name}: no criteria group {group}")
+        for key, path in groups[group].items():
+            given = {"address": "file", "source": path}
+            if key in inputs and inputs[key] != given:
+                raise DeclarationError(f"job {name}: input {key} disagrees with criteria group {group}")
+            inputs[key] = given
+    return {**{k: v for k, v in raw.items() if k != "criteria"}, "inputs": inputs}
 
 
 def _with_refusal(job: Job) -> Job:

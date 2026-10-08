@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.workflow import DeclarationError, load_job_set, open_handouts
+from commonplace.workflow import DeclarationError, Input, load_job_set, open_handouts
 from tests.commonplace.workflow.support import Coordinator, job_set
 
 
@@ -23,6 +23,9 @@ from tests.commonplace.workflow.support import Coordinator, job_set
      "own role as input"),
     (lambda d: d["jobs"][1].update(max_attempts=3), "unknown keys"),
     (lambda d: d["jobs"][1]["inputs"].update({"c": {"address": "coverage", "source": "brief"}}), "derived"),
+    (lambda d: d["jobs"][1].update(criteria=["absent"]), "no criteria group"),
+    (lambda d: (d.update(criteria={"g": {"candidate": "contract.md"}}), d["jobs"][1].update(criteria=["g"])),
+     "disagrees with criteria group"),
     (lambda d: d["jobs"][0].update(name="group/brief"), None),
     (lambda d: d["jobs"][0].update(name="operator"), None),
     (lambda d: d["jobs"][0].update(outputs=["../brief"]), None),
@@ -175,3 +178,12 @@ def test_inspection_reports_a_run_stopped_by_exhausted_attempts(coordinator: Coo
         c.advance()
     view = inspect(c.run_dir)
     assert view["exhausted_jobs"] == ["report"] and view["condition"] == "stopped"
+
+
+def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> None:
+    data = job_set(tmp_path)
+    data["criteria"] = {"contracts": {"contract": "contracts/report.md", "shared": "contracts/shared.md"}}
+    data["jobs"][1]["criteria"] = ["contracts"]
+    job = load_job_set(yaml.safe_dump(data)).job(data["jobs"][1]["name"])
+    assert job.inputs["contract"] == Input("file", "contracts/report.md")
+    assert job.inputs["shared"] == Input("file", "contracts/shared.md")
