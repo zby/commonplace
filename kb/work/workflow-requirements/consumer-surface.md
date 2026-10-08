@@ -88,7 +88,10 @@ coverage holds, and the report says why it waits.
 narrow "completed" that the [publication handoff](./publication-consumer-handoff.md)
 uses. Proposed: a run is settled when no job is ready and no attempt is
 open, and the run is publishable, published or stopped by a failure or an
-exhausted job.
+exhausted job. The leftover state, nothing ready, nothing open, not
+publishable and not stopped, is a stuck run; `inspect` names it as such
+rather than the specification arguing it cannot occur. Whether it can is an
+engine test.
 
 ## Deletions: checks that re-prove engine invariants
 
@@ -101,7 +104,10 @@ exhausted job.
 - **Environment guards in intermediate jobs.** `_opened_environment` and
   `_require_opened_method` appear 29 times (handlers 9, verification 8,
   profile 7, publication 5). The Deferred item *Validator code identity*
-  keeps this an environment check at open and publish.
+  keeps this an environment check at open and publish. The guard is not
+  only a check: it returns the metadata and the repository path that every
+  caller uses afterwards (`handlers.py:168-179`). The change is a split
+  into a cheap locate step and the removal of the checks, not a deletion.
 
 These change no design and can go first. The provenance checks that survive
 are the producer's name and kind and the worker identity.
@@ -176,15 +182,26 @@ which acceptances backed the publication. A gate loses that unless its
 version carries it.
 
 **Resolution:** the engine determines coverage and supplies it as a derived
-input address that a job declares like any other. Its version is
-content-derived from the covering judgment identities and the member
-versions, so the publication record still names its evidence. Member,
-judgment and refusal inputs are already engine-derived views; this adds no
-new category. Declared required, it makes `publish` not ready until
-coverage holds, which is what scenario 10 already expects. Its producers for
-the pending-producer wait are those of a judgment input. Amends requirement
-9: the engine determines coverage; a code job copies the current versions
-out, pinned.
+input address that a job declares like any other. Its version is a
+canonical digest over the covering claims, sorted, together with the member
+versions, so the publication record still names its evidence. Claims, not
+judgment-record ids: the judgment address already uses claim identity
+(`state.py:217`) so that an apply job re-recording an unchanged verdict is
+no change, and coverage must not rerun `publish`, an external effect, for
+the same non-event. Member, judgment and refusal inputs are already
+engine-derived views; this adds no new category. Declared required, it makes
+`publish` not ready until coverage holds, which is what scenario 10 already
+expects. Its producers for the pending-producer wait are those of a judgment
+input. Amends requirement 9: the engine determines coverage; a code job
+copies the current versions out, pinned.
+
+The input's scope is derived, not declared. `assemble` fills the `overview`
+role and judges the overview itself, while the `overview:*` relations sit on
+`publish` (`job-set.yaml:919-930`). A whole-set coverage input on `assemble`
+would depend on its own judgment, which requirement 1 forbids and which
+would rerun it without end. So a coverage input covers the relations not
+touching the declaring job's role; `publish` has no role and gets the whole
+set. No new field is needed.
 
 The gate forces one semantic gap into the open. `Run.publishable()` checks
 relation coverage only. The handler additionally requires a holding
@@ -192,9 +209,9 @@ acceptance of every member. These differ for a member with no relation to
 another present member, such as a blocked disposition holding only a
 boundary: its acceptance can go stale while the member stays (requirement
 6), and the engine calls the set publishable where the handler refuses.
-**Resolution:** the stricter reading. A set is publishable when every
-member's acceptance holds and every relation between members is covered.
-Requirement 9 states both conditions.
+**Resolution:** the stricter reading. A set is publishable when some
+holding acceptance exists for each current member and every relation
+between members is covered. Requirement 9 states both conditions.
 
 ## Outside the handler surface
 
@@ -209,18 +226,34 @@ Requirement 9 states both conditions.
 
 ## Order and acceptance
 
-Order: the deletions; the refusal format; the fixed set type and its
-accessor; the coverage gate with the stricter publishable rule; engine-owned
-inspection; then the criteria-declaration section. Each step leaves the
-tests passing.
+Order: the guard split and the deletions; the refusal format; the
+attempt-record decision (published subset or handed address) and its
+implementation; the fixed set type and its accessor; the coverage gate with
+the stricter publishable rule; engine-owned inspection and locking; then the
+criteria-declaration section. Each step leaves the tests passing.
+
+Every design step begins by amending the specification texts, not by code.
+The resolutions above touch requirements 1 and 9, the fixed-declaration
+Decision, the Open item and scenario 10; they add glossary entries for
+settled, the narrow completed and the coverage address; and they add
+`inspect`, the layout and relations accessors and the coverage address to
+`api-design.md`. The first done criterion depends on those additions, since
+`inspect` is not a public name there today.
+
+Review before steps 3 to 5 (2026-10-08) found two further reach-ins the
+inspection step must absorb. `worktree.py:418,524` takes the store's lock
+directly, and `cli/workflow.py:54-59` both locks and reads a version's bytes
+from the store, which is the storage API the design says does not exist.
 
 Done when:
 
-- the analysis package imports nothing from `commonplace.workflow` except
-  the public names in `api-design.md`;
+- the analysis package and the CLI import nothing from `commonplace.workflow`
+  except the public names in `api-design.md`, locking and version reads
+  included;
 - no handler reads the set type as a file input or parses it;
 - `job-set.yaml` has no `coverage-*` or `*-accepted` inputs, and `assemble`
   is not ready, rather than failing, while a relation is uncovered;
-- scenarios 8 and 10 and the blocked-disposition gap above are tests;
+- scenarios 8 and 10, the blocked-disposition gap, the unchanged re-recorded
+  verdict and the stuck-run state are tests;
 - the handler layer's line count is reported against the expectation,
   separately from integration and support.
