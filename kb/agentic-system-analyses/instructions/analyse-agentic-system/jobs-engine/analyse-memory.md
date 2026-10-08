@@ -9,8 +9,7 @@ Give reconciliation a source-grounded account of the included memory mechanisms,
 
 Read this instruction first, then complete the invocation's Input reading
 batches. Follow `worker-rules`, `collection`, `sources-contract`,
-`records-contract` and `memory-contract`. Do not use legacy round, request or
-run-state interfaces.
+`records-contract` and `memory-contract`.
 
 ## Inputs and results
 

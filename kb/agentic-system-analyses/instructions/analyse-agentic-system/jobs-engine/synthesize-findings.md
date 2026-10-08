@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine after record and profile verification to write a self-standing synthesis carrying all declared limits"
+description: "Use after record and profile verification to write a self-standing synthesis carrying all declared limits"
 type: types/instruction.md
 ---
 
@@ -9,8 +9,7 @@ Give public readers a supported account that remains intelligible without the ot
 
 Read this instruction first, then all invocation Input reading batches. Follow
 `worker-rules`, `collection`, `sources-contract`, `records-contract` and
-`synthesis-contract`. This instruction serves the opt-in synthesizer hand-out;
-the live legacy workflow is unchanged.
+`synthesis-contract`.
 
 ## Inputs and result
 

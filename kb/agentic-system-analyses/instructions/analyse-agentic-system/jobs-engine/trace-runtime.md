@@ -9,8 +9,7 @@ Give later analysts a source-grounded account of how the selected target perform
 
 Read this instruction first, then complete the invocation's Input reading
 batches. Follow `worker-rules`, `collection`, `sources-contract`,
-`records-contract` and `runtime-contract`. This is not a legacy invocation:
-there is no round number, request path or run-state path to reconstruct.
+`records-contract` and `runtime-contract`.
 
 ## Inputs and results
 

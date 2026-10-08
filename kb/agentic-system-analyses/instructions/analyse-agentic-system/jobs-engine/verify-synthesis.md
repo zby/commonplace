@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine to independently judge the exact handed public synthesis and faithful carriage of settled verification limits"
+description: "Use to independently judge the exact handed public synthesis and faithful carriage of settled verification limits"
 type: types/instruction.md
 ---
 
@@ -9,8 +9,7 @@ Give public readers an independent judgment of the synthesis's supported conclus
 
 Read this instruction first, then all invocation Input reading batches. Follow
 `worker-rules`, `collection`, `sources-contract`, `records-contract`,
-`synthesis-contract` and `synthesis-verification-contract`. This instruction
-serves the opt-in synthesis-verifier hand-out, not the legacy workflow.
+`synthesis-contract` and `synthesis-verification-contract`.
 
 ## Inputs and result
 

@@ -1,5 +1,5 @@
 ---
-description: "Use for the new engine's boundary hand-out to classify one target and establish its frozen evidence; not for legacy workflow invocations"
+description: "Use for the boundary hand-out to classify one target and establish its frozen evidence"
 type: types/instruction.md
 ---
 
@@ -9,7 +9,7 @@ Write the boundary that fixes this run's target, disposition and frozen evidence
 
 Read this instruction first, then complete the invocation's Input reading
 batches in order. Follow the supplied worker rules and collection, source,
-boundary and boundary-result contracts. Do not load legacy job instructions.
+boundary and boundary-result contracts.
 
 ## Inputs and result
 
@@ -28,7 +28,7 @@ the supplied `run-id`. `refusal = absent` means there is no refusal input.
 Otherwise read its refusal identity, refused version, scope and findings. On a retry, `previous-boundary` supplies the
 previous completed output by identity. Repair the reported defects and their
 consequences, preserving unrelated work; write the full amended boundary to
-`output`. Do not edit the previous file or reconstruct a legacy previous-output path.
+`output`. Do not edit the previous file.
 
 `blocked` and `out-of-scope` are valid boundary dispositions, not worker
 failures. Use `problem` only when you cannot produce the assigned boundary

@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine to independently judge profile support, natural units and inventory coverage against exact handed records"
+description: "Use to independently judge profile support, natural units and inventory coverage against exact handed records"
 type: types/instruction.md
 ---
 
@@ -9,8 +9,7 @@ Give comparison consumers an independent judgment of whether the handed profile'
 
 Read this instruction first, then all invocation Input reading batches. Follow
 `worker-rules`, `collection`, `sources-contract`, `records-contract`,
-`memory-profile-contract` and `profile-verification-contract`. This instruction
-serves the opt-in profile-verifier hand-out, not the legacy workflow.
+`memory-profile-contract` and `profile-verification-contract`.
 
 ## Inputs and result
 

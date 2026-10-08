@@ -1,5 +1,5 @@
 ---
-description: "Use with every opt-in engine analysis model hand-out for input reading, write authority, frozen sources, correction answers and content checks"
+description: "Use with every analysis model hand-out for input reading, write authority, frozen sources, correction answers and content checks"
 type: types/instruction.md
 ---
 
@@ -9,7 +9,7 @@ Produce one assigned analysis output from its pinned inputs without changing the
 
 These rules serve every new-engine model role: boundary, the three analysts,
 reconciliation, record verification, profile, profile verification, synthesis
-and synthesis verification. The live legacy workflow continues to load its own worker rules. The coordinator owns
+and synthesis verification. The coordinator owns
 scheduling, acceptance, integration and recovery; this hand-out grants neither
 delegation nor publication authority.
 
@@ -19,8 +19,7 @@ Read the invocation prompt completely, recovering every truncated part. Read
 the named instruction first, then every Input reading batch in printed order.
 Use supplied paths unchanged. Complete a batch before beginning the next;
 read oversized files in the printed bounded ranges until their end. Read
-source files and searches in bounded ranges too. No legacy `read-first`
-parameter or legacy reading-order section is required.
+source files and searches in bounded ranges too.
 
 Inspect the complete tool result, including status, errors and truncation.
 Recover a truncated read with a smaller range; a larger inner token limit
@@ -57,9 +56,8 @@ modify existing captures. Closed hand-out workspaces are disposable; captures
 must survive them. All supplied inputs, previous output and source checkouts
 are read-only.
 Do not create other workspace files, edit the working set or another job's
-workspace, alter attempts, versions, judgments or run metadata, or write
-legacy `workflow-state/` or `output/` copies. The layout is authority, not a
-filesystem sandbox.
+workspace, or alter attempts, versions, judgments or run metadata. The layout
+is authority, not a filesystem sandbox.
 
 Do not publish, stage, commit, delegate or invoke a worker. Read engine state
 only through this prompt's supplied inputs and previous output; do not inspect

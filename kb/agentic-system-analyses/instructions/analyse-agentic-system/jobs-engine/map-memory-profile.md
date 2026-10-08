@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine after record verification to classify accepted memory records into a revision-2 comparison profile"
+description: "Use after record verification to classify accepted memory records into a revision-2 comparison profile"
 type: types/instruction.md
 ---
 
@@ -9,8 +9,7 @@ Give comparison consumers supported memory values with the uncertainty each valu
 
 Read this instruction first, then all invocation Input reading batches. Follow
 `worker-rules`, `collection`, `sources-contract`, `records-contract` and
-`memory-profile-contract`. This instruction is consumed by the opt-in
-engine's profile hand-out; the live legacy workflow is unchanged.
+`memory-profile-contract`.
 
 ## Inputs and result
 

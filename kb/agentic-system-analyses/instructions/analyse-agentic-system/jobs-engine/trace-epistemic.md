@@ -9,8 +9,7 @@ Establish whether and how the selected target acquires or produces truth-apt con
 
 Read this instruction first, then complete the invocation's Input reading
 batches. Follow `worker-rules`, `collection`, `sources-contract`,
-`records-contract` and `epistemic-contract`. Do not reconstruct legacy rounds,
-requests or run-state paths.
+`records-contract` and `epistemic-contract`.
 
 ## Inputs and results
 

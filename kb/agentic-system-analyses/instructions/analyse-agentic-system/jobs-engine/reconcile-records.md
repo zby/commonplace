@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine reconciliation hand-out to connect pinned analyst records without judging or rewriting their findings"
+description: "Use with the reconciliation hand-out to connect pinned analyst records without judging or rewriting their findings"
 type: types/instruction.md
 ---
 
@@ -10,8 +10,7 @@ State how the three reports connect and where they disagree so the record verifi
 Read this instruction first, then complete the invocation's Input reading
 batches, recovering truncated reads. Follow `worker-rules`, `collection`,
 `sources-contract`, `records-contract` and the supplied report contracts.
-The coordinator owns scheduling, acceptance and recovery. This instruction
-serves only the opt-in engine's reconciliation job, not the live legacy workflow.
+The coordinator owns scheduling, acceptance and recovery.
 
 ## Inputs, authority and result
 

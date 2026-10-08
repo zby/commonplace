@@ -1,5 +1,5 @@
 ---
-description: "Use with the opt-in engine record verifier hand-out to independently judge pinned records, reconciliation, structural findings and correction answers"
+description: "Use with the record verifier hand-out to independently judge pinned records, reconciliation, structural findings and correction answers"
 type: types/instruction.md
 ---
 
@@ -10,8 +10,7 @@ Judge whether the reconciled records support a source-grounded bounded account, 
 Read this instruction first, then complete the invocation's Input reading
 batches, recovering truncated reads. Follow `worker-rules`, `collection`,
 `sources-contract`, `records-contract`, `boundary-contract` and the supplied
-report and verification contracts. This instruction serves only the opt-in
-engine's record verifier, not the live legacy workflow. The coordinator owns
+report and verification contracts. The coordinator owns
 scheduling, judgment application and recovery.
 
 ## Inputs, authority and result
@@ -34,8 +33,7 @@ and judge the supplied records afresh. An answered blocker is not necessarily
 settled. For `corrected`, check the changed finding and every passage depending
 on it. For `declined`, judge the reason against frozen evidence; drop the
 blocker or raise it again with why the reason fails. A previous verifier can
-be wrong. Repair any supplied `refusal` of the verdict's own form. Do not
-reconstruct legacy rounds, requests, change files or run-state paths.
+be wrong. Repair any supplied `refusal` of the verdict's own form.
 
 ## Judge coverage and materiality
 
