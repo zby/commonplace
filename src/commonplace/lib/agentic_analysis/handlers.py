@@ -12,18 +12,21 @@ import json
 import os
 import re
 import subprocess
+from dataclasses import replace
 from pathlib import Path
 
 from commonplace.lib.agentic_analysis.acquisition import acquire_source
 from commonplace.lib.agentic_analysis.boundary import (
     boundary_refusals,
-    frozen_source_refusals,
+)
+from commonplace.lib.agentic_analysis.candidate import (
+    answer_reasons,
+    candidate,
+    content_reasons,
+    judge,
+    review,
 )
 from commonplace.lib.agentic_analysis.checkout import github_checkout_path
-from commonplace.lib.agentic_analysis.checks import (
-    correction_findings,
-    refusal_findings,
-)
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
     require_publishable_worktree,
@@ -31,12 +34,10 @@ from commonplace.lib.agentic_analysis.guards import (
 )
 from commonplace.lib.agentic_analysis.sets import (
     RETAINED_ROOT,
-    SET_TYPE,
     analysis_layout,
     normalize_source_identity,
     source_slug,
 )
-from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.agentic_analysis.worktree import (
     STATE_ROOT,
     preparation_for,
@@ -45,8 +46,9 @@ from commonplace.lib.agentic_analysis.worktree import (
     source_checkout,
 )
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow import CodeAttempt
+
+ANALYSTS = ("runtime", "memory", "epistemic")
 
 
 def _head(repo: Path) -> str:
@@ -187,16 +189,13 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     """Judge the pinned boundary, never a mutable set projection or hand-out file.
 
     Content checks see a one-member snapshot at its intended set path. Invocation
-    checks bind its run identity and source to opening/acquisition. Self-citations
-    are content checks, not engine relations; no downstream coverage is claimed.
-    The declaration binds this check only with translated downstream hand-outs.
+    checks bind its run identity and source to opening/acquisition; later checks
+    rely on that binding. Self-citations are content checks, not engine
+    relations, so no scope is claimed.
     """
     metadata, repo = _locate(attempt)
-    candidate = attempt.read("candidate")
-    source_bytes = attempt.read("source")
-    if candidate is None or source_bytes is None:
-        raise ValueError("boundary check requires its candidate and acquisition result")
-    frozen = json.loads(source_bytes)
+    check = candidate(attempt, "boundary", ())
+    frozen = json.loads(attempt.read("source"))
     if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
         raise ValueError("boundary check requires a Git source object or explicit JSON null")
     # Only an accepted boundary establishes the capture pin. A declared member
@@ -209,84 +208,32 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
             raise ValueError("boundary check cannot read the incumbent boundary")
         incumbent_source = (incumbent.frontmatter or {}).get("source")
     reasons = ["[invocation] " + reason for reason in boundary_refusals(
-        candidate, repo_root=repo, run_id=metadata["run-id"],
+        check.data, repo_root=repo, run_id=metadata["run-id"],
         identity=metadata["source-identity"], frozen=frozen,
         capture_directory=Path(metadata["capture-directory"]),
     )]
     if incumbent_source is not None and incumbent_source != frozen:
         reasons += ["[incumbent] " + reason for reason in boundary_refusals(
-            candidate, repo_root=repo, run_id=metadata["run-id"],
+            check.data, repo_root=repo, run_id=metadata["run-id"],
             identity=metadata["source-identity"], frozen=incumbent_source,
         )]
-    source_pin = frozen
-    if frozen is None and not reasons:
-        document, error = parse_document(candidate.decode("utf-8", errors="replace"))
-        if document is not None and not error:
-            source_pin = (document.frontmatter or {}).get("source")
-    findings = validate_draft_at_slot(
-        attempt.run_dir / "set", "boundary.md", candidate, repo_root=repo, members={},
-        manifest=f"type: {SET_TYPE}\n".encode(), criteria=criterion_bytes(attempt),
-        frozen_source=source_pin,
-    )
-    reasons += ["[set] " + finding.render() for finding in findings if not finding.info]
-    attempt.judge(
-        "candidate", outcome="refused" if reasons else "accepted", findings="\n".join(reasons),
-    )
+    source_pin = frozen if frozen is not None or reasons else check.fields.get("source")
+    reasons += content_reasons(replace(check, source=source_pin))
+    judge(check, reasons)
     return {}
 
 
 def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
-    metadata, repo = _locate(attempt)
-    candidate = attempt.read("candidate")
-    if candidate is None:
-        raise ValueError(f"{member} check requires a candidate")
-    partners = ["boundary", *[role for role in ("runtime", "memory", "epistemic") if role != member]]
-    layout = attempt.layout
-    snapshot = {}
-    present = []
-    for role in partners:
-        data = attempt.read(role)
-        if data is not None:
-            snapshot[layout.path(role)] = data
-            present.append(role)
-    boundary, error = parse_document(snapshot["boundary.md"].decode("utf-8"))
-    if boundary is None or error or not isinstance((boundary.frontmatter or {}).get("source"), dict):
-        raise ValueError(f"{member} check requires a boundary with a frozen source")
-    source = boundary.frontmatter["source"]
-    findings = validate_draft_at_slot(
-        attempt.run_dir / "set", layout.path(member), candidate,
-        repo_root=repo, members=snapshot, manifest=f"type: {SET_TYPE}\n".encode(),
-        criteria=criterion_bytes(attempt), frozen_source=source,
+    check = candidate(attempt, member, ("boundary", *(role for role in ANALYSTS if role != member)))
+    reasons = review(check) + answer_reasons(
+        check, record="producer-attempt", output="report", incumbent="incumbent-report",
     )
-    reasons = ["[set] " + finding.render() for finding in findings
-               if not finding.info and not finding.warn and not finding.absent]
-    reasons += ["[invocation] " + reason for reason in frozen_source_refusals(source)]
-    try:
-        document, _ = parse_document(candidate.decode("utf-8"))
-    except UnicodeError:
-        document = None
-    if document is not None:
-        fields = document.frontmatter or {}
-        if fields.get("run-id") != metadata["run-id"]:
-            reasons.append("[invocation] run-id must be the opening's run identity")
-        if member == "memory" and fields.get("source-identity") != metadata["source-identity"]:
+    # The memory report is the source of the profile's source identity.
+    if member == "memory" and check.fields:
+        opened = _locate(attempt)[0]["source-identity"]
+        if check.fields.get("source-identity") != opened:
             reasons.append("[invocation] source-identity must be the opening's normalized source identity")
-    answered = attempt.read("answered-refusal")
-    producer_bytes = attempt.read("producer-attempt")
-    if producer_bytes is None:
-        raise ValueError("analyst check requires the producer attempt")
-    producer = json.loads(producer_bytes)
-    reasons += ["[correction] " + reason for reason in correction_findings(
-        candidate, member=member, incumbent=attempt.read("incumbent-report"),
-        refusal=answered, answers=attempt.read("answers"),
-        previous_version=producer["previous_outputs"].get("report"),
-    )]
-    scope = [f"{member}:cites:{role}" for role in present]
-    scope.append(f"{member}:identity:boundary")
-    attempt.judge(
-        "candidate", outcome="refused" if reasons else "accepted", scope=tuple(scope),
-        findings=refusal_findings(reasons, member=member, answered=answered) if reasons else "",
-    )
+    judge(check, reasons)
     return {}
 
 

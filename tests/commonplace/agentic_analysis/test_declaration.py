@@ -135,7 +135,6 @@ def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
         job = jobs.job(verifier)
         assert job.inputs[f"{subject}-answers"].source == f"{producer}:answers"
         assert job.inputs[f"{subject}-refusal"].source == producer
-    assert jobs.job("set-check").inputs["metadata"].source == "open:metadata"
 
 
 def test_apply_jobs_judge_handed_members_not_current_slots(graph):
@@ -146,12 +145,9 @@ def test_apply_jobs_judge_handed_members_not_current_slots(graph):
         assert apply.inputs["verifier-attempt"].source == name
         assert not any(spec.address == "member" for spec in apply.inputs.values())
         expected = {f"verifier-attempt:{key}" for key, spec in verifier.inputs.items()
-                    if spec.address == "member" or key == "set-check"}
+                    if spec.address == "member" or key in ("set-check", "refusal")}
         handed = {spec.source for spec in apply.inputs.values() if spec.address == "handed"}
-        if name != "verify":
-            expected.add("verifier-attempt:refusal")
         assert handed == expected
-        assert apply.inputs["metadata"].source == "open:metadata"
 
 
 def test_profile_and_synthesis_have_explicit_verdict_gates(graph):

@@ -2,7 +2,6 @@
 
 Snapshots are made solely from declared inputs. Structural checks cover content
 relations; only a valid, blocker-free verifier verdict settles semantic gates.
-Environment guards are the same consumer-owned guards as the analyst checks.
 """
 
 from __future__ import annotations
@@ -10,106 +9,55 @@ from __future__ import annotations
 import json
 
 from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
-from commonplace.lib.agentic_analysis.checks import refusal_findings
-from commonplace.lib.agentic_analysis.handlers import (
-    _locate,
+from commonplace.lib.agentic_analysis.candidate import (
+    MANIFEST,
+    candidate,
+    checkout,
+    frozen_source,
+    judge,
+    review,
+    snapshot,
 )
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
     section,
 )
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME
-from commonplace.lib.note_parser import parse_document
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import CriterionSnapshot
-from commonplace.lib.validation import ValidationRun, validate_draft_at_slot
+from commonplace.lib.validation import ValidationRun
 from commonplace.workflow import CodeAttempt
 
 ANALYSTS = ("runtime", "memory", "epistemic")
 RECORDS = (*ANALYSTS, "reconciliation")
 PARTNERS = ("boundary", *RECORDS)
-MANIFEST = f"type: {SET_TYPE}\n".encode()
-
-
-def _required(attempt: CodeAttempt, name: str) -> bytes:
-    data = attempt.read(name)
-    if data is None:
-        raise ValueError(f"record check requires {name}")
-    return data
-
-
-def _path(attempt: CodeAttempt, role: str) -> str:
-    return attempt.layout.path(role)
-
-
-def _snapshot(attempt: CodeAttempt, roles: tuple[str, ...], suffix: str = "") -> dict[str, bytes]:
-    return {_path(attempt, role): _required(attempt, role + suffix) for role in roles}
-
-
-def _source(snapshot: dict[str, bytes]) -> dict:
-    boundary, error = parse_document(snapshot["boundary.md"].decode("utf-8"))
-    if boundary is None or error or not isinstance((boundary.frontmatter or {}).get("source"), dict):
-        raise ValueError("record check requires a boundary with a frozen source")
-    return boundary.frontmatter["source"]
-
-
-def _source_reasons(snapshot: dict[str, bytes]) -> list[str]:
-    return ["[invocation] " + reason for reason in frozen_source_refusals(_source(snapshot))]
-
-
-def _candidate_reasons(attempt, repo, metadata, role, candidate, snapshot):
-    findings = validate_draft_at_slot(
-        attempt.run_dir / "set", _path(attempt, role), candidate,
-        repo_root=repo, members=snapshot, manifest=MANIFEST,
-        criteria=criterion_bytes(attempt), frozen_source=_source(snapshot),
-    )
-    reasons = ["[set] " + finding.render() for finding in findings
-               if not finding.info and not finding.warn and not finding.absent]
-    reasons += _source_reasons(snapshot)
-    try:
-        document, _ = parse_document(candidate.decode("utf-8"))
-    except UnicodeError:
-        document = None
-    if document is not None and (document.frontmatter or {}).get("run-id") != metadata["run-id"]:
-        reasons.append("[invocation] run-id must be the opening's run identity")
-    return reasons
 
 
 def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
     """Check reconciliation content against pinned reports, without semantic acceptance."""
-    metadata, repo = _locate(attempt)
-    candidate = _required(attempt, "candidate")
-    snapshot = _snapshot(attempt, ("boundary", *ANALYSTS))
-    reasons = _candidate_reasons(attempt, repo, metadata, "reconciliation", candidate, snapshot)
-    answered = attempt.read("answered-refusal")
-    attempt.judge(
-        "candidate", outcome="refused" if reasons else "accepted",
-        scope=tuple(f"reconciliation:cites:{role}" for role in ("boundary", *ANALYSTS))
-        + ("reconciliation:identity:boundary",),
-        findings=refusal_findings(reasons, member="reconciliation", answered=answered) if reasons else "",
-    )
+    check = candidate(attempt, "reconciliation", ("boundary", *ANALYSTS))
+    judge(check, review(check))
     return {}
 
 
 def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     """Set_check returns record content and relation findings from one pinned snapshot."""
-    _, repo = _locate(attempt)
-    snapshot = _snapshot(attempt, PARTNERS)
+    members = snapshot(attempt, PARTNERS)
+    source = frozen_source(attempt, members)
     directory = (attempt.run_dir / "set").resolve()
     run = ValidationRun(
-        repo, (), content_overrides={directory / MANIFEST_NAME: MANIFEST},
-        member_snapshots={directory: snapshot},
-        criteria=CriterionSnapshot(kb_root(repo), criterion_bytes(attempt)),
-        frozen_source=_source(snapshot),
+        checkout(attempt), (), content_overrides={directory / MANIFEST_NAME: MANIFEST},
+        member_snapshots={directory: members},
+        criteria=CriterionSnapshot(kb_root(checkout(attempt)), criterion_bytes(attempt)),
+        frozen_source=source,
     )
-    reasons = _source_reasons(snapshot)
+    reasons = ["[invocation] " + reason for reason in frozen_source_refusals(source)]
     # Ordinary member content checks are not replaced by directory relation checks.
     for role in RECORDS:
-        result = run.validate(directory / _path(attempt, role))
-        reasons += [f"{_path(attempt, role)}: {failure}" for failure in result.fails]
+        path = attempt.layout.path(role)
+        reasons += [f"{path}: {failure}" for failure in run.validate(directory / path).fails]
     try:
         reasons += ["[set] " + finding.render() for finding in run.artifact_findings(directory)
                     if not finding.absent and not finding.info]
@@ -190,27 +138,23 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     an earlier verdict. The engine owns late-subject installation and refusal
     delivery. No explicit overrides or current-member discovery are used here.
     """
-    metadata, repo = _locate(attempt)
-    producer = json.loads(_required(attempt, "verifier-attempt"))
-    candidate = _required(attempt, "candidate")
-    snapshot = _snapshot(attempt, PARTNERS, "-seen")
-    reasons = _candidate_reasons(attempt, repo, metadata, "record-verification", candidate, snapshot)
+    producer = json.loads(attempt.read("verifier-attempt"))
+    check = candidate(attempt, "record-verification", PARTNERS, seen=True)
+    reasons = review(check)
     try:
-        entries, malformed = _blockers(candidate.decode("utf-8"))
+        entries, malformed = _blockers(check.data.decode("utf-8"))
     except UnicodeError:
         entries, malformed = [], ["verification must be UTF-8 text"]
     reasons += malformed
-    if _set_check_failed(_required(attempt, "set-check-seen")) and not entries:
+    if _set_check_failed(attempt.read("set-check-seen")) and not entries:
         reasons.append("structural failures require explicit blockers (code requires at least one; the verifier must address every finding)")
-    if reasons:
-        attempt.judge("candidate", outcome="refused", findings="\n".join(reasons))
-        return {}
     # A verifier with blockers is a valid verdict document, not an acceptance
     # of the defective reports. Its content acceptance must not cover their gates.
-    scope = ("record-verification:cites:boundary", "record-verification:identity:boundary")
-    attempt.judge("candidate", outcome="accepted", scope=scope)
+    judge(check, reasons, subjects=RECORDS)
+    if reasons:
+        return {}
     if entries:
-        bodies = {role: snapshot[_path(attempt, role)].decode("utf-8") for role in ANALYSTS}
+        bodies = {role: check.snapshot[attempt.layout.path(role)].decode("utf-8") for role in ANALYSTS}
         owners = {_addressee(entry) for entry in entries}
         for role in RECORDS:
             if role in owners:

@@ -58,11 +58,14 @@ def correction_findings(
 
 
 def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None) -> str:
-    """Carry correction obligations through a structural refusal without rerouting."""
+    """Carry correction obligations and a verdict's limits through a structural refusal."""
     blockers = correction_blockers(answered, member)
-    cited = "none" if answered is None else section(answered.decode("utf-8"), "Cited records from other reports").strip() or "none"
-    return (
+    text = "" if answered is None else answered.decode("utf-8")
+    cited = section(text, "Cited records from other reports").strip() or "none"
+    packet = (
         "## Findings\n\n" + "\n".join(reasons)
         + "\n\n## Blockers\n\n" + blockers
         + "\n\n## Cited records from other reports\n\n" + cited + "\n"
     )
+    limits = section(text, "Limits").strip()
+    return packet + ("\n## Limits\n\n" + limits + "\n" if limits else "")

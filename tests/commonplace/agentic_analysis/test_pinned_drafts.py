@@ -98,21 +98,14 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
                for failure in failures(draft(tmp_path, criteria(), candidate, frozen_source=wrong)))
 
 
-@pytest.mark.parametrize("module,role", [
-    ("profile", "memory-profile"),
-    ("profile", "synthesis-verification"),
-    ("verification", "reconciliation"),
-    ("verification", "record-verification"),
-])
-def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, monkeypatch, module, role):
-    import importlib
+def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_source(tmp_path, monkeypatch):
+    from commonplace.lib.agentic_analysis import candidate as module
 
-    handlers = importlib.import_module("commonplace.lib.agentic_analysis." + module)
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
-    declared = {}
+    declared = {"candidate": CANDIDATE, "boundary": boundary}
     files = {path: data for path, data in pinned.items() if path != SET_TYPE}
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     seen = []
@@ -121,35 +114,34 @@ def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, 
         seen.append((args, kwargs))
         return []
 
-    monkeypatch.setattr(handlers, "validate_draft_at_slot", validate)
-    snapshot = {"boundary.md": boundary}
-    if module == "profile":
-        handlers._content(attempt, tmp_path, role, CANDIDATE, snapshot)
-    else:
-        monkeypatch.setattr(handlers, "frozen_source_refusals", lambda _: [])
-        handlers._candidate_reasons(attempt, tmp_path, {"run-id": "fixture"}, role, CANDIDATE, snapshot)
+    monkeypatch.setattr(module, "checkout", lambda _: tmp_path)
+    monkeypatch.setattr(module, "validate_draft_at_slot", validate)
+    monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
+    check = module.candidate(attempt, "reconciliation", ("boundary",))
+    assert module.review(check) == []
     args, kwargs = seen[0]
     assert args[2] == CANDIDATE
-    assert kwargs["members"] is snapshot
+    assert kwargs["members"] == {"boundary.md": boundary}
     assert kwargs["criteria"] == pinned
     assert kwargs["frozen_source"] == source
 
 
 def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_path, monkeypatch):
-    from commonplace.lib.agentic_analysis import handlers
+    from commonplace.lib.agentic_analysis import candidate, handlers
 
     pinned = criteria()
     declared = {}
     files = {path: data for path, data in pinned.items() if path != SET_TYPE}
     declared.update({"candidate": CANDIDATE, "source": b"null", "metadata": b"{}",
-                     "incumbent-boundary": None})
+                     "incumbent-boundary": None, "answered-refusal": None})
     judgments = []
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files),
-                              judge=lambda *args, **kwargs: judgments.append(kwargs))
+                         relations=(), judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
     monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: (metadata, tmp_path))
+    monkeypatch.setattr(candidate, "checkout", lambda _: tmp_path)
     seen = []
-    monkeypatch.setattr(handlers, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])
+    monkeypatch.setattr(candidate, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])
     handlers.check_boundary(attempt)
     assert seen[0]["criteria"] == pinned
     assert seen[0]["frozen_source"] is None
@@ -164,14 +156,13 @@ def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, mon
     pinned = criteria()
     declared = {}
     files = {path: data for path, data in pinned.items() if path != SET_TYPE}
-    declared["metadata"] = b"{}"
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     source = {"kind": "capture", "identity": "fixture", "revision": "fixture", "path": str(tmp_path)}
     snapshot = {"boundary.md": b"pinned boundary"}
-    monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: ({}, tmp_path))
-    monkeypatch.setattr(handlers, "_snapshot", lambda *args: snapshot)
-    monkeypatch.setattr(handlers, "_source", lambda *args: source)
-    monkeypatch.setattr(handlers, "_source_reasons", lambda *args: [])
+    monkeypatch.setattr(handlers, "checkout", lambda _: tmp_path)
+    monkeypatch.setattr(handlers, "snapshot", lambda *args: snapshot)
+    monkeypatch.setattr(handlers, "frozen_source", lambda *args: source)
+    monkeypatch.setattr(handlers, "frozen_source_refusals", lambda _: [])
     seen = []
 
     def run(*args, **kwargs):

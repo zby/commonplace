@@ -334,6 +334,21 @@ confirm that draft validation enforces the identity relations for a
 candidate whose partners are in the snapshot, since the deletion rests on
 it.
 
+**Implemented (2026-10-08)** as `agentic_analysis/candidate.py`. Draft
+validation reports identity mismatches as failures of the candidate's role,
+so the step-6 checks were deleted. Two remain: the memory report's source
+identity, and the profile's comparison version, which the schema leaves
+optional. Both disagreements were treated as defects: every check now
+refuses on failures only, with the findings packet, and the packet also
+carries the answered refusal's limits. Every check scopes a refusal as it
+would scope an acceptance; a verdict leaves out its subjects either way.
+`apply-verify` gained the answered refusal the other applications declare,
+the handed profile input is named by its role, and the nine jobs that no
+longer read the opening metadata no longer declare it. The four copies,
+about 340 lines, became a 129-line helper plus per-job checks; the package
+shrank by 76 lines, less than estimated, because the helper keeps
+docstrings and also serves the record set check.
+
 ## Outside the handler surface
 
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path

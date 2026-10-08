@@ -99,10 +99,9 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         snapshot.update({role: verdict(a, kind) for role, kind in
                          (("record-verification", "records"), ("profile-verification", "profile"))})
     if apply:
-        snapshot[stage] = profile(a) if stage == "profile" else synthesis(a)
+        snapshot["memory-profile" if stage == "profile" else stage] = profile(a) if stage == "profile" else synthesis(a)
     for role, data in snapshot.items():
-        actual = "memory-profile" if role == "profile" else role
-        values[role + ("-seen" if apply else "")] = (data, actual)
+        values[role + ("-seen" if apply else "")] = (data, role)
     output = "verification" if apply else "profile" if stage == "profile" else "synthesis"
     record_name = "verifier-attempt" if apply else "producer-attempt"
     values[record_name] = (json.dumps({
@@ -164,7 +163,9 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     handler(ctx)
     (judgment,) = judgments(ctx)
     assert judgment["subject"]["role"] == f"{stage}-verification"
-    assert judgment["outcome"] == "refused" and not judgment["scope"]
+    assert judgment["outcome"] == "refused"
+    subject = "memory-profile" if stage == "profile" else "synthesis"
+    assert f"{stage}-verification:cites:{subject}" not in {s["relation"] for s in judgment["scope"]}
     assert not judgment["overrides"]
 
 
@@ -182,7 +183,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
     relation = f"{stage}-verification:cites:{'memory-profile' if stage == 'profile' else 'synthesis'}"
     assert relation not in {s["relation"] for s in valid["scope"]}
     assert subject["scope"][0]["relation"] == relation
-    assert subject["subject"]["version"] == ctx._pins[f"{stage}-seen"].version
+    assert subject["subject"]["version"] == ctx._pins[f"{'memory-profile' if stage == 'profile' else stage}-seen"].version
     assert subject["outcome"] == ("accepted" if blockers == "none" else "refused")
     if blockers != "none":
         assert "Continued evidence explanation." in subject["findings"]

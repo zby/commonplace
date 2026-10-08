@@ -112,7 +112,6 @@ jobs:
     candidate: {address: output, source: 'runtime:report', required: true}
     incumbent-report: {address: member, source: runtime, required: false}
     note-type: {address: file, source: types/note.md}
-    metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: runtime, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
@@ -176,7 +175,6 @@ jobs:
     candidate: {address: output, source: 'epistemic:report', required: true}
     incumbent-report: {address: member, source: epistemic, required: false}
     note-type: {address: file, source: types/note.md}
-    metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: epistemic, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
@@ -211,7 +209,6 @@ jobs:
   criteria: [check, reports, reconciliation]
   inputs:
     candidate: {address: output, source: 'reconcile:reconciliation', required: true}
-    metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: reconcile, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
@@ -225,7 +222,6 @@ jobs:
   outputs: [findings]
   criteria: [check, reports, reconciliation]
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
     boundary: {address: member, source: boundary}
     runtime: {address: member, source: runtime}
     memory: {address: member, source: memory}
@@ -264,7 +260,6 @@ jobs:
   handler: commonplace.lib.agentic_analysis.verification.apply_verify
   criteria: [check, reports, reconciliation, verification]
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
     candidate: {address: output, source: 'verify:verification', required: true}
     verifier-attempt: {address: attempt, source: verify, required: true}
     boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
@@ -273,6 +268,7 @@ jobs:
     epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
     reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
     set-check-seen: {address: handed, source: 'verifier-attempt:set-check'}
+    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
   outputs: []
 - name: profile
   kind: model
@@ -305,7 +301,6 @@ jobs:
     candidate: {address: output, source: 'profile:profile', required: true}
     answers: {address: output, source: 'profile:answers', required: false}
     reconciliation: {address: member, source: reconciliation, required: true}
-    metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: profile, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
@@ -341,7 +336,6 @@ jobs:
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_profile
   criteria: [check, reports, reconciliation, verification, profile]
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
     answers: {address: output, source: 'verify-profile:answers', required: false}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-profile:verification', required: true}
@@ -351,7 +345,7 @@ jobs:
     memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
     epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
     reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
+    memory-profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
   outputs: []
 - name: synthesize
   kind: model
@@ -390,7 +384,6 @@ jobs:
     reconciliation: {address: member, source: reconciliation, required: true}
     record-verification: {address: member, source: record-verification, required: true}
     profile-verification: {address: member, source: profile-verification, required: true}
-    metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: synthesize, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
@@ -428,7 +421,6 @@ jobs:
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_synthesis
   criteria: [check, reports, reconciliation, verification, synthesis]
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
     answers: {address: output, source: 'verify-synthesis:answers', required: false}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-synthesis:verification', required: true}
