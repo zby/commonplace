@@ -50,13 +50,18 @@ def main(argv: list[str] | None = None) -> int:
             reject_legacy_run(arguments.run)
             rendered = json.loads(render_engine_run_report(arguments.run))
             if rendered["state"] == "completed":
+                from hashlib import sha256
+
                 from commonplace.lib.note_parser import parse_document
-                from commonplace.workflow.store import RunStore
 
                 version = rendered["members"].get("boundary")
                 if version is None:
                     raise ValueError("completed analysis has no boundary member")
-                document, error = parse_document(RunStore(arguments.run).get(version).decode("utf-8"))
+                # The set directory holds the members materialized; content identity ties it to the report.
+                data = (Path(rendered["set"]) / "boundary.md").read_bytes()
+                if sha256(data).hexdigest() != version:
+                    raise ValueError("the materialized boundary differs from the reported member")
+                document, error = parse_document(data.decode("utf-8"))
                 if error or document is None or not document.frontmatter:
                     raise ValueError("completed analysis has an unreadable boundary member")
                 disposition = document.frontmatter.get("result-disposition")

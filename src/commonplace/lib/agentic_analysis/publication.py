@@ -389,7 +389,7 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
             ) from error
         raise
     if prepared is None:
-        return {}
+        return {"receipt": _receipt(published=False)}
     metadata, repo, destination, files = prepared
 
     def inspect_incumbent():
@@ -403,4 +403,14 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         _publish_effect(run_dir=attempt.run_dir, destination=destination, archive_root=repo / ARCHIVE_ROOT,
                         files=files, identity=metadata["source-identity"],
                         expected=metadata["expected-incumbent-sha256"], inspect_incumbent=inspect_incumbent)
-    return {}
+    return {"receipt": _receipt(published=True, destination=str(destination), members=_hashes(files),
+                                **{name: metadata.get(name) for name in RECEIPT_PINS})}
+
+
+RECEIPT_PINS = ("run-id", "inputs-commit", "system", "source-identity", "source", "source-revision",
+                "expected-incumbent-sha256")
+
+
+def _receipt(**fields) -> bytes:
+    """What publication did, for consumers that read the job's current completion."""
+    return (json.dumps(fields, sort_keys=True) + "\n").encode("utf-8")

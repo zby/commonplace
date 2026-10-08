@@ -10,10 +10,9 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.workflow import RunStatus
-from commonplace.workflow.engine import inspect
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore
+from commonplace.workflow import RunStatus, current_outputs, inspect, run_lock
+
+PUBLISH_JOB = "publish"
 
 
 def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict:
@@ -21,39 +20,13 @@ def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict
     run_dir = Path(run_dir).resolve()
     if any((run_dir / name).exists() for name in ("workflow-state", "output", "opening.json")):
         raise ValueError("new-engine reporting rejects legacy/mixed run directories")
-    store = RunStore(run_dir)
-    if not store.metadata.exists():
+    if not (run_dir / "run.json").exists():
         raise ValueError("new-engine reporting requires run.json; legacy state is not converted")
-    with store.lock():
+    with run_lock(run_dir):
         view = inspect(run_dir)
-        run = Run(store)
-        attempts = sorted(run.attempts.values(), key=lambda r: r["seq"])
         failures = [asdict(stop) for stop in view["failed_attempts"]]
         stops = [asdict(stop) for stop in status.stops] if status is not None else []
-        exhausted = [job.name for job in run.jobs.jobs
-                     if getattr(job, "max_attempts", None) is not None
-                     and run.attempt_count(job.name) >= job.max_attempts
-                     and run.ready(job, run.permitted())]
-        stale = [judgment["id"] for judgment in run.judgments
-                 if judgment["outcome"] == "accepted" and not run.holds(judgment)]
-        drift = []
-        members = run.members()
-        for judgment in run.judgments:
-            if judgment["outcome"] != "accepted" or not run.holds(judgment):
-                continue
-            basis = judgment["basis"]
-            for name, entry in basis.items():
-                spec = entry["input"]
-                if spec["address"] != "handed":
-                    continue
-                alias, _, handed = spec["source"].partition(":")
-                producer = run.jobs.job(basis[alias]["input"]["source"])
-                original = producer.inputs.get(handed)
-                if (original is not None and original.address == "member"
-                        and entry["version"] != members.get(original.source)):
-                    drift.append({"judgment": judgment["id"], "input": name,
-                                  "role": original.source, "handed": entry["version"],
-                                  "current": members.get(original.source)})
+        exhausted = view["exhausted_jobs"]
         effects = {}
         for name in ("acquire", "publish"):
             path = run_dir / "effects" / f"{name}.json"
@@ -69,27 +42,21 @@ def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict
                     effects[name] = {"error": str(error), "verified": False}
         uncertain = any(stop["uncertain"] for stop in [*failures, *stops])
         state = "uncertain" if uncertain else "stopped" if (failures or stops or exhausted) else "running"
-        publication = next((job for job in run.jobs.jobs
-                            if getattr(job, "handler", None)
-                            == "commonplace.lib.agentic_analysis.publication.publish_analysis"), None)
-        if (state == "running" and publication is not None and view["publishable"]
-                and not view["open_attempts"] and run.latest_completed(publication.name) is not None
-                and not run.ready(publication, run.permitted())):
+        if (state == "running" and view["condition"] == "publishable"
+                and current_outputs(run_dir, PUBLISH_JOB) is not None):
             state = "completed"
         return {
             "format": "commonplace-engine-run-report-v1", "run-id": run_dir.name,
             "state": state, "set": str(run_dir / "set"), "publishable": view["publishable"],
-            "parameters": dict(run.parameters), "members": view["members"],
+            "parameters": view["parameters"], "members": view["members"],
             "open-attempts": view["open_attempts"], "failed-attempts": failures,
             "invocation-stops": stops, "exhausted-jobs": exhausted,
-            "stale-acceptances": stale, "canonical-peer-drift": drift,
+            "stale-acceptances": view["stale_acceptances"], "canonical-peer-drift": view["historical_bases"],
             "refusals": [asdict(item) for item in view["refusals"]],
-            "attempts": [{key: record.get(key) for key in
-                          ("id", "job", "kind", "state", "model", "effort", "reason", "uncertain")}
-                         for record in attempts],
+            "attempts": view["attempts"],
             "effects": effects,
             "limitations": [
-                "Publishable means engine relation coverage, not publication or content validation.",
+                "Publishable means engine coverage (required roles, holding acceptances, covered relations), not publication or content validation.",
                 "Completed means the bound publication job completed against unchanged inputs, not a fresh filesystem audit.",
                 "Holding handed judgments can refer to historical peers; canonical-peer-drift reports that separately.",
                 "Reporting does not change logical run state; acquiring its lock may create state/lock.",

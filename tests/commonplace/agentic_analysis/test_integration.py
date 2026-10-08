@@ -10,11 +10,10 @@ from types import SimpleNamespace
 
 import pytest
 
+from commonplace import workflow
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis import worktree as aw
 from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.workflow import state
-from commonplace.workflow.state import Resolved
 from commonplace.workflow.store import RunStore
 
 
@@ -50,23 +49,17 @@ def proof(tmp_path, monkeypatch):
              "ARTIFACT.yaml": b"fixture manifest\n", "boundary.md": b"fixture boundary\n"}
     for name, data in files.items():
         (destination / name).write_bytes(data)
-    pin = Resolved(sha256(b"input").hexdigest(), b"input")
-    job = SimpleNamespace(name="publish", handler="commonplace.lib.agentic_analysis.publication.publish_analysis",
-                          inputs={"input": None})
-    complete = {"id": "000001-publish", "seq": 1, "job": "publish", "kind": "code",
-                "state": "completed", "pins": {"input": pin.pin()}, "outputs": {}}
-    engine = SimpleNamespace(
-        jobs=SimpleNamespace(jobs=[job], job=lambda name: job),
-        attempts={complete["id"]: complete}, parameters={"system": "Example", "source": "fixture", "source-identity": "identity"},
-        latest_completed=lambda name: complete, publishable=lambda: True,
-        ready=lambda *args: False, permitted=lambda: None, resolve=lambda *args: pin,
-    )
-    monkeypatch.setattr(state, "Run", lambda store: engine)
-    monkeypatch.setattr(state, "CodeAttempt", lambda *args: None)
-    opened = {"run-id": run.name, "inputs-commit": method, **engine.parameters,
-              "expected-incumbent-sha256": "absent"}
-    prepared = (opened, root, destination, files)
-    monkeypatch.setattr(publication, "_prepare_publication", lambda attempt: prepared)
+    parameters = {"system": "Example", "source": "fixture", "source-identity": "identity"}
+    view = {"declaration": {"job_set": str(declaration), "sha256": sha256(declaration.read_bytes()).hexdigest(),
+                            "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
+            "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
+    receipt = {"published": True, "destination": str(destination), "members": publication._hashes(files),
+               "run-id": run.name, "inputs-commit": method, **parameters, "source-revision": None,
+               "expected-incumbent-sha256": "absent"}
+    engine = SimpleNamespace(view=view, receipt=receipt, current=True)
+    monkeypatch.setattr(workflow, "inspect", lambda run_dir: engine.view)
+    monkeypatch.setattr(workflow, "current_outputs", lambda run_dir, job: (
+        {"receipt": json.dumps(engine.receipt).encode()} if engine.current else None))
     journal = {"version": 1, "run-id": run.name, "destination": str(destination),
                "source-identity": "identity", "expected": "absent", "new": publication._hashes(files),
                "old": None, "archive": None, "state": "completed"}
@@ -74,7 +67,7 @@ def proof(tmp_path, monkeypatch):
     path.parent.mkdir()
     path.write_text(json.dumps(journal))
     return SimpleNamespace(root=root, method=method, run=run, destination=destination,
-                           files=files, engine=engine, journal=journal, journal_path=path, opened=opened)
+                           files=files, engine=engine, journal=journal, journal_path=path, receipt=receipt)
 
 
 def verify(proof):
@@ -115,22 +108,20 @@ def test_journal_label_and_identity_are_not_proof(proof, field, value):
         verify(proof)
 
 
-@pytest.mark.parametrize("case", ["unpublished", "uncovered", "open", "failed", "uncertain", "stale", "changed-pin", "local"])
-def test_engine_completion_is_required_independently(proof, monkeypatch, case):
-    if case == "unpublished":
-        proof.engine.latest_completed = lambda name: None
+@pytest.mark.parametrize("case", ["not-current", "uncovered", "failed", "exhausted", "local", "other-method"])
+def test_engine_completion_is_required_independently(proof, case):
+    if case == "not-current":
+        proof.engine.current = False
     elif case == "uncovered":
-        proof.engine.publishable = lambda: False
-    elif case in ("open", "failed", "uncertain"):
-        record = next(iter(proof.engine.attempts.values()))
-        record["state"] = "open" if case == "open" else "failed"
-        record["uncertain"] = case == "uncertain"
-    elif case == "stale":
-        proof.engine.ready = lambda *args: True
-    elif case == "changed-pin":
-        proof.engine.resolve = lambda *args: Resolved(sha256(b"changed").hexdigest(), b"changed")
+        proof.engine.view["condition"] = "running"
+    elif case == "failed":
+        proof.engine.view["failed_attempts"] = ["a failed attempt"]
+    elif case == "exhausted":
+        proof.engine.view["exhausted_jobs"] = ["verify"]
+    elif case == "local":
+        proof.engine.receipt = {"published": False}
     else:
-        monkeypatch.setattr(publication, "_prepare_publication", lambda attempt: None)
+        proof.engine.view["declaration"]["sha256"] = "0" * 64
     with pytest.raises(ValueError):
         verify(proof)
 
@@ -145,8 +136,8 @@ def test_archive_must_equal_the_git_incumbent_not_only_journal(proof):
     git(proof.root, "add", str(proof.destination))
     git(proof.root, "commit", "-m", "Fixture incumbent")
     proof.method = git(proof.root, "rev-parse", "HEAD")
-    proof.opened["inputs-commit"] = proof.method
-    proof.opened["expected-incumbent-sha256"] = sha256(old["overview.md"]).hexdigest()
+    proof.receipt["inputs-commit"] = proof.method
+    proof.receipt["expected-incumbent-sha256"] = sha256(old["overview.md"]).hexdigest()
     proof.files["overview.md"] = (f"---\nrun-id: {proof.run.name}\ninputs-commit: {proof.method}\n"
                                   "result-disposition: complete\nreviewed-boundary: revision\n---\n").encode()
     archive = proof.root / aw.ARCHIVE_ROOT / old_id
@@ -156,7 +147,8 @@ def test_archive_must_equal_the_git_incumbent_not_only_journal(proof):
     for name, data in proof.files.items():
         (proof.destination / name).write_bytes(data)
     proof.journal.update(old=publication._hashes(old), archive=str(archive),
-                         expected=proof.opened["expected-incumbent-sha256"], new=publication._hashes(proof.files))
+                         expected=proof.receipt["expected-incumbent-sha256"], new=publication._hashes(proof.files))
+    proof.receipt["members"] = publication._hashes(proof.files)
     proof.journal_path.write_text(json.dumps(proof.journal))
     assert len(verify(proof)[0]) == 2
     (archive / "boundary.md").write_bytes(b"changed archive")

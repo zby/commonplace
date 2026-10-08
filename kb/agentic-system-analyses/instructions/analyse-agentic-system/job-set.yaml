@@ -771,4 +771,4 @@ jobs:
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     manifest: {address: output, source: 'assemble:manifest'}
-  outputs: []
+  outputs: [receipt]

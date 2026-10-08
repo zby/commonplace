@@ -71,6 +71,8 @@ what it replaced; *decided* — settled by the operator.
 | Previous attempt's output in a hand-out | previous output | — | The previous output is supplied by identity and is not an input. | changed: the spec calls it *context*, colliding with untracked context |
 | What a worker reads beyond its inputs | untracked context | — | Untracked context is anything a worker reads that is not an input. | keep; reserve *context* for this |
 | A code job's handle on its attempt | code attempt | `CodeAttempt` | A code attempt gives a handler its pinned inputs and stages its judgments. | changed: was `CodeContext`, colliding with *context* |
+| What inspection says about a whole run | run condition | `inspect()["condition"]` | The run condition is running, publishable, stopped or stuck. | added: replaces the analysis report's own "completed" and "stopped" |
+| A completion that still stands | current completion | `current_outputs()` | A completion is current while its pins still resolve unchanged, no attempt of the job is open and the job is not ready. | added: the narrow "completed" the publication handoff used |
 | An invocation ending for the operator | stop | `Stop` | A stop names the job and attempt that ended the invocation. | keep |
 | A worker's declared inability | problem | `Handout.problem` | The problem file is where a worker reports why it cannot produce output. | keep |
 

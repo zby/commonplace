@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import fcntl
+import json
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from threading import Event
@@ -88,8 +89,8 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
             assert not second_destination.exists()
         finally:
             release.set()
-        assert first_result.result(timeout=5) == {}
-        assert second_result.result(timeout=5) == {}
+        for result in (first_result, second_result):
+            assert json.loads(result.result(timeout=5)["receipt"])["published"] is True
     assert inspecting.is_set()
     for destination in (first_destination, second_destination):
         assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == SET_TYPE
@@ -103,7 +104,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
 
     monkeypatch.setattr(engine, "_publish_effect", replay)
     monkeypatch.setattr(engine, "inspect_destination", lambda **kw: pytest.fail("replay reinspected"))
-    assert engine.publish_analysis(second) == {}
+    assert json.loads(engine.publish_analysis(second)["receipt"])["published"] is True
     with guards.publication_lock(tmp_path):
         assert_locked(tmp_path)
 

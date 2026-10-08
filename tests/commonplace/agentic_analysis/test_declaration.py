@@ -327,4 +327,4 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
             if schema:
                 assert schema_dependencies((LIBRARY / path).parent / schema) <= files
         assert jobs.job("assemble").outputs == ("overview", "manifest")
-        assert jobs.job("publish").outputs == ()
+        assert jobs.job("publish").outputs == ("receipt",)

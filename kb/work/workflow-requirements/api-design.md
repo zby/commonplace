@@ -22,6 +22,12 @@ from the requirements.
 - `CodeAttempt.judge()` stages acceptance or refusal of one subject version,
   with findings, a scope of covered relations and optional explicit refusal
   overrides.
+- `inspect(run_dir)` reports the run under its lock: members, open and
+  failed attempts, refusals in force, stale acceptances, exhausted jobs,
+  holding acceptances resting on historical versions and the run condition.
+  `current_outputs(run_dir, job)` returns a job's outputs only while its
+  completion is current. `run_lock(run_dir)` holds the run lock for a
+  consumer that must keep the run still, such as an integration.
 - `AttemptResult` closes an open model attempt as completed or failed, with
   worker identity.
 - `Handout`, `Stop` and `RunStatus` report work and state to the coordinator.

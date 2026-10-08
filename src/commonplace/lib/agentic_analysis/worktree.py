@@ -403,52 +403,36 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     """Prove current engine completion AND exact publication, without recovery writes.
 
     Caller holds the run and publication locks. A journal label is not proof.
-    Reuse publication's pure preparation checks, never its effect recognizer.
+    The publish job's current receipt names what was published; the retained
+    tree, journal and archive must match it exactly.
     """
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.lib.agentic_analysis.publication import (
-        JOURNAL,
-        _hashes,
-        _prepare_publication,
-        _tree,
-    )
-    from commonplace.workflow.state import CodeAttempt, Run
-    from commonplace.workflow.store import RunStore
+    from commonplace.lib.agentic_analysis.publication import JOURNAL, _hashes, _tree
+    from commonplace.workflow import current_outputs, inspect
 
-    store = RunStore(run_dir)
-    metadata = store.read_metadata()
-    if (metadata["declaration"] != (worktree / "kb" / JOB_SET).read_text(encoding="utf-8")
-            or Path(metadata["job_set"]) != worktree / "kb" / JOB_SET):
+    view = inspect(run_dir)
+    fixed = view["declaration"]
+    shipped = worktree / "kb" / JOB_SET
+    if Path(fixed["job_set"]) != shipped or fixed["sha256"] != sha256(shipped.read_bytes()).hexdigest():
         raise ValueError("integration requires the fixed shipped analysis job set")
-    if metadata["type"] != (worktree / "kb" / metadata["type_spec"]).read_text(encoding="utf-8"):
+    if fixed["type_sha256"] != sha256((worktree / "kb" / fixed["type_spec"]).read_bytes()).hexdigest():
         raise ValueError("integration requires the unchanged shipped set type")
-    run = Run(store)
-    publication = run.jobs.job("publish")
-    if publication.handler != "commonplace.lib.agentic_analysis.publication.publish_analysis":
-        raise ValueError("integration requires the shipped publication handler")
-    completed = run.latest_completed("publish")
-    if completed is None or not run.publishable():
-        raise ValueError("integration requires engine publication completion and current coverage")
-    for job in run.jobs.jobs:
-        records = [r for r in run.attempts.values() if r["job"] == job.name]
-        latest = max(records, key=lambda r: r["seq"], default=None)
-        if (latest is not None and latest["state"] != "completed") or run.ready(job, run.permitted()):
-            raise ValueError("integration refuses open, failed, uncertain or stale engine results")
-    pins = {name: run.resolve(name, publication.inputs) for name in publication.inputs}
-    if ({name: pin.pin() for name, pin in pins.items()} != completed["pins"]):
-        raise ValueError("publication completion inputs have changed")
-    for pin in pins.values():
-        if pin.data is not None and sha256(pin.data).hexdigest() != pin.version:
-            raise ValueError("publication input bytes differ from their engine version")
-    prepared = _prepare_publication(CodeAttempt(run, publication, pins))
-    if prepared is None:
+    outputs = current_outputs(run_dir, "publish")
+    if (outputs is None or view["condition"] != "publishable"
+            or view["failed_attempts"] or view["exhausted_jobs"]):
+        raise ValueError("integration requires a current publication completion and current coverage")
+    receipt = json.loads(outputs.get("receipt", b"null"))
+    if not isinstance(receipt, dict) or receipt.get("published") is not True:
         raise ValueError("integration requires a published complete disposition, not a local result")
-    opened, repo, destination, files = prepared
-    if repo != worktree or opened["run-id"] != run_dir.name or opened["inputs-commit"] != method:
+    if receipt.get("run-id") != run_dir.name or receipt.get("inputs-commit") != method:
         raise ValueError("publication does not pin this run and method")
-    if any(opened.get(name) != run.parameters.get(name) for name in
+    if any(receipt.get(name) != view["parameters"].get(name) for name in
            ("system", "source-identity", "source", "source-revision")):
         raise ValueError("publication source and system pins differ from run parameters")
+    destination = Path(receipt["destination"])
+    files = _tree(destination)
+    if files is None or _hashes(files) != receipt["members"]:
+        raise ValueError("publication journal or exact retained bytes differ from completed inputs")
     overview = _frontmatter(files["overview.md"].decode("utf-8"), destination / "overview.md")
     if (overview.get("run-id") != run_dir.name or overview.get("inputs-commit") != method
             or overview.get("result-disposition") != "complete"
@@ -460,11 +444,11 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
         raise ValueError("publication journal redirects")
     journal = json.loads(journal_path.read_bytes())
     intent = {"version": 1, "run-id": run_dir.name, "destination": str(destination),
-              "source-identity": opened["source-identity"],
-              "expected": opened["expected-incumbent-sha256"], "new": _hashes(files)}
+              "source-identity": receipt["source-identity"],
+              "expected": receipt["expected-incumbent-sha256"], "new": receipt["members"]}
     if (not isinstance(journal, dict) or set(journal) != {*intent, "old", "archive", "state"}
             or any(journal.get(k) != v for k, v in intent.items())
-            or journal["state"] != "completed" or _tree(destination) != files):
+            or journal["state"] != "completed"):
         raise ValueError("publication journal or exact retained bytes differ from completed inputs")
     relative = destination.relative_to(worktree)
     if relative.parent != RETAINED_ROOT:
@@ -506,7 +490,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
 def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     """Authorize Git integration while serializing cooperating run/publisher mutations."""
     from commonplace.lib.agentic_analysis.guards import publication_lock
-    from commonplace.workflow.store import RunStore
+    from commonplace.workflow import run_lock
 
     run_dir = Path(run_dir).absolute()
     if run_dir.resolve() != run_dir:
@@ -521,7 +505,7 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     if worktree / STATE_ROOT != run_dir.parent:
         raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
     require_run_code(run_dir, cwd=Path.cwd())
-    with RunStore(run_dir).lock(), publication_lock(worktree):
+    with run_lock(run_dir), publication_lock(worktree):
         return _integrate_analysis(run_dir, model=model)
 
 

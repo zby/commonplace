@@ -33,6 +33,10 @@ def canonical(record: Any) -> bytes:
     return (json.dumps(record, sort_keys=True, indent=1) + "\n").encode("utf-8")
 
 
+# Run directories whose lock this process holds, so nested holders do not deadlock.
+_HELD: set[Path] = set()
+
+
 class RunStore:
     def __init__(self, run_dir: Path) -> None:
         self.run_dir = run_dir
@@ -51,11 +55,18 @@ class RunStore:
 
     @contextmanager
     def lock(self) -> Iterator[None]:
+        """Hold the run lock; re-entering it in the same process is a no-op."""
+        key = self.run_dir.resolve()
+        if key in _HELD:
+            yield
+            return
         with open(self.state / "lock", "a") as handle:
             fcntl.flock(handle, fcntl.LOCK_EX)
+            _HELD.add(key)
             try:
                 yield
             finally:
+                _HELD.discard(key)
                 fcntl.flock(handle, fcntl.LOCK_UN)
 
     # Writing

@@ -22,8 +22,11 @@ from commonplace.workflow.engine import (
     Stop,
     UncertainEffectError,
     advance,
+    current_outputs,
+    inspect,
     judge,
     open_handouts,
+    run_lock,
     start_run,
 )
 
@@ -40,8 +43,11 @@ __all__ = [
     "Stop",
     "UncertainEffectError",
     "advance",
+    "current_outputs",
+    "inspect",
     "judge",
     "load_job_set",
     "open_handouts",
+    "run_lock",
     "start_run",
 ]

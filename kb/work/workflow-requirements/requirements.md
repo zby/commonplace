@@ -117,11 +117,6 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    records. A code job declaring it copies the current versions out,
    pinned.
 
-## Open
-
-- **Stale acceptances.** Reported every invocation, or at
-  publication.
-
 ## Decisions
 
 Settled choices beneath the requirements, of the kind an ADR would record.
@@ -264,6 +259,24 @@ They bind an implementation of this spec; they are not requirements.
   delivered baseline, the produced versions and worker identity, and a
   whole internal record made every field a dependency. The attempt id
   keeps each completed attempt a distinct version, as scenario 22 needs.
+- **The engine reports a run's condition; consumers do not reconstruct it.**
+  Inspection reads a run under its lock and reports members, open and
+  failed attempts, refusals in force, stale acceptances, jobs that have
+  exhausted max attempts, holding acceptances whose basis has a handed
+  version that is no longer current, and the run condition, decided in
+  this order: *running* while an attempt is open; *stopped* while a job's
+  latest attempt failed or a job has exhausted max attempts, since jobs
+  waiting on it will not run; *publishable*; *running* while a job is
+  ready; otherwise *stuck*. A job's
+  completion is *current* while its latest completed attempt's pins still
+  resolve to the same versions, no attempt of it is open and it is not
+  ready; only a current completion's outputs are read back. Stale
+  acceptances are reported whenever inspection runs; publication neither
+  reports nor refuses them, since the coverage input already waits.
+  Consumers hold the run lock through a public context, never the store.
+  Why: an operator report and a Git integration both need these answers,
+  and computing them outside the engine made each consumer re-read
+  internal records.
 
 ## Deferred
 

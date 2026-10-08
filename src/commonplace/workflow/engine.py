@@ -14,7 +14,8 @@ the version an installing acceptance put in a role.
 from __future__ import annotations
 
 import traceback
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -210,7 +211,11 @@ def inspect(run_dir: Path) -> dict:
     store = RunStore(Path(run_dir))
     if not store.metadata.exists():
         raise FileNotFoundError(f"{run_dir} holds no run; start it first")
-    run = Run(store)
+    with store.lock():
+        return _inspect(Run(store))
+
+
+def _inspect(run: Run) -> dict:
     refusals = []
     for job in run.jobs.jobs:
         if not isinstance(job, ModelJob):
@@ -227,13 +232,95 @@ def inspect(run_dir: Path) -> dict:
         latest[record["job"]] = record
     failures = [Stop(r["reason"], r["job"], r["id"], r.get("uncertain", False))
                 for r in latest.values() if r["state"] == "failed"]
+    permitted = run.permitted()
+    exhausted = [job.name for job in run.jobs.jobs
+                 if isinstance(job, ModelJob) and job.max_attempts is not None
+                 and run.attempt_count(job.name) >= job.max_attempts and run.ready(job, permitted)]
+    opened = sorted(r["id"] for r in run.attempts.values() if r["state"] == "open")
+    failed = {stop.job for stop in failures}
+    publishable = run.publishable()
+    # A failed or exhausted job stops the run even while others wait on it.
+    if opened:
+        condition = "running"
+    elif failed or exhausted:
+        condition = "stopped"
+    elif publishable:
+        condition = "publishable"
+    elif any(run.ready(job, permitted) for job in run.jobs.jobs):
+        condition = "running"
+    else:
+        condition = "stuck"
     return {
+        "condition": condition,
+        "parameters": dict(run.parameters),
+        "declaration": _declaration_identity(run),
+        "attempts": [{key: record.get(key) for key in
+                      ("id", "job", "kind", "state", "model", "effort", "reason", "uncertain")}
+                     for record in sorted(run.attempts.values(), key=lambda r: r["seq"])],
         "failed_attempts": failures,
+        "exhausted_jobs": exhausted,
         "members": dict(run.members()),
-        "open_attempts": sorted(r["id"] for r in run.attempts.values() if r["state"] == "open"),
+        "open_attempts": opened,
         "refusals": refusals,
-        "publishable": run.publishable(),
+        "stale_acceptances": [j["id"] for j in run.judgments
+                              if j["outcome"] == "accepted" and not run.holds(j)],
+        "historical_bases": _historical_bases(run),
+        "publishable": publishable,
     }
+
+
+def _declaration_identity(run: Run) -> dict:
+    """Which job set and type the run fixed at start, by path and content digest."""
+    metadata = run.store.read_metadata()
+    return {"job_set": metadata["job_set"], "sha256": digest(metadata["declaration"].encode("utf-8")),
+            "type_spec": metadata["type_spec"], "type_sha256": digest(metadata["type"].encode("utf-8"))}
+
+
+def _historical_bases(run: Run) -> list[dict]:
+    """Holding acceptances whose basis has a handed member that is no longer current."""
+    members = run.members()
+    found = []
+    for judgment in run.judgments:
+        if judgment["outcome"] != "accepted" or not run.holds(judgment):
+            continue
+        basis = judgment["basis"]
+        for name, entry in basis.items():
+            if entry["input"]["address"] != "handed":
+                continue
+            alias, _, handed = entry["input"]["source"].partition(":")
+            producer = run.jobs.job(basis[alias]["input"]["source"])
+            original = producer.inputs.get(handed)
+            if (original is not None and original.address == "member"
+                    and entry["version"] != members.get(original.source)):
+                found.append({"judgment": judgment["id"], "input": name, "role": original.source,
+                              "handed": entry["version"], "current": members.get(original.source)})
+    return found
+
+
+def current_outputs(run_dir: Path, job: str) -> dict[str, bytes] | None:
+    """A job's outputs while its completion is current, else None.
+
+    A completion is current while its pins still resolve to the same
+    versions, no attempt of the job is open and the job is not ready.
+    """
+    store = RunStore(Path(run_dir))
+    with store.lock():
+        run = Run(store)
+        declared = run.jobs.job(job)
+        last = run.latest_completed(job)
+        if last is None or run.open_attempt(job) is not None or run.ready(declared, run.permitted()):
+            return None
+        pins = {name: run.resolve(name, declared.inputs).pin() for name in declared.inputs}
+        if pins != last["pins"]:
+            return None
+        return {name: store.get(version) for name, version in last["outputs"].items()}
+
+
+@contextmanager
+def run_lock(run_dir: Path) -> Iterator[None]:
+    """Hold the run lock so no invocation changes the run meanwhile."""
+    with RunStore(Path(run_dir)).lock():
+        yield
 
 
 def _status(run: Run, handouts, stops) -> RunStatus:

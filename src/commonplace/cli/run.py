@@ -31,11 +31,11 @@ from commonplace.workflow import (
     RunStatus,
     Stop,
     advance,
+    inspect,
     judge,
     open_handouts,
     start_run,
 )
-from commonplace.workflow.engine import inspect
 
 
 def _parser() -> argparse.ArgumentParser:

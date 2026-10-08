@@ -154,7 +154,7 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
     outputs = publication.assemble_analysis(attempt)
     attempt.inputs.update(outputs)
     monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must remain local"))
-    assert publication.publish_analysis(attempt) == {}
+    assert json.loads(publication.publish_analysis(attempt)["receipt"]) == {"published": False}
     assert not (tmp_path / "kb/agentic-system-analyses/retained").exists()
     assert not (attempt.run_dir / "output").exists()
     assert not (attempt.run_dir / "run-state.md").exists()
@@ -309,7 +309,7 @@ def test_rollback_failure_is_uncertain_and_preserves_evidence(tmp_path, monkeypa
 def test_engine_report_is_separate_and_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
     type_text = (ROOT / "kb" / SET_TYPE).read_text()
-    store.create({"type": type_text, "type_spec": SET_TYPE, "library": str(ROOT / "kb"),
+    store.create({"type": type_text, "type_spec": SET_TYPE, "job_set": "fixture-job-set.yaml", "library": str(ROOT / "kb"),
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": []}]}),
                   "parameters": {"system": "fixture"}})
@@ -401,7 +401,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     # Run the actual registered handler through the engine, with fixture pinned
     # inputs and scripted content validation, not an effect-only replacement.
     store = RunStore(attempt.run_dir)
-    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE,
+    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE, "job_set": "fixture-job-set.yaml",
                   "library": str(ROOT / "kb"), "parameters": {},
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
@@ -425,7 +425,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
         assert publication._tree(destination) == old
         # A resolved rollback remains an ordinary failure, and can retry.
         monkeypatch.setattr(publication, "atomic_write", write)
-        assert publication.publish_analysis(attempt) == {}
+        assert json.loads(publication.publish_analysis(attempt)["receipt"])["published"] is True
 
 
 @pytest.mark.parametrize("journal", [None, b'{"state": "rolled-back"}', b"malformed"])

@@ -147,3 +147,31 @@ def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordin
     assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort"}
     assert record["job"] == "report" and record["kind"] == "model"
     assert record["outputs"]["report"] == digest(b"report A\n")
+
+
+def test_inspection_reports_the_run_condition_and_current_completions(coordinator: Coordinator) -> None:
+    from commonplace.workflow import current_outputs, inspect, run_lock
+
+    c = coordinator
+    assert inspect(c.run_dir)["condition"] == "running", "the brief is handed out"
+    c.through_publication()
+    with run_lock(c.run_dir):  # Re-entered by inspect and current_outputs without deadlock.
+        assert inspect(c.run_dir)["condition"] == "publishable"
+        assert current_outputs(c.run_dir, "summary") == {"summary": b"summary S1\n"}
+    c.edit_method("summary.md", "# summary\n\nWrite it again.\n")
+    assert current_outputs(c.run_dir, "summary") is None, "a changed input makes the completion stale"
+    assert inspect(c.run_dir)["condition"] == "publishable", "no member has changed yet"
+
+
+def test_inspection_reports_a_run_stopped_by_exhausted_attempts(coordinator: Coordinator) -> None:
+    from commonplace.workflow import inspect
+
+    c = coordinator
+    c.through_brief()
+    c.complete("other", "other O1\n")
+    for _ in range(3):
+        c.handout("report").problem.write_text("unreadable\n", encoding="utf-8")
+        c.fail("report", "worker reported a problem")
+        c.advance()
+    view = inspect(c.run_dir)
+    assert view["exhausted_jobs"] == ["report"] and view["condition"] == "stopped"

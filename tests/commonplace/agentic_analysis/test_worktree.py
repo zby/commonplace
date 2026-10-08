@@ -290,13 +290,16 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
 def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
-    from commonplace.lib.agentic_analysis import report
-    from commonplace.workflow.store import RunStore
+    from hashlib import sha256
 
-    store = RunStore(tmp_path)
-    version = store.put(f"---\nresult-disposition: {disposition}\n---\n".encode())
+    from commonplace.lib.agentic_analysis import report
+
+    boundary = f"---\nresult-disposition: {disposition}\n---\n".encode()
+    (tmp_path / "set").mkdir()
+    (tmp_path / "set" / "boundary.md").write_bytes(boundary)
     monkeypatch.setattr(report, "render_engine_run_report", lambda run: json.dumps({
-        "state": "completed", "members": {"boundary": version}, "effects": {"publish": {"verified": False}},
+        "state": "completed", "set": str(tmp_path / "set"), "members": {"boundary": sha256(boundary).hexdigest()},
+        "effects": {"publish": {"verified": False}},
     }))
     assert main(["report-analysis", str(tmp_path)]) == 0
     result = json.loads(capsys.readouterr().out)
