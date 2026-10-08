@@ -260,6 +260,28 @@ def test_producer_records_the_previous_outputs_actually_delivered(analysts):
     assert Path(p["previous-answers"]).read_bytes() == b""
 
 
+def test_structural_repair_can_restore_original_bytes_with_fresh_declines(analysts):
+    a = analysts
+    through_analysts(a)
+    original = report(a, "runtime")
+    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings=(
+        "## Blockers\n\n- runtime: reconsider SRC-1.\n"
+    ))
+    a.coordinator.advance()
+    a.coordinator.complete(
+        "runtime", report(a, "runtime", **{"reviewed-boundary": "b" * 40}),
+        answers="- declined: retained the SRC-1 finding.\n",
+    )
+    assert judgments(a, "runtime")[-1]["outcome"] == "refused"
+    a.coordinator.complete(
+        "runtime", original,
+        answers="- declined: restored the pinned boundary and rechecked SRC-1; the finding remains supported.\n",
+    )
+    assert not a.coordinator.status.stops and not a.coordinator.status.handouts
+    assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
+    assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
+
+
 def test_record_preservation_is_a_pure_correction_check():
     original = "## Shared records\n\n### Operative objects\n\n#### RT-OBJ-store — Store\n\noriginal finding\n".encode()
     lost = b"## Shared records\n\nnone declared in this member\n"

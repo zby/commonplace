@@ -128,8 +128,12 @@ scheduling another correction.
 The engine supplies each producer's latest refusal of its latest completed
 output, including the refused version, the findings and the refusal's
 identity. Historical refusals stay as evidence but do not enter that
-producer's refusal input. Reading it answers it; only a newer, unsuperseded
-refusal triggers another correction. Supersession requires a sufficient
+producer's refusal input. Reading it in a completed attempt answers it; only
+a newer, unsuperseded refusal triggers another correction. Restoring earlier
+output bytes can expose an earlier refusal again. A completed attempt that
+already read that refusal identity keeps it answered, even when the latest
+completed attempt read a different structural refusal. Failed attempts do not
+answer it. Supersession requires a sufficient
 scope or an explicit override. There is no designated-verifier ownership
 map or aggregation of outstanding findings beyond the requirement's
 latest-refusal address.

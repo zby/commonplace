@@ -130,6 +130,21 @@ def test_decline_completion_does_not_reset_max_attempts(tmp_path, tmp_library, m
     assert Run(RunStore(c.run_dir)).attempt_count("report") == 2
 
 
+def test_restoring_bytes_does_not_reanswer_a_historical_refusal(tmp_path, tmp_library, monkeypatch):
+    c = decline_run(tmp_path, monkeypatch)
+    original_refusal = RunStore(c.run_dir).judgment_records()[-1]
+    c.complete("report", "REFUSE\n", answers=ANSWER)
+    assert c.handed() == {"report"}
+    c.ran()
+    c.complete("report", "report A\n", answers=ANSWER + "Restored the structural fields.\n")
+    assert not c.status.stops and c.handed() == {"verify"}
+    assert "check-report" in c.ran()
+    run = Run(RunStore(c.run_dir))
+    assert not run.superseded(original_refusal), "completion is not an override"
+    assert not run.covered("verification:cites:report", "verification", "report")
+    assert len(completed_reports(c)) == 3
+
+
 def test_changed_auxiliary_does_not_accept_a_structurally_refused_primary(coordinator: Coordinator):
     c = coordinator
     c.through_brief()

@@ -245,11 +245,23 @@ class Run:
         last = self.latest_completed(job.name)
         if last is None:
             return True
-        return any(
-            not job.inputs[name].order_only and resolved.version is not None
-            and resolved.version != last["pins"].get(name, {}).get("version")
-            for name, resolved in current.items()
-        )
+        def changed(name: str, resolved: Resolved) -> bool:
+            spec = job.inputs[name]
+            if (spec.order_only or resolved.version is None
+                    or resolved.version == last["pins"].get(name, {}).get("version")):
+                return False
+            if isinstance(job, ModelJob) and spec.address == "refusal" and spec.source == job.name:
+                # Restoring earlier bytes can expose an earlier refusal again.
+                # Reading it in a completed attempt answered it; a structural
+                # repair must not spend another model attempt on that identity.
+                return not any(
+                    record["job"] == job.name and record["state"] == "completed"
+                    and record["pins"].get(name, {}).get("version") == resolved.version
+                    for record in self.attempts.values()
+                )
+            return True
+
+        return any(changed(name, resolved) for name, resolved in current.items())
 
     def producers(self, job: Job) -> set[str]:
         """Model jobs whose pending work would change one of `job`'s inputs.

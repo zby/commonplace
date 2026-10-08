@@ -167,6 +167,19 @@ was handed. A fresh sufficient acceptance can supersede the refusal; another
 refusal can request another answer, subject to the unchanged attempt limit.
 An identical repeated answer is scenario 15, not a new reconciliation. [1, 3–8]
 
+**15b. Structural repair restores the earlier report bytes.** `V` refuses
+A. Attempt 2 reads that refusal, declines its semantic blocker and produces
+B with a structural defect. `check-R` refuses B and preserves the semantic
+blocker in its findings. Attempt 3 repairs B by restoring A's exact bytes,
+with fresh answers. Content identity makes A's earlier refusal current again,
+but attempt 2 already answered that refusal identity. It is not a newer
+refusal and does not schedule attempt 4 or hold `check-R` back. `check-R`
+judges attempt 3 and its pinned answers. In an analysis it can accept the
+structural repair; `V` still must reassess the decline. No historical refusal
+is overridden by completion, no coverage is granted automatically, and all
+three attempts count toward max attempts. A failed attempt would not have
+answered the refusal. [3–8]
+
 **16. Structural acceptance does not replenish the budget.** A passes
 `check-R`, `V` refuses A, B passes `check-R`, `V` refuses B, and so on.
 Each structural pass is an acceptance, but max attempts counts attempts in
