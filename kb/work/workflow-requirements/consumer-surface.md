@@ -275,8 +275,8 @@ references per job.
 Order: the guard split and the deletions; the refusal format; the
 attempt-record decision (published subset or handed address) and its
 implementation; the fixed set type and its accessor; the coverage gate with
-the stricter publishable rule; engine-owned inspection and locking; then the
-criteria-declaration section. Each step leaves the tests passing.
+the stricter publishable rule; engine-owned inspection and locking; then
+criteria groups. Each step leaves the tests passing.
 
 Every design step begins by amending the specification texts, not by code.
 The resolutions above touch requirements 1 and 9, the fixed-declaration
