@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import re
 import subprocess
-from collections.abc import Callable, Collection
+from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -71,9 +71,11 @@ from commonplace.lib.quote_verification import (
     QuoteResult,
     ingest_normalization,
     ingest_quotes_section,
+    parse_prose_citations,
     verify_content,
 )
 from commonplace.lib.type_resolver import (
+    CriterionSnapshot,
     TypeProfile,
     canonical_type_identity,
     resolve_type,
@@ -164,6 +166,9 @@ class ValidationRun:
     content_overrides: dict[Path, str | bytes] = field(default_factory=dict)
     # Explicit snapshots replace discovery; unrelated on-disk members are not inputs.
     member_snapshots: dict[Path, dict[str, bytes]] = field(default_factory=dict)
+    criteria: CriterionSnapshot | None = None
+    # Exact boundary source declaration authorizing local frozen inspection.
+    frozen_source: Mapping[str, object] | None = None
     _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
     _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
     _evaluating: list[Path] = field(default_factory=list, init=False)
@@ -204,6 +209,8 @@ class ValidationRun:
         key = path.resolve()
         if key not in self._bytes:
             content = self.content_overrides.get(key)
+            if content is None and self.criteria is not None:
+                content = self.criteria.read(key)
             self._bytes[key] = (
                 content.encode("utf-8") if isinstance(content, str)
                 else content if content is not None else key.read_bytes()
@@ -238,6 +245,8 @@ class ValidationRun:
 
     def load_frontmatter(self, path: Path) -> frontmatter.FrontmatterResult:
         """Serve type-spec frontmatter from this run's parse cache."""
+        if self.criteria is not None:
+            return self.criteria.frontmatter(path)
         loaded = self.load_document(path)
         if loaded.error:
             return frontmatter.FrontmatterResult(errors=[loaded.error])
@@ -262,6 +271,7 @@ class ValidationRun:
                 loaded.document.frontmatter,
                 repo_root=self.repo_root,
                 load_frontmatter=self.load_frontmatter,
+                criteria=self.criteria,
             )
         except (FileNotFoundError, TypeError, ValueError) as exc:
             result = (None, str(exc))
@@ -293,11 +303,34 @@ class ValidationRun:
     def verbatim_quotes(self, parsed: ParsedNote) -> list[QuoteResult]:
         """Resolve a note's verbatim quotes once for every check that reads them."""
         if parsed.path not in self._verbatim_quotes:
-            self._verbatim_quotes[parsed.path] = verify_content(
-                parsed.content,
-                parsed.path,
-                load_source=lambda path: self.load_document(path).content,
-            )
+            if self.criteria is None:
+                self._verbatim_quotes[parsed.path] = verify_content(
+                    parsed.content,
+                    parsed.path,
+                    load_source=lambda path: self.load_document(path).content,
+                )
+            else:
+                from commonplace.lib.quote_matching import match_quote
+
+                quotes = []
+                for citation in parse_prose_citations(parsed.content):
+                    source = (parsed.path.parent / citation.source).resolve() if citation.source else None
+                    error, status = citation.error, "unresolved"
+                    if error is None and source is not None:
+                        try:
+                            content = self.read_bytes(source).decode("utf-8")
+                            region = ([c.quote for c in parse_blockquotes(ingest_quotes_section(content))]
+                                      if source.name.endswith(".ingest.md") else content)
+                            kind = ingest_normalization(content) if source.name.endswith(".ingest.md") else "prose"
+                            matched = match_quote(citation.quote, region, kind=kind)
+                            status = "match" if matched.matched else "mismatch"
+                            error = matched.error
+                        except (OSError, UnicodeError) as exc:
+                            error = f"source error: {exc}"
+                    detail = error or ("source unavailable" if status == "unresolved" else "")
+                    quotes.append(QuoteResult(status, parsed.path, citation.line, citation.quote or None,
+                                              source, detail))
+                self._verbatim_quotes[parsed.path] = quotes
         return self._verbatim_quotes[parsed.path]
 
     def snapshots(self, directory: Path) -> SnapshotDirectory:
@@ -355,6 +388,9 @@ class ValidationRun:
 
     def is_git_ignored(self, path: Path) -> bool:
         """Return whether Git excludes one artifact from version control."""
+        if self.criteria is not None:
+            # A publication slot is authored even if its working directory is ignored.
+            return False
         key = path.resolve()
         self.prime_git_ignored((key,))
         return self._git_ignored[key]
@@ -458,6 +494,7 @@ class ValidationRun:
         return resolve_type(
             directory / MANIFEST_NAME, self.artifact(directory).manifest,
             repo_root=self.repo_root, load_frontmatter=self.load_frontmatter,
+            criteria=self.criteria,
         )
 
     def artifact_findings(self, directory: Path) -> list[Finding]:
@@ -654,6 +691,7 @@ def validate_links_from_document(
     links: tuple[str, ...],
     *,
     available_paths: Collection[Path] = (),
+    closed_directory: Path | None = None,
 ) -> None:
     """Resolve links against disk and normalized paths supplied by this validation run."""
     missing: list[str] = []
@@ -661,7 +699,8 @@ def validate_links_from_document(
         target = _resolve_local_link_target(path, link)
         if target is None:
             continue
-        if target not in available_paths and not target.exists():
+        in_closed_set = closed_directory is not None and target.parent == closed_directory
+        if target not in available_paths and (in_closed_set or not target.exists()):
             missing.append(link)
 
     if missing:
@@ -1266,6 +1305,7 @@ def validate_type_spec_definition(
             parsed.path,
             repo_root=run.repo_root,
             load_frontmatter=run.load_frontmatter,
+            criteria=run.criteria,
         )
     except (FileNotFoundError, TypeError, ValueError) as exc:
         results.fails.append(f"type definition: {exc}")
@@ -1741,7 +1781,10 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         base,
         parsed.path,
         parsed.document.links,
-        available_paths=run.content_overrides,
+        available_paths=(set(run.content_overrides) | set(run.criteria.contents)
+                         if run.criteria is not None else run.content_overrides),
+        closed_directory=(parsed.path.parent if run.criteria is not None
+                          and parsed.path.parent in run.member_snapshots else None),
     )
     validate_proposal_archive_links(
         base,
@@ -1751,7 +1794,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     )
     validate_tag_heads(base, parsed, run=run)
     validate_write_brief_pairing(base, parsed, run=run)
-    validate_verbatim_quotes(base, run.verbatim_quotes(parsed))
+    quote_results = run.verbatim_quotes(parsed)
+    validate_verbatim_quotes(base, quote_results)
+    if run.criteria is not None:
+        for quote in quote_results:
+            if quote.status == "unresolved":
+                base.fails.append(f"verbatim quote cannot be verified: {quote.detail}")
     snapshots = run.snapshots(parsed.path.parent / ".snapshots")
     validate_ingest_snapshot_pairing(
         base, parsed.content, parsed.path, snapshots=snapshots
@@ -1770,6 +1818,90 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     _merge_labelled(results, schema_results, "schema")
 
     return results
+
+
+def validate_pinned_analysis_set(
+    *, repo: Path, intended_set_path: Path, members: Mapping[str, bytes],
+    manifest: bytes, criteria: Mapping[str, bytes],
+    frozen_source: Mapping[str, object] | None = None,
+) -> CheckResults:
+    """Check an exact analysis publication snapshot without writing files.
+
+    Criterion keys are relative to the library (not prefixed with kb/). The
+    snapshot's virtual root is repo/kb. Supply every type, transitive schema and
+    substantive contract dependency; missing dependencies fail closed. The
+    stable installed Python rules remain the implementation of prose contracts:
+    this is not an interpreter of arbitrary changed method prose. Callers must
+    separately guard the opened method/code identity.
+
+    frozen_source must equal the boundary source mapping and explicitly grants
+    local inspection of that frozen checkout/capture only. Relative link
+    existence and collection/type eligibility are stable-method environment
+    guards; they do not authorize external content reads. Warnings are returned,
+    not silently promoted to success. A caller must reject nonempty fails.
+    """
+    from commonplace.lib.agentic_set import SET_TYPE
+
+    repo = repo.resolve()
+    directory = intended_set_path if intended_set_path.is_absolute() else repo / intended_set_path
+    directory = directory.resolve()
+    if not directory.is_relative_to(repo / "kb" / "agentic-system-analyses"):
+        raise ValueError("intended set must be inside the analysis collection")
+    snapshot = CriterionSnapshot(kb_root(repo), criteria)
+    result = CheckResults(SET_TYPE)
+    try:
+        for required in ("agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md"):
+            snapshot.read(snapshot.root / required)
+        run = ValidationRun(
+            repo, (directory,), member_snapshots={directory: dict(members)},
+            content_overrides={directory / MANIFEST_NAME: manifest},
+            criteria=snapshot, frozen_source=frozen_source,
+        )
+        artifact = run.artifact(directory)
+        if artifact.manifest["type"] != SET_TYPE:
+            raise ValueError("pinned analysis adapter requires the analysis set type")
+        pins = artifact.manifest.get("members")
+        if (not isinstance(pins, dict) or set(pins) != set(members)
+                or any(not isinstance(entry, dict) or set(entry) != {"sha256"}
+                       for entry in pins.values())):
+            raise ValueError("publication manifest must pin every exact member")
+        profile = run.artifact_profile(directory)
+        if profile.layout is None:
+            raise ValueError("analysis set requires its pinned layout")
+        allowed = {role.type for role in profile.layout.roles.values()}
+        type_documents = {profile.type_doc_path, snapshot.root / "types/type-spec.md"}
+        # This adapter cannot safely dispatch arbitrary library rules that do
+        # direct filesystem scans. Fail explicitly, rather than skip those rules.
+        for member in artifact.members.values():
+            fm = member.document.frontmatter or {}
+            type_value = fm.get("type")
+            if (type_value not in allowed or not isinstance(type_value, str)
+                    or not type_value.startswith("agentic-system-analyses/types/")
+                    or type_value not in _TYPE_RULES):
+                raise ValueError(f"unsupported publication member type: {type_value}")
+            member_profile, error = run.parse_note(member.path)
+            if error:
+                raise ValueError(f"publication member {member.path.name}: {error}")
+            if member_profile is None or member_profile.profile.schema is None:
+                raise ValueError(f"publication member {member.path.name} needs a pinned schema")
+            type_documents.add(member_profile.profile.type_doc_path)
+            if fm.get("tags") or "brief" in fm or member.path.name.endswith(".ingest.md"):
+                raise ValueError("pinned analysis adapter cannot bound tag/brief/ingest dependencies")
+        result = run.validate(directory)
+        meta_profile = resolve_type_definition(
+            snapshot.root / "types/type-spec.md", repo_root=repo, criteria=snapshot,
+        )
+        if meta_profile.schema is None:
+            raise ValueError("pinned type specifications require their type-spec schema")
+        for type_document in sorted(path for path in type_documents if path is not None):
+            metadata = snapshot.frontmatter(type_document).data
+            if metadata.get("tags") or "brief" in metadata:
+                raise ValueError("pinned type specifications cannot add tag/brief dependencies")
+            _merge_labelled(result, run.validate(type_document), f"criterion {type_document.relative_to(snapshot.root)}")
+        result.infos.append("local link existence and type eligibility use stable-method environment guards")
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError, yaml.YAMLError) as exc:
+        result.fails.append(f"[pinned contracts] {exc}")
+    return result
 
 
 def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
@@ -2065,6 +2197,8 @@ def run_validation(
 def validate_draft_at_slot(
     directory: Path, slot: Path | str, candidate: Path | bytes, *, repo_root: Path,
     members: dict[str, bytes] | None = None, manifest: bytes | None = None,
+    criteria: Mapping[str, bytes] | None = None,
+    frozen_source: Mapping[str, object] | None = None,
 ) -> list[Finding]:
     """Validate candidate bytes at a declared member slot, without writing.
 
@@ -2075,7 +2209,9 @@ def validate_draft_at_slot(
     this judges member content and relations, not publication acceptance.
     With ``members``, judge only that exact byte snapshot plus the candidate;
     an explicit manifest is required and disk discovery is disabled. Otherwise
-    preserve the ordinary CLI's incumbent-overlay behavior.
+    preserve the ordinary CLI's incumbent-overlay behavior. With ``criteria``,
+    type and schema resolution use only the supplied closed criterion bytes.
+    ``frozen_source`` authorizes inspection of that exact boundary source only.
     """
     directory = directory.resolve()
     intended = Path(slot)
@@ -2090,7 +2226,11 @@ def validate_draft_at_slot(
     overrides = {intended: data}
     if manifest is not None:
         overrides[directory / MANIFEST_NAME] = manifest
-    run = ValidationRun(repo_root, (), content_overrides=overrides, member_snapshots=snapshot)
+    run = ValidationRun(
+        repo_root, (), content_overrides=overrides, member_snapshots=snapshot,
+        criteria=CriterionSnapshot(kb_root(repo_root), criteria) if criteria is not None else None,
+        frozen_source=frozen_source,
+    )
     if intended.is_symlink():
         raise ValueError("draft slot must not be a symlink")
     from commonplace.lib.directory_artifact import UniqueKeyLoader
@@ -2104,10 +2244,13 @@ def validate_draft_at_slot(
         key: value for key, value in manifest.items() if key != "members"
     })
     run._bytes.pop(directory / MANIFEST_NAME, None)
-    layout = resolve_type(
-        directory / MANIFEST_NAME, manifest, repo_root=run.repo_root,
-        load_frontmatter=run.load_frontmatter,
-    ).layout
+    try:
+        layout = resolve_type(
+            directory / MANIFEST_NAME, manifest, repo_root=run.repo_root,
+            load_frontmatter=run.load_frontmatter, criteria=run.criteria,
+        ).layout
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        return [Finding(None, f"{intended.name}: set input cannot be checked: {exc}")]
     role = layout.role_at(intended.name) if layout is not None else None
     if role is None:
         raise ValueError(f"{intended.name}: no declared layout role")
@@ -2166,7 +2309,7 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
                 findings.append(Finding("overview", f"{layout.path('overview')}: missing member link to {layout.path(name)}",
                                         repair="link every present member from the overview's Members section"))
 
-    findings += _set_quotation_findings(artifact, layout, documents)
+    findings += _set_quotation_findings(artifact, layout, documents, run=run)
     findings += _verification_findings(layout, documents)
 
     profile = documents.get("memory-profile")
@@ -2235,8 +2378,67 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
     return findings
 
 
+class _FrozenGitObjects:
+    """Read committed blobs, never ignored/untracked checkout files.
+
+    The boundary supplies the repository and full object identity. Git is only
+    used as a local object reader, not to acquire or execute source content.
+    """
+
+    def __init__(self, source: Mapping[str, object]) -> None:
+        from commonplace.lib.quote_grounding import GitPin
+
+        self.pin = GitPin(str(source["identity"]), str(source["revision"]), Path(str(source["path"])))
+
+    def _git(self, *args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            ["git", "--no-replace-objects", "-C", str(self.pin.root), *args], capture_output=True,
+            check=False, timeout=10,
+        )
+
+    def missing(self) -> str | None:
+        if not re.fullmatch(r"[0-9a-f]{40}", self.pin.revision):
+            return "frozen Git source requires a full commit hash"
+        try:
+            found = self._git("rev-parse", "HEAD")
+            if found.returncode or found.stdout.decode().strip() != self.pin.revision:
+                return "frozen Git source is not at its declared revision"
+        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
+            return f"cannot inspect frozen Git source: {exc}"
+        return None
+
+    def attribution_error(self, citation) -> str | None:
+        return self.pin.attribution_error(citation)
+
+    def read(self, citation, *, text: bool = True):
+        from commonplace.lib.agentic_set import is_normalized_relative
+        from commonplace.lib.quote_grounding import SourceText
+        from commonplace.lib.quote_matching import git_citation_path
+
+        missing = self.missing()
+        if missing:
+            return SourceText(missing=missing)
+        path, _ = git_citation_path(citation)
+        if not is_normalized_relative(path):
+            return SourceText(error="expected a normalized commit-relative path")
+        try:
+            obj = f"{self.pin.revision}:{path}"
+            kind = self._git("cat-file", "-t", obj)
+            if kind.returncode or kind.stdout.strip() != b"blob":
+                return SourceText(error="path does not name a committed blob", path=path)
+            if not text:
+                return SourceText("", path, f"{path} at the recorded commit")
+            blob = self._git("cat-file", "blob", obj)
+            if blob.returncode:
+                return SourceText(error="cannot read committed blob", path=path)
+            return SourceText(blob.stdout.decode("utf-8"), path, f"{path} at the recorded commit")
+        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
+            return SourceText(error=f"cannot read committed blob: {exc}", path=path)
+
+
 def _set_quotation_findings(
     artifact: DirectoryArtifact, layout: Layout, documents: dict[str, ParsedDocument],
+    *, run: ValidationRun,
 ) -> list[Finding]:
     """Every member's quotations resolve against the boundary's frozen source.
 
@@ -2248,8 +2450,61 @@ def _set_quotation_findings(
 
     boundary = documents.get("boundary")
     source = (boundary.frontmatter or {}).get("source") if boundary is not None else None
-    pin = frozen_source_pin(source) if isinstance(source, dict) else None
+    bounded = run.criteria is not None
+    authorized = not bounded or (isinstance(source, dict) and source == run.frozen_source)
+    complete_source = isinstance(source, dict) and all(
+        isinstance(source.get(key), str) and source[key] for key in ("identity", "revision", "path")
+    )
+    pin = frozen_source_pin(source) if complete_source and authorized else None
+    if bounded and pin is not None and source.get("kind") == "git":
+        pin = _FrozenGitObjects(source)
     findings = []
+    if bounded and pin is None:
+        from commonplace.lib.quote_matching import URL_RE
+
+        if any("github.com/" in match.group() and "/blob/" in match.group()
+               for document in documents.values() for match in URL_RE.finditer(document.body)):
+            findings.append(Finding("boundary", "source anchors require authorized frozen source inspection"))
+    if bounded and isinstance(source, dict) and not authorized:
+        findings.append(Finding("boundary", "frozen source inspection requires the exact boundary source context"))
+    if bounded and pin is not None:
+        from commonplace.lib.quote_matching import (
+            URL_RE,
+            Citation,
+            blank_quote_bodies,
+            parse_github_blob,
+        )
+
+        if source.get("kind") not in {"git", "capture"} or not Path(str(source.get("path", ""))).is_absolute():
+            return [Finding("boundary", "frozen source needs a git/capture kind and absolute path")]
+        missing = pin.missing()
+        if missing is not None:
+            findings.append(Finding("boundary", f"frozen source unavailable: {missing}"))
+        for name, document in documents.items():
+            if source.get("kind") == "git":
+                for match in URL_RE.finditer(blank_quote_bodies(document.body)):
+                    url = match.group().rstrip(".,;")
+                    try:
+                        blob = parse_github_blob(url)
+                        if blob is None:
+                            continue
+                        citation = Citation("", url, blob.revision)
+                        error = pin.attribution_error(citation)
+                        found = pin.read(citation, text=False) if error is None else None
+                        error = error or (found.error or found.missing if found is not None else None)
+                        if error:
+                            findings.append(Finding(name, f"source citation: {error}: {url}"))
+                    except ValueError as exc:
+                        findings.append(Finding(name, f"source citation: {exc}"))
+            else:
+                # A GitHub blob citation cannot be established by a capture.
+                for match in URL_RE.finditer(document.body):
+                    url = match.group().rstrip(".,;")
+                    try:
+                        if parse_github_blob(url) is not None:
+                            findings.append(Finding(name, "GitHub source anchor cannot be verified against a capture"))
+                    except ValueError as exc:
+                        findings.append(Finding(name, f"source citation: {exc}"))
     for role in layout.roles.values():
         if role.name not in documents:
             continue
@@ -2268,5 +2523,5 @@ def _set_quotation_findings(
                 unverified.append(resolution)
         if unverified:
             findings.append(Finding(role.name, f"{role.path}: {len(unverified)} quotations unverified, "
-                                               f"{unverified[0].detail}", info=True))
+                                               f"{unverified[0].detail}", info=not bounded))
     return findings

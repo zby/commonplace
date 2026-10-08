@@ -11,19 +11,20 @@ no root can shadow the other. The written value is the type's identity.
 from __future__ import annotations
 
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import urldefrag, urljoin, urlparse
 from urllib.request import url2pathname
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
-from jsonschema.exceptions import ValidationError
+from jsonschema.exceptions import SchemaError, ValidationError
 from referencing import Registry, Resource
 from referencing.exceptions import NoSuchResource
+from referencing.jsonschema import DRAFT202012
 
 from commonplace.lib import frontmatter
 from commonplace.lib.directory_layout import Layout, parse_layout
@@ -39,6 +40,7 @@ class TypeProfile:
     schema_path: Path | None
     schema: dict[str, Any] | None = None
     layout: Layout | None = None
+    criteria: CriterionSnapshot | None = None
 
 
 TYPE_SPEC = "types/type-spec.md"
@@ -49,6 +51,118 @@ SCHEMA_URI_SCHEME = "commonplace"
 
 class TypeCollisionError(ValueError):
     """A type value names two different files on the search path (ADR 088)."""
+
+
+class CriterionSnapshot:
+    """Closed run-local contract bytes, keyed by paths relative to a KB root.
+
+    No disk, network or process-cache fallback. Alternate $id bases and
+    dynamic references are outside this bounded adapter's supported dialect.
+    """
+
+    def __init__(self, root: Path, contents: Mapping[str, bytes]) -> None:
+        self.root = root.resolve()
+        self.contents: dict[Path, bytes] = {}
+        self._schemas: dict[Path, dict[str, Any]] = {}
+        for name, data in contents.items():
+            path = Path(name)
+            if (path.is_absolute() or ".." in path.parts or path.as_posix() != name
+                    or not isinstance(data, bytes)):
+                raise ValueError(f"invalid criterion entry: {name!r}")
+            key = (self.root / path).resolve()
+            if not key.is_relative_to(self.root):
+                raise ValueError(f"criterion escapes root: {name}")
+            self.contents[key] = data
+
+    def read(self, path: Path) -> bytes:
+        try:
+            return self.contents[path.resolve()]
+        except KeyError as exc:
+            raise FileNotFoundError(f"missing pinned criterion: {path}") from exc
+
+    def frontmatter(self, path: Path) -> frontmatter.FrontmatterResult:
+        return frontmatter.parse(self.read(path).decode("utf-8"))
+
+    def schema(self, path: Path) -> dict[str, Any]:
+        path = path.resolve()
+        if path not in self._schemas:
+            try:
+                raw = yaml.safe_load(self.read(path))
+            except yaml.YAMLError as exc:
+                raise ValueError(f"invalid pinned schema {path}: {exc}") from exc
+            if not isinstance(raw, dict):
+                raise TypeError(f"{path}: schema must load to a mapping")
+            raw = _library_refs_to_files(raw, self.root, preserve_fragments=True)
+            if raw.get("$schema", "https://json-schema.org/draft/2020-12/schema") != "https://json-schema.org/draft/2020-12/schema":
+                raise ValueError("pinned schemas require JSON Schema draft 2020-12")
+            uri = path.as_uri()
+
+            def inspect(node: Any, *, top: bool = False) -> None:
+                if isinstance(node, dict):
+                    if "$dynamicRef" in node or "$dynamicAnchor" in node:
+                        raise ValueError("pinned schemas do not support dynamic references")
+                    if "$id" in node and (not top or node["$id"] != uri):
+                        raise ValueError("pinned schemas require the canonical file $id")
+                    for value in node.values():
+                        inspect(value)
+                elif isinstance(node, list):
+                    for value in node:
+                        inspect(value)
+
+            inspect(raw, top=True)
+            raw = {**raw, "$id": uri}
+            try:
+                Draft202012Validator.check_schema(raw)
+            except SchemaError as exc:
+                raise ValueError(f"invalid pinned schema {path}: {exc.message}") from exc
+            self._schemas[path] = raw
+        return self._schemas[path]
+
+    def registry(self, path: Path) -> Registry:
+        # Preflight even inactive branches and transitive refs before success.
+        registry = Registry()
+        seen: set[Path] = set()
+        references: list[tuple[str, str]] = []
+
+        def visit(file: Path) -> None:
+            nonlocal registry
+            file = file.resolve()
+            if file in seen:
+                return
+            schema = self.schema(file)
+            seen.add(file)
+            uri = file.as_uri()
+            registry = registry.with_resource(
+                uri, Resource.from_contents(schema, default_specification=DRAFT202012),
+            )
+
+            def walk(node: Any) -> None:
+                if isinstance(node, dict):
+                    ref = node.get("$ref")
+                    if ref is not None:
+                        if not isinstance(ref, str):
+                            raise ValueError("schema $ref must be a string")
+                        target, _ = urldefrag(urljoin(uri, ref))
+                        parsed = urlparse(target)
+                        if parsed.scheme != "file" or parsed.netloc:
+                            raise ValueError(f"unbounded schema reference: {ref}")
+                        visit(Path(url2pathname(parsed.path)))
+                        references.append((uri, ref))
+                    for value in node.values():
+                        walk(value)
+                elif isinstance(node, list):
+                    for value in node:
+                        walk(value)
+
+            walk(schema)
+
+        visit(path)
+        for base, ref in references:
+            try:
+                registry.resolver(base_uri=base).lookup(ref)
+            except Exception as exc:
+                raise ValueError(f"invalid pinned schema reference {ref}: {exc}") from exc
+        return registry
 
 
 def global_types_dir() -> Path:
@@ -155,6 +269,7 @@ def validate_type_path(
     *,
     repo_root: Path,
     source_file: Path | None = None,
+    criteria: CriterionSnapshot | None = None,
 ) -> tuple[str, Path]:
     """Validate a frontmatter type value and find its spec on the search path.
 
@@ -180,6 +295,11 @@ def validate_type_path(
         raise ValueError(f"frontmatter.type: not a KB-relative path: {rel}")
     if not rel.endswith(".md"):
         raise ValueError(f"frontmatter.type: must end with .md: {rel}")
+
+    if criteria is not None:
+        pinned = criteria.root / path
+        criteria.read(pinned)
+        return rel, pinned
 
     candidates = []
     if GLOBAL_TYPE_VALUE.match(rel):
@@ -253,9 +373,10 @@ def read_frontmatter(path: Path) -> frontmatter.FrontmatterResult:
 
 
 def _load_type_frontmatter(
-    type_doc_path: Path, type_doc_rel: str, load: FrontmatterLoader
+    type_doc_path: Path, type_doc_rel: str, load: FrontmatterLoader,
+    criteria: CriterionSnapshot | None = None,
 ) -> dict[str, Any]:
-    if not type_doc_path.is_file():
+    if criteria is None and not type_doc_path.is_file():
         raise FileNotFoundError(
             f"frontmatter.type points to a missing type spec: {type_doc_rel}"
         )
@@ -275,6 +396,7 @@ def _schema_path_from_type_doc(
     type_frontmatter: dict[str, Any],
     workspace_root: Path,
     boundary: Path | None = None,
+    criteria: CriterionSnapshot | None = None,
 ) -> Path | None:
     if "schema" not in type_frontmatter:
         raise ValueError(f"{type_doc_rel}: type spec frontmatter must include schema")
@@ -291,7 +413,9 @@ def _schema_path_from_type_doc(
         source_file=type_doc_path,
         boundary=boundary,
     )
-    if not schema_path.is_file():
+    if criteria is not None:
+        criteria.read(schema_path)
+    elif not schema_path.is_file():
         raise FileNotFoundError(f"{type_doc_rel}: schema file is missing: {schema_rel}")
     return schema_path
 
@@ -300,24 +424,34 @@ def _load_schema(path_str: str) -> dict[str, Any]:
     return _load_schema_with_library(path_str, str(library_root()))
 
 
-def _library_refs_to_files(node: Any, library: Path) -> Any:
+def _library_refs_to_files(
+    node: Any, library: Path, *, preserve_fragments: bool = False,
+) -> Any:
     """Rewrite `commonplace:<path>` $refs to the library file's URI.
 
     Relative refs inside the referenced schema then resolve against an ordinary
     file URI; urljoin does not join relative paths onto an unknown scheme.
     """
     prefix = f"{SCHEMA_URI_SCHEME}:"
+
+    def file_uri(value: str) -> str:
+        if not preserve_fragments:
+            return (library / value[len(prefix):]).resolve().as_uri()
+        path, fragment = urldefrag(value[len(prefix):])
+        uri = (library / path).resolve().as_uri()
+        return uri + ("#" + fragment if fragment else "")
+
     if isinstance(node, dict):
         return {
             key: (
-                (library / value[len(prefix) :]).resolve().as_uri()
+                file_uri(value)
                 if key == "$ref" and isinstance(value, str) and value.startswith(prefix)
-                else _library_refs_to_files(value, library)
+                else _library_refs_to_files(value, library, preserve_fragments=preserve_fragments)
             )
             for key, value in node.items()
         }
     if isinstance(node, list):
-        return [_library_refs_to_files(item, library) for item in node]
+        return [_library_refs_to_files(item, library, preserve_fragments=preserve_fragments) for item in node]
     return node
 
 
@@ -372,13 +506,19 @@ def resolve_type_definition(
     *,
     repo_root: Path,
     load_frontmatter: FrontmatterLoader = read_frontmatter,
+    criteria: CriterionSnapshot | None = None,
 ) -> TypeProfile:
     """Load one identified type-spec document and its declared schema."""
     workspace_root = repo_root.resolve()
     resolved_type_doc = type_doc_path.resolve()
     project_kb = kb_root(workspace_root).resolve()
     library = library_root().resolve()
-    if resolved_type_doc.is_relative_to(project_kb):
+    if criteria is not None:
+        root = criteria.root
+        if not resolved_type_doc.is_relative_to(root):
+            raise ValueError("pinned type must stay under criterion root")
+        load_frontmatter = criteria.frontmatter
+    elif resolved_type_doc.is_relative_to(project_kb):
         root = project_kb
     elif resolved_type_doc.is_relative_to(library):
         root = library
@@ -390,7 +530,7 @@ def resolve_type_definition(
     boundary = library if root == library and root != project_kb else None
     type_doc_rel = resolved_type_doc.relative_to(root).as_posix()
     type_frontmatter = _load_type_frontmatter(
-        resolved_type_doc, type_doc_rel, load_frontmatter
+        resolved_type_doc, type_doc_rel, load_frontmatter, criteria
     )
 
     if type_frontmatter.get("type") != TYPE_SPEC:
@@ -412,13 +552,18 @@ def resolve_type_definition(
         resolved_type_doc,
         type_frontmatter,
         workspace_root,
-        boundary=boundary,
+        boundary=criteria.root if criteria is not None else boundary,
+        criteria=criteria,
     )
     schema = (
-        _load_schema(str(schema_path.resolve())) if schema_path is not None else None
+        (criteria.schema(schema_path) if criteria is not None
+         else _load_schema(str(schema_path.resolve()))) if schema_path is not None else None
     )
+    if criteria is not None and schema_path is not None:
+        criteria.registry(schema_path)
     return TypeProfile(
         type_path=type_doc_rel,
+        criteria=criteria,
         type_doc_path=resolved_type_doc,
         type_name=type_name.strip(),
         schema_path=schema_path,
@@ -436,6 +581,7 @@ def resolve_type(
     *,
     repo_root: Path,
     load_frontmatter: FrontmatterLoader = read_frontmatter,
+    criteria: CriterionSnapshot | None = None,
 ) -> TypeProfile:
     """Resolve a note's type profile from its frontmatter."""
     workspace_root = repo_root.resolve()
@@ -455,18 +601,21 @@ def resolve_type(
         frontmatter["type"],
         repo_root=workspace_root,
         source_file=file_path,
+        criteria=criteria,
     )
     profile = resolve_type_definition(
         type_doc_path,
         repo_root=workspace_root,
         load_frontmatter=load_frontmatter,
+        criteria=criteria,
     )
     assert profile.type_doc_path is not None
-    validate_type_eligibility(
-        file_path,
-        profile.type_doc_path,
-        repo_root=workspace_root,
-    )
+    if criteria is None or not GLOBAL_TYPE_VALUE.fullmatch(profile.type_path):
+        validate_type_eligibility(
+            file_path,
+            profile.type_doc_path,
+            repo_root=workspace_root,
+        )
     return profile
 
 
@@ -481,7 +630,13 @@ def validate_instance(
     schema_type_path = canonical_type_identity(profile)
     if isinstance(fm, dict) and fm.get("type") != schema_type_path:
         instance = {**instance, "frontmatter": {**fm, "type": schema_type_path}}
-    validator = _validator_for_path(str(profile.schema_path.resolve()))
+    validator = (
+        Draft202012Validator(
+            profile.schema, registry=profile.criteria.registry(profile.schema_path),
+            format_checker=FormatChecker(),
+        ) if profile.criteria is not None
+        else _validator_for_path(str(profile.schema_path.resolve()))
+    )
     return sorted(
         validator.iter_errors(instance),
         key=lambda error: tuple(str(part) for part in error.absolute_path),
