@@ -232,6 +232,16 @@ They bind an implementation of this spec; they are not requirements.
   job. A result also carries the worker identity the retained manifest
   records. Why: the coordinator is about to call the command anyway, and
   the engine learns the worker's model and effort at no other moment.
+- **A refusal input has a published format.** Its bytes are a Markdown
+  document whose YAML frontmatter holds `refusal` (the refusal's identity),
+  `version` (the refused version) and `scope` (the relation names, possibly
+  none); the body is the findings, verbatim. Consumer code reads the
+  findings as the body and the rest as fields; nothing else about the
+  rendering is part of the contract. Why: a check that answers a refusal
+  needs its findings exactly, and stripping an unspecified header made every
+  consumer depend on the engine's display text. The identity and version
+  stay in the bytes so that two refusals with the same findings remain
+  different versions, as requirement 7 needs.
 
 ## Deferred
 

@@ -108,3 +108,19 @@ def test_a_scope_with_two_partner_versions_is_refused(coordinator: Coordinator) 
     attempt.judge("s", outcome="accepted", scope=("summary:cites:report",))
     with pytest.raises(ValueError, match="2 versions of report"):
         attempt.judgments({}, 1, "probe")
+
+
+def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> None:
+    from commonplace.lib.note_parser import parse_document
+    from commonplace.workflow.store import digest
+
+    c = coordinator
+    c.through_records()
+    c.complete("verify", "block report: r1\n")
+    prompt = c.handout("report").prompt.read_text(encoding="utf-8").splitlines()
+    path = Path(dict(line.split(" = ", 1) for line in prompt if " = " in line)["refusal"])
+    document, error = parse_document(path.read_text(encoding="utf-8"))
+    assert error is None and set(document.frontmatter) == {"refusal", "version", "scope"}
+    assert document.frontmatter["version"] == digest(b"report A\n")
+    assert document.frontmatter["scope"] == ["verification:cites:report"]
+    assert document.body == "r1", "the findings, verbatim"

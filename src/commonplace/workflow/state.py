@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from types import MappingProxyType
 
+import yaml
+
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
 
@@ -200,9 +202,8 @@ class Run:
             if output is None or not refusals or self.superseded(refusals[-1]):
                 return ABSENT
             refusal = refusals[-1]
-            text = (f"Refusal {refusal['id']} of version {output}\n"
-                    f"Scope: {', '.join(e['relation'] for e in refusal['scope']) or 'none'}\n\n"
-                    f"{refusal['findings']}\n").encode()
+            text = refusal_document(refusal["id"], output, [e["relation"] for e in refusal["scope"]],
+                                    refusal["findings"])
             return Resolved(digest(text), text, job.role, None, output)
         if spec.address == "judgment":
             matches = [j for j in self.judgments if j["subject"]["role"] == spec.source
@@ -403,6 +404,12 @@ class Run:
                         and entry["other_version"] == members.get(other)):
                     return True
         return False
+
+
+def refusal_document(refusal: str, version: str, scope: list[str], findings: str) -> bytes:
+    """A refusal input's bytes: the published fields as frontmatter, the findings as body."""
+    fields = yaml.safe_dump({"refusal": refusal, "version": version, "scope": scope}, sort_keys=False)
+    return f"---\n{fields}---\n{findings}".encode()
 
 
 def _parse_type(text: str, where: str) -> tuple[Layout, list[tuple[str, str, str]]]:

@@ -6,17 +6,18 @@ import hashlib
 import re
 
 from commonplace.lib.agentic_analysis.records import declared_ids, section
+from commonplace.lib.note_parser import parse_document
 
 
 def correction_blockers(refusal: bytes | None, member: str) -> str:
     """Extract preserved blockers; treat unstructured operator findings as one."""
     if refusal is None:
         return "none"
-    text = refusal.decode("utf-8")
-    if re.search(r"(?m)^## Blockers[ \t]*$", text):
-        return section(text, "Blockers").strip() or "none"
-    # Engine refusal reports prefix the consumer's findings with identity/scope.
-    findings = text.split("\n\n", 1)[-1].strip()
+    # The engine's published refusal format: fields as frontmatter, findings as body.
+    document, _ = parse_document(refusal.decode("utf-8"))
+    findings = (document.body if document is not None else "").strip()
+    if re.search(r"(?m)^## Blockers[ \t]*$", findings):
+        return section(findings, "Blockers").strip() or "none"
     if not findings:
         return "none"
     lines = findings.splitlines()

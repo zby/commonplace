@@ -167,7 +167,8 @@ before the downstream hand-out can pin an older accepted version.
 
 The engine supplies each producer's latest refusal of its latest completed
 output, including the refused version, the findings and the refusal's
-identity. Historical refusals stay as evidence but do not enter that
+identity, in the published format the Decisions give: YAML frontmatter with
+`refusal`, `version` and `scope`, and the findings as the body. Historical refusals stay as evidence but do not enter that
 producer's refusal input. Reading it in a completed attempt answers it; only
 a newer, unsuperseded refusal triggers another correction. Restoring earlier
 output bytes can expose an earlier refusal again. A completed attempt that
