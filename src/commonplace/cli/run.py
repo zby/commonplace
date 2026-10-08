@@ -22,7 +22,6 @@ from dataclasses import asdict
 from pathlib import Path
 
 from commonplace.lib.agentic_analysis.worktree import (
-    reject_legacy_run,
     require_run_code,
 )
 from commonplace.workflow import (
@@ -125,7 +124,6 @@ def _print_inspection(view: dict, as_json: bool) -> None:
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     try:
-        reject_legacy_run(arguments.run)
         if arguments.command != "status":
             require_run_code(arguments.run, cwd=Path.cwd())
         if arguments.command == "start":

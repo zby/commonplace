@@ -332,14 +332,6 @@ def preparation_for(worktree: Path, *, require_token: bool = True) -> dict[str, 
     return record
 
 
-def reject_legacy_run(run: Path) -> None:
-    """Never reinterpret legacy or mixed state as a generic engine run."""
-    legacy = [name for name in ("workflow-state", "output", "opening.json", "run-state.md")
-              if os.path.lexists(run / name)]
-    if legacy:
-        raise ValueError("legacy/mixed run directories are retired; start a new run: " + ", ".join(legacy))
-
-
 def start_analysis(worktree: Path, *, system: str, source_identity: str,
                    source: str, source_revision: str | None = None) -> Path:
     """Allocate a prepared analysis and pin its declaration, without advancing."""
@@ -480,7 +472,6 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     run_dir = Path(run_dir).absolute()
     if run_dir.resolve() != run_dir:
         raise ValueError("analysis run must not traverse symlinks")
-    reject_legacy_run(run_dir)
     if not (run_dir / "run.json").is_file():
         raise ValueError("integration requires a new-engine run.json")
     if (run_dir.parent.name != STATE_ROOT.name

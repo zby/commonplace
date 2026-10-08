@@ -41,7 +41,6 @@ from commonplace.lib.agentic_analysis.sets import (
 from commonplace.lib.agentic_analysis.worktree import (
     STATE_ROOT,
     preparation_for,
-    reject_legacy_run,
     require_run_code,
     source_checkout,
 )
@@ -66,16 +65,12 @@ def _head(repo: Path) -> str:
 
 
 def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Open a prepared new-engine analysis by returning checked run metadata.
+    """Open a prepared analysis by returning checked run metadata.
 
     Run parameters are fixed by start_run, not read from a file input. The
     executing code, library, run location, preparation token, method commit,
-    worktree cleanliness and incumbent all pass the existing opening guards.
-    No source is acquired and no legacy opening/run-state/output copy is made.
-
-    Legacy state is rejected, not converted. Its engine is retired; preserved
-    run directories are historical evidence, not inputs to this workflow.
-    New-engine analysis runs require a ready token-bearing preparation record.
+    worktree cleanliness and incumbent all pass the opening guards. No source
+    is acquired. Analysis runs require a ready token-bearing preparation record.
     """
     parameters = attempt.parameters
     for name in ("system", "source-identity", "source"):
@@ -100,7 +95,6 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
             raise ValueError("source-revision requires a GitHub repository identity")
 
     run_dir = attempt.run_dir
-    reject_legacy_run(run_dir)
     repo = source_checkout(run_dir)
     if repo is None or run_dir.parent != repo / STATE_ROOT:
         raise ValueError(f"a new-engine analysis run must be directly under its checkout's {STATE_ROOT}")

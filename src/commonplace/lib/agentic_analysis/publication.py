@@ -1,4 +1,4 @@
-"""Pinned new-engine assembly and publication; never manufacture legacy state.
+"""Pinned assembly and publication.
 
 Whole-set validation uses closed criterion and member snapshots and refuses
 missing dependencies. Effect recovery
@@ -130,7 +130,7 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes]) -> dict:
 
 def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
                         manifest: bytes) -> None:
-    """Validate all exact member, manifest and criterion bytes; never forge legacy state."""
+    """Validate all exact member, manifest and criterion bytes."""
     boundary = _document(members["boundary.md"])
     result = validate_pinned_analysis_set(
         repo=repo, intended_set_path=attempt.run_dir / "set", members=members,

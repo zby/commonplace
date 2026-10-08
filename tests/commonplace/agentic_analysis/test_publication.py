@@ -311,7 +311,7 @@ def test_rollback_failure_is_uncertain_and_preserves_evidence(tmp_path, monkeypa
     assert args["archive_root"].exists()
 
 
-def test_engine_report_is_separate_and_uncertain_without_recovery(tmp_path):
+def test_engine_report_is_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
     type_text = (ROOT / "kb" / SET_TYPE).read_text()
     store.create({"type": type_text, "type_spec": SET_TYPE, "job_set": "fixture-job-set.yaml", "library": str(ROOT / "kb"),
@@ -328,12 +328,6 @@ def test_engine_report_is_separate_and_uncertain_without_recovery(tmp_path):
     assert report["effects"]["publish"] == {"journal-state": "completed", "verified": False}
     assert report["failed-attempts"][0]["uncertain"]
     assert report["invocation-stops"][0]["uncertain"]
-    assert not (store.run_dir / "run-state.md").exists()
-    assert not (store.run_dir / "output").exists()
-    assert "round" not in report
-    (store.run_dir / "output").mkdir()
-    with pytest.raises(ValueError, match="legacy/mixed"):
-        engine_run_report(store.run_dir)
 
 
 @pytest.mark.parametrize("interruption", ["archive", "rollback"])

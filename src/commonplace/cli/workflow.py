@@ -12,7 +12,6 @@ from commonplace.lib.agentic_analysis.worktree import (
     command_environment,
     integrate_analysis,
     prepare_analysis,
-    reject_legacy_run,
     start_analysis,
 )
 from commonplace.workflow import UncertainEffectError
@@ -47,7 +46,6 @@ def main(argv: list[str] | None = None) -> int:
         elif arguments.command == "report-analysis":
             from commonplace.lib.agentic_analysis.report import render_engine_run_report
 
-            reject_legacy_run(arguments.run)
             rendered = json.loads(render_engine_run_report(arguments.run))
             if rendered["state"] == "completed":
                 from hashlib import sha256

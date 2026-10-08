@@ -1,4 +1,4 @@
-"""Read-only new-engine reports, separate from legacy round/completion state.
+"""Read-only analysis run reports.
 
 This is an operator report, not a typed retained member or a recovery decision.
 Publication journals are reported as evidence only; the effect handler must
@@ -18,10 +18,8 @@ PUBLISH_JOB = "publish"
 def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict:
     """Report engine attempts, identity, refusals and stops without running jobs."""
     run_dir = Path(run_dir).resolve()
-    if any((run_dir / name).exists() for name in ("workflow-state", "output", "opening.json")):
-        raise ValueError("new-engine reporting rejects legacy/mixed run directories")
     if not (run_dir / "run.json").exists():
-        raise ValueError("new-engine reporting requires run.json; legacy state is not converted")
+        raise ValueError("reporting requires an engine run's run.json")
     with run_lock(run_dir):
         view = inspect(run_dir)
         failures = [asdict(stop) for stop in view["failed_attempts"]]
@@ -62,11 +60,10 @@ def engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> dict
                 "Reporting does not change logical run state; acquiring its lock may create state/lock.",
                 "Journal state is unverified; only the effect handler recognizes completion.",
                 "Invocation scheduling stops require the supplied RunStatus; they are not reconstructed.",
-                "No legacy rounds or typed legacy run-state are inferred.",
             ],
         }
 
 
 def render_engine_run_report(run_dir: Path, *, status: RunStatus | None = None) -> str:
-    """Render the separate engine report as JSON; never write a legacy run-state."""
+    """Render the engine run report as JSON."""
     return json.dumps(engine_run_report(run_dir, status=status), indent=2, sort_keys=True) + "\n"
