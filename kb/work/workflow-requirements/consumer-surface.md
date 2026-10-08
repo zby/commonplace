@@ -353,6 +353,12 @@ docstrings and also serves the record set check.
 
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path
   containment) are ordinary refactoring, not engine design.
+- **The publication journal is the effect's recovery record.** Integration
+  no longer reads it (2026-10-08). The publish receipt, the retained tree
+  and the archive compared with the method commit's incumbent prove
+  everything the journal's intent, `old`, `archive` and `state` fields did.
+  Acquisition and publication journals differ in shape and recognition, so
+  only the atomic write is shared.
 
 ## Order and acceptance
 

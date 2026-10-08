@@ -13,11 +13,11 @@ from __future__ import annotations
 import json
 import os
 import re
-import tempfile
 from hashlib import sha256
 from pathlib import Path
 
 from commonplace.lib.agentic_analysis import checkout
+from commonplace.lib.agentic_analysis.guards import atomic_write
 from commonplace.lib.agentic_analysis.sets import normalize_source_identity
 from commonplace.workflow import UncertainEffectError
 
@@ -29,16 +29,7 @@ class AcquisitionUncertainError(UncertainEffectError):
 
 
 def _write_journal(path: Path, record: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = None
-    try:
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as file:
-            temporary = Path(file.name)
-            file.write(json.dumps(record, sort_keys=True, indent=2) + "\n")
-        os.replace(temporary, path)
-    finally:
-        if temporary is not None:
-            temporary.unlink(missing_ok=True)
+    atomic_write(path, (json.dumps(record, sort_keys=True, indent=2) + "\n").encode())
 
 
 def _complete_journal(path: Path, record: dict, source: dict) -> None:

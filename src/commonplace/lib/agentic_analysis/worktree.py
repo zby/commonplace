@@ -402,12 +402,13 @@ def _changed_paths(worktree: Path, *args: str) -> list[str]:
 def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tuple[list[str], str]:
     """Prove current engine completion AND exact publication, without recovery writes.
 
-    Caller holds the run and publication locks. A journal label is not proof.
-    The publish job's current receipt names what was published; the retained
-    tree, journal and archive must match it exactly.
+    Caller holds the run and publication locks. The publish job's current
+    receipt names what was published; the retained tree must match it exactly,
+    and the archive must hold the method commit's exact incumbent. The effect's
+    own journal is recovery evidence for publication, not read here.
     """
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.lib.agentic_analysis.publication import JOURNAL, _hashes, _tree
+    from commonplace.lib.agentic_analysis.publication import _hashes, _tree
     from commonplace.workflow import current_outputs, inspect
 
     view = inspect(run_dir)
@@ -432,24 +433,13 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     destination = Path(receipt["destination"])
     files = _tree(destination)
     if files is None or _hashes(files) != receipt["members"]:
-        raise ValueError("publication journal or exact retained bytes differ from completed inputs")
+        raise ValueError("exact retained bytes differ from the publication receipt")
     overview = _frontmatter(files["overview.md"].decode("utf-8"), destination / "overview.md")
     if (overview.get("run-id") != run_dir.name or overview.get("inputs-commit") != method
             or overview.get("result-disposition") != "complete"
             or not isinstance(overview.get("reviewed-boundary"), str)
             or not overview["reviewed-boundary"]):
         raise ValueError("published overview has mismatched run, method, disposition or source pins")
-    journal_path = run_dir / JOURNAL
-    if journal_path.resolve() != journal_path:
-        raise ValueError("publication journal redirects")
-    journal = json.loads(journal_path.read_bytes())
-    intent = {"version": 1, "run-id": run_dir.name, "destination": str(destination),
-              "source-identity": receipt["source-identity"],
-              "expected": receipt["expected-incumbent-sha256"], "new": receipt["members"]}
-    if (not isinstance(journal, dict) or set(journal) != {*intent, "old", "archive", "state"}
-            or any(journal.get(k) != v for k, v in intent.items())
-            or journal["state"] != "completed"):
-        raise ValueError("publication journal or exact retained bytes differ from completed inputs")
     relative = destination.relative_to(worktree)
     if relative.parent != RETAINED_ROOT:
         raise ValueError("publication destination is outside retained sets")
@@ -468,20 +458,15 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
             result = subprocess.run(["git", "show", f"{method}:{relative.as_posix()}/{name}"],
                                     cwd=worktree, capture_output=True, check=True)
             old[name] = result.stdout
-    if journal["old"] != _hashes(old):
-        raise ValueError("journal incumbent differs from the method commit's exact tree")
     expected = "absent" if old is None else sha256(old["overview.md"]).hexdigest()
-    if intent["expected"] != expected:
+    if receipt["expected-incumbent-sha256"] != expected:
         raise ValueError("opened incumbent differs from method commit")
-    if old is None:
-        if journal["archive"] is not None:
-            raise ValueError("unexpected publication archive")
-    else:
+    if old is not None:
         old_id = _frontmatter(old["overview.md"].decode("utf-8"), relative / "overview.md").get("run-id")
         if not isinstance(old_id, str) or re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) is None:
             raise ValueError("incumbent has an invalid run ID")
         archive = worktree / ARCHIVE_ROOT / old_id
-        if journal["archive"] != str(archive) or _tree(archive) != old:
+        if _tree(archive) != old:
             raise ValueError("publication archive is missing or differs from the exact incumbent")
         paths.append(archive.relative_to(worktree).as_posix())
     return paths, overview["reviewed-boundary"]

@@ -60,14 +60,8 @@ def proof(tmp_path, monkeypatch):
     monkeypatch.setattr(workflow, "inspect", lambda run_dir: engine.view)
     monkeypatch.setattr(workflow, "current_outputs", lambda run_dir, job: (
         {"receipt": json.dumps(engine.receipt).encode()} if engine.current else None))
-    journal = {"version": 1, "run-id": run.name, "destination": str(destination),
-               "source-identity": "identity", "expected": "absent", "new": publication._hashes(files),
-               "old": None, "archive": None, "state": "completed"}
-    path = run / publication.JOURNAL
-    path.parent.mkdir()
-    path.write_text(json.dumps(journal))
     return SimpleNamespace(root=root, method=method, run=run, destination=destination,
-                           files=files, engine=engine, journal=journal, journal_path=path, receipt=receipt)
+                           files=files, engine=engine, receipt=receipt)
 
 
 def verify(proof):
@@ -75,9 +69,7 @@ def verify(proof):
 
 
 def test_exact_publication_proof_is_read_only(proof):
-    before = proof.journal_path.read_bytes()
     assert verify(proof) == ([proof.destination.relative_to(proof.root).as_posix()], "revision")
-    assert proof.journal_path.read_bytes() == before
     assert git(proof.root, "diff", "--cached", "--name-only") == ""
 
 
@@ -90,22 +82,12 @@ def test_exact_retained_tree_required(proof, change):
         (proof.destination / "extra.md").write_text("unowned")
     elif change == "symlink":
         path.unlink()
-        path.symlink_to(proof.journal_path)
+        path.symlink_to(proof.destination / "overview.md")
     else:
         path.write_text("changed")
     with pytest.raises((ValueError, publication.UncertainEffectError)):
         verify(proof)
     assert git(proof.root, "diff", "--cached", "--name-only") == ""
-
-
-@pytest.mark.parametrize("field,value", [("state", "started"), ("state", "rolled-back"),
-                                         ("run-id", "other"), ("source-identity", "other"),
-                                         ("expected", "wrong"), ("new", {}), ("archive", "elsewhere")])
-def test_journal_label_and_identity_are_not_proof(proof, field, value):
-    proof.journal[field] = value
-    proof.journal_path.write_text(json.dumps(proof.journal))
-    with pytest.raises(ValueError):
-        verify(proof)
 
 
 @pytest.mark.parametrize("case", ["not-current", "uncovered", "failed", "exhausted", "local", "other-method"])
@@ -126,7 +108,7 @@ def test_engine_completion_is_required_independently(proof, case):
         verify(proof)
 
 
-def test_archive_must_equal_the_git_incumbent_not_only_journal(proof):
+def test_archive_must_equal_the_git_incumbent(proof):
     old_id = "AAS-2025-01-01-example-01"
     old = {"overview.md": f"---\nrun-id: {old_id}\n---\n".encode(), "boundary.md": b"old boundary\n"}
     for path in proof.destination.iterdir():
@@ -146,16 +128,10 @@ def test_archive_must_equal_the_git_incumbent_not_only_journal(proof):
     proof.destination.mkdir()
     for name, data in proof.files.items():
         (proof.destination / name).write_bytes(data)
-    proof.journal.update(old=publication._hashes(old), archive=str(archive),
-                         expected=proof.receipt["expected-incumbent-sha256"], new=publication._hashes(proof.files))
     proof.receipt["members"] = publication._hashes(proof.files)
-    proof.journal_path.write_text(json.dumps(proof.journal))
     assert len(verify(proof)[0]) == 2
     (archive / "boundary.md").write_bytes(b"changed archive")
-    # Even rewriting journal old hashes cannot launder an altered incumbent.
-    proof.journal["old"]["boundary.md"] = sha256(b"changed archive").hexdigest()
-    proof.journal_path.write_text(json.dumps(proof.journal))
-    with pytest.raises(ValueError, match="method commit"):
+    with pytest.raises(ValueError, match="exact incumbent"):
         verify(proof)
 
 
