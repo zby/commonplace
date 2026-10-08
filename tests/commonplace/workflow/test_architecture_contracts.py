@@ -180,6 +180,21 @@ def test_inspection_reports_a_run_stopped_by_exhausted_attempts(coordinator: Coo
     assert view["exhausted_jobs"] == ["report"] and view["condition"] == "stopped"
 
 
+def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
+        tmp_path: Path, tmp_library: None, monkeypatch) -> None:
+    from commonplace.workflow import inspect
+    from tests.commonplace.workflow.support import custom_run
+
+    # check-other never sees the report, so no check covers other:cites:report.
+    c = custom_run(tmp_path, monkeypatch, lambda jobs: jobs["check-other"]["inputs"].pop("report"))
+    c.through_records()
+    c.complete("verify", "no blockers\n")
+    c.complete("digest", "digest D1\n")
+    view = inspect(c.run_dir)
+    assert not c.handed() and not view["failed_attempts"] and not view["exhausted_jobs"]
+    assert view["condition"] == "stuck"
+
+
 def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> None:
     data = job_set(tmp_path)
     data["criteria"] = {"contracts": {"contract": "contracts/report.md", "shared": "contracts/shared.md"}}
