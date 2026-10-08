@@ -265,6 +265,75 @@ gains the path-keyed read of pinned file inputs. Estimated effect: about
 300 lines of input declarations become about 60 lines of groups and a few
 references per job.
 
+## Check skeleton
+
+After the steps above, nine code jobs judge a model candidate: the boundary,
+three analyst, reconciliation, profile and synthesis checks, and the first
+half of the three verdict applications, which judge the verdict document
+before parsing it. Each runs the same skeleton, written four times
+(`handlers.check_boundary`, `handlers._check_analyst`,
+`verification._candidate_reasons` with `check_reconcile`, and
+`profile._check` with `_apply`):
+
+1. locate the run's metadata and checkout;
+2. read the candidate;
+3. snapshot the partner members at their set paths, from current member
+   inputs or, in verdict applications, from handed `-seen` inputs (three
+   implementations);
+4. validate the candidate as a draft at its role against that snapshot and
+   the pinned criteria, keeping failures as `[set]` reasons;
+5. check the boundary's frozen source as `[invocation]` reasons;
+6. compare candidate identity fields with the opening metadata;
+7. check correction answers against the refusal the producer answered;
+8. judge the candidate, refused with a findings packet that carries the
+   answered blockers forward, or accepted with a hand-written scope.
+
+Reading the four copies side by side shows more than repetition:
+
+- **Step 6 mostly re-proves the type.** The set type makes every member
+  copy `run-id` and `reviewed-boundary` from the boundary, and the profile
+  copy `source-identity` from the memory report. Draft validation in step 4
+  checks those identity relations against the snapshot, and the boundary
+  check already binds the boundary to the opening. What remains genuinely
+  per job is small: the profile's comparison version, and the memory
+  report's source identity, which the boundary check does not cover.
+- **The copies disagree.** The boundary check keeps validation warnings as
+  refusal reasons; the others drop warnings. Verdict applications refuse
+  with plain reasons; the others build a findings packet. Neither
+  difference is stated as intended.
+- **Step 8's scope is derivable.** Each hand-written scope is the type's
+  relations from the candidate's role to the partners in the snapshot, which
+  are exactly the relations step 4 validated. Deriving the scope from the
+  snapshot claims no relation the check did not examine, which is the
+  objection that ruled out an engine-level default scope above.
+
+Three shapes:
+
+- **A consumer helper.** One function in the analysis package takes the
+  attempt, the candidate's role, the partner roles and where their versions
+  come from, and returns the reasons of steps 3 to 5 and 7. One more judges
+  the candidate with a derived scope and the findings packet. Each handler
+  keeps only its domain checks: boundary source refusals, the memory
+  source identity, the profile comparison version, limit carrying and
+  verdict parsing. The engine is unchanged, which respects the non-goal of
+  engine-level validation policy.
+- **A declared generic check.** One handler serves every check job, with
+  role, partners and extra checks named in the declaration. Code jobs have
+  no parameters today, so this needs an engine change, and it hides the
+  per-job domain checks behind names in YAML.
+- **Engine-generated check pairs.** The mapping's remark that "a
+  declaration default could generate these pairs". The engine would know
+  what a content check is, which the non-goals exclude.
+
+**Recommendation:** the consumer helper, together with deleting the step-6
+checks the type already enforces and settling the two disagreements as
+deliberate choices or defects. This changes no requirement or decision.
+Estimated effect: the four copies, about 250 lines, become a helper of
+about 80 lines plus per-job domain checks. Implementation must first
+confirm that draft validation enforces the identity relations for a
+candidate whose partners are in the snapshot, since the deletion rests on
+it.
+
 ## Outside the handler surface
 
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path
@@ -275,8 +344,8 @@ references per job.
 Order: the guard split and the deletions; the refusal format; the
 attempt-record decision (published subset or handed address) and its
 implementation; the fixed set type and its accessor; the coverage gate with
-the stricter publishable rule; engine-owned inspection and locking; then
-criteria groups. Each step leaves the tests passing.
+the stricter publishable rule; engine-owned inspection and locking;
+criteria groups; then the check skeleton. Each step leaves the tests passing.
 
 Every design step begins by amending the specification texts, not by code.
 The resolutions above touch requirements 1 and 9, the fixed-declaration
