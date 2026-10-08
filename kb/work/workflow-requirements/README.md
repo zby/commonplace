@@ -51,7 +51,9 @@ readiness, currency, cleanup, attempt limits and coverage are enforcement
 properties that only a deterministic interpreter can guarantee;
 interpretation is what moves. Which ready jobs run, in what order and
 batches, is the coordinator's already, within one engine-side rule: a job
-waits while a producer of its inputs is pending. When the direction is taken up, requirement
+waits while a producer of its inputs is pending, except a code consumer applying
+completed work to immutable handed subjects as specified in scenario 21.
+When the direction is taken up, requirement
 5 and the decision "only code jobs judge" are the two places that name the
 operator where they should name the coordinator too.
 
@@ -65,6 +67,16 @@ handlers named by dotted path. Pinning and storage remain internal; the sketch
 does not add alternative currency or refusal-ownership rules.
 [Glossary](./glossary.md) sets one word per concept for the spec and the
 API together; it is applied to every file here.
+
+## Translation review
+
+[Translation coherence review](./translation-coherence-review.md) records the
+integrated opt-in handlers, fixed invariant defects and remaining limits.
+[Publication consumer boundary](./publication-consumer-handoff.md) describes
+pinned validation, provenance, effects, coordination and format separation.
+The operator requested coherence review instead of the planned end-to-end proof.
+The live CLI and skill remain legacy; no production switch or YAML compaction
+follows from handler bindings or fixture counts.
 
 ## Related
 

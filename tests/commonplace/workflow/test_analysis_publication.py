@@ -1,0 +1,465 @@
+"""Narrow scripted consumers/effect tests, not a pipeline or analytical run.
+
+No model hand-outs are executed. Most consumer plumbing uses scripted validation;
+a narrow non-complete snapshot also exercises the real bounded adapter.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+import yaml
+
+from commonplace.lib import agentic_job_publication as publication
+from commonplace.lib.agentic_engine_report import engine_run_report
+from commonplace.lib.agentic_set import SET_TYPE
+from commonplace.workflow import RunStatus, Stop, UncertainEffectError
+from commonplace.workflow.state import _parse_type
+from commonplace.workflow.store import RunStore
+
+ROOT = Path(__file__).resolve().parents[3]
+RUN_ID = "AAS-2026-10-07-example-0123456789ab-01"
+
+
+def doc(fields, body=""):
+    return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
+
+
+class Attempt:
+    """A restricted pinned-input fixture: no hidden run/store introspection."""
+    def __init__(self, tmp_path, disposition="blocked", *, overview=False):
+        self.run_dir = tmp_path / RUN_ID
+        self.run_dir.mkdir(parents=True)
+        self.library = tmp_path / "kb"
+        self.inputs = {"set-type": (ROOT / "kb" / SET_TYPE).read_bytes()}
+        layout, relations = _parse_type(self.inputs["set-type"].decode(), SET_TYPE)
+        boundary_fields = {"run-id": RUN_ID, "result-disposition": disposition,
+                           "target-class": None, "boundary-kind": None, "reviewed-boundary": None,
+                           "analysis-cutoff": None, "evidence-tier": None}
+        present = {"boundary"}
+        if disposition == "complete":
+            present |= set(publication.PRODUCERS)
+        if overview:
+            present.add("overview")
+        for role in layout.roles:
+            if role == "overview" and not overview:
+                continue
+            data = doc({"type": layout.roles[role].type, **boundary_fields,
+                        "description": "Fixture description"}) if role in present else None
+            self.inputs[role] = data
+            self.inputs[f"{role}-accepted"] = (json.dumps({"subject": publication._digest(data),
+                                                          "outcome": "accepted", "scope": []}).encode()
+                                                      if data else None)
+            if role != "overview":
+                producer, primary = publication.PRODUCERS[role]
+                self.inputs[f"{role}-attempt"] = (json.dumps({
+                    "job": producer, "state": "completed", "kind": "model", "model": "fixture/model",
+                    "effort": "high", "outputs": {primary: publication._digest(data)},
+                }).encode() if data else None)
+        for origin, partner, relation in relations:
+            if not overview and "overview" in (origin, partner):
+                continue
+            for end, other in ((origin, partner), (partner, origin)):
+                data = None
+                if end in present and other in present:
+                    data = json.dumps({"subject": publication._digest(self.inputs[end]),
+                                       "outcome": "accepted", "scope": [
+                                           [relation, publication._digest(self.inputs[other])]]}).encode()
+                self.inputs[f"coverage-{relation.replace(':', '-')}-{end}"] = data
+        self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
+                         "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
+                         "review-path": "kb/agentic-system-analyses/retained/example/overview.md",
+                         "expected-incumbent-sha256": "absent"}
+        self.judgments = []
+
+    def read(self, name):
+        return self.inputs[name]  # Undeclared means error, never disk fallback.
+
+    def judge(self, subject, **kwargs):
+        self.judgments.append((subject, kwargs))
+
+
+@pytest.fixture
+def scripted(monkeypatch):
+    checked = []
+    monkeypatch.setattr(publication, "_environment", lambda attempt, boundary, **kw: (attempt.metadata, attempt.run_dir.parent))
+    monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
+    monkeypatch.setattr(publication, "validate_pinned_set", lambda *args, **kw: checked.append(kw))
+    return checked
+
+
+def pinned_criteria(attempt):
+    """Shipped layout with minimal schemas, like pinned_validation_contracts.
+
+    This isolates the adapter, not the substantive shipped analysis criteria.
+    All type/schema bytes still travel through declared criterion aliases.
+    """
+    for alias in ("collection", "validation-contract"):
+        attempt.inputs[alias] = b"# Fixture contract\n"
+    attempt.inputs["agentic-system-analysis-set-schema"] = b"type: object\n"
+    for alias, name in (("type-spec", "type-spec"), ("boundary-type", "agentic-system-boundary"),
+                        ("overview-type", "agentic-system-analysis-overview")):
+        schema = name + ".schema.yaml"
+        attempt.inputs[alias] = (f"---\ntype: types/type-spec.md\nname: {name}\n"
+                                 f"description: Pinned fixture\nschema: ./{schema}\n---\n# Fixture\n").encode()
+        schema_alias = "type-spec-schema" if alias == "type-spec" else name + "-schema"
+        attempt.inputs[schema_alias] = b"type: object\n"
+
+
+def test_default_validation_adapter_rejects_missing_criteria(tmp_path):
+    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
+    with pytest.raises(ValueError, match="missing pinned criterion"):
+        publication.validate_pinned_set(attempt, repo=tmp_path,
+                                       members={"boundary.md": attempt.inputs["boundary"]},
+                                       manifest=b"type: ignored\n")
+
+
+@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope", "complete"])
+def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted, disposition):
+    attempt = Attempt(tmp_path, disposition)
+    # Garbage mutable projections cannot become analytical input.
+    (attempt.run_dir / "set").mkdir()
+    (attempt.run_dir / "set" / "memory.md").write_bytes(b"untracked garbage")
+    outputs = publication.assemble_analysis(attempt)
+    manifest = yaml.safe_load(outputs["manifest"])
+    assert manifest["worker"] == {"model": "fixture/model", "effort": "high"}
+    assert manifest["members"]["overview.md"] == {"sha256": publication._digest(outputs["overview"])}
+    assert set(manifest["members"]) == set(scripted[0]["members"])
+    assert b"untracked garbage" not in outputs["overview"]
+    assert attempt.judgments[0][0] == "overview"
+    assert "overview:identity:boundary" in attempt.judgments[0][1]["scope"]
+    assert not (attempt.run_dir / "output").exists()
+    assert not (attempt.run_dir / "run-state.md").exists()
+
+
+@pytest.mark.parametrize("defect,reason", [
+    ("missing", "membership"), ("acceptance", "holding acceptance"),
+    ("coverage", "uncovered relation"), ("historical", "uncovered relation"),
+    ("provenance", "provenance"), ("mixed-worker", "identical worker"),
+])
+def test_assembly_rejects_unsettled_or_misattributed_complete_set(tmp_path, scripted, defect, reason):
+    attempt = Attempt(tmp_path, "complete")
+    if defect == "missing":
+        attempt.inputs["memory"] = None
+    elif defect == "acceptance":
+        attempt.inputs["memory-accepted"] = None
+    elif defect in ("coverage", "historical"):
+        for end in ("memory", "boundary"):
+            name = f"coverage-memory-identity-boundary-{end}"
+            if defect == "coverage":
+                attempt.inputs[name] = None
+            else:
+                claim = json.loads(attempt.inputs[name])
+                claim["scope"][0][1] = "f" * 64
+                attempt.inputs[name] = json.dumps(claim).encode()
+    else:
+        record = json.loads(attempt.inputs["memory-attempt"])
+        record["model" if defect == "mixed-worker" else "outputs"] = (
+            "other/model" if defect == "mixed-worker" else {"answers": publication._digest(attempt.inputs["memory"])})
+        attempt.inputs["memory-attempt"] = json.dumps(record).encode()
+    with pytest.raises(ValueError, match=reason):
+        publication.assemble_analysis(attempt)
+    assert not scripted and not attempt.judgments
+
+
+def test_missing_criteria_prevent_overview_acceptance(tmp_path, monkeypatch):
+    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    with pytest.raises(ValueError, match="missing pinned criterion"):
+        publication.assemble_analysis(attempt)
+    assert not attempt.judgments
+    assert not (attempt.run_dir / "set" / "overview.md").exists()
+
+
+@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
+def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypatch, disposition):
+    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state", disposition)
+    pinned_criteria(attempt)
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
+    outputs = publication.assemble_analysis(attempt)
+    attempt.inputs.update(outputs)
+    attempt.inputs["overview-accepted"] = json.dumps({
+        "outcome": "accepted", "subject": publication._digest(outputs["overview"]), "scope": [],
+    }).encode()
+    _, relations = _parse_type(attempt.inputs["set-type"].decode(), SET_TYPE)
+    for origin, partner, relation in relations:
+        if {origin, partner} == {"overview", "boundary"}:
+            attempt.inputs[f"coverage-{relation.replace(':', '-')}-overview"] = json.dumps({
+                "outcome": "accepted", "subject": publication._digest(outputs["overview"]),
+                "scope": [[relation, publication._digest(attempt.inputs["boundary"])]],
+            }).encode()
+    monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must remain local"))
+    assert publication.publish_analysis(attempt) == {}
+    assert not (tmp_path / "kb/agentic-system-analyses/retained").exists()
+    assert not (attempt.run_dir / "output").exists()
+    assert not (attempt.run_dir / "run-state.md").exists()
+
+    # Re-pin an identity-inconsistent overview: hashes alone are not validation.
+    members = {"boundary.md": attempt.inputs["boundary"],
+               "overview.md": outputs["overview"].replace(RUN_ID.encode(), b"changed-run")}
+    manifest = yaml.safe_dump({"type": SET_TYPE, "members": {
+        name: {"sha256": publication._digest(data)} for name, data in members.items()
+    }}).encode()
+    with pytest.raises(ValueError, match="identity field run-id"):
+        publication.validate_pinned_set(attempt, repo=tmp_path, members=members, manifest=manifest)
+
+
+def test_content_failure_prevents_overview_acceptance(tmp_path, monkeypatch):
+    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
+    pinned_criteria(attempt)
+    attempt.inputs["agentic-system-boundary-schema"] = b"required: [missing-fixture-field]\n"
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    with pytest.raises(ValueError, match="missing-fixture-field"):
+        publication.assemble_analysis(attempt)
+    assert not attempt.judgments
+
+
+def test_coverage_can_be_supplied_at_either_end(tmp_path):
+    attempt = Attempt(tmp_path, "complete")
+    attempt.inputs["coverage-memory-identity-boundary-memory"] = None
+    publication._snapshot(attempt, overview=False)
+
+
+def test_optional_inputs_do_not_allow_forbidden_disposition_members(tmp_path):
+    attempt = Attempt(tmp_path)
+    attempt.inputs["memory"] = doc({"type": "anything"})
+    with pytest.raises(ValueError, match="forbidden"):
+        publication._snapshot(attempt, overview=False)
+
+
+def assembled_publish_attempt(tmp_path, scripted, disposition="complete"):
+    assembly = Attempt(tmp_path / "assemble", disposition)
+    outputs = publication.assemble_analysis(assembly)
+    publish = Attempt(tmp_path / "publish", disposition, overview=True)
+    publish.inputs["overview"] = outputs["overview"]
+    publish.inputs["overview-accepted"] = json.dumps({"outcome": "accepted", "subject": publication._digest(outputs["overview"])}).encode()
+    for name, data in publish.inputs.items():
+        if name.startswith("coverage-") and data:
+            claim = json.loads(data)
+            if name.endswith("-overview"):
+                claim["subject"] = publication._digest(outputs["overview"])
+            elif name.startswith("coverage-overview-"):
+                claim["scope"][0][1] = publication._digest(outputs["overview"])
+            publish.inputs[name] = json.dumps(claim).encode()
+    publish.inputs["manifest"] = outputs["manifest"]
+    return publish
+
+
+def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted):
+    attempt = assembled_publish_attempt(tmp_path, scripted)
+    attempt.inputs["manifest"] = b"type: wrong\n"
+    with pytest.raises(ValueError, match="manifest does not pin"):
+        publication.publish_analysis(attempt)
+
+
+def test_noncomplete_publish_is_local_only(tmp_path, scripted, monkeypatch):
+    attempt = assembled_publish_attempt(tmp_path, scripted, "out-of-scope")
+    monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must not publish"))
+    assert publication.publish_analysis(attempt) == {}
+    assert not (attempt.run_dir.parent / "kb/agentic-system-analyses/retained").exists()
+
+
+def effect(tmp_path, *, incumbent=False):
+    run = tmp_path / RUN_ID
+    run.mkdir()
+    destination = tmp_path / "retained" / "example"
+    archive = tmp_path / "archive"
+    old = {"overview.md": doc({"run-id": "AAS-2026-10-06-example-0123456789ab-01"}),
+           "ARTIFACT.yaml": b"old manifest\n", "memory.md": b"old memory\r\n"}
+    if incumbent:
+        destination.mkdir(parents=True)
+        for name, data in old.items():
+            (destination / name).write_bytes(data)
+    new = {"ARTIFACT.yaml": b"new manifest\n", "overview.md": b"new overview\r\n", "memory.md": b"new memory\n"}
+    args = {"run_dir": run, "destination": destination, "archive_root": archive, "files": new,
+            "expected": publication._digest(old["overview.md"]) if incumbent else "absent",
+            "identity": "fixture/source", "inspect_incumbent": lambda: None}
+    return args, old
+
+
+@pytest.mark.parametrize("incumbent", [False, True])
+def test_exact_byte_effect_and_replay(tmp_path, incumbent):
+    args, old = effect(tmp_path, incumbent=incumbent)
+    first = publication._publish_effect(**args)
+    assert publication._tree(args["destination"]) == args["files"]
+    if incumbent:
+        assert publication._tree(args["archive_root"] / "AAS-2026-10-06-example-0123456789ab-01") == old
+    args["inspect_incumbent"] = lambda: pytest.fail("recognizable replay must not reinspect the new incumbent")
+    assert publication._publish_effect(**args) == first
+    assert json.loads((args["run_dir"] / publication.JOURNAL).read_bytes())["state"] == "completed"
+
+
+def test_incumbent_guard_has_no_effect(tmp_path):
+    args, old = effect(tmp_path, incumbent=True)
+    args["expected"] = "f" * 64
+    with pytest.raises(ValueError, match="changed since"):
+        publication._publish_effect(**args)
+    assert publication._tree(args["destination"]) == old
+    assert not (args["run_dir"] / publication.JOURNAL).exists()
+
+
+def test_failed_write_rolls_back_exact_old_tree_and_retries(tmp_path, monkeypatch):
+    args, old = effect(tmp_path, incumbent=True)
+    original = publication.atomic_write
+
+    def fail_member(path, data):
+        if path.name == "memory.md":
+            raise OSError("scripted member failure")
+        original(path, data)
+
+    monkeypatch.setattr(publication, "atomic_write", fail_member)
+    with pytest.raises(OSError, match="scripted"):
+        publication._publish_effect(**args)
+    assert publication._tree(args["destination"]) == old
+    assert json.loads((args["run_dir"] / publication.JOURNAL).read_bytes())["state"] == "rolled-back"
+    monkeypatch.setattr(publication, "atomic_write", original)
+    publication._publish_effect(**args)
+    assert publication._tree(args["destination"]) == args["files"]
+
+
+@pytest.mark.parametrize("point", ["before-effect", "after-move", "after-install"])
+def test_interrupted_effect_recognition(tmp_path, monkeypatch, point):
+    args, old = effect(tmp_path, incumbent=True)
+    original = publication._write_record
+    write = publication.atomic_write
+
+    def interrupt(path, record):
+        if record["state"] == ("completed" if point == "after-install" else "started"):
+            original(path, record) if point == "before-effect" else None
+            if point != "after-move":
+                raise KeyboardInterrupt("scripted interrupt")
+        original(path, record)
+
+    def interrupt_member(path, data):
+        if point == "after-move" and path.name == "ARTIFACT.yaml":
+            raise KeyboardInterrupt("scripted interrupt")
+        write(path, data)
+
+    monkeypatch.setattr(publication, "_write_record", interrupt)
+    monkeypatch.setattr(publication, "atomic_write", interrupt_member)
+    with pytest.raises(KeyboardInterrupt):
+        publication._publish_effect(**args)
+    monkeypatch.setattr(publication, "_write_record", original)
+    monkeypatch.setattr(publication, "atomic_write", write)
+    if point == "after-move":
+        with pytest.raises(UncertainEffectError, match="interrupted publication"):
+            publication._publish_effect(**args)
+        assert publication._tree(args["destination"]) == {}
+        assert publication._tree(args["archive_root"] / "AAS-2026-10-06-example-0123456789ab-01") == old
+    else:
+        publication._publish_effect(**args)
+        assert publication._tree(args["destination"]) == args["files"]
+
+
+def test_changed_journal_inputs_and_changed_completed_bytes_stop(tmp_path):
+    args, _ = effect(tmp_path)
+    publication._publish_effect(**args)
+    args["files"] = {**args["files"], "memory.md": b"different pin"}
+    with pytest.raises(UncertainEffectError, match="identity"):
+        publication._publish_effect(**args)
+    args["files"]["memory.md"] = b"new memory\n"
+    (args["destination"] / "memory.md").write_bytes(b"unexpected mutation")
+    with pytest.raises(UncertainEffectError, match="completed publication"):
+        publication._publish_effect(**args)
+
+
+def test_rollback_failure_is_uncertain_and_preserves_evidence(tmp_path, monkeypatch):
+    args, _ = effect(tmp_path, incumbent=True)
+    original = publication.atomic_write
+
+    def fail(path, data):
+        if path.name == "memory.md":
+            raise OSError("cannot write member")
+        original(path, data)
+
+    monkeypatch.setattr(publication, "atomic_write", fail)
+    monkeypatch.setattr(publication.shutil, "rmtree", lambda path: (_ for _ in ()).throw(OSError("cannot rollback")))
+    with pytest.raises(UncertainEffectError, match="rollback uncertain"):
+        publication._publish_effect(**args)
+    assert (args["run_dir"] / publication.JOURNAL).exists()
+    assert args["archive_root"].exists()
+
+
+def test_engine_report_is_separate_and_uncertain_without_recovery(tmp_path):
+    store = RunStore(tmp_path / "engine-run")
+    type_text = (ROOT / "kb" / SET_TYPE).read_text()
+    store.create({"type": type_text, "type_spec": SET_TYPE, "library": str(ROOT / "kb"),
+                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
+                      {"name": "publish", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": []}]}),
+                  "parameters": {"system": "fixture"}})
+    store.fail_attempt({"id": "000001-publish", "seq": 1, "job": "publish", "kind": "code", "pins": {}},
+                       "scripted uncertain publication", uncertain=True)
+    (store.run_dir / "effects").mkdir()
+    (store.run_dir / publication.JOURNAL).write_text('{"state": "completed"}')
+    status = RunStatus((), (), (Stop("uncertain effect", "publish", "000001-publish", True),), False)
+    report = engine_run_report(store.run_dir, status=status)
+    assert report["state"] == "uncertain"
+    assert report["effects"]["publish"] == {"journal-state": "completed", "verified": False}
+    assert report["failed-attempts"][0]["uncertain"]
+    assert report["invocation-stops"][0]["uncertain"]
+    assert not (store.run_dir / "run-state.md").exists()
+    assert not (store.run_dir / "output").exists()
+    assert "round" not in report
+    (store.run_dir / "output").mkdir()
+    with pytest.raises(ValueError, match="legacy/mixed"):
+        engine_run_report(store.run_dir)
+
+
+def test_engine_records_uncertain_effect_as_stop_without_committing_outputs(tmp_path, monkeypatch):
+    from commonplace.workflow import advance
+
+    args, _ = effect(tmp_path)
+    publication._publish_effect(**args)
+    (args["destination"] / "memory.md").write_bytes(b"unknown external bytes")
+    store = RunStore(args["run_dir"])
+    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE,
+                  "library": str(ROOT / "kb"), "parameters": {},
+                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
+                      {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
+                       "handler": "commonplace.lib.agentic_job_publication.publish_analysis"}]})})
+
+    def scripted_effect_only(attempt):
+        publication._publish_effect(**args)
+        return {}
+
+    monkeypatch.setattr(publication, "publish_analysis", scripted_effect_only)
+    status = advance(store.run_dir)
+    assert len(status.stops) == 1 and status.stops[0].uncertain
+    record = store.attempt_records()[0]
+    assert record["state"] == "failed" and record["uncertain"] and not record["pins"]
+    assert "outputs" not in record
+    assert (args["destination"] / "memory.md").read_bytes() == b"unknown external bytes"
+    assert not (store.run_dir / "output").exists()
+
+
+def test_environment_rechecks_the_declared_capture_identity(tmp_path, monkeypatch):
+    attempt = Attempt(tmp_path)
+    capture = attempt.run_dir / "sources" / "capture.txt"
+    capture.parent.mkdir()
+    capture.write_bytes(b"frozen local fixture bytes")
+    source = {"kind": "capture", "identity": attempt.metadata["source-identity"],
+              "revision": "local-fixture-v1", "path": str(capture),
+              "sha256": publication._digest(capture.read_bytes())}
+    attempt.metadata["capture-directory"] = str(capture.parent)
+    attempt.inputs["source"] = b"null\n"
+    attempt.inputs["metadata"] = json.dumps(attempt.metadata).encode()
+    fields = publication._document(attempt.inputs["boundary"]).frontmatter
+    attempt.inputs["boundary"] = doc({**fields, "source": source, "reviewed-boundary": source["revision"]})
+    monkeypatch.setattr(publication, "_opened_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
+    capture.write_bytes(b"changed local fixture bytes")
+    with pytest.raises(ValueError, match="SHA-256"):
+        publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
+
+
+def test_effect_rejects_symlinked_destination_without_mutation(tmp_path):
+    args, _ = effect(tmp_path)
+    external = tmp_path / "external"
+    external.mkdir()
+    args["destination"].parent.mkdir()
+    args["destination"].symlink_to(external, target_is_directory=True)
+    with pytest.raises(UncertainEffectError, match="symlinks"):
+        publication._publish_effect(**args)
+    assert list(external.iterdir()) == []

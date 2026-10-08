@@ -20,6 +20,7 @@ from commonplace.lib.agentic_acquisition import acquire_source
 from commonplace.lib.agentic_boundary import boundary_refusals, frozen_source_refusals
 from commonplace.lib.agentic_checkout import github_checkout_path
 from commonplace.lib.agentic_job_checks import correction_findings, refusal_findings
+from commonplace.lib.agentic_job_validation import criterion_bytes
 from commonplace.lib.agentic_publication import (
     inspect_destination,
     require_publishable_worktree,
@@ -38,6 +39,7 @@ from commonplace.lib.analysis_worktree import (
     require_run_code,
     source_checkout,
 )
+from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow import CodeAttempt
@@ -177,6 +179,17 @@ def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, j
     return metadata, repo
 
 
+def _analysis_layout(attempt: CodeAttempt):
+    """Read the declared layout, never the mutable installed set type."""
+    data = attempt.read("set-type")
+    if data is None:
+        raise ValueError("analysis check requires the pinned set type")
+    document, error = parse_document(data.decode("utf-8"))
+    if document is None or error:
+        raise ValueError("analysis check cannot read the pinned set type")
+    return parse_layout((document.frontmatter or {}).get("layout"), where=SET_TYPE)
+
+
 def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     """Judge the pinned boundary, never a mutable set projection or hand-out file.
 
@@ -202,12 +215,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
         if incumbent is None or error:
             raise ValueError("boundary check cannot read the incumbent boundary")
         incumbent_source = (incumbent.frontmatter or {}).get("source")
-    findings = validate_draft_at_slot(
-        attempt.run_dir / "set", "boundary.md", candidate, repo_root=repo, members={},
-        manifest=f"type: {SET_TYPE}\n".encode(),
-    )
-    reasons = ["[set] " + finding.render() for finding in findings if not finding.info]
-    reasons += ["[invocation] " + reason for reason in boundary_refusals(
+    reasons = ["[invocation] " + reason for reason in boundary_refusals(
         candidate, repo_root=repo, run_id=metadata["run-id"],
         identity=metadata["source-identity"], frozen=frozen,
         capture_directory=Path(metadata["capture-directory"]),
@@ -217,6 +225,17 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
             candidate, repo_root=repo, run_id=metadata["run-id"],
             identity=metadata["source-identity"], frozen=incumbent_source,
         )]
+    source_pin = frozen
+    if frozen is None and not reasons:
+        document, error = parse_document(candidate.decode("utf-8", errors="replace"))
+        if document is not None and not error:
+            source_pin = (document.frontmatter or {}).get("source")
+    findings = validate_draft_at_slot(
+        attempt.run_dir / "set", "boundary.md", candidate, repo_root=repo, members={},
+        manifest=f"type: {SET_TYPE}\n".encode(), criteria=criterion_bytes(attempt),
+        frozen_source=source_pin,
+    )
+    reasons += ["[set] " + finding.render() for finding in findings if not finding.info]
     _require_opened_method(repo, metadata, job="boundary check")
     attempt.judge(
         "candidate", outcome="refused" if reasons else "accepted", findings="\n".join(reasons),
@@ -230,20 +249,22 @@ def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
     if candidate is None:
         raise ValueError(f"{member} check requires a candidate")
     partners = ["boundary", *[role for role in ("runtime", "memory", "epistemic") if role != member]]
+    layout = _analysis_layout(attempt)
     snapshot = {}
     present = []
     for role in partners:
         data = attempt.read(role)
         if data is not None:
-            snapshot[analysis_layout().path(role)] = data
+            snapshot[layout.path(role)] = data
             present.append(role)
     boundary, error = parse_document(snapshot["boundary.md"].decode("utf-8"))
     if boundary is None or error or not isinstance((boundary.frontmatter or {}).get("source"), dict):
         raise ValueError(f"{member} check requires a boundary with a frozen source")
     source = boundary.frontmatter["source"]
     findings = validate_draft_at_slot(
-        attempt.run_dir / "set", analysis_layout().path(member), candidate,
+        attempt.run_dir / "set", layout.path(member), candidate,
         repo_root=repo, members=snapshot, manifest=f"type: {SET_TYPE}\n".encode(),
+        criteria=criterion_bytes(attempt), frozen_source=source,
     )
     reasons = ["[set] " + finding.render() for finding in findings
                if not finding.info and not finding.warn and not finding.absent]

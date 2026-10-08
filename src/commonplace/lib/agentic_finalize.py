@@ -21,9 +21,17 @@ RUN_METADATA_NAME = "run-metadata.json"
 WORKER_FIELDS = ("model", "effort")
 
 
+def _require_legacy_run(run_dir: Path) -> None:
+    """Reject engine or mixed directories before manufacturing a legacy twin."""
+    if any((run_dir / name).exists() or (run_dir / name).is_symlink()
+           for name in ("run.json", "state")):
+        raise ValueError("legacy manifest functions refuse new-engine or mixed run directories")
+
+
 def start_manifest(run_dir: Path) -> None:
     """Create ``output/`` with a type-only manifest, unless a manifest exists,
     so a replay of a finished run changes nothing."""
+    _require_legacy_run(run_dir)
     output = run_dir / OUTPUT_DIR
     output.mkdir(exist_ok=True)
     if not (output / MANIFEST_NAME).exists():
@@ -37,6 +45,7 @@ def build_manifest(run_dir: Path) -> str:
     One model writes a whole run, so the manifest carries it once, as the
     orchestrator recorded it when the run opened.
     """
+    _require_legacy_run(run_dir)
     output = run_dir / OUTPUT_DIR
     layout = analysis_layout()
     members = {}

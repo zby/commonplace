@@ -1,16 +1,14 @@
-# Opt-in analysis migration declaration. NOT a runnable analysis workflow.
-# Opening/acquisition are bound, followed by an engine-specific boundary hand-out.
-# Boundary/runtime checks are bound; memory/epistemic checks stay unbound until
-# reconciliation hand-outs are ported. The live skill/CLI remain legacy;
-# do not launch workers from this migration declaration.
+# Opt-in analysis declaration with translated model protocols and bound handlers.
+# The live skill/CLI remain legacy. Binding is not production adoption or proof
+# of whole-workflow coherence; do not launch workers from this declaration.
 # File inputs are relative to the library root recorded by start_run.
 # Opening consumes fixed system, source-identity, source and optional
 # source-revision run parameters, not run.json. It requires a ready preparation
 # record and the token-bearing run ID; legacy state must use the legacy workflow.
 # Model contracts below are substantive authoring/judging inputs, not blanket
 # validation dependencies. Code checks own type/schema dependency closure.
-# Downstream legacy round, requests/answers, previous-output and reading-order
-# interfaces still need porting before their instructions consume engine hand-outs.
+# Model jobs use opening metadata, pinned previous outputs and refusal feedback,
+# not legacy rounds, requests, run-state or reading-order interfaces.
 # Assembly/publication must check disposition-dependent coverage at BOTH ends;
 # optional coverage inputs express the alternatives, not permission to publish.
 # Publication reads assembly's pinned manifest, not a second working-set copy.
@@ -150,7 +148,7 @@ jobs:
     validation-member: memory.md
 - name: check-memory
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.check_memory
   inputs:
     candidate: {address: output, source: 'memory:report', required: true}
     incumbent-report: {address: member, source: memory, required: false}
@@ -203,7 +201,7 @@ jobs:
     validation-member: epistemic.md
 - name: check-epistemic
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.check_epistemic
   inputs:
     candidate: {address: output, source: 'epistemic:report', required: true}
     incumbent-report: {address: member, source: epistemic, required: false}
@@ -239,8 +237,9 @@ jobs:
   outputs:
   - reconciliation
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/reconcile.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/reconcile-records.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -255,21 +254,20 @@ jobs:
     refusal: {address: refusal, source: reconcile, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: reconciliation.md
 - name: check-reconcile
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_verification.check_reconcile
   inputs:
     candidate: {address: output, source: 'reconcile:reconciliation', required: true}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: reconcile, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
-    epistemic: {address: member, source: epistemic, required: false}
-    memory: {address: member, source: memory, required: false}
-    runtime: {address: member, source: runtime, required: false}
+    epistemic: {address: member, source: epistemic, required: true}
+    memory: {address: member, source: memory, required: true}
+    runtime: {address: member, source: runtime, required: true}
     set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
@@ -290,10 +288,11 @@ jobs:
   outputs: []
 - name: set-check
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_verification.set_check
   outputs:
   - findings
   inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
     boundary: {address: member, source: boundary}
     runtime: {address: member, source: runtime}
     memory: {address: member, source: memory}
@@ -324,8 +323,9 @@ jobs:
   outputs:
   - verification
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-records.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -347,13 +347,13 @@ jobs:
     set-check: {address: output, source: 'set-check:findings'}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: record-verification.md
 - name: apply-verify
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_verification.apply_verify
   inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
     candidate: {address: output, source: 'verify:verification', required: true}
     verifier-attempt: {address: attempt, source: verify, required: true}
     boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
@@ -389,9 +389,11 @@ jobs:
   max_attempts: 3
   outputs:
   - profile
+  - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/profile.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/map-memory-profile.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -409,21 +411,24 @@ jobs:
     refusal: {address: refusal, source: profile, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: memory-profile.md
 - name: check-profile
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_profile.check_profile
   inputs:
     candidate: {address: output, source: 'profile:profile', required: true}
+    answers: {address: output, source: 'profile:answers', required: false}
+    reconciliation: {address: member, source: reconciliation, required: true}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: profile, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
-    epistemic: {address: member, source: epistemic, required: false}
-    memory: {address: member, source: memory, required: false}
-    runtime: {address: member, source: runtime, required: false}
+    epistemic: {address: member, source: epistemic, required: true}
+    memory: {address: member, source: memory, required: true}
+    runtime: {address: member, source: runtime, required: true}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    reconciliation-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
     set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
@@ -449,9 +454,13 @@ jobs:
   max_attempts: 3
   outputs:
   - verification
+  - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-profile.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-memory-profile.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
+    profile-answers: {address: output, source: 'profile:answers', required: false}
+    profile-refusal: {address: refusal, source: profile, required: false}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -466,13 +475,15 @@ jobs:
     refusal: {address: refusal, source: verify-profile, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: profile-verification.md
 - name: apply-verify-profile
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_profile.apply_verify_profile
   inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
+    answers: {address: output, source: 'verify-profile:answers', required: false}
+    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-profile:verification', required: true}
     verifier-attempt: {address: attempt, source: verify-profile, required: true}
     boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
@@ -510,9 +521,11 @@ jobs:
   max_attempts: 2
   outputs:
   - synthesis
+  - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/synthesize.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-findings.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -534,21 +547,28 @@ jobs:
     refusal: {address: refusal, source: synthesize, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: synthesis.md
 - name: check-synthesize
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_profile.check_synthesize
   inputs:
     candidate: {address: output, source: 'synthesize:synthesis', required: true}
+    answers: {address: output, source: 'synthesize:answers', required: false}
+    reconciliation: {address: member, source: reconciliation, required: true}
+    record-verification: {address: member, source: record-verification, required: true}
+    profile-verification: {address: member, source: profile-verification, required: true}
+    reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
+    verification-type: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
+    reconciliation-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
+    verification-schema: {address: file, source: agentic-system-analyses/types/agentic-system-verification.schema.yaml}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: synthesize, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: member, source: boundary, required: true}
-    epistemic: {address: member, source: epistemic, required: false}
-    memory: {address: member, source: memory, required: false}
-    runtime: {address: member, source: runtime, required: false}
+    epistemic: {address: member, source: epistemic, required: true}
+    memory: {address: member, source: memory, required: true}
+    runtime: {address: member, source: runtime, required: true}
     set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
@@ -574,9 +594,13 @@ jobs:
   max_attempts: 2
   outputs:
   - verification
+  - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-synthesis.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
+    synthesis-answers: {address: output, source: 'synthesize:answers', required: false}
+    synthesis-refusal: {address: refusal, source: synthesize, required: false}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -593,13 +617,15 @@ jobs:
     refusal: {address: refusal, source: verify-synthesis, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: synthesis-verification.md
 - name: apply-verify-synthesis
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_profile.apply_verify_synthesis
   inputs:
+    metadata: {address: output, source: 'open:metadata', required: true}
+    answers: {address: output, source: 'verify-synthesis:answers', required: false}
+    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-synthesis:verification', required: true}
     verifier-attempt: {address: attempt, source: verify-synthesis, required: true}
     boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
@@ -636,8 +662,25 @@ jobs:
   outputs: []
 - name: assemble
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_publication.assemble_analysis
   inputs:
+    source: {address: output, source: 'acquire:source', required: true}
+    boundary-attempt: {address: attempt, source: boundary, required: true}
+    runtime-attempt: {address: attempt, source: runtime, required: false}
+    memory-attempt: {address: attempt, source: memory, required: false}
+    epistemic-attempt: {address: attempt, source: epistemic, required: false}
+    reconciliation-attempt: {address: attempt, source: reconcile, required: false}
+    record-verification-attempt: {address: attempt, source: verify, required: false}
+    memory-profile-attempt: {address: attempt, source: profile, required: false}
+    profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
+    synthesis-attempt: {address: attempt, source: synthesize, required: false}
+    synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    validation-contract: {address: file, source: reference/validation-contract.md}
+    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
+    note-type: {address: file, source: types/note.md}
+    type-spec: {address: file, source: types/type-spec.md}
+    type-spec-schema: {address: file, source: types/type-spec.schema.yaml}
     metadata: {address: output, source: 'open:metadata', required: true}
     boundary: {address: member, source: boundary, required: true}
     runtime: {address: member, source: runtime, required: false}
@@ -842,8 +885,25 @@ jobs:
   role: overview
 - name: publish
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_publication.publish_analysis
   inputs:
+    source: {address: output, source: 'acquire:source', required: true}
+    boundary-attempt: {address: attempt, source: boundary, required: true}
+    runtime-attempt: {address: attempt, source: runtime, required: false}
+    memory-attempt: {address: attempt, source: memory, required: false}
+    epistemic-attempt: {address: attempt, source: epistemic, required: false}
+    reconciliation-attempt: {address: attempt, source: reconcile, required: false}
+    record-verification-attempt: {address: attempt, source: verify, required: false}
+    memory-profile-attempt: {address: attempt, source: profile, required: false}
+    profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
+    synthesis-attempt: {address: attempt, source: synthesize, required: false}
+    synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
+    collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
+    validation-contract: {address: file, source: reference/validation-contract.md}
+    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
+    note-type: {address: file, source: types/note.md}
+    type-spec: {address: file, source: types/type-spec.md}
+    type-spec-schema: {address: file, source: types/type-spec.schema.yaml}
     metadata: {address: output, source: 'open:metadata', required: true}
     boundary: {address: member, source: boundary, required: true}
     overview: {address: member, source: overview, required: true}

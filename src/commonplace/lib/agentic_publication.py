@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import fcntl
 import os
 import re
 import shutil
 import subprocess
 import tempfile
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from hashlib import sha256
 from pathlib import Path
@@ -470,8 +473,35 @@ def atomic_write(path: Path, content: bytes) -> None:
         raise
 
 
+@contextmanager
+def publication_lock(repo_root: Path) -> Iterator[None]:
+    """Serialize cooperating publishers in this repository, including rollback.
+
+    The persistent lock file lives in the ignored analysis state root. Never
+    unlink it: waiters must keep using the same inode. Acquire any per-run lock
+    first, then this lock; do not acquire a run lock while holding this one.
+    This advisory lock is not exclusive ownership of publication files.
+    Non-cooperating writes still require authority-level exclusivity.
+    """
+    path = repo_root.resolve() / "kb/agentic-system-analyses/state/.publication.lock"
+    if path.resolve() != path:
+        raise ValueError("publication lock must not traverse symlinks")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "a") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def publish_publication(spec: PublicationSpec) -> PublishedPublication:
-    """Validate before replacing, archive unchanged bytes, and restore on errors."""
+    """Validate and publish under the shared repository lock, restoring on errors."""
+    with publication_lock(spec.repo_root):
+        return _publish_publication(spec)
+
+
+def _publish_publication(spec: PublicationSpec) -> PublishedPublication:
     checked = _check_set(spec)
     repo_root = checked.spec.repo_root
     state_path = checked.spec.run_state_path

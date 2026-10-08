@@ -125,6 +125,35 @@ only pending model jobs hold others back. Missing required inputs still block
 readiness. A producer's refusal input lapses after a newer output without
 scheduling another correction.
 
+Historical verdict application has one declaration-derived scheduling exception
+(scenario 21). A code job need not wait for a model producer when:
+
+- it declares that producer's latest completed attempt record as a normal,
+  not order-only, input;
+- it declares a handed input from that record whose producer-side address is
+  a member of a role distinct from the producer's own role, and that handed
+  member version is present;
+- every input dependency on that producer resolves from the same completed
+  record: its outputs, its attempt record or its declared handed inputs.
+
+A current member or judgment dependency on that producer, a live refusal of
+it, or an undeclared handed address prevents the exception. Outputs alone
+are not enough. Other producers still impose their ordinary waits. Required
+inputs still must be present. With no other input change, ordinary input
+currency makes an unchanged completed record apply only once. A new completed
+record triggers application even with identical verdict bytes. The exception
+works while the verifier is
+ready, has exhausted max attempts or has a subsequent attempt open; it does
+not grant another model attempt or change model readiness.
+
+A check whose only handed input is its producer's answered refusal does not
+qualify: that input is not a handed member from another role. It still waits
+for the refused producer, as scenario 17 requires. This exception implements
+the mapping's historical apply behavior; it adds no primitive or schema field.
+Judgment subjects, installation, scope, supersession and explicit overrides
+retain their existing semantics. Completion and scheduling grant no semantic
+acceptance or automatic override.
+
 The engine supplies each producer's latest refusal of its latest completed
 output, including the refused version, the findings and the refusal's
 identity. Historical refusals stay as evidence but do not enter that
@@ -170,10 +199,12 @@ omits a reusable effect-adapter protocol, not this recovery obligation.
 ## Remaining design checks
 
 The apply jobs must declare the verifier's attempt record and the member
-versions it was handed, as the updated mapping requires. Scenario 21 then
-judges A without restoring it over B or delivering A's refusal as B's
-refusal input. In scenario 22, identical verdict bytes about B still rerun
-the apply job because its attempt-record input changed. Ordinary transforms
+versions it was handed, as the updated mapping requires. The scheduling
+exception above lets scenario 21 apply the completed verdict about A before
+another verifier attempt replaces that completed record, without restoring A
+over B or delivering A's refusal as B's refusal input. In scenario 22,
+identical verdict bytes about B still rerun the apply job because its
+attempt-record input changed. Ordinary transforms
 retain content-only early cutoff.
 
 The complete declaration should exercise these scenarios, interrupted code

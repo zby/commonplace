@@ -96,6 +96,8 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
             repo / f"kb/agentic-system-analyses/instructions/agentic-analysis-{name}.md",
         )
     shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")
+    (repo / "kb/reference").mkdir(parents=True)
+    shutil.copy2(ROOT / "kb/reference/validation-contract.md", repo / "kb/reference/validation-contract.md")
     (repo / "src/commonplace/lib").mkdir(parents=True)
     (repo / "src/commonplace/__init__.py").write_text("# Local package binding fixture.\n")
     (repo / "src/commonplace/lib/agentic_workflow.py").write_text("# Source-checkout marker.\n")

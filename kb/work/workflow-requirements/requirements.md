@@ -176,7 +176,14 @@ They bind an implementation of this spec; they are not requirements.
   the job filling its role and every job that judges it; an output's or
   an attempt record's producer is its job; a judgment input's are the
   model jobs filling its subject's role and the roles at its relation's
-  ends, the work behind the code job that records it. When every ready
+  ends, the work behind the code job that records it. One narrow code-only
+  exception applies a completed model attempt to immutable handed subjects
+  before that producer's rerun, as scenario 21 requires. It needs a triggering
+  completed-attempt input and a present handed member from another role; every
+  dependency on the exempt producer must be that completed attempt, its outputs
+  or its handed inputs. Live member/judgment dependencies and a check reading
+  only its own answered refusal retain the wait. This changes scheduling, not
+  readiness, subjects, installation or refusal supersession. When every ready
   job waits for another ready job, the invocation stops naming the cycle. Code jobs run
   to a fixed point, in declaration order, before model readiness is
   computed, so a code producer is never pending when model jobs are handed

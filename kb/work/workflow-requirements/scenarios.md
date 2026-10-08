@@ -197,7 +197,11 @@ ready. No redundant re-acceptance of A is recorded. When `R` completes B,
 that attempt answered, and judges B against the current sibling. Had a
 re-check of A run, as an operator's command could make one, its
 acceptance would not supersede the refusal: its scope does not include
-the refusal's and it names no refusal it overrides. [4, 5, 7]
+the refusal's and it names no refusal it overrides. Declaring `R`'s completed
+attempt and its handed answered refusal does not exempt `check-R` from the
+wait: the refusal is not a handed member of another role. The historical
+apply exception in scenario 21 therefore does not permit this redundant
+re-check. [4, 5, 7]
 
 **18. Input versions are fixed at hand-out.** `reconcile` is handed out
 while the reports are at version set 1; the hand-out pins those versions
@@ -230,9 +234,22 @@ becomes ready. The upstream wait does not hold `R` back, since `V`
 produces none of `R`'s inputs, and it cannot recall `V`'s open attempt.
 `R` completes with B; the coordinator advances and `check-R` installs B.
 `V` then completes with a verdict about A. The apply job's inputs are `V`'s attempt record
-and the members it was handed, so its judgments are about A. An
-acceptance of A is evidence only, because A is not `R`'s latest completed output; B stays the
-member. A refusal of A is likewise not the refusal `R`'s input counts, so B
+and the members it was handed, so its judgments are about A. It applies
+this completed verdict without waiting for `V`'s next ready or open attempt,
+even if `V` has exhausted max attempts. The declaration-derived exception
+requires a code job with a normal, not order-only, completed-attempt input
+and a present handed member from a declared producer input on a different
+role. Every dependency on the exempt producer must come from that same
+completed record's outputs, attempt record or declared handed inputs. Live
+member, judgment or refusal dependencies on `V` prevent the exception;
+other producers' waits remain. Missing required inputs still block the apply
+job. Outputs alone or only `V`'s handed answered refusal do not qualify.
+With no other input change, unchanged completed inputs do not apply again;
+another completed attempt record triggers another application, including
+scenario 22's identical text. This implements historical application without
+changing model readiness, attempt limits or judgment semantics. An acceptance
+of A is evidence only, because A is not `R`'s latest completed output; B stays
+the member. A refusal of A is likewise not the refusal `R`'s input counts, so B
 is not thrown away. The verification's acceptance against A still holds,
 since its handed input has not moved, but it covers nothing: the partner
 version in its basis is not the partner's current member. B has no acceptance

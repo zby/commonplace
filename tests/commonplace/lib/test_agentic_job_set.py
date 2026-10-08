@@ -13,7 +13,6 @@ from commonplace.lib.agentic_job_set import (
     ACQUIRE_HANDLER,
     ANALYST_CHECK_HANDLERS,
     BOUNDARY_CHECK_HANDLER,
-    HANDLER,
     JOB_SET,
     MODEL_ROLES,
     OPEN_HANDLER,
@@ -32,6 +31,25 @@ from commonplace.workflow.store import RunStore
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
 DECLARATION = LIBRARY / JOB_SET
+ENGINE_INSTRUCTIONS = {
+    "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
+    "epistemic": "trace-epistemic", "reconcile": "reconcile-records", "verify": "verify-records",
+    "profile": "map-memory-profile", "verify-profile": "verify-memory-profile",
+    "synthesize": "synthesize-findings", "verify-synthesis": "verify-synthesis",
+}
+INTEGRATED_HANDLERS = {
+    "open": OPEN_HANDLER, "acquire": ACQUIRE_HANDLER, "check-boundary": BOUNDARY_CHECK_HANDLER,
+    **{f"check-{role}": handler for role, handler in ANALYST_CHECK_HANDLERS.items()},
+    **{name: f"commonplace.lib.agentic_job_verification.{function}" for name, function in (
+        ("check-reconcile", "check_reconcile"), ("set-check", "set_check"), ("apply-verify", "apply_verify"),
+    )},
+    **{name: f"commonplace.lib.agentic_job_profile.{function}" for name, function in (
+        ("check-profile", "check_profile"), ("check-synthesize", "check_synthesize"),
+        ("apply-verify-profile", "apply_verify_profile"), ("apply-verify-synthesis", "apply_verify_synthesis"),
+    )},
+    "assemble": "commonplace.lib.agentic_job_publication.assemble_analysis",
+    "publish": "commonplace.lib.agentic_job_publication.publish_analysis",
+}
 
 
 @pytest.fixture
@@ -62,10 +80,10 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     assert jobs.job("check-boundary").handler == BOUNDARY_CHECK_HANDLER
     assert jobs.job("check-runtime").handler == ANALYST_CHECK_HANDLERS["runtime"]
     for member in ("memory", "epistemic"):
-        assert jobs.job(f"check-{member}").handler == HANDLER
-    for member in REPORTS:
-        assert "opening" in jobs.job(member).inputs
-        assert "run-state" not in jobs.job(member).parameters
+        assert jobs.job(f"check-{member}").handler == ANALYST_CHECK_HANDLERS[member]
+    for name in MODEL_ROLES:
+        assert jobs.job(name).inputs["opening"].source == "open:metadata"
+        assert "run-state" not in jobs.job(name).parameters
     boundary = jobs.job("boundary")
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
@@ -146,7 +164,11 @@ def test_apply_jobs_judge_handed_members_not_current_slots(graph):
         assert not any(spec.address == "member" for spec in apply.inputs.values())
         expected = {f"verifier-attempt:{key}" for key, spec in verifier.inputs.items()
                     if spec.address == "member" or key == "set-check"}
-        assert {spec.source for spec in apply.inputs.values() if spec.address == "handed"} == expected
+        handed = {spec.source for spec in apply.inputs.values() if spec.address == "handed"}
+        if name != "verify":
+            expected.add("verifier-attempt:refusal")
+        assert handed == expected
+        assert apply.inputs["metadata"].source == "open:metadata"
 
 
 def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
@@ -180,17 +202,11 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
     for name, roles in role_contracts.items():
         job = jobs.job(name)
         expected = {
-            f"agentic-system-analyses/instructions/analyse-agentic-system/jobs/{name}.md",
-            "agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md",
+            f"agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/{ENGINE_INSTRUCTIONS[name]}.md",
+            "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md",
             "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
             *(layout.roles[role].type for role in roles),
         }
-        if name in ("boundary", *REPORTS):
-            jobs_root = "agentic-system-analyses/instructions/analyse-agentic-system/"
-            instruction = {"boundary": "fix-boundary", "runtime": "trace-runtime",
-                           "memory": "analyse-memory", "epistemic": "trace-epistemic"}[name]
-            expected -= {f"{jobs_root}jobs/{name}.md", f"{jobs_root}jobs/worker-rules.md"}
-            expected |= {f"{jobs_root}jobs-engine/{instruction}.md", f"{jobs_root}jobs-engine/follow-worker-rules.md"}
         if name != "boundary":
             expected.add(f"{shared}records.md")
         if name in ("boundary", "verify"):
@@ -233,7 +249,7 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
             if path.suffix == ".md":
                 document, error = parse_document(path.read_text(encoding="utf-8"))
                 assert not error
-                schema = document.frontmatter.get("schema")
+                schema = (document.frontmatter or {}).get("schema")
                 if schema:
                     assert schema_dependencies((path.parent / schema).resolve()) <= files, job.name
         # Candidate and partner type documents belong to checks, even when the
@@ -318,10 +334,9 @@ def test_publication_requires_holding_acceptances_not_every_possible_member(engi
     pins["overview-accepted"] = ABSENT
     assert not run.ready(job, {"boundary", "overview"})
     assert pins["overview"].version is not None
-    # Readiness is not coverage or publication acceptance. The handler must
-    # enforce those; until ported it refuses even this synthetically ready job.
-    with pytest.raises(NotImplementedError, match="handlers are not ported"):
-        job.resolve_handler()(object())
+    # Readiness is not coverage or publication acceptance. The bound handler
+    # separately enforces exact pinned coverage, provenance and content checks.
+    assert job.handler == INTEGRATED_HANDLERS["publish"]
 
 
 def test_live_contract_gaps_are_explicit():
@@ -329,11 +344,16 @@ def test_live_contract_gaps_are_explicit():
     assert not any(gap.startswith("missing verdict relation:") for gap in gaps)
     assert not any(gap.startswith("disposition:") for gap in gaps)
     assert any(gap.startswith("working set path:") for gap in gaps)
-    assert any(gap.startswith("publication:") for gap in gaps)
+    assert any(gap.startswith("publication coordination:") for gap in gaps)
+    assert any(gap.startswith("live routing:") for gap in gaps)
+    assert any(gap.startswith("verification:") for gap in gaps)
+    assert any("coherence review completed" in gap for gap in gaps)
     assert not any(gap.startswith("opening:") for gap in gaps)
     assert any(gap.startswith("startup:") for gap in gaps)
     assert not any(gap.startswith("acquisition binding:") for gap in gaps)
-    assert any(gap.startswith("analyst check bindings:") for gap in gaps)
+    assert not any(gap.startswith(prefix) for gap in gaps for prefix in (
+        "analyst check bindings:", "handlers:", "worker protocol:", "memory provenance:", "coverage:",
+    ))
     assert any(gap.startswith("legacy runs:") for gap in gaps)
     assert not any(gap.startswith("runtime context:") for gap in gaps)
     assert not any(gap.startswith("check criteria:") for gap in gaps)
@@ -345,30 +365,9 @@ def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatc
     jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))
     for job in jobs.jobs:
         if isinstance(job, CodeJob):
-            if job.name == "open":
-                from commonplace.lib.agentic_job_handlers import open_analysis
-
-                assert job.handler == OPEN_HANDLER and job.resolve_handler() is open_analysis
-                continue
-            if job.name == "acquire":
-                from commonplace.lib.agentic_job_handlers import acquire_analysis
-
-                assert job.handler == ACQUIRE_HANDLER and job.resolve_handler() is acquire_analysis
-                continue
-            if job.name == "check-boundary":
-                from commonplace.lib.agentic_job_handlers import check_boundary
-
-                assert job.handler == BOUNDARY_CHECK_HANDLER and job.resolve_handler() is check_boundary
-                continue
-            if job.name == "check-runtime":
-                from commonplace.lib.agentic_job_handlers import check_runtime
-
-                assert job.handler == ANALYST_CHECK_HANDLERS["runtime"] and job.resolve_handler() is check_runtime
-                continue
-            assert job.handler == HANDLER
-            assert job.resolve_handler() is unported
-            with pytest.raises(NotImplementedError, match="handlers are not ported"):
-                job.resolve_handler()(object())
+            assert job.handler == INTEGRATED_HANDLERS[job.name]
+            assert callable(job.resolve_handler())
+            assert job.resolve_handler() is not unported
     with pytest.raises(NotImplementedError, match="handlers are not ported"):
         unported(object())
     start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
@@ -379,3 +378,63 @@ def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatc
     assert "requires a nonempty source-identity run parameter" in status.stops[0].reason
     assert not (tmp_path / "related-systems").exists()
     assert not (tmp_path / "retained").exists()
+
+
+def test_publication_declares_producer_provenance_and_full_criterion_closure(graph):
+    jobs, layout = graph
+    contracts = {
+        SET_TYPE, "types/type-spec.md", "types/note.md",
+        "agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md",
+        *(f"agentic-system-analyses/instructions/agentic-analysis-{name}.md"
+          for name in ("sources", "records", "boundary")),
+        *(role.type for role in layout.roles.values()),
+    }
+    for name in ("assemble", "publish"):
+        job = jobs.job(name)
+        source = job.inputs["source"]
+        assert (source.address, source.source, source.required) == ("output", "acquire:source", True)
+        for producer, role in MODEL_ROLES.items():
+            spec = job.inputs[f"{role}-attempt"]
+            assert (spec.address, spec.source, spec.required) == ("attempt", producer, role == "boundary")
+        files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
+        assert {(LIBRARY / path).resolve() for path in contracts} <= files
+        # Close both the instance schemas and the meta-type used to validate
+        # criterion documents, including references in inactive schema branches.
+        for path in contracts:
+            document, error = parse_document((LIBRARY / path).read_text(encoding="utf-8"))
+            assert not error
+            if document is None or document.frontmatter is None:
+                continue
+            schema = document.frontmatter.get("schema")
+            if schema:
+                assert schema_dependencies((LIBRARY / path).parent / schema) <= files
+        assert jobs.job("assemble").outputs == ("overview", "manifest")
+        assert jobs.job("publish").outputs == ()
+
+
+def test_profile_synthesis_answer_protocol_and_exact_check_inputs(graph):
+    jobs, _ = graph
+    records = {"boundary", *RECORDS}
+    for producer in ("profile", "synthesize", "verify-profile", "verify-synthesis"):
+        model = jobs.job(producer)
+        assert model.outputs[-1] == "answers"
+        check = jobs.job(f"apply-{producer}" if producer.startswith("verify") else f"check-{producer}")
+        answers = check.inputs["answers"]
+        assert (answers.address, answers.source, answers.required) == ("output", f"{producer}:answers", False)
+        attempt_key = "verifier-attempt" if producer.startswith("verify") else "producer-attempt"
+        answered = check.inputs["answered-refusal"]
+        assert (answered.address, answered.source, answered.required) == ("handed", f"{attempt_key}:refusal", False)
+    for producer in ("profile", "synthesize", "reconcile"):
+        check = jobs.job(f"check-{producer}")
+        required = {spec.source for spec in check.inputs.values() if spec.address == "member" and spec.required}
+        assert records - {MODEL_ROLES[producer]} <= required
+    assert {"record-verification", "profile-verification"} <= {
+        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "member" and spec.required
+    }
+    for verifier, subject, producer in (
+        ("verify-profile", "profile", "profile"), ("verify-synthesis", "synthesis", "synthesize"),
+    ):
+        job = jobs.job(verifier)
+        assert job.inputs[f"{subject}-answers"].source == f"{producer}:answers"
+        assert job.inputs[f"{subject}-refusal"].source == producer
+    assert jobs.job("set-check").inputs["metadata"].source == "open:metadata"

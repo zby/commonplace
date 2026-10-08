@@ -1,5 +1,5 @@
 ---
-description: "Use with the new engine's boundary and analyst hand-outs for input reading, write authority, frozen sources, correction answers and content checks"
+description: "Use with every opt-in engine analysis model hand-out for input reading, write authority, frozen sources, correction answers and content checks"
 type: types/instruction.md
 ---
 
@@ -7,8 +7,9 @@ type: types/instruction.md
 
 Produce one assigned analysis output from its pinned inputs without changing the target, evidence boundary or coordinator-owned state.
 
-These rules serve the new engine's boundary, runtime, memory and epistemic jobs. The live legacy
-workflow continues to load its own worker rules. The coordinator owns
+These rules serve every new-engine model role: boundary, the three analysts,
+reconciliation, record verification, profile, profile verification, synthesis
+and synthesis verification. The live legacy workflow continues to load its own worker rules. The coordinator owns
 scheduling, acceptance, integration and recovery; this hand-out grants neither
 delegation nor publication authority.
 
@@ -32,8 +33,9 @@ requires it. Group reads only when that tool supports complete batch delivery.
 | `system`, `run-id` | Fixed target name and exact run identity |
 | `job`, `attempt` | Assigned job and open attempt |
 | Named inputs | Absolute paths; `absent` means the optional input is missing |
+| `opening` | Pinned opening JSON, including the prepared `command-path` and source identity |
 | `refusal` | Optional refusal report: refused version, identity, scope and findings |
-| `previous-boundary`, `previous-report`, `previous-answers` | Prior completed outputs by identity, when supplied; not current inputs |
+| `previous-boundary`, `previous-report`, `previous-reconciliation`, `previous-profile`, `previous-synthesis`, `previous-verification`, `previous-answers` | Prior completed outputs by identity, when supplied; not current inputs |
 | `validation-set`, `validation-member` | Intended set directory and member slot for content validation |
 | `output`, `output-answers`, `problem` | Primary result, declared correction answers when supplied, or inability report |
 | `workspace`, `scratch` | Per-attempt workspace and intermediate-file directory |
@@ -69,34 +71,38 @@ against the frozen source, preserving unrelated work. Use the supplied
 previous output as the baseline, not a mutable member copy. Do not repeat the
 whole analysis. The engine's max attempts do not reset after acceptance.
 
-## Answer analyst correction obligations
+## Answer correction obligations
 
-This section applies to runtime, memory and epistemic outputs. Write an empty
-`output-answers` file when there are no blockers. On a retry, repair Findings
-in `refusal` and answer every entry under its `## Blockers`, in order, using
+For every role supplied `output-answers`, write an empty file when there are
+no blockers. This includes the analysts, profile, synthesis and the profile
+and synthesis verifiers. Boundary, reconciliation and record verification
+repair refusal findings in their primary output without an auxiliary answer.
+For roles with `output-answers`, on a retry repair Findings in `refusal` and
+answer every entry under its `## Blockers`, in order, using
 the record contract's `- corrected: ...` or `- declined: ...` grammar.
 `none` means no blockers. Unstructured operator findings constitute one
-blocker. The feedback's Cited records from other reports supplies peer
-fragments; do not reconstruct whole peer-report paths. A structural repair
+blocker. For analysts, the feedback's Cited records from other reports supplies
+peer fragments; do not reconstruct whole peer-report paths. A structural repair
 can retain earlier semantic blockers: answer those too, not just the latest
-format findings. Preserve the accepted predecessor's record IDs and referents.
-The engine records the versions delivered as `previous-report` and
-`previous-answers` in the producer attempt. Code tests a `corrected` answer
-against that delivered report, not a member that acceptance has since replaced.
+format findings. Analysts preserve the accepted predecessor's record IDs and
+referents; other roles preserve unrelated supported findings and carried limits without
+inventing records. The engine records the delivered primary previous output
+and `previous-answers` in the producer attempt. Code tests a `corrected` answer
+against that delivered primary output, not a member acceptance has since replaced.
 
 Recheck each blocker against frozen evidence. Correct the finding and every
 dependent field, table, ledger row and conclusion where it holds. Otherwise
 keep the finding and explain the evidence for declining. Preserve unrelated
-work. A `corrected` answer requires a changed report. When all answers are
-`declined`, the report may remain byte-identical if the answers change; this
+work. A `corrected` answer requires a changed primary output. When all answers are
+`declined`, the primary output may remain byte-identical if the answers change; this
 completes an attempt, not a semantic acceptance or override of the verifier.
-Repeating both the report and answers fails and counts toward max attempts.
+Repeating both the primary output and answers fails and counts toward max attempts.
 
-When fixing a structurally refused attempt, use `previous-report` as the edit
-baseline and `previous-answers` to preserve relevant answers. The unchanged
-accepted predecessor still governs record preservation. Do not make artificial
-report changes merely to bypass an unchanged-result failure. Return both
-output paths when both were written.
+When fixing a structurally refused attempt, use the role's supplied previous
+primary output as the edit baseline and `previous-answers` to preserve relevant
+answers. For analysts, the unchanged accepted predecessor still governs record
+preservation. Do not make artificial primary-output changes merely to bypass
+an unchanged-result failure. Return both output paths when both were written.
 
 ## Inspect sources, not target execution
 

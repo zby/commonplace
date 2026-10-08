@@ -269,28 +269,71 @@ class Run:
         Code jobs run to a fixed point before model jobs are handed out, so
         only model jobs are ever pending when readiness is decided.
         """
-        names = set()
-        for spec in job.inputs.values():
-            if spec.address == "member":
-                filler = self.jobs.filler(spec.source)
-                names.add(filler.name if filler else None)
-            elif spec.address in ("output", "attempt"):
-                names.add(spec.source.partition(":")[0])
-            elif spec.address == "handed":
-                names.add(job.inputs[spec.source.partition(":")[0]].source)
-            elif spec.address == "judgment":
-                # The judging job is a code job, run to a fixed point; the
-                # pending work behind it is the model jobs filling the roles
-                # its judgment relates: the subject and the relation's ends.
-                roles = {spec.source}
-                if spec.relation:
-                    origin, _, partner = spec.relation.split(":")
-                    roles |= {origin, partner}
-                for role in roles:
-                    filler = self.jobs.filler(role)
-                    names.add(filler.name if filler else None)
+        names = set().union(*(self._input_producers(job, spec) for spec in job.inputs.values()))
         return {name for name in names
-                if name and name != job.name and isinstance(self.jobs.job(name), ModelJob)}
+                if name and name != job.name and isinstance(self.jobs.job(name), ModelJob)
+                and not self._consumes_completed_subjects(job, self.jobs.job(name))}
+
+    def _input_producers(self, job: Job, spec: Input) -> set[str]:
+        """Declared producers for one input, before the completed-subject exception."""
+        names = set()
+        if spec.address == "member":
+            filler = self.jobs.filler(spec.source)
+            names.add(filler.name if filler else None)
+        elif spec.address in ("output", "attempt"):
+            names.add(spec.source.partition(":")[0])
+        elif spec.address == "handed":
+            names.add(job.inputs[spec.source.partition(":")[0]].source)
+        elif spec.address == "judgment":
+            # The judging job is code; the pending work behind it is the
+            # model jobs filling the subject and the relation's ends.
+            roles = {spec.source}
+            if spec.relation:
+                origin, _, partner = spec.relation.split(":")
+                roles |= {origin, partner}
+            for role in roles:
+                filler = self.jobs.filler(role)
+                names.add(filler.name if filler else None)
+        return {name for name in names if name}
+
+    def _consumes_completed_subjects(self, job: Job, producer: Job) -> bool:
+        """A code consumer of handed members can apply completed work before a rerun.
+
+        This is scheduling only. Readiness, exact judgment subjects and refusal
+        supersession are unchanged. A check reading only its producer's answered
+        refusal is not historical verdict application and must still wait.
+        """
+        if not isinstance(job, CodeJob) or not isinstance(producer, ModelJob):
+            return False
+        record = self.latest_completed(producer.name)
+        if record is None or not any(
+            spec.address == "attempt" and spec.source == producer.name and not spec.order_only
+            for spec in job.inputs.values()
+        ):
+            return False
+        handed_member = False
+        for spec in job.inputs.values():
+            if spec.address == "refusal" and spec.source == producer.name:
+                return False  # A live refusal is not part of the completed record.
+            if producer.name not in self._input_producers(job, spec):
+                continue
+            if spec.address == "attempt":
+                continue
+            if spec.address == "output":
+                # resolve() selects outputs from this same latest completed attempt,
+                # including recorded absence of an optional auxiliary output.
+                continue
+            if spec.address != "handed":
+                return False  # Current members and judgment gates retain their wait.
+            _, _, name = spec.source.partition(":")
+            declared = producer.inputs.get(name)
+            pin = record["pins"].get(name)
+            if declared is None or pin is None:
+                return False  # No exemption for an arbitrary historical address.
+            if (declared.address == "member" and declared.source != producer.role
+                    and pin["version"] is not None and pin["role"] == declared.source):
+                handed_member = True
+        return handed_member
 
     # Coverage
 

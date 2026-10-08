@@ -1,9 +1,9 @@
 """Fail-closed bindings for the opt-in analysis migration declaration.
 
 The job set is library data beside the job instructions, not generated Python.
-No live workflow or CLI uses it yet. Opening/acquisition, boundary and analyst
-hand-outs are ported. The specialist checks remain unbound to prevent handing
-out unported reconciliation instructions.
+No live workflow or CLI uses it yet. All model hand-outs and consumer handlers
+are declared. Coherence review is retained in the workshop; production routing
+and full-pipeline evidence remain separate adoption work. Binding grants no run authority.
 """
 
 from __future__ import annotations
@@ -53,14 +53,13 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
         raise ValueError(f"cannot read analysis set type: {error}")
     layout = parse_layout(document.frontmatter["layout"], where=SET_TYPE)
     gaps = [
-        "working set path: legacy consumers use output/, new-engine runs use set/; port consumers before switching",
-        "worker protocol: boundary and analysts are translated; port reconciliation, verification, profile and synthesis interfaces",
-        "run-state: project new-engine attempts/stops and uncertain external effects",
-        "publication: enforce disposition-dependent holding acceptance coverage, preserve incumbent checks and effect recovery",
-        "analyst check bindings: memory/epistemic implemented; keep unbound until reconciliation hand-outs are translated",
-        "handlers: reconciliation/profile/synthesis checks, set checks, verdict application and assembly remain unported",
-        "coverage: assembly/publication handlers must enforce disposition-dependent whole-set coverage",
-        "memory provenance: implement the workflow check promised by the set type or remove the promise",
+        "working set path: legacy consumers use output/, new-engine runs use set/; select formats explicitly before switching",
+        "live routing: skill/CLI remain legacy; opt-in handler bindings are not production adoption",
+        "verification: coherence review completed; end-to-end proof omitted at the operator's request, not established by fixture counts",
+        "reporting: use engine attempts/stops and uncertain-effect reports, never manufacture legacy run-state",
+        "publication coordination: shared repository locks serialize cooperating publishers; exclude non-cooperating writers",
+        "publication policy: non-complete sets finish locally; public replacement requires an explicit consumer/type decision",
+        "worker provenance: the retained manifest permits one identical worker identity, not heterogeneous role workers",
         "legacy runs: opening rejects legacy state; keep legacy consumers intact until an explicit retirement",
         "startup: port run allocation and binding checks in preparation/CLI consumers before a production switch",
     ]
@@ -74,5 +73,7 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
         for subject in subjects:
             if subject not in layout.roles[verifier].cites:
                 gaps.append(f"missing verdict relation: {verifier}:cites:{subject}")
-    gaps.append("set relations: decide how overview amendment-index and synthesis limit checks enter coverage")
+    gaps.append(
+        "set relations: amendment-index and carried limits remain content checks, not new engine relation kinds"
+    )
     return tuple(gaps)
