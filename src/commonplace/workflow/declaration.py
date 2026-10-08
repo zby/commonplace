@@ -15,7 +15,7 @@ from typing import Any
 
 import yaml
 
-ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal")
+ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal", "coverage")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
 RUN_PLACEHOLDERS = ("run", "run-id", "set", "workspace")
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
@@ -121,7 +121,13 @@ def _input(job: str, name: str, raw: Any) -> Input:
     address, source = raw.get("address"), raw.get("source")
     if address not in ADDRESSES:
         raise DeclarationError(f"{where}: address must be one of {', '.join(ADDRESSES)}")
-    if not isinstance(source, str) or not source:
+    if address == "coverage":
+        # The scope is derived: the set minus the declaring job's own role,
+        # filled in once the job's role is known.
+        if source is not None:
+            raise DeclarationError(f"{where}: a coverage input has no source; its scope is derived")
+        source = ""
+    elif not isinstance(source, str) or not source:
         raise DeclarationError(f"{where}: source must be a nonempty string")
     required = raw.get("required", True)
     if not isinstance(required, bool):
@@ -171,6 +177,8 @@ def _job(raw: Any) -> Job:
     role = raw.get("role")
     if role is not None and not outputs:
         raise DeclarationError(f"job {name}: a role-filling job needs a primary output")
+    inputs = {key: replace(spec, source=role or "") if spec.address == "coverage" else spec
+              for key, spec in inputs.items()}
     if kind == "model":
         allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "max_attempts", "parameters"}
         instruction = raw.get("instruction")

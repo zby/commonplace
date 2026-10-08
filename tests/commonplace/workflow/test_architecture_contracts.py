@@ -22,6 +22,7 @@ from tests.commonplace.workflow.support import Coordinator, job_set
     (lambda d: d["jobs"][2]["inputs"].update({"self": {"address": "member", "source": "report"}}),
      "own role as input"),
     (lambda d: d["jobs"][1].update(max_attempts=3), "unknown keys"),
+    (lambda d: d["jobs"][1]["inputs"].update({"c": {"address": "coverage", "source": "brief"}}), "derived"),
     (lambda d: d["jobs"][0].update(name="group/brief"), None),
     (lambda d: d["jobs"][0].update(name="operator"), None),
     (lambda d: d["jobs"][0].update(outputs=["../brief"]), None),

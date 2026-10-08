@@ -91,6 +91,7 @@ what it replaced; *decided* — settled by the operator.
 | Cancelling a refusal explicitly | override | `judge(…, overrides=…)` | An override names a refusal the acceptance cancels. | keep; refusal identity must be exposed, see below |
 | A rerun having read a refusal | answers | — | An attempt answers the refusal it read. | keep |
 | A judgment's reasons | findings | `findings` | — | keep |
+| The engine's coverage evidence as an input | coverage input | `address="coverage"` | A coverage input is present while the set minus the declaring job's role is publishable; its version names the members and covering claims. | added: replaces per-relation judgment inputs on assembly and publication |
 | Coverage for publication | covers | — | A holding acceptance of the current member at one end covers a relation when the current member at the other end is in its basis. | keep |
 
 ## Relation

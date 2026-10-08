@@ -52,25 +52,12 @@ class Attempt:
             data = doc({"type": layout.roles[role].type, **boundary_fields,
                         "description": "Fixture description"}) if role in present else None
             self.inputs[role] = data
-            self.inputs[f"{role}-accepted"] = (json.dumps({"subject": publication._digest(data),
-                                                          "outcome": "accepted", "scope": []}).encode()
-                                                      if data else None)
             if role != "overview":
                 producer, primary = publication.PRODUCERS[role]
                 self.inputs[f"{role}-attempt"] = (json.dumps({
                     "job": producer, "state": "completed", "kind": "model", "model": "fixture/model",
                     "effort": "high", "outputs": {primary: publication._digest(data)},
                 }).encode() if data else None)
-        for origin, partner, relation in relations:
-            if not overview and "overview" in (origin, partner):
-                continue
-            for end, other in ((origin, partner), (partner, origin)):
-                data = None
-                if end in present and other in present:
-                    data = json.dumps({"subject": publication._digest(self.inputs[end]),
-                                       "outcome": "accepted", "scope": [
-                                           [relation, publication._digest(self.inputs[other])]]}).encode()
-                self.inputs[f"coverage-{relation.replace(':', '-')}-{end}"] = data
         self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
                          "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
                          "review-path": "kb/agentic-system-analyses/retained/example/overview.md",
@@ -127,31 +114,17 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     assert "overview:identity:boundary" in attempt.judgments[0][1]["scope"]
 
 
+# Membership, acceptance and coverage now gate assembly through the engine's
+# coverage input; the engine scenario tests pin that it waits, not fails.
 @pytest.mark.parametrize("defect,reason", [
-    ("missing", "membership"), ("acceptance", "holding acceptance"),
-    ("coverage", "uncovered relation"), ("historical", "uncovered relation"),
     ("provenance", "provenance"), ("mixed-worker", "identical worker"),
 ])
-def test_assembly_rejects_unsettled_or_misattributed_complete_set(tmp_path, scripted, defect, reason):
+def test_assembly_rejects_misattributed_complete_set(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")
-    if defect == "missing":
-        attempt.inputs["memory"] = None
-    elif defect == "acceptance":
-        attempt.inputs["memory-accepted"] = None
-    elif defect in ("coverage", "historical"):
-        for end in ("memory", "boundary"):
-            name = f"coverage-memory-identity-boundary-{end}"
-            if defect == "coverage":
-                attempt.inputs[name] = None
-            else:
-                claim = json.loads(attempt.inputs[name])
-                claim["scope"][0][1] = "f" * 64
-                attempt.inputs[name] = json.dumps(claim).encode()
-    else:
-        record = json.loads(attempt.inputs["memory-attempt"])
-        record["model" if defect == "mixed-worker" else "outputs"] = (
-            "other/model" if defect == "mixed-worker" else {"answers": publication._digest(attempt.inputs["memory"])})
-        attempt.inputs["memory-attempt"] = json.dumps(record).encode()
+    record = json.loads(attempt.inputs["memory-attempt"])
+    record["model" if defect == "mixed-worker" else "outputs"] = (
+        "other/model" if defect == "mixed-worker" else {"answers": publication._digest(attempt.inputs["memory"])})
+    attempt.inputs["memory-attempt"] = json.dumps(record).encode()
     with pytest.raises(ValueError, match=reason):
         publication.assemble_analysis(attempt)
     assert not scripted and not attempt.judgments
@@ -180,15 +153,6 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
     monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
     outputs = publication.assemble_analysis(attempt)
     attempt.inputs.update(outputs)
-    attempt.inputs["overview-accepted"] = json.dumps({
-        "outcome": "accepted", "subject": publication._digest(outputs["overview"]), "scope": [],
-    }).encode()
-    for origin, partner, relation in attempt.relations:
-        if {origin, partner} == {"overview", "boundary"}:
-            attempt.inputs[f"coverage-{relation.replace(':', '-')}-overview"] = json.dumps({
-                "outcome": "accepted", "subject": publication._digest(outputs["overview"]),
-                "scope": [[relation, publication._digest(attempt.inputs["boundary"])]],
-            }).encode()
     monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must remain local"))
     assert publication.publish_analysis(attempt) == {}
     assert not (tmp_path / "kb/agentic-system-analyses/retained").exists()
@@ -205,33 +169,11 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
         publication.validate_pinned_set(attempt, repo=tmp_path, members=members, manifest=manifest)
 
 
-def test_coverage_can_be_supplied_at_either_end(tmp_path):
-    attempt = Attempt(tmp_path, "complete")
-    attempt.inputs["coverage-memory-identity-boundary-memory"] = None
-    publication._snapshot(attempt, overview=False)
-
-
-def test_optional_inputs_do_not_allow_forbidden_disposition_members(tmp_path):
-    attempt = Attempt(tmp_path)
-    attempt.inputs["memory"] = doc({"type": "anything"})
-    with pytest.raises(ValueError, match="forbidden"):
-        publication._snapshot(attempt, overview=False)
-
-
 def assembled_publish_attempt(tmp_path, scripted, disposition="complete"):
     assembly = Attempt(tmp_path / "assemble", disposition)
     outputs = publication.assemble_analysis(assembly)
     publish = Attempt(tmp_path / "publish", disposition, overview=True)
     publish.inputs["overview"] = outputs["overview"]
-    publish.inputs["overview-accepted"] = json.dumps({"outcome": "accepted", "subject": publication._digest(outputs["overview"])}).encode()
-    for name, data in publish.inputs.items():
-        if name.startswith("coverage-") and data:
-            claim = json.loads(data)
-            if name.endswith("-overview"):
-                claim["subject"] = publication._digest(outputs["overview"])
-            elif name.startswith("coverage-overview-"):
-                claim["scope"][0][1] = publication._digest(outputs["overview"])
-            publish.inputs[name] = json.dumps(claim).encode()
     publish.inputs["manifest"] = outputs["manifest"]
     return publish
 
@@ -495,7 +437,7 @@ def test_preliminary_failure_requires_journal_to_be_uncertain(tmp_path, journal)
         path.parent.mkdir()
         path.write_bytes(journal)
     expected = ValueError if journal is None else UncertainEffectError
-    with pytest.raises(expected, match="membership is incomplete"):
+    with pytest.raises(expected, match="classified boundary"):
         publication.publish_analysis(attempt)
     if journal is not None:
         assert path.read_bytes() == journal

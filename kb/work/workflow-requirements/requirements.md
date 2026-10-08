@@ -15,7 +15,7 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    role, relation and outcome, with the latest one current, and may be
    declared as inputs; so may a job's attempt record (3), with the latest
    completed one current, which carries the versions that attempt was
-   handed. Instructions a model job follows and contracts a
+   handed; and so may the set's coverage (9). Instructions a model job follows and contracts a
    check job applies are among its inputs; a file input may name its path
    relative to the library, resolved against the library the run was
    started with, so a job set is a file that names no machine's paths. An
@@ -105,11 +105,16 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    whether the answer resolves the refusal, and a downstream verifier must
    declare that output as an input to reassess it. A failed attempt records
    no inputs, so the job stays ready; every attempt counts toward max attempts.
-9. **Publication.** A set is publishable when every relation the type
-   declares between its members is covered. A relation is covered by a
-   holding acceptance of the current member at either end that has the
-   relation in its scope and the current member at the other end in its
-   basis. A code job checks this and copies the current versions out,
+9. **Publication.** A set is publishable when every role its disposition
+   requires is present, every member has a holding acceptance, and every
+   relation the type declares between its members is covered. A relation
+   is covered by a holding acceptance of the current member at either end
+   that has the relation in its scope and the current member at the other
+   end in its basis. The engine determines this and supplies it as a
+   coverage input: a job may declare one, and it is present only while the
+   three conditions hold for the set minus the declaring job's own role.
+   Its version names the members and the covering claims, never judgment
+   records. A code job declaring it copies the current versions out,
    pinned.
 
 ## Open

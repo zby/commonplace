@@ -62,8 +62,9 @@ must reject ambiguous output ownership and a job with its own role as input.
 
 Each input has an address: a file, a member, a job's latest completed output, a
 latest completed attempt record, a version that record says was handed, a
-judgment addressed by role, relation and outcome, or a producer's current
-refusal. Required and optional inputs record presence or absence. A required
+judgment addressed by role, relation and outcome, a producer's current
+refusal, or the set's coverage, whose scope is the set minus the declaring
+job's role. Required and optional inputs record presence or absence. A required
 judgment input is present only while the judgment holds. Workers can read
 untracked context, but it is not authoritative, tracked or a currency
 signal.
@@ -196,8 +197,10 @@ job's latest completed output. A judgment of any earlier version is evidence
 only: it moves no member and cannot supply a refusal of the latest output.
 The member stays when its acceptance stops holding.
 
-Publication remains a code job. It checks that every relation the type
-declares between the members is covered. A relation is covered by a
+Publication remains a code job, gated by a required coverage input: the
+engine supplies it only while every required role is present, every member
+has a holding acceptance and every relation the type declares between the
+members is covered. A relation is covered by a
 holding acceptance of the current member at either end that has the
 relation in its scope and the current member at the other end in its
 basis; a holding acceptance whose basis has a handed, historical version

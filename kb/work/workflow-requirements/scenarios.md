@@ -95,9 +95,9 @@ That acceptance still holds, since its basis is what the verifier was
 handed, but it covers nothing: the partner version in its basis is not the
 partner's current member. `verify-synthesis` reruns, because its input
 changed; until its new verification is accepted against B and B against
-it, the set lacks an acceptance covering the relation. In the mapping that
-acceptance is a required input of `publish`, so `publish` is not ready
-rather than refusing. [1, 4, 5, 9]
+it, the set lacks an acceptance covering the relation. `publish` requires
+the coverage input, which is absent until that acceptance exists, so
+`publish` is not ready rather than refusing. [1, 4, 5, 9]
 
 **11. Worker reports a problem.** `R`'s worker writes the problem file
 instead of a candidate. The command stops naming `R` and the problem. The

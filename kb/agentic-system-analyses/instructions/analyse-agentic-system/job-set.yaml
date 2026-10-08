@@ -653,6 +653,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
   inputs:
+    coverage: {address: coverage}
     source: {address: output, source: 'acquire:source', required: true}
     boundary-attempt: {address: attempt, source: boundary, required: true}
     runtime-attempt: {address: attempt, source: runtime, required: false}
@@ -681,157 +682,6 @@ jobs:
     record-verification: {address: member, source: record-verification, required: false}
     profile-verification: {address: member, source: profile-verification, required: false}
     synthesis-verification: {address: member, source: synthesis-verification, required: false}
-    coverage-runtime-cites-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
-    coverage-runtime-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
-    coverage-runtime-cites-memory-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:memory', outcome: accepted}
-    coverage-runtime-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'runtime:cites:memory', outcome: accepted}
-    coverage-runtime-cites-epistemic-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
-    coverage-runtime-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
-    coverage-runtime-identity-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:identity:boundary', outcome: accepted}
-    coverage-runtime-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:identity:boundary',
-      outcome: accepted}
-    coverage-memory-cites-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:boundary', outcome: accepted}
-    coverage-memory-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:cites:boundary', outcome: accepted}
-    coverage-memory-cites-runtime-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:runtime', outcome: accepted}
-    coverage-memory-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory:cites:runtime', outcome: accepted}
-    coverage-memory-cites-epistemic-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
-    coverage-memory-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
-    coverage-memory-identity-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:identity:boundary', outcome: accepted}
-    coverage-memory-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:identity:boundary', outcome: accepted}
-    coverage-epistemic-cites-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:boundary',
-      outcome: accepted}
-    coverage-epistemic-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:cites:boundary', outcome: accepted}
-    coverage-epistemic-cites-runtime-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
-    coverage-epistemic-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
-    coverage-epistemic-cites-memory-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
-    coverage-epistemic-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
-    coverage-epistemic-identity-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:identity:boundary',
-      outcome: accepted}
-    coverage-epistemic-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:identity:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:cites:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-runtime-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:runtime',
-      outcome: accepted}
-    coverage-reconciliation-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'reconciliation:cites:runtime',
-      outcome: accepted}
-    coverage-reconciliation-cites-memory-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:memory',
-      outcome: accepted}
-    coverage-reconciliation-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'reconciliation:cites:memory',
-      outcome: accepted}
-    coverage-reconciliation-cites-epistemic-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:epistemic',
-      outcome: accepted}
-    coverage-reconciliation-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'reconciliation:cites:epistemic',
-      outcome: accepted}
-    coverage-reconciliation-identity-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:identity:boundary',
-      outcome: accepted}
-    coverage-reconciliation-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-cites-runtime-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:runtime',
-      outcome: accepted}
-    coverage-memory-profile-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory-profile:cites:runtime',
-      outcome: accepted}
-    coverage-memory-profile-cites-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:memory',
-      outcome: accepted}
-    coverage-memory-profile-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:cites:memory',
-      outcome: accepted}
-    coverage-memory-profile-cites-epistemic-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:epistemic',
-      outcome: accepted}
-    coverage-memory-profile-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory-profile:cites:epistemic',
-      outcome: accepted}
-    coverage-memory-profile-identity-boundary-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory-profile:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-identity-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:memory',
-      outcome: accepted}
-    coverage-memory-profile-identity-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:identity:memory',
-      outcome: accepted}
-    coverage-synthesis-cites-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:boundary',
-      outcome: accepted}
-    coverage-synthesis-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:cites:boundary', outcome: accepted}
-    coverage-synthesis-cites-runtime-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
-    coverage-synthesis-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
-    coverage-synthesis-cites-memory-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
-    coverage-synthesis-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
-    coverage-synthesis-cites-epistemic-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-identity-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:identity:boundary',
-      outcome: accepted}
-    coverage-synthesis-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:identity:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:cites:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-runtime-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:runtime',
-      outcome: accepted}
-    coverage-record-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'record-verification:cites:runtime',
-      outcome: accepted}
-    coverage-record-verification-cites-memory-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:memory',
-      outcome: accepted}
-    coverage-record-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'record-verification:cites:memory',
-      outcome: accepted}
-    coverage-record-verification-cites-epistemic-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-record-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'record-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-record-verification-cites-reconciliation-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:reconciliation',
-      outcome: accepted}
-    coverage-record-verification-cites-reconciliation-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'record-verification:cites:reconciliation',
-      outcome: accepted}
-    coverage-record-verification-identity-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:identity:boundary',
-      outcome: accepted}
-    coverage-record-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:identity:boundary',
-      outcome: accepted}
-    coverage-profile-verification-cites-runtime-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:runtime',
-      outcome: accepted}
-    coverage-profile-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'profile-verification:cites:runtime',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:memory',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'profile-verification:cites:memory',
-      outcome: accepted}
-    coverage-profile-verification-cites-epistemic-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-profile-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'profile-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-profile-verification: {address: judgment, source: profile-verification, required: false,
-      relation: 'profile-verification:cites:memory-profile', outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'profile-verification:cites:memory-profile',
-      outcome: accepted}
-    coverage-profile-verification-identity-boundary-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:identity:boundary',
-      outcome: accepted}
-    coverage-profile-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'profile-verification:identity:boundary',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:boundary', outcome: accepted}
-    coverage-synthesis-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:cites:boundary',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-runtime-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:runtime', outcome: accepted}
-    coverage-synthesis-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis-verification:cites:runtime',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-memory-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:memory', outcome: accepted}
-    coverage-synthesis-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis-verification:cites:memory',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-epistemic-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:epistemic', outcome: accepted}
-    coverage-synthesis-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-synthesis-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:synthesis', outcome: accepted}
-    coverage-synthesis-verification-cites-synthesis-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis-verification:cites:synthesis',
-      outcome: accepted}
-    coverage-synthesis-verification-identity-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:identity:boundary', outcome: accepted}
-    coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
-      outcome: accepted}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -857,16 +707,6 @@ jobs:
     note-schema: {address: file, source: types/note.schema.yaml}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    boundary-accepted: {address: judgment, source: boundary, outcome: accepted, required: true}
-    runtime-accepted: {address: judgment, source: runtime, outcome: accepted, required: false}
-    memory-accepted: {address: judgment, source: memory, outcome: accepted, required: false}
-    epistemic-accepted: {address: judgment, source: epistemic, outcome: accepted, required: false}
-    reconciliation-accepted: {address: judgment, source: reconciliation, outcome: accepted, required: false}
-    memory-profile-accepted: {address: judgment, source: memory-profile, outcome: accepted, required: false}
-    synthesis-accepted: {address: judgment, source: synthesis, outcome: accepted, required: false}
-    record-verification-accepted: {address: judgment, source: record-verification, outcome: accepted, required: false}
-    profile-verification-accepted: {address: judgment, source: profile-verification, outcome: accepted, required: false}
-    synthesis-verification-accepted: {address: judgment, source: synthesis-verification, outcome: accepted, required: false}
   outputs:
   - overview
   - manifest
@@ -875,6 +715,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.publish_analysis
   inputs:
+    coverage: {address: coverage}
     source: {address: output, source: 'acquire:source', required: true}
     boundary-attempt: {address: attempt, source: boundary, required: true}
     runtime-attempt: {address: attempt, source: runtime, required: false}
@@ -904,170 +745,6 @@ jobs:
     record-verification: {address: member, source: record-verification, required: false}
     profile-verification: {address: member, source: profile-verification, required: false}
     synthesis-verification: {address: member, source: synthesis-verification, required: false}
-    coverage-overview-cites-boundary-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:boundary', outcome: accepted}
-    coverage-overview-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'overview:cites:boundary', outcome: accepted}
-    coverage-overview-cites-runtime-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:runtime', outcome: accepted}
-    coverage-overview-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'overview:cites:runtime', outcome: accepted}
-    coverage-overview-cites-memory-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:memory', outcome: accepted}
-    coverage-overview-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'overview:cites:memory', outcome: accepted}
-    coverage-overview-cites-epistemic-overview: {address: judgment, source: overview, required: false, relation: 'overview:cites:epistemic', outcome: accepted}
-    coverage-overview-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'overview:cites:epistemic',
-      outcome: accepted}
-    coverage-overview-identity-boundary-overview: {address: judgment, source: overview, required: false, relation: 'overview:identity:boundary',
-      outcome: accepted}
-    coverage-overview-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'overview:identity:boundary',
-      outcome: accepted}
-    coverage-runtime-cites-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
-    coverage-runtime-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:cites:boundary', outcome: accepted}
-    coverage-runtime-cites-memory-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:memory', outcome: accepted}
-    coverage-runtime-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'runtime:cites:memory', outcome: accepted}
-    coverage-runtime-cites-epistemic-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
-    coverage-runtime-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'runtime:cites:epistemic', outcome: accepted}
-    coverage-runtime-identity-boundary-runtime: {address: judgment, source: runtime, required: false, relation: 'runtime:identity:boundary', outcome: accepted}
-    coverage-runtime-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'runtime:identity:boundary',
-      outcome: accepted}
-    coverage-memory-cites-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:boundary', outcome: accepted}
-    coverage-memory-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:cites:boundary', outcome: accepted}
-    coverage-memory-cites-runtime-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:runtime', outcome: accepted}
-    coverage-memory-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory:cites:runtime', outcome: accepted}
-    coverage-memory-cites-epistemic-memory: {address: judgment, source: memory, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
-    coverage-memory-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory:cites:epistemic', outcome: accepted}
-    coverage-memory-identity-boundary-memory: {address: judgment, source: memory, required: false, relation: 'memory:identity:boundary', outcome: accepted}
-    coverage-memory-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory:identity:boundary', outcome: accepted}
-    coverage-epistemic-cites-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:boundary',
-      outcome: accepted}
-    coverage-epistemic-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:cites:boundary', outcome: accepted}
-    coverage-epistemic-cites-runtime-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
-    coverage-epistemic-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'epistemic:cites:runtime', outcome: accepted}
-    coverage-epistemic-cites-memory-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
-    coverage-epistemic-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'epistemic:cites:memory', outcome: accepted}
-    coverage-epistemic-identity-boundary-epistemic: {address: judgment, source: epistemic, required: false, relation: 'epistemic:identity:boundary',
-      outcome: accepted}
-    coverage-epistemic-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'epistemic:identity:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:cites:boundary',
-      outcome: accepted}
-    coverage-reconciliation-cites-runtime-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:runtime',
-      outcome: accepted}
-    coverage-reconciliation-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'reconciliation:cites:runtime',
-      outcome: accepted}
-    coverage-reconciliation-cites-memory-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:memory',
-      outcome: accepted}
-    coverage-reconciliation-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'reconciliation:cites:memory',
-      outcome: accepted}
-    coverage-reconciliation-cites-epistemic-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:cites:epistemic',
-      outcome: accepted}
-    coverage-reconciliation-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'reconciliation:cites:epistemic',
-      outcome: accepted}
-    coverage-reconciliation-identity-boundary-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'reconciliation:identity:boundary',
-      outcome: accepted}
-    coverage-reconciliation-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'reconciliation:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-cites-runtime-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:runtime',
-      outcome: accepted}
-    coverage-memory-profile-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'memory-profile:cites:runtime',
-      outcome: accepted}
-    coverage-memory-profile-cites-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:memory',
-      outcome: accepted}
-    coverage-memory-profile-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:cites:memory',
-      outcome: accepted}
-    coverage-memory-profile-cites-epistemic-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:cites:epistemic',
-      outcome: accepted}
-    coverage-memory-profile-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'memory-profile:cites:epistemic',
-      outcome: accepted}
-    coverage-memory-profile-identity-boundary-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'memory-profile:identity:boundary',
-      outcome: accepted}
-    coverage-memory-profile-identity-memory-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'memory-profile:identity:memory',
-      outcome: accepted}
-    coverage-memory-profile-identity-memory-memory: {address: judgment, source: memory, required: false, relation: 'memory-profile:identity:memory',
-      outcome: accepted}
-    coverage-synthesis-cites-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:boundary',
-      outcome: accepted}
-    coverage-synthesis-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:cites:boundary', outcome: accepted}
-    coverage-synthesis-cites-runtime-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
-    coverage-synthesis-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis:cites:runtime', outcome: accepted}
-    coverage-synthesis-cites-memory-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
-    coverage-synthesis-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis:cites:memory', outcome: accepted}
-    coverage-synthesis-cites-epistemic-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-identity-boundary-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis:identity:boundary',
-      outcome: accepted}
-    coverage-synthesis-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis:identity:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:cites:boundary',
-      outcome: accepted}
-    coverage-record-verification-cites-runtime-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:runtime',
-      outcome: accepted}
-    coverage-record-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'record-verification:cites:runtime',
-      outcome: accepted}
-    coverage-record-verification-cites-memory-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:memory',
-      outcome: accepted}
-    coverage-record-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'record-verification:cites:memory',
-      outcome: accepted}
-    coverage-record-verification-cites-epistemic-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-record-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'record-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-record-verification-cites-reconciliation-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:cites:reconciliation',
-      outcome: accepted}
-    coverage-record-verification-cites-reconciliation-reconciliation: {address: judgment, source: reconciliation, required: false, relation: 'record-verification:cites:reconciliation',
-      outcome: accepted}
-    coverage-record-verification-identity-boundary-record-verification: {address: judgment, source: record-verification, required: false, relation: 'record-verification:identity:boundary',
-      outcome: accepted}
-    coverage-record-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'record-verification:identity:boundary',
-      outcome: accepted}
-    coverage-profile-verification-cites-runtime-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:runtime',
-      outcome: accepted}
-    coverage-profile-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'profile-verification:cites:runtime',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:memory',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'profile-verification:cites:memory',
-      outcome: accepted}
-    coverage-profile-verification-cites-epistemic-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-profile-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'profile-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-profile-verification: {address: judgment, source: profile-verification, required: false,
-      relation: 'profile-verification:cites:memory-profile', outcome: accepted}
-    coverage-profile-verification-cites-memory-profile-memory-profile: {address: judgment, source: memory-profile, required: false, relation: 'profile-verification:cites:memory-profile',
-      outcome: accepted}
-    coverage-profile-verification-identity-boundary-profile-verification: {address: judgment, source: profile-verification, required: false, relation: 'profile-verification:identity:boundary',
-      outcome: accepted}
-    coverage-profile-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'profile-verification:identity:boundary',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:boundary', outcome: accepted}
-    coverage-synthesis-verification-cites-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:cites:boundary',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-runtime-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:runtime', outcome: accepted}
-    coverage-synthesis-verification-cites-runtime-runtime: {address: judgment, source: runtime, required: false, relation: 'synthesis-verification:cites:runtime',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-memory-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:memory', outcome: accepted}
-    coverage-synthesis-verification-cites-memory-memory: {address: judgment, source: memory, required: false, relation: 'synthesis-verification:cites:memory',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-epistemic-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:epistemic', outcome: accepted}
-    coverage-synthesis-verification-cites-epistemic-epistemic: {address: judgment, source: epistemic, required: false, relation: 'synthesis-verification:cites:epistemic',
-      outcome: accepted}
-    coverage-synthesis-verification-cites-synthesis-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:cites:synthesis', outcome: accepted}
-    coverage-synthesis-verification-cites-synthesis-synthesis: {address: judgment, source: synthesis, required: false, relation: 'synthesis-verification:cites:synthesis',
-      outcome: accepted}
-    coverage-synthesis-verification-identity-boundary-synthesis-verification: {address: judgment, source: synthesis-verification, required: false,
-      relation: 'synthesis-verification:identity:boundary', outcome: accepted}
-    coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
-      outcome: accepted}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -1093,16 +770,5 @@ jobs:
     note-schema: {address: file, source: types/note.schema.yaml}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    boundary-accepted: {address: judgment, source: boundary, outcome: accepted, required: true}
-    overview-accepted: {address: judgment, source: overview, outcome: accepted, required: true}
-    runtime-accepted: {address: judgment, source: runtime, outcome: accepted, required: false}
-    memory-accepted: {address: judgment, source: memory, outcome: accepted, required: false}
-    epistemic-accepted: {address: judgment, source: epistemic, outcome: accepted, required: false}
-    reconciliation-accepted: {address: judgment, source: reconciliation, outcome: accepted, required: false}
-    memory-profile-accepted: {address: judgment, source: memory-profile, outcome: accepted, required: false}
-    synthesis-accepted: {address: judgment, source: synthesis, outcome: accepted, required: false}
-    record-verification-accepted: {address: judgment, source: record-verification, outcome: accepted, required: false}
-    profile-verification-accepted: {address: judgment, source: profile-verification, outcome: accepted, required: false}
-    synthesis-verification-accepted: {address: judgment, source: synthesis-verification, outcome: accepted, required: false}
     manifest: {address: output, source: 'assemble:manifest'}
   outputs: []

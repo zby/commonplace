@@ -14,7 +14,7 @@ from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.workflow import CodeJob, ModelJob, advance, load_job_set, start_run
-from commonplace.workflow.state import ABSENT, Resolved, Run
+from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore
 
 REPORTS = ("runtime", "memory", "epistemic")
@@ -82,25 +82,14 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
             assert not any(spec.source.endswith(".schema.yaml") for spec in job.inputs.values())
 
 
-def test_assembly_and_publication_track_both_ends_of_coverage(graph):
-    jobs, layout = graph
-    for name in ("assemble", "publish"):
+def test_assembly_and_publication_are_gated_on_engine_coverage(graph):
+    jobs, _ = graph
+    for name, scope in (("assemble", "overview"), ("publish", "")):
         job = jobs.job(name)
         assert job.inputs["metadata"].source == "open:metadata"
-        for origin, role in layout.roles.items():
-            if name == "assemble" and origin == "overview":
-                continue
-            relations = [("cites", partner) for partner in role.cites]
-            relations += [("identity", source.role) for source in role.identity]
-            for kind, partner in relations:
-                if origin == partner:
-                    continue
-                for subject in (origin, partner):
-                    spec = job.inputs[f"coverage-{origin}-{kind}-{partner}-{subject}"]
-                    assert (spec.address, spec.source, spec.required, spec.outcome) == (
-                        "judgment", subject, False, "accepted",
-                    )
-                    assert spec.relation == f"{origin}:{kind}:{partner}"
+        coverage = job.inputs["coverage"]
+        assert (coverage.address, coverage.source, coverage.required) == ("coverage", scope, True)
+        assert not any(spec.address == "judgment" for spec in job.inputs.values())
     manifest = jobs.job("publish").inputs["manifest"]
     assert (manifest.address, manifest.source, manifest.required) == ("output", "assemble:manifest", True)
     assert jobs.job("assemble").outputs == ("overview", "manifest")
@@ -288,25 +277,6 @@ def engine_run(tmp_path, monkeypatch):
     return Run(RunStore(run_dir))
 
 
-@pytest.mark.slow
-def test_publication_requires_holding_acceptances_not_every_possible_member(engine_run, monkeypatch):
-    run = engine_run
-    job = run.jobs.job("publish")
-    required_members = {spec.source for spec in job.inputs.values() if spec.address == "member" and spec.required}
-    assert required_members == {"boundary", "overview"}
-    required_acceptances = {spec.source for spec in job.inputs.values() if spec.address == "judgment" and spec.required}
-    assert required_acceptances == {"boundary", "overview"}
-    for role in run.layout.roles:
-        spec = job.inputs[f"{role}-accepted"]
-        assert (spec.address, spec.source, spec.outcome) == ("judgment", role, "accepted")
-    # A non-complete disposition needs no later member. A holding acceptance
-    # lapsing must still block publish readiness, even though its member stays.
-    pins = {key: Resolved(f"version-{key}") if spec.required else ABSENT for key, spec in job.inputs.items()}
-    monkeypatch.setattr(run, "resolve", lambda key, inputs: pins[key])
-    assert run.ready(job, {"boundary", "overview"})
-    pins["overview-accepted"] = ABSENT
-    assert not run.ready(job, {"boundary", "overview"})
-    assert pins["overview"].version is not None
 
 
 @pytest.mark.slow
@@ -358,4 +328,3 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
                 assert schema_dependencies((LIBRARY / path).parent / schema) <= files
         assert jobs.job("assemble").outputs == ("overview", "manifest")
         assert jobs.job("publish").outputs == ()
-

@@ -78,18 +78,9 @@ def _document(data: bytes):
     return document
 
 
-def _accepted(data: bytes | None, version: str, relation: str | None = None,
-              other_version: str | None = None) -> bool:
-    # The judgment address resolves only holding acceptances of current members.
-    # Its canonical claim carries versions, not the private judgment record.
-    if data is None:
-        return False
-    claim = _json(data, "acceptance")
-    return (claim.get("outcome") == "accepted" and claim.get("subject") == version
-            and (relation is None or [relation, other_version] in claim.get("scope", [])))
-
-
 def _snapshot(attempt: CodeAttempt, *, overview: bool):
+    # The required coverage input gates this job: the engine has established
+    # that every required member is present, accepted and related as declared.
     layout, relations = attempt.layout, attempt.relations
     members = {}
     documents = {}
@@ -100,26 +91,10 @@ def _snapshot(attempt: CodeAttempt, *, overview: bool):
         if data is not None:
             members[role] = data
             documents[layout.path(role)] = _document(data)
-    required, permitted = layout.requirement(documents)
-    if not overview:
-        required -= {"overview"}
-    if not required <= members.keys() or (permitted is not None and not members.keys() <= permitted):
-        raise ValueError("disposition-dependent membership is incomplete or forbidden")
     boundary = documents.get(layout.path("boundary"))
     if boundary is None or boundary.frontmatter.get("result-disposition") not in (
             "complete", "blocked", "out-of-scope"):
         raise ValueError("a classified boundary is required")
-    for role, data in members.items():
-        if not _accepted(attempt.read(f"{role}-accepted"), _digest(data)):
-            raise ValueError(f"{role} lacks a holding acceptance of its pinned member")
-    for origin, partner, relation in relations:
-        if origin not in members or partner not in members:
-            continue
-        if not any(_accepted(
-            attempt.read(f"coverage-{relation.replace(':', '-')}-{end}"),
-            _digest(members[end]), relation, _digest(members[other]),
-        ) for end, other in ((origin, partner), (partner, origin))):
-            raise ValueError(f"uncovered relation: {relation}")
     return layout, relations, members, boundary
 
 

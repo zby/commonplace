@@ -262,6 +262,50 @@ def test_14_non_complete_disposition(coordinator: Coordinator) -> None:
     assert c.status.publishable
 
 
+def test_14_complete_disposition_does_not_assemble_a_partial_set(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.ran()
+    c.through_brief()
+    assert "assemble" not in c.ran(), "coverage of the set minus the overview does not hold yet"
+    assert not c.status.stops, "assembly waits; it does not fail"
+    c.advance(c.result("report", "report A\n", answers=""), c.result("other", "other O1\n"))
+    c.complete("summary", "summary S1\n")
+    c.complete("verify", "no blockers\n")
+    assert "assemble" not in c.ran(), "the digest is still required"
+    c.complete("digest", "digest D1\n")
+    assert "assemble" in c.ran() and c.member("overview") is not None
+
+
+def test_09_rerecording_an_unchanged_claim_does_not_reassemble(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_publication()
+    c.ran()
+    judge(c.run_dir, role="report", outcome="accepted", scope=("verification:cites:report",),
+          basis=("verification",), findings="the same claim again")
+    c.advance()
+    assert c.ran() == [], "coverage names claims, not records"
+    assert c.status.publishable
+
+
+def test_14_a_member_whose_acceptance_stopped_holding_blocks_publication(
+        tmp_path, tmp_library, monkeypatch) -> None:
+    from tests.commonplace.workflow.support import custom_run
+
+    def edit(jobs):
+        jobs["check-brief"]["inputs"]["contract"] = dict(jobs["check-report"]["inputs"]["contract"])
+
+    c = custom_run(tmp_path, monkeypatch, edit)
+    c.through_brief(BLOCKED_BRIEF)
+    assert c.status.publishable
+    (c.method / "contract-report.md").write_text("# Edited contract\n", encoding="utf-8")
+    from commonplace.workflow.state import Run
+    from commonplace.workflow.store import RunStore
+
+    assert not Run(RunStore(c.run_dir)).publishable(), "the brief's only acceptance no longer holds"
+    c.advance()
+    assert c.status.publishable, "the check re-accepts the brief against the edited contract"
+
+
 def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()

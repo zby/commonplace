@@ -206,6 +206,12 @@ class Run:
             text = refusal_document(refusal["id"], output, [e["relation"] for e in refusal["scope"]],
                                     refusal["findings"])
             return Resolved(digest(text), text, job.role, None, output)
+        if spec.address == "coverage":
+            evidence = self.coverage(spec.source or None)
+            if evidence is None:
+                return ABSENT
+            data = canonical(evidence)
+            return Resolved(digest(data), data)
         if spec.address == "judgment":
             matches = [j for j in self.judgments if j["subject"]["role"] == spec.source
                        and j["outcome"] == spec.outcome
@@ -292,6 +298,12 @@ class Run:
             names.add(spec.source.partition(":")[0])
         elif spec.address == "handed":
             names.add(job.inputs[spec.source.partition(":")[0]].source)
+        elif spec.address == "coverage":
+            # Every model job filling a role in scope can still change coverage.
+            for role in self.layout.roles:
+                filler = self.jobs.filler(role)
+                if role != spec.source and filler is not None:
+                    names.add(filler.name)
         elif spec.address == "judgment":
             # The judging job is code; the pending work behind it is the
             # model jobs filling the subject and the relation's ends.
@@ -380,16 +392,46 @@ class Run:
 
     # Coverage
 
-    def publishable(self) -> bool:
-        members = self.members()
+    def coverage(self, excluded: str | None = None) -> dict | None:
+        """The evidence that the set minus `excluded` is covered, or None while it is not.
+
+        Three conditions: every required role is present, every member has a
+        holding acceptance, and every relation between members is covered.
+        The evidence names members and covering claims, never record ids, so
+        re-recording an unchanged claim changes nothing.
+        """
+        members = {role: version for role, version in self.members().items() if role != excluded}
         required, permitted = self.requirements()
-        if not required <= set(members):
-            return False
+        if not required - {excluded} <= set(members):
+            return None
         if permitted is not None and not set(members) <= permitted:
-            return False  # A member left over from before the disposition changed.
-        return all(self.covered(relation, origin, partner)
-                   for origin, partner, relation in self.relations
-                   if origin in members and partner in members)
+            return None  # A member left over from before the disposition changed.
+        relations = [(origin, partner, name) for origin, partner, name in self.relations
+                     if origin in members and partner in members]
+        accepted = [j for j in self.judgments if j["outcome"] == "accepted"
+                    and members.get(j["subject"]["role"]) == j["subject"]["version"] and self.holds(j)]
+        claims = set()
+        for role, version in members.items():
+            mine = [j for j in accepted if j["subject"]["role"] == role]
+            if not mine:
+                return None
+            claims |= {(role, version, None, None) for _ in mine[:1]}
+        for origin, partner, name in relations:
+            covering = {
+                (j["subject"]["role"], j["subject"]["version"], name, entry["other_version"])
+                for j in accepted for entry in j["scope"]
+                if entry["relation"] == name
+                and entry["other_version"] == members[partner if j["subject"]["role"] == origin else origin]
+            }
+            if not covering:
+                return None
+            claims |= covering
+        return {"members": dict(sorted(members.items())),
+                "claims": sorted([list(claim) for claim in claims], key=lambda c: [str(x) for x in c])}
+
+    def publishable(self) -> bool:
+        """The whole set is covered: requirement 9's three conditions hold."""
+        return self.coverage() is not None
 
     def covered(self, relation: str, origin: str, partner: str) -> bool:
         members = self.members()

@@ -211,6 +211,8 @@ def job_set(method: Path) -> dict:
             }),
             code("assemble", "assemble", {
                 "brief": _member("brief"),
+                # Assembly waits until the set minus its own role is covered.
+                "coverage": {"address": "coverage"},
                 **{role: _optional("member", role)
                    for role in ("report", "other", "summary", "verification", "digest")},
             }, role="overview", outputs=["overview"]),
