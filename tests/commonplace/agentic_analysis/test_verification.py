@@ -287,12 +287,9 @@ def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
     assert all(not e["relation"].startswith("record-verification:") for e in repaired["scope"])
 
 
-def test_source_and_method_guards_remain_fail_closed(records):
+def test_source_drift_is_a_set_check_finding(records):
     a = records
     to_verifier(a)
     attempt = code_attempt(a, "set-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
     assert "does not hold exactly" in handlers.set_check(attempt)["findings"].decode()
-    a.prepared.record(token="b" * 12)
-    with pytest.raises(ValueError, match="preparation token"):
-        handlers.set_check(attempt)

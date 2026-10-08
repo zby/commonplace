@@ -98,9 +98,12 @@ engine test.
 - **Completed-state checks.** `profile.py:93` and `verification.py:202`
   require `state == "completed"`; the `attempt` address resolves only
   completed attempts.
-- **Output-digest checks.** `profile.py:95` and `publication.py:141-143`
-  compare the recorded output with the candidate's digest; the engine resolved
-  the candidate from that record.
+- **Output-digest checks.** `profile.py:95` compares the recorded output with
+  the candidate's digest; the engine resolved the candidate from that record.
+  The similar check in `publication._provenance` stays: there the subject is
+  the current member, which can be older than the producer's latest completed
+  output, so the digest is what ties the worker identity to the published
+  member.
 - **Environment guards in intermediate jobs.** `_opened_environment` and
   `_require_opened_method` appear 29 times (handlers 9, verification 8,
   profile 7, publication 5). The Deferred item *Validator code identity*

@@ -277,27 +277,10 @@ def test_identical_verdict_bytes_record_different_handed_subject_versions(opened
     assert judgments(first)[1]["subject"]["version"] != judgments(second)[1]["subject"]["version"]
 
 
-def test_producer_output_identity_mismatch_is_a_visible_failure(opened):
-    ctx = attempt(opened, "profile", profile(opened))
-    ctx._pins["producer-attempt"] = Resolved("unused", json.dumps({
-        "state": "completed", "outputs": {"profile": "wrong"}, "previous_outputs": {},
-    }).encode())
-    with pytest.raises(ValueError, match="recorded producer output"):
-        handlers.check_profile(ctx)
-    assert not judgments(ctx)
-
-
-def test_source_drift_and_method_guard_stop_acceptance(opened, monkeypatch):
+def test_source_drift_refuses_acceptance(opened):
     a = opened
     (a.checkout / "README.md").write_text("Dirty frozen source\n")
     ctx = attempt(a, "profile", profile(a))
     handlers.check_profile(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"
     assert "checkout" in judgments(ctx)[0]["findings"]
-    ctx = attempt(a, "profile", profile(a))
-    def changed(*args, **kwargs):
-        raise ValueError("method changed")
-    monkeypatch.setattr(handlers, "_require_opened_method", changed)
-    with pytest.raises(ValueError, match="method changed"):
-        handlers.check_profile(ctx)
-    assert not judgments(ctx)

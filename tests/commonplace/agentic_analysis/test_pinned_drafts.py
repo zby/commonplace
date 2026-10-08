@@ -183,8 +183,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     attempt = SimpleNamespace(run_dir=tmp_path, read=lambda alias: declared[alias],
                               judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
-    monkeypatch.setattr(handlers, "_opened_environment", lambda *args, **kwargs: (metadata, tmp_path))
-    monkeypatch.setattr(handlers, "_require_opened_method", lambda *args, **kwargs: None)
+    monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: (metadata, tmp_path))
     seen = []
     monkeypatch.setattr(handlers, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])
     handlers.check_boundary(attempt)
@@ -204,8 +203,7 @@ def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, mon
     attempt = SimpleNamespace(run_dir=tmp_path, read=lambda alias: declared[alias])
     source = {"kind": "capture", "identity": "fixture", "revision": "fixture", "path": str(tmp_path)}
     snapshot = {"boundary.md": b"pinned boundary"}
-    monkeypatch.setattr(handlers, "_opened_environment", lambda *args, **kwargs: ({}, tmp_path))
-    monkeypatch.setattr(handlers, "_require_opened_method", lambda *args, **kwargs: None)
+    monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: ({}, tmp_path))
     monkeypatch.setattr(handlers, "_snapshot", lambda *args: snapshot)
     monkeypatch.setattr(handlers, "_source", lambda *args: source)
     monkeypatch.setattr(handlers, "_source_reasons", lambda *args: [])

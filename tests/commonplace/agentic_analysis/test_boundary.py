@@ -251,20 +251,6 @@ def test_capture_cannot_use_storage_outside_the_supplied_directory(acquisition, 
     assert "supplied capture-directory" in judgment(a)["findings"]
 
 
-def test_boundary_check_rechecks_preparation_and_can_resume_without_a_new_worker(boundary):
-    a = boundary
-    text = candidate(a)
-    a.prepared.record(token="b" * 12)
-    status = a.coordinator.complete("boundary", text)
-    (stop,) = status.stops
-    assert stop.job == "check-boundary" and "preparation token differs" in stop.reason
-    assert not stop.uncertain
-    assert not RunStore(a.coordinator.run_dir).judgment_records()
-    a.prepared.record()
-    status = a.coordinator.advance()
-    assert not status.stops and not status.handouts and judgment(a)["outcome"] == "accepted"
-    assert (a.coordinator.run_dir / "set/boundary.md").read_text() == text
-    assert len(a.freezes) == 1
 
 
 def test_boundary_unchanged_refusal_answer_fails_and_bound_does_not_reset(boundary):

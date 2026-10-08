@@ -24,6 +24,7 @@ from commonplace.lib.agentic_analysis.guards import (
     publication_lock,
 )
 from commonplace.lib.agentic_analysis.handlers import (
+    _locate,
     _opened_environment,
     _require_opened_method,
 )
@@ -138,7 +139,9 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes]) -> dict:
             continue  # Code-written, never a model worker.
         record = _json(attempt.read(f"{role}-attempt"), f"{role} producer attempt")
         producer, primary = PRODUCERS[role]
-        if (record.get("state") != "completed" or record.get("kind") != "model"
+        # The member can be older than the producer's latest completed output,
+        # so the digest ties the worker identity to the member actually published.
+        if (record.get("kind") != "model"
                 or record.get("job") != producer
                 or record.get("outputs", {}).get(primary) != _digest(data)):
             raise ValueError(f"{role} provenance does not identify its completed output")
@@ -179,8 +182,9 @@ def _manifest(layout, members: Mapping[str, bytes], worker: dict) -> bytes:
     }, sort_keys=False).encode("utf-8")
 
 
-def _environment(attempt: CodeAttempt, boundary, *, job: str):
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job=job)
+def _environment(attempt: CodeAttempt, boundary, *, job: str, guard: bool = False):
+    metadata, repo = (_opened_environment(attempt, attempt.read("metadata"), job=job) if guard
+                      else _locate(attempt))
     source_bytes = attempt.read("source")
     if source_bytes is None:
         raise ValueError(f"{job} requires the pinned acquisition result")
@@ -235,7 +239,6 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     manifest = _manifest(layout, complete, worker)
     validate_pinned_set(attempt, repo=repo,
                         members={layout.path(r): b for r, b in complete.items()}, manifest=manifest)
-    _require_opened_method(repo, metadata, job="assembly")
     scope = tuple(relation for origin, partner, relation in relations
                   if "overview" in (origin, partner)
                   and (partner if origin == "overview" else origin) in members)
@@ -377,7 +380,7 @@ def _publish_effect(*, run_dir: Path, destination: Path, archive_root: Path,
 def _prepare_publication(attempt: CodeAttempt):
     """Check pinned inputs and environment before journal reconciliation or mutation."""
     layout, _, members, boundary = _snapshot(attempt, overview=True)
-    metadata, repo = _environment(attempt, boundary, job="publication")
+    metadata, repo = _environment(attempt, boundary, job="publication", guard=True)
     worker = _provenance(attempt, members)
     manifest = attempt.read("manifest")
     if manifest is None:

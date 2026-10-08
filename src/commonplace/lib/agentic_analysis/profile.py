@@ -8,7 +8,6 @@ The declaration must supply all criterion files read by content validation.
 
 from __future__ import annotations
 
-import hashlib
 import json
 
 from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
@@ -18,8 +17,7 @@ from commonplace.lib.agentic_analysis.checks import (
 )
 from commonplace.lib.agentic_analysis.handlers import (
     _analysis_layout,
-    _opened_environment,
-    _require_opened_method,
+    _locate,
 )
 from commonplace.lib.agentic_analysis.records import section
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
@@ -90,10 +88,6 @@ def _answers(attempt: CodeAttempt, candidate: bytes, *, member: str, record: str
     if data is None:
         raise ValueError(f"{member} check requires {record}")
     producer = json.loads(data)
-    if producer.get("state") != "completed":
-        raise ValueError(f"{member} check requires a completed producer attempt")
-    if producer.get("outputs", {}).get(output) != hashlib.sha256(candidate).hexdigest():
-        raise ValueError(f"{member} candidate must be the recorded producer output")
     # These stages declare no records. Record preservation applies to analysts;
     # retaining supported profile values and prose is judged semantically.
     return ["[correction] " + reason for reason in correction_findings(
@@ -104,7 +98,7 @@ def _answers(attempt: CodeAttempt, candidate: bytes, *, member: str, record: str
 
 def _check(attempt: CodeAttempt, *, role: str, output: str) -> dict[str, bytes]:
     job = f"{role} check"
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job=job)
+    metadata, repo = _locate(attempt)
     candidate = attempt.read("candidate")
     if candidate is None:
         raise ValueError(f"{job} requires a candidate")
@@ -124,7 +118,6 @@ def _check(attempt: CodeAttempt, *, role: str, output: str) -> dict[str, bytes]:
         if limits:
             # Structural repair must not lose the semantic verdict's limits.
             findings += "\n## Limits\n\n" + limits + "\n"
-    _require_opened_method(repo, metadata, job=job)
     attempt.judge("candidate", outcome="refused" if reasons else "accepted", scope=tuple(scope),
                   findings=findings)
     return {}
@@ -145,7 +138,7 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
     subject_role = "memory-profile" if stage == "profile" else "synthesis"
     subject = f"{stage}-seen"
     job = f"{role} application"
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job=job)
+    metadata, repo = _locate(attempt)
     candidate = attempt.read("candidate")
     if candidate is None:
         raise ValueError(f"{job} requires a candidate")
@@ -156,7 +149,6 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
     reasons = _content(attempt, repo, role, candidate, snapshot)
     reasons += _identity(metadata, candidate, snapshot)
     reasons += _answers(attempt, candidate, member=role, record="verifier-attempt", output="verification")
-    _require_opened_method(repo, metadata, job=job)
     if reasons:
         # A malformed verdict has no semantic authority over any partner.
         # No automatic scope override may cancel an earlier semantic refusal.
@@ -189,7 +181,6 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
         findings += "".join(f"- {reason}\n" for reason in missing_limits)
     if findings:
         findings += "\n## Limits\n\n" + section(document.body, "Limits").strip() + "\n"
-    _require_opened_method(repo, metadata, job=job)
     attempt.judge(subject, outcome="refused" if findings else "accepted",
                   scope=(f"{role}:cites:{subject_role}",), findings=findings)
     return {}

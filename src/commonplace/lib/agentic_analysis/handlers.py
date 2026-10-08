@@ -147,11 +147,8 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """
-    metadata_bytes = attempt.read("metadata")
-    metadata, repo = _opened_environment(attempt, metadata_bytes, job="acquisition")
-    source = acquire_source(repo, attempt.run_dir, metadata_bytes)
-    _require_opened_method(repo, metadata, job="acquisition")
-    return {"source": source}
+    _, repo = _locate(attempt)
+    return {"source": acquire_source(repo, attempt.run_dir, attempt.read("metadata"))}
 
 
 def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
@@ -163,6 +160,14 @@ def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
         raise ValueError(f"{job} worktree differs from the opened preparation commit")
     require_publishable_worktree(repo)
     require_running_package_unchanged(commit)
+
+
+def _locate(attempt: CodeAttempt) -> tuple[dict, Path]:
+    """The opened run's metadata and checkout; opening and publication own the guards."""
+    repo = source_checkout(attempt.run_dir)
+    if repo is None:
+        raise ValueError("analysis jobs must run inside their analysis checkout")
+    return json.loads(attempt.read("metadata")), repo
 
 
 def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
@@ -198,7 +203,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     are content checks, not engine relations; no downstream coverage is claimed.
     The declaration binds this check only with translated downstream hand-outs.
     """
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="boundary check")
+    metadata, repo = _locate(attempt)
     candidate = attempt.read("candidate")
     source_bytes = attempt.read("source")
     if candidate is None or source_bytes is None:
@@ -236,7 +241,6 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
         frozen_source=source_pin,
     )
     reasons += ["[set] " + finding.render() for finding in findings if not finding.info]
-    _require_opened_method(repo, metadata, job="boundary check")
     attempt.judge(
         "candidate", outcome="refused" if reasons else "accepted", findings="\n".join(reasons),
     )
@@ -244,7 +248,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
 
 
 def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job=f"{member} check")
+    metadata, repo = _locate(attempt)
     candidate = attempt.read("candidate")
     if candidate is None:
         raise ValueError(f"{member} check requires a candidate")
@@ -289,7 +293,6 @@ def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
         refusal=answered, answers=attempt.read("answers"),
         previous_version=producer["previous_outputs"].get("report"),
     )]
-    _require_opened_method(repo, metadata, job=f"{member} check")
     scope = [f"{member}:cites:{role}" for role in present]
     scope.append(f"{member}:identity:boundary")
     attempt.judge(

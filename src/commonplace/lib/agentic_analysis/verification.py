@@ -12,8 +12,7 @@ import json
 from commonplace.lib.agentic_analysis.boundary import frozen_source_refusals
 from commonplace.lib.agentic_analysis.checks import refusal_findings
 from commonplace.lib.agentic_analysis.handlers import (
-    _opened_environment,
-    _require_opened_method,
+    _locate,
 )
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
@@ -85,12 +84,11 @@ def _candidate_reasons(attempt, repo, metadata, role, candidate, snapshot):
 
 def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
     """Check reconciliation content against pinned reports, without semantic acceptance."""
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="reconciliation check")
+    metadata, repo = _locate(attempt)
     candidate = _required(attempt, "candidate")
     snapshot = _snapshot(attempt, ("boundary", *ANALYSTS))
     reasons = _candidate_reasons(attempt, repo, metadata, "reconciliation", candidate, snapshot)
     answered = attempt.read("answered-refusal")
-    _require_opened_method(repo, metadata, job="reconciliation check")
     attempt.judge(
         "candidate", outcome="refused" if reasons else "accepted",
         scope=tuple(f"reconciliation:cites:{role}" for role in ("boundary", *ANALYSTS))
@@ -102,7 +100,7 @@ def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
 
 def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     """Set_check returns record content and relation findings from one pinned snapshot."""
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="record set check")
+    _, repo = _locate(attempt)
     snapshot = _snapshot(attempt, PARTNERS)
     directory = (attempt.run_dir / "set").resolve()
     run = ValidationRun(
@@ -121,7 +119,6 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
                     if not finding.absent and not finding.info]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
         reasons.append(f"[set] set input cannot be checked: {exc}")
-    _require_opened_method(repo, metadata, job="record set check")
     text = "# Record set check\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
     return {"findings": text.encode("utf-8")}
 
@@ -197,10 +194,8 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     an earlier verdict. The engine owns late-subject installation and refusal
     delivery. No explicit overrides or current-member discovery are used here.
     """
-    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="record verification")
+    metadata, repo = _locate(attempt)
     producer = json.loads(_required(attempt, "verifier-attempt"))
-    if producer.get("state") != "completed":
-        raise ValueError("record verification requires a completed verifier attempt")
     candidate = _required(attempt, "candidate")
     snapshot = _snapshot(attempt, PARTNERS, "-seen")
     reasons = _candidate_reasons(attempt, repo, metadata, "record-verification", candidate, snapshot)
@@ -211,7 +206,6 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     reasons += malformed
     if _set_check_failed(_required(attempt, "set-check-seen")) and not entries:
         reasons.append("structural failures require explicit blockers (code requires at least one; the verifier must address every finding)")
-    _require_opened_method(repo, metadata, job="record verification")
     if reasons:
         attempt.judge("candidate", outcome="refused", findings="\n".join(reasons))
         return {}

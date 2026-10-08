@@ -206,27 +206,6 @@ def test_interrupted_existing_default_snapshot_stops_as_uncertain(acquisition, m
     assert (a.journal.read_bytes(), a.checkout.joinpath(".git/HEAD").read_bytes()) == before
 
 
-def test_acquisition_rechecks_preparation_token_on_resume(acquisition, monkeypatch):
-    start, _ = acquisition
-    a = start()
-    original = RunStore.commit_attempt
-
-    def interrupt(self, record, judgments=()):
-        if record["job"] == "acquire":
-            raise KeyboardInterrupt()
-        return original(self, record, judgments)
-
-    monkeypatch.setattr(RunStore, "commit_attempt", interrupt)
-    with pytest.raises(KeyboardInterrupt):
-        a.advance()
-    before = a.journal.read_bytes()
-    monkeypatch.setattr(RunStore, "commit_attempt", original)
-    a.prepared.record(token="b" * 12)
-    a.advance()
-    a.stop("preparation token differs from the opened run")
-    assert a.journal.read_bytes() == before and len(a.freezes) == 1
-    a.prepared.record()
-    assert not a.advance().stops and a.source()["kind"] == "git"
 
 
 def test_completion_journal_write_failure_is_visible_as_uncertain(acquisition, monkeypatch):
