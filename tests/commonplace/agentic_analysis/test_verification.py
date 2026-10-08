@@ -29,6 +29,8 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 )
 from tests.commonplace.workflow.support import Coordinator
 
+pytestmark = pytest.mark.slow
+
 
 @pytest.fixture
 def records(request, tmp_path):

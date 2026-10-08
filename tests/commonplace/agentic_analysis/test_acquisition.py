@@ -37,6 +37,7 @@ def test_checkout_refusal_is_a_domain_value_error_without_side_effects(tmp_path)
     assert path.read_bytes() == b"keep this file"
 
 
+@pytest.mark.slow
 def test_clone_freezes_the_local_default_tip_and_records_the_effect(acquisition):
     start, upstream = acquisition
     revision = advance_upstream(upstream)
@@ -57,6 +58,7 @@ def test_clone_freezes_the_local_default_tip_and_records_the_effect(acquisition)
     assert not (a.prepared.repo / "kb/agentic-system-analyses/retained").exists()
 
 
+@pytest.mark.slow
 def test_requested_older_commit_is_frozen_not_the_current_tip(acquisition):
     start, upstream = acquisition
     older = git(upstream, "rev-parse", "HEAD")
@@ -67,6 +69,7 @@ def test_requested_older_commit_is_frozen_not_the_current_tip(acquisition):
     assert not (a.checkout / "NEW.md").exists()
 
 
+@pytest.mark.slow
 def test_matching_requested_checkout_keeps_its_branch(acquisition):
     start, upstream = acquisition
     revision = git(upstream, "rev-parse", "HEAD")
@@ -79,6 +82,7 @@ def test_matching_requested_checkout_keeps_its_branch(acquisition):
     assert a.source()["revision"] == revision
 
 
+@pytest.mark.slow
 def test_existing_checkout_fetches_and_freezes_the_new_default_tip(acquisition):
     start, upstream = acquisition
     a = start()
@@ -91,6 +95,7 @@ def test_existing_checkout_fetches_and_freezes_the_new_default_tip(acquisition):
     assert json.loads(a.journal.read_text())["initial-head"] == initial
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("condition,reason", [
     ("dirty", "local changes or untracked files"),
     ("foreign", "does not have the origin"),
@@ -118,6 +123,7 @@ def test_preflight_failure_changes_no_source_and_records_no_effect(acquisition, 
         assert (a.checkout / "KEEP.md").read_bytes() == b"Preserve this local change.\n"
 
 
+@pytest.mark.slow
 def test_unavailable_explicit_commit_is_an_ordinary_retryable_failure(acquisition):
     start, _ = acquisition
     a = start(revision="0" * 40)
@@ -130,6 +136,7 @@ def test_unavailable_explicit_commit_is_an_ordinary_retryable_failure(acquisitio
     assert len(a.freezes) == 2
 
 
+@pytest.mark.slow
 def test_interrupted_intent_with_no_installed_checkout_is_safe_to_retry(acquisition, monkeypatch):
     start, _ = acquisition
     a = start()
@@ -148,6 +155,7 @@ def test_interrupted_intent_with_no_installed_checkout_is_safe_to_retry(acquisit
     assert len(a.freezes) == 1 and a.source()["kind"] == "git"
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("case", ("new-default", "new-requested", "existing-requested"))
 def test_interrupted_installation_is_recognized_without_refetching(acquisition, monkeypatch, case):
     start, upstream = acquisition
@@ -180,6 +188,7 @@ def test_interrupted_installation_is_recognized_without_refetching(acquisition, 
     assert len(a.freezes) == 1
 
 
+@pytest.mark.slow
 def test_interrupted_existing_default_snapshot_stops_as_uncertain(acquisition, monkeypatch):
     start, upstream = acquisition
     a = start()
@@ -207,6 +216,7 @@ def test_interrupted_existing_default_snapshot_stops_as_uncertain(acquisition, m
     assert (a.journal.read_bytes(), a.checkout.joinpath(".git/HEAD").read_bytes()) == before
 
 
+@pytest.mark.slow
 def test_completion_journal_write_failure_is_visible_as_uncertain(acquisition, monkeypatch):
     start, _ = acquisition
     a = start()
@@ -226,6 +236,7 @@ def test_completion_journal_write_failure_is_visible_as_uncertain(acquisition, m
     assert a.source()["kind"] == "git" and len(a.freezes) == 1
 
 
+@pytest.mark.slow
 def test_completed_journal_recovers_a_lost_attempt_without_moving_the_pin(acquisition, monkeypatch):
     start, upstream = acquisition
     a = start()
@@ -248,6 +259,7 @@ def test_completed_journal_recovers_a_lost_attempt_without_moving_the_pin(acquis
     assert a.source()["revision"] == revision and len(a.freezes) == 1
 
 
+@pytest.mark.slow
 def test_explicit_revision_failure_before_mutation_can_retry_the_original_checkout(acquisition, monkeypatch):
     start, upstream = acquisition
     initial = git(upstream, "rev-parse", "HEAD")
@@ -273,6 +285,7 @@ def test_explicit_revision_failure_before_mutation_can_retry_the_original_checko
     assert a.source()["revision"] == revision and len(calls) == 2
 
 
+@pytest.mark.slow
 def test_an_exception_after_atomic_installation_is_recognized_not_repeated(acquisition, monkeypatch):
     start, upstream = acquisition
     revision = git(upstream, "rev-parse", "HEAD")
@@ -289,6 +302,7 @@ def test_an_exception_after_atomic_installation_is_recognized_not_repeated(acqui
     assert json.loads(a.journal.read_text())["state"] == "completed"
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("damage", ("dirty", "missing", "foreign", "symlink", "malformed-journal", "different-inputs"))
 def test_recovery_preserves_unverifiable_completed_effects(acquisition, monkeypatch, damage):
     start, _ = acquisition

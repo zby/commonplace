@@ -32,6 +32,7 @@ def acquisition(request):
     return request.getfixturevalue("local_acquisition")
 
 
+@pytest.mark.slow
 def test_handout_is_context_complete_and_uses_engine_names(boundary):
     a = boundary
     h = a.coordinator.handout("boundary")
@@ -50,6 +51,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
 def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, disposition):
     a = boundary
@@ -65,6 +67,7 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
     assert not (a.coordinator.run_dir / "output").exists()
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("changes,reason", [
     ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "member identity: run-id"),
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
@@ -85,6 +88,7 @@ def test_refuses_bad_content_or_invocation(boundary, changes, reason):
     assert not (a.coordinator.run_dir / "set/boundary.md").exists()
 
 
+@pytest.mark.slow
 def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
     a = boundary
     h = a.coordinator.handout("boundary")
@@ -95,6 +99,7 @@ def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
     assert "[set]" in judgment(a)["findings"]
 
 
+@pytest.mark.slow
 def test_dirty_frozen_checkout_is_refused_without_cleaning_it(boundary):
     a = boundary
     readme = a.checkout / "README.md"
@@ -109,6 +114,7 @@ def test_dirty_frozen_checkout_is_refused_without_cleaning_it(boundary):
     assert judgment(a)["outcome"] == "accepted"
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
 def test_no_source_is_valid_only_for_noncomplete_boundary(acquisition, disposition):
     start, _ = acquisition
@@ -121,6 +127,7 @@ def test_no_source_is_valid_only_for_noncomplete_boundary(acquisition, dispositi
     assert judgment(a)["outcome"] == "accepted"
 
 
+@pytest.mark.slow
 def test_capture_in_the_supplied_directory_is_accepted_and_survives_cleanup(acquisition):
     start, _ = acquisition
     a = start(boundary=True, identity="local capture identity")
@@ -139,6 +146,7 @@ def test_capture_in_the_supplied_directory_is_accepted_and_survives_cleanup(acqu
     assert not a.freezes
 
 
+@pytest.mark.slow
 def test_accepted_capture_pin_cannot_change_on_boundary_correction(acquisition):
     start, _ = acquisition
     a = start(boundary=True, identity="local capture identity")
@@ -166,6 +174,7 @@ def test_accepted_capture_pin_cannot_change_on_boundary_correction(acquisition):
     assert capture.read_bytes() == b"Original capture.\n"
 
 
+@pytest.mark.slow
 def test_current_shipped_declaration_hands_out_translated_runtime(acquisition):
     start, _ = acquisition
     a = start(production=True)

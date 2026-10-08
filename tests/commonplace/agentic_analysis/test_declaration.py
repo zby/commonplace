@@ -266,6 +266,7 @@ def schema_dependencies(path):
     return result
 
 
+@pytest.mark.slow
 def test_code_checks_declare_type_schema_and_shared_criteria(graph):
     jobs, layout = graph
     for job in jobs.jobs:
@@ -315,6 +316,7 @@ def engine_run(tmp_path, monkeypatch):
     return Run(RunStore(run_dir))
 
 
+@pytest.mark.slow
 def test_publication_requires_holding_acceptances_not_every_possible_member(engine_run, monkeypatch):
     run = engine_run
     job = run.jobs.job("publish")
@@ -338,6 +340,7 @@ def test_publication_requires_holding_acceptances_not_every_possible_member(engi
     assert job.handler == INTEGRATED_HANDLERS["publish"]
 
 
+@pytest.mark.slow
 def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"

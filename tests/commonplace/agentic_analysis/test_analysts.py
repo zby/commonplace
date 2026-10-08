@@ -30,6 +30,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 )
 
 
+@pytest.mark.slow
 def test_three_analysts_install_pinned_members_and_cover_present_relations(analysts):
     a = analysts
     through_analysts(a)
@@ -42,6 +43,7 @@ def test_three_analysts_install_pinned_members_and_cover_present_relations(analy
     assert not a.coordinator.status.handouts and not a.coordinator.status.publishable
 
 
+@pytest.mark.slow
 def test_analyst_handouts_carry_opening_answers_and_pinned_boundary(analysts):
     a = analysts
     for member in REPORT_TYPES:
@@ -57,6 +59,7 @@ def test_analyst_handouts_carry_opening_answers_and_pinned_boundary(analysts):
         assert Path(p["boundary"]).read_text() == boundary_candidate(a)
 
 
+@pytest.mark.slow
 def test_corrected_answer_cannot_keep_identical_report(analysts):
     a = analysts
     through_analysts(a)
@@ -68,6 +71,7 @@ def test_corrected_answer_cannot_keep_identical_report(analysts):
     assert "## Blockers" in j["findings"] and "Correct the finding." in j["findings"]
 
 
+@pytest.mark.slow
 def test_structural_repair_retains_original_semantic_blockers(analysts):
     a = analysts
     through_analysts(a)
@@ -87,6 +91,7 @@ def test_structural_repair_retains_original_semantic_blockers(analysts):
     assert "exactly 1 entries" in judgments(a, "runtime")[-1]["findings"]
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("member,changes,reason", [
     ("runtime", {"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "run-id"),
     ("memory", {"source-identity": "wrong identity"}, "source-identity"),
@@ -108,6 +113,7 @@ def test_member_identity_is_checked_against_pinned_inputs(analysts, member, chan
     assert j["outcome"] == "refused" and reason in j["findings"]
 
 
+@pytest.mark.slow
 def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     a = analysts
     original = report(a, "runtime").replace(
@@ -128,6 +134,7 @@ def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
 
 
+@pytest.mark.slow
 def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     a = analysts
     projected = a.coordinator.run_dir / "set/memory.md"
@@ -143,6 +150,7 @@ def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     assert not any(r["relation"] == "runtime:cites:memory" for r in j["scope"])
 
 
+@pytest.mark.slow
 def test_structural_repair_can_restore_original_bytes_with_fresh_declines(analysts):
     a = analysts
     through_analysts(a)

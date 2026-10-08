@@ -26,6 +26,8 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import report
 
+pytestmark = pytest.mark.slow
+
 
 def encoded(fields, body):
     return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
