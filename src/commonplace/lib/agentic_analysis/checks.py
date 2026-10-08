@@ -24,6 +24,17 @@ def correction_blockers(refusal: bytes | None, member: str) -> str:
     return f"- {member}: {lines[0]}" + "".join(f"\n  {line}" for line in lines[1:])
 
 
+def blocker_entries(blockers: str) -> list[str]:
+    """The `- ` entries of a Blockers list, continuation lines joined; `none` has none."""
+    entries = []
+    for line in blockers.splitlines():
+        if line.startswith("- "):
+            entries.append(line)
+        elif entries and line.strip():
+            entries[-1] += "\n" + line
+    return entries
+
+
 def correction_findings(
     candidate: bytes, *, member: str, incumbent: bytes | None,
     refusal: bytes | None, answers: bytes | None, previous_version: str | None = None,
@@ -41,7 +52,7 @@ def correction_findings(
                 "record declarations: keep every record the accepted predecessor declared: "
                 + ", ".join(dropped) + "; correct its finding without changing its referent"
             )
-    wanted = sum(line.startswith("- ") for line in correction_blockers(refusal, member).splitlines())
+    wanted = len(blocker_entries(correction_blockers(refusal, member)))
     try:
         answer_text = "" if answers is None else answers.decode("utf-8")
     except UnicodeError:

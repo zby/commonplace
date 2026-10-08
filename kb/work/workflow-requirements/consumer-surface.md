@@ -349,6 +349,40 @@ about 340 lines, became a 129-line helper plus per-job checks; the package
 shrank by 76 lines, less than estimated, because the helper keeps
 docstrings and also serves the record set check.
 
+## Refusal and correction protocol
+
+A verdict's `## Blockers` become refusals of its subjects. The producer
+answers each blocker in its `answers` output with `- corrected: ` or
+`- declined: ` and a reason, and its check tests the count, the grammar, and
+that a corrected answer comes with changed bytes. A structural refusal
+carries the answered refusal's blockers, cited records and limits forward,
+because only the latest refusal is in force (requirement 7) and the verifier
+reads the answers to its own blockers. The code is about 150 lines:
+`checks.py`, the routing in `verification.py` (`_blockers`, `_entries`,
+`_addressee`, `_feedback`) and the subject judgment in `profile._apply`.
+
+- **Nothing moves to the engine.** Answer checks count entries in the
+  refusal's body, which is a consumer format. Accumulating obligations in
+  the engine would replace the ten-line carry-forward with a multi-valued
+  refusal input and a changed requirement 7.
+- **The routing re-proves the type.** The verification type's validation
+  (`validation._verification_findings`) already refuses a Blockers section
+  that is not `none` or a list, and a record blocker without a report
+  addressee. `review` runs it, so `_blockers`' grammar and addressee checks
+  repeat it. Parsing the entries is all that remains.
+- **Three blocker parsers.** `correction_blockers` counts `- ` lines,
+  `verification._entries` joins continuation lines, and `profile._apply`
+  takes the section whole. One entry parser serves all three.
+- **The grammar is stated six times.** The shared worker rules, which every
+  model job receives, state it. The records contract states it for
+  analysts, and four job instructions restate it. The job instructions need
+  only what is specific to the job.
+
+**Recommendation:** delete the re-proving grammar checks, share one entry
+parser, and trim the instruction restatements to their job-specific parts.
+No requirement or engine change. The effect is small, about 30 lines of
+code: the protocol is mostly legitimate domain logic.
+
 ## Outside the handler surface
 
 - **Duplicated utilities** (atomic write, locks, Git wrappers, path

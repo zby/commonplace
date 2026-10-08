@@ -18,6 +18,7 @@ from commonplace.lib.agentic_analysis.candidate import (
     review,
     snapshot,
 )
+from commonplace.lib.agentic_analysis.checks import blocker_entries
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
@@ -67,37 +68,9 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     return {"findings": text.encode("utf-8")}
 
 
-def _blockers(text: str) -> tuple[list[str], list[str]]:
-    """Require explicit routing grammar, including nonempty findings and continuations."""
-    value = section(text, "Blockers").strip()
-    if value == "none":
-        return [], []
-    lines = [line for line in value.splitlines() if line.strip()]
-    if not lines or not lines[0].startswith("- ") or any(
-        not line.startswith(("- ", " ", "\t")) for line in lines
-    ):
-        return [], ["Blockers must be exactly none or a Markdown list"]
-    entries = _entries(value)
-    if any(_addressee(entry) is None for entry in entries):
-        return [], ["each record blocker needs runtime:, memory:, epistemic: or reconciliation: followed by a finding"]
-    return entries, []
-
-
-def _entries(value: str) -> list[str]:
-    entries = []
-    for line in value.splitlines():
-        if line.startswith("- "):
-            entries.append(line)
-        elif entries and line.strip():
-            entries[-1] += "\n" + line
-    return entries
-
-
-def _addressee(entry: str) -> str | None:
-    for role in RECORDS:
-        if entry.startswith(f"- {role}: ") and entry[len(role) + 4:].strip():
-            return role
-    return None
+def _addressee(entry: str) -> str:
+    """The report a blocker names; the verification type's validation enforces the prefix."""
+    return entry[2:].partition(":")[0]
 
 
 def _feedback(role: str, verifier: str, entries: list[str], bodies: dict[str, str]) -> str:
@@ -140,12 +113,9 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     """
     producer = json.loads(attempt.read("verifier-attempt"))
     check = candidate(attempt, "record-verification", PARTNERS, seen=True)
+    # Validation refuses Blockers that are not none or addressed list entries.
     reasons = review(check)
-    try:
-        entries, malformed = _blockers(check.data.decode("utf-8"))
-    except UnicodeError:
-        entries, malformed = [], ["verification must be UTF-8 text"]
-    reasons += malformed
+    entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
     if _set_check_failed(attempt.read("set-check-seen")) and not entries:
         reasons.append("structural failures require explicit blockers (code requires at least one; the verifier must address every finding)")
     # A verifier with blockers is a valid verdict document, not an acceptance

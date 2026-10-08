@@ -2339,9 +2339,9 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
             entries = re.split(r"(?m)^- ", text)[1:]
             if title == "Blockers" and stage == "records":
                 for entry in entries:
-                    if not re.match(r"(?:runtime|memory|epistemic|reconciliation):", entry):
+                    if not re.match(r"(?:runtime|memory|epistemic|reconciliation): +\S", entry):
                         findings.append(Finding(name, f"{path}: record blocker has no report addressee",
-                                                repair="start each blocker with runtime:, memory:, epistemic: or reconciliation:"))
+                                                repair="start each blocker with runtime:, memory:, epistemic: or reconciliation: and its finding"))
             if title == "Limits" and synthesis is not None:
                 for entry in entries:
                     cited = record_references(entry)
