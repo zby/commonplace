@@ -44,7 +44,6 @@ from commonplace.lib.agentic_analysis.worktree import (
     require_run_code,
     source_checkout,
 )
-from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_draft_at_slot
 from commonplace.workflow import CodeAttempt
@@ -184,17 +183,6 @@ def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, j
     return metadata, repo
 
 
-def _analysis_layout(attempt: CodeAttempt):
-    """Read the declared layout, never the mutable installed set type."""
-    data = attempt.read("set-type")
-    if data is None:
-        raise ValueError("analysis check requires the pinned set type")
-    document, error = parse_document(data.decode("utf-8"))
-    if document is None or error:
-        raise ValueError("analysis check cannot read the pinned set type")
-    return parse_layout((document.frontmatter or {}).get("layout"), where=SET_TYPE)
-
-
 def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     """Judge the pinned boundary, never a mutable set projection or hand-out file.
 
@@ -253,7 +241,7 @@ def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
     if candidate is None:
         raise ValueError(f"{member} check requires a candidate")
     partners = ["boundary", *[role for role in ("runtime", "memory", "epistemic") if role != member]]
-    layout = _analysis_layout(attempt)
+    layout = attempt.layout
     snapshot = {}
     present = []
     for role in partners:

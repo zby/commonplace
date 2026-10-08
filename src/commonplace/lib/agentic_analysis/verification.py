@@ -22,7 +22,6 @@ from commonplace.lib.agentic_analysis.records import (
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.agentic_analysis.validation import criterion_bytes
 from commonplace.lib.directory_artifact import MANIFEST_NAME
-from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import CriterionSnapshot
@@ -43,10 +42,7 @@ def _required(attempt: CodeAttempt, name: str) -> bytes:
 
 
 def _path(attempt: CodeAttempt, role: str) -> str:
-    document, error = parse_document(_required(attempt, "set-type").decode("utf-8"))
-    if document is None or error:
-        raise ValueError("record check requires the pinned set type")
-    return parse_layout(document.frontmatter.get("layout"), where=SET_TYPE).path(role)
+    return attempt.layout.path(role)
 
 
 def _snapshot(attempt: CodeAttempt, roles: tuple[str, ...], suffix: str = "") -> dict[str, bytes]:

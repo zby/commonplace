@@ -29,6 +29,10 @@ def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
     """Missing declared dependencies stay absent; the closed validator rejects them."""
     result = {}
     for alias, path in CRITERIA.items():
+        if alias == "set-type":
+            # The set type is fixed for the run, never a live file input.
+            result[path] = attempt.type_text.encode("utf-8")
+            continue
         try:
             data = attempt.read(alias)
         except KeyError:

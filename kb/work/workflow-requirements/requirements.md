@@ -23,7 +23,8 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    prerequisites: it orders the job after it and its version is recorded,
    but it is never a rerun trigger. A job never has the role it
    writes as an input. The declaration is fixed; nothing adds a dependency
-   at run time. Roles and their relations come from the set's type; a
+   at run time. Roles and their relations come from the set's type, which
+   the declaration names and which is fixed with it for the run; a
    relation runs from an origin role to a partner role and is named by
    both ends and its kind, such as `verification:cites:runtime`. The job
    set adds only who produces what from what.
@@ -134,7 +135,7 @@ They bind an implementation of this spec; they are not requirements.
   max attempts, with each code job naming its handler by dotted path into the
   package. A run is started by an operation of its own, which writes the
   run's metadata naming the job set and the run parameters and fixes the
-  declaration for the run; every later invocation loads the job set from
+  declaration and the set type it names for the run; every later invocation loads the job set from
   that metadata. A job set's first code job, such as `open`, is then an
   ordinary job with the metadata as an input. The type knows nothing
   about producers. The instruction trees install as shared data, not as
@@ -153,6 +154,12 @@ They bind an implementation of this spec; they are not requirements.
   `{workspace}` and `{param:<name>}` substituted; no template language.
   Why: the analysis instructions already follow this shape, so they port
   unchanged.
+- **Code jobs see the fixed type, not a file of it.** A code attempt
+  exposes the run's layout and relations and the fixed type text, so a
+  handler never declares the set type as a file input. Member types,
+  schemas and contracts stay live file inputs, which scenario 8 edits.
+  Why: a file input of the set type would follow a mid-run edit while the
+  engine schedules, scopes and covers against the copy fixed at start.
 - **File inputs are checked, not snapshotted.** A file input is handed at
   its own path and its digest is pinned at hand-out; completing the
   attempt fails if the file then differs. A change reverted before

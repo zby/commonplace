@@ -40,7 +40,6 @@ from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_analysis_set
 from commonplace.workflow import CodeAttempt, UncertainEffectError
-from commonplace.workflow.state import _parse_type
 
 JOURNAL = "effects/publish.json"
 PRODUCERS = {
@@ -91,10 +90,7 @@ def _accepted(data: bytes | None, version: str, relation: str | None = None,
 
 
 def _snapshot(attempt: CodeAttempt, *, overview: bool):
-    type_bytes = attempt.read("set-type")
-    if type_bytes is None:
-        raise ValueError("assembly/publication requires its pinned set type")
-    layout, relations = _parse_type(type_bytes.decode("utf-8"), SET_TYPE)
+    layout, relations = attempt.layout, attempt.relations
     members = {}
     documents = {}
     for role in layout.roles:

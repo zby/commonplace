@@ -33,8 +33,11 @@ class Attempt:
         self.run_dir = tmp_path / RUN_ID
         self.run_dir.mkdir(parents=True)
         self.library = tmp_path / "kb"
-        self.inputs = {"set-type": (ROOT / "kb" / SET_TYPE).read_bytes()}
-        layout, relations = _parse_type(self.inputs["set-type"].decode(), SET_TYPE)
+        # The set type a run fixes at start, as CodeAttempt exposes it.
+        self.type_text = (ROOT / "kb" / SET_TYPE).read_text()
+        layout, relations = _parse_type(self.type_text, SET_TYPE)
+        self.layout, self.relations = layout, tuple(relations)
+        self.inputs = {}
         boundary_fields = {"run-id": RUN_ID, "result-disposition": disposition,
                            "target-class": None, "boundary-kind": None, "reviewed-boundary": None,
                            "analysis-cutoff": None, "evidence-tier": None}
@@ -180,8 +183,7 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
     attempt.inputs["overview-accepted"] = json.dumps({
         "outcome": "accepted", "subject": publication._digest(outputs["overview"]), "scope": [],
     }).encode()
-    _, relations = _parse_type(attempt.inputs["set-type"].decode(), SET_TYPE)
-    for origin, partner, relation in relations:
+    for origin, partner, relation in attempt.relations:
         if {origin, partner} == {"overview", "boundary"}:
             attempt.inputs[f"coverage-{relation.replace(':', '-')}-overview"] = json.dumps({
                 "outcome": "accepted", "subject": publication._digest(outputs["overview"]),
@@ -486,14 +488,14 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
 
 @pytest.mark.parametrize("journal", [None, b'{"state": "rolled-back"}', b"malformed"])
 def test_preliminary_failure_requires_journal_to_be_uncertain(tmp_path, journal):
-    attempt = Attempt(tmp_path)
-    attempt.inputs["set-type"] = None
+    attempt = Attempt(tmp_path, overview=True)
+    attempt.inputs["boundary"] = None
     if journal is not None:
         path = attempt.run_dir / publication.JOURNAL
         path.parent.mkdir()
         path.write_bytes(journal)
     expected = ValueError if journal is None else UncertainEffectError
-    with pytest.raises(expected, match="pinned set type"):
+    with pytest.raises(expected, match="membership is incomplete"):
         publication.publish_analysis(attempt)
     if journal is not None:
         assert path.read_bytes() == journal

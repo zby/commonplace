@@ -245,7 +245,7 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
         if job.name in ("open", "acquire") or isinstance(job, ModelJob):
             continue
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
-        assert (LIBRARY / SET_TYPE).resolve() in files
+        assert (LIBRARY / SET_TYPE).resolve() not in files, "the set type is fixed for the run"
         assert {"sources-contract", "records-contract"} <= set(job.inputs)
         for path in files:
             if path.suffix == ".md":
@@ -344,7 +344,8 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
             spec = job.inputs[f"{role}-attempt"]
             assert (spec.address, spec.source, spec.required) == ("attempt", producer, role == "boundary")
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
-        assert {(LIBRARY / path).resolve() for path in contracts} <= files
+        # The set type itself is fixed for the run; its schema closure stays declared.
+        assert {(LIBRARY / path).resolve() for path in contracts - {SET_TYPE}} <= files
         # Close both the instance schemas and the meta-type used to validate
         # criterion documents, including references in inactive schema branches.
         for path in contracts:

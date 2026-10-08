@@ -26,6 +26,13 @@ def criteria():
     }
 
 
+def fixed_type(**kwargs):
+    """An attempt double carrying the set type a run fixes at start."""
+    from commonplace.lib.agentic_analysis.sets import analysis_layout
+
+    return SimpleNamespace(type_text=(LIBRARY / SET_TYPE).read_text(), layout=analysis_layout(), **kwargs)
+
+
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
     return validate_draft_at_slot(
         tmp_path / "kb/agentic-system-analyses/state/fixture/set", "boundary.md", candidate,
@@ -71,9 +78,10 @@ def test_criterion_collection_reads_only_declared_known_aliases():
             raise KeyError(alias)
         return data[alias]
 
-    result = criterion_bytes(SimpleNamespace(read=read))
-    assert result == {CRITERIA[alias]: data[alias] for alias in ("boundary-type", "note-schema")}
-    assert set(calls) == set(CRITERIA)
+    result = criterion_bytes(fixed_type(read=read))
+    assert result == {**{CRITERIA[alias]: data[alias] for alias in ("boundary-type", "note-schema")},
+                      SET_TYPE: (LIBRARY / SET_TYPE).read_bytes()}
+    assert set(calls) == set(CRITERIA) - {"set-type"}, "the set type is fixed, never read as an input"
 
 
 def test_conflicting_criterion_aliases_are_rejected():
@@ -83,7 +91,7 @@ def test_conflicting_criterion_aliases_are_rejected():
         raise KeyError(alias)
 
     with pytest.raises(ValueError, match="conflicting pinned criterion aliases"):
-        criterion_bytes(SimpleNamespace(read=read))
+        criterion_bytes(fixed_type(read=read))
 
 
 def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
@@ -125,7 +133,7 @@ def test_member_helpers_forward_declared_criteria_and_boundary_source(tmp_path, 
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
     declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
-    attempt = SimpleNamespace(run_dir=tmp_path, read=lambda alias: declared[alias])
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias])
     seen = []
 
     def validate(*args, **kwargs):
@@ -154,7 +162,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     declared.update({"candidate": CANDIDATE, "source": b"null", "metadata": b"{}",
                      "incumbent-boundary": None})
     judgments = []
-    attempt = SimpleNamespace(run_dir=tmp_path, read=lambda alias: declared[alias],
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias],
                               judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
     monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: (metadata, tmp_path))
@@ -174,7 +182,7 @@ def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, mon
     pinned = criteria()
     declared = {alias: pinned[path] for alias, path in CRITERIA.items() if path in pinned}
     declared["metadata"] = b"{}"
-    attempt = SimpleNamespace(run_dir=tmp_path, read=lambda alias: declared[alias])
+    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias])
     source = {"kind": "capture", "identity": "fixture", "revision": "fixture", "path": str(tmp_path)}
     snapshot = {"boundary.md": b"pinned boundary"}
     monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: ({}, tmp_path))

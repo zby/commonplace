@@ -16,7 +16,6 @@ from commonplace.lib.agentic_analysis.checks import (
     refusal_findings,
 )
 from commonplace.lib.agentic_analysis.handlers import (
-    _analysis_layout,
     _locate,
 )
 from commonplace.lib.agentic_analysis.records import section
@@ -38,7 +37,7 @@ def _snapshot(attempt: CodeAttempt, roles: tuple[str, ...], *, seen: bool = Fals
         data = attempt.read(name)
         if data is None:
             raise ValueError(f"profile/synthesis check requires {name}")
-        snapshot[_analysis_layout(attempt).path(role)] = data
+        snapshot[attempt.layout.path(role)] = data
     return snapshot
 
 
@@ -46,7 +45,7 @@ def _content(attempt: CodeAttempt, repo, role: str, candidate: bytes, snapshot: 
     boundary, error = parse_document(snapshot["boundary.md"].decode("utf-8"))
     source = (boundary.frontmatter or {}).get("source") if boundary is not None and not error else None
     return ["[set] " + finding.render() for finding in validate_draft_at_slot(
-        attempt.run_dir / "set", _analysis_layout(attempt).path(role), candidate,
+        attempt.run_dir / "set", attempt.layout.path(role), candidate,
         repo_root=repo, members=snapshot, manifest=f"type: {SET_TYPE}\n".encode(),
         criteria=criterion_bytes(attempt), frozen_source=source,
     ) if not finding.info and not finding.warn and not finding.absent]
@@ -170,7 +169,7 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
         # Validate the handed synthesis with this exact verdict, not the latest
         # mutable synthesis. Only limit traceability belongs to this apply step;
         # the independent verifier judges its substantive support.
-        with_verdict = {**snapshot, _analysis_layout(attempt).path(role): candidate}
+        with_verdict = {**snapshot, attempt.layout.path(role): candidate}
         missing_limits = [reason for reason in _content(
             attempt, repo, subject_role, snapshot["synthesis.md"], with_verdict,
         ) if "limit not carried:" in reason]

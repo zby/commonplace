@@ -20,13 +20,15 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
         if spec.address == "file"
     }
     collection = LIBRARY / "agentic-system-analyses"
-    contracts = {collection / "COLLECTION.md", LIBRARY / jobs.type_spec}
-    # Historical projection and run-state schemas are not execution inputs.
+    contracts = {collection / "COLLECTION.md"}
+    # Historical projection and run-state schemas are not execution inputs,
+    # and the set type is fixed for the run rather than declared.
     historical = ("generated-review.", "agentic-system-analysis-run-state.")
     contracts.update(
         path for path in (collection / "types").iterdir()
-        if not path.name.startswith(historical)
+        if not path.name.startswith(historical) and path != LIBRARY / jobs.type_spec
     )
+    assert LIBRARY / jobs.type_spec not in declared
     contracts.update((collection / "instructions").glob("agentic-analysis-*.md"))
     workers = declaration.parent / "jobs-engine"
     contracts.update(workers.glob("*.md"))

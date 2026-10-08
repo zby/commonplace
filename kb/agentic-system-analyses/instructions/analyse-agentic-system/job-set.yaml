@@ -60,7 +60,6 @@ jobs:
     producer-attempt: {address: attempt, source: boundary, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     source: {address: output, source: 'acquire:source', required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     note-type: {address: file, source: types/note.md}
     agentic-system-analysis-overview-schema: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-overview.schema.yaml}
@@ -107,7 +106,6 @@ jobs:
     epistemic: {address: member, source: epistemic, required: false}
     memory: {address: member, source: memory, required: false}
     answers: {address: output, source: 'runtime:answers', required: false}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -160,7 +158,6 @@ jobs:
     epistemic: {address: member, source: epistemic, required: false}
     runtime: {address: member, source: runtime, required: false}
     answers: {address: output, source: 'memory:answers', required: false}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -213,7 +210,6 @@ jobs:
     memory: {address: member, source: memory, required: false}
     runtime: {address: member, source: runtime, required: false}
     answers: {address: output, source: 'epistemic:answers', required: false}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -268,7 +264,6 @@ jobs:
     epistemic: {address: member, source: epistemic, required: true}
     memory: {address: member, source: memory, required: true}
     runtime: {address: member, source: runtime, required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -298,7 +293,6 @@ jobs:
     memory: {address: member, source: memory}
     epistemic: {address: member, source: epistemic}
     reconciliation: {address: member, source: reconciliation}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -361,7 +355,6 @@ jobs:
     memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
     epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
     reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -429,7 +422,6 @@ jobs:
     runtime: {address: member, source: runtime, required: true}
     reconciliation-type: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
     reconciliation-schema: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -492,7 +484,6 @@ jobs:
     epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
     reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
     profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -569,7 +560,6 @@ jobs:
     epistemic: {address: member, source: epistemic, required: true}
     memory: {address: member, source: memory, required: true}
     runtime: {address: member, source: runtime, required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -636,7 +626,6 @@ jobs:
     synthesis-seen: {address: handed, source: 'verifier-attempt:synthesis', required: true}
     record-verification-seen: {address: handed, source: 'verifier-attempt:record-verification', required: true}
     profile-verification-seen: {address: handed, source: 'verifier-attempt:profile-verification', required: true}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -843,7 +832,6 @@ jobs:
       relation: 'synthesis-verification:identity:boundary', outcome: accepted}
     coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
       outcome: accepted}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
@@ -1080,7 +1068,6 @@ jobs:
       relation: 'synthesis-verification:identity:boundary', outcome: accepted}
     coverage-synthesis-verification-identity-boundary-boundary: {address: judgment, source: boundary, required: false, relation: 'synthesis-verification:identity:boundary',
       outcome: accepted}
-    set-type: {address: file, source: agentic-system-analyses/types/agentic-system-analysis-set.md}
     boundary-type: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     epistemic-type: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     memory-type: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}

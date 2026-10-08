@@ -60,6 +60,7 @@ class Run:
         # never from the library, so a later edit or another checkout changes nothing.
         self.layout, self.relations = _parse_type(metadata["type"], metadata["type_spec"])
         self.type_spec = metadata["type_spec"]
+        self.type_text = metadata["type"]
         self.parameters = metadata.get("parameters", {})
         self.library = Path(metadata["library"])
         self.jobs = load_job_set(metadata["declaration"], self.layout.roles)
@@ -449,6 +450,21 @@ class CodeAttempt:
     def parameters(self) -> Mapping[str, str]:
         """The run parameters fixed at start, read-only and not rerun triggers."""
         return self._parameters
+
+    @property
+    def layout(self) -> Layout:
+        """The set type's layout, fixed at start like the declaration."""
+        return self._run.layout
+
+    @property
+    def relations(self) -> tuple[tuple[str, str, str], ...]:
+        """The type's relations as (origin, partner, name), fixed at start."""
+        return tuple(self._run.relations)
+
+    @property
+    def type_text(self) -> str:
+        """The set type's text fixed at start, for validators that need it."""
+        return self._run.type_text
 
     @property
     def run_dir(self) -> Path:

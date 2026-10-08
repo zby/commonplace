@@ -81,6 +81,11 @@ def test_code_attempt_exposes_fixed_read_only_run_metadata(coordinator: Coordina
     run.parameters["subject"] = "mutated internal view"
     assert attempt.parameters == {"subject": "toy"}
     assert attempt.run_dir == c.run_dir.resolve()
+    type_file = c.method.parent.parent / "types" / "toy-set.md"
+    type_file.write_text("not a type any more\n", encoding="utf-8")
+    assert attempt.type_text != type_file.read_text(), "the type text is the copy fixed at start"
+    assert "report" in attempt.layout.roles
+    assert ("verification", "report", "verification:cites:report") in attempt.relations
     recorded_library = attempt.library
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", "/not-the-recorded-library")
     assert attempt.library == recorded_library
