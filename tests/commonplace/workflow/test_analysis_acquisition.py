@@ -18,6 +18,7 @@ from commonplace.lib import agentic_acquisition, agentic_checkout
 from commonplace.lib.agentic_acquisition import JOURNAL
 from commonplace.lib.agentic_job_set import (
     ACQUIRE_HANDLER,
+    ANALYST_CHECK_HANDLERS,
     BOUNDARY_CHECK_HANDLER,
     JOB_SET,
 )
@@ -106,16 +107,20 @@ def acquisition(request, monkeypatch, tmp_path):
         IDENTITY if original_origin(value) == str(upstream) else original_origin(value)
     ))
 
-    def start(*, revision=None, identity=None, boundary=False, production=False):
+    def start(*, revision=None, identity=None, boundary=False, analysts=False, production=False):
         # No actual workers. Boundary scripts bind its check only in a restricted
         # declaration; the migration declaration blocks unported runtime hand-outs.
         data = yaml.safe_load((prepared.repo / "kb" / JOB_SET).read_text())
         if not production:
-            data["jobs"] = data["jobs"][:4 if boundary else 2]
+            data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
         data["jobs"][1]["handler"] = ACQUIRE_HANDLER
-        if boundary:
+        if boundary or analysts:
             assert not production
             data["jobs"][3]["handler"] = BOUNDARY_CHECK_HANDLER
+        if analysts:
+            for job in data["jobs"]:
+                if job["name"].startswith("check-") and job["name"][6:] in ANALYST_CHECK_HANDLERS:
+                    job["handler"] = ANALYST_CHECK_HANDLERS[job["name"][6:]]
         declaration = tmp_path / "code-only-acquisition.yaml"
         declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
         parameters = dict(PARAMETERS)

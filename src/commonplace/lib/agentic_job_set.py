@@ -1,9 +1,9 @@
 """Fail-closed bindings for the opt-in analysis migration declaration.
 
 The job set is library data beside the job instructions, not generated Python.
-No live workflow or CLI uses it yet. Opening/acquisition and the boundary
-hand-out are ported. The next check binding remains fail-closed to prevent
-handing out unported runtime instructions.
+No live workflow or CLI uses it yet. Opening/acquisition, boundary and analyst
+hand-outs are ported. The specialist checks remain unbound to prevent handing
+out unported reconciliation instructions.
 """
 
 from __future__ import annotations
@@ -33,6 +33,9 @@ HANDLER = "commonplace.lib.agentic_job_set.unported"
 OPEN_HANDLER = "commonplace.lib.agentic_job_handlers.open_analysis"
 ACQUIRE_HANDLER = "commonplace.lib.agentic_job_handlers.acquire_analysis"
 BOUNDARY_CHECK_HANDLER = "commonplace.lib.agentic_job_handlers.check_boundary"
+ANALYST_CHECK_HANDLERS = {
+    member: f"commonplace.lib.agentic_job_handlers.check_{member}" for member in REPORTS
+}
 
 
 def unported(_attempt):
@@ -51,11 +54,11 @@ def contract_gaps(library: Path) -> tuple[str, ...]:
     layout = parse_layout(document.frontmatter["layout"], where=SET_TYPE)
     gaps = [
         "working set path: legacy consumers use output/, new-engine runs use set/; port consumers before switching",
-        "worker protocol: boundary is translated; port downstream ordering, input names, correction/answers and previous-output interfaces",
+        "worker protocol: boundary and analysts are translated; port reconciliation, verification, profile and synthesis interfaces",
         "run-state: project new-engine attempts/stops and uncertain external effects",
         "publication: enforce disposition-dependent holding acceptance coverage, preserve incumbent checks and effect recovery",
-        "boundary check binding: implemented against pinned inputs; keep it unbound until runtime hand-outs are translated",
-        "handlers: downstream member checks, set checks, verdict application and assembly remain unported",
+        "analyst check bindings: memory/epistemic implemented; keep unbound until reconciliation hand-outs are translated",
+        "handlers: reconciliation/profile/synthesis checks, set checks, verdict application and assembly remain unported",
         "coverage: assembly/publication handlers must enforce disposition-dependent whole-set coverage",
         "memory provenance: implement the workflow check promised by the set type or remove the promise",
         "legacy runs: opening rejects legacy state; keep legacy consumers intact until an explicit retirement",

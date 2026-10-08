@@ -1,7 +1,7 @@
 # Opt-in analysis migration declaration. NOT a runnable analysis workflow.
 # Opening/acquisition are bound, followed by an engine-specific boundary hand-out.
-# Boundary checking is implemented but stays unbound until runtime hand-outs are
-# ported. Other code bindings fail closed. The live skill/CLI remain legacy;
+# Boundary/runtime checks are bound; memory/epistemic checks stay unbound until
+# reconciliation hand-outs are ported. The live skill/CLI remain legacy;
 # do not launch workers from this migration declaration.
 # File inputs are relative to the library root recorded by start_run.
 # Opening consumes fixed system, source-identity, source and optional
@@ -52,7 +52,7 @@ jobs:
     validation-member: boundary.md
 - name: check-boundary
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.check_boundary
   inputs:
     candidate: {address: output, source: 'boundary:boundary', required: true}
     # Preserve an already accepted capture when boundary prose is corrected.
@@ -82,8 +82,9 @@ jobs:
   - report
   - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/runtime.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-runtime.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -92,14 +93,15 @@ jobs:
     refusal: {address: refusal, source: runtime, required: false}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: runtime.md
 - name: check-runtime
   kind: code
-  handler: commonplace.lib.agentic_job_set.unported
+  handler: commonplace.lib.agentic_job_handlers.check_runtime
   inputs:
     candidate: {address: output, source: 'runtime:report', required: true}
+    incumbent-report: {address: member, source: runtime, required: false}
+    note-type: {address: file, source: types/note.md}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: runtime, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
@@ -132,8 +134,9 @@ jobs:
   - report
   - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/analyse-memory.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -143,7 +146,6 @@ jobs:
     runtime: {address: member, source: runtime, order_only: true}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: memory.md
 - name: check-memory
@@ -151,6 +153,8 @@ jobs:
   handler: commonplace.lib.agentic_job_set.unported
   inputs:
     candidate: {address: output, source: 'memory:report', required: true}
+    incumbent-report: {address: member, source: memory, required: false}
+    note-type: {address: file, source: types/note.md}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: memory, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
@@ -183,8 +187,9 @@ jobs:
   - report
   - answers
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/epistemic.md}
-    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-epistemic.md}
+    worker-rules: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md}
+    opening: {address: output, source: 'open:metadata', required: true}
     collection: {address: file, source: agentic-system-analyses/COLLECTION.md}
     sources-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-sources.md}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -194,7 +199,6 @@ jobs:
     runtime: {address: member, source: runtime, order_only: true}
   parameters:
     system: '{param:system}'
-    run-state: '{run}/run-state.md'
     validation-set: '{set}'
     validation-member: epistemic.md
 - name: check-epistemic
@@ -202,6 +206,8 @@ jobs:
   handler: commonplace.lib.agentic_job_set.unported
   inputs:
     candidate: {address: output, source: 'epistemic:report', required: true}
+    incumbent-report: {address: member, source: epistemic, required: false}
+    note-type: {address: file, source: types/note.md}
     metadata: {address: output, source: 'open:metadata', required: true}
     producer-attempt: {address: attempt, source: epistemic, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}

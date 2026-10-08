@@ -322,13 +322,13 @@ def test_boundary_unchanged_refusal_answer_fails_and_bound_does_not_reset(bounda
     assert "max attempts" in status.stops[0].reason
 
 
-def test_migration_declaration_stops_before_legacy_runtime_handout(acquisition):
+def test_migration_declaration_hands_out_translated_runtime(acquisition):
     start, _ = acquisition
     a = start(production=True)
     a.coordinator.advance()
     assert a.coordinator.handed() == {"boundary"}
     status = a.coordinator.complete("boundary", candidate(a))
-    assert not status.handouts and not status.open_attempts and not status.publishable
-    (stop,) = status.stops
-    assert stop.job == "check-boundary" and "handlers are not ported" in stop.reason
-    assert Run(RunStore(a.coordinator.run_dir)).members() == {}
+    assert not status.stops and not status.publishable
+    assert a.coordinator.handed() == {"runtime"}
+    assert "jobs-engine/trace-runtime.md" in a.coordinator.handout("runtime").prompt.read_text()
+    assert set(Run(RunStore(a.coordinator.run_dir)).members()) == {"boundary"}

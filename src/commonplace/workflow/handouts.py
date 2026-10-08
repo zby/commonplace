@@ -115,6 +115,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     store.open_attempt({
         "id": attempt, "seq": seq, "job": job.name, "kind": "model",
         "pins": {name: pinned.pin() for name, pinned in pins.items()},
+        "previous_outputs": {} if previous is None else dict(previous["outputs"]),
     })
     return Handout(attempt, job.name, prompt, outputs, problem)
 

@@ -11,6 +11,8 @@ import yaml
 
 from commonplace.lib.agentic_job_set import (
     ACQUIRE_HANDLER,
+    ANALYST_CHECK_HANDLERS,
+    BOUNDARY_CHECK_HANDLER,
     HANDLER,
     JOB_SET,
     MODEL_ROLES,
@@ -57,7 +59,13 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, _ = graph
     assert jobs.job("open").inputs == {}
     assert jobs.job("acquire").handler == ACQUIRE_HANDLER
-    assert jobs.job("check-boundary").handler == HANDLER
+    assert jobs.job("check-boundary").handler == BOUNDARY_CHECK_HANDLER
+    assert jobs.job("check-runtime").handler == ANALYST_CHECK_HANDLERS["runtime"]
+    for member in ("memory", "epistemic"):
+        assert jobs.job(f"check-{member}").handler == HANDLER
+    for member in REPORTS:
+        assert "opening" in jobs.job(member).inputs
+        assert "run-state" not in jobs.job(member).parameters
     boundary = jobs.job("boundary")
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
@@ -177,11 +185,13 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
             "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
             *(layout.roles[role].type for role in roles),
         }
-        if name == "boundary":
+        if name in ("boundary", *REPORTS):
             jobs_root = "agentic-system-analyses/instructions/analyse-agentic-system/"
-            expected -= {f"{jobs_root}jobs/boundary.md", f"{jobs_root}jobs/worker-rules.md"}
-            expected |= {f"{jobs_root}jobs-engine/fix-boundary.md", f"{jobs_root}jobs-engine/follow-worker-rules.md"}
-        else:
+            instruction = {"boundary": "fix-boundary", "runtime": "trace-runtime",
+                           "memory": "analyse-memory", "epistemic": "trace-epistemic"}[name]
+            expected -= {f"{jobs_root}jobs/{name}.md", f"{jobs_root}jobs/worker-rules.md"}
+            expected |= {f"{jobs_root}jobs-engine/{instruction}.md", f"{jobs_root}jobs-engine/follow-worker-rules.md"}
+        if name != "boundary":
             expected.add(f"{shared}records.md")
         if name in ("boundary", "verify"):
             expected.add(f"{shared}boundary.md")
@@ -323,7 +333,7 @@ def test_live_contract_gaps_are_explicit():
     assert not any(gap.startswith("opening:") for gap in gaps)
     assert any(gap.startswith("startup:") for gap in gaps)
     assert not any(gap.startswith("acquisition binding:") for gap in gaps)
-    assert any(gap.startswith("boundary check binding:") for gap in gaps)
+    assert any(gap.startswith("analyst check bindings:") for gap in gaps)
     assert any(gap.startswith("legacy runs:") for gap in gaps)
     assert not any(gap.startswith("runtime context:") for gap in gaps)
     assert not any(gap.startswith("check criteria:") for gap in gaps)
@@ -344,6 +354,16 @@ def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatc
                 from commonplace.lib.agentic_job_handlers import acquire_analysis
 
                 assert job.handler == ACQUIRE_HANDLER and job.resolve_handler() is acquire_analysis
+                continue
+            if job.name == "check-boundary":
+                from commonplace.lib.agentic_job_handlers import check_boundary
+
+                assert job.handler == BOUNDARY_CHECK_HANDLER and job.resolve_handler() is check_boundary
+                continue
+            if job.name == "check-runtime":
+                from commonplace.lib.agentic_job_handlers import check_runtime
+
+                assert job.handler == ANALYST_CHECK_HANDLERS["runtime"] and job.resolve_handler() is check_runtime
                 continue
             assert job.handler == HANDLER
             assert job.resolve_handler() is unported

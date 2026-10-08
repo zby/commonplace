@@ -17,8 +17,9 @@ import subprocess
 from pathlib import Path
 
 from commonplace.lib.agentic_acquisition import acquire_source
-from commonplace.lib.agentic_boundary import boundary_refusals
+from commonplace.lib.agentic_boundary import boundary_refusals, frozen_source_refusals
 from commonplace.lib.agentic_checkout import github_checkout_path
+from commonplace.lib.agentic_job_checks import correction_findings, refusal_findings
 from commonplace.lib.agentic_publication import (
     inspect_destination,
     require_publishable_worktree,
@@ -182,7 +183,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     Content checks see a one-member snapshot at its intended set path. Invocation
     checks bind its run identity and source to opening/acquisition. Self-citations
     are content checks, not engine relations; no downstream coverage is claimed.
-    Keep this handler unbound until runtime hand-outs are ported.
+    The declaration binds this check only with translated downstream hand-outs.
     """
     metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job="boundary check")
     candidate = attempt.read("candidate")
@@ -221,3 +222,72 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
         "candidate", outcome="refused" if reasons else "accepted", findings="\n".join(reasons),
     )
     return {}
+
+
+def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
+    metadata, repo = _opened_environment(attempt, attempt.read("metadata"), job=f"{member} check")
+    candidate = attempt.read("candidate")
+    if candidate is None:
+        raise ValueError(f"{member} check requires a candidate")
+    partners = ["boundary", *[role for role in ("runtime", "memory", "epistemic") if role != member]]
+    snapshot = {}
+    present = []
+    for role in partners:
+        data = attempt.read(role)
+        if data is not None:
+            snapshot[analysis_layout().path(role)] = data
+            present.append(role)
+    boundary, error = parse_document(snapshot["boundary.md"].decode("utf-8"))
+    if boundary is None or error or not isinstance((boundary.frontmatter or {}).get("source"), dict):
+        raise ValueError(f"{member} check requires a boundary with a frozen source")
+    source = boundary.frontmatter["source"]
+    findings = validate_draft_at_slot(
+        attempt.run_dir / "set", analysis_layout().path(member), candidate,
+        repo_root=repo, members=snapshot, manifest=f"type: {SET_TYPE}\n".encode(),
+    )
+    reasons = ["[set] " + finding.render() for finding in findings
+               if not finding.info and not finding.warn and not finding.absent]
+    reasons += ["[invocation] " + reason for reason in frozen_source_refusals(source)]
+    try:
+        document, _ = parse_document(candidate.decode("utf-8"))
+    except UnicodeError:
+        document = None
+    if document is not None:
+        fields = document.frontmatter or {}
+        if fields.get("run-id") != metadata["run-id"]:
+            reasons.append("[invocation] run-id must be the opening's run identity")
+        if member == "memory" and fields.get("source-identity") != metadata["source-identity"]:
+            reasons.append("[invocation] source-identity must be the opening's normalized source identity")
+    answered = attempt.read("answered-refusal")
+    producer_bytes = attempt.read("producer-attempt")
+    if producer_bytes is None:
+        raise ValueError("analyst check requires the producer attempt")
+    producer = json.loads(producer_bytes)
+    reasons += ["[correction] " + reason for reason in correction_findings(
+        candidate, member=member, incumbent=attempt.read("incumbent-report"),
+        refusal=answered, answers=attempt.read("answers"),
+        previous_version=producer["previous_outputs"].get("report"),
+    )]
+    _require_opened_method(repo, metadata, job=f"{member} check")
+    scope = [f"{member}:cites:{role}" for role in present]
+    scope.append(f"{member}:identity:boundary")
+    attempt.judge(
+        "candidate", outcome="refused" if reasons else "accepted", scope=tuple(scope),
+        findings=refusal_findings(reasons, member=member, answered=answered) if reasons else "",
+    )
+    return {}
+
+
+def check_runtime(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Judge a runtime candidate and its correction answers against pinned inputs."""
+    return _check_analyst(attempt, "runtime")
+
+
+def check_memory(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Judge a memory candidate and its correction answers against pinned inputs."""
+    return _check_analyst(attempt, "memory")
+
+
+def check_epistemic(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Judge an epistemic candidate and its correction answers against pinned inputs."""
+    return _check_analyst(attempt, "epistemic")

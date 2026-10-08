@@ -86,7 +86,10 @@ only the attempt record selecting the version changes.
 ## Attempts and currency
 
 Hand-outs pin every input and always supply the previous output by identity;
-it is not an input. There is no opt-in previous-output flag. A completed
+it is not an input. The attempt record retains those delivered previous-output
+versions in `previous_outputs`. A code consumer declaring the producer's
+attempt can compare a candidate with its delivered baseline without reading a
+mutable member or adding a self-input. There is no opt-in previous-output flag. A completed
 attempt records the versions pinned at opening, not those current when its
 result is reported. An open model attempt is closed only by an attempt
 result. A result with no output closes it as failed; a killed worker is not
