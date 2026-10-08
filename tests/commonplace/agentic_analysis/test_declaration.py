@@ -1,4 +1,4 @@
-"""Contracts for the opt-in, fail-closed analysis YAML declaration.
+"""Contracts for the analysis YAML declaration and its bound handlers.
 
 Use the real shipped layout and instructions. No workers, network, source
 acquisition, publication or production command switches are involved.
@@ -9,22 +9,34 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib.agentic_analysis.declaration import (
-    ACQUIRE_HANDLER,
-    ANALYST_CHECK_HANDLERS,
-    BOUNDARY_CHECK_HANDLER,
-    JOB_SET,
-    MODEL_ROLES,
-    OPEN_HANDLER,
-    RECORDS,
-    REPORTS,
-)
+from commonplace.lib.agentic_analysis.declaration import JOB_SET
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.workflow import CodeJob, ModelJob, advance, load_job_set, start_run
 from commonplace.workflow.state import ABSENT, Resolved, Run
 from commonplace.workflow.store import RunStore
+
+REPORTS = ("runtime", "memory", "epistemic")
+RECORDS = (*REPORTS, "reconciliation")
+MODEL_ROLES = {
+    "boundary": "boundary",
+    "runtime": "runtime",
+    "memory": "memory",
+    "epistemic": "epistemic",
+    "reconcile": "reconciliation",
+    "verify": "record-verification",
+    "profile": "memory-profile",
+    "verify-profile": "profile-verification",
+    "synthesize": "synthesis",
+    "verify-synthesis": "synthesis-verification",
+}
+OPEN_HANDLER = "commonplace.lib.agentic_analysis.handlers.open_analysis"
+ACQUIRE_HANDLER = "commonplace.lib.agentic_analysis.handlers.acquire_analysis"
+BOUNDARY_CHECK_HANDLER = "commonplace.lib.agentic_analysis.handlers.check_boundary"
+ANALYST_CHECK_HANDLERS = {
+    member: f"commonplace.lib.agentic_analysis.handlers.check_{member}" for member in REPORTS
+}
 
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
@@ -337,7 +349,7 @@ def test_publication_requires_holding_acceptances_not_every_possible_member(engi
     assert job.handler == INTEGRATED_HANDLERS["publish"]
 
 
-def test_migration_bindings_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
+def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"
     jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))

@@ -10,7 +10,7 @@ from commonplace.workflow.declaration import CodeJob, Input
 from commonplace.workflow.engine import _close, _open_model_attempts, _run_code_jobs
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore, digest
-from tests.commonplace.workflow.conftest import COMPLETE_BRIEF, Coordinator, toy_library
+from tests.commonplace.workflow.support import COMPLETE_BRIEF, Coordinator, toy_library
 
 
 def state(c):

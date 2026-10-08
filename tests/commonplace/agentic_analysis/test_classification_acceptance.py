@@ -25,13 +25,13 @@ from commonplace.lib.agentic_analysis.records import (
 )
 from commonplace.lib.validation import validate_draft_at_slot
 from scripts import analyze_matrix as stats
-from tests.commonplace.lib.test_agentic_analysis import (
+from tests.commonplace.agentic_analysis.fixtures import (
+    comparison_schema,
     frontmatter,
     member_fixture,
     repin,
     replace_frontmatter,
 )
-from tests.commonplace.lib.test_systems_matrix import comparison_schema
 
 
 @dataclass(frozen=True)
@@ -289,7 +289,7 @@ def test_self_improvement_test_reaches_declared_job_inputs(job_name):
         )
 
 
-def test_case11_unsupported_negative_and_reference_defects_are_really_rejected():
+def test_unsupported_negative_and_reference_defects_are_rejected():
     profile, bodies = materialize({"trace_learning": axis(
         Part("trace-negative", "Unsupported negative", "No absence search was performed.", ("no",)))})
     # In-vocabulary negative with a resolved ID is still incompatible with the
@@ -342,7 +342,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     assert "an unsupported emitted value or strength" in declared_packet("verify-profile").lower()
 
 
-def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):
+def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):
     specification, _ = CASES[-1].values
     profile, bodies = materialize(specification)
     sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
@@ -382,7 +382,7 @@ def test_case13_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch
     assert sm.complete_values(row, "write_agency") is None
 
 
-def test_case12_public_contribution_and_independent_uncertainties(tmp_path, tmp_library):
+def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library):
     from commonplace.lib import validation
 
     directory = member_fixture(tmp_path) / "set"

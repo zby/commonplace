@@ -263,7 +263,7 @@ def test_on_page_markdown_keeps_headless_tags_as_text(tmp_path: Path) -> None:
 
 def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_library) -> None:
     from commonplace.lib.systems_matrix import load_results
-    from tests.commonplace.lib.test_agentic_analysis import retained_fixture
+    from tests.commonplace.agentic_analysis.fixtures import retained_fixture
     retained_fixture(tmp_path)
     docs_dir = tmp_path / "kb"
     readme = write(docs_dir / "agentic-system-analyses/README.md", "# Analyses\n")

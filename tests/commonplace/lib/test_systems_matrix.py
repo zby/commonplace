@@ -2,13 +2,12 @@ import csv
 import io
 import json
 from copy import deepcopy
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
-from jsonschema import Draft202012Validator
 
 from commonplace.lib import systems_matrix as sm
+from tests.commonplace.agentic_analysis.fixtures import comparison_schema
 
 KNOWN = {"RT-OBJ-store", "RT-RTE-model-call", "RT-ABS-missing-route"}
 
@@ -214,15 +213,6 @@ def axis2(*units, assessment="known"):
         "assessment": assessment, "units": list(units),
         "records": ["RT-OBJ-store"], "note": "Synthetic scoped inventory witness.",
     }
-
-
-def comparison_schema():
-    schema = json.loads((Path(__file__).resolve().parents[3] /
-                         "kb/agentic-system-analyses/types/agent-memory-profile.schema.yaml").read_text())
-    comparison = deepcopy(schema["allOf"][1]["properties"]["frontmatter"]["properties"]["memory-comparison"])
-    comparison["$defs"] = schema["$defs"]
-    Draft202012Validator.check_schema(comparison)
-    return Draft202012Validator(comparison)
 
 
 def test_revision2_partial_positive_roundtrip_and_nonmutation():

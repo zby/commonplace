@@ -6,81 +6,29 @@ import json
 from pathlib import Path
 
 import pytest
-import yaml
 
 from commonplace.lib.agentic_analysis.checks import correction_findings
 from commonplace.workflow import judge
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.test_analysis_acquisition import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    REPORT_TYPES,
+    judgments,
+    parameters,
+    report,
+    through_analysts,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local fixture
 )
-from tests.commonplace.workflow.test_analysis_acquisition import (
-    prepared_checkout,  # noqa: F401 - transitive local fixture
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    analysts as analysts,  # noqa: PLC0414 - explicit fixture registration
 )
-from tests.commonplace.workflow.test_analysis_boundary import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     candidate as boundary_candidate,
 )
-from tests.commonplace.workflow.test_analysis_boundary import parameters
-
-REPORT_TYPES = {
-    "runtime": "agentic-system-runtime-report", "memory": "agent-memory-analysis-report",
-    "epistemic": "agentic-system-epistemic-report",
-}
-KINDS = ["Components", "Operative objects", "Routes", "Claims", "Evidenced absences", "Behavioral-authority paths"]
-
-
-@pytest.fixture
-def analysts(request):
-    start, _ = request.getfixturevalue("local_acquisition")
-    a = start(analysts=True)
-    a.coordinator.advance()
-    a.coordinator.complete("boundary", boundary_candidate(a))
-    assert a.coordinator.handed() == {"runtime"}
-    return a
-
-
-def report(a, member, **changes):
-    fields = {
-        "type": f"agentic-system-analyses/types/{REPORT_TYPES[member]}.md",
-        "description": f"Example System {member} report at the frozen local fixture boundary",
-        "run-id": a.coordinator.run_dir.name,
-        "reviewed-boundary": a.source()["revision"],
-    }
-    if member == "memory":
-        fields["source-identity"] = a.source()["identity"]
-    fields.update(changes)
-    sections = {
-        "runtime": ["Runtime account", "Shared records", "Annotations"],
-        "memory": ["Boundary and evidence", "Core ideas", "Shared records", "Write side", "Read-back",
-                   "Integration issues", "Limitations and checks"],
-        "epistemic": ["Source-and-claim boundary", "Epistemic-object inventory", "Authority-route ledger",
-                      "System-claim versus route comparison", "Bounded conclusion", "Shared records"],
-    }[member]
-    body = f"# Example System {member} report\n\n"
-    for title in sections:
-        body += f"## {title}\n\n"
-        if title == "Shared records":
-            body += "".join(f"### {kind}\n\nnone declared in this member\n\n" for kind in KINDS)
-        elif title == "Authority-route ledger":
-            body += "no route found within boundary\n\n"
-        elif title in ("Annotations", "Integration issues"):
-            body += "none\n\n"
-        else:
-            body += "Local fixture only; no analytical model was run. SRC-1 fixes the evidence.\n\n"
-    return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
-
-
-def judgments(a, member):
-    return [j for j in RunStore(a.coordinator.run_dir).judgment_records() if j["job"] == f"check-{member}"]
-
-
-def through_analysts(a):
-    c = a.coordinator
-    c.complete("runtime", report(a, "runtime"), answers="")
-    assert c.handed() == {"memory", "epistemic"}
-    c.advance(c.result("memory", report(a, "memory"), answers=""),
-              c.result("epistemic", report(a, "epistemic"), answers=""))
-    assert not c.status.stops
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
+)
 
 
 def test_three_analysts_install_pinned_members_and_cover_present_relations(analysts):

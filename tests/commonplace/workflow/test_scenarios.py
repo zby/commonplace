@@ -11,8 +11,8 @@ from __future__ import annotations
 import pytest
 
 from commonplace.workflow import AttemptResult, judge, start_run
-from tests.commonplace.workflow.conftest import BLOCKED_BRIEF, Coordinator
 from tests.commonplace.workflow.handlers import INTERRUPT_ENV
+from tests.commonplace.workflow.support import BLOCKED_BRIEF, Coordinator
 
 
 def refuse_report(c: Coordinator, reason: str = "r1") -> None:
@@ -473,7 +473,7 @@ def test_handout_prompt_keeps_the_legacy_shape(coordinator: Coordinator) -> None
 
 
 def test_start_refuses_missing_run_parameters(tmp_path, tmp_library) -> None:
-    from tests.commonplace.workflow.conftest import toy_library
+    from tests.commonplace.workflow.support import toy_library
 
     declaration, _ = toy_library(tmp_path)
     with pytest.raises(ValueError, match="run parameters not given: subject"):

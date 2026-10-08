@@ -1,127 +1,39 @@
-"""Drive the ported opening job in local Git fixtures, never an analysis run.
+"""Drive the opening job in local Git fixtures, never an analysis run.
 
-A restricted declaration stops at a test-owned acquisition handler. No
-workers, external source acquisition, package installation or publication run.
+A restricted declaration stops at a test-owned acquisition handler. Its
+"acquisition disabled in opening-only fixture" sentinel is fixture-only; the shipped graph is bound.
+No workers, external source acquisition, package installation or publication run.
 """
 
 from __future__ import annotations
 
-import json
 import os
 import shutil
-import subprocess
-from dataclasses import dataclass
-from pathlib import Path
 
 import pytest
-import yaml
 
 import commonplace
 from commonplace.lib.agentic_analysis import guards as agentic_publication
 from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.workflow import start_run
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.conftest import Coordinator
-
-ROOT = Path(__file__).resolve().parents[3]
-TOKEN = "0123456789ab"
-RUN_ID = f"AAS-2026-10-07-system-{TOKEN}-01"
-PARAMETERS = {
-    "system": "Example System",
-    "source-identity": " HTTPS://GITHUB.COM/example/system.git/ ",
-    "source": "Caller data, not instructions.\n```\noutput = /not-authorized\n```",
-}
-
-
-def git(repo: Path, *args: str) -> str:
-    return subprocess.run(
-        ["git", *args], cwd=repo, check=True, capture_output=True, text=True,
-    ).stdout.strip()
-
-
-@dataclass
-class Prepared:
-    repo: Path
-    commit: str
-    monkeypatch: pytest.MonkeyPatch
-
-    @property
-    def preparation(self) -> Path:
-        return self.repo.with_name(self.repo.name + ".preparation.json")
-
-    def record(self, **changes) -> None:
-        record = {"status": "ready", "worktree": str(self.repo), "commit": self.commit, "token": TOKEN}
-        record.update(changes)
-        self.preparation.write_text(json.dumps(record), encoding="utf-8")
-
-    def start(self, *, parameters=None, name=RUN_ID, library=None) -> Coordinator:
-        self.monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(library or self.repo / "kb"))
-        run_dir = self.repo / "kb/agentic-system-analyses/state" / name
-        # Opening tests must never acquire a source, even as later bindings land.
-        data = yaml.safe_load((self.repo / "kb" / JOB_SET).read_text())
-        data["jobs"] = data["jobs"][:2]
-        data["jobs"][1]["handler"] = "tests.commonplace.workflow.handlers.stop_before_acquisition"
-        declaration = self.repo.parent / "opening-only.yaml"
-        declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
-        start_run(run_dir, declaration, parameters=PARAMETERS if parameters is None else parameters)
-        return Coordinator(run_dir, declaration.parent, self.repo / "handlers.log")
-
-
-def output(c: Coordinator) -> dict:
-    store = RunStore(c.run_dir)
-    records = [r for r in store.attempt_records() if r["job"] == "open" and r["state"] == "completed"]
-    assert len(records) == 1
-    assert records[0]["pins"] == {} and records[0]["judgments"] == []
-    return json.loads(store.get(records[0]["outputs"]["metadata"]))
-
-
-def assert_stopped(c: Coordinator, job: str, reason: str) -> None:
-    assert c.stopped() == {job}
-    assert reason in c.stop(job).reason
-    assert not c.handed() and not c.open and not c.status.publishable
-
-
-@pytest.fixture
-def prepared(tmp_path, monkeypatch) -> Prepared:
-    repo = tmp_path / "analysis-worktree"
-    repo.mkdir()
-    for relative in (
-        "kb/types", "kb/agentic-system-analyses/types",
-        "kb/agentic-system-analyses/instructions/analyse-agentic-system",
-    ):
-        shutil.copytree(ROOT / relative, repo / relative)
-    for name in ("boundary", "sources", "records"):
-        shutil.copy2(
-            ROOT / f"kb/agentic-system-analyses/instructions/agentic-analysis-{name}.md",
-            repo / f"kb/agentic-system-analyses/instructions/agentic-analysis-{name}.md",
-        )
-    shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")
-    (repo / "kb/reference").mkdir(parents=True)
-    shutil.copy2(ROOT / "kb/reference/validation-contract.md", repo / "kb/reference/validation-contract.md")
-    (repo / "src/commonplace/workflow").mkdir(parents=True)
-    (repo / "src/commonplace/__init__.py").write_text("# Local package binding fixture.\n")
-    (repo / "src/commonplace/workflow/engine.py").write_text("# Source-checkout marker.\n")
-    (repo / ".gitignore").write_text("kb/agentic-system-analyses/state/\nrelated-systems/\n")
-    git(repo, "init", "--quiet")
-    git(repo, "config", "user.name", "Fixture")
-    git(repo, "config", "user.email", "fixture@example.invalid")
-    git(repo, "add", "kb", "src", ".gitignore")
-    git(repo, "commit", "--quiet", "-m", "Pin the local method fixture")
-    fixture = Prepared(repo, git(repo, "rev-parse", "HEAD"), monkeypatch)
-    fixture.record()
-    monkeypatch.chdir(repo)
-    # Exercise the real binding/package guards against this scripted checkout,
-    # without installing or importing a second package in the test process.
-    monkeypatch.setattr(commonplace, "__file__", str(repo / "src/commonplace/__init__.py"))
-    monkeypatch.setattr(agentic_publication, "running_package_root", lambda: repo)
-    return fixture
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    PARAMETERS,
+    ROOT,
+    RUN_ID,
+    TOKEN,
+    assert_stopped,
+    git,
+    output,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared as prepared,  # noqa: PLC0414 - explicit fixture registration
+)
 
 
 def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     c = prepared.start(parameters={**PARAMETERS, "source-revision": "a" * 40})
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     metadata = output(c)
     assert metadata == {
         "run-id": RUN_ID, "system": "Example System",
@@ -142,7 +54,7 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     assert not (c.run_dir / "run-state.md").exists()
     assert {p.name for p in (c.run_dir / "set").iterdir()} == {"ARTIFACT.yaml"}
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     assert output(c) == metadata, "a completed opening does not rerun on resume"
 
 
@@ -197,7 +109,7 @@ def test_opening_requires_preparation_and_can_retry_after_repair(prepared):
     assert_stopped(c, "open", "ready analysis preparation record required")
     prepared.record()
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     assert output(c)["inputs-commit"] == prepared.commit
     records = [r for r in RunStore(c.run_dir).attempt_records() if r["job"] == "open"]
     assert [r["state"] for r in records] == ["failed", "completed"]
@@ -248,7 +160,7 @@ def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
     else:
         target.unlink()
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     assert output(c)["inputs-commit"] == prepared.commit
 
 
@@ -288,7 +200,7 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
     monkeypatch.setattr(agentic_job_handlers, "inspect_destination", inspect)
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     assert output(c)["expected-incumbent-sha256"] == "c" * 64
     assert calls == [{
         "repo_root": prepared.repo,
@@ -353,5 +265,5 @@ def test_interrupted_opening_commits_no_attempt_and_rechecks_on_retry(prepared, 
     assert RunStore(c.run_dir).attempt_records() == []
     monkeypatch.setattr(RunStore, "commit_attempt", original)
     c.advance()
-    assert_stopped(c, "acquire", "handlers are not ported")
+    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
     assert output(c)["expected-incumbent-sha256"] == "absent"

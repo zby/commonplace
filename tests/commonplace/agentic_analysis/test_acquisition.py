@@ -7,38 +7,25 @@ No workers, network sources, target execution, installations or publication.
 from __future__ import annotations
 
 import json
-import subprocess
-from dataclasses import dataclass, field
-from pathlib import Path
 
 import pytest
-import yaml
 
 from commonplace.lib.agentic_analysis import acquisition as agentic_acquisition
 from commonplace.lib.agentic_analysis import checkout as agentic_checkout
-from commonplace.lib.agentic_analysis.acquisition import JOURNAL
 from commonplace.lib.agentic_analysis.checkout import CheckoutError
-from commonplace.lib.agentic_analysis.declaration import (
-    ACQUIRE_HANDLER,
-    ANALYST_CHECK_HANDLERS,
-    BOUNDARY_CHECK_HANDLER,
-    JOB_SET,
-)
-from commonplace.workflow import start_run
 from commonplace.workflow.engine import inspect
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.conftest import Coordinator
-from tests.commonplace.workflow.test_analysis_opening import (
-    PARAMETERS,
-    RUN_ID,
-    Prepared,
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    IDENTITY,
+    advance_upstream,
     git,
 )
-from tests.commonplace.workflow.test_analysis_opening import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    acquisition as acquisition,  # noqa: PLC0414 - explicit fixture registration
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - shared local fixture
 )
-
-IDENTITY = "https://github.com/example/system"
 
 
 def test_checkout_refusal_is_a_domain_value_error_without_side_effects(tmp_path):
@@ -48,114 +35,6 @@ def test_checkout_refusal_is_a_domain_value_error_without_side_effects(tmp_path)
         agentic_checkout.refreeze(path, origin="https://example.invalid/source", revision="a" * 40)
     assert isinstance(raised.value, ValueError)
     assert path.read_bytes() == b"keep this file"
-
-
-@dataclass
-class Acquisition:
-    prepared: Prepared
-    upstream: Path
-    coordinator: Coordinator
-    freezes: list[dict] = field(default_factory=list)
-
-    @property
-    def checkout(self) -> Path:
-        return self.prepared.repo / "related-systems/example--system"
-
-    @property
-    def journal(self) -> Path:
-        return self.coordinator.run_dir / JOURNAL
-
-    def source(self):
-        store = RunStore(self.coordinator.run_dir)
-        records = [r for r in store.attempt_records() if r["job"] == "acquire" and r["state"] == "completed"]
-        assert len(records) == 1
-        return json.loads(store.get(records[0]["outputs"]["source"]))
-
-    def advance(self):
-        status = self.coordinator.advance()
-        assert not status.handouts and not status.open_attempts and not status.publishable
-        return status
-
-    def stop(self, reason, *, uncertain=False):
-        (stop,) = self.coordinator.status.stops
-        assert stop.job == "acquire" and reason in stop.reason and stop.uncertain is uncertain
-        return stop
-
-
-def advance_upstream(upstream: Path) -> str:
-    (upstream / "NEW.md").write_text("New local fixture revision.\n")
-    git(upstream, "add", "NEW.md")
-    git(upstream, "commit", "--quiet", "-m", "Advance the local source")
-    return git(upstream, "rev-parse", "HEAD")
-
-
-@pytest.fixture
-def acquisition(request, monkeypatch, tmp_path):
-    prepared = request.getfixturevalue("prepared_checkout")
-    upstream = tmp_path / "local-upstream"
-    upstream.mkdir()
-    git(upstream, "init", "--quiet")
-    git(upstream, "config", "user.name", "Fixture")
-    git(upstream, "config", "user.email", "fixture@example.invalid")
-    (upstream / "README.md").write_text("Local source fixture; never execute it.\n")
-    git(upstream, "add", "README.md")
-    git(upstream, "commit", "--quiet", "-m", "Pin the local source")
-    original_run = subprocess.run
-    original_origin = agentic_checkout.canonical_origin
-
-    def local_only(args, *positional, **kwargs):
-        args = list(args)
-        if args[:3] == ["git", "clone", "--quiet"] and args[3] == IDENTITY:
-            args[3] = str(upstream)
-        # Every fetch origin is a local directory established by that clone.
-        # Refuse network addresses instead of accidentally exercising the web.
-        if args and args[0] == "git":
-            assert not any(str(arg).startswith(("https://", "http://", "ssh://", "git@")) for arg in args)
-        return original_run(args, *positional, **kwargs)
-
-    monkeypatch.setattr(subprocess, "run", local_only)
-    monkeypatch.setattr(agentic_checkout, "canonical_origin", lambda value: (
-        IDENTITY if original_origin(value) == str(upstream) else original_origin(value)
-    ))
-
-    def start(*, revision=None, identity=None, boundary=False, analysts=False, production=False):
-        # No actual workers. Boundary scripts bind its check only in a restricted
-        # declaration; the migration declaration blocks unported runtime hand-outs.
-        data = yaml.safe_load((prepared.repo / "kb" / JOB_SET).read_text())
-        if not production:
-            data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
-        data["jobs"][1]["handler"] = ACQUIRE_HANDLER
-        if boundary or analysts:
-            assert not production
-            data["jobs"][3]["handler"] = BOUNDARY_CHECK_HANDLER
-        if analysts:
-            for job in data["jobs"]:
-                if job["name"].startswith("check-") and job["name"][6:] in ANALYST_CHECK_HANDLERS:
-                    job["handler"] = ANALYST_CHECK_HANDLERS[job["name"][6:]]
-        declaration = tmp_path / "code-only-acquisition.yaml"
-        declaration.write_text(yaml.safe_dump(data), encoding="utf-8")
-        parameters = dict(PARAMETERS)
-        if revision is not None:
-            parameters["source-revision"] = revision
-        if identity is not None:
-            parameters["source-identity"] = identity
-        monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(prepared.repo / "kb"))
-        run_dir = prepared.repo / "kb/agentic-system-analyses/state" / RUN_ID
-        if identity is not None:
-            run_dir = run_dir.with_name(RUN_ID.replace("-system-", "-example-system-"))
-        start_run(run_dir, declaration, parameters=parameters)
-        c = Coordinator(run_dir, declaration.parent, tmp_path / "handlers.log")
-        a = Acquisition(prepared, upstream, c)
-        original_freeze = agentic_checkout.freeze_checkout
-
-        def freeze(*args, **kwargs):
-            a.freezes.append(kwargs)
-            return original_freeze(*args, **kwargs)
-
-        monkeypatch.setattr(agentic_checkout, "freeze_checkout", freeze)
-        return a
-
-    return start, upstream
 
 
 def test_clone_freezes_the_local_default_tip_and_records_the_effect(acquisition):

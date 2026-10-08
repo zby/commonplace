@@ -17,14 +17,14 @@ from commonplace.lib.systems_matrix import AXES
 from commonplace.workflow import CodeAttempt, CodeJob, Input
 from commonplace.workflow.state import Resolved, Run
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.test_analysis_acquisition import (
-    acquisition as local_acquisition,  # noqa: F401
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
 )
-from tests.commonplace.workflow.test_analysis_acquisition import (
-    prepared_checkout,  # noqa: F401
+from tests.commonplace.agentic_analysis.execution_fixtures import candidate as boundary
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
-from tests.commonplace.workflow.test_analysis_analysts import report
-from tests.commonplace.workflow.test_analysis_boundary import candidate as boundary
+from tests.commonplace.agentic_analysis.execution_fixtures import report
 
 
 def encoded(fields, body):

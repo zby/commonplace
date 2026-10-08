@@ -10,7 +10,7 @@ import yaml
 
 from commonplace.workflow import DeclarationError, load_job_set, open_handouts
 from commonplace.workflow.store import RecordError
-from tests.commonplace.workflow.conftest import Coordinator, job_set
+from tests.commonplace.workflow.support import Coordinator, job_set
 
 
 @pytest.mark.parametrize("edit, message", [

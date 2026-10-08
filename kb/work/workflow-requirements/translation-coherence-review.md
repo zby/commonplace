@@ -36,7 +36,7 @@ cross-run cache isolation, missing dependencies and exact member snapshots.
 Technical basis: `src/commonplace/lib/type_resolver.py`,
 `src/commonplace/lib/validation.py`, `agentic_analysis/validation.py`,
 `tests/commonplace/lib/test_pinned_validation_contracts.py` and
-`tests/commonplace/workflow/test_analysis_pinned_drafts.py`.
+`tests/commonplace/agentic_analysis/test_pinned_drafts.py`.
 
 ### Upstream waits could discard a late completed verdict's application
 
@@ -115,7 +115,7 @@ and evidence is preserved. A journal's state label alone does not prove recovery
 a rollback verified by the effect handler retains ordinary-failure semantics.
 
 Technical basis: `agentic_analysis/publication.py` and actual-handler interruption
-regressions in `tests/commonplace/workflow/test_analysis_publication.py`.
+regressions in `tests/commonplace/agentic_analysis/test_publication.py`.
 
 ### Rejected sources and boundary links
 
@@ -125,7 +125,7 @@ not inspected for additional integrity diagnostics. Boundary members also use
 the same relocation-safe link rule as the other published members.
 
 Technical basis: `agentic_analysis/boundary.py`, `validation.py` and
-`tests/commonplace/lib/test_analysis_boundary_review_fixes.py`.
+`tests/commonplace/agentic_analysis/test_source_guards.py`.
 
 ## Reviewed invariants
 

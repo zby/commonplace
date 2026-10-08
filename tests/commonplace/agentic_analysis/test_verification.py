@@ -8,29 +8,26 @@ import pytest
 import yaml
 
 from commonplace.lib.agentic_analysis import verification as handlers
-from commonplace.lib.agentic_analysis.declaration import (
-    ANALYST_CHECK_HANDLERS,
-    BOUNDARY_CHECK_HANDLER,
-    JOB_SET,
-)
+from commonplace.lib.agentic_analysis.declaration import JOB_SET
 from commonplace.workflow import judge, start_run
 from commonplace.workflow.state import CodeAttempt, Resolved, Run
 from commonplace.workflow.store import RunStore, digest
-from tests.commonplace.workflow.conftest import Coordinator
-from tests.commonplace.workflow.test_analysis_acquisition import (
-    acquisition as local_acquisition,  # noqa: F401
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    PARAMETERS,
+    parameters,
+    report,
+    through_analysts,
 )
-from tests.commonplace.workflow.test_analysis_acquisition import (
-    prepared_checkout,  # noqa: F401
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
 )
-from tests.commonplace.workflow.test_analysis_analysts import report, through_analysts
-from tests.commonplace.workflow.test_analysis_boundary import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     candidate as boundary_candidate,
 )
-from tests.commonplace.workflow.test_analysis_boundary import parameters
-from tests.commonplace.workflow.test_analysis_opening import PARAMETERS
-
-MODULE = "commonplace.lib.agentic_analysis.verification."
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
+)
+from tests.commonplace.workflow.support import Coordinator
 
 
 @pytest.fixture
@@ -39,25 +36,12 @@ def records(request, tmp_path):
     a = start(analysts=True)
     data = yaml.safe_load((a.prepared.repo / "kb" / JOB_SET).read_text())
     data["jobs"] = data["jobs"][:15]
-    bindings = {"check-reconcile": "check_reconcile", "set-check": "set_check", "apply-verify": "apply_verify"}
+    # Fixture-only criterion: these three shipped checks do not declare the
+    # note-type input. This restricted graph therefore is not the exact shipped
+    # declaration, even though its handlers and other input paths are unchanged.
     for job in data["jobs"]:
-        name = job["name"]
-        if name in bindings:
-            job["handler"] = MODULE + bindings[name]
+        if job["name"] in ("check-reconcile", "set-check", "apply-verify"):
             job["inputs"]["note-type"] = {"address": "file", "source": "types/note.md"}
-        if name == "check-boundary":
-            job["handler"] = BOUNDARY_CHECK_HANDLER
-        if name.startswith("check-") and name[6:] in ANALYST_CHECK_HANDLERS:
-            job["handler"] = ANALYST_CHECK_HANDLERS[name[6:]]
-        if name in ("set-check", "apply-verify"):
-            job["inputs"]["metadata"] = {"address": "output", "source": "open:metadata"}
-        if name in ("reconcile", "verify"):
-            job["parameters"].pop("run-state", None)
-            job["inputs"]["opening"] = {"address": "output", "source": "open:metadata"}
-            leaf = "reconcile-records" if name == "reconcile" else "verify-records"
-            base = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/"
-            job["inputs"]["instruction"]["source"] = base + leaf + ".md"
-            job["inputs"]["worker-rules"]["source"] = base + "follow-worker-rules.md"
     if getattr(request, "param", None) == "late":
         # Isolate historical application from upstream wait. This restricted
         # declaration deliberately does not rerun the verifier on record edits.

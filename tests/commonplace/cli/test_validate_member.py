@@ -10,7 +10,7 @@ import yaml
 from commonplace.cli import validate_notes
 from commonplace.lib.directory_layout import Finding
 from commonplace.lib.validation import validate_draft_at_slot
-from tests.commonplace.lib.test_agentic_analysis import member_fixture
+from tests.commonplace.agentic_analysis.fixtures import member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 

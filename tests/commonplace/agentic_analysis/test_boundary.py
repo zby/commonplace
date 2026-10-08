@@ -8,72 +8,31 @@ from hashlib import sha256
 from pathlib import Path
 
 import pytest
-import yaml
 
 from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
 from commonplace.workflow import AttemptResult, judge
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.test_analysis_acquisition import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     IDENTITY,
-    Acquisition,
-    prepared_checkout,  # noqa: F401 - transitive local Git fixture
+    candidate,
+    judgment,
+    parameters,
 )
-from tests.commonplace.workflow.test_analysis_acquisition import (
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local-only acquisition fixture
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    boundary as boundary,  # noqa: PLC0414 - explicit fixture registration
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared as prepared_checkout,  # noqa: F401 - transitive local Git fixture
 )
 
 
 @pytest.fixture
 def acquisition(request):
     return request.getfixturevalue("local_acquisition")
-
-
-def parameters(handout) -> dict[str, str]:
-    return dict(line.split(" = ", 1) for line in handout.prompt.read_text().splitlines() if " = " in line)
-
-
-def candidate(a: Acquisition, disposition="complete", **changes) -> str:
-    source = a.source()
-    fields = {
-        "type": "agentic-system-analyses/types/agentic-system-boundary.md",
-        "description": "Example System at the frozen local fixture boundary",
-        "run-id": a.coordinator.run_dir.name,
-        "result-disposition": disposition,
-        "target-class": "returning computation",
-        "boundary-kind": "subsystem-only",
-        "reviewed-boundary": None if source is None else source["revision"],
-        "analysis-cutoff": "2026-10-07",
-        "evidence-tier": "code-grounded",
-        "source": source,
-        **changes,
-    }
-    source = fields["source"]
-    body = "# Example System boundary\n\n## Boundary and evidence\n\nLocal fixture only.\n\n## Source register\n\n"
-    if source is not None:
-        body += (
-            f"| SRC-1 | {source['kind']} | `{source['identity']}` | `{source['revision']}` | implementation "
-            "| README.md | `README.md` | none |\n"
-        )
-    if disposition != "complete":
-        body += "\n## Not reached\n\nNo analytical model was run; the fixture establishes no system findings.\n"
-    return "---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body
-
-
-def judgment(a):
-    store = RunStore(a.coordinator.run_dir)
-    judgments = [j for j in store.judgment_records() if j["job"] == "check-boundary"]
-    assert judgments
-    return judgments[-1]
-
-
-@pytest.fixture
-def boundary(acquisition):
-    start, _ = acquisition
-    a = start(boundary=True)
-    status = a.coordinator.advance()
-    assert not status.stops and a.coordinator.handed() == {"boundary"}
-    return a
 
 
 def test_handout_is_context_complete_and_uses_engine_names(boundary):
@@ -322,7 +281,7 @@ def test_boundary_unchanged_refusal_answer_fails_and_bound_does_not_reset(bounda
     assert "max attempts" in status.stops[0].reason
 
 
-def test_migration_declaration_hands_out_translated_runtime(acquisition):
+def test_current_shipped_declaration_hands_out_translated_runtime(acquisition):
     start, _ = acquisition
     a = start(production=True)
     a.coordinator.advance()

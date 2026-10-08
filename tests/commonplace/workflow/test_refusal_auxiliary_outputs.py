@@ -12,8 +12,7 @@ import pytest
 
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.conftest import Coordinator
-from tests.commonplace.workflow.test_review_regressions import custom_run
+from tests.commonplace.workflow.support import Coordinator, custom_run
 
 ANSWER = "- declined: the frozen evidence supports the finding.\n"
 

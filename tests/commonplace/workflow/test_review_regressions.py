@@ -7,30 +7,13 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.workflow import DeclarationError, judge, load_job_set, start_run
-from tests.commonplace.workflow.conftest import (
+from commonplace.workflow import DeclarationError, judge, load_job_set
+from tests.commonplace.workflow.support import (
     BLOCKED_BRIEF,
     Coordinator,
+    custom_run,
     job_set,
-    toy_library,
 )
-from tests.commonplace.workflow.handlers import INTERRUPT_ENV, LOG_ENV
-
-
-def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordinator:
-    """A toy run whose declaration `edit` changes before the run starts."""
-    declaration, method = toy_library(tmp_path)
-    data = job_set(method)
-    edit({job["name"]: job for job in data["jobs"]})
-    declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
-    log = tmp_path / "handlers.log"
-    monkeypatch.setenv(LOG_ENV, str(log))
-    monkeypatch.delenv(INTERRUPT_ENV, raising=False)
-    run_dir = tmp_path / "runs" / "custom"
-    start_run(run_dir, declaration, parameters={"subject": "toy"})
-    coordinator = Coordinator(run_dir=run_dir, method=method, log=log)
-    coordinator.advance()
-    return coordinator
 
 
 def test_a_file_input_edited_while_open_fails_the_attempt(coordinator: Coordinator) -> None:

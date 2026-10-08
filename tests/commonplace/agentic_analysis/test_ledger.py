@@ -6,7 +6,7 @@ import pytest
 
 from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 from commonplace.lib.validation import validate_note
-from tests.commonplace.lib.test_agentic_analysis import member_fixture
+from tests.commonplace.agentic_analysis.fixtures import member_fixture
 
 HEADER = "| route ID | route function | architectural status | gap/limit |\n|---|---|---|---|\n"
 ROW = "| `RTE-model-call` | content transformation | implemented | no observed candidate |\n"

@@ -1,4 +1,4 @@
-"""Local source-authorization and member-link regressions; no workflow effects."""
+"""Local source authorization and member-link guards; no workflow effects."""
 from hashlib import sha256
 from pathlib import Path
 from subprocess import CompletedProcess

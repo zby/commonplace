@@ -6,7 +6,7 @@ from commonplace.lib.agentic_analysis.records import (
     conclusion_status_errors,
 )
 from commonplace.lib.validation import validate_draft_at_slot
-from tests.commonplace.lib.test_agentic_analysis import member_fixture
+from tests.commonplace.agentic_analysis.fixtures import member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 

@@ -11,8 +11,8 @@ from commonplace.workflow.engine import _close
 from commonplace.workflow.handouts import _open
 from commonplace.workflow.state import Run
 from commonplace.workflow.store import RunStore, digest
-from tests.commonplace.workflow.conftest import Coordinator, toy_library
 from tests.commonplace.workflow.handlers import LOG_ENV
+from tests.commonplace.workflow.support import Coordinator, toy_library
 
 
 def run_state(c):
