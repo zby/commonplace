@@ -1,87 +1,82 @@
 ---
-description: "A model-mediated operation is instantiated by weights plus prompt; code complements that pair by defining operations whose consequences a symbolic runtime executes without reinterpreting the prompt"
+description: "Distinguishes model interpretation from runtime-assigned execution, including model-generated code and the same code artifact used as prompt context or as an executable operation"
 type: types/note.md
+brief: code-complements-weight-prompt-with-symbolic-operations.brief.md
 traits: [title-as-claim]
 tags: [computational-model, learning-theory, constraining, artifact-analysis]
 ---
 
 # Code complements the weight–prompt pair with independently executed symbolic operations
 
-A prompt does not define an LLM operation by itself. Relative to fixed call
-settings, the operation is instantiated jointly by the model's weights and the
-prompt. The weights provide broad learned competence. The prompt supplies the
-current task, project state, intent, evidence, and constraints that specialize
-that competence.
+The model's weights and its prompt jointly produce an LLM's behavior. The
+weights supply learned competence; the prompt supplies the current task,
+evidence, and constraints. Code complements this pair by defining operations
+that a runtime executes independently of model interpretation. A system can
+use the model to choose what to do and code to carry out the chosen operation.
 
-Code supplies a complementary operation class. Relative to a runtime, code
-assigns consequences to inputs and explicit symbolic state. Once selected and
-installed, the runtime can execute those consequences without asking the model
-to reinterpret the prompt or reconstruct the operation on every use.
+The distinction concerns how the operation executes:
 
-```text
-model-mediated operation:  weights + prompt  -> interpreted, generally stochastic behavior
-symbolic operation:        code + runtime    -> runtime-assigned state transition
-```
+| Execution path | What determines the operation |
+|---|---|
+| Model-mediated | Weights and assembled prompt jointly produce an interpretation and response |
+| Symbolic | Code and runtime define permitted transitions for explicit inputs and state |
 
-A model may generate, select, explain, or revise the code. That provenance does
-not change how the installed operation executes. "Independently" means
-independently of model interpretation at that execution step, not independently
-of the runtime, inputs, or environment.
+“Independently” refers to model interpretation at that execution step. The
+operation follows the runtime's rules using the supplied inputs and state.
 
-The weight–prompt pair is useful where an operation requires semantic
-interpretation, open-ended generation, judgment, or search. Code is useful where
-a selected behavior can be assigned precisely enough to benefit from exact state
-transitions, reliable bookkeeping, repeatability, or enforceable checks. This is
-the mechanism behind the
-[scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md):
-a model may decide what a scheduler should do or write it, while a symbolic
-runtime owns queues, counters, checkpoints, retries, and transitions.
+## The same code can be read or executed
 
-The complement is therefore not natural language versus code. It is between a
-model-mediated operation defined by the interaction of weights and a
-call-specific prompt, and a symbolic operation defined by code and its runtime.
-A deployed agent system composes both.
+Consider a validator. Supplied in a prompt, its code helps the model understand
+the checks, find defects, or propose changes. Run against a file, the same code
+computes a verdict. The first use depends on the model's interpretation; the
+second executes the checks. The workflow can enforce those checks by requiring
+a passing verdict before it proceeds.
 
-## One code artifact can enter both operations
+The code's bytes can be identical in both cases. What changes is the consumer:
+a model reads them as context, or a runtime executes them. This is the relevant
+[representational-form](./definitions/representational-form.md) distinction:
+content is classified by how it is encoded and consumed. A stored instruction
+likewise becomes prompt context when it is supplied to a model call.
 
-When code is loaded into a prompt, it is project evidence for a model-mediated
-operation. It can reveal interfaces, dependencies, invariants, current behavior,
-and possible modification points.
+## A model can author the operation it delegates
 
-When a runtime imports, executes, tests, or validates the same code, the artifact
-has symbolic force. Its consequences no longer depend on how the model reads it.
-The code can therefore be both an object of semantic search and the independent
-executor of a result produced by that search.
+A model may generate, select, or revise a program, then ask a runtime to execute
+it. The model chooses the computation; the runtime carries it out under its
+operational rules. Authorship and execution are separate roles.
 
-This dual role follows the
-[representational-form](./definitions/representational-form.md) rule that form is
-classified by an operative part and consumption path, not by file extension or
-storage substrate.
+This allows a sequence of complementary operations: the model selects a
+transformation, code performs it, and the model interprets the result. The
+judgment about which transformation suits the task happens upstream of
+execution. This is a case of [relocating semantic work](./semantic-work-can-be-relocated-but-not-eliminated.md).
+The implementation needs to follow the selected rule, while
+[the rule's suitability for the task needs its own assessment](./exact-implementation-does-not-validate-a-requirement.md).
+
+[Bookkeeping makes the practical leverage concrete](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md):
+a model can decide what work is needed while code maintains the dependencies
+and completion records. That note develops the reliability argument. The same
+division of labor also applies to calculations, transformations, and checks
+outside scheduling.
 
 ## Scope
 
-- "Weights plus prompt" abstracts over a call with fixed model binding,
-  inference settings, tool exposure, and protocol. Changing those can change the
-  model-mediated operation too.
-- A retained natural-language artifact is not automatically a prompt. It joins
-  the pair only when context assembly supplies it as model input.
-- Symbolic exactness is relative to the implemented transition. It does not show
-  that the code implements the right requirement, because
-  [exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md).
-- The claim does not rank the two operation classes globally. Judgment-heavy
-  work may remain model-mediated, while adequately specified operations may gain
-  reliability or efficiency from symbolic execution.
+The weight–prompt pair describes a call with fixed model binding, inference
+settings, tool exposure, and protocol. These settings and the external
+environment also affect the system's behavior.
+
+Symbolic execution follows assigned rules, which may permit variation,
+concurrency, or external effects. A model response can also be repeatable.
+The distinction is who applies the operational rules, rather than whether
+successive outputs happen to match.
 
 ---
 
 Relevant Notes:
 
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: supplies the semantic underspecification and execution-indeterminism distinction behind prompt interpretation and runtime-assigned consequences
-- [Semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — grounds: explains why generating or selecting code moves semantic judgment upstream rather than removing it from the system
-- [Specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — contrasts: shows that symbolic-looking structure remains model-mediated when the model still interprets its control semantics
-- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — mechanism: describes how recurrent model-interpreted behavior can become an installed symbolic operation
-- [Natural-language project state may specialize weight-resident search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — grounds: isolates how retained project information changes the prompt side of the model-mediated operation
-- [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: explains why exact state transitions and bookkeeping benefit from independent symbolic execution
-- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — exemplifies: composes explicit symbolic state and transitions with bounded model calls
-- [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) — extends: makes movement between the two operation classes local while preserving an interface
+- [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: develops why bookkeeping is a high-leverage use of independent symbolic execution
+- [Semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — grounds: selecting or generating an operation moves judgment upstream rather than removing it
+- [Representational form](./definitions/representational-form.md) — defined-in: distinguishes symbolic content from model-interpreted content by how it gets its consequences
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: limits what runtime-assigned execution establishes about the intended task
+- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: addresses when recurrent interpreted behavior warrants a symbolic commitment
+- [Natural-language project state may specialize weight-resident search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — grounds: develops how retained project information changes the prompt side of the operation
+- [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) — extends: makes movement between the two execution paths local while preserving an interface
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — extends: places both operation classes inside one behavior-producing system
