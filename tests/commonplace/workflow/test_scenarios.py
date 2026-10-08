@@ -201,9 +201,19 @@ def test_11_code_job_failure_stops_every_time(coordinator: Coordinator) -> None:
     c.ran()
     c.advance(c.result("report", "report CRASH\n", answers=""))
     c.stop("check-report")
-    c.advance()
-    c.stop("check-report")
-    assert c.ran() == ["check-report", "check-report"]
+    for _ in range(3):
+        c.advance()
+        c.stop("check-report")
+    assert c.ran() == ["check-report"] * 4, "code jobs have no max attempts"
+
+
+
+
+def test_code_jobs_run_to_a_fixed_point_within_one_invocation(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.ran()
+    c.through_brief(BLOCKED_BRIEF)
+    assert c.ran() == ["check-brief", "assemble"], "assemble became ready from check-brief's acceptance"
 
 
 def test_12_interrupted_invocation_resumes(coordinator: Coordinator, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -266,17 +276,35 @@ def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: C
 
 
 def test_17_recheck_waits_for_the_refused_producer(coordinator: Coordinator) -> None:
-    # Scenario 17's redundant re-acceptance of A no longer happens under the
-    # proposed upstream wait: check-report waits while the report job is ready.
     c = coordinator
     c.through_records()
-    c.ran()
     c.complete("verify", "block report: r1\n")
-    assert "check-report" not in c.ran()
     assert "report" in c.handed()
+    c.ran()
+    c.edit_method("contract-report.md", "# Changed contract\n")
+    c.advance()
+    assert "check-report" not in c.ran(), "an input of check-report changed, but the report job is pending"
     assert c.member("report") == "report A\n"
     c.complete("report", "report B\n", answers="answered r1\n")
+    assert c.ran().count("check-report") == 1, "one check of B, no redundant re-acceptance of A"
     assert c.member("report") == "report B\n"
+
+
+@pytest.mark.parametrize(("scope", "basis", "supersedes"), [
+    (("verification:cites:report",), ("verification",), True),
+    (("report:cites:brief",), ("brief",), False),
+])
+def test_17_acceptance_supersedes_a_refusal_only_within_its_scope(
+        coordinator: Coordinator, scope: tuple[str, ...], basis: tuple[str, ...], supersedes: bool) -> None:
+    from commonplace.workflow.engine import inspect
+
+    c = coordinator
+    c.through_records()
+    refuse_report(c)
+    assert [r.job for r in inspect(c.run_dir)["refusals"]] == ["report"]
+    judge(c.run_dir, role="report", outcome="accepted", scope=scope, basis=basis)
+    in_force = [r.job for r in inspect(c.run_dir)["refusals"]]
+    assert ("report" not in in_force) == supersedes
 
 
 def test_18_input_versions_are_fixed_at_handout(coordinator: Coordinator) -> None:
