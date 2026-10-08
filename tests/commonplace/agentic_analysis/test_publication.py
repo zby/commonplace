@@ -336,7 +336,7 @@ def test_environment_rechecks_the_declared_capture_identity(tmp_path, monkeypatc
     attempt.inputs["metadata"] = json.dumps(attempt.metadata).encode()
     fields = publication._document(attempt.inputs["boundary"]).frontmatter
     attempt.inputs["boundary"] = doc({**fields, "source": source, "reviewed-boundary": source["revision"]})
-    monkeypatch.setattr(publication, "_locate", lambda *args, **kw: (attempt.metadata, tmp_path))
+    monkeypatch.setattr(publication, "locate", lambda *args, **kw: (attempt.metadata, tmp_path))
     publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
     capture.write_bytes(b"changed local fixture bytes")
     with pytest.raises(ValueError, match="SHA-256"):

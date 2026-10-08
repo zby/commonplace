@@ -1,8 +1,8 @@
 """Analysis opening, acquisition, boundary and analyst-check handlers.
 
-Opening is read-only outside the engine's attempt commit. Acquisition owns its
-external-effect journal. Checks use pinned candidate and criterion bytes;
-invocation and environment guards remain separate from content validation.
+Opening is read-only outside the engine's attempt commit. Acquisition passes
+the opening's source pins to the shared effect. Checks use pinned candidate
+and criterion bytes; environment guards stay separate from content validation.
 """
 
 from __future__ import annotations
@@ -11,7 +11,6 @@ import datetime
 import json
 import os
 import re
-import subprocess
 from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
@@ -41,6 +40,7 @@ from commonplace.setrun.isolation import (
     preparation_for,
     require_run_code,
     require_running_package_unchanged,
+    run_command,
     source_checkout,
 )
 from commonplace.setrun.sources import acquire, github_checkout_path
@@ -50,14 +50,7 @@ ANALYSTS = ("runtime", "memory", "epistemic")
 
 
 def _head(repo: Path) -> str:
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"], cwd=repo, check=True,
-            capture_output=True, text=True, timeout=30,
-        )
-    except (OSError, subprocess.SubprocessError) as error:
-        raise ValueError(f"cannot inspect the analysis worktree HEAD: {repo}") from error
-    commit = result.stdout.strip()
+    commit = run_command(["git", "rev-parse", "HEAD"], cwd=repo)
     if re.fullmatch(r"[0-9a-f]{40}", commit) is None:
         raise ValueError("analysis worktree HEAD must be a full 40-hex commit")
     return commit
@@ -142,7 +135,7 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     has to establish a non-Git capture, not that a source check succeeded.
     """
     metadata_bytes = attempt.read("metadata")
-    metadata, repo = _locate(attempt)
+    metadata, repo = locate(attempt)
     identity = metadata.get("source-identity")
     revision = metadata.get("source-revision")
     if not isinstance(identity, str) or not identity or normalize_source_identity(identity) != identity:
@@ -153,37 +146,12 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
                               inputs_digest=sha256(metadata_bytes).hexdigest())}
 
 
-def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
-    preparation = preparation_for(repo)
-    if metadata["run-id"].rsplit("-", 2)[-2:-1] != [preparation["token"]]:
-        raise ValueError(f"{job} preparation token differs from the opened run")
-    commit = metadata.get("inputs-commit")
-    if _head(repo) != commit or preparation.get("commit") != commit:
-        raise ValueError(f"{job} worktree differs from the opened preparation commit")
-    require_publishable_worktree(repo)
-    require_running_package_unchanged(commit)
-
-
-def _locate(attempt: CodeAttempt) -> tuple[dict, Path]:
+def locate(attempt: CodeAttempt) -> tuple[dict, Path]:
     """The opened run's metadata and checkout; opening and publication own the guards."""
     repo = source_checkout(attempt.run_dir)
     if repo is None:
         raise ValueError("analysis jobs must run inside their analysis checkout")
     return json.loads(attempt.read("metadata")), repo
-
-
-def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
-    if metadata_bytes is None:
-        raise ValueError(f"{job} requires the opening metadata")
-    metadata = json.loads(metadata_bytes)
-    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
-        raise ValueError(f"{job} opening metadata must name this run")
-    repo = source_checkout(attempt.run_dir)
-    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
-        raise ValueError(f"{job} must use this run's analysis checkout and recorded library")
-    require_run_code(attempt.run_dir, cwd=Path.cwd())
-    _require_opened_method(repo, metadata, job=job)
-    return metadata, repo
 
 
 def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
@@ -194,7 +162,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     rely on that binding. Self-citations are content checks, not engine
     relations, so no scope is claimed.
     """
-    metadata, repo = _locate(attempt)
+    metadata, repo = locate(attempt)
     check = candidate(attempt, "boundary", ())
     frozen = json.loads(attempt.read("source"))
     if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
@@ -240,7 +208,7 @@ def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
             )
     # The memory report is the source of the profile's source identity.
     if member == "memory" and check.fields:
-        opened = _locate(attempt)[0]["source-identity"]
+        opened = locate(attempt)[0]["source-identity"]
         if check.fields.get("source-identity") != opened:
             reasons.append("[invocation] source-identity must be the opening's normalized source identity")
     judge(check, reasons)

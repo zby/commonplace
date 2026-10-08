@@ -32,10 +32,18 @@ STARTUP_FILENAMES = {
 }
 
 
+def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(
+            ["git", *args], cwd=repo_root, check=False,
+            capture_output=True, text=True, timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ValueError(f"cannot run git {args[0]} in the repository") from exc
+
+
 def _git_paths(origin: Path, args: list[str]) -> set[str]:
-    result = subprocess.run(
-        ["git", *args], cwd=origin, capture_output=True, text=True, check=False
-    )
+    result = _git(origin, *args)
     if result.returncode:
         raise ValueError(f"could not inspect startup files: {result.stderr.strip()}")
     return set(filter(None, result.stdout.split("\0")))
@@ -202,10 +210,7 @@ def _require_current_revision(origin: Path, commit: str) -> None:
     """An implicit HEAD behind the default branch is a stale launching checkout."""
     for branch in ("main", "master"):
         ref = f"refs/heads/{branch}"
-        if subprocess.run(
-            ["git", "rev-parse", "--verify", "--quiet", ref],
-            cwd=origin, capture_output=True, check=False,
-        ).returncode:
+        if _git(origin, "rev-parse", "--verify", "--quiet", ref).returncode:
             continue
         behind = int(run_command(["git", "rev-list", "--count", f"{commit}..{ref}"], cwd=origin))
         ahead = int(run_command(["git", "rev-list", "--count", f"{ref}..{commit}"], cwd=origin))
@@ -271,10 +276,7 @@ def prepare_worktree(
         raise ValueError(f"preparation record already exists: {record_path}")
     if worktree.is_relative_to(origin):
         for path in (worktree, record_path):
-            ignored = subprocess.run(
-                ["git", "check-ignore", "--quiet", str(path)], cwd=origin, check=False
-            )
-            if ignored.returncode:
+            if _git(origin, "check-ignore", "--quiet", str(path)).returncode:
                 raise ValueError("a worktree and its record inside the origin must be under an ignored directory")
     worktree.parent.mkdir(parents=True, exist_ok=True)
     run_command(["git", "worktree", "add", "--detach", str(worktree), commit], cwd=origin)
@@ -336,16 +338,6 @@ def changed_paths(worktree: Path, *args: str) -> list[str]:
     if result.returncode:
         raise ValueError(f"could not inspect changed paths: {result.stderr.decode(errors='replace').strip()}")
     return [os.fsdecode(path) for path in result.stdout.split(b"\0") if path]
-
-
-def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
-    try:
-        return subprocess.run(
-            ["git", *args], cwd=repo_root, check=False,
-            capture_output=True, text=True, timeout=30,
-        )
-    except (OSError, subprocess.SubprocessError) as exc:
-        raise ValueError(f"cannot run git {args[0]} in the repository") from exc
 
 
 def _status_entries(porcelain: str) -> list[tuple[str, str]]:
@@ -464,15 +456,14 @@ def prepared_origin(worktree: Path) -> tuple[dict[str, object], Path, str]:
     if run_command(["git", "rev-parse", "HEAD"], cwd=worktree) != method:
         raise ValueError("worktree HEAD differs from its preparation commit")
     require_committed_startup(worktree, method)
-    if subprocess.run(["git", "merge-base", "--is-ancestor", method, "main"], cwd=origin, check=False).returncode:
+    if _git(origin, "merge-base", "--is-ancestor", method, "main").returncode:
         raise ValueError("the method commit is not an ancestor of main")
     return record, origin, method
 
 
 def committed_tree(worktree: Path, commit: str, relative: str) -> dict[str, bytes] | None:
     """A directory's direct files at ``commit``, or None when it is absent there."""
-    if subprocess.run(["git", "cat-file", "-e", f"{commit}:{relative}"], cwd=worktree,
-                      capture_output=True, check=False).returncode:
+    if _git(worktree, "cat-file", "-e", f"{commit}:{relative}").returncode:
         return None
     names = run_command(["git", "ls-tree", "--name-only", f"{commit}:{relative}"], cwd=worktree)
     files = {}
@@ -497,8 +488,7 @@ def merge_paths(worktree: Path, origin: Path, method: str, *, branch: str, paths
 
     if changed_paths(origin, method, "HEAD", "--", *paths):
         raise ValueError("origin paths changed since the method commit")
-    if subprocess.run(["git", "show-ref", "--verify", "--quiet", f"refs/heads/{branch}"],
-                      cwd=worktree, check=False).returncode == 0:
+    if _git(worktree, "show-ref", "--verify", "--quiet", f"refs/heads/{branch}").returncode == 0:
         raise ValueError(f"branch already exists: {branch}")
     if changed_paths(worktree, "--cached"):
         raise ValueError("worktree already has staged changes")

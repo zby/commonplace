@@ -40,22 +40,22 @@ def tree(path: Path) -> dict[str, bytes] | None:
     if not os.path.lexists(path):
         return None
     if path.resolve() != path or not path.is_dir():
-        raise UncertainEffectError(f"publication tree redirects or is not a directory: {path}")
+        raise UncertainEffectError(f"tree redirects or is not a directory: {path}")
     result = {}
     for file in path.iterdir():
         if not file.is_file() or file.is_symlink():
-            raise UncertainEffectError(f"unexpected publication tree entry: {file}")
+            raise UncertainEffectError(f"unexpected tree entry: {file}")
         result[file.name] = file.read_bytes()
     return result
 
 
-def hashes(tree: Mapping[str, bytes] | None):
+def hashes(tree: Mapping[str, bytes] | None) -> dict[str, str] | None:
     return None if tree is None else {name: sha256(data).hexdigest() for name, data in sorted(tree.items())}
 
 
 def safe(path: Path) -> Path:
     if path.resolve() != path:
-        raise UncertainEffectError(f"publication path must not traverse symlinks: {path}")
+        raise UncertainEffectError(f"effect path must not traverse symlinks: {path}")
     return path
 
 

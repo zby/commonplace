@@ -145,7 +145,12 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
 
 
 def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
-    """Authorize Git integration while serializing cooperating run/publisher mutations."""
+    """Commit one completed publication in its worktree and merge it into main.
+
+    Calling this is the separate authorization to transfer a published run.
+    The run and publication locks serialize cooperating run and publisher
+    mutations. A conflict is aborted in main; its branch remains for review.
+    """
     from commonplace.lib.agentic_analysis.guards import publication_lock
     from commonplace.workflow import run_lock
 
@@ -153,7 +158,7 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     if run_dir.resolve() != run_dir:
         raise ValueError("analysis run must not traverse symlinks")
     if not (run_dir / "run.json").is_file():
-        raise ValueError("integration requires a new-engine run.json")
+        raise ValueError("integration requires an engine run's run.json")
     if (run_dir.parent.name != STATE_ROOT.name
             or len(run_dir.parents) <= len(STATE_ROOT.parts)):
         raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
@@ -162,30 +167,13 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
         raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
     require_run_code(run_dir, cwd=Path.cwd())
     with run_lock(run_dir), publication_lock(worktree):
-        return _integrate_analysis(run_dir, model=model)
-
-
-def _integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
-    """Commit one completed publication in its worktree and merge it into main.
-
-    Calling this is the separate authorization to transfer a published run.
-    A conflict is aborted in main; its publication branch remains for review.
-    """
-    run_dir = Path(run_dir).resolve()
-    if (run_dir.parent.name != STATE_ROOT.name
-            or len(run_dir.parents) <= len(STATE_ROOT.parts)):
-        raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
-    worktree = run_dir.parents[len(STATE_ROOT.parts)]
-    if worktree / STATE_ROOT != run_dir.parent:
-        raise ValueError(f"analysis run must be directly under {STATE_ROOT}")
-    record, origin, method = prepared_origin(worktree)
-    run_id = run_dir.name
-    token = str(record["token"])
-    if re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-[a-z0-9-]+-{token}-\d{{2}}", run_id) is None:
-        raise ValueError("run ID does not match the worktree preparation token")
-    paths, source_revision = _integration_publication(run_dir, worktree, method)
-    body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"
-    if model:
-        body += f"\n\nModel: {model}"
-    return merge_paths(worktree, origin, method, branch=f"analysis/{run_id}", paths=paths,
-                       subject="Publish analysis result", body=body)
+        record, origin, method = prepared_origin(worktree)
+        run_id = run_dir.name
+        if re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-[a-z0-9-]+-{record['token']}-\d{{2}}", run_id) is None:
+            raise ValueError("run ID does not match the worktree preparation token")
+        paths, source_revision = _integration_publication(run_dir, worktree, method)
+        body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"
+        if model:
+            body += f"\n\nModel: {model}"
+        return merge_paths(worktree, origin, method, branch=f"analysis/{run_id}", paths=paths,
+                           subject="Publish analysis result", body=body)

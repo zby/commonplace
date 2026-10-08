@@ -22,7 +22,6 @@ from commonplace.lib.source_identity import normalize_source_identity
 SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
-REVIEWS_ROOT = PurePosixPath(RETAINED_ROOT.as_posix())
 ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
 
 
@@ -60,7 +59,7 @@ def is_review_path(value: str) -> bool:
     """Whether ``value`` names a current accepted overview at its stable path."""
     pure = PurePosixPath(value)
     return (is_normalized_relative(value) and pure.name == analysis_layout().path("overview")
-            and pure.parent.parent == REVIEWS_ROOT)
+            and pure.parent.parent == PurePosixPath(RETAINED_ROOT.as_posix()))
 
 
 @dataclass(frozen=True)

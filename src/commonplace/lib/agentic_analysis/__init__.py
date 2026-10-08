@@ -1,7 +1,8 @@
-"""Agentic-analysis consumer of the independent ``commonplace.workflow`` engine.
+"""The agentic-system analysis: a consumer of ``commonplace.workflow``.
 
-This package owns analysis handlers, source acquisition, publication, reporting,
-and isolated-worktree operations. Its ``sets``, ``records`` and ``ledger`` modules
-provide set contracts and retained-data validation without importing workflow
-execution. The generic engine does not import this consumer.
+This package owns the handlers its job declaration names, the analysis
+domain rules, and the paths, run naming and roles it passes to
+``commonplace.setrun``. Its ``sets``, ``records`` and ``ledger`` modules
+provide set contracts and retained-data validation without importing the
+engine.
 """

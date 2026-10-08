@@ -20,23 +20,28 @@ from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
     publication_lock,
+    require_publishable_worktree,
 )
-from commonplace.lib.agentic_analysis.handlers import (
-    _locate,
-    _opened_environment,
-    _require_opened_method,
-)
+from commonplace.lib.agentic_analysis.handlers import locate
 from commonplace.lib.agentic_analysis.records import amendment_index
 from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     source_slug,
 )
+from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_analysis_set
 from commonplace.setrun.checks import criterion_bytes
 from commonplace.setrun.effects import hashes, install_tree
+from commonplace.setrun.isolation import (
+    preparation_for,
+    require_run_code,
+    require_running_package_unchanged,
+    run_command,
+    source_checkout,
+)
 from commonplace.workflow import CodeAttempt, UncertainEffectError
 
 JOURNAL = "effects/publish.json"
@@ -74,6 +79,31 @@ def _document(data: bytes):
     if error or document is None or document.frontmatter is None:
         raise ValueError(f"unparseable typed member: {error}")
     return document
+
+
+def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
+    preparation = preparation_for(repo)
+    if metadata["run-id"].rsplit("-", 2)[-2:-1] != [preparation["token"]]:
+        raise ValueError(f"{job} preparation token differs from the opened run")
+    commit = metadata.get("inputs-commit")
+    if run_command(["git", "rev-parse", "HEAD"], cwd=repo) != commit or preparation.get("commit") != commit:
+        raise ValueError(f"{job} worktree differs from the opened preparation commit")
+    require_publishable_worktree(repo)
+    require_running_package_unchanged(commit)
+
+
+def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
+    if metadata_bytes is None:
+        raise ValueError(f"{job} requires the opening metadata")
+    metadata = json.loads(metadata_bytes)
+    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
+        raise ValueError(f"{job} opening metadata must name this run")
+    repo = source_checkout(attempt.run_dir)
+    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
+        raise ValueError(f"{job} must use this run's analysis checkout and recorded library")
+    require_run_code(attempt.run_dir, cwd=Path.cwd())
+    _require_opened_method(repo, metadata, job=job)
+    return metadata, repo
 
 
 def _snapshot(attempt: CodeAttempt, *, overview: bool):
@@ -154,7 +184,7 @@ def _manifest(attempt: CodeAttempt, members: Mapping[str, bytes], worker: dict) 
 
 def _environment(attempt: CodeAttempt, boundary, *, job: str, guard: bool = False):
     metadata, repo = (_opened_environment(attempt, attempt.read("metadata"), job=job) if guard
-                      else _locate(attempt))
+                      else locate(attempt))
     source_bytes = attempt.read("source")
     if source_bytes is None:
         raise ValueError(f"{job} requires the pinned acquisition result")

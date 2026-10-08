@@ -140,7 +140,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files),
                          relations=(), judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
-    monkeypatch.setattr(handlers, "_locate", lambda *args, **kwargs: (metadata, tmp_path))
+    monkeypatch.setattr(handlers, "locate", lambda *args, **kwargs: (metadata, tmp_path))
     monkeypatch.setattr(candidate, "checkout", lambda _: tmp_path)
     seen = []
     monkeypatch.setattr(candidate, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])

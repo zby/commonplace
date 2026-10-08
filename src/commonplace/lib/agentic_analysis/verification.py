@@ -48,10 +48,11 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     members = snapshot(attempt, PARTNERS)
     source = frozen_source(attempt, members, "boundary")
     directory = (attempt.run_dir / "set").resolve()
+    repo = checkout(attempt)
     run = ValidationRun(
-        checkout(attempt), (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
+        repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
         member_snapshots={directory: members},
-        criteria=CriterionSnapshot(kb_root(checkout(attempt)), criterion_bytes(attempt)),
+        criteria=CriterionSnapshot(kb_root(repo), criterion_bytes(attempt)),
         frozen_source=source,
     )
     reasons = ["[invocation] " + reason for reason in frozen_source_refusals(source)]

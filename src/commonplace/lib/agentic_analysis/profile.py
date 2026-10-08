@@ -2,7 +2,7 @@
 
 Content is checked against declared byte snapshots, never mutable set members.
 Semantic support and completeness are the independent verifier's judgment;
-code enforces identity, shape, correction answers and limit traceability only.
+code enforces type validation, correction answers and limit traceability only.
 The declaration must supply all criterion files read by content validation.
 """
 
