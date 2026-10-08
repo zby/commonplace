@@ -242,6 +242,16 @@ They bind an implementation of this spec; they are not requirements.
   consumer depend on the engine's display text. The identity and version
   stay in the bytes so that two refusals with the same findings remain
   different versions, as requirement 7 needs.
+- **An attempt-record input has a published format.** Its bytes are
+  canonical JSON with the fields present among `id`, `job`, `kind`
+  (`model`, `code` or `operator`), `outputs` (output name to version),
+  and, for a model attempt, `previous_outputs` (the versions delivered as
+  previous output), `model` and `effort`. Pins, sequence numbers and other
+  record internals are not part of it; the versions an attempt was handed
+  reach a consumer through handed inputs. Why: consumers need the
+  delivered baseline, the produced versions and worker identity, and a
+  whole internal record made every field a dependency. The attempt id
+  keeps each completed attempt a distinct version, as scenario 22 needs.
 
 ## Deferred
 

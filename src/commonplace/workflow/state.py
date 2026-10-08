@@ -184,7 +184,7 @@ class Run:
             record = self.latest_completed(spec.source)
             if record is None:
                 return ABSENT
-            data = canonical(record)
+            data = canonical({key: record[key] for key in ATTEMPT_FIELDS if key in record})
             return Resolved(digest(data), data, None, spec.source)
         if spec.address == "handed":
             attempt_input, _, handed = spec.source.partition(":")
@@ -404,6 +404,10 @@ class Run:
                         and entry["other_version"] == members.get(other)):
                     return True
         return False
+
+
+# The published fields of an attempt-record input; the rest of the record is internal.
+ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort")
 
 
 def refusal_document(refusal: str, version: str, scope: list[str], findings: str) -> bytes:

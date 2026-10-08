@@ -124,3 +124,20 @@ def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> Non
     assert document.frontmatter["version"] == digest(b"report A\n")
     assert document.frontmatter["scope"] == ["verification:cites:report"]
     assert document.body == "r1", "the findings, verbatim"
+
+
+def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordinator) -> None:
+    import json
+
+    from commonplace.workflow.declaration import Input
+    from commonplace.workflow.state import Run
+    from commonplace.workflow.store import RunStore, digest
+
+    c = coordinator
+    c.through_brief()
+    c.complete("report", "report A\n", answers="")
+    run = Run(RunStore(c.run_dir))
+    record = json.loads(run.resolve("r", {"r": Input("attempt", "report")}).data)
+    assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort"}
+    assert record["job"] == "report" and record["kind"] == "model"
+    assert record["outputs"]["report"] == digest(b"report A\n")
