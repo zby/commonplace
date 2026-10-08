@@ -23,15 +23,10 @@ content-check command directory.
 Write the complete synthesis to `output` with the supplied `run-id` and the
 boundary's `reviewed-boundary`. Its description, Bounded synthesis and
 Limitations follow `synthesis-contract`; the overview will link it, not copy
-its sections. Write empty `output-answers` on a first attempt. On retry, use
-`previous-synthesis` and `previous-answers` as read-only baselines; repair
-Findings in `refusal` and answer every Blockers entry in order with
-`- corrected: ...` or `- declined: ...` and its evidence-based reason.
-Unstructured operator findings count as one blocker. Preserve semantic
-obligations through structural repairs. A corrected answer needs changed
-synthesis bytes. All-declined answers may retain identical synthesis bytes if
-answers change; this is completion, not semantic acceptance or an override.
-There are two attempts total, including failures; acceptance does not reset them.
+its sections. On retry, use `previous-synthesis` and `previous-answers` as
+read-only baselines and answer `refusal` under the shared correction
+protocol. There are two attempts total, including failures; acceptance does
+not reset them.
 
 ## Write the bounded account
 

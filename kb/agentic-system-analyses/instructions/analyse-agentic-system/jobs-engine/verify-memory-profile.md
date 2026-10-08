@@ -21,15 +21,10 @@ prepared content-check command directory.
 
 Write the verdict to `output` with `verifies: profile`, the supplied `run-id`
 and the boundary's `reviewed-boundary`. Apply the verification contract's
-exact Verification, Blockers and Limits format. Write empty `output-answers`
-when no refusal was handed. On retry, use `previous-verification` and
-`previous-answers` as read-only baselines; repair Findings and answer every
-Blockers entry in `refusal`, in order, with `- corrected: ...` or
-`- declined: ...` and a reason. Unstructured operator findings count as one
-blocker. Preserve carried obligations through structural repairs. A corrected
-answer requires changed verdict bytes. All-declined answers may keep identical
-verdict bytes only with changed answers; this is completion, not an override.
-There are three attempts total, including failures; acceptance does not reset them.
+exact Verification, Blockers and Limits format. On retry, use
+`previous-verification` and `previous-answers` as read-only baselines and
+answer `refusal` under the shared correction protocol. There are three
+attempts total, including failures; acceptance does not reset them.
 
 ## Judge classification
 

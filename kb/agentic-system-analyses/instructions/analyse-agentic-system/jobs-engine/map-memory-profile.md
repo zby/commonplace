@@ -18,17 +18,10 @@ and `reconciliation` are accepted records, gated by holding record-verification
 acceptances. Read their supplied versions, not reconstructed member paths.
 `opening` supplies the prepared command directory for the shared content check.
 
-Write the complete revision-2 profile to `output`. Write empty
-`output-answers` on a first attempt. On a retry, use `previous-profile` and
-`previous-answers` as read-only baselines and repair `refusal` and its
-consequences, preserving unrelated supported findings. Answer every entry
-under its Blockers, in order, with `- corrected: ...` or `- declined: ...`
-and the evidence-based reason. Unstructured operator findings count as one
-blocker. A structural repair must also answer preserved semantic blockers.
-A corrected answer requires changed profile bytes; all-declined answers may
-keep the profile identical if answers change. Completion is not semantic
-acceptance or an override. Repeating both outputs fails and counts toward
-max attempts. There are three attempts total; acceptance does not reset them.
+Write the complete revision-2 profile to `output`. On a retry, use
+`previous-profile` and `previous-answers` as read-only baselines and answer
+`refusal` under the shared correction protocol. There are three attempts
+total, including failures; acceptance does not reset them.
 
 ## Classify from records
 

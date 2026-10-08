@@ -22,14 +22,9 @@ prepared content-check command directory.
 
 Write the verdict to `output` with `verifies: synthesis`, the supplied `run-id`
 and boundary's `reviewed-boundary`. Follow the verification contract's exact
-Verification, Blockers and Limits format. Write empty `output-answers` when no
-refusal was handed. On retry, use `previous-verification` and `previous-answers`
-as read-only baselines; repair Findings and answer every Blockers entry in
-`refusal`, in order, with `- corrected: ...` or `- declined: ...` and its reason.
-Unstructured operator findings count as one blocker. Preserve obligations
-through structural repairs. A corrected answer requires changed verdict bytes;
-all-declined answers may keep identical verdict bytes if answers change.
-Completion is not an override. There are two attempts total, including failures;
+Verification, Blockers and Limits format. On retry, use `previous-verification`
+and `previous-answers` as read-only baselines and answer `refusal` under the
+shared correction protocol. There are two attempts total, including failures;
 acceptance does not reset them.
 
 ## Judge the public account
