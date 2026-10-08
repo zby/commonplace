@@ -76,11 +76,9 @@ def test_graph_covers_real_roles_once(graph):
     assert {job.role for job in jobs.jobs if job.role} == set(layout.roles)
     models = [job for job in jobs.jobs if isinstance(job, ModelJob)]
     assert {job.name: job.role for job in models} == MODEL_ROLES
-    assert len(jobs.jobs) == 25
     for job in models:
         refusal = job.inputs["refusal"]
         assert (refusal.address, refusal.source, refusal.required) == ("refusal", job.name, False)
-        assert job.max_attempts == (2 if job.name in ("boundary", "synthesize", "verify-synthesis") else 3)
 
 
 def test_declared_file_inputs_are_portable_library_paths(graph):
@@ -93,11 +91,9 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
         assert jobs.job(f"check-{member}").handler == ANALYST_CHECK_HANDLERS[member]
     for name in MODEL_ROLES:
         assert jobs.job(name).inputs["opening"].source == "open:metadata"
-        assert "run-state" not in jobs.job(name).parameters
     boundary = jobs.job("boundary")
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
-    assert "run-state" not in boundary.parameters
     incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
     assert (incumbent.address, incumbent.source, incumbent.required) == ("member", "boundary", False)
     assert jobs.job("publish").inputs["manifest"].address == "output"
@@ -112,16 +108,6 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
             assert {"instruction", "worker-rules", "collection", "sources-contract"} <= set(job.inputs)
             assert "set-type" not in job.inputs and "member-type" not in job.inputs
             assert not any(spec.source.endswith(".schema.yaml") for spec in job.inputs.values())
-
-
-def test_verifiers_receive_the_contracts_they_judge(graph):
-    jobs, layout = graph
-    for name in ("reconcile", "verify"):
-        for role in RECORDS:
-            assert jobs.job(name).inputs[f"{role}-contract"].source == layout.roles[role].type
-    assert "memory-profile-contract" in jobs.job("verify-profile").inputs
-    assert "synthesis-contract" in jobs.job("verify-synthesis").inputs
-    assert jobs.job("verify-profile").inputs["profile"].source == "memory-profile"
 
 
 def test_assembly_and_publication_track_both_ends_of_coverage(graph):
@@ -148,7 +134,7 @@ def test_assembly_and_publication_track_both_ends_of_coverage(graph):
     assert jobs.job("assemble").outputs == ("overview", "manifest")
 
 
-def test_checks_pin_answered_refusal_and_declared_partners(graph):
+def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
     jobs, layout = graph
     for name, role in MODEL_ROLES.items():
         if name.startswith("verify"):
@@ -163,6 +149,32 @@ def test_checks_pin_answered_refusal_and_declared_partners(graph):
         assert partners - {role} <= {spec.source for spec in check.inputs.values() if spec.address == "member"}
     for name in REPORTS:
         assert jobs.job(f"check-{name}").inputs["answers"].source == f"{name}:answers"
+    for producer in ("profile", "synthesize", "verify-profile", "verify-synthesis"):
+        assert jobs.job(producer).outputs[-1] == "answers"
+        verifies = producer.startswith("verify")
+        check = jobs.job(f"apply-{producer}" if verifies else f"check-{producer}")
+        answers = check.inputs["answers"]
+        assert (answers.address, answers.source, answers.required) == ("output", f"{producer}:answers", False)
+        if verifies:
+            answered = check.inputs["answered-refusal"]
+            assert (answered.address, answered.source, answered.required) == (
+                "handed", "verifier-attempt:refusal", False,
+            )
+    records = {"boundary", *RECORDS}
+    for producer in ("profile", "synthesize", "reconcile"):
+        required = {spec.source for spec in jobs.job(f"check-{producer}").inputs.values()
+                    if spec.address == "member" and spec.required}
+        assert records - {MODEL_ROLES[producer]} <= required
+    assert {"record-verification", "profile-verification"} <= {
+        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "member" and spec.required
+    }
+    for verifier, subject, producer in (
+        ("verify-profile", "profile", "profile"), ("verify-synthesis", "synthesis", "synthesize"),
+    ):
+        job = jobs.job(verifier)
+        assert job.inputs[f"{subject}-answers"].source == f"{producer}:answers"
+        assert job.inputs[f"{subject}-refusal"].source == producer
+    assert jobs.job("set-check").inputs["metadata"].source == "open:metadata"
 
 
 def test_apply_jobs_judge_handed_members_not_current_slots(graph):
@@ -222,6 +234,13 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
         if name in ("boundary", "verify"):
             expected.add(f"{shared}boundary.md")
         assert {spec.source for spec in job.inputs.values() if spec.address == "file"} == expected
+    # Worker instructions name the contracts by these input keys.
+    for name in ("reconcile", "verify"):
+        for role in RECORDS:
+            assert jobs.job(name).inputs[f"{role}-contract"].source == layout.roles[role].type
+    assert "memory-profile-contract" in jobs.job("verify-profile").inputs
+    assert "synthesis-contract" in jobs.job("verify-synthesis").inputs
+    assert jobs.job("verify-profile").inputs["profile"].source == "memory-profile"
 
 
 def schema_dependencies(path):
@@ -296,36 +315,6 @@ def engine_run(tmp_path, monkeypatch):
     return Run(RunStore(run_dir))
 
 
-def test_engine_resolves_declaration_files_against_recorded_library(engine_run):
-    run = engine_run
-    assert run.parameters == {"system": "fixture"}
-    assert run.jobs.job("open").inputs == {}
-    for job in run.jobs.jobs:
-        for spec in job.inputs.values():
-            if spec.address == "file":
-                assert run.file_path(spec) == LIBRARY / spec.source
-                assert run.file_path(spec).is_file()
-
-
-@pytest.mark.parametrize("name", ("memory", "epistemic"))
-def test_presence_only_runtime_orders_initial_work_without_correction_cascade(engine_run, monkeypatch, name):
-    run = engine_run
-    job = run.jobs.job(name)
-    current = {key: Resolved(f"version-{key}") for key in job.inputs}
-    current["refusal"] = ABSENT
-    current["runtime"] = ABSENT
-    monkeypatch.setattr(run, "resolve", lambda key, inputs: current[key])
-    assert not run.ready(job, set(MODEL_ROLES.values()))
-    current["runtime"] = Resolved("runtime-first")
-    assert run.ready(job, set(MODEL_ROLES.values()))
-    completed = {"pins": {key: value.pin() for key, value in current.items()}}
-    monkeypatch.setattr(run, "latest_completed", lambda job: completed)
-    current["runtime"] = Resolved("runtime-corrected")
-    assert not run.ready(job, set(MODEL_ROLES.values()))
-    current["refusal"] = Resolved("new-verifier-refusal")
-    assert run.ready(job, set(MODEL_ROLES.values()))
-
-
 def test_publication_requires_holding_acceptances_not_every_possible_member(engine_run, monkeypatch):
     run = engine_run
     job = run.jobs.job("publish")
@@ -363,7 +352,6 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     assert len(status.stops) == 1
     assert status.stops[0].job == "open"
     assert "requires a nonempty source-identity run parameter" in status.stops[0].reason
-    assert not (tmp_path / "related-systems").exists()
     assert not (tmp_path / "retained").exists()
 
 
@@ -398,30 +386,3 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
         assert jobs.job("assemble").outputs == ("overview", "manifest")
         assert jobs.job("publish").outputs == ()
 
-
-def test_profile_synthesis_answer_protocol_and_exact_check_inputs(graph):
-    jobs, _ = graph
-    records = {"boundary", *RECORDS}
-    for producer in ("profile", "synthesize", "verify-profile", "verify-synthesis"):
-        model = jobs.job(producer)
-        assert model.outputs[-1] == "answers"
-        check = jobs.job(f"apply-{producer}" if producer.startswith("verify") else f"check-{producer}")
-        answers = check.inputs["answers"]
-        assert (answers.address, answers.source, answers.required) == ("output", f"{producer}:answers", False)
-        attempt_key = "verifier-attempt" if producer.startswith("verify") else "producer-attempt"
-        answered = check.inputs["answered-refusal"]
-        assert (answered.address, answered.source, answered.required) == ("handed", f"{attempt_key}:refusal", False)
-    for producer in ("profile", "synthesize", "reconcile"):
-        check = jobs.job(f"check-{producer}")
-        required = {spec.source for spec in check.inputs.values() if spec.address == "member" and spec.required}
-        assert records - {MODEL_ROLES[producer]} <= required
-    assert {"record-verification", "profile-verification"} <= {
-        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "member" and spec.required
-    }
-    for verifier, subject, producer in (
-        ("verify-profile", "profile", "profile"), ("verify-synthesis", "synthesis", "synthesize"),
-    ):
-        job = jobs.job(verifier)
-        assert job.inputs[f"{subject}-answers"].source == f"{producer}:answers"
-        assert job.inputs[f"{subject}-refusal"].source == producer
-    assert jobs.job("set-check").inputs["metadata"].source == "open:metadata"

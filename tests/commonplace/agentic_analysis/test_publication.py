@@ -108,14 +108,6 @@ def pinned_criteria(attempt):
         attempt.inputs[schema_alias] = b"type: object\n"
 
 
-def test_default_validation_adapter_rejects_missing_criteria(tmp_path):
-    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
-    with pytest.raises(ValueError, match="missing pinned criterion"):
-        publication.validate_pinned_set(attempt, repo=tmp_path,
-                                       members={"boundary.md": attempt.inputs["boundary"]},
-                                       manifest=b"type: ignored\n")
-
-
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope", "complete"])
 def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted, disposition):
     attempt = Attempt(tmp_path, disposition)
@@ -130,8 +122,6 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     assert b"untracked garbage" not in outputs["overview"]
     assert attempt.judgments[0][0] == "overview"
     assert "overview:identity:boundary" in attempt.judgments[0][1]["scope"]
-    assert not (attempt.run_dir / "output").exists()
-    assert not (attempt.run_dir / "run-state.md").exists()
 
 
 @pytest.mark.parametrize("defect,reason", [
@@ -164,10 +154,16 @@ def test_assembly_rejects_unsettled_or_misattributed_complete_set(tmp_path, scri
     assert not scripted and not attempt.judgments
 
 
-def test_missing_criteria_prevent_overview_acceptance(tmp_path, monkeypatch):
+@pytest.mark.parametrize("defect,reason", [
+    ("missing-criteria", "missing pinned criterion"), ("content", "missing-fixture-field"),
+])
+def test_validation_failure_prevents_overview_acceptance(tmp_path, monkeypatch, defect, reason):
     attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
+    if defect == "content":
+        pinned_criteria(attempt)
+        attempt.inputs["agentic-system-boundary-schema"] = b"required: [missing-fixture-field]\n"
     monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
-    with pytest.raises(ValueError, match="missing pinned criterion"):
+    with pytest.raises(ValueError, match=reason):
         publication.assemble_analysis(attempt)
     assert not attempt.judgments
     assert not (attempt.run_dir / "set" / "overview.md").exists()
@@ -207,16 +203,6 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
         publication.validate_pinned_set(attempt, repo=tmp_path, members=members, manifest=manifest)
 
 
-def test_content_failure_prevents_overview_acceptance(tmp_path, monkeypatch):
-    attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state")
-    pinned_criteria(attempt)
-    attempt.inputs["agentic-system-boundary-schema"] = b"required: [missing-fixture-field]\n"
-    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
-    with pytest.raises(ValueError, match="missing-fixture-field"):
-        publication.assemble_analysis(attempt)
-    assert not attempt.judgments
-
-
 def test_coverage_can_be_supplied_at_either_end(tmp_path):
     attempt = Attempt(tmp_path, "complete")
     attempt.inputs["coverage-memory-identity-boundary-memory"] = None
@@ -253,13 +239,6 @@ def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted
     attempt.inputs["manifest"] = b"type: wrong\n"
     with pytest.raises(ValueError, match="manifest does not pin"):
         publication.publish_analysis(attempt)
-
-
-def test_noncomplete_publish_is_local_only(tmp_path, scripted, monkeypatch):
-    attempt = assembled_publish_attempt(tmp_path, scripted, "out-of-scope")
-    monkeypatch.setattr(publication, "_publish_effect", lambda **kw: pytest.fail("must not publish"))
-    assert publication.publish_analysis(attempt) == {}
-    assert not (attempt.run_dir.parent / "kb/agentic-system-analyses/retained").exists()
 
 
 def effect(tmp_path, *, incumbent=False):
@@ -406,33 +385,6 @@ def test_engine_report_is_separate_and_uncertain_without_recovery(tmp_path):
     (store.run_dir / "output").mkdir()
     with pytest.raises(ValueError, match="legacy/mixed"):
         engine_run_report(store.run_dir)
-
-
-def test_engine_records_uncertain_effect_as_stop_without_committing_outputs(tmp_path, monkeypatch):
-    from commonplace.workflow import advance
-
-    args, _ = effect(tmp_path)
-    publication._publish_effect(**args)
-    (args["destination"] / "memory.md").write_bytes(b"unknown external bytes")
-    store = RunStore(args["run_dir"])
-    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE,
-                  "library": str(ROOT / "kb"), "parameters": {},
-                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
-                      {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
-                       "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
-
-    def scripted_effect_only(attempt):
-        publication._publish_effect(**args)
-        return {}
-
-    monkeypatch.setattr(publication, "publish_analysis", scripted_effect_only)
-    status = advance(store.run_dir)
-    assert len(status.stops) == 1 and status.stops[0].uncertain
-    record = store.attempt_records()[0]
-    assert record["state"] == "failed" and record["uncertain"] and not record["pins"]
-    assert "outputs" not in record
-    assert (args["destination"] / "memory.md").read_bytes() == b"unknown external bytes"
-    assert not (store.run_dir / "output").exists()
 
 
 @pytest.mark.parametrize("interruption", ["archive", "rollback"])

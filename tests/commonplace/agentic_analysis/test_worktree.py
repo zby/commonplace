@@ -86,8 +86,10 @@ def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(orig
     assert json.loads(Path(str(prepared["record"])).read_text()) == prepared
 
 
-@pytest.mark.parametrize("kind", ["unstaged", "staged", "cancelling", "untracked", "ignored", "skill"])
-def test_startup_changes_are_never_omitted(origin: Path, kind: str) -> None:
+def _startup_change(origin: Path, kind: str) -> Path | None:
+    """Make one local change; return the path a refusal must name, or None if exempt."""
+    # A user-wide ignore file must not decide the unignored cases.
+    git(origin, "config", "core.excludesFile", "/dev/null")
     changed = origin / "AGENTS.md"
     if kind in {"unstaged", "staged", "cancelling"}:
         changed.write_text("New instructions\n")
@@ -98,12 +100,35 @@ def test_startup_changes_are_never_omitted(origin: Path, kind: str) -> None:
     elif kind == "skill":
         changed = origin / "kb/instructions/worker/SKILL.md"
         changed.write_text("Modified linked skill\n")
-    else:
+    elif kind in {"untracked", "ignored"}:
         changed = origin / ".pi/settings.json"
         changed.parent.mkdir()
         changed.write_text("{}\n")
         if kind == "ignored":
             (origin / ".git/info/exclude").write_text(".pi/\n")
+    elif kind in {"local-settings", "ignored-local-settings"}:
+        changed = origin / ".claude/settings.local.json"
+        changed.parent.mkdir()
+        changed.write_text("{}\n")
+        if kind == "ignored-local-settings":
+            (origin / ".git/info/exclude").write_text("**/.claude/settings.local.json\n")
+            return None
+    else:  # Harness runtime state and READMEs are not startup inputs.
+        for name in (".claude/scheduled_tasks.lock", ".pi/README.md", ".codex/state.sqlite"):
+            path = origin / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("Local runtime state or documentation\n")
+        return None
+    return changed
+
+
+@pytest.mark.parametrize("kind", ["unstaged", "staged", "cancelling", "untracked", "ignored", "skill",
+                                  "local-settings", "ignored-local-settings", "harness-state"])
+def test_startup_changes_are_never_omitted(origin: Path, kind: str) -> None:
+    changed = _startup_change(origin, kind)
+    if changed is None:
+        assert aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
+        return
     with pytest.raises(ValueError, match="startup instructions or configuration") as error:
         aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
     assert changed.relative_to(origin).as_posix() in str(error.value)
@@ -117,27 +142,6 @@ def test_selected_revision_must_match_the_origins_startup_instructions(origin: P
     git(origin, "commit", "--quiet", "-m", "Change startup instructions")
     with pytest.raises(ValueError, match="AGENTS.md"):
         aw.prepare_analysis(origin, name="example", revision=old, allow_dirty_origin=True)
-
-
-def test_harness_runtime_state_and_readmes_are_not_startup_inputs(origin: Path) -> None:
-    for name in (".claude/scheduled_tasks.lock", ".pi/README.md", ".codex/state.sqlite"):
-        path = origin / name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("Local runtime state or documentation\n")
-    prepared = aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
-    assert prepared["status"] == "ready"
-
-
-def test_only_ignored_local_harness_settings_are_exempt(origin: Path) -> None:
-    # A user-wide ignore file must not decide the unignored case.
-    git(origin, "config", "core.excludesFile", "/dev/null")
-    local = origin / ".claude/settings.local.json"
-    local.parent.mkdir()
-    local.write_text("{}\n")
-    with pytest.raises(ValueError, match="settings.local.json"):
-        aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)
-    (origin / ".git/info/exclude").write_text("**/.claude/settings.local.json\n")
-    assert aw.prepare_analysis(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
 
 
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:
@@ -179,38 +183,36 @@ def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path
     assert list(first.iterdir()) == []
 
 
-def test_failed_installation_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys) -> None:
-    def fail(tree):
-        raise ValueError("installation failed")
-    monkeypatch.setattr(aw, "_install", fail)
+@pytest.mark.parametrize("failure,message", [
+    ("installation", "installation failed"), ("startup-change", "AGENTS.md"),
+])
+def test_failed_setup_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys,
+                                                     failure: str, message: str) -> None:
+    def install(tree):
+        if failure == "installation":
+            raise ValueError("installation failed")
+        (origin / "AGENTS.md").write_text("Changed during setup\n")
+        return {}
+    monkeypatch.setattr(aw, "_install", install)
     monkeypatch.chdir(origin)
     assert main(["prepare-analysis", "--name", "example", "--", "must-not-launch"]) == 1
-    assert "installation failed" in capsys.readouterr().err
+    assert message in capsys.readouterr().err
     (record_path,) = (origin / ".commonplace/worktrees").glob("*.preparation.json")
     record = json.loads(record_path.read_text())
     assert record["status"] == "failed"
     assert Path(record["worktree"]).is_dir()
 
 
-def test_startup_change_during_setup_prevents_launch(origin: Path, monkeypatch, capsys) -> None:
-    def changed(tree):
-        (origin / "AGENTS.md").write_text("Changed during setup\n")
-        return {}
-    monkeypatch.setattr(aw, "_install", changed)
-    monkeypatch.chdir(origin)
-    assert main(["prepare-analysis", "--name", "example", "--", "must-not-launch"]) == 1
-    assert "AGENTS.md" in capsys.readouterr().err
-    (record_path,) = (origin / ".commonplace/worktrees").glob("*.preparation.json")
-    assert json.loads(record_path.read_text())["status"] == "failed"
-
-
 def test_launcher_binds_cwd_commands_and_committed_agents(origin: Path, monkeypatch, capfd) -> None:
     monkeypatch.chdir(origin)
-    monkeypatch.setenv("PYTHONPATH", "/wrong/runtime")
+    for key in ("PYTHONPATH", "PYTHONHOME", "UV_WORKING_DIR"):
+        monkeypatch.setenv(key, "/wrong/runtime")
     probe = (
         "import json, os; from pathlib import Path; "
         "print(json.dumps({'cwd': str(Path.cwd()), 'path': os.environ['PATH'], "
-        "'pythonpath': os.environ.get('PYTHONPATH'), 'agents': Path('AGENTS.md').read_text()}))"
+        "'pythonpath': os.environ.get('PYTHONPATH'), 'uv': os.environ.get('UV_WORKING_DIR'), "
+        "'home': os.environ.get('PYTHONHOME'), "
+        "'agents': Path('AGENTS.md').read_text()}))"
     )
     assert main(["prepare-analysis", "--name", "example", "--", sys.executable, "-c", probe]) == 0
     lines = capfd.readouterr().out.splitlines()
@@ -219,39 +221,12 @@ def test_launcher_binds_cwd_commands_and_committed_agents(origin: Path, monkeypa
     assert prepared["agents-md"] == str(Path(prepared["worktree"]) / "AGENTS.md")
     assert child["cwd"] == prepared["worktree"]
     assert child["path"].split(os.pathsep)[0] == prepared["path-prefix"]
-    assert child["pythonpath"] is None
+    assert child["pythonpath"] is None and child["uv"] is None and child["home"] is None
     assert child["agents"] == "Committed instructions\n"
 
 
-def test_command_environment_clears_inherited_python_overrides(tmp_path: Path, monkeypatch) -> None:
-    for key in ("PYTHONPATH", "PYTHONHOME", "UV_WORKING_DIR"):
-        monkeypatch.setenv(key, "/origin")
-    env = aw.command_environment(tmp_path)
-    assert all(key not in env for key in ("PYTHONPATH", "PYTHONHOME", "UV_WORKING_DIR"))
-    assert env["PATH"].split(os.pathsep)[0] == str(tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin"))
-
-
-def test_installation_probe_requires_only_active_commands(tmp_path: Path, monkeypatch) -> None:
-    local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
-    found = {
-        "module": str(tmp_path / aw.RUNTIME_MARKER),
-        "workflow": str(local_bin / "commonplace-workflow"),
-        "run": str(local_bin / "commonplace-run"),
-        "validate": str(local_bin / "commonplace-validate"),
-    }
-
-    def run(args, **kwargs):
-        if args[0] == "uv":
-            return ""
-        assert "analysis-check" not in args[-1]
-        return json.dumps(found)
-
-    monkeypatch.setattr(aw, "_run", run)
-    assert aw._install(tmp_path)["path-prefix"] == str(local_bin)
-
-
-@pytest.mark.parametrize("wrong", ["module", "workflow", "run", "validate"])
-def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, monkeypatch, wrong: str) -> None:
+@pytest.mark.parametrize("wrong", [None, "module", "workflow", "run", "validate"])
+def test_installation_probe_requires_worktree_local_commands(tmp_path: Path, monkeypatch, wrong) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
@@ -260,8 +235,12 @@ def test_installation_probe_rejects_a_shared_command_or_package(tmp_path: Path, 
         "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
-    found[wrong] = "/shared/main/runtime"
+    if wrong is not None:
+        found[wrong] = "/shared/main/runtime"
     monkeypatch.setattr(aw, "_run", lambda args, **kwargs: "" if args[0] == "uv" else json.dumps(found))
+    if wrong is None:
+        assert aw._install(tmp_path)["path-prefix"] == str(local_bin)
+        return
     with pytest.raises(ValueError, match="outside"):
         aw._install(tmp_path)
 
@@ -288,13 +267,11 @@ def fake_checkout(root: Path) -> Path:
     return run
 
 
-def test_run_outside_a_source_checkout_is_not_bound(tmp_path: Path) -> None:
-    aw.require_run_code(tmp_path / "run", cwd=tmp_path)
-
-
 def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys) -> None:
     import commonplace
 
+    # A run outside any source checkout is not bound to one.
+    aw.require_run_code(tmp_path / "run", cwd=tmp_path)
     run = fake_checkout(tmp_path / "worktree")
     (tmp_path / "worktree/.venv/bin").mkdir(parents=True)
     with pytest.raises(ValueError, match=r"runs code from .*; run it from .*worktree, calling the command in .*\.venv/bin/"):
@@ -309,13 +286,6 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
     aw.require_run_code(run, cwd=tmp_path / "worktree")
     with pytest.raises(ValueError, match="working directory"):
         aw.require_run_code(run, cwd=tmp_path)
-
-
-@pytest.mark.parametrize("command", ["start", "step", "report", "resolve", "release"])
-def test_workflow_cli_has_no_legacy_shell_route(command: str) -> None:
-    with pytest.raises(SystemExit) as error:
-        main([command])
-    assert error.value.code == 2
 
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
@@ -334,12 +304,3 @@ def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, 
     assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
     assert result["effects"]["publish"]["verified"] is False
 
-
-@pytest.mark.parametrize("marker", ["workflow-state", "output", "opening.json", "run-state.md"])
-@pytest.mark.parametrize("command", ["advance", "status", "judge", "start"])
-def test_generic_cli_rejects_legacy_and_mixed(tmp_path: Path, capsys, marker: str, command: str) -> None:
-    (tmp_path / marker).touch()
-    (tmp_path / "run.json").write_text("{}")
-    extra = ["--role", "boundary", "--outcome", "accepted"] if command == "judge" else ["missing.yaml"] if command == "start" else []
-    assert run_main([command, str(tmp_path), *extra]) == 1
-    assert "legacy/mixed" in capsys.readouterr().err

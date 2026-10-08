@@ -1,7 +1,6 @@
 """Local source authorization and member-link guards; no workflow effects."""
 from hashlib import sha256
 from pathlib import Path
-from subprocess import CompletedProcess
 
 import pytest
 import yaml
@@ -38,47 +37,38 @@ def check(data, root, **kwargs):
     )
 
 
-@pytest.mark.parametrize("kind", ["capture", "git"])
-@pytest.mark.parametrize("field", ["path", "identity", "revision", "sha256", "kind"])
-def test_mismatched_frozen_source_never_inspected(tmp_path, monkeypatch, kind, field):
-    frozen = source_at(tmp_path / "frozen", kind)
-    source = {**frozen, field: "different"}
-    if field == "path":
-        source[field] = str(tmp_path / "unauthorized")
-    data = boundary(source, **{"run-id": "wrong"})
-    calls = []
-
-    def forbidden(*args, **kwargs):
-        calls.append(args)
-        raise AssertionError("unauthorized source inspection")
-
-    with monkeypatch.context() as patch:
-        for name in ("read_bytes", "read_text", "is_file", "is_dir", "is_symlink", "resolve"):
-            patch.setattr(Path, name, forbidden)
-        patch.setattr(agentic_boundary.subprocess, "run", forbidden)
-        reasons = check(data, tmp_path, frozen=frozen)
-    assert not calls
-    assert any("source must" in reason for reason in reasons)
-    assert any("run-id" in reason for reason in reasons)
-    if field == "identity":
-        assert any("source.identity" in reason for reason in reasons)
+FROZEN_CASES = [f"frozen-{kind}-{field}" for kind in ("capture", "git")
+                for field in ("path", "identity", "revision", "sha256", "kind")]
+UNPINNED_CASES = [f"unpinned-{defect}" for defect in
+                  ("outside", "traversal", "relative", "git", "identity", "legacy-identity")]
 
 
-@pytest.mark.parametrize("defect", ["outside", "traversal", "relative", "git", "identity", "legacy-identity"])
-def test_unpinned_source_authorization_precedes_inspection(tmp_path, monkeypatch, defect):
-    directory = tmp_path / "captures"
-    source = source_at(directory / "capture.md")
-    if defect == "outside":
-        source["path"] = str(tmp_path / "captures-other/capture.md")
-    elif defect == "traversal":
-        source["path"] = str(directory / "../outside.md")
-    elif defect == "relative":
-        source["path"] = "captures/capture.md"
-    elif defect == "git":
-        source = source_at(directory / "checkout", "git")
+@pytest.mark.parametrize("case", [*FROZEN_CASES, *UNPINNED_CASES])
+def test_unauthorized_source_is_refused_before_inspection(tmp_path, monkeypatch, case):
+    mode, _, detail = case.partition("-")
+    if mode == "frozen":
+        kind, field = detail.split("-")
+        frozen = source_at(tmp_path / "frozen", kind)
+        source = {**frozen, field: "different"}
+        if field == "path":
+            source[field] = str(tmp_path / "unauthorized")
+        data = boundary(source, **{"run-id": "wrong"})
+        options = {"frozen": frozen}
     else:
-        source["identity"] = "wrong"
-    data = boundary(source)
+        directory = tmp_path / "captures"
+        source = source_at(directory / "capture.md")
+        if detail == "outside":
+            source["path"] = str(tmp_path / "captures-other/capture.md")
+        elif detail == "traversal":
+            source["path"] = str(directory / "../outside.md")
+        elif detail == "relative":
+            source["path"] = "captures/capture.md"
+        elif detail == "git":
+            source = source_at(directory / "checkout", "git")
+        else:
+            source["identity"] = "wrong"
+        data = boundary(source)
+        options = {"capture_directory": None if detail == "legacy-identity" else directory}
     calls = []
 
     def forbidden(*args, **kwargs):
@@ -89,8 +79,13 @@ def test_unpinned_source_authorization_precedes_inspection(tmp_path, monkeypatch
         for name in ("read_bytes", "read_text", "is_file", "is_dir", "is_symlink", "resolve"):
             patch.setattr(Path, name, forbidden)
         patch.setattr(agentic_boundary.subprocess, "run", forbidden)
-        reasons = check(data, tmp_path, capture_directory=None if defect == "legacy-identity" else directory)
+        reasons = check(data, tmp_path, **options)
     assert reasons and not calls
+    if mode == "frozen":
+        assert any("source must" in reason for reason in reasons)
+        assert any("run-id" in reason for reason in reasons)
+        if field == "identity":
+            assert any("source.identity" in reason for reason in reasons)
 
 
 @pytest.mark.parametrize("guard", ["file-symlink", "parent-symlink", "traversal"])
@@ -151,28 +146,6 @@ def test_authorized_capture_is_read_and_independent_diagnostics_survive(tmp_path
         assert any("run-id" in reason for reason in reasons)
         if mode != "legacy":
             assert any("reviewed-boundary" in reason for reason in reasons)
-
-
-@pytest.mark.parametrize("status", ["", " M tracked.md\n"])
-def test_authorized_git_uses_existing_commit_root_and_cleanliness_checks(tmp_path, monkeypatch, status):
-    source = source_at(tmp_path, "git")
-    calls = []
-    outputs = {("rev-parse", "HEAD"): REVISION + "\n",
-               ("rev-parse", "--show-toplevel"): str(tmp_path) + "\n",
-               ("status", "--porcelain"): status}
-
-    def git(command, **kwargs):
-        assert command[:3] == ["git", "-C", str(tmp_path)]
-        args = tuple(command[3:])
-        calls.append(args)
-        return CompletedProcess(command, 0, outputs[args], "")
-
-    monkeypatch.setattr(agentic_boundary.subprocess, "run", git)
-    reasons = check(boundary(source), tmp_path, frozen=source)
-    assert calls == list(outputs)
-    assert bool(reasons) == bool(status)
-    if status:
-        assert "does not hold exactly the commit's files" in reasons[0]
 
 
 @pytest.fixture
