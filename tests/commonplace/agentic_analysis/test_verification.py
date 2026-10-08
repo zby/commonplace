@@ -36,12 +36,6 @@ def records(request, tmp_path):
     a = start(analysts=True)
     data = yaml.safe_load((a.prepared.repo / "kb" / JOB_SET).read_text())
     data["jobs"] = data["jobs"][:15]
-    # Fixture-only criterion: these three shipped checks do not declare the
-    # note-type input. This restricted graph therefore is not the exact shipped
-    # declaration, even though its handlers and other input paths are unchanged.
-    for job in data["jobs"]:
-        if job["name"] in ("check-reconcile", "set-check", "apply-verify"):
-            job["inputs"]["note-type"] = {"address": "file", "source": "types/note.md"}
     if getattr(request, "param", None) == "late":
         # Isolate historical application from upstream wait. This restricted
         # declaration deliberately does not rerun the verifier on record edits.
