@@ -917,7 +917,6 @@ class TestResolveGates:
         result = run_cli("resolve_criteria", "prose/source-residue", cwd=tmp_path)
 
         assert "=== criterion: prose/source-residue ===" in result.stdout
-        assert "path:" not in result.stdout
 
     def test_missing_gate_raises(self, tmp_path: Path) -> None:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"

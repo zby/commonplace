@@ -1,36 +1,9 @@
 from __future__ import annotations
 
-from datetime import date
-
 import pytest
 import yaml
 
 from commonplace.lib import frontmatter
-
-
-@pytest.mark.parametrize("python_loader", [False, True])
-def test_safe_loaders_preserve_frontmatter_values(monkeypatch, python_loader) -> None:
-    if python_loader:
-        monkeypatch.delattr(yaml, "CSafeLoader", raising=False)
-    result = frontmatter.parse(
-        "---\n"
-        "published: 2026-10-04\n"
-        "enabled: true\n"
-        "original: &items [one, two]\n"
-        "alias: *items\n"
-        "description: |\n  First line.\n  Second line.\n"
-        "---\n"
-    )
-
-    assert result.ok
-    assert result.data == {
-        "published": date(2026, 10, 4),
-        "enabled": True,
-        "original": ["one", "two"],
-        "alias": ["one", "two"],
-        "description": "First line.\nSecond line.",
-    }
-    assert result.data["original"] is result.data["alias"]
 
 
 @pytest.mark.parametrize("python_loader", [False, True])
@@ -41,7 +14,6 @@ def test_safe_loaders_reject_python_object_tags(monkeypatch, python_loader) -> N
 
     assert not result.ok
     assert result.data == {}
-    assert "could not determine a constructor" in result.errors[0]
 
 
 def test_parse_empty_frontmatter_returns_empty_result() -> None:

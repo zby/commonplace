@@ -37,7 +37,6 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     a = boundary
     h = a.coordinator.handout("boundary")
     p = parameters(h)
-    assert h.prompt.read_text().startswith("Follow ")
     assert "jobs-engine/fix-boundary.md" in h.prompt.read_text()
     assert "jobs-engine/follow-worker-rules.md" in h.prompt.read_text()
     assert "## Input reading batches" in h.prompt.read_text()

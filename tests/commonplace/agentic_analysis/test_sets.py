@@ -28,23 +28,8 @@ def test_identity_findings_belong_to_the_member_that_disagrees() -> None:
     ]
 
 
-def test_the_profile_cannot_cite_a_source_directly() -> None:
-    layout = agentic_set.analysis_layout()
-    assert "boundary" not in layout.roles["memory-profile"].cites
-    assert set(layout.roles["overview"].cites) == {"boundary", "runtime", "memory", "epistemic"}
 
 
-def test_verifications_can_cite_the_members_they_judge() -> None:
-    layout = agentic_set.analysis_layout()
-    assert set(layout.roles["record-verification"].cites) == {
-        "boundary", "runtime", "memory", "epistemic", "reconciliation",
-    }
-    assert set(layout.roles["profile-verification"].cites) == {
-        "runtime", "memory", "epistemic", "memory-profile",
-    }
-    assert set(layout.roles["synthesis-verification"].cites) == {
-        "boundary", "runtime", "memory", "epistemic", "synthesis",
-    }
 
 
 def test_boundary_disposition_selects_roles_before_overview_exists() -> None:

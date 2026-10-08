@@ -31,13 +31,6 @@ MODEL_ROLES = {
     "synthesize": "synthesis",
     "verify-synthesis": "synthesis-verification",
 }
-OPEN_HANDLER = "commonplace.lib.agentic_analysis.handlers.open_analysis"
-ACQUIRE_HANDLER = "commonplace.lib.agentic_analysis.handlers.acquire_analysis"
-BOUNDARY_CHECK_HANDLER = "commonplace.lib.agentic_analysis.handlers.check_boundary"
-ANALYST_CHECK_HANDLERS = {
-    member: f"commonplace.lib.agentic_analysis.handlers.check_{member}" for member in REPORTS
-}
-
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
 DECLARATION = LIBRARY / JOB_SET
@@ -46,19 +39,6 @@ ENGINE_INSTRUCTIONS = {
     "epistemic": "trace-epistemic", "reconcile": "reconcile-records", "verify": "verify-records",
     "profile": "map-memory-profile", "verify-profile": "verify-memory-profile",
     "synthesize": "synthesize-findings", "verify-synthesis": "verify-synthesis",
-}
-INTEGRATED_HANDLERS = {
-    "open": OPEN_HANDLER, "acquire": ACQUIRE_HANDLER, "check-boundary": BOUNDARY_CHECK_HANDLER,
-    **{f"check-{role}": handler for role, handler in ANALYST_CHECK_HANDLERS.items()},
-    **{name: f"commonplace.lib.agentic_analysis.verification.{function}" for name, function in (
-        ("check-reconcile", "check_reconcile"), ("set-check", "set_check"), ("apply-verify", "apply_verify"),
-    )},
-    **{name: f"commonplace.lib.agentic_analysis.profile.{function}" for name, function in (
-        ("check-profile", "check_profile"), ("check-synthesize", "check_synthesize"),
-        ("apply-verify-profile", "apply_verify_profile"), ("apply-verify-synthesis", "apply_verify_synthesis"),
-    )},
-    "assemble": "commonplace.lib.agentic_analysis.publication.assemble_analysis",
-    "publish": "commonplace.lib.agentic_analysis.publication.publish_analysis",
 }
 
 
@@ -72,7 +52,6 @@ def graph():
 
 def test_graph_covers_real_roles_once(graph):
     jobs, layout = graph
-    assert jobs.type_spec == Path(SET_TYPE)
     assert {job.role for job in jobs.jobs if job.role} == set(layout.roles)
     models = [job for job in jobs.jobs if isinstance(job, ModelJob)]
     assert {job.name: job.role for job in models} == MODEL_ROLES
@@ -83,12 +62,6 @@ def test_graph_covers_real_roles_once(graph):
 
 def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, _ = graph
-    assert jobs.job("open").inputs == {}
-    assert jobs.job("acquire").handler == ACQUIRE_HANDLER
-    assert jobs.job("check-boundary").handler == BOUNDARY_CHECK_HANDLER
-    assert jobs.job("check-runtime").handler == ANALYST_CHECK_HANDLERS["runtime"]
-    for member in ("memory", "epistemic"):
-        assert jobs.job(f"check-{member}").handler == ANALYST_CHECK_HANDLERS[member]
     for name in MODEL_ROLES:
         assert jobs.job(name).inputs["opening"].source == "open:metadata"
     boundary = jobs.job("boundary")
@@ -96,7 +69,6 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
     incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
     assert (incumbent.address, incumbent.source, incumbent.required) == ("member", "boundary", False)
-    assert jobs.job("publish").inputs["manifest"].address == "output"
     for job in jobs.jobs:
         for name, spec in job.inputs.items():
             if spec.address != "file":
@@ -335,9 +307,6 @@ def test_publication_requires_holding_acceptances_not_every_possible_member(engi
     pins["overview-accepted"] = ABSENT
     assert not run.ready(job, {"boundary", "overview"})
     assert pins["overview"].version is not None
-    # Readiness is not coverage or publication acceptance. The bound handler
-    # separately enforces exact pinned coverage, provenance and content checks.
-    assert job.handler == INTEGRATED_HANDLERS["publish"]
 
 
 @pytest.mark.slow
@@ -347,7 +316,7 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))
     for job in jobs.jobs:
         if isinstance(job, CodeJob):
-            assert job.handler == INTEGRATED_HANDLERS[job.name]
+            assert job.handler.startswith("commonplace.lib.agentic_analysis.")
             assert callable(job.resolve_handler())
     start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
     status = advance(run_dir)

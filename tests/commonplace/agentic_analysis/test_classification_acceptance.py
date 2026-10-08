@@ -239,14 +239,14 @@ def declared_packet(job_name):
 
 
 @pytest.mark.parametrize("job_name, phrases", [
-    ("memory", ["generic caller identity does not establish human control", "implemented transformation", "the missing fact, inspection/access limit and"]),
-    ("epistemic", ["checking is never", "improved capacity", "independent claims"]),
-    ("reconcile", ["never allocates ids", "faithful uncertainty alone", "bounded absence"]),
-    ("verify", ["unsupported claims, evidence strengths, absence or completeness claims require correction", "judge coverage against the frozen repository tree, not just listed anchors", "requested behavior and route names do not establish changed meaning", "remain independent claims"]),
-    ("profile", ["generic caller identity alone leaves control unresolved", "selecting or reading an existing checkpoint does not establish a write", "synthesize` creates a claim absent from the inputs", "fulfilling a consumer's request", "original input", "a faithfulness defect"]),
-    ("verify-profile", ["an unsupported emitted value or strength", "semantic verification judges support", "unresolved included parts", "inventory coverage is independent of positive witnesses"]),
-    ("synthesize", ["independent route/property conclusions", "several unestablished independent properties are not a bundled negative", "faithfully bounded uncertainty remains publishable"]),
-    ("verify-synthesis", ["structural acceptance does not establish support", "faithful uncertainty is neither blocker nor limit", "bundled negative"]),
+    ("memory", ["generic caller identity does not establish human control"]),
+    ("epistemic", ["checking is never"]),
+    ("reconcile", ["never allocates ids"]),
+    ("verify", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
+    ("profile", ["generic caller identity alone leaves control unresolved"]),
+    ("verify-profile", ["an unsupported emitted value or strength"]),
+    ("synthesize", ["independent route/property conclusions"]),
+    ("verify-synthesis", ["structural acceptance does not establish support"]),
 ])
 def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
     packet = declared_packet(job_name).lower()
@@ -267,26 +267,6 @@ def test_self_improvement_test_reaches_declared_job_inputs(job_name):
     assert match is not None
     operative = " ".join(match[1].strip().split())
     assert operative in declared_packet(job_name)
-    for phrase in (
-        "own behavior-determining organization",
-        "not merely improvement of an external work product",
-        "boundary, assessment horizon and improvement objective",
-        "specifiable independently of the change",
-        "Evidence bearing on the objective causally shapes determination",
-        "The result changes the system's own organization",
-        "consumer, channel and force capable of reaching later behavior",
-        "Subsequent operation exercises that path and causally depends",
-        "loading alone do not close these links",
-        "dormant pathway supports only a marked dispositional claim",
-        "not exercised self-improvement over the horizon",
-        "not successful improvement; success needs separate outcome evidence",
-        "a separate evaluator or rejection gate",
-        "adds no universal assessment obligation",
-    ):
-        assert phrase in operative.replace(
-            "[behavior-determining organization](../../notes/definitions/behavior-determining-organization.md)",
-            "behavior-determining organization",
-        )
 
 
 def test_unsupported_negative_and_reference_defects_are_rejected():

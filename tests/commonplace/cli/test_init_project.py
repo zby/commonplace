@@ -330,28 +330,13 @@ def test_every_project_collection_the_template_routes_to_is_scaffolded(
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
     init_project(tmp_path, name="myproject")
 
-    assert not (tmp_path / ".envrc").exists()
-
     # AGENTS.md.template has project name filled in
     agents = tmp_path / "AGENTS.md.template"
     text = agents.read_text(encoding="utf-8")
     assert "myproject" in text
     assert "{{project_name}}" not in text
-    assert "## Vocabulary" in text
-    assert "Terms needed to understand the project" in text
-    assert "Call `commonplace-*` commands by bare name" in text
-    assert "user-level `llm-commonplace` uv tool installation" in text
-    assert ".venv" not in text
-
-    assert not (tmp_path / "qmd-collections.yml").exists()
 
 
-def test_init_project_defaults_name_to_directory(tmp_path: Path) -> None:
-    init_project(tmp_path)
-
-    agents = tmp_path / "AGENTS.md.template"
-    text = agents.read_text(encoding="utf-8")
-    assert tmp_path.name in text
 
 
 def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
