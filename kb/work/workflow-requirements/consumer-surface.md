@@ -416,8 +416,9 @@ validation to the analysis. The pinned-set adapter takes the set type as an
 argument (`validate_pinned_set_snapshot`), and the frozen Git reader moved
 to `quote_grounding`.
 
-Still in `commonplace.lib` and analysis-specific: `systems_matrix`, which
-compares retained analyses. Moving it is ordinary relocation.
+`systems_matrix` stays in `commonplace.lib`. It reads retained analyses for
+the landscape synthesis in `kb/agentic-systems`, a second consumer of the
+analysis data modules, not part of the analysis workflow.
 
 ## Outside the handler surface
 
