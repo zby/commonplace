@@ -8,7 +8,13 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import Input, PlanError, load_plan, open_handouts
-from tests.commonplace.artifactrun.support import Coordinator, as_member, plan
+from tests.commonplace.artifactrun.support import (
+    NO_BLOCKERS,
+    Coordinator,
+    as_member,
+    blocking,
+    plan,
+)
 
 
 @pytest.mark.parametrize("edit, message", [
@@ -126,14 +132,15 @@ def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> Non
 
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: r1\n")
+    c.complete("verify", blocking("report: r1"))
     prompt = c.handout("report").prompt.read_text(encoding="utf-8").splitlines()
     path = Path(dict(line.split(" = ", 1) for line in prompt if " = " in line)["refusal"])
     document, error = parse_document(path.read_text(encoding="utf-8"))
     assert error is None and set(document.frontmatter) == {"refusal", "version", "scope"}
     assert document.frontmatter["version"] == digest(as_member("report", "report A\n").encode())
     assert document.frontmatter["scope"] == ["verification:verifies:report"]
-    assert document.body == "r1", "the findings, verbatim"
+    assert document.body == ("## Findings\n\nnone\n\n## Blockers\n\n- report: r1\n\n## Limits\n\nnone\n"), \
+        "the findings, verbatim"
 
 
 def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordinator) -> None:
@@ -190,7 +197,7 @@ def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
     # check-summary never sees the other report, so no check covers summary:cites:other.
     c = custom_run(tmp_path, monkeypatch, lambda jobs: jobs["check-summary"]["inputs"].pop("other"))
     c.through_records()
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     c.complete("digest", "digest D1\n")
     view = inspect(c.run_dir)
     assert not c.handed() and not view["failed_attempts"] and not view["exhausted_jobs"]

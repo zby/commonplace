@@ -11,6 +11,7 @@ from tests.commonplace.artifactrun.support import (
     BLOCKED_BRIEF,
     CORRECTED,
     Coordinator,
+    blocking,
     custom_run,
 )
 
@@ -91,7 +92,7 @@ def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_libra
     assert "other" in c.handed()
     c.complete("other", "other O1\n")
     c.complete("summary", "summary S1\n")
-    c.complete("verify", "block report: r1\n")
+    c.complete("verify", blocking("report: r1"))
     c.complete("report", "report B\n", answers=CORRECTED)
     assert c.member("report") == "report B\n"
     assert "other" not in c.handed(), "a changed order-only input is not a rerun trigger"

@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 import yaml
 
-from commonplace.artifactrun import start_run
+from commonplace.artifactrun import judge, start_run
 from commonplace.artifactrun.engine import _close
 from commonplace.artifactrun.handouts import _open
 from commonplace.artifactrun.plan import Input
@@ -14,7 +14,9 @@ from commonplace.artifactrun.store import RunStore
 from tests.commonplace.artifactrun.handlers import LOG_ENV
 from tests.commonplace.artifactrun.support import (
     CORRECTED,
+    NO_BLOCKERS,
     Coordinator,
+    blocking,
     record_calls,
     toy_library,
     version,
@@ -48,9 +50,11 @@ def late_run(tmp_path, tmp_library, monkeypatch, request):
     c.advance()
     c.through_records()
     old = c.handout("verify")
-    c.forbid("report A")
+    # An operator refusal replaces A with B while the verifier still holds A;
+    # A stays valid, so the late verdict alone decides A's judgment.
+    judge(c.run_dir, role="report", outcome="refused", findings="replace the report")
     c.advance()
-    c.complete("report", "report B\n", answers="repair\n")
+    c.complete("report", "report B\n", answers=CORRECTED)
     c.complete("summary", "summary S2\n")
     assert c.member("report") == "report B\n"
     assert not applications(c)
@@ -58,7 +62,7 @@ def late_run(tmp_path, tmp_library, monkeypatch, request):
 
 
 @pytest.mark.parametrize("late_run", [1, 3], indirect=True)
-@pytest.mark.parametrize("verdict", ["no blockers\n", "block report: late blocker\n"])
+@pytest.mark.parametrize("verdict", [NO_BLOCKERS, blocking("report: late blocker")])
 def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run, verdict):
     c, old = late_run
     c.advance(c.result_for(old, verdict))
@@ -67,7 +71,7 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     judgments = [j for j in run.judgments if j["job"] == "apply-verification"]
     subject = next(j for j in judgments if j["subject"]["role"] == "report")
     assert subject["subject"]["version"] == version("report", "report A\n")
-    assert subject["outcome"] == ("refused" if "block report" in verdict else "accepted")
+    assert subject["outcome"] == ("refused" if "- report:" in verdict else "accepted")
     assert not subject["installs"] and not subject["overrides"]
     assert c.member("report") == "report B\n"
     assert run.resolve("refusal", {"refusal": Input("refusal", "report")}).version is None
@@ -88,7 +92,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
     c, old = late_run
     # Close V and open its next ready attempt without the intervening code fixed
     # point. This constructs the same supported record state on a later invocation.
-    result = c.result_for(old, "no blockers\n")
+    result = c.result_for(old, NO_BLOCKERS)
     run = run_state(c)
     with run.store.lock():
         assert _close(run, result) is None
@@ -106,7 +110,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
     c.advance()
     assert len(applications(c)) == 1
     # Identical verdict bytes, but a new attempt record and handed B, apply again.
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert len(applications(c)) == 2
     latest = [j for j in run_state(c).judgments
               if j["job"] == "apply-verification" and j["subject"]["role"] == "report"][-1]
@@ -119,7 +123,7 @@ def test_report_separates_holding_historical_basis_from_canonical_currency(late_
     from commonplace.artifactrun.report import engine_run_report
 
     c, old = late_run
-    c.advance(c.result_for(old, "no blockers\n"))
+    c.advance(c.result_for(old, NO_BLOCKERS))
     view = engine_run_report(c.run_dir, final_job="publish", status=c.status)
     report_drift = [entry for entry in view["canonical-peer-drift"] if entry["role"] == "report"]
     assert report_drift
@@ -132,7 +136,7 @@ def test_report_separates_holding_historical_basis_from_canonical_currency(late_
 def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: semantic blocker\n")
+    c.complete("verify", blocking("report: semantic blocker"))
     run = run_state(c)
     check = run.jobs.job("check-report")
     assert "report" in run.producers(check)
@@ -147,7 +151,7 @@ def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     assert run_state(c).attempt_count("check-report") == before + 1
     assert c.member("report") == "report B\n"
     c.complete("summary", "summary S2\n")
-    c.complete("verify", "block report: second semantic blocker\n")
+    c.complete("verify", blocking("report: second semantic blocker"))
     run = run_state(c)
     # Even a consumer stripped down to only completed outputs, the attempt and
     # its now-present answered refusal must wait: the handed role is R's own.
@@ -169,7 +173,7 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     run = run_state(c)
     apply = run.jobs.job("apply-verification")
     assert "verify" in run.producers(apply), "no completed record exists yet"
-    c.advance(c.result_for(old, "no blockers\n"))
+    c.advance(c.result_for(old, NO_BLOCKERS))
     run = run_state(c)
     assert "verify" not in run.producers(apply)
     extra = {
@@ -181,7 +185,7 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     }
     guarded = {
         **{name: replace(apply, inputs={**apply.inputs, "extra": value}) for name, value in extra.items()},
-        "outputs-only": replace(apply, inputs={"verdict": apply.inputs["verdict"]}),
+        "outputs-only": replace(apply, inputs={"candidate": apply.inputs["candidate"]}),
         "order-only-record": replace(apply, inputs={
             **apply.inputs,
             "verification-attempt": replace(apply.inputs["verification-attempt"], order_only=True),

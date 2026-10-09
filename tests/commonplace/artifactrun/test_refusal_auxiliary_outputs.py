@@ -12,7 +12,12 @@ import pytest
 
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
-from tests.commonplace.artifactrun.support import Coordinator, custom_run
+from tests.commonplace.artifactrun.support import (
+    NO_BLOCKERS,
+    Coordinator,
+    blocking,
+    custom_run,
+)
 
 ANSWER = "- declined: the frozen evidence supports the finding.\n"
 
@@ -35,7 +40,7 @@ def decline_run(tmp_path, monkeypatch, *, max_attempts=3, initial_answers=""):
     auxiliary = {} if initial_answers is None else {"answers": initial_answers}
     c.advance(c.result("report", "report A\n", **auxiliary), c.result("other", "other O1\n"))
     c.complete("summary", "summary S1\n")
-    c.complete("verify", "block report: reconsider the finding\n")
+    c.complete("verify", blocking("report: reconsider the finding"))
     assert c.handed() == {"report"}
     return c
 
@@ -61,7 +66,7 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     prompt = c.handout("verify").prompt.read_text()
     answer_path = next(line.split(" = ", 1)[1] for line in prompt.splitlines() if line.startswith("answers = "))
     assert Path(answer_path).read_text() == ANSWER
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert c.handed() == {"digest"}
     assert Run(RunStore(c.run_dir)).covered("verification:verifies:report", "verification", "report")
 
@@ -91,7 +96,7 @@ def test_only_a_newly_present_or_changed_auxiliary_answer_completes(
 def test_identical_decline_after_a_new_refusal_fails(tmp_path, tmp_library, monkeypatch):
     c = decline_run(tmp_path, monkeypatch)
     c.complete("report", "report A\n", answers=ANSWER)
-    c.complete("verify", "block report: still not persuaded\n")
+    c.complete("verify", blocking("report: still not persuaded"))
     assert c.handed() == {"report"}
     c.complete("report", "report A\n", answers=ANSWER)
     assert "unchanged" in c.stop("report").reason

@@ -14,20 +14,41 @@ judges from the job's declared inputs, never from per-job configuration:
 
 Validation runs in the project the run's library belongs to, against the
 job's pinned criteria.
+
+`apply_verdict` implements the verification protocol: a verifying role's
+document has `## Blockers` and `## Limits`, each exactly `none` or a list
+with one `- ` entry per finding. With several subjects every blocker starts
+with the role it addresses (`- <role>: ...`); with one subject, none does.
+A verdict whose Blockers are `none` accepts every handed subject validation
+did not refuse. Otherwise each addressed subject is refused with its
+blockers, and a subject no blocker addresses is not judged: its gate stays
+unsettled until a blocker-free verdict. A subject failing validation at
+its role, beside this verdict, is refused whatever Blockers says. Every
+refusal of a subject carries the verdict's Limits.
 """
 
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Mapping
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
     Candidate,
+    blocker_entries,
+    content_reasons,
     correction_findings,
+    criterion_bytes,
     judge,
+    manifest,
     review,
 )
+from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.note_parser import parse_document
+from commonplace.lib.project_paths import kb_root
+from commonplace.lib.type_resolver import CriterionSnapshot
+from commonplace.lib.validation import ValidationRun
 
 CANDIDATE = "candidate"
 
@@ -101,3 +122,119 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     answers, answered = correction(attempt, built)
     judge(built, review(built) + answers, answered=answered)
     return {}
+
+
+PROTOCOL_SECTIONS = ("Blockers", "Limits")
+
+
+def _sections(body: str) -> dict[str, str | None]:
+    """Each protocol section's text; None when its heading is absent."""
+    found = {}
+    for title in PROTOCOL_SECTIONS:
+        match = re.search(rf"(?ms)^## {title}[ \t]*\n(.*?)(?=^## |\Z)", body)
+        found[title] = match[1].strip() if match else None
+    return found
+
+
+def protocol_reasons(verdict: bytes, subjects: tuple[str, ...]) -> list[str]:
+    """Why a verdict does not follow the verification protocol for ``subjects``."""
+    document, error = parse_document(verdict.decode("utf-8", errors="replace"))
+    if document is None:
+        return [f"[protocol] verdict cannot be read: {error}"]
+    reasons = []
+    for title, text in _sections(document.body).items():
+        if text is None:
+            reasons.append(f"[protocol] ## {title} is missing")
+        elif text != "none" and any(line.strip() and not line.startswith(("- ", " ", "\t"))
+                                    for line in text.splitlines()) or text != "none" and not text.startswith("- "):
+            reasons.append(f"[protocol] ## {title} must be exactly none or a list of - entries")
+    blockers = _sections(document.body)["Blockers"]
+    if blockers and blockers != "none" and len(subjects) > 1:
+        for entry in blocker_entries(blockers):
+            if addressee(entry) not in subjects:
+                reasons.append(f"[protocol] blocker addresses none of {', '.join(subjects)}: {entry.splitlines()[0]}")
+    return reasons
+
+
+def addressee(entry: str) -> str:
+    """The role a `- <role>: ...` blocker addresses."""
+    return entry[2:].partition(":")[0].strip()
+
+
+def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
+    """Apply a verdict to the exact subject versions its verifier was handed.
+
+    The candidate is the verdict at the verifier's role; the subjects are the
+    roles that role verifies, read from the handed inputs. The verdict's own
+    judgment covers its cites and identity relations; only the subject
+    judgments cover the verifies relations.
+    """
+    verdict = candidate(attempt)
+    layout = attempt.layout
+    verified = layout.roles[verdict.role].verifies
+    if not verified:
+        raise ValueError(f"role {verdict.role} verifies no role")
+    handed = {role: name for role, name in partners(attempt, exclude=verdict.role).items() if role in verified}
+    missing = [role for role in verified if role not in handed]
+    if missing:
+        raise ValueError(f"job {attempt.job.name}: no handed input for verified roles {', '.join(missing)}")
+    answers, answered = correction(attempt, verdict)
+    reasons = review(verdict) + answers + protocol_reasons(verdict.data, verified)
+    judge(verdict, reasons, answered=answered)
+    if reasons:
+        return {}  # A verdict that fails its own check judges nothing.
+
+    document, _ = parse_document(verdict.data.decode("utf-8"))
+    sections = _sections(document.body)
+    entries = blocker_entries(sections["Blockers"]) if sections["Blockers"] != "none" else []
+    limits = sections["Limits"]
+    for role in verified:
+        path = layout.path(role)
+        if path not in verdict.snapshot:
+            continue  # Not handed: nothing to judge.
+        invalid = content_reasons(verdict, role=role, data=verdict.snapshot[path],
+                                  members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
+        own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
+        relation = (f"{verdict.role}:verifies:{role}",)
+        if invalid or own:
+            findings = ("## Findings\n\n" + ("\n".join(invalid) or "none")
+                        + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
+                        + "\n\n## Limits\n\n" + limits + "\n")
+            attempt.judge(handed[role], outcome="refused", scope=relation, findings=findings)
+        elif not entries:
+            attempt.judge(handed[role], outcome="accepted", scope=relation)
+    return {}
+
+
+SET_CHECK_HEADING = "# Set check"
+
+
+def set_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
+    """Validate the role inputs as one snapshot and write the findings; judge nothing.
+
+    The findings include the artifact-level findings a role's check filters
+    out, so a verifier can read them. The output `findings` is a document
+    headed `# Set check` holding `none` or one `- ` line per finding.
+    """
+    layout = attempt.layout
+    members = {}
+    for name in attempt.inputs:
+        role = attempt.input_role(name)
+        data = attempt.read(name) if role is not None else None
+        if data is not None:
+            members[layout.path(role)] = data
+    directory = (attempt.run_dir / "artifact").resolve()
+    repo = attempt.library.parent
+    run = ValidationRun(
+        repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
+        member_snapshots={directory: members},
+        criteria=CriterionSnapshot(kb_root(repo), criterion_bytes(attempt)),
+    )
+    reasons = [f"{path}: {failure}" for path in sorted(members) for failure in run.validate(directory / path).fails]
+    try:
+        reasons += ["[artifact] " + finding.render() for finding in run.artifact_findings(directory)
+                    if not finding.absent and not finding.info]
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        reasons.append(f"[artifact] artifact input cannot be checked: {exc}")
+    text = f"{SET_CHECK_HEADING}\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
+    return {"findings": text.encode("utf-8")}

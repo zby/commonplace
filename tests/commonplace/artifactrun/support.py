@@ -107,6 +107,15 @@ MODEL_ROLES = {"brief": "brief", "report": "report", "other": "other", "summary"
                "verify": "verification", "digest": "digest"}
 MODEL_JOBS = tuple(MODEL_ROLES)
 
+NO_BLOCKERS = "## Blockers\n\nnone\n\n## Limits\n\nnone\n"
+"""A verdict that accepts every handed subject."""
+
+
+def blocking(*blockers: str) -> str:
+    """A verdict whose blockers are `<role>: <reason>` entries, each refusing its role."""
+    return "## Blockers\n\n" + "".join(f"- {b}\n" for b in blockers) + "\n## Limits\n\nnone\n"
+
+
 CORRECTED = "- corrected: repaired what the verifier blocked\n"
 """The answers to a refusal carrying one blocker, as a verifier's block of one role does."""
 
@@ -174,10 +183,12 @@ def record_calls(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordinator:
-    """A toy run whose declaration `edit` changes before the run starts."""
+    """A toy run whose declaration `edit` changes before the run starts; it may add jobs."""
     declaration, method = toy_library(tmp_path)
     data = plan(method)
-    edit({job["name"]: job for job in data["jobs"]})
+    jobs = {job["name"]: job for job in data["jobs"]}
+    edit(jobs)
+    data["jobs"] = list(jobs.values())
     declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
     log = tmp_path / "handlers.log"
     monkeypatch.setenv(LOG_ENV, str(log))
@@ -285,13 +296,16 @@ def plan(method: Path) -> dict:
                 "other": _role("other"),
                 "summary": _role("summary"),
             }, ["verification"], max_attempts=3),
-            code("apply-verification", "apply_verification", {
-                "verdict": {"address": "output", "source": "verify:verification"},
+            {"name": "apply-verification", "kind": "code", "handler": f"{STANDARD}.apply_verdict",
+             "criteria": ["toy"], "outputs": [], "inputs": {
+                "candidate": {"address": "output", "source": "verify:verification"},
+                # The handed report is validated at its role, under its contract.
+                "contract": {"address": "file", "source": CONTRACT},
                 "verification-attempt": {"address": "attempt", "source": "verify"},
                 "report-seen": {"address": "handed", "source": "verification-attempt:report"},
                 "other-seen": {"address": "handed", "source": "verification-attempt:other"},
                 "summary-seen": {"address": "handed", "source": "verification-attempt:summary"},
-            }),
+            }},
             model("digest", "digest", {
                 "report": _role("report"),
                 "other": _role("other"),
@@ -436,7 +450,7 @@ class Coordinator:
     def through_publication(self) -> RunStatus:
         """From a fresh run to a publishable artifact."""
         self.through_records()
-        self.complete("verify", "no blockers\n")
+        self.complete("verify", NO_BLOCKERS)
         self.complete("digest", "digest D1\n")
         assert self.status.publishable, self.status
         return self.status

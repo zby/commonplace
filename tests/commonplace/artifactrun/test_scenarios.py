@@ -15,14 +15,16 @@ from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV
 from tests.commonplace.artifactrun.support import (
     BLOCKED_BRIEF,
     CORRECTED,
+    NO_BLOCKERS,
     Coordinator,
     as_member,
+    blocking,
 )
 
 
 def refuse_report(c: Coordinator, reason: str = "r1") -> None:
     """From a verification hand-out, have V block the report."""
-    c.complete("verify", f"block report: {reason}\n")
+    c.complete("verify", blocking(f"report: {reason}"))
     assert "report" in c.handed()
 
 
@@ -52,7 +54,7 @@ def test_02_refuse_correct_accept(coordinator: Coordinator) -> None:
     assert "report" not in c.handed(), "a lapsed refusal input is not a change"
     assert "summary" in c.handed()
     c.complete("summary", "summary S2\n")
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert "report" not in c.handed()
     assert "digest" in c.handed()
 
@@ -62,7 +64,7 @@ def test_03_verifier_waits_for_a_refused_producer(coordinator: Coordinator) -> N
     # V reruns only after every refused producer of its inputs has answered.
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: r1\nblock other: o1\n")
+    c.complete("verify", blocking("report: r1", "other: o1"))
     c.complete("other", "other O2\n")
     assert "summary" not in c.handed(), "the report job, a producer of its input, is open"
     assert "verify" not in c.handed()
@@ -77,19 +79,21 @@ def test_05_waiting_for_a_settled_stage(coordinator: Coordinator) -> None:
     refuse_report(c)
     assert "digest" not in c.handed(), "the verification still has blockers"
     correct_report(c, "report B\n", "summary S2\n")
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert "digest" in c.handed()
     c.complete("digest", "digest D1\n")
 
     c.forbid("report B")
     c.advance()
     assert "report" in c.handed()
-    # The contract's refusal of B carries forward the blocker B answered.
-    c.complete("report", "report C\n", answers=CORRECTED)
+    # The contract change reruns the check and the verdict's application, which
+    # validates the handed B under the same contract; the application's
+    # refusal is the later one, in force, and has no blockers to answer.
+    c.complete("report", "report C\n", answers="")
     assert c.member("report") == "report C\n"
     assert "digest" not in c.handed(), "the acceptance of B no longer names the current member"
     c.complete("summary", "summary S3\n")
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert "digest" in c.handed()
 
 
@@ -187,7 +191,7 @@ def test_10_publication_blocked_by_an_acceptance_that_stopped_holding(coordinato
     assert c.member("summary") == "summary S2\n"
     assert "verify" in c.handed()
     assert not c.status.publishable
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert c.status.publishable
 
 
@@ -238,7 +242,7 @@ def test_code_jobs_run_to_a_fixed_point_within_one_invocation(coordinator: Coord
 def test_12_interrupted_invocation_resumes(coordinator: Coordinator, monkeypatch: pytest.MonkeyPatch) -> None:
     c = coordinator
     c.through_records()
-    result = c.result("verify", "no blockers\n")
+    result = c.result("verify", NO_BLOCKERS)
     monkeypatch.setenv(INTERRUPT_ENV, "apply-verification")
     with pytest.raises(KeyboardInterrupt):
         c.advance(result)
@@ -263,7 +267,7 @@ def test_12_tampered_member_is_rematerialized(coordinator: Coordinator) -> None:
 def test_13_parallel_handouts_together(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: r1\nblock other: o1\n")
+    c.complete("verify", blocking("report: r1", "other: o1"))
     c.advance(c.result("report", "report B\n", answers=CORRECTED), c.result("other", "other O2\n"))
     c.handout("summary")
     c.complete("summary", "summary S2\n")
@@ -289,7 +293,7 @@ def test_14_complete_disposition_does_not_assemble_a_partial_artifact(coordinato
     assert not c.status.stops, "assembly waits; it does not fail"
     c.advance(c.result("report", "report A\n", answers=""), c.result("other", "other O1\n"))
     c.complete("summary", "summary S1\n")
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert "assemble" not in c.ran(), "the digest is still required"
     c.complete("digest", "digest D1\n")
     assert "assemble" in c.ran() and c.member("overview") is not None
@@ -333,7 +337,7 @@ def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: C
         c.ran()
         correct_report(c, f"report {version}\n", f"summary {summary}\n")
         assert "check-report" in c.ran(), "each correction passed its structural check"
-    c.complete("verify", "block report: r\n")
+    c.complete("verify", blocking("report: r"))
     assert "report" not in c.handed()
     c.stop("report")
 
@@ -341,7 +345,7 @@ def test_16_structural_acceptance_does_not_replenish_max_attempts(coordinator: C
 def test_17_recheck_waits_for_the_refused_producer(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: r1\n")
+    c.complete("verify", blocking("report: r1"))
     assert "report" in c.handed()
     c.ran()
     c.edit_contract()
@@ -387,7 +391,7 @@ def test_18_input_versions_are_fixed_at_handout(coordinator: Coordinator) -> Non
 def test_19_cleanup_spares_an_open_attempt(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", "block report: r1\nblock other: o1\n")
+    c.complete("verify", blocking("report: r1", "other: o1"))
     open_other = c.handout("other")
     partial = open_other.outputs["other"]
     partial.write_text("other half-written\n", encoding="utf-8")
@@ -407,7 +411,7 @@ def test_20_rerun_with_its_previous_output(coordinator: Coordinator) -> None:
     c.complete("report", "report B\n", answers=CORRECTED)
     assert "summary S1" in c.reachable(c.handout("summary"))
     c.complete("summary", "summary S2\n")
-    assert "block report: r1" in c.reachable(c.handout("verify"))
+    assert "- report: r1" in c.reachable(c.handout("verify"))
 
 
 # Scenario 21 is test_late_completed_verdict_applies_before_ready_or_exhausted_rerun
@@ -422,7 +426,7 @@ def test_22_identical_verdict_text_about_different_inputs(coordinator: Coordinat
     c.complete("report", "report B\n", answers="answered\n")
     c.complete("summary", "summary S1\n")
     c.ran()
-    c.complete("verify", "no blockers\n")
+    c.complete("verify", NO_BLOCKERS)
     assert "apply-verification" in c.ran(), "the verifier's attempt record changed"
     assert "digest" in c.handed()
 
