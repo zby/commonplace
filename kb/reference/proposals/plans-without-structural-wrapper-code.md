@@ -235,8 +235,9 @@ The syntax, stated so that the loader does not invent it:
   input. `defaults.parameters` is merged under an entry's `parameters`.
 - **Input names.** A role read is named after the role. A `job:output`
   read is named after the job when the output is the job's only one, else
-  `<job>-<output>`. A read `refusal:<role>` is the filling job's latest
-  refusal, named `<role>-refusal`. A name that today differs from this,
+  `<job>-<output>`, so the boundary's read of acquisition's one output is
+  `acquire`. A read `refusal:<role>` is the filling job's latest refusal,
+  named `<role>-refusal`. A name that today differs from this,
   such as the profile verifier's `profile` for the memory profile, is
   renamed in its instruction rather than given a naming syntax.
 - **Reads.** `reads` defaults to the role's cites and identity sources,
@@ -254,8 +255,11 @@ The syntax, stated so that the loader does not invent it:
   identity source is absent, and the roles it cites as optional role
   inputs, so the check covers the relations to the partners present
   whatever the model job was handed; plus the candidate, the producer
-  attempt, the answered refusal, and the answers when the filling job
-  declares a second output. The derived apply receives, from the verifier's
+  attempt read order-only so that an identical rerun is not rechecked,
+  the answered refusal, and the answers when the filling job declares a
+  second output. A role a model job reads but does not cite, such as the
+  reconciliation for the profile, is not a check partner: a change to it
+  re-readies the model job, which is what matters, and not the check. The derived apply receives, from the verifier's
   attempt, the handed version of every role the verifier read, named
   `<role>-seen`, so its content acceptance covers the verdict's `cites`
   relations; the subjects are those the verifier role verifies. An
@@ -320,9 +324,13 @@ The syntax, stated so that the loader does not invent it:
   member whose `source` field pins the source the run may inspect. The
   loader passes it to every derived check, apply and set check, which read
   the field from that role's input. It is a plan declaration because it
-  is the run's authorization to inspect a checkout, not shape: the
-  worker's self-check runs without it and reports quotations as
-  unverified, and the type cannot say what a run is allowed to read.
+  is the run's authorization to inspect a checkout, not shape; the type
+  cannot say what a run is allowed to read. Without a pin, quotation
+  validation fails rather than reporting quotations as unverified, so for
+  the pinning role's own candidate the standard check runs the declared
+  checks first, the boundary's binding to acquisition, and inspects the
+  candidate's source only when they pass. Authority stays with
+  acquisition.
 - **The rest of the plan.** The consumer's own code jobs, the criteria
   groups model jobs name, plan-level `inputs` every model job receives,
   such as the opening metadata, and run parameters keep today's form. A
@@ -332,9 +340,10 @@ The syntax, stated so that the loader does not invent it:
   worktrees; a package-installed consumer would need the run metadata to
   record the root, and none exists.
 
-The analysis plan drops from 498 lines to roughly 80. Widening the type's
-`cites` to mean reads was rejected because it would make the validator
-read mission.
+The compact analysis plan is 237 lines against the hand-written 498: the
+criteria groups take about 45 and the four full-form jobs about 60.
+Widening the type's `cites` to mean reads was rejected because it would
+make the validator read mission.
 
 ### Run binding as identity
 
@@ -360,7 +369,14 @@ deletes checks the opener and the analyst check carry until then.
    extensions, proven by the fidelity tests and then by switching the
    analysis skill to the compact plan. The extensions are part of this
    step, not a later escape: the record-check gate and the cited-records
-   feedback need them on the first compact analysis plan.
+   feedback need them on the first compact analysis plan. Done 2026-10-09
+   except the production run: the analysis runs on the compact plan, the
+   wrappers are deleted, and the fidelity test applies the decided
+   differences to a frozen copy of the hand-written plan and requires
+   equality. The judgment test compared each wrapper with its standard
+   replacement on the same pins before the wrappers went; the profile and
+   synthesis checks were not compared, since their derived jobs lack the
+   reconciliation partner.
 4. Run binding as identity, deleting the opener's and the analyst check's
    remaining duplicates.
 
@@ -452,6 +468,7 @@ form and relations, not analytical truth.
   to the same judgments and coverage as the hand-written one. Then one
   analysis runs through the compact plan to publication, with the
   record-check gate and the cited-records feedback as declared functions
-  and the consumer's apply handlers deleted.
+  and the consumer's apply handlers deleted. All but the production run
+  are met as of 2026-10-09; the run is the operator's call.
 - Step 4: the opener's run-binding checks are deleted after draft
   validation reports the same mismatches.
