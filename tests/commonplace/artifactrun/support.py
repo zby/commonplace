@@ -9,7 +9,7 @@ kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
 | report, check-report | an analyst report (`R`, `check-R` in the scenarios) | model, code |
 | other, check-other | a second analyst; its check has the report as input | model, code |
 | summary, check-summary | reconcile | model, code |
-| verify, apply-verification | verify-records and its apply job (`V`) | model, code |
+| verification, apply-verification | verify-records and its apply job (`V`) | model, code |
 | digest, check-digest | profile, gated on the verification's acceptances | model, code |
 | assemble | assemble, gated on coverage | code |
 
@@ -113,7 +113,7 @@ TOY_TYPE = {
 }
 
 MODEL_ROLES = {"brief": "brief", "report": "report", "other": "other", "summary": "summary",
-               "verify": "verification", "digest": "digest"}
+               "verification": "verification", "digest": "digest"}
 MODEL_JOBS = tuple(MODEL_ROLES)
 
 NO_BLOCKERS = "## Blockers\n\nnone\n\n## Limits\n\nnone\n"
@@ -293,8 +293,8 @@ def plan(method: Path) -> dict:
                 "contract": {"address": "file", "source": CONTRACT},
                 # The refusal input lapses once the new candidate completes, so a
                 # check takes the refusal it answers from the attempt record.
-                "report-attempt": {"address": "attempt", "source": "report"},
-                "answered": _optional("handed", "report-attempt:refusal"),
+                "producer-attempt": {"address": "attempt", "source": "report"},
+                "answered-refusal": _optional("handed", "producer-attempt:refusal"),
                 "answers": _optional("output", "report:answers"),
             }),
             model("other", "other", {"brief": _role("brief"), "refusal": _optional("refusal", "other")},
@@ -314,20 +314,20 @@ def plan(method: Path) -> dict:
                 "report": _role("report"),
                 "other": _role("other"),
             }),
-            model("verify", "verification", {
+            model("verification", "verification", {
                 "report": _role("report"),
                 "other": _role("other"),
                 "summary": _role("summary"),
             }, ["verification"], max_attempts=3),
             {"name": "apply-verification", "kind": "code", "handler": f"{STANDARD}.apply_verdict",
              "criteria": ["toy"], "outputs": [], "inputs": {
-                "candidate": {"address": "output", "source": "verify:verification"},
+                "candidate": {"address": "output", "source": "verification:verification"},
                 # The handed report is validated at its role, under its contract.
                 "contract": {"address": "file", "source": CONTRACT},
-                "verification-attempt": {"address": "attempt", "source": "verify"},
-                "report-seen": {"address": "handed", "source": "verification-attempt:report"},
-                "other-seen": {"address": "handed", "source": "verification-attempt:other"},
-                "summary-seen": {"address": "handed", "source": "verification-attempt:summary"},
+                "verifier-attempt": {"address": "attempt", "source": "verification"},
+                "report-seen": {"address": "handed", "source": "verifier-attempt:report"},
+                "other-seen": {"address": "handed", "source": "verifier-attempt:other"},
+                "summary-seen": {"address": "handed", "source": "verifier-attempt:summary"},
             }},
             model("digest", "digest", {
                 "report": _role("report"),
@@ -467,19 +467,50 @@ class Coordinator:
         self.through_brief()
         self.advance(self.result("report", report, answers=""), self.result("other", other))
         self.complete("summary", summary)
-        assert "verify" in self.handed()
+        assert "verification" in self.handed()
         return self.status
 
     def through_publication(self) -> RunStatus:
         """From a fresh run to a publishable artifact."""
         self.through_records()
-        self.complete("verify", NO_BLOCKERS)
+        self.complete("verification", NO_BLOCKERS)
         self.complete("digest", "digest D1\n")
         assert self.status.publishable, self.status
         return self.status
 
 
-def toy_library(tmp_path: Path) -> tuple[Path, Path]:
+def compact_plan() -> dict:
+    """The toy plan in compact form: the writing jobs and assembly; the checks are derived.
+
+    Instructions are relative to the plan's directory. Its expansion and the
+    hand-written `plan` run the same scenarios.
+    """
+
+    def role(name: str, reads: dict, max_attempts: int, **more) -> dict:
+        return {"role": name, "instruction": f"{name}.md", "max_attempts": max_attempts,
+                "reads": reads, **more}
+
+    return {
+        "type_spec": "types/toy-set.md",
+        "jobs": [
+            role("brief", {}, 2),
+            role("report", {"brief": "required"}, 3, outputs=["report", "answers"],
+                 parameters={"system": "{param:subject}"}),
+            role("other", {"brief": "required"}, 3),
+            role("summary", {"report": "required", "other": "required"}, 3),
+            role("verification", {"report": "required", "other": "required", "summary": "required"}, 3),
+            role("digest", {"report": "required", "other": "required"}, 2, **{"verified-by": ["verification"]}),
+            {"name": "assemble", "kind": "code", "handler": f"{HANDLERS}.assemble", "role": "overview",
+             "outputs": ["overview"], "inputs": {
+                 "brief": _role("brief"),
+                 "coverage": {"address": "coverage"},
+                 **{name: _optional("role", name)
+                    for name in ("report", "other", "summary", "verification", "digest")}}},
+        ],
+    }
+
+
+def toy_library(tmp_path: Path, *, compact: bool = False) -> tuple[Path, Path]:
     """Write the toy type and plan under tmp_path/kb; return (declaration, method dir)."""
     kb = tmp_path / "kb"
     types = kb / "types"
@@ -496,6 +527,7 @@ def toy_library(tmp_path: Path) -> tuple[Path, Path]:
     for job in MODEL_JOBS:
         (method / f"{job}.md").write_text(f"# {job}\n\nWrite the {job}.\n", encoding="utf-8")
     declaration = method / "jobs.yaml"
-    declaration.write_text(yaml.safe_dump(plan(method), sort_keys=False), encoding="utf-8")
+    data = compact_plan() if compact else plan(method)
+    declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
     return declaration, method
 

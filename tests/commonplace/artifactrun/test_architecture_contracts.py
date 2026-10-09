@@ -132,7 +132,7 @@ def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> Non
 
     c = coordinator
     c.through_records()
-    c.complete("verify", blocking("report: r1"))
+    c.complete("verification", blocking("report: r1"))
     prompt = c.handout("report").prompt.read_text(encoding="utf-8").splitlines()
     path = Path(dict(line.split(" = ", 1) for line in prompt if " = " in line)["refusal"])
     document, error = parse_document(path.read_text(encoding="utf-8"))
@@ -197,7 +197,7 @@ def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
     # check-summary never sees the other report, so no check covers summary:cites:other.
     c = custom_run(tmp_path, monkeypatch, lambda jobs: jobs["check-summary"]["inputs"].pop("other"))
     c.through_records()
-    c.complete("verify", NO_BLOCKERS)
+    c.complete("verification", NO_BLOCKERS)
     c.complete("digest", "digest D1\n")
     view = inspect(c.run_dir)
     assert not c.handed() and not view["failed_attempts"] and not view["exhausted_jobs"]

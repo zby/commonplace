@@ -12,6 +12,7 @@ from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
 from tests.commonplace.artifactrun.support import (
     COMPLETE_BRIEF,
+    CONTRACT,
     Coordinator,
     toy_library,
     version,
@@ -91,7 +92,8 @@ def test_failed_code_retries_after_inputs_revert(coordinator, monkeypatch):
             return resolve(job)
 
         def check(attempt):
-            calls.append(attempt.read("contract"))
+            calls.append(next(attempt.read(name) for name, spec in attempt.inputs.items()
+                              if spec.source == CONTRACT))
             if len(calls) == 1:
                 raise RuntimeError("temporary failure")
             return resolve(job)(attempt)

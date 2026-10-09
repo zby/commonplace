@@ -25,6 +25,7 @@ import yaml
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
+from .compact import expand_text
 from .handouts import WORKER_RUNTIME, Handout, _open, handout_for
 from .plan import CodeJob, Input, ModelJob, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
@@ -83,8 +84,10 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
     store = RunStore(Path(run_dir))
     if store.metadata.exists():
         raise FileExistsError(f"{run_dir} already holds a run")
-    declaration = Path(plan).read_text(encoding="utf-8")
     library = library_root().resolve()
+    # A compact plan is expanded here; the run fixes and runs the expansion.
+    declaration = expand_text(Path(plan).read_text(encoding="utf-8"), library=library,
+                              plan_dir=Path(plan).resolve().parent)
     type_spec = load_plan(declaration).type_spec
     type_text = (library / type_spec).read_text(encoding="utf-8")
     layout, relations = _parse_type(type_text, str(type_spec))

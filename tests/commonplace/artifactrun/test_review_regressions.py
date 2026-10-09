@@ -38,10 +38,10 @@ def test_an_operator_refusal_reaches_a_job_that_declared_no_refusal_input(coordi
 def test_a_gate_waits_for_the_verifier_behind_its_judgment(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_publication()
-    c.edit_method("verify.md", "# verify\n\nVerify again.\n")
+    c.edit_method("verification.md", "# verify\n\nVerify again.\n")
     c.edit_method("digest.md", "# digest\n\nDigest again.\n")
     c.advance()
-    assert "verify" in c.handed()
+    assert "verification" in c.handed()
     assert "digest" not in c.handed(), "digest's gate is produced through the verifier"
 
 
@@ -92,7 +92,7 @@ def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_libra
     assert "other" in c.handed()
     c.complete("other", "other O1\n")
     c.complete("summary", "summary S1\n")
-    c.complete("verify", blocking("report: r1"))
+    c.complete("verification", blocking("report: r1"))
     c.complete("report", "report B\n", answers=CORRECTED)
     assert c.member("report") == "report B\n"
     assert "other" not in c.handed(), "a changed order-only input is not a rerun trigger"
@@ -105,3 +105,19 @@ def test_an_undeclared_relation_is_refused_at_start(tmp_path: Path, tmp_library:
 
     with pytest.raises(PlanError, match="not declared by the type"):
         custom_run(tmp_path, monkeypatch, typo)
+
+
+def test_a_judgment_does_not_lapse_on_an_order_only_input(tmp_path: Path, tmp_library: None,
+                                                           monkeypatch: pytest.MonkeyPatch) -> None:
+    def summary_record_order_only(jobs):
+        jobs["check-summary"]["inputs"]["summary-attempt"] = {
+            "address": "attempt", "source": "summary", "order_only": True}
+
+    c = custom_run(tmp_path, monkeypatch, summary_record_order_only)
+    c.through_publication()
+    c.edit_method("summary.md", "# summary\n\nWrite it again.\n")
+    c.advance()
+    c.ran()
+    c.complete("summary", "summary S1\n")
+    assert c.ran() == [], "a new record of identical bytes is no signal"
+    assert c.status.publishable, "so the check's acceptance keeps holding"

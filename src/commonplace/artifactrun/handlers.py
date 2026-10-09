@@ -15,6 +15,13 @@ judges from the job's declared inputs, never from per-job configuration:
 Validation runs in the project the run's library belongs to, against the
 job's pinned criteria.
 
+A job's `options`, fixed with the plan, extend the standard handlers:
+`frozen-source` names the role whose `source` field pins the checkout the
+run may inspect; `checks` lists functions called with the built candidate,
+each returning refusal reasons; `feedback` names a function the verdict
+application calls for each refused subject with the role, the blockers
+addressed to it and the verdict's candidate, appending the text it returns.
+
 `apply_verdict` implements the verification protocol: a verifying role's
 document has `## Blockers` and `## Limits`, each exactly `none` or a list
 with one `- ` entry per finding. With several subjects every blocker starts
@@ -32,9 +39,10 @@ refusal of a subject carries the verdict's Limits.
 
 from __future__ import annotations
 
+import importlib
 import json
 import re
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
@@ -47,6 +55,7 @@ from commonplace.artifactrun.checks import (
     manifest,
     review,
 )
+from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.project_paths import kb_root
@@ -82,7 +91,49 @@ def candidate(attempt: CodeAttempt) -> Candidate:
         member = attempt.read(name)
         if member is not None:
             members[attempt.layout.path(partner)] = member
-    return Candidate(attempt, role, data, members, attempt.library.parent, None)
+    return Candidate(attempt, role, data, members, attempt.library.parent,
+                     frozen_source(attempt, role, data, members))
+
+
+def _source_field(data: bytes) -> dict | None:
+    document, error = parse_document(data.decode("utf-8", errors="replace"))
+    source = (document.frontmatter or {}).get("source") if document is not None and not error else None
+    return source if isinstance(source, dict) else None
+
+
+def frozen_source(attempt: CodeAttempt, role: str, data: bytes, members: Mapping[str, bytes]) -> dict | None:
+    """The source the run may inspect: the `source` field of the `frozen-source` option's role.
+
+    The candidate's own field when it fills that role, else the member's.
+    None when the plan names no frozen source; a named role whose member is
+    absent or has no source is an error, never a silent unverified check.
+    """
+    pinned = attempt.options.get("frozen-source")
+    if pinned is None:
+        return None
+    holder = data if pinned == role else members.get(attempt.layout.path(pinned))
+    source = _source_field(holder) if holder is not None else None
+    if source is None and pinned != role:
+        raise TypeError(f"job {attempt.job.name}: the frozen-source member {pinned} has no source field")
+    return source
+
+
+def _resolve(path: str) -> Callable:
+    module, _, attribute = path.rpartition(".")
+    return getattr(importlib.import_module(module), attribute)
+
+
+def extension_reasons(check: Candidate) -> list[str]:
+    """Reasons from the job's declared checks, each called with the built candidate.
+
+    An entry of the `checks` option is a dotted path or a mapping with a
+    `function`; the inputs a check declares are ordinary job inputs.
+    """
+    reasons = []
+    for entry in check.attempt.options.get("checks", ()):
+        path = entry["function"] if isinstance(entry, dict) else entry
+        reasons += list(_resolve(path)(check))
+    return reasons
 
 
 def _named(attempt: CodeAttempt, address: str, source: str) -> str | None:
@@ -123,7 +174,7 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """
     built = candidate(attempt)
     answers, answered = correction(attempt, built)
-    judge(built, review(built) + answers, answered=answered)
+    judge(built, review(built) + answers + extension_reasons(built), answered=answered)
     return {}
 
 
@@ -182,7 +233,7 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
     if missing:
         raise ValueError(f"job {attempt.job.name}: no handed input for verified roles {', '.join(missing)}")
     answers, answered = correction(attempt, verdict)
-    reasons = review(verdict) + answers + protocol_reasons(verdict.data, verified)
+    reasons = review(verdict) + answers + protocol_reasons(verdict.data, verified) + extension_reasons(verdict)
     judge(verdict, reasons, answered=answered)
     if reasons:
         return {}  # A verdict that fails its own check judges nothing.
@@ -191,6 +242,7 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
     sections = _sections(document.body)
     entries = blocker_entries(sections["Blockers"]) if sections["Blockers"] != "none" else []
     limits = sections["Limits"]
+    feedback = _resolve(attempt.options["feedback"]) if attempt.options.get("feedback") else None
     for role in verified:
         path = layout.path(role)
         if path not in verdict.snapshot:
@@ -205,6 +257,8 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
             findings = ("## Findings\n\n" + ("\n".join(invalid) or "none")
                         + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
                         + "\n\n## Limits\n\n" + limits + "\n")
+            if feedback is not None:
+                findings += feedback(role, own, verdict)
             attempt.judge(handed[role], outcome="refused", scope=relation, findings=findings)
         elif not entries:
             attempt.judge(handed[role], outcome="accepted", scope=relation)
@@ -230,12 +284,16 @@ def set_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
             members[layout.path(role)] = data
     directory = (attempt.run_dir / "artifact").resolve()
     repo = attempt.library.parent
+    pinned = attempt.options.get("frozen-source")
+    source = frozen_source(attempt, "", b"", members) if pinned is not None else None
     run = ValidationRun(
         repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
         member_snapshots={directory: members},
         criteria=CriterionSnapshot(kb_root(repo), criterion_bytes(attempt)),
+        frozen_source=source,
     )
-    reasons = [f"{path}: {failure}" for path in sorted(members) for failure in run.validate(directory / path).fails]
+    reasons = ["[invocation] " + reason for reason in frozen_source_refusals(source)] if source else []
+    reasons += [f"{path}: {failure}" for path in sorted(members) for failure in run.validate(directory / path).fails]
     try:
         reasons += ["[artifact] " + finding.render() for finding in run.artifact_findings(directory)
                     if not finding.absent and not finding.info]

@@ -31,7 +31,7 @@ def decline_run(tmp_path, monkeypatch, *, max_attempts=3, initial_answers=""):
     def edit(jobs):
         jobs["report"]["max_attempts"] = max_attempts
         # The analysis declaration already gives its verifiers these inputs.
-        jobs["verify"]["inputs"]["answers"] = {
+        jobs["verification"]["inputs"]["answers"] = {
             "address": "output", "source": "report:answers", "required": False,
         }
 
@@ -40,7 +40,7 @@ def decline_run(tmp_path, monkeypatch, *, max_attempts=3, initial_answers=""):
     auxiliary = {} if initial_answers is None else {"answers": initial_answers}
     c.advance(c.result("report", "report A\n", **auxiliary), c.result("other", "other O1\n"))
     c.complete("summary", "summary S1\n")
-    c.complete("verify", blocking("report: reconsider the finding"))
+    c.complete("verification", blocking("report: reconsider the finding"))
     assert c.handed() == {"report"}
     return c
 
@@ -51,7 +51,7 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     previous_summary = c.member("summary")
     c.ran()
     status = c.complete("report", "report A\n", answers=ANSWER)
-    assert not status.stops and c.handed() == {"verify"}
+    assert not status.stops and c.handed() == {"verification"}
     current = completed_reports(c)[-1]
     assert len(completed_reports(c)) == 2
     assert current["outputs"]["report"] == original["outputs"]["report"]
@@ -63,10 +63,10 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     assert not run.covered("verification:verifies:report", "verification", "report")
     report_job = run.jobs.job("report")
     assert not run.ready(report_job, set(run.layout.roles)), "the old refusal was answered, not overridden"
-    prompt = c.handout("verify").prompt.read_text()
+    prompt = c.handout("verification").prompt.read_text()
     answer_path = next(line.split(" = ", 1)[1] for line in prompt.splitlines() if line.startswith("answers = "))
     assert Path(answer_path).read_text() == ANSWER
-    c.complete("verify", NO_BLOCKERS)
+    c.complete("verification", NO_BLOCKERS)
     assert c.handed() == {"digest"}
     assert Run(RunStore(c.run_dir)).covered("verification:verifies:report", "verification", "report")
 
@@ -82,7 +82,7 @@ def test_only_a_newly_present_or_changed_auxiliary_answer_completes(
     auxiliary = {} if answer is None else {"answers": answer}
     c.complete("report", "report A\n", **auxiliary)
     if completes:
-        assert not c.status.stops and c.handed() == {"verify"}
+        assert not c.status.stops and c.handed() == {"verification"}
         assert "answers" in completed_reports(c)[-1]["outputs"]
         return
     assert "no new auxiliary version" in c.stop("report").reason
@@ -96,7 +96,7 @@ def test_only_a_newly_present_or_changed_auxiliary_answer_completes(
 def test_identical_decline_after_a_new_refusal_fails(tmp_path, tmp_library, monkeypatch):
     c = decline_run(tmp_path, monkeypatch)
     c.complete("report", "report A\n", answers=ANSWER)
-    c.complete("verify", blocking("report: still not persuaded"))
+    c.complete("verification", blocking("report: still not persuaded"))
     assert c.handed() == {"report"}
     c.complete("report", "report A\n", answers=ANSWER)
     assert "unchanged" in c.stop("report").reason
@@ -123,7 +123,7 @@ def test_restoring_bytes_does_not_reanswer_a_historical_refusal(tmp_path, tmp_li
     assert c.handed() == {"report"}
     c.ran()
     c.complete("report", "report A\n", answers=ANSWER + "Restored the structural fields.\n")
-    assert not c.status.stops and c.handed() == {"verify"}
+    assert not c.status.stops and c.handed() == {"verification"}
     assert "check-report" in c.ran()
     run = Run(RunStore(c.run_dir))
     assert not run.superseded(original_refusal), "completion is not an override"

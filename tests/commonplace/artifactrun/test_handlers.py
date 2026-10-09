@@ -17,7 +17,7 @@ def applied(c: Coordinator) -> dict[str, dict]:
 def test_one_blocker_refuses_its_subject_and_leaves_the_others_unsettled(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", blocking("report: r1"))
+    c.complete("verification", blocking("report: r1"))
     judged = applied(c)
     assert judged["report"]["outcome"] == "refused"
     assert "## Blockers\n\n- report: r1\n" in judged["report"]["findings"]
@@ -29,7 +29,7 @@ def test_one_blocker_refuses_its_subject_and_leaves_the_others_unsettled(coordin
 def test_a_blocker_free_verdict_accepts_every_subject(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", NO_BLOCKERS)
+    c.complete("verification", NO_BLOCKERS)
     judged = applied(c)
     for role in ("report", "other", "summary"):
         assert judged[role]["outcome"] == "accepted"
@@ -40,7 +40,7 @@ def test_a_verdict_dependent_finding_refuses_its_subject_with_blockers_none(coor
     c = coordinator
     c.through_records()
     # The toy type's rule: the summary repeats each Limit of the verification.
-    c.complete("verify", blocking(limits=("the toy is small",)))
+    c.complete("verification", blocking(limits=("the toy is small",)))
     judged = applied(c)
     assert judged["summary"]["outcome"] == "refused"
     findings = judged["summary"]["findings"]
@@ -52,7 +52,7 @@ def test_a_verdict_dependent_finding_refuses_its_subject_with_blockers_none(coor
 def test_a_finding_the_subject_shows_alone_is_left_to_its_check(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    verifier = c.handout("verify")
+    verifier = c.handout("verification")
     # The contract changes while the verifier holds report A; check-report refuses A.
     c.forbid("report A")
     c.advance()
@@ -67,7 +67,7 @@ def test_a_finding_the_subject_shows_alone_is_left_to_its_check(coordinator: Coo
 def test_a_verdict_breaking_the_protocol_judges_nothing_else(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", "## Blockers\n\n- the report is wrong\n\n## Limits\n\nnone\n")
+    c.complete("verification", "## Blockers\n\n- the report is wrong\n\n## Limits\n\nnone\n")
     judged = applied(c)
     assert set(judged) == {"verification"}
     assert judged["verification"]["outcome"] == "refused"
@@ -77,7 +77,7 @@ def test_a_verdict_breaking_the_protocol_judges_nothing_else(coordinator: Coordi
 def test_a_verdict_without_limits_is_refused(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    c.complete("verify", "## Blockers\n\nnone\n")
+    c.complete("verification", "## Blockers\n\nnone\n")
     judged = applied(c)
     assert set(judged) == {"verification"} and judged["verification"]["outcome"] == "refused"
     assert "## Limits is missing" in judged["verification"]["findings"]
@@ -119,3 +119,69 @@ def test_the_set_check_writes_findings_over_the_members(tmp_path, tmp_library, m
     pins["report"] = Resolved("v", as_member("report", "REFUSE\n").encode(), "report", "report")
     findings = set_check(CodeAttempt(run, job, pins))["findings"].decode()
     assert findings.startswith("# Set check\n\n- report.md: ") and "refused pattern REFUSE" in findings
+
+
+def vetoed(check) -> list[str]:
+    """A declared check: refuse a candidate containing VETO."""
+    return ["[declared] the candidate is vetoed"] if b"VETO" in check.data else []
+
+
+def see_also(role, blockers, verdict) -> str:
+    """A declared feedback function: one line naming the role and its blocker count."""
+    return f"\n## See also\n\n{role}: {len(blockers)} blocker(s)\n"
+
+
+def compact_run(tmp_path, monkeypatch, edit) -> Coordinator:
+    """A toy run from the compact plan, with `edit` applied to its entries by role or job name."""
+    import yaml
+
+    from commonplace.artifactrun import start_run
+    from tests.commonplace.artifactrun.handlers import LOG_ENV
+    from tests.commonplace.artifactrun.support import record_calls, toy_library
+
+    declaration, method = toy_library(tmp_path, compact=True)
+    data = yaml.safe_load(declaration.read_text())
+    edit({entry.get("role") or entry.get("name"): entry for entry in data["jobs"]})
+    declaration.write_text(yaml.safe_dump(data, sort_keys=False))
+    monkeypatch.setenv(LOG_ENV, str(tmp_path / "handlers.log"))
+    record_calls(monkeypatch)
+    start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})
+    c = Coordinator(tmp_path / "run", method, tmp_path / "handlers.log")
+    c.advance()
+    return c
+
+
+def test_a_declared_check_refuses_through_the_standard_check(tmp_path, tmp_library, monkeypatch) -> None:
+    c = compact_run(tmp_path, monkeypatch,
+                    lambda entries: entries["report"].update(checks=[f"{__name__}.vetoed"]))
+    c.through_brief()
+    c.advance(c.result("report", "report VETO\n", answers=""), c.result("other", "other O1\n"))
+    assert "report" in c.handed()
+    refusal = [j for j in Run(RunStore(c.run_dir)).judgments if j["job"] == "check-report"][-1]
+    assert refusal["outcome"] == "refused" and "the candidate is vetoed" in refusal["findings"]
+
+
+def test_declared_feedback_is_appended_to_a_subject_refusal(tmp_path, tmp_library, monkeypatch) -> None:
+    c = compact_run(tmp_path, monkeypatch,
+                    lambda entries: entries["verification"].update(feedback=f"{__name__}.see_also"))
+    c.through_records()
+    c.complete("verification", blocking("report: r1"))
+    assert applied(c)["report"]["findings"].endswith("## See also\n\nreport: 1 blocker(s)\n")
+
+
+def test_the_frozen_source_role_must_pin_a_source(tmp_path, tmp_library, monkeypatch) -> None:
+    import yaml
+
+    from commonplace.artifactrun import start_run
+    from tests.commonplace.artifactrun.support import toy_library
+
+    declaration, method = toy_library(tmp_path, compact=True)
+    data = yaml.safe_load(declaration.read_text())
+    data["frozen-source"] = "brief"  # The toy brief pins no source.
+    declaration.write_text(yaml.safe_dump(data, sort_keys=False))
+    start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})
+    c = Coordinator(tmp_path / "run", method, tmp_path / "handlers.log")
+    c.advance()
+    c.through_brief()
+    c.advance(c.result("report", "report A\n", answers=""), c.result("other", "other O1\n"))
+    assert "has no source field" in c.stop("check-report").reason

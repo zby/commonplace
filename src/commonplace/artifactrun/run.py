@@ -138,11 +138,17 @@ class Run:
     # Judgments
 
     def holds(self, judgment: dict) -> bool:
+        """A judgment holds while every input of its basis resolves to the version it pinned.
+
+        Order-only inputs are recorded but excluded: their change never makes
+        the judging job ready again, so a judgment lapsing on one could never
+        be renewed.
+        """
         if judgment["id"] not in self._holds:
             self._holds[judgment["id"]] = True  # A basis never depends on its own judgment.
             specs = {name: _input(entry["input"]) for name, entry in judgment["basis"].items()}
             self._holds[judgment["id"]] = all(
-                self.resolve(name, specs).version == entry["version"]
+                specs[name].order_only or self.resolve(name, specs).version == entry["version"]
                 for name, entry in judgment["basis"].items()
             )
         return self._holds[judgment["id"]]
@@ -529,6 +535,11 @@ class CodeAttempt:
     def job(self) -> CodeJob:
         """The job this attempt runs, as declared."""
         return self._job
+
+    @property
+    def options(self) -> Mapping[str, object]:
+        """The job's declared handler options, read-only; the engine never reads them."""
+        return MappingProxyType(dict(self._job.options))
 
     @property
     def inputs(self) -> Mapping[str, Input]:

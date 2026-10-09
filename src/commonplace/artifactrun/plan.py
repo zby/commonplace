@@ -74,13 +74,18 @@ class ModelJob:
 
 @dataclass(frozen=True)
 class CodeJob:
-    """A code job runs its handler under the command."""
+    """A code job runs its handler under the command.
+
+    `options` is data for the handler that the engine stores with the plan
+    and never interprets; a change to it is a change of plan, not an input.
+    """
 
     name: str
     inputs: Mapping[str, Input]
     outputs: tuple[str, ...]
     handler: str
     role: str | None = None
+    options: Mapping[str, Any] = field(default_factory=dict)
 
     def resolve_handler(self) -> Callable:
         module, _, attribute = self.handler.rpartition(".")
@@ -225,11 +230,14 @@ def _job(raw: Any) -> Job:
                     raise PlanError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
         job: Job = ModelJob(name, inputs, outputs, instruction, role, max_attempts, dict(parameters))
     elif kind == "code":
-        allowed = {"name", "kind", "inputs", "outputs", "handler", "role"}
+        allowed = {"name", "kind", "inputs", "outputs", "handler", "role", "options"}
         handler = raw.get("handler")
         if not isinstance(handler, str) or "." not in handler:
             raise PlanError(f"job {name}: handler must be a dotted path")
-        job = CodeJob(name, inputs, outputs, handler, role)
+        options = raw.get("options") or {}
+        if not isinstance(options, dict) or not all(isinstance(key, str) for key in options):
+            raise PlanError(f"job {name}: options must be a mapping with string keys")
+        job = CodeJob(name, inputs, outputs, handler, role, dict(options))
     else:
         raise PlanError(f"job {name}: kind must be model or code")
     unknown = set(raw) - allowed

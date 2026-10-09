@@ -36,7 +36,7 @@ def applications(c):
 def late_run(tmp_path, tmp_library, monkeypatch, request):
     declaration, method = toy_library(tmp_path)
     data = yaml.safe_load(declaration.read_text())
-    verifier = next(j for j in data["jobs"] if j["name"] == "verify")
+    verifier = next(j for j in data["jobs"] if j["name"] == "verification")
     verifier["max_attempts"] = getattr(request, "param", 3)
     # All verifier member inputs remain ordinary currency triggers.
     assert all(not i.get("order_only", False) for i in verifier["inputs"].values())
@@ -49,7 +49,7 @@ def late_run(tmp_path, tmp_library, monkeypatch, request):
     c = Coordinator(directory, method, log)
     c.advance()
     c.through_records()
-    old = c.handout("verify")
+    old = c.handout("verification")
     # An operator refusal replaces A with B while the verifier still holds A;
     # A stays valid, so the late verdict alone decides A's judgment.
     judge(c.run_dir, role="report", outcome="refused", findings="replace the report")
@@ -77,12 +77,12 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     assert run.resolve("refusal", {"refusal": Input("refusal", "report")}).version is None
     assert not run.covered("verification:verifies:report", "verification", "report")
     assert not c.status.publishable and "digest" not in c.handed()
-    if run.jobs.job("verify").max_attempts == 1:
-        assert c.stop("verify").reason == "max attempts (1) exhausted"
+    if run.jobs.job("verification").max_attempts == 1:
+        assert c.stop("verification").reason == "max attempts (1) exhausted"
         assert not c.handed()
     else:
-        assert c.handed() == {"verify"}
-        new = run.open_attempt("verify")
+        assert c.handed() == {"verification"}
+        new = run.open_attempt("verification")
         assert new["pins"]["report"]["version"] == version("report", "report B\n")
     c.advance()
     assert len(applications(c)) == 1, "an unchanged completed subject applies only once"
@@ -97,7 +97,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
     with run.store.lock():
         assert _close(run, result) is None
         run.reload()
-        verifier = run.jobs.job("verify")
+        verifier = run.jobs.job("verification")
         assert run.ready(verifier, run.permitted())
         new = _open(run, verifier)
     c.open.pop(old.attempt)
@@ -110,7 +110,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
     c.advance()
     assert len(applications(c)) == 1
     # Identical verdict bytes, but a new attempt record and handed B, apply again.
-    c.complete("verify", NO_BLOCKERS)
+    c.complete("verification", NO_BLOCKERS)
     assert len(applications(c)) == 2
     latest = [j for j in run_state(c).judgments
               if j["job"] == "apply-verification" and j["subject"]["role"] == "report"][-1]
@@ -136,7 +136,7 @@ def test_report_separates_holding_historical_basis_from_canonical_currency(late_
 def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     c = coordinator
     c.through_records()
-    c.complete("verify", blocking("report: semantic blocker"))
+    c.complete("verification", blocking("report: semantic blocker"))
     run = run_state(c)
     check = run.jobs.job("check-report")
     assert "report" in run.producers(check)
@@ -151,14 +151,14 @@ def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     assert run_state(c).attempt_count("check-report") == before + 1
     assert c.member("report") == "report B\n"
     c.complete("summary", "summary S2\n")
-    c.complete("verify", blocking("report: second semantic blocker"))
+    c.complete("verification", blocking("report: second semantic blocker"))
     run = run_state(c)
     # Even a consumer stripped down to only completed outputs, the attempt and
     # its now-present answered refusal must wait: the handed role is R's own.
     own_refusal_only = replace(check, inputs={
-        name: check.inputs[name] for name in ("candidate", "report-attempt", "answered", "answers")
+        name: check.inputs[name] for name in ("candidate", "producer-attempt", "answered-refusal", "answers")
     })
-    answered = run.resolve("answered", own_refusal_only.inputs)
+    answered = run.resolve("answered-refusal", own_refusal_only.inputs)
     assert answered.version is not None and answered.role == "report"
     assert "report" in run.producers(own_refusal_only)
     assert run.open_attempt("report") is not None
@@ -172,27 +172,27 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     c, old = late_run
     run = run_state(c)
     apply = run.jobs.job("apply-verification")
-    assert "verify" in run.producers(apply), "no completed record exists yet"
+    assert "verification" in run.producers(apply), "no completed record exists yet"
     c.advance(c.result_for(old, NO_BLOCKERS))
     run = run_state(c)
-    assert "verify" not in run.producers(apply)
+    assert "verification" not in run.producers(apply)
     extra = {
         "live-member": Input("role", "verification", required=False),
         "live-judgment": Input("judgment", "report", required=False,
                                relation="verification:verifies:report", outcome="accepted"),
-        "live-refusal": Input("refusal", "verify", required=False),
-        "undeclared-handed": Input("handed", "verification-attempt:undeclared", required=False),
+        "live-refusal": Input("refusal", "verification", required=False),
+        "undeclared-handed": Input("handed", "verifier-attempt:undeclared", required=False),
     }
     guarded = {
         **{name: replace(apply, inputs={**apply.inputs, "extra": value}) for name, value in extra.items()},
         "outputs-only": replace(apply, inputs={"candidate": apply.inputs["candidate"]}),
         "order-only-record": replace(apply, inputs={
             **apply.inputs,
-            "verification-attempt": replace(apply.inputs["verification-attempt"], order_only=True),
+            "verifier-attempt": replace(apply.inputs["verifier-attempt"], order_only=True),
         }),
         "model-consumer": replace(run.jobs.job("digest"), inputs=apply.inputs),
     }[variant]
-    assert "verify" in run.producers(guarded)
+    assert "verification" in run.producers(guarded)
     # Exemption is per producer, not a waiver for independent live dependencies.
     mixed = replace(apply, inputs={**apply.inputs, "report-now": Input("role", "report")})
     assert run.producers(mixed) == {"report"}
