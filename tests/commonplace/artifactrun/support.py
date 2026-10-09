@@ -205,11 +205,15 @@ def record_calls(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(CodeJob, "resolve_handler", logged)
 
 
-def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordinator:
-    """A toy run whose declaration `edit` changes before the run starts; it may add jobs."""
+def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit, *, compact: bool = False) -> Coordinator:
+    """A toy run whose declaration `edit` changes before the run starts; it may add jobs.
+
+    `edit` receives the jobs by name; a compact plan's entries are keyed by
+    their role, job or name.
+    """
     declaration, method = toy_library(tmp_path)
-    data = plan(method)
-    jobs = {job["name"]: job for job in data["jobs"]}
+    data = compact_plan() if compact else plan(method)
+    jobs = {job.get("name") or job.get("role") or job.get("job"): job for job in data["jobs"]}
     edit(jobs)
     data["jobs"] = list(jobs.values())
     declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")

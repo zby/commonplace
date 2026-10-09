@@ -61,13 +61,19 @@ def attempt(tmp_path, candidate: bytes, judged: list) -> SimpleNamespace:
     )
 
 
+def candidate(tmp_path, data: bytes, judged: list) -> checks.Candidate:
+    """The body candidate with the head as its one partner, as the standard check builds it."""
+    pinned = attempt(tmp_path, data, judged)
+    return checks.Candidate(pinned, "body", data, {"head.md": pinned.read("head")}, tmp_path, None)
+
+
 def body(run: str) -> bytes:
     return f"---\ntype: pairs/types/body.md\nname: body\ndescription: Body.\nrun: {run}\n---\n# Body\n".encode()
 
 
 def test_a_matching_body_is_accepted_over_its_relations(tmp_path):
     judged = []
-    check = checks.candidate(attempt(tmp_path, body("R1"), judged), "body", ("head",), repo=tmp_path)
+    check = candidate(tmp_path, body("R1"), judged)
     reasons = checks.review(check)
     checks.judge(check, reasons)
     assert reasons == []
@@ -76,7 +82,7 @@ def test_a_matching_body_is_accepted_over_its_relations(tmp_path):
 
 def test_a_body_that_breaks_identity_is_refused_with_findings(tmp_path):
     judged = []
-    check = checks.candidate(attempt(tmp_path, body("R2"), judged), "body", ("head",), repo=tmp_path)
+    check = candidate(tmp_path, body("R2"), judged)
     checks.judge(check, checks.review(check))
     assert judged[0]["outcome"] == "refused"
     assert "identity field run" in judged[0]["findings"] and "## Blockers\n\nnone" in judged[0]["findings"]
@@ -89,7 +95,7 @@ def test_the_manifest_quotes_a_type_path_yaml_would_cut():
 
 def test_a_content_acceptance_never_covers_a_verifies_relation(tmp_path):
     judged = []
-    check = checks.candidate(attempt(tmp_path, body("R1"), judged), "body", ("head",), repo=tmp_path)
+    check = candidate(tmp_path, body("R1"), judged)
     assert ("body", "head", "body:verifies:head") in check.attempt.relations
     checks.judge(check, checks.review(check))
     assert "body:verifies:head" not in judged[0]["scope"]

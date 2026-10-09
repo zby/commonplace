@@ -4,7 +4,12 @@ from __future__ import annotations
 
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
-from tests.commonplace.artifactrun.support import NO_BLOCKERS, Coordinator, blocking
+from tests.commonplace.artifactrun.support import (
+    NO_BLOCKERS,
+    Coordinator,
+    blocking,
+    custom_run,
+)
 
 
 def applied(c: Coordinator) -> dict[str, dict]:
@@ -85,7 +90,7 @@ def test_a_verdict_without_limits_is_refused(coordinator: Coordinator) -> None:
 
 def set_checked(tmp_path, monkeypatch) -> Coordinator:
     """A toy run with a set check over the record roles, under the report's contract."""
-    from tests.commonplace.artifactrun.support import CONTRACT, STANDARD, custom_run
+    from tests.commonplace.artifactrun.support import CONTRACT, STANDARD
 
     def add(jobs):
         jobs["set-check"] = {
@@ -131,29 +136,9 @@ def see_also(role, blockers, verdict) -> str:
     return f"\n## See also\n\n{role}: {len(blockers)} blocker(s)\n"
 
 
-def compact_run(tmp_path, monkeypatch, edit) -> Coordinator:
-    """A toy run from the compact plan, with `edit` applied to its entries by role or job name."""
-    import yaml
-
-    from commonplace.artifactrun import start_run
-    from tests.commonplace.artifactrun.handlers import LOG_ENV
-    from tests.commonplace.artifactrun.support import record_calls, toy_library
-
-    declaration, method = toy_library(tmp_path, compact=True)
-    data = yaml.safe_load(declaration.read_text())
-    edit({entry.get("role") or entry.get("name"): entry for entry in data["jobs"]})
-    declaration.write_text(yaml.safe_dump(data, sort_keys=False))
-    monkeypatch.setenv(LOG_ENV, str(tmp_path / "handlers.log"))
-    record_calls(monkeypatch)
-    start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})
-    c = Coordinator(tmp_path / "run", method, tmp_path / "handlers.log")
-    c.advance()
-    return c
-
-
 def test_a_declared_check_refuses_through_the_standard_check(tmp_path, tmp_library, monkeypatch) -> None:
-    c = compact_run(tmp_path, monkeypatch,
-                    lambda entries: entries["report"].update(checks=[f"{__name__}.vetoed"]))
+    c = custom_run(tmp_path, monkeypatch, lambda entries: entries["report"].update(checks=[f"{__name__}.vetoed"]),
+                   compact=True)
     c.through_brief()
     c.advance(c.result("report", "report VETO\n", answers=""), c.result("other", "other O1\n"))
     assert "report" in c.handed()
@@ -162,8 +147,8 @@ def test_a_declared_check_refuses_through_the_standard_check(tmp_path, tmp_libra
 
 
 def test_declared_feedback_is_appended_to_a_subject_refusal(tmp_path, tmp_library, monkeypatch) -> None:
-    c = compact_run(tmp_path, monkeypatch,
-                    lambda entries: entries["verification"].update(feedback=f"{__name__}.see_also"))
+    c = custom_run(tmp_path, monkeypatch, lambda entries: entries["verification"].update(
+        feedback=f"{__name__}.see_also"), compact=True)
     c.through_records()
     c.complete("verification", blocking("report: r1"))
     assert applied(c)["report"]["findings"].endswith("## See also\n\nreport: 1 blocker(s)\n")

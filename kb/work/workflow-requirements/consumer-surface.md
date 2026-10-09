@@ -390,21 +390,24 @@ engine's reuse modules (2026-10-09):
 
 - `commonplace.artifactrun`, the engine. Its scheduling knows nothing of
   validation, Git or files outside its store. Its reuse modules serve any
-  consumer of a typed artifact: candidate checks and the correction protocol
-  (`checks`), frozen external sources and their acquisition (`sources`), the
-  journaled directory install (`effects`), commit-bound worktrees and
-  branch-and-merge transfer (`worktree`), and the run report (`report`).
+  consumer of a typed artifact: the compact-plan loader (`compact`), the
+  standard check, verdict application and set check (`handlers`), candidate
+  checks and the correction protocol (`checks`), frozen external sources and
+  their acquisition (`sources`), the journaled directory install
+  (`effects`), commit-bound worktrees and branch-and-merge transfer
+  (`worktree`), and the run report (`report`).
   They depend on `commonplace.lib`, never on a consumer; a test enforces
   that.
-- `commonplace.lib.agentic_analysis`, the domain: the handlers the
-  declaration names, record and ledger rules, boundary semantics, assembly,
+- `commonplace.lib.agentic_analysis`, the domain: the handlers of its own
+  code jobs, the declared checks and feedback its compact plan names, record
+  and ledger rules, boundary semantics, assembly,
   the publication proof, and the paths, run naming and role names it passes
   to the engine's reuse modules as arguments.
 
 The artifact type reaches the checks from the run (`CodeAttempt.type_spec`), not
 a constant. A structural refusal now carries every section of the answered
 refusal except Findings and Blockers, so `artifactrun/checks.py` names no
-analysis section. The analysis data modules (`sets`, `records`, `ledger`) must import
+analysis section. The analysis data modules (`analyses`, `records`, `ledger`) must import
 without the engine, so the helpers they share with the reuse modules moved to
 `commonplace.lib` (`note_parser.section`, `source_identity`).
 

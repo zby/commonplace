@@ -99,16 +99,15 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
                for failure in failures(draft(tmp_path, criteria(), candidate, frozen_source=wrong)))
 
 
-def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_source(tmp_path, monkeypatch):
+def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path, monkeypatch):
     from commonplace.artifactrun import checks as module
 
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
-    declared = {"candidate": CANDIDATE, "boundary": boundary}
     files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
-    attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
+    attempt = fixed_type(run_dir=tmp_path, read_files=lambda: dict(files))
     seen = []
 
     def validate(*args, **kwargs):
@@ -117,7 +116,7 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
 
     monkeypatch.setattr(module, "validate_draft_in_role", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
-    check = module.candidate(attempt, "reconciliation", ("boundary",), repo=tmp_path, source_role="boundary")
+    check = module.Candidate(attempt, "reconciliation", CANDIDATE, {"boundary.md": boundary}, tmp_path, source)
     assert module.review(check) == []
     args, kwargs = seen[0]
     assert args[2] == CANDIDATE

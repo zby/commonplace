@@ -15,7 +15,9 @@ standard `artifactrun.handlers.apply_verdict`; the record check is the
 standard `set_check`, which writes `# Set check`; the record-check gate,
 the cited-records feedback (`_feedback`) and record preservation
 (`_check_analyst`) are the declared checks `record_check_gate`,
-`cited_records` and `preserved_records`. One rule changed: an apply refuses
+`cited_records` and `preserved_records`. The candidate is built by
+`handlers.candidate` from the job's declared inputs; `checks.candidate`,
+its partner tuple and `answer_reasons` are gone. One rule changed: an apply refuses
 a subject only for findings its verdict causes. The rest of the protocol
 described here holds.
 

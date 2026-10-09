@@ -10,8 +10,6 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import CodeJob, ModelJob, advance, load_plan, start_run
-from commonplace.artifactrun.run import Run
-from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 from commonplace.lib.directory_layout import parse_layout
@@ -254,18 +252,6 @@ def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     assert names.index("record-check") < names.index("record-verification")
     handed = jobs.job("apply-record-verification").inputs["record-check-seen"]
     assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:record-check", True)
-
-
-@pytest.fixture
-def engine_run(tmp_path, monkeypatch):
-    """Only local metadata: never advance past the fail-closed opening job."""
-    monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
-    monkeypatch.chdir(tmp_path)
-    run_dir = tmp_path / "run"
-    start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
-    return Run(RunStore(run_dir))
-
-
 
 
 @pytest.mark.slow

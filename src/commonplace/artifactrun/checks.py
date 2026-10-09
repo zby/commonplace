@@ -1,9 +1,10 @@
 """The checks a code job applies to a model candidate in a typed artifact.
 
-A check validates the candidate as a draft at its role against a snapshot of
-partner members and the run's pinned criteria, checks a frozen source when one
-member pins it, checks the producer's answers to the refusal it answered, and
-judges the candidate over the relations its validation examined.
+The standard handlers (`handlers`) build a `Candidate` from a job's declared
+inputs; these functions validate it as a draft at its role against its
+partners and the run's pinned criteria, check a frozen source when one
+member pins it, check the producer's answers to the refusal it answered,
+and judge it over the relations its validation examined.
 
 A refusal's body is Markdown. Its `## Blockers` list holds obligations: the
 producer answers each, in order, with `- corrected: ` or `- declined: ` and a
@@ -14,7 +15,6 @@ other sections forward, because only the latest refusal is in force.
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -59,36 +59,6 @@ class Candidate:
         except UnicodeError:
             return {}
         return (document.frontmatter or {}) if document is not None else {}
-
-
-def snapshot(attempt: CodeAttempt, partners: tuple[str, ...], *, seen: bool = False) -> dict[str, bytes]:
-    """Partner members at their artifact paths, from inputs named by role or handed `<role>-seen`."""
-    members = {}
-    for partner in partners:
-        data = attempt.read(f"{partner}-seen" if seen else partner)
-        if data is not None:
-            members[attempt.layout.path(partner)] = data
-    return members
-
-
-def frozen_source(attempt: CodeAttempt, members: dict[str, bytes], role: str) -> dict:
-    """The `source` field of the member at ``role``, which pins the frozen source."""
-    document, error = parse_document(members[attempt.layout.path(role)].decode("utf-8"))
-    source = (document.frontmatter or {}).get("source") if document is not None and not error else None
-    if not isinstance(source, dict):
-        raise TypeError(f"checks require a {role} member with a frozen source")
-    return source
-
-
-def candidate(attempt: CodeAttempt, role: str, partners: tuple[str, ...], *, repo: Path,
-              seen: bool = False, source_role: str | None = None) -> Candidate:
-    """The `candidate` input at ``role`` with its partners, validated in project ``repo``.
-
-    ``source_role`` names the member whose `source` pins the frozen source.
-    """
-    members = snapshot(attempt, partners, seen=seen)
-    source = frozen_source(attempt, members, source_role) if source_role in partners else None
-    return Candidate(attempt, role, attempt.read("candidate"), members, repo, source)
 
 
 def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | None = None,
@@ -155,15 +125,6 @@ def correction_findings(candidate: bytes, *, member: str, refusal: bytes | None,
     if previous_version == hashlib.sha256(candidate).hexdigest() and any(line.startswith("- corrected:") for line in entries):
         return ["correction answers: an entry says corrected but the output is identical to its predecessor"]
     return []
-
-
-def answer_reasons(check: Candidate, *, record: str, output: str) -> list[str]:
-    """Correction answers to the refusal the producer answered."""
-    producer = json.loads(check.attempt.read(record))
-    return ["[correction] " + reason for reason in correction_findings(
-        check.data, member=check.role, refusal=check.attempt.read("answered-refusal"),
-        answers=check.attempt.read("answers"), previous_version=producer["previous_outputs"].get(output),
-    )]
 
 
 def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None) -> str:
