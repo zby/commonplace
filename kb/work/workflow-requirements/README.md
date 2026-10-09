@@ -91,6 +91,17 @@ checks re-prove engine invariants, and two requirement-level resolutions,
 settled 2026-10-08: the artifact type is fixed for the run, and coverage is an
 engine-derived input rather than a handler recomputation.
 
+## Verification protocol
+
+[The correction and verification protocol as implemented](./verification-protocol.md)
+describes, as of 2026-10-09, what the engine fixes, what the shared check
+module fixes, and what the analysis consumer's types, handlers and
+instructions add: the verdict language, the two routing policies, the
+record-check gate and the limits rule. It separates the parts a generic
+apply handler could take as protocol from this consumer's own content, for
+the [plans-without-consumer-code](../../reference/proposals/plans-without-consumer-code.md)
+design.
+
 ## Related
 
 - [Code-scheduled workflows](../../reference/proposals/archive/code-scheduled-workflows.md),
