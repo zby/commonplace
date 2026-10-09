@@ -165,7 +165,14 @@ together, the subjects placed at their roles, and routes findings by the
 role they name: findings at the verdict's role refuse the verdict and
 nothing is applied; findings at a subject's role refuse that subject's
 handed version, with the verdict's Limits appended, whatever Blockers
-says. It does not infer blame from which rule ran. Its refusal of a
+says. It does not infer blame from which rule ran. It refuses a subject
+only for verdict-dependent findings: those at the subject's role that
+appear with the verdict placed and do not appear without it, found by
+validating twice. A finding the subject shows on its own belongs to the
+subject's check, which already refused it; an apply that repeated it would
+be the later refusal in force and would drop the blockers the check
+carried forward from the subject's answered refusal, since the apply's
+own Blockers section is `none`. Its refusal of a
 subject is the subject's blockers followed by the verdict's Limits, plus
 whatever a declared `feedback` function appends.
 
@@ -223,10 +230,11 @@ The syntax, stated so that the loader does not invent it:
   does not make the job ready again; it maps to the engine's `order_only`
   input. Reads shape only the model job's hand-out.
 - **Derived inputs.** The derived check takes its partners from the
-  layout, not from `reads`: every role the candidate's role cites or
-  copies identity from, as an optional role input, so the check covers
-  the relations to the partners present whatever the model job was
-  handed. The derived apply receives the handed versions of the roles the
+  layout, not from `reads`: the roles the candidate's role copies identity
+  from as required role inputs, since the layout refuses a member whose
+  identity source is absent, and the roles it cites as optional role
+  inputs, so the check covers the relations to the partners present
+  whatever the model job was handed. The derived apply receives the handed versions of the roles the
   verifier verifies, from the verifier's attempt. An input only a declared
   check needs, which the model job must not see, is declared on the check
   entry's `inputs` in the same read grammar and reaches only the derived
@@ -274,11 +282,21 @@ The syntax, stated so that the loader does not invent it:
   `check`, for files that type rules read but no type references, such as
   the records contract. Model jobs keep naming their groups explicitly, as
   today.
+- **The frozen source.** A plan-level `frozen-source: <role>` names the
+  member whose `source` field pins the source the run may inspect. The
+  loader passes it to every derived check, apply and set check, which read
+  the field from that role's input. It is a plan declaration because it
+  is the run's authorization to inspect a checkout, not shape: the
+  worker's self-check runs without it and reports quotations as
+  unverified, and the type cannot say what a run is allowed to read.
 - **The rest of the plan.** The consumer's own code jobs, the criteria
   groups model jobs name, plan-level `inputs` every model job receives,
   such as the opening metadata, and run parameters keep today's form. A
   plan-level `defaults` block carries `max_attempts` for entries that do
-  not say.
+  not say. The standard handlers validate with the library's parent as the
+  project root, which holds for a source checkout and the analysis
+  worktrees; a package-installed consumer would need the run metadata to
+  record the root, and none exists.
 
 The analysis plan drops from 498 lines to roughly 80. Widening the type's
 `cites` to mean reads was rejected because it would make the validator
@@ -297,10 +315,13 @@ deletes checks the opener and the analyst check carry until then.
 ## Sequence
 
 1. Standard handlers and the input accessor, proven by deleting the engine
-   tests' check handlers. Shape checks into the type alongside, as far as
-   they need no rule selection.
+   tests' check handlers. Done 2026-10-09 for the check and the set check;
+   the directory publish and the minimal opener wait for step 3, since the
+   toy plan has nothing to test them on. No analysis shape check qualified
+   for the type without rule selection or run binding, so that part folds
+   into step 4 and the type-selected checks proposal.
 2. The named protocol as the standard apply handler's contract, proven on
-   the toy plan's verifier.
+   the toy plan's verifier. Done 2026-10-09.
 3. The compact plan and its loader, with the `checks` and `feedback`
    extensions, proven by the fidelity tests and then by switching the
    analysis skill to the compact plan. The extensions are part of this
