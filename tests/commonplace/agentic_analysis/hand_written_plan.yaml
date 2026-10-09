@@ -236,7 +236,7 @@ jobs:
   outputs: [verification]
   criteria: [worker]
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-records.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-reports.md}
     opening: {address: output, source: 'open:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}

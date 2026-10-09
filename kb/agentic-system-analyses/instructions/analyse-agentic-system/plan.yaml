@@ -126,7 +126,7 @@ jobs:
   handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
-  instruction: jobs-engine/verify-records.md
+  instruction: jobs-engine/verify-reports.md
   outputs: [verification]
   criteria: [worker]
   files:

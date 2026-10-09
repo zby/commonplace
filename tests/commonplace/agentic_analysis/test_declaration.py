@@ -27,7 +27,7 @@ DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
     "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
     "epistemic": "trace-epistemic", "reconciliation": "reconcile-records",
-    "report-verification": "verify-records", "memory-profile": "map-memory-profile",
+    "report-verification": "verify-reports", "memory-profile": "map-memory-profile",
     "profile-verification": "verify-memory-profile", "synthesis": "synthesize-findings",
     "synthesis-verification": "verify-synthesis",
 }

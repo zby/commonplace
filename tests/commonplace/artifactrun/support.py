@@ -9,7 +9,7 @@ kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
 | report, check-report | an analyst report (`R`, `check-R` in the scenarios) | model, code |
 | other, check-other | a second analyst; its check has the report as input | model, code |
 | summary, check-summary | reconcile | model, code |
-| verification, apply-verification | verify-records and its apply job (`V`) | model, code |
+| verification, apply-verification | verify-reports and its apply job (`V`) | model, code |
 | digest, check-digest | profile, gated on the verification's acceptances | model, code |
 | assemble | assemble, gated on coverage | code |
 
