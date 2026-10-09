@@ -54,7 +54,6 @@ def digest(path: Path) -> str:
 
 def configure_types(tmp_path: Path) -> None:
     for name in (
-        "agentic-analysis-boundary.md",
         "agentic-analysis-sources.md",
         "agentic-analysis-records.md",
     ):

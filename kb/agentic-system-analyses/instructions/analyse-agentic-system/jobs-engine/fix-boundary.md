@@ -22,20 +22,12 @@ server, tool or returning computation may qualify without owning the enclosing
 runtime. A target outside this scope gets `out-of-scope`. If no coherent
 boundary or reachable source can be established, use `blocked`.
 
-Classify an in-scope target with a `target-class` and `boundary-kind` from the
-boundary contract. State functional inclusions, exclusions and external
-dependencies. Do not assign an excluded host's responsibilities to this target.
-
-Inspect the repository tree and trace shipped entry points and their consumers
-before classifying it. A caller in the same repository is not an excluded
-application merely because it calls a library API; a shipped driver is not
-external merely because it supplies state to an API. Decide membership from
-shipped usage and responsibilities. For `whole-system`, include the boundary
-contract's top-level coverage table. For a memory or knowledge system, trace
-shipped prompts, maintenance instructions, persistence and reload callers,
-later consumers and evaluators; include them or justify each exclusion and
-its prevented conclusion. An intentional library-only target gets a narrower
-boundary kind. Do not call an available, uninspected file an access gap.
+Classify an in-scope target with the target class and boundary kind
+`member-type` defines. Before classifying, inspect the repository tree and
+trace shipped entry points and their consumers; for a memory or knowledge
+system, also trace shipped prompts, maintenance instructions, persistence and
+reload callers, later consumers and evaluators. Decide membership from shipped
+usage and responsibilities, and give each exclusion its prevented conclusion.
 
 ## Establish frozen evidence
 
@@ -57,10 +49,8 @@ boundary kind. Do not call an available, uninspected file an access gap.
    write `problem`, not a replacement source. `source.identity` must equal
    the opening identity. If no source was
    established, use frontmatter `source: null` and a non-complete disposition.
-4. Build the `SRC-*` register under the boundary and source contracts. A frozen
-   source must have a register row. Keep one row per source identity, labelling
-   the layers' inspected scope, anchors and limits within it. Register paths
-   describe initial coverage, not a restriction on later reading at the commit.
+4. Build the `SRC-*` register as `member-type` defines it, with the evidence
+   layers of the source contract.
 
 The boundary type gives its sections, including `## Not reached` for a
 non-complete disposition.

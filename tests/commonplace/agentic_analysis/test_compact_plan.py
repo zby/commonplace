@@ -23,6 +23,8 @@ from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 HAND_WRITTEN = Path(__file__).with_name("hand_written_plan.yaml")
 TEMPLATE = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/handout.md"
+RETIRED = {"agentic-system-analyses/instructions/agentic-analysis-boundary.md"}
+"""Contracts whose content moved into types; jobs receive those types instead."""
 
 JOB_RENAMES = {
     "reconcile": "reconciliation", "verify": "record-verification", "profile": "memory-profile",
@@ -122,7 +124,7 @@ def test_each_job_equals_its_hand_written_form_after_the_intended_differences(pl
             # write or read, derived from the layout instead of listed by hand.
             read = {spec.source for spec in job.inputs.values() if spec.address == "role"}
             derived = {TEMPLATE, *(layout.roles[role].type for role in {job.role, *read})}
-            assert files(job) == files(old_job) | derived, job.name
+            assert files(job) == (files(old_job) - RETIRED) | derived, job.name
 
 
 def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
@@ -174,7 +176,7 @@ def test_derived_criteria_include_what_the_hand_written_jobs_pinned(plans):
         if isinstance(old_job, ModelJob):
             continue
         job = new.job(job_name(old_job.name))
-        removed = files(old_job) - files(job)
+        removed = files(old_job) - files(job) - RETIRED
         # Only the type closure of partners the layout no longer gives the check.
         partners = {spec.source for spec in old_job.inputs.values() if spec.address == "role"}
         kept = {spec.source for spec in job.inputs.values() if spec.address == "role"}

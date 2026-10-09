@@ -6,9 +6,8 @@ description: "Shared evidence contract for agentic analyses: evidence layers, re
 # Agentic analysis sources
 
 This contract defines the frozen evidence used by every worker of an
-`analyse-agentic-system` run. The boundary job writes Boundary and evidence
-and the Source register under the
-[boundary contract](./agentic-analysis-boundary.md); they remain in the
+`analyse-agentic-system` run. The [boundary type](../types/agentic-system-boundary.md)
+defines Boundary and evidence and the Source register; they remain in the
 boundary member, linked from the overview. Job invocations declare this file
 as a required read.
 

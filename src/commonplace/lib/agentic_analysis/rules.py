@@ -69,7 +69,7 @@ def _agentic_boundary_register_rule(
     body = parsed.document.body
     rows = source_register_rows(body)
     errors = [
-        f"source register: {row[0]} needs all eight columns from the boundary contract"
+        f"source register: {row[0]} needs all eight columns the boundary type defines"
         for row in rows if len(row) != 8
     ]
     errors.extend(

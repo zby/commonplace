@@ -175,8 +175,6 @@ def test_model_jobs_receive_the_types_of_what_they_write_and_read(graph):
         }
         if name != "boundary":
             expected.add(f"{shared}records.md")
-        if name in ("boundary", "record-verification"):
-            expected.add(f"{shared}boundary.md")
         assert {spec.source for spec in job.inputs.values() if spec.address == "file"} == expected, name
         # The hand-out names each read member's type after its role.
         for role in read:
@@ -275,7 +273,7 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
         ANALYSIS_TYPE, "types/type-spec.md", "types/note.md",
         "agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md",
         *(f"agentic-system-analyses/instructions/agentic-analysis-{name}.md"
-          for name in ("sources", "records", "boundary")),
+          for name in ("sources", "records")),
         *(role.type for role in layout.roles.values()),
     }
     for name in ("assemble", "publish"):

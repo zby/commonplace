@@ -55,7 +55,6 @@ criteria:
   publication:
     collection: agentic-system-analyses/COLLECTION.md
     validation-contract: reference/validation-contract.md
-    boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
     note-type: types/note.md
     overview-type: agentic-system-analyses/types/agentic-system-analysis-overview.md
     type-spec: types/type-spec.md
@@ -82,8 +81,6 @@ jobs:
   instruction: jobs-engine/fix-boundary.md
   max_attempts: 2
   criteria: [worker]
-  files:
-    boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
   reads: {'acquire:source': required}
   checks:
   - function: commonplace.lib.agentic_analysis.handlers.bound_boundary
@@ -135,7 +132,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
           'epistemic:answers': optional, 'record-check:findings': required}

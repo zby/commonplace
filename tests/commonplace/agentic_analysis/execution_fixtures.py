@@ -103,11 +103,8 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
         "kb/agentic-system-analyses/instructions/analyse-agentic-system",
     ):
         shutil.copytree(ROOT / relative, repo / relative)
-    for name in ("boundary", "sources", "records"):
-        shutil.copy2(
-            ROOT / f"kb/agentic-system-analyses/instructions/agentic-analysis-{name}.md",
-            repo / f"kb/agentic-system-analyses/instructions/agentic-analysis-{name}.md",
-        )
+    for contract in (ROOT / "kb/agentic-system-analyses/instructions").glob("agentic-analysis-*.md"):
+        shutil.copy2(contract, repo / "kb/agentic-system-analyses/instructions" / contract.name)
     shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")
     (repo / "kb/reference").mkdir(parents=True)
     shutil.copy2(ROOT / "kb/reference/validation-contract.md", repo / "kb/reference/validation-contract.md")

@@ -24,7 +24,7 @@ including this overview.
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
 | `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
-| `target-class` | Yes | Target role under the boundary contract; `null` before classification |
+| `target-class` | Yes | Target class under the [boundary type](./agentic-system-boundary.md); `null` before classification |
 | `boundary-kind` | Yes | Extent of the selected target; `null` before establishment |
 | `reviewed-boundary` | Yes | Immutable revision or capture identity, or `null` before establishment |
 | `analysis-cutoff` | Yes | Applicability cutoff, or `null` before establishment |
