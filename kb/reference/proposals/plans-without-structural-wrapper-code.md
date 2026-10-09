@@ -206,7 +206,7 @@ mission:
 ```yaml
 - role: memory
   instruction: jobs-engine/analyse-memory.md
-  max_attempts: 3
+  max-attempts: 3
   outputs: [report, answers]
   reads: {boundary: required, runtime: order-only}
 - job: report-check
@@ -223,6 +223,10 @@ mission:
           epistemic: required, reconciliation: required}
   verified-by: [report-verification]
 ```
+
+Plan keys and names use hyphens in both the compact and the full form;
+the loader refuses a key or name with an underscore, so a misspelt plan
+fails at start ([ADR 116](../adr/116-one-word-per-concept-across-prose-and-code.md)).
 
 The syntax, stated so that the loader does not invent it:
 
@@ -247,7 +251,7 @@ The syntax, stated so that the loader does not invent it:
   against the plan. Its mode is `required`, `optional` or `order-only`. An
   optional read absent at hand-out is an absent input, not a stop. An
   order-only read is handed and its version recorded, but a change to it
-  does not make the job ready again; it maps to the engine's `order_only`
+  does not make the job ready again; it maps to the engine's `order-only`
   input. Reads shape only the model job's hand-out.
 - **Derived inputs.** The derived check takes its partners from the
   layout, not from `reads`: the roles the candidate's role copies identity
@@ -336,7 +340,7 @@ The syntax, stated so that the loader does not invent it:
 - **The rest of the plan.** The consumer's own code jobs, the criteria
   groups model jobs name, plan-level `inputs` every model job receives,
   such as the opening metadata, and run parameters keep today's form. A
-  plan-level `defaults` block carries `max_attempts` for entries that do
+  plan-level `defaults` block carries `max-attempts` for entries that do
   not say. The standard handlers validate with the library's parent as the
   project root, which holds for a source checkout and the analysis
   worktrees; a package-installed consumer would need the run metadata to

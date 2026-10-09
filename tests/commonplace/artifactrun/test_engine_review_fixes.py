@@ -59,7 +59,7 @@ def test_failed_model_is_handed_out_again_after_inputs_revert(tmp_path, tmp_libr
     declaration, method = toy_library(tmp_path)
     data = yaml.safe_load(declaration.read_text())
     data["jobs"] = data["jobs"][:2]
-    data["jobs"][0]["max_attempts"] = 3
+    data["jobs"][0]["max-attempts"] = 3
     declaration.write_text(yaml.safe_dump(data))
     start_run(tmp_path / "run", declaration)
     c = Coordinator(tmp_path / "run", method, tmp_path / "log")
@@ -124,7 +124,7 @@ def pending_candidate(tmp_path, tmp_library):
         "address": "role", "source": "other", "required": False,
     }
     jobs["other"]["inputs"]["report"] = {
-        "address": "role", "source": "report", "order_only": True,
+        "address": "role", "source": "report", "order-only": True,
     }
     declaration.write_text(yaml.safe_dump(data, sort_keys=False))
     start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})

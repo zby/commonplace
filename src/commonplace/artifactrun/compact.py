@@ -27,7 +27,7 @@ from typing import Any
 
 import yaml
 
-from commonplace.artifactrun.plan import PlanError
+from commonplace.artifactrun.plan import PlanError, reject_underscored_keys
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME
@@ -41,10 +41,10 @@ HANDLER_OUTPUTS = {ARTIFACT_CHECK: ["findings"]}
 CHECK_GROUP = "check"
 """The plan-level criteria group every derived job receives besides its type closure."""
 MODES = ("required", "optional", "order-only")
-ROLE_KEYS = {"role", "instruction", "max_attempts", "outputs", "reads", "criteria", "files",
+ROLE_KEYS = {"role", "instruction", "max-attempts", "outputs", "reads", "criteria", "files",
              "parameters", "verified-by", "checks", "feedback"}
 JOB_KEYS = {"job", "handler", "inputs", "outputs"}
-PLAN_KEYS = {"type_spec", "criteria", "inputs", "defaults", "frozen-source", "prompt-section", "jobs"}
+PLAN_KEYS = {"type", "criteria", "inputs", "defaults", "frozen-source", "prompt-section", "jobs"}
 
 
 def is_compact(data: Mapping[str, Any]) -> bool:
@@ -63,12 +63,13 @@ def expand_text(text: str, *, library: Path, plan_dir: Path) -> str:
 
 def expand(data: Mapping[str, Any], *, library: Path, plan_dir: Path) -> dict:
     """Expand a compact plan; `plan_dir` resolves entries' instruction paths."""
+    reject_underscored_keys(data)
     unknown = set(data) - PLAN_KEYS
     if unknown:
         raise PlanError(f"unknown keys {sorted(unknown)}")
-    type_spec = data.get("type_spec")
+    type_spec = data.get("type")
     if not isinstance(type_spec, str):
-        raise PlanError("type_spec must name the artifact's type, relative to the KB root")
+        raise PlanError("type must name the artifact's type, relative to the KB root")
     layout = _layout(library, type_spec)
     expansion = _Expansion(data, layout=layout, library=library.resolve(), plan_dir=plan_dir.resolve(),
                            type_spec=type_spec)
@@ -200,7 +201,7 @@ class _Expansion:
         if mode == "optional":
             spec["required"] = False
         elif mode == "order-only":
-            spec["order_only"] = True
+            spec["order-only"] = True
         return name, spec
 
     def reads(self, entry: Mapping[str, Any]) -> dict[str, dict]:
@@ -269,7 +270,7 @@ class _Expansion:
                 jobs += self.role_jobs(entry)
             else:
                 jobs.append(self.standard_job(entry))
-        plan = {"type_spec": self.type_spec}
+        plan = {"type": self.type_spec}
         if self.data.get("prompt-section") is not None:
             plan["prompt-section"] = self.library_path(self.data["prompt-section"], "prompt-section")
         if self.groups:
@@ -312,12 +313,12 @@ class _Expansion:
                                                  "outcome": "accepted"}
         parameters = {**(self.defaults.get("parameters") or {}), **(entry.get("parameters") or {})}
         model = {"name": name, "kind": "model", "role": role.name, "instruction": "instruction",
-                 "max_attempts": entry.get("max_attempts", self.defaults.get("max_attempts")),
+                 "max-attempts": entry.get("max-attempts", self.defaults.get("max-attempts")),
                  "outputs": outputs, "inputs": inputs}
         if parameters:
             model["parameters"] = parameters
-        if model["max_attempts"] is None:
-            del model["max_attempts"]
+        if model["max-attempts"] is None:
+            del model["max-attempts"]
         if entry.get("criteria"):
             model["criteria"] = list(entry["criteria"])
         derived = self.apply_job(entry, reads) if role.verifies else self.check_job(entry)
@@ -348,7 +349,7 @@ class _Expansion:
         """
         record = {"address": "attempt", "source": name}
         if not trigger:
-            record["order_only"] = True
+            record["order-only"] = True
         inputs = {"candidate": {"address": "output", "source": f"{name}:{outputs[0]}"},
                   attempt: record,
                   "answered-refusal": {"address": "handed", "source": f"{attempt}:refusal", "required": False}}

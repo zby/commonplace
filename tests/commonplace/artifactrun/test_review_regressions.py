@@ -83,7 +83,7 @@ def test_relative_file_inputs_resolve_against_the_library(tmp_path: Path, tmp_li
 def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_library: None,
                                                          monkeypatch: pytest.MonkeyPatch) -> None:
     def after_report(jobs):
-        jobs["other"]["inputs"]["report-context"] = {"address": "role", "source": "report", "order_only": True}
+        jobs["other"]["inputs"]["report-context"] = {"address": "role", "source": "report", "order-only": True}
 
     c = custom_run(tmp_path, monkeypatch, after_report)
     c.through_brief()
@@ -111,7 +111,7 @@ def test_a_judgment_does_not_lapse_on_an_order_only_input(tmp_path: Path, tmp_li
                                                            monkeypatch: pytest.MonkeyPatch) -> None:
     def summary_record_order_only(jobs):
         jobs["check-summary"]["inputs"]["summary-attempt"] = {
-            "address": "attempt", "source": "summary", "order_only": True}
+            "address": "attempt", "source": "summary", "order-only": True}
 
     c = custom_run(tmp_path, monkeypatch, summary_record_order_only)
     c.through_publication()

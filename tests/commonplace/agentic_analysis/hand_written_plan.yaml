@@ -7,7 +7,7 @@
 # source-identity, source and optional source-revision. Assembly and
 # publication are gated by the engine's coverage input; publication reads
 # assembly's pinned manifest and writes a receipt.
-type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
+type: agentic-system-analyses/types/agentic-system-analysis-set.md
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
@@ -66,7 +66,7 @@ jobs:
   kind: model
   role: boundary
   instruction: instruction
-  max_attempts: 2
+  max-attempts: 2
   outputs: [boundary]
   criteria: [worker]
   inputs:
@@ -94,7 +94,7 @@ jobs:
   kind: model
   role: runtime
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [report, answers]
   criteria: [worker]
   inputs:
@@ -124,7 +124,7 @@ jobs:
   kind: model
   role: memory
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [report, answers]
   criteria: [worker]
   inputs:
@@ -134,7 +134,7 @@ jobs:
     memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
     boundary: {address: role, source: boundary, required: true}
     refusal: {address: refusal, source: memory, required: false}
-    runtime: {address: role, source: runtime, order_only: true}
+    runtime: {address: role, source: runtime, order-only: true}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: memory}
 - name: check-memory
   kind: code
@@ -156,7 +156,7 @@ jobs:
   kind: model
   role: epistemic
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [report, answers]
   criteria: [worker]
   inputs:
@@ -166,7 +166,7 @@ jobs:
     epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     boundary: {address: role, source: boundary, required: true}
     refusal: {address: refusal, source: epistemic, required: false}
-    runtime: {address: role, source: runtime, order_only: true}
+    runtime: {address: role, source: runtime, order-only: true}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: epistemic}
 - name: check-epistemic
   kind: code
@@ -187,7 +187,7 @@ jobs:
   kind: model
   role: reconciliation
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [reconciliation]
   criteria: [worker]
   inputs:
@@ -232,7 +232,7 @@ jobs:
   kind: model
   role: report-verification
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [verification]
   criteria: [worker]
   inputs:
@@ -275,7 +275,7 @@ jobs:
   kind: model
   role: memory-profile
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [profile, answers]
   criteria: [worker]
   inputs:
@@ -313,7 +313,7 @@ jobs:
   kind: model
   role: profile-verification
   instruction: instruction
-  max_attempts: 3
+  max-attempts: 3
   outputs: [verification, answers]
   criteria: [worker]
   inputs:
@@ -352,7 +352,7 @@ jobs:
   kind: model
   role: synthesis
   instruction: instruction
-  max_attempts: 2
+  max-attempts: 2
   outputs: [synthesis, answers]
   criteria: [worker]
   inputs:
@@ -396,7 +396,7 @@ jobs:
   kind: model
   role: synthesis-verification
   instruction: instruction
-  max_attempts: 2
+  max-attempts: 2
   outputs: [verification, answers]
   criteria: [worker]
   inputs:

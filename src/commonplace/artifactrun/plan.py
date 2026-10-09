@@ -140,11 +140,23 @@ class Plan:
         return None
 
 
+def reject_underscored_keys(data: Any, where: str = "plan") -> None:
+    """Plan keys and names are hyphenated; an underscore is a misspelling."""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(key, str) and "_" in key:
+                raise PlanError(f"{where}: key {key!r} uses an underscore; plan keys and names use hyphens")
+            reject_underscored_keys(value, f"{where}: {key}")
+    elif isinstance(data, list):
+        for item in data:
+            reject_underscored_keys(item, where)
+
+
 def _input(job: str, name: str, raw: Any) -> Input:
     where = f"job {job}: input {name}"
     if not isinstance(raw, dict):
         raise PlanError(f"{where}: must be a mapping")
-    unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "order_only"}
+    unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "order-only"}
     if unknown:
         raise PlanError(f"{where}: unknown keys {sorted(unknown)}")
     address, source = raw.get("address"), raw.get("source")
@@ -171,9 +183,9 @@ def _input(job: str, name: str, raw: Any) -> Input:
         raise PlanError(f"{where}: only a judgment input has a relation or an outcome")
     if address in ("output", "handed") and source.count(":") != 1:
         raise PlanError(f"{where}: source must read <name>:<name>")
-    order_only = raw.get("order_only", False)
+    order_only = raw.get("order-only", False)
     if not isinstance(order_only, bool):
-        raise PlanError(f"{where}: order_only must be true or false")
+        raise PlanError(f"{where}: order-only must be true or false")
     return Input(address, source, required, relation, outcome, order_only)
 
 
@@ -209,15 +221,15 @@ def _job(raw: Any) -> Job:
     inputs = {key: replace(spec, source=role or "") if spec.address == "coverage" else spec
               for key, spec in inputs.items()}
     if kind == "model":
-        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "max_attempts", "parameters"}
+        allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "max-attempts", "parameters"}
         instruction = raw.get("instruction")
         if instruction not in inputs or inputs[instruction].address != "file" or not inputs[instruction].required:
             raise PlanError(f"job {name}: instruction must name a required file input")
         if not outputs:
             raise PlanError(f"job {name}: a model job needs an output")
-        max_attempts = raw.get("max_attempts")
+        max_attempts = raw.get("max-attempts")
         if max_attempts is not None and (not isinstance(max_attempts, int) or max_attempts < 1):
-            raise PlanError(f"job {name}: max_attempts must be a positive integer")
+            raise PlanError(f"job {name}: max-attempts must be a positive integer")
         parameters = raw.get("parameters") or {}
         if not isinstance(parameters, dict) or not all(
                 isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
@@ -255,12 +267,13 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
         raise PlanError("a plan must be a mapping")
-    unknown = set(data) - {"type_spec", "criteria", "jobs", "prompt-section"}
+    reject_underscored_keys(data)
+    unknown = set(data) - {"type", "criteria", "jobs", "prompt-section"}
     if unknown:
         raise PlanError(f"unknown keys {sorted(unknown)}")
     groups = _criteria_groups(data.get("criteria", {}))
-    if not isinstance(data.get("type_spec"), str):
-        raise PlanError("type_spec must name the artifact's type, relative to the KB root")
+    if not isinstance(data.get("type"), str):
+        raise PlanError("type must name the artifact's type, relative to the KB root")
     raw_jobs = data.get("jobs")
     if not isinstance(raw_jobs, list):
         raise PlanError("jobs must be a list")
@@ -270,7 +283,7 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     section = data.get("prompt-section")
     if section is not None and (not isinstance(section, str) or not section):
         raise PlanError("prompt-section must name the prompt section file, relative to the KB root")
-    plan = Plan(Path(data["type_spec"]), tuple(_with_prompt_section(_with_refusal(job), section) for job in jobs),
+    plan = Plan(Path(data["type"]), tuple(_with_prompt_section(_with_refusal(job), section) for job in jobs),
                 section)
     _check(plan, roles)
     return plan

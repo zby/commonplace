@@ -37,9 +37,9 @@ def late_run(tmp_path, tmp_library, monkeypatch, request):
     declaration, method = toy_library(tmp_path)
     data = yaml.safe_load(declaration.read_text())
     verifier = next(j for j in data["jobs"] if j["name"] == "verification")
-    verifier["max_attempts"] = getattr(request, "param", 3)
+    verifier["max-attempts"] = getattr(request, "param", 3)
     # All verifier member inputs remain ordinary currency triggers.
-    assert all(not i.get("order_only", False) for i in verifier["inputs"].values())
+    assert all(not i.get("order-only", False) for i in verifier["inputs"].values())
     declaration.write_text(yaml.safe_dump(data, sort_keys=False))
     log = tmp_path / "handlers.log"
     monkeypatch.setenv(LOG_ENV, str(log))

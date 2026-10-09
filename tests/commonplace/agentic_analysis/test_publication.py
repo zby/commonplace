@@ -208,7 +208,7 @@ def test_engine_report_is_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
     type_text = (ROOT / "kb" / ANALYSIS_TYPE).read_text()
     store.create({"type": type_text, "type_spec": ANALYSIS_TYPE, "plan": "fixture-plan.yaml", "library": str(ROOT / "kb"),
-                  "declaration": yaml.safe_dump({"type_spec": ANALYSIS_TYPE, "jobs": [
+                  "declaration": yaml.safe_dump({"type": ANALYSIS_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": []}]}),
                   "parameters": {"system": "fixture"}})
     store.fail_attempt({"id": "000001-publish", "seq": 1, "job": "publish", "kind": "code", "pins": {}},
@@ -295,7 +295,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     store = RunStore(attempt.run_dir)
     store.create({"type": (ROOT / "kb" / ANALYSIS_TYPE).read_text(), "type_spec": ANALYSIS_TYPE, "plan": "fixture-plan.yaml",
                   "library": str(ROOT / "kb"), "parameters": {},
-                  "declaration": yaml.safe_dump({"type_spec": ANALYSIS_TYPE, "jobs": [
+                  "declaration": yaml.safe_dump({"type": ANALYSIS_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
                        "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
     monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))

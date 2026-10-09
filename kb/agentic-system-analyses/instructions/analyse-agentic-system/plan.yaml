@@ -13,7 +13,7 @@
 # source and optional source-revision; every model job prints system and
 # command-path, the prepared checkout's command directory; assembly and publication are gated
 # by the engine's coverage input.
-type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
+type: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
 prompt-section: jobs-engine/prompt-section.md
 criteria:
@@ -61,7 +61,7 @@ criteria:
 inputs:
   opening: {address: output, source: 'open:metadata'}
 defaults:
-  max_attempts: 3
+  max-attempts: 3
   parameters: {system: '{param:system}', command-path: '{param:command-path}'}
 jobs:
 - name: open
@@ -78,7 +78,7 @@ jobs:
   outputs: [source]
 - role: boundary
   instruction: jobs-engine/fix-boundary.md
-  max_attempts: 2
+  max-attempts: 2
   criteria: [worker]
   reads: {'acquire:source': required}
   checks:
@@ -157,7 +157,7 @@ jobs:
           'refusal:memory-profile': optional}
 - role: synthesis
   instruction: jobs-engine/synthesize-findings.md
-  max_attempts: 2
+  max-attempts: 2
   outputs: [synthesis, answers]
   criteria: [worker]
   files:
@@ -168,7 +168,7 @@ jobs:
   verified-by: [report-verification, profile-verification]
 - role: synthesis-verification
   instruction: jobs-engine/verify-synthesis.md
-  max_attempts: 2
+  max-attempts: 2
   outputs: [verification, answers]
   criteria: [worker]
   files:

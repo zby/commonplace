@@ -248,7 +248,7 @@ def plan(method: Path) -> dict:
             "kind": "model",
             "role": role,
             "instruction": "instruction",
-            "max_attempts": max_attempts,
+            "max-attempts": max_attempts,
             "outputs": outputs,
             "inputs": {"instruction": file(f"{name}.md"), **inputs},
         }
@@ -278,7 +278,7 @@ def plan(method: Path) -> dict:
         for role in ("report", "other")
     }
     return {
-        "type_spec": "types/toy-set.md",
+        "type": "types/toy-set.md",
         "criteria": {"toy": {
             "member-type": MEMBER,
             "member-schema": "types/toy-member.schema.yaml",
@@ -493,11 +493,11 @@ def compact_plan() -> dict:
     """
 
     def role(name: str, reads: dict, max_attempts: int, **more) -> dict:
-        return {"role": name, "instruction": f"{name}.md", "max_attempts": max_attempts,
+        return {"role": name, "instruction": f"{name}.md", "max-attempts": max_attempts,
                 "reads": reads, **more}
 
     return {
-        "type_spec": "types/toy-set.md",
+        "type": "types/toy-set.md",
         "jobs": [
             role("brief", {}, 2),
             role("report", {"brief": "required"}, 3, outputs=["report", "answers"],

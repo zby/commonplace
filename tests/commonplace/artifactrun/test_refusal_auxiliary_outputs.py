@@ -29,7 +29,7 @@ def completed_reports(c):
 
 def decline_run(tmp_path, monkeypatch, *, max_attempts=3, initial_answers=""):
     def edit(jobs):
-        jobs["report"]["max_attempts"] = max_attempts
+        jobs["report"]["max-attempts"] = max_attempts
         # The analysis declaration already gives its verifiers these inputs.
         jobs["verification"]["inputs"]["answers"] = {
             "address": "output", "source": "report:answers", "required": False,
