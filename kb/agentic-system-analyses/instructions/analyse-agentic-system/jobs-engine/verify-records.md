@@ -3,7 +3,7 @@ description: "Use with the record verifier hand-out to independently judge pinne
 type: types/instruction.md
 ---
 
-# Verify the pinned record set
+# Verify the pinned records
 
 Judge whether the reconciled records support a source-grounded bounded account, distinguishing material blockers from local limits.
 
@@ -65,7 +65,7 @@ that the sources cannot settle become limits naming both positions and the
 conclusions readers must withhold. Blockers and Limits are each exactly
 `none` or a Markdown list under their required headings.
 
-Write `problem` instead of a verdict when the whole record set cannot support
+Write `problem` instead of a verdict when the records together cannot support
 any bounded conclusion or evidence contradicts the frozen target or boundary
 kind. Name paths, responsibilities and prevented conclusions. A local defect
 within a supported boundary is not that case. Do not move an incorrect

@@ -10,11 +10,11 @@ model: opus
 
 # Analyse an Agentic System
 
-Analyse one external agentic system at one frozen evidence boundary and publish its accepted set with the overview as the public entry point. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
+Analyse one external agentic system at one frozen evidence boundary and publish its accepted artifact with the overview as the public entry point. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained set under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained analysis under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
-Run the orchestrator's commands from the root of the prepared worktree throughout the run. The run's files, `related-systems/` and the retained set are found from there.
+Run the orchestrator's commands from the root of the prepared worktree throughout the run. The run's files, `related-systems/` and the retained analysis are found from there.
 
 ## Isolated run setup
 
@@ -76,7 +76,7 @@ origin checkout must be clean and on `main`. An agent also supplies
 the publication on `analysis/<run-id>` from the method commit and merges that
 branch into `main`. If Git reports a conflict, the command aborts the merge,
 keeps the branch and worktree, and stops for the operator. Do not copy the
-retained set into `main`.
+retained analysis into `main`.
 
 Worktree removal is a separate operator decision. It is permitted only when
 every run in it has completed with verified publication merged into `main`, no
