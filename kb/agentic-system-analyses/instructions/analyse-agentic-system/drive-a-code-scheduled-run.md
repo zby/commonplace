@@ -22,6 +22,12 @@ Code runs ready code jobs and prints model handouts, open attempts, stops and
 publishability. There is no separate launch/done outcome line. Exit status 0
 means the run continues, 2 means it stopped, and 1 means the command failed.
 
+Preserve and expose each shell command's exit code alongside stdout and stderr.
+Wait for completion and inspect the exit code before using the result. When
+calling through a script or tool wrapper, forward the complete command result;
+successful wrapper execution does not establish command success. Handle
+expected nonzero exits explicitly.
+
 Source acquisition runs during advance. If its network requirement is known to
 be blocked by the sandbox, request approval for that advance command before
 running it. Do not perform a standalone clone or fetch as a repair. Approval does

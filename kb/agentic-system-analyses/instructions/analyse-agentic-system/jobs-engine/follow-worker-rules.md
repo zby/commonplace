@@ -23,9 +23,15 @@ source files and searches in bounded ranges too.
 
 Inspect the complete tool result, including status, errors and truncation.
 Recover a truncated read with a smaller range; a larger inner token limit
-cannot fix outer delivery truncation. A running command has no final status
-until it completes. Use the available read tool for files when the runtime
-requires it. Group reads only when that tool supports complete batch delivery.
+cannot fix outer delivery truncation. Use the available read tool for files when
+the runtime requires it. Group reads only when that tool supports complete batch
+delivery.
+
+Preserve and expose each shell command's exit code alongside stdout and stderr.
+Wait for completion and inspect the exit code before using the result. When
+calling through a script or tool wrapper, forward the complete command result;
+successful wrapper execution does not establish command success. Handle
+expected nonzero exits explicitly.
 
 | Name | Meaning |
 |---|---|
