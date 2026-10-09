@@ -65,6 +65,16 @@ meaning each. The job named after its role, `check-<role>` and
 `apply-<role>` as derived names, and `report-verification` with
 `report-check` would make one family.
 
+## Caution for the relocations
+
+The relocation commands rewrite every inbound link in the KB. The archived
+set under `kb/agentic-system-analyses/retained-archive/` names the old type
+paths in its members' frontmatter, and its manifest pins those members'
+bytes. A relocation that touches the archive breaks the pins silently.
+Keep the rewrite off the archive, or re-pin deliberately and say so; the
+change-a-contract procedure's byte-pinned consumers field is where that is
+recorded.
+
 ## Order
 
 The first five renames are cheap now, while the retained area is empty and
