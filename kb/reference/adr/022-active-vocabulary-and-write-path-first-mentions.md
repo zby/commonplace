@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — shipped definitions are no longer under a project's `kb/commonplace/`; they live in the installed library, which project files cannot link to by relative path.
+[ADR 116](./116-one-word-per-concept-across-prose-and-code.md) — the one-term rule reaches every surface a concept has in code and declarations, with a spelling per surface.
 **Date:** 2026-05-17
 **Refines:** [ADR-011](./011-notes-must-be-accessible-to-external-readers.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md), [ADR-019](./019-collection-owned-link-vocabulary.md)
 
