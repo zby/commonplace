@@ -9,7 +9,7 @@ from pathlib import Path
 
 from commonplace.artifactrun import effects
 from commonplace.artifactrun.worktree import require_clean_worktree, source_checkout
-from commonplace.lib.agentic_analysis.sets import (
+from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     current_analyses,
@@ -62,14 +62,14 @@ def inspect_destination(
     path = _destination_path(repo_root, generated_destination)
     require_publishable_worktree(repo_root)
     source_identity = normalize_source_identity(source_identity)
-    # Validate every current set before choosing a replacement.
-    for member_set in current_analyses(repo_root):
-        if member_set.overview.path != path:
+    # Validate every current artifact before choosing a replacement.
+    for analysis in current_analyses(repo_root):
+        if analysis.overview.path != path:
             continue
-        if member_set.memory.frontmatter["source-identity"] != source_identity:
+        if analysis.memory.frontmatter["source-identity"] != source_identity:
             raise ValueError("publication destination belongs to another source")
         return {
             "exists": True,
-            "expected_incumbent_sha256": sha256(member_set.overview.content).hexdigest(),
+            "expected_incumbent_sha256": sha256(analysis.overview.content).hexdigest(),
         }
     return {"exists": False, "expected_incumbent_sha256": "absent"}

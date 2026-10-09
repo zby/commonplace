@@ -135,7 +135,7 @@ def test_09_operator_refusal_makes_the_producer_ready(coordinator: Coordinator) 
     c.advance()
     assert "report" in c.handed(), "an operator refusal is an ordinary refusal"
     assert "the operator wants a second look" in c.reachable(c.handout("report"))
-    # Scenario 9's caveat: the refusal changed no acceptance's basis, so the set
+    # Scenario 9's caveat: the refusal changed no acceptance's basis, so the artifact
     # still counts as publishable; the operator holds publication or waits.
     assert c.status.publishable
 
@@ -262,11 +262,11 @@ def test_14_non_complete_disposition(coordinator: Coordinator) -> None:
     assert c.status.publishable
 
 
-def test_14_complete_disposition_does_not_assemble_a_partial_set(coordinator: Coordinator) -> None:
+def test_14_complete_disposition_does_not_assemble_a_partial_artifact(coordinator: Coordinator) -> None:
     c = coordinator
     c.ran()
     c.through_brief()
-    assert "assemble" not in c.ran(), "coverage of the set minus the overview does not hold yet"
+    assert "assemble" not in c.ran(), "coverage of the artifact minus the overview does not hold yet"
     assert not c.status.stops, "assembly waits; it does not fail"
     c.advance(c.result("report", "report A\n", answers=""), c.result("other", "other O1\n"))
     c.complete("summary", "summary S1\n")
@@ -438,7 +438,7 @@ def test_check_job_refuses_to_run_on_a_moved_member(coordinator: Coordinator, mo
     assert c.ran() == [], "the handler did not run"
     monkeypatch.setattr(engine, "_materialize", real)
     c.advance()
-    assert c.ran() == ["check-report"], "the next invocation rebuilds the set and runs the job"
+    assert c.ran() == ["check-report"], "the next invocation rebuilds the artifact and runs the job"
     assert c.member("report") == "report A\n"
 
 

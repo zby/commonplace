@@ -1,8 +1,8 @@
 """The analysis types' validation rules, registered with the validator.
 
 Rules the analysis type specs and their schemas cannot express: record
-declarations and references, the source register, the epistemic ledger, set
-member links, and the analysis set's cross-member relations, including
+declarations and references, the source register, the epistemic ledger, artifact
+member links, and the analysis artifact's cross-member relations, including
 quotations resolved against the boundary's frozen source. Importing this
 module registers them.
 """
@@ -13,22 +13,22 @@ import re
 from collections import Counter
 from pathlib import Path
 
+from commonplace.lib.agentic_analysis.analyses import RETAINED_ROOT, source_slug
 from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     annotated_ids,
+    artifact_declarations,
+    artifact_record_findings,
     conclusion_status_errors,
     declared_ids,
     record_reference_errors,
     record_references,
     route_field_errors,
-    set_declarations,
-    set_record_findings,
     source_register_ids,
     source_register_rows,
     value_amendments,
 )
-from commonplace.lib.agentic_analysis.sets import RETAINED_ROOT, source_slug
 from commonplace.lib.directory_artifact import DirectoryArtifact
 from commonplace.lib.directory_layout import Finding, Layout
 from commonplace.lib.note_parser import (
@@ -118,8 +118,8 @@ def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
 
-    # A member validated alone cannot resolve references the set declares
-    # elsewhere; the analysis set's directory rule resolves them across the
+    # A member validated alone cannot resolve references the artifact declares
+    # elsewhere; the analysis artifact's directory rule resolves them across the
     # members.
     errors = record_reference_errors(parsed.document.body)
     results.fails.extend(errors)
@@ -136,11 +136,11 @@ def _agentic_evidence_and_references_rule(
     validate_quote_citations(results, parsed.content)
 
 
-def agentic_set_member_link_failures(path: Path, links: tuple[str, ...]) -> list[str]:
-    """Links must survive moving a member into a retained set directory."""
+def artifact_member_link_failures(path: Path, links: tuple[str, ...]) -> list[str]:
+    """Links must survive moving a member into a retained artifact directory."""
     directory = path.resolve().parent
     return [
-        f"set member link: {link} leaves the set directory and breaks once "
+        f"artifact member link: {link} leaves the artifact directory and breaks once "
         "retained; name the file by path in a code span"
         for link in links
         if (target := resolve_local_link_target(path, link)) is not None
@@ -180,15 +180,15 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
 @type_rule("agentic-system-analyses/types/agent-memory-profile.md")
 @type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
-def _agentic_set_member_link_rule(
+def _artifact_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """Relative links stay inside the set directory, which moves on retention."""
+    """Relative links stay inside the artifact directory, which moves on retention."""
     del run
-    failures = agentic_set_member_link_failures(parsed.path, parsed.document.links)
+    failures = artifact_member_link_failures(parsed.path, parsed.document.links)
     results.fails.extend(failures)
     if not failures:
-        results.passes.append("set member links: relative links stay inside the set directory")
+        results.passes.append("artifact member links: relative links stay inside the artifact directory")
 
 
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
@@ -240,7 +240,7 @@ def _epistemic_ledger_rule(
 def _memory_profile_local_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """The profile's own content; its references resolve in the set rule."""
+    """The profile's own content; its references resolve in the artifact rule."""
     if re.search(r"(?m)^> ?", parsed.document.body):
         results.fails.append("memory profile cannot add source quotations")
     if declared_ids(parsed.document.body) or annotated_ids(parsed.document.body):
@@ -249,10 +249,10 @@ def _memory_profile_local_rule(
 
 
 @directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
-def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
+def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
     """Relations the layout names but code must compute, over the members present."""
     if layout is None:
-        return [Finding(None, "the analysis set type must declare a layout")]
+        return [Finding(None, "the analysis artifact type must declare a layout")]
     documents = {
         role.name: artifact.members[role.path].document
         for role in layout.roles.values() if role.path in artifact.members
@@ -266,7 +266,7 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
     bodies = {layout.path(name): document.body for name, document in documents.items()}
     cites = {role.path: [layout.path(cited) for cited in role.cites] for role in layout.roles.values()}
     sources = layout.path("boundary")
-    _, record_findings = set_record_findings(sources, bodies, cites=cites)
+    _, record_findings = artifact_record_findings(sources, bodies, cites=cites)
     for name, message in record_findings:
         role = layout.role_at(name) if name else None
         findings.append(Finding(role.name if role else None, message))
@@ -283,12 +283,12 @@ def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None,
                 findings.append(Finding("overview", f"{layout.path('overview')}: missing member link to {layout.path(name)}",
                                         repair="link every present member from the overview's Members section"))
 
-    findings += _set_quotation_findings(artifact, layout, documents, run=run)
+    findings += _artifact_quotation_findings(artifact, layout, documents, run=run)
     findings += _verification_findings(layout, documents)
 
     profile = documents.get("memory-profile")
     if profile is not None:
-        declared = set_declarations(sources, bodies)
+        declared = artifact_declarations(sources, bodies)
         scope = {identifier for cited in cites[layout.path("memory-profile")]
                  for identifier in declared.get(cited, ())}
         try:
@@ -352,7 +352,7 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
     return findings
 
 
-def _set_quotation_findings(
+def _artifact_quotation_findings(
     artifact: DirectoryArtifact, layout: Layout, documents: dict[str, ParsedDocument],
     *, run: ValidationRun,
 ) -> list[Finding]:

@@ -1,6 +1,6 @@
 """Profile/synthesis checks and application of exact handed verdicts.
 
-Content is checked against declared byte snapshots, never mutable set members.
+Content is checked against declared byte snapshots, never mutable artifact members.
 Semantic support and completeness are the independent verifier's judgment;
 code enforces type validation, correction answers and limit traceability only.
 The declaration must supply all criterion files read by content validation.

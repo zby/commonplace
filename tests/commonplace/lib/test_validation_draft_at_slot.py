@@ -4,8 +4,8 @@ from hashlib import sha256
 import pytest
 import yaml
 
-from commonplace.lib.agentic_analysis.rules import validate_analysis_set
-from commonplace.lib.agentic_analysis.sets import analysis_layout
+from commonplace.lib.agentic_analysis.analyses import analysis_layout
+from commonplace.lib.agentic_analysis.rules import validate_analysis_artifact
 from commonplace.lib.directory_artifact import ArtifactMember, DirectoryArtifact
 from commonplace.lib.directory_layout import layout_findings
 from commonplace.lib.note_parser import parse_document
@@ -19,7 +19,7 @@ def document(body, **metadata):
 
 
 @pytest.fixture
-def draft_set(tmp_path, tmp_library):
+def draft_artifact(tmp_path, tmp_library):
     note_types = tmp_path / "kb/types"
     note_types.mkdir(parents=True)
     (note_types / "note.md").write_text(
@@ -48,8 +48,8 @@ def draft_set(tmp_path, tmp_library):
     return tmp_path, output
 
 
-def test_overlay_filters_roles_and_never_writes(draft_set):
-    root, output = draft_set
+def test_overlay_filters_roles_and_never_writes(draft_artifact):
+    root, output = draft_artifact
     incumbent = b"---\ntype: types/note.md\nrun: wrong\ndescription: Body\n---\n# Body\n"
     (output / "body.md").write_bytes(incumbent)
     draft = root / "candidate.md"
@@ -70,8 +70,8 @@ def test_overlay_filters_roles_and_never_writes(draft_set):
     assert all(f.repair and "Repair: " in f.render() for f in findings)
 
 
-def test_exact_snapshot_ignores_disk_members_and_manifest(draft_set):
-    root, output = draft_set
+def test_exact_snapshot_ignores_disk_members_and_manifest(draft_artifact):
+    root, output = draft_artifact
     head = (output / "head.md").read_bytes()
     candidate = b"---\ntype: types/note.md\nrun: expected\ndescription: Body\n---\n# Body\n"
     (output / "head.md").write_bytes(head.replace(b"expected", b"wrong"))
@@ -94,8 +94,8 @@ def test_exact_snapshot_ignores_disk_members_and_manifest(draft_set):
 
 
 @pytest.mark.parametrize("name", ["../escape.md", ".hidden.md", "bad\\\\name.md", "not-markdown.json"])
-def test_snapshot_member_names_cannot_expand_scope(draft_set, name):
-    root, output = draft_set
+def test_snapshot_member_names_cannot_expand_scope(draft_artifact, name):
+    root, output = draft_artifact
     with pytest.raises(ValueError, match="snapshot member"):
         validate_draft_at_slot(
             output, "body.md", b"# Body\n", repo_root=root,
@@ -103,8 +103,8 @@ def test_snapshot_member_names_cannot_expand_scope(draft_set, name):
         )
 
 
-def test_snapshot_requires_its_manifest_and_refuses_unreadable_candidate(draft_set):
-    root, output = draft_set
+def test_snapshot_requires_its_manifest_and_refuses_unreadable_candidate(draft_artifact):
+    root, output = draft_artifact
     with pytest.raises(ValueError, match="explicit manifest"):
         validate_draft_at_slot(output, "body.md", b"# Body\n", repo_root=root, members={})
     findings = validate_draft_at_slot(
@@ -114,8 +114,8 @@ def test_snapshot_requires_its_manifest_and_refuses_unreadable_candidate(draft_s
     assert findings and all(f.role == "body" for f in findings)
 
 
-def test_overlay_new_slot_and_candidate_file_failures(draft_set):
-    root, output = draft_set
+def test_overlay_new_slot_and_candidate_file_failures(draft_artifact):
+    root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("---\ntype: types/missing.md\nrun: expected\n---\n# Candidate\n")
     findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
@@ -124,8 +124,8 @@ def test_overlay_new_slot_and_candidate_file_failures(draft_set):
     assert not (output / "body.md").exists()
 
 
-def test_bad_candidate_reports_failure_instead_of_aborting(draft_set):
-    root, output = draft_set
+def test_bad_candidate_reports_failure_instead_of_aborting(draft_artifact):
+    root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("---\ntype: [bad\n---\n# Candidate\n")
     findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
@@ -134,8 +134,8 @@ def test_bad_candidate_reports_failure_instead_of_aborting(draft_set):
 
 
 @pytest.mark.parametrize("slot", ["../escape.md", "unknown.md"])
-def test_slot_must_be_declared_and_direct(draft_set, slot):
-    root, output = draft_set
+def test_slot_must_be_declared_and_direct(draft_artifact, slot):
+    root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("# Candidate\n")
     with pytest.raises(ValueError):
@@ -173,11 +173,11 @@ def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name, stage):
         "runtime": document("# Runtime\n\n## Shared records\n#### RT-OBJ-store — Store\n"),
     }
     artifact = analysis_artifact(tmp_path, documents)
-    findings = validate_analysis_set(artifact, layout=layout, run=ValidationRun(tmp_path, ()))
+    findings = validate_analysis_artifact(artifact, layout=layout, run=ValidationRun(tmp_path, ()))
     carried = [f for f in findings if "limit not carried" in f.message]
     assert len(carried) == 1 and carried[0].role == "synthesis"
     documents["synthesis"] = document("# Synthesis\n\n## Limitations\nRT-OBJ-store has incomplete coverage.\n")
-    findings = validate_analysis_set(analysis_artifact(tmp_path, documents), layout=layout, run=ValidationRun(tmp_path, ()))
+    findings = validate_analysis_artifact(analysis_artifact(tmp_path, documents), layout=layout, run=ValidationRun(tmp_path, ()))
     assert not any("limit not carried" in f.message for f in findings)
 
 
@@ -187,7 +187,7 @@ def test_citation_scope_is_enforced_for_new_roles(tmp_path, name):
         "boundary": document("# Boundary\n\n## Source register\n| SRC-1 | frozen repository |\n"),
         name: document("# Member\n\nSRC-1 supports this statement.\n"),
     }
-    findings = validate_analysis_set(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
+    findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
     unresolved = [f for f in findings if "unresolved record SRC-1" in f.message]
     if name == "profile-verification":
         assert len(unresolved) == 1 and unresolved[0].role == name
@@ -196,21 +196,21 @@ def test_citation_scope_is_enforced_for_new_roles(tmp_path, name):
         assert not unresolved
 
 
-def test_context_parse_failure_is_explicit_and_nonwriting(draft_set):
-    root, output = draft_set
+def test_context_parse_failure_is_explicit_and_nonwriting(draft_artifact):
+    root, output = draft_artifact
     broken = output / "later.md"
     broken.write_text("---\ntype: [broken\n---\n# Later\n")
     draft = root / "candidate.md"
     draft.write_text("---\ntype: types/note.md\nrun: expected\ndescription: Body\n---\n# Body\n")
     findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
     assert all(f.role == "body" for f in findings)
-    assert any("set input cannot be checked" in f.message and "later.md" in f.message for f in findings)
+    assert any("artifact input cannot be checked" in f.message and "later.md" in f.message for f in findings)
     assert not (output / "body.md").exists()
 
 
 def test_verification_stage_and_grammar_are_role_findings(tmp_path):
     docs = {"record-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n", verifies="profile")}
-    findings = validate_analysis_set(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
+    findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
     assert len(findings) == 3
     assert all(f.role == "record-verification" for f in findings)
     assert any("verifies" in f.message for f in findings)
@@ -219,9 +219,9 @@ def test_verification_stage_and_grammar_are_role_findings(tmp_path):
 
 
 @pytest.fixture
-def content_member_set(draft_set):
+def content_member_artifact(draft_artifact):
     """Use real rule dispatch with minimal type contracts and a local layout."""
-    root, _ = draft_set
+    root, _ = draft_artifact
     types = root / "kb/agentic-system-analyses/types"
     types.mkdir(parents=True)
     (types.parent / "COLLECTION.md").write_text("# Analyses\n")
@@ -245,8 +245,8 @@ def content_member_set(draft_set):
     return root, output
 
 
-def content_checks(content_member_set, role, body, **metadata):
-    root, output = content_member_set
+def content_checks(content_member_artifact, role, body, **metadata):
+    root, output = content_member_artifact
     name = {"boundary": "agentic-system-boundary",
             "reconciliation": "agentic-system-reconciliation-report"}[role]
     content = "---\n" + yaml.safe_dump({
@@ -273,14 +273,14 @@ def source_row(kind="git", identity="https://example.org/repo", revision="a" * 4
 
 
 @pytest.mark.parametrize("kind,revision", [("git", "a" * 40), ("capture", "capture-2026")])
-def test_boundary_register_matches_git_or_capture(content_member_set, kind, revision):
-    errors = content_checks(content_member_set, "boundary", "## Source register\n" + source_row(kind, revision=revision),
+def test_boundary_register_matches_git_or_capture(content_member_artifact, kind, revision):
+    errors = content_checks(content_member_artifact, "boundary", "## Source register\n" + source_row(kind, revision=revision),
                             source={"kind": kind, "identity": "https://example.org/repo", "revision": revision})
     assert not errors
 
 
 @pytest.mark.parametrize("defect", ["shape", "missing", "kind", "identity", "revision", "duplicate"])
-def test_boundary_register_content_defects(content_member_set, defect):
+def test_boundary_register_content_defects(content_member_artifact, defect):
     row = source_row()
     if defect == "shape":
         row = row.replace(" | limits", "")
@@ -293,24 +293,24 @@ def test_boundary_register_content_defects(content_member_set, defect):
                         "identity": ("https://example.org/repo", "https://example.org/other"),
                         "revision": ("a" * 40, "b" * 40)}
         row = row.replace(*replacements[defect])
-    errors = content_checks(content_member_set, "boundary", "## Source register\n" + row,
+    errors = content_checks(content_member_artifact, "boundary", "## Source register\n" + row,
                             source={"kind": "git", "identity": "https://example.org/repo", "revision": "a" * 40})
     expected = {"shape": "all eight columns", "duplicate": "duplicate source declaration"}.get(
         defect, "source register must declare the frozen source")
     assert any(expected in error for error in errors)
 
 
-def test_boundary_register_checks_shape_and_duplicates_without_frozen_source(content_member_set):
-    errors = content_checks(content_member_set, "boundary", "## Source register\n| SRC-1 | short |\n| SRC-1 | short |\n", source=None)
+def test_boundary_register_checks_shape_and_duplicates_without_frozen_source(content_member_artifact):
+    errors = content_checks(content_member_artifact, "boundary", "## Source register\n| SRC-1 | short |\n| SRC-1 | short |\n", source=None)
     assert sum("all eight columns" in error for error in errors) == 2
     assert sum("duplicate source declaration" in error for error in errors) == 1
     assert not any("must declare the frozen source" in error for error in errors)
 
 
-def test_boundary_register_ignores_quoted_and_fenced_examples(content_member_set):
+def test_boundary_register_ignores_quoted_and_fenced_examples(content_member_artifact):
     row = source_row()
     body = "## Source register\n" + row + "> | SRC-1 | short |\n\n```markdown\n" + row + "```\n"
-    assert not content_checks(content_member_set, "boundary", body,
+    assert not content_checks(content_member_artifact, "boundary", body,
                               source={"kind": "git", "identity": "https://example.org/repo", "revision": "a" * 40})
 
 
@@ -320,8 +320,8 @@ def test_boundary_register_ignores_quoted_and_fenced_examples(content_member_set
     ("> Amendment: RT-OBJ-store has a new value.", False),
     ("```markdown\nAmendment: RT-OBJ-store has a new value.\n```", False),
 ])
-def test_reconciliation_value_amendments_are_content_findings(content_member_set, amendment, refused):
-    errors = content_checks(content_member_set, "reconciliation", "## Reconciliation\n\n" + amendment + "\n")
+def test_reconciliation_value_amendments_are_content_findings(content_member_artifact, amendment, refused):
+    errors = content_checks(content_member_artifact, "reconciliation", "## Reconciliation\n\n" + amendment + "\n")
     assert any("value amendment: reconciliation states connections between reports" in error for error in errors) == refused
 
 
@@ -330,5 +330,5 @@ def test_overview_has_links_not_copy_relations(tmp_path):
         "boundary": document("# Boundary\n\n## Boundary and evidence\nOriginal boundary.\n\n## Source register\nnone\n"),
         "overview": document("# Entry\n\n## Members\n[Boundary](boundary.md)\n\n## Amendment index\nNot reached.\n\n## Deterministic validation\nChecked.\n"),
     }
-    findings = validate_analysis_set(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
+    findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
     assert not findings

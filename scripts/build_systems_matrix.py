@@ -1,6 +1,6 @@
-"""Build a memory comparison matrix directly from retained analysis sets.
+"""Build a memory comparison matrix directly from retained analysis artifacts.
 
-Each current accepted set has an ARTIFACT.yaml; that manifest
+Each current accepted artifact has an ARTIFACT.yaml; that manifest
 pins every member, including the profile member that carries the comparison
 profile. The shared reader exports revision identity, supported unions,
 coverage, evidence and records, plus revision-2 units as JSON cells. Union

@@ -17,7 +17,7 @@ from commonplace.artifactrun.report import engine_run_report
 from commonplace.artifactrun.run import _parse_type
 from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import publication
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 
 ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-10-07-example-0123456789ab-01"
@@ -35,10 +35,10 @@ class Attempt:
         self.run_dir = tmp_path / RUN_ID
         self.run_dir.mkdir(parents=True)
         self.library = tmp_path / "kb"
-        # The set type a run fixes at start, as CodeAttempt exposes it.
-        self.type_text = (ROOT / "kb" / SET_TYPE).read_text()
-        self.type_spec = SET_TYPE
-        layout, relations = _parse_type(self.type_text, SET_TYPE)
+        # The artifact type a run fixes at start, as CodeAttempt exposes it.
+        self.type_text = (ROOT / "kb" / ANALYSIS_TYPE).read_text()
+        self.type_spec = ANALYSIS_TYPE
+        layout, relations = _parse_type(self.type_text, ANALYSIS_TYPE)
         self.layout, self.relations = layout, tuple(relations)
         self.inputs = {}
         self.files = {}
@@ -83,7 +83,7 @@ def scripted(monkeypatch):
     checked = []
     monkeypatch.setattr(publication, "_environment", lambda attempt, boundary, **kw: (attempt.metadata, attempt.run_dir.parent))
     monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
-    monkeypatch.setattr(publication, "validate_pinned_set", lambda *args, **kw: checked.append(kw))
+    monkeypatch.setattr(publication, "validate_pinned_artifact", lambda *args, **kw: checked.append(kw))
     return checked
 
 
@@ -127,7 +127,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     ("provenance", "provenance"), ("mixed-worker", "not the run profile's"),
     ("mixed-report", "every worker must report the same model"),
 ])
-def test_assembly_rejects_misattributed_complete_set(tmp_path, scripted, defect, reason):
+def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")
     record = json.loads(attempt.inputs["memory-attempt"])
     if defect == "mixed-worker":
@@ -175,11 +175,11 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
     # Re-pin an identity-inconsistent overview: hashes alone are not validation.
     members = {"boundary.md": attempt.inputs["boundary"],
                "overview.md": outputs["overview"].replace(RUN_ID.encode(), b"changed-run")}
-    manifest = yaml.safe_dump({"type": SET_TYPE, "members": {
+    manifest = yaml.safe_dump({"type": ANALYSIS_TYPE, "members": {
         name: {"sha256": publication._digest(data)} for name, data in members.items()
     }}).encode()
     with pytest.raises(ValueError, match="identity field run-id"):
-        publication.validate_pinned_set(attempt, repo=tmp_path, members=members, manifest=manifest)
+        publication.validate_pinned_artifact(attempt, repo=tmp_path, members=members, manifest=manifest)
 
 
 def assembled_publish_attempt(tmp_path, scripted, disposition="complete"):
@@ -200,9 +200,9 @@ def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted
 
 def test_engine_report_is_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
-    type_text = (ROOT / "kb" / SET_TYPE).read_text()
-    store.create({"type": type_text, "type_spec": SET_TYPE, "plan": "fixture-plan.yaml", "library": str(ROOT / "kb"),
-                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
+    type_text = (ROOT / "kb" / ANALYSIS_TYPE).read_text()
+    store.create({"type": type_text, "type_spec": ANALYSIS_TYPE, "plan": "fixture-plan.yaml", "library": str(ROOT / "kb"),
+                  "declaration": yaml.safe_dump({"type_spec": ANALYSIS_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": []}]}),
                   "parameters": {"system": "fixture"}})
     store.fail_attempt({"id": "000001-publish", "seq": 1, "job": "publish", "kind": "code", "pins": {}},
@@ -287,9 +287,9 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     # Run the actual registered handler through the engine, with fixture pinned
     # inputs and scripted content validation, not an effect-only replacement.
     store = RunStore(attempt.run_dir)
-    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE, "plan": "fixture-plan.yaml",
+    store.create({"type": (ROOT / "kb" / ANALYSIS_TYPE).read_text(), "type_spec": ANALYSIS_TYPE, "plan": "fixture-plan.yaml",
                   "library": str(ROOT / "kb"), "parameters": {},
-                  "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
+                  "declaration": yaml.safe_dump({"type_spec": ANALYSIS_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
                        "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
     monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))

@@ -15,7 +15,7 @@ from commonplace.artifactrun import effects
 from commonplace.artifactrun.run import _parse_type
 from commonplace.lib.agentic_analysis import guards
 from commonplace.lib.agentic_analysis import publication as engine
-from commonplace.lib.agentic_analysis.sets import SET_TYPE, source_slug
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE, source_slug
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -30,23 +30,23 @@ def assert_locked(repo):
 def engine_fixture(repo, monkeypatch, name="fixture"):
     run = repo / f"engine-run-{name}"
     run.mkdir()
-    layout, _ = _parse_type((ROOT / "kb" / SET_TYPE).read_text(), SET_TYPE)
+    layout, _ = _parse_type((ROOT / "kb" / ANALYSIS_TYPE).read_text(), ANALYSIS_TYPE)
     identity = f"https://example.invalid/{name}"
     destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, name)
     members = {"boundary": b"boundary", "overview": b"overview"}
     worker = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model",
               "model": "fixture-model-1", "effort": "high"}
-    manifest = engine._manifest(SimpleNamespace(layout=layout, type_spec=SET_TYPE), members, worker)
+    manifest = engine._manifest(SimpleNamespace(layout=layout, type_spec=ANALYSIS_TYPE), members, worker)
     metadata = {"system": name, "source-identity": identity,
                 "review-path": (destination / "overview.md").relative_to(repo).as_posix(),
                 "expected-incumbent-sha256": "absent"}
-    attempt = SimpleNamespace(run_dir=run, metadata=metadata, layout=layout, type_spec=SET_TYPE,
+    attempt = SimpleNamespace(run_dir=run, metadata=metadata, layout=layout, type_spec=ANALYSIS_TYPE,
                               read=lambda key: manifest if key == "manifest" else None)
     monkeypatch.setattr(engine, "_snapshot", lambda *a, **kw: (
         layout, (), members, SimpleNamespace(frontmatter={"result-disposition": "complete"})))
     monkeypatch.setattr(engine, "_environment", lambda current, *a, **kw: (current.metadata, repo))
     monkeypatch.setattr(engine, "_provenance", lambda *a: worker)
-    monkeypatch.setattr(engine, "validate_pinned_set", lambda *a, **kw: None)
+    monkeypatch.setattr(engine, "validate_pinned_artifact", lambda *a, **kw: None)
     monkeypatch.setattr(engine, "_require_opened_method", lambda *a, **kw: None)
     return attempt, destination
 
@@ -95,7 +95,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
             assert json.loads(result.result(timeout=5)["receipt"])["published"] is True
     assert inspecting.is_set()
     for destination in (first_destination, second_destination):
-        assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == SET_TYPE
+        assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == ANALYSIS_TYPE
         assert (destination / "overview.md").read_bytes() == b"overview"
     # Replay recognition, not only fresh incumbent inspection, holds the lock.
     original_effect = engine.install_tree

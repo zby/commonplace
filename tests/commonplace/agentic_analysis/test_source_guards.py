@@ -7,12 +7,12 @@ import yaml
 
 from commonplace.artifactrun import sources
 from commonplace.lib.agentic_analysis import boundary as agentic_boundary
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import (
     ValidationRun,
     validate_draft_at_slot,
-    validate_pinned_set_snapshot,
+    validate_pinned_artifact_snapshot,
 )
 
 IDENTITY = "https://example.invalid/source"
@@ -154,8 +154,8 @@ def link_snapshot():
     # Real layout and rule dispatch, minimal schemas to isolate the link rule.
     library = Path(__file__).resolve().parents[3] / "kb"
     criteria = {
-        SET_TYPE: (library / SET_TYPE).read_bytes(),
-        SET_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
+        ANALYSIS_TYPE: (library / ANALYSIS_TYPE).read_bytes(),
+        ANALYSIS_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
         "agentic-system-analyses/COLLECTION.md": b"# Fixture collection\n",
         "reference/validation-contract.md": b"# Fixture validation contract\n",
         "types/type-spec.md": (
@@ -182,14 +182,14 @@ def link_snapshot():
     ("./overview.md", False), ("#boundary-and-evidence", False),
     ("https://example.invalid/evidence", False),
 ])
-def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_set(tmp_path, link_snapshot, link, refused):
+def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_artifact(tmp_path, link_snapshot, link, refused):
     criteria, members = link_snapshot
     members["boundary.md"] += f"\n[Evidence]({link})\n".encode()
     manifest = yaml.safe_dump({
-        "type": SET_TYPE,
+        "type": ANALYSIS_TYPE,
         "members": {name: {"sha256": sha256(data).hexdigest()} for name, data in members.items()},
     }).encode()
-    expected = f"set member link: {link} leaves the set directory"
+    expected = f"artifact member link: {link} leaves the artifact directory"
     for location in ("state/fixture/artifact", "retained/fixture"):
         directory = tmp_path / "kb/agentic-system-analyses" / location
         path = directory / "boundary.md"
@@ -201,13 +201,13 @@ def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_set(tmp_p
             directory, "boundary.md", members["boundary.md"], repo_root=tmp_path,
             members={"overview.md": members["overview.md"]}, manifest=manifest, criteria=criteria,
         )
-        pinned = validate_pinned_set_snapshot(
-            repo=tmp_path, set_type=SET_TYPE, intended_set_path=directory, members=members,
+        pinned = validate_pinned_artifact_snapshot(
+            repo=tmp_path, artifact_type=ANALYSIS_TYPE, intended_artifact_path=directory, members=members,
             manifest=manifest, criteria=criteria,
         )
         assert not any("[pinned contracts]" in message for message in pinned.fails), pinned.fails
         for messages in (standalone.fails, [finding.message for finding in draft], pinned.fails):
-            failures = [message for message in messages if "set member link:" in message]
+            failures = [message for message in messages if "artifact member link:" in message]
             assert bool(failures) == refused, messages
             if refused:
                 assert any(expected in message for message in failures)

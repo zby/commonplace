@@ -1,4 +1,4 @@
-"""Render a memory comparison table directly from retained analysis sets."""
+"""Render a memory comparison table directly from retained analysis artifacts."""
 
 from __future__ import annotations
 
@@ -60,7 +60,7 @@ def render(rows: list[dict], output: Path) -> str:
         "",
         "# Memory mechanisms in agentic systems",
         "",
-        "Each row uses one retained analysis set and its stated memory boundary. Values",
+        "Each row uses one retained analysis artifact and its stated memory boundary. Values",
         "carry their evidence basis. Revision 2 shows each unit's scope, findings and",
         "coverage; a strong witness does not upgrade weaker alternatives. Revision 1",
         "retains its original aggregate meaning. Admission-control semantics differ",

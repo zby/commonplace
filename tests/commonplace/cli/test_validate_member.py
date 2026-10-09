@@ -22,7 +22,7 @@ def snapshot(root: Path) -> dict:
     }
 
 
-def member_set(root: Path) -> tuple[Path, Path]:
+def member_artifact(root: Path) -> tuple[Path, Path]:
     types = root / "kb/reports/types"
     types.mkdir(parents=True)
     (root / "kb/reports/COLLECTION.md").write_text("# Reports\n")
@@ -64,29 +64,29 @@ def member_set(root: Path) -> tuple[Path, Path]:
 
 @pytest.mark.parametrize("full", [False, True])
 def test_cli_uses_shared_findings_and_writes_nothing(tmp_path, monkeypatch, capsys, full):
-    directory, candidate = member_set(tmp_path)
+    directory, candidate = member_artifact(tmp_path)
     monkeypatch.chdir(tmp_path)
     expected = validate_draft_at_slot(directory, "main.md", candidate, repo_root=tmp_path)
     expected = [finding for finding in expected if not finding.absent and not finding.warn]
     assert expected
     before = snapshot(tmp_path)
-    argv = [str(candidate), "--set", str(directory), "--member", "main.md"]
+    argv = [str(candidate), "--artifact", str(directory), "--member", "main.md"]
     if full:
         argv.append("--full")
     assert validate_notes.main(argv) == 1
     assert capsys.readouterr().out.rstrip() == "\n".join(
-        "[set] " + finding.render() for finding in expected
+        "[artifact] " + finding.render() for finding in expected
     ).rstrip()
     assert snapshot(tmp_path) == before
     assert all(finding.role == "main" for finding in expected)
 
 
 def test_member_json_retains_repairs_and_does_not_write_receipt(tmp_path, monkeypatch, capsys):
-    directory, candidate = member_set(tmp_path)
+    directory, candidate = member_artifact(tmp_path)
     monkeypatch.chdir(tmp_path)
     before = snapshot(tmp_path)
     assert validate_notes.main([
-        str(candidate), "--set", str(directory), "--member", "main.md", "--json",
+        str(candidate), "--artifact", str(directory), "--member", "main.md", "--json",
     ]) == 1
     payload = json.loads(capsys.readouterr().out)
     assert payload["schema"] == "commonplace.validation.member.v1"
@@ -97,12 +97,12 @@ def test_member_json_retains_repairs_and_does_not_write_receipt(tmp_path, monkey
 
 
 def test_clean_draft_is_only_a_content_pass(tmp_path, monkeypatch, capsys):
-    directory, candidate = member_set(tmp_path)
+    directory, candidate = member_artifact(tmp_path)
     candidate.write_text((directory / "main.md").read_text())
     monkeypatch.chdir(tmp_path)
     before = snapshot(tmp_path)
     assert validate_notes.main([
-        str(candidate), "--set", str(directory), "--member", "main.md",
+        str(candidate), "--artifact", str(directory), "--member", "main.md",
     ]) == 0
     assert "not job acceptance" in capsys.readouterr().out
     assert snapshot(tmp_path) == before
@@ -110,9 +110,9 @@ def test_clean_draft_is_only_a_content_pass(tmp_path, monkeypatch, capsys):
 
 
 @pytest.mark.parametrize("flags", [
-    ["--set", "set"],
+    ["--artifact", "set"],
     ["--member", "main.md"],
-    ["--set", "set", "--member", "main.md", "--json", "--output", "receipt.json"],
+    ["--artifact", "set", "--member", "main.md", "--json", "--output", "receipt.json"],
 ])
 def test_invalid_flag_combinations_refuse_before_library_call(tmp_path, monkeypatch, flags):
     monkeypatch.chdir(tmp_path)
@@ -126,19 +126,19 @@ def test_invalid_flag_combinations_refuse_before_library_call(tmp_path, monkeypa
 @pytest.mark.parametrize("slot", ["../main.md", "/tmp/main.md", "child/main.md", "."])
 def test_slot_must_be_relative_and_direct(tmp_path, monkeypatch, capsys, slot):
     monkeypatch.chdir(tmp_path)
-    assert validate_notes.main(["draft.md", "--set", "set", "--member", slot]) == 2
+    assert validate_notes.main(["draft.md", "--artifact", "set", "--member", slot]) == 2
     assert "relative member filename" in capsys.readouterr().err
 
 
 def test_unknown_slot_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, capsys):
-    directory, candidate = member_set(tmp_path)
+    directory, candidate = member_artifact(tmp_path)
     monkeypatch.chdir(tmp_path)
     assert validate_notes.main([
-        str(candidate), "--set", str(directory), "--member", "undeclared.md",
+        str(candidate), "--artifact", str(directory), "--member", "undeclared.md",
     ]) == 2
     assert "no declared layout role" in capsys.readouterr().err
     assert validate_notes.main([
-        "missing.md", "--set", str(directory), "--member", "main.md",
+        "missing.md", "--artifact", str(directory), "--member", "main.md",
     ]) == 2
     assert "member validation:" in capsys.readouterr().err
 
@@ -158,11 +158,11 @@ def test_analysis_member_cli_matches_shared_validator(tmp_path, monkeypatch, cap
         expected = validate_draft_at_slot(directory, slot, candidate, repo_root=tmp_path)
         before = snapshot(tmp_path)
         validate_notes.main([
-            str(candidate), "--set", str(directory), "--member", slot, "--json",
+            str(candidate), "--artifact", str(directory), "--member", slot, "--json",
         ])
         payload = json.loads(capsys.readouterr().out)
         assert [item["text"] for item in payload["diagnostics"]] == [
-            "[set] " + finding.render() for finding in expected if not finding.absent
+            "[artifact] " + finding.render() for finding in expected if not finding.absent
         ]
         assert snapshot(tmp_path) == before
 
@@ -179,5 +179,5 @@ def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeyp
     ) == 1
     output = capsys.readouterr().out
     assert "absent" not in output
-    assert "WARN: [set] " + findings[1].render() in output
-    assert "[set] " + findings[2].render() in output
+    assert "WARN: [artifact] " + findings[1].render() in output
+    assert "[artifact] " + findings[2].render() in output

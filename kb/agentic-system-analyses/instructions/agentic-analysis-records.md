@@ -38,7 +38,7 @@ Within `## Shared records`, kind headings group declarations:
 `### Evidenced absences`, `### Behavioral-authority paths`. A declaration
 is one level-four heading, `#### RT-OBJ-store — Short label`. Prose, lists and
 tables do not declare records. Member types specify which empty kind
-headings remain. IDs are unique across the set and resolve within it.
+headings remain. IDs are unique across the artifact and resolve within it.
 Use full IDs; aliases are not inferred. Named `through`, dash and
 `to` grouping prose is permitted; code resolves written IDs without expanding
 intervals. Structured citation lists and single-ID fields remain explicit.
@@ -83,7 +83,7 @@ whose referent is a material part of exactly one supplied record writes
 `Part of: RT-OBJ-store` on its own unindented line within that declaration,
 using its parent's full record ID. The field carries exactly one ID,
 without backticks or other text, and cannot name the declaring record itself.
-Local and set checks enforce its syntax; existing set resolution checks its
+Local and artifact checks enforce its syntax; existing artifact resolution checks its
 target. Explain a parent of a different record kind beside the relation.
 Semantic verification checks containment; matching kinds alone does not prove it.
 A candidate that can replace a record's referent is not thereby a part of it.
@@ -179,7 +179,7 @@ replacing `reason` with the explanation. Supporting prose, tables and
 quotations may follow. Another record or an annotation cannot supply these
 fields for the declaration.
 
-Local member validation and set validation reject missing, empty or duplicate
+Local member validation and artifact validation reject missing, empty or duplicate
 fields and uncertainty values without reasons. They check presence and form;
 semantic verification judges the answers and their evidence. The separate
 status-field check above enforces conclusion-status form. Component fixity

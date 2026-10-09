@@ -139,7 +139,7 @@ def test_cli_json_counts_artifact_once_and_locates_member_failure(tmp_path, caps
     assert any(d["subject"].endswith("/optional.md") for d in report["diagnostics"])
 
 
-def test_set_size_diagnostic_does_not_dump_member_bodies(tmp_path):
+def test_artifact_size_diagnostic_does_not_dump_member_bodies(tmp_path):
     directory = make_artifact(tmp_path)
     schema_path = tmp_path / "kb/reports/types/set.schema.yaml"
     schema = yaml.safe_load(schema_path.read_text())

@@ -16,14 +16,14 @@ scheduling, judgment application and recovery.
 ## Inputs, authority and result
 
 Judge exactly the supplied `boundary`, `runtime`, `memory`, `epistemic`,
-`reconciliation` and `set-check`. `opening` is JSON metadata including the
+`reconciliation` and `record-check`. `opening` is JSON metadata including the
 prepared `command-path`. Use the supplied `system` and `run-id`. Write the
 whole verification to `output` under `record-verification-contract`, with
 `verifies: records` and `boundary`'s `reviewed-boundary`.
 
 Write only `output`, `problem` and intermediate files under `scratch`. All
 inputs, previous outputs and frozen sources are read-only. Do not correct
-another author's text, change the boundary or working set, inspect other
+another author's text, change the boundary or working artifact, inspect other
 attempts, alter engine state, publish, stage, commit, delegate or launch a
 worker. Inspect source text; do not execute or install the target.
 
@@ -57,7 +57,7 @@ or `- reconciliation: ...`, naming full IDs, the defective passage, what is
 wrong and its evidence. Indent continuation lines. A defect requiring two
 reports to change is two separately addressed blockers. Address dependent
 passages relying on a defective value to their own authors. Every structural
-failure in `set-check` requires an explicit blocker addressed to its report;
+failure in `record-check` requires an explicit blocker addressed to its report;
 if the finding cannot be routed within this job's authority, write `problem`
 instead of silently dismissing it. A conflict missing IDs, both findings,
 evidence or prevented conclusion is addressed to reconciliation. Conflicts

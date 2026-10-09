@@ -18,10 +18,10 @@ import pytest
 from commonplace.lib import systems_matrix as sm
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
+    artifact_record_errors,
     conclusion_status_errors,
     route_field_errors,
     section,
-    set_record_errors,
 )
 from commonplace.lib.validation import validate_draft_at_slot
 from scripts import analyze_matrix as stats
@@ -199,7 +199,7 @@ def materialize(specification):
 def test_plan_classifications_retain_fixture_findings_and_limits(specification, expected):
     profile, bodies = materialize(specification)
     before = deepcopy(profile)
-    known, errors = set_record_errors("overview.md", bodies)
+    known, errors = artifact_record_errors("overview.md", bodies)
     assert errors == []
     assert route_field_errors(bodies["memory.md"]) == []
     assert conclusion_status_errors(bodies["memory.md"]) == []
@@ -226,8 +226,8 @@ def declared_packet(job_name):
     from pathlib import Path
 
     from commonplace.artifactrun import load_plan
+    from commonplace.lib.agentic_analysis.analyses import analysis_layout
     from commonplace.lib.agentic_analysis.plan import PLAN
-    from commonplace.lib.agentic_analysis.sets import analysis_layout
 
     library = Path(__file__).resolve().parents[3] / "kb"
     declaration = load_plan((library / PLAN).read_text(), analysis_layout().roles)
@@ -318,7 +318,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
                for finding in validate_draft_at_slot(directory, "profile-verification.md", verdict, repo_root=tmp_path))
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
-    assert set_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
+    assert artifact_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
     assert "an unsupported emitted value or strength" in declared_packet("verify-profile").lower()
 
 
@@ -419,5 +419,5 @@ def test_reconciliation_cannot_hide_an_unresolved_record():
         "curator-write", "Automatic curator", "Software controls admission.", ("automatic",)))})
     bodies["reconciliation.md"] = "## Reconciliation\n\nAmendment: MEM-RTE-curator-write is superseded by RT-RTE-missing-write; identity evidence at SRC-1.\n"
     assert "MEM-RTE-curator-write" in amendment_index(bodies["reconciliation.md"])
-    _, errors = set_record_errors("overview.md", bodies)
+    _, errors = artifact_record_errors("overview.md", bodies)
     assert "reconciliation.md: unresolved record RT-RTE-missing-write" in errors

@@ -599,7 +599,7 @@ def check_member_draft(
             "schema": "commonplace.validation.member.v1",
             "status": "failed" if refused else "success",
             "draft": str(candidate.resolve()),
-            "set": str(directory.resolve()),
+            "artifact": str(directory.resolve()),
             "member": slot.as_posix(),
             "scope": "member content; invocation residue not checked",
             "diagnostics": [
@@ -608,13 +608,13 @@ def check_member_draft(
                     "severity": "warning" if finding.warn else "info" if finding.info else "failure",
                     "reason": finding.message,
                     "repair": finding.repair,
-                    "text": "[set] " + finding.render(),
+                    "text": "[artifact] " + finding.render(),
                 } for finding in findings
             ],
         }, indent=2, sort_keys=True))
     else:
         for finding in findings:
-            print(("WARN: " if finding.warn else "") + "[set] " + finding.render())
+            print(("WARN: " if finding.warn else "") + "[artifact] " + finding.render())
         if not refused:
             print("Member content check passes; invocation residue not checked. "
                   "This is not job acceptance or claim support.")
@@ -641,12 +641,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Atomically save the exact --json stdout bytes to this file path; its parent directory must exist.",
     )
     parser.add_argument(
-        "--set", dest="set_directory", type=Path,
+        "--artifact", dest="artifact_directory", type=Path,
         help="Working artifact directory in which to check the positional draft (requires --member).",
     )
     parser.add_argument(
         "--member", type=Path,
-        help="Declared relative member slot for the positional draft (requires --set; writes nothing).",
+        help="Declared relative member slot for the positional draft (requires --artifact; writes nothing).",
     )
     parser.add_argument(
         "target",
@@ -656,8 +656,8 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
-    if (args.set_directory is None) != (args.member is None):
-        parser.error("--set and --member must be supplied together")
+    if (args.artifact_directory is None) != (args.member is None):
+        parser.error("--artifact and --member must be supplied together")
     if args.member is not None and args.output is not None:
         parser.error("draft-at-slot validation writes nothing; --output is not allowed")
     if args.output is not None and not args.json:
@@ -668,7 +668,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.member is not None:
         try:
             return check_member_draft(
-                Path(args.target), directory=args.set_directory, slot=args.member,
+                Path(args.target), directory=args.artifact_directory, slot=args.member,
                 repo_root=repo_root, json_output=args.json,
             )
         except (OSError, UnicodeError, ValueError, TypeError) as exc:

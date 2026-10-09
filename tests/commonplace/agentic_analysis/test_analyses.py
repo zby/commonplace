@@ -1,4 +1,4 @@
-from commonplace.lib.agentic_analysis import sets as agentic_set
+from commonplace.lib.agentic_analysis import analyses
 from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.note_parser import parse_document
 
@@ -10,7 +10,7 @@ def document(values: str):
 
 
 def test_identity_findings_belong_to_the_member_that_disagrees() -> None:
-    layout = agentic_set.analysis_layout()
+    layout = analyses.analysis_layout()
     types = {role.path: role.type for role in layout.roles.values()}
     members = {
         "boundary.md": document(f"type: {types['boundary.md']}\nrun-id: R\nreviewed-boundary: B\nresult-disposition: complete"),
@@ -33,7 +33,7 @@ def test_identity_findings_belong_to_the_member_that_disagrees() -> None:
 
 
 def test_boundary_disposition_selects_roles_before_overview_exists() -> None:
-    layout = agentic_set.analysis_layout()
+    layout = analyses.analysis_layout()
     assert layout.required.by_role == "boundary"
     assert layout.required.by_field == "result-disposition"
     for disposition in ("complete", "blocked", "out-of-scope"):

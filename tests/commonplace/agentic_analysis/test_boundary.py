@@ -42,7 +42,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert "## Input reading batches" in h.prompt.read_text()
     assert p["refusal"] == "absent"
     assert p["output"] == str(h.outputs["boundary"])
-    assert p["validation-set"] == str(a.coordinator.run_dir / "artifact")
+    assert p["validation-artifact"] == str(a.coordinator.run_dir / "artifact")
     assert p["validation-member"] == "boundary.md"
     assert json.loads(Path(p["source"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
@@ -72,9 +72,9 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
     # A non-complete disposition does not authorize dropping code's source pin.
     ({"result-disposition": "blocked", "source": None, "reviewed-boundary": None}, "exactly the checkout code froze"),
-    ({"result-disposition": "not-a-disposition"}, "[set]"),
-    ({"extra": "not allowed"}, "[set]"),
-    ({"type": "types/note.md"}, "[set]"),
+    ({"result-disposition": "not-a-disposition"}, "[artifact]"),
+    ({"extra": "not allowed"}, "[artifact]"),
+    ({"type": "types/note.md"}, "[artifact]"),
 ])
 def test_refuses_bad_content_or_invocation(boundary, changes, reason):
     a = boundary
@@ -96,7 +96,7 @@ def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
     status = a.coordinator.advance(AttemptResult(h.attempt, model="test-model", effort="low"))
     assert not status.stops and a.coordinator.handed() == {"boundary"}
     assert judgment(a)["outcome"] == "refused"
-    assert "[set]" in judgment(a)["findings"]
+    assert "[artifact]" in judgment(a)["findings"]
 
 
 @pytest.mark.slow

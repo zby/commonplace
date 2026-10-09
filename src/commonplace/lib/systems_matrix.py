@@ -1,4 +1,4 @@
-"""Read memory comparisons directly from retained analysis sets."""
+"""Read memory comparisons directly from retained analysis artifacts."""
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.lib.agentic_analysis.analyses import analysis_layout, current_analyses
 from commonplace.lib.agentic_analysis.records import declared_ids, is_absence
-from commonplace.lib.agentic_analysis.sets import analysis_layout, current_analyses
 
 __all__ = [
     "AXES",
@@ -368,7 +368,7 @@ def project_comparison(profile: dict) -> dict:
 def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) -> dict:
     """Resolve profile support against the records the given members declare.
 
-    The set rule checks the record members themselves.
+    The artifact rule checks the record members themselves.
     """
     known = {identifier for body in record_bodies.values() for identifier in declared_ids(body)}
     return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
@@ -390,30 +390,30 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
 
     root = root.resolve()
     run = ValidationRun(root, ())
-    sets = current_analyses(root, run=run)
+    analyses = current_analyses(root, run=run)
     layout = analysis_layout()
     selected = None if review_paths is None else {(root / path).resolve() for path in review_paths}
-    available = {member_set.overview.path for member_set in sets}
+    available = {analysis.overview.path for analysis in analyses}
     if selected is not None and not selected <= available:
         raise ValueError("selected path is not a current analysis overview")
     rows, hashes = [], {}
-    for member_set in sets:
-        path = member_set.overview.path
+    for analysis in analyses:
+        path = analysis.overview.path
         if selected is not None and path not in selected:
             continue
         relative = path.relative_to(root)
-        review_bytes = member_set.overview.content
-        manifest_path = member_set.artifact.path / "ARTIFACT.yaml"
+        review_bytes = analysis.overview.content
+        manifest_path = analysis.artifact.path / "ARTIFACT.yaml"
         retained = manifest_path.relative_to(root)
-        manifest_hash = sha256(member_set.artifact.content).hexdigest()
-        data = member_set.overview.frontmatter
-        source = member_set.memory.frontmatter["source-identity"]
+        manifest_hash = sha256(analysis.artifact.content).hexdigest()
+        data = analysis.overview.frontmatter
+        source = analysis.memory.frontmatter["source-identity"]
         meta = {**data, "analysis-run": data["run-id"]}
-        member = member_set.profile
-        assert member is not None  # complete sets require the separate profile
+        member = analysis.profile
+        assert member is not None  # complete analyses require the separate profile
         cited = layout.roles["memory-profile"].cites
         profile = profile_member_comparison(member.frontmatter, record_bodies={
-            role: member_set.roles[role].body for role in cited if role in member_set.roles
+            role: analysis.roles[role].body for role in cited if role in analysis.roles
         })
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
@@ -443,7 +443,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
         hashes[retained.as_posix()] = manifest_hash
-        for document in member_set.documents:
+        for document in analysis.documents:
             hashes[(retained.parent / document.name).as_posix()] = document.sha256
     if not rows:
         raise ValueError("no current analyses selected")

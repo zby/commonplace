@@ -17,7 +17,7 @@ Read this instruction first, then all invocation Input reading batches. Follow
 account. `memory-profile`, `record-verification` and `profile-verification`
 carry accepted comparison findings and limits. Holding record acceptances and
 the profile's holding semantic acceptance gate this job. Use only supplied
-versions, not reconstructed set paths. `opening` supplies the prepared
+versions, not reconstructed artifact paths. `opening` supplies the prepared
 content-check command directory.
 
 Write the complete synthesis to `output` with the supplied `run-id` and the

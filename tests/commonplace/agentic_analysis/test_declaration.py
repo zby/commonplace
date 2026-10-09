@@ -12,8 +12,8 @@ import yaml
 from commonplace.artifactrun import CodeJob, ModelJob, advance, load_plan, start_run
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.agentic_analysis.plan import PLAN
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 
@@ -44,7 +44,7 @@ ENGINE_INSTRUCTIONS = {
 
 @pytest.fixture
 def graph():
-    document, error = parse_document((LIBRARY / SET_TYPE).read_text(encoding="utf-8"))
+    document, error = parse_document((LIBRARY / ANALYSIS_TYPE).read_text(encoding="utf-8"))
     assert document is not None and not error
     layout = parse_layout(document.frontmatter["layout"])
     return load_plan(DECLARATION.read_text(encoding="utf-8"), layout.roles), layout
@@ -145,7 +145,7 @@ def test_apply_jobs_judge_handed_members_not_current_slots(graph):
         assert apply.inputs["verifier-attempt"].source == name
         assert not any(spec.address == "member" for spec in apply.inputs.values())
         expected = {f"verifier-attempt:{key}" for key, spec in verifier.inputs.items()
-                    if spec.address == "member" or key in ("set-check", "refusal")}
+                    if spec.address == "member" or key in ("record-check", "refusal")}
         handed = {spec.source for spec in apply.inputs.values() if spec.address == "handed"}
         assert handed == expected
 
@@ -230,7 +230,7 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
         if job.name in ("open", "acquire") or isinstance(job, ModelJob):
             continue
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
-        assert (LIBRARY / SET_TYPE).resolve() not in files, "the set type is fixed for the run"
+        assert (LIBRARY / ANALYSIS_TYPE).resolve() not in files, "the artifact type is fixed for the run"
         assert {"sources-contract", "records-contract"} <= set(job.inputs)
         for path in files:
             if path.suffix == ".md":
@@ -252,15 +252,15 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
 
 def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     jobs, _ = graph
-    check = jobs.job("set-check")
+    check = jobs.job("record-check")
     assert check.outputs == ("findings",) and check.role is None
     assert {spec.source for spec in check.inputs.values() if spec.address == "member"} == {"boundary", *RECORDS}
     assert all(spec.required for spec in check.inputs.values())
-    spec = jobs.job("verify").inputs["set-check"]
-    assert (spec.address, spec.source, spec.required) == ("output", "set-check:findings", True)
-    assert [job.name for job in jobs.jobs].index("set-check") < [job.name for job in jobs.jobs].index("verify")
-    handed = jobs.job("apply-verify").inputs["set-check-seen"]
-    assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:set-check", True)
+    spec = jobs.job("verify").inputs["record-check"]
+    assert (spec.address, spec.source, spec.required) == ("output", "record-check:findings", True)
+    assert [job.name for job in jobs.jobs].index("record-check") < [job.name for job in jobs.jobs].index("verify")
+    handed = jobs.job("apply-verify").inputs["record-check-seen"]
+    assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:record-check", True)
 
 
 @pytest.fixture
@@ -296,7 +296,7 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
 def test_publication_declares_producer_provenance_and_full_criterion_closure(graph):
     jobs, layout = graph
     contracts = {
-        SET_TYPE, "types/type-spec.md", "types/note.md",
+        ANALYSIS_TYPE, "types/type-spec.md", "types/note.md",
         "agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md",
         *(f"agentic-system-analyses/instructions/agentic-analysis-{name}.md"
           for name in ("sources", "records", "boundary")),
@@ -310,8 +310,8 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
             spec = job.inputs[f"{role}-attempt"]
             assert (spec.address, spec.source, spec.required) == ("attempt", producer, role == "boundary")
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
-        # The set type itself is fixed for the run; its schema closure stays declared.
-        assert {(LIBRARY / path).resolve() for path in contracts - {SET_TYPE}} <= files
+        # The artifact type itself is fixed for the run; its schema closure stays declared.
+        assert {(LIBRARY / path).resolve() for path in contracts - {ANALYSIS_TYPE}} <= files
         # Close both the instance schemas and the meta-type used to validate
         # criterion documents, including references in inactive schema branches.
         for path in contracts:

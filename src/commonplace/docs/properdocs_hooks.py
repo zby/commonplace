@@ -108,12 +108,12 @@ def on_files(files, config):
 
     collection = docs_dir / "agentic-system-analyses"
     if collection.is_dir():
-        from commonplace.lib.agentic_analysis.sets import current_analyses
+        from commonplace.lib.agentic_analysis.analyses import current_analyses
         lines = ["# Current agentic-system analyses", "",
                  "| System | Description | Boundary | Run | Date | Evidence |", "|---|---|---|---|---|---|"]
-        for member_set in current_analyses(root):
-            data = member_set.overview.frontmatter
-            href = member_set.overview.path.relative_to(collection).as_posix()
+        for analysis in current_analyses(root):
+            data = analysis.overview.frontmatter
+            href = analysis.overview.path.relative_to(collection).as_posix()
             escape = lambda value: str(value).replace("|", "\\|").replace("\n", " ")
             values = [f"[{escape(data['system'])}]({href})", *[escape(data[key]) for key in
                       ("description", "reviewed-boundary", "run-id", "run-date", "evidence-tier")]]

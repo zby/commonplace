@@ -1,4 +1,4 @@
-"""Retained analysis sets, member validation and comparison readers (no runtime)."""
+"""Retained analysis artifacts, member validation and comparison readers (no runtime)."""
 from __future__ import annotations
 
 import json
@@ -9,12 +9,12 @@ import pytest
 import yaml
 
 from commonplace.lib import quote_grounding, systems_matrix, validation
-from commonplace.lib.agentic_analysis import sets as agentic_set
+from commonplace.lib.agentic_analysis import analyses
 from tests.commonplace.agentic_analysis.fixtures import (
+    MEMBER_NAMES,
     REPO_ROOT,
     RETAINED_OVERVIEW,
     RUN_ID,
-    SET_NAMES,
     SOURCE,
     commit_paths,
     digest,
@@ -47,7 +47,7 @@ def test_manifest_hash_must_be_a_digest(tmp_path):
     values["members"]["runtime.md"]["sha256"] = "bad"
     manifest.write_text(yaml.safe_dump(values))
     with pytest.raises(ValueError, match="malformed SHA-256"):
-        agentic_set.load_member_set(directory, run=validation.ValidationRun(tmp_path, ()))
+        analyses.load_analysis(directory, run=validation.ValidationRun(tmp_path, ()))
 
 
 @pytest.mark.parametrize("mutation", ["valid", "outside"])
@@ -156,10 +156,10 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
 
 
 @pytest.mark.parametrize("link, error", [
-    ("[memory report](../memory-report-0.md)", "set member link: ../memory-report-0.md leaves the set directory"),
+    ("[memory report](../memory-report-0.md)", "artifact member link: ../memory-report-0.md leaves the artifact directory"),
     ("[runtime member](runtime.md)", None),
 ])
-def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: str, error: str | None) -> None:
+def test_artifact_member_links_stay_inside_the_artifact_directory(tmp_path: Path, link: str, error: str | None) -> None:
     """A link out of artifact/ resolves in the run directory but breaks once retained."""
     overview = member_fixture(tmp_path) / "artifact/overview.md"
     overview.write_text(overview.read_text() + f"\nRead {link}.\n")
@@ -170,8 +170,8 @@ def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: st
         assert any(error in failure for failure in fails), fails
 
 
-def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, capsys, monkeypatch) -> None:
-    """The skill's step 7 command resolves and validates the set from the repository root."""
+def test_validate_cli_checks_a_complete_artifact_at_the_skill_path(tmp_path: Path, capsys, monkeypatch) -> None:
+    """The skill's step 7 command resolves and validates the artifact from the repository root."""
     from commonplace.cli.validate_notes import main
 
     member_fixture(tmp_path)
@@ -181,7 +181,7 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
     assert main([target, "--json"]) == 0
     report = json.loads(capsys.readouterr().out)
     assert [artifact["path"] for artifact in report["analysed_artifacts"]] == [target]
-    assert report["analysed_artifacts"][0]["type"] == agentic_set.SET_TYPE
+    assert report["analysed_artifacts"][0]["type"] == analyses.ANALYSIS_TYPE
     assert main([target, "--full"]) == 0
 
 
@@ -203,7 +203,7 @@ def test_member_validation_rejects_ranged_prose_anchors(tmp_path: Path) -> None:
     )
 
 
-def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
+def test_real_retained_artifact_keeps_links_and_hashes_when_archived(tmp_path):
     from urllib.parse import urlsplit
 
     from commonplace.lib.note_parser import find_markdown_links
@@ -225,7 +225,7 @@ def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
                 assert (member.parent / parts.path).is_file(), (member, link)
 
 
-def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) -> None:
+def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     output = run_dir / "artifact"
     epistemic = output / "epistemic.md"
@@ -266,7 +266,7 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
-def test_profile_rejects_missing_identity_source_without_requiring_whole_set(tmp_path: Path) -> None:
+def test_profile_rejects_missing_identity_source_without_requiring_whole_artifact(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     output = run_dir / "artifact"
     candidate = write(run_dir / "profile-candidate.md", (output / "memory-profile.md").read_text()
@@ -315,7 +315,7 @@ def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_pa
     ("invalid", "member runtime.md"),
     ("identity", "identity field source-identity"),
 ])
-def test_retained_set_rejects_member_defects(tmp_path, mutation, diagnostic):
+def test_retained_artifact_rejects_member_defects(tmp_path, mutation, diagnostic):
     directory = retained_fixture(tmp_path)
     runtime = directory / "runtime.md"
     if mutation == "drift":
@@ -337,7 +337,7 @@ def test_retained_set_rejects_member_defects(tmp_path, mutation, diagnostic):
     ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "attribution uses revision"),
     ("\n> --- `README.md` @ `{revision}`\n", "quote body is empty"),
 ])
-def test_set_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
+def test_artifact_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
     directory = retained_fixture(tmp_path)
     memory = directory / "memory.md"
     revision = frontmatter(directory / "boundary.md")["source"]["revision"]
@@ -350,7 +350,7 @@ def test_set_validator_rejects_bad_evidence_without_writes(tmp_path, addition, d
 
 
 @pytest.mark.parametrize("citation_kind", ["local", "github"])
-def test_set_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind):
+def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind):
     directory = retained_fixture(tmp_path)
     boundary = directory / "boundary.md"
     metadata = frontmatter(boundary)
@@ -358,7 +358,7 @@ def test_set_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind)
     revision = source["revision"]
     if citation_kind == "github":
         identity = "https://github.com/example/system"
-        # Identity is a set relation, not a run-state property.
+        # Identity is an artifact relation, not a run-state property.
         for name in ("boundary.md", "memory.md", "memory-profile.md"):
             member = directory / name
             member.write_text(member.read_text().replace(SOURCE, identity))
@@ -468,7 +468,7 @@ def test_quoted_source_links_and_examples_validate_without_publication(tmp_path)
     assert not any("unverified" in item for item in checked.infos)
 
 
-def test_changed_checkout_leaves_set_quotations_unverified(tmp_path):
+def test_changed_checkout_leaves_artifact_quotations_unverified(tmp_path):
     directory = retained_fixture(tmp_path)
     source = frontmatter(directory / "boundary.md")["source"]
     write(Path(source["path"]) / "README.md", "# Changed worktree\n")
@@ -478,7 +478,7 @@ def test_changed_checkout_leaves_set_quotations_unverified(tmp_path):
 
 
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
-def test_noncomplete_set_validates_but_cannot_supply_comparison(tmp_path, disposition):
+def test_noncomplete_artifact_validates_but_cannot_supply_comparison(tmp_path, disposition):
     retained = retained_fixture(tmp_path)
     directory = retained.rename(tmp_path / "draft-set")
     for name in ("overview.md", "boundary.md"):
@@ -491,7 +491,7 @@ def test_noncomplete_set_validates_but_cannot_supply_comparison(tmp_path, dispos
         line for line in overview.read_text().splitlines()
         if not line.startswith("- [") or line.startswith("- [boundary.md]")
     ) + "\n")
-    for name in SET_NAMES:
+    for name in MEMBER_NAMES:
         if name not in {"boundary.md", "overview.md"}:
             (directory / name).unlink()
     repin(directory)

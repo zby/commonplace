@@ -17,7 +17,7 @@ from commonplace.artifactrun.worktree import (
     require_run_code,
     run_command,
 )
-from commonplace.lib.agentic_analysis.sets import (
+from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     WORKER_PROFILES,
@@ -109,7 +109,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     if Path(fixed["plan"]) != shipped or fixed["sha256"] != sha256(shipped.read_bytes()).hexdigest():
         raise ValueError("integration requires the fixed shipped analysis plan")
     if fixed["type_sha256"] != sha256((worktree / "kb" / fixed["type_spec"]).read_bytes()).hexdigest():
-        raise ValueError("integration requires the unchanged shipped set type")
+        raise ValueError("integration requires the unchanged shipped artifact type")
     outputs = current_outputs(run_dir, "publish")
     if (outputs is None or view["condition"] != "publishable"
             or view["failed_attempts"] or view["exhausted_jobs"]):
@@ -134,7 +134,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
         raise ValueError("published overview has mismatched run, method, disposition or source pins")
     relative = destination.relative_to(worktree)
     if relative.parent != RETAINED_ROOT:
-        raise ValueError("publication destination is outside retained sets")
+        raise ValueError("publication destination is outside retained artifacts")
     paths = [relative.as_posix()]
     # Compare the archive to Git's entire incumbent tree, not only its overview.
     old = committed_tree(worktree, method, relative.as_posix())

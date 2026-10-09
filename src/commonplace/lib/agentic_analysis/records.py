@@ -10,7 +10,7 @@ from difflib import get_close_matches
 from commonplace.lib.note_parser import section
 
 # A record ID carries the prefix of the analyst that established it, for the
-# life of the set: `RT-`, `MEM-`, or `EPI-`. Archived results written with
+# life of the artifact: `RT-`, `MEM-`, or `EPI-`. Archived results written with
 # bare runtime IDs are not read by current code.
 _PREFIX = r"(?:RT|MEM|EPI)-"
 _KIND = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)"
@@ -216,7 +216,7 @@ def _record_syntax_errors(body: str) -> list[str]:
 
 
 def record_reference_errors(body: str) -> list[str]:
-    """Check local syntax and declarations; resolve other members' IDs at set level."""
+    """Check local syntax and declarations; resolve other members' IDs at artifact level."""
     errors = _record_syntax_errors(body)
     records = section(_analysis_prose(body), "Shared records")
     unprefixed = _UNPREFIXED_DECLARATION.findall(records)
@@ -316,7 +316,7 @@ def conclusion_status_errors(body: str) -> list[str]:
     return errors
 
 
-def set_declarations(sources: str, bodies: Mapping[str, str]) -> dict[str, list[str]]:
+def artifact_declarations(sources: str, bodies: Mapping[str, str]) -> dict[str, list[str]]:
     """Each body's record declarations; ``sources`` also declares its Source register."""
     declarations = {name: declared_ids(body) for name, body in bodies.items()}
     if sources in bodies:
@@ -324,24 +324,24 @@ def set_declarations(sources: str, bodies: Mapping[str, str]) -> dict[str, list[
     return declarations
 
 
-def set_record_findings(
+def artifact_record_findings(
     sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
 ) -> tuple[set[str], list[tuple[str | None, str]]]:
     """Resolve references against declarations, excluding source excerpts.
 
-    ``bodies`` maps set names to bodies. The Source register of ``sources``
+    ``bodies`` maps artifact member names to bodies. The Source register of ``sources``
     declares the ``SRC-*`` records. With ``cites``, a body's references resolve
     only against the declarations of the names it cites; a body it does not
     list resolves against every declaration. Each finding names the body it
     belongs to.
     """
-    declared = set_declarations(sources, bodies)
+    declared = artifact_declarations(sources, bodies)
     known = {identifier for identifiers in declared.values() for identifier in identifiers}
     findings: list[tuple[str | None, str]] = []
     counts = Counter(identifier for identifiers in declared.values() for identifier in identifiers)
     for name, identifiers in declared.items():
         findings.extend(
-            (name, f"{name}: duplicate set declaration: {identifier}")
+            (name, f"{name}: duplicate artifact declaration: {identifier}")
             for identifier in dict.fromkeys(identifiers) if counts[identifier] > 1
         )
     owners = {identifier: name for name, identifiers in declared.items() for identifier in identifiers}
@@ -392,9 +392,9 @@ def set_record_findings(
     return known, findings
 
 
-def set_record_errors(
+def artifact_record_errors(
     sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
 ) -> tuple[set[str], list[str]]:
-    """``set_record_findings`` without attribution."""
-    known, findings = set_record_findings(sources, bodies, cites=cites)
+    """``artifact_record_findings`` without attribution."""
+    known, findings = artifact_record_findings(sources, bodies, cites=cites)
     return known, [message for _, message in findings]

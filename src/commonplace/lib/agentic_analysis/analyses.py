@@ -22,14 +22,14 @@ from commonplace.lib.note_parser import ParsedDocument
 from commonplace.lib.quote_grounding import is_normalized_relative
 from commonplace.lib.source_identity import normalize_source_identity
 
-SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
+ANALYSIS_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
 ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
 
 
 def analysis_layout() -> Layout:
-    """The set type's declared layout, from the library this process runs."""
+    """The artifact type's declared layout, from the library this process runs."""
     from commonplace.lib.library import library_root
 
     return _layout_at(str(library_root()))
@@ -47,7 +47,7 @@ def _spec_at(library: str, type_path: str) -> dict[str, Any]:
 
 @cache
 def _layout_at(library: str) -> Layout:
-    return parse_layout(_spec_at(library, SET_TYPE).get("layout"), where=f"{SET_TYPE}: layout")
+    return parse_layout(_spec_at(library, ANALYSIS_TYPE).get("layout"), where=f"{ANALYSIS_TYPE}: layout")
 
 
 def is_review_path(value: str) -> bool:
@@ -58,7 +58,7 @@ def is_review_path(value: str) -> bool:
 
 
 @dataclass(frozen=True)
-class SetDocument:
+class Member:
     name: str
     path: Path
     content: bytes
@@ -82,50 +82,50 @@ class SetDocument:
 
 
 @dataclass(frozen=True)
-class MemberSet:
-    """One analysis set's documents, by layout role."""
+class Analysis:
+    """One analysis artifact's documents, by layout role."""
 
     artifact: DirectoryArtifact
-    roles: dict[str, SetDocument]
+    roles: dict[str, Member]
 
     @property
-    def documents(self) -> list[SetDocument]:
+    def documents(self) -> list[Member]:
         return list(self.roles.values())
 
     @property
-    def overview(self) -> SetDocument:
+    def overview(self) -> Member:
         return self.roles["overview"]
 
     @property
-    def memory(self) -> SetDocument | None:
+    def memory(self) -> Member | None:
         return self.roles.get("memory")
 
     @property
-    def profile(self) -> SetDocument | None:
+    def profile(self) -> Member | None:
         return self.roles.get("memory-profile")
 
 
-def from_artifact(artifact: DirectoryArtifact, layout: Layout | None = None) -> MemberSet:
+def from_artifact(artifact: DirectoryArtifact, layout: Layout | None = None) -> Analysis:
     """The members that have a layout role; a missing overview is an error."""
     layout = layout or analysis_layout()
     roles = {}
     for role in layout.roles.values():
         member = artifact.members.get(role.path)
         if member is not None:
-            roles[role.name] = SetDocument(role.path, member.path, member.content, member.document)
+            roles[role.name] = Member(role.path, member.path, member.content, member.document)
     if "overview" not in roles:
-        raise ValueError(f"analysis set has no {layout.path('overview')}")
-    return MemberSet(artifact, roles)
+        raise ValueError(f"analysis artifact has no {layout.path('overview')}")
+    return Analysis(artifact, roles)
 
 
-def load_member_set(directory: Path, *, run: ValidationRun) -> MemberSet:
+def load_analysis(directory: Path, *, run: ValidationRun) -> Analysis:
     """Validate one analysis artifact through the caller's shared context."""
     checked = run.validate(directory)
     if checked.fails or checked.warns:
         raise ValueError("; ".join([*checked.fails, *checked.warns]))
     artifact = run.artifact(directory)
-    if artifact.manifest.get("type") != SET_TYPE:
-        raise ValueError(f"expected analysis artifact type {SET_TYPE}")
+    if artifact.manifest.get("type") != ANALYSIS_TYPE:
+        raise ValueError(f"expected analysis artifact type {ANALYSIS_TYPE}")
     return from_artifact(artifact)
 
 
@@ -170,8 +170,8 @@ def source_slug(identity: str, system: str) -> str:
     return slug
 
 
-def current_analyses(repo_root: Path, *, run=None) -> list[MemberSet]:
-    """Enumerate and validate one current set per source at its stable path."""
+def current_analyses(repo_root: Path, *, run=None) -> list[Analysis]:
+    """Enumerate and validate one current artifact per source at its stable path."""
     from commonplace.lib.validation import ValidationRun
 
     root = repo_root.resolve()
@@ -198,11 +198,11 @@ def current_analyses(repo_root: Path, *, run=None) -> list[MemberSet]:
             continue
         if not directory.is_dir() or directory.is_symlink():
             raise ValueError(f"current analysis must be a directory: {directory}")
-        member_set = load_member_set(directory, run=run)
-        data = member_set.overview.frontmatter
-        if data.get("result-disposition") != "complete" or member_set.memory is None:
+        analysis = load_analysis(directory, run=run)
+        data = analysis.overview.frontmatter
+        if data.get("result-disposition") != "complete" or analysis.memory is None:
             raise ValueError(f"current analysis must be complete: {directory}")
-        identity = normalize_source_identity(member_set.memory.frontmatter.get("source-identity", ""))
+        identity = normalize_source_identity(analysis.memory.frontmatter.get("source-identity", ""))
         if not identity:
             raise ValueError(f"current analysis lacks source identity: {directory}")
         if identity in identities:
@@ -210,5 +210,5 @@ def current_analyses(repo_root: Path, *, run=None) -> list[MemberSet]:
         identities.add(identity)
         if directory.name != source_slug(identity, data["system"]):
             raise ValueError(f"current directory name does not match its source: {directory}")
-        result.append(member_set)
+        result.append(analysis)
     return result

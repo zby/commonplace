@@ -1,4 +1,4 @@
-"""The shared candidate checks on a set type other than the analysis."""
+"""The shared candidate checks on an artifact type other than the analysis."""
 from __future__ import annotations
 
 from types import SimpleNamespace
@@ -11,7 +11,7 @@ from commonplace.artifactrun.run import _parse_type
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
-SET_TYPE = "pairs/types/pair.md"
+ARTIFACT_TYPE = "pairs/types/pair.md"
 PAIR = """---
 type: types/type-spec.md
 name: pair
@@ -50,12 +50,12 @@ def attempt(tmp_path, candidate: bytes, judged: list) -> SimpleNamespace:
         "pairs/types/head.md": member_type("head"), "pairs/types/head.schema.yaml": schema,
         "pairs/types/body.md": member_type("body"), "pairs/types/body.schema.yaml": schema,
     }
-    layout, relations = _parse_type(PAIR, SET_TYPE)
+    layout, relations = _parse_type(PAIR, ARTIFACT_TYPE)
     inputs = {"candidate": candidate,
               "head": b"---\ntype: pairs/types/head.md\nname: head\ndescription: Head.\nrun: R1\n---\n# Head\n"}
     return SimpleNamespace(
         run_dir=tmp_path / "kb/pairs/state/run", layout=layout, relations=tuple(relations),
-        type_spec=SET_TYPE, type_text=PAIR, read=inputs.get, read_files=lambda: dict(files),
+        type_spec=ARTIFACT_TYPE, type_text=PAIR, read=inputs.get, read_files=lambda: dict(files),
         judge=lambda subject, **verdict: judged.append(verdict),
     )
 

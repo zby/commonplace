@@ -103,13 +103,13 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
             to_verifier(a)
     assert judgments(a, "check-reconcile")[-1]["outcome"] == "accepted"
     p = parameters(a.coordinator.handout("verify"))
-    assert Path(p["set-check"]).read_text() == "# Record set check\n\nnone\n"
+    assert Path(p["record-check"]).read_text() == "# Record check\n\nnone\n"
     a.coordinator.complete("verify", verdict(a))
     applied = judgments(a, "apply-verify")
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
     assert {j["subject"]["role"] for j in applied} == {"record-verification", *handlers.RECORDS}
-    assert all({"verifier-attempt", "set-check-seen"} <= j["basis"].keys() for j in applied)
+    assert all({"verifier-attempt", "record-check-seen"} <= j["basis"].keys() for j in applied)
     assert not a.coordinator.status.publishable
 
 
@@ -175,25 +175,25 @@ def test_declined_answers_rerun_verifier_without_semantic_override(records):
     assert judgments(a, "apply-verify")[-4]["outcome"] == "accepted"
 
 
-def test_set_check_uses_pinned_content_not_projection_or_later_members(records):
+def test_record_check_uses_pinned_content_not_projection_or_later_members(records):
     a = records
     to_verifier(a)
-    clean = code_attempt(a, "set-check")
-    baseline = handlers.set_check(clean)
+    clean = code_attempt(a, "record-check")
+    baseline = handlers.record_check(clean)
     (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
     (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
-    assert handlers.set_check(clean) == baseline
+    assert handlers.record_check(clean) == baseline
     bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
-    findings = handlers.set_check(code_attempt(a, "set-check", {"runtime": bad}))["findings"].decode()
+    findings = handlers.record_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
     assert "Runtime account" in findings
     assert "synthesis" not in findings and "overview" not in findings
 
 
-def test_handed_set_check_failure_cannot_be_ignored(records):
+def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
     a.coordinator.complete("verify", verdict(a))
-    attempt = code_attempt(a, "apply-verify", {"set-check-seen": b"# Record set check\n\n- runtime.md: fixture failure\n"})
+    attempt = code_attempt(a, "apply-verify", {"record-check-seen": b"# Record check\n\n- runtime.md: fixture failure\n"})
     handlers.apply_verify(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
@@ -236,9 +236,9 @@ def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
     assert all(not e["relation"].startswith("record-verification:") for e in repaired["scope"])
 
 
-def test_source_drift_is_a_set_check_finding(records):
+def test_source_drift_is_a_record_check_finding(records):
     a = records
     to_verifier(a)
-    attempt = code_attempt(a, "set-check")
+    attempt = code_attempt(a, "record-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
-    assert "does not hold exactly" in handlers.set_check(attempt)["findings"].decode()
+    assert "does not hold exactly" in handlers.record_check(attempt)["findings"].decode()

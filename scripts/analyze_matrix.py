@@ -1,4 +1,4 @@
-"""Summarize memory comparison evidence directly from retained analysis sets.
+"""Summarize memory comparison evidence directly from retained analysis artifacts.
 
 Per axis: assessment counts, evidence bases, values with strong positive
 evidence (wired, observed or causally supported) in code-grounded rows, and

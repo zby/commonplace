@@ -693,8 +693,8 @@ def validate_links_from_document(
         target = resolve_local_link_target(path, link)
         if target is None:
             continue
-        in_closed_set = closed_directory is not None and target.parent == closed_directory
-        if target not in available_paths and (in_closed_set or not target.exists()):
+        in_closed_artifact = closed_directory is not None and target.parent == closed_directory
+        if target not in available_paths and (in_closed_artifact or not target.exists()):
             missing.append(link)
 
     if missing:
@@ -1587,14 +1587,14 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     return results
 
 
-def validate_pinned_set_snapshot(
-    *, repo: Path, set_type: str, intended_set_path: Path, members: Mapping[str, bytes],
+def validate_pinned_artifact_snapshot(
+    *, repo: Path, artifact_type: str, intended_artifact_path: Path, members: Mapping[str, bytes],
     manifest: bytes, criteria: Mapping[str, bytes],
     frozen_source: Mapping[str, object] | None = None,
 ) -> CheckResults:
-    """Check an exact snapshot of a set of ``set_type`` without writing files.
+    """Check an exact snapshot of an artifact of ``artifact_type`` without writing files.
 
-    The set type belongs to a collection (``<collection>/types/...``); the set
+    The artifact type belongs to a collection (``<collection>/types/...``); the artifact
     and its members' types must lie in that collection.
     Criterion keys are relative to the library (not prefixed with kb/). The
     snapshot's virtual root is repo/kb. Supply every type, transitive schema and
@@ -1603,22 +1603,22 @@ def validate_pinned_set_snapshot(
     this is not an interpreter of arbitrary changed method prose. Callers must
     separately guard the opened method/code identity.
 
-    frozen_source must equal the source mapping the set pins and explicitly grants
+    frozen_source must equal the source mapping the artifact pins and explicitly grants
     local inspection of that frozen checkout/capture only. Relative link
     existence and collection/type eligibility are stable-method environment
     guards; they do not authorize external content reads. Warnings are returned,
     not silently promoted to success. A caller must reject nonempty fails.
     """
-    collection, separator, _ = set_type.rpartition("/types/")
+    collection, separator, _ = artifact_type.rpartition("/types/")
     if not separator:
-        raise ValueError(f"{set_type} is not a collection-local type")
+        raise ValueError(f"{artifact_type} is not a collection-local type")
     repo = repo.resolve()
-    directory = intended_set_path if intended_set_path.is_absolute() else repo / intended_set_path
+    directory = intended_artifact_path if intended_artifact_path.is_absolute() else repo / intended_artifact_path
     directory = directory.resolve()
     if not directory.is_relative_to(repo / "kb" / collection):
-        raise ValueError(f"intended set must be inside the {collection} collection")
+        raise ValueError(f"intended artifact must be inside the {collection} collection")
     snapshot = CriterionSnapshot(kb_root(repo), criteria)
-    result = CheckResults(set_type)
+    result = CheckResults(artifact_type)
     try:
         for required in (f"{collection}/COLLECTION.md", "reference/validation-contract.md"):
             snapshot.read(snapshot.root / required)
@@ -1628,8 +1628,8 @@ def validate_pinned_set_snapshot(
             criteria=snapshot, frozen_source=frozen_source,
         )
         artifact = run.artifact(directory)
-        if artifact.manifest["type"] != set_type:
-            raise ValueError(f"pinned set adapter requires the {set_type} set type")
+        if artifact.manifest["type"] != artifact_type:
+            raise ValueError(f"pinned artifact adapter requires the {artifact_type} artifact type")
         pins = artifact.manifest.get("members")
         if (not isinstance(pins, dict) or set(pins) != set(members)
                 or any(not isinstance(entry, dict) or set(entry) != {"sha256"}
@@ -1637,7 +1637,7 @@ def validate_pinned_set_snapshot(
             raise ValueError("publication manifest must pin every exact member")
         profile = run.artifact_profile(directory)
         if profile.layout is None:
-            raise ValueError("the set type requires its pinned layout")
+            raise ValueError("the artifact type requires its pinned layout")
         allowed = {role.type for role in profile.layout.roles.values()}
         type_documents = {profile.type_doc_path, snapshot.root / "types/type-spec.md"}
         # This adapter cannot safely dispatch arbitrary library rules that do
@@ -1656,7 +1656,7 @@ def validate_pinned_set_snapshot(
                 raise ValueError(f"publication member {member.path.name} needs a pinned schema")
             type_documents.add(member_profile.profile.type_doc_path)
             if fm.get("tags") or "brief" in fm or member.path.name.endswith(".ingest.md"):
-                raise ValueError("pinned set adapter cannot bound tag/brief/ingest dependencies")
+                raise ValueError("pinned artifact adapter cannot bound tag/brief/ingest dependencies")
         result = run.validate(directory)
         meta_profile = resolve_type_definition(
             snapshot.root / "types/type-spec.md", repo_root=repo, criteria=snapshot,
@@ -1973,7 +1973,7 @@ def validate_draft_at_slot(
     """Validate candidate bytes at a declared member slot, without writing.
 
     ``slot`` is a filename or the absolute intended member path. Ordinary
-    file checks use that intended path (including link resolution); set checks
+    file checks use that intended path (including link resolution); artifact checks
     see the replacement bytes everywhere and return only this member's role.
     No absent findings are suppressed. Manifest pinning is not a draft check:
     this judges member content and relations, not publication acceptance.
@@ -2020,7 +2020,7 @@ def validate_draft_at_slot(
             load_frontmatter=run.load_frontmatter, criteria=run.criteria,
         ).layout
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        return [Finding(None, f"{intended.name}: set input cannot be checked: {exc}")]
+        return [Finding(None, f"{intended.name}: artifact input cannot be checked: {exc}")]
     role = layout.role_at(intended.name) if layout is not None else None
     if role is None:
         raise ValueError(f"{intended.name}: no declared layout role")
@@ -2032,7 +2032,7 @@ def validate_draft_at_slot(
     try:
         findings += [finding for finding in run.artifact_findings(directory) if finding.role == role.name]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        findings.append(Finding(role.name, f"{intended.name}: set input cannot be checked: {exc}"))
+        findings.append(Finding(role.name, f"{intended.name}: artifact input cannot be checked: {exc}"))
     return findings
 
 

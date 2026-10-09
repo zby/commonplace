@@ -100,7 +100,7 @@ def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | 
         members=check.snapshot if members is None else members, manifest=manifest(check.attempt),
         criteria=criterion_bytes(check.attempt), frozen_source=check.source,
     )
-    return ["[set] " + finding.render() for finding in findings
+    return ["[artifact] " + finding.render() for finding in findings
             if not finding.info and not finding.warn and not finding.absent]
 
 

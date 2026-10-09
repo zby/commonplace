@@ -4,14 +4,14 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.type_resolver import (
     CriterionSnapshot,
     resolve_type,
     resolve_type_definition,
     validate_instance,
 )
-from commonplace.lib.validation import ValidationRun, validate_pinned_set_snapshot
+from commonplace.lib.validation import ValidationRun, validate_pinned_artifact_snapshot
 
 TYPE = b"""---
 type: types/type-spec.md
@@ -135,8 +135,8 @@ def test_virtual_verbatim_sources_require_supplied_bytes(tmp_path):
 
 
 def test_public_adapter_missing_substantive_criterion(tmp_path):
-    result = validate_pinned_set_snapshot(
-        repo=tmp_path, set_type=SET_TYPE, intended_set_path=Path("kb/agentic-system-analyses/state/local/artifact"),
+    result = validate_pinned_artifact_snapshot(
+        repo=tmp_path, artifact_type=ANALYSIS_TYPE, intended_artifact_path=Path("kb/agentic-system-analyses/state/local/artifact"),
         members={}, manifest=b"type: ignored\n", criteria={},
     )
     assert any("missing pinned criterion" in failure for failure in result.fails)
@@ -145,13 +145,13 @@ def test_public_adapter_missing_substantive_criterion(tmp_path):
 def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path):
     from hashlib import sha256
 
-    from commonplace.lib.agentic_analysis.sets import SET_TYPE
+    from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 
     # Keep the shipped layout, but use minimal schemas to isolate the adapter.
     library = Path(__file__).resolve().parents[3] / "kb"
     criteria = {
-        SET_TYPE: (library / SET_TYPE).read_bytes(),
-        SET_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
+        ANALYSIS_TYPE: (library / ANALYSIS_TYPE).read_bytes(),
+        ANALYSIS_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
         "agentic-system-analyses/COLLECTION.md": b"# Fixture collection\n",
         "reference/validation-contract.md": b"# Fixture validation contract\n",
         "types/type-spec.md": TYPE.replace(b"./fixture.schema.yaml", b"./type-spec.schema.yaml"),
@@ -175,12 +175,12 @@ def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path)
 
     def validate():
         manifest = yaml.safe_dump({
-            "type": SET_TYPE,
+            "type": ANALYSIS_TYPE,
             "members": {name: {"sha256": sha256(data).hexdigest()}
                         for name, data in members.items()},
         }).encode()
-        return validate_pinned_set_snapshot(
-            repo=tmp_path, set_type=SET_TYPE, intended_set_path=directory, members=members,
+        return validate_pinned_artifact_snapshot(
+            repo=tmp_path, artifact_type=ANALYSIS_TYPE, intended_artifact_path=directory, members=members,
             manifest=manifest, criteria=criteria,
         )
 

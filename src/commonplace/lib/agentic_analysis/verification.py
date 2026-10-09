@@ -1,4 +1,4 @@
-"""Reconciliation checks, the record set check and record verdict application.
+"""Reconciliation checks, the record check and record verdict application.
 
 Snapshots are made solely from declared inputs. Structural checks cover content
 relations; only a valid, blocker-free verifier verdict settles semantic gates.
@@ -44,8 +44,8 @@ def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
     return {}
 
 
-def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Set_check returns record content and relation findings from one pinned snapshot."""
+def record_check(attempt: CodeAttempt) -> dict[str, bytes]:
+    """Record_check returns record content and relation findings from one pinned snapshot."""
     members = snapshot(attempt, PARTNERS)
     source = frozen_source(attempt, members, "boundary")
     directory = (attempt.run_dir / "artifact").resolve()
@@ -62,11 +62,11 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
         path = attempt.layout.path(role)
         reasons += [f"{path}: {failure}" for failure in run.validate(directory / path).fails]
     try:
-        reasons += ["[set] " + finding.render() for finding in run.artifact_findings(directory)
+        reasons += ["[artifact] " + finding.render() for finding in run.artifact_findings(directory)
                     if not finding.absent and not finding.info]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        reasons.append(f"[set] set input cannot be checked: {exc}")
-    text = "# Record set check\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
+        reasons.append(f"[artifact] artifact input cannot be checked: {exc}")
+    text = "# Record check\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
     return {"findings": text.encode("utf-8")}
 
 
@@ -93,16 +93,16 @@ def _feedback(role: str, verifier: str, entries: list[str], bodies: dict[str, st
     )
 
 
-def _set_check_failed(data: bytes) -> bool:
+def _record_check_failed(data: bytes) -> bool:
     text = data.decode("utf-8").strip()
-    heading = "# Record set check"
+    heading = "# Record check"
     if not text.startswith(heading + "\n"):
-        raise ValueError("handed set-check must be a Record set check document")
+        raise ValueError("handed record-check must be a Record check document")
     body = text[len(heading):].strip()
     if body == "none":
         return False
     if not body or not body.startswith("- "):
-        raise ValueError("handed set-check must contain none or findings")
+        raise ValueError("handed record-check must contain none or findings")
     return True
 
 
@@ -119,7 +119,7 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     # Validation refuses Blockers that are not none or addressed list entries.
     reasons = review(check)
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
-    if _set_check_failed(attempt.read("set-check-seen")) and not entries:
+    if _record_check_failed(attempt.read("record-check-seen")) and not entries:
         reasons.append("structural failures require explicit blockers (code requires at least one; the verifier must address every finding)")
     # A verifier with blockers is a valid verdict document, not an acceptance
     # of the defective reports. Its content acceptance must not cover their gates.

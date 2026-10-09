@@ -1,9 +1,9 @@
 """Pinned assembly and publication.
 
-Whole-set validation uses closed criterion and member snapshots and refuses
+Whole-artifact validation uses closed criterion and member snapshots and refuses
 missing dependencies. Effect recovery
 is independent of engine attempt commits and never infers success from an overview
-alone. Only complete dispositions replace a public set.
+alone. Only complete dispositions replace a public artifact.
 """
 from __future__ import annotations
 
@@ -26,6 +26,11 @@ from commonplace.artifactrun.worktree import (
     run_command,
     source_checkout,
 )
+from commonplace.lib.agentic_analysis.analyses import (
+    ARCHIVE_ROOT,
+    RETAINED_ROOT,
+    source_slug,
+)
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
@@ -34,15 +39,10 @@ from commonplace.lib.agentic_analysis.guards import (
 )
 from commonplace.lib.agentic_analysis.handlers import locate
 from commonplace.lib.agentic_analysis.records import amendment_index
-from commonplace.lib.agentic_analysis.sets import (
-    ARCHIVE_ROOT,
-    RETAINED_ROOT,
-    source_slug,
-)
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.validation import validate_pinned_set_snapshot
+from commonplace.lib.validation import validate_pinned_artifact_snapshot
 
 JOURNAL = "effects/publish.json"
 PRODUCERS = {
@@ -162,21 +162,21 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
     return {**worker, "model": reported.pop()}
 
 
-def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
+def validate_pinned_artifact(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
                         manifest: bytes) -> None:
     """Validate all exact member, manifest and criterion bytes."""
     boundary = _document(members["boundary.md"])
-    result = validate_pinned_set_snapshot(
-        repo=repo, set_type=attempt.type_spec, intended_set_path=attempt.run_dir / "artifact", members=members,
+    result = validate_pinned_artifact_snapshot(
+        repo=repo, artifact_type=attempt.type_spec, intended_artifact_path=attempt.run_dir / "artifact", members=members,
         manifest=manifest, criteria=criterion_bytes(attempt),
         frozen_source=boundary.frontmatter.get("source"),
     )
     if result.fails:
-        raise ValueError("pinned set validation failed: " + "; ".join(result.fails))
+        raise ValueError("pinned artifact validation failed: " + "; ".join(result.fails))
     # Assembly's current receipt cannot faithfully retain per-member warnings.
-    # Refuse rather than claim that a warning-bearing set passed unqualified.
+    # Refuse rather than claim that a warning-bearing artifact passed unqualified.
     if result.warns:
-        raise ValueError("pinned set validation warnings require review: " + "; ".join(result.warns))
+        raise ValueError("pinned artifact validation warnings require review: " + "; ".join(result.warns))
 
 
 def _manifest(attempt: CodeAttempt, members: Mapping[str, bytes], worker: dict) -> bytes:
@@ -243,7 +243,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
                 + "---\n\n" + body).encode("utf-8")
     complete = {**members, "overview": overview}
     manifest = _manifest(attempt, complete, worker)
-    validate_pinned_set(attempt, repo=repo,
+    validate_pinned_artifact(attempt, repo=repo,
                         members={layout.path(r): b for r, b in complete.items()}, manifest=manifest)
     scope = tuple(relation for origin, partner, relation in relations
                   if "overview" in (origin, partner)
@@ -253,7 +253,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
 
 
 def _archive_name(incumbent: Mapping[str, bytes], run_id: str) -> str:
-    """An incumbent set is archived under its own run ID, never this run's."""
+    """An incumbent artifact is archived under its own run ID, never this run's."""
     old_id = _document(incumbent["overview.md"]).frontmatter.get("run-id")
     if not isinstance(old_id, str) or not re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) or old_id == run_id:
         raise ValueError("replacement requires a different valid incumbent run ID")
@@ -272,12 +272,12 @@ def _prepare_publication(attempt: CodeAttempt):
     if supplied != yaml.safe_load(_manifest(attempt, members, worker)):
         raise ValueError("assembly manifest does not pin these exact members and provenance")
     files = {layout.path(role): data for role, data in members.items()}
-    validate_pinned_set(attempt, repo=repo, members=files, manifest=manifest)
+    validate_pinned_artifact(attempt, repo=repo, members=files, manifest=manifest)
     _require_opened_method(repo, metadata, job="publication")
     if boundary.frontmatter["result-disposition"] != "complete":
         if os.path.lexists(attempt.run_dir / JOURNAL):
-            raise UncertainEffectError("non-complete set has a publication effect journal")
-        return None  # Accepted set remains local; no retained or archive output.
+            raise UncertainEffectError("non-complete artifact has a publication effect journal")
+        return None  # Accepted artifact remains local; no retained or archive output.
     destination = repo / RETAINED_ROOT / source_slug(metadata["source-identity"], metadata["system"])
     if metadata["review-path"] != (destination / layout.path("overview")).relative_to(repo).as_posix():
         raise ValueError("opened publication destination differs from the canonical source path")
@@ -286,7 +286,7 @@ def _prepare_publication(attempt: CodeAttempt):
 
 
 def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Publish a pinned complete set, or close a non-complete set without public mutation."""
+    """Publish a pinned complete artifact, or close a non-complete artifact without public mutation."""
     try:
         prepared = _prepare_publication(attempt)
     except UncertainEffectError:

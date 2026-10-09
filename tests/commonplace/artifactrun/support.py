@@ -1,4 +1,4 @@
-"""A toy set type, a plan over it, and a scripted coordinator.
+"""A toy artifact type, a plan over it, and a scripted coordinator.
 
 The toy plan mirrors the analysis mapping in
 kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
@@ -211,7 +211,7 @@ def plan(method: Path) -> dict:
             }),
             code("assemble", "assemble", {
                 "brief": _member("brief"),
-                # Assembly waits until the set minus its own role is covered.
+                # Assembly waits until the artifact minus its own role is covered.
                 "coverage": {"address": "coverage"},
                 **{role: _optional("member", role)
                    for role in ("report", "other", "summary", "verification", "digest")},
@@ -325,7 +325,7 @@ class Coordinator:
         return self.status
 
     def through_publication(self) -> RunStatus:
-        """From a fresh run to a publishable set."""
+        """From a fresh run to a publishable artifact."""
         self.through_records()
         self.complete("verify", "no blockers\n")
         self.complete("digest", "digest D1\n")

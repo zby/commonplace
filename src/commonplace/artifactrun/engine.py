@@ -407,7 +407,7 @@ def _materialize(run: Run) -> None:
     """Make `artifact/` hold exactly the members and the manifest, from the records.
 
     The manifest is the directory artifact's, not a member: the engine writes
-    it naming only the type, as a working set's is. Pinning member digests is
+    it naming only the type, as a working artifact's is. Pinning member digests is
     publication's, which copies the artifact out.
     """
     members = run.members()

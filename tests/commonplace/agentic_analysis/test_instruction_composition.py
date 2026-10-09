@@ -22,7 +22,7 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     collection = LIBRARY / "agentic-system-analyses"
     contracts = {collection / "COLLECTION.md"}
     # Historical projection and run-state schemas are not execution inputs,
-    # and the set type is fixed for the run rather than declared.
+    # and the artifact type is fixed for the run rather than declared.
     historical = ("generated-review.", "agentic-system-analysis-run-state.")
     contracts.update(
         path for path in (collection / "types").iterdir()

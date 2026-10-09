@@ -20,7 +20,7 @@ including the prepared `command-path`. Use the supplied `system` and `run-id`.
 Write the whole member to `output` under `reconciliation-contract`, repeating
 `boundary`'s `reviewed-boundary`. Write only `output`, `problem` and intermediate
 files under `scratch`; all inputs and previous outputs are read-only. Do not
-edit reports, engine state or the working set, publish, stage, commit, delegate
+edit reports, engine state or the working artifact, publish, stage, commit, delegate
 or launch a worker. Inspect source text, never execute or install the target.
 
 `refusal = absent` means no refusal input. When supplied, repair the named

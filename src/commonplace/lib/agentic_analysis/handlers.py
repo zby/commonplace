@@ -31,6 +31,12 @@ from commonplace.artifactrun.worktree import (
     run_command,
     source_checkout,
 )
+from commonplace.lib.agentic_analysis.analyses import (
+    RETAINED_ROOT,
+    analysis_layout,
+    source_slug,
+    worker_profile,
+)
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     checkout,
@@ -38,12 +44,6 @@ from commonplace.lib.agentic_analysis.guards import (
     require_publishable_worktree,
 )
 from commonplace.lib.agentic_analysis.records import declared_ids
-from commonplace.lib.agentic_analysis.sets import (
-    RETAINED_ROOT,
-    analysis_layout,
-    source_slug,
-    worker_profile,
-)
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
@@ -156,9 +156,9 @@ def locate(attempt: CodeAttempt) -> tuple[dict, Path]:
 
 
 def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Judge the pinned boundary, never a mutable set projection or hand-out file.
+    """Judge the pinned boundary, never a mutable artifact projection or hand-out file.
 
-    Content checks see a one-member snapshot at its intended set path. Invocation
+    Content checks see a one-member snapshot at its intended artifact path. Invocation
     checks bind its run identity and source to opening/acquisition; later checks
     rely on that binding. Self-citations are content checks, not engine
     relations, so no scope is claimed.

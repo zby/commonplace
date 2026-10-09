@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 from commonplace.artifactrun.checks import criterion_bytes
-from commonplace.lib.agentic_analysis.sets import SET_TYPE
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.validation import validate_draft_at_slot
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
@@ -17,8 +17,8 @@ CANDIDATE = (f"---\ntype: {BOUNDARY_TYPE}\ndescription: Fixture\n"
 
 def criteria():
     return {
-        SET_TYPE: (LIBRARY / SET_TYPE).read_bytes(),
-        SET_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
+        ANALYSIS_TYPE: (LIBRARY / ANALYSIS_TYPE).read_bytes(),
+        ANALYSIS_TYPE.removesuffix(".md") + ".schema.yaml": b"type: object\n",
         BOUNDARY_TYPE: (b"---\ntype: types/type-spec.md\nname: agentic-system-boundary\n"
                         b"description: Fixture\nschema: ./agentic-system-boundary.schema.yaml\n"
                         b"---\n# Boundary type\n"),
@@ -27,17 +27,17 @@ def criteria():
 
 
 def fixed_type(**kwargs):
-    """An attempt double carrying the set type a run fixes at start."""
-    from commonplace.lib.agentic_analysis.sets import analysis_layout
+    """An attempt double carrying the artifact type a run fixes at start."""
+    from commonplace.lib.agentic_analysis.analyses import analysis_layout
 
-    return SimpleNamespace(type_text=(LIBRARY / SET_TYPE).read_text(), type_spec=SET_TYPE,
+    return SimpleNamespace(type_text=(LIBRARY / ANALYSIS_TYPE).read_text(), type_spec=ANALYSIS_TYPE,
                            layout=analysis_layout(), **kwargs)
 
 
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
     return validate_draft_at_slot(
         tmp_path / "kb/agentic-system-analyses/state/fixture/artifact", "boundary.md", candidate,
-        repo_root=tmp_path, members={}, manifest=f"type: {SET_TYPE}\n".encode(),
+        repo_root=tmp_path, members={}, manifest=f"type: {ANALYSIS_TYPE}\n".encode(),
         criteria=pinned, **kwargs,
     )
 
@@ -69,10 +69,10 @@ def test_non_complete_boundary_source_does_not_crash(tmp_path, source):
         assert result  # Malformed sources still fail; they just do not crash.
 
 
-def test_criteria_are_the_pinned_library_files_plus_the_fixed_set_type():
+def test_criteria_are_the_pinned_library_files_plus_the_fixed_artifact_type():
     files = {BOUNDARY_TYPE: b"pinned", "types/note.schema.yaml": b"schema"}
     result = criterion_bytes(fixed_type(read_files=lambda: dict(files)))
-    assert result == {**files, SET_TYPE: (LIBRARY / SET_TYPE).read_bytes()}
+    assert result == {**files, ANALYSIS_TYPE: (LIBRARY / ANALYSIS_TYPE).read_bytes()}
 
 
 def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
@@ -107,7 +107,7 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
     declared = {"candidate": CANDIDATE, "boundary": boundary}
-    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
+    files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     seen = []
 
@@ -132,7 +132,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
 
     pinned = criteria()
     declared = {}
-    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
+    files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
     declared.update({"candidate": CANDIDATE, "source": b"null", "metadata": b"{}",
                      "incumbent-boundary": None, "answered-refusal": None})
     judgments = []
@@ -149,13 +149,13 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     assert judgments[0]["outcome"] == "accepted"
 
 
-def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, monkeypatch):
+def test_record_check_forwards_same_source_and_member_snapshot(tmp_path, monkeypatch):
     from commonplace.lib.agentic_analysis import verification as handlers
     from commonplace.lib.validation import CheckResults
 
     pinned = criteria()
     declared = {}
-    files = {path: data for path, data in pinned.items() if path != SET_TYPE}
+    files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
     attempt = fixed_type(run_dir=tmp_path, read=lambda alias: declared[alias], read_files=lambda: dict(files))
     source = {"kind": "capture", "identity": "fixture", "revision": "fixture", "path": str(tmp_path)}
     snapshot = {"boundary.md": b"pinned boundary"}
@@ -170,7 +170,7 @@ def test_record_set_check_forwards_same_source_and_member_snapshot(tmp_path, mon
         return SimpleNamespace(validate=lambda _: CheckResults("fixture"), artifact_findings=lambda _: [])
 
     monkeypatch.setattr(handlers, "ValidationRun", run)
-    assert handlers.set_check(attempt)["findings"].endswith(b"none\n")
+    assert handlers.record_check(attempt)["findings"].endswith(b"none\n")
     kwargs = seen[0]
     assert kwargs["frozen_source"] is source
     assert next(iter(kwargs["member_snapshots"].values())) is snapshot

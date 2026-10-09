@@ -391,13 +391,13 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
         name="memory-profile.md", sha256="profile-digest", body="",
         frontmatter={"memory-comparison": data},
     )
-    member_set = SimpleNamespace(
+    analysis = SimpleNamespace(
         overview=overview, memory=memory, profile=profile_member,
         artifact=SimpleNamespace(path=overview.path.parent, content=b"manifest"),
         documents=[overview, memory, profile_member],
         roles={"overview": overview, "memory": memory, "memory-profile": profile_member},
     )
-    monkeypatch.setattr(sm, "current_analyses", lambda root, run: [member_set])
+    monkeypatch.setattr(sm, "current_analyses", lambda root, run: [analysis])
     inputs = sm.load_results(tmp_path)
     row = inputs.rows[0]
     assert row["comparison_version"] == 2

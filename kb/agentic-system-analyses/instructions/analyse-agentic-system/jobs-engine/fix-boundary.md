@@ -91,7 +91,7 @@ The boundary remains its own member; the overview later links to it.
 
 ## Check and return
 
-Run the worker rules' draft-at-slot command with the supplied `validation-set`
+Run the worker rules' draft-at-slot command with the supplied `validation-artifact`
 and `validation-member`, using the command directory in `opening`. Repair
 content findings and rerun. A content pass does not establish acceptance:
 code also checks the pinned run identity, acquisition object and frozen source.

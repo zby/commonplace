@@ -40,7 +40,7 @@ def imported_modules(path: Path) -> list[str]:
 def test_data_modules_import_without_artifact_run_execution():
     subprocess.run([
         sys.executable, "-c",
-        ("import sys; from commonplace.lib.agentic_analysis import sets, records, ledger; "
+        ("import sys; from commonplace.lib.agentic_analysis import analyses, records, ledger; "
          "assert 'commonplace.artifactrun' not in sys.modules"),
     ], check=True)
 

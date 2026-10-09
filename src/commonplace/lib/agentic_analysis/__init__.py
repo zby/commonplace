@@ -2,7 +2,7 @@
 
 This package owns the handlers its plan names, the analysis
 domain rules, and the paths, run naming and roles it passes to
-``commonplace.artifactrun``. Its ``sets``, ``records`` and ``ledger`` modules
-provide set contracts and retained-data validation without importing the
+``commonplace.artifactrun``. Its ``analyses``, ``records`` and ``ledger`` modules
+provide artifact contracts and retained-data validation without importing the
 engine.
 """

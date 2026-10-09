@@ -1,4 +1,4 @@
-"""Reusable retained-set and member fixtures, without artifact-run execution."""
+"""Reusable retained-artifact and member fixtures, without artifact-run execution."""
 from __future__ import annotations
 
 import json
@@ -12,7 +12,7 @@ import yaml
 from jsonschema import Draft202012Validator
 
 from commonplace.lib import systems_matrix, validation
-from commonplace.lib.agentic_analysis import sets as agentic_set
+from commonplace.lib.agentic_analysis import analyses
 from commonplace.lib.agentic_analysis.records import amendment_index
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
 
 
-RETAINED_OVERVIEW = agentic_set.RETAINED_ROOT / "example-system" / "overview.md"
+RETAINED_OVERVIEW = analyses.RETAINED_ROOT / "example-system" / "overview.md"
 
 
 SOURCE = "https://example.invalid/example-system"
@@ -369,7 +369,7 @@ Object the epistemic lens established. Evidence: SRC-1.
 """
 
 
-SET_NAMES = tuple(role.path for role in agentic_set.analysis_layout().roles.values())
+MEMBER_NAMES = tuple(role.path for role in analyses.analysis_layout().roles.values())
 
 
 def boundary_text(revision: str, *, source: str = SOURCE, path: str = "/fixture/example-system") -> str:
@@ -425,7 +425,7 @@ inputs-commit: {inputs_commit}
 
 ## Members
 
-{chr(10).join(f'- [{name}]({name})' for name in SET_NAMES if name != 'overview.md')}
+{chr(10).join(f'- [{name}]({name})' for name in MEMBER_NAMES if name != 'overview.md')}
 
 ## Amendment index
 
@@ -442,27 +442,27 @@ def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
 
 
 def output_path(run_dir: Path, name: str) -> Path:
-    if name in (*SET_NAMES, "ARTIFACT.yaml"):
+    if name in (*MEMBER_NAMES, "ARTIFACT.yaml"):
         return run_dir / "artifact" / name
     return run_dir / name
 
 
 def repin(directory: Path) -> None:
-    manifest = {"type": agentic_set.SET_TYPE, "members": {
+    manifest = {"type": analyses.ANALYSIS_TYPE, "members": {
         path.name: {"sha256": digest(path)} for path in sorted(directory.glob("*.md"))
     }}
     write(directory / "ARTIFACT.yaml", yaml.safe_dump(manifest, sort_keys=False))
 
 
-def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
+def retain_artifact(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
     directory = RETAINED_OVERVIEW.parent
-    for name in ("ARTIFACT.yaml", *SET_NAMES):
+    for name in ("ARTIFACT.yaml", *MEMBER_NAMES):
         retained = directory / name
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / retained).write_bytes((output_path(run_dir, name)).read_bytes())
 
 
-def write_set(run_dir: Path, revision: str, *, source_path: Path | None = None) -> Path:
+def write_artifact(run_dir: Path, revision: str, *, source_path: Path | None = None) -> Path:
     """Write the members and the overview pinning them."""
     write(run_dir / "artifact/boundary.md", boundary_text(
         revision, **({"path": source_path.as_posix()} if source_path else {})))
@@ -537,10 +537,10 @@ MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.
 
 
 def member_fixture(tmp_path: Path) -> Path:
-    """A run directory's set without source checkout or run state, for checks of one document."""
+    """A run directory's artifact without source checkout or run state, for checks of one document."""
     configure_types(tmp_path)
     run_dir = run_dir_of(tmp_path)
-    write_set(run_dir, "a" * 40)
+    write_artifact(run_dir, "a" * 40)
     return run_dir
 
 
@@ -564,10 +564,10 @@ def commit_paths(root: Path, message: str, *paths: Path | str) -> str:
 
 
 def retained_fixture(tmp_path: Path) -> Path:
-    """A source-backed retained set, constructed without running or publishing."""
+    """A source-backed retained artifact, constructed without running or publishing."""
     configure_types(tmp_path)
     source, revision = git_checkout(tmp_path / "related-systems/example--system")
     run_dir = run_dir_of(tmp_path)
-    write_set(run_dir, revision, source_path=source)
-    retain_set(tmp_path, run_dir)
+    write_artifact(run_dir, revision, source_path=source)
+    retain_artifact(tmp_path, run_dir)
     return tmp_path / RETAINED_OVERVIEW.parent
