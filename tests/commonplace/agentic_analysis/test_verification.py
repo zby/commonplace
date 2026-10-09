@@ -32,7 +32,7 @@ from tests.commonplace.artifactrun.support import Coordinator
 pytestmark = pytest.mark.slow
 
 RECORDS = ("runtime", "memory", "epistemic", "reconciliation")
-"""The roles record verification verifies."""
+"""The roles report verification verifies."""
 
 
 @pytest.fixture
@@ -79,7 +79,7 @@ def judgments(a, job):
 def to_verifier(a):
     a.coordinator.complete("reconciliation", reconciliation(a))
     assert not a.coordinator.status.stops
-    assert a.coordinator.handed() == {"record-verification"}
+    assert a.coordinator.handed() == {"report-verification"}
 
 
 def code_attempt(a, name, replacements=None):
@@ -95,7 +95,7 @@ def code_attempt(a, name, replacements=None):
 
 def test_blocker_free_verdict_covers_only_checked_relations(records):
     a = records
-    for name in ("reconciliation", "record-verification"):
+    for name in ("reconciliation", "report-verification"):
         h = a.coordinator.handout(name)
         assert "## Input reading batches" in h.prompt.read_text()
         assert "jobs-engine/" in h.prompt.read_text()
@@ -103,13 +103,13 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
         if name == "reconciliation":
             to_verifier(a)
     assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
-    p = parameters(a.coordinator.handout("record-verification"))
+    p = parameters(a.coordinator.handout("report-verification"))
     assert Path(p["record-check"]).read_text() == "# Set check\n\nnone\n"
-    a.coordinator.complete("record-verification", verdict(a))
-    applied = judgments(a, "apply-record-verification")
+    a.coordinator.complete("report-verification", verdict(a))
+    applied = judgments(a, "apply-report-verification")
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
-    assert {j["subject"]["role"] for j in applied} == {"record-verification", *RECORDS}
+    assert {j["subject"]["role"] for j in applied} == {"report-verification", *RECORDS}
     assert all({"verifier-attempt", "record-check-seen"} <= j["basis"].keys() for j in applied)
     assert not a.coordinator.status.publishable
 
@@ -137,22 +137,22 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
 def test_malformed_verdict_never_judges_records(records, blockers, changes, reason):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a, blockers, **changes))
-    applied = judgments(a, "apply-record-verification")
+    a.coordinator.complete("report-verification", verdict(a, blockers, **changes))
+    applied = judgments(a, "apply-report-verification")
     assert len(applied) == 1 and applied[0]["outcome"] == "refused"
     assert reason in applied[0]["findings"]
-    assert applied[0]["subject"]["role"] == "record-verification"
+    assert applied[0]["subject"]["role"] == "report-verification"
 
 
 def test_routes_only_addressed_blockers_and_preserves_continuations(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a, "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."))
-    applied = judgments(a, "apply-record-verification")
-    assert [j["subject"]["role"] for j in applied] == ["record-verification", "runtime", "reconciliation"]
+    a.coordinator.complete("report-verification", verdict(a, "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."))
+    applied = judgments(a, "apply-report-verification")
+    assert [j["subject"]["role"] for j in applied] == ["report-verification", "runtime", "reconciliation"]
     assert {e["relation"] for e in applied[0]["scope"]} == {
-        "record-verification:identity:boundary",
-        *(f"record-verification:cites:{role}" for role in ("boundary", *RECORDS))}, \
+        "report-verification:identity:boundary",
+        *(f"report-verification:cites:{role}" for role in ("boundary", *RECORDS))}, \
         "a verdict's content acceptance covers its citations, never a verifies relation"
     p = parameters(a.coordinator.handout("runtime"))
     feedback = Path(p["refusal"]).read_text()
@@ -164,17 +164,17 @@ def test_routes_only_addressed_blockers_and_preserves_continuations(records):
 def test_declined_answers_rerun_verifier_without_semantic_override(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a, "- runtime: reconsider SRC-1."))
+    a.coordinator.complete("report-verification", verdict(a, "- runtime: reconsider SRC-1."))
     a.coordinator.complete("runtime", report(a, "runtime"), answers="- declined: SRC-1 still supports the bounded finding.\n")
-    assert a.coordinator.handed() == {"record-verification"}, a.coordinator.status
+    assert a.coordinator.handed() == {"report-verification"}, a.coordinator.status
     assert judgments(a, "check-runtime")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
-    refused = next(j for j in judgments(a, "apply-record-verification") if j["outcome"] == "refused")
+    refused = next(j for j in judgments(a, "apply-report-verification") if j["outcome"] == "refused")
     assert refused["id"] not in judgments(a, "check-runtime")[-1]["overrides"]
-    p = parameters(a.coordinator.handout("record-verification"))
+    p = parameters(a.coordinator.handout("report-verification"))
     assert Path(p["runtime-answers"]).read_text().startswith("- declined:")
     assert Path(p["previous-verification"]).read_text() == verdict(a, "- runtime: reconsider SRC-1.")
-    a.coordinator.complete("record-verification", verdict(a))
-    assert judgments(a, "apply-record-verification")[-4]["outcome"] == "accepted"
+    a.coordinator.complete("report-verification", verdict(a))
+    assert judgments(a, "apply-report-verification")[-4]["outcome"] == "accepted"
 
 
 def test_record_check_uses_pinned_content_not_projection_or_later_members(records):
@@ -194,8 +194,8 @@ def test_record_check_uses_pinned_content_not_projection_or_later_members(record
 def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a))
-    attempt = code_attempt(a, "apply-record-verification", {"record-check-seen": b"# Set check\n\n- runtime.md: fixture failure\n"})
+    a.coordinator.complete("report-verification", verdict(a))
+    attempt = code_attempt(a, "apply-report-verification", {"record-check-seen": b"# Set check\n\n- runtime.md: fixture failure\n"})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
@@ -205,14 +205,14 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
 def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a))
+    a.coordinator.complete("report-verification", verdict(a))
     memory = report(a, "memory").replace(
         "### Operative objects\n\nnone declared in this member\n",
         "### Operative objects\n\n#### MEM-OBJ-store\n\nLabel: Fixture store\n\nPinned peer finding at SRC-1.\n",
     ).encode()
     text = verdict(a, "- runtime: reconsider [MEM-OBJ-store](memory.md#mem-obj-store) and SRC-1.\n"
                    "- epistemic: reconsider SRC-1.").encode()
-    attempt = code_attempt(a, "apply-record-verification", {"candidate": text, "memory-seen": memory})
+    attempt = code_attempt(a, "apply-report-verification", {"candidate": text, "memory-seen": memory})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     runtime = next(j for j in result if j["subject"]["role"] == "runtime")
@@ -226,7 +226,7 @@ def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
 def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a, "- reconciliation: clarify SRC-1 relations."))
+    a.coordinator.complete("report-verification", verdict(a, "- reconciliation: clarify SRC-1 relations."))
     a.coordinator.complete("reconciliation", reconciliation(a, "Amendment: RT-OBJ-missing has a new value."))
     refused = judgments(a, "check-reconciliation")[-1]
     assert refused["outcome"] == "refused"
@@ -236,7 +236,7 @@ def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
     a.coordinator.complete("reconciliation", reconciliation(a, "Clarified the fixture relations at SRC-1."))
     repaired = judgments(a, "check-reconciliation")[-1]
     assert repaired["outcome"] == "accepted" and not repaired["overrides"]
-    assert all(not e["relation"].startswith("record-verification:") for e in repaired["scope"])
+    assert all(not e["relation"].startswith("report-verification:") for e in repaired["scope"])
 
 
 def test_source_drift_is_a_record_check_finding(records):

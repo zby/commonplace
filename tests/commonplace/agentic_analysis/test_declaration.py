@@ -17,7 +17,7 @@ from commonplace.lib.note_parser import parse_document
 
 REPORTS = ("runtime", "memory", "epistemic")
 RECORDS = (*REPORTS, "reconciliation")
-VERIFIERS = ("record-verification", "profile-verification", "synthesis-verification")
+VERIFIERS = ("report-verification", "profile-verification", "synthesis-verification")
 # A job that fills a role takes the role's name.
 MODEL_ROLES = {role: role for role in (
     "boundary", *RECORDS, "memory-profile", "synthesis", *VERIFIERS)}
@@ -27,7 +27,7 @@ DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
     "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
     "epistemic": "trace-epistemic", "reconciliation": "reconcile-records",
-    "record-verification": "verify-records", "memory-profile": "map-memory-profile",
+    "report-verification": "verify-records", "memory-profile": "map-memory-profile",
     "profile-verification": "verify-memory-profile", "synthesis": "synthesize-findings",
     "synthesis-verification": "verify-synthesis",
 }
@@ -119,7 +119,7 @@ def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
                 "handed", "verifier-attempt:refusal", False,
             )
     # The carried-limits rule reads both verifications, which the synthesis cites.
-    assert {"record-verification", "profile-verification"} <= {
+    assert {"report-verification", "profile-verification"} <= {
         spec.source for spec in jobs.job("check-synthesis").inputs.values() if spec.address == "role"
     }
     for verifier, subject in (("profile-verification", "memory-profile"), ("synthesis-verification", "synthesis")):
@@ -149,7 +149,7 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
         assert set(RECORDS) <= set(gates)
         for role in RECORDS:
             assert gates[role].required and gates[role].outcome == "accepted"
-            assert gates[role].relation == f"record-verification:verifies:{role}"
+            assert gates[role].relation == f"report-verification:verifies:{role}"
     profile = jobs.job("synthesis").inputs["memory-profile-verified"]
     assert profile.relation == "profile-verification:verifies:memory-profile"
     # Runtime must be present initially but its version is not a rerun trigger.
@@ -238,11 +238,11 @@ def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     assert check.outputs == ("findings",) and check.role is None
     assert {spec.source for spec in check.inputs.values() if spec.address == "role"} == {"boundary", *RECORDS}
     assert all(spec.required for spec in check.inputs.values())
-    spec = jobs.job("record-verification").inputs["record-check"]
+    spec = jobs.job("report-verification").inputs["record-check"]
     assert (spec.address, spec.source, spec.required) == ("output", "record-check:findings", True)
     names = [job.name for job in jobs.jobs]
-    assert names.index("record-check") < names.index("record-verification")
-    handed = jobs.job("apply-record-verification").inputs["record-check-seen"]
+    assert names.index("record-check") < names.index("report-verification")
+    handed = jobs.job("apply-report-verification").inputs["record-check-seen"]
     assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:record-check", True)
 
 

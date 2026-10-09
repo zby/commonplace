@@ -257,13 +257,13 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
     candidate = write(run_dir / "memory-candidate.md",
                       (output / "memory.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
     verification = write(run_dir / "verification.md",
-                         (output / "record-verification.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
+                         (output / "report-verification.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
 
     findings = validation.validate_draft_in_role(output, "memory", candidate, repo_root=tmp_path)
     assert any("memory.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
-    findings = validation.validate_draft_in_role(output, "record-verification", verification, repo_root=tmp_path)
-    assert any("record-verification.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
+    findings = validation.validate_draft_in_role(output, "report-verification", verification, repo_root=tmp_path)
+    assert any("report-verification.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 

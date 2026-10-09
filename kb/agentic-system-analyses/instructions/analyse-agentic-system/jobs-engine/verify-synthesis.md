@@ -9,7 +9,7 @@ Give public readers an independent judgment of the synthesis's supported conclus
 
 Judge the exact supplied `synthesis` against
 `boundary`, `runtime`, `memory`, `epistemic`, `reconciliation`,
-`record-verification` and `profile-verification`. Assess `synthesis-answers`
+`report-verification` and `profile-verification`. Assess `synthesis-answers`
 and `synthesis-refusal`, when supplied, afresh, not as established repairs or
 defects.
 

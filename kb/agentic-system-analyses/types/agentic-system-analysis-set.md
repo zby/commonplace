@@ -53,9 +53,9 @@ layout:
       type: agentic-system-analyses/types/agentic-system-synthesis.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic, record-verification, profile-verification]
-    record-verification:
-      path: record-verification.md
+      cites: [boundary, runtime, memory, epistemic, report-verification, profile-verification]
+    report-verification:
+      path: report-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
@@ -81,7 +81,7 @@ layout:
       role: boundary
       field: result-disposition
       values:
-        complete: [runtime, memory, epistemic, reconciliation, memory-profile, synthesis, record-verification, profile-verification, synthesis-verification]
+        complete: [runtime, memory, epistemic, reconciliation, memory-profile, synthesis, report-verification, profile-verification, synthesis-verification]
 ---
 
 # Agentic system analysis set

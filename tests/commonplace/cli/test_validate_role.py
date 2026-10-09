@@ -145,7 +145,7 @@ def test_unknown_role_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, c
 
 @pytest.mark.parametrize("role", [
     "boundary", "runtime", "memory", "epistemic", "reconciliation",
-    "memory-profile", "record-verification", "profile-verification",
+    "memory-profile", "report-verification", "profile-verification",
     "synthesis", "synthesis-verification", "overview",
 ])
 def test_analysis_role_cli_matches_shared_validator(tmp_path, monkeypatch, capsys, role):

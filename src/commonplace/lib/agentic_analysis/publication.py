@@ -49,7 +49,7 @@ PRODUCERS = {
     "boundary": ("boundary", "boundary"), "runtime": ("runtime", "report"),
     "memory": ("memory", "report"), "epistemic": ("epistemic", "report"),
     "reconciliation": ("reconciliation", "reconciliation"),
-    "record-verification": ("record-verification", "verification"),
+    "report-verification": ("report-verification", "verification"),
     "memory-profile": ("memory-profile", "profile"),
     "profile-verification": ("profile-verification", "verification"),
     "synthesis": ("synthesis", "synthesis"),

@@ -17,13 +17,13 @@ boundary, runtime, memory, epistemic.
 |---|---|---|---|---|---|
 | boundary | `boundary.md` | itself | | | always |
 | overview | `overview.md` | b r m e | | | always |
-| runtime | `runtime.md` | b r m e | | record-verification | complete |
-| memory | `memory.md` | b r m e | | record-verification | complete |
-| epistemic | `epistemic.md` | b r m e | | record-verification | complete |
-| reconciliation | `reconciliation.md` | b r m e | | record-verification | complete |
+| runtime | `runtime.md` | b r m e | | report-verification | complete |
+| memory | `memory.md` | b r m e | | report-verification | complete |
+| epistemic | `epistemic.md` | b r m e | | report-verification | complete |
+| reconciliation | `reconciliation.md` | b r m e | | report-verification | complete |
 | memory-profile | `memory-profile.md` | r m e | | profile-verification | complete |
-| synthesis | `synthesis.md` | b r m e record-verification profile-verification | | synthesis-verification | complete |
-| record-verification | `record-verification.md` | b r m e reconciliation | r m e reconciliation | | complete |
+| synthesis | `synthesis.md` | b r m e report-verification profile-verification | | synthesis-verification | complete |
+| report-verification | `report-verification.md` | b r m e reconciliation | r m e reconciliation | | complete |
 | profile-verification | `profile-verification.md` | r m e memory-profile | memory-profile | | complete |
 | synthesis-verification | `synthesis-verification.md` | b r m e synthesis | synthesis | | complete |
 
@@ -45,7 +45,7 @@ present members covered by an accepted judgment of the current versions.
 
 So `memory:cites:runtime` is covered when `check-memory` accepts a memory
 candidate whose references into the runtime report resolve, and
-`record-verification:verifies:memory` is covered when `apply-verify`
+`report-verification:verifies:memory` is covered when `apply-verify`
 reads a blocker-free verdict and accepts the memory version the verifier
 was handed. A verdict's own content check covers its `cites` to the
 reports, never its `verifies`.
@@ -54,7 +54,7 @@ reports, never its `verifies`.
 
 | Verifier | Cites | Verifies | Difference |
 |---|---|---|---|
-| record-verification | boundary, the four records | the four records | cites the boundary, does not verify it |
+| report-verification | boundary, the four records | the four records | cites the boundary, does not verify it |
 | profile-verification | the three reports, memory-profile | memory-profile | cites the reports as evidence, verifies only the profile |
 | synthesis-verification | boundary, the three reports, synthesis | synthesis | same shape as the profile's |
 
@@ -69,7 +69,7 @@ reaches further than its judgment.
 - One apply job per role with a `verifies` list, judging the handed
   versions of the listed roles over the `verifies` relations.
 - Judgment gates named by `verifies` relations: the profile waits on
-  `record-verification:verifies:memory` and its three siblings; the
+  `report-verification:verifies:memory` and its three siblings; the
   synthesis waits on those and `profile-verification:verifies:memory-profile`.
 - Publication when every role the disposition requires is present and
   every relation above is covered.

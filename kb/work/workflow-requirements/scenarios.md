@@ -45,7 +45,7 @@ The structural acceptances of A and B along the way do not reset the
 count. [4, 7]
 
 **5. Waiting for a settled stage.** `profile` declares as required inputs
-the acceptances of the three reports against the record verification,
+the acceptances of the three reports against the report verification,
 each addressed by role, relation and outcome. While `V` still raises
 blockers, those acceptances do not exist, so `profile` is unready however
 many verifications have been written. When the apply job accepts the
@@ -189,7 +189,7 @@ operator. [7]
 
 **17. A re-check waits for the refused producer.** `V` refuses A; the
 apply job records the refusal of the runtime report with
-`record-verification:cites:runtime` as its scope, and `R` is ready. A
+`report-verification:cites:runtime` as its scope, and `R` is ready. A
 sibling report that A cites is corrected, so an input of `check-R`
 changed, but `check-R` waits: `R`, the producer of its candidate, is
 ready. No redundant re-acceptance of A is recorded. When `R` completes B,

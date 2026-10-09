@@ -1,5 +1,5 @@
 ---
-description: "Use with the record verifier hand-out to independently judge pinned records, reconciliation, structural findings and correction answers"
+description: "Use with the report verifier hand-out to independently judge pinned records, reconciliation, structural findings and correction answers"
 type: types/instruction.md
 ---
 

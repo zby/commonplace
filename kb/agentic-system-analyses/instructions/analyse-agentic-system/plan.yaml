@@ -125,7 +125,7 @@ jobs:
 - job: record-check
   handler: commonplace.artifactrun.handlers.set_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
-- role: record-verification
+- role: report-verification
   instruction: jobs-engine/verify-records.md
   outputs: [verification]
   criteria: [worker]
@@ -144,7 +144,7 @@ jobs:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required}
-  verified-by: [record-verification]
+  verified-by: [report-verification]
   checks: [commonplace.lib.agentic_analysis.profile.comparison_version]
 - role: profile-verification
   instruction: jobs-engine/verify-memory-profile.md
@@ -163,9 +163,9 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, memory-profile: required, record-verification: required,
+          reconciliation: required, memory-profile: required, report-verification: required,
           profile-verification: required}
-  verified-by: [record-verification, profile-verification]
+  verified-by: [report-verification, profile-verification]
 - role: synthesis-verification
   instruction: jobs-engine/verify-synthesis.md
   max_attempts: 2
@@ -174,7 +174,7 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, synthesis: required, record-verification: required,
+          reconciliation: required, synthesis: required, report-verification: required,
           profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}
 - name: assemble
   kind: code
@@ -190,7 +190,7 @@ jobs:
     memory-attempt: {address: attempt, source: memory, required: false}
     epistemic-attempt: {address: attempt, source: epistemic, required: false}
     reconciliation-attempt: {address: attempt, source: reconciliation, required: false}
-    record-verification-attempt: {address: attempt, source: record-verification, required: false}
+    report-verification-attempt: {address: attempt, source: report-verification, required: false}
     memory-profile-attempt: {address: attempt, source: memory-profile, required: false}
     profile-verification-attempt: {address: attempt, source: profile-verification, required: false}
     synthesis-attempt: {address: attempt, source: synthesis, required: false}
@@ -202,7 +202,7 @@ jobs:
     reconciliation: {address: role, source: reconciliation, required: false}
     memory-profile: {address: role, source: memory-profile, required: false}
     synthesis: {address: role, source: synthesis, required: false}
-    record-verification: {address: role, source: record-verification, required: false}
+    report-verification: {address: role, source: report-verification, required: false}
     profile-verification: {address: role, source: profile-verification, required: false}
     synthesis-verification: {address: role, source: synthesis-verification, required: false}
   outputs: [overview, manifest]

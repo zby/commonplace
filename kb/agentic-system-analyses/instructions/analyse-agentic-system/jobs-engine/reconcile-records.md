@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Reconcile the pinned analyst records
 
-State how the three reports connect and where they disagree so the record verifier can judge them as one bounded account.
+State how the three reports connect and where they disagree so the report verifier can judge them as one bounded account.
 
 Connect `runtime`, `memory` and `epistemic` against `boundary`. Reconcile the
 supplied reports afresh; do not copy an old connection after its evidence

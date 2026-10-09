@@ -114,7 +114,7 @@ limit into the synthesis (`rules.py`, the set rule; the repair text for
 
 | Verification | Subjects | Blocker addressing | Apply handler |
 |---|---|---|---|
-| record-verification | runtime, memory, epistemic, reconciliation | each blocker starts `runtime:`, `memory:`, `epistemic:` or `reconciliation:`; a defect in two reports is two blockers | `verification.apply_verify` |
+| report-verification | runtime, memory, epistemic, reconciliation | each blocker starts `runtime:`, `memory:`, `epistemic:` or `reconciliation:`; a defect in two reports is two blockers | `verification.apply_verify` |
 | profile-verification | memory-profile | none; the one author owns every blocker | `profile.apply_verify_profile` |
 | synthesis-verification | synthesis | none | `profile.apply_verify_synthesis` |
 
@@ -123,9 +123,9 @@ itself, with the subjects excluded from the content acceptance's scope.
 A verdict that fails its own content check is refused like any candidate
 and judges nothing. Only a valid verdict goes on to judge its subjects.
 
-**Record verification, partial verdicts.** With blockers, the handler
+**Report verification, partial verdicts.** With blockers, the handler
 refuses each addressed role's handed version over
-`record-verification:cites:<role>`, with a feedback document holding that
+`report-verification:cites:<role>`, with a feedback document holding that
 role's blockers and the declarations of records from other reports those
 blockers cite (`_feedback`). Roles no blocker addresses are not judged at
 all: their gates stay unsettled until a blocker-free verdict. With

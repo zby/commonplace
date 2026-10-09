@@ -104,7 +104,7 @@ of exactly one keeps the distinct-identity comparison, naming each overlap.
 
 When a required part is undeclared, reconciliation retains an
 `Unresolved conflict:` naming the combined ID, missing part, evidence and
-prevented conclusion. The record verifier addresses it to the analyst who
+prevented conclusion. The report verifier addresses it to the analyst who
 should declare the part. Name the undeclared part in prose,
 without inventing an unresolved ID.
 

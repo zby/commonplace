@@ -100,7 +100,7 @@ coverage-gated copy with destination parameters.
 which instruction, max attempts and auxiliary outputs. Which members a
 worker reads, since reads exceed cites: the profile reads the
 reconciliation it may not cite. Ordering between tiers: the profile and the
-synthesis wait for record verification to accept the records, a gate the
+synthesis wait for report verification to accept the records, a gate the
 layout cannot infer because the reconciliation reads the same records
 unverified. Whether a verifier is handed a structural report before it
 judges. And the consumer's own jobs: opening, acquisition, the boundary's
@@ -212,7 +212,7 @@ mission:
 - job: record-check
   handler: commonplace.artifactrun.handlers.set_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
-- role: record-verification
+- role: report-verification
   reads: {boundary: required, record-check:findings: optional}
   checks:
     - {function: commonplace.lib.agentic_analysis.verification.record_check_gate,
@@ -221,7 +221,7 @@ mission:
 - role: memory-profile
   reads: {boundary: required, runtime: required, memory: required,
           epistemic: required, reconciliation: required}
-  verified-by: [record-verification]
+  verified-by: [report-verification]
 ```
 
 The syntax, stated so that the loader does not invent it:
@@ -305,7 +305,7 @@ The syntax, stated so that the loader does not invent it:
   | Today | Derived |
   |---|---|
   | reconcile, check-reconcile | reconciliation, check-reconciliation |
-  | verify, apply-verify | record-verification, apply-record-verification |
+  | verify, apply-verify | report-verification, apply-report-verification |
   | profile, check-profile | memory-profile, check-memory-profile |
   | verify-profile, apply-verify-profile | profile-verification, apply-profile-verification |
   | synthesize, check-synthesize | synthesis, check-synthesis |

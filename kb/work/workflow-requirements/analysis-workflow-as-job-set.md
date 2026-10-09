@@ -33,7 +33,7 @@ which are kept as written.
 - **Apply jobs.** A verification is a model-written verdict document. A code
   job reads it and turns its blockers into refusals of the members they
   address, each scoped to the relation from the verification to that
-  member, such as `record-verification:cites:runtime`.
+  member, such as `report-verification:cites:runtime`.
   Its inputs are the verifier's attempt record and the members that
   attempt was handed, not the current ones, so its judgments
   are about what the verifier saw and it reruns whenever the verifier
@@ -67,15 +67,15 @@ input, so it is not listed.
 | check-\<report\> | code | candidate, `R`'s attempt record, which names the refusal that attempt answered, boundary, the reports it cites, answers | accepts the report against those; refuses when validation at its role fails, a declared record ID was dropped, or answers do not match the blockers | |
 | reconcile | model | boundary, runtime, memory, epistemic, refusal | candidate reconciliation | 3 |
 | check-reconciliation | code | candidate, boundary, reports | accepts or refuses | |
-| verify-records | model | boundary, reports, reconciliation, answers | candidate record-verification | 3 |
-| apply-record-verification | code | candidate, its attempt record, the reports and reconciliation it was handed | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
-| profile | model | boundary, reports, reconciliation, refusal; required: each report and the reconciliation accepted against record-verification | candidate memory-profile | 3 |
+| verify-records | model | boundary, reports, reconciliation, answers | candidate report-verification | 3 |
+| apply-report-verification | code | candidate, its attempt record, the reports and reconciliation it was handed | accepts the verification against them; for each blocker, refuses the addressed member against the verification with the blocker as findings; with no blockers, accepts each report and the reconciliation against the verification | |
+| profile | model | boundary, reports, reconciliation, refusal; required: each report and the reconciliation accepted against report-verification | candidate memory-profile | 3 |
 | check-profile | code | candidate, boundary, memory, reports | accepts or refuses; comparison version and source identity are part of validation at its role | |
 | verify-profile | model | memory-profile, reports | candidate profile-verification | 3 |
 | apply-profile-verification | code | candidate, its attempt record, the memory-profile it was handed | accepts the verification; refuses the profile on blockers; accepts the profile against the verification otherwise | |
-| synthesize | model | boundary, reports, reconciliation, record-verification, profile-verification, refusal; required: the record acceptances above and memory-profile accepted against profile-verification | candidate synthesis | 2 |
+| synthesize | model | boundary, reports, reconciliation, report-verification, profile-verification, refusal; required: the record acceptances above and memory-profile accepted against profile-verification | candidate synthesis | 2 |
 | check-synthesis | code | candidate, boundary, reports | accepts or refuses | |
-| verify-synthesis | model | synthesis, reports, record-verification, profile-verification | candidate synthesis-verification | 2 |
+| verify-synthesis | model | synthesis, reports, report-verification, profile-verification | candidate synthesis-verification | 2 |
 | apply-synthesis-verification | code | candidate, its attempt record, the synthesis it was handed | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
 | assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md` (the engine keeps `artifact/ARTIFACT.yaml` naming the type; publish pins the copy); accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
@@ -101,7 +101,7 @@ straight to `assemble`.
 run with the runtime report exposed as untracked context, not as an
 input (S8).
 `reconcile` runs once the three reports are members, then `verify-records`.
-`apply-record-verification` accepts the verification against the reports
+`apply-report-verification` accepts the verification against the reports
 and reconciliation it judged, then either refuses the addressed members or,
 with no blockers, accepts every report and the reconciliation against the
 verification. That second acceptance is what "records settled" means.
@@ -201,12 +201,12 @@ kept as written for the record.
   which this mapping drops. If a reviewer wants diffs back, a code job
   would need to read a non-current version. Proposal deferred.
 - **S6. Acceptance-gated readiness.** `profile` and `synthesize` must not
-  run while the record verification still has blockers, and the synthesis
+  run while the report verification still has blockers, and the synthesis
   must wait for the profile verification. With readiness by file
   existence alone, both run on a verification that still carries blockers
   and rerun after each round, at model cost. Proposal: a read may require
   that the member be currently accepted against named inputs, for example
-  "reports accepted against record-verification". Fallback: the apply job
+  "reports accepted against report-verification". Fallback: the apply job
   writes a marker file only when no blockers remain, and the gated job
   reads the marker. The marker is a judgment in disguise.
 - **S7. Disposition gates jobs.** A non-complete boundary must leave the

@@ -502,7 +502,7 @@ Fixture synthesis over [RT-OBJ-store](runtime.md#rt-obj-store), [MEM-OBJ-store](
 
 None.
 ''')
-    for stage, name in (("records", "record-verification.md"),
+    for stage, name in (("records", "report-verification.md"),
                         ("profile", "profile-verification.md"),
                         ("synthesis", "synthesis-verification.md")):
         write(run_dir / "artifact" / name, f'''---

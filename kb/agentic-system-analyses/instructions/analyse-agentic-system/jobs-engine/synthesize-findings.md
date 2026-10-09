@@ -8,7 +8,7 @@ type: types/instruction.md
 Give public readers a supported account that remains intelligible without the other members and states the conclusions its evidence cannot support.
 
 `boundary`, `runtime`, `memory`, `epistemic` and `reconciliation` are the
-settled account; `memory-profile`, `record-verification` and
+settled account; `memory-profile`, `report-verification` and
 `profile-verification` carry the accepted comparison findings and limits.
 
 ## Write the bounded account

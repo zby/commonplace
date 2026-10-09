@@ -8,10 +8,10 @@ schema: ./agentic-system-verification.schema.yaml
 # Agentic system verification
 
 The judgment of an independent verifier on one stage of an analysis run. A
-run has three: the record verification judges the analyst reports and the
+run has three: the report verification judges the analyst reports and the
 reconciliation; the profile verification judges the memory profile against
 the accepted records; the synthesis verification judges the public synthesis
-against the records it cites. They are the set's `record-verification.md`,
+against the records it cites. They are the set's `report-verification.md`,
 `profile-verification.md` and `synthesis-verification.md` members. Code reads
 their blockers to decide what happens next; the overview links each judgment
 without copying it. The [record contract](../instructions/agentic-analysis-records.md)
@@ -48,7 +48,7 @@ coverage. A repairable defect is not automatically a blocker. Explain what
 readers or comparison consumers would infer incorrectly and why a stated limit
 cannot preserve the bounded account. It cites the records
 it concerns, the passage holding the defective text, what is wrong and the
-evidence. In a record verification each blocker starts with the one report
+evidence. In a report verification each blocker starts with the one report
 whose text must change, `runtime:`, `memory:`, `epistemic:` or
 `reconciliation:`; code routes the correction by that word and refuses a
 blocker without it. A defect that needs changes in two reports is two blockers.
@@ -83,12 +83,12 @@ objection is evidence to assess, not an established defect.
 ```markdown
 ---
 type: agentic-system-analyses/types/agentic-system-verification.md
-description: "Record verification of {system} at {boundary}"
+description: "Report verification of {system} at {boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 reviewed-boundary: "{immutable revision or capture identity}"
 ---
 
-# {System} record verification
+# {System} report verification
 
 ## Verification
 

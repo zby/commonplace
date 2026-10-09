@@ -1,4 +1,4 @@
-"""The record verification's declared check and feedback.
+"""The report verification's declared check and feedback.
 
 The standard apply handler applies the verdict; these supply what the
 analysis adds: a verifier handed structural findings must block, and an

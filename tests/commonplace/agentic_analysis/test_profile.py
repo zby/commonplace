@@ -98,7 +98,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         b"### Operative objects\n\n#### RT-OBJ-store\n\nLabel: Store\n\nSRC-1 fixes the fixture store.\n",
     )
     if stage == "synthesis":
-        snapshot.update({name: verdict(a) for name in ("record-verification", "profile-verification")})
+        snapshot.update({name: verdict(a) for name in ("report-verification", "profile-verification")})
     if apply:
         snapshot[subject] = profile(a) if stage == "profile" else synthesis(a)
     output = run.jobs.job(role).outputs[0]
@@ -242,7 +242,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     assert judgments(ctx)[1]["outcome"] == "accepted"
 
 
-@pytest.mark.parametrize("prior_role", ["record-verification", "profile-verification"])
+@pytest.mark.parametrize("prior_role", ["report-verification", "profile-verification"])
 def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_role):
     a = opened
     ctx = attempt(a, "synthesis", synthesis(a))

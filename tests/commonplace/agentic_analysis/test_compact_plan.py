@@ -28,7 +28,7 @@ RETIRED = {"agentic-system-analyses/instructions/agentic-analysis-boundary.md",
 """Contracts whose content moved into types; jobs receive those types instead."""
 
 JOB_RENAMES = {
-    "reconcile": "reconciliation", "verify": "record-verification", "profile": "memory-profile",
+    "reconcile": "reconciliation", "verify": "report-verification", "profile": "memory-profile",
     "verify-profile": "profile-verification", "synthesize": "synthesis",
     "verify-synthesis": "synthesis-verification",
 }
@@ -158,10 +158,10 @@ def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plan
     _, new = plans
     entries = compact_entries()
     expected_hooks = {role: entry.get("checks") for role, entry in entries.items() if entry.get("checks")}
-    assert set(expected_hooks) == {"boundary", "runtime", "memory", "epistemic", "record-verification",
+    assert set(expected_hooks) == {"boundary", "runtime", "memory", "epistemic", "report-verification",
                                    "memory-profile"}, "the migrated hooks, one per wrapper that had a check"
     for role, entry in entries.items():
-        derived = "apply-" if new.job(role).role in {"record-verification", "profile-verification",
+        derived = "apply-" if new.job(role).role in {"report-verification", "profile-verification",
                                                       "synthesis-verification"} else "check-"
         job = new.job(derived + role)
         assert job.options.get("checks") == entry.get("checks"), job.name
@@ -170,7 +170,7 @@ def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plan
             if isinstance(check, dict):
                 for name in check["inputs"]:
                     assert name in job.inputs, f"{job.name}: declared check input {name} is wired"
-    assert new.job("apply-record-verification").options["feedback"].endswith("cited_records")
+    assert new.job("apply-report-verification").options["feedback"].endswith("cited_records")
 
 
 def test_derived_criteria_include_what_the_hand_written_jobs_pinned(plans):
@@ -205,7 +205,7 @@ def test_one_edit_to_a_compact_entry_changes_the_expansion():
     memory = next(entry for entry in data["jobs"] if entry.get("role") == "memory")
     memory["reads"]["runtime"] = "required"
     synthesis = next(entry for entry in data["jobs"] if entry.get("role") == "synthesis")
-    synthesis["verified-by"] = ["record-verification"]
+    synthesis["verified-by"] = ["report-verification"]
     plan = load_plan(yaml.safe_dump(expand(data, library=LIBRARY, plan_dir=path.parent)))
     assert plan.job("memory").inputs["runtime"] == Input("role", "runtime")
     assert "memory-profile-verified" not in plan.job("synthesis").inputs

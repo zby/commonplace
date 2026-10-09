@@ -247,7 +247,7 @@ def declared_packet(job_name):
     ("memory", ["generic caller identity does not establish human control"]),
     ("epistemic", ["checking is never"]),
     ("reconciliation", ["never allocates ids"]),
-    ("record-verification", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
+    ("report-verification", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
     ("memory-profile", ["generic caller identity alone leaves control unresolved"]),
     ("profile-verification", ["an unsupported emitted value or strength"]),
     ("synthesis", ["independent route/property conclusions"]),
@@ -260,7 +260,7 @@ def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
 
 
 @pytest.mark.parametrize("job_name", [
-    "runtime", "memory", "epistemic", "reconciliation", "record-verification", "memory-profile",
+    "runtime", "memory", "epistemic", "reconciliation", "report-verification", "memory-profile",
     "profile-verification", "synthesis", "synthesis-verification",
 ])
 def test_self_improvement_test_reaches_declared_job_inputs(job_name):

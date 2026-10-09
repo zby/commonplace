@@ -8,7 +8,7 @@ type: types/instruction.md
 Produce one assigned analysis output from its pinned inputs without changing the target, evidence boundary or coordinator-owned state.
 
 These rules serve every new-engine model role: boundary, the three analysts,
-reconciliation, record verification, profile, profile verification, synthesis
+reconciliation, report verification, profile, profile verification, synthesis
 and synthesis verification. The coordinator owns
 scheduling, acceptance, integration and recovery; this hand-out grants neither
 delegation nor publication authority.

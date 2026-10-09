@@ -153,7 +153,7 @@ def analysis_artifact(tmp_path, documents):
 
 def test_complete_requires_four_new_members_and_identity_is_from_boundary():
     layout = analysis_layout()
-    new = {"synthesis", "record-verification", "profile-verification", "synthesis-verification"}
+    new = {"synthesis", "report-verification", "profile-verification", "synthesis-verification"}
     docs = {"overview.md": document("# Entry\n", **{"result-disposition": "complete"}),
             "boundary.md": document("# Boundary\n", **{
                 "run-id": "R", "reviewed-boundary": "B", "result-disposition": "complete",
@@ -162,7 +162,7 @@ def test_complete_requires_four_new_members_and_identity_is_from_boundary():
     assert new <= {f.role for f in findings if f.absent}
 
 
-@pytest.mark.parametrize("name", ["record-verification", "profile-verification", "synthesis-verification"])
+@pytest.mark.parametrize("name", ["report-verification", "profile-verification", "synthesis-verification"])
 def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name):
     layout = analysis_layout()
     documents = {
@@ -182,7 +182,7 @@ def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name):
     assert not any("limit not carried" in f.message for f in findings)
 
 
-@pytest.mark.parametrize("name", ["synthesis", "record-verification", "profile-verification", "synthesis-verification"])
+@pytest.mark.parametrize("name", ["synthesis", "report-verification", "profile-verification", "synthesis-verification"])
 def test_citation_scope_is_enforced_for_new_roles(tmp_path, name):
     docs = {
         "boundary": document("# Boundary\n\n## Source register\n| SRC-1 | frozen repository |\n"),
@@ -210,10 +210,10 @@ def test_context_parse_failure_is_explicit_and_nonwriting(draft_artifact):
 
 
 def test_verification_grammar_findings_are_role_findings(tmp_path):
-    docs = {"record-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n")}
+    docs = {"report-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n")}
     findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
     assert len(findings) == 2
-    assert all(f.role == "record-verification" for f in findings)
+    assert all(f.role == "report-verification" for f in findings)
     assert any("addressee" in f.message for f in findings)
     assert any("Limits" in f.message for f in findings)
 

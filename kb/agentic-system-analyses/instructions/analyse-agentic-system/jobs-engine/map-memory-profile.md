@@ -1,5 +1,5 @@
 ---
-description: "Use after record verification to classify accepted memory records into a revision-2 comparison profile"
+description: "Use after report verification to classify accepted memory records into a revision-2 comparison profile"
 type: types/instruction.md
 ---
 
@@ -25,7 +25,7 @@ Name missing facts and prevented conclusions in warranted `partial`,
 strength; do not upgrade opaque alternatives from one wired witness.
 
 Declare no records, add no quotes or evidence, edit no member and do not
-reopen record verification. Do not read incumbent or reference profiles.
+reopen report verification. Do not read incumbent or reference profiles.
 Source reading is limited to a named ambiguity in a cited record, at its
 cited paths and frozen revision. Log each read under Comparison rationale
 with path, lines and ambiguity resolved. Source understanding cannot replace
