@@ -58,7 +58,7 @@ Commit `6374109c` added the unique-occurrence requirement to the main
 quotation section of the [result type](../../types/agentic-system-analysis-result.md).
 It did not update the standalone
 [memory instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md) or
-[memory-report type](../../agentic-system-analyses/types/agent-memory-analysis-report.md).
+[memory-report type](../../agentic-system-analyses/types/agentic-system-memory-report.md).
 Those still explain that publication finds the text in the source, without
 stating that exactly one occurrence is required.
 

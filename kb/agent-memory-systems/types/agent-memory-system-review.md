@@ -21,7 +21,7 @@ current interest brief.
 
 This type is not a current production target. [`analyse-agentic-system`](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
 delegates memory analysis to the [memory analyst](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/memory.md),
-which returns an [agent-memory-analysis-report](../../agentic-system-analyses/types/agent-memory-analysis-report.md)
+which returns an [agent-memory-analysis-report](../../agentic-system-analyses/types/agentic-system-memory-report.md)
 for integration into the main result. It does not draft or publish a review of
 this type. The remaining contract describes existing artifacts.
 
