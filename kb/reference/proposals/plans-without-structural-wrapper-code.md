@@ -13,7 +13,7 @@ the agentic-system analysis, needed a package of handlers beside a plan of
 about 330 lines. This proposal removes the wrapper code that restates the
 layout: a loader derives the structural jobs from the type, standard
 handlers run them, and the consumer keeps only its own checks, its opener,
-acquisition, record check, assembly and publication. The direction is the
+acquisition, assembly and effect verification. The direction is the
 operator's (2026-10-09): the type defines most of the type-dependent work,
 and code extensions are the special cases. The design below is decided;
 what remains is the sequence and the adoption criteria.
@@ -37,10 +37,10 @@ directly, and a draft validates in its role through
 `commonplace-validate --artifact --role`, the call the shared check and the
 worker's self-check both make.
 
-The analysis plan has twenty-five jobs. Five are the consumer's own code:
-`open`, `acquire`, `record-check`, `assemble` and `publish`. Ten are
-model jobs, one per role. The other ten are check or apply jobs, and each
-restates what the layout already says about its role: the candidate from
+The analysis plan has twenty-five jobs. Four are the consumer's own code:
+`open`, `acquire`, `assemble` and `publish`. Ten are model jobs, one per
+role. The other eleven are check, apply or set-check jobs, and each
+restates what the layout already says about its roles: the candidate from
 the filling job's primary output, the incumbent, the producer attempt and
 its answered refusal, partner roles from cites and identity sources, the
 criteria from the role's type and schema, and the validation parameters.
@@ -54,9 +54,12 @@ which compares the candidate with partner members or its own fields:
 declared record IDs surviving a correction, the memory report's source
 identity matching the opening's, limits carried from a verification into
 the synthesis. And checks that consult something outside the artifact: the
-boundary's binding to the run parameters and the frozen source, the record
-check that runs before verification, the feedback an author receives with
-cited records, and effect verification at acquisition and publication.
+boundary's binding to the run parameters and the frozen source, the
+feedback an author receives with cited records, and effect verification at
+acquisition and publication. The record check that runs before
+verification is structural: it validates the record roles as one snapshot
+and writes the findings, including the artifact-level findings a role
+check filters out, for the verifier to read.
 Pinned-artifact validation refuses a member type with no Python type rule,
 registered through one hard import at the end of
 `src/commonplace/lib/validation.py`.
@@ -99,8 +102,9 @@ worker reads, since reads exceed cites: the profile reads the
 reconciliation it may not cite. Ordering between tiers: the profile and the
 synthesis wait for record verification to accept the records, a gate the
 layout cannot infer because the reconciliation reads the same records
-unverified. And the consumer's own jobs: opening, acquisition, the
-boundary's source binding, the record check and assembly.
+unverified. Whether a verifier is handed a structural report before it
+judges. And the consumer's own jobs: opening, acquisition, the boundary's
+source binding and assembly.
 
 **Not derivable at all**: effect verification. No schema states that a Git
 checkout is still what a record says.
@@ -110,9 +114,10 @@ checkout is still what a record says.
 ### Standard handlers in the reuse modules
 
 The engine's reuse modules ship one handler for each recurring code job: a
-check, a verdict application, a directory publish and a minimal opener. A
-consumer with a domain check writes its own, as the analysis does for its
-five jobs. The shared check learns its role and partners from the
+check, a verdict application, a set check that validates its role inputs
+as one snapshot and writes the findings as a document, a directory publish
+and a minimal opener. A consumer with a domain check writes its own, as the
+analysis does for its four jobs. The shared check learns its role and partners from the
 declaration through an accessor exposing a code job's declared inputs on
 the code attempt: the candidate's role is the role of the job that
 produces the candidate input, and the partner roles are the role inputs.
@@ -191,6 +196,9 @@ mission:
   max_attempts: 3
   outputs: [report, answers]
   reads: {boundary: required, runtime: order-only}
+- job: record-check
+  handler: commonplace.artifactrun.handlers.set_check
+  inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: record-verification
   reads: {boundary: required, record-check:findings: optional}
   checks: [commonplace.lib.agentic_analysis.verification.record_check_gate]
