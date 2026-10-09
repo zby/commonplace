@@ -10,7 +10,7 @@ write candidates, code jobs check and judge them, and a coverage gate
 releases publication ([ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md)).
 A consumer supplies a plan, a type and any handlers. The first consumer,
 the agentic-system analysis, needed a package of handlers beside a plan of
-about 330 lines. This proposal removes the wrapper code that restates the
+498 lines. This proposal removes the wrapper code that restates the
 layout: a loader derives the structural jobs from the type, standard
 handlers run them, and the consumer keeps only its own checks, its opener,
 acquisition, assembly and effect verification. The direction is the
@@ -201,7 +201,9 @@ mission:
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: record-verification
   reads: {boundary: required, record-check:findings: optional}
-  checks: [commonplace.lib.agentic_analysis.verification.record_check_gate]
+  checks:
+    - {function: commonplace.lib.agentic_analysis.verification.record_check_gate,
+       inputs: {findings: record-check:findings}}
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile
   reads: {boundary: required, runtime: required, memory: required,
@@ -211,38 +213,76 @@ mission:
 
 The syntax, stated so that the loader does not invent it:
 
-- **Reads.** `reads` defaults to the role's cites and identity sources. An
-  explicit `reads` replaces the default, so an entry that names any read
-  names them all. A read is a role, checked against the layout, or an
-  output of a declared job in the form `job:output`, checked against the
-  plan. A read may be `optional`; an optional read absent at hand-out is an
-  absent input, not a stop. Reads reach the model job; its derived check
-  and apply jobs receive the handed versions of the same reads, which is
-  what they judge against. An input only a declared check needs, which the
-  model job must not see, is declared on the `checks` entry and reaches
-  only the derived job.
+- **Reads.** `reads` defaults to the role's cites and identity sources,
+  `required`. An explicit `reads` replaces the default, so an entry that
+  names any read names them all. A read is a role, checked against the
+  layout, or an output of a declared job in the form `job:output`, checked
+  against the plan. Its mode is `required`, `optional` or `order-only`. An
+  optional read absent at hand-out is an absent input, not a stop. An
+  order-only read is handed and its version recorded, but a change to it
+  does not make the job ready again; it maps to the engine's `order_only`
+  input. Reads shape only the model job's hand-out.
+- **Derived inputs.** The derived check takes its partners from the
+  layout, not from `reads`: every role the candidate's role cites or
+  copies identity from, as an optional role input, so the check covers
+  the relations to the partners present whatever the model job was
+  handed. The derived apply receives the handed versions of the roles the
+  verifier verifies, from the verifier's attempt. An input only a declared
+  check needs, which the model job must not see, is declared on the check
+  entry's `inputs` in the same read grammar and reaches only the derived
+  job.
 - **Gates.** `verified-by` names verifiers; it expands into one
   accepted-judgment input over `<verifier>:verifies:<read>` for each read
   that verifier verifies. A verifier that verifies none of the entry's
   reads is an error. There is no plan-level default gating every read
   after its verifier; that would be wrong for the reconciliation.
-- **Extensions.** `checks` lists functions by dotted path, each receiving
-  the candidate the standard handler built and returning reasons; the
-  candidate carries the attempt, so a check reads a handed input without
-  more plumbing. `feedback` names one function receiving the subject role,
+- **Extensions.** `checks` lists functions, each either a bare dotted
+  path or a mapping `{function: <dotted path>, inputs: {<name>: <read>}}`.
+  Each receives the candidate the standard handler built and returns
+  reasons; the candidate carries the attempt, so a check reads its own
+  inputs and any handed input without more plumbing. `feedback` names one function receiving the subject role,
   its blockers and the handed snapshot and returning text the refusal
   appends. Both are consumed by the standard handlers, which call them.
+- **Standard jobs on roles.** A `job:` entry is a code job that neither
+  fills a role nor is derived, running a standard handler over roles. Its
+  `inputs` as a list name roles; as a mapping they take the full read
+  grammar. Its `outputs` default to the handler's documented outputs,
+  `findings` for the set check, and are declared otherwise. The set check
+  validates its role inputs as one snapshot, writes the findings, and
+  judges nothing. A consumer's own code jobs, opening, acquisition,
+  assembly and publication, keep today's full form.
 - **Names.** A consumer job named `check-<role>` or `apply-<role>` for a
   role the loader derives is an error, not a replacement; a consumer that
-  needs its own check for a derived role declares it with `checks`.
-- **The rest of the plan.** The consumer's own code jobs, the criteria
-  groups, plan-level `inputs` every model job receives, such as the opening
-  metadata, and run parameters keep today's form. A plan-level `defaults`
-  block carries `max_attempts` for entries that do not say.
+  needs its own check for a derived role declares it with `checks`. The
+  loader's names differ from today's plan in twelve jobs:
 
-The analysis plan drops to roughly 80 lines. Widening the type's `cites`
-to mean reads was rejected because it would make the validator read
-mission.
+  | Today | Derived |
+  |---|---|
+  | reconcile, check-reconcile | reconciliation, check-reconciliation |
+  | verify, apply-verify | record-verification, apply-record-verification |
+  | profile, check-profile | memory-profile, check-memory-profile |
+  | verify-profile, apply-verify-profile | profile-verification, apply-profile-verification |
+  | synthesize, check-synthesize | synthesis, check-synthesis |
+  | verify-synthesis, apply-verify-synthesis | synthesis-verification, apply-synthesis-verification |
+
+  The other thirteen keep their names. A run directory started under the
+  old names is not resumed under the new ones, which is the driver's
+  existing rule for old or mixed run directories.
+- **Criteria.** A derived check, apply or standard job's criteria are the
+  type closure of its roles: each role's type spec, its schema and the
+  base schemas it references, plus one plan-level group, conventionally
+  `check`, for files that type rules read but no type references, such as
+  the records contract. Model jobs keep naming their groups explicitly, as
+  today.
+- **The rest of the plan.** The consumer's own code jobs, the criteria
+  groups model jobs name, plan-level `inputs` every model job receives,
+  such as the opening metadata, and run parameters keep today's form. A
+  plan-level `defaults` block carries `max_attempts` for entries that do
+  not say.
+
+The analysis plan drops from 498 lines to roughly 80. Widening the type's
+`cites` to mean reads was rejected because it would make the validator
+read mission.
 
 ### Run binding as identity
 
@@ -337,10 +377,15 @@ form and relations, not analytical truth.
   Blockers `none`.
 - Step 3: the loader's expansion of a compact analysis plan is equivalent
   to the hand-written plan, asserted by four tests. Equivalence is equality
-  of each job's inputs, outputs, parameters and criteria after a listed
-  set of renamings, with handlers compared by substitution: a consumer
-  wrapper may be replaced by the standard handler, and a judgment test
-  shows the two record the same judgments on the same inputs. A
+  of each job's inputs, outputs and parameters after the renamings listed
+  above, with handlers compared by substitution: a consumer wrapper may be
+  replaced by the standard handler, and a judgment test shows the two
+  record the same judgments on the same inputs. Criteria are compared by
+  inclusion, not equality: a recording criterion snapshot lists the files
+  validation opens, and the derived set must include them. Today's groups
+  are cumulative and over-include, for instance `check-profile` pins the
+  reconciliation type the profile does not cite; the extras are intended
+  removals, listed by the test. A
   semantic-change test shows that one edit to a compact entry changes the
   expansion. A migration test shows that the gates once named as `cites`
   relations are `verifies` relations with the same acceptances. An
