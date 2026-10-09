@@ -1,7 +1,7 @@
 """Public API sketch for requirements.md; implementations deliberately use `...`.
 
-Not runtime code. start_run() writes run metadata naming a fixed job-set file,
-which names the set type. Attempts, versions and judgments live beside the typed set.
+Not runtime code. start_run() writes run metadata naming a fixed plan file,
+which names the artifact type. Attempts, versions and judgments live beside the artifact.
 Job declarations below describe the data-file schema, not executable Python
 configuration. Operator entry points are outside this sketch by request.
 Storage records and currency calculations are not public APIs.
@@ -80,8 +80,8 @@ class CodeJob:
 
 
 @dataclass(frozen=True)
-class JobSet:
-    """A job set declares the jobs that produce one type of set.
+class Plan:
+    """A plan declares the jobs that produce one type of artifact.
 
     It is the schema of a declaration file under the workflow instructions,
     not code. The loader resolves handlers from dotted paths into the
@@ -188,15 +188,15 @@ class RunStatus:
 
 def start_run(
     run_dir: Path,
-    job_set: Path,
+    plan: Path,
     *,
     parameters: Mapping[str, str] | None = None,
 ) -> None:
-    """Start a run: write metadata naming the job set and the run parameters.
+    """Start a run: write metadata naming the plan and the run parameters.
 
     The metadata fixes the declaration for the run; every later invocation
-    loads the job set from it. The job set's first code job, such as `open`,
-    has the metadata as an input like any other. Starting a run directory
+    loads the plan from it. The plan's first code job, such as `open`,
+    has the metadata as an input like any other. Starting an artifact-run directory
     that already holds a run raises FileExistsError.
     """
     ...
@@ -207,9 +207,9 @@ def advance(
     *,
     results: tuple[AttemptResult, ...] = (),
 ) -> RunStatus:
-    """Run one invocation over the run directory and return its run status.
+    """Run one invocation over the artifact-run directory and return its run status.
 
-    Load the fixed job set named in the metadata that start_run() wrote. Editing its
+    Load the fixed plan named in the metadata that start_run() wrote. Editing its
     max attempts grants no further attempts in this run; a changed declaration is
     a method change and makes the run unpublishable.
 

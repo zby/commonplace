@@ -160,7 +160,7 @@ validation also uses that command environment. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
 `start-analysis --system <name> --source-identity <identity> --source <input>`
-allocates a token-bearing run ID, pins the active job-set declaration, and
+allocates a token-bearing run ID, pins the active plan, and
 prints its path without advancing or acquiring sources. Optional
 `--source-revision <full-40-hex-commit>` requires a GitHub identity. Worker
 provenance is not an opening parameter: report actual model/effort with
@@ -192,14 +192,14 @@ for coordination and stop rules.
 
 ### commonplace-run
 
-Run the generic job-set engine, including the active analysis workflow.
-`start <run> <job-set.yaml>` writes
+Run the generic engine on a plan, such as the active analysis workflow's.
+`start <run> <plan.yaml>` writes
 the run's metadata, fixing the declaration for the run; `--param key=value`
 records run parameters. `advance <run>` closes the attempts reported with
 `--completed <attempt>` and `--failed <attempt>=<reason>` (`--model` and
 `--effort` record the actual worker identity on those results), runs every ready
 code job, hands out every ready model job, and prints the exact prompt paths,
-open attempts, stops and whether the set is publishable; `--json` prints the
+open attempts, stops and whether the artifact is publishable; `--json` prints the
 same as data. The coordinator launches fresh workers without parent conversation
 and settles all round handouts before advancing. The analysis manifest still
 requires one consistent worker model/effort identity.

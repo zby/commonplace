@@ -55,7 +55,7 @@ boundary instruction separately permits immutable captures or bundles under
 modify existing captures. Closed hand-out workspaces are disposable; captures
 must survive them. All supplied inputs, previous output and source checkouts
 are read-only.
-Do not create other workspace files, edit the working set or another job's
+Do not create other workspace files, edit the artifact or another job's
 workspace, or alter attempts, versions, judgments or run metadata. The layout
 is authority, not a filesystem sandbox.
 

@@ -38,7 +38,7 @@ a later acceptance of the same version whose scope includes the
 refusal's supersedes it, and `R` is no longer ready. [4, 7]
 
 **4. Second refusal of the correction.** `V` refuses B. `R`'s refusal input
-has a new version, which is a change. Attempt 3 reads it. If the job set
+has a new version, which is a change. Attempt 3 reads it. If the plan
 sets `R`'s max attempts to three, attempt 3 is the last; a further
 refusal would call for a fourth, and the command stops naming `R` instead.
 The structural acceptances of A and B along the way do not reset the
@@ -95,7 +95,7 @@ That acceptance still holds, since its basis is what the verifier was
 handed, but it covers nothing: the partner version in its basis is not the
 partner's current member. `verify-synthesis` reruns, because its input
 changed; until its new verification is accepted against B and B against
-it, the set lacks an acceptance covering the relation. `publish` requires
+it, the artifact lacks an acceptance covering the relation. `publish` requires
 the coverage input, which is absent until that acceptance exists, so
 `publish` is not ready rather than refusing. [1, 4, 5, 9]
 

@@ -12,7 +12,7 @@ model: opus
 
 Analyse one external agentic system at one frozen evidence boundary and publish its accepted set with the overview as the public entry point. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the run directory under `kb/agentic-system-analyses/state/`, the retained set under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained set under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
 Run the orchestrator's commands from the root of the prepared worktree throughout the run. The run's files, `related-systems/` and the retained set are found from there.
 
@@ -111,7 +111,7 @@ Code normalizes the source identity and allocates
 `kb/agentic-system-analyses/state/`. The token comes from the ready preparation
 record, including with `--worktree`. The source slug determines the stable
 publication directory; there is no public-path override. The command pins the
-job-set declaration and prints the run path. It does not advance, acquire sources
+plan and prints the run path. It does not advance, acquire sources
 or launch workers. The first advance opens the analysis and pins the prepared
 method commit; publication requires it unchanged.
 

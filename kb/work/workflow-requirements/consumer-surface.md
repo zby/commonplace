@@ -6,14 +6,14 @@
 engine's semantics. They do not say how much code a consumer must write to
 live inside those semantics. The analysis workflow is the first consumer, and
 its package `src/commonplace/lib/agentic_analysis/` is about 3,400 lines plus a
-1,121-line `job-set.yaml`. The expectation was mostly declarations, with code
+1,121-line `plan.yaml`. The expectation was mostly declarations, with code
 for checks whose logic is genuinely complex.
 
 That count mixes layers. Roughly 1,550 lines are handlers (`handlers`,
 `profile`, `verification`, `publication`, `checks`, `boundary`,
 `acquisition`); about 950 are run setup and Git integration (`worktree`,
 `checkout`, `report`, `ledger`); the rest is record parsing and shared
-support (`records`, `sets`, `guards`, `validation`, `declaration`). The
+support (`records`, `sets`, `guards`, `validation`, `plan`). The
 expectation applies to the handler layer. Integration code is the
 coordinator's side of the boundary and is measured separately.
 
@@ -39,7 +39,7 @@ Requirement 1 makes attempt records declarable inputs, and requirement 7 makes
 a job's refusals one. Their bytes are engine internals today:
 
 - An `attempt` input resolves to the canonical JSON of the whole internal
-  record, pins and sequence numbers included (`state.py` `resolve`). Handlers
+  record, pins and sequence numbers included (`run.py` `resolve`). Handlers
   `json.loads` it (`handlers.py`, `profile.py`, `verification.py`,
   `publication.py`).
 - A `refusal` input is an engine-rendered text header followed by the
@@ -121,8 +121,8 @@ are the producer's name and kind and the worker identity.
   consumer computing `sha256` uses a public rule.
 - **Role-keyed snapshots.** The input-name tables (`-seen`, the `profile`
   alias in `profile.py:35`) come from inconsistent input naming in
-  `job-set.yaml`. Rename the inputs; roles stay internal.
-- **Splitting `run_dir`.** Its uses are the set path, which a Decision fixes;
+  `plan.yaml`. Rename the inputs; roles stay internal.
+- **Splitting `run_dir`.** Its uses are the artifact path, which a Decision fixes;
   the run id, which is the directory name; effect journals, which
   `api-design.md` leaves consumer-owned; and the opening guard. Each is
   legitimate and none needs its own accessor.
@@ -133,11 +133,11 @@ are the producer's name and kind and the worker identity.
 
 Discussed 2026-10-08; each amends the requirements or a scenario as stated.
 
-### The set type is fixed for the run
+### The artifact type is fixed for the run
 
 `start_run` fixes layout and relations in `run.json`, and the engine
 schedules, scopes and computes coverage from that copy. Handlers read the
-set type as a pinned file input (13 `set-type` inputs), so a mid-run edit
+artifact type as a pinned file input (13 `set-type` inputs), so a mid-run edit
 makes them validate against a layout the engine does not use.
 `publication.py:42` imports the private `_parse_type` for this.
 
@@ -147,16 +147,16 @@ count a mid-run edit of the declaration as a method change that makes the
 run unpublishable. The layout cannot follow a live edit whatever the
 handlers read. Scenario 8 does not require otherwise: the contracts it
 edits are member types and schemas among a check job's inputs, and those
-stay live file inputs. The set type says what the set is, and the run was
+stay live file inputs. The artifact type says what the artifact is, and the run was
 started against one answer to that.
 
-**Resolution:** the set type is part of the fixed declaration. Delete the
+**Resolution:** the artifact type is part of the fixed declaration. Delete the
 13 `set-type` inputs, then expose the parsed layout and relations on
 `CodeAttempt`. The accessor hides the split only while the file inputs
 remain; once they are gone the engine's copy is the one source. Exposing
 the parsed value rather than the type bytes keeps the parser private.
 Analysis runs already pin a commit in a worktree, so fixing the type
-changes nothing they do today. Amends requirement 1 (the set type is named
+changes nothing they do today. Amends requirement 1 (the artifact type is named
 by the declaration and fixed with it) and the Decision on the fixed
 declaration.
 
@@ -189,7 +189,7 @@ input address that a job declares like any other. Its version is a
 canonical digest over the covering claims, sorted, together with the member
 versions, so the publication record still names its evidence. Claims, not
 judgment-record ids: the judgment address already uses claim identity
-(`state.py:217`) so that an apply job re-recording an unchanged verdict is
+(`run.py:217`) so that an apply job re-recording an unchanged verdict is
 no change, and coverage must not rerun `publish`, an external effect, for
 the same non-event. Member, judgment and refusal inputs are already
 engine-derived views; this adds no new category. Declared required, it makes
@@ -200,25 +200,25 @@ copies the current versions out, pinned.
 
 The input's scope is derived, not declared. `assemble` fills the `overview`
 role and judges the overview itself, while the `overview:*` relations sit on
-`publish` (`job-set.yaml:919-930`). A whole-set coverage input on `assemble`
+`publish` (`plan.yaml:919-930`). A whole-artifact coverage input on `assemble`
 would depend on its own judgment, which requirement 1 forbids and which
 would rerun it without end. So a coverage input covers the relations not
 touching the declaring job's role; `publish` has no role and gets the whole
-set. No new field is needed.
+artifact. No new field is needed.
 
 The gate forces one semantic gap into the open. `Run.publishable()` checks
 relation coverage only. The handler additionally requires a holding
 acceptance of every member. These differ for a member with no relation to
 another present member, such as a blocked disposition holding only a
 boundary: its acceptance can go stale while the member stays (requirement
-6), and the engine calls the set publishable where the handler refuses.
-**Resolution:** the stricter reading. A set is publishable when every role
+6), and the engine calls the artifact publishable where the handler refuses.
+**Resolution:** the stricter reading. An artifact is publishable when every role
 the disposition requires is present, some holding acceptance exists for
 each current member, and every relation between members is covered.
 Requirement 9 states all three conditions. The first is not implied by the
 other two: with only an accepted complete-disposition boundary, coverage
 among present members holds trivially, and only the pending-producer wait,
-a scheduling accident, would keep `assemble` off a partial set.
+a scheduling accident, would keep `assemble` off a partial artifact.
 
 A coverage input applies all three conditions to the derived scope: the
 declaring job's own role is excluded from the required roles and from the
@@ -227,7 +227,7 @@ wait for the overview it writes.
 
 ## Criteria declarations
 
-After the steps above, `job-set.yaml` (775 lines) declares 316 file inputs
+After the steps above, `plan.yaml` (775 lines) declares 316 file inputs
 over 55 distinct files. The same contracts, type specs and schemas recur on
 up to 23 jobs: `agentic-analysis-sources.md` 23 times, each analyst type and
 schema 12 times. Every check job lists its candidate's type closure by hand,
@@ -243,7 +243,7 @@ and part of the judgment's basis.
 
 Two shapes keep that:
 
-- **Named groups in the declaration.** The job set declares groups of
+- **Named groups in the declaration.** The plan declares groups of
   library paths once, and a job lists the groups it applies. The loader
   expands each group into ordinary file inputs, so pinning, currency and
   bases are unchanged and the engine learns nothing about types or
@@ -260,7 +260,7 @@ Two shapes keep that:
 validator knowledge into the engine, keep every dependency readable in the
 declaration, and change no requirement: requirement 1 already makes
 contracts inputs, and a group is declaration syntax for several of them.
-The Decision on the job-set file gains the group syntax; the API design
+The Decision on the plan file gains the group syntax; the API design
 gains the path-keyed read of pinned file inputs. Estimated effect: about
 300 lines of input declarations become about 60 lines of groups and a few
 references per job.
@@ -277,7 +277,7 @@ before parsing it. Each runs the same skeleton, written four times
 
 1. locate the run's metadata and checkout;
 2. read the candidate;
-3. snapshot the partner members at their set paths, from current member
+3. snapshot the partner members at their artifact paths, from current member
    inputs or, in verdict applications, from handed `-seen` inputs (three
    implementations);
 4. validate the candidate as a draft at its role against that snapshot and
@@ -290,7 +290,7 @@ before parsing it. Each runs the same skeleton, written four times
 
 Reading the four copies side by side shows more than repetition:
 
-- **Step 6 mostly re-proves the type.** The set type makes every member
+- **Step 6 mostly re-proves the type.** The artifact type makes every member
   copy `run-id` and `reviewed-boundary` from the boundary, and the profile
   copy `source-identity` from the memory report. Draft validation in step 4
   checks those identity relations against the snapshot, and the boundary
@@ -385,27 +385,27 @@ code: the protocol is mostly legitimate domain logic.
 
 ## Layers
 
-The generic checks are neither engine nor analysis, so they have their own
-package between the two (2026-10-09):
+The generic checks are neither scheduling nor analysis, so they are the
+engine's reuse modules (2026-10-09):
 
-- `commonplace.workflow`, the engine, unchanged. It knows nothing of
-  validation, Git or files outside its store.
-- `commonplace.setrun`, what any consumer of a typed set reuses: candidate
-  checks and the correction protocol (`checks`), frozen external sources and
-  their acquisition (`sources`), the journaled directory install
-  (`effects`), commit-bound worktrees and branch-and-merge transfer
-  (`isolation`), and the run report (`report`). It depends on the engine and
-  `commonplace.lib`, never on a consumer; a test enforces that.
+- `commonplace.artifactrun`, the engine. Its scheduling knows nothing of
+  validation, Git or files outside its store. Its reuse modules serve any
+  consumer of a typed artifact: candidate checks and the correction protocol
+  (`checks`), frozen external sources and their acquisition (`sources`), the
+  journaled directory install (`effects`), commit-bound worktrees and
+  branch-and-merge transfer (`worktree`), and the run report (`report`).
+  They depend on `commonplace.lib`, never on a consumer; a test enforces
+  that.
 - `commonplace.lib.agentic_analysis`, the domain: the handlers the
   declaration names, record and ledger rules, boundary semantics, assembly,
   the publication proof, and the paths, run naming and role names it passes
-  to `setrun` as arguments.
+  to the engine's reuse modules as arguments.
 
-The set type reaches the checks from the run (`CodeAttempt.type_spec`), not
+The artifact type reaches the checks from the run (`CodeAttempt.type_spec`), not
 a constant. A structural refusal now carries every section of the answered
-refusal except Findings and Blockers, so `setrun` names no analysis
-section. The analysis data modules (`sets`, `records`, `ledger`) must import
-without the engine, so the helpers they share with `setrun` moved to
+refusal except Findings and Blockers, so `artifactrun/checks.py` names no
+analysis section. The analysis data modules (`sets`, `records`, `ledger`) must import
+without the engine, so the helpers they share with the reuse modules moved to
 `commonplace.lib` (`note_parser.section`, `source_identity`).
 
 The analysis type rules now live in `agentic_analysis.rules` and register
@@ -435,7 +435,7 @@ analysis data modules, not part of the analysis workflow.
 
 Order: the guard split and the deletions; the refusal format; the
 attempt-record decision (published subset or handed address) and its
-implementation; the fixed set type and its accessor; the coverage gate with
+implementation; the fixed artifact type and its accessor; the coverage gate with
 the stricter publishable rule; engine-owned inspection and locking;
 criteria groups; then the check skeleton. Each step leaves the tests passing.
 
@@ -454,11 +454,11 @@ from the store, which is the storage API the design says does not exist.
 
 Done when:
 
-- the analysis package and the CLI import nothing from `commonplace.workflow`
+- the analysis package and the CLI import nothing from `commonplace.artifactrun`
   except the public names in `api-design.md`, locking and version reads
   included;
-- no handler reads the set type as a file input or parses it;
-- `job-set.yaml` has no `coverage-*` or `*-accepted` inputs, and `assemble`
+- no handler reads the artifact type as a file input or parses it;
+- `plan.yaml` has no `coverage-*` or `*-accepted` inputs, and `assemble`
   is not ready, rather than failing, while a relation is uncovered;
 - scenarios 8 and 10, the blocked-disposition gap, the unchanged re-recorded
   verdict, the stuck-run state, and a complete-disposition run with only the

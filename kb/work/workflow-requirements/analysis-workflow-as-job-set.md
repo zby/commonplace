@@ -1,9 +1,9 @@
-# The analysis workflow as a job set
+# The analysis workflow as a plan
 
 A definition of `analyse-agentic-system` in the terms of
 [requirements](./requirements.md), written against the working-tree
 implementation of 2026-10-07 (`src/commonplace/lib/agentic_workflow.py` and
-the set type's layout). The spec is not changed here; where the mapping
+the artifact type's layout). The spec is not changed here; where the mapping
 needs something the spec does not give, the need is reported under
 [Spec needs](#spec-needs) with a fallback that stays inside the spec.
 Words follow the [glossary](./glossary.md), except in the Spec needs items,
@@ -11,11 +11,11 @@ which are kept as written.
 
 ## Conventions
 
-- **Directory.** The run directory `state/<run-id>/`. Its `set/` is the
-  typed set; state, versions and candidates live beside it. The job set is
-  a file under the workflow's instructions that names the set type, and
-  the run's metadata names the job set, as the spec's decisions require.
-- **Member.** The current accepted version of a role in `set/`. A model
+- **Directory.** The artifact-run directory `state/<run-id>/`. Its
+  `artifact/` is the artifact; state, versions and candidates live beside
+  it. The plan is a file under the workflow's instructions that names the
+  artifact type, and the run's metadata names the plan, as the spec's decisions require.
+- **Member.** The current accepted version of a role in `artifact/`. A model
   job's output is a candidate until a code job accepts it.
 - **Inputs.** A job's inputs are current members, run files or engine
   addresses such as refusals and attempt records. They are the rerun triggers
@@ -77,7 +77,7 @@ input, so it is not listed.
 | check-synthesis | code | candidate, boundary, reports | accepts or refuses | |
 | verify-synthesis | model | synthesis, reports, record-verification, profile-verification | candidate synthesis-verification | 2 |
 | apply-synthesis-verification | code | candidate, its attempt record, the synthesis it was handed | accepts the verification against the synthesis; refuses the synthesis on blockers or on a limit the synthesis does not carry; accepts the synthesis against the verification otherwise | |
-| assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md` (the engine keeps `set/ARTIFACT.yaml` naming the type; publish pins the copy); accepts the overview against the members | – |
+| assemble | code | all members; required: the holding acceptances covering every declared relation of every member | `overview.md` (the engine keeps `artifact/ARTIFACT.yaml` naming the type; publish pins the copy); accepts the overview against the members | – |
 | publish | code | all members, manifest, run-metadata; required: the same acceptances plus the overview's | checks method and package unchanged and the incumbent digest; external effect: writes `retained/<slug>/`, archives the incumbent | – |
 
 Max attempts are today's rounds plus one: three attempts where two correction
@@ -135,7 +135,7 @@ synthesis reruns with that finding and the verification follows.
 **Assembly and publication.** `assemble` runs when every complete-disposition
 member has a holding acceptance against the members it relates to, and
 writes the overview and the pinned manifest. `publish` rechecks the
-condition over the whole set and copies the current versions out. Its
+condition over the whole artifact and copies the current versions out. Its
 environment checks and its external effect follow requirement 8: an
 outcome that cannot be established stops the command for the operator.
 
@@ -228,7 +228,7 @@ kept as written for the record.
 ## Type needs, not spec needs
 
 - Requirement 4 gates jobs on the roles the type permits given the members
-  present. The set type discriminates on the overview's result-disposition,
+  present. The artifact type discriminates on the overview's result-disposition,
   and the overview is written last, so the gate would never close. The
   type must discriminate on the boundary, which carries the same field;
   the overview copies it as an identity field already.
@@ -237,7 +237,7 @@ kept as written for the record.
   synthesis and its verification, the overview's amendment index against
   the reconciliation, and the profile's source identity against the memory
   report are prose. They should become declared relation partners.
-- The memory analyst's provenance check named in the set type has no
+- The memory analyst's provenance check named in the artifact type has no
   implementation in the workflow code. Either declare it or drop the
   sentence.
 

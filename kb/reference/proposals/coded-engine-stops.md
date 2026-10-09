@@ -13,7 +13,7 @@ deliberately minimal: engine stops only, not handler or validator errors.
 ## Current state (as of 2026-10-08)
 
 A `Stop` carries a prose reason, the job, the attempt and an `uncertain`
-flag (`src/commonplace/workflow/engine.py`). The engine creates stops in a
+flag (`src/commonplace/artifactrun/engine.py`). The engine creates stops in a
 few places:
 
 - a model attempt closed as failed: the coordinator reported a failure, the

@@ -1,39 +1,39 @@
-# Workflow engine requirements
+# Engine requirements
 
 ## Purpose
 
-One command that, given a run directory, works out what remains to be done
+One command that, given an artifact-run directory, works out what remains to be done
 there, does the deterministic part itself, and lists the model-executed part
 for a coordinator to run. The analysis workflow is the first consumer;
 nothing here is specific to it. Words follow the [glossary](./glossary.md).
 
 ## Requirements
 
-1. **Declaration.** A run directory declares its job set: each job's kind,
+1. **Declaration.** An artifact-run directory declares its plan: each job's kind,
    its inputs, required or optional, and the outputs it writes.
    Dependencies are those inputs. Judgments (5) are files addressed by
    role, relation and outcome, with the latest one current, and may be
    declared as inputs; so may a job's attempt record (3), with the latest
    completed one current, which carries the versions that attempt was
-   handed; and so may the set's coverage (9). Instructions a model job follows and contracts a
+   handed; and so may the artifact's coverage (9). Instructions a model job follows and contracts a
    check job applies are among its inputs; a file input may name its path
    relative to the library, resolved against the library the run was
-   started with, so a job set is a file that names no machine's paths. An
+   started with, so a plan is a file that names no machine's paths. An
    input may be order-only, in the sense of Make's order-only
    prerequisites: it orders the job after it and its version is recorded,
    but it is never a rerun trigger. A job never has the role it
    writes as an input. The declaration is fixed; nothing adds a dependency
-   at run time. Roles and their relations come from the set's type, which
+   at run time. Roles and their relations come from the artifact's type, which
    the declaration names and which is fixed with it for the run; a
    relation runs from an origin role to a partner role and is named by
-   both ends and its kind, such as `verification:cites:runtime`. The job
-   set adds only who produces what from what.
+   both ends and its kind, such as `verification:cites:runtime`. The plan
+   adds only who produces what from what.
 2. **Two kinds of job.** A code job runs under the command and reads only
    its inputs. A model job is handed out as a prompt and an expected output
    path; the command never calls a model. Its inputs are authoritative and
    are its rerun triggers. Whatever else its worker reads is untracked
    context, and its output answers to judgments, not to that context.
-3. **One call advances.** An invocation reads the run directory, runs every
+3. **One call advances.** An invocation reads the artifact-run directory, runs every
    ready code job and prints the ready model jobs. The next invocation
    continues from the files it finds; none depends on an earlier process.
    A hand-out opens an attempt and pins the version of every input; the
@@ -84,13 +84,13 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    holding. A role the type does not permit given the members present has
    no member; its versions and judgments stay recorded. A worker's output is a candidate until accepted.
 7. **Refusal.** A job's refusals are one versioned, optional input of that
-   job, whether or not the job set declares it, whose current version is the latest refusal of its latest
+   job, whether or not the plan declares it, whose current version is the latest refusal of its latest
    completed output, supplying the refused version by identity and the
    findings. An attempt that read a refusal has answered it; only a newer
    refusal makes the job ready again, and not one that a later acceptance
    of the same version supersedes. An acceptance supersedes a refusal only
    when its scope includes the refusal's scope or it names that refusal as
-   overridden. The job set may set a job's max attempts: how many attempts it
+   overridden. The plan may set a job's max attempts: how many attempts it
    makes in the run, identical and failed attempts included, before the
    command stops; the count never resets.
 8. **Failure stays visible.** A job that cannot complete, whether the worker
@@ -105,14 +105,14 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
    whether the answer resolves the refusal, and a downstream verifier must
    declare that output as an input to reassess it. A failed attempt records
    no inputs, so the job stays ready; every attempt counts toward max attempts.
-9. **Publication.** A set is publishable when every role its disposition
+9. **Publication.** An artifact is publishable when every role its disposition
    requires is present, every member has a holding acceptance, and every
    relation the type declares between its members is covered. A relation
    is covered by a holding acceptance of the current member at either end
    that has the relation in its scope and the current member at the other
    end in its basis. The engine determines this and supplies it as a
    coverage input: a job may declare one, and it is present only while the
-   three conditions hold for the set minus the declaring job's own role.
+   three conditions hold for the artifact minus the declaring job's own role.
    Its version names the members and the covering claims, never judgment
    records. A code job declaring it copies the current versions out,
    pinned.
@@ -122,27 +122,27 @@ nothing here is specific to it. Words follow the [glossary](./glossary.md).
 Settled choices beneath the requirements, of the kind an ADR would record.
 They bind an implementation of this spec; they are not requirements.
 
-- **State lives beside the set.** The command is given a run directory;
-  the typed set is its `set/` subdirectory, and attempts, versions,
+- **State lives beside the artifact.** The command is given an artifact-run
+  directory; the artifact is its `artifact/` subdirectory, and attempts, versions,
   judgments, hand-out prompts and failure records are its siblings, never
-  members. Why: the set type has closed membership, so anything else
-  inside it is a violation; kept outside, the set validates as it stands
+  members. Why: the artifact type has closed membership, so anything else
+  inside it is a violation; kept outside, the artifact validates as it stands
   at every moment, publication is a plain copy, and no consumer needs an
   exclusion rule.
-- **The job set is its own file, named by the run, naming the type.** It
+- **The plan is its own file, named by the run, naming the type.** It
   is a declaration file, not code, under the workflow's instructions
   beside the worker instructions it refers to: jobs, inputs, outputs and
   max attempts, with each code job naming its handler by dotted path into the
   package. A run is started by an operation of its own, which writes the
-  run's metadata naming the job set and the run parameters and fixes the
-  declaration and the set type it names for the run; every later invocation loads the job set from
-  that metadata. A job set's first code job, such as `open`, is then an
+  run's metadata naming the plan and the run parameters and fixes the
+  declaration and the type it names for the run; every later invocation loads the plan from
+  that metadata. A plan's first code job, such as `open`, is then an
   ordinary job with the metadata as an input. The type knows nothing
   about producers. The instruction trees install as shared data, not as
   Python, which is why handlers live in the package and the file only
-  names them. Why: a type says what a set is and a job set says how
+  names them. Why: a type says what an artifact is and a plan says how
   one is made; they change for different reasons, type specs are shared
-  library artifacts, and one type may have several job sets, such as a
+  library artifacts, and one type may have several plans, such as a
   production and a test configuration.
 - **The hand-out keeps the analysis workers' shape.** A prompt names the
   instruction, then lists `name = value` lines for the job, its declared
@@ -150,11 +150,11 @@ They bind an implementation of this spec; they are not requirements.
   the workspace and any previous output, then reading batches over the
   inputs. File inputs are handed at their own path so relative links in
   instructions resolve; engine-held versions are copied into the
-  hand-out. Parameters are plain strings with `{run}`, `{run-id}`, `{set}`,
+  hand-out. Parameters are plain strings with `{run}`, `{run-id}`, `{artifact}`,
   `{workspace}` and `{param:<name>}` substituted; no template language.
   Why: the analysis instructions already follow this shape, so they port
   unchanged.
-- **Criteria groups are declaration syntax.** A job set may declare named
+- **Criteria groups are declaration syntax.** A plan may declare named
   groups, each mapping input names to library paths, and a job lists the
   groups it applies. The loader expands each group into ordinary file
   inputs, so pinning, currency and bases are those of file inputs; a
@@ -166,9 +166,9 @@ They bind an implementation of this spec; they are not requirements.
   that applies it, which expansion keeps.
 - **Code jobs see the fixed type, not a file of it.** A code attempt
   exposes the run's layout and relations and the fixed type text, so a
-  handler never declares the set type as a file input. Member types,
+  handler never declares the artifact type as a file input. Member types,
   schemas and contracts stay live file inputs, which scenario 8 edits.
-  Why: a file input of the set type would follow a mid-run edit while the
+  Why: a file input of the artifact type would follow a mid-run edit while the
   engine schedules, scopes and covers against the copy fixed at start.
 - **File inputs are checked, not snapshotted.** A file input is handed at
   its own path and its digest is pinned at hand-out; completing the
@@ -216,7 +216,7 @@ They bind an implementation of this spec; they are not requirements.
   is therefore applied to model producers only. Between code jobs it is
   not applied: a code job declared before its code producer may run once
   against stale input and again after it, which wastes a run but records
-  nothing wrong, so a job set should declare code jobs in dependency order. Why: without the wait a
+  nothing wrong, so a plan should declare code jobs in dependency order. Why: without the wait a
   correction makes a transform and its verifier ready together, and the
   verifier runs once against stale state; the current engine avoids that
   through its round structure. This is a scheduling policy over ready
@@ -293,7 +293,7 @@ They bind an implementation of this spec; they are not requirements.
 - **Validator code identity.** A package change can alter a check's verdict
   with no input changing. It stays an environment check at open and
   publish, as today, not a currency rule.
-- **Freshness after publication.** A published set is frozen; whether it is
+- **Freshness after publication.** A published artifact is frozen; whether it is
   stale against later methods is the library's freshness question, not the
   engine's.
 

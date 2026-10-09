@@ -35,7 +35,7 @@ verifiers retain that responsibility.
 
 ## Canonical paths and reporting
 
-`set/` is the sole new-engine set. Assembly's exact-byte manifest is an engine
+`artifact/` is the sole new-engine artifact. Assembly's exact-byte manifest is an engine
 output; publication consumes it, not the type-only working projection. No
 persistent `output/` twin is created. The CLI rejects old or mixed directories;
 legacy finalize, handoff and publication commands are removed. Retained data is

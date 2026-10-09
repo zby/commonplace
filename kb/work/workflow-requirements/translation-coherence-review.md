@@ -53,8 +53,8 @@ ordinary waits. Model scheduling, exact subjects, installation and scope overrid
 rules do not change. Tests use ordinary currency inputs, an open next attempt and
 exhaustion; they retain scenario 17's wait and scenario 21's historical subjects.
 
-Technical basis: `workflow/state.py`,
-`tests/commonplace/workflow/test_completed_handed_scheduling.py` and scenario 21.
+Technical basis: `artifactrun/run.py`,
+`tests/commonplace/artifactrun/test_completed_handed_scheduling.py` and scenario 21.
 
 ### Per-run locking did not coordinate publishers
 
@@ -71,13 +71,13 @@ Technical basis: `agentic_analysis.guards.publication_lock`,
 The review originally added engine/mixed-directory rejection to legacy manifest
 creation. Retirement removes that command rather than retaining an adapter.
 The active CLI rejects old/mixed runs; assembly supplies the published exact-byte
-manifest separately from the engine's type-only `set/` projection. It does not
+manifest separately from the engine's type-only `artifact/` projection. It does not
 manufacture legacy state or an `output/` twin. Old retained data remains evidence.
 
-Current basis: `src/commonplace/lib/agentic_analysis/worktree.py`, set type and
+Current basis: `src/commonplace/lib/agentic_analysis/worktree.py`, artifact type and
 routing tests.
 
-### Holding historical judgments were easy to misread as current-set verification
+### Holding historical judgments were easy to misread as current-artifact verification
 
 A handed basis can remain holding after a canonical peer changes. This is correct
 historical evidence, not verification of the new peer. Reporting now exposes
@@ -85,7 +85,7 @@ historical evidence, not verification of the new peer. Reporting now exposes
 still requires current endpoint versions, and stage gates retain all required
 subject judgments. No mutable peer is substituted into a historical judgment.
 
-Technical basis: `agentic_analysis/report.py`, `workflow/state.py` and the report
+Technical basis: `agentic_analysis/report.py`, `artifactrun/run.py` and the report
 regression in `test_completed_handed_scheduling.py`.
 
 ### Completion, retries and downstream ordering
@@ -102,8 +102,8 @@ attempts, required peers and live judgment gates retain their waits. The check
 records existing peer bytes and rechecks when they change. It does not judge a
 future peer or grant semantic acceptance merely by scheduling the check.
 
-Technical basis: `workflow/engine.py`, `workflow/state.py` and
-`tests/commonplace/workflow/test_engine_review_fixes.py`.
+Technical basis: `artifactrun/engine.py`, `artifactrun/run.py` and
+`tests/commonplace/artifactrun/test_engine_review_fixes.py`.
 
 ### Preliminary guards can prevent publication recovery
 
@@ -148,7 +148,7 @@ Technical basis: `agentic_analysis/boundary.py`, `validation.py` and
   and incumbent identity, and recognizes effects by exact trees and archive.
   Partial or changed effects remain uncertain, including when preliminary guards
   block journal reconciliation. Verified rollback remains an ordinary failure.
-  Non-complete sets remain local.
+  Non-complete artifacts remain local.
 
 ## Limits retained rather than hidden
 
@@ -156,7 +156,7 @@ Technical basis: `agentic_analysis/boundary.py`, `validation.py` and
    fixtures do not establish every interaction of the complete declaration.
 2. Holding handed judgments and canonical-current verification are distinct.
    Drift is reported; graph coverage and all-subject gates enforce current
-   endpoints. Do not describe holding alone as whole-set semantic currency.
+   endpoints. Do not describe holding alone as whole-artifact semantic currency.
 3. Record-verification code requires at least one routed blocker when set-check
    failed. The verifier's instruction requires every finding to be addressed.
    Free-text semantic correspondence is not deterministically matched; the

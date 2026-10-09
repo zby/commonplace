@@ -3,7 +3,8 @@
 Each concept in [requirements](./requirements.md) gets one word, used
 unchanged in the requirements, the scenarios, the
 [mapping](./analysis-workflow-as-job-set.md), the [API design](./api-design.md)
-and the [sketch](./api_sketch.py). Applied to all five on 2026-10-07; the
+and the [sketch](./api_sketch.py). Applied to all five on 2026-10-07, and its 2026-10-09 decisions on
+2026-10-09; the
 mapping's Spec needs items keep their original wording as a record. The
 Status column records what changed.
 
@@ -25,13 +26,29 @@ ch. 2), Ousterhout (*A Philosophy of Software Design*, ch. 14) and Evans
 **Status:** *keep* — the earlier word passed; *changed* — replaced, with
 what it replaced; *decided* — settled by the operator.
 
+## Purpose and layers
+
+The engine produces composite artifacts: artifacts whose members are
+artifacts with types of their own, made by separate jobs that must agree.
+Relations, scoped judgments, coverage and the pending-producer wait exist for
+that agreement. A single document has none of it and is written and
+validated by the ordinary write path, never by a plan. Whether a member can
+itself be composite is out of scope (operator, 2026-10-09).
+
+| Concept | Word | API name | First sentence | Status |
+|---|---|---|---|---|
+| One execution of a plan, producing one artifact | artifact run | `Run`, package `artifactrun` | An artifact run executes a plan with parameters and produces one artifact. | decided 2026-10-09: the bare word *run* is the codebase's commonest verb, so the concept takes a compound; *setrun* rejected with *set*, *runset* rejected as reading "a set of runs". Inside the package the class stays `Run`. `commonplace.workflow` renamed 2026-10-09 |
+| The code that runs artifact runs | engine | package `artifactrun` | The engine schedules, pins, judges and covers; it knows nothing of validation, Git or files outside its store. | added |
+| What any consumer's handlers and command-line glue reuse | shared layer | package `setrun`, label pending | The shared layer holds the concept modules consumers reuse: checks, sources, effects, worktree, report. | added: a namespace, not a concept; its label must stop sounding like *artifact run* |
+| What supplies a plan, a type and any handlers | consumer | — | A consumer supplies a plan, a type and the handlers the plan names. | added: the `setrun` docstring's word |
+
 ## Structure
 
 | Concept | Word | API name | First sentence | Status |
 |---|---|---|---|---|
-| The directory one command advances | run directory | `run_dir: Path` | The run directory holds one typed set and the state that produces it. | changed: `directory` says nothing of what it holds |
-| The typed subdirectory | set | — | The set is the typed directory the run produces; only members live in it. | decided: `set/`, replacing `output/`, which collided with *output* |
-| The type of the set | type | `JobSet.type_spec` | The type declares the set's roles, relations and required members. | keep |
+| The directory one command advances | artifact-run directory | `run_dir: Path` | The artifact-run directory holds one artifact and the state that produces it. | decided 2026-10-09: follows *artifact run*; was *run directory* |
+| The typed subdirectory | artifact | `artifact/` | The artifact is the typed directory the run produces; only members live in it. | decided 2026-10-09: the KB's word for a typed thing, and ADR 095's kind; was *set*, ordinary English and the validator's word for the membership as a whole. Renamed 2026-10-09 |
+| The type of the artifact | type | `Plan.type_spec` | The type declares the artifact's roles, relations and required members. | keep |
 | A declared position in the set | role | `ModelJob.role`, `CodeJob.role` | A role is a position the type declares, with a path and relations. | changed: the spec says *slot*, the sketch says *member* and *slot name*, the type layout says `roles` |
 | The accepted version in a role | member | — | A member is the version currently installed in a role. | keep; stop using it for the role itself |
 | A declared link between two roles | relation | `"verification:cites:runtime"` | A relation is a link the type declares from an origin role to a partner role, of a kind such as `identity` or `cites`. | decided: `<origin>:<kind>:<partner>`, replacing `<kind>:<partner>`; see [Relation](#relation) |
@@ -41,7 +58,7 @@ what it replaced; *decided* — settled by the operator.
 
 | Concept | Word | API name | First sentence | Status |
 |---|---|---|---|---|
-| The declared work for a set | job set | `JobSet` | A job set declares the jobs that produce one type of set. | keep |
+| The declared work for an artifact | plan | `Plan`, module `plan` | A plan declares the jobs that produce one type of artifact. | decided 2026-10-09: was *job set*, whose *set* collided with the produced set. Renamed 2026-10-09 |
 | A unit of work | job | `ModelJob`, `CodeJob` | A model job is handed out to a worker; a code job runs under the command. | keep |
 | A code job's function | handler | `CodeJob.handler` | A handler is the package function a code job runs, named by dotted path. | keep |
 | A model job's instruction file | instruction | `ModelJob.instruction` | The instruction is the input whose file the worker follows. | keep |
@@ -57,12 +74,12 @@ what it replaced; *decided* — settled by the operator.
 
 | Concept | Word | API name | First sentence | Status |
 |---|---|---|---|---|
-| Creating a run | start | `start_run()` | Starting a run writes the metadata that names its job set and parameters. | added: no operation created a run, so nothing could name the job set that `advance()` loads |
+| Creating a run | start | `start_run()` | Starting a run writes the metadata that names its plan and parameters. | added: no operation created a run, so nothing could name the plan that `advance()` loads |
 | One call of the command | invocation | `advance()` | An invocation runs ready code jobs and hands out ready model jobs. | keep the function; drop *round*, which the decisions use for the same thing |
 | What an invocation returns | run status | `RunStatus` | The run status lists hand-outs, open attempts, stops and publishability after an invocation. | changed: was `Advance`, the same word as the function |
 | The agent calling the command | coordinator | — | The coordinator calls the command, runs workers and reports their attempts. | changed: spec says *orchestrating agent* and *agent* |
 | The agent running a model job | worker | `AttemptResult.model`, `.effort` | A worker is the model run that carries out one attempt. | keep; drop `runner`, which is undefined |
-| One run of a job | attempt | `attempt: str` | An attempt is one run of a job against inputs pinned when it opens. | keep |
+| One execution of a job | attempt | `attempt: str` | An attempt is one execution of a job against inputs pinned when it opens. | keep; *execution*, not *run*, so that *run* keeps one meaning |
 | An attempt's states | open, completed, failed | — | An attempt is open until reported; it closes completed or failed. | changed: the sketch says *finished*, the spec *completed*; use *completed* |
 | The coordinator's report closing an attempt | attempt result | `AttemptResult` | An attempt result closes one open attempt as completed or failed. | changed: was `Completion`, which also closes failures; *Report* collides with analyst reports |
 | The record written last for an attempt | attempt record | `address="attempt"` | An attempt record is the closed attempt with the versions it was handed. | keep |

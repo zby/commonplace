@@ -1,4 +1,4 @@
-# Workflow API design sketch
+# Engine API design sketch
 
 The [Python sketch](./api_sketch.py) expresses the updated
 [requirements](./requirements.md) through a small public boundary. Behavior
@@ -10,15 +10,15 @@ from the requirements.
 
 ## Public boundary
 
-- `JobSet`, `ModelJob`, `CodeJob` and `Input` describe the declaration-file schema.
-- `start_run(run_dir, job_set, parameters=...)` starts a run: it writes the
-  run metadata naming the job set and parameters, which fixes the
+- `Plan`, `ModelJob`, `CodeJob` and `Input` describe the declaration-file schema.
+- `start_run(run_dir, plan, parameters=...)` starts a run: it writes the
+  run metadata naming the plan and parameters, which fixes the
   declaration for the run.
 - `advance(run_dir, results=...)` runs one invocation and returns a
-  `RunStatus`. It loads the job-set file named by the run metadata.
+  `RunStatus`. It loads the plan file named by the run metadata.
 - `CodeAttempt.read()` reads a pinned input by name. `CodeAttempt.layout`,
-  `.relations`, `.type_text` and `.type_spec` (its library path) give the set
-  type fixed at start, as `.parameters` gives the run parameters. `CodeAttempt.read_files()` returns
+  `.relations`, `.type_text` and `.type_spec` (its library path) give the
+  artifact type fixed at start, as `.parameters` gives the run parameters. `CodeAttempt.read_files()` returns
   the pinned file inputs under the library, keyed by library path.
 - `CodeAttempt.judge()` stages acceptance or refusal of one subject version,
   with findings, a scope of covered relations and optional explicit refusal
@@ -34,7 +34,7 @@ from the requirements.
 - `Handout`, `Stop` and `RunStatus` report work and state to the coordinator.
   `RunStatus.handouts` lists the attempts that invocation opened;
   `open_attempts` lists every attempt still open, whenever it was opened.
-- `start_run()` on a run directory that already holds a run raises
+- `start_run()` on an artifact-run directory that already holds a run raises
   `FileExistsError`.
 
 There is no public engine object, storage API, pin constructor, verdict parser
@@ -45,8 +45,8 @@ of this sketch. Code jobs retain explicit scoped overrides through `judge()`.
 
 ## Declaration and type separation
 
-The job set is a declaration file, not executable code, under the workflow's
-instructions. It names the type, and the run metadata names the job set.
+The plan is a declaration file, not executable code, under the workflow's
+instructions. It names the type, and the run metadata names the plan.
 Code jobs name package handlers by dotted path; a handler receives a
 `CodeAttempt` and returns named output bytes. The Python dataclasses show the
 loaded schema, not a Python configuration format. The serialization format
@@ -70,7 +70,7 @@ must reject ambiguous output ownership and a job with its own role as input.
 Each input has an address: a file, a member, a job's latest completed output, a
 latest completed attempt record, a version that record says was handed, a
 judgment addressed by role, relation and outcome, a producer's current
-refusal, or the set's coverage, whose scope is the set minus the declaring
+refusal, or the artifact's coverage, whose scope is the artifact minus the declaring
 job's role. Required and optional inputs record presence or absence. A required
 judgment input is present only while the judgment holds. Workers can read
 untracked context, but it is not authoritative, tracked or a currency
@@ -214,7 +214,7 @@ basis; a holding acceptance whose basis has a handed, historical version
 at the other end is not sufficient. The job copies the current members,
 pinned. The type's disposition determines required roles and gates the jobs
 that fill them. State, attempts, versions, judgments and prompts remain
-siblings of `set/`, never members.
+siblings of `artifact/`, never members.
 
 External-effect recognition remains consumer-owned. Acquisition and
 publication must establish whether an interrupted effect completed before

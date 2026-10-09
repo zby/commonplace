@@ -5,7 +5,7 @@
 - **Closes when:** the operator has accepted or amended each requirement in
   [requirements](./requirements.md) and a design proposal has been derived
   from the accepted set. Implementing that design for the analysis
-  workflow also needs the set type to declare the relations its prose now
+  workflow also needs the artifact type to declare the relations its prose now
   states; see the type needs in [the mapping](./analysis-workflow-as-job-set.md).
 
 ## Goal
@@ -24,7 +24,7 @@ judgment record, acceptance or refusal of a version against named inputs,
 carries acceptance, correction and publication. The abstraction is stated
 as requirements in [requirements](./requirements.md); the analysis workflow
 is its first consumer and the test of whether it is enough. That test is
-[the analysis workflow as a job set](./analysis-workflow-as-job-set.md),
+[the analysis workflow as a plan](./analysis-workflow-as-job-set.md),
 which maps the current workflow onto the spec and reports what the spec
 lacks, without changing it. [Scenarios](./scenarios.md) walks the
 situations the spec must cover and names those it does not yet.
@@ -78,7 +78,7 @@ pinned validation, provenance, effects, coordination and format separation.
 The operator requested coherence review instead of the planned end-to-end proof.
 The operator subsequently authorized retirement of the old engine and a new-only
 CLI/skill route. `commonplace-workflow` now prepares, starts, reports and integrates
-analyses; `commonplace-run` advances the active job set. Old run directories are
+analyses; `commonplace-run` advances the active plan. Old run directories are
 rejected without deleting retained data. This adoption decision does not supply
 the missing end-to-end proof or establish production fitness. YAML compaction
 remains deferred.
@@ -88,7 +88,7 @@ remains deferred.
 [Consumer surface](./consumer-surface.md) reviews the boundary between the
 engine and the analysis package: which handler needs are legitimate, which
 checks re-prove engine invariants, and two requirement-level resolutions,
-settled 2026-10-08: the set type is fixed for the run, and coverage is an
+settled 2026-10-08: the artifact type is fixed for the run, and coverage is an
 engine-derived input rather than a handler recomputation.
 
 ## Related
