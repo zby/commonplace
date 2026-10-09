@@ -17,9 +17,16 @@ delegation nor publication authority.
 
 Read the invocation prompt completely, recovering every truncated part. Read
 the named instruction first, then every Input reading batch in printed order.
-Use supplied paths unchanged. Complete a batch before beginning the next;
-read oversized files in the printed bounded ranges until their end. Read
-source files and searches in bounded ranges too.
+Use the supplied absolute paths for inputs and outputs, including patch targets.
+Do not reconstruct supplied paths from run IDs, directory names or relative
+links. For shell commands using paths relative to the analyzed repository, set
+the working directory to that repository's checkout path, supplied as
+`source.path` in the acquired source object or boundary. Commonplace commands
+run from the prepared Commonplace worktree.
+
+Complete a batch before beginning the next; read oversized files in the printed
+bounded ranges until their end. Read source files and searches in bounded ranges
+too.
 
 Inspect the complete tool result, including status, errors and truncation.
 Recover a truncated read with a smaller range; a larger inner token limit

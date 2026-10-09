@@ -65,8 +65,11 @@ One row declares each `SRC-*` ID in its first cell, as `| SRC-1 | ... |`:
 Each stable source identity is in a code span, including a non-URL capture
 identity. A Git row identifies the canonical repository, full reviewed
 commit, initially inspected commit-relative paths and commit-pinned anchors.
-An access root such as `related-systems/<owner>--<repo>/` may also appear; its mutable
-worktree or current HEAD is not the durable evidence identity.
+For the frozen source row, copy `kind`, `identity` and `revision` from the
+frontmatter's `source` object into their respective cells unchanged. Put an
+access root such as `related-systems/<owner>--<repo>/` in inspected scope, not
+the identity cell. Its mutable worktree or current HEAD is not the durable
+evidence identity.
 
 The registered Git source is the repository at that commit. Listed paths
 record the boundary job's initial inspection, not an allowlist: the source
