@@ -19,7 +19,8 @@ Keep code, method files, lockfile and environment unchanged throughout the run.
 For a new run, call `commonplace-run advance <run>`. Inspect the exit status,
 stdout and stderr; wait for the command to finish before taking another action.
 Code runs ready code jobs and prints model handouts, open attempts, stops and
-publishability. There is no separate launch/done outcome line.
+publishability. There is no separate launch/done outcome line. Exit status 0
+means the run continues, 2 means it stopped, and 1 means the command failed.
 
 Source acquisition runs during advance. If its network requirement is known to
 be blocked by the sandbox, request approval for that advance command before
