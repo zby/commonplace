@@ -103,7 +103,7 @@ commonplace-workflow start-analysis \
   --system "<source-native system name>" \
   --source-identity "<stable source identity, e.g. https://github.com/owner/repo>" \
   --source "<the caller's source input, as given>" \
-  --profile <worker profile>
+  --harness <this harness> [--profile <operator-named profile>]
 ```
 
 Code normalizes the source identity and allocates
@@ -126,12 +126,13 @@ foreign origin or unavailable commit stops the run for the operator.
 
 Every worker of a run uses one worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, model and effort.
-Use the profile the operator names; otherwise the file's `default`. Pass it
-to `start-analysis` with `--profile <name>`; opening records it and
-publication writes it to the retained manifest. If this session does not run
-in the profile's harness, or the harness cannot select the profile's model
-and effort for a fresh worker, stop before starting the run and tell the
-operator.
+Pass `start-analysis` this session's harness with `--harness <name>`
+(`claude-code`, `codex` or `pi`), and the profile the operator names with
+`--profile <name>`. Without a named profile, code uses the harness's default;
+it refuses a profile of another harness. Opening records the profile and
+publication writes it to the retained manifest. If the harness cannot select
+the profile's model and effort for a fresh worker, stop before starting the
+run and tell the operator.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 

@@ -133,13 +133,20 @@ WORKER_PROFILES = "agentic-system-analyses/instructions/analyse-agentic-system/w
 """Library-relative path of the named worker identities a run chooses from."""
 
 
-def worker_profile(data: bytes, name: str | None) -> dict[str, str]:
-    """Resolve a worker profile by name, or the file's default, to its identity."""
+def worker_profile(data: bytes, name: str | None, *, harness: str | None = None) -> dict[str, str]:
+    """Resolve a worker profile by name, or the harness's default, to its identity.
+
+    A named profile must belong to ``harness`` when one is given.
+    """
     parsed = yaml.safe_load(data)
     profiles = parsed.get("profiles") if isinstance(parsed, dict) else None
-    if not isinstance(profiles, dict) or not profiles:
-        raise ValueError("worker profiles need a nonempty profiles mapping")
-    name = parsed.get("default") if name is None else name
+    defaults = parsed.get("defaults") if isinstance(parsed, dict) else None
+    if not isinstance(profiles, dict) or not profiles or not isinstance(defaults, dict):
+        raise ValueError("worker profiles need nonempty profiles and a defaults mapping")
+    if name is None:
+        if harness not in defaults:
+            raise ValueError(f"name a worker profile or a harness with a default: {', '.join(sorted(defaults))}")
+        name = defaults[harness]
     if name not in profiles:
         raise ValueError(f"unknown worker profile {name!r}; choose one of {', '.join(sorted(profiles))}")
     profile = profiles[name]
@@ -147,6 +154,8 @@ def worker_profile(data: bytes, name: str | None) -> dict[str, str]:
     if (not isinstance(profile, dict) or set(profile) != set(fields)
             or any(not isinstance(profile[field], str) or not profile[field].strip() for field in fields)):
         raise ValueError(f"worker profile {name} needs exactly a harness, model and effort")
+    if harness is not None and profile["harness"] != harness:
+        raise ValueError(f"worker profile {name} runs in {profile['harness']}, not {harness}")
     return {"profile": name, **{field: profile[field] for field in fields}}
 
 

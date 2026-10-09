@@ -1,6 +1,10 @@
 # Worker profiles for analyse-agentic-system runs. A run names one profile at
-# start; opening records it, and every worker of the run uses it.
-default: codex-sol
+# start, or its harness's default; opening records it, and every worker of
+# the run uses it.
+defaults:
+  claude-code: opus
+  codex: codex-sol
+  pi: pi-luna
 profiles:
   opus: {harness: claude-code, model: claude-opus-5-5, effort: medium}
   sonnet: {harness: claude-code, model: claude-sonnet-5-5, effort: medium}

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -38,7 +39,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
         "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
-            "default: pi-luna\nprofiles:\n  pi-luna: {harness: pi, model: gpt-6-luna, effort: medium}\n",
+            "defaults: {pi: pi-luna}\nprofiles:\n  pi-luna: {harness: pi, model: gpt-6-luna, effort: medium}\n",
     }
     for name, content in files.items():
         path = root / name
@@ -176,7 +177,8 @@ def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
     monkeypatch.setattr(commonplace.workflow, "start_run", lambda *args, **kwargs: calls.append((args, kwargs)))
     monkeypatch.setattr(commonplace.workflow, "advance", lambda *args, **kwargs: pytest.fail("must not advance"))
-    params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository"}
+    params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository",
+              "harness": "pi"}
     first = aw.start_analysis(tree, **params)
     second = aw.start_analysis(tree, **params)
     assert first.name.endswith(f"-{prepared['token']}-01")
@@ -313,11 +315,18 @@ def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, 
 
 
 
-def test_analysis_start_refuses_an_unknown_worker_profile(origin: Path, tmp_path: Path, monkeypatch) -> None:
+@pytest.mark.parametrize("choice,reason", [
+    ({"profile": "opus"}, "unknown worker profile 'opus'; choose one of pi-luna"),
+    ({}, "name a worker profile or a harness with a default: pi"),
+    ({"harness": "codex"}, "name a worker profile or a harness with a default: pi"),
+    ({"profile": "pi-luna", "harness": "codex"}, "worker profile pi-luna runs in pi, not codex"),
+])
+def test_analysis_start_refuses_an_unresolvable_worker_profile(origin: Path, tmp_path: Path, monkeypatch,
+                                                               choice, reason) -> None:
     prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
-    with pytest.raises(ValueError, match="unknown worker profile 'opus'; choose one of pi-luna"):
+    with pytest.raises(ValueError, match=re.escape(reason)):
         aw.start_analysis(tree, system="Example", source_identity="https://github.com/Example/Repo",
-                          source="repository", profile="opus")
+                          source="repository", **choice)
     assert not (tree / "kb/agentic-system-analyses/state").exists()

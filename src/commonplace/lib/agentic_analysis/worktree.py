@@ -31,10 +31,11 @@ STATE_ROOT = Path("kb/agentic-system-analyses/state")
 
 
 def start_analysis(worktree: Path, *, system: str, source_identity: str,
-                   source: str, source_revision: str | None = None, profile: str | None = None) -> Path:
+                   source: str, source_revision: str | None = None, profile: str | None = None,
+                   harness: str | None = None) -> Path:
     """Allocate a prepared analysis and pin its declaration, without advancing.
 
-    ``profile`` names the run's worker profile; without it the method's default applies.
+    ``profile`` names the run's worker profile; without it, ``harness``'s default applies.
     """
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
     from commonplace.setrun.sources import github_checkout_path
@@ -58,7 +59,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     slug = source_slug(identity, system)
     date = datetime.datetime.now(datetime.UTC).date().isoformat()
     prefix = f"AAS-{date}-{slug}-{preparation['token']}"
-    worker = worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), profile)
+    worker = worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), profile, harness=harness)
     parameters = {"system": system, "source-identity": identity, "source": source,
                   "worker-profile": worker["profile"]}
     if source_revision is not None:
