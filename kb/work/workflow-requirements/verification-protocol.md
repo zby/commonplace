@@ -24,9 +24,10 @@ These hold for every plan ([ADR 113](../../reference/adr/113-artifact-runs-execu
   (relations it covers). An acceptance of the producer's latest completed
   output installs it in its role. A refusal of any version is evidence; a
   refusal of the latest completed output is what the producer answers.
-- **The refusal input.** Every job has an optional `refusal` input the
-  loader adds, resolving to the latest refusal of its latest completed
-  output, as a document: frontmatter `refusal` (identity), `version` and
+- **The refusal input.** Every model job that fills a role has an optional
+  `refusal` input the loader adds unless the plan declared one
+  (`plan._with_refusal`), resolving to the latest refusal of its latest
+  completed output, as a document: frontmatter `refusal` (identity), `version` and
   `scope`; body, the findings verbatim (`run.refusal_document`). An
   attempt that read a refusal has answered it; only a newer refusal makes
   the job ready again. A later acceptance supersedes a refusal when its
