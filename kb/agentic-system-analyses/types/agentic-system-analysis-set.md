@@ -86,62 +86,24 @@ layout:
 
 # Agentic system analysis set
 
-A directory artifact, as the reference definitions define it: a retained
-analysis in the collection's `retained/` area, or the working set of a run. In a finished set the manifest pins a SHA-256 for every member and
-records the worker that produced the run under `worker`:
+A directory artifact: a retained analysis in the collection's `retained/`
+area, or the working set of a run. The layout above declares the members;
+each member's type says what it contains.
 
-- `profile`: the worker profile the run started with;
-- `harness`, `launch-model` and `effort`: that profile's harness, the name
-  the harness selects a model by, and its reasoning effort;
-- `model`: the exact model ID every worker reported, or `not stated`.
+A finished set's manifest pins a SHA-256 for every member and records the
+worker that produced the run under `worker`: the `profile` the run started
+with, its `harness`, `launch-model` and `effort`, and the exact `model`
+every worker reported, or `not stated`. The launch model is the name the
+harness selects a model by; the reported model is what ran.
 
-A launch model is an alias such as `sonnet` that may later select a newer
-model; the reported model is what ran. One profile writes a whole run, and
-publication requires every worker to have reported the same model.
+Beyond the layout, validation of the set checks that the manifest pins
+every member once it pins any, that no record is declared twice, the
+overview's amendment index against the reconciliation, the profile's
+comparison references, the verifications' Blockers and Limits lists and
+each limit's trace into the synthesis, and that every member's quotations
+resolve against the boundary's frozen source. A verification document's
+`verifies` field names its stage and must match its role; the role's
+layout `verifies` names the roles its verdict settles (ADR 114).
 
-## Members
-
-The layout above declares the members. Every set has the boundary and the
-overview. A boundary whose `result-disposition` is `complete` adds the four
-reports, the memory profile, the synthesis and the three verifications; any
-other disposition admits no other member. Membership is closed. Each member
-has its own type and passes ordinary file validation on its own.
-
-The boundary is written first. It declares the analysed source and the run
-and boundary identity that every other member repeats; the overview repeats
-all of its boundary fields and its disposition. The overview is an entry
-page: it declares no sources or records. A member's record references
-resolve against the members its role cites. The profile cites only the
-three analyst reports: it declares or annotates no records, contributes no
-new evidence, cites no source directly, and its source identity matches the
-memory report's.
-
-## Whole-set checks
-
-Beyond the layout, validation of the set checks that the manifest pins every
-member once it pins any, that no record is declared twice, the overview's
-amendment index against the reconciliation, the profile's comparison
-references, and that every member's quotations resolve against the
-boundary's frozen source, with unavailable pinned bytes reported as
-unverified rather than failed.
-
-The word `verifies` has two uses. A verification document's `verifies`
-field names its stage, `records`, `profile` or `synthesis`, and must match
-its role. A verification role's layout entry `verifies` names the roles
-whose acceptance its verdict settles; validation only checks that the names
-are roles, and the engine covers each such relation by a judgment of the
-verified version (ADR 114).
-
-A verification's Blockers and Limits are `none` or Markdown lists, and a
-record blocker starts with the report it addresses. Every limit that cites
-record IDs has at least one of those IDs in the synthesis's Limitations.
-This checks traceability, not whether the synthesis states the consequence
-faithfully; review judges that. The memory report's provenance is a
-workflow check, not a set check.
-
-## Working and published sets
-
-Until publication pins the manifest, whole-set validation reports it as
-unpinned. A published set is frozen: its manifest pins every member, and a
-correction is a new run. Earlier versions, answers, attempts, judgments and
-prompts stay in the run's state and are never published.
+A published set is frozen: a correction is a new run, and the run's earlier
+versions, answers, attempts, judgments and prompts are never published.
