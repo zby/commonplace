@@ -363,16 +363,22 @@ instruction holds only its mission.
   that frame, after the input lines and before the reading batches. A plan
   without the key gets today's prompt, so the toy plan is untouched. One
   composer: the template fills its slot and nothing else.
-- **Slots.** `{name}` placeholders in the parameter grammar, filled from
-  the plan, the layout and the run: `{role}`; `{member-type}`, the
-  layout's type for the role; `{set-type}`, the run's type; `{output}`,
-  the primary output; `{answers}`, the second output or empty;
-  `{validation-artifact}` and `{validation-role}`; and `{param:<name>}`
-  for a run parameter, as in a model job's parameters. An unknown
-  placeholder is a plan error at start. One conditional: a paragraph
-  whose first line is `[answers]` is kept, without the marker, only for a
-  job that declares an answers output. A second template file for
-  answering jobs was the alternative and would repeat the rest.
+- **Slots are lines.** Every `name = value` line the frame prints is
+  available in the template as `{name}` with the same value, and no other
+  slot exists; the frame prints a `role` line for role-filling jobs so
+  `{role}` is one. So `{output}` and `{output-answers}` are paths, as the
+  lines are; `{member-type}`, `{set-type}` and `{<role>-type}` are the
+  handed type files; `{validation-artifact}` and `{validation-role}` are
+  the parameter lines. A run parameter the template needs is declared in
+  the plan's `parameters`, which prints it as a line; `{param:<name>}` and
+  `{artifact}` appear only there, so the plan is the one place that
+  substitutes run values. An unknown placeholder is a plan error at
+  start. One conditional: a paragraph whose first line is `[<name>]` is
+  kept, without the marker, when the prompt has that line, so
+  `[output-answers]` marks the answers paragraph and `[refusal]` would
+  mark a repair one. Decided 2026-10-09 after the first version gave
+  `{output}` the output's name while the line gave its path, and the
+  template used a third notation to reach the line.
 - **Derived type inputs.** Each role-filling model job receives as file
   inputs its own role's type as `member-type` and the type of each role it
   reads as `<role>-type`, and as `set-type` the run's type through a new
