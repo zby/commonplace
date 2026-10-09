@@ -216,19 +216,13 @@ the analysis artifact has at a fraction of the cost.
 
 ## Choices within option 5
 
-- **Where "verifies" lives.** The loader must know that record-verification
-  judges the records. Either the plan says so on the verifier's entry, or
-  the type declares `verifies` beside `cites` as a second relation kind.
-  Candidate: the type. That a published analysis contains verified records
-  is part of what the artifact is, and the relation
-  `record-verification:cites:runtime` already carries acceptance semantics
-  through coverage. This amends ADR 111's layout vocabulary with one
-  coverage invariant: a structural check never covers a `verifies`
-  relation. The verdict's content acceptance excludes its subjects, as the
-  shared check's scope rule does today, and only the apply job judges a
-  `verifies` relation, against the exact versions the verifier was handed,
-  never the current members. Without the invariant, a content pass on the
-  verdict document would satisfy coverage by itself.
+- **Where "verifies" lives.** Decided by
+  [ADR 114](../adr/114-directory-types-declare-what-a-role-verifies.md):
+  the type declares `verifies` beside `cites`, the engine derives a
+  `verifies` relation per entry, coverage requires it, and a structural
+  check never covers it. The loader reads a verifier's subjects from the
+  layout, and the apply job judges the handed versions over the `verifies`
+  relations.
 - **Reads against cites.** `reads` stays in the plan, defaulting to cites
   plus identity sources, so most entries declare nothing. Widening the
   type's `cites` to mean reads would make the validator read mission.
@@ -336,5 +330,5 @@ form and relations, not analytical truth.
   check already.
 - Option 6: a consumer where a verdict's subjects are the current members
   and the coordinator's judgment call is simpler than a routing handler.
-- The "verifies" choice: an ADR revising ADR 111's layout vocabulary, or a
-  recorded decision to keep it in the plan.
+- The "verifies" choice: decided in ADR 114; its criterion is the engine
+  refusing coverage to an artifact whose verifier has not judged a subject.

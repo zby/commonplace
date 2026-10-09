@@ -10,6 +10,8 @@ status: accepted
 **Date:** 2026-10-06
 **Amends:** [ADR 095](./095-directory-artifacts-add-shared-set-validation.md): the layout, not the schema, owns membership; the schema keeps the manifest's instance metadata and hashes.
 
+**Amended by:** [ADR 114](./114-directory-types-declare-what-a-role-verifies.md). A role may declare `verifies`, a relation kind the engine covers only by a judgment of the handed version; the sentence below that verifications are not members predates ADR 113.
+
 ## Context
 
 ADR 095 let a directory type's JSON Schema own membership. The schema could
