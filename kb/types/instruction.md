@@ -63,7 +63,7 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 
 ## Operativity
 
-An instruction changes system behavior only through a path: something consumes it, over some channel, with some force. Before writing or editing one, name that path — what loads this text (harness skill selection, a collection contract, a link from another instruction, a human invoking it) and when it fires. An instruction nothing loads is inert: it persists, stays true, and changes nothing — and it fails silently, because no consumer means no error either.
+An instruction changes system behavior only through a path: something consumes it, over some channel, with some force. An instruction must identify its consumption path: what loads the text, when it fires, and what authority its requirements have for that consumer. Examples of loaders include harness skill selection, a collection contract, a link from another instruction, or a human invoking it; no particular loader is required. An instruction nothing loads is inert: it persists, stays true, and changes nothing — and it fails silently, because no consumer means no error either.
 
 The same path defines what the instruction may omit as inherited. When a packet
 depends on an upstream contract by omitting one of its rules, a change to that

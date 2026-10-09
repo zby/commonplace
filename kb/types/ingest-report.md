@@ -172,7 +172,7 @@ than the retained extracts provide.
 - Useful value classes include evidence for an existing claim, contradiction or limitation affecting current KB content, reusable method or workflow, data point or empirical result, vocabulary or framing that improves retrieval and discussion, operational warning or failure mode, and candidate artifact to write, update, retire, or review.
 - Mark extractable value items with effort tags: `[quick-win]`, `[experiment]`, `[deep-dive]`, or `[just-a-reference]`.
 - Assess reach: high-reach findings explain why something works beyond the source's local context; context-bound observations should be flagged.
-- Before writing limitations, ask what is surprising, what simpler account could explain the result, and whether the central claim is hard to vary.
+- Limitations must explain what weakens or bounds the source's central claim, rather than merely list generic caveats. For example, asking what is surprising, what simpler account could explain the result, or whether the central claim is hard to vary may help identify those limits; these are optional prompts, not a required checklist.
 - Be specific in the recommended action: name the note, reference document, runbook, instruction, policy, ADR, product requirement, dataset, incident note, or other local artifact to write, update, retire, or review. Filing as a source-only reference or scheduling a focused brainstorm are also valid when that is the right destination.
 - Notes remain the default promotion target for transferable claims, but the recommended action may point to another local artifact type when collection contracts make that the better home.
 

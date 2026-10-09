@@ -27,7 +27,7 @@ The description should answer "why this document?" for a future retrieval decisi
 
 `user-verified: true` means a human user explicitly attests that the artifact's current substantive contents have been verified. Absence means only that there is no current user attestation; it says nothing about truth, maturity, currency, or review history.
 
-Never add the field during creation, conversion, deterministic validation, or semantic review. A substantive edit must remove it. Preserve it only for a mechanical change covered by an explicit human-approved trivial-change workflow.
+Creation, conversion, deterministic validation, and semantic review do not confer human verification; their outputs must not carry a newly granted `user-verified` field. After a substantive edit, the field must be absent until a human explicitly verifies the revised contents. An existing attestation remains valid across a mechanical change only when that change is covered by an explicit human-approved trivial-change workflow.
 
 ## Traits
 
