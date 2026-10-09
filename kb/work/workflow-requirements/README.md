@@ -102,6 +102,12 @@ apply handler could take as protocol from this consumer's own content, for
 the [plans-without-consumer-code](../../reference/proposals/plans-without-structural-wrapper-code.md)
 design.
 
+## The analysis layout
+
+[The analysis set's layout](./analysis-layout.md) writes out the roles,
+what each cites, verifies and is verified by, and which job covers each
+kind of relation, under ADR 114.
+
 ## Related
 
 - [Code-scheduled workflows](../../reference/proposals/archive/code-scheduled-workflows.md),
