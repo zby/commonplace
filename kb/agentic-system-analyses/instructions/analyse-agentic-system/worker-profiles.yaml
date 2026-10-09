@@ -2,7 +2,7 @@
 # start, or its harness's default; opening records it, and every worker of
 # the run uses it.
 defaults:
-  claude-code: opus
+  claude-code: sonnet
   codex: codex-sol
   pi: pi-luna
 profiles:
