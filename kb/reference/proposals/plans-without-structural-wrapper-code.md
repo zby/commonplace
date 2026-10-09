@@ -387,8 +387,8 @@ deletes checks the opener and the analyst check carry until then.
    the type closure uses the validator's reference resolver, not its own;
    a code job whose judgment stopped holding because an optional basis
    input disappeared becomes ready, model jobs unchanged; and the fidelity
-   test asserts every derived job's declared checks and feedback. The
-   regression is fixed first.
+   test asserts every derived job's declared checks and feedback. All five
+   are fixed as of 2026-10-09.
 4. Run binding as identity, deleting the opener's and the analyst check's
    remaining duplicates.
 
