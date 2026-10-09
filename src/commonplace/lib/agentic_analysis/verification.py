@@ -8,6 +8,18 @@ from __future__ import annotations
 
 import json
 
+from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.checks import (
+    blocker_entries,
+    candidate,
+    criterion_bytes,
+    frozen_source,
+    judge,
+    manifest,
+    review,
+    snapshot,
+)
+from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.agentic_analysis.guards import checkout
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
@@ -18,18 +30,6 @@ from commonplace.lib.note_parser import section
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import ValidationRun
-from commonplace.setrun.checks import (
-    blocker_entries,
-    candidate,
-    criterion_bytes,
-    frozen_source,
-    judge,
-    manifest,
-    review,
-    snapshot,
-)
-from commonplace.setrun.sources import frozen_source_refusals
-from commonplace.workflow import CodeAttempt
 
 ANALYSTS = ("runtime", "memory", "epistemic")
 RECORDS = (*ANALYSTS, "reconciliation")
@@ -48,7 +48,7 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     """Set_check returns record content and relation findings from one pinned snapshot."""
     members = snapshot(attempt, PARTNERS)
     source = frozen_source(attempt, members, "boundary")
-    directory = (attempt.run_dir / "set").resolve()
+    directory = (attempt.run_dir / "artifact").resolve()
     repo = checkout(attempt.run_dir)
     run = ValidationRun(
         repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},

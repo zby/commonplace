@@ -6,8 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.note_parser import parse_document
-from commonplace.setrun.sources import frozen_source_refusals
 
 
 def boundary_refusals(

@@ -7,11 +7,11 @@ from pathlib import Path
 import pytest
 import yaml
 
+from commonplace.artifactrun import start_run
+from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
+from commonplace.artifactrun.store import RunStore, digest
 from commonplace.lib.agentic_analysis import verification as handlers
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.workflow import start_run
-from commonplace.workflow.state import CodeAttempt, Resolved, Run
-from commonplace.workflow.store import RunStore, digest
+from commonplace.lib.agentic_analysis.plan import PLAN
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     parameters,
@@ -27,7 +27,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
-from tests.commonplace.workflow.support import Coordinator
+from tests.commonplace.artifactrun.support import Coordinator
 
 pytestmark = pytest.mark.slow
 
@@ -36,7 +36,7 @@ pytestmark = pytest.mark.slow
 def records(request, tmp_path):
     start, _ = request.getfixturevalue("local_acquisition")
     a = start(analysts=True)
-    data = yaml.safe_load((a.prepared.repo / "kb" / JOB_SET).read_text())
+    data = yaml.safe_load((a.prepared.repo / "kb" / PLAN).read_text())
     data["jobs"] = data["jobs"][:15]
     declaration = tmp_path / "restricted-record-jobs.yaml"
     declaration.write_text(yaml.safe_dump(data))
@@ -124,7 +124,7 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
     a.coordinator.complete("reconcile", reconciliation(a, body, **changes))
     j = judgments(a, "check-reconcile")[-1]
     assert j["outcome"] == "refused" and reason in j["findings"]
-    assert not (a.coordinator.run_dir / "set/reconciliation.md").exists()
+    assert not (a.coordinator.run_dir / "artifact/reconciliation.md").exists()
 
 
 @pytest.mark.parametrize("blockers,changes,reason", [
@@ -180,8 +180,8 @@ def test_set_check_uses_pinned_content_not_projection_or_later_members(records):
     to_verifier(a)
     clean = code_attempt(a, "set-check")
     baseline = handlers.set_check(clean)
-    (a.coordinator.run_dir / "set/runtime.md").write_text("untracked malformed projection")
-    (a.coordinator.run_dir / "set/synthesis.md").write_text("untracked later member")
+    (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
+    (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
     assert handlers.set_check(clean) == baseline
     bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
     findings = handlers.set_check(code_attempt(a, "set-check", {"runtime": bad}))["findings"].decode()

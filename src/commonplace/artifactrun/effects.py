@@ -17,7 +17,7 @@ from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.workflow import UncertainEffectError
+from commonplace.artifactrun import UncertainEffectError
 
 
 def atomic_write(path: Path, content: bytes) -> None:

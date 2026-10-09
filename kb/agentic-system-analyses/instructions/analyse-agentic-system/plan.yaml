@@ -1,4 +1,4 @@
-# The analyse-agentic-system job set for the workflow engine.
+# The analyse-agentic-system plan for the artifact-run engine.
 # File inputs are relative to the library root recorded by start_run.
 # Criteria groups expand into ordinary file inputs of the jobs that list
 # them; each stays a live, pinned rerun trigger (scenario 8). Code checks
@@ -76,7 +76,7 @@ jobs:
     opening: {address: output, source: 'open:metadata', required: true}
     source: {address: output, source: 'acquire:source', required: true}
     refusal: {address: refusal, source: boundary, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: boundary.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: boundary.md}
 - name: check-boundary
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.check_boundary
@@ -104,7 +104,7 @@ jobs:
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
     boundary: {address: member, source: boundary, required: true}
     refusal: {address: refusal, source: runtime, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: runtime.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: runtime.md}
 - name: check-runtime
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.check_runtime
@@ -135,7 +135,7 @@ jobs:
     boundary: {address: member, source: boundary, required: true}
     refusal: {address: refusal, source: memory, required: false}
     runtime: {address: member, source: runtime, order_only: true}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: memory.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: memory.md}
 - name: check-memory
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.check_memory
@@ -167,7 +167,7 @@ jobs:
     boundary: {address: member, source: boundary, required: true}
     refusal: {address: refusal, source: epistemic, required: false}
     runtime: {address: member, source: runtime, order_only: true}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: epistemic.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: epistemic.md}
 - name: check-epistemic
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.check_epistemic
@@ -203,7 +203,7 @@ jobs:
     memory: {address: member, source: memory, required: true}
     epistemic: {address: member, source: epistemic, required: true}
     refusal: {address: refusal, source: reconcile, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: reconciliation.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: reconciliation.md}
 - name: check-reconcile
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.check_reconcile
@@ -255,7 +255,7 @@ jobs:
     epistemic-answers: {address: output, source: 'epistemic:answers', required: false}
     refusal: {address: refusal, source: verify, required: false}
     set-check: {address: output, source: 'set-check:findings'}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: record-verification.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: record-verification.md}
 - name: apply-verify
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.apply_verify
@@ -293,7 +293,7 @@ jobs:
     epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:cites:epistemic', outcome: accepted}
     reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation', outcome: accepted}
     refusal: {address: refusal, source: profile, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: memory-profile.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: memory-profile.md}
 - name: check-profile
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.check_profile
@@ -331,7 +331,7 @@ jobs:
     reconciliation: {address: member, source: reconciliation, required: true}
     profile: {address: member, source: memory-profile, required: true}
     refusal: {address: refusal, source: verify-profile, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: profile-verification.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: profile-verification.md}
 - name: apply-verify-profile
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_profile
@@ -374,7 +374,7 @@ jobs:
     reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation', outcome: accepted}
     profile-verified: {address: judgment, source: memory-profile, required: true, relation: 'profile-verification:cites:memory-profile', outcome: accepted}
     refusal: {address: refusal, source: synthesize, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: synthesis.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: synthesis.md}
 - name: check-synthesize
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.check_synthesize
@@ -416,7 +416,7 @@ jobs:
     record-verification: {address: member, source: record-verification, required: true}
     profile-verification: {address: member, source: profile-verification, required: true}
     refusal: {address: refusal, source: verify-synthesis, required: false}
-  parameters: {system: '{param:system}', validation-set: '{set}', validation-member: synthesis-verification.md}
+  parameters: {system: '{param:system}', validation-set: '{artifact}', validation-member: synthesis-verification.md}
 - name: apply-verify-synthesis
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_synthesis

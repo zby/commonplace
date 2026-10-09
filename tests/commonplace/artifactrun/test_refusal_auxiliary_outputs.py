@@ -10,9 +10,9 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.support import Coordinator, custom_run
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore
+from tests.commonplace.artifactrun.support import Coordinator, custom_run
 
 ANSWER = "- declined: the frozen evidence supports the finding.\n"
 

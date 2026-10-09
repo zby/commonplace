@@ -7,6 +7,8 @@ from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.artifactrun import effects
+from commonplace.artifactrun.worktree import require_clean_worktree, source_checkout
 from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
@@ -14,8 +16,6 @@ from commonplace.lib.agentic_analysis.sets import (
     is_review_path,
 )
 from commonplace.lib.source_identity import normalize_source_identity
-from commonplace.setrun import effects
-from commonplace.setrun.isolation import require_clean_worktree, source_checkout
 
 # A sibling run's publication may remain uncommitted while a batch runs.
 OUTPUT_LOCATIONS: tuple[str, ...] = (f"{RETAINED_ROOT.as_posix()}/", f"{ARCHIVE_ROOT.as_posix()}/")

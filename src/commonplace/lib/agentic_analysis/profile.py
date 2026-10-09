@@ -8,16 +8,16 @@ The declaration must supply all criterion files read by content validation.
 
 from __future__ import annotations
 
-from commonplace.lib.agentic_analysis.guards import checkout
-from commonplace.lib.note_parser import parse_document, section
-from commonplace.setrun.checks import (
+from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.checks import (
     answer_reasons,
     candidate,
     content_reasons,
     judge,
     review,
 )
-from commonplace.workflow import CodeAttempt
+from commonplace.lib.agentic_analysis.guards import checkout
+from commonplace.lib.note_parser import parse_document, section
 
 _RECORDS = ("boundary", "runtime", "memory", "epistemic", "reconciliation")
 _PRIOR_VERDICTS = ("record-verification", "profile-verification")

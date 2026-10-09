@@ -6,8 +6,8 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from commonplace.setrun import checks
-from commonplace.workflow.state import _parse_type
+from commonplace.artifactrun import checks
+from commonplace.artifactrun.run import _parse_type
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 

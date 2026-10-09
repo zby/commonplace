@@ -24,9 +24,9 @@ import yaml
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
-from .declaration import CodeJob, Input, ModelJob, check_relations, load_job_set
 from .handouts import Handout, _open, handout_for
-from .state import CodeAttempt, Resolved, Run, _parse_type
+from .plan import CodeJob, Input, ModelJob, check_relations, load_plan
+from .run import CodeAttempt, Resolved, Run, _parse_type
 from .store import RunStore, digest
 
 MAX_CODE_RUNS = 10_000
@@ -77,25 +77,25 @@ class RunStatus:
 # Operations
 
 
-def start_run(run_dir: Path, job_set: Path, *, parameters: Mapping[str, str] | None = None) -> None:
-    """Start a run: write metadata naming the job set and the run parameters."""
+def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None = None) -> None:
+    """Start a run: write metadata naming the plan and the run parameters."""
     store = RunStore(Path(run_dir))
     if store.metadata.exists():
         raise FileExistsError(f"{run_dir} already holds a run")
-    declaration = Path(job_set).read_text(encoding="utf-8")
+    declaration = Path(plan).read_text(encoding="utf-8")
     library = library_root().resolve()
-    type_spec = load_job_set(declaration).type_spec
+    type_spec = load_plan(declaration).type_spec
     type_text = (library / type_spec).read_text(encoding="utf-8")
     layout, relations = _parse_type(type_text, str(type_spec))
-    jobs = load_job_set(declaration, layout.roles)
+    jobs = load_plan(declaration, layout.roles)
     check_relations(jobs, [relation for _, _, relation in relations])
     given = dict(parameters or {})
     missing = sorted({name for job in jobs.jobs if isinstance(job, ModelJob)
                       for name in job.run_parameters()} - set(given))
     if missing:
-        raise ValueError(f"the job set substitutes run parameters not given: {', '.join(missing)}")
+        raise ValueError(f"the plan substitutes run parameters not given: {', '.join(missing)}")
     store.create({
-        "job_set": str(Path(job_set).resolve()),
+        "plan": str(Path(plan).resolve()),
         "declaration": declaration,
         "type_spec": str(type_spec),
         "library": str(library),
@@ -272,9 +272,9 @@ def _inspect(run: Run) -> dict:
 
 
 def _declaration_identity(run: Run) -> dict:
-    """Which job set and type the run fixed at start, by path and content digest."""
+    """Which plan and type the run fixed at start, by path and content digest."""
     metadata = run.store.read_metadata()
-    return {"job_set": metadata["job_set"], "sha256": digest(metadata["declaration"].encode("utf-8")),
+    return {"plan": metadata["plan"], "sha256": digest(metadata["declaration"].encode("utf-8")),
             "type_spec": metadata["type_spec"], "type_sha256": digest(metadata["type"].encode("utf-8"))}
 
 
@@ -398,22 +398,22 @@ def _sweep(run: Run) -> None:
 
 
 def _materialize(run: Run) -> None:
-    """Make `set/` hold exactly the members and the manifest, from the records.
+    """Make `artifact/` hold exactly the members and the manifest, from the records.
 
     The manifest is the directory artifact's, not a member: the engine writes
     it naming only the type, as a working set's is. Pinning member digests is
-    publication's, which copies the set out.
+    publication's, which copies the artifact out.
     """
     members = run.members()
     wanted = {run.layout.path(role): version for role, version in members.items()}
     wanted[MANIFEST_NAME] = run.store.put(yaml.safe_dump({"type": run.type_spec}).encode())
-    set_dir = run.store.set_dir
-    set_dir.mkdir(parents=True, exist_ok=True)
-    for path in set_dir.iterdir():
+    artifact_dir = run.store.artifact_dir
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    for path in artifact_dir.iterdir():
         if path.name not in wanted:
             run.store.remove(path)
     for name, version in wanted.items():
-        path = set_dir / name
+        path = artifact_dir / name
         data = run.store.get(version)
         if not path.is_file() or path.read_bytes() != data:
             run.store.write_bytes(path, data)
@@ -434,7 +434,7 @@ def _run_code_jobs(run: Run) -> Stop | None:
                             for peer in run.producers(job) & pending)), None)
         if job is None:
             return None
-        # A handler may read the set directory (draft-at-slot validation does),
+        # A handler may read the artifact directory (draft-at-slot validation does),
         # so it must hold the current members when the job's inputs are pinned.
         _materialize(run)
         stop = _run_code_job(run, job)
@@ -445,9 +445,9 @@ def _run_code_jobs(run: Run) -> Stop | None:
 
 
 def _moved_members(run: Run, job: CodeJob, pins: Mapping[str, Resolved]) -> list[str]:
-    """Member inputs whose file in `set/` is not the pinned version.
+    """Member inputs whose file in `artifact/` is not the pinned version.
 
-    The set was rebuilt just before pinning, so a mismatch means something
+    The artifact was rebuilt just before pinning, so a mismatch means something
     outside the engine changed it, or an engine defect; the job must not run
     against bytes its record would not describe.
     """
@@ -455,7 +455,7 @@ def _moved_members(run: Run, job: CodeJob, pins: Mapping[str, Resolved]) -> list
     for name, spec in job.inputs.items():
         if spec.address != "member" or pins[name].version is None:
             continue
-        path = run.store.set_dir / run.layout.path(spec.source)
+        path = run.store.artifact_dir / run.layout.path(spec.source)
         if not path.is_file() or digest(path.read_bytes()) != pins[name].version:
             moved.append(spec.source)
     return moved
@@ -473,7 +473,7 @@ def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
               "pins": {name: pinned.pin() for name, pinned in pins.items()}}
     moved = _moved_members(run, job, pins)
     if moved:
-        reason = "the set directory does not hold the pinned version of " + ", ".join(moved)
+        reason = "the artifact directory does not hold the pinned version of " + ", ".join(moved)
         store.fail_attempt(record, reason)
         return Stop(reason, job.name, attempt)
     code_attempt = CodeAttempt(run, job, pins)

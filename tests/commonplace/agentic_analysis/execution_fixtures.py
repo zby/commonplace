@@ -17,13 +17,12 @@ import pytest
 import yaml
 
 import commonplace
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.setrun import isolation
-from commonplace.setrun import sources as agentic_checkout
-from commonplace.setrun.sources import JOURNAL
-from commonplace.workflow import start_run
-from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.support import Coordinator
+from commonplace.artifactrun import sources as agentic_checkout
+from commonplace.artifactrun import start_run, worktree
+from commonplace.artifactrun.sources import JOURNAL
+from commonplace.artifactrun.store import RunStore
+from commonplace.lib.agentic_analysis.plan import PLAN
+from tests.commonplace.artifactrun.support import Coordinator
 
 ROOT = Path(__file__).resolve().parents[3]
 TOKEN = "0123456789ab"
@@ -72,7 +71,7 @@ class Prepared:
         self.monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(library or self.repo / "kb"))
         run_dir = self.repo / "kb/agentic-system-analyses/state" / name
         # Deliberately stop before acquisition despite the fully bound shipped graph.
-        data = yaml.safe_load((self.repo / "kb" / JOB_SET).read_text())
+        data = yaml.safe_load((self.repo / "kb" / PLAN).read_text())
         data["jobs"] = data["jobs"][:2]
         data["jobs"][1]["handler"] = "tests.commonplace.agentic_analysis.execution_fixtures.stop_before_acquisition"
         declaration = self.repo.parent / "opening-only.yaml"
@@ -112,9 +111,9 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
     shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")
     (repo / "kb/reference").mkdir(parents=True)
     shutil.copy2(ROOT / "kb/reference/validation-contract.md", repo / "kb/reference/validation-contract.md")
-    (repo / "src/commonplace/workflow").mkdir(parents=True)
+    (repo / "src/commonplace/artifactrun").mkdir(parents=True)
     (repo / "src/commonplace/__init__.py").write_text("# Local package binding fixture.\n")
-    (repo / "src/commonplace/workflow/engine.py").write_text("# Source-checkout marker.\n")
+    (repo / "src/commonplace/artifactrun/engine.py").write_text("# Source-checkout marker.\n")
     (repo / ".gitignore").write_text("kb/agentic-system-analyses/state/\nrelated-systems/\n")
     git(repo, "init", "--quiet")
     git(repo, "config", "user.name", "Fixture")
@@ -127,7 +126,7 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
     # Exercise the real binding/package guards against this scripted checkout,
     # without installing or importing a second package in the test process.
     monkeypatch.setattr(commonplace, "__file__", str(repo / "src/commonplace/__init__.py"))
-    monkeypatch.setattr(isolation, "running_package_root", lambda: repo)
+    monkeypatch.setattr(worktree, "running_package_root", lambda: repo)
     return fixture
 
 
@@ -202,7 +201,7 @@ def acquisition(request, monkeypatch, tmp_path):
     def start(*, revision=None, identity=None, boundary=False, analysts=False, production=False):
         # No actual workers. Truncate the fully bound shipped declaration to
         # isolate acquisition, boundary or analysts unless production is requested.
-        data = yaml.safe_load((prepared.repo / "kb" / JOB_SET).read_text())
+        data = yaml.safe_load((prepared.repo / "kb" / PLAN).read_text())
         if not production:
             data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
         if boundary or analysts:

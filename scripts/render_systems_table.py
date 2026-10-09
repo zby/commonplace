@@ -7,7 +7,7 @@ import os
 import sys
 from pathlib import Path
 
-from commonplace.setrun.effects import atomic_write
+from commonplace.artifactrun.effects import atomic_write
 from commonplace.lib.systems_matrix import load_results
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

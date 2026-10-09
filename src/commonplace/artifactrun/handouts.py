@@ -17,8 +17,8 @@ from commonplace.lib.reading_batches import (
     reading_ranges,
 )
 
-from .declaration import PLACEHOLDER, ModelJob
-from .state import Run
+from .plan import PLACEHOLDER, ModelJob
+from .run import Run
 
 
 @dataclass(frozen=True)
@@ -77,7 +77,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     problem = directory / "problem.md"
     run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
-                  "set": str(store.set_dir), "workspace": f"{directory}/"}
+                  "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
     values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name != job.instruction}

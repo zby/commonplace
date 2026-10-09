@@ -1,6 +1,6 @@
-"""A toy set type, a job set over it, and a scripted coordinator.
+"""A toy set type, a plan over it, and a scripted coordinator.
 
-The toy job set mirrors the analysis mapping in
+The toy plan mirrors the analysis mapping in
 kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
 
 | Toy job | Analysis role | Kind |
@@ -44,7 +44,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.workflow import (
+from commonplace.artifactrun import (
     AttemptResult,
     Handout,
     RunStatus,
@@ -52,15 +52,15 @@ from commonplace.workflow import (
     advance,
     start_run,
 )
-from tests.commonplace.workflow.handlers import INTERRUPT_ENV, LOG_ENV
+from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV, LOG_ENV
 
-HANDLERS = "tests.commonplace.workflow.handlers"
+HANDLERS = "tests.commonplace.artifactrun.handlers"
 
 COMPLETE_BRIEF = "---\ndisposition: complete\n---\n# Brief\n"
 BLOCKED_BRIEF = "---\ndisposition: blocked\n---\n# Brief\n"
 
 TOY_TYPE = {
-    "description": "A toy set for workflow engine tests.",
+    "description": "A toy artifact for artifact-run engine tests.",
     "type": "types/type-spec.md",
     "name": "toy-set",
     "layout": {
@@ -95,7 +95,7 @@ MODEL_JOBS = ("brief", "report", "other", "summary", "verify", "digest")
 def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordinator:
     """A toy run whose declaration `edit` changes before the run starts."""
     declaration, method = toy_library(tmp_path)
-    data = job_set(method)
+    data = plan(method)
     edit({job["name"]: job for job in data["jobs"]})
     declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
     log = tmp_path / "handlers.log"
@@ -116,7 +116,7 @@ def _optional(address: str, source: str) -> dict:
     return {"address": address, "source": source, "required": False}
 
 
-def job_set(method: Path) -> dict:
+def plan(method: Path) -> dict:
     """The toy declaration; file inputs point into `method`."""
 
     def file(name: str) -> dict:
@@ -159,7 +159,7 @@ def job_set(method: Path) -> dict:
             code("check-brief", "check_brief", {"candidate": candidate("brief")}),
             {**model("report", "report", {"brief": _member("brief"), "refusal": _optional("refusal", "report")},
                      ["report", "answers"], max_attempts=3),
-             "parameters": {"system": "{param:subject}", "validation-member": "{set}/report.md"}},
+             "parameters": {"system": "{param:subject}", "validation-member": "{artifact}/report.md"}},
             code("check-report", "check_report", {
                 "candidate": candidate("report"),
                 "brief": _member("brief"),
@@ -283,7 +283,7 @@ class Coordinator:
         return matches[0]
 
     def member(self, role: str) -> str | None:
-        path = self.run_dir / "set" / TOY_TYPE["layout"]["roles"][role]["path"]
+        path = self.run_dir / "artifact" / TOY_TYPE["layout"]["roles"][role]["path"]
         return path.read_text(encoding="utf-8") if path.exists() else None
 
     def ran(self) -> list[str]:
@@ -333,7 +333,7 @@ class Coordinator:
 
 
 def toy_library(tmp_path: Path) -> tuple[Path, Path]:
-    """Write the toy type and job set under tmp_path/kb; return (declaration, method dir)."""
+    """Write the toy type and plan under tmp_path/kb; return (declaration, method dir)."""
     kb = tmp_path / "kb"
     types = kb / "types"
     types.mkdir(parents=True)
@@ -346,6 +346,6 @@ def toy_library(tmp_path: Path) -> tuple[Path, Path]:
         (method / f"{job}.md").write_text(f"# {job}\n\nWrite the {job}.\n", encoding="utf-8")
     (method / "contract-report.md").write_text("# Report contract\n", encoding="utf-8")
     declaration = method / "jobs.yaml"
-    declaration.write_text(yaml.safe_dump(job_set(method), sort_keys=False), encoding="utf-8")
+    declaration.write_text(yaml.safe_dump(plan(method), sort_keys=False), encoding="utf-8")
     return declaration, method
 

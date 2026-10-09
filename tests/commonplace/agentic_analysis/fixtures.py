@@ -1,4 +1,4 @@
-"""Reusable retained-set and member fixtures, without workflow execution."""
+"""Reusable retained-set and member fixtures, without artifact-run execution."""
 from __future__ import annotations
 
 import json
@@ -182,7 +182,7 @@ def profile_report_fixture(run_dir: Path, revision: str, *, version: int = 1) ->
         "run-id": RUN_ID, "source-identity": SOURCE,
         "reviewed-boundary": revision, "memory-comparison": profile,
     }
-    return write(run_dir / "set/memory-profile.md", "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n# Fixture memory profile\n\n## Comparison rationale\n\nBoth stores are MEM-OBJ-store.\n")
+    return write(run_dir / "artifact/memory-profile.md", "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n# Fixture memory profile\n\n## Comparison rationale\n\nBoth stores are MEM-OBJ-store.\n")
 
 
 def memory_report_fixture(run_dir: Path, revision: str) -> Path:
@@ -255,7 +255,7 @@ none
 Fixture evidence.
 """
     return write(
-        run_dir / "set/memory.md",
+        run_dir / "artifact/memory.md",
         "---\n" + yaml.safe_dump(values, sort_keys=False) + "---\n\n" + body,
     )
 
@@ -443,7 +443,7 @@ def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
 
 def output_path(run_dir: Path, name: str) -> Path:
     if name in (*SET_NAMES, "ARTIFACT.yaml"):
-        return run_dir / "set" / name
+        return run_dir / "artifact" / name
     return run_dir / name
 
 
@@ -464,16 +464,16 @@ def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
 
 def write_set(run_dir: Path, revision: str, *, source_path: Path | None = None) -> Path:
     """Write the members and the overview pinning them."""
-    write(run_dir / "set/boundary.md", boundary_text(
+    write(run_dir / "artifact/boundary.md", boundary_text(
         revision, **({"path": source_path.as_posix()} if source_path else {})))
     members = {
-        "runtime.md": write(run_dir / "set/runtime.md", runtime_text(revision)),
+        "runtime.md": write(run_dir / "artifact/runtime.md", runtime_text(revision)),
         "memory.md": memory_report_fixture(run_dir, revision),
         "memory-profile.md": profile_report_fixture(run_dir, revision),
-        "epistemic.md": write(run_dir / "set/epistemic.md", epistemic_text(revision)),
-        "reconciliation.md": write(run_dir / "set/reconciliation.md", reconciliation_text(revision)),
+        "epistemic.md": write(run_dir / "artifact/epistemic.md", epistemic_text(revision)),
+        "reconciliation.md": write(run_dir / "artifact/reconciliation.md", reconciliation_text(revision)),
     }
-    write(run_dir / "set/synthesis.md", f'''---
+    write(run_dir / "artifact/synthesis.md", f'''---
 type: agentic-system-analyses/types/agentic-system-synthesis.md
 description: "Fixture synthesis retains supported object and route conclusions at the frozen boundary"
 run-id: {RUN_ID}
@@ -493,7 +493,7 @@ None.
     for stage, name in (("records", "record-verification.md"),
                         ("profile", "profile-verification.md"),
                         ("synthesis", "synthesis-verification.md")):
-        write(run_dir / "set" / name, f'''---
+        write(run_dir / "artifact" / name, f'''---
 type: agentic-system-analyses/types/agentic-system-verification.md
 description: "Independent fixture verification of the accepted {stage} at the frozen boundary"
 run-id: {RUN_ID}
@@ -515,8 +515,8 @@ none
 
 none
 ''')
-    overview = write(run_dir / "set/overview.md", overview_text(revision, members))
-    repin(run_dir / "set")
+    overview = write(run_dir / "artifact/overview.md", overview_text(revision, members))
+    repin(run_dir / "artifact")
     return overview
 
 

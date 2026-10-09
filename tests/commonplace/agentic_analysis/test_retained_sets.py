@@ -32,7 +32,7 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> None:
     run = member_fixture(tmp_path)
-    reconciliation = run / "set/reconciliation.md"
+    reconciliation = run / "artifact/reconciliation.md"
     reconciliation.write_text(reconciliation.read_text() +
         "\nAmendment: EPI-OBJ-store is superseded by RT-OBJ-store; identity evidence at SRC-1.\n")
     repin(reconciliation.parent)
@@ -41,7 +41,7 @@ def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> No
 
 
 def test_manifest_hash_must_be_a_digest(tmp_path):
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     manifest = directory / "ARTIFACT.yaml"
     values = yaml.safe_load(manifest.read_text())
     values["members"]["runtime.md"]["sha256"] = "bad"
@@ -52,7 +52,7 @@ def test_manifest_hash_must_be_a_digest(tmp_path):
 
 @pytest.mark.parametrize("mutation", ["valid", "outside"])
 def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation: str) -> None:
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     memory = directory / "memory.md"
     report = directory / "memory-profile.md"
     body = memory.read_text().replace(
@@ -160,8 +160,8 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
     ("[runtime member](runtime.md)", None),
 ])
 def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: str, error: str | None) -> None:
-    """A link out of set/ resolves in the run directory but breaks once retained."""
-    overview = member_fixture(tmp_path) / "set/overview.md"
+    """A link out of artifact/ resolves in the run directory but breaks once retained."""
+    overview = member_fixture(tmp_path) / "artifact/overview.md"
     overview.write_text(overview.read_text() + f"\nRead {link}.\n")
     fails = validation.validate_note(overview, repo_root=tmp_path).fails
     if error is None:
@@ -176,7 +176,7 @@ def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, ca
 
     member_fixture(tmp_path)
     monkeypatch.chdir(tmp_path)
-    target = f"kb/agentic-system-analyses/state/{RUN_ID}/set"
+    target = f"kb/agentic-system-analyses/state/{RUN_ID}/artifact"
 
     assert main([target, "--json"]) == 0
     report = json.loads(capsys.readouterr().out)
@@ -194,7 +194,7 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
 
 
 def test_member_validation_rejects_ranged_prose_anchors(tmp_path: Path) -> None:
-    runtime = member_fixture(tmp_path) / "set/runtime.md"
+    runtime = member_fixture(tmp_path) / "artifact/runtime.md"
     runtime.write_text(runtime.read_text() + "\nEvidence: `src/agent.py:120-140`.\n")
     checked = validation.validate_note(runtime, repo_root=tmp_path)
     assert any(
@@ -227,7 +227,7 @@ def test_real_retained_set_keeps_links_and_hashes_when_archived(tmp_path):
 
 def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
-    output = run_dir / "set"
+    output = run_dir / "artifact"
     epistemic = output / "epistemic.md"
     epistemic.write_text(epistemic.read_text() + "\nEPI-OBJ-dangling is cited here.\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
@@ -248,7 +248,7 @@ def test_a_candidate_receives_only_its_own_roles_set_findings(tmp_path: Path) ->
 
 def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
-    output = run_dir / "set"
+    output = run_dir / "artifact"
     runtime = output / "runtime.md"
     runtime.write_text(runtime.read_text().replace(
         "## Annotations", "#### RT-OBJ-store — Duplicate object\n\n## Annotations",
@@ -268,7 +268,7 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
 
 def test_profile_rejects_missing_identity_source_without_requiring_whole_set(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
-    output = run_dir / "set"
+    output = run_dir / "artifact"
     candidate = write(run_dir / "profile-candidate.md", (output / "memory-profile.md").read_text()
                       .replace("MEM-OBJ-store", "RT-OBJ-store")
                       .replace(SOURCE, "https://example.invalid/unrelated"))
@@ -289,7 +289,7 @@ def test_profile_rejects_missing_identity_source_without_requiring_whole_set(tmp
 
 def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
-    runtime = run_dir / "set/runtime.md"
+    runtime = run_dir / "artifact/runtime.md"
     assert not validation.validate_note(runtime, repo_root=tmp_path).fails
     runtime.write_text(runtime.read_text().replace("#### RT-OBJ-store —", "#### MEM-OBJ-store —", 1))
     failures = validation.validate_note(runtime, repo_root=tmp_path).fails
@@ -298,7 +298,7 @@ def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
 
 def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)  # its boundary pins a checkout that is not here
-    output = run_dir / "set"
+    output = run_dir / "artifact"
 
     checked = validation.validate_note(output, repo_root=tmp_path)
 

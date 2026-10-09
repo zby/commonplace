@@ -10,12 +10,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace import workflow
+from commonplace import artifactrun
+from commonplace.artifactrun import effects
+from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis import worktree as aw
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
-from commonplace.setrun import effects
-from commonplace.workflow.store import RunStore
+from commonplace.lib.agentic_analysis.plan import PLAN
 
 
 def git(root: Path, *args: str) -> str:
@@ -32,7 +32,7 @@ def proof(tmp_path, monkeypatch):
     git(root, "config", "user.email", "test@example.com")
     git(root, "config", "user.name", "Test")
     (root / ".gitignore").write_text("kb/agentic-system-analyses/state/\n")
-    declaration = root / "kb" / JOB_SET
+    declaration = root / "kb" / PLAN
     declaration.parent.mkdir(parents=True)
     declaration.write_text("scripted declaration\n")
     (root / "kb/type.md").write_text("scripted type\n")
@@ -41,7 +41,7 @@ def proof(tmp_path, monkeypatch):
     method = git(root, "rev-parse", "HEAD")
     run = root / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
     store = RunStore(run)
-    store.create({"declaration": declaration.read_text(), "job_set": str(declaration),
+    store.create({"declaration": declaration.read_text(), "plan": str(declaration),
                   "type": "scripted type\n", "type_spec": "type.md"})
     destination = root / aw.RETAINED_ROOT / "example"
     destination.mkdir(parents=True)
@@ -51,15 +51,15 @@ def proof(tmp_path, monkeypatch):
     for name, data in files.items():
         (destination / name).write_bytes(data)
     parameters = {"system": "Example", "source": "fixture", "source-identity": "identity"}
-    view = {"declaration": {"job_set": str(declaration), "sha256": sha256(declaration.read_bytes()).hexdigest(),
+    view = {"declaration": {"plan": str(declaration), "sha256": sha256(declaration.read_bytes()).hexdigest(),
                             "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
             "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
     receipt = {"published": True, "destination": str(destination), "members": effects.hashes(files),
                "run-id": run.name, "inputs-commit": method, **parameters, "source-revision": None,
                "expected-incumbent-sha256": "absent"}
     engine = SimpleNamespace(view=view, receipt=receipt, current=True)
-    monkeypatch.setattr(workflow, "inspect", lambda run_dir: engine.view)
-    monkeypatch.setattr(workflow, "current_outputs", lambda run_dir, job: (
+    monkeypatch.setattr(artifactrun, "inspect", lambda run_dir: engine.view)
+    monkeypatch.setattr(artifactrun, "current_outputs", lambda run_dir, job: (
         {"receipt": json.dumps(engine.receipt).encode()} if engine.current else None))
     return SimpleNamespace(root=root, method=method, run=run, destination=destination,
                            files=files, engine=engine, receipt=receipt)

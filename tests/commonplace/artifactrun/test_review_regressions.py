@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.workflow import DeclarationError, judge
-from tests.commonplace.workflow.support import (
+from commonplace.artifactrun import PlanError, judge
+from tests.commonplace.artifactrun.support import (
     BLOCKED_BRIEF,
     Coordinator,
     custom_run,
@@ -101,5 +101,5 @@ def test_an_undeclared_relation_is_refused_at_start(tmp_path: Path, tmp_library:
     def typo(jobs):
         jobs["digest"]["inputs"]["report-verified"]["relation"] = "verification:cites:reprot"
 
-    with pytest.raises(DeclarationError, match="not declared by the type"):
+    with pytest.raises(PlanError, match="not declared by the type"):
         custom_run(tmp_path, monkeypatch, typo)

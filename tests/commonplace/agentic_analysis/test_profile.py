@@ -12,11 +12,11 @@ import json
 import pytest
 import yaml
 
+from commonplace.artifactrun import CodeAttempt, CodeJob, Input
+from commonplace.artifactrun.run import Resolved, Run
+from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import profile as handlers
 from commonplace.lib.systems_matrix import AXES
-from commonplace.workflow import CodeAttempt, CodeJob, Input
-from commonplace.workflow.state import Resolved, Run
-from commonplace.workflow.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
 )
@@ -113,10 +113,10 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
     pins = {name: Resolved(hashlib.sha256(data).hexdigest() if data is not None else None, data, role)
             for name, (data, role) in values.items()}
     # Every criterion the shipped declaration's jobs apply, pinned as a file input.
-    from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.workflow import load_job_set
+    from commonplace.artifactrun import load_plan
+    from commonplace.lib.agentic_analysis.plan import PLAN
 
-    for declared in load_job_set((run.library / JOB_SET).read_text()).jobs:
+    for declared in load_plan((run.library / PLAN).read_text()).jobs:
         for name, spec in declared.inputs.items():
             if spec.address == "file" and name not in inputs:
                 data = (run.library / spec.source).read_bytes()
@@ -175,7 +175,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
     a = opened
     ctx = attempt(a, stage, verdict(a, stage, blockers=blockers), apply=True)
     # Poison the mutable projection. The handler must not read it.
-    path = a.coordinator.run_dir / "set" / ("memory-profile.md" if stage == "profile" else "synthesis.md")
+    path = a.coordinator.run_dir / "artifact" / ("memory-profile.md" if stage == "profile" else "synthesis.md")
     path.write_bytes(b"newer unhanded bytes")
     handler(ctx)
     valid, subject = judgments(ctx)

@@ -15,6 +15,22 @@ from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.checks import (
+    answer_reasons,
+    candidate,
+    content_reasons,
+    judge,
+    review,
+)
+from commonplace.artifactrun.sources import acquire, github_checkout_path
+from commonplace.artifactrun.worktree import (
+    preparation_for,
+    require_run_code,
+    require_running_package_unchanged,
+    run_command,
+    source_checkout,
+)
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     checkout,
@@ -31,22 +47,6 @@ from commonplace.lib.agentic_analysis.sets import (
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
-from commonplace.setrun.checks import (
-    answer_reasons,
-    candidate,
-    content_reasons,
-    judge,
-    review,
-)
-from commonplace.setrun.isolation import (
-    preparation_for,
-    require_run_code,
-    require_running_package_unchanged,
-    run_command,
-    source_checkout,
-)
-from commonplace.setrun.sources import acquire, github_checkout_path
-from commonplace.workflow import CodeAttempt
 
 ANALYSTS = ("runtime", "memory", "epistemic")
 

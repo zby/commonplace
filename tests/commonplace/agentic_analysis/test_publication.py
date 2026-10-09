@@ -12,13 +12,12 @@ from pathlib import Path
 import pytest
 import yaml
 
+from commonplace.artifactrun import RunStatus, Stop, UncertainEffectError, effects
+from commonplace.artifactrun.report import engine_run_report
+from commonplace.artifactrun.run import _parse_type
+from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
-from commonplace.setrun import effects
-from commonplace.setrun.report import engine_run_report
-from commonplace.workflow import RunStatus, Stop, UncertainEffectError
-from commonplace.workflow.state import _parse_type
-from commonplace.workflow.store import RunStore
 
 ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-10-07-example-0123456789ab-01"
@@ -110,8 +109,8 @@ def pinned_criteria(attempt):
 def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted, disposition):
     attempt = Attempt(tmp_path, disposition)
     # Garbage mutable projections cannot become analytical input.
-    (attempt.run_dir / "set").mkdir()
-    (attempt.run_dir / "set" / "memory.md").write_bytes(b"untracked garbage")
+    (attempt.run_dir / "artifact").mkdir()
+    (attempt.run_dir / "artifact" / "memory.md").write_bytes(b"untracked garbage")
     outputs = publication.assemble_analysis(attempt)
     manifest = yaml.safe_load(outputs["manifest"])
     assert manifest["worker"] == WORKER
@@ -151,7 +150,7 @@ def test_validation_failure_prevents_overview_acceptance(tmp_path, monkeypatch, 
     with pytest.raises(ValueError, match=reason):
         publication.assemble_analysis(attempt)
     assert not attempt.judgments
-    assert not (attempt.run_dir / "set" / "overview.md").exists()
+    assert not (attempt.run_dir / "artifact" / "overview.md").exists()
 
 
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
@@ -197,7 +196,7 @@ def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted
 def test_engine_report_is_uncertain_without_recovery(tmp_path):
     store = RunStore(tmp_path / "engine-run")
     type_text = (ROOT / "kb" / SET_TYPE).read_text()
-    store.create({"type": type_text, "type_spec": SET_TYPE, "job_set": "fixture-job-set.yaml", "library": str(ROOT / "kb"),
+    store.create({"type": type_text, "type_spec": SET_TYPE, "plan": "fixture-plan.yaml", "library": str(ROOT / "kb"),
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": []}]}),
                   "parameters": {"system": "fixture"}})
@@ -216,8 +215,8 @@ def test_engine_report_is_uncertain_without_recovery(tmp_path):
 @pytest.mark.parametrize("interruption", ["archive", "rollback"])
 def test_real_handler_recovery_preserves_guard_and_engine_classification(
         tmp_path, scripted, monkeypatch, interruption):
+    from commonplace.artifactrun import CodeAttempt, advance
     from commonplace.lib.agentic_analysis.guards import require_publishable_worktree
-    from commonplace.workflow import CodeAttempt, advance
 
     attempt = assembled_publish_attempt(tmp_path, scripted)
     repo = attempt.run_dir.parent
@@ -283,7 +282,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     # Run the actual registered handler through the engine, with fixture pinned
     # inputs and scripted content validation, not an effect-only replacement.
     store = RunStore(attempt.run_dir)
-    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE, "job_set": "fixture-job-set.yaml",
+    store.create({"type": (ROOT / "kb" / SET_TYPE).read_text(), "type_spec": SET_TYPE, "plan": "fixture-plan.yaml",
                   "library": str(ROOT / "kb"), "parameters": {},
                   "declaration": yaml.safe_dump({"type_spec": SET_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],

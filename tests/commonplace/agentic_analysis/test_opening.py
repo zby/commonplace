@@ -12,9 +12,9 @@ import shutil
 
 import pytest
 
+from commonplace.artifactrun import worktree
+from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
-from commonplace.setrun import isolation
-from commonplace.workflow.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     ROOT,
@@ -48,7 +48,7 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     assert len(metadata["run-date"]) == 10
     assert not (prepared.repo / "related-systems").exists()
     assert not (prepared.repo / "kb/agentic-system-analyses/retained").exists()
-    assert {p.name for p in (c.run_dir / "set").iterdir()} == {"ARTIFACT.yaml"}
+    assert {p.name for p in (c.run_dir / "artifact").iterdir()} == {"ARTIFACT.yaml"}
 
 
 @pytest.mark.parametrize("changes,reason", [
@@ -104,7 +104,7 @@ def test_opening_requires_the_token_bearing_source_slug_run_id(prepared, name):
 
 
 @pytest.mark.parametrize("path,tracked", [
-    ("src/commonplace/workflow/engine.py", True),
+    ("src/commonplace/artifactrun/engine.py", True),
     ("kb/untracked.md", False),
 ])
 def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
@@ -126,8 +126,8 @@ def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
 def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, monkeypatch):
     other = prepared.repo.with_name("running-package")
     shutil.copytree(prepared.repo, other)
-    (other / "src/commonplace/workflow/engine.py").write_text("# Different executing code.\n")
-    monkeypatch.setattr(isolation, "running_package_root", lambda: other)
+    (other / "src/commonplace/artifactrun/engine.py").write_text("# Different executing code.\n")
+    monkeypatch.setattr(worktree, "running_package_root", lambda: other)
     c = prepared.start()
     c.advance()
     assert_stopped(c, "open", "running commonplace source")
@@ -173,7 +173,7 @@ def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monk
         if change == "commit":
             git(prepared.repo, "commit", "--allow-empty", "--quiet", "-m", "Concurrent commit")
         else:
-            (prepared.repo / "src/commonplace/workflow/engine.py").write_text("# Concurrent modification.\n")
+            (prepared.repo / "src/commonplace/artifactrun/engine.py").write_text("# Concurrent modification.\n")
         return decision
 
     monkeypatch.setattr(agentic_job_handlers, "inspect_destination", concurrent)

@@ -1,4 +1,4 @@
-"""`commonplace-run` drives the toy job set from the command line."""
+"""`commonplace-run` drives the toy plan from the command line."""
 
 from __future__ import annotations
 
@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pytest
 
+from commonplace.artifactrun import CodeJob, UncertainEffectError
+from commonplace.artifactrun.store import RunStore
 from commonplace.cli.run import main
-from commonplace.workflow import CodeJob, UncertainEffectError
-from commonplace.workflow.store import RunStore
-from tests.commonplace.workflow.handlers import LOG_ENV
-from tests.commonplace.workflow.support import COMPLETE_BRIEF, toy_library
+from tests.commonplace.artifactrun.handlers import LOG_ENV
+from tests.commonplace.artifactrun.support import COMPLETE_BRIEF, toy_library
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 

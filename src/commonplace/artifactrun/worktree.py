@@ -140,7 +140,7 @@ def _install(worktree: Path) -> dict[str, str]:
     # will be inherited by the harness and its child processes.
     probe = run_command(
         [str(python), "-c", (
-            "import json, shutil; import commonplace.workflow.engine as m; "
+            "import json, shutil; import commonplace.artifactrun.engine as m; "
             "print(json.dumps({'module': m.__file__, "
             "'workflow': shutil.which('commonplace-workflow'), "
             "'run': shutil.which('commonplace-run'), "
@@ -163,7 +163,7 @@ def _install(worktree: Path) -> dict[str, str]:
     return {"python": str(python), "path-prefix": str(bin_dir)}
 
 
-RUNTIME_MARKER = "src/commonplace/workflow/engine.py"
+RUNTIME_MARKER = "src/commonplace/artifactrun/engine.py"
 
 
 def source_checkout(path: Path) -> Path | None:

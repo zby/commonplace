@@ -11,10 +11,10 @@ from pathlib import Path
 
 import pytest
 
+from commonplace.artifactrun import worktree as iso
 from commonplace.cli.run import main as run_main
 from commonplace.cli.workflow import main
 from commonplace.lib.agentic_analysis import worktree as aw
-from commonplace.setrun import isolation as iso
 
 
 def git(root: Path, *args: str) -> str:
@@ -35,7 +35,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "AGENTS.md": "Committed instructions\n",
         "pyproject.toml": '[project]\nname = "llm-commonplace"\n',
         "uv.lock": "version = 1\n",
-        "src/commonplace/workflow/engine.py": "# committed runtime\n",
+        "src/commonplace/artifactrun/engine.py": "# committed runtime\n",
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
         "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
@@ -168,22 +168,22 @@ def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Pa
 
 
 def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path: Path, monkeypatch) -> None:
-    import commonplace.workflow
-    from commonplace.lib.agentic_analysis.declaration import JOB_SET
+    import commonplace.artifactrun
+    from commonplace.lib.agentic_analysis.plan import PLAN
 
     prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
     calls = []
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
-    monkeypatch.setattr(commonplace.workflow, "start_run", lambda *args, **kwargs: calls.append((args, kwargs)))
-    monkeypatch.setattr(commonplace.workflow, "advance", lambda *args, **kwargs: pytest.fail("must not advance"))
+    monkeypatch.setattr(commonplace.artifactrun, "start_run", lambda *args, **kwargs: calls.append((args, kwargs)))
+    monkeypatch.setattr(commonplace.artifactrun, "advance", lambda *args, **kwargs: pytest.fail("must not advance"))
     params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository",
               "harness": "pi"}
     first = aw.start_analysis(tree, **params)
     second = aw.start_analysis(tree, **params)
     assert first.name.endswith(f"-{prepared['token']}-01")
     assert second.name.endswith(f"-{prepared['token']}-02")
-    assert calls[0][0] == (first, tree / "kb" / JOB_SET)
+    assert calls[0][0] == (first, tree / "kb" / PLAN)
     assert calls[0][1]["parameters"]["source-identity"] == "https://github.com/Example/Repo"
     assert calls[0][1]["parameters"]["worker-profile"] == "pi-luna"
     assert list(first.iterdir()) == []
@@ -298,13 +298,13 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
 def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
     from hashlib import sha256
 
-    from commonplace.setrun import report
+    from commonplace.artifactrun import report
 
     boundary = f"---\nresult-disposition: {disposition}\n---\n".encode()
-    (tmp_path / "set").mkdir()
-    (tmp_path / "set" / "boundary.md").write_bytes(boundary)
+    (tmp_path / "artifact").mkdir()
+    (tmp_path / "artifact" / "boundary.md").write_bytes(boundary)
     monkeypatch.setattr(report, "render_engine_run_report", lambda run, **kw: json.dumps({
-        "state": "completed", "set": str(tmp_path / "set"), "members": {"boundary": sha256(boundary).hexdigest()},
+        "state": "completed", "artifact": str(tmp_path / "artifact"), "members": {"boundary": sha256(boundary).hexdigest()},
         "effects": {"publish": {"verified": False}},
     }))
     assert main(["report-analysis", str(tmp_path)]) == 0

@@ -16,6 +16,16 @@ from pathlib import Path
 
 import yaml
 
+from commonplace.artifactrun import CodeAttempt, UncertainEffectError
+from commonplace.artifactrun.checks import criterion_bytes
+from commonplace.artifactrun.effects import hashes, install_tree
+from commonplace.artifactrun.worktree import (
+    preparation_for,
+    require_run_code,
+    require_running_package_unchanged,
+    run_command,
+    source_checkout,
+)
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
@@ -33,16 +43,6 @@ from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_set_snapshot
-from commonplace.setrun.checks import criterion_bytes
-from commonplace.setrun.effects import hashes, install_tree
-from commonplace.setrun.isolation import (
-    preparation_for,
-    require_run_code,
-    require_running_package_unchanged,
-    run_command,
-    source_checkout,
-)
-from commonplace.workflow import CodeAttempt, UncertainEffectError
 
 JOURNAL = "effects/publish.json"
 PRODUCERS = {
@@ -160,7 +160,7 @@ def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[st
     """Validate all exact member, manifest and criterion bytes."""
     boundary = _document(members["boundary.md"])
     result = validate_pinned_set_snapshot(
-        repo=repo, set_type=attempt.type_spec, intended_set_path=attempt.run_dir / "set", members=members,
+        repo=repo, set_type=attempt.type_spec, intended_set_path=attempt.run_dir / "artifact", members=members,
         manifest=manifest, criteria=criterion_bytes(attempt),
         frozen_source=boundary.frontmatter.get("source"),
     )

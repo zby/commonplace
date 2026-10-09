@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.workflow import judge
+from commonplace.artifactrun import judge
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     REPORT_TYPES,
     judgments,
@@ -38,7 +38,7 @@ def test_three_analysts_install_pinned_members_and_cover_present_relations(analy
         assert j["outcome"] == "accepted", j["findings"]
         assert f"{member}:identity:boundary" in {r["relation"] for r in j["scope"]}
         assert {"candidate", "producer-attempt", "answered-refusal", "incumbent-report"} <= j["basis"].keys()
-        assert (a.coordinator.run_dir / "set" / f"{member}.md").read_text() == report(a, member)
+        assert (a.coordinator.run_dir / "artifact" / f"{member}.md").read_text() == report(a, member)
     assert not a.coordinator.status.handouts and not a.coordinator.status.publishable
 
 
@@ -130,13 +130,13 @@ def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     a.coordinator.complete("runtime", report(a, "runtime"), answers="- corrected: removed the object.\n")
     assert judgments(a, "runtime")[-1]["outcome"] == "refused"
     assert "RT-OBJ-store" in judgments(a, "runtime")[-1]["findings"]
-    assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
+    assert (a.coordinator.run_dir / "artifact/runtime.md").read_text() == original
 
 
 @pytest.mark.slow
 def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     a = analysts
-    projected = a.coordinator.run_dir / "set/memory.md"
+    projected = a.coordinator.run_dir / "artifact/memory.md"
     projected.write_text(
         report(a, "memory").replace("### Components\n\nnone declared in this member\n",
                                    "### Components\n\n#### MEM-CMP-unseen — Untracked component\n\nSRC-1.\n"),
@@ -169,4 +169,4 @@ def test_structural_repair_can_restore_original_bytes_with_fresh_declines(analys
     )
     assert not a.coordinator.status.stops and not a.coordinator.status.handouts
     assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
-    assert (a.coordinator.run_dir / "set/runtime.md").read_text() == original
+    assert (a.coordinator.run_dir / "artifact/runtime.md").read_text() == original

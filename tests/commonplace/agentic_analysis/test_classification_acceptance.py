@@ -225,12 +225,12 @@ def declared_packet(job_name):
     """Inspect declared model inputs without executing jobs or manufacturing handouts."""
     from pathlib import Path
 
-    from commonplace.lib.agentic_analysis.declaration import JOB_SET
+    from commonplace.artifactrun import load_plan
+    from commonplace.lib.agentic_analysis.plan import PLAN
     from commonplace.lib.agentic_analysis.sets import analysis_layout
-    from commonplace.workflow import load_job_set
 
     library = Path(__file__).resolve().parents[3] / "kb"
-    declaration = load_job_set((library / JOB_SET).read_text(), analysis_layout().roles)
+    declaration = load_plan((library / PLAN).read_text(), analysis_layout().roles)
     job = declaration.job(job_name)
     paths = [library / item.source for item in job.inputs.values() if item.address == "file"]
     assert paths
@@ -301,7 +301,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     # Passing these checks is NOT acceptance of its source support.
     comparison_schema().validate(profile)
     sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     memory = directory / "memory.md"
     memory.write_text(memory.read_text().replace(
         "## Write side", bodies["memory.md"].removeprefix("## Shared records\n\n") + "## Write side",
@@ -365,7 +365,7 @@ def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsy
 def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library):
     from commonplace.lib import validation
 
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     profile, _ = materialize({})
     memory = directory / "memory.md"
     memory.write_text(memory.read_text().replace(

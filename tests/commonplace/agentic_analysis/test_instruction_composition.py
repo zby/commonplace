@@ -2,17 +2,17 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
+from commonplace.artifactrun import ModelJob, load_plan
+from commonplace.lib.agentic_analysis.plan import PLAN
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
-from commonplace.workflow import ModelJob, load_job_set
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = REPO_ROOT / "kb"
 
 
 def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs() -> None:
-    declaration = LIBRARY / JOB_SET
-    jobs = load_job_set(declaration.read_text(encoding="utf-8"))
+    declaration = LIBRARY / PLAN
+    jobs = load_plan(declaration.read_text(encoding="utf-8"))
     declared = {
         LIBRARY / spec.source
         for job in jobs.jobs

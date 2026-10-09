@@ -10,7 +10,7 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.workflow import RunStatus, current_outputs, inspect, run_lock
+from commonplace.artifactrun import RunStatus, current_outputs, inspect, run_lock
 
 
 def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> dict:
@@ -45,7 +45,7 @@ def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None
             state = "completed"
         return {
             "format": "commonplace-engine-run-report-v1", "run-id": run_dir.name,
-            "state": state, "set": str(run_dir / "set"), "publishable": view["publishable"],
+            "state": state, "artifact": str(run_dir / "artifact"), "publishable": view["publishable"],
             "parameters": view["parameters"], "members": view["members"],
             "open-attempts": view["open_attempts"], "failed-attempts": failures,
             "invocation-stops": stops, "exhausted-jobs": exhausted,

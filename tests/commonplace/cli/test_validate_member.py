@@ -150,7 +150,7 @@ def test_unknown_slot_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, c
 ])
 def test_analysis_member_cli_matches_shared_validator(tmp_path, monkeypatch, capsys, slot):
     """Validate each declared member directly, without executing workflow jobs."""
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     candidate = tmp_path / "draft.md"
     monkeypatch.chdir(tmp_path)
     for content in ("invalid draft\n", (directory / slot).read_text()):

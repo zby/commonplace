@@ -9,13 +9,13 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib.agentic_analysis.declaration import JOB_SET
+from commonplace.artifactrun import CodeJob, ModelJob, advance, load_plan, start_run
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore
+from commonplace.lib.agentic_analysis.plan import PLAN
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
-from commonplace.workflow import CodeJob, ModelJob, advance, load_job_set, start_run
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore
 
 REPORTS = ("runtime", "memory", "epistemic")
 RECORDS = (*REPORTS, "reconciliation")
@@ -33,7 +33,7 @@ MODEL_ROLES = {
 }
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
-DECLARATION = LIBRARY / JOB_SET
+DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
     "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
     "epistemic": "trace-epistemic", "reconcile": "reconcile-records", "verify": "verify-records",
@@ -47,7 +47,7 @@ def graph():
     document, error = parse_document((LIBRARY / SET_TYPE).read_text(encoding="utf-8"))
     assert document is not None and not error
     layout = parse_layout(document.frontmatter["layout"])
-    return load_job_set(DECLARATION.read_text(encoding="utf-8"), layout.roles), layout
+    return load_plan(DECLARATION.read_text(encoding="utf-8"), layout.roles), layout
 
 
 def test_graph_covers_real_roles_once(graph):
@@ -279,7 +279,7 @@ def engine_run(tmp_path, monkeypatch):
 def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"
-    jobs = load_job_set(DECLARATION.read_text(encoding="utf-8"))
+    jobs = load_plan(DECLARATION.read_text(encoding="utf-8"))
     for job in jobs.jobs:
         if isinstance(job, CodeJob):
             assert job.handler.startswith("commonplace.lib.agentic_analysis.")

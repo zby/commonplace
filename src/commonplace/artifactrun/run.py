@@ -2,7 +2,7 @@
 
 `Run` is one consistent reading of a run directory. It resolves inputs to
 versions, decides which jobs are ready and which roles have members, and
-says whether the set is publishable. `CodeAttempt` is a handler's view of
+says whether the artifact is publishable. `CodeAttempt` is a handler's view of
 one code attempt; it turns staged judgments into records. Nothing here
 writes: commits are the store's, transitions are the engine's.
 """
@@ -19,7 +19,7 @@ import yaml
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
 
-from .declaration import CodeJob, Input, Job, ModelJob, load_job_set
+from .plan import CodeJob, Input, Job, ModelJob, load_plan
 from .store import RunStore, canonical, digest
 
 
@@ -63,7 +63,7 @@ class Run:
         self.type_text = metadata["type"]
         self.parameters = metadata.get("parameters", {})
         self.library = Path(metadata["library"])
-        self.jobs = load_job_set(metadata["declaration"], self.layout.roles)
+        self.jobs = load_plan(metadata["declaration"], self.layout.roles)
         self.reload()
 
     def reload(self) -> None:
@@ -393,7 +393,7 @@ class Run:
     # Coverage
 
     def coverage(self, excluded: str | None = None) -> dict | None:
-        """The evidence that the set minus `excluded` is covered, or None while it is not.
+        """The evidence that the artifact minus `excluded` is covered, or None while it is not.
 
         Three conditions: every required role is present, every member has a
         holding acceptance, and every relation between members is covered.
@@ -430,7 +430,7 @@ class Run:
                 "claims": sorted([list(claim) for claim in claims], key=lambda c: [str(x) for x in c])}
 
     def publishable(self) -> bool:
-        """The whole set is covered: requirement 9's three conditions hold."""
+        """The whole artifact is covered: requirement 9's three conditions hold."""
         return self.coverage() is not None
 
     def covered(self, relation: str, origin: str, partner: str) -> bool:
@@ -495,7 +495,7 @@ class CodeAttempt:
 
     @property
     def layout(self) -> Layout:
-        """The set type's layout, fixed at start like the declaration."""
+        """The type's layout, fixed at start like the declaration."""
         return self._run.layout
 
     @property
@@ -505,12 +505,12 @@ class CodeAttempt:
 
     @property
     def type_text(self) -> str:
-        """The set type's text fixed at start, for validators that need it."""
+        """The type's text fixed at start, for validators that need it."""
         return self._run.type_text
 
     @property
     def type_spec(self) -> str:
-        """The set type's library path recorded at start, for keying its text."""
+        """The type's library path recorded at start, for keying its text."""
         return self._run.type_spec
 
     @property

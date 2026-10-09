@@ -1,4 +1,4 @@
-"""The checks a code job applies to a model candidate in a typed set.
+"""The checks a code job applies to a model candidate in a typed artifact.
 
 A check validates the candidate as a draft at its role against a snapshot of
 partner members and the run's pinned criteria, checks a frozen source when one
@@ -21,14 +21,14 @@ from pathlib import Path
 
 import yaml
 
+from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.lib.validation import validate_draft_at_slot
-from commonplace.setrun.sources import frozen_source_refusals
-from commonplace.workflow import CodeAttempt
 
 
 def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
-    """The job's pinned library files plus the set type fixed at start.
+    """The job's pinned library files plus the type fixed at start.
 
     Missing dependencies stay absent; the closed validator rejects them.
     """
@@ -36,7 +36,7 @@ def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
 
 
 def manifest(attempt: CodeAttempt) -> bytes:
-    """A minimal set manifest naming the run's set type."""
+    """A minimal artifact manifest naming the run's type."""
     return yaml.safe_dump({"type": attempt.type_spec}).encode()
 
 
@@ -62,7 +62,7 @@ class Candidate:
 
 
 def snapshot(attempt: CodeAttempt, partners: tuple[str, ...], *, seen: bool = False) -> dict[str, bytes]:
-    """Partner members at their set paths, from inputs named by role or handed `<role>-seen`."""
+    """Partner members at their artifact paths, from inputs named by role or handed `<role>-seen`."""
     members = {}
     for partner in partners:
         data = attempt.read(f"{partner}-seen" if seen else partner)
@@ -95,7 +95,7 @@ def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | 
                     members: dict[str, bytes] | None = None) -> list[str]:
     """Draft-validation failures at a role; warnings and absent partners do not refuse."""
     findings = validate_draft_at_slot(
-        check.attempt.run_dir / "set", check.attempt.layout.path(role or check.role),
+        check.attempt.run_dir / "artifact", check.attempt.layout.path(role or check.role),
         check.data if data is None else data, repo_root=check.repo,
         members=check.snapshot if members is None else members, manifest=manifest(check.attempt),
         criteria=criterion_bytes(check.attempt), frozen_source=check.source,

@@ -1,6 +1,6 @@
-"""Files under a run directory: the set, content-addressed versions and records.
+"""Files under a run directory: the artifact, content-addressed versions and records.
 
-The run directory holds `run.json`, the typed set under `set/`, and the
+The run directory holds `run.json`, the typed artifact under `artifact/`, and the
 engine's state under `state/`: versions by content digest, attempt and
 judgment records, and hand-out directories. Every file is written whole, by
 rename, so a reader sees either the old file or the new one.
@@ -41,7 +41,7 @@ class RunStore:
     def __init__(self, run_dir: Path) -> None:
         self.run_dir = run_dir
         self.metadata = run_dir / "run.json"
-        self.set_dir = run_dir / "set"
+        self.artifact_dir = run_dir / "artifact"
         self.state = run_dir / "state"
         self.versions = self.state / "versions"
         self.attempts = self.state / "attempts"
@@ -49,7 +49,7 @@ class RunStore:
         self.handouts = self.state / "handouts"
 
     def create(self, metadata: dict) -> None:
-        for directory in (self.set_dir, self.versions, self.attempts, self.judgments, self.handouts):
+        for directory in (self.artifact_dir, self.versions, self.attempts, self.judgments, self.handouts):
             directory.mkdir(parents=True, exist_ok=True)
         self.write_json(self.metadata, metadata)
 

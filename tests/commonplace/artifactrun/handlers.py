@@ -1,4 +1,4 @@
-"""Code-job handlers for the toy job set, named by dotted path in its declaration.
+"""Code-job handlers for the toy plan, named by dotted path in its declaration.
 
 Each handler records its call in the file named by `LOG_ENV`, so a test can see
 which code jobs an invocation ran. A handler raises `KeyboardInterrupt` when
@@ -21,7 +21,7 @@ from __future__ import annotations
 import os
 from collections.abc import Callable, Mapping
 
-from commonplace.workflow import CodeAttempt
+from commonplace.artifactrun import CodeAttempt
 
 LOG_ENV = "WORKFLOW_TEST_LOG"
 INTERRUPT_ENV = "WORKFLOW_TEST_INTERRUPT"

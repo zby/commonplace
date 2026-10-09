@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from commonplace.artifactrun import sources
 from commonplace.lib.agentic_analysis import boundary as agentic_boundary
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.type_resolver import CriterionSnapshot
@@ -13,7 +14,6 @@ from commonplace.lib.validation import (
     validate_draft_at_slot,
     validate_pinned_set_snapshot,
 )
-from commonplace.setrun import sources
 
 IDENTITY = "https://example.invalid/source"
 REVISION = "a" * 40
@@ -190,7 +190,7 @@ def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_set(tmp_p
         "members": {name: {"sha256": sha256(data).hexdigest()} for name, data in members.items()},
     }).encode()
     expected = f"set member link: {link} leaves the set directory"
-    for location in ("state/fixture/set", "retained/fixture"):
+    for location in ("state/fixture/artifact", "retained/fixture"):
         directory = tmp_path / "kb/agentic-system-analyses" / location
         path = directory / "boundary.md"
         standalone = ValidationRun(

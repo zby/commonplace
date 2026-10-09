@@ -8,9 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.workflow import AttemptResult, judge
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore
+from commonplace.artifactrun import AttemptResult, judge
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local-only acquisition fixture
 )
@@ -42,7 +42,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert "## Input reading batches" in h.prompt.read_text()
     assert p["refusal"] == "absent"
     assert p["output"] == str(h.outputs["boundary"])
-    assert p["validation-set"] == str(a.coordinator.run_dir / "set")
+    assert p["validation-set"] == str(a.coordinator.run_dir / "artifact")
     assert p["validation-member"] == "boundary.md"
     assert json.loads(Path(p["source"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
@@ -61,7 +61,7 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
     assert record["outcome"] == "accepted" and record["installs"]
     assert record["findings"] == ""
     assert record["scope"] == []  # Self-citations are content checks, not cross-role coverage.
-    assert (a.coordinator.run_dir / "set/boundary.md").read_text() == text
+    assert (a.coordinator.run_dir / "artifact/boundary.md").read_text() == text
     assert {"candidate", "metadata", "source", "producer-attempt", "answered-refusal", "note-type"} <= record["basis"].keys()
     assert not (a.coordinator.run_dir / "output").exists()
 
@@ -84,7 +84,7 @@ def test_refuses_bad_content_or_invocation(boundary, changes, reason):
     record = judgment(a)
     assert record["outcome"] == "refused" and not record["installs"]
     assert reason in record["findings"]
-    assert not (a.coordinator.run_dir / "set/boundary.md").exists()
+    assert not (a.coordinator.run_dir / "artifact/boundary.md").exists()
 
 
 @pytest.mark.slow
@@ -169,7 +169,7 @@ def test_accepted_capture_pin_cannot_change_on_boundary_correction(acquisition):
     a.coordinator.complete("boundary", candidate(a, source=changed, **{"reviewed-boundary": "capture-2"}))
     assert judgment(a)["outcome"] == "refused"
     assert "preserve the incumbent boundary's frozen capture" in judgment(a)["findings"]
-    assert (a.coordinator.run_dir / "set/boundary.md").read_text() == text
+    assert (a.coordinator.run_dir / "artifact/boundary.md").read_text() == text
     assert capture.read_bytes() == b"Original capture.\n"
 
 

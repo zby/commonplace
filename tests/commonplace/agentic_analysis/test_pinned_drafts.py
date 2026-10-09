@@ -4,9 +4,9 @@ from types import SimpleNamespace
 
 import pytest
 
+from commonplace.artifactrun.checks import criterion_bytes
 from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.validation import validate_draft_at_slot
-from commonplace.setrun.checks import criterion_bytes
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 BOUNDARY_TYPE = "agentic-system-analyses/types/agentic-system-boundary.md"
@@ -36,7 +36,7 @@ def fixed_type(**kwargs):
 
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
     return validate_draft_at_slot(
-        tmp_path / "kb/agentic-system-analyses/state/fixture/set", "boundary.md", candidate,
+        tmp_path / "kb/agentic-system-analyses/state/fixture/artifact", "boundary.md", candidate,
         repo_root=tmp_path, members={}, manifest=f"type: {SET_TYPE}\n".encode(),
         criteria=pinned, **kwargs,
     )
@@ -100,7 +100,7 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
 
 
 def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_source(tmp_path, monkeypatch):
-    from commonplace.setrun import checks as module
+    from commonplace.artifactrun import checks as module
 
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
@@ -127,8 +127,8 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
 
 
 def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_path, monkeypatch):
+    from commonplace.artifactrun import checks as candidate
     from commonplace.lib.agentic_analysis import handlers
-    from commonplace.setrun import checks as candidate
 
     pinned = criteria()
     declared = {}

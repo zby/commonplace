@@ -1,6 +1,6 @@
 """`commonplace-run`: start and advance a run directory, and judge from the command line.
 
-    commonplace-run start RUN JOB_SET.yaml [--param key=value ...]
+    commonplace-run start RUN PLAN.yaml [--param key=value ...]
     commonplace-run advance RUN [--completed ATTEMPT ...] [--failed ATTEMPT=REASON ...]
                                 [--model ID] [--effort LEVEL] [--json]
     commonplace-run status RUN [--json]          # also re-prints open hand-outs
@@ -8,7 +8,7 @@
                           [--version V] [--scope RELATION ...] [--findings TEXT]
                           [--override JUDGMENT_ID ...] [--basis ROLE ...]
 
-The engine behind these is `commonplace.workflow`; its design is in
+The engine behind these is `commonplace.artifactrun`; its design is in
 kb/work/workflow-requirements/. `advance` prints the hand-outs a coordinator
 must run and reports back with the next `advance`.
 """
@@ -21,10 +21,9 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.setrun.isolation import require_run_code
-from commonplace.workflow import (
+from commonplace.artifactrun import (
     AttemptResult,
-    DeclarationError,
+    PlanError,
     RunStatus,
     Stop,
     advance,
@@ -33,15 +32,16 @@ from commonplace.workflow import (
     open_handouts,
     start_run,
 )
+from commonplace.artifactrun.worktree import require_run_code
 
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="commonplace-run", description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
 
-    start = commands.add_parser("start", help="start a run from a job-set declaration")
+    start = commands.add_parser("start", help="start a run from a plan")
     start.add_argument("run", type=Path)
-    start.add_argument("job_set", type=Path)
+    start.add_argument("plan", type=Path)
     start.add_argument("--param", action="append", default=[], metavar="KEY=VALUE")
 
     step = commands.add_parser("advance", help="close reported attempts, run code jobs, hand out model jobs")
@@ -125,7 +125,7 @@ def main(argv: list[str] | None = None) -> int:
         if arguments.command != "status":
             require_run_code(arguments.run, cwd=Path.cwd())
         if arguments.command == "start":
-            start_run(arguments.run, arguments.job_set, parameters=_pairs(arguments.param, "--param"))
+            start_run(arguments.run, arguments.plan, parameters=_pairs(arguments.param, "--param"))
             print(f"started {arguments.run}")
         elif arguments.command == "advance":
             results = [AttemptResult(a, model=arguments.model, effort=arguments.effort) for a in arguments.completed]
@@ -143,7 +143,7 @@ def main(argv: list[str] | None = None) -> int:
                 overrides=tuple(arguments.override), basis=tuple(arguments.basis),
             )
             print(f"recorded {identifier}")
-    except (ValueError, OSError, DeclarationError, KeyError) as error:
+    except (ValueError, OSError, PlanError, KeyError) as error:
         print(str(error), file=sys.stderr)
         return 1
     return 0

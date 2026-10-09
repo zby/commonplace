@@ -5,14 +5,14 @@ from dataclasses import replace
 import pytest
 import yaml
 
-from commonplace.workflow import start_run
-from commonplace.workflow.declaration import Input
-from commonplace.workflow.engine import _close
-from commonplace.workflow.handouts import _open
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore, digest
-from tests.commonplace.workflow.handlers import LOG_ENV
-from tests.commonplace.workflow.support import Coordinator, toy_library
+from commonplace.artifactrun import start_run
+from commonplace.artifactrun.engine import _close
+from commonplace.artifactrun.handouts import _open
+from commonplace.artifactrun.plan import Input
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore, digest
+from tests.commonplace.artifactrun.handlers import LOG_ENV
+from tests.commonplace.artifactrun.support import Coordinator, toy_library
 
 
 def run_state(c):
@@ -109,7 +109,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
 
 
 def test_report_separates_holding_historical_basis_from_canonical_currency(late_run):
-    from commonplace.setrun.report import engine_run_report
+    from commonplace.artifactrun.report import engine_run_report
 
     c, old = late_run
     c.advance(c.result_for(old, "no blockers\n"))

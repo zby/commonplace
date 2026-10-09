@@ -1,6 +1,6 @@
-"""The job-set declaration: a data file naming jobs, their inputs and outputs.
+"""The plan: a data file naming jobs, their inputs and outputs.
 
-A job set declares the jobs that produce one type of set. It is data, not
+A plan declares the jobs that produce one type of artifact. It is data, not
 code: code jobs name their handlers by dotted path into the package.
 """
 
@@ -17,7 +17,7 @@ import yaml
 
 ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal", "coverage")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
-RUN_PLACEHOLDERS = ("run", "run-id", "set", "workspace")
+RUN_PLACEHOLDERS = ("run", "run-id", "artifact", "workspace")
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
 NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
@@ -31,8 +31,8 @@ REFUSAL_INPUT = "refusal"
 OUTCOMES = ("accepted", "refused")
 
 
-class DeclarationError(ValueError):
-    """A job set that cannot be run as declared."""
+class PlanError(ValueError):
+    """A plan that cannot be run as declared."""
 
 
 @dataclass(frozen=True)
@@ -87,15 +87,15 @@ class CodeJob:
         try:
             return getattr(importlib.import_module(module), attribute)
         except (ImportError, AttributeError) as error:
-            raise DeclarationError(f"job {self.name}: handler {self.handler} does not resolve: {error}") from error
+            raise PlanError(f"job {self.name}: handler {self.handler} does not resolve: {error}") from error
 
 
 Job = ModelJob | CodeJob
 
 
 @dataclass(frozen=True)
-class JobSet:
-    """A job set declares the jobs that produce one type of set."""
+class Plan:
+    """A plan declares the jobs that produce one type of artifact."""
 
     type_spec: Path
     jobs: tuple[Job, ...]
@@ -114,141 +114,141 @@ class JobSet:
 def _input(job: str, name: str, raw: Any) -> Input:
     where = f"job {job}: input {name}"
     if not isinstance(raw, dict):
-        raise DeclarationError(f"{where}: must be a mapping")
+        raise PlanError(f"{where}: must be a mapping")
     unknown = set(raw) - {"address", "source", "required", "relation", "outcome", "order_only"}
     if unknown:
-        raise DeclarationError(f"{where}: unknown keys {sorted(unknown)}")
+        raise PlanError(f"{where}: unknown keys {sorted(unknown)}")
     address, source = raw.get("address"), raw.get("source")
     if address not in ADDRESSES:
-        raise DeclarationError(f"{where}: address must be one of {', '.join(ADDRESSES)}")
+        raise PlanError(f"{where}: address must be one of {', '.join(ADDRESSES)}")
     if address == "coverage":
-        # The scope is derived: the set minus the declaring job's own role,
+        # The scope is derived: the artifact minus the declaring job's own role,
         # filled in once the job's role is known.
         if source is not None:
-            raise DeclarationError(f"{where}: a coverage input has no source; its scope is derived")
+            raise PlanError(f"{where}: a coverage input has no source; its scope is derived")
         source = ""
     elif not isinstance(source, str) or not source:
-        raise DeclarationError(f"{where}: source must be a nonempty string")
+        raise PlanError(f"{where}: source must be a nonempty string")
     required = raw.get("required", True)
     if not isinstance(required, bool):
-        raise DeclarationError(f"{where}: required must be true or false")
+        raise PlanError(f"{where}: required must be true or false")
     relation, outcome = raw.get("relation"), raw.get("outcome")
     if address == "judgment":
         if outcome not in OUTCOMES:
-            raise DeclarationError(f"{where}: a judgment input needs an outcome of {' or '.join(OUTCOMES)}")
+            raise PlanError(f"{where}: a judgment input needs an outcome of {' or '.join(OUTCOMES)}")
         if relation is not None and (not isinstance(relation, str) or relation.count(":") != 2):
-            raise DeclarationError(f"{where}: relation must read <origin>:<kind>:<partner>")
+            raise PlanError(f"{where}: relation must read <origin>:<kind>:<partner>")
     elif relation is not None or outcome is not None:
-        raise DeclarationError(f"{where}: only a judgment input has a relation or an outcome")
+        raise PlanError(f"{where}: only a judgment input has a relation or an outcome")
     if address in ("output", "handed") and source.count(":") != 1:
-        raise DeclarationError(f"{where}: source must read <name>:<name>")
+        raise PlanError(f"{where}: source must read <name>:<name>")
     order_only = raw.get("order_only", False)
     if not isinstance(order_only, bool):
-        raise DeclarationError(f"{where}: order_only must be true or false")
+        raise PlanError(f"{where}: order_only must be true or false")
     return Input(address, source, required, relation, outcome, order_only)
 
 
 def _job(raw: Any) -> Job:
     if not isinstance(raw, dict):
-        raise DeclarationError("each job must be a mapping")
+        raise PlanError("each job must be a mapping")
     name = raw.get("name")
     if not isinstance(name, str) or not NAME.fullmatch(name):
-        raise DeclarationError(f"job name {name!r} must be letters, digits, '-' or '_'")
+        raise PlanError(f"job name {name!r} must be letters, digits, '-' or '_'")
     if name in RESERVED_JOBS:
-        raise DeclarationError(f"job name {name} is reserved for the engine's records")
+        raise PlanError(f"job name {name} is reserved for the engine's records")
     kind = raw.get("kind")
     raw_inputs = raw.get("inputs", {})
     if not isinstance(raw_inputs, dict):
-        raise DeclarationError(f"job {name}: inputs must be a mapping")
+        raise PlanError(f"job {name}: inputs must be a mapping")
     for key in raw_inputs:
         if not isinstance(key, str) or not NAME.fullmatch(key):
-            raise DeclarationError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
+            raise PlanError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
         if key in HANDOUT_FIELDS or key.startswith(HANDOUT_PREFIXES):
-            raise DeclarationError(f"job {name}: input name {key} collides with a hand-out field")
+            raise PlanError(f"job {name}: input name {key} collides with a hand-out field")
     inputs = {str(key): _input(name, str(key), value) for key, value in raw_inputs.items()}
     raw_outputs = raw.get("outputs", [])
     if not isinstance(raw_outputs, list):
-        raise DeclarationError(f"job {name}: outputs must be a list of names")
+        raise PlanError(f"job {name}: outputs must be a list of names")
     outputs = tuple(raw_outputs)
     if not all(isinstance(output, str) and NAME.fullmatch(output) for output in outputs):
-        raise DeclarationError(f"job {name}: output names must be letters, digits, '-' or '_'")
+        raise PlanError(f"job {name}: output names must be letters, digits, '-' or '_'")
     if len(set(outputs)) != len(outputs):
-        raise DeclarationError(f"job {name}: output names must be unique")
+        raise PlanError(f"job {name}: output names must be unique")
     role = raw.get("role")
     if role is not None and not outputs:
-        raise DeclarationError(f"job {name}: a role-filling job needs a primary output")
+        raise PlanError(f"job {name}: a role-filling job needs a primary output")
     inputs = {key: replace(spec, source=role or "") if spec.address == "coverage" else spec
               for key, spec in inputs.items()}
     if kind == "model":
         allowed = {"name", "kind", "inputs", "outputs", "instruction", "role", "max_attempts", "parameters"}
         instruction = raw.get("instruction")
         if instruction not in inputs or inputs[instruction].address != "file" or not inputs[instruction].required:
-            raise DeclarationError(f"job {name}: instruction must name a required file input")
+            raise PlanError(f"job {name}: instruction must name a required file input")
         if not outputs:
-            raise DeclarationError(f"job {name}: a model job needs an output")
+            raise PlanError(f"job {name}: a model job needs an output")
         max_attempts = raw.get("max_attempts")
         if max_attempts is not None and (not isinstance(max_attempts, int) or max_attempts < 1):
-            raise DeclarationError(f"job {name}: max_attempts must be a positive integer")
+            raise PlanError(f"job {name}: max_attempts must be a positive integer")
         parameters = raw.get("parameters") or {}
         if not isinstance(parameters, dict) or not all(
                 isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
                 for k, v in parameters.items()):
-            raise DeclarationError(f"job {name}: parameters must map names to one-line strings")
+            raise PlanError(f"job {name}: parameters must map names to one-line strings")
         reserved = {*HANDOUT_FIELDS, *RUN_PLACEHOLDERS, *inputs}
         clash = sorted(k for k in parameters if k in reserved or k.startswith(HANDOUT_PREFIXES))
         if clash:
-            raise DeclarationError(f"job {name}: parameters {clash} collide with names the hand-out sets")
+            raise PlanError(f"job {name}: parameters {clash} collide with names the hand-out sets")
         for key, value in parameters.items():
             for placeholder in PLACEHOLDER.findall(value):
                 if placeholder not in RUN_PLACEHOLDERS and not (
                         placeholder.startswith("param:") and placeholder != "param:"):
-                    raise DeclarationError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
+                    raise PlanError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
         job: Job = ModelJob(name, inputs, outputs, instruction, role, max_attempts, dict(parameters))
     elif kind == "code":
         allowed = {"name", "kind", "inputs", "outputs", "handler", "role"}
         handler = raw.get("handler")
         if not isinstance(handler, str) or "." not in handler:
-            raise DeclarationError(f"job {name}: handler must be a dotted path")
+            raise PlanError(f"job {name}: handler must be a dotted path")
         job = CodeJob(name, inputs, outputs, handler, role)
     else:
-        raise DeclarationError(f"job {name}: kind must be model or code")
+        raise PlanError(f"job {name}: kind must be model or code")
     unknown = set(raw) - allowed
     if unknown:
-        raise DeclarationError(f"job {name}: unknown keys {sorted(unknown)}")
+        raise PlanError(f"job {name}: unknown keys {sorted(unknown)}")
     return job
 
 
-def load_job_set(text: str, roles: Mapping[str, Any] | None = None) -> JobSet:
+def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     """Parse a declaration; with `roles`, also check it against the type's roles."""
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
-        raise DeclarationError("a job set must be a mapping")
+        raise PlanError("a plan must be a mapping")
     unknown = set(data) - {"type_spec", "criteria", "jobs"}
     if unknown:
-        raise DeclarationError(f"unknown keys {sorted(unknown)}")
+        raise PlanError(f"unknown keys {sorted(unknown)}")
     groups = _criteria_groups(data.get("criteria", {}))
     if not isinstance(data.get("type_spec"), str):
-        raise DeclarationError("type_spec must name the set's type, relative to the KB root")
+        raise PlanError("type_spec must name the artifact's type, relative to the KB root")
     raw_jobs = data.get("jobs")
     if not isinstance(raw_jobs, list):
-        raise DeclarationError("jobs must be a list")
+        raise PlanError("jobs must be a list")
     jobs = tuple(_job(_expand_criteria(raw, groups)) for raw in raw_jobs)
     if not jobs:
-        raise DeclarationError("a job set declares at least one job")
-    job_set = JobSet(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
-    _check(job_set, roles)
-    return job_set
+        raise PlanError("a plan declares at least one job")
+    plan = Plan(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
+    _check(plan, roles)
+    return plan
 
 
 def _criteria_groups(raw: Any) -> dict[str, dict[str, str]]:
     """Named groups of file inputs: each maps input names to library paths."""
     if not isinstance(raw, dict):
-        raise DeclarationError("criteria must map group names to input mappings")
+        raise PlanError("criteria must map group names to input mappings")
     groups = {}
     for name, members in raw.items():
         if (not isinstance(name, str) or not NAME.fullmatch(name) or not isinstance(members, dict)
                 or not members or not all(isinstance(k, str) and isinstance(v, str) for k, v in members.items())):
-            raise DeclarationError(f"criteria group {name!r} must map input names to library paths")
+            raise PlanError(f"criteria group {name!r} must map input names to library paths")
         groups[name] = dict(members)
     return groups
 
@@ -260,15 +260,15 @@ def _expand_criteria(raw: Any, groups: Mapping[str, Mapping[str, str]]) -> Any:
     name = raw.get("name")
     listed = raw["criteria"]
     if not isinstance(listed, list) or not all(isinstance(group, str) for group in listed):
-        raise DeclarationError(f"job {name}: criteria must list group names")
+        raise PlanError(f"job {name}: criteria must list group names")
     inputs = dict(raw.get("inputs") or {})
     for group in listed:
         if group not in groups:
-            raise DeclarationError(f"job {name}: no criteria group {group}")
+            raise PlanError(f"job {name}: no criteria group {group}")
         for key, path in groups[group].items():
             given = {"address": "file", "source": path}
             if key in inputs and inputs[key] != given:
-                raise DeclarationError(f"job {name}: input {key} disagrees with criteria group {group}")
+                raise PlanError(f"job {name}: input {key} disagrees with criteria group {group}")
             inputs[key] = given
     return {**{k: v for k, v in raw.items() if k != "criteria"}, "inputs": inputs}
 
@@ -284,57 +284,57 @@ def _with_refusal(job: Job) -> Job:
     if any(spec.address == "refusal" and spec.source == job.name for spec in job.inputs.values()):
         return job
     if REFUSAL_INPUT in job.inputs:
-        raise DeclarationError(f"job {job.name}: input {REFUSAL_INPUT} is reserved for its refusals")
+        raise PlanError(f"job {job.name}: input {REFUSAL_INPUT} is reserved for its refusals")
     inputs = {**job.inputs, REFUSAL_INPUT: Input("refusal", job.name, required=False)}
     return replace(job, inputs=inputs)
 
 
-def check_relations(job_set: JobSet, relations: Sequence[str]) -> None:
+def check_relations(plan: Plan, relations: Sequence[str]) -> None:
     """Every relation a judgment input names must be one the type declares.
 
     An undeclared relation would make the input permanently absent, and a
     job gated on it would wait without any stop to say why.
     """
     declared = set(relations)
-    for job in job_set.jobs:
+    for job in plan.jobs:
         for name, spec in job.inputs.items():
             if spec.address != "judgment" or spec.relation is None:
                 continue
             if spec.relation not in declared:
-                raise DeclarationError(
+                raise PlanError(
                     f"job {job.name}: input {name}: relation {spec.relation} is not declared by the type")
             origin, _, partner = spec.relation.split(":")
             if spec.source not in (origin, partner):
-                raise DeclarationError(
+                raise PlanError(
                     f"job {job.name}: input {name}: role {spec.source} is at neither end of {spec.relation}")
 
 
-def _check(job_set: JobSet, roles: Mapping[str, Any] | None) -> None:
-    names = [job.name for job in job_set.jobs]
+def _check(plan: Plan, roles: Mapping[str, Any] | None) -> None:
+    names = [job.name for job in plan.jobs]
     if len(set(names)) != len(names):
-        raise DeclarationError("job names must be unique")
-    filled = [job.role for job in job_set.jobs if job.role]
+        raise PlanError("job names must be unique")
+    filled = [job.role for job in plan.jobs if job.role]
     if len(set(filled)) != len(filled):
-        raise DeclarationError("two jobs fill the same role")
-    for job in job_set.jobs:
+        raise PlanError("two jobs fill the same role")
+    for job in plan.jobs:
         if roles is not None and job.role is not None and job.role not in roles:
-            raise DeclarationError(f"job {job.name}: role {job.role} is not declared by the type")
+            raise PlanError(f"job {job.name}: role {job.role} is not declared by the type")
         for name, spec in job.inputs.items():
             where = f"job {job.name}: input {name}"
             if spec.address in ("member", "judgment"):
                 if roles is not None and spec.source not in roles:
-                    raise DeclarationError(f"{where}: role {spec.source} is not declared by the type")
+                    raise PlanError(f"{where}: role {spec.source} is not declared by the type")
                 if spec.address == "member" and spec.source == job.role:
-                    raise DeclarationError(f"{where}: a job never has its own role as input")
+                    raise PlanError(f"{where}: a job never has its own role as input")
             elif spec.address in ("output", "attempt", "refusal"):
                 producer, _, output = spec.source.partition(":")
                 if producer not in names:
-                    raise DeclarationError(f"{where}: no job named {producer}")
+                    raise PlanError(f"{where}: no job named {producer}")
                 if producer == job.name and spec.address != "refusal":
-                    raise DeclarationError(f"{where}: a job never has its own output as input")
-                if spec.address == "output" and output not in job_set.job(producer).outputs:
-                    raise DeclarationError(f"{where}: {producer} has no output {output}")
+                    raise PlanError(f"{where}: a job never has its own output as input")
+                if spec.address == "output" and output not in plan.job(producer).outputs:
+                    raise PlanError(f"{where}: {producer} has no output {output}")
             elif spec.address == "handed":
                 attempt, _, _ = spec.source.partition(":")
                 if attempt not in job.inputs or job.inputs[attempt].address != "attempt":
-                    raise DeclarationError(f"{where}: {attempt} must be an attempt input of this job")
+                    raise PlanError(f"{where}: {attempt} must be an attempt input of this job")

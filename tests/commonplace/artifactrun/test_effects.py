@@ -6,8 +6,7 @@ from hashlib import sha256
 
 import pytest
 
-from commonplace.setrun import effects
-from commonplace.workflow import UncertainEffectError
+from commonplace.artifactrun import UncertainEffectError, effects
 
 ARCHIVED = "previous-run"
 

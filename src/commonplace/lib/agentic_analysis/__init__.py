@@ -1,8 +1,8 @@
-"""The agentic-system analysis: a consumer of ``commonplace.workflow``.
+"""The agentic-system analysis: a consumer of ``commonplace.artifactrun``.
 
-This package owns the handlers its job declaration names, the analysis
+This package owns the handlers its plan names, the analysis
 domain rules, and the paths, run naming and roles it passes to
-``commonplace.setrun``. Its ``sets``, ``records`` and ``ledger`` modules
+``commonplace.artifactrun``. Its ``sets``, ``records`` and ``ledger`` modules
 provide set contracts and retained-data validation without importing the
 engine.
 """

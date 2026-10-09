@@ -1,13 +1,13 @@
-"""Register the generic workflow coordinator fixture."""
+"""Register the generic artifact-run coordinator fixture."""
 
 from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
 
-from commonplace.workflow import start_run
-from tests.commonplace.workflow.handlers import INTERRUPT_ENV, LOG_ENV
-from tests.commonplace.workflow.support import Coordinator, toy_library
+from commonplace.artifactrun import start_run
+from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV, LOG_ENV
+from tests.commonplace.artifactrun.support import Coordinator, toy_library
 
 
 @pytest.fixture

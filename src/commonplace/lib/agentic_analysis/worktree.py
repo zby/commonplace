@@ -8,6 +8,15 @@ import re
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.artifactrun.worktree import (
+    committed_tree,
+    merge_paths,
+    preparation_for,
+    prepared_origin,
+    require_committed_startup,
+    require_run_code,
+    run_command,
+)
 from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
@@ -17,15 +26,6 @@ from commonplace.lib.agentic_analysis.sets import (
 )
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
-from commonplace.setrun.isolation import (
-    committed_tree,
-    merge_paths,
-    preparation_for,
-    prepared_origin,
-    require_committed_startup,
-    require_run_code,
-    run_command,
-)
 
 STATE_ROOT = Path("kb/agentic-system-analyses/state")
 
@@ -37,9 +37,9 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
 
     ``profile`` names the run's worker profile; without it, ``harness``'s default applies.
     """
-    from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.setrun.sources import github_checkout_path
-    from commonplace.workflow import start_run
+    from commonplace.artifactrun import start_run
+    from commonplace.artifactrun.sources import github_checkout_path
+    from commonplace.lib.agentic_analysis.plan import PLAN
 
     worktree = worktree.resolve()
     preparation = preparation_for(worktree)
@@ -72,7 +72,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
             run.mkdir()  # Atomic allocation: never reuse another run's state.
         except FileExistsError:
             continue
-        start_run(run, worktree / "kb" / JOB_SET, parameters=parameters)
+        start_run(run, worktree / "kb" / PLAN, parameters=parameters)
         return run
     raise ValueError("analysis run sequence exhausted for this source and worktree")
 
@@ -99,15 +99,15 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     and the archive must hold the method commit's exact incumbent. The effect's
     own journal is recovery evidence for publication, not read here.
     """
-    from commonplace.lib.agentic_analysis.declaration import JOB_SET
-    from commonplace.setrun.effects import hashes, tree
-    from commonplace.workflow import current_outputs, inspect
+    from commonplace.artifactrun import current_outputs, inspect
+    from commonplace.artifactrun.effects import hashes, tree
+    from commonplace.lib.agentic_analysis.plan import PLAN
 
     view = inspect(run_dir)
     fixed = view["declaration"]
-    shipped = worktree / "kb" / JOB_SET
-    if Path(fixed["job_set"]) != shipped or fixed["sha256"] != sha256(shipped.read_bytes()).hexdigest():
-        raise ValueError("integration requires the fixed shipped analysis job set")
+    shipped = worktree / "kb" / PLAN
+    if Path(fixed["plan"]) != shipped or fixed["sha256"] != sha256(shipped.read_bytes()).hexdigest():
+        raise ValueError("integration requires the fixed shipped analysis plan")
     if fixed["type_sha256"] != sha256((worktree / "kb" / fixed["type_spec"]).read_bytes()).hexdigest():
         raise ValueError("integration requires the unchanged shipped set type")
     outputs = current_outputs(run_dir, "publish")
@@ -159,8 +159,8 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     The run and publication locks serialize cooperating run and publisher
     mutations. A conflict is aborted in main; its branch remains for review.
     """
+    from commonplace.artifactrun import run_lock
     from commonplace.lib.agentic_analysis.guards import publication_lock
-    from commonplace.workflow import run_lock
 
     run_dir = Path(run_dir).absolute()
     if run_dir.resolve() != run_dir:

@@ -136,7 +136,7 @@ def test_virtual_verbatim_sources_require_supplied_bytes(tmp_path):
 
 def test_public_adapter_missing_substantive_criterion(tmp_path):
     result = validate_pinned_set_snapshot(
-        repo=tmp_path, set_type=SET_TYPE, intended_set_path=Path("kb/agentic-system-analyses/state/local/set"),
+        repo=tmp_path, set_type=SET_TYPE, intended_set_path=Path("kb/agentic-system-analyses/state/local/artifact"),
         members={}, manifest=b"type: ignored\n", criteria={},
     )
     assert any("missing pinned criterion" in failure for failure in result.fails)
@@ -169,7 +169,7 @@ def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path)
             data += b"\n## Members\n\n[Boundary](./boundary.md)\n"
         members[role + ".md"] = data
 
-    directory = tmp_path / "kb/agentic-system-analyses/state/fixture/set"
+    directory = tmp_path / "kb/agentic-system-analyses/state/fixture/artifact"
     directory.mkdir(parents=True)
     (directory / "unrelated.md").write_text("--- invalid untracked file")
 

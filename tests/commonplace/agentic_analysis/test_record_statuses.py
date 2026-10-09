@@ -12,7 +12,7 @@ pytestmark = pytest.mark.usefixtures("tmp_library")
 
 
 def test_member_validator_rejects_and_accepts_corrected_status(tmp_path):
-    directory = member_fixture(tmp_path) / "set"
+    directory = member_fixture(tmp_path) / "artifact"
     runtime = directory / "runtime.md"
     valid = runtime.read_text()
     runtime.write_text(valid.replace(

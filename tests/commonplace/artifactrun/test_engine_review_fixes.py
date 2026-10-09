@@ -5,12 +5,16 @@ from dataclasses import replace
 import pytest
 import yaml
 
-from commonplace.workflow import AttemptResult, advance, start_run
-from commonplace.workflow.declaration import CodeJob
-from commonplace.workflow.engine import _close
-from commonplace.workflow.state import Run
-from commonplace.workflow.store import RunStore, digest
-from tests.commonplace.workflow.support import COMPLETE_BRIEF, Coordinator, toy_library
+from commonplace.artifactrun import AttemptResult, advance, start_run
+from commonplace.artifactrun.engine import _close
+from commonplace.artifactrun.plan import CodeJob
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore, digest
+from tests.commonplace.artifactrun.support import (
+    COMPLETE_BRIEF,
+    Coordinator,
+    toy_library,
+)
 
 
 def state(c):

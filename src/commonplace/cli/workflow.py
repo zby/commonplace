@@ -8,9 +8,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+from commonplace.artifactrun import UncertainEffectError
+from commonplace.artifactrun.worktree import command_environment, prepare_worktree
 from commonplace.lib.agentic_analysis.worktree import integrate_analysis, start_analysis
-from commonplace.setrun.isolation import command_environment, prepare_worktree
-from commonplace.workflow import UncertainEffectError
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -43,7 +43,7 @@ def main(argv: list[str] | None = None) -> int:
         elif arguments.command == "integrate-analysis":
             print(integrate_analysis(arguments.run, model=arguments.model))
         elif arguments.command == "report-analysis":
-            from commonplace.setrun.report import render_engine_run_report
+            from commonplace.artifactrun.report import render_engine_run_report
 
             rendered = json.loads(render_engine_run_report(arguments.run, final_job="publish"))
             if rendered["state"] == "completed":
@@ -54,8 +54,8 @@ def main(argv: list[str] | None = None) -> int:
                 version = rendered["members"].get("boundary")
                 if version is None:
                     raise ValueError("completed analysis has no boundary member")
-                # The set directory holds the members materialized; content identity ties it to the report.
-                data = (Path(rendered["set"]) / "boundary.md").read_bytes()
+                # The artifact directory holds the members materialized; content identity ties it to the report.
+                data = (Path(rendered["artifact"]) / "boundary.md").read_bytes()
                 if sha256(data).hexdigest() != version:
                     raise ValueError("the materialized boundary differs from the reported member")
                 document, error = parse_document(data.decode("utf-8"))

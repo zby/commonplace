@@ -3,16 +3,16 @@
 `R` is the toy `report` job, `check-R` is `check-report`, `V` is `verify`
 with `apply-verification`, `reconcile` is `summary` and `profile` is
 `digest`; see conftest.py. Assertions use only the public surface: run
-status, members in `set/`, hand-out files and the handlers' call log.
+status, members in `artifact/`, hand-out files and the handlers' call log.
 """
 
 from __future__ import annotations
 
 import pytest
 
-from commonplace.workflow import AttemptResult, judge, start_run
-from tests.commonplace.workflow.handlers import INTERRUPT_ENV
-from tests.commonplace.workflow.support import BLOCKED_BRIEF, Coordinator
+from commonplace.artifactrun import AttemptResult, judge, start_run
+from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV
+from tests.commonplace.artifactrun.support import BLOCKED_BRIEF, Coordinator
 
 
 def refuse_report(c: Coordinator, reason: str = "r1") -> None:
@@ -146,7 +146,7 @@ def test_09_operator_override_names_the_refusal(coordinator: Coordinator) -> Non
     c.edit_method("contract-report.md", "forbid: report A\n")
     c.advance()
     assert "report" in c.handed(), "the check refused A under the new contract"
-    from commonplace.workflow.engine import inspect
+    from commonplace.artifactrun.engine import inspect
 
     refusal = next(r for r in inspect(c.run_dir)["refusals"] if r.job == "report")
     judge(c.run_dir, role="report", outcome="accepted", scope=("report:cites:brief",), basis=("brief",),
@@ -162,7 +162,7 @@ def test_09_judging_history_is_evidence_only(coordinator: Coordinator) -> None:
     c.through_records()
     refuse_report(c)
     c.complete("report", "report B\n", answers="answered\n")
-    from commonplace.workflow.store import digest
+    from commonplace.artifactrun.store import digest
 
     judge(c.run_dir, role="report", outcome="accepted", version=digest(b"report A\n"))
     c.advance()
@@ -233,8 +233,8 @@ def test_12_interrupted_invocation_resumes(coordinator: Coordinator, monkeypatch
 def test_12_tampered_member_is_rematerialized(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
-    (c.run_dir / "set" / "report.md").write_text("bytes with no record\n", encoding="utf-8")
-    manifest = c.run_dir / "set" / "ARTIFACT.yaml"
+    (c.run_dir / "artifact" / "report.md").write_text("bytes with no record\n", encoding="utf-8")
+    manifest = c.run_dir / "artifact" / "ARTIFACT.yaml"
     manifest.write_text("type: something/else.md\n", encoding="utf-8")
     c.advance()
     assert c.member("report") == "report A\n"
@@ -289,7 +289,7 @@ def test_09_rerecording_an_unchanged_claim_does_not_reassemble(coordinator: Coor
 
 def test_14_a_member_whose_acceptance_stopped_holding_blocks_publication(
         tmp_path, tmp_library, monkeypatch) -> None:
-    from tests.commonplace.workflow.support import custom_run
+    from tests.commonplace.artifactrun.support import custom_run
 
     def edit(jobs):
         jobs["check-brief"]["inputs"]["contract"] = dict(jobs["check-report"]["inputs"]["contract"])
@@ -298,8 +298,8 @@ def test_14_a_member_whose_acceptance_stopped_holding_blocks_publication(
     c.through_brief(BLOCKED_BRIEF)
     assert c.status.publishable
     (c.method / "contract-report.md").write_text("# Edited contract\n", encoding="utf-8")
-    from commonplace.workflow.state import Run
-    from commonplace.workflow.store import RunStore
+    from commonplace.artifactrun.run import Run
+    from commonplace.artifactrun.store import RunStore
 
     assert not Run(RunStore(c.run_dir)).publishable(), "the brief's only acceptance no longer holds"
     c.advance()
@@ -340,7 +340,7 @@ def test_17_recheck_waits_for_the_refused_producer(coordinator: Coordinator) -> 
 ])
 def test_17_acceptance_supersedes_a_refusal_only_within_its_scope(
         coordinator: Coordinator, scope: tuple[str, ...], basis: tuple[str, ...], supersedes: bool) -> None:
-    from commonplace.workflow.engine import inspect
+    from commonplace.artifactrun.engine import inspect
 
     c = coordinator
     c.through_records()
@@ -419,7 +419,7 @@ def test_type_is_fixed_for_the_run(coordinator: Coordinator) -> None:
 def test_check_job_refuses_to_run_on_a_moved_member(coordinator: Coordinator, monkeypatch) -> None:
     c = coordinator
     c.through_brief()
-    from commonplace.workflow import engine
+    from commonplace.artifactrun import engine
 
     real = engine._materialize
     calls = {"n": 0}
@@ -427,7 +427,7 @@ def test_check_job_refuses_to_run_on_a_moved_member(coordinator: Coordinator, mo
     def tamper_after_rebuild(run):
         real(run)
         calls["n"] += 1
-        brief = run.store.set_dir / "brief.md"
+        brief = run.store.artifact_dir / "brief.md"
         if brief.exists():
             brief.write_text("changed behind the engine's back\n", encoding="utf-8")
 
@@ -450,7 +450,7 @@ def test_handout_prompt_keeps_the_legacy_shape(coordinator: Coordinator) -> None
     assert prompt[0] == f"Follow {c.method / 'report.md'} with:", "the instruction is handed at its own path"
     values = dict(line.split(" = ", 1) for line in prompt if " = " in line)
     assert values["system"] == "toy"
-    assert values["validation-member"] == str(c.run_dir / "set" / "report.md")
+    assert values["validation-member"] == str(c.run_dir / "artifact" / "report.md")
     assert values["output"] == str(handout.outputs["report"])
     assert values["output-answers"] == str(handout.outputs["answers"])
     assert values["refusal"] == "absent"
@@ -461,7 +461,7 @@ def test_handout_prompt_keeps_the_legacy_shape(coordinator: Coordinator) -> None
 
 
 def test_start_refuses_missing_run_parameters(tmp_path, tmp_library) -> None:
-    from tests.commonplace.workflow.support import toy_library
+    from tests.commonplace.artifactrun.support import toy_library
 
     declaration, _ = toy_library(tmp_path)
     with pytest.raises(ValueError, match="run parameters not given: subject"):
