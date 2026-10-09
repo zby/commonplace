@@ -123,11 +123,13 @@ clones a missing checkout or fetches a clean existing one and detaches it at the
 default branch tip. With a revision it uses that commit. A dirty checkout,
 foreign origin or unavailable commit stops the run for the operator.
 
-Do not supply an opening-model guess. Record the actual worker model and effort
-with each completed result through `commonplace-run advance --completed …
---model … --effort …`. Omit effort only when the harness reports no setting.
-The retained manifest still requires one consistent worker model/effort identity
-across the run; heterogeneous-worker publication is not supported.
+Workers run on `gpt-6-sol` at `low` effort, unless the operator names another
+model and effort for this run. Launch every worker with that model and effort
+selected explicitly, and report them with each completed result through
+`commonplace-run advance --completed … --model … --effort …`. When the harness
+cannot select the model or effort for a fresh worker, stop before launching
+and tell the operator. The retained manifest requires one worker model/effort
+identity across the run; heterogeneous-worker publication is not supported.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 
