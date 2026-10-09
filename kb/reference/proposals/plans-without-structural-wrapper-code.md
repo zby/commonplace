@@ -230,9 +230,9 @@ The syntax, stated so that the loader does not invent it:
   directory, expanded to a library path. `files: {<name>: <library path>}`
   declares named file inputs such as contracts. `criteria` names groups as
   today. The loader adds the plan-level `inputs` and the validation
-  parameters, `validation-artifact` and `validation-role`, to every
-  role-filling entry; the engine's own loader already adds the refusal
-  input. `defaults.parameters` is merged under an entry's `parameters`.
+  `inputs` to every role-filling entry; the engine's own loader already
+  adds the refusal input, and the frame prints the role and artifact
+  lines the check command needs. `defaults.parameters` is merged under an entry's `parameters`.
 - **Input names.** A role read is named after the role. A `job:output`
   read is named after the job when the output is the job's only one, else
   `<job>-<output>`, so the boundary's read of acquisition's one output is
@@ -365,11 +365,14 @@ instruction holds only its mission.
   composer: the template fills its slot and nothing else.
 - **Slots are lines.** Every `name = value` line the frame prints is
   available in the template as `{name}` with the same value, and no other
-  slot exists; the frame prints a `role` line for role-filling jobs so
-  `{role}` is one. So `{output}` and `{output-answers}` are paths, as the
-  lines are; `{member-type}`, `{set-type}` and `{<role>-type}` are the
-  handed type files; `{validation-artifact}` and `{validation-role}` are
-  the parameter lines. A run parameter the template needs is declared in
+  slot exists; the frame prints `role` for role-filling jobs and
+  `artifact`, the run's artifact directory, so `{role}` and `{artifact}`
+  are lines. So `{output}` and `{output-answers}` are paths, as the lines
+  are, and `{member-type}`, `{set-type}` and `{<role>-type}` are the
+  handed type files. The per-job `validation-artifact` and
+  `validation-role` parameters go: they duplicated those two lines, and
+  the check command reads `{command-path}/commonplace-validate {output}
+  --artifact {artifact} --role {role}`. A run parameter the template needs is declared in
   the plan's `parameters`, which prints it as a line; `{param:<name>}` and
   `{artifact}` appear only there, so the plan is the one place that
   substitutes run values. An unknown placeholder is a plan error at
