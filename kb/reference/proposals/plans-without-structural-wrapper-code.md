@@ -133,6 +133,12 @@ hard import is the subject of
 and is not re-decided here; pinned-artifact validation treats a type with
 no rule as schema-only rather than unsupported.
 
+A type rule that reads a partner's content needs that partner in the
+role's `cites`, so the derived check's snapshot holds it and the check's
+judgment covers the relation. The synthesis therefore cites the record and
+profile verifications, whose Limits it carries; `cites` demands no actual
+citation, it is the scope a member's references and its rules may read.
+
 A rule supplies a finding; it does not say whose version the finding
 refuses. Every layout and rule finding names the role it belongs to
 (ADR 111), and that is the attribution the standard handlers consume. The
