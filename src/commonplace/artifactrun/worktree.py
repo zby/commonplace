@@ -142,7 +142,7 @@ def _install(worktree: Path) -> dict[str, str]:
         [str(python), "-c", (
             "import json, shutil; import commonplace.artifactrun.engine as m; "
             "print(json.dumps({'module': m.__file__, "
-            "'workflow': shutil.which('commonplace-workflow'), "
+            "'analysis': shutil.which('commonplace-analysis'), "
             "'run': shutil.which('commonplace-run'), "
             "'validate': shutil.which('commonplace-validate')}))"
         )],
@@ -154,7 +154,7 @@ def _install(worktree: Path) -> dict[str, str]:
         expected = worktree / RUNTIME_MARKER
         if Path(found["module"]).resolve() != expected.resolve():
             raise ValueError("the installed package resolves outside the prepared worktree")
-        for key in ("workflow", "run", "validate"):
+        for key in ("analysis", "run", "validate"):
             # Resolve the directory, not the executable: uv may use symlinks.
             if not found[key] or Path(found[key]).parent.resolve() != bin_dir.resolve():
                 raise ValueError(f"{key} command resolves outside the local environment")

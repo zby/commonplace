@@ -142,11 +142,11 @@ Capture an X/Twitter post, thread, or article under the ignored
 is reported rather than replaced; `--reobserve` captures it again as a new
 observation under a basename ending in the capture date.
 
-## Workflows
+## Artifact runs
 
-### commonplace-workflow
+### commonplace-analysis
 
-`prepare-analysis --name <system>` creates a dedicated Commonplace source
+`prepare --name <system>` creates a dedicated Commonplace source
 worktree and installs and verifies its local command environment. It pins a
 commit and a 12-hex worktree token in the preparation record for distinct
 analysis run IDs. It excludes uncommitted origin changes only with
@@ -159,14 +159,14 @@ commands require the prepared checkout and its local executing code. Draft
 validation also uses that command environment. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
-`start-analysis --system <name> --source-identity <identity> --source <input>`
+`start --system <name> --source-identity <identity> --source <input>`
 allocates a token-bearing run ID, pins the active plan, and
 prints its path without advancing or acquiring sources. Optional
 `--source-revision <full-40-hex-commit>` requires a GitHub identity. Worker
 provenance is not an opening parameter: report actual model/effort with
 completed results through `commonplace-run advance`.
 
-`report-analysis <run>` emits JSON engine evidence without changing logical
+`report <run>` emits JSON engine evidence without changing logical
 state (locking may create a lock file). It distinguishes completed local
 `blocked`/`out-of-scope` dispositions from completion of the publication job.
 It reports attempts, failures, exhausted jobs, refusals and canonical peer drift;
@@ -174,7 +174,7 @@ journal labels are unverified, and invocation-specific stops require the
 original advance result. It is not a retained-filesystem audit or an old-style
 handoff command.
 
-`integrate-analysis <run>` independently verifies engine completion, current
+`integrate <run>` independently verifies engine completion, current
 coverage, exact pinned publication inputs, retained bytes, journal and archive
 evidence. After separate operator authorization it commits the published set and
 incumbent archive on an analysis branch and merges into `main`. A conflict

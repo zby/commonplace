@@ -8,10 +8,10 @@ type: types/instruction.md
 Let code schedule and judge the analysis; launch only its handed-out workers and
 report their completion or failure without doing their work.
 
-`<run>` is the path printed by `start-analysis`. Run every command from the
+`<run>` is the path printed by `commonplace-analysis start`. Run every command from the
 prepared worktree with its command directory, as required by
 [isolated run setup](./SKILL.md#isolated-run-setup). Use
-`<path-prefix>/commonplace-run` and `<path-prefix>/commonplace-workflow` below.
+`<path-prefix>/commonplace-run` and `<path-prefix>/commonplace-analysis` below.
 Keep code, method files, lockfile and environment unchanged throughout the run.
 
 ## Advance and launch
@@ -78,7 +78,7 @@ Recovery needs a separate operator decision; do not treat a journal label as
 proof that an external effect happened or was rolled back.
 
 When advance returns no handouts or open attempts, inspect
-`commonplace-workflow report-analysis <run>`. If it reports `completed`, return
+`commonplace-analysis report <run>`. If it reports `completed`, return
 its output under the skill's reporting rules. A local blocked/out-of-scope result
 is not publication. If it is not completed, report the unresolved state rather
 than repeatedly advancing or declaring success. `publishable: yes` alone is not

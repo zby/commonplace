@@ -22,7 +22,7 @@ Run each analysis in a dedicated Commonplace worktree at a committed method
 revision. Prepare it first, from the checkout this session started in:
 
 ```bash
-commonplace-workflow prepare-analysis --name <system-label>
+commonplace-analysis prepare --name <system-label>
 ```
 
 Code creates a detached worktree under `.commonplace/worktrees/`, installs
@@ -70,7 +70,7 @@ use the same worktree and command directory before following the
 worker-recovery rules. A completed published run stays in this worktree until the
 operator separately authorizes integration. Keep using the prepared worktree's
 command directory and working directory for
-`commonplace-workflow integrate-analysis <run>` after the report; its recorded
+`commonplace-analysis integrate <run>` after the report; its recorded
 origin checkout must be clean and on `main`. An agent also supplies
 `--model <model-id>`. The command commits
 the publication on `analysis/<run-id>` from the method commit and merges that
@@ -99,7 +99,7 @@ skill there. This session then stops after preparation.
 From the prepared worktree root, using its command directory, allocate the run:
 
 ```bash
-commonplace-workflow start-analysis \
+commonplace-analysis start \
   --system "<source-native system name>" \
   --source-identity "<stable source identity, e.g. https://github.com/owner/repo>" \
   --source "<the caller's source input, as given>" \
@@ -126,7 +126,7 @@ foreign origin or unavailable commit stops the run for the operator.
 
 Every worker of a run uses one worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, `launch-model` and effort.
-Pass `start-analysis` this session's harness with `--harness <name>`
+Pass `commonplace-analysis start` this session's harness with `--harness <name>`
 (`claude-code`, `codex` or `pi`), and the profile the operator names with
 `--profile <name>`. Without a named profile, code uses the harness's default;
 it refuses a profile of another harness. Opening records the profile and
@@ -138,11 +138,11 @@ Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retaine
 
 ## 2. Drive the run
 
-Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = the path `start-analysis` printed. The run is new: you started it in this session.
+Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>` = the path `commonplace-analysis start` printed. The run is new: you started it in this session.
 
 ## 3. Report
 
-Run `commonplace-workflow report-analysis <run>` and include its JSON output
+Run `commonplace-analysis report <run>` and include its JSON output
 unchanged in the final response, together with any stops from the last advance.
 The report does not reconstruct invocation-specific scheduling stops or audit
 retained files. `publishable` is engine coverage, not proof of publication.

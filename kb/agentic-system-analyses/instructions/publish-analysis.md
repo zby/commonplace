@@ -21,13 +21,13 @@ There is no standalone finalize, handoff or publication command.
 A `complete` disposition publishes to `retained/<source-slug>/`. An incumbent
 moves unchanged to `retained-archive/<its-run-id>/`, then the accepted manifest
 and members are copied unchanged. `blocked` and `out-of-scope` dispositions
-complete locally without retained mutation. Use `commonplace-workflow
-report-analysis <run>` to distinguish these results. Its `completed` state means
+complete locally without retained mutation. Use `commonplace-analysis
+report <run>` to distinguish these results. Its `completed` state means
 the bound job completed on current inputs; neither that state nor engine
 publishability is a fresh audit of retained files.
 
 After the report and separate operator authorization, run
-`commonplace-workflow integrate-analysis <run>` with the prepared worktree's
+`commonplace-analysis integrate <run>` with the prepared worktree's
 command directory and working directory; its recorded origin must be clean and
 on `main` (an agent adds `--model <model-id>`). Integration independently checks
 current completion and coverage, exact pinned publication inputs, retained bytes,

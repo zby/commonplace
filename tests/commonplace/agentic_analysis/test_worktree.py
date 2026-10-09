@@ -12,8 +12,8 @@ from pathlib import Path
 import pytest
 
 from commonplace.artifactrun import worktree as iso
+from commonplace.cli.analysis import main
 from commonplace.cli.run import main as run_main
-from commonplace.cli.workflow import main
 from commonplace.lib.agentic_analysis import worktree as aw
 
 
@@ -201,7 +201,7 @@ def test_failed_setup_is_recorded_and_never_launched(origin: Path, monkeypatch, 
         return {}
     monkeypatch.setattr(iso, "_install", install)
     monkeypatch.chdir(origin)
-    assert main(["prepare-analysis", "--name", "example", "--", "must-not-launch"]) == 1
+    assert main(["prepare", "--name", "example", "--", "must-not-launch"]) == 1
     assert message in capsys.readouterr().err
     (record_path,) = (origin / ".commonplace/worktrees").glob("*.preparation.json")
     record = json.loads(record_path.read_text())
@@ -220,7 +220,7 @@ def test_launcher_binds_cwd_commands_and_committed_agents(origin: Path, monkeypa
         "'home': os.environ.get('PYTHONHOME'), "
         "'agents': Path('AGENTS.md').read_text()}))"
     )
-    assert main(["prepare-analysis", "--name", "example", "--", sys.executable, "-c", probe]) == 0
+    assert main(["prepare", "--name", "example", "--", sys.executable, "-c", probe]) == 0
     lines = capfd.readouterr().out.splitlines()
     prepared = json.loads("\n".join(lines[:-1]))
     child = json.loads(lines[-1])
@@ -231,13 +231,13 @@ def test_launcher_binds_cwd_commands_and_committed_agents(origin: Path, monkeypa
     assert child["agents"] == "Committed instructions\n"
 
 
-@pytest.mark.parametrize("wrong", [None, "module", "workflow", "run", "validate"])
+@pytest.mark.parametrize("wrong", [None, "module", "analysis", "run", "validate"])
 def test_installation_probe_requires_worktree_local_commands(tmp_path: Path, monkeypatch, wrong) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
         "module": str(tmp_path / iso.RUNTIME_MARKER),
-        "workflow": str(local_bin / "commonplace-workflow"),
+        "analysis": str(local_bin / "commonplace-analysis"),
         "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
@@ -307,7 +307,7 @@ def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, 
         "state": "completed", "artifact": str(tmp_path / "artifact"), "members": {"boundary": sha256(boundary).hexdigest()},
         "effects": {"publish": {"verified": False}},
     }))
-    assert main(["report-analysis", str(tmp_path)]) == 0
+    assert main(["report", str(tmp_path)]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["result-disposition"] == disposition
     assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
