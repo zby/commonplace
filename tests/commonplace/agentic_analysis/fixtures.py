@@ -162,14 +162,14 @@ def profile_report_fixture(run_dir: Path, revision: str, *, version: int = 1) ->
                 "scope": "The fixture's two inspected stores",
                 "assessment": "known",
                 "findings": [
-                    {"value": value, "basis": "wired", "records": ["MEM-OBJ-store"],
+                    {"value": value, "basis": "wired", "records": ["memory.md#mem-obj-store"],
                      "note": "Fixture witness."}
                     for value in ["sqlite", "files"]
                 ],
-                "records": ["MEM-OBJ-store"],
+                "records": ["memory.md#mem-obj-store"],
                 "note": "Both stores occur within the fixture boundary.",
             }],
-            "records": ["MEM-OBJ-store"],
+            "records": ["memory.md#mem-obj-store"],
             "note": "Both stores cover the fixture inventory.",
         }
     else:
@@ -214,13 +214,15 @@ none proposed.
 
 ### Operative objects
 
-#### MEM-OBJ-store — Fixture memory store
+#### MEM-OBJ-store
+
+Label: Fixture memory store
 
 Store the specialist established, from SRC-1.
 
 ### Routes
 
-#### On RT-RTE-model-call — Fixture route
+#### On [RT-RTE-model-call](runtime.md#rt-rte-model-call)
 
 Seeded route with the specialist's memory fields.
 
@@ -238,11 +240,11 @@ none proposed.
 
 ## Write side
 
-Fixture evidence on MEM-OBJ-store.
+Fixture evidence on [MEM-OBJ-store](memory.md#mem-obj-store).
 
 ## Read-back
 
-Fixture evidence on RT-RTE-model-call.
+Fixture evidence on [RT-RTE-model-call](runtime.md#rt-rte-model-call).
 
 ## Integration issues
 
@@ -276,24 +278,30 @@ Implementation inspected at `README.md`; operation is unobserved.
 
 ### Components
 
-#### RT-CMP-model — Fixture component
+#### RT-CMP-model
+
+Label: Fixture component
 
 Record. Evidence: SRC-1.
 
 ### Operative objects
 
-#### RT-OBJ-store — Fixture object
+#### RT-OBJ-store
+
+Label: Fixture object
 
 Record. Evidence: SRC-1.
 
 ### Routes
 
-#### RT-RTE-model-call — Fixture route
+#### RT-RTE-model-call
+
+Label: Fixture route
 
 - implementation conclusion status: wired
 
 - Immediate return: The fixture invocation returns the stored object.
-- Later read-back: A later invocation reads RT-OBJ-store.
+- Later read-back: A later invocation reads [RT-OBJ-store](runtime.md#rt-obj-store).
 - Delegated visibility: inapplicable — the fixture has no delegated workers.
 - Selection predicate: The caller requests the fixture object.
 - Invalidation or expiry: inapplicable — the fixture has no expiry mechanism.
@@ -304,7 +312,9 @@ Record. Evidence: SRC-1.
 
 ### Claims
 
-#### RT-CLM-runtime-claim — Fixture claim
+#### RT-CLM-runtime-claim
+
+Label: Fixture claim
 
 Record. Evidence: SRC-1.
 
@@ -314,7 +324,9 @@ none found within the fixture boundary.
 
 ### Behavioral-authority paths
 
-#### RT-BAP-content-authority — Fixture authority path
+#### RT-BAP-content-authority
+
+Label: Fixture authority path
 
 Record. Evidence: SRC-1.
 
@@ -340,18 +352,18 @@ Boundary from the overview's Source register.
 
 ## Epistemic-object inventory
 
-RT-OBJ-store and EPI-OBJ-store carry no candidate truth-apt content.
+[RT-OBJ-store](runtime.md#rt-obj-store) and [EPI-OBJ-store](epistemic.md#epi-obj-store) carry no candidate truth-apt content.
 
 ## Authority-route ledger
 
-Route ID: RT-RTE-model-call
+Route ID: [RT-RTE-model-call](runtime.md#rt-rte-model-call)
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
 
 ## System-claim versus route comparison
 
-RT-CLM-runtime-claim is compared with RT-RTE-model-call.
+[RT-CLM-runtime-claim](runtime.md#rt-clm-runtime-claim) is compared with [RT-RTE-model-call](runtime.md#rt-rte-model-call).
 
 ## Bounded conclusion
 
@@ -361,7 +373,9 @@ Conclusion.
 
 ### Operative objects
 
-#### EPI-OBJ-store — Fixture checked object
+#### EPI-OBJ-store
+
+Label: Fixture checked object
 
 Object the epistemic lens established. Evidence: SRC-1.
 """
@@ -482,7 +496,7 @@ reviewed-boundary: {revision}
 
 ## Bounded synthesis
 
-Fixture synthesis over RT-OBJ-store, MEM-OBJ-store, EPI-OBJ-store and RT-RTE-model-call.
+Fixture synthesis over [RT-OBJ-store](runtime.md#rt-obj-store), [MEM-OBJ-store](memory.md#mem-obj-store), [EPI-OBJ-store](epistemic.md#epi-obj-store) and [RT-RTE-model-call](runtime.md#rt-rte-model-call).
 
 ## Limitations
 
@@ -530,7 +544,7 @@ reviewed-boundary: {revision}
 
 ## Reconciliation
 
-MEM-OBJ-store and EPI-OBJ-store duplicate no runtime record.
+[MEM-OBJ-store](memory.md#mem-obj-store) and [EPI-OBJ-store](epistemic.md#epi-obj-store) duplicate no runtime record.
 '''
 
 

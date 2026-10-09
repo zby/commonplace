@@ -56,7 +56,7 @@ admission and theory fields.
 ### Annotations
 
 `## Annotations` holds only runtime-specific fields on records declared
-elsewhere, as `#### On MEM-RTE-memory-read — Short label`: admission and theory
+elsewhere, as `#### On [MEM-RTE-memory-read](memory.md#mem-rte-memory-read)`: admission and theory
 fields, decision roles, operating mode, answer oracle and links to
 runtime-declared records. It repeats no generic identity, evidence passage
 or memory finding. Ordinarily this section says `none`: the runtime is

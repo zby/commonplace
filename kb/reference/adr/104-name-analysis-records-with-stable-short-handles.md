@@ -9,6 +9,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-10-04
 **Amends:** [ADR 096](./096-analysis-passes-declare-their-own-records-under-lens-prefixes.md) for record suffixes; analyst ownership and immutable identities remain in force.
+**Amended by:** [ADR 115](./115-analysis-records-are-cited-by-markdown-links.md): records are cited by Markdown links; bare IDs are literal, so the grouping-prose and token-prefix rules below record the prior decision.
 
 ## Context
 

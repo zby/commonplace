@@ -10,6 +10,8 @@ from commonplace.lib import systems_matrix as sm
 from tests.commonplace.agentic_analysis.fixtures import comparison_schema
 
 KNOWN = {"RT-OBJ-store", "RT-RTE-model-call", "RT-ABS-missing-route"}
+KNOWN2 = dict.fromkeys(KNOWN, "runtime.md")
+"""Revision 2 cites records as member.md#anchor, so its known IDs name their member."""
 
 
 def profile():
@@ -102,7 +104,8 @@ def test_comparison_resolves_canonical_runtime_ids():
     identifier = "RT-OBJ-store"
     data = profile()
     data["axes"]["storage_substrate"] = known(["files"], [identifier])
-    body = "## Shared records\n\n### Operative objects\n\n" + "\n".join(f"#### {id_} — Fixture\n" for id_ in KNOWN | {identifier})
+    body = "## Shared records\n\n### Operative objects\n\n" + "\n".join(
+        f"#### {id_}\n\nLabel: Fixture\n" for id_ in KNOWN | {identifier})
     assert sm.profile_member_comparison({"memory-comparison": data}, record_bodies={"overview.md": "", "memory.md": body}) == data
 
 
@@ -196,14 +199,14 @@ def revision2():
 def finding(value, basis="wired", records=None):
     return {
         "value": value, "basis": basis,
-        "records": records or ["RT-OBJ-store"], "note": "Synthetic witness only.",
+        "records": records or ["runtime.md#rt-obj-store"], "note": "Synthetic witness only.",
     }
 
 
 def unit(*findings, assessment="known", scope="Automatic update"):
     return {
         "scope": scope, "assessment": assessment, "findings": list(findings),
-        "records": ["RT-OBJ-store"],
+        "records": ["runtime.md#rt-obj-store"],
         "note": "Coverage is scoped to this route; opaque alternatives remain named.",
     }
 
@@ -211,7 +214,7 @@ def unit(*findings, assessment="known", scope="Automatic update"):
 def axis2(*units, assessment="known"):
     return {
         "assessment": assessment, "units": list(units),
-        "records": ["RT-OBJ-store"], "note": "Synthetic scoped inventory witness.",
+        "records": ["runtime.md#rt-obj-store"], "note": "Synthetic scoped inventory witness.",
     }
 
 
@@ -224,7 +227,7 @@ def test_revision2_partial_positive_roundtrip_and_nonmutation():
     )
     before = deepcopy(data)
     comparison_schema().validate(data)
-    assert sm.validate_comparison(data, known_ids=KNOWN) == before
+    assert sm.validate_comparison(data, known_ids=KNOWN2) == before
     row = sm.project_comparison(data)
     row.update(source_tier="code-grounded")
     assert row["write_agency"] == ["automatic"]
@@ -246,7 +249,7 @@ def test_revision2_every_finding_must_be_strong_even_for_same_value():
         unit(finding("automatic", basis="claimed"), scope="Other admission"),
         unit(finding("manual"), scope="Explicit operator replacement"),
     )
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert sm.supported_values(row, "write_agency") == {"automatic", "manual"}
     assert row["write_agency_evidence"]["automatic"]["basis"] == "wired"
@@ -263,12 +266,12 @@ def test_revision2_trace_local_no_does_not_negate_yes(assessment):
     data = revision2()
     units = [
         unit(finding("yes"), scope="Trace-fed later guidance"),
-        unit(finding("no", records=["RT-ABS-missing-route"]), scope="Bounded static branch"),
+        unit(finding("no", records=["runtime.md#rt-abs-missing-route"]), scope="Bounded static branch"),
     ]
     if assessment == "partial":
         units.append(unit(assessment="uninspected", scope="Opaque branch"))
     data["axes"]["trace_learning"] = axis2(*units, assessment=assessment)
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert row["trace_learning"] == ["yes"]
     assert row["trace_learning_units"][1]["findings"][0]["value"] == "no"
@@ -278,14 +281,14 @@ def test_revision2_trace_local_no_does_not_negate_yes(assessment):
 def test_revision2_bounded_absence_and_unknown_are_distinct():
     data = revision2()
     data["axes"]["curation_operations"] = axis2(assessment="absent")
-    data["axes"]["curation_operations"]["records"] = ["RT-ABS-missing-route"]
-    sm.validate_comparison(data, known_ids=KNOWN)
+    data["axes"]["curation_operations"]["records"] = ["runtime.md#rt-abs-missing-route"]
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert sm.complete_values(row, "curation_operations") == ()
     assert sm.complete_values(row, "storage_substrate") is None
-    data["axes"]["trace_learning"] = axis2(unit(finding("no", records=["RT-ABS-missing-route"])))
+    data["axes"]["trace_learning"] = axis2(unit(finding("no", records=["runtime.md#rt-abs-missing-route"])))
     data["axes"]["trace_source"] = axis2(assessment="inapplicable")
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     assert sm.project_comparison(data)["trace_learning"] == ["no"]
 
 
@@ -306,7 +309,7 @@ def test_revision2_partial_unions_keep_heterogeneous_parts(axis, values):
         unit(assessment="not-determinable", scope="Opaque included part"),
         assessment="partial",
     )
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert row[axis] == sorted(values)
     assert sm.complete_values(row, axis) is None
@@ -323,8 +326,8 @@ def test_revision2_partial_unions_keep_heterogeneous_parts(axis, values):
     (lambda p: p["axes"]["write_agency"]["units"][0].update(assessment="uninspected"), "empty findings"),
     (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(value="caller"), "off-vocabulary"),
     (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(basis="requested"), "invalid evidence basis"),
-    (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["RT-OBJ-missing"]), "unresolved"),
-    (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["SRC-1"]), "canonical record ID"),
+    (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["runtime.md#rt-obj-missing"]), "unresolved"),
+    (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["SRC-1"]), "invalid record citation"),
     (lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(note=" "), "missing evidence rationale"),
 ])
 def test_revision2_rejects_malformed_and_unsupported_assertions(mutation, error):
@@ -332,7 +335,7 @@ def test_revision2_rejects_malformed_and_unsupported_assertions(mutation, error)
     data["axes"]["write_agency"] = axis2(unit(finding("automatic")))
     mutation(data)
     with pytest.raises(ValueError, match=error):
-        sm.validate_comparison(data, known_ids=KNOWN | {"SRC-1"})
+        sm.validate_comparison(data, known_ids={**KNOWN2, "SRC-1": "boundary.md"})
 
 
 @pytest.mark.parametrize("assessment", ["known", "partial"])
@@ -340,7 +343,7 @@ def test_revision2_no_without_bounded_absence_is_rejected(assessment):
     data = revision2()
     data["axes"]["trace_learning"] = axis2(unit(finding("no"), assessment=assessment))
     with pytest.raises(ValueError, match="bounded absence"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)
 
 
 def test_revision2_canonical_declarations_not_mentions():
@@ -351,7 +354,7 @@ def test_revision2_canonical_declarations_not_mentions():
             "overview.md": "", "memory.md": "## Shared records\n\nSee RT-OBJ-store.\n",
         })
     assert sm.profile_member_comparison({"memory-comparison": data}, record_bodies={
-        "overview.md": "", "memory.md": "## Shared records\n\n#### RT-OBJ-store — Fixture store\n",
+        "overview.md": "", "runtime.md": "## Shared records\n\n#### RT-OBJ-store\n\nLabel: Fixture store\n",
     }) == data
 
 
@@ -385,8 +388,9 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
     memory = SimpleNamespace(
         name="memory.md", sha256="memory-digest",
         frontmatter={"source-identity": "synthetic"},
-        body="## Shared records\n\n#### RT-OBJ-store — Fixture store\n",
+        body="## Shared records\n\n",
     )
+    runtime = SimpleNamespace(name="runtime.md", body="## Shared records\n\n#### RT-OBJ-store\n\nLabel: Fixture store\n")
     profile_member = SimpleNamespace(
         name="memory-profile.md", sha256="profile-digest", body="",
         frontmatter={"memory-comparison": data},
@@ -395,7 +399,7 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
         overview=overview, memory=memory, profile=profile_member,
         artifact=SimpleNamespace(path=overview.path.parent, content=b"manifest"),
         documents=[overview, memory, profile_member],
-        roles={"overview": overview, "memory": memory, "memory-profile": profile_member},
+        roles={"overview": overview, "runtime": runtime, "memory": memory, "memory-profile": profile_member},
     )
     monkeypatch.setattr(sm, "current_analyses", lambda root, run: [analysis])
     inputs = sm.load_results(tmp_path)
@@ -415,7 +419,7 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
     lambda p: p["axes"]["write_agency"]["units"][0].update(findings=[]),
     lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["SRC-1"]),
     lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=[]),
-    lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["RT-OBJ-store", "RT-OBJ-store"]),
+    lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(records=["runtime.md#rt-obj-store", "runtime.md#rt-obj-store"]),
     lambda p: p["axes"]["write_agency"]["units"][0]["findings"][0].update(note=" "),
 ])
 def test_revision2_schema_rejects_malformed_structure(mutation):
@@ -432,29 +436,29 @@ def test_revision2_partial_unit_can_name_its_own_unresolved_parts():
         assessment="partial",
     )
     comparison_schema().validate(data)
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     assert sm.project_comparison(data)["write_agency"] == ["automatic"]
 
 
 def test_revision2_partial_axis_cannot_promote_only_local_negatives():
     data = revision2()
     data["axes"]["trace_learning"] = axis2(
-        unit(finding("no", records=["RT-ABS-missing-route"])),
+        unit(finding("no", records=["runtime.md#rt-abs-missing-route"])),
         unit(assessment="uninspected", scope="Uninspected write"), assessment="partial",
     )
     with pytest.raises(ValueError, match="partial coverage needs positives"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)
 
 
 @pytest.mark.parametrize("assessment", ["uninspected", "not-determinable"])
 def test_revision2_local_negative_survives_unresolved_axis_without_system_no(assessment):
     data = revision2()
     data["axes"]["trace_learning"] = axis2(
-        unit(finding("no", records=["RT-ABS-missing-route"]), scope="Inspected static branch"),
+        unit(finding("no", records=["runtime.md#rt-abs-missing-route"]), scope="Inspected static branch"),
         unit(assessment=assessment, scope="Unresolved alternative write"), assessment=assessment,
     )
     comparison_schema().validate(data)
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert row["trace_learning"] == []
     assert row["trace_learning_units"][0]["findings"][0]["value"] == "no"
@@ -466,7 +470,7 @@ def test_legacy_projection_keeps_revision_identity_without_inventing_units():
     data = profile()
     data["axes"]["write_agency"] = known(["manual"])
     comparison_schema().validate(data)
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data)
     assert row["comparison_version"] == 1
     assert row["write_agency"] == ["manual"]
@@ -494,7 +498,7 @@ def test_whole_inapplicability_rejects_positive_or_unresolved_inventory(version,
         data["axes"][parent] = axis2(*units, assessment=status)
         data["axes"][child] = axis2(assessment="inapplicable")
     with pytest.raises(ValueError, match=f"{child}: inapplicability requires"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)
 
 
 @pytest.mark.parametrize("parent, child, value", [
@@ -504,13 +508,13 @@ def test_whole_inapplicability_rejects_positive_or_unresolved_inventory(version,
 def test_local_negative_cannot_make_unresolved_inventory_inapplicable(parent, child, value):
     data = revision2()
     data["axes"][parent] = axis2(
-        unit(finding(value, records=["RT-ABS-missing-route"])),
+        unit(finding(value, records=["runtime.md#rt-abs-missing-route"])),
         unit(assessment="uninspected", scope="Opaque alternative"),
         assessment="uninspected" if value == "no" else "partial",
     )
     data["axes"][child] = axis2(assessment="inapplicable")
     with pytest.raises(ValueError, match=f"{child}: inapplicability requires"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)
 
 
 @pytest.mark.parametrize("version", [1, 2])
@@ -528,12 +532,12 @@ def test_whole_inapplicability_accepts_only_complete_negative_boundaries(version
         data["axes"][child]["assessment"] = "inapplicable"
     else:
         data["axes"][parent] = axis2(
-            *([unit(finding(value, records=["RT-ABS-missing-route"]))] if status == "known" else []),
+            *([unit(finding(value, records=["runtime.md#rt-abs-missing-route"]))] if status == "known" else []),
             assessment=status,
         )
-        data["axes"][parent]["records"] = ["RT-ABS-missing-route"]
+        data["axes"][parent]["records"] = ["runtime.md#rt-abs-missing-route"]
         data["axes"][child] = axis2(assessment="inapplicable")
-    sm.validate_comparison(data, known_ids=KNOWN)
+    sm.validate_comparison(data, known_ids=KNOWN2)
 
 
 @pytest.mark.parametrize("axis", list(sm.AXES))
@@ -541,7 +545,7 @@ def test_known_axis_cannot_be_wholly_inapplicable(axis):
     data = revision2()
     data["axes"][axis] = axis2(unit(assessment="inapplicable"))
     with pytest.raises(ValueError, match="wholly inapplicable"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
     assert sm.complete_values(row, axis) is None
     row[axis + "_assessment"] = "inapplicable"
@@ -555,4 +559,4 @@ def test_partial_negative_does_not_establish_absence():
     data["axes"]["trace_learning"] = known(["no"], ["RT-ABS-missing-route"])
     data["axes"]["trace_learning"]["assessment"] = "partial"
     with pytest.raises(ValueError, match="partial coverage cannot establish no"):
-        sm.validate_comparison(data, known_ids=KNOWN)
+        sm.validate_comparison(data, known_ids=KNOWN2)

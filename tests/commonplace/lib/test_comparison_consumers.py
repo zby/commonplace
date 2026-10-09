@@ -16,10 +16,10 @@ def unit(scope, assessment, value=None, basis="wired", note="Bounded finding."):
         "scope": scope,
         "assessment": assessment,
         "findings": [] if value is None else [{
-            "value": value, "basis": basis, "records": ["MEM-RTE-update"],
+            "value": value, "basis": basis, "records": ["memory.md#mem-rte-update"],
             "note": "Synthetic support.",
         }],
-        "records": ["MEM-RTE-update"],
+        "records": ["memory.md#mem-rte-update"],
         "note": note,
     }
 
@@ -38,7 +38,7 @@ def profile_fixture(version=2):
                 unit("alternate API", "known", "automatic", "afforded"),
                 unit("initial sheet", "not-determinable", note="Caller identity unknown; manual control not established."),
             ],
-            "records": ["MEM-RTE-update"], "note": "Initial control unresolved.",
+            "records": ["memory.md#mem-rte-update"], "note": "Initial control unresolved.",
         }
         profile = {"version": 2, "scope": "synthetic memory", "axes": axes}
     else:
@@ -57,7 +57,7 @@ def profile_fixture(version=2):
 
 def row(version=2, profile=None):
     profile = profile if profile is not None else profile_fixture(version)
-    sm.validate_comparison(profile, known_ids={"MEM-RTE-update", "MEM-ABS-static"})
+    sm.validate_comparison(profile, known_ids=dict.fromkeys(("MEM-RTE-update", "MEM-ABS-static"), "memory.md"))
     result = {key: "synthetic" for key in sm.METADATA}
     result.update(sm.project_comparison(profile))
     result.update(source_tier="code-grounded", system_name=f"Synthetic v{version}",
@@ -136,7 +136,7 @@ def test_complete_statistics_do_not_upgrade_weak_duplicate_witness(monkeypatch, 
     profile["axes"]["write_agency"]["assessment"] = "known"
     profile["axes"]["write_agency"]["units"] = profile["axes"]["write_agency"]["units"][:2]
     profile["axes"]["storage_substrate"].update(
-        assessment="absent", units=[], records=["MEM-ABS-static"],
+        assessment="absent", units=[], records=["memory.md#mem-abs-static"],
         note="Bounded evidenced absence of retained storage.",
     )
     absent = row(profile=profile)
@@ -152,12 +152,12 @@ def test_complete_statistics_do_not_upgrade_weak_duplicate_witness(monkeypatch, 
 def test_partial_trace_positive_keeps_local_no_without_aggregate_negative(tmp_path):
     profile = profile_fixture()
     negative = unit("static branch", "known", "no")
-    negative["findings"][0]["records"] = ["MEM-ABS-static"]
-    negative["records"] = ["MEM-ABS-static"]
+    negative["findings"][0]["records"] = ["memory.md#mem-abs-static"]
+    negative["records"] = ["memory.md#mem-abs-static"]
     units = [unit("update", "known", "yes"), negative,
              unit("opaque branch", "uninspected")]
     profile["axes"]["trace_learning"] = {
-        "assessment": "partial", "units": units, "records": ["MEM-RTE-update"],
+        "assessment": "partial", "units": units, "records": ["memory.md#mem-rte-update"],
         "note": "Opaque branch prevents complete trace inventory.",
     }
     revised = row(profile=profile)

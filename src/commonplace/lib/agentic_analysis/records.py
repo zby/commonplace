@@ -1,34 +1,39 @@
-"""Check explicit agentic-analysis record references without interpreting claims."""
+"""Record declarations and the citations that link to them, without interpreting claims.
+
+A record is declared by a heading that is exactly its ID, `#### RT-OBJ-store`.
+The renderer's automatic slug of that heading is the ID in lower case,
+`rt-obj-store`, so a citation is an ordinary Markdown link to it:
+`[RT-OBJ-store](runtime.md#rt-obj-store)` from another member, or
+`[RT-OBJ-store](#rt-obj-store)` within one. The layout's `cites` is the
+schema of this relation and each citation an instance edge. A bare ID in
+prose is literal text, never a citation. Source IDs (`SRC-1`) are declared by
+Source register rows and cited bare.
+"""
 
 from __future__ import annotations
 
 import re
 from collections import Counter
 from collections.abc import Mapping, Sequence
-from difflib import get_close_matches
+from dataclasses import dataclass
+from posixpath import normpath
+from urllib.parse import unquote, urlsplit
 
-from commonplace.lib.note_parser import section
+from commonplace.lib.note_parser import find_markdown_links_with_text, section
 
 # A record ID carries the prefix of the analyst that established it, for the
-# life of the artifact: `RT-`, `MEM-`, or `EPI-`. Archived results written with
-# bare runtime IDs are not read by current code.
+# life of the artifact: `RT-`, `MEM-`, or `EPI-`.
 _PREFIX = r"(?:RT|MEM|EPI)-"
 _KIND = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)"
 _NAME = r"[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}"
 _RECORD_ID = rf"{_PREFIX}{_KIND}-{_NAME}"
-# Scan whole candidates first, including malformed names and kind codes.
-_RECORD_TOKEN = rf"{_PREFIX}[A-Z]+-[\w-]*"
-_DECLARATION = re.compile(
-    rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
-)
-_ANNOTATION = re.compile(
-    rf"(?m)^####[ \t]+On[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
-)
-_UNPREFIXED_DECLARATION = re.compile(
-    rf"(?m)^####[ \t]+({_KIND}-[\w-]+)[ \t]+—[ \t]+\S[^\n]*$"
-)
+_ANCHOR = rf"(?:rt|mem|epi)-(?:cmp|obj|rte|clm|abs|bap)-{_NAME}"
+_DECLARATION = re.compile(rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]*$")
+_ANNOTATION = re.compile(r"(?m)^####[ \t]+On[ \t]+(\S[^\n]*?)[ \t]*$")
+# A heading that names a record but carries more than its ID.
+_LABELLED_DECLARATION = re.compile(rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]+\S[^\n]*$")
 _SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
-_REFERENCE = re.compile(rf"(?<![\w-])(?:SRC-\d+|{_RECORD_TOKEN})(?![\w-])")
+_SOURCE = re.compile(r"(?<![\w-])SRC-\d+(?![\w-])")
 # Only numbered source IDs retain interval syntax refusals.
 _RANGE = re.compile(
     r"(?<![\w-])(?:SRC-\d+`?[ \t]*(?:through|[–—-])[ \t]*`?"
@@ -36,19 +41,57 @@ _RANGE = re.compile(
 )
 
 
-def _references(prose: str) -> set[str]:
-    # An ASCII dash between two full IDs is grouping punctuation. A lowercase
-    # attached word stays in the token, so sheet-based cannot resolve as sheet.
-    separated = re.sub(r"-(?=(?:RT|MEM|EPI)-[A-Z]+-)", " ", prose)
-    return set(_REFERENCE.findall(separated))
+def anchor(identifier: str) -> str:
+    """The fragment that addresses a record's declaration: its ID in lower case."""
+    return identifier.lower()
 
 
-def _prefix_collisions(identifiers: list[str]) -> list[str]:
-    names = sorted(set(identifiers))
-    return [
-        f"record IDs: {long} extends declared ID {short}; use names neither of which is the other plus a hyphenated word"
-        for short in names for long in names if long.startswith(short + "-")
-    ]
+def identifier_from_anchor(fragment: str) -> str | None:
+    """The record ID an anchor addresses, or None when it is no record anchor."""
+    if re.fullmatch(_ANCHOR, fragment) is None:
+        return None
+    prefix, kind, name = fragment.split("-", 2)
+    return f"{prefix.upper()}-{kind.upper()}-{name}"
+
+
+@dataclass(frozen=True)
+class RecordLink:
+    """One record citation as written: its label, the member it names ('' for
+    its own member) and the fragment."""
+
+    label: str
+    member: str
+    fragment: str
+
+    @property
+    def identifier(self) -> str | None:
+        """The record ID its fragment addresses."""
+        return identifier_from_anchor(self.fragment)
+
+
+def _record_link(label: str, target: str) -> RecordLink | None:
+    parsed = urlsplit(target)
+    if parsed.scheme or parsed.netloc:
+        return None
+    label = label.strip().strip("`")
+    if identifier_from_anchor(parsed.fragment) is None and re.fullmatch(_RECORD_ID, label) is None:
+        return None  # An ordinary link: a whole member, a source or another heading.
+    member = normpath(unquote(parsed.path)) if parsed.path else ""
+    return RecordLink(label, "" if member == "." else member, parsed.fragment)
+
+
+def record_links(text: str) -> list[RecordLink]:
+    """The record citations a text makes, in order.
+
+    A link is a record citation when its fragment is a record anchor or its
+    label is a record ID. Quotations, fenced and inline code are excluded.
+    """
+    return [link for label, target in find_markdown_links_with_text(text)
+            if (link := _record_link(label, target)) is not None]
+
+
+def _sources(prose: str) -> set[str]:
+    return set(_SOURCE.findall(prose))
 
 
 ROUTE_FIELDS = (
@@ -91,7 +134,8 @@ def _analysis_prose(body: str) -> str:
 def declared_ids(body: str) -> list[str]:
     """IDs declared under Shared records, in order, with repeats kept.
 
-    An annotation heading (`#### On RT-OBJ-store — label`) is not a declaration.
+    A declaration is a level-four heading that is exactly a record ID; an
+    annotation heading (`#### On [ID](...)`) is not one.
     """
     return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
 
@@ -113,8 +157,9 @@ def source_register_rows(body: str) -> list[list[str]]:
 
 
 def annotated_ids(body: str) -> set[str]:
-    """IDs a member annotates with `On <ID>` headings without declaring them."""
-    return set(_ANNOTATION.findall(_analysis_prose(body)))
+    """IDs a member annotates with `#### On [ID](member.md#anchor)` headings."""
+    return {link.identifier for heading in _ANNOTATION.findall(_analysis_prose(body))
+            for link in record_links(heading) if link.identifier}
 
 
 def is_absence(identifier: str) -> bool:
@@ -122,12 +167,22 @@ def is_absence(identifier: str) -> bool:
     return re.fullmatch(rf"{_PREFIX}ABS-{_NAME}", identifier) is not None
 
 
+def _paragraphs(body: str) -> list[str]:
+    # A wrapped paragraph is one statement.
+    return re.split(r"\n[ \t]*\n", _analysis_prose(body))
+
+
+def _flattened(text: str) -> str:
+    """The text with each record citation replaced by its label."""
+    return re.sub(r"\[([^\]\n]+)\]\([^)\s]*\)", lambda m: m[1].strip("`"), " ".join(text.split()))
+
+
 def amendment_index(body: str) -> str:
     """The overview's navigation line for records changed by reconciliation."""
-    identifiers = sorted(set(re.findall(
-        rf"(?m)^Amendment:[ \t]+`?({_RECORD_ID})(?![\w-])",
-        _analysis_prose(body),
-    )))
+    identifiers = sorted({
+        links[0].identifier for paragraph in _paragraphs(body) if paragraph.startswith("Amendment:")
+        if (links := record_links(paragraph)) and links[0].identifier
+    })
     return (
         "Amended or superseded records: " + (", ".join(identifiers) or "none")
         + "; [reconciliation](reconciliation.md)."
@@ -135,20 +190,15 @@ def amendment_index(body: str) -> str:
 
 
 def record_references(text: str) -> set[str]:
-    """The well-formed record IDs a text refers to, excluding source IDs."""
-    return {
-        identifier for identifier in _references(_analysis_prose(text))
-        if re.fullmatch(_RECORD_ID, identifier)
-    }
+    """The record IDs a text cites by link; bare IDs are not citations."""
+    return {link.identifier for link in record_links(text) if link.identifier}
 
 
 def record_declaration(body: str, identifier: str) -> str | None:
     """A record's declaration as written: its heading and the text up to the
     next heading of the same or a higher level, or None when the body does not
     declare it."""
-    match = re.search(
-        rf"(?m)^(#{{3,6}})[ \t]+{re.escape(identifier)}[ \t]+—[ \t]+\S[^\n]*$", body,
-    )
+    match = re.search(rf"(?m)^(#{{3,6}})[ \t]+{re.escape(identifier)}[ \t]*$", body)
     if match is None:
         return None
     level = len(match[1])
@@ -163,74 +213,93 @@ def value_amendments(body: str) -> list[str]:
     belongs in the declaring analyst's report.
     """
     supersession = re.compile(
-        rf"Amendment:[ \t]+`?{_RECORD_ID}`?[ \t]+is superseded by[ \t]+`?{_RECORD_ID}(?![\w-])"
+        rf"Amendment:[ \t]+{_RECORD_ID}[ \t]+is superseded by[ \t]+{_RECORD_ID}(?![\w-])"
     )
-    # A wrapped paragraph is one statement.
-    paragraphs = re.split(r"\n[ \t]*\n", _analysis_prose(body))
     return [
-        paragraph.splitlines()[0] for paragraph in paragraphs
-        if paragraph.startswith("Amendment:")
-        and supersession.match(" ".join(paragraph.split())) is None
+        paragraph.splitlines()[0] for paragraph in _paragraphs(body)
+        if paragraph.startswith("Amendment:") and supersession.match(_flattened(paragraph)) is None
     ]
 
 
+def _citation_errors(text: str) -> list[str]:
+    """A record citation's label is the ID its fragment addresses."""
+    errors = []
+    for link in record_links(text):
+        if link.identifier is None:
+            errors.append(f"record citations: [{link.label}] links to #{link.fragment}, which is not a record "
+                          f"anchor; link to #{anchor(link.label)}")
+        elif link.label != link.identifier:
+            errors.append(f"record citations: [{link.label}] links to the record {link.identifier}; "
+                          "use that record's ID as the label")
+    return errors
+
+
 def _record_syntax_errors(body: str) -> list[str]:
-    """Check ranges and part fields without resolving cross-member references."""
+    """Check declarations, labels, part fields and citation labels without resolving them."""
     prose = _analysis_prose(body)
     errors = [
         f"source references: ranges are not expanded: {match[0]}; list every full SRC ID"
         for match in _RANGE.finditer(prose)
     ]
+    errors.extend(_citation_errors(prose))
+    records = section(prose, "Shared records")
     errors.extend(
-        f"record IDs: invalid ID {identifier}; use RT-, MEM- or EPI-, a registered kind, and one to three lowercase words starting with a letter (digits may follow letters)"
-        for identifier in sorted(_references(prose))
-        if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None
+        f"record declarations: {identifier}: the heading is exactly the record ID; "
+        "put the label on the record's first line as 'Label: <label>'"
+        for identifier in _LABELLED_DECLARATION.findall(records)
     )
-    # A Part of field belongs to a declaration, not an annotation or prose section.
+    for heading in _ANNOTATION.findall(prose):
+        if len(record_links(heading)) != 1:
+            errors.append(f"record annotations: 'On {heading}' must link exactly one record, "
+                          "as 'On [ID](member.md#anchor)'")
+    # Each declaration opens with its label; a Part of field belongs to a declaration.
     owner = None
     in_records = False
+    expect_label = None
     part_owners = set()
     for line in prose.splitlines():
         if line.startswith("## "):
             in_records = line == "## Shared records"
             owner = None
         elif re.match(r"^#{3,6}[ \t]", line):
+            if expect_label:
+                errors.append(f"record declarations: {expect_label}: missing 'Label: <label>' first line")
             declaration = _DECLARATION.fullmatch(line)
             owner = declaration[1] if in_records and declaration else None
+            expect_label = owner
+            continue
+        if expect_label and line.strip():
+            if not re.fullmatch(r"Label:[ \t]+\S.*", line):
+                errors.append(f"record declarations: {expect_label}: missing 'Label: <label>' first line")
+            expect_label = None
         if re.match(r"^[ \t]*(?:-[ \t]+)?Part of:", line):
             if not line.startswith("Part of:"):
-                errors.append("record references: use an unindented 'Part of: <full record ID>' line")
+                errors.append("record references: use an unindented 'Part of: [ID](member.md#anchor)' line")
                 continue
-            target = line.removeprefix("Part of:").strip()
             if owner is None:
                 errors.append("record references: Part of: must belong to a declared record")
-            else:
-                if owner in part_owners:
-                    errors.append(f"record references: {owner}: duplicate Part of: field")
-                part_owners.add(owner)
-                if re.fullmatch(_RECORD_ID, target) is None:
-                    errors.append(f"record references: {owner}: Part of: requires exactly one full record ID")
-                elif target == owner:
-                    errors.append(f"record references: {owner}: Part of: cannot name itself")
+                continue
+            if owner in part_owners:
+                errors.append(f"record references: {owner}: duplicate Part of: field")
+            part_owners.add(owner)
+            links = record_links(line)
+            if len(links) != 1:
+                errors.append(f"record references: {owner}: Part of: requires exactly one record citation")
+            elif links[0].identifier == owner:
+                errors.append(f"record references: {owner}: Part of: cannot name itself")
+    if expect_label:
+        errors.append(f"record declarations: {expect_label}: missing 'Label: <label>' first line")
     return errors
 
 
 def record_reference_errors(body: str) -> list[str]:
-    """Check local syntax and declarations; resolve other members' IDs at artifact level."""
+    """Check local syntax and declarations; resolve citations at artifact level."""
     errors = _record_syntax_errors(body)
-    records = section(_analysis_prose(body), "Shared records")
-    unprefixed = _UNPREFIXED_DECLARATION.findall(records)
-    if unprefixed:
-        errors.append(
-            "record references: declarations without an analyst prefix: "
-            + ", ".join(unprefixed) + "; use RT-, MEM- or EPI-"
-        )
     repeated = sorted(
         key for key, count in Counter(declared_ids(body)).items() if count > 1
     )
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))
-    errors.extend(_prefix_collisions(declared_ids(body)))
     return errors
 
 
@@ -324,15 +393,20 @@ def artifact_declarations(sources: str, bodies: Mapping[str, str]) -> dict[str, 
     return declarations
 
 
+def _destination(name: str, link: RecordLink) -> str:
+    """The member a citation in member ``name`` addresses; members share one directory."""
+    return name if not link.member else link.member.removeprefix("./")
+
+
 def artifact_record_findings(
     sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
 ) -> tuple[set[str], list[tuple[str | None, str]]]:
-    """Resolve references against declarations, excluding source excerpts.
+    """Resolve every record citation to its declaration, and source IDs to the register.
 
-    ``bodies`` maps artifact member names to bodies. The Source register of ``sources``
-    declares the ``SRC-*`` records. With ``cites``, a body's references resolve
-    only against the declarations of the names it cites; a body it does not
-    list resolves against every declaration. Each finding names the body it
+    ``bodies`` maps artifact member names to bodies. A citation resolves when
+    the member it names is present and among those its member may cite (with
+    ``cites``; every member otherwise), declares the addressed record exactly
+    once, and the label is that record's ID. Each finding names the body it
     belongs to.
     """
     declared = artifact_declarations(sources, bodies)
@@ -344,51 +418,40 @@ def artifact_record_findings(
             (name, f"{name}: duplicate artifact declaration: {identifier}")
             for identifier in dict.fromkeys(identifiers) if counts[identifier] > 1
         )
-    owners = {identifier: name for name, identifiers in declared.items() for identifier in identifiers}
-    for error in _prefix_collisions([identifier for identifier in known if not identifier.startswith("SRC-")]):
-        longer = error.split(" ", 3)[2]
-        findings.append((owners.get(longer), error))
     for name, body in bodies.items():
         findings.extend((name, f"{name}: {error}") for error in _record_syntax_errors(body))
-        scope_counts = counts if cites is None or name not in cites else Counter(
-            identifier for cited in set(cites[name]) for identifier in declared.get(cited, ())
-        )
-        scope = set(scope_counts)
-        references = _references(_analysis_prose(body))
-        for identifier in sorted(references & scope):
-            if scope_counts[identifier] > 1 and identifier not in declared[name]:
-                # Declaring members already have a duplicate finding. Consumers
-                # need their own finding so candidate-only filtering preserves it.
-                findings.append((name, (
-                    f"{name}: ambiguous record {identifier}; "
-                    "multiple declarations in the documents this one may cite"
-                )))
-        for identifier in sorted(references - scope):
-            if not identifier.startswith("SRC-") and re.fullmatch(_RECORD_ID, identifier) is None:
-                continue  # the whole-token grammar diagnostic above is sufficient
-            if identifier in known:
-                findings.append((name, (
-                    f"{name}: unresolved record {identifier}; it is declared outside "
-                    f"the documents this one may cite: {', '.join(cites[name]) or 'none'}"
-                )))
-                continue
-            hint = ""
-            if re.fullmatch(_RECORD_ID, identifier):
-                suffix = identifier.split("-", 1)[1]
-                alternatives = sorted(candidate for candidate in scope
-                                      if re.fullmatch(_RECORD_ID, candidate)
-                                      and candidate.split("-", 1)[1] == suffix)
-                if alternatives:
-                    hint = "; declared with another analyst prefix: " + ", ".join(alternatives)
-            if not hint:
-                candidates = sorted(candidate for candidate in scope
-                                    if candidate.startswith("SRC-") == identifier.startswith("SRC-"))
-                labels = {candidate.split("-", 2)[-1]: candidate for candidate in candidates
-                          if candidate.split("-", 2)[:2] == identifier.split("-", 2)[:2]}
-                closest = get_close_matches(identifier.split("-", 2)[-1], sorted(labels), n=1, cutoff=0.6)
-                if closest:
-                    hint = "; nearest declared ID: " + labels[closest[0]]
-            findings.append((name, f"{name}: unresolved record {identifier}{hint}"))
+        scope = set(bodies) if cites is None or name not in cites else set(cites[name])
+        prose = _analysis_prose(body)
+        for link in record_links(prose):
+            identifier = link.identifier
+            if identifier is None or link.label != identifier:
+                continue  # The label finding above is sufficient.
+            member = _destination(name, link)
+            where = f"[{identifier}]({link.member}#{link.fragment})"
+            if "/" in member:
+                findings.append((name, f"{name}: record citation {where} leaves the artifact directory"))
+            elif member not in scope:
+                findings.append((name, (f"{name}: record citation {where}: {member} is not among the "
+                                        f"documents this one may cite: {', '.join(sorted(scope)) or 'none'}")))
+            elif member not in bodies:
+                findings.append((name, f"{name}: record citation {where}: member {member} is not present"))
+            elif identifier not in declared.get(member, ()):
+                elsewhere = sorted(other for other, ids in declared.items() if identifier in ids)
+                hint = f"; it is declared in {', '.join(elsewhere)}" if elsewhere else ""
+                findings.append((name, (f"{name}: unresolved record citation {where}: {member} declares "
+                                        f"no {identifier}{hint}")))
+            elif declared[member].count(identifier) > 1:
+                findings.append((name, (f"{name}: ambiguous record citation {where}: {member} declares "
+                                        f"{identifier} more than once")))
+        for identifier in sorted(_sources(prose)):
+            if sources not in scope:
+                findings.append((name, (f"{name}: unresolved source {identifier}; the Source register is "
+                                        f"outside the documents this one may cite: {', '.join(sorted(scope)) or 'none'}")))
+            elif sources in bodies and identifier not in declared.get(sources, ()):
+                findings.append((name, (f"{name}: unresolved source {identifier}; the Source register "
+                                        "does not declare it")))
+            elif sources in bodies and declared[sources].count(identifier) > 1 and name != sources:
+                findings.append((name, f"{name}: ambiguous source {identifier}; the Source register declares it twice"))
     return known, findings
 
 

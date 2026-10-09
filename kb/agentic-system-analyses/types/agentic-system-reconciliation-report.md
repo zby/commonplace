@@ -27,9 +27,9 @@ supersessions and what its connections may claim from evidence. The member decla
 ## Reconciliation
 
 The body contains `## Reconciliation`: duplicate supersessions, anchored
-conflicts, independent convergence and integration-issue dispositions. Name full IDs and describe discrepancies
+conflicts, independent convergence and integration-issue dispositions. Cite the records concerned and describe discrepancies
 without selecting the strongest-sounding status. A supersession paragraph
-starts `Amendment: <full record ID> is superseded by <full record IDs>` and
+starts `Amendment: <record citation> is superseded by <record citations>` and
 gives its identity evidence and affected findings. Both supersession IDs
 stay declared in their original members. An `Amendment:` paragraph that
 replaces a record's value is not accepted in a new set; sets published before

@@ -4,7 +4,8 @@
     "text": {"type": "string", "minLength": 1, "pattern": "\\S"},
     "records": {
       "type": "array", "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^(RT|MEM|EPI)-(CMP|OBJ|RTE|CLM|ABS|BAP)-[a-z][a-z0-9]*(-[a-z][a-z0-9]*){0,2}$"}
+      "items": {"type": "string", "pattern": "^[a-z][a-z0-9-]*\\.md#(rt|mem|epi)-(cmp|obj|rte|clm|abs|bap)-[a-z][a-z0-9]*(-[a-z][a-z0-9]*){0,2}$",
+                "description": "a record citation as a link destination: member.md#record-anchor"}
     },
     "assessment": {"enum": ["known", "partial", "absent", "inapplicable", "uninspected", "not-determinable"]},
     "finding": {

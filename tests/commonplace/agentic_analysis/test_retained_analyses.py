@@ -34,7 +34,8 @@ def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> No
     run = member_fixture(tmp_path)
     reconciliation = run / "artifact/reconciliation.md"
     reconciliation.write_text(reconciliation.read_text() +
-        "\nAmendment: EPI-OBJ-store is superseded by RT-OBJ-store; identity evidence at SRC-1.\n")
+        "\nAmendment: [EPI-OBJ-store](epistemic.md#epi-obj-store) is superseded by "
+        "[RT-OBJ-store](runtime.md#rt-obj-store); identity evidence at SRC-1.\n")
     repin(reconciliation.parent)
     failures = validation.validate_note(reconciliation.parent, repo_root=tmp_path).fails
     assert any("amendment index does not match" in failure for failure in failures)
@@ -57,7 +58,7 @@ def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation
     report = directory / "memory-profile.md"
     body = memory.read_text().replace(
         "### Evidenced absences\n\nnone proposed.\n",
-        "### Evidenced absences\n\n#### MEM-ABS-missing-route — Inspected absence\n\nSearched.\n",
+        "### Evidenced absences\n\n#### MEM-ABS-missing-route\n\nLabel: Inspected absence\n\nSearched.\n",
     )
     memory.write_text(body)
     metadata = frontmatter(report)
@@ -74,7 +75,7 @@ def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation
     expected_error = None
     if mutation == "outside":
         memory.write_text(memory.read_text().replace(
-            "#### MEM-OBJ-store — Fixture memory store\n", "",
+            "#### MEM-OBJ-store\n\nLabel: Fixture memory store\n", "",
         ) + "\nMEM-OBJ-store outside the register.\n")
         expected_error = "unresolved record"
     replace_frontmatter(report, metadata)
@@ -229,7 +230,7 @@ def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Pat
     run_dir = member_fixture(tmp_path)
     output = run_dir / "artifact"
     epistemic = output / "epistemic.md"
-    epistemic.write_text(epistemic.read_text() + "\nEPI-OBJ-dangling is cited here.\n")
+    epistemic.write_text(epistemic.read_text() + "\n[EPI-OBJ-dangling](epistemic.md#epi-obj-dangling) is cited here.\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
     candidate = write(run_dir / "runtime-report-1.md",
                       (output / "runtime.md").read_text().replace(f"run-id: {RUN_ID}", "run-id: AAS-2026-09-04-other-01"))
@@ -251,18 +252,18 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
     output = run_dir / "artifact"
     runtime = output / "runtime.md"
     runtime.write_text(runtime.read_text().replace(
-        "## Annotations", "#### RT-OBJ-store — Duplicate object\n\n## Annotations",
+        "## Annotations", "#### RT-OBJ-store\n\nLabel: Duplicate object\n\n## Annotations",
     ))
     candidate = write(run_dir / "memory-candidate.md",
-                      (output / "memory.md").read_text() + "\nSee RT-OBJ-store.\n")
+                      (output / "memory.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
     verification = write(run_dir / "verification.md",
-                         (output / "record-verification.md").read_text() + "\nSee RT-OBJ-store.\n")
+                         (output / "record-verification.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
 
     findings = validation.validate_draft_in_role(output, "memory", candidate, repo_root=tmp_path)
-    assert any("memory.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
+    assert any("memory.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
     findings = validation.validate_draft_in_role(output, "record-verification", verification, repo_root=tmp_path)
-    assert any("record-verification.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
+    assert any("record-verification.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
@@ -291,7 +292,7 @@ def test_a_report_declares_only_its_types_record_prefix(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     runtime = run_dir / "artifact/runtime.md"
     assert not validation.validate_note(runtime, repo_root=tmp_path).fails
-    runtime.write_text(runtime.read_text().replace("#### RT-OBJ-store —", "#### MEM-OBJ-store —", 1))
+    runtime.write_text(runtime.read_text().replace("#### RT-OBJ-store\n", "#### MEM-OBJ-store\n", 1))
     failures = validation.validate_note(runtime, repo_root=tmp_path).fails
     assert any("this report declares only RT- records: MEM-OBJ-store" in failure for failure in failures)
 

@@ -288,7 +288,7 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
     profile = documents.get("memory-profile")
     if profile is not None:
         declared = artifact_declarations(sources, bodies)
-        scope = {identifier for cited in cites[layout.path("memory-profile")]
+        scope = {identifier: cited for cited in cites[layout.path("memory-profile")]
                  for identifier in declared.get(cited, ())}
         try:
             validate_comparison((profile.frontmatter or {}).get("memory-comparison"), known_ids=scope)

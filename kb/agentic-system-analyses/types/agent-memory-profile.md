@@ -56,7 +56,9 @@ occurs exactly once in `axes`:
 Each axis has `assessment`, `units`, `records` and `note`. Each unit has
 `scope`, `assessment`, `findings`, `records` and `note`. Each finding has one
 `value`, `basis`, `records` and `note`. Findings are authored once; no parallel
-value list or evidence map is authored. A basis is `claimed`, `afforded`,
+value list or evidence map is authored. Each `records` entry is a record
+citation's link destination, `memory.md#mem-rte-update-path`: the declaring
+member and the record's anchor. A basis is `claimed`, `afforded`,
 `wired`, `observed`, or `causally supported`, attached to the actual supporting
 part or mechanism. Distinct bases remain distinct findings even for the same
 value. One wired witness never upgrades an opaque or claimed alternative.
@@ -261,18 +263,18 @@ memory-comparison:
           findings:
             - value: automatic
               basis: wired
-              records: [MEM-RTE-update-path]
+              records: [memory.md#mem-rte-update-path]
               note: "{recorded software admission without per-content operator decision}"
-          records: [MEM-RTE-update-path]
+          records: [memory.md#mem-rte-update-path]
           note: "{unit coverage warrant}"
         - scope: "{included initial-content admission mechanism}"
           assessment: not-determinable
           findings: []
-          records: [MEM-OBJ-initial-content]
+          records: [memory.md#mem-obj-initial-content]
           note: "{missing control fact and conclusion prevented}"
-      records: [MEM-RTE-update-path, MEM-OBJ-initial-content]
+      records: [memory.md#mem-rte-update-path, memory.md#mem-obj-initial-content]
       note: "{inventory coverage and unresolved included part}"
-    # Placeholder IDs illustrate shape only; replace with accepted canonical IDs.
+    # Placeholder citations illustrate shape only; cite accepted records as member.md#anchor.
 ---
 
 # {System} memory profile

@@ -47,7 +47,7 @@ undermines a central conclusion, leaves the analysis materially misleading, or
 asserts an unsupported comparison value, evidence strength, absence or complete
 coverage. A repairable defect is not automatically a blocker. Explain what
 readers or comparison consumers would infer incorrectly and why a stated limit
-cannot preserve the bounded account. It names the full IDs
+cannot preserve the bounded account. It cites the records
 it concerns, the passage holding the defective text, what is wrong and the
 evidence. In a record verification each blocker starts with the one report
 whose text must change, `runtime:`, `memory:`, `epistemic:` or
@@ -57,10 +57,10 @@ Profile and synthesis blockers go to the one author of that stage and need no
 addressee.
 
 A **limit** is a local unresolved issue the analysis can be published with:
-its consequences can be stated, and the remaining conclusions hold. It names
-the full IDs it concerns, the issue, and which conclusions readers should
+its consequences can be stated, and the remaining conclusions hold. It cites
+the records it concerns, the issue, and which conclusions readers should
 withhold. The synthesis carries every limit into its Limitations
-with those IDs; a limit on a profile value is admissible only where the value
+with those citations; a limit on a profile value is admissible only where the value
 itself already expresses the uncertainty (`partial`, `not-determinable` or
 `uninspected`), because a synthesis caveat does not travel with an extracted
 value. A disagreement between reports that the sources do not settle is a

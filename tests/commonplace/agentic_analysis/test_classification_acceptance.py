@@ -18,6 +18,7 @@ import pytest
 from commonplace.lib import systems_matrix as sm
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
+    anchor,
     artifact_record_errors,
     conclusion_status_errors,
     route_field_errors,
@@ -169,11 +170,13 @@ def materialize(specification):
     for name, (assessment, parts) in specification.items():
         units = []
         for part in parts:
-            findings = [{"value": value, "basis": part.basis, "records": [part.identifier],
+            cited = f"memory.md#{anchor(part.identifier)}"
+            findings = [{"value": value, "basis": part.basis, "records": [cited],
                          "note": part.facts} for value in part.values]
             units.append({"scope": part.scope, "assessment": part.assessment,
-                          "findings": findings, "records": [part.identifier], "note": part.limit})
-            bodies["memory.md"] += f"#### {part.identifier} — {part.scope}\n\n{part.facts}\n\nEvidence: SRC-1 (synthetic only).\n\n"
+                          "findings": findings, "records": [cited], "note": part.limit})
+            bodies["memory.md"] += (f"#### {part.identifier}\n\nLabel: {part.scope}\n\n{part.facts}\n\n"
+                                    "Evidence: SRC-1 (synthetic only).\n\n")
             status = "absent" if part.kind == "ABS" else (
                 "uninspected" if part.assessment in {"not-determinable", "uninspected"} else part.basis)
             bodies["memory.md"] += f"- implementation conclusion status: {status}\n\n"
@@ -186,7 +189,7 @@ def materialize(specification):
                     "- Invalidation or expiry: uninspected — not needed for this fixture judgment.\n"
                     "- Activation or effect: uninspected — no target execution or benefit measurement.\n"
                     "- Evidence limits: Authored synthetic specification, not inspected external source.\n\n")
-        refs = [part.identifier for part in parts]
+        refs = [f"memory.md#{anchor(part.identifier)}" for part in parts]
         # An inapplicable whole axis still needs a canonical boundary warrant.
         if not refs:
             refs = list(profile["axes"]["read_back_direction"]["records"])
@@ -291,7 +294,7 @@ def test_unsupported_negative_and_reference_defects_are_rejected():
     with pytest.raises(ValueError, match="empty findings"):
         sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
     profile["axes"]["trace_learning"]["units"][0]["assessment"] = "known"
-    finding.update(value="yes", records=["MEM-RTE-missing-update"])
+    finding.update(value="yes", records=["memory.md#mem-rte-missing-update"])
     with pytest.raises(ValueError, match="unresolved"):
         sm.profile_member_comparison({"memory-comparison": profile}, record_bodies=bodies)
 
@@ -364,6 +367,9 @@ def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsy
     assert sm.complete_values(row, "write_agency") is None
 
 
+STORE = "[MEM-OBJ-store](memory.md#mem-obj-store)"
+
+
 def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library):
     from commonplace.lib import validation
 
@@ -376,7 +382,7 @@ def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library
         "Initial admission control is inaccessible; full agency coverage cannot be concluded. Evidence: SRC-1 (fixture only)."))
     reconciliation = directory / "reconciliation.md"
     reconciliation.write_text(reconciliation.read_text() +
-        "\nUnresolved conflict: MEM-OBJ-store initial admission control is inaccessible at SRC-1; complete write-agency coverage is prevented.\n")
+        f"\nUnresolved conflict: {STORE} initial admission control is inaccessible at SRC-1; complete write-agency coverage is prevented.\n")
     metadata = frontmatter(directory / "memory-profile.md")
     metadata["memory-comparison"] = profile
     replace_frontmatter(directory / "memory-profile.md", metadata)
@@ -386,11 +392,11 @@ def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library
         'description: "Synthetic fixture retains session-derived guidance for later model use, without establishing improved capacity."\n'
         f"run-id: {overview_fields['run-id']}\nreviewed-boundary: {overview_fields['reviewed-boundary']}\n---\n\n"
         "# Synthetic fixture synthesis\n\n"
-        "## Bounded synthesis\n\nMEM-OBJ-store retains guidance for later use; this supported contribution does not establish improved capacity.\n\n"
+        f"## Bounded synthesis\n\n{STORE} retains guidance for later use; this supported contribution does not establish improved capacity.\n\n"
         "## Limitations\n\n"
         "| limitation | affected record | inspected boundary | conclusion prevented | resolving evidence |\n"
         "| --- | --- | --- | --- | --- |\n"
-        "| Capacity comparison unavailable | MEM-OBJ-store | synthetic fixture | Learning is not established as improved capacity | Controlled future-action comparison |\n"
+        f"| Capacity comparison unavailable | {STORE} | synthetic fixture | Learning is not established as improved capacity | Controlled future-action comparison |\n"
         "| Causal self-representation unavailable | EPI-OBJ-store | synthetic fixture | Reflection is not established | Both causal directions |\n"
         "| Internal role ownership unresolved | RT-RTE-model-call | synthetic fixture | Autonomy is not established | Role-by-role execution evidence |\n"
         "| Evidence-responsive organizational change and exercised downstream dependence not inspected | RT-OBJ-store | synthetic fixture boundary and horizon | Self-improvement is not established | Declared objective, evidence-shaped organizational update, live consumer/channel/force and subsequent causal dependence |\n"
@@ -403,8 +409,8 @@ def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library
         ) if not finding.info and not finding.warn]
 
     assert check(candidate) == []
-    candidate.write_text(synthesis.replace("MEM-OBJ-store retains", "MEM-OBJ-undeclared retains"))
-    assert any("unresolved record MEM-OBJ-undeclared" in error for error in check(candidate))
+    candidate.write_text(synthesis.replace(f"{STORE} retains", "[MEM-OBJ-undeclared](memory.md#mem-obj-undeclared) retains"))
+    assert any("declares no MEM-OBJ-undeclared" in error for error in check(candidate))
     candidate.write_text(synthesis)
     public_synthesis = directory / "synthesis.md"
     public_synthesis.write_text(synthesis)
@@ -419,7 +425,9 @@ def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library
 def test_reconciliation_cannot_hide_an_unresolved_record():
     _, bodies = materialize({"write_agency": axis(Part(
         "curator-write", "Automatic curator", "Software controls admission.", ("automatic",)))})
-    bodies["reconciliation.md"] = "## Reconciliation\n\nAmendment: MEM-RTE-curator-write is superseded by RT-RTE-missing-write; identity evidence at SRC-1.\n"
+    bodies["reconciliation.md"] = (
+        "## Reconciliation\n\nAmendment: [MEM-RTE-curator-write](memory.md#mem-rte-curator-write) is superseded "
+        "by [RT-RTE-missing-write](runtime.md#rt-rte-missing-write); identity evidence at SRC-1.\n")
     assert "MEM-RTE-curator-write" in amendment_index(bodies["reconciliation.md"])
     _, errors = artifact_record_errors("overview.md", bodies)
-    assert "reconciliation.md: unresolved record RT-RTE-missing-write" in errors
+    assert any("reconciliation.md: record citation [RT-RTE-missing-write]" in error for error in errors)

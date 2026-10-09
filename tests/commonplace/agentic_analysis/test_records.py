@@ -1,15 +1,32 @@
+"""Record declarations, linked citations and route fields.
+
+A record is declared by a heading that is exactly its ID; a citation is a
+Markdown link to that heading's anchor, `[RT-OBJ-store](runtime.md#rt-obj-store)`.
+"""
+
 from __future__ import annotations
+
+import re
+from pathlib import Path
 
 import pytest
 
 from commonplace.lib.agentic_analysis.records import (
+    ROUTE_FIELDS,
     amendment_index,
+    anchor,
     annotated_ids,
     artifact_record_errors,
+    artifact_record_findings,
     declared_ids,
+    identifier_from_anchor,
+    record_declaration,
+    record_links,
     record_reference_errors,
+    record_references,
     route_field_errors,
     source_register_rows,
+    value_amendments,
 )
 
 ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
@@ -23,7 +40,10 @@ ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
 
 
 def route_body(identifier: str = "RT-RTE-model-call", answers: str = ROUTE_ANSWERS) -> str:
-    return f"## Shared records\n\n### Routes\n\n#### {identifier} — Recall\n\n{answers}"
+    return f"## Shared records\n\n### Routes\n\n#### {identifier}\n\nLabel: Recall\n\n{answers}"
+
+
+# Route fields
 
 
 @pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
@@ -50,7 +70,7 @@ def test_route_field_failures(replacement: str, diagnostic: str) -> None:
 
 
 def test_other_records_and_annotations_cannot_supply_missing_fields() -> None:
-    for heading in ("#### MEM-RTE-memory-update — Another route", "#### On RT-RTE-model-call — Overlay",
+    for heading in ("#### MEM-RTE-memory-update", "#### On [RT-RTE-model-call](#rt-rte-model-call)",
                     "### Claims", "## Discussion"):
         errors = route_field_errors(route_body(answers="") + f"\n{heading}\n\n{ROUTE_ANSWERS}")
         assert sum("RT-RTE-model-call:" in error for error in errors) == 7
@@ -60,489 +80,268 @@ def test_source_excerpts_cannot_supply_fields_or_declare_routes() -> None:
     quoted = "\n".join("> " + line for line in ROUTE_ANSWERS.splitlines())
     for fenced in (f"```markdown\n{ROUTE_ANSWERS}```\n", quoted):
         assert len(route_field_errors(route_body(answers=fenced))) == 7
-    excerpt = "\n```markdown\n#### RT-RTE-missing — Source example\n```\n"
+    excerpt = "\n```markdown\n#### RT-RTE-missing\n```\n"
     assert route_field_errors(route_body() + excerpt) == []
 
 
 def test_annotation_fields_are_not_required() -> None:
-    assert route_field_errors("## Shared records\n\n#### On RT-RTE-model-call — Overlay\n") == []
+    assert route_field_errors("## Shared records\n\n#### On [RT-RTE-model-call](runtime.md#rt-rte-model-call)\n") == []
 
 
 def test_route_field_labels_match_the_delivered_contract() -> None:
-    from pathlib import Path
-
-    from commonplace.lib.agentic_analysis.records import ROUTE_FIELDS
-
     contract = (Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/"
                 "agentic-analysis-records.md").read_text()
-    import re
-
     labels = re.findall(r"(?m)^- ([^:\n]+): \.\.\.$", contract)
     assert tuple(labels) == ROUTE_FIELDS
 
-BASE = """# Example
 
-## Source register
-
-| ID | Source |
-| --- | --- |
-| SRC-1 | Frozen source |
-
-## Shared records
-
-### Operative objects
-
-#### RT-OBJ-store — First object
-
-Evidence: SRC-1.
-
-#### RT-OBJ-input — Second object
-
-#### RT-OBJ-third — Third object
-
-### Routes
-
-#### RT-RTE-model-call — S3 invocation
-
-#### RT-RTE-another-route — Another route
-
-## Lens outputs
-
-"""
+# Declarations
 
 
-def test_heading_title_is_not_inferred_to_be_shorthand() -> None:
-    assert record_reference_errors(BASE) == []
-    assert artifact_record_errors("overview.md", {"overview.md": BASE})[1] == []
+def declaration(identifier: str, label: str = "Fixture", text: str = "") -> str:
+    return f"#### {identifier}\n\nLabel: {label}\n\n{text}\n"
 
 
-def test_only_complete_references_are_recognized() -> None:
-    reference = "RT-OBJ-store/O2"
-    assert record_reference_errors(BASE + reference) == []
-    assert artifact_record_errors("overview.md", {"overview.md": BASE + reference})[1] == []
+RUNTIME = "# Runtime\n\n## Shared records\n\n### Routes\n\n" + declaration(
+    "RT-RTE-model-call", "Ordinary invocation", "Reads [RT-OBJ-store](#rt-obj-store) at SRC-1.",
+) + "\n### Operative objects\n\n" + declaration("RT-OBJ-store", "Persistent store")
+MEMORY = "# Memory\n\n## Shared records\n\n" + declaration(
+    "MEM-RTE-import", "Benchmark import",
+    "Feeds [RT-OBJ-store](runtime.md#rt-obj-store), from SRC-2.",
+) + "\n## Annotations\n\n#### On [RT-RTE-model-call](runtime.md#rt-rte-model-call)\n\nMemory fields.\n"
+BOUNDARY = "## Source register\n\n| SRC-1 | Runtime source |\n| SRC-2 | Memory source |\n"
+CITES = {"runtime.md": ["boundary.md", "runtime.md", "memory.md"],
+         "memory.md": ["boundary.md", "runtime.md", "memory.md"],
+         "profile.md": ["memory.md"]}
 
 
-def test_complete_unresolved_references_still_fail() -> None:
-    reference = "RT-OBJ-store/RT-OBJ-missing"
-    _, errors = artifact_record_errors("overview.md", {"overview.md": BASE + reference})
-    assert errors == ["overview.md: unresolved record RT-OBJ-missing"]
+def bodies(**changes: str) -> dict[str, str]:
+    return {"boundary.md": BOUNDARY, "runtime.md": RUNTIME, "memory.md": MEMORY, **changes}
 
 
-def test_accepts_complete_lists_and_ignores_source_code() -> None:
-    content = BASE + """RT-OBJ-store, RT-OBJ-input; `RT-RTE-model-call`/`RT-RTE-another-route`.
-
-> Source example RT-OBJ-example999/O2.
-
-```python
-print("RT-RTE-example999–R9")
-```
-
-See RT-OBJ-third and SRC-1.
-"""
-    assert record_reference_errors(content) == []
-    assert artifact_record_errors("overview.md", {"overview.md": content})[1] == []
+def errors(**changes: str) -> list[str]:
+    return artifact_record_errors("boundary.md", bodies(**changes), cites=CITES)[1]
 
 
-def test_prose_lists_and_tables_are_references_not_declarations() -> None:
-    content = BASE.replace("### Routes", """RT-OBJ-store is retained. Evidence: SRC-1.
-- RT-OBJ-store is consumed later.
-| RT-OBJ-store | Cross-reference |
-SRC-1 supplies the evidence.
-| SRC-1 | Source cross-reference |
+def test_a_declaration_is_a_heading_that_is_exactly_the_id() -> None:
+    assert declared_ids(RUNTIME) == ["RT-RTE-model-call", "RT-OBJ-store"]
+    assert record_reference_errors(RUNTIME) == []
+    assert record_declaration(RUNTIME, "RT-OBJ-store").startswith("#### RT-OBJ-store\n\nLabel: Persistent store")
 
-### Routes""")
-    assert declared_ids(content) == ["RT-OBJ-store", "RT-OBJ-input", "RT-OBJ-third", "RT-RTE-model-call", "RT-RTE-another-route"]
-    assert record_reference_errors(content) == []
-    assert artifact_record_errors("overview.md", {"overview.md": content})[1] == []
+
+def test_a_labelled_heading_is_refused_with_its_repair() -> None:
+    body = "## Shared records\n\n#### RT-OBJ-store — Persistent store\n\nLabel: Store\n"
+    assert declared_ids(body) == []
+    assert any("the heading is exactly the record ID" in error for error in record_reference_errors(body))
+
+
+def test_every_declaration_opens_with_its_label() -> None:
+    body = "## Shared records\n\n#### RT-OBJ-store\n\nA store without its label line.\n"
+    assert record_reference_errors(body) == ["record declarations: RT-OBJ-store: missing 'Label: <label>' first line"]
+    assert any("missing 'Label" in error for error in record_reference_errors("## Shared records\n\n#### RT-OBJ-store\n"))
 
 
 @pytest.mark.parametrize("heading", [
-    "### RT-OBJ-missing — Wrong level", "##### RT-OBJ-missing — Wrong level",
-    "#### RT-OBJ-missing", "#### RT-OBJ-missing - Wrong separator", "#### SRC-99 — Source",
+    "### RT-OBJ-missing", "##### RT-OBJ-missing", "#### SRC-99", "#### OBJ-missing",
 ])
-def test_only_prescribed_record_headings_declare(heading: str) -> None:
+def test_only_the_prescribed_heading_declares(heading: str) -> None:
     assert declared_ids("## Shared records\n\n" + heading + "\n") == []
 
 
 def test_record_headings_outside_shared_records_do_not_declare() -> None:
-    assert declared_ids("## Discussion\n\n#### RT-OBJ-missing — Example\n") == []
-
-
-def test_rejects_declarations_without_an_analyst_prefix() -> None:
-    body = "## Shared records\n\n#### OBJ-store — Bare heading\n\n#### RT-OBJ-input — Prefixed\n"
-    assert record_reference_errors(body) == [
-        "record references: declarations without an analyst prefix: OBJ-store; use RT-, MEM- or EPI-"
-    ]
-    assert record_reference_errors("## Discussion\n\n#### OBJ-store — Not a declaration\n") == []
-
-
-def test_member_can_reference_ids_other_members_declare() -> None:
-    assert record_reference_errors("Uses RT-OBJ-example40 and MEM-OBJ-input.") == []
+    assert declared_ids("## Discussion\n\n#### RT-OBJ-missing\n") == []
 
 
 @pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
-def test_rejects_duplicate_declarations_of_every_prefix(prefix: str) -> None:
-    body = f"""## Shared records
-
-#### {prefix}OBJ-store — First object
-
-#### {prefix}OBJ-store — Different object
-"""
-    assert record_reference_errors(body) == [
-        f"record references: duplicate declarations: {prefix}OBJ-store"
-    ]
+def test_duplicate_declarations_are_refused(prefix: str) -> None:
+    body = "## Shared records\n\n" + declaration(f"{prefix}OBJ-store") + declaration(f"{prefix}OBJ-store")
+    assert record_reference_errors(body) == [f"record references: duplicate declarations: {prefix}OBJ-store"]
 
 
-def test_analyst_prefix_is_part_of_the_declared_id() -> None:
-    body = """## Shared records
+def test_a_record_declared_by_two_members_is_refused_in_both() -> None:
+    memory = MEMORY.replace("## Annotations", declaration("RT-OBJ-store") + "\n## Annotations")
+    found = errors(**{"memory.md": memory})
+    assert "runtime.md: duplicate artifact declaration: RT-OBJ-store" in found
+    assert "memory.md: duplicate artifact declaration: RT-OBJ-store" in found
 
-#### MEM-RTE-model-call — S3 invocation
 
-#### EPI-RTE-model-call — Admission check
-
-#### RT-RTE-model-call — Ordinary invocation
-
-MEM-RTE-model-call and EPI-RTE-model-call read the bucket RT-RTE-model-call writes.
-"""
-    assert declared_ids(body) == ["MEM-RTE-model-call", "EPI-RTE-model-call", "RT-RTE-model-call"]
+def test_ids_that_extend_one_another_can_coexist() -> None:
+    body = "## Shared records\n\n" + declaration("MEM-OBJ-sheet") + declaration("MEM-OBJ-sheet-cache")
     assert record_reference_errors(body) == []
-    assert artifact_record_errors("overview.md", {"overview.md": body})[1] == []
 
 
-@pytest.mark.parametrize("kind", ["OBJ", "ABS"])
-def test_bare_kind_tokens_are_neither_declarations_nor_references(kind: str) -> None:
-    identifier = f"RT-{kind}-record"
-    bodies = {
-        "overview.md": "## Source register\n\n| SRC-1 | Source |\n",
-        "runtime.md": f"## Shared records\n\n#### {identifier} — Record\nEvidence: SRC-1.\n",
-        "memory.md": f"## Shared records\n\n#### On {identifier} — Finding\n",
-        "epistemic.md": f"Assessment of {identifier} at SRC-1.",
-        "reconciliation.md": f"## Reconciliation\n\nAmendment: {identifier} — correction at SRC-1.\n",
-    }
-    known, errors = artifact_record_errors("overview.md", bodies)
-    assert known == {identifier, "SRC-1"} and errors == []
-    assert annotated_ids(bodies["memory.md"]) == {identifier}
-    assert identifier in amendment_index(bodies["reconciliation.md"])
-    bodies["epistemic.md"] = f"Assessment of {kind}-1."
-    bodies["runtime.md"] += f"\n#### {kind}-2 — Unprefixed heading\n"
-    assert artifact_record_errors("overview.md", bodies) == ({identifier, "SRC-1"}, [])
+# Citations
 
 
-RUNTIME = """# Runtime
-
-## Shared records
-
-### Routes
-
-#### RT-RTE-model-call — Ordinary invocation
-
-Record citing SRC-1.
-
-## Annotations
-
-#### On MEM-RTE-example10 — Benchmark import
-
-Theory-route overlay on the memory route MEM-RTE-example10.
-"""
-
-MEMORY = """# Memory
-
-## Shared records
-
-### Routes
-
-#### On RT-RTE-model-call — Ordinary invocation
-
-Memory fields on the seeded route.
-
-#### MEM-RTE-example10 — Benchmark import
-
-Record citing SRC-2 and MEM-OBJ-store.
-"""
-
-EPISTEMIC = """# Epistemic
-
-## Authority-route ledger
-
-EPI-RTE-model-call checks what MEM-RTE-example10 imports before RT-RTE-model-call uses it.
-
-## Shared records
-
-### Routes
-
-#### EPI-RTE-model-call — Import check
-
-Record citing SRC-1.
-"""
+def test_anchor_and_id_are_one_mapping() -> None:
+    assert anchor("RT-OBJ-store") == "rt-obj-store"
+    assert identifier_from_anchor("rt-obj-store") == "RT-OBJ-store"
+    assert identifier_from_anchor("mem-rte-update2-path") == "MEM-RTE-update2-path"
+    assert identifier_from_anchor("persistent-store") is None
 
 
-def test_annotation_headings_are_not_declarations() -> None:
-    assert declared_ids(MEMORY) == ["MEM-RTE-example10"]
-    assert annotated_ids(MEMORY) == {"RT-RTE-model-call"}
-    assert annotated_ids(RUNTIME) == {"MEM-RTE-example10"}
-    assert declared_ids(RUNTIME) == ["RT-RTE-model-call"]
+def test_valid_cross_member_and_within_member_citations_resolve() -> None:
+    assert errors() == []
+    assert record_references(MEMORY) == {"RT-OBJ-store", "RT-RTE-model-call"}
 
 
-OVERVIEW = "## Source register\n\n| SRC-1 | Runtime source |\n| SRC-2 | Memory source |\n"
+def test_a_missing_destination_member_fails() -> None:
+    _known, found = artifact_record_errors("boundary.md", {
+        "boundary.md": BOUNDARY, "memory.md": MEMORY,
+    }, cites=CITES)
+    assert any("member runtime.md is not present" in error for error in found)
 
 
-def test_artifact_resolves_lens_prefixed_records_across_members() -> None:
-    memory = MEMORY + "\n#### MEM-OBJ-store — Stored object\n"
-    known, errors = artifact_record_errors("overview.md", {
-        "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory,
-        "epistemic.md": EPISTEMIC,
-    })
-    assert known == {"SRC-1", "SRC-2", "RT-RTE-model-call", "MEM-RTE-example10", "MEM-OBJ-store", "EPI-RTE-model-call"}
-    assert errors == []
+def test_a_missing_record_fails_even_when_the_member_exists() -> None:
+    memory = MEMORY.replace("[RT-OBJ-store](runtime.md#rt-obj-store)", "[RT-OBJ-cache](runtime.md#rt-obj-cache)")
+    assert errors(**{"memory.md": memory}) == [
+        "memory.md: unresolved record citation [RT-OBJ-cache](runtime.md#rt-obj-cache): runtime.md declares no RT-OBJ-cache"]
 
 
-def test_artifact_rejects_a_lens_record_declared_by_two_members() -> None:
-    memory = MEMORY + "\n#### MEM-OBJ-store — Stored object\n"
-    epistemic = EPISTEMIC + "\n#### MEM-OBJ-store — The same object again\n"
-    _, errors = artifact_record_errors("overview.md", {
-        "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory,
-        "epistemic.md": epistemic,
-    })
-    assert errors == [
-        "memory.md: duplicate artifact declaration: MEM-OBJ-store",
-        "epistemic.md: duplicate artifact declaration: MEM-OBJ-store",
-    ]
+def test_a_non_record_fragment_fails() -> None:
+    memory = MEMORY.replace("[RT-OBJ-store](runtime.md#rt-obj-store)", "[RT-OBJ-store](runtime.md#routes)")
+    assert errors(**{"memory.md": memory}) == [
+        ("memory.md: record citations: [RT-OBJ-store] links to #routes, which is not a record anchor; "
+        "link to #rt-obj-store")]
 
 
-def test_a_reference_outside_the_cited_members_is_unresolved_for_the_citing_member() -> None:
-    memory = MEMORY + "\n#### MEM-OBJ-store — Stored object\n"
-    profile = "## Comparison\n\nMEM-OBJ-store and SRC-1.\n"
-    known, errors = artifact_record_errors("overview.md", {
-        "overview.md": OVERVIEW, "runtime.md": RUNTIME, "memory.md": memory, "memory-profile.md": profile,
-    }, cites={"memory-profile.md": ["memory.md"]})
-    assert "SRC-1" in known
-    assert errors == [(
-        "memory-profile.md: unresolved record SRC-1; it is declared outside the documents "
-        "this one may cite: memory.md"
-    )]
+def test_a_record_declared_in_another_member_than_the_link_names_fails_with_a_hint() -> None:
+    memory = MEMORY.replace("(runtime.md#rt-obj-store)", "(memory.md#rt-obj-store)")
+    assert errors(**{"memory.md": memory}) == [
+        ("memory.md: unresolved record citation [RT-OBJ-store](memory.md#rt-obj-store): memory.md declares "
+        "no RT-OBJ-store; it is declared in runtime.md")]
 
 
-@pytest.mark.parametrize("split_declarations", [False, True])
-def test_ambiguous_references_belong_to_the_citing_document(split_declarations: bool) -> None:
-    declaration = "## Shared records\n\n#### MEM-OBJ-store — Stored object\n"
-    bodies = {
-        "memory.md": declaration,
-        "epistemic.md": declaration if split_declarations else "",
-        "candidate.md": "See MEM-OBJ-store.\n",
-    }
-    if not split_declarations:
-        bodies["memory.md"] += "\n#### MEM-OBJ-store — Duplicate object\n"
-    from commonplace.lib.agentic_analysis.records import artifact_record_findings
-
-    _, findings = artifact_record_findings("boundary.md", bodies, cites={
-        "candidate.md": ["memory.md", "epistemic.md"],
-    })
-    assert [message for name, message in findings if name == "candidate.md"] == [(
-        "candidate.md: ambiguous record MEM-OBJ-store; "
-        "multiple declarations in the documents this one may cite"
-    )]
-
-    bodies["candidate.md"] = "No record references.\n"
-    _, findings = artifact_record_findings("boundary.md", bodies)
-    assert not any(name == "candidate.md" for name, _ in findings)
-
-    if split_declarations:
-        bodies["candidate.md"] = "See MEM-OBJ-store.\n"
-        _, findings = artifact_record_findings("boundary.md", bodies, cites={"candidate.md": ["memory.md"]})
-        assert not any(name == "candidate.md" for name, _ in findings)
+def test_a_destination_outside_the_citing_roles_cites_fails() -> None:
+    profile = "Uses [RT-OBJ-store](runtime.md#rt-obj-store).\n"
+    assert errors(**{"profile.md": profile}) == [
+        ("profile.md: record citation [RT-OBJ-store](runtime.md#rt-obj-store): runtime.md is not among the "
+        "documents this one may cite: memory.md")]
 
 
-def test_duplicate_source_reference_is_ambiguous_for_its_consumer() -> None:
-    from commonplace.lib.agentic_analysis.records import artifact_record_findings
-
-    _, findings = artifact_record_findings("boundary.md", {
-        "boundary.md": "## Source register\n\n| SRC-1 | First |\n| SRC-1 | Second |\n",
-        "candidate.md": "Evidence: SRC-1.\n",
-    })
-    assert ("candidate.md", (
-        "candidate.md: ambiguous record SRC-1; "
-        "multiple declarations in the documents this one may cite"
-    )) in findings
+def test_a_within_member_citation_needs_the_member_in_its_own_cites() -> None:
+    cites = {**CITES, "runtime.md": ["boundary.md", "memory.md"]}
+    _, found = artifact_record_errors("boundary.md", bodies(), cites=cites)
+    assert found == [
+        ("runtime.md: record citation [RT-OBJ-store](#rt-obj-store): runtime.md is not among the documents "
+        "this one may cite: boundary.md, memory.md")]
 
 
-def test_an_amendment_in_the_reconciliation_resolves_against_the_artifact() -> None:
-    memory = MEMORY + "\n#### MEM-OBJ-store — Stored object\n"
-    supersession = (
-        "\n## Reconciliation\n\nAmendment: MEM-RTE-example10 is superseded by RT-RTE-model-call; both "
-        "trace the same call at SRC-1.\n"
+def test_a_label_naming_another_record_fails() -> None:
+    memory = MEMORY.replace("[RT-OBJ-store](runtime.md#rt-obj-store)", "[RT-OBJ-cache](runtime.md#rt-obj-store)")
+    assert errors(**{"memory.md": memory}) == [
+        "memory.md: record citations: [RT-OBJ-cache] links to the record RT-OBJ-store; use that record's ID as the label"]
+
+
+def test_a_cited_record_declared_twice_is_ambiguous_for_the_citer() -> None:
+    runtime = RUNTIME + declaration("RT-OBJ-store")
+    found = errors(**{"runtime.md": runtime})
+    assert "memory.md: ambiguous record citation [RT-OBJ-store](runtime.md#rt-obj-store): runtime.md declares " \
+           "RT-OBJ-store more than once" in found
+
+
+def test_changing_a_declarations_label_leaves_citations_valid() -> None:
+    assert errors(**{"runtime.md": RUNTIME.replace("Label: Persistent store", "Label: Shared storage")}) == []
+
+
+def test_bare_ids_are_text_not_citations() -> None:
+    memory = MEMORY + "\nThe bare RT-OBJ-missing and MEM-OBJ-UPPER are literal text.\n"
+    assert errors(**{"memory.md": memory}) == []
+    assert "RT-OBJ-missing" not in record_references(memory)
+
+
+def test_quotations_and_fenced_examples_are_not_citations() -> None:
+    memory = MEMORY + (
+        "\n> Source text [RT-OBJ-missing](runtime.md#rt-obj-missing).\n> ---\n> `src/file.py`\n"
+        "\n```markdown\n[RT-OBJ-missing](runtime.md#rt-obj-missing)\n```\n"
+        "\nInline `[RT-OBJ-missing](runtime.md#rt-obj-missing)` code.\n"
     )
-    bodies = {"runtime.md": RUNTIME, "memory.md": memory, "epistemic.md": EPISTEMIC}
-    assert artifact_record_errors("overview.md", {"overview.md": OVERVIEW, "reconciliation.md": supersession, **bodies})[1] == []
-
-    undeclared = supersession.replace("RT-RTE-model-call;", "RT-RTE-policy-check;")
-    _, errors = artifact_record_errors("overview.md", {"overview.md": OVERVIEW, "reconciliation.md": undeclared, **bodies})
-    assert errors == ["reconciliation.md: unresolved record RT-RTE-policy-check"]
+    assert errors(**{"memory.md": memory}) == []
 
 
-def test_artifact_rejects_duplicate_source_rows() -> None:
-    content = BASE.replace("| SRC-1 | Frozen source |", "| SRC-1 | First |\n| SRC-1 | Second |")
-    _, errors = artifact_record_errors("overview.md", {"overview.md": content})
-    assert errors == ["overview.md: duplicate artifact declaration: SRC-1"]
+def test_ordinary_links_stay_ordinary() -> None:
+    memory = MEMORY + (
+        "\nSee the [runtime report](runtime.md), its [Routes](runtime.md#routes) section, "
+        "the [upstream code](https://example.invalid/repo#readme) and the [boundary](boundary.md).\n"
+    )
+    assert errors(**{"memory.md": memory}) == []
+    assert record_links(memory)[-1].identifier == "RT-RTE-model-call", "only the record citations are collected"
 
 
-def test_only_overview_source_register_table_declares_sources() -> None:
-    overview = """## Source register
+def test_a_citation_cannot_leave_the_artifact_directory() -> None:
+    memory = MEMORY.replace("(runtime.md#rt-obj-store)", "(../other/runtime.md#rt-obj-store)")
+    assert any("leaves the artifact directory" in error for error in errors(**{"memory.md": memory}))
 
-SRC-1 is mentioned in prose.
-- SRC-2 is mentioned in a list.
-#### SRC-3 — Heading
-| Other column | SRC-4 |
-| SRC-5 | Actual source |
 
-## Other section
+# Annotations, parts and supersessions
 
-| SRC-6 | Not in the register |
-"""
-    known, errors = artifact_record_errors("overview.md", {
-        "overview.md": overview,
-        "memory.md": "## Source register\n\n| SRC-7 | Not in the overview |\n",
-    })
-    assert known == {"SRC-5"}
-    assert len(errors) == 6
-    assert all("unresolved record SRC-" in error for error in errors)
+
+def test_an_annotation_heading_links_its_record_and_declares_nothing() -> None:
+    assert annotated_ids(MEMORY) == {"RT-RTE-model-call"}
+    assert declared_ids(MEMORY) == ["MEM-RTE-import"]
+    broken = MEMORY.replace("(runtime.md#rt-rte-model-call)", "(runtime.md#rt-rte-missing)")
+    assert any("declares no RT-RTE-missing" in error
+               for error in errors(**{"memory.md": broken.replace("[RT-RTE-model-call]", "[RT-RTE-missing]")}))
+
+
+def test_an_annotation_without_a_record_link_is_refused() -> None:
+    body = "## Annotations\n\n#### On RT-RTE-model-call — Overlay\n"
+    assert any("must link exactly one record" in error for error in record_reference_errors(body))
+
+
+@pytest.mark.parametrize(("field", "diagnostic"), [
+    ("Part of: [RT-OBJ-store](runtime.md#rt-obj-store)", None),
+    ("Part of: RT-OBJ-store", "exactly one record citation"),
+    ("Part of: [RT-OBJ-store](runtime.md#rt-obj-store), [RT-RTE-model-call](runtime.md#rt-rte-model-call)",
+     "exactly one record citation"),
+    ("Part of: [MEM-OBJ-part](#mem-obj-part)", "cannot name itself"),
+    ("- Part of: [RT-OBJ-store](runtime.md#rt-obj-store)", "unindented"),
+])
+def test_a_part_field_cites_exactly_one_other_record(field: str, diagnostic: str | None) -> None:
+    body = "## Shared records\n\n" + declaration("MEM-OBJ-part", text=field)
+    found = record_reference_errors(body)
+    assert (not found) if diagnostic is None else any(diagnostic in error for error in found)
+
+
+def test_a_part_field_needs_a_declaration_owner() -> None:
+    body = "## Discussion\n\nPart of: [RT-OBJ-store](runtime.md#rt-obj-store)\n"
+    assert record_reference_errors(body) == ["record references: Part of: must belong to a declared record"]
+
+
+def test_a_supersession_links_both_records_and_indexes_the_superseded_one() -> None:
+    reconciliation = ("## Reconciliation\n\nAmendment: [MEM-RTE-import](memory.md#mem-rte-import) is superseded by "
+                      "[RT-RTE-model-call](runtime.md#rt-rte-model-call); both trace one call at SRC-1.\n")
+    cites = {**CITES, "reconciliation.md": ["boundary.md", "runtime.md", "memory.md"]}
+    _, found = artifact_record_errors("boundary.md", bodies(**{"reconciliation.md": reconciliation}), cites=cites)
+    assert found == []
+    assert value_amendments(reconciliation) == []
+    assert amendment_index(reconciliation).startswith("Amended or superseded records: MEM-RTE-import;")
+    changed = "## Reconciliation\n\nAmendment: [MEM-RTE-import](memory.md#mem-rte-import) has a new value.\n"
+    assert value_amendments(changed) == ["Amendment: [MEM-RTE-import](memory.md#mem-rte-import) has a new value."]
+
+
+# Sources
+
+
+def test_bare_source_ids_resolve_against_the_register_in_scope() -> None:
+    assert errors(**{"profile.md": "Evidence: SRC-1.\n"}) == [
+        ("profile.md: unresolved source SRC-1; the Source register is outside the documents this one may "
+        "cite: memory.md")]
+    assert errors(**{"memory.md": MEMORY + "\nAlso SRC-9.\n"}) == [
+        "memory.md: unresolved source SRC-9; the Source register does not declare it"]
+
+
+def test_duplicate_source_rows_are_refused_and_ambiguous_for_their_users() -> None:
+    found = errors(**{"boundary.md": BOUNDARY + "| SRC-1 | Again |\n"})
+    assert "boundary.md: duplicate artifact declaration: SRC-1" in found
+    assert "runtime.md: ambiguous source SRC-1; the Source register declares it twice" in found
 
 
 @pytest.mark.parametrize("reference", [
     "SRC-1 through SRC-2", "SRC-1–SRC-2", "SRC-1–2", "`SRC-1`–`SRC-2`", "SRC-1-2",
 ])
-def test_source_ranges_are_refused_independently_of_endpoint_resolution(reference: str) -> None:
-    body = BASE + reference
-    assert any("ranges are not expanded" in error for error in record_reference_errors(body))
-    assert any("ranges are not expanded" in error
-               for error in artifact_record_errors("overview.md", {"overview.md": body})[1])
-
-
-@pytest.mark.parametrize("reference", [
-    "The inventory compares `EPI-OBJ-candidate` to `RT-OBJ-store`.",
-    "Move EPI-OBJ-candidate to RT-OBJ-store.",
-    "RT-OBJ-store, RT-OBJ-input and RT-OBJ-third.",
-])
-def test_relation_prose_does_not_enumerate_a_record_range(reference: str) -> None:
-    body = BASE + reference
-    epistemic = "## Shared records\n\n#### EPI-OBJ-candidate — Candidate\n"
-    assert record_reference_errors(body) == []
-    assert artifact_record_errors("overview.md", {"overview.md": body, "epistemic.md": epistemic})[1] == []
-
-
-def test_unresolved_record_suggests_all_prefix_matches_without_changing_identity() -> None:
-    bodies = {
-        "overview.md": OVERVIEW,
-        "runtime.md": "## Shared records\n\n#### RT-OBJ-output — Runtime object\n",
-        "epistemic.md": "## Shared records\n\n#### EPI-OBJ-output — Epistemic object\n",
-        "memory.md": "MEM-OBJ-output and MEM-OBJ-payload and MEM-RTE-selection-route.",
-    }
-    assert artifact_record_errors("overview.md", bodies)[1] == [
-        "memory.md: unresolved record MEM-OBJ-output; declared with another analyst prefix: EPI-OBJ-output, RT-OBJ-output",
-        "memory.md: unresolved record MEM-OBJ-payload",
-        "memory.md: unresolved record MEM-RTE-selection-route",
-    ]
-
-
-@pytest.mark.parametrize(("field", "diagnostic"), [
-    ("Part of: RT-OBJ-store", None),
-    ("Part of: RT-OBJ-missing", "unresolved record RT-OBJ-missing"),
-    ("Part of: MEM-OBJ-store", "cannot name itself"),
-    ("Part of:", "exactly one full record ID"),
-    ("- Part of: RT-OBJ-store", "unindented"),
-    ("Part of: RT-OBJ-store\nPart of: RT-OBJ-input", "duplicate Part of:"),
-])
-def test_part_field_syntax_and_existing_target_resolution(field: str, diagnostic: str | None) -> None:
-    memory = f"## Shared records\n\n### Operative objects\n\n#### MEM-OBJ-store — Part\n\n{field}\n"
-    errors = artifact_record_errors("overview.md", {"overview.md": BASE, "memory.md": memory})[1]
-    if diagnostic is None:
-        assert errors == []
-    else:
-        assert any(diagnostic in error for error in errors)
-    if field == "Part of: RT-OBJ-missing":
-        assert record_reference_errors(memory) == []
-
-
-@pytest.mark.parametrize("heading", ["## Discussion", "#### On RT-OBJ-store — Annotation"])
-def test_part_field_requires_a_declaration_owner(heading: str) -> None:
-    body = BASE + heading + "\n\nPart of: RT-OBJ-input\n"
-    assert "Part of: must belong" in record_reference_errors(body)[0]
-
-
-def test_range_and_part_examples_in_source_excerpts_are_ignored() -> None:
-    body = BASE + "\n> RT-OBJ-store through RT-OBJ-missing\n> Part of: RT-OBJ-missing\n"
-    body += "\n```markdown\nRT-OBJ-1–RT-OBJ-missing\nPart of: RT-OBJ-missing\n```\n"
-    assert record_reference_errors(body) == []
-    assert artifact_record_errors("overview.md", {"overview.md": body})[1] == []
-
-
-@pytest.mark.parametrize('name', ['original-input-corpus', 'gpt4'])
-def test_named_ids_resolve_in_declarations_annotations_and_parts(name: str) -> None:
-    identifier = f'RT-OBJ-{name}'
-    runtime = f'## Shared records\n\n#### {identifier} — Object\n'
-    memory = f'## Shared records\n\n#### On {identifier} — Annotation\n\n'
-    memory += f'#### MEM-OBJ-part — Part\n\nPart of: {identifier}\n'
-    assert declared_ids(runtime) == [identifier]
-    assert annotated_ids(memory) == {identifier}
-    assert artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'runtime.md': runtime, 'memory.md': memory})[1] == []
-
-
-# Each malformed form and reference context needs coverage, not their product.
-@pytest.mark.parametrize(('name', 'context'), [
-    ('1', '#### {id} — Object'),
-    ('sheet-2', '{id} supports this finding.'),
-    ('Sheet', '#### On {id} — Annotation'),
-    ('one-two-three-four', 'Amendment: {id} corrected.'),
-    ('sheet_', '#### {id} — Object'),
-    ('sheet-', '{id} supports this finding.'),
-    ('sheet--cache', '#### On {id} — Annotation'),
-    ('café', 'Amendment: {id} corrected.'),
-])
-def test_malformed_candidate_tokens_are_refused_whole(name: str, context: str) -> None:
-    identifier = f'RT-OBJ-{name}'
-    body = '## Shared records\n\n' + context.format(id=identifier) + '\n'
-    errors = record_reference_errors(body)
-    assert any(f'invalid ID {identifier}' in error for error in errors)
-    assert any(f'invalid ID {identifier}' in error
-               for error in artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'runtime.md': body})[1])
-
-
-@pytest.mark.parametrize('separator', [' through ', ' to ', '–', '—', '-', '`–`'])
-def test_named_group_resolves_written_endpoints_without_expansion(separator: str) -> None:
-    declarations = '## Shared records\n\n#### MEM-OBJ-sheet — Sheet\n\n'
-    declarations += '#### MEM-OBJ-vectors — Vectors\n\n'
-    reference = f'MEM-OBJ-sheet{separator}MEM-OBJ-vectors'
-    assert artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'memory.md': declarations + reference})[1] == []
-    errors = artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'memory.md': declarations.replace(
-        '#### MEM-OBJ-vectors — Vectors', '#### MEM-OBJ-input — Input') + reference})[1]
-    assert any('unresolved record MEM-OBJ-vectors' in error for error in errors)
-
-
-def test_attached_word_is_not_silently_resolved_to_declared_prefix() -> None:
-    body = '## Shared records\n\n#### MEM-OBJ-sheet — Sheet\n\nMEM-OBJ-sheet-based'
-    assert artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'memory.md': body})[1] == [
-        'memory.md: unresolved record MEM-OBJ-sheet-based; nearest declared ID: MEM-OBJ-sheet']
-
-
-def test_prefix_collision_is_refused_at_member_and_artifact_acceptance() -> None:
-    body = '## Shared records\n\n#### MEM-OBJ-sheet — Sheet\n\n'
-    body += '#### MEM-OBJ-sheet-cache — Cache\n'
-    assert any('extends declared ID' in error for error in record_reference_errors(body))
-    assert any('extends declared ID' in error for error in artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'memory.md': body})[1])
-    distinct = body.replace('MEM-OBJ-sheet-cache', 'EPI-OBJ-sheet-cache')
-    assert record_reference_errors(distinct) == []
-    distinct = body.replace('MEM-OBJ-sheet-cache', 'MEM-CMP-sheet-cache')
-    assert record_reference_errors(distinct) == []
-
-
-def test_misspelling_refuses_reference_and_suggests_declared_name() -> None:
-    body = '## Shared records\n\n#### MEM-OBJ-embeddings — Embeddings\n\nMEM-OBJ-embedings'
-    assert artifact_record_errors("overview.md", {'overview.md': OVERVIEW, 'memory.md': body})[1] == [
-        'memory.md: unresolved record MEM-OBJ-embedings; nearest declared ID: MEM-OBJ-embeddings']
-
-
-def test_named_group_cannot_replace_single_part_identifier() -> None:
-    body = '## Shared records\n\n#### MEM-OBJ-part — Part\n\nPart of: RT-OBJ-store through RT-OBJ-input\n'
-    assert any('exactly one full record ID' in error for error in record_reference_errors(body))
+def test_source_ranges_are_refused(reference: str) -> None:
+    assert any("ranges are not expanded" in error for error in record_reference_errors(RUNTIME + reference))
 
 
 def test_source_register_rows_preserve_escaped_pipes_and_ignore_examples() -> None:
@@ -550,15 +349,13 @@ def test_source_register_rows_preserve_escaped_pipes_and_ignore_examples() -> No
     body = "## Source register\n\n" + row
     body += "\n> " + row.replace("SRC-1", "SRC-2")
     body += "\n```markdown\n" + row.replace("SRC-1", "SRC-3") + "\n```\n"
-
     assert source_register_rows(body) == [[
         "SRC-1", "git", "`https://example.invalid/source`", "`revision`",
         "implementation", "`a|b.txt`", "`a|b.txt`", "none",
     ]]
 
 
-def test_invalid_names_and_source_ranges_inside_source_excerpts_are_ignored() -> None:
-    body = BASE + '\n> RT-OBJ-1 SRC-1 through SRC-9 RT-OBJ-UPPER\n'
-    body += '\n```markdown\nRT-OBJ-one-two-three-four SRC-1–9\n```\n'
-    assert record_reference_errors(body) == []
-    assert artifact_record_errors("overview.md", {'overview.md': body})[1] == []
+def test_findings_name_the_member_they_belong_to() -> None:
+    profile = "Uses [RT-OBJ-store](runtime.md#rt-obj-store).\n"
+    _, findings = artifact_record_findings("boundary.md", bodies(**{"profile.md": profile}), cites=CITES)
+    assert [name for name, _ in findings] == ["profile.md"]

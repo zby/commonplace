@@ -61,7 +61,9 @@ Trace.
 
 ### Components
 
-#### RT-CMP-model — Model endpoint
+#### RT-CMP-model
+
+Label: Model endpoint
 
 Record.
 
@@ -71,7 +73,9 @@ none declared in this member.
 
 ### Routes
 
-#### RT-RTE-model-call — Ordinary invocation
+#### RT-RTE-model-call
+
+Label: Ordinary invocation
 
 - implementation conclusion status: wired
 
@@ -121,7 +125,7 @@ Inventory.
 
 ## Authority-route ledger
 
-Route ID: RT-RTE-model-call
+Route ID: [RT-RTE-model-call](runtime.md#rt-rte-model-call)
 Route function: operational admission/selection/consumption
 Architectural status: implemented
 Content/update relation: no content change.
@@ -138,7 +142,9 @@ Conclusion.
 
 ### Routes
 
-#### EPI-RTE-model-call — Admission check
+#### EPI-RTE-model-call
+
+Label: Admission check
 
 - implementation conclusion status: wired
 
@@ -164,7 +170,7 @@ reviewed-boundary: "{REVISION}"
 
 ## Reconciliation
 
-Amendment: EPI-OBJ-store is superseded by RT-OBJ-store; both name the same store at SRC-1.
+Amendment: [EPI-OBJ-store](epistemic.md#epi-obj-store) is superseded by [RT-OBJ-store](runtime.md#rt-obj-store); both name the same store at SRC-1.
 '''
 
 

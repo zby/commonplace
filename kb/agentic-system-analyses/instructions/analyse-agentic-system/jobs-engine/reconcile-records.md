@@ -17,7 +17,7 @@ disagreements.
 
 State every
 identity between records as a supersession or rule it out. An unresolved
-disagreement is an `Unresolved conflict:` paragraph naming the full IDs, both
+disagreement is an `Unresolved conflict:` paragraph citing the records, both
 findings, each finding's evidence and the conclusion it prevents. Faithful
 uncertainty alone is not a disagreement. A report relying on another report's
 record disagrees when that record no longer says what the dependent finding

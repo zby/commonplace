@@ -15,6 +15,8 @@ status: accepted
 
 **Amended 2026-10-04:** [ADR 104](./104-name-analysis-records-with-stable-short-handles.md) replaces numeric record suffixes with stable short names. Analyst ownership and immutable identities remain in force; numeric examples below describe the historical contract.
 
+**Amended 2026-10-09:** [ADR 115](./115-analysis-records-are-cited-by-markdown-links.md) moves the declaration label to a `Label:` line and makes citations Markdown links to the declaring member. Lens prefixes remain in force; bare-ID citations below describe the historical contract.
+
 ## Context
 
 An agentic-system analysis set has one record namespace, and three passes

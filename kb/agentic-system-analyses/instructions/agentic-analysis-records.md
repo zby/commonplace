@@ -21,7 +21,7 @@ member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory ha
 `MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
 Each report type declares its prefix as `record-prefix`, and validating the
 report checks every declaration against it. The prefix identifies the declaring analyst, not the member discussing the
-record. Keep a supplied ID unchanged in references, annotations and supersessions.
+record. Keep a supplied ID unchanged in citations, annotations and supersessions.
 
 Names: one to three lowercase hyphenated words, each starting with a letter;
 digits may follow. Components/objects use available source-native names.
@@ -36,28 +36,37 @@ Names are handles, not conclusions (`validated-knowledge`).
 Within `## Shared records`, kind headings group declarations:
 `### Components`, `### Operative objects`, `### Routes`, `### Claims`,
 `### Evidenced absences`, `### Behavioral-authority paths`. A declaration
-is one level-four heading, `#### RT-OBJ-store — Short label`. Prose, lists and
-tables do not declare records. Member types specify which empty kind
-headings remain. IDs are unique across the artifact and resolve within it.
-Use full IDs; aliases are not inferred. Named `through`, dash and
-`to` grouping prose is permitted; code resolves written IDs without expanding
-intervals. Structured citation lists and single-ID fields remain explicit.
-Numbered `SRC-*` ranges are refused; list each source ID. Source quotations
-and fenced excerpts are excluded from identifier checks.
+is one level-four heading that is exactly the record ID, `#### RT-OBJ-store`,
+followed by `Label: Short label` as the first line of its body. The heading
+gives the record a stable anchor, the lowercase ID (`#rt-obj-store`).
+Prose, lists and tables do not declare records. Member types specify which
+empty kind headings remain. IDs are unique across the artifact.
 
-An annotation, `#### On RT-OBJ-store — Short label`, supplies another analyst's
-fields on a record declared elsewhere. It does not repeat generic identity
-or redefine the referent, and never annotates a record the member declares.
-Its location and permitted fields come from the annotating member's type.
+A record citation is a Markdown link whose text is the full ID and whose
+destination is the declaring member and anchor:
+`[RT-OBJ-store](runtime.md#rt-obj-store)`, or `[RT-OBJ-store](#rt-obj-store)`
+within the declaring member. The citing member's type names the members it
+may cite. A bare ID is literal text, not a citation: write one to mention a
+record without asserting anything about it. Every citation must resolve to
+exactly one declaration in its destination; aliases and intervals are not
+inferred. Source quotations, fenced excerpts and inline code are excluded
+from citation checks. `SRC-*` sources stay bare IDs resolved against the
+Source register; numbered `SRC-*` ranges are refused, so list each source ID.
+
+An annotation, `#### On [RT-OBJ-store](runtime.md#rt-obj-store)`, supplies
+another analyst's fields on a record declared elsewhere. Its heading links
+exactly one record. It does not repeat generic identity or redefine the
+referent, and never annotates a record the member declares. Its location and
+permitted fields come from the annotating member's type.
 
 A record's value changes only in the report that declares it: the declaring
 analyst corrects it in a correction round. The reconciliation member states
 identity between declared records and never replaces a value. A conflict it
 cannot settle retains both findings. A
-supersession uses `Amendment: MEM-RTE-selection-route is superseded by RT-RTE-policy-check`, with
-identity evidence; both IDs stay declared. A split supersedes the combined
+supersession uses `Amendment: [MEM-RTE-selection-route](memory.md#mem-rte-selection-route) is superseded by [RT-RTE-policy-check](runtime.md#rt-rte-policy-check)`,
+with identity evidence; both IDs stay declared. A split supersedes the combined
 record only by parts already declared in analyst members, for example
-`Amendment: RT-OBJ-output is superseded by EPI-OBJ-store and EPI-OBJ-input`, with identity
+`Amendment: [RT-OBJ-output](runtime.md#rt-obj-output) is superseded by [EPI-OBJ-store](epistemic.md#epi-obj-store) and [EPI-OBJ-input](epistemic.md#epi-obj-input)`, with identity
 evidence and affected findings. Reconciliation never allocates IDs. Supersede
 a combined record only when its findings are wrong once the parts are
 separated; a valid container can remain alongside its parts. No ID changes referent, and
@@ -75,14 +84,14 @@ entry is `declined`.
 
 When other members are supplied, a new declaration records its closest
 supplied full IDs and distinct identity, possible-duplicate evidence, or
-no counterpart after comparison. An existing referent receives an
+no counterpart after comparison, citing each supplied record it compares. An existing referent receives an
 annotation rather than another declaration; a different prefix or label
 does not establish a distinct referent. Material parts with different
 checks or consumers are declared and assessed separately. A declaration
 whose referent is a material part of exactly one supplied record writes
-`Part of: RT-OBJ-store` on its own unindented line within that declaration,
-using its parent's full record ID. The field carries exactly one ID,
-without backticks or other text, and cannot name the declaring record itself.
+`Part of: [RT-OBJ-store](runtime.md#rt-obj-store)` on its own unindented line
+within that declaration. The field carries exactly one record citation and
+cannot name the declaring record itself.
 Local and artifact checks enforce its syntax; existing artifact resolution checks its
 target. Explain a parent of a different record kind beside the relation.
 Semantic verification checks containment; matching kinds alone does not prove it.

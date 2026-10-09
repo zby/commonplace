@@ -6,12 +6,17 @@ import csv
 import io
 import json
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
 from commonplace.lib.agentic_analysis.analyses import analysis_layout, current_analyses
-from commonplace.lib.agentic_analysis.records import declared_ids, is_absence
+from commonplace.lib.agentic_analysis.records import (
+    declared_ids,
+    identifier_from_anchor,
+    is_absence,
+)
 
 __all__ = [
     "AXES",
@@ -111,7 +116,7 @@ def _strings(value: object, label: str) -> list[str]:
 
 # BACKCOMPAT: immutable retained Dynamic Cheatsheet profiles are unversioned -
 # remove after no retained or archived consumer needs revision 1.
-def _validate_v1(profile: object, *, known_ids: set[str]) -> dict:
+def _validate_v1(profile: object, *, known_ids: Mapping[str, str]) -> dict:
     """Validate authored assessments and references, without classifying prose.
 
     ``known_ids`` are the record IDs the profile may cite.
@@ -127,7 +132,7 @@ def _validate_v1(profile: object, *, known_ids: set[str]) -> dict:
         raise ValueError(
             "memory-comparison.axes must contain every registered axis exactly once"
         )
-    ids = known_ids
+    ids = set(known_ids)  # Revision 1 cites bare record IDs.
     for name, vocabulary in AXES.items():
         entry = axes[name]
         if not isinstance(entry, dict) or set(entry) != {
@@ -141,7 +146,7 @@ def _validate_v1(profile: object, *, known_ids: set[str]) -> dict:
                 f"{name}: requires assessment, evidence, values, records, and note"
             )
         values = _strings(entry["values"], name + ".values")
-        records = _refs(entry["records"], name + ".records", ids)
+        records = _bare_refs(entry["records"], name + ".records", ids)
         if (
             not isinstance(entry["assessment"], str)
             or entry["assessment"] not in ASSESSMENTS
@@ -172,7 +177,7 @@ def _validate_v1(profile: object, *, known_ids: set[str]) -> dict:
                 raise ValueError(f"{name}.{value}: requires basis, records, and note")
             if not isinstance(support["basis"], str) or support["basis"] not in BASES:
                 raise ValueError(f"{name}.{value}: invalid evidence basis")
-            refs = _refs(support["records"], f"{name}.{value}", ids)
+            refs = _bare_refs(support["records"], f"{name}.{value}", ids)
             if not refs or not set(refs) <= ids:
                 raise ValueError(f"{name}.{value}: unresolved records")
             if not isinstance(support["note"], str) or not support["note"].strip():
@@ -227,7 +232,8 @@ def _validate_applicability(row: dict) -> None:
         raise ValueError("read_back_signal: inapplicability requires complete pull-only or bounded absent read-back")
 
 
-def _refs(value: object, label: str, ids: set[str], *, required: bool = False) -> list[str]:
+# BACKCOMPAT: revision-1 profiles cite bare record IDs - remove with _validate_v1.
+def _bare_refs(value: object, label: str, ids: set[str], *, required: bool = False) -> list[str]:
     refs = _strings(value, label)
     if any(re.fullmatch(
         r"(?:RT|MEM|EPI)-(?:CMP|OBJ|RTE|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}",
@@ -239,7 +245,26 @@ def _refs(value: object, label: str, ids: set[str], *, required: bool = False) -
     return refs
 
 
-def _coverage(entry: dict, label: str, ids: set[str]) -> None:
+def _refs(value: object, label: str, ids: Mapping[str, str], *, required: bool = False) -> list[str]:
+    """The record IDs a list of citations names, each `member.md#anchor` declared by that member.
+
+    ``ids`` maps each record ID the profile may cite to the member declaring it.
+    """
+    cited = []
+    for ref in _strings(value, label):
+        member, separator, fragment = ref.partition("#")
+        identifier = identifier_from_anchor(fragment)
+        if not separator or identifier is None or not member or "/" in member:
+            raise ValueError(f"{label}: invalid record citation {ref!r}; use member.md#record-anchor")
+        if ids.get(identifier) != member:
+            raise ValueError(f"{label}: unresolved records")
+        cited.append(identifier)
+    if required and not cited:
+        raise ValueError(f"{label}: unresolved records")
+    return cited
+
+
+def _coverage(entry: dict, label: str, ids: Mapping[str, str]) -> None:
     if not isinstance(entry["assessment"], str) or entry["assessment"] not in ASSESSMENTS:
         raise ValueError(f"{label}: invalid assessment")
     if not isinstance(entry["note"], str) or not entry["note"].strip():
@@ -251,7 +276,7 @@ def _coverage(entry: dict, label: str, ids: set[str]) -> None:
         raise ValueError(f"{label}: absence requires an evidenced-absence record")
 
 
-def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
+def validate_comparison(profile: object, *, known_ids: Mapping[str, str]) -> dict:
     """Check structure and canonical references, not the truth of source claims."""
     if isinstance(profile, dict) and "version" not in profile:
         return _validate_v1(profile, known_ids=known_ids)
@@ -337,6 +362,11 @@ def validate_comparison(profile: object, *, known_ids: set[str]) -> dict:
     return profile
 
 
+def _cited_ids(citations: list[str]) -> list[str]:
+    """Record IDs for a revision-2 citation list; the matrix reports records by ID."""
+    return [identifier_from_anchor(citation.partition("#")[2]) or citation for citation in citations]
+
+
 def project_comparison(profile: dict) -> dict:
     """Derive unions and strongest existence witnesses; retain local evidence."""
     row = {"comparison_version": profile.get("version", 1)}
@@ -353,13 +383,15 @@ def project_comparison(profile: dict) -> dict:
                 for finding in unit["findings"]:
                     value = finding["value"]
                     if value not in evidence or ranks[finding["basis"]] > ranks[evidence[value]["basis"]]:
-                        evidence[value] = {key: finding[key] for key in ("basis", "records", "note")}
+                        evidence[value] = {"basis": finding["basis"], "records": _cited_ids(finding["records"]),
+                                           "note": finding["note"]}
             if name == "trace_learning" and ("yes" in evidence or entry["assessment"] != "known"):
                 evidence.pop("no", None)
         row[name] = sorted(evidence)
         row[name + "_assessment"] = entry["assessment"]
         row[name + "_evidence"] = evidence
-        row[name + "_records"] = list(entry["records"])
+        row[name + "_records"] = (list(entry["records"]) if profile.get("version", 1) == 1
+                                  else _cited_ids(entry["records"]))
         row[name + "_units"] = units
         row[name + "_note"] = entry["note"]
     return row
@@ -370,7 +402,7 @@ def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) 
 
     The artifact rule checks the record members themselves.
     """
-    known = {identifier for body in record_bodies.values() for identifier in declared_ids(body)}
+    known = {identifier: name for name, body in record_bodies.items() for identifier in declared_ids(body)}
     return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
 
 
@@ -413,7 +445,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         assert member is not None  # complete analyses require the separate profile
         cited = layout.roles["memory-profile"].cites
         profile = profile_member_comparison(member.frontmatter, record_bodies={
-            role: analysis.roles[role].body for role in cited if role in analysis.roles
+            layout.path(role): analysis.roles[role].body for role in cited if role in analysis.roles
         })
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:

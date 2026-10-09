@@ -95,7 +95,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
                                            "# Fixture reconciliation\n\n## Reconciliation\n\nNo amendments.\n")}
     snapshot["runtime"] = snapshot["runtime"].replace(
         b"### Operative objects\n\nnone declared in this member\n",
-        "### Operative objects\n\n#### RT-OBJ-store — Store\n\nSRC-1 fixes the fixture store.\n".encode(),
+        b"### Operative objects\n\n#### RT-OBJ-store\n\nLabel: Store\n\nSRC-1 fixes the fixture store.\n",
     )
     if stage == "synthesis":
         snapshot.update({name: verdict(a, kind) for name, kind in
@@ -148,7 +148,7 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     elif defect == "wrong-stage":
         data = verdict(a, "records")
     elif defect == "citation":
-        data = verdict(a, stage, blockers="- MEM-OBJ-unhanded is unsupported.")
+        data = verdict(a, stage, blockers="- [MEM-OBJ-unhanded](memory.md#mem-obj-unhanded) is unsupported.")
     else:
         data = b"\xff"
     ctx = attempt(a, stage, data, apply=True)
@@ -230,7 +230,7 @@ def test_profile_revision_and_source_identity_are_invocation_guards(opened):
 
 def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     a = opened
-    data = verdict(a, "synthesis", limits="- RT-OBJ-store: missing inspection prevents complete store comparison.")
+    data = verdict(a, "synthesis", limits="- [RT-OBJ-store](runtime.md#rt-obj-store): missing inspection prevents complete store comparison.")
     ctx = attempt(a, "synthesis", data, apply=True)
     apply_verdict(ctx)
     valid, subject = judgments(ctx)
@@ -238,7 +238,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     assert subject["outcome"] == "refused" and "limit not carried" in subject["findings"]
     assert "## Limits" in subject["findings"]
     # Same exact handed verdict, but a synthesis carrying its ID may pass.
-    data = synthesis(a, "Store inspection incomplete | RT-OBJ-store | SRC-1 | complete comparison | inspect store")
+    data = synthesis(a, "Store inspection incomplete | [RT-OBJ-store](runtime.md#rt-obj-store) | SRC-1 | complete comparison | inspect store")
     ctx._pins["synthesis-seen"] = Resolved(hashlib.sha256(data).hexdigest(), data, "synthesis")
     ctx._staged.clear()
     apply_verdict(ctx)
@@ -250,7 +250,7 @@ def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_r
     a = opened
     ctx = attempt(a, "synthesis", synthesis(a))
     data = verdict(a, "records" if prior_role == "record-verification" else "profile",
-                   limits="- RT-OBJ-store: incomplete store inspection prevents complete comparison.")
+                   limits="- [RT-OBJ-store](runtime.md#rt-obj-store): incomplete store inspection prevents complete comparison.")
     ctx._pins[prior_role] = Resolved(hashlib.sha256(data).hexdigest(), data, prior_role)
     check(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"

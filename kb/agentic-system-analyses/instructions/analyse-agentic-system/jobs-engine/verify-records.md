@@ -35,7 +35,7 @@ uncertainty alone is neither a blocker nor a limit. Assess objections rather
 than treating them as established defects.
 
 Write each blocker as `- runtime: ...`, `- memory: ...`, `- epistemic: ...`
-or `- reconciliation: ...`, naming full IDs, the defective passage, what is
+or `- reconciliation: ...`, citing the records, the defective passage, what is
 wrong and its evidence. Indent continuation lines. A defect requiring two
 reports to change is two separately addressed blockers. Address dependent
 passages relying on a defective value to their own authors. Every structural

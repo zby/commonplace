@@ -52,8 +52,8 @@ assertions or concealed coverage gaps do not.
 
 The Bounded synthesis must read without the members' context. State its
 evidence basis and boundary, and link the member records that support it so
-a reader can inspect the underlying account. Every record ID resolves in the
-members its layout role cites. Relative links resolve from `synthesis.md`
+a reader can inspect the underlying account. Every record citation resolves
+in the members its layout role cites. Relative links resolve from `synthesis.md`
 in the set directory.
 
 ## Limitations

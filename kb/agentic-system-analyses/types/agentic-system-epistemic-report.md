@@ -106,9 +106,9 @@ does not negate the others.
 
 The body contains five level-two sections in order, as readable Markdown
 tables or compact records, followed by `## Shared records`. Each block
-cites record IDs and repeats at most the ID, one source-native short
-label, and one local evidence anchor; a field the declaring record owns
-says `see <ID>`. Architectural status is this report's own field;
+cites records by link and repeats at most the citation, one source-native
+short label, and one local evidence anchor; a field the declaring record owns
+says `see` and cites the record. Architectural status is this report's own field;
 use its controlled values rather than the set's conclusion-status vocabulary.
 
 **1. Source-and-claim boundary.** Declared scope and excluded components,
@@ -149,7 +149,7 @@ inside an inline code span. Structural validation rejects orphan rows,
 unequal cell counts, and invalid route-function or architectural-status
 values; it does not establish coverage or evidence support.
 
-In compact records, start each record with `Route ID: <full ID or IDs>`
+In compact records, start each record with `Route ID: <record citation or citations>`
 on its own line. Use `Route function: <value>` and
 `Architectural status: <value>` once each on their own lines, followed by
 the other named ledger fields and evidence. These labels are literal;

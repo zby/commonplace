@@ -68,8 +68,8 @@ status. Evidence does not create a separate record kind.
 
 ### Annotations
 
-`## Annotations` holds only `#### On <ID> — Label` entries on records declared
-elsewhere.
+`## Annotations` holds only `#### On [<ID>](<member>.md#<anchor>)` entries on
+records declared elsewhere.
 An entry carries only memory-specific fields and their supporting passages:
 storage substrate, representational form, lineage, memory consumers and their
 behavioral authority; raw versus derived material; write agency, curation,
@@ -115,7 +115,7 @@ requested read-back does not resolve an opaque alternative.
 
 List every correction to a supplied fact, every record of this report that
 may duplicate a supplied record, and every unresolved question, with its
-evidence, analytical consequence and the full IDs it concerns, so the
+evidence, analytical consequence and citations of the records it concerns, so the
 reconciliation can connect or supersede without rediscovering its meaning.
 State `none` when no issues remain. Supported corrections and justified
 unknowns can remain in a complete report; side-channel messages do not

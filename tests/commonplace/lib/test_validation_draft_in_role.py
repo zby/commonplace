@@ -168,15 +168,17 @@ def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name, stage):
     layout = analysis_layout()
     documents = {
         name: document("# Judgment\n\n## Verification\nChecked.\n\n## Blockers\nnone\n\n## Limits\n"
-                       "- RT-OBJ-store: incomplete inspection.\n  Withhold complete coverage.\n", verifies=stage),
+                       "- [RT-OBJ-store](runtime.md#rt-obj-store): incomplete inspection.\n"
+                       "  Withhold complete coverage.\n", verifies=stage),
         "synthesis": document("# Synthesis\n\n## Bounded synthesis\nAccount.\n\n## Limitations\nnone\n"),
-        "runtime": document("# Runtime\n\n## Shared records\n#### RT-OBJ-store — Store\n"),
+        "runtime": document("# Runtime\n\n## Shared records\n#### RT-OBJ-store\n\nLabel: Store\n"),
     }
     artifact = analysis_artifact(tmp_path, documents)
     findings = validate_analysis_artifact(artifact, layout=layout, run=ValidationRun(tmp_path, ()))
     carried = [f for f in findings if "limit not carried" in f.message]
     assert len(carried) == 1 and carried[0].role == "synthesis"
-    documents["synthesis"] = document("# Synthesis\n\n## Limitations\nRT-OBJ-store has incomplete coverage.\n")
+    documents["synthesis"] = document(
+        "# Synthesis\n\n## Limitations\n[RT-OBJ-store](runtime.md#rt-obj-store) has incomplete coverage.\n")
     findings = validate_analysis_artifact(analysis_artifact(tmp_path, documents), layout=layout, run=ValidationRun(tmp_path, ()))
     assert not any("limit not carried" in f.message for f in findings)
 
@@ -188,7 +190,7 @@ def test_citation_scope_is_enforced_for_new_roles(tmp_path, name):
         name: document("# Member\n\nSRC-1 supports this statement.\n"),
     }
     findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
-    unresolved = [f for f in findings if "unresolved record SRC-1" in f.message]
+    unresolved = [f for f in findings if "unresolved source SRC-1" in f.message]
     if name == "profile-verification":
         assert len(unresolved) == 1 and unresolved[0].role == name
         assert "outside" in unresolved[0].message

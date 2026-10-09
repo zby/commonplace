@@ -117,7 +117,7 @@ def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
     a = analysts
     original = report(a, "runtime").replace(
         "### Operative objects\n\nnone declared in this member\n",
-        "### Operative objects\n\n#### RT-OBJ-store — Fixture store\n\nA symbolic fixture object in README.md at SRC-1.\n",
+        "### Operative objects\n\n#### RT-OBJ-store\n\nLabel: Fixture store\n\nA symbolic fixture object in README.md at SRC-1.\n",
     )
     a.coordinator.complete("runtime", original, answers="")
     assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
@@ -139,9 +139,9 @@ def test_untracked_projection_cannot_supply_a_citation_partner(analysts):
     projected = a.coordinator.run_dir / "artifact/memory.md"
     projected.write_text(
         report(a, "memory").replace("### Components\n\nnone declared in this member\n",
-                                   "### Components\n\n#### MEM-CMP-unseen — Untracked component\n\nSRC-1.\n"),
+                                   "### Components\n\n#### MEM-CMP-unseen\n\nLabel: Untracked component\n\nSRC-1.\n"),
     )
-    text = report(a, "runtime").replace("SRC-1 fixes the evidence.", "MEM-CMP-unseen fixes the evidence.")
+    text = report(a, "runtime").replace("SRC-1 fixes the evidence.", "[MEM-CMP-unseen](memory.md#mem-cmp-unseen) fixes the evidence.")
     a.coordinator.complete("runtime", text, answers="")
     j = judgments(a, "runtime")[-1]
     assert j["outcome"] == "refused" and "MEM-CMP-unseen" in j["findings"]

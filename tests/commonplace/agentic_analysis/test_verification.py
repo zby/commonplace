@@ -118,7 +118,7 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
 
 @pytest.mark.parametrize("body,changes,reason", [
     ("Amendment: RT-OBJ-missing now has a stronger value.", {}, "Amendment"),
-    ("Unknown RT-OBJ-missing is used.", {}, "unresolved record"),
+    ("Unknown [RT-OBJ-missing](runtime.md#rt-obj-missing) is used.", {}, "unresolved record citation"),
     ("SRC-1", {"reviewed-boundary": "b" * 40}, "identity"),
     ("SRC-1", {"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "run-id"),
 ])
@@ -211,15 +211,16 @@ def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
     a.coordinator.complete("record-verification", verdict(a))
     memory = report(a, "memory").replace(
         "### Operative objects\n\nnone declared in this member\n",
-        "### Operative objects\n\n#### MEM-OBJ-store — Fixture store\n\nPinned peer finding at SRC-1.\n",
+        "### Operative objects\n\n#### MEM-OBJ-store\n\nLabel: Fixture store\n\nPinned peer finding at SRC-1.\n",
     ).encode()
-    text = verdict(a, "- runtime: reconsider MEM-OBJ-store and SRC-1.\n- epistemic: reconsider SRC-1.").encode()
+    text = verdict(a, "- runtime: reconsider [MEM-OBJ-store](memory.md#mem-obj-store) and SRC-1.\n"
+                   "- epistemic: reconsider SRC-1.").encode()
     attempt = code_attempt(a, "apply-record-verification", {"candidate": text, "memory-seen": memory})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     runtime = next(j for j in result if j["subject"]["role"] == "runtime")
     epistemic = next(j for j in result if j["subject"]["role"] == "epistemic")
-    assert "#### MEM-OBJ-store — Fixture store" in runtime["findings"]
+    assert "#### MEM-OBJ-store\n\nLabel: Fixture store" in runtime["findings"]
     assert "Pinned peer finding at SRC-1." in runtime["findings"]
     assert "MEM-OBJ-store" not in epistemic["findings"]
     assert "## Boundary and evidence" not in runtime["findings"]
