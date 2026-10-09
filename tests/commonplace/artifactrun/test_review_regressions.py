@@ -143,7 +143,7 @@ def test_a_check_reruns_when_an_optional_partner_disappears_for_good(tmp_path: P
 
     declaration, method = toy_library(tmp_path, compact=True)
     toy = yaml.safe_load(yaml.safe_dump(TOY_TYPE))
-    toy["layout"]["required"]["by"]["values"]["partial"] = ["summary"]
+    toy["layout"]["required"]["when"]["values"]["partial"] = ["summary"]
     (tmp_path / "kb/types/toy-set.md").write_text(
         "---\n" + yaml.safe_dump(toy, sort_keys=False) + "---\n\n# Toy set\n", encoding="utf-8")
     log = tmp_path / "handlers.log"

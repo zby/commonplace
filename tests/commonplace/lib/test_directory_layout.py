@@ -10,7 +10,7 @@ LAYOUT = {
         "body": {"path": "body.md", "type": "t/body.md",
                  "identity": [{"from": "head", "fields": ["run"]}], "cites": ["head", "body"]},
     },
-    "required": {"always": ["head"], "by": {"role": "head", "field": "state", "values": {"done": ["body"]}}},
+    "required": {"always": ["head"], "when": {"role": "head", "field": "state", "values": {"done": ["body"]}}},
 }
 
 

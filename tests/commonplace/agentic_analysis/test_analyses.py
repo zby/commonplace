@@ -34,8 +34,8 @@ def test_identity_findings_belong_to_the_member_that_disagrees() -> None:
 
 def test_boundary_disposition_selects_roles_before_overview_exists() -> None:
     layout = analyses.analysis_layout()
-    assert layout.required.by_role == "boundary"
-    assert layout.required.by_field == "result-disposition"
+    assert layout.required.when_role == "boundary"
+    assert layout.required.when_field == "result-disposition"
     for disposition in ("complete", "blocked", "out-of-scope"):
         members = {"boundary.md": document(f"result-disposition: {disposition}")}
         required, permitted = layout.requirement(members)

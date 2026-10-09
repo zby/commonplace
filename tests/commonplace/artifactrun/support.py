@@ -103,7 +103,7 @@ TOY_TYPE = {
         },
         "required": {
             "always": ["brief", "overview"],
-            "by": {
+            "when": {
                 "role": "brief",
                 "field": "disposition",
                 "values": {"complete": ["report", "other", "summary", "verification", "digest"]},

@@ -41,8 +41,8 @@ class Role:
 @dataclass(frozen=True)
 class Requirement:
     always: tuple[str, ...] = ()
-    by_role: str | None = None
-    by_field: str | None = None
+    when_role: str | None = None
+    when_field: str | None = None
     values: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
 
 
@@ -104,12 +104,12 @@ class Layout:
         is absent, only ``always`` is required and every role is permitted.
         """
         required = set(self.required.always)
-        if self.required.by_role is None:
+        if self.required.when_role is None:
             return required, None
-        document = members.get(self.path(self.required.by_role))
+        document = members.get(self.path(self.required.when_role))
         if document is None:
             return required, None
-        value = (document.frontmatter or {}).get(self.required.by_field)
+        value = (document.frontmatter or {}).get(self.required.when_field)
         selected = set(self.required.values.get(value, ()) if isinstance(value, str) else ())
         return required | selected, required | selected
 
@@ -173,25 +173,25 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
         for target in (*(source.role for source in role.identity), *role.cites, *role.verifies):
             if target not in roles:
                 raise ValueError(f"{where}.roles.{role.name}: names unknown role {target!r}")
-    raw_required = _mapping(data.get("required", {}), f"{where}.required", {"always", "by"})
+    raw_required = _mapping(data.get("required", {}), f"{where}.required", {"always", "when"})
     always = _names(raw_required.get("always", []), f"{where}.required.always")
-    by_role = by_field = None
+    when_role = when_field = None
     values: dict[str, tuple[str, ...]] = {}
-    if "by" in raw_required:
-        by = _mapping(raw_required["by"], f"{where}.required.by", {"role", "field", "values"}, {"role", "field", "values"})
-        by_role, by_field = by["role"], by["field"]
-        if not isinstance(by_field, str) or not by_field:
-            raise ValueError(f"{where}.required.by.field: must be a field name")
-        if not isinstance(by["values"], dict):
-            raise ValueError(f"{where}.required.by.values: must map values to role lists")
+    if "when" in raw_required:
+        when = _mapping(raw_required["when"], f"{where}.required.when", {"role", "field", "values"}, {"role", "field", "values"})
+        when_role, when_field = when["role"], when["field"]
+        if not isinstance(when_field, str) or not when_field:
+            raise ValueError(f"{where}.required.when.field: must be a field name")
+        if not isinstance(when["values"], dict):
+            raise ValueError(f"{where}.required.when.values: must map values to role lists")
         values = {
-            str(key): _names(names, f"{where}.required.by.values.{key}")
-            for key, names in by["values"].items()
+            str(key): _names(names, f"{where}.required.when.values.{key}")
+            for key, names in when["values"].items()
         }
-    for name in (*always, *((by_role,) if by_role else ()), *(n for names in values.values() for n in names)):
+    for name in (*always, *((when_role,) if when_role else ()), *(n for names in values.values() for n in names)):
         if name not in roles:
             raise ValueError(f"{where}.required: names unknown role {name!r}")
-    return Layout(roles, Requirement(always, by_role, by_field, values), data["membership"])
+    return Layout(roles, Requirement(always, when_role, when_field, values), data["membership"])
 
 
 def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> list[Finding]:
@@ -202,8 +202,8 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> li
             findings.append(Finding(None, f"{name}: no layout role; this type has closed membership"))
     required, permitted = layout.requirement(members)
     discriminator = (
-        f"{layout.path(layout.required.by_role)} {layout.required.by_field}"
-        if layout.required.by_role else ""
+        f"{layout.path(layout.required.when_role)} {layout.required.when_field}"
+        if layout.required.when_role else ""
     )
     for role in layout.roles.values():
         document = members.get(role.path)
@@ -212,7 +212,7 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> li
                 findings.append(Finding(role.name, f"{role.path}: required member is absent", absent=True))
             continue
         if permitted is not None and role.name not in permitted:
-            value = (members[layout.path(layout.required.by_role)].frontmatter or {}).get(layout.required.by_field)
+            value = (members[layout.path(layout.required.when_role)].frontmatter or {}).get(layout.required.when_field)
             findings.append(Finding(role.name, f"{role.path}: not a member when {discriminator} is {value!r}"))
         actual = (document.frontmatter or {}).get("type")
         if actual != role.type:

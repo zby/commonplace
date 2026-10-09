@@ -77,7 +77,7 @@ layout:
       verifies: [synthesis]
   required:
     always: [boundary, overview]
-    by:
+    when:
       role: boundary
       field: result-disposition
       values:
