@@ -27,7 +27,7 @@ not establish its reliability.
 revised classification contracts. Profiles at revision 2 of
 `memory-comparison` keep each finding on a scoped unit and can mark a unit
 or axis `partial`, `not-determinable` or `uninspected`; the
-[profile type](../../../agentic-system-analyses/types/agent-memory-profile.md)
+[profile type](../../../agentic-system-analyses/types/agentic-system-memory-profile.md)
 defines that representation. This proposal must build on those contracts
 rather than redesign them.
 

@@ -25,7 +25,7 @@ comparison of human versus automatic control needs that distinction explicitly.
 ## Decision
 
 New profiles use revision 2 of the
-[memory profile contract](../../agentic-system-analyses/types/agent-memory-profile.md).
+[memory profile contract](../../agentic-system-analyses/types/agentic-system-memory-profile.md).
 Classify natural units: objects and derivation paths, transformations, admission
 mechanisms, original inputs, and actual consumers or selectors, as appropriate
 to each axis. Each finding carries its value, evidence basis, canonical records

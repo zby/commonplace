@@ -62,7 +62,7 @@ A residual audit finding is that Sol's trace-source inventory identifies conditi
 
 This comparison holds recorded model, harness, reasoning and source revision constant. Method differs, but one execution per method cannot establish that method caused the differences.
 
-The profile's [classification contract](../../agentic-system-analyses/types/agent-memory-profile.md) distinguishes retained parts, actual consumers, evidence strength and inventory coverage. The [theory-builder definition](../../notes/definitions/theory-builder.md) separates stated theory content, content-dependent consumption, criticism and criticism-shaped iteration. A wired prompt path is evidence of delivery, not proof of the full consumption condition.
+The profile's [classification contract](../../agentic-system-analyses/types/agentic-system-memory-profile.md) distinguishes retained parts, actual consumers, evidence strength and inventory coverage. The [theory-builder definition](../../notes/definitions/theory-builder.md) separates stated theory content, content-dependent consumption, criticism and criticism-shaped iteration. A wired prompt path is evidence of delivery, not proof of the full consumption condition.
 
 | Area | Older Luna | Latest Luna | Comparative finding |
 |---|---|---|---|

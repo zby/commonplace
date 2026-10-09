@@ -31,7 +31,7 @@ they never reopen the analysts or reconciliation.
 
 The classifier writes `memory-profile.md` as the sixth manifest-pinned member
 of a complete analysis set. It owns the unchanged `memory-comparison` mapping
-and Comparison rationale under the [profile type](../../agentic-system-analyses/types/agent-memory-profile.md).
+and Comparison rationale under the [profile type](../../agentic-system-analyses/types/agentic-system-memory-profile.md).
 It cites existing canonical records, applying reconciliation amendments and
 supersessions. It declares or annotates no records and adds no evidence.
 Optional frozen-source reading resolves a named ambiguity in a record's cited

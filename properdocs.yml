@@ -70,6 +70,7 @@ plugins:
         'agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify.md': 'agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-reports.md'
         'agentic-system-analyses/instructions/analyse-agentic-system/jobs/worker-rules.md': 'agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md'
         'agentic-system-analyses/types/agent-memory-analysis-report.md': 'agentic-system-analyses/types/agentic-system-memory-report.md'
+        'agentic-system-analyses/types/agent-memory-profile.md': 'agentic-system-analyses/types/agentic-system-memory-profile.md'
         'agentic-systems/academic-research-skills.md': 'agentic-systems/reviews/academic-research-skills.md'
         'agentic-systems/agno-agentos.md': 'agentic-systems/reviews/agno-agentos.md'
         'agentic-systems/ai-agent-book.md': 'agentic-systems/reviews/ai-agent-book.md'

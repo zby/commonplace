@@ -14,7 +14,7 @@ They reject duplicate sources and directory names that disagree with sources.
 Old `agentic-systems/reports/` and the new `retained-archive/` do not participate
 in current validation or comparison. No local run state, source checkout,
 legacy review or prior CSV is required. The
-[memory profile contract](../../agentic-system-analyses/types/agent-memory-profile.md#memory-comparison-fields)
+[memory profile contract](../../agentic-system-analyses/types/agentic-system-memory-profile.md#memory-comparison-fields)
 defines scoped findings, evidence bases and coverage assessments. New profiles
 use revision 2; immutable unversioned profiles retain revision-1 interpretation.
 Do not silently pool changed write-agency semantics across revisions.
