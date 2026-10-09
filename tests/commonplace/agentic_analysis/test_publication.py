@@ -60,7 +60,7 @@ class Attempt:
                 producer, primary = publication.PRODUCERS[role]
                 self.inputs[f"{role}-attempt"] = (json.dumps({
                     "job": producer, "state": "completed", "kind": "model", "model": "fixture/model",
-                    "effort": "high", "worker_model": "fixture-model-1", "outputs": {primary: publication._digest(data)},
+                    "effort": "high", "worker_effort": "high", "worker_model": "fixture-model-1", "outputs": {primary: publication._digest(data)},
                 }).encode() if data else None)
         self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
                          "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
@@ -126,6 +126,8 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
 @pytest.mark.parametrize("defect,reason", [
     ("provenance", "provenance"), ("mixed-worker", "not the run profile's"),
     ("mixed-report", "every worker must report the same model"),
+    ("wrong-effort", "reported worker effort"),
+    ("missing-effort", "reported worker effort"),
 ])
 def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")
@@ -134,6 +136,10 @@ def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, de
         record["model"] = "other/model"
     elif defect == "mixed-report":
         record["worker_model"] = "fixture-model-2"
+    elif defect == "wrong-effort":
+        record["worker_effort"] = "low"
+    elif defect == "missing-effort":
+        record.pop("worker_effort")
     else:
         record["outputs"] = {"answers": publication._digest(attempt.inputs["memory"])}
     attempt.inputs["memory-attempt"] = json.dumps(record).encode()

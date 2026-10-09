@@ -147,8 +147,9 @@ def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordin
     c.complete("report", "report A\n", answers="")
     run = Run(RunStore(c.run_dir))
     record = json.loads(run.resolve("r", {"r": Input("attempt", "report")}).data)
-    assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model"}
+    assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort"}
     assert record["job"] == "report" and record["kind"] == "model" and record["worker_model"] == "test-model"
+    assert record["worker_effort"] == "medium"
     assert record["outputs"]["report"] == digest(b"report A\n")
 
 
@@ -205,7 +206,12 @@ def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> Non
 
 
 
-def test_a_completion_without_a_worker_model_report_fails(coordinator: Coordinator) -> None:
+@pytest.mark.parametrize("report", [None, "not json", '[]', '{"model": "m"}',
+                                     '{"model": "m", "effort": 1}',
+                                     '{"model": "m", "effort": ""}',
+                                     '{"model": "m\\nother", "effort": "medium"}',
+                                     '{"model": "m", "effort": "medium", "extra": "x"}'])
+def test_a_completion_without_a_valid_worker_runtime_report_fails(coordinator: Coordinator, report) -> None:
     from commonplace.artifactrun import AttemptResult
     from commonplace.artifactrun.store import RunStore
 
@@ -213,7 +219,10 @@ def test_a_completion_without_a_worker_model_report_fails(coordinator: Coordinat
     c.through_brief()
     handout = c.handout("report")
     c.write(handout, "report A\n", answers="")
-    handout.worker_model.unlink()
+    if report is None:
+        handout.worker_runtime.unlink()
+    else:
+        handout.worker_runtime.write_text(report, encoding="utf-8")
     c.advance(AttemptResult(handout.attempt))
     record = next(r for r in RunStore(c.run_dir).attempt_records() if r["id"] == handout.attempt)
-    assert record["state"] == "failed" and "worker-model" in record["reason"]
+    assert record["state"] == "failed" and "worker-runtime" in record["reason"]

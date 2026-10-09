@@ -132,7 +132,9 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
     Opening resolved the profile the run started with; every worker uses it.
     A producer record that a coordinator reported with a model or effort must
     agree with it. Every producer must report the same model from its
-    environment, which may be `not stated`.
+    environment, which may be `not stated`. Reported effective effort must
+    match the profile when available; unavailable effort remains explicit in
+    the attempt record.
     """
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
@@ -155,6 +157,10 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
             if record.get(field) is not None and record[field] != worker[profiled]:
                 raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
                                  f"not the run profile's {worker[profiled]!r}")
+        effective_effort = record.get("worker_effort")
+        if effective_effort not in (worker["effort"], "not stated"):
+            raise ValueError(f"{role} reported worker effort {effective_effort!r}, "
+                             f"not the run profile's {worker['effort']!r}")
         reported.add(record.get("worker_model"))
     if len(reported) != 1 or not all(isinstance(model, str) and model for model in reported):
         raise ValueError("every worker must report the same model; reported: "

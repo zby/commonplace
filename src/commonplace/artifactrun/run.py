@@ -450,7 +450,7 @@ class Run:
 
 
 # The published fields of an attempt-record input; the rest of the record is internal.
-ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model")
+ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort")
 
 
 def refusal_document(refusal: str, version: str, scope: list[str], findings: str) -> bytes:

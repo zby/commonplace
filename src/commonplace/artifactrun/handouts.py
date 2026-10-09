@@ -20,7 +20,7 @@ from commonplace.lib.reading_batches import (
 from .plan import PLACEHOLDER, ModelJob
 from .run import Run
 
-WORKER_MODEL = "worker-model.txt"
+WORKER_RUNTIME = "worker-runtime.json"
 
 
 @dataclass(frozen=True)
@@ -32,7 +32,7 @@ class Handout:
     prompt: Path
     outputs: Mapping[str, Path]
     problem: Path
-    worker_model: Path
+    worker_runtime: Path
 
 
 
@@ -79,7 +79,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
         paths[name] = path
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     problem = directory / "problem.md"
-    worker_model = directory / WORKER_MODEL
+    worker_runtime = directory / WORKER_RUNTIME
     run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                   "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, "attempt": attempt, "run-id": store.run_dir.name}
@@ -87,7 +87,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name != job.instruction}
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
-    values |= {"problem": str(problem), "worker-model": str(worker_model),
+    values |= {"problem": str(problem), "worker-runtime": str(worker_runtime),
                "workspace": f"{directory}/", "scratch": f"{scratch}/"}
     previous = run.latest_completed(job.name)
     if previous is not None:
@@ -115,8 +115,12 @@ def _open(run: Run, job: ModelJob) -> Handout:
                 spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))
                 lines.append(f"- {path}: lines {spans}")
     lines += ["", "If you cannot produce the output, write the problem to the problem path.",
-              ("Write to the worker-model path the exact model ID your system prompt or environment "
-               "states, on one line, or `not stated` when it states none; do not infer it.")]
+              ('Write a JSON object to the worker-runtime path with exactly the string fields "model" and "effort". '
+               'Report the exact model ID and effective effort/thinking level stated by your runtime instructions '
+               'or environment; use "not stated" independently for each unavailable value. Do not infer values '
+               'from the requested worker profile. In Pi, inspect PI_PROVIDER, PI_MODEL and PI_REASONING_LEVEL '
+               'through Bash; report the model as provider/model when both are available. Do not scan session '
+               'logs or edit engine-owned run metadata.')]
     prompt = directory / "prompt.md"
     store.write_bytes(prompt, ("\n".join(lines) + "\n").encode("utf-8"))
     store.open_attempt({
@@ -124,7 +128,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
         "pins": {name: pinned.pin() for name, pinned in pins.items()},
         "previous_outputs": {} if previous is None else dict(previous["outputs"]),
     })
-    return Handout(attempt, job.name, prompt, outputs, problem, worker_model)
+    return Handout(attempt, job.name, prompt, outputs, problem, worker_runtime)
 
 
 def handout_for(run: Run, record: dict) -> Handout:
@@ -133,4 +137,4 @@ def handout_for(run: Run, record: dict) -> Handout:
     directory = run.store.handout_dir(record["id"])
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     return Handout(record["id"], job.name, directory / "prompt.md", outputs, directory / "problem.md",
-                   directory / WORKER_MODEL)
+                   directory / WORKER_RUNTIME)

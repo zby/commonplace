@@ -25,8 +25,8 @@ def run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path]:
     return run_dir, declaration
 
 
-def advance_json(run_dir: Path, capsys: pytest.CaptureFixture[str], *args: str) -> dict:
-    assert main(["advance", str(run_dir), "--json", *args]) == 0
+def advance_json(run_dir: Path, capsys: pytest.CaptureFixture[str], *args: str, exit_code: int = 0) -> dict:
+    assert main(["advance", str(run_dir), "--json", *args]) == exit_code
     return json.loads(capsys.readouterr().out)
 
 
@@ -41,13 +41,13 @@ def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pyt
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     assert handout["job"] == "brief"
     Path(handout["problem"]).write_text("no source at that revision\n", encoding="utf-8")
-    status = advance_json(run_dir, capsys, "--failed", f"{handout['attempt']}=worker gave up")
+    status = advance_json(run_dir, capsys, "--failed", f"{handout['attempt']}=worker gave up", exit_code=2)
     (stop,) = status["stops"]
     assert stop["job"] == "brief" and "no source at that revision" in stop["reason"]
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     assert handout["job"] == "brief", "a failed attempt leaves the job ready"
     Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
-    Path(handout["worker_model"]).write_text("test-model\n", encoding="utf-8")
+    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
 
     assert main(["advance", str(run_dir), "--completed", handout["attempt"], "--model", "m", "--effort", "e"]) == 0
     text = capsys.readouterr().out
@@ -62,7 +62,7 @@ def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monk
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
-    Path(handout["worker_model"]).write_text("test-model\n", encoding="utf-8")
+    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     original = CodeJob.resolve_handler
 
     def fail(attempt):
@@ -70,7 +70,7 @@ def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monk
         raise error("scripted external condition")
 
     monkeypatch.setattr(CodeJob, "resolve_handler", lambda job: fail if job.name == "check-brief" else original(job))
-    status = advance_json(run_dir, capsys, "--completed", handout["attempt"])
+    status = advance_json(run_dir, capsys, "--completed", handout["attempt"], exit_code=2)
     (stop,) = status["stops"]
     assert stop["uncertain"] is uncertain
     (record,) = [r for r in RunStore(run_dir).attempt_records() if r["job"] == "check-brief"]
@@ -93,7 +93,7 @@ def test_status_and_judge(run: tuple[Path, Path], capsys: pytest.CaptureFixture[
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
-    Path(handout["worker_model"]).write_text("test-model\n", encoding="utf-8")
+    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     advance_json(run_dir, capsys, "--completed", handout["attempt"])
 
     assert main(["judge", str(run_dir), "--role", "brief", "--outcome", "refused", "--findings", "wrong system"]) == 0

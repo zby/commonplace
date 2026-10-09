@@ -10,7 +10,8 @@
 
 The engine behind these is `commonplace.artifactrun`; its design is in
 kb/work/workflow-requirements/. `advance` prints the hand-outs a coordinator
-must run and reports back with the next `advance`.
+must run and reports back with the next `advance`. It exits 2 when the run
+stopped and 1 when the command failed.
 """
 
 from __future__ import annotations
@@ -33,6 +34,10 @@ from commonplace.artifactrun import (
     start_run,
 )
 from commonplace.artifactrun.worktree import require_run_code
+
+# `advance` exits 1 when the command fails and nothing happened, and STOPPED
+# when the run stopped: its state changed and the printed stops need a decision.
+STOPPED = 2
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -94,7 +99,7 @@ def _print_status(status: RunStatus, as_json: bool) -> None:
         for name, path in handout.outputs.items():
             print(f"  output {name}: {path}")
         print(f"  problem: {handout.problem}")
-        print(f"  worker-model: {handout.worker_model}")
+        print(f"  worker-runtime: {handout.worker_runtime}")
     if status.open_attempts:
         print("open: " + " ".join(status.open_attempts))
     for stop in status.stops:
@@ -132,7 +137,10 @@ def main(argv: list[str] | None = None) -> int:
             results = [AttemptResult(a, model=arguments.model, effort=arguments.effort) for a in arguments.completed]
             results += [AttemptResult(a, outcome="failed", reason=reason, model=arguments.model, effort=arguments.effort)
                         for a, reason in _pairs(arguments.failed, "--failed").items()]
-            _print_status(advance(arguments.run, results=tuple(results)), arguments.json)
+            status = advance(arguments.run, results=tuple(results))
+            _print_status(status, arguments.json)
+            if status.stops:
+                return STOPPED
         elif arguments.command == "status":
             view = inspect(arguments.run)
             view["handouts"] = open_handouts(arguments.run)
