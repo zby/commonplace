@@ -374,11 +374,15 @@ instruction holds only its mission.
   job that declares an answers output. A second template file for
   answering jobs was the alternative and would repeat the rest.
 - **Derived type inputs.** Each role-filling model job receives as file
-  inputs its own role's type as `member-type`, the type of each role it
-  reads as `<role>-type`, and the run's type as `set-type`. These replace
-  the `files:` entries that named type specs; `files:` stays for files
-  that are not types. Worker instructions using the old names change in
-  the same commit.
+  inputs its own role's type as `member-type` and the type of each role it
+  reads as `<role>-type`, and as `set-type` the run's type through a new
+  input address, `type`, with no source, resolving to the type text the
+  run fixed at start. Handing the library file instead broke that
+  guarantee: a mid-run edit of the type stopped an open attempt. Workers
+  read the bytes code validates against. These replace the `files:`
+  entries that named type specs; `files:` stays for files that are not
+  types. The template itself is a pinned file input of every model job,
+  rendered rather than listed, so editing it re-hands-out the job.
 - **Precedence, stated once in the template.** The member type owns what
   the member contains and wins over the mission file on conflict; the set
   type owns shared and cross-member shape; the worker rules own
@@ -443,7 +447,10 @@ deletes checks the opener and the analyst check carry until then.
    and loader with the toy plan untouched; the analysis template, the
    mission-file shrink and the derived type inputs with the old contract
    files still in place; then the contract moves, one commit each,
-   boundary, records, sources. Independent of step 4.
+   boundary, records, sources. Independent of step 4. The first two parts
+   are done 2026-10-09: the toy prompts are byte-identical, the ten
+   mission files hold about 2,900 words from 4,950, and the plan is 219
+   lines. The contract moves are in progress.
 
 ## Not taken
 
