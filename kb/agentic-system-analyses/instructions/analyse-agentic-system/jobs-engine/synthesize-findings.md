@@ -24,11 +24,11 @@ negative or infer improved capacity from trace-fed durable updates alone.
 No product ranking, aggregate epistemic grade, generic adoption advice or
 Commonplace transfer recommendation belongs here.
 
-Limitations must carry every record- and profile-verification limit and every
-`Unresolved conflict:` in reconciliation, with affected IDs, inspected boundary,
+Limitations must carry every report- and profile-verification limit and every
+`Unresolved conflict:` in reconciliation, citing the affected records, with inspected boundary,
 prevented conclusion and evidence that would resolve it. Preserve limits across
 corrections and carry synthesis-verification limits supplied in refusal feedback.
-Code checks ID traceability, not whether the consequence is faithfully stated;
+Code checks that each limit's cited records appear here, not whether the consequence is faithfully stated;
 independent verification judges that meaning.
 
 Do not reconcile records, add evidence or write verification text. A discovered

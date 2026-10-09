@@ -64,14 +64,14 @@ class Finding:
     def __post_init__(self) -> None:
         if not self.repair:
             repairs = {
-                "unresolved record": "use the full ID of a declaration in this role's citation scope; remove unsupported references",
+                "unresolved record": "link to the member that declares the record, within this role's citation scope; remove unsupported references",
                 "duplicate": "keep one declaration per ID and give distinct records distinct names",
                 "required member is absent": "supply the member at its declared path",
                 "identity field": "use the expected identity value from the named source member",
                 "source member": "supply the named source member before checking this dependent identity",
                 "does not match": "use the expected value shown for this role",
                 "unverified": "make the boundary's pinned source bytes available and check again",
-                "limit not carried": "carry the named limit and its affected IDs into synthesis Limitations",
+                "limit not carried": "carry the named limit, citing its affected records, into synthesis Limitations",
                 "missing field": "supply the named field with an answer or an explicit evidence limit",
             }
             object.__setattr__(self, "repair", next(

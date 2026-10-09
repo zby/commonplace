@@ -172,11 +172,6 @@ def _paragraphs(body: str) -> list[str]:
     return re.split(r"\n[ \t]*\n", _analysis_prose(body))
 
 
-def _flattened(text: str) -> str:
-    """The text with each record citation replaced by its label."""
-    return re.sub(r"\[([^\]\n]+)\]\([^)\s]*\)", lambda m: m[1].strip("`"), " ".join(text.split()))
-
-
 def amendment_index(body: str) -> str:
     """The overview's navigation line for records changed by reconciliation."""
     identifiers = sorted({
@@ -212,12 +207,11 @@ def value_amendments(body: str) -> list[str]:
     Reconciliation states identity between declared records. A changed value
     belongs in the declaring analyst's report.
     """
-    supersession = re.compile(
-        rf"Amendment:[ \t]+{_RECORD_ID}[ \t]+is superseded by[ \t]+{_RECORD_ID}(?![\w-])"
-    )
+    cited = rf"\[{_RECORD_ID}\]\([^)\s]*\)"
+    supersession = re.compile(rf"Amendment: {cited} is superseded by {cited}")
     return [
         paragraph.splitlines()[0] for paragraph in _paragraphs(body)
-        if paragraph.startswith("Amendment:") and supersession.match(_flattened(paragraph)) is None
+        if paragraph.startswith("Amendment:") and supersession.match(" ".join(paragraph.split())) is None
     ]
 
 

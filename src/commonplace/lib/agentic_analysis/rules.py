@@ -101,7 +101,7 @@ def _agentic_reconciliation_amendment_rule(
     errors = [
         "value amendment: reconciliation states connections between reports and does "
         "not replace a record's value; describe the disagreement with both records and "
-        "their evidence, or use `Amendment: <ID> is superseded by <IDs>` for an "
+        "their evidence, or use `Amendment: <record citation> is superseded by <record citations>` for an "
         f"identity judgment: {line[:120]}"
         for line in value_amendments(parsed.document.body)
     ]
@@ -124,7 +124,7 @@ def _agentic_evidence_and_references_rule(
     errors = record_reference_errors(parsed.document.body)
     results.fails.extend(errors)
     if not errors:
-        results.passes.append("record references: explicit IDs and declarations checked")
+        results.passes.append("record references: declarations, labels and citation syntax checked")
     field_errors = route_field_errors(parsed.document.body)
     results.fails.extend(field_errors)
     if not field_errors:
@@ -308,7 +308,6 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
 
 def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
     """List grammar and carried limits; meaning remains review."""
-    from commonplace.lib.note_parser import section
 
     findings = []
     synthesis = documents.get("synthesis")
@@ -334,7 +333,7 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
             if title == "Blockers" and name == "report-verification":
                 for entry in entries:
                     if not re.match(r"(?:runtime|memory|epistemic|reconciliation): +\S", entry):
-                        findings.append(Finding(name, f"{path}: record blocker has no report addressee",
+                        findings.append(Finding(name, f"{path}: report blocker has no report addressee",
                                                 repair="start each blocker with runtime:, memory:, epistemic: or reconciliation: and its finding"))
             if title == "Limits" and synthesis is not None:
                 for entry in entries:

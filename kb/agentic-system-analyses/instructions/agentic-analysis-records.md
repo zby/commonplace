@@ -82,9 +82,9 @@ starting `- corrected: ` or `- declined: `, and no other line starting
 `- `. A report identical to its predecessor is accepted only when every
 entry is `declined`.
 
-When other members are supplied, a new declaration records its closest
-supplied full IDs and distinct identity, possible-duplicate evidence, or
-no counterpart after comparison, citing each supplied record it compares. An existing referent receives an
+When other members are supplied, a new declaration cites its closest
+supplied records and states distinct identity, possible-duplicate evidence,
+or no counterpart after comparison. An existing referent receives an
 annotation rather than another declaration; a different prefix or label
 does not establish a distinct referent. Material parts with different
 checks or consumers are declared and assessed separately. A declaration
@@ -103,7 +103,7 @@ supersession. A record spanning several supplied records without being part
 of exactly one keeps the distinct-identity comparison, naming each overlap.
 
 When a required part is undeclared, reconciliation retains an
-`Unresolved conflict:` naming the combined ID, missing part, evidence and
+`Unresolved conflict:` citing the combined record and naming the missing part, evidence and
 prevented conclusion. The report verifier addresses it to the analyst who
 should declare the part. Name the undeclared part in prose,
 without inventing an unresolved ID.

@@ -91,7 +91,7 @@ it, and a consumer with its own verdict language derives no apply job.
 
 **From the layout alone**, for a role R: the check job that judges
 candidates for R, with every input named above and the standard check as
-its handler; the draft-validation parameters for R's filling job; and, for
+its handler; and, for
 a role that verifies others, the apply job that judges the verified roles'
 handed versions over the `verifies` relations. Publication is a
 coverage-gated copy with destination parameters.
@@ -195,7 +195,7 @@ the rule derives it from the layout; the loader reads nothing from it.
 The plan lists the jobs that write and the consumer's own code jobs. A
 loader in the reuse modules, not in the engine's scheduling, expands it
 into the full plan: one check job per filled role, one apply job per role
-with `verifies`, draft-validation parameters, criteria from the roles'
+with `verifies`, criteria from the roles'
 types, and a coverage-gated publish from the disposition. The engine
 receives the expanded plan and fixes it in the run metadata, so `status`,
 `judge` and the attempt records see ordinary job names and the engine's
@@ -368,7 +368,7 @@ instruction holds only its mission.
   slot exists; the frame prints `role` for role-filling jobs and
   `artifact`, the run's artifact directory, so `{role}` and `{artifact}`
   are lines. So `{output}` and `{output-answers}` are paths, as the lines
-  are, and `{member-type}`, `{set-type}` and `{<role>-type}` are the
+  are, and `{member-type}` and `{<role>-type}` are the
   handed type files. The per-job `validation-artifact` and
   `validation-role` parameters go: they duplicated those two lines, and
   the check command reads `{command-path}/commonplace-validate {output}

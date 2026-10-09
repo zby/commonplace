@@ -138,8 +138,8 @@ def uninspected_profile(scope: str) -> dict:
     }
 
 
-def profile_report_fixture(run_dir: Path, revision: str, *, version: int = 1) -> Path:
-    """Keep historical-reader fixtures v1; scheduled workflow fixtures use v2."""
+def profile_report_fixture(run_dir: Path, revision: str) -> Path:
+    """A revision-1 profile, the form historical readers consume."""
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
     profile["axes"]["storage_substrate"] = {
         "assessment": "known", "values": ["sqlite", "files"],
@@ -147,33 +147,6 @@ def profile_report_fixture(run_dir: Path, revision: str, *, version: int = 1) ->
                      for v in ["sqlite", "files"]},
         "records": ["MEM-OBJ-store"], "note": "Both stores occur within the fixture boundary.",
     }
-    if version == 2:
-        profile = {
-            "version": 2, "scope": profile["scope"],
-            "axes": {
-                axis: {"assessment": "uninspected", "units": [], "records": [],
-                       "note": "Not inspected in this fixture."}
-                for axis in systems_matrix.AXES
-            },
-        }
-        profile["axes"]["storage_substrate"] = {
-            "assessment": "known",
-            "units": [{
-                "scope": "The fixture's two inspected stores",
-                "assessment": "known",
-                "findings": [
-                    {"value": value, "basis": "wired", "records": ["memory.md#mem-obj-store"],
-                     "note": "Fixture witness."}
-                    for value in ["sqlite", "files"]
-                ],
-                "records": ["memory.md#mem-obj-store"],
-                "note": "Both stores occur within the fixture boundary.",
-            }],
-            "records": ["memory.md#mem-obj-store"],
-            "note": "Both stores cover the fixture inventory.",
-        }
-    else:
-        assert version == 1
     values = {
         "type": "agentic-system-analyses/types/agent-memory-profile.md",
         "description": "Comparison of the fixture memory boundary from verified source records",
@@ -466,7 +439,7 @@ def repin(directory: Path) -> None:
     write(directory / "ARTIFACT.yaml", yaml.safe_dump(manifest, sort_keys=False))
 
 
-def retain_artifact(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
+def retain_artifact(tmp_path: Path, run_dir: Path) -> None:
     directory = RETAINED_OVERVIEW.parent
     for name in ("ARTIFACT.yaml", *MEMBER_NAMES):
         retained = directory / name

@@ -43,7 +43,7 @@ reports to change is two separately addressed blockers. Address dependent
 passages relying on a defective value to their own authors. Every structural
 failure in `record-check` requires an explicit blocker addressed to its report;
 if the finding cannot be routed within this job's authority, write `problem`
-instead of silently dismissing it. A conflict missing IDs, both findings,
+instead of silently dismissing it. A conflict missing record citations, both findings,
 evidence or prevented conclusion is addressed to reconciliation. Conflicts
 that the sources cannot settle become limits naming both positions and the
 conclusions readers must withhold. Blockers and Limits are each exactly

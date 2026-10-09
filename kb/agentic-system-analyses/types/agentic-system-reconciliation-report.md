@@ -39,12 +39,12 @@ A split supersedes a combined record only by parts already declared in the
 analyst members. Reconciliation never allocates IDs or declares parts. A
 valid container stays alongside its declared `Part of:` records; containment
 alone is no reason to supersede it. If a required part is missing, retain an
-`Unresolved conflict:` naming the combined ID, the missing part in prose,
+`Unresolved conflict:` citing the combined record, the missing part in prose,
 evidence and prevented conclusion; the verifier addresses it to the analyst
 who should declare the part.
 
 Mark every disagreement between reports with a paragraph starting
-`Unresolved conflict:`, followed by the affected IDs, conflicting findings,
+`Unresolved conflict:`, followed by citations of the affected records, conflicting findings,
 evidence and conclusion prevented. The reconciler settles none of them: the
 verifier addresses a blocker to the report that must change, and a conflict
 the sources cannot settle becomes a limitation of the synthesis.

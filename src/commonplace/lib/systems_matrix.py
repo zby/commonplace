@@ -233,14 +233,14 @@ def _validate_applicability(row: dict) -> None:
 
 
 # BACKCOMPAT: revision-1 profiles cite bare record IDs - remove with _validate_v1.
-def _bare_refs(value: object, label: str, ids: set[str], *, required: bool = False) -> list[str]:
+def _bare_refs(value: object, label: str, ids: set[str]) -> list[str]:
     refs = _strings(value, label)
     if any(re.fullmatch(
         r"(?:RT|MEM|EPI)-(?:CMP|OBJ|RTE|CLM|ABS|BAP)-[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}",
         ref,
     ) is None for ref in refs):
         raise ValueError(f"{label}: invalid canonical record ID")
-    if (required and not refs) or not set(refs) <= ids:
+    if not set(refs) <= ids:
         raise ValueError(f"{label}: unresolved records")
     return refs
 

@@ -60,12 +60,12 @@ in the set directory.
 
 `## Limitations` contains one row per limitation:
 
-`limitation | affected source, record, or route IDs | inspected boundary | conclusion prevented | evidence that would resolve it`
+`limitation | affected SRC IDs and record citations | inspected boundary | conclusion prevented | evidence that would resolve it`
 
 Every `Unresolved conflict:` in the reconciliation appears here, and so does
 a record fault found during synthesis verification, with its prevented
 conclusion. Every limit declared by any of the three verification members
-is carried here with its IDs and analytical consequence. `none` means the
+is carried here with its record citations and analytical consequence. `none` means the
 whole set was checked and no limitation remains. A blocker also recorded in
 a verification still has its analytical consequence stated here.
 

@@ -39,7 +39,7 @@ surfaces, inspected paths and evidence layers, access gaps, and conclusion
 limits. The set's source declarations are the Source register of `boundary`.
 
 Retain a compact coverage table: entry point or memory operation, source
-path, covering supplied or new IDs, or exclusion/uninspected reason and
+path, citations of the supplied or new records covering it, or exclusion/uninspected reason and
 conclusion prevented. Distinguish direct source reads from supplied
 runtime findings. The inventory includes unresolved operative parts and
 alternative admission/read-back paths, with missing facts and prevented

@@ -95,7 +95,7 @@ def test_rejects_unsupported_or_contradictory_classification(edit, error):
 def test_cross_reference_is_not_a_record_declaration():
     data = profile()
     data["axes"]["storage_substrate"] = known(["files"], ["MEM-OBJ-example9"])
-    body = "## Shared records\n\nSee MEM-OBJ-example9 for more details.\n\n#### MEM-OBJ-store — store\n"
+    body = "## Shared records\n\nSee MEM-OBJ-example9 for more details.\n\n#### MEM-OBJ-store\n\nLabel: store\n"
     with pytest.raises(ValueError, match="unresolved"):
         sm.profile_member_comparison({"memory-comparison": data}, record_bodies={"overview.md": "", "memory.md": body})
 

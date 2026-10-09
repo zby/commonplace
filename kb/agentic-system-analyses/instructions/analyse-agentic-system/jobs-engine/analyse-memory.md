@@ -26,8 +26,8 @@ source claims, misleading labels and partial ontology mappings. A thin
 memory boundary warrants short sections with explicit limits.
 
 Under Integration issues, record each overlap disposition, correction to a
-supplied fact and unresolved question, with evidence, consequences and full
-IDs. Side-channel messages do not substitute for this section. Retain
+supplied fact and unresolved question, with evidence, consequences and
+citations of the records concerned. Side-channel messages do not substitute for this section. Retain
 supported facts beside unresolved parts; do not erase positives to make
 coverage uniform.
 

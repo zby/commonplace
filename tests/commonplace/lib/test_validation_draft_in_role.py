@@ -316,7 +316,8 @@ def test_boundary_register_ignores_quoted_and_fenced_examples(content_member_art
 
 @pytest.mark.parametrize("amendment,refused", [
     ("Amendment: RT-OBJ-store has a new value.", True),
-    ("Amendment: RT-OBJ-store\nis superseded by MEM-OBJ-store.", False),
+    ("Amendment: [RT-OBJ-store](runtime.md#rt-obj-store)\nis superseded by [MEM-OBJ-store](memory.md#mem-obj-store).", False),
+    ("Amendment: RT-OBJ-store is superseded by MEM-OBJ-store.", True),
     ("> Amendment: RT-OBJ-store has a new value.", False),
     ("```markdown\nAmendment: RT-OBJ-store has a new value.\n```", False),
 ])

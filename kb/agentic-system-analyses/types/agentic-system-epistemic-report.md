@@ -114,11 +114,11 @@ use its controlled values rather than the set's conclusion-status vocabulary.
 **1. Source-and-claim boundary.** Declared scope and excluded components,
 the analysis question, assessed and unassessed route families, each
 missing item of evidence with the conclusion it prevents, and the
-system's knowledge-production or warrant claims by `CLM-*` ID, or `none
-found`. It cites the boundary's Source register and does not copy it.
+system's knowledge-production or warrant claims, citing their `CLM-*` records, or
+`none found`. It cites the boundary's Source register and does not copy it.
 
 Retain a compact coverage table: entry point or operation, source path,
-covering supplied or new IDs, or exclusion/uninspected reason and conclusion
+citations of the supplied or new records covering it, or exclusion/uninspected reason and conclusion
 prevented. Distinguish direct source reads from supplied runtime findings;
 an unassessed relevant operation prevents a system-complete negative.
 
@@ -190,7 +190,7 @@ public or design claim, or an explicit statement that none was found:
 `claim ID | claimed operation or warrant | claim source ID/anchor and evidence layer | doctrine/design support | implemented route IDs | observed-run support | causal support and design limits | supported conclusion | mismatch/unknown`
 
 **5. Bounded conclusion.** Only findings that change the answer to the
-analysis question, grouping homogeneous IDs whose warrant and force are
+analysis question, grouping homogeneous records whose warrant and force are
 the same: what the system retains, retrieves, reshapes, or uses; what it
 acquires and whether source warrant is preserved, degraded, or unknown;
 what it derives, from which warranted premises, and within what domain;

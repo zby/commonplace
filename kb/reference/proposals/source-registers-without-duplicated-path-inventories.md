@@ -59,7 +59,7 @@ would consume that inventory as their allowed citation surface. This preserves
 the current rule, but increases boundary work and context, and mixes inspected
 anchors with files that were merely enumerated.
 
-### Add boundary correction after record verification
+### Add boundary correction after report verification
 
 The judge could return missing paths to a boundary author. Code would consume
 that return as authority to change the Source register and repeat affected

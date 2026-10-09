@@ -28,8 +28,8 @@ Do not select the strongest-sounding status, replace a record's value,
 strengthen or narrow a report's finding, allocate IDs or declare parts.
 `Amendment:` is only for supersession backed by identity evidence. Both IDs
 remain declared in their original reports. Containment alone does not justify
-supersession. For a missing required part, retain a conflict naming the
-combined ID, missing part in prose, evidence and prevented conclusion.
+supersession. For a missing required part, retain a conflict citing the
+combined record, missing part in prose, evidence and prevented conclusion.
 Resolve references against the supplied Source register and analyst reports.
 Claim support is the verifier's question; only the declaring analyst changes
 its report.
