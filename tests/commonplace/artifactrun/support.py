@@ -74,6 +74,7 @@ TOY_TYPE = {
                 "path": "verification.md",
                 "type": "types/text.md",
                 "cites": ["report", "other", "summary"],
+                "verifies": ["report", "other", "summary"],
             },
             "digest": {"path": "digest.md", "type": "types/text.md", "cites": ["report", "other"]},
             "overview": {"path": "overview.md", "type": "types/text.md", "cites": ["brief"]},
@@ -147,7 +148,7 @@ def plan(method: Path) -> dict:
         f"{role}-verified": {
             "address": "judgment",
             "source": role,
-            "relation": f"verification:cites:{role}",
+            "relation": f"verification:verifies:{role}",
             "outcome": "accepted",
         }
         for role in ("report", "other")

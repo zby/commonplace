@@ -3,8 +3,7 @@
 The `agentic-system-analysis-set` type's layout as it stands after
 [ADR 114](../../reference/adr/114-directory-types-declare-what-a-role-verifies.md),
 written out role by role so that the relations the engine derives can be
-read without parsing the frontmatter. The `verifies` column is the ADR's
-addition and is not yet in the type spec.
+read without parsing the frontmatter.
 
 ## Roles
 

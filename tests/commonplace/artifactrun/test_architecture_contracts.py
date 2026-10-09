@@ -90,6 +90,7 @@ def test_code_attempt_exposes_fixed_read_only_run_metadata(coordinator: Coordina
     assert attempt.type_text != type_file.read_text(), "the type text is the copy fixed at start"
     assert "report" in attempt.layout.roles
     assert ("verification", "report", "verification:cites:report") in attempt.relations
+    assert ("verification", "report", "verification:verifies:report") in attempt.relations
     recorded_library = attempt.library
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", "/not-the-recorded-library")
     assert attempt.library == recorded_library
@@ -131,7 +132,7 @@ def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> Non
     document, error = parse_document(path.read_text(encoding="utf-8"))
     assert error is None and set(document.frontmatter) == {"refusal", "version", "scope"}
     assert document.frontmatter["version"] == digest(b"report A\n")
-    assert document.frontmatter["scope"] == ["verification:cites:report"]
+    assert document.frontmatter["scope"] == ["verification:verifies:report"]
     assert document.body == "r1", "the findings, verbatim"
 
 

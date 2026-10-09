@@ -472,6 +472,8 @@ def _parse_type(text: str, where: str) -> tuple[Layout, list[tuple[str, str, str
         for source in role.identity:
             if source.role != role.name:
                 relations.append((role.name, source.role, f"{role.name}:identity:{source.role}"))
+        for partner in role.verifies:
+            relations.append((role.name, partner, f"{role.name}:verifies:{partner}"))
     return layout, relations
 
 

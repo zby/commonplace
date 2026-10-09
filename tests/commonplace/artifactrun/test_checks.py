@@ -29,6 +29,7 @@ layout:
       identity:
         - {from: head, fields: [run]}
       cites: [head]
+      verifies: [head]
 ---
 # Pair
 """
@@ -84,3 +85,11 @@ def test_a_body_that_breaks_identity_is_refused_with_findings(tmp_path):
 def test_the_manifest_quotes_a_type_path_yaml_would_cut():
     spec = "types/custom #1.md"
     assert yaml.safe_load(checks.manifest(SimpleNamespace(type_spec=spec))) == {"type": spec}
+
+
+def test_a_content_acceptance_never_covers_a_verifies_relation(tmp_path):
+    judged = []
+    check = checks.candidate(attempt(tmp_path, body("R1"), judged), "body", ("head",), repo=tmp_path)
+    assert ("body", "head", "body:verifies:head") in check.attempt.relations
+    checks.judge(check, checks.review(check))
+    assert "body:verifies:head" not in judged[0]["scope"]

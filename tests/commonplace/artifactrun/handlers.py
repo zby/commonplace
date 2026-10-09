@@ -97,15 +97,18 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
             role, _, reason = line.removeprefix("block ").partition(": ")
             blocked[role] = reason
     for role in VERIFIED:
-        relation = f"verification:cites:{role}"
+        relation = f"verification:verifies:{role}"
         if role in blocked:
             attempt.judge(f"{role}-seen", outcome="refused", scope=(relation,), findings=blocked[role])
         else:
             attempt.judge(f"{role}-seen", outcome="accepted", scope=(relation,))
+    # The verdict's content acceptance covers its citations of every subject it
+    # was handed; the verifies relations above are covered only by the subject
+    # judgments.
     attempt.judge(
         "verdict",
         outcome="accepted",
-        scope=tuple(f"verification:cites:{role}" for role in VERIFIED if role not in blocked),
+        scope=tuple(f"verification:cites:{role}" for role in VERIFIED),
     )
     return {}
 

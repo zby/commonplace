@@ -56,9 +56,9 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
         roles += _PRIOR_VERDICTS
     check = candidate(attempt, role, roles, repo=checkout(attempt.run_dir), seen=True, source_role="boundary")
     reasons = review(check) + answer_reasons(check, record="verifier-attempt", output="verification")
-    # Content acceptance of the verdict cannot cover the semantic gate of its
-    # subject. Only the separate blocker-free subject acceptance covers that.
-    judge(check, reasons, subjects=(subject_role,))
+    # Content acceptance of the verdict covers its citations, never the
+    # verifies relation; only the subject judgment below covers that.
+    judge(check, reasons)
     if reasons:
         # A malformed verdict has no semantic authority over any partner.
         return {}
@@ -82,7 +82,7 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
     if findings:
         findings += "\n## Limits\n\n" + section(document.body, "Limits").strip() + "\n"
     attempt.judge(f"{subject_role}-seen", outcome="refused" if findings else "accepted",
-                  scope=(f"{role}:cites:{subject_role}",), findings=findings)
+                  scope=(f"{role}:verifies:{subject_role}",), findings=findings)
     return {}
 
 

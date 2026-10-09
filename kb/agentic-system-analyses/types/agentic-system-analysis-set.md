@@ -60,18 +60,21 @@ layout:
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic, reconciliation]
+      verifies: [runtime, memory, epistemic, reconciliation]
     profile-verification:
       path: profile-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [runtime, memory, epistemic, memory-profile]
+      verifies: [memory-profile]
     synthesis-verification:
       path: synthesis-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic, synthesis]
+      verifies: [synthesis]
   required:
     always: [boundary, overview]
     by:
@@ -120,6 +123,10 @@ reconciliation, and the profile's comparison references. The three
 verification roles respectively require `verifies: records`, `profile` and
 `synthesis`. Their citation partners include the reconciliation, memory profile
 and synthesis respectively, alongside the reports declared in the layout.
+Each verification role also declares the roles it `verifies`. Validation
+gives that no meaning beyond the names existing; the engine derives one
+`verifies` relation per entry, requires an accepted judgment over it for
+publication, and lets no content check cover it (ADR 114).
 Their Blockers and Limits are `none` or Markdown lists; record
 blockers name the report owner. Every verification limit that cites IDs has
 at least one of those IDs in the synthesis's Limitations. This checks

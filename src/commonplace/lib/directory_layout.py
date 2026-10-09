@@ -35,6 +35,7 @@ class Role:
     type: str
     identity: tuple[IdentitySource, ...] = ()
     cites: tuple[str, ...] = ()
+    verifies: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -146,7 +147,7 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
         at = f"{where}.roles.{name}"
         if not isinstance(name, str) or not name:
             raise ValueError(f"{where}.roles: role names must be nonempty strings")
-        entry = _mapping(raw, at, {"path", "type", "identity", "cites"}, {"path", "type"})
+        entry = _mapping(raw, at, {"path", "type", "identity", "cites", "verifies"}, {"path", "type"})
         path = entry["path"]
         if (not isinstance(path, str) or PurePosixPath(path).name != path
                 or path.startswith(".") or not path.endswith(".md")):
@@ -161,12 +162,15 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
             source = _mapping(source, f"{at}.identity[{index}]", {"from", "fields"}, {"from", "fields"})
             identity.append(IdentitySource(source["from"], _names(source["fields"], f"{at}.identity[{index}].fields")))
         cites = _names(entry.get("cites", []), f"{at}.cites")
-        roles[name] = Role(name, path, entry["type"], tuple(identity), cites)
+        verifies = _names(entry.get("verifies", []), f"{at}.verifies")
+        if name in verifies:
+            raise ValueError(f"{at}.verifies: a role cannot verify itself")
+        roles[name] = Role(name, path, entry["type"], tuple(identity), cites, verifies)
     paths = [role.path for role in roles.values()]
     if len(set(paths)) != len(paths):
         raise ValueError(f"{where}.roles: two roles share a path")
     for role in roles.values():
-        for target in (*(source.role for source in role.identity), *role.cites):
+        for target in (*(source.role for source in role.identity), *role.cites, *role.verifies):
             if target not in roles:
                 raise ValueError(f"{where}.roles.{role.name}: names unknown role {target!r}")
     raw_required = _mapping(data.get("required", {}), f"{where}.required", {"always", "by"})

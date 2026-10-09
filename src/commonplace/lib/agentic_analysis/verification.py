@@ -122,8 +122,9 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     if _record_check_failed(attempt.read("record-check-seen")) and not entries:
         reasons.append("structural failures require explicit blockers (code requires at least one; the verifier must address every finding)")
     # A verifier with blockers is a valid verdict document, not an acceptance
-    # of the defective reports. Its content acceptance must not cover their gates.
-    judge(check, reasons, subjects=RECORDS)
+    # of the defective reports: its content acceptance covers its citations,
+    # never the verifies relations, which only the judgments below cover.
+    judge(check, reasons)
     if reasons:
         return {}
     if entries:
@@ -133,10 +134,10 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
             if role in owners:
                 attempt.judge(
                     role + "-seen", outcome="refused",
-                    scope=(f"record-verification:cites:{role}",),
+                    scope=(f"record-verification:verifies:{role}",),
                     findings=_feedback(role, producer["id"], entries, bodies),
                 )
     else:
         for role in RECORDS:
-            attempt.judge(role + "-seen", outcome="accepted", scope=(f"record-verification:cites:{role}",))
+            attempt.judge(role + "-seen", outcome="accepted", scope=(f"record-verification:verifies:{role}",))
     return {}

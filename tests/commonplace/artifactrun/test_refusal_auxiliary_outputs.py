@@ -55,7 +55,7 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     assert "check-report" in c.ran()
     assert c.member("report") == "report A\n" and c.member("summary") == previous_summary
     run = Run(RunStore(c.run_dir))
-    assert not run.covered("verification:cites:report", "verification", "report")
+    assert not run.covered("verification:verifies:report", "verification", "report")
     report_job = run.jobs.job("report")
     assert not run.ready(report_job, set(run.layout.roles)), "the old refusal was answered, not overridden"
     prompt = c.handout("verify").prompt.read_text()
@@ -63,7 +63,7 @@ def test_changed_answer_completes_rechecks_and_reverifies_same_subject(tmp_path,
     assert Path(answer_path).read_text() == ANSWER
     c.complete("verify", "no blockers\n")
     assert c.handed() == {"digest"}
-    assert Run(RunStore(c.run_dir)).covered("verification:cites:report", "verification", "report")
+    assert Run(RunStore(c.run_dir)).covered("verification:verifies:report", "verification", "report")
 
 
 @pytest.mark.parametrize(("initial", "answer", "completes"), [
@@ -122,7 +122,7 @@ def test_restoring_bytes_does_not_reanswer_a_historical_refusal(tmp_path, tmp_li
     assert "check-report" in c.ran()
     run = Run(RunStore(c.run_dir))
     assert not run.superseded(original_refusal), "completion is not an override"
-    assert not run.covered("verification:cites:report", "verification", "report")
+    assert not run.covered("verification:verifies:report", "verification", "report")
     assert len(completed_reports(c)) == 3
 
 

@@ -68,8 +68,17 @@ def test_open_membership_admits_unmatched_files() -> None:
     ({"membership": "sealed"}, "membership"),
     ({"roles": {"a": {"path": "sub/a.md", "type": "t/a.md"}}}, "direct Markdown file"),
     ({"roles": {"a": {"path": "a.md", "type": "t/a.md", "cites": ["b"]}}}, "unknown role 'b'"),
+    ({"roles": {"a": {"path": "a.md", "type": "t/a.md", "verifies": ["b"]}}}, "unknown role 'b'"),
+    ({"roles": {"a": {"path": "a.md", "type": "t/a.md", "verifies": ["a"]}}}, "cannot verify itself"),
     ({"required": {"always": ["missing"]}}, "unknown role 'missing'"),
 ])
 def test_layout_defects_are_named(change: dict, error: str) -> None:
     with pytest.raises((ValueError, TypeError), match=error):
         parse_layout({**LAYOUT, **change})
+
+
+def test_a_role_may_declare_what_it_verifies() -> None:
+    layout = parse_layout({**LAYOUT, "roles": {**LAYOUT["roles"], "check": {
+        "path": "check.md", "type": "t/check.md", "cites": ["body"], "verifies": ["body"]}}})
+    assert layout.roles["check"].verifies == ("body",)
+    assert layout.roles["body"].verifies == ()

@@ -64,7 +64,7 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     assert not subject["installs"] and not subject["overrides"]
     assert c.member("report") == "report B\n"
     assert run.resolve("refusal", {"refusal": Input("refusal", "report")}).version is None
-    assert not run.covered("verification:cites:report", "verification", "report")
+    assert not run.covered("verification:verifies:report", "verification", "report")
     assert not c.status.publishable and "digest" not in c.handed()
     if run.jobs.job("verify").max_attempts == 1:
         assert c.stop("verify").reason == "max attempts (1) exhausted"
@@ -168,7 +168,7 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     extra = {
         "live-member": Input("role", "verification", required=False),
         "live-judgment": Input("judgment", "report", required=False,
-                               relation="verification:cites:report", outcome="accepted"),
+                               relation="verification:verifies:report", outcome="accepted"),
         "live-refusal": Input("refusal", "verify", required=False),
         "undeclared-handed": Input("handed", "verification-attempt:undeclared", required=False),
     }

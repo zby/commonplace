@@ -53,8 +53,12 @@ candidate members; descendants remain independent traversal targets.
 A type spec's `layout` declares the members. Each role names a direct child
 file, the type expected there, the roles whose fields it repeats
 (`identity`) and the roles whose declarations its references resolve against
-(`cites`). `required` lists the roles every instance has and, through a
-discriminating role and field, the roles each value requires and admits.
+(`cites`), and the roles it verifies (`verifies`). `required` lists the
+roles every instance has and, through a discriminating role and field, the
+roles each value requires and admits. `verifies` names must be roles; the
+validator gives the key no other meaning, and the artifact-run engine
+covers each `verifies` relation only by a judgment of the verified version
+(ADR 114).
 `membership: closed` makes a file that matches no role a finding;
 `membership: open` admits it. The validator checks membership, expected
 types, requiredness and identity from the layout; type rules registered for

@@ -99,7 +99,7 @@ def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_libra
 def test_an_undeclared_relation_is_refused_at_start(tmp_path: Path, tmp_library: None,
                                                     monkeypatch: pytest.MonkeyPatch) -> None:
     def typo(jobs):
-        jobs["digest"]["inputs"]["report-verified"]["relation"] = "verification:cites:reprot"
+        jobs["digest"]["inputs"]["report-verified"]["relation"] = "verification:verifies:reprot"
 
     with pytest.raises(PlanError, match="not declared by the type"):
         custom_run(tmp_path, monkeypatch, typo)

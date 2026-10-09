@@ -151,7 +151,9 @@ def test_routes_only_addressed_blockers_and_preserves_continuations(records):
     applied = judgments(a, "apply-verify")
     assert [j["subject"]["role"] for j in applied] == ["record-verification", "runtime", "reconciliation"]
     assert {e["relation"] for e in applied[0]["scope"]} == {
-        "record-verification:cites:boundary", "record-verification:identity:boundary"}
+        "record-verification:identity:boundary",
+        *(f"record-verification:cites:{role}" for role in ("boundary", *handlers.RECORDS))}, \
+        "a verdict's content acceptance covers its citations, never a verifies relation"
     p = parameters(a.coordinator.handout("runtime"))
     feedback = Path(p["refusal"]).read_text()
     assert "The reader inference is unsupported." in feedback

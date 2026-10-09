@@ -157,9 +157,9 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
         assert set(RECORDS) <= set(gates)
         for role in RECORDS:
             assert gates[role].required and gates[role].outcome == "accepted"
-            assert gates[role].relation == f"record-verification:cites:{role}"
+            assert gates[role].relation == f"record-verification:verifies:{role}"
     profile = jobs.job("synthesize").inputs["profile-verified"]
-    assert profile.relation == "profile-verification:cites:memory-profile"
+    assert profile.relation == "profile-verification:verifies:memory-profile"
     # Runtime must be present initially but its version is not a rerun trigger.
     for name in ("memory", "epistemic"):
         runtime = jobs.job(name).inputs["runtime"]

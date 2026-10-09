@@ -180,16 +180,17 @@ def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None)
     return packet
 
 
-def judge(check: Candidate, reasons: list[str], *, subjects: tuple[str, ...] = ()) -> None:
+def judge(check: Candidate, reasons: list[str]) -> None:
     """Judge the candidate over the relations its validation examined.
 
-    The scope is the type's relations from the candidate's role to partners in
-    the snapshot. A verdict leaves out its subjects: its content acceptance
-    does not cover their semantic gates, which are judged separately.
+    The scope is the type's `cites` and `identity` relations from the
+    candidate's role to partners in the snapshot. A `verifies` relation is
+    never in it: a content check cannot settle a verification gate, which
+    only a judgment of the handed subject covers (ADR 114).
     """
     layout = check.attempt.layout
     scope = tuple(name for origin, partner, name in check.attempt.relations
-                  if origin == check.role and partner not in subjects
+                  if origin == check.role and not name.startswith(f"{origin}:verifies:")
                   and layout.path(partner) in check.snapshot)
     findings = refusal_findings(
         reasons, member=check.role, answered=check.attempt.read("answered-refusal"),

@@ -280,7 +280,7 @@ def test_09_rerecording_an_unchanged_claim_does_not_reassemble(coordinator: Coor
     c = coordinator
     c.through_publication()
     c.ran()
-    judge(c.run_dir, role="report", outcome="accepted", scope=("verification:cites:report",),
+    judge(c.run_dir, role="report", outcome="accepted", scope=("verification:verifies:report",),
           basis=("verification",), findings="the same claim again")
     c.advance()
     assert c.ran() == [], "coverage names claims, not records"
@@ -335,7 +335,7 @@ def test_17_recheck_waits_for_the_refused_producer(coordinator: Coordinator) -> 
 
 
 @pytest.mark.parametrize(("scope", "basis", "supersedes"), [
-    (("verification:cites:report",), ("verification",), True),
+    (("verification:verifies:report",), ("verification",), True),
     (("report:cites:brief",), ("brief",), False),
 ])
 def test_17_acceptance_supersedes_a_refusal_only_within_its_scope(

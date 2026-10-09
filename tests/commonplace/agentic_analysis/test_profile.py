@@ -165,7 +165,7 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     assert judgment["subject"]["role"] == f"{stage}-verification"
     assert judgment["outcome"] == "refused"
     subject = "memory-profile" if stage == "profile" else "synthesis"
-    assert f"{stage}-verification:cites:{subject}" not in {s["relation"] for s in judgment["scope"]}
+    assert f"{stage}-verification:verifies:{subject}" not in {s["relation"] for s in judgment["scope"]}
     assert not judgment["overrides"]
 
 
@@ -180,7 +180,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
     handler(ctx)
     valid, subject = judgments(ctx)
     assert valid["outcome"] == "accepted"
-    relation = f"{stage}-verification:cites:{'memory-profile' if stage == 'profile' else 'synthesis'}"
+    relation = f"{stage}-verification:verifies:{'memory-profile' if stage == 'profile' else 'synthesis'}"
     assert relation not in {s["relation"] for s in valid["scope"]}
     assert subject["scope"][0]["relation"] == relation
     assert subject["subject"]["version"] == ctx._pins[f"{'memory-profile' if stage == 'profile' else stage}-seen"].version

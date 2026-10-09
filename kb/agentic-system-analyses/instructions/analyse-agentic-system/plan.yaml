@@ -288,10 +288,10 @@ jobs:
     memory: {address: role, source: memory, required: true}
     epistemic: {address: role, source: epistemic, required: true}
     reconciliation: {address: role, source: reconciliation, required: true}
-    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:cites:runtime', outcome: accepted}
-    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:cites:memory', outcome: accepted}
-    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:cites:epistemic', outcome: accepted}
-    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation', outcome: accepted}
+    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:verifies:runtime', outcome: accepted}
+    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:verifies:memory', outcome: accepted}
+    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:verifies:epistemic', outcome: accepted}
+    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:verifies:reconciliation', outcome: accepted}
     refusal: {address: refusal, source: profile, required: false}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: memory-profile}
 - name: check-profile
@@ -368,11 +368,11 @@ jobs:
     memory-profile: {address: role, source: memory-profile, required: true}
     record-verification: {address: role, source: record-verification, required: true}
     profile-verification: {address: role, source: profile-verification, required: true}
-    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:cites:runtime', outcome: accepted}
-    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:cites:memory', outcome: accepted}
-    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:cites:epistemic', outcome: accepted}
-    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:cites:reconciliation', outcome: accepted}
-    profile-verified: {address: judgment, source: memory-profile, required: true, relation: 'profile-verification:cites:memory-profile', outcome: accepted}
+    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:verifies:runtime', outcome: accepted}
+    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:verifies:memory', outcome: accepted}
+    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:verifies:epistemic', outcome: accepted}
+    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:verifies:reconciliation', outcome: accepted}
+    profile-verified: {address: judgment, source: memory-profile, required: true, relation: 'profile-verification:verifies:memory-profile', outcome: accepted}
     refusal: {address: refusal, source: synthesize, required: false}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: synthesis}
 - name: check-synthesize
