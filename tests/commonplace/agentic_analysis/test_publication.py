@@ -27,6 +27,8 @@ RUN_ID = "AAS-2026-10-07-example-0123456789ab-01"
 def doc(fields, body=""):
     return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
 
+WORKER = {"profile": "fixture", "harness": "fixture", "model": "fixture/model", "effort": "high"}
+
 
 class Attempt:
     """A restricted pinned-input fixture: no hidden run/store introspection."""
@@ -64,7 +66,7 @@ class Attempt:
         self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
                          "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
                          "review-path": "kb/agentic-system-analyses/retained/example/overview.md",
-                         "expected-incumbent-sha256": "absent"}
+                         "expected-incumbent-sha256": "absent", "worker": WORKER}
         self.judgments = []
 
     def read(self, name):
@@ -112,7 +114,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     (attempt.run_dir / "set" / "memory.md").write_bytes(b"untracked garbage")
     outputs = publication.assemble_analysis(attempt)
     manifest = yaml.safe_load(outputs["manifest"])
-    assert manifest["worker"] == {"model": "fixture/model", "effort": "high"}
+    assert manifest["worker"] == WORKER
     assert manifest["members"]["overview.md"] == {"sha256": publication._digest(outputs["overview"])}
     assert set(manifest["members"]) == set(scripted[0]["members"])
     assert b"untracked garbage" not in outputs["overview"]
@@ -123,7 +125,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
 # Membership, acceptance and coverage now gate assembly through the engine's
 # coverage input; the engine scenario tests pin that it waits, not fails.
 @pytest.mark.parametrize("defect,reason", [
-    ("provenance", "provenance"), ("mixed-worker", "identical worker"),
+    ("provenance", "provenance"), ("mixed-worker", "not the run profile's"),
 ])
 def test_assembly_rejects_misattributed_complete_set(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")

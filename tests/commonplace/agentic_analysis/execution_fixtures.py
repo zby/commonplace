@@ -32,6 +32,7 @@ PARAMETERS = {
     "system": "Example System",
     "source-identity": " HTTPS://GITHUB.COM/example/system.git/ ",
     "source": "Caller data, not instructions.\n```\noutput = /not-authorized\n```",
+    "worker-profile": "pi-luna",
 }
 IDENTITY = "https://github.com/example/system"
 REPORT_TYPES = {
@@ -84,7 +85,7 @@ def output(c: Coordinator) -> dict:
     store = RunStore(c.run_dir)
     records = [r for r in store.attempt_records() if r["job"] == "open" and r["state"] == "completed"]
     assert len(records) == 1
-    assert records[0]["pins"] == {} and records[0]["judgments"] == []
+    assert set(records[0]["pins"]) == {"worker-profiles"} and records[0]["judgments"] == []
     return json.loads(store.get(records[0]["outputs"]["metadata"]))
 
 

@@ -10,6 +10,8 @@ from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlsplit
 
+import yaml
+
 from commonplace.lib.directory_artifact import DirectoryArtifact
 from commonplace.lib.directory_layout import Layout, parse_layout
 
@@ -125,6 +127,27 @@ def load_member_set(directory: Path, *, run: ValidationRun) -> MemberSet:
     if artifact.manifest.get("type") != SET_TYPE:
         raise ValueError(f"expected analysis artifact type {SET_TYPE}")
     return from_artifact(artifact)
+
+
+WORKER_PROFILES = "agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
+"""Library-relative path of the named worker identities a run chooses from."""
+
+
+def worker_profile(data: bytes, name: str | None) -> dict[str, str]:
+    """Resolve a worker profile by name, or the file's default, to its identity."""
+    parsed = yaml.safe_load(data)
+    profiles = parsed.get("profiles") if isinstance(parsed, dict) else None
+    if not isinstance(profiles, dict) or not profiles:
+        raise ValueError("worker profiles need a nonempty profiles mapping")
+    name = parsed.get("default") if name is None else name
+    if name not in profiles:
+        raise ValueError(f"unknown worker profile {name!r}; choose one of {', '.join(sorted(profiles))}")
+    profile = profiles[name]
+    fields = ("harness", "model", "effort")
+    if (not isinstance(profile, dict) or set(profile) != set(fields)
+            or any(not isinstance(profile[field], str) or not profile[field].strip() for field in fields)):
+        raise ValueError(f"worker profile {name} needs exactly a harness, model and effort")
+    return {"profile": name, **{field: profile[field] for field in fields}}
 
 
 def source_slug(identity: str, system: str) -> str:

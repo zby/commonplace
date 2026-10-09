@@ -126,13 +126,17 @@ def _snapshot(attempt: CodeAttempt, *, overview: bool):
     return layout, relations, members, boundary
 
 
-def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes]) -> dict:
-    """Require completed producer records, including the memory analyst's identity.
+def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: dict) -> dict:
+    """The run's worker profile, after checking each member's completed producer record.
 
-    No metadata parameter or mutable run scan may substitute for coordinator-
-    reported worker identity. The retained type currently allows one worker only.
+    Opening resolved the profile the run started with; every worker uses it.
+    A producer record that reports a model or effort must agree with it.
     """
-    workers = []
+    worker = metadata.get("worker")
+    if not isinstance(worker, dict) or not all(
+            isinstance(worker.get(field), str) and worker[field].strip()
+            for field in ("profile", "harness", "model", "effort")):
+        raise ValueError("the opening metadata records no worker profile")
     for role, data in members.items():
         if role == "overview":
             continue  # Code-written, never a model worker.
@@ -144,16 +148,11 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes]) -> dict:
                 or record.get("job") != producer
                 or record.get("outputs", {}).get(primary) != _digest(data)):
             raise ValueError(f"{role} provenance does not identify its completed output")
-        model = record.get("model")
-        effort = record.get("effort")
-        if not isinstance(model, str) or not model.strip():
-            raise ValueError(f"{role} provenance requires the coordinator-reported model")
-        if effort is not None and (not isinstance(effort, str) or not effort.strip()):
-            raise ValueError(f"{role} provenance has invalid effort")
-        workers.append({"model": model, **({"effort": effort} if effort is not None else {})})
-    if not workers or any(worker != workers[0] for worker in workers):
-        raise ValueError("the retained manifest requires one identical worker identity across the run")
-    return workers[0]
+        for field in ("model", "effort"):
+            if record.get(field) is not None and record[field] != worker[field]:
+                raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
+                                 f"not the run profile's {worker[field]!r}")
+    return worker
 
 
 def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
@@ -210,7 +209,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     """Assemble an entry and exact-byte manifest from declared members only."""
     layout, relations, members, boundary = _snapshot(attempt, overview=False)
     metadata, repo = _environment(attempt, boundary, job="assembly")
-    worker = _provenance(attempt, members)
+    worker = _provenance(attempt, members, metadata)
     fields = boundary.frontmatter
     disposition = fields["result-disposition"]
     description = (str(_document(members["synthesis"]).frontmatter["description"])
@@ -258,7 +257,7 @@ def _prepare_publication(attempt: CodeAttempt):
     """Check pinned inputs and environment before journal reconciliation or mutation."""
     layout, _, members, boundary = _snapshot(attempt, overview=True)
     metadata, repo = _environment(attempt, boundary, job="publication", guard=True)
-    worker = _provenance(attempt, members)
+    worker = _provenance(attempt, members, metadata)
     manifest = attempt.read("manifest")
     if manifest is None:
         raise ValueError("publication requires assembly's pinned manifest")

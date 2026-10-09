@@ -38,6 +38,7 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
         "run-id": RUN_ID, "system": "Example System",
         "source-identity": "https://github.com/example/system",
         "source": PARAMETERS["source"], "source-revision": "a" * 40,
+        "worker": {"profile": "pi-luna", "harness": "pi", "model": "gpt-6-luna", "effort": "medium"},
         "inputs-commit": prepared.commit, "run-date": metadata["run-date"],
         "command-path": str(prepared.repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
         "capture-directory": str(c.run_dir / "sources"),

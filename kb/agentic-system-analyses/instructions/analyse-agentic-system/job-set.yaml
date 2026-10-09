@@ -53,7 +53,8 @@ jobs:
 - name: open
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.open_analysis
-  inputs: {}
+  inputs:
+    worker-profiles: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml}
   outputs: [metadata]
 - name: acquire
   kind: code

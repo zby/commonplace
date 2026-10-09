@@ -27,6 +27,7 @@ def main(argv: list[str] | None = None) -> int:
     start.add_argument("--source-identity", required=True)
     start.add_argument("--source", required=True)
     start.add_argument("--source-revision")
+    start.add_argument("--profile", help="worker profile from the method's worker-profiles.yaml; default there")
     integrate = commands.add_parser("integrate-analysis", help="commit exact published bytes and merge into main")
     integrate.add_argument("run", type=Path)
     integrate.add_argument("--model")
@@ -36,7 +37,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if arguments.command == "start-analysis":
             print(start_analysis(Path.cwd(), system=arguments.system, source_identity=arguments.source_identity,
-                                 source=arguments.source, source_revision=arguments.source_revision))
+                                 source=arguments.source, source_revision=arguments.source_revision,
+                                 profile=arguments.profile))
         elif arguments.command == "integrate-analysis":
             print(integrate_analysis(arguments.run, model=arguments.model))
         elif arguments.command == "report-analysis":

@@ -11,7 +11,9 @@ from pathlib import Path
 from commonplace.lib.agentic_analysis.sets import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
+    WORKER_PROFILES,
     source_slug,
+    worker_profile,
 )
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
@@ -29,8 +31,11 @@ STATE_ROOT = Path("kb/agentic-system-analyses/state")
 
 
 def start_analysis(worktree: Path, *, system: str, source_identity: str,
-                   source: str, source_revision: str | None = None) -> Path:
-    """Allocate a prepared analysis and pin its declaration, without advancing."""
+                   source: str, source_revision: str | None = None, profile: str | None = None) -> Path:
+    """Allocate a prepared analysis and pin its declaration, without advancing.
+
+    ``profile`` names the run's worker profile; without it the method's default applies.
+    """
     from commonplace.lib.agentic_analysis.declaration import JOB_SET
     from commonplace.setrun.sources import github_checkout_path
     from commonplace.workflow import start_run
@@ -53,7 +58,9 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     slug = source_slug(identity, system)
     date = datetime.datetime.now(datetime.UTC).date().isoformat()
     prefix = f"AAS-{date}-{slug}-{preparation['token']}"
-    parameters = {"system": system, "source-identity": identity, "source": source}
+    worker = worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), profile)
+    parameters = {"system": system, "source-identity": identity, "source": source,
+                  "worker-profile": worker["profile"]}
     if source_revision is not None:
         parameters["source-revision"] = source_revision
     root = worktree / STATE_ROOT

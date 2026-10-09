@@ -16,6 +16,12 @@ properties:
         required:
         - model
         properties:
+          profile:
+            type: string
+            minLength: 1
+          harness:
+            type: string
+            minLength: 1
           model:
             type: string
             minLength: 1

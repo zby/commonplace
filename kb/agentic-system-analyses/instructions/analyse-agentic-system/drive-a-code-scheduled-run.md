@@ -40,8 +40,8 @@ For every printed handout:
    context, interpret its feedback, or do the job yourself. Use a harness option
    that excludes parent conversation (for Codex, `fork_turns=none`). If the
    harness cannot provide fresh isolation, report the launch failure rather
-   than weakening it. Select the run's worker model and effort explicitly at
-   every launch.
+   than weakening it. Select the model and effort of the run's worker profile
+   explicitly at every launch.
 2. Launch all handouts from this advance as one round. Wait until every worker
    has finished or failed to start before advancing again. Retain the mapping
    between each worker and its exact attempt ID.
@@ -50,14 +50,15 @@ For every printed handout:
 
    ```bash
    commonplace-run advance <run> \
-     --completed <attempt-id> --model <worker-model> --effort <worker-effort> \
+     --completed <attempt-id> \
      --failed '<failed-attempt-id>=<reason>'
    ```
 
    Repeat `--completed` and `--failed` as needed for the round; omit absent
-   categories. Model and effort are the ones selected at launch and apply to the results in this command. Completion means the worker
-   finished, not that its output is accepted. Code judges the submitted bytes.
-   Never invent model provenance or silently substitute another worker identity.
+   categories. The run's worker profile is its provenance; do not pass
+   `--model` or `--effort`. Completion means the worker finished, not that its
+   output is accepted. Code judges the submitted bytes. Never launch a worker
+   on another model or effort than the profile's.
 4. Launch the next handouts only as code prints them. Do not choose jobs,
    schedule retries yourself, or advance while a worker from the round is still
    running.

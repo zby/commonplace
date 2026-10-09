@@ -88,10 +88,11 @@ area or a local working run. The engine uses `state/<run-id>/set/` as
 its sole working set. Historical runs used `output/`; their execution format
 is retired and is not converted or mirrored by the current workflow.
 `ARTIFACT.yaml` selects this type. In a finished set it records a SHA-256 for every member and
-names the worker that produced the run under `worker`: the exact `model`
-identifier and, when the harness reports one, its reasoning `effort`. One
-model writes a whole run, so the manifest carries it once; sets published
-before 2026-10-06 have no `worker`.
+names the worker that produced the run under `worker`: the worker `profile`
+the run started with, and that profile's `harness`, exact `model` identifier
+and reasoning `effort`. One profile writes a whole run, so the manifest
+carries it once. Sets published before 2026-10-09 may lack `profile` and
+`harness`, and sets published before 2026-10-06 have no `worker`.
 
 The layout above declares the members. Every set has the boundary and the
 overview; a `complete` boundary disposition adds the four reports, the

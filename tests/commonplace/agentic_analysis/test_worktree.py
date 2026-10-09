@@ -37,6 +37,8 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "src/commonplace/workflow/engine.py": "# committed runtime\n",
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
+        "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
+            "default: pi-luna\nprofiles:\n  pi-luna: {harness: pi, model: gpt-6-luna, effort: medium}\n",
     }
     for name, content in files.items():
         path = root / name
@@ -181,6 +183,7 @@ def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path
     assert second.name.endswith(f"-{prepared['token']}-02")
     assert calls[0][0] == (first, tree / "kb" / JOB_SET)
     assert calls[0][1]["parameters"]["source-identity"] == "https://github.com/Example/Repo"
+    assert calls[0][1]["parameters"]["worker-profile"] == "pi-luna"
     assert list(first.iterdir()) == []
 
 
@@ -308,3 +311,13 @@ def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, 
     assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
     assert result["effects"]["publish"]["verified"] is False
 
+
+
+def test_analysis_start_refuses_an_unknown_worker_profile(origin: Path, tmp_path: Path, monkeypatch) -> None:
+    prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
+    tree = Path(str(prepared["worktree"]))
+    monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
+    with pytest.raises(ValueError, match="unknown worker profile 'opus'; choose one of pi-luna"):
+        aw.start_analysis(tree, system="Example", source_identity="https://github.com/Example/Repo",
+                          source="repository", profile="opus")
+    assert not (tree / "kb/agentic-system-analyses/state").exists()

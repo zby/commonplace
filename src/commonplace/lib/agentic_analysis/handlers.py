@@ -26,6 +26,7 @@ from commonplace.lib.agentic_analysis.sets import (
     RETAINED_ROOT,
     analysis_layout,
     source_slug,
+    worker_profile,
 )
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.note_parser import parse_document
@@ -66,7 +67,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     is acquired. Analysis runs require a ready token-bearing preparation record.
     """
     parameters = attempt.parameters
-    for name in ("system", "source-identity", "source"):
+    for name in ("system", "source-identity", "source", "worker-profile"):
         if not isinstance(parameters.get(name), str) or not parameters[name].strip():
             raise ValueError(f"analysis opening requires a nonempty {name} run parameter")
     if "review-path" in parameters:
@@ -80,6 +81,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     identity = normalize_source_identity(raw_identity)
     if not identity:
         raise ValueError("source-identity must normalize to a nonempty single-line identity")
+    worker = worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
     revision = parameters.get("source-revision")
     if revision is not None:
         if not isinstance(revision, str) or re.fullmatch(r"[0-9a-f]{40}", revision) is None:
@@ -118,6 +120,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         "source-identity": identity,
         "source": parameters["source"],
         "source-revision": revision,
+        "worker": worker,
         "inputs-commit": commit,
         "run-date": datetime.datetime.now(datetime.UTC).date().isoformat(),
         "command-path": str(repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
