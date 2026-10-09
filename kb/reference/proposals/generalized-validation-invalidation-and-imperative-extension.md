@@ -9,7 +9,7 @@ tags: [type-system, kb-maintenance]
 This proposal asks when Commonplace should generalize the selection of artifacts
 that need revalidation after a change. It does not decide how checks execute.
 [Type-selected Python validation checks](./type-selected-python-validation-checks.md)
-addresses executable extensions; [document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md)
+addresses executable extensions; draft validation at a member slot ([ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md))
 separates the document being checked from the related artifacts used as context.
 
 ## Current state (as of 2026-10-06)

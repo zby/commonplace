@@ -6,9 +6,11 @@ tags: [type-system, kb-maintenance]
 
 # Document validation in working-set context
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 113](../../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md) in stage one: `commonplace-validate <draft> --artifact <directory> --member <slot>` checks a draft at its member path, and the shared check and self-check call the same path. Stage two was not adopted and has no trigger. The 2026-10-06 state with the separate analyst check command and the workflow-private context helper remains here — design texture only.
+
 The directory-type mechanism from ADR 095 validates a set as a whole, and
 the declared layout of
-[ADR 111](../adr/111-directory-types-declare-their-layout.md), adopted from
+[ADR 111](../../adr/111-directory-types-declare-their-layout.md), adopted from
 the proposal "Directory types declare their layout", lets it validate an
 incomplete working instance with findings attributed to roles. This proposal adds a member mode: one candidate file is validated at
 its intended member path, against the siblings its role relates to, whether
@@ -21,14 +23,14 @@ The proposal is staged, and each stage is adoptable on its own. Stage one
 exposes what the layout mechanism already computes: the whole-artifact check with
 a draft's bytes at its slot, filtered to the draft's role. Stage two changes
 what is read and how context defects are reported. Stage one is what
-[adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md)
+[adopting the declared layout in the analysis workflow](../adopt-declared-layout-in-the-analysis-workflow.md)
 needs to retire the separate analyst check command; that plan decides stage
 one and records the measurements that would warrant stage two. The operator
 selected this direction on 2026-10-06. Neither stage is shipped behavior.
 
 ## Current state (as of 2026-10-06)
 
-- [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md)
+- [ADR 095](../../adr/095-directory-artifacts-add-shared-set-validation.md)
   recognizes a directory artifact by `ARTIFACT.yaml`. Artifact checks run when the
   directory itself is validated. Explicit file validation checks that file
   alone and never reads a manifest.
@@ -48,7 +50,7 @@ selected this direction on 2026-10-06. Neither stage is shipped behavior.
 - The set type checks every member's quotations against the boundary's
   frozen source (commit 86ae3c8e1), so quotation anchoring is a set relation,
   not a workflow-only check.
-- Under [ADR 105](../adr/105-let-analysts-run-their-acceptance-check-before-submission.md),
+- Under [ADR 105](../../adr/105-let-analysts-run-their-acceptance-check-before-submission.md),
   analysts self-check through `commonplace-analysis-check`, which loads the
   run's workflow definition to reach the job's validator. The job, not the
   type, supplies the context. `commonplace-validate` cannot take a draft at
@@ -173,7 +175,7 @@ the boundary has a slot.
 Removing a declaration from a replacement may break references in other
 members while the candidate's own references stay valid. That belongs to an
 explicit impact or whole-artifact check.
-[Generalized validation invalidation](./generalized-validation-invalidation-and-imperative-extension.md)
+[Generalized validation invalidation](../generalized-validation-invalidation-and-imperative-extension.md)
 addresses affected-target selection and is not prerequisite here.
 
 ## Forces
@@ -200,7 +202,7 @@ addresses affected-target selection and is not prerequisite here.
 The flag's name and shape, how repair text attaches to findings, and whether
 whole-artifact rules and member-mode rules share one registration are
 implementation choices. Start with existing Python checks; the
-[type-selected Python validation proposal](./type-selected-python-validation-checks.md)
+[type-selected Python validation proposal](../type-selected-python-validation-checks.md)
 is not a prerequisite, and selecting a role does not authorize loading
 repository Python code.
 

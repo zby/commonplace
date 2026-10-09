@@ -23,7 +23,7 @@ same declaration.
 
 The operator selected this design on 2026-10-06. It is not shipped behavior.
 The companion proposal
-[document validation in working-set context](../type-declared-cross-checks-and-one-validation-surface.md)
+[document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md)
 depends on this one; this one does not depend on it.
 
 ## Current state (as of 2026-10-06)

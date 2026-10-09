@@ -6,6 +6,8 @@ traits: [has-external-sources]
 
 # Record acceptance reads and judged versions
 
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 113](../../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md): judgments record their basis from pinned inputs and a verifier's handed versions resolve from its attempt record, so the untracked validator read and the role-only verification this proposal repaired no longer exist. The 2026-10-07 replay-recheck engine, its reachable mismatch and the build-systems classification of that engine remain here — design texture only.
+
 Make two additions to the analysis workflow's existing trace model, and no
 new storage or commit protocol. First, what a job's acceptance validator
 reads becomes part of the job's recorded trace, and the replay recheck of an
@@ -14,7 +16,7 @@ Second, a verification pins the exact version of the member it judged, so
 replacing that member marks the judgment stale for publication.
 
 This is a proposed design, not implemented behavior. It addresses the replay
-blocker in [declared-layout adoption](./adopt-declared-layout-in-the-analysis-workflow.md).
+blocker in [declared-layout adoption](../adopt-declared-layout-in-the-analysis-workflow.md).
 An earlier version of this proposal answered the same blocker with fixed set
 snapshots and explicit commits; that design is recorded under Alternatives.
 
@@ -27,7 +29,7 @@ continuing. See `WorkflowEngine.judge` in `src/commonplace/workflow/engine.py`.
 The input identity hashes the job's prompt, launch data and declared inputs
 only.
 
-In the vocabulary of [Build Systems à la Carte](../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md),
+In the vocabulary of [Build Systems à la Carte](../../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md),
 this is a restarting scheduler with a verifying-trace rebuilder: a per-job
 record of input and output hashes, rechecked on each restart from the top.
 The placement is this KB's mapping, not the paper's.
@@ -89,7 +91,7 @@ affected relation next, which is the correction job, or to whole-artifact
 validation at publication.
 
 The split between what is pinned and what is read live follows
-[criteria edits invalidate verdicts; process edits invalidate artifacts](../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
+[criteria edits invalidate verdicts; process edits invalidate artifacts](../../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
 Type contracts and validator code are criteria: they stay live, and a change
 to them changes the verdict and reopens the job, as it does now. Sibling
 members are context: they are pinned, because a later sibling is not a change
@@ -137,7 +139,7 @@ membership check is the validator plus the verification.
 
 ## External design basis
 
-[Build Systems à la Carte, journal version](../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md)
+[Build Systems à la Carte, journal version](../../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md)
 classifies build systems by scheduler and rebuilder, defines correctness as
 exact recomputation from recorded dependencies, and treats untracked
 dependencies, task versions and non-determinism as the cases where that
@@ -146,7 +148,7 @@ track it, mark the task volatile, or leave it untracked. The current engine
 is the volatile case. This proposal is the tracking case. The paper does not
 discuss workflow engines or acceptance validators; the application is ours.
 
-[Dagster's asset versioning](../../sources/dagster-asset-versioning-and-caching.ingest.md)
+[Dagster's asset versioning](../../../sources/dagster-asset-versioning-and-caching.ingest.md)
 records, per materialization, which upstream data versions it consumed and
 flags an asset as unsynced one hop at a time. The ingest's verdict is that
 this workflow is a departure from Dagster's main path: Dagster's versioning
@@ -156,9 +158,9 @@ What transfers is the bookkeeping kernel only: a content fingerprint per
 member, recorded by each judgment that consumed it, compared one hop at a
 time. Nothing else of Dagster is proposed.
 
-[Airflow's retained guidance](../../sources/apache-airflow-best-practices.ingest.md)
+[Airflow's retained guidance](../../../sources/apache-airflow-best-practices.ingest.md)
 supplies the fixed-partition rule and the warning against reading latest
-data. [Iceberg's reliability account](../../sources/apache-iceberg-reliability.ingest.md)
+data. [Iceberg's reliability account](../../../sources/apache-iceberg-reliability.ingest.md)
 was the basis of the earlier snapshot-and-commit version. Its protocol serves
 many writers over shared storage. This workflow has one coordinator under a
 run lock with whole-state atomic writes, so that protocol answers a need the
@@ -234,8 +236,8 @@ unresolved.
 
 Relevant Notes:
 
-- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rests-on: the split between live criteria and pinned context
-- [Build Systems à la Carte: theory and practice](../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md) — evidenced-by: classification of the engine, untracked dependencies and their three responses, the non-determinism boundary
-- [Dagster asset versioning and caching](../../sources/dagster-asset-versioning-and-caching.ingest.md) — evidenced-by: the consumed-version record and one-hop staleness, and the verdict that this workflow is a departure from Dagster's main path
-- [Apache Airflow best practices](../../sources/apache-airflow-best-practices.ingest.md) — evidenced-by: the rule against reading latest data between reruns
-- [Apache Iceberg reliability](../../sources/apache-iceberg-reliability.ingest.md) — see-also: the multi-writer snapshot protocol behind the set-aside alternative
+- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rests-on: the split between live criteria and pinned context
+- [Build Systems à la Carte: theory and practice](../../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md) — evidenced-by: classification of the engine, untracked dependencies and their three responses, the non-determinism boundary
+- [Dagster asset versioning and caching](../../../sources/dagster-asset-versioning-and-caching.ingest.md) — evidenced-by: the consumed-version record and one-hop staleness, and the verdict that this workflow is a departure from Dagster's main path
+- [Apache Airflow best practices](../../../sources/apache-airflow-best-practices.ingest.md) — evidenced-by: the rule against reading latest data between reruns
+- [Apache Iceberg reliability](../../../sources/apache-iceberg-reliability.ingest.md) — see-also: the multi-writer snapshot protocol behind the set-aside alternative

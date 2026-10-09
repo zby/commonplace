@@ -18,9 +18,9 @@ and the end state, the boundaries that hold, and what is left to the
 implementer's judgment. It does not prescribe the sequence of work. The
 operator selected this direction on 2026-10-06. It is not shipped behavior.
 
-Its validator side is stage one of
-[document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md),
-which this plan decides in place of the measurement runs the earlier version
+Its validator side, draft validation at a member slot, shipped under
+[ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md);
+this plan had decided it in place of the measurement runs the earlier version
 of this proposal gated it on.
 
 ## Current state (as of 2026-10-06)

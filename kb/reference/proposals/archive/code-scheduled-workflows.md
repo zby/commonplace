@@ -5,7 +5,9 @@ type: reference/types/design-proposal.md
 
 # Code-scheduled workflows
 
-[`analyse-agentic-system`](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) is a multi-step workflow whose schedule lives in prose. The coordinating agent reads the skill, decides what runs next, launches workers, checks their outputs and carries values between steps. Claude Code's [dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) move that schedule into a script, but the script runs only in Claude Code and cannot read files or run commands. This proposal gets as close to a code scheduler as a harness without one permits. A Commonplace program runs the workflow, keeps all run state on disk, and stops only where it needs a sub-agent. The parent agent launches the sub-agents the program names and runs the program again.
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 113](../../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md): the engine in `commonplace.artifactrun` with the `commonplace-run` and `commonplace-analysis` commands carries the live design; this proposal's first implementation was replaced on 2026-10-07. The 2026-09-29 prose-schedule state, the `step`/`report`/`agent()` vocabulary and the open choices on recovery, core placement and rerun timing remain here — design texture only.
+
+[`analyse-agentic-system`](../../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) is a multi-step workflow whose schedule lives in prose. The coordinating agent reads the skill, decides what runs next, launches workers, checks their outputs and carries values between steps. Claude Code's [dynamic workflows](../../../agentic-systems/reviews/claude-code-dynamic-workflows.md) move that schedule into a script, but the script runs only in Claude Code and cannot read files or run commands. This proposal gets as close to a code scheduler as a harness without one permits. A Commonplace program runs the workflow, keeps all run state on disk, and stops only where it needs a sub-agent. The parent agent launches the sub-agents the program names and runs the program again.
 
 ## Current state (as of 2026-09-29)
 
@@ -14,9 +16,9 @@ type: reference/types/design-proposal.md
 - Error recovery is the coordinator's. The skill's failure rule tells it to keep a correctable failure in `running` state, fix the candidate or member, and repeat the failed check. The skill forbids a phase ledger, packet, correction log, retry log or validation receipt. A failed run is not resumed; a new run ID replaces it.
 - At this dated anchor, mechanical steps were moving into commands. Opening
   and required route fields were separate proposals; their implemented choices
-  are now [workflow-owned opening](../adr/101-open-analysis-runs-through-workflow-start.md)
-  and [route-field acceptance](../adr/100-check-required-route-fields-at-member-acceptance.md).
-- Review jobs already use the worker contract this proposal reuses: code generates each job's `prompt.md`, and the worker reads only that prompt and writes one output ([ADR 067](../adr/067-review-workers-read-one-prompt-and-write-one-output.md)). The parent dispatches through [run review batches](../../instructions/run-review-batches.md), which needs only the ability to launch a sub-agent with a prompt.
+  are now [workflow-owned opening](../../adr/101-open-analysis-runs-through-workflow-start.md)
+  and [route-field acceptance](../../adr/100-check-required-route-fields-at-member-acceptance.md).
+- Review jobs already use the worker contract this proposal reuses: code generates each job's `prompt.md`, and the worker reads only that prompt and writes one output ([ADR 067](../../adr/067-review-workers-read-one-prompt-and-write-one-output.md)). The parent dispatches through [run review batches](../../../instructions/run-review-batches.md), which needs only the ability to launch a sub-agent with a prompt.
 - Claude Code dynamic workflows exist only in Claude Code. The script sandbox has no filesystem or shell, the resume journal is session-local, and a run takes no mid-run user input.
 
 ## The problem
@@ -48,7 +50,7 @@ These terms are local to this proposal until adoption.
 
 ## The model
 
-In the terms of the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md), code owns `select`, `transition` and the state `K`. The agent orchestrator implements `call_all` and nothing else.
+In the terms of the [bounded-context orchestration model](../../../notes/bounded-context-orchestration-model.md), code owns `select`, `transition` and the state `K`. The agent orchestrator implements `call_all` and nothing else.
 
 ```
 step(run directory):
@@ -98,7 +100,7 @@ Four invariants define the model:
 
 **A step consumes a round.** A call of `step` means every worker launched from the previous step has returned or failed to start. A job handed out before and still without an output counts as a failed attempt. Repeating `step` gives the same outcome only where nothing is left to consume: on a finished run, on an uncertain effect, and on a run that may only be stopped.
 
-**State is on disk because the process cannot wait.** [The practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) lets live variables hold `K` while one process holds the whole run. Here the process exits whenever no path can continue, and the run goes on after it. That is the lifetime mismatch that note names as forcing `K` into external storage.
+**State is on disk because the process cannot wait.** [The practical scheduler is the host language](../../../notes/the-practical-scheduler-is-the-host-language.md) lets live variables hold `K` while one process holds the whole run. Here the process exits whenever no path can continue, and the run goes on after it. That is the lifetime mismatch that note names as forcing `K` into external storage.
 
 **Migration.** The model differs from a native code scheduler in one place: how a wait on a pending job is satisfied. Here the process exits and a later invocation replays. Where a harness lets code launch sub-agents, the wait is satisfied inside the running process, and the agent orchestrator loop is not needed. The definition is unchanged only if that runtime also runs the definition's language and lets it perform its mechanical steps. The Claude Code sandbox does neither today, so replacing the launch mechanism is the goal of migration and may not be all of it.
 
@@ -184,7 +186,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - **A report is written by an LLM.** It can be missing, wrong or late. Code therefore derives every transition from what it can check — outputs, validators, declared inputs, its own record of jobs handed out — and uses reports for diagnosis and audit. A report that code had to trust would return part of the schedule to the conversation.
 - **Reporting costs the agent orchestrator attention.** A report required every round would be one more thing to get right every round, for information code already has. Reporting listed events keeps a round without failure at one command. An event outside the list is recorded only if the agent orchestrator chooses to report it.
 - **Two commands versus one.** Carrying the report on the `step` call would keep the core at one command. It would also make `step` take free text, record a report twice when the call is repeated, hold each observation in the conversation until the round ends, and leave no way to record the observation made when stopping. A separate `report` costs one more call in a round that has something to report.
-- **The agent orchestrator is still an LLM loop.** Each round costs a parent turn. Because state lives on disk, a fresh agent orchestrator can take over; this is the externalisation recovery named in [LLM-mediated schedulers](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md), with the transition logic factored into code and only the launch left in the conversation.
+- **The agent orchestrator is still an LLM loop.** Each round costs a parent turn. Because state lives on disk, a fresh agent orchestrator can take over; this is the externalisation recovery named in [LLM-mediated schedulers](../../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md), with the transition logic factored into code and only the launch left in the conversation.
 - **Launch fidelity cannot be checked by code.** Code detects a skipped job, because the output is missing. It cannot detect an agent orchestrator that paraphrased a prompt or did a job in its own context. A fixed launch instruction reduces the risk and does not remove it.
 - **Acceptance by validator is only as strong as the validator.** Most analysis validators check structure. A structurally valid report may still need correction, as the trace audit showed; semantic acceptance is a judgment job.
 - **Input matching needs declared inputs.** A worker that reads an undeclared file makes the match incomplete, so a change to that file does not reopen the job. Declaring inputs per job is also what problem 1 asks for, but it is new authoring work in the definition.
@@ -195,7 +197,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 - **One writer per output.** Losing the agent orchestrator's session does not show that its workers stopped. A worker from the earlier session can write to an output path after its replacement starts, and the current skill already forbids a second writer while the first one's ownership is unresolved. The smallest contract is that recovery requires the earlier workers to have stopped. Recovery that tolerates overlap needs a separate output per attempt and a rule for which attempt may be accepted.
 - **Replay needs discipline.** A definition that branches on the clock, or a mechanical step that is not safe to repeat, behaves differently on the second invocation than on the first. Asynchronous paths add one case: a job identified by the order of calls changes identity when paths run in a different order.
 - **Eager launch.** A job is launched once it is named, whether or not the program has waited on it yet. This saves rounds. It also means a job named on a path that a later result makes unnecessary is still run.
-- **Shared barrier versus staggered progress.** The agent orchestrator waits for every worker in a round before running `step`. A path whose job finished early does not advance until the slowest job in the round finishes. Advancing it sooner needs the outstanding mark listed under free choices and a more complex loop; the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) assumes the shared barrier.
+- **Shared barrier versus staggered progress.** The agent orchestrator waits for every worker in a round before running `step`. A path whose job finished early does not advance until the slowest job in the round finishes. Advancing it sooner needs the outstanding mark listed under free choices and a more complex loop; the [bounded-context orchestration model](../../../notes/bounded-context-orchestration-model.md) assumes the shared barrier.
 - **Harness neutrality versus native support.** Dynamic workflows give progress display, isolation and concurrency caps in one harness. This design gives them up in exchange for running wherever a command can be run and a sub-agent launched.
 - **Every new command widens the method paths.** Publication requires the running package to equal the method commit, so code orchestrator code joins what must be committed before a run opens.
 - **Term collision.** "Job" already means a review job. The core's job record is compatible with ADR 067 but is not the review store's job; the two stay distinct unless a later proposal merges them.
@@ -232,9 +234,9 @@ The added automated evaluation is the validator run inside `step`. For the analy
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — abstracted-from: the code-coordinates, agents-act division this design copies, with the sandbox, session-local journal and no-mid-run-input limits it avoids
-- [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — rests-on: the select/call form whose `call_all` is the one element left to the agent orchestrator
-- [scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — rests-on: why moving exact schedule state from the coordinator's context into code is expected to remove a class of errors
-- [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the definition is host-language code, and run state is reified on disk because the run outlives each process
-- [067-Review workers read one prompt and write one output](../adr/067-review-workers-read-one-prompt-and-write-one-output.md) — see-also: the worker contract every job record reuses
-- [Open analysis runs through workflow start](../adr/101-open-analysis-runs-through-workflow-start.md) — see-also: the analysis definition's implemented opening operation
+- [Claude Code dynamic workflows](../../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — abstracted-from: the code-coordinates, agents-act division this design copies, with the sandbox, session-local journal and no-mid-run-input limits it avoids
+- [bounded-context orchestration model](../../../notes/bounded-context-orchestration-model.md) — rests-on: the select/call form whose `call_all` is the one element left to the agent orchestrator
+- [scheduler-LLM separation exploits an error-correction asymmetry](../../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — rests-on: why moving exact schedule state from the coordinator's context into code is expected to remove a class of errors
+- [the practical scheduler is the host language](../../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the definition is host-language code, and run state is reified on disk because the run outlives each process
+- [067-Review workers read one prompt and write one output](../../adr/067-review-workers-read-one-prompt-and-write-one-output.md) — see-also: the worker contract every job record reuses
+- [Open analysis runs through workflow start](../../adr/101-open-analysis-runs-through-workflow-start.md) — see-also: the analysis definition's implemented opening operation

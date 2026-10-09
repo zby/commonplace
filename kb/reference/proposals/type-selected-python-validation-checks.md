@@ -155,6 +155,6 @@ checker before building that distribution path. Do not require existing check
 logic to be re-expressed in a generic primitive vocabulary merely to make it
 selectable.
 
-[Document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md)
-is a potential consumer, but can use existing Python registrations first.
-Neither proposal's adoption depends on implementing the other in full.
+Draft validation at a member slot ([ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md))
+is a consumer that uses the existing Python registrations; its adoption did not
+depend on this proposal.
