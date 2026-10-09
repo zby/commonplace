@@ -408,6 +408,22 @@ instruction holds only its mission.
   the type.
 - **Mission files shrink** to a purpose sentence and what the job must
   establish and challenge. The loader does not police this.
+- **Layout facts as lines** (decided 2026-10-10, under
+  [frontloading](../../notes/frontloading-spares-execution-context.md)).
+  The frame prints, for a role-filling job, `identity`, the fields it
+  repeats and from which roles, and `cites`, the roles it may cite, and
+  for a verifying role `verifies`; the prompt section says each in one
+  sentence, and a `[verifies]` paragraph names the blocker addressees, so
+  no job instruction restates the layout and no producer learns its scope
+  from a failed check. The opening's `capture-directory` and
+  `source-identity` become plan parameters printed as lines, as
+  `command-path` did, so no worker reads the opening JSON. Deferred with
+  its trigger: a list of the limits the synthesis must carry would need a
+  consumer code job reading the verdicts; it waits for a run in which the
+  limit-not-carried refusal actually fires. A list of citable records was
+  considered and dropped: the writer reads the cited members anyway, and
+  the destination follows from the ID by one case change and the prefix's
+  member.
 - **Ordering.** This lands with the contract moves: the boundary contract
   into the boundary type; the records contract stays a shared member-level
   contract that the member types declaring or citing records refer to;
