@@ -10,9 +10,15 @@ from commonplace.artifactrun.engine import _close
 from commonplace.artifactrun.handouts import _open
 from commonplace.artifactrun.plan import Input
 from commonplace.artifactrun.run import Run
-from commonplace.artifactrun.store import RunStore, digest
+from commonplace.artifactrun.store import RunStore
 from tests.commonplace.artifactrun.handlers import LOG_ENV
-from tests.commonplace.artifactrun.support import Coordinator, toy_library
+from tests.commonplace.artifactrun.support import (
+    CORRECTED,
+    Coordinator,
+    record_calls,
+    toy_library,
+    version,
+)
 
 
 def run_state(c):
@@ -35,13 +41,14 @@ def late_run(tmp_path, tmp_library, monkeypatch, request):
     declaration.write_text(yaml.safe_dump(data, sort_keys=False))
     log = tmp_path / "handlers.log"
     monkeypatch.setenv(LOG_ENV, str(log))
+    record_calls(monkeypatch)
     directory = tmp_path / "run"
     start_run(directory, declaration, parameters={"subject": "toy"})
     c = Coordinator(directory, method, log)
     c.advance()
     c.through_records()
     old = c.handout("verify")
-    c.edit_method("contract-report.md", "forbid: report A\n")
+    c.forbid("report A")
     c.advance()
     c.complete("report", "report B\n", answers="repair\n")
     c.complete("summary", "summary S2\n")
@@ -59,7 +66,7 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     assert len(applications(c)) == 1
     judgments = [j for j in run.judgments if j["job"] == "apply-verification"]
     subject = next(j for j in judgments if j["subject"]["role"] == "report")
-    assert subject["subject"]["version"] == digest(b"report A\n")
+    assert subject["subject"]["version"] == version("report", "report A\n")
     assert subject["outcome"] == ("refused" if "block report" in verdict else "accepted")
     assert not subject["installs"] and not subject["overrides"]
     assert c.member("report") == "report B\n"
@@ -72,7 +79,7 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     else:
         assert c.handed() == {"verify"}
         new = run.open_attempt("verify")
-        assert new["pins"]["report"]["version"] == digest(b"report B\n")
+        assert new["pins"]["report"]["version"] == version("report", "report B\n")
     c.advance()
     assert len(applications(c)) == 1, "an unchanged completed subject applies only once"
 
@@ -103,7 +110,7 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
     assert len(applications(c)) == 2
     latest = [j for j in run_state(c).judgments
               if j["job"] == "apply-verification" and j["subject"]["role"] == "report"][-1]
-    assert latest["subject"]["version"] == digest(b"report B\n")
+    assert latest["subject"]["version"] == version("report", "report B\n")
     assert latest["installs"] and not latest["overrides"]
     assert "digest" in c.handed()
 
@@ -116,8 +123,8 @@ def test_report_separates_holding_historical_basis_from_canonical_currency(late_
     view = engine_run_report(c.run_dir, final_job="publish", status=c.status)
     report_drift = [entry for entry in view["canonical-peer-drift"] if entry["role"] == "report"]
     assert report_drift
-    assert all(entry["handed"] == digest(b"report A\n") for entry in report_drift)
-    assert all(entry["current"] == digest(b"report B\n") for entry in report_drift)
+    assert all(entry["handed"] == version("report", "report A\n") for entry in report_drift)
+    assert all(entry["current"] == version("report", "report B\n") for entry in report_drift)
     assert any(entry["judgment"] not in view["stale-acceptances"] for entry in report_drift)
     assert not view["publishable"]
 
@@ -131,12 +138,12 @@ def test_own_answered_refusal_check_retains_scenario17_wait(coordinator):
     assert "report" in run.producers(check)
     before = run.attempt_count("check-report")
     # A changed contract makes the check ready while R's correction is open.
-    c.edit_method("contract-report.md", "# Changed contract\n")
+    c.edit_contract()
     c.advance()
     run = run_state(c)
     assert run.ready(check, run.permitted())
     assert run.attempt_count("check-report") == before
-    c.complete("report", "report B\n", answers="answer\n")
+    c.complete("report", "report B\n", answers=CORRECTED)
     assert run_state(c).attempt_count("check-report") == before + 1
     assert c.member("report") == "report B\n"
     c.complete("summary", "summary S2\n")

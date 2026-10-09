@@ -9,9 +9,10 @@ ready model jobs for a coordinator to run.
 
 The core modules ``plan``, ``run``, ``store``, ``handouts`` and ``engine``
 schedule, pin, judge and cover; they know nothing of validation, Git or
-files outside the store. The other five modules are what code-job handlers
-and the coordinator's command line reuse: candidate checks and the
-correction protocol (``checks``), frozen external sources (``sources``),
+files outside the store. The other six modules are what code-job handlers
+and the coordinator's command line reuse: standard handlers a plan names
+directly (``handlers``), candidate checks and the correction protocol
+(``checks``), frozen external sources (``sources``),
 journaled effects (``effects``), commit-bound worktrees (``worktree``) and
 run reports (``report``). This package exports only the core's public names.
 

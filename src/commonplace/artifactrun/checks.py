@@ -180,19 +180,20 @@ def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None)
     return packet
 
 
-def judge(check: Candidate, reasons: list[str]) -> None:
+def judge(check: Candidate, reasons: list[str], *, answered: str | None = "answered-refusal") -> None:
     """Judge the candidate over the relations its validation examined.
 
     The scope is the type's `cites` and `identity` relations from the
     candidate's role to partners in the snapshot. A `verifies` relation is
     never in it: a content check cannot settle a verification gate, which
-    only a judgment of the handed subject covers (ADR 114).
+    only a judgment of the handed subject covers (ADR 114). ``answered``
+    names the input holding the refusal the producer answered, or None.
     """
     layout = check.attempt.layout
     scope = tuple(name for origin, partner, name in check.attempt.relations
                   if origin == check.role and not name.startswith(f"{origin}:verifies:")
                   and layout.path(partner) in check.snapshot)
     findings = refusal_findings(
-        reasons, member=check.role, answered=check.attempt.read("answered-refusal"),
+        reasons, member=check.role, answered=check.attempt.read(answered) if answered else None,
     ) if reasons else ""
     check.attempt.judge("candidate", outcome="refused" if reasons else "accepted", scope=scope, findings=findings)

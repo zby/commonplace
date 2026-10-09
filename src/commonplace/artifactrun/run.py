@@ -525,6 +525,25 @@ class CodeAttempt:
         """The library root recorded at start, not the process's current library."""
         return self._run.library
 
+    @property
+    def job(self) -> CodeJob:
+        """The job this attempt runs, as declared."""
+        return self._job
+
+    @property
+    def inputs(self) -> Mapping[str, Input]:
+        """The job's declared inputs, so a standard handler learns its subjects from them."""
+        return self._job.inputs
+
+    def input_role(self, name: str) -> str | None:
+        """The role input `name` holds by declaration; see `Plan.input_role`."""
+        return self._run.jobs.input_role(self._job, name)
+
+    def producer(self, name: str) -> str | None:
+        """The job whose output or attempt input `name` names, else None."""
+        spec = self._job.inputs[name]
+        return spec.source.partition(":")[0] if spec.address in ("output", "attempt") else None
+
     def read(self, name: str) -> bytes | None:
         if name not in self._pins:
             raise KeyError(f"job {self._job.name} declares no input {name}")

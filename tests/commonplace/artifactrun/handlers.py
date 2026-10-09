@@ -90,7 +90,6 @@ check_digest = _check("check-digest", "digest", ("report", "other"))
 
 def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """Judge the versions the verifier was handed, never the current members."""
-    _enter("apply-verification")
     blocked = {}
     for line in (_text(attempt, "verdict") or "").splitlines():
         if line.startswith("block "):
@@ -114,7 +113,6 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
 
 
 def assemble(attempt: CodeAttempt) -> Mapping[str, bytes]:
-    _enter("assemble")
     brief = _text(attempt, "brief") or ""
     attempt.judge("overview", outcome="accepted", scope=("overview:cites:brief",))
     return {"overview": f"# Overview\n\nAssembled from a brief of {len(brief)} bytes.\n".encode()}

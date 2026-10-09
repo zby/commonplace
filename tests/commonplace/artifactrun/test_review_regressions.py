@@ -9,6 +9,7 @@ import pytest
 from commonplace.artifactrun import PlanError, judge
 from tests.commonplace.artifactrun.support import (
     BLOCKED_BRIEF,
+    CORRECTED,
     Coordinator,
     custom_run,
 )
@@ -91,7 +92,7 @@ def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_libra
     c.complete("other", "other O1\n")
     c.complete("summary", "summary S1\n")
     c.complete("verify", "block report: r1\n")
-    c.complete("report", "report B\n", answers="answered\n")
+    c.complete("report", "report B\n", answers=CORRECTED)
     assert c.member("report") == "report B\n"
     assert "other" not in c.handed(), "a changed order-only input is not a rerun trigger"
 

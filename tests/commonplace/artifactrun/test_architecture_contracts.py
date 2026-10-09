@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import Input, PlanError, load_plan, open_handouts
-from tests.commonplace.artifactrun.support import Coordinator, plan
+from tests.commonplace.artifactrun.support import Coordinator, as_member, plan
 
 
 @pytest.mark.parametrize("edit, message", [
@@ -131,7 +131,7 @@ def test_refusal_input_has_the_published_format(coordinator: Coordinator) -> Non
     path = Path(dict(line.split(" = ", 1) for line in prompt if " = " in line)["refusal"])
     document, error = parse_document(path.read_text(encoding="utf-8"))
     assert error is None and set(document.frontmatter) == {"refusal", "version", "scope"}
-    assert document.frontmatter["version"] == digest(b"report A\n")
+    assert document.frontmatter["version"] == digest(as_member("report", "report A\n").encode())
     assert document.frontmatter["scope"] == ["verification:verifies:report"]
     assert document.body == "r1", "the findings, verbatim"
 
@@ -151,7 +151,7 @@ def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordin
     assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort"}
     assert record["job"] == "report" and record["kind"] == "model" and record["worker_model"] == "test-model"
     assert record["worker_effort"] == "medium"
-    assert record["outputs"]["report"] == digest(b"report A\n")
+    assert record["outputs"]["report"] == digest(as_member("report", "report A\n").encode())
 
 
 def test_inspection_reports_the_run_condition_and_current_completions(coordinator: Coordinator) -> None:
@@ -162,7 +162,7 @@ def test_inspection_reports_the_run_condition_and_current_completions(coordinato
     c.through_publication()
     with run_lock(c.run_dir):  # Re-entered by inspect and current_outputs without deadlock.
         assert inspect(c.run_dir)["condition"] == "publishable"
-        assert current_outputs(c.run_dir, "summary") == {"summary": b"summary S1\n"}
+        assert current_outputs(c.run_dir, "summary") == {"summary": as_member("summary", "summary S1\n").encode()}
     c.edit_method("summary.md", "# summary\n\nWrite it again.\n")
     assert current_outputs(c.run_dir, "summary") is None, "a changed input makes the completion stale"
     assert inspect(c.run_dir)["condition"] == "publishable", "no member has changed yet"
@@ -187,8 +187,8 @@ def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
     from commonplace.artifactrun import inspect
     from tests.commonplace.artifactrun.support import custom_run
 
-    # check-other never sees the report, so no check covers other:cites:report.
-    c = custom_run(tmp_path, monkeypatch, lambda jobs: jobs["check-other"]["inputs"].pop("report"))
+    # check-summary never sees the other report, so no check covers summary:cites:other.
+    c = custom_run(tmp_path, monkeypatch, lambda jobs: jobs["check-summary"]["inputs"].pop("other"))
     c.through_records()
     c.complete("verify", "no blockers\n")
     c.complete("digest", "digest D1\n")
@@ -199,7 +199,7 @@ def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
 
 def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> None:
     data = plan(tmp_path)
-    data["criteria"] = {"contracts": {"contract": "contracts/report.md", "shared": "contracts/shared.md"}}
+    data["criteria"]["contracts"] = {"contract": "contracts/report.md", "shared": "contracts/shared.md"}
     data["jobs"][1]["criteria"] = ["contracts"]
     job = load_plan(yaml.safe_dump(data)).job(data["jobs"][1]["name"])
     assert job.inputs["contract"] == Input("file", "contracts/report.md")

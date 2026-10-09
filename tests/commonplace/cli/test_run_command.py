@@ -11,7 +11,7 @@ from commonplace.artifactrun import CodeJob, UncertainEffectError
 from commonplace.artifactrun.store import RunStore
 from commonplace.cli.run import main
 from tests.commonplace.artifactrun.handlers import LOG_ENV
-from tests.commonplace.artifactrun.support import COMPLETE_BRIEF, toy_library
+from tests.commonplace.artifactrun.support import COMPLETE_BRIEF, as_member, toy_library
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -46,7 +46,7 @@ def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pyt
     assert stop["job"] == "brief" and "no source at that revision" in stop["reason"]
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     assert handout["job"] == "brief", "a failed attempt leaves the job ready"
-    Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
+    Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
     Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
 
     assert main(["advance", str(run_dir), "--completed", handout["attempt"], "--model", "m", "--effort", "e"]) == 0
@@ -61,7 +61,7 @@ def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pyt
 def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monkeypatch, uncertain):
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
-    Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
+    Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
     Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     original = CodeJob.resolve_handler
 
@@ -92,7 +92,7 @@ def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monk
 def test_status_and_judge(run: tuple[Path, Path], capsys: pytest.CaptureFixture[str]) -> None:
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
-    Path(handout["outputs"]["brief"]).write_text(COMPLETE_BRIEF, encoding="utf-8")
+    Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
     Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     advance_json(run_dir, capsys, "--completed", handout["attempt"])
 

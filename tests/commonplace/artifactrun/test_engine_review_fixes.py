@@ -9,11 +9,12 @@ from commonplace.artifactrun import AttemptResult, advance, start_run
 from commonplace.artifactrun.engine import _close
 from commonplace.artifactrun.plan import CodeJob
 from commonplace.artifactrun.run import Run
-from commonplace.artifactrun.store import RunStore, digest
+from commonplace.artifactrun.store import RunStore
 from tests.commonplace.artifactrun.support import (
     COMPLETE_BRIEF,
     Coordinator,
     toy_library,
+    version,
 )
 
 
@@ -43,7 +44,7 @@ def test_first_closure_is_final(coordinator, first_outcome, conflicting, same_ba
     assert record["model"] == "first-model"
     if first_outcome == "completed":
         assert not c.status.stops
-        assert record["outputs"]["brief"] == digest(COMPLETE_BRIEF.encode())
+        assert record["outputs"]["brief"] == version("brief", COMPLETE_BRIEF)
     else:
         assert record["reason"] == "first"
         if same_batch:
@@ -81,7 +82,7 @@ def test_failed_code_retries_after_inputs_revert(coordinator, monkeypatch):
     c = coordinator
     c.through_brief()
     c.advance(c.result("report", "report A\n"), c.result("other", "other O1\n"))
-    original = (c.method / "contract-report.md").read_text()
+    original = c.contract.read_text()
     resolve = CodeJob.resolve_handler
     calls = []
 
@@ -98,12 +99,13 @@ def test_failed_code_retries_after_inputs_revert(coordinator, monkeypatch):
         return check
 
     monkeypatch.setattr(CodeJob, "resolve_handler", handler)
-    c.edit_method("contract-report.md", "changed")
+    c.edit_contract()
+    changed = c.contract.read_bytes()
     c.advance()
     assert c.stop("check-report")
-    c.edit_method("contract-report.md", original)
+    c.contract.write_text(original)
     c.advance()
-    assert calls == [b"changed", original.encode()]
+    assert calls == [changed, original.encode()]
     assert not c.status.stops
     c.advance()
     assert len(calls) == 2
@@ -143,20 +145,20 @@ def test_new_candidate_checked_before_optional_downstream(pending_candidate):
     c = pending_candidate
     c.advance()
     run = state(c)
-    assert run.latest_output(run.jobs.job("report")) == digest(b"runtime B\n")
+    assert run.latest_output(run.jobs.job("report")) == version("report", "runtime B\n")
     assert not run.ready(run.jobs.job("check-report"), run.permitted())
     assert "other" in run.producers(run.jobs.job("check-report"))
     assert c.handed() == {"other"}
-    assert run.open_attempt("other")["pins"]["report"]["version"] == digest(b"runtime B\n")
+    assert run.open_attempt("other")["pins"]["report"]["version"] == version("report", "runtime B\n")
     assert c.member("report") == "runtime B\n"
     check = run.latest_completed("check-report")
-    assert check["pins"]["other"]["version"] == digest(b"downstream A\n")
+    assert check["pins"]["other"]["version"] == version("other", "downstream A\n")
     judgment = next(j for j in run.judgments if j["attempt"] == check["id"])
     assert run.holds(judgment)
     c.complete("other", "downstream B\n")
     run = state(c)
     assert not run.holds(judgment)
-    assert run.latest_completed("check-report")["pins"]["other"]["version"] == digest(b"downstream B\n")
+    assert run.latest_completed("check-report")["pins"]["other"]["version"] == version("other", "downstream B\n")
     # This is not an immutable-handed-subject application: the peer is live.
     assert not run._consumes_completed_subjects(
         run.jobs.job("check-report"), run.jobs.job("other"),

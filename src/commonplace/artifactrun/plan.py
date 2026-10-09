@@ -110,6 +110,26 @@ class Plan:
         """The job whose primary output fills `role`."""
         return next((job for job in self.jobs if job.role == role), None)
 
+    def input_role(self, job: Job, name: str) -> str | None:
+        """The role whose versions `job`'s input `name` holds, by declaration alone.
+
+        A role input holds its role; a producer's primary output holds the
+        producer's role; a handed input holds what the producer's own input
+        of that name held. Anything else holds no role.
+        """
+        spec = job.inputs[name]
+        if spec.address == "role":
+            return spec.source
+        if spec.address == "output":
+            producer, _, output = spec.source.partition(":")
+            upstream = self.job(producer)
+            return upstream.role if upstream.outputs and output == upstream.outputs[0] else None
+        if spec.address == "handed":
+            attempt, _, handed = spec.source.partition(":")
+            producer = self.job(job.inputs[attempt].source)
+            return self.input_role(producer, handed) if handed in producer.inputs else None
+        return None
+
 
 def _input(job: str, name: str, raw: Any) -> Input:
     where = f"job {job}: input {name}"

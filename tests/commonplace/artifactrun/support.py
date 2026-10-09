@@ -37,6 +37,7 @@ Semantics these tests rely on, each now stated in the workshop documents:
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -46,6 +47,7 @@ import yaml
 
 from commonplace.artifactrun import (
     AttemptResult,
+    CodeJob,
     Handout,
     RunStatus,
     Stop,
@@ -55,29 +57,40 @@ from commonplace.artifactrun import (
 from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV, LOG_ENV
 
 HANDLERS = "tests.commonplace.artifactrun.handlers"
+STANDARD = "commonplace.artifactrun.handlers"
 
 COMPLETE_BRIEF = "---\ndisposition: complete\n---\n# Brief\n"
 BLOCKED_BRIEF = "---\ndisposition: blocked\n---\n# Brief\n"
+
+MEMBER = "types/toy-member.md"
+REPORT = "types/toy-report.md"
+CONTRACT = "types/toy-report.schema.yaml"
+"""The report's schema: the criterion the scheduling tests edit as the report's contract."""
 
 TOY_TYPE = {
     "description": "A toy artifact for artifact-run engine tests.",
     "type": "types/type-spec.md",
     "name": "toy-set",
+    "schema": "./toy-set.schema.yaml",
     "layout": {
         "membership": "closed",
         "roles": {
-            "brief": {"path": "brief.md", "type": "types/text.md"},
-            "report": {"path": "report.md", "type": "types/text.md", "cites": ["brief"]},
-            "other": {"path": "other.md", "type": "types/text.md", "cites": ["brief", "report"]},
-            "summary": {"path": "summary.md", "type": "types/text.md", "cites": ["report", "other"]},
+            "brief": {"path": "brief.md", "type": MEMBER},
+            "report": {"path": "report.md", "type": REPORT, "cites": ["brief"]},
+            # The other report repeats the report's `claim`, so changing the
+            # report's claim refuses the other report through the generic
+            # identity check.
+            "other": {"path": "other.md", "type": MEMBER, "cites": ["brief", "report"],
+                      "identity": [{"from": "report", "fields": ["claim"]}]},
+            "summary": {"path": "summary.md", "type": MEMBER, "cites": ["report", "other"]},
             "verification": {
                 "path": "verification.md",
-                "type": "types/text.md",
+                "type": MEMBER,
                 "cites": ["report", "other", "summary"],
                 "verifies": ["report", "other", "summary"],
             },
-            "digest": {"path": "digest.md", "type": "types/text.md", "cites": ["report", "other"]},
-            "overview": {"path": "overview.md", "type": "types/text.md", "cites": ["brief"]},
+            "digest": {"path": "digest.md", "type": MEMBER, "cites": ["report", "other"]},
+            "overview": {"path": "overview.md", "type": MEMBER, "cites": ["brief"]},
         },
         "required": {
             "always": ["brief", "overview"],
@@ -90,7 +103,74 @@ TOY_TYPE = {
     },
 }
 
-MODEL_JOBS = ("brief", "report", "other", "summary", "verify", "digest")
+MODEL_ROLES = {"brief": "brief", "report": "report", "other": "other", "summary": "summary",
+               "verify": "verification", "digest": "digest"}
+MODEL_JOBS = tuple(MODEL_ROLES)
+
+CORRECTED = "- corrected: repaired what the verifier blocked\n"
+"""The answers to a refusal carrying one blocker, as a verifier's block of one role does."""
+
+REFUSED = "REFUSE"
+"""Text every toy member type's schema refuses in a body."""
+
+
+def refused_pattern(pattern: str, why: str) -> dict:
+    return {"not": {"pattern": pattern}, "description": why}
+
+
+def member_schema(*forbidden: str) -> dict:
+    """A toy member schema: the body must not match REFUSE or any forbidden text."""
+    rules = [refused_pattern(REFUSED, f"body matches the refused pattern {REFUSED}")]
+    rules += [refused_pattern(re.escape(text), f"body contains the forbidden text {text!r}") for text in forbidden]
+    return {"type": "object", "properties": {"body": {"allOf": rules}}}
+
+
+def member_type(name: str) -> str:
+    return (f"---\ntype: types/type-spec.md\nname: {name}\ndescription: A {name} in the toy artifact.\n"
+            f"schema: ./{name}.schema.yaml\n---\n# {name}\n")
+
+
+def as_member(role: str, text: str) -> str:
+    """A worker's text as a member of `role`: the role's type added to its frontmatter."""
+    kind = TOY_TYPE["layout"]["roles"][role]["type"]
+    if text.startswith("---\n"):
+        return f"---\ntype: {kind}\n" + text.removeprefix("---\n")
+    return f"---\ntype: {kind}\n---\n{text}"
+
+
+def as_text(role: str, member: str) -> str:
+    """The inverse of `as_member`, so a test reads back what its worker wrote."""
+    kind = TOY_TYPE["layout"]["roles"][role]["type"]
+    text = member.replace(f"type: {kind}\n", "", 1)
+    return text.removeprefix("---\n---\n")
+
+
+def version(role: str, text: str) -> str:
+    """The stored version of a worker's text written as a member of `role`."""
+    from commonplace.artifactrun.store import digest
+
+    return digest(as_member(role, text).encode())
+
+
+def record_calls(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Log each code-job handler call to LOG_ENV; raise KeyboardInterrupt for INTERRUPT_ENV's job."""
+    resolve = CodeJob.resolve_handler
+
+    def logged(job: CodeJob):
+        handler = resolve(job)
+
+        def call(attempt):
+            log = os.environ.get(LOG_ENV)
+            if log:
+                with open(log, "a", encoding="utf-8") as handle:
+                    handle.write(job.name + "\n")
+            if os.environ.get(INTERRUPT_ENV) == job.name:
+                raise KeyboardInterrupt(job.name)
+            return handler(attempt)
+
+        return call
+
+    monkeypatch.setattr(CodeJob, "resolve_handler", logged)
 
 
 def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordinator:
@@ -102,6 +182,7 @@ def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordin
     log = tmp_path / "handlers.log"
     monkeypatch.setenv(LOG_ENV, str(log))
     monkeypatch.delenv(INTERRUPT_ENV, raising=False)
+    record_calls(monkeypatch)
     run_dir = tmp_path / "runs" / "custom"
     start_run(run_dir, declaration, parameters={"subject": "toy"})
     coordinator = Coordinator(run_dir=run_dir, method=method, log=log)
@@ -141,6 +222,11 @@ def plan(method: Path) -> dict:
             entry["role"] = role
         return entry
 
+    def check(name: str, inputs: dict) -> dict:
+        """A standard check; its role and partners come from the inputs it declares."""
+        return {"name": name, "kind": "code", "handler": f"{STANDARD}.check",
+                "inputs": inputs, "criteria": ["toy"], "outputs": []}
+
     def candidate(job: str) -> dict:
         return {"address": "output", "source": f"{job}:{job}"}
 
@@ -155,16 +241,22 @@ def plan(method: Path) -> dict:
     }
     return {
         "type_spec": "types/toy-set.md",
+        "criteria": {"toy": {
+            "member-type": MEMBER,
+            "member-schema": "types/toy-member.schema.yaml",
+            "report-type": REPORT,
+            "set-schema": "types/toy-set.schema.yaml",
+        }},
         "jobs": [
             model("brief", "brief", {}, ["brief"], max_attempts=2),
-            code("check-brief", "check_brief", {"candidate": candidate("brief")}),
+            check("check-brief", {"candidate": candidate("brief")}),
             {**model("report", "report", {"brief": _role("brief"), "refusal": _optional("refusal", "report")},
                      ["report", "answers"], max_attempts=3),
              "parameters": {"system": "{param:subject}", "validation-role": "report"}},
-            code("check-report", "check_report", {
+            check("check-report", {
                 "candidate": candidate("report"),
                 "brief": _role("brief"),
-                "contract": file("contract-report.md"),
+                "contract": {"address": "file", "source": CONTRACT},
                 # The refusal input lapses once the new candidate completes, so a
                 # check takes the refusal it answers from the attempt record.
                 "report-attempt": {"address": "attempt", "source": "report"},
@@ -173,7 +265,7 @@ def plan(method: Path) -> dict:
             }),
             model("other", "other", {"brief": _role("brief"), "refusal": _optional("refusal", "other")},
                   ["other"], max_attempts=3),
-            code("check-other", "check_other", {
+            check("check-other", {
                 "candidate": candidate("other"),
                 "brief": _role("brief"),
                 "report": _optional("role", "report"),
@@ -183,7 +275,7 @@ def plan(method: Path) -> dict:
                 "other": _role("other"),
                 "refusal": _optional("refusal", "summary"),
             }, ["summary"], max_attempts=3),
-            code("check-summary", "check_summary", {
+            check("check-summary", {
                 "candidate": candidate("summary"),
                 "report": _role("report"),
                 "other": _role("other"),
@@ -205,7 +297,7 @@ def plan(method: Path) -> dict:
                 "other": _role("other"),
                 **accepted_by_verification,
             }, ["digest"], max_attempts=2),
-            code("check-digest", "check_digest", {
+            check("check-digest", {
                 "candidate": candidate("digest"),
                 "report": _role("report"),
                 "other": _role("other"),
@@ -250,7 +342,7 @@ class Coordinator:
 
     def write(self, handout: Handout, primary: str, **auxiliary: str) -> None:
         names = list(handout.outputs)
-        handout.outputs[names[0]].write_text(primary, encoding="utf-8")
+        handout.outputs[names[0]].write_text(as_member(MODEL_ROLES[handout.job], primary), encoding="utf-8")
         handout.worker_runtime.write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
         for name, text in auxiliary.items():
             handout.outputs[name].write_text(text, encoding="utf-8")
@@ -285,8 +377,9 @@ class Coordinator:
         return matches[0]
 
     def member(self, role: str) -> str | None:
+        """The member as its worker wrote it, without the type the coordinator added."""
         path = self.run_dir / "artifact" / TOY_TYPE["layout"]["roles"][role]["path"]
-        return path.read_text(encoding="utf-8") if path.exists() else None
+        return as_text(role, path.read_text(encoding="utf-8")) if path.exists() else None
 
     def ran(self) -> list[str]:
         """Code jobs run since the last call, in order; resets the log."""
@@ -309,6 +402,21 @@ class Coordinator:
 
     def edit_method(self, name: str, text: str) -> None:
         (self.method / name).write_text(text, encoding="utf-8")
+
+    @property
+    def contract(self) -> Path:
+        """The report's schema in the library, a criterion of the report's check."""
+        return self.method.parents[1] / CONTRACT
+
+    def forbid(self, text: str) -> None:
+        """Change the report's contract so a report containing `text` fails validation."""
+        self.contract.write_text(yaml.safe_dump(member_schema(text)), encoding="utf-8")
+
+    def edit_contract(self) -> None:
+        """Change the report's contract without changing what it accepts."""
+        schema = yaml.safe_load(self.contract.read_text(encoding="utf-8"))
+        schema["$comment"] = f"edit {schema.get('$comment', '')}".strip()
+        self.contract.write_text(yaml.safe_dump(schema), encoding="utf-8")
 
     # Common stretches of a run
 
@@ -342,11 +450,14 @@ def toy_library(tmp_path: Path) -> tuple[Path, Path]:
     (types / "toy-set.md").write_text(
         "---\n" + yaml.safe_dump(TOY_TYPE, sort_keys=False) + "---\n\n# Toy set\n", encoding="utf-8"
     )
+    (types / "toy-set.schema.yaml").write_text(yaml.safe_dump({"type": "object"}), encoding="utf-8")
+    for name in ("toy-member", "toy-report"):
+        (types / f"{name}.md").write_text(member_type(name), encoding="utf-8")
+        (types / f"{name}.schema.yaml").write_text(yaml.safe_dump(member_schema()), encoding="utf-8")
     method = kb / "instructions" / "toy"
     method.mkdir(parents=True)
     for job in MODEL_JOBS:
         (method / f"{job}.md").write_text(f"# {job}\n\nWrite the {job}.\n", encoding="utf-8")
-    (method / "contract-report.md").write_text("# Report contract\n", encoding="utf-8")
     declaration = method / "jobs.yaml"
     declaration.write_text(yaml.safe_dump(plan(method), sort_keys=False), encoding="utf-8")
     return declaration, method
