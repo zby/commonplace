@@ -378,7 +378,10 @@ instruction holds only its mission.
   `[output-answers]` marks the answers paragraph and `[refusal]` would
   mark a repair one. Decided 2026-10-09 after the first version gave
   `{output}` the output's name while the line gave its path, and the
-  template used a third notation to reach the line.
+  template used a third notation to reach the line. The same rule placed
+  the command path: the opener had written it inside the opening JSON,
+  which no slot reaches, so the analysis's start passes it as a run
+  parameter and the check command renders whole.
 - **Derived type inputs.** Each role-filling model job receives as file
   inputs its own role's type as `member-type` and the type of each role it
   reads as `<role>-type`, and as `set-type` the run's type through a new
