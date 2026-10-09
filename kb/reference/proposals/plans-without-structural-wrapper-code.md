@@ -538,8 +538,10 @@ form and relations, not analytical truth.
 - Step 4: the opener's run-binding checks are deleted after draft
   validation reports the same mismatches.
 - Step 5: the toy plan's prompts are byte-identical before and after
-  template support; no analysis job instruction names an input, output,
-  answers file or check command; no model job in the compact analysis plan
+  template support; no analysis job instruction says what an input is or
+  where it comes from, and none names an output, an answers file or the
+  check command, though a mission names the inputs it works from; no model
+  job in the compact analysis plan
   lists a type under `files:`; the three contract files are gone and
   nothing links them; and one analysis runs to publication on the
   templated hand-outs.
