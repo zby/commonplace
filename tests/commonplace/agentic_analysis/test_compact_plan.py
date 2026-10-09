@@ -134,6 +134,32 @@ def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
         assert job.options.get("frozen-source") == "boundary", job.name
 
 
+def compact_entries() -> dict[str, dict]:
+    """The compact plan's role entries by role name."""
+    data = yaml.safe_load((LIBRARY / PLAN).read_text(encoding="utf-8"))
+    return {entry["role"]: entry for entry in data["jobs"] if "role" in entry and "kind" not in entry}
+
+
+def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plans):
+    """The consumer's hooks are wired, not only the standard handler path."""
+    _, new = plans
+    entries = compact_entries()
+    expected_hooks = {role: entry.get("checks") for role, entry in entries.items() if entry.get("checks")}
+    assert set(expected_hooks) == {"boundary", "runtime", "memory", "epistemic", "record-verification",
+                                   "memory-profile"}, "the migrated hooks, one per wrapper that had a check"
+    for role, entry in entries.items():
+        derived = "apply-" if new.job(role).role in {"record-verification", "profile-verification",
+                                                      "synthesis-verification"} else "check-"
+        job = new.job(derived + role)
+        assert job.options.get("checks") == entry.get("checks"), job.name
+        assert job.options.get("feedback") == entry.get("feedback"), job.name
+        for check in entry.get("checks") or []:
+            if isinstance(check, dict):
+                for name in check["inputs"]:
+                    assert name in job.inputs, f"{job.name}: declared check input {name} is wired"
+    assert new.job("apply-record-verification").options["feedback"].endswith("cited_records")
+
+
 def test_derived_criteria_include_what_the_hand_written_jobs_pinned(plans):
     old, new = plans
     layout = analysis_layout()

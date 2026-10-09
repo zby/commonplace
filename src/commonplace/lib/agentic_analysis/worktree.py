@@ -106,7 +106,8 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     view = inspect(run_dir)
     fixed = view["declaration"]
     shipped = worktree / "kb" / PLAN
-    if Path(fixed["plan"]) != shipped or fixed["sha256"] != sha256(shipped.read_bytes()).hexdigest():
+    # The run fixed the plan's expansion; the shipped file is the compact plan.
+    if Path(fixed["plan"]) != shipped or fixed.get("plan_sha256") != sha256(shipped.read_bytes()).hexdigest():
         raise ValueError("integration requires the fixed shipped analysis plan")
     if fixed["type_sha256"] != sha256((worktree / "kb" / fixed["type_spec"]).read_bytes()).hexdigest():
         raise ValueError("integration requires the unchanged shipped artifact type")

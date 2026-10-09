@@ -86,8 +86,8 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
         raise FileExistsError(f"{run_dir} already holds a run")
     library = library_root().resolve()
     # A compact plan is expanded here; the run fixes and runs the expansion.
-    declaration = expand_text(Path(plan).read_text(encoding="utf-8"), library=library,
-                              plan_dir=Path(plan).resolve().parent)
+    source = Path(plan).read_bytes()
+    declaration = expand_text(source.decode("utf-8"), library=library, plan_dir=Path(plan).resolve().parent)
     type_spec = load_plan(declaration).type_spec
     type_text = (library / type_spec).read_text(encoding="utf-8")
     layout, relations = _parse_type(type_text, str(type_spec))
@@ -100,6 +100,7 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
         raise ValueError(f"the plan substitutes run parameters not given: {', '.join(missing)}")
     store.create({
         "plan": str(Path(plan).resolve()),
+        "plan_sha256": digest(source),
         "declaration": declaration,
         "type_spec": str(type_spec),
         "library": str(library),
@@ -276,9 +277,14 @@ def _inspect(run: Run) -> dict:
 
 
 def _declaration_identity(run: Run) -> dict:
-    """Which plan and type the run fixed at start, by path and content digest."""
+    """Which plan and type the run fixed at start, by path and content digest.
+
+    `plan_sha256` is the plan file as shipped; `sha256` is the declaration the
+    run fixed, which differs for a compact plan the engine expanded.
+    """
     metadata = run.store.read_metadata()
-    return {"plan": metadata["plan"], "sha256": digest(metadata["declaration"].encode("utf-8")),
+    return {"plan": metadata["plan"], "plan_sha256": metadata.get("plan_sha256"),
+            "sha256": digest(metadata["declaration"].encode("utf-8")),
             "type_spec": metadata["type_spec"], "type_sha256": digest(metadata["type"].encode("utf-8"))}
 
 

@@ -30,6 +30,7 @@ import yaml
 from commonplace.artifactrun.plan import PlanError
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
+from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME
 
 STANDARD = "commonplace.artifactrun.handlers"
 CHECK = f"{STANDARD}.check"
@@ -97,7 +98,10 @@ def type_closure(library: Path, type_paths: list[str]) -> list[str]:
                 add(_relative(path, schema))
         else:
             for ref in _refs(yaml.safe_load(text)):
-                add(_relative(path, ref.partition("#")[0]))
+                target = ref.partition("#")[0]
+                # The validator's resolver reads `commonplace:<path>` from the library root.
+                prefix = f"{SCHEMA_URI_SCHEME}:"
+                add(target[len(prefix):] if target.startswith(prefix) else _relative(path, target))
 
     for path in type_paths:
         add(path)
@@ -353,6 +357,9 @@ class _Expansion:
         missing = [subject for subject in role.verifies if subject not in reads]
         if missing:
             raise PlanError(f"role {name}: verifies {', '.join(missing)} but does not read them")
+        # The frozen source comes handed when the verifier read its member, else live.
+        if self.frozen is not None and self.frozen != name and f"{self.frozen}-seen" not in inputs:
+            inputs[self.frozen] = {"address": "role", "source": self.frozen}
         inputs.update(self.check_inputs(entry))
         roles = [spec["source"] for read, spec in reads.items() if spec["address"] == "role"]
         inputs.update(self.criteria([name, *roles]))

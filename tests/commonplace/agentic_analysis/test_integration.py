@@ -42,6 +42,7 @@ def proof(tmp_path, monkeypatch):
     run = root / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
     store = RunStore(run)
     store.create({"declaration": declaration.read_text(), "plan": str(declaration),
+                  "plan_sha256": sha256(declaration.read_bytes()).hexdigest(),
                   "type": "scripted type\n", "type_spec": "type.md"})
     destination = root / aw.RETAINED_ROOT / "example"
     destination.mkdir(parents=True)
@@ -51,7 +52,8 @@ def proof(tmp_path, monkeypatch):
     for name, data in files.items():
         (destination / name).write_bytes(data)
     parameters = {"system": "Example", "source": "fixture", "source-identity": "identity"}
-    view = {"declaration": {"plan": str(declaration), "sha256": sha256(declaration.read_bytes()).hexdigest(),
+    view = {"declaration": {"plan": str(declaration), "plan_sha256": sha256(declaration.read_bytes()).hexdigest(),
+                            "sha256": sha256(b"an expansion the engine fixed\n").hexdigest(),
                             "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
             "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
     receipt = {"published": True, "destination": str(destination), "members": effects.hashes(files),
@@ -104,7 +106,7 @@ def test_engine_completion_is_required_independently(proof, case):
     elif case == "local":
         proof.engine.receipt = {"published": False}
     else:
-        proof.engine.view["declaration"]["sha256"] = "0" * 64
+        proof.engine.view["declaration"]["plan_sha256"] = "0" * 64
     with pytest.raises(ValueError):
         verify(proof)
 
@@ -196,3 +198,20 @@ def test_integration_git_actions_are_scoped_and_merge(proof, monkeypatch, tmp_pa
     assert (origin / destination.relative_to(tree) / "overview.md").read_bytes() == proof.files["overview.md"]
     changed = git(tree, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()
     assert changed and all(name.startswith(destination.relative_to(tree).as_posix() + "/") for name in changed)
+
+
+def test_a_real_compact_plan_s_fixed_identity_names_the_shipped_file(tmp_path, monkeypatch):
+    """The run fixes the expansion; integration compares the plan file the operator shipped."""
+    from commonplace.artifactrun import inspect, start_run
+    from commonplace.artifactrun.engine import library_root
+
+    library = Path(__file__).resolve().parents[3] / "kb"
+    monkeypatch.setattr("commonplace.artifactrun.engine.library_root", lambda: library)
+    assert library_root() == library
+    run = tmp_path / "run"
+    start_run(run, library / PLAN, parameters={"system": "x", "source": "y", "source-identity": "z"})
+    fixed = inspect(run)["declaration"]
+    shipped = library / PLAN
+    assert fixed["plan"] == str(shipped.resolve())
+    assert fixed["plan_sha256"] == sha256(shipped.read_bytes()).hexdigest()
+    assert fixed["sha256"] != fixed["plan_sha256"], "the fixed declaration is the expansion, not the file"

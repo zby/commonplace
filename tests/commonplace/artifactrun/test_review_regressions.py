@@ -121,3 +121,43 @@ def test_a_judgment_does_not_lapse_on_an_order_only_input(tmp_path: Path, tmp_li
     c.complete("summary", "summary S1\n")
     assert c.ran() == [], "a new record of identical bytes is no signal"
     assert c.status.publishable, "so the check's acceptance keeps holding"
+
+
+def test_a_check_reruns_when_an_optional_partner_disappears_for_good(tmp_path: Path, tmp_library: None,
+                                                                     monkeypatch: pytest.MonkeyPatch) -> None:
+    """A disposition that keeps the summary but retires what it cited.
+
+    The summary's acceptance rested on the report and the other; once they are
+    gone it stops holding, and nothing would renew it unless the check reran
+    over the remaining snapshot.
+    """
+    import yaml
+
+    from commonplace.artifactrun import start_run
+    from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV, LOG_ENV
+    from tests.commonplace.artifactrun.support import (
+        TOY_TYPE,
+        record_calls,
+        toy_library,
+    )
+
+    declaration, method = toy_library(tmp_path, compact=True)
+    toy = yaml.safe_load(yaml.safe_dump(TOY_TYPE))
+    toy["layout"]["required"]["by"]["values"]["partial"] = ["summary"]
+    (tmp_path / "kb/types/toy-set.md").write_text(
+        "---\n" + yaml.safe_dump(toy, sort_keys=False) + "---\n\n# Toy set\n", encoding="utf-8")
+    log = tmp_path / "handlers.log"
+    monkeypatch.setenv(LOG_ENV, str(log))
+    monkeypatch.delenv(INTERRUPT_ENV, raising=False)
+    record_calls(monkeypatch)
+    start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})
+    c = Coordinator(run_dir=tmp_path / "run", method=method, log=log)
+    c.advance()
+    c.through_publication()
+    c.ran()
+    judge(c.run_dir, role="brief", outcome="refused", findings="narrow the scope")
+    c.advance()
+    c.complete("brief", "---\ndisposition: partial\n---\n# Brief\n")
+    assert c.member("report") is None and c.member("summary") is not None
+    assert "check-summary" in c.ran(), "the summary's acceptance lapsed with its partners; the check renews it"
+    assert c.status.publishable

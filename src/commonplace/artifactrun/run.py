@@ -267,9 +267,15 @@ class Run:
             return True
         def changed(name: str, resolved: Resolved) -> bool:
             spec = job.inputs[name]
-            if (spec.order_only or resolved.version is None
-                    or resolved.version == last["pins"].get(name, {}).get("version")):
+            if spec.order_only or resolved.version == last["pins"].get(name, {}).get("version"):
                 return False
+            if resolved.version is None:
+                # An optional input that disappeared: a code job reruns only when
+                # a judgment it made on that basis stopped holding, so the
+                # remaining snapshot gets a judgment again. Model jobs never
+                # rerun on absence.
+                return (isinstance(job, CodeJob) and last["pins"].get(name, {}).get("version") is not None
+                        and any(j["attempt"] == last["id"] and not self.holds(j) for j in self.judgments))
             if isinstance(job, ModelJob) and spec.address == "refusal" and spec.source == job.name:
                 # Restoring earlier bytes can expose an earlier refusal again.
                 # Reading it in a completed attempt answered it; a structural
