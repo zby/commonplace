@@ -56,7 +56,7 @@ identity matching the opening's, limits carried from a verification into
 the synthesis. And checks that consult something outside the artifact: the
 boundary's binding to the run parameters and the frozen source, the
 feedback an author receives with cited records, and effect verification at
-acquisition and publication. The record check that runs before
+acquisition and publication. The report check that runs before
 verification is structural: it validates the record roles as one snapshot
 and writes the findings, including the artifact-level findings a role
 check filters out, for the verifier to read.
@@ -182,7 +182,7 @@ own Blockers section is `none`. Its refusal of a
 subject is the subject's blockers followed by the verdict's Limits, plus
 whatever a declared `feedback` function appends.
 
-What stays the analysis's own: the record-check gate, that a verifier must
+What stays the analysis's own: the report-check gate, that a verifier must
 address structural failures, as a declared check on the apply job; the
 feedback composition with cited records, as a declared `feedback`
 function; and the materiality rules that say what a blocker and a limit
@@ -209,14 +209,14 @@ mission:
   max_attempts: 3
   outputs: [report, answers]
   reads: {boundary: required, runtime: order-only}
-- job: record-check
+- job: report-check
   handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
-  reads: {boundary: required, record-check:findings: optional}
+  reads: {boundary: required, report-check:findings: optional}
   checks:
     - {function: commonplace.lib.agentic_analysis.verification.record_check_gate,
-       inputs: {findings: record-check:findings}}
+       inputs: {findings: report-check:findings}}
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile
   reads: {boundary: required, runtime: required, memory: required,
@@ -441,7 +441,7 @@ deletes checks the opener and the analyst check carry until then.
 3. The compact plan and its loader, with the `checks` and `feedback`
    extensions, proven by the fidelity tests and then by switching the
    analysis skill to the compact plan. The extensions are part of this
-   step, not a later escape: the record-check gate and the cited-records
+   step, not a later escape: the report-check gate and the cited-records
    feedback need them on the first compact analysis plan. Done 2026-10-09
    except the production run: the analysis runs on the compact plan, the
    wrappers are deleted, and the fidelity test applies the decided
@@ -571,7 +571,7 @@ form and relations, not analytical truth.
   execution test runs the expanded plan through the engine tests' scenario
   to the same judgments and coverage as the hand-written one. Then one
   analysis runs through the compact plan to publication, with the
-  record-check gate and the cited-records feedback as declared functions
+  report-check gate and the cited-records feedback as declared functions
   and the consumer's apply handlers deleted. All but the production run
   are met as of 2026-10-09; the run is the operator's call.
 - Step 4: the opener's run-binding checks are deleted after draft

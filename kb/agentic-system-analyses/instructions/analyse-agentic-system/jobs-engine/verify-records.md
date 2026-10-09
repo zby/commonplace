@@ -8,7 +8,7 @@ type: types/instruction.md
 Judge whether the reconciled records support a source-grounded bounded account, distinguishing material blockers from local limits.
 
 Judge exactly the supplied `boundary`, `runtime`, `memory`, `epistemic`,
-`reconciliation` and `record-check`.
+`reconciliation` and `report-check`.
 Code has already checked what the verification type assigns to it; judge
 what that type assigns to the verifier.
 
@@ -41,7 +41,7 @@ or `- reconciliation: ...`, citing the records, the defective passage, what is
 wrong and its evidence. Indent continuation lines. A defect requiring two
 reports to change is two separately addressed blockers. Address dependent
 passages relying on a defective value to their own authors. Every structural
-failure in `record-check` requires an explicit blocker addressed to its report;
+failure in `report-check` requires an explicit blocker addressed to its report;
 if the finding cannot be routed within this job's authority, write `problem`
 instead of silently dismissing it. A conflict missing record citations, both findings,
 evidence or prevented conclusion is addressed to reconciliation. Conflicts

@@ -20,19 +20,19 @@ def _artifact_check_failed(data: bytes) -> bool:
     text = data.decode("utf-8").strip()
     heading = ARTIFACT_CHECK_HEADING
     if not text.startswith(heading + "\n"):
-        raise ValueError(f"handed record-check must be a {heading.removeprefix('# ')} document")
+        raise ValueError(f"handed report-check must be a {heading.removeprefix('# ')} document")
     body = text[len(heading):].strip()
     if body == "none":
         return False
     if not body or not body.startswith("- "):
-        raise ValueError("handed record-check must contain none or findings")
+        raise ValueError("handed report-check must contain none or findings")
     return True
 
 
 def record_check_gate(check: Candidate) -> list[str]:
     """A verifier handed structural findings must address them with at least one blocker."""
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
-    if _artifact_check_failed(check.attempt.read("record-check-seen")) and not entries:
+    if _artifact_check_failed(check.attempt.read("report-check-seen")) and not entries:
         return [("structural failures require explicit blockers (code requires at least one; "
                  "the verifier must address every finding)")]
     return []

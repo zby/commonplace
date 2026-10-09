@@ -347,7 +347,7 @@ the handed profile input is named by its role, and the nine jobs that no
 longer read the opening metadata no longer declare it. The four copies,
 about 340 lines, became a 129-line helper plus per-job checks; the package
 shrank by 76 lines, less than estimated, because the helper keeps
-docstrings and also serves the record-check job.
+docstrings and also serves the report-check job.
 
 ## Refusal and correction protocol
 

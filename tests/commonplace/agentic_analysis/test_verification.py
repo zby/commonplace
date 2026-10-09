@@ -104,13 +104,13 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
             to_verifier(a)
     assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
     p = parameters(a.coordinator.handout("report-verification"))
-    assert Path(p["record-check"]).read_text() == "# Artifact check\n\nnone\n"
+    assert Path(p["report-check"]).read_text() == "# Artifact check\n\nnone\n"
     a.coordinator.complete("report-verification", verdict(a))
     applied = judgments(a, "apply-report-verification")
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
     assert {j["subject"]["role"] for j in applied} == {"report-verification", *RECORDS}
-    assert all({"verifier-attempt", "record-check-seen"} <= j["basis"].keys() for j in applied)
+    assert all({"verifier-attempt", "report-check-seen"} <= j["basis"].keys() for j in applied)
     assert not a.coordinator.status.publishable
 
 
@@ -180,13 +180,13 @@ def test_declined_answers_rerun_verifier_without_semantic_override(records):
 def test_record_check_uses_pinned_content_not_projection_or_later_members(records):
     a = records
     to_verifier(a)
-    clean = code_attempt(a, "record-check")
+    clean = code_attempt(a, "report-check")
     baseline = artifact_check(clean)
     (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
     (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
     assert artifact_check(clean) == baseline
     bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
-    findings = artifact_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
+    findings = artifact_check(code_attempt(a, "report-check", {"runtime": bad}))["findings"].decode()
     assert "Runtime account" in findings
     assert "synthesis" not in findings and "overview" not in findings
 
@@ -195,7 +195,7 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
     a.coordinator.complete("report-verification", verdict(a))
-    attempt = code_attempt(a, "apply-report-verification", {"record-check-seen": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
+    attempt = code_attempt(a, "apply-report-verification", {"report-check-seen": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
@@ -242,6 +242,6 @@ def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
 def test_source_drift_is_a_record_check_finding(records):
     a = records
     to_verifier(a)
-    attempt = code_attempt(a, "record-check")
+    attempt = code_attempt(a, "report-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
     assert "does not hold exactly" in artifact_check(attempt)["findings"].decode()

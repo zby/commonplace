@@ -122,7 +122,7 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-- job: record-check
+- job: report-check
   handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
@@ -133,7 +133,7 @@ jobs:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
-          'epistemic:answers': optional, 'record-check:findings': required}
+          'epistemic:answers': optional, 'report-check:findings': required}
   checks: [commonplace.lib.agentic_analysis.verification.record_check_gate]
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile

@@ -217,7 +217,7 @@ jobs:
     memory: {address: role, source: memory, required: true}
     runtime: {address: role, source: runtime, required: true}
   outputs: []
-- name: record-check
+- name: report-check
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.record_check
   outputs: [findings]
@@ -254,7 +254,7 @@ jobs:
     memory-answers: {address: output, source: 'memory:answers', required: false}
     epistemic-answers: {address: output, source: 'epistemic:answers', required: false}
     refusal: {address: refusal, source: verify, required: false}
-    record-check: {address: output, source: 'record-check:findings'}
+    report-check: {address: output, source: 'report-check:findings'}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: report-verification}
 - name: apply-verify
   kind: code
@@ -268,7 +268,7 @@ jobs:
     memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
     epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
     reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    record-check-seen: {address: handed, source: 'verifier-attempt:record-check'}
+    report-check-seen: {address: handed, source: 'verifier-attempt:report-check'}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
   outputs: []
 - name: profile

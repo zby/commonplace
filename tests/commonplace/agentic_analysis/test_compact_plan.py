@@ -42,7 +42,7 @@ INPUT_RENAMES = {
 }
 STANDARD = {"check": "commonplace.artifactrun.handlers.check",
             "apply": "commonplace.artifactrun.handlers.apply_verdict",
-            "record-check": "commonplace.artifactrun.handlers.artifact_check"}
+            "report-check": "commonplace.artifactrun.handlers.artifact_check"}
 
 
 def job_name(name: str) -> str:
@@ -73,7 +73,7 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
     name = job_name(old_job.name)
     renames = INPUT_RENAMES.get(name, {})
     inputs = {renames.get(key, key): renamed(spec) for key, spec in old_job.inputs.items() if spec.address != "file"}
-    if name.startswith("check-") and name != "record-check":
+    if name.startswith("check-") and name != "report-check":
         role = layout.roles[name.removeprefix("check-")]
         identity = {source.role for source in role.identity}
         # A check reads its producer's record order-only: identical reruns are no signal.
@@ -142,7 +142,7 @@ def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
                                        "commonplace.lib.agentic_analysis.publication.")):
             assert job.handler == old_job.handler, job.name  # The analysis's own jobs stay.
             continue
-        kind = "record-check" if job.name == "record-check" else job.name.partition("-")[0]
+        kind = "report-check" if job.name == "report-check" else job.name.partition("-")[0]
         assert job.handler == STANDARD[kind], job.name
         assert job.options.get("frozen-source") == "boundary", job.name
 

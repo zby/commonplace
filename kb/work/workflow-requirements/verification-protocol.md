@@ -11,8 +11,8 @@ language, and the layout does not supply one.
 
 Since d17a53d4a (2026-10-09) the analysis runs from a compact plan, and
 the handlers named below are gone. The three apply handlers are the
-standard `artifactrun.handlers.apply_verdict`; the record check is the
-standard `artifact_check`, which writes `# Artifact check`; the record-check gate,
+standard `artifactrun.handlers.apply_verdict`; the report check is the
+standard `artifact_check`, which writes `# Artifact check`; the report-check gate,
 the cited-records feedback (`_feedback`) and record preservation
 (`_check_analyst`) are the declared checks `record_check_gate`,
 `cited_records` and `preserved_records`. The candidate is built by
@@ -133,8 +133,8 @@ Blockers `none`, the handler accepts all four handed versions. The record
 verifier's instruction states the same: a verdict with blockers supplies
 refusals only to addressed authors and settles no other gate.
 
-**The record-check gate.** Before verification, the code job
-`record-check` validates the five record members as one pinned snapshot
+**The report-check gate.** Before verification, the code job
+`report-check` validates the five record members as one pinned snapshot
 and writes its findings as a document (`# Record check`, a list or
 `none`). The verifier reads it. If it reported failures and the verdict has
 no blockers, the apply handler refuses the verdict: a structural failure
@@ -182,8 +182,8 @@ is not settled; `corrected` is checked against the changed passage,
 1. The memory analyst completes. `check-memory` refuses: `## Findings`
    lists validation failures, `## Blockers` is `none`. The analyst's next
    attempt repairs, with an empty answers file.
-2. `check-memory` accepts. `record-check` runs and writes `none`. `verify`
-   is handed the five records and the record check.
+2. `check-memory` accepts. `report-check` runs and writes `none`. `verify`
+   is handed the five records and the report check.
 3. The verifier completes with two blockers, both `memory:`.
    `apply-verify` validates the verdict, accepts it over its relations to
    boundary, refuses the handed memory version with the two blockers as
@@ -191,7 +191,7 @@ is not settled; `corrected` is checked against the changed passage,
 4. The memory analyst is ready again, with the refusal as input. It
    corrects and writes two answers. `check-memory` checks the answers
    against that exact refusal and the handed previous version, then accepts.
-5. `record-check` reruns on the new snapshot. `verify` is ready because its
+5. `report-check` reruns on the new snapshot. `verify` is ready because its
    memory input changed; its hand-out carries the previous verdict and the
    memory answers. It completes with Blockers `none`. `apply-verify`
    accepts all four handed versions; the profile's judgment gates are now
@@ -214,7 +214,7 @@ is not settled; `corrected` is checked against the changed passage,
 | Materiality: what is a blocker, what is a limit | verification type and verifier instructions | prose, not code |
 
 The policy choices a generic apply handler would have to take as given
-are the partial-verdict policy, the addressee grammar, the record-check
+are the partial-verdict policy, the addressee grammar, the report-check
 gate and the limits rule. The first two become the fixed policy of a named
 protocol: a blocker names the subject it addresses, addressed subjects are
 refused, unaddressed subjects wait. Other policies are coherent, such as

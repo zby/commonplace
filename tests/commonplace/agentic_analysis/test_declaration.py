@@ -234,16 +234,16 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
 
 def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     jobs, _ = graph
-    check = jobs.job("record-check")
+    check = jobs.job("report-check")
     assert check.outputs == ("findings",) and check.role is None
     assert {spec.source for spec in check.inputs.values() if spec.address == "role"} == {"boundary", *RECORDS}
     assert all(spec.required for spec in check.inputs.values())
-    spec = jobs.job("report-verification").inputs["record-check"]
-    assert (spec.address, spec.source, spec.required) == ("output", "record-check:findings", True)
+    spec = jobs.job("report-verification").inputs["report-check"]
+    assert (spec.address, spec.source, spec.required) == ("output", "report-check:findings", True)
     names = [job.name for job in jobs.jobs]
-    assert names.index("record-check") < names.index("report-verification")
-    handed = jobs.job("apply-report-verification").inputs["record-check-seen"]
-    assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:record-check", True)
+    assert names.index("report-check") < names.index("report-verification")
+    handed = jobs.job("apply-report-verification").inputs["report-check-seen"]
+    assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:report-check", True)
 
 
 @pytest.mark.slow
