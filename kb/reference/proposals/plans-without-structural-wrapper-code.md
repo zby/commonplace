@@ -220,6 +220,19 @@ mission:
 
 The syntax, stated so that the loader does not invent it:
 
+- **Model entries.** `instruction` is a path relative to the plan file's
+  directory, expanded to a library path. `files: {<name>: <library path>}`
+  declares named file inputs such as contracts. `criteria` names groups as
+  today. The loader adds the plan-level `inputs` and the validation
+  parameters, `validation-artifact` and `validation-role`, to every
+  role-filling entry; the engine's own loader already adds the refusal
+  input. `defaults.parameters` is merged under an entry's `parameters`.
+- **Input names.** A role read is named after the role. A `job:output`
+  read is named after the job when the output is the job's only one, else
+  `<job>-<output>`. A read `refusal:<role>` is the filling job's latest
+  refusal, named `<role>-refusal`. A name that today differs from this,
+  such as the profile verifier's `profile` for the memory profile, is
+  renamed in its instruction rather than given a naming syntax.
 - **Reads.** `reads` defaults to the role's cites and identity sources,
   `required`. An explicit `reads` replaces the default, so an entry that
   names any read names them all. A read is a role, checked against the
@@ -234,8 +247,14 @@ The syntax, stated so that the loader does not invent it:
   from as required role inputs, since the layout refuses a member whose
   identity source is absent, and the roles it cites as optional role
   inputs, so the check covers the relations to the partners present
-  whatever the model job was handed. The derived apply receives the handed versions of the roles the
-  verifier verifies, from the verifier's attempt. An input only a declared
+  whatever the model job was handed; plus the candidate, the producer
+  attempt, the answered refusal, and the answers when the filling job
+  declares a second output. The derived apply receives, from the verifier's
+  attempt, the handed version of every role the verifier read, named
+  `<role>-seen`, so its content acceptance covers the verdict's `cites`
+  relations; the subjects are those the verifier role verifies. An
+  incumbent or the opening metadata is an input of a declared check, not a
+  derived one. An input only a declared
   check needs, which the model job must not see, is declared on the check
   entry's `inputs` in the same read grammar and reaches only the derived
   job.
@@ -251,6 +270,15 @@ The syntax, stated so that the loader does not invent it:
   inputs and any handed input without more plumbing. `feedback` names one function receiving the subject role,
   its blockers and the handed snapshot and returning text the refusal
   appends. Both are consumed by the standard handlers, which call them.
+- **Options.** A code job may carry an `options` mapping the engine fixes
+  with the declaration and never interprets, exposed to the handler. The
+  loader writes `frozen-source`, `checks` and `feedback` there; a check's
+  declared inputs become ordinary job inputs. The name is distinct from
+  `parameters`, which on a model job are substituted into its hand-out
+  and on an attempt are the run's.
+- **Publish.** The loader derives no publish job unless the plan asks for
+  one. The analysis keeps its own assembly and publication, so the standard
+  directory publish waits for a consumer without a publisher.
 - **Standard jobs on roles.** A `job:` entry is a code job that neither
   fills a role nor is derived, running a standard handler over roles. Its
   `inputs` as a list name roles; as a mapping they take the full read
