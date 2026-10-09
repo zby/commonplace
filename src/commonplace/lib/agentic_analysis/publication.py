@@ -127,16 +127,19 @@ def _snapshot(attempt: CodeAttempt, *, overview: bool):
 
 
 def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: dict) -> dict:
-    """The run's worker profile, after checking each member's completed producer record.
+    """The run's worker profile and the exact model its workers report.
 
     Opening resolved the profile the run started with; every worker uses it.
-    A producer record that reports a model or effort must agree with it.
+    A producer record that a coordinator reported with a model or effort must
+    agree with it. Every producer must report the same model from its
+    environment, which may be `not stated`.
     """
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
             isinstance(worker.get(field), str) and worker[field].strip()
             for field in ("profile", "harness", "launch-model", "effort")):
         raise ValueError("the opening metadata records no worker profile")
+    reported = set()
     for role, data in members.items():
         if role == "overview":
             continue  # Code-written, never a model worker.
@@ -152,7 +155,11 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
             if record.get(field) is not None and record[field] != worker[profiled]:
                 raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
                                  f"not the run profile's {worker[profiled]!r}")
-    return worker
+        reported.add(record.get("worker_model"))
+    if len(reported) != 1 or not all(isinstance(model, str) and model for model in reported):
+        raise ValueError("every worker must report the same model; reported: "
+                         + ", ".join(sorted(map(str, reported))))
+    return {**worker, "model": reported.pop()}
 
 
 def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],

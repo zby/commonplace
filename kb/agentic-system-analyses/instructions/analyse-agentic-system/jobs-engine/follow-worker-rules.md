@@ -49,7 +49,7 @@ uncertainty that only limits a conclusion stays beside that conclusion in
 ## Stay within authority
 
 Write only the supplied output paths (`output` and `output-answers` when
-present), `problem` and intermediate files under `scratch`. The
+present), `problem`, `worker-model` and intermediate files under `scratch`. The
 boundary instruction separately permits immutable captures or bundles under
 `capture-directory` in `opening`, including creation of that directory. Do not
 modify existing captures. Closed hand-out workspaces are disposable; captures

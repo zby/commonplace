@@ -147,8 +147,8 @@ def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordin
     c.complete("report", "report A\n", answers="")
     run = Run(RunStore(c.run_dir))
     record = json.loads(run.resolve("r", {"r": Input("attempt", "report")}).data)
-    assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort"}
-    assert record["job"] == "report" and record["kind"] == "model"
+    assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model"}
+    assert record["job"] == "report" and record["kind"] == "model" and record["worker_model"] == "test-model"
     assert record["outputs"]["report"] == digest(b"report A\n")
 
 
@@ -202,3 +202,18 @@ def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> Non
     job = load_plan(yaml.safe_dump(data)).job(data["jobs"][1]["name"])
     assert job.inputs["contract"] == Input("file", "contracts/report.md")
     assert job.inputs["shared"] == Input("file", "contracts/shared.md")
+
+
+
+def test_a_completion_without_a_worker_model_report_fails(coordinator: Coordinator) -> None:
+    from commonplace.artifactrun import AttemptResult
+    from commonplace.artifactrun.store import RunStore
+
+    c = coordinator
+    c.through_brief()
+    handout = c.handout("report")
+    c.write(handout, "report A\n", answers="")
+    handout.worker_model.unlink()
+    c.advance(AttemptResult(handout.attempt))
+    record = next(r for r in RunStore(c.run_dir).attempt_records() if r["id"] == handout.attempt)
+    assert record["state"] == "failed" and "worker-model" in record["reason"]

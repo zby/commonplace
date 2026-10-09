@@ -90,9 +90,11 @@ is retired and is not converted or mirrored by the current workflow.
 `ARTIFACT.yaml` selects this type. In a finished set it records a SHA-256 for every member and
 names the worker that produced the run under `worker`: the worker `profile`
 the run started with, and that profile's `harness`, `launch-model` and
-reasoning `effort`. The launch model is the name the harness selects a model
-by, not a resolved version: an alias such as `sonnet` can later select a
-newer model. One profile writes a whole run, so the manifest carries it once.
+reasoning `effort`, and the `model` every worker reported. The launch model
+is the name the harness selects a model by: an alias such as `sonnet` can
+later select a newer model. The reported model is the exact ID each worker's
+environment stated, or `not stated`; publication requires one value across
+the run. One profile writes a whole run, so the manifest carries it once.
 Sets published before 2026-10-06 have no `worker`.
 
 The layout above declares the members. Every set has the boundary and the
