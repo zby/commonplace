@@ -317,9 +317,9 @@ The syntax, stated so that the loader does not invent it:
 - **Criteria.** A derived check, apply or standard job's criteria are the
   type closure of its roles: each role's type spec, its schema and the
   base schemas it references, plus one plan-level group, conventionally
-  `check`, for files that type rules read but no type references, such as
-  the records contract. Model jobs keep naming their groups explicitly, as
-  today.
+  `check`, for files that type rules read but no type references, if any
+  remain once the records contract is inside the set type. Model jobs keep
+  naming their groups explicitly, as today.
 - **The frozen source.** A plan-level `frozen-source: <role>` names the
   member whose `source` field pins the source the run may inspect. The
   loader passes it to every derived check, apply and set check, which read
@@ -346,6 +346,54 @@ The compact analysis plan is 237 lines against the hand-written 498: the
 criteria groups take about 45 and the four full-form jobs about 60.
 Widening the type's `cites` to mean reads was rejected because it would
 make the validator read mission.
+
+### The hand-out template and derived type inputs
+
+Each analysis job instruction is about half boilerplate: read order, the
+follow list, what the inputs are, answers, the self-check and the return.
+This extension, approved 2026-10-09, moves that boilerplate into one file
+the plan names and derives the type inputs from the layout, so a job
+instruction holds only its mission.
+
+- **The engine keeps the frame.** The hand-out module still writes the
+  "Follow <instruction> with:" line, the input lines, the reading batches,
+  the problem line and the worker-runtime section. A plan-level
+  `handout: <path>`, relative to the plan file like an entry's
+  instruction, names a Markdown file the engine renders as one section of
+  that frame, after the input lines and before the reading batches. A plan
+  without the key gets today's prompt, so the toy plan is untouched. One
+  composer: the template fills its slot and nothing else.
+- **Slots.** `{name}` placeholders in the parameter grammar, filled from
+  the plan, the layout and the run: `{role}`; `{member-type}`, the
+  layout's type for the role; `{set-type}`, the run's type; `{output}`,
+  the primary output; `{answers}`, the second output or empty;
+  `{validation-artifact}` and `{validation-role}`; and `{param:<name>}`
+  for a run parameter, as in a model job's parameters. An unknown
+  placeholder is a plan error at start. One conditional: a paragraph
+  whose first line is `[answers]` is kept, without the marker, only for a
+  job that declares an answers output. A second template file for
+  answering jobs was the alternative and would repeat the rest.
+- **Derived type inputs.** Each role-filling model job receives as file
+  inputs its own role's type as `member-type`, the type of each role it
+  reads as `<role>-type`, and the run's type as `set-type`. These replace
+  the `files:` entries that named type specs; `files:` stays for files
+  that are not types. Worker instructions using the old names change in
+  the same commit.
+- **Precedence, stated once in the template.** The member type owns what
+  the member contains and wins over the mission file on conflict; the set
+  type owns shared and cross-member shape; the worker rules own
+  execution. The hand-out is the complete write procedure, and the
+  repository's authoring skills do not apply to a worker: they assume an
+  operator, the KB as evidence and KB destinations. This is the split the
+  connect skill already makes, execution in the skill and the contract in
+  the type.
+- **Mission files shrink** to a purpose sentence and what the job must
+  establish and challenge. The loader does not police this.
+- **Ordering.** This lands with the contract moves: the boundary contract
+  into the boundary type, the records and evidence content into the set
+  type, the sources procedure into the worker rules. The set type becomes
+  a file workers read, which reverses the earlier cut of its body to
+  maintainer prose; its new sections are written for workers.
 
 ### Run binding as identity
 
@@ -391,6 +439,11 @@ deletes checks the opener and the analyst check carry until then.
    are fixed as of 2026-10-09.
 4. Run binding as identity, deleting the opener's and the analyst check's
    remaining duplicates.
+5. The hand-out template, in three parts: template support in the engine
+   and loader with the toy plan untouched; the analysis template, the
+   mission-file shrink and the derived type inputs with the old contract
+   files still in place; then the contract moves, one commit each,
+   boundary, records, sources. Independent of step 4.
 
 ## Not taken
 
@@ -484,3 +537,9 @@ form and relations, not analytical truth.
   are met as of 2026-10-09; the run is the operator's call.
 - Step 4: the opener's run-binding checks are deleted after draft
   validation reports the same mismatches.
+- Step 5: the toy plan's prompts are byte-identical before and after
+  template support; no analysis job instruction names an input, output,
+  answers file or check command; no model job in the compact analysis plan
+  lists a type under `files:`; the three contract files are gone and
+  nothing links them; and one analysis runs to publication on the
+  templated hand-outs.
