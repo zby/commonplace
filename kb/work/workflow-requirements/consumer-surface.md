@@ -454,9 +454,9 @@ from the store, which is the storage API the design says does not exist.
 
 Done when:
 
-- the analysis package and the CLI import nothing from `commonplace.artifactrun`
-  except the public names in `api-design.md`, locking and version reads
-  included;
+- the analysis package and the CLI import nothing from the engine's core
+  modules except the public names in `api-design.md`, locking and version
+  reads included;
 - no handler reads the artifact type as a file input or parses it;
 - `plan.yaml` has no `coverage-*` or `*-accepted` inputs, and `assemble`
   is not ready, rather than failing, while a relation is uncovered;

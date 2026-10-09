@@ -1,11 +1,11 @@
 ---
-description: "Proposal: give workflow-engine stops a kind from a small closed set, and give uncertain stops the evidence to inspect before retrying, so a coordinator can branch on stops without parsing prose"
+description: "Proposal: give engine stops a kind from a small closed set, and give uncertain stops the evidence to inspect before retrying, so a coordinator can branch on stops without parsing prose"
 type: reference/types/design-proposal.md
 ---
 
 # Coded engine stops
 
-The workflow engine reports why an invocation ended only in prose. This
+The engine reports why an invocation ended only in prose. This
 proposal gives each stop a kind from a small closed set, and gives an
 uncertain stop the evidence to inspect before anyone retries. It is
 deliberately minimal: engine stops only, not handler or validator errors.

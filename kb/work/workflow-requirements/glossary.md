@@ -39,8 +39,8 @@ itself be composite is out of scope (operator, 2026-10-09).
 |---|---|---|---|---|
 | One execution of a plan, producing one artifact | artifact run | `Run`, package `artifactrun` | An artifact run executes a plan with parameters and produces one artifact. | decided 2026-10-09: the bare word *run* is the codebase's commonest verb, so the concept takes a compound; *setrun* rejected with *set*, *runset* rejected as reading "a set of runs". Inside the package the class stays `Run`. `commonplace.workflow` renamed 2026-10-09 |
 | The code that runs artifact runs | engine | package `artifactrun` | The engine schedules, pins, judges and covers; it knows nothing of validation, Git or files outside its store. | added |
-| What any consumer's handlers and command-line glue reuse | shared layer | package `setrun`, label pending | The shared layer holds the concept modules consumers reuse: checks, sources, effects, worktree, report. | added: a namespace, not a concept; its label must stop sounding like *artifact run* |
-| What supplies a plan, a type and any handlers | consumer | — | A consumer supplies a plan, a type and the handlers the plan names. | added: the `setrun` docstring's word |
+| What any consumer's handlers and command-line glue reuse | reuse modules | `artifactrun.checks`, `.sources`, `.effects`, `.worktree`, `.report` | The reuse modules are the engine's modules that code-job handlers and the coordinator's command line call. | decided 2026-10-09: no package of their own; every one imports the engine, so they live in it beside the core. The former `setrun` package was a namespace, not a concept |
+| What supplies a plan, a type and any handlers | consumer | — | A consumer supplies a plan, a type and the handlers the plan names. | added: the former `setrun` docstring's word |
 
 ## Structure
 
@@ -136,8 +136,8 @@ Established terms are borrowed only where their meaning matches exactly;
 a near-match misleads an agent more than a coined word (method rule 5).
 
 - **Kept as ours.** *Candidate* (an output not yet accepted; as in a release
-  candidate), *member*, *role*, *set*, *judgment*, *acceptance*, *refusal*,
-  *scope*, *hand-out*, *attempt* (also Temporal's word) and *job set*. ETL
+  candidate), *member*, *role*, *artifact*, *judgment*, *acceptance*, *refusal*,
+  *scope*, *hand-out*, *attempt* (also Temporal's word) and *plan*. ETL
   vocabulary has no exact counterpart, and *DAG* would be wrong: correction
   loops are cycles.
 - **Pattern, not vocabulary.** Candidate, check and acceptance follow the
@@ -150,7 +150,7 @@ a near-match misleads an agent more than a coined word (method rule 5).
 
 ## Notes
 
-- **The set directory.** Historical runs are unaffected by `set/`: a
+- **The artifact directory.** Historical runs are unaffected by `artifact/`: a
   retained set holds the members directly, not the directory name.
 - **Refusal identity.** The refusal address now carries the refusal's
   identity, which `overrides` names.
