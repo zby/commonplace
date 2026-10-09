@@ -90,7 +90,7 @@ A directory artifact in the agentic-system-analyses collection's `retained/`
 area or a local working run. The engine uses `state/<run-id>/set/` as
 its sole working set. Historical runs used `output/`; their execution format
 is retired and is not converted or mirrored by the current workflow.
-`ARTIFACT.yaml` selects this type. In a finished set it records a SHA-256 for every member and
+In a finished set the manifest records a SHA-256 for every member and
 names the worker that produced the run under `worker`: the worker `profile`
 the run started with, and that profile's `harness`, `launch-model` and
 reasoning `effort`, and the `model` every worker reported. The launch model
