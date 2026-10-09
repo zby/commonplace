@@ -43,7 +43,7 @@ def identity(a, kind, **extra):
 
 
 def profile(a, **changes):
-    fields = identity(a, "agent-memory-profile", **{
+    fields = identity(a, "agentic-system-memory-profile", **{
         "source-identity": a.source()["identity"],
         "memory-comparison": {
             "version": 2, "scope": "Local scripted fixture; memory surfaces not inspected.",

@@ -35,7 +35,7 @@ INPUTS_COMMIT = "f" * 40
 
 def comparison_schema():
     schema = json.loads((Path(__file__).resolve().parents[3] /
-                         "kb/agentic-system-analyses/types/agent-memory-profile.schema.yaml").read_text())
+                         "kb/agentic-system-analyses/types/agentic-system-memory-profile.schema.yaml").read_text())
     comparison = deepcopy(schema["allOf"][1]["properties"]["frontmatter"]["properties"]["memory-comparison"])
     comparison["$defs"] = schema["$defs"]
     Draft202012Validator.check_schema(comparison)
@@ -148,7 +148,7 @@ def profile_report_fixture(run_dir: Path, revision: str) -> Path:
         "records": ["MEM-OBJ-store"], "note": "Both stores occur within the fixture boundary.",
     }
     values = {
-        "type": "agentic-system-analyses/types/agent-memory-profile.md",
+        "type": "agentic-system-analyses/types/agentic-system-memory-profile.md",
         "description": "Comparison of the fixture memory boundary from verified source records",
         "run-id": RUN_ID, "source-identity": SOURCE,
         "reviewed-boundary": revision, "memory-comparison": profile,

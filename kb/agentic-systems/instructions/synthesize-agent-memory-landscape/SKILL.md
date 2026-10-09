@@ -35,7 +35,7 @@ links, the amendment index and deterministic validation. Validate the artifact
 directory before reading its members. The overview is the reader entry point,
 not a substitute for a member account or comparison assessment.
 
-Use `kb/agentic-system-analyses/types/agent-memory-profile.md` for the `memory-comparison`
+Use `kb/agentic-system-analyses/types/agentic-system-memory-profile.md` for the `memory-comparison`
 contract, `kb/agentic-system-analyses/types/agentic-system-boundary.md` for sources and
 evidence layers, `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for record
 conventions and evidence interpretation, `kb/agentic-system-analyses/types/agentic-system-analysis-set.md`

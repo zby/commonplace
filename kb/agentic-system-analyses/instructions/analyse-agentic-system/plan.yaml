@@ -46,8 +46,8 @@ criteria:
     verification-type: agentic-system-analyses/types/agentic-system-verification.md
     verification-schema: agentic-system-analyses/types/agentic-system-verification.schema.yaml
   profile:
-    memory-profile-type: agentic-system-analyses/types/agent-memory-profile.md
-    memory-profile-schema: agentic-system-analyses/types/agent-memory-profile.schema.yaml
+    memory-profile-type: agentic-system-analyses/types/agentic-system-memory-profile.md
+    memory-profile-schema: agentic-system-analyses/types/agentic-system-memory-profile.schema.yaml
   synthesis:
     synthesis-type: agentic-system-analyses/types/agentic-system-synthesis.md
     synthesis-schema: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml

@@ -36,8 +36,8 @@ criteria:
     verification-type: agentic-system-analyses/types/agentic-system-verification.md
     verification-schema: agentic-system-analyses/types/agentic-system-verification.schema.yaml
   profile:
-    memory-profile-type: agentic-system-analyses/types/agent-memory-profile.md
-    memory-profile-schema: agentic-system-analyses/types/agent-memory-profile.schema.yaml
+    memory-profile-type: agentic-system-analyses/types/agentic-system-memory-profile.md
+    memory-profile-schema: agentic-system-analyses/types/agentic-system-memory-profile.schema.yaml
   synthesis:
     synthesis-type: agentic-system-analyses/types/agentic-system-synthesis.md
     synthesis-schema: agentic-system-analyses/types/agentic-system-synthesis.schema.yaml
@@ -282,7 +282,7 @@ jobs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/map-memory-profile.md}
     opening: {address: output, source: 'open:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-profile.md}
     boundary: {address: role, source: boundary, required: true}
     runtime: {address: role, source: runtime, required: true}
     memory: {address: role, source: memory, required: true}
@@ -322,7 +322,7 @@ jobs:
     profile-answers: {address: output, source: 'profile:answers', required: false}
     profile-refusal: {address: refusal, source: profile, required: false}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
+    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-profile.md}
     profile-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
     boundary: {address: role, source: boundary, required: true}
     runtime: {address: role, source: runtime, required: true}

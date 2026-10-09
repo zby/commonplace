@@ -1,8 +1,8 @@
 ---
 type: types/type-spec.md
-name: agent-memory-profile
+name: agentic-system-memory-profile
 description: Comparison classifications derived from independently verified memory records at one frozen source boundary
-schema: ./agent-memory-profile.schema.yaml
+schema: ./agentic-system-memory-profile.schema.yaml
 ---
 
 # Agent memory profile
@@ -19,7 +19,7 @@ governs the records it cites.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `agentic-system-analyses/types/agent-memory-profile.md` |
+| `type` | Yes | `agentic-system-analyses/types/agentic-system-memory-profile.md` |
 | `description` | Yes | System and compared memory boundary |
 | `run-id` | Yes | Supplied set identity |
 | `source-identity` | Yes | Frozen repository or capture identity |
@@ -245,7 +245,7 @@ in the cited records.
 
 ```markdown
 ---
-type: agentic-system-analyses/types/agent-memory-profile.md
+type: agentic-system-analyses/types/agentic-system-memory-profile.md
 description: "Memory profile of {system} at {memory boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: "{repository or capture identity}"

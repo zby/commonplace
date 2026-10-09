@@ -177,7 +177,7 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
-@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
 @type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
 def _artifact_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
@@ -235,7 +235,7 @@ def _epistemic_ledger_rule(
         results.passes.append("epistemic ledger: table/record syntax and controlled function/status checked")
 
 
-@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
 def _memory_profile_local_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

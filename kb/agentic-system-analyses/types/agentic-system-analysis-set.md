@@ -43,7 +43,7 @@ layout:
       cites: [boundary, runtime, memory, epistemic]
     memory-profile:
       path: memory-profile.md
-      type: agentic-system-analyses/types/agent-memory-profile.md
+      type: agentic-system-analyses/types/agentic-system-memory-profile.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
         - {from: memory, fields: [source-identity]}
