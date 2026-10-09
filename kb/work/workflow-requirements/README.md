@@ -116,6 +116,14 @@ vocabulary checked against Code Complete's and Clean Code's naming rules
 and the one-vocabulary rule; renames proposed in order, names to keep with
 their definitions fixed, and what is already consistent.
 
+## Notes bearing on the design
+
+[Notes bearing on the analysis design](./notes-bearing-on-the-design.md),
+2026-10-10: a sweep of every note and definition for claims that touch
+the engine, the plan, the prompts, the correction and verification
+protocol and the records; opportunities in order, cautions, and what is
+already applied.
+
 ## The analysis layout
 
 [The analysis set's layout](./analysis-layout.md) writes out the roles,
