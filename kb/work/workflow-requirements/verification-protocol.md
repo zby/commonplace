@@ -201,11 +201,15 @@ is not settled; `corrected` is checked against the changed passage,
 | Feedback composition with cited records | `_feedback` | this consumer's alone |
 | Materiality: what is a blocker, what is a limit | verification type and verifier instructions | prose, not code |
 
-The policy choices a generic apply handler would have to take as given or
-as parameters are the partial-verdict policy, the addressee grammar, the
-record-check gate and the limits rule. The first two have one natural
-reading for any multi-subject verifier: a blocker names the subject it
-addresses, addressed subjects are refused, unaddressed subjects wait. The
-other two are relations between this consumer's roles that a type rule can
-state. The feedback composition and the materiality rules are not
-protocol; they are this consumer's content.
+The policy choices a generic apply handler would have to take as given
+are the partial-verdict policy, the addressee grammar, the record-check
+gate and the limits rule. The first two become the fixed policy of a named
+protocol: a blocker names the subject it addresses, addressed subjects are
+refused, unaddressed subjects wait. Other policies are coherent, such as
+accepting a subject another verifier has already accepted, so this is the
+protocol's choice rather than the only reading, and it stays unconfigurable
+until a consumer needs another. The other two are relations between this
+consumer's roles that a type rule can state, with the routing of a rule's
+finding to the handed subject kept in the handler. The feedback
+composition and the materiality rules are not protocol; they are this
+consumer's content.

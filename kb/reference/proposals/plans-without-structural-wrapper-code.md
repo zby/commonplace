@@ -1,9 +1,9 @@
 ---
-description: "Proposal: derive a plan's check and apply jobs from the artifact type's layout, with standard handlers from the engine's reuse modules, so a plan lists only the jobs that write and consumer Python holds only what reaches outside the artifact"
+description: "Proposal: derive check and apply jobs from the type layout under a named verification protocol, with standard handlers in the reuse modules, so a plan lists the jobs that write and consumer Python holds only its own checks"
 type: reference/types/design-proposal.md
 ---
 
-# Plans without consumer code
+# Plans without structural wrapper code
 
 The engine runs a typed directory artifact through a plan: model jobs
 write candidates, code jobs check and judge them, and a coverage gate
@@ -12,10 +12,12 @@ A consumer supplies a plan, a type and any handlers. The first consumer,
 the agentic-system analysis, needed a package of handlers beside a plan of
 about 330 lines. This proposal asks how much of both the type already
 determines, and designs a compact plan from which a loader derives the
-rest, so that consumer Python holds only the checks that reach outside the
-artifact. The direction is the operator's (2026-10-09): the type should
-define most of the type-dependent work, and code extensions should be the
-special cases.
+rest, so that consumer Python holds only the checks that are the
+consumer's own. The direction is the operator's (2026-10-09): the type
+should define most of the type-dependent work, and code extensions should
+be the special cases. The analysis keeps its opener, acquisition, record
+check, assembly and publication; what goes is the wrapper code that
+restates the layout.
 
 ## Current state (as of 2026-10-09)
 
@@ -75,7 +77,10 @@ roles are written, in what order, from what, is hard to see.
 ## What the type determines and what it does not
 
 The split follows ADR 110: shape belongs to the type, mission to the
-instruction.
+instruction. The derivation below holds for a consumer that adopts the
+named protocol of the next section. Adopting it is a plan choice; the
+layout does not imply it, and a consumer with its own verdict language
+derives no apply job from its layout.
 
 **From the layout alone**, for a role R: the check job that judges
 candidates for R, with every input named above and the standard check as
@@ -95,6 +100,35 @@ boundary's source binding, the record check and assembly.
 
 **Not derivable at all**: effect verification. No schema states that a Git
 checkout is still what a record says.
+
+## The protocol the standard handlers assume
+
+[The correction and verification protocol as implemented](../../work/workflow-requirements/verification-protocol.md)
+describes three layers: what the engine fixes for every plan, what the
+shared check module fixes for any consumer that calls it, and what the
+analysis adds in its types, handlers and instructions. This proposal
+promotes three of the analysis's conventions into a named, fixed protocol
+in the reuse modules, beside the standard handlers:
+
+- **The verdict document.** A verifying role's type declares `## Blockers`
+  and `## Limits`, each exactly `none` or a list with one entry per
+  finding. A verdict that fails its own content check is refused like any
+  candidate and judges nothing.
+- **Subject addressing.** With several subjects, every blocker starts with
+  the role it addresses. With one subject, no prefix.
+- **The partial-verdict policy.** Blockers `none` accepts every subject's
+  handed version. Otherwise each addressed subject's handed version is
+  refused with its blockers as findings, and a subject no blocker addresses
+  is not judged at all: its gate stays unsettled until a blocker-free
+  verdict. This is the protocol's policy, not the only coherent one;
+  accepting a subject another verifier has already accepted would also be
+  coherent. It is fixed, not configurable, until a consumer needs another.
+
+What stays the analysis's own: the record-check gate, the limits rule, the
+feedback composition with cited records, and the materiality rules that say
+what a blocker and a limit are. The first two are declared checks under
+option 2 or type rules under option 3; the last two are instruction and
+type prose.
 
 ## Options
 
@@ -119,7 +153,13 @@ checkout is still what a record says.
    checks. How a type selects a rule without the hard import is the subject
    of [type-selected Python validation checks](./type-selected-python-validation-checks.md)
    and is not re-decided here. Pinned-artifact validation treats a type
-   with no rule as schema-only rather than unsupported.
+   with no rule as schema-only rather than unsupported. A rule supplies a
+   finding; it does not say whose version the finding refuses. The limits
+   rule between the synthesis and its verification detects a limit the
+   synthesis does not carry, and the apply job still validates the exact
+   synthesis the verifier was handed against that exact verdict, refuses
+   the synthesis rather than the verdict, and does so with Blockers `none`.
+   That routing stays in the standard apply handler, below.
 
 4. **Layout identity sources name the run parameters.** The engine fixes
    the parameters in the run metadata. Letting an identity source name
@@ -182,20 +222,42 @@ the analysis artifact has at a fraction of the cost.
   Candidate: the type. That a published analysis contains verified records
   is part of what the artifact is, and the relation
   `record-verification:cites:runtime` already carries acceptance semantics
-  through coverage. This amends ADR 111's layout vocabulary; the apply
-  job's scope then names `verifies` relations.
+  through coverage. This amends ADR 111's layout vocabulary with one
+  coverage invariant: a structural check never covers a `verifies`
+  relation. The verdict's content acceptance excludes its subjects, as the
+  shared check's scope rule does today, and only the apply job judges a
+  `verifies` relation, against the exact versions the verifier was handed,
+  never the current members. Without the invariant, a content pass on the
+  verdict document would satisfy coverage by itself.
 - **Reads against cites.** `reads` stays in the plan, defaulting to cites
   plus identity sources, so most entries declare nothing. Widening the
   type's `cites` to mean reads would make the validator read mission.
 - **Verification gates.** A per-entry `verified-by` list. A plan-level
   default that gates every member read after its verifier is simpler and
   wrong for the reconciliation.
-- **The standard apply handler.** Blockers `none` accepts every verified
-  role; entries refuse the addressed roles, or the single verified role
-  when there is one. The synthesis-specific "limit not carried" check
-  becomes a type rule between the synthesis and its verification, under
-  option 3. The record-check gate, that a verifier must address structural
-  failures, stays a declared check on the apply job, under option 2.
+- **The standard apply handler.** It guarantees the protocol above: the
+  verdict is checked first and judges nothing when refused; Blockers
+  `none` accepts every subject's handed version; entries refuse the
+  addressed subjects, or the single subject when there is one; unaddressed
+  subjects stay unsettled. It also routes a type rule's finding against a
+  handed subject to that subject: when the verdict's type rules fail
+  against the subject's handed version, the subject is refused, with the
+  verdict's Limits appended, even with Blockers `none`. The record-check
+  gate, that a verifier must address structural failures, stays a declared
+  check on the apply job, under option 2.
+- **The compact syntax.** An explicit `reads` replaces the default, so an
+  entry that names any read names them all; the loader rejects a read that
+  the layout does not know. A read may be `optional`, as the record check
+  is for a verifier whose subjects passed it, and an optional read absent
+  at hand-out is an absent input, not a stop. A consumer job named
+  `check-<role>` or `apply-<role>` for a role the loader derives is an
+  error, not a replacement; a consumer that needs its own check for a role
+  declares it with `checks` on that role's entry. A `verified-by` naming a
+  verifier whose `verifies` covers none of the entry's reads is an error.
+  A declared check that needs a versioned input beyond the derived ones,
+  such as the record check's output, names it under the entry's `reads`
+  with its address, so the derived job's inputs stay the one place inputs
+  are declared.
 - **Extra checks.** A per-entry `checks` list under option 2 for the
   boundary's frozen-source binding and the memory source identity, until
   option 4 makes them shape.
@@ -227,12 +289,14 @@ the analysis artifact has at a fraction of the cost.
 ## Candidate selection
 
 Options 1 and 3 first, with the input-spec accessor, proven by deleting the
-engine tests' check handlers. Option 5 second, with the choices above,
-proven by the fidelity test against the hand-written analysis plan and
-then by switching the analysis skill to the compact plan. Option 4 after,
-since it deletes the checks the opener and the analyst check still carry.
-Option 2 as the escape for what remains. Option 6 waits for a consumer
-that needs it.
+engine tests' check handlers; they need no new syntax. Option 5 second, on
+two preconditions: the protocol section above is implemented as the
+standard apply handler's contract, and the `verifies` coverage invariant
+is decided and recorded. Then the choices above, proven by the fidelity
+test against the hand-written analysis plan and then by switching the
+analysis skill to the compact plan. Option 4 after, since it deletes the
+checks the opener and the analyst check still carry. Option 2 as the
+escape for what remains. Option 6 waits for a consumer that needs it.
 
 ## Operativity
 
@@ -256,9 +320,15 @@ form and relations, not analytical truth.
 
 - Options 1 and 3: the engine tests' toy plan runs to publication with no
   handler outside the engine's reuse modules.
-- Option 5: the loader's expansion of a compact analysis plan equals the
-  hand-written plan job for job, asserted by a test; then one analysis
-  runs through the compact plan to publication.
+- Option 5: the loader's expansion of a compact analysis plan is
+  equivalent to the hand-written plan, asserted by three tests. Equivalence
+  is equality of each job's inputs, outputs, handler, parameters and
+  criteria after a listed set of renamings, since derived jobs and inputs
+  take the loader's names. A semantic-change test shows that one edit to a
+  compact entry, such as dropping a read, changes the expansion. An
+  execution test runs the expanded plan through the engine tests' scenario
+  to the same judgments and coverage as the hand-written one. Then one
+  analysis runs through the compact plan to publication.
 - Option 4: the opener's run-binding checks are deleted after draft
   validation reports the same mismatches.
 - Option 2: a consumer needs a check that consults the attempt and that
