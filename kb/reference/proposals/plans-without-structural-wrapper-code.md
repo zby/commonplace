@@ -323,7 +323,9 @@ The syntax, stated so that the loader does not invent it:
 - **The frozen source.** A plan-level `frozen-source: <role>` names the
   member whose `source` field pins the source the run may inspect. The
   loader passes it to every derived check, apply and set check, which read
-  the field from that role's input. It is a plan declaration because it
+  the field from that role's input; where the job has no such input, the
+  loader adds the role as a required role input, and a derived apply uses
+  the handed version when the verifier read the role. It is a plan declaration because it
   is the run's authorization to inspect a checkout, not shape; the type
   cannot say what a run is allowed to read. Without a pin, quotation
   validation fails rather than reporting quotations as unverified, so for
@@ -376,7 +378,17 @@ deletes checks the opener and the analyst check carry until then.
    equality. The judgment test compared each wrapper with its standard
    replacement on the same pins before the wrappers went; the profile and
    synthesis checks were not compared, since their derived jobs lack the
-   reconciliation partner.
+   reconciliation partner. The
+   [implementation review](../../work/workflow-requirements/compact-plan-implementation-review.md)
+   of 2026-10-09 found one regression and four gaps, with these rulings:
+   the run metadata records the compact plan's own digest at expansion and
+   integration compares that with the shipped file, keeping the type
+   guard; a derived apply gets its frozen-source input as stated above;
+   the type closure uses the validator's reference resolver, not its own;
+   a code job whose judgment stopped holding because an optional basis
+   input disappeared becomes ready, model jobs unchanged; and the fidelity
+   test asserts every derived job's declared checks and feedback. The
+   regression is fixed first.
 4. Run binding as identity, deleting the opener's and the analyst check's
    remaining duplicates.
 
