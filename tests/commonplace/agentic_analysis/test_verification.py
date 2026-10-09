@@ -8,10 +8,11 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import start_run
+from commonplace.artifactrun.handlers import apply_verdict, set_check
 from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
 from commonplace.artifactrun.store import RunStore, digest
 from commonplace.lib.agentic_analysis import verification as handlers
-from commonplace.lib.agentic_analysis.plan import PLAN
+from commonplace.lib.agentic_analysis.plan import expanded
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     parameters,
@@ -36,7 +37,7 @@ pytestmark = pytest.mark.slow
 def records(request, tmp_path):
     start, _ = request.getfixturevalue("local_acquisition")
     a = start(analysts=True)
-    data = yaml.safe_load((a.prepared.repo / "kb" / PLAN).read_text())
+    data = expanded(a.prepared.repo / "kb")
     data["jobs"] = data["jobs"][:15]
     declaration = tmp_path / "restricted-record-jobs.yaml"
     declaration.write_text(yaml.safe_dump(data))
@@ -47,7 +48,7 @@ def records(request, tmp_path):
     c.advance()
     c.complete("boundary", boundary_candidate(a))
     through_analysts(a)
-    assert c.handed() == {"reconcile"}
+    assert c.handed() == {"reconciliation"}
     return a
 
 
@@ -76,9 +77,9 @@ def judgments(a, job):
 
 
 def to_verifier(a):
-    a.coordinator.complete("reconcile", reconciliation(a))
+    a.coordinator.complete("reconciliation", reconciliation(a))
     assert not a.coordinator.status.stops
-    assert a.coordinator.handed() == {"verify"}
+    assert a.coordinator.handed() == {"record-verification"}
 
 
 def code_attempt(a, name, replacements=None):
@@ -94,18 +95,18 @@ def code_attempt(a, name, replacements=None):
 
 def test_blocker_free_verdict_covers_only_checked_relations(records):
     a = records
-    for name in ("reconcile", "verify"):
+    for name in ("reconciliation", "record-verification"):
         h = a.coordinator.handout(name)
         assert "## Input reading batches" in h.prompt.read_text()
         assert "jobs-engine/" in h.prompt.read_text()
         assert "opening" in parameters(h)
-        if name == "reconcile":
+        if name == "reconciliation":
             to_verifier(a)
-    assert judgments(a, "check-reconcile")[-1]["outcome"] == "accepted"
-    p = parameters(a.coordinator.handout("verify"))
-    assert Path(p["record-check"]).read_text() == "# Record check\n\nnone\n"
-    a.coordinator.complete("verify", verdict(a))
-    applied = judgments(a, "apply-verify")
+    assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
+    p = parameters(a.coordinator.handout("record-verification"))
+    assert Path(p["record-check"]).read_text() == "# Set check\n\nnone\n"
+    a.coordinator.complete("record-verification", verdict(a))
+    applied = judgments(a, "apply-record-verification")
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
     assert {j["subject"]["role"] for j in applied} == {"record-verification", *handlers.RECORDS}
@@ -121,8 +122,8 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
 ])
 def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes, reason):
     a = records
-    a.coordinator.complete("reconcile", reconciliation(a, body, **changes))
-    j = judgments(a, "check-reconcile")[-1]
+    a.coordinator.complete("reconciliation", reconciliation(a, body, **changes))
+    j = judgments(a, "check-reconciliation")[-1]
     assert j["outcome"] == "refused" and reason in j["findings"]
     assert not (a.coordinator.run_dir / "artifact/reconciliation.md").exists()
 
@@ -137,8 +138,8 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
 def test_malformed_verdict_never_judges_records(records, blockers, changes, reason):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a, blockers, **changes))
-    applied = judgments(a, "apply-verify")
+    a.coordinator.complete("record-verification", verdict(a, blockers, **changes))
+    applied = judgments(a, "apply-record-verification")
     assert len(applied) == 1 and applied[0]["outcome"] == "refused"
     assert reason in applied[0]["findings"]
     assert applied[0]["subject"]["role"] == "record-verification"
@@ -147,8 +148,8 @@ def test_malformed_verdict_never_judges_records(records, blockers, changes, reas
 def test_routes_only_addressed_blockers_and_preserves_continuations(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a, "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."))
-    applied = judgments(a, "apply-verify")
+    a.coordinator.complete("record-verification", verdict(a, "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."))
+    applied = judgments(a, "apply-record-verification")
     assert [j["subject"]["role"] for j in applied] == ["record-verification", "runtime", "reconciliation"]
     assert {e["relation"] for e in applied[0]["scope"]} == {
         "record-verification:identity:boundary",
@@ -164,29 +165,29 @@ def test_routes_only_addressed_blockers_and_preserves_continuations(records):
 def test_declined_answers_rerun_verifier_without_semantic_override(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a, "- runtime: reconsider SRC-1."))
+    a.coordinator.complete("record-verification", verdict(a, "- runtime: reconsider SRC-1."))
     a.coordinator.complete("runtime", report(a, "runtime"), answers="- declined: SRC-1 still supports the bounded finding.\n")
-    assert a.coordinator.handed() == {"verify"}, a.coordinator.status
+    assert a.coordinator.handed() == {"record-verification"}, a.coordinator.status
     assert judgments(a, "check-runtime")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
-    refused = next(j for j in judgments(a, "apply-verify") if j["outcome"] == "refused")
+    refused = next(j for j in judgments(a, "apply-record-verification") if j["outcome"] == "refused")
     assert refused["id"] not in judgments(a, "check-runtime")[-1]["overrides"]
-    p = parameters(a.coordinator.handout("verify"))
+    p = parameters(a.coordinator.handout("record-verification"))
     assert Path(p["runtime-answers"]).read_text().startswith("- declined:")
     assert Path(p["previous-verification"]).read_text() == verdict(a, "- runtime: reconsider SRC-1.")
-    a.coordinator.complete("verify", verdict(a))
-    assert judgments(a, "apply-verify")[-4]["outcome"] == "accepted"
+    a.coordinator.complete("record-verification", verdict(a))
+    assert judgments(a, "apply-record-verification")[-4]["outcome"] == "accepted"
 
 
 def test_record_check_uses_pinned_content_not_projection_or_later_members(records):
     a = records
     to_verifier(a)
     clean = code_attempt(a, "record-check")
-    baseline = handlers.record_check(clean)
+    baseline = set_check(clean)
     (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
     (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
-    assert handlers.record_check(clean) == baseline
+    assert set_check(clean) == baseline
     bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
-    findings = handlers.record_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
+    findings = set_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
     assert "Runtime account" in findings
     assert "synthesis" not in findings and "overview" not in findings
 
@@ -194,9 +195,9 @@ def test_record_check_uses_pinned_content_not_projection_or_later_members(record
 def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a))
-    attempt = code_attempt(a, "apply-verify", {"record-check-seen": b"# Record check\n\n- runtime.md: fixture failure\n"})
-    handlers.apply_verify(attempt)
+    a.coordinator.complete("record-verification", verdict(a))
+    attempt = code_attempt(a, "apply-record-verification", {"record-check-seen": b"# Set check\n\n- runtime.md: fixture failure\n"})
+    apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
     assert "structural failures require explicit blockers" in result[0]["findings"]
@@ -205,14 +206,14 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
 def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a))
+    a.coordinator.complete("record-verification", verdict(a))
     memory = report(a, "memory").replace(
         "### Operative objects\n\nnone declared in this member\n",
         "### Operative objects\n\n#### MEM-OBJ-store — Fixture store\n\nPinned peer finding at SRC-1.\n",
     ).encode()
     text = verdict(a, "- runtime: reconsider MEM-OBJ-store and SRC-1.\n- epistemic: reconsider SRC-1.").encode()
-    attempt = code_attempt(a, "apply-verify", {"candidate": text, "memory-seen": memory})
-    handlers.apply_verify(attempt)
+    attempt = code_attempt(a, "apply-record-verification", {"candidate": text, "memory-seen": memory})
+    apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     runtime = next(j for j in result if j["subject"]["role"] == "runtime")
     epistemic = next(j for j in result if j["subject"]["role"] == "epistemic")
@@ -225,15 +226,15 @@ def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
 def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
     a = records
     to_verifier(a)
-    a.coordinator.complete("verify", verdict(a, "- reconciliation: clarify SRC-1 relations."))
-    a.coordinator.complete("reconcile", reconciliation(a, "Amendment: RT-OBJ-missing has a new value."))
-    refused = judgments(a, "check-reconcile")[-1]
+    a.coordinator.complete("record-verification", verdict(a, "- reconciliation: clarify SRC-1 relations."))
+    a.coordinator.complete("reconciliation", reconciliation(a, "Amendment: RT-OBJ-missing has a new value."))
+    refused = judgments(a, "check-reconciliation")[-1]
     assert refused["outcome"] == "refused"
     assert "- reconciliation: clarify SRC-1 relations." in refused["findings"]
-    p = parameters(a.coordinator.handout("reconcile"))
+    p = parameters(a.coordinator.handout("reconciliation"))
     assert "- reconciliation: clarify SRC-1 relations." in Path(p["refusal"]).read_text()
-    a.coordinator.complete("reconcile", reconciliation(a, "Clarified the fixture relations at SRC-1."))
-    repaired = judgments(a, "check-reconcile")[-1]
+    a.coordinator.complete("reconciliation", reconciliation(a, "Clarified the fixture relations at SRC-1."))
+    repaired = judgments(a, "check-reconciliation")[-1]
     assert repaired["outcome"] == "accepted" and not repaired["overrides"]
     assert all(not e["relation"].startswith("record-verification:") for e in repaired["scope"])
 
@@ -243,4 +244,41 @@ def test_source_drift_is_a_record_check_finding(records):
     to_verifier(a)
     attempt = code_attempt(a, "record-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
-    assert "does not hold exactly" in handlers.record_check(attempt)["findings"].decode()
+    assert "does not hold exactly" in set_check(attempt)["findings"].decode()
+
+
+def claims(attempt) -> list[tuple]:
+    """What judgments claim, without their record ids or findings wording."""
+    return sorted((j["subject"]["role"], j["subject"]["version"], j["outcome"],
+                   tuple(sorted(e["relation"] for e in j["scope"])))
+                  for j in attempt.judgments({}, 100, "scripted"))
+
+
+@pytest.mark.parametrize("verdict_blockers", ["none", "- runtime: reconsider SRC-1.\n- reconciliation: clarify it."])
+def test_standard_handlers_record_the_wrappers_judgments(records, verdict_blockers):
+    """Handler substitution: on the same pinned inputs, the consumer wrapper the
+    hand-written plan named and the standard handler with the entry's declared
+    checks record the same judgments."""
+    from commonplace.artifactrun import handlers as standard
+    from commonplace.lib.agentic_analysis import handlers as consumer
+
+    a = records
+    to_verifier(a)
+    a.coordinator.complete("record-verification", verdict(a, verdict_blockers))
+    pairs = [
+        ("check-boundary", consumer.check_boundary, standard.check),
+        ("check-runtime", consumer.check_runtime, standard.check),
+        ("check-memory", consumer.check_memory, standard.check),
+        ("check-epistemic", consumer.check_epistemic, standard.check),
+        ("check-reconciliation", handlers.check_reconcile, standard.check),
+        ("apply-record-verification", handlers.apply_verify, standard.apply_verdict),
+    ]
+    for job, wrapper, replacement in pairs:
+        new = code_attempt(a, job)
+        # The wrapper read the same findings under the record check's former heading.
+        seen = new.read("record-check-seen") if job.startswith("apply-") else None
+        old = code_attempt(a, job, {"record-check-seen": seen.replace(b"# Set check", b"# Record check")}
+                           if seen is not None else None)
+        wrapper(old)
+        replacement(new)
+        assert claims(old) == claims(new), job

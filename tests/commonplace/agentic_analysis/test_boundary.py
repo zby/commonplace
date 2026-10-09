@@ -44,7 +44,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert p["output"] == str(h.outputs["boundary"])
     assert p["validation-artifact"] == str(a.coordinator.run_dir / "artifact")
     assert p["validation-role"] == "boundary"
-    assert json.loads(Path(p["source"]).read_bytes()) == a.source()
+    assert json.loads(Path(p["acquire"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
     assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"

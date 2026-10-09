@@ -43,6 +43,7 @@ import importlib
 import json
 import re
 from collections.abc import Callable, Mapping
+from dataclasses import replace
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
@@ -92,7 +93,7 @@ def candidate(attempt: CodeAttempt) -> Candidate:
         if member is not None:
             members[attempt.layout.path(partner)] = member
     return Candidate(attempt, role, data, members, attempt.library.parent,
-                     frozen_source(attempt, role, data, members))
+                     frozen_source(attempt, role, members))
 
 
 def _source_field(data: bytes) -> dict | None:
@@ -101,19 +102,21 @@ def _source_field(data: bytes) -> dict | None:
     return source if isinstance(source, dict) else None
 
 
-def frozen_source(attempt: CodeAttempt, role: str, data: bytes, members: Mapping[str, bytes]) -> dict | None:
+def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes]) -> dict | None:
     """The source the run may inspect: the `source` field of the `frozen-source` option's role.
 
-    The candidate's own field when it fills that role, else the member's.
-    None when the plan names no frozen source; a named role whose member is
-    absent or has no source is an error, never a silent unverified check.
+    None when the plan names no frozen source, and for a candidate filling
+    that role: `check` gives such a candidate its own source only once the
+    job's declared checks, which bind it to what the run acquired, pass. A
+    named role whose member is absent or has no source is an error, never a
+    silent unverified check.
     """
     pinned = attempt.options.get("frozen-source")
-    if pinned is None:
+    if pinned is None or pinned == role:
         return None
-    holder = data if pinned == role else members.get(attempt.layout.path(pinned))
+    holder = members.get(attempt.layout.path(pinned))
     source = _source_field(holder) if holder is not None else None
-    if source is None and pinned != role:
+    if source is None:
         raise TypeError(f"job {attempt.job.name}: the frozen-source member {pinned} has no source field")
     return source
 
@@ -174,7 +177,18 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """
     built = candidate(attempt)
     answers, answered = correction(attempt, built)
-    judge(built, review(built) + answers + extension_reasons(built), answered=answered)
+    declared = extension_reasons(built)
+    if attempt.options.get("frozen-source") == built.role:
+        # The candidate names the source its quotations are checked against.
+        # Its declared checks bind that source to what the run acquired; only
+        # a bound candidate's own source is inspected.
+        if declared:
+            judge(built, declared + answers, answered=answered)
+            return {}
+        built = replace(built, source=_source_field(built.data))
+    # A declared check may restate a finding the standard review made.
+    reasons = list(dict.fromkeys(review(built) + answers + declared))
+    judge(built, reasons, answered=answered)
     return {}
 
 
@@ -285,7 +299,7 @@ def set_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     directory = (attempt.run_dir / "artifact").resolve()
     repo = attempt.library.parent
     pinned = attempt.options.get("frozen-source")
-    source = frozen_source(attempt, "", b"", members) if pinned is not None else None
+    source = frozen_source(attempt, "", members) if pinned is not None else None
     run = ValidationRun(
         repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
         member_snapshots={directory: members},

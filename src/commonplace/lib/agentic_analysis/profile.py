@@ -94,3 +94,13 @@ def apply_verify_profile(attempt: CodeAttempt) -> dict[str, bytes]:
 def apply_verify_synthesis(attempt: CodeAttempt) -> dict[str, bytes]:
     """Apply a valid synthesis verdict and carried limits to the handed synthesis."""
     return _apply(attempt, stage="synthesis")
+
+
+def comparison_version(check) -> list[str]:
+    """A declared check for the compact plan: a new-engine profile is a version-2 memory comparison."""
+    if not check.fields:
+        return []
+    comparison = check.fields.get("memory-comparison")
+    if not isinstance(comparison, dict) or type(comparison.get("version")) is not int or comparison["version"] != 2:
+        return ["[invocation] new workflow profiles require memory-comparison version: 2"]
+    return []

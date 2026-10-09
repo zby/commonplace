@@ -13,9 +13,9 @@ Read this instruction first, then all invocation Input reading batches. Follow
 
 ## Inputs and result
 
-Judge the exact supplied `profile` against `boundary`, `runtime`, `memory`,
-`epistemic` and `reconciliation`. Read `profile-answers` and `profile-refusal`
-when supplied; assess declines as arguments, not established defects or repairs.
+Judge the exact supplied `memory-profile` against `boundary`, `runtime`,
+`memory`, `epistemic` and `reconciliation`. Read `memory-profile-answers` and
+`memory-profile-refusal` when supplied; assess declines as arguments, not established defects or repairs.
 Do not inspect current-member paths or other attempts. `opening` supplies the
 prepared content-check command directory.
 

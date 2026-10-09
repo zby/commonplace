@@ -48,12 +48,12 @@ JOURNAL = "effects/publish.json"
 PRODUCERS = {
     "boundary": ("boundary", "boundary"), "runtime": ("runtime", "report"),
     "memory": ("memory", "report"), "epistemic": ("epistemic", "report"),
-    "reconciliation": ("reconcile", "reconciliation"),
-    "record-verification": ("verify", "verification"),
-    "memory-profile": ("profile", "profile"),
-    "profile-verification": ("verify-profile", "verification"),
-    "synthesis": ("synthesize", "synthesis"),
-    "synthesis-verification": ("verify-synthesis", "verification"),
+    "reconciliation": ("reconciliation", "reconciliation"),
+    "record-verification": ("record-verification", "verification"),
+    "memory-profile": ("memory-profile", "profile"),
+    "profile-verification": ("profile-verification", "verification"),
+    "synthesis": ("synthesis", "synthesis"),
+    "synthesis-verification": ("synthesis-verification", "verification"),
 }
 IDENTITY_FIELDS = (
     "run-id", "result-disposition", "target-class", "boundary-kind",

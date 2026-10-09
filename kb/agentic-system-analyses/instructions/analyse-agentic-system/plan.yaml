@@ -1,21 +1,28 @@
-# The analyse-agentic-system plan for the artifact-run engine.
-# File inputs are relative to the library root recorded by start_run.
-# Criteria groups expand into ordinary file inputs of the jobs that list
-# them; each stays a live, pinned rerun trigger (scenario 8). Code checks
-# own their type/schema closure; model jobs keep the input names their
-# instructions use. Opening consumes the fixed run parameters system,
-# source-identity, source and optional source-revision. Assembly and
-# publication are gated by the engine's coverage input; publication reads
-# assembly's pinned manifest and writes a receipt.
+# The analyse-agentic-system plan for the artifact-run engine, in compact form.
+# commonplace.artifactrun.compact expands it when a run starts: each role
+# entry becomes its model job plus a derived check-<role>, or apply-<role>
+# for a verifying role, whose partners, criteria and correction inputs come
+# from the type's layout. Entries declare mission only: instruction, reads,
+# gates, attempts and the analysis's own checks. Instructions are relative
+# to this file; other file inputs are library paths. Opening, acquisition,
+# assembly and publication are the analysis's own code jobs in the engine's
+# full form. Opening consumes the run parameters system, source-identity,
+# source and optional source-revision; assembly and publication are gated
+# by the engine's coverage input.
 type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
+frozen-source: boundary
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
     sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
+  # Read by type rules but referenced by no type; every derived job receives it.
   check:
     sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    note-type: types/note.md
+  # Publication validates every member; these groups make its closure explicit.
+  types:
     note-schema: types/note.schema.yaml
     note-base-schema: types/note-base.schema.yaml
     boundary-type: agentic-system-analyses/types/agentic-system-boundary.md
@@ -49,6 +56,11 @@ criteria:
     overview-type: agentic-system-analyses/types/agentic-system-analysis-overview.md
     type-spec: types/type-spec.md
     type-spec-schema: types/type-spec.schema.yaml
+inputs:
+  opening: {address: output, source: 'open:metadata'}
+defaults:
+  max_attempts: 3
+  parameters: {system: '{param:system}'}
 jobs:
 - name: open
   kind: code
@@ -60,400 +72,150 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'open:metadata'}
   outputs: [source]
-- name: boundary
-  kind: model
-  role: boundary
-  instruction: instruction
+- role: boundary
+  instruction: jobs-engine/fix-boundary.md
   max_attempts: 2
-  outputs: [boundary]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/fix-boundary.md}
-    boundary-result-contract: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
-    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    source: {address: output, source: 'acquire:source', required: true}
-    refusal: {address: refusal, source: boundary, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: boundary}
-- name: check-boundary
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.check_boundary
-  criteria: [check]
-  inputs:
-    candidate: {address: output, source: 'boundary:boundary', required: true}
-    incumbent-boundary: {address: role, source: boundary, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
-    producer-attempt: {address: attempt, source: boundary, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    source: {address: output, source: 'acquire:source', required: true}
-    note-type: {address: file, source: types/note.md}
-  outputs: []
-- name: runtime
-  kind: model
-  role: runtime
-  instruction: instruction
-  max_attempts: 3
+  files:
+    boundary-result-contract: agentic-system-analyses/types/agentic-system-boundary.md
+    boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
+  reads: {'acquire:source': required}
+  checks:
+  - function: commonplace.lib.agentic_analysis.handlers.bound_boundary
+    inputs: {metadata: 'open:metadata', source: 'acquire:source',
+             incumbent-boundary: {source: boundary, mode: optional}}
+- role: runtime
+  instruction: jobs-engine/trace-runtime.md
   outputs: [report, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-runtime.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
-    boundary: {address: role, source: boundary, required: true}
-    refusal: {address: refusal, source: runtime, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: runtime}
-- name: check-runtime
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.check_runtime
-  criteria: [check, reports]
-  inputs:
-    candidate: {address: output, source: 'runtime:report', required: true}
-    incumbent-report: {address: role, source: runtime, required: false}
-    note-type: {address: file, source: types/note.md}
-    producer-attempt: {address: attempt, source: runtime, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    epistemic: {address: role, source: epistemic, required: false}
-    memory: {address: role, source: memory, required: false}
-    answers: {address: output, source: 'runtime:answers', required: false}
-  outputs: []
-- name: memory
-  kind: model
-  role: memory
-  instruction: instruction
-  max_attempts: 3
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
+  reads: {boundary: required}
+  checks:
+  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+    inputs: {incumbent-report: {source: runtime, mode: optional}}
+- role: memory
+  instruction: jobs-engine/analyse-memory.md
   outputs: [report, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/analyse-memory.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
-    boundary: {address: role, source: boundary, required: true}
-    refusal: {address: refusal, source: memory, required: false}
-    runtime: {address: role, source: runtime, order_only: true}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: memory}
-- name: check-memory
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.check_memory
-  criteria: [check, reports]
-  inputs:
-    candidate: {address: output, source: 'memory:report', required: true}
-    incumbent-report: {address: role, source: memory, required: false}
-    note-type: {address: file, source: types/note.md}
-    metadata: {address: output, source: 'open:metadata', required: true}
-    producer-attempt: {address: attempt, source: memory, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    epistemic: {address: role, source: epistemic, required: false}
-    runtime: {address: role, source: runtime, required: false}
-    answers: {address: output, source: 'memory:answers', required: false}
-  outputs: []
-- name: epistemic
-  kind: model
-  role: epistemic
-  instruction: instruction
-  max_attempts: 3
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
+  reads: {boundary: required, runtime: order-only}
+  checks:
+  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+    inputs: {incumbent-report: {source: memory, mode: optional}}
+  - function: commonplace.lib.agentic_analysis.handlers.memory_source_identity
+    inputs: {metadata: 'open:metadata'}
+- role: epistemic
+  instruction: jobs-engine/trace-epistemic.md
   outputs: [report, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-epistemic.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
-    boundary: {address: role, source: boundary, required: true}
-    refusal: {address: refusal, source: epistemic, required: false}
-    runtime: {address: role, source: runtime, order_only: true}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: epistemic}
-- name: check-epistemic
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.check_epistemic
-  criteria: [check, reports]
-  inputs:
-    candidate: {address: output, source: 'epistemic:report', required: true}
-    incumbent-report: {address: role, source: epistemic, required: false}
-    note-type: {address: file, source: types/note.md}
-    producer-attempt: {address: attempt, source: epistemic, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    memory: {address: role, source: memory, required: false}
-    runtime: {address: role, source: runtime, required: false}
-    answers: {address: output, source: 'epistemic:answers', required: false}
-  outputs: []
-- name: reconcile
-  kind: model
-  role: reconciliation
-  instruction: instruction
-  max_attempts: 3
-  outputs: [reconciliation]
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
+  reads: {boundary: required, runtime: order-only}
+  checks:
+  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+    inputs: {incumbent-report: {source: epistemic, mode: optional}}
+- role: reconciliation
+  instruction: jobs-engine/reconcile-records.md
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/reconcile-records.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
-    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
-    reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    refusal: {address: refusal, source: reconcile, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: reconciliation}
-- name: check-reconcile
-  kind: code
-  handler: commonplace.lib.agentic_analysis.verification.check_reconcile
-  criteria: [check, reports, reconciliation]
-  inputs:
-    candidate: {address: output, source: 'reconcile:reconciliation', required: true}
-    producer-attempt: {address: attempt, source: reconcile, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    memory: {address: role, source: memory, required: true}
-    runtime: {address: role, source: runtime, required: true}
-  outputs: []
-- name: record-check
-  kind: code
-  handler: commonplace.lib.agentic_analysis.verification.record_check
-  outputs: [findings]
-  criteria: [check, reports, reconciliation]
-  inputs:
-    boundary: {address: role, source: boundary}
-    runtime: {address: role, source: runtime}
-    memory: {address: role, source: memory}
-    epistemic: {address: role, source: epistemic}
-    reconciliation: {address: role, source: reconciliation}
-- name: verify
-  kind: model
-  role: record-verification
-  instruction: instruction
-  max_attempts: 3
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
+    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
+    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
+    reconciliation-contract: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+- job: record-check
+  handler: commonplace.artifactrun.handlers.set_check
+  inputs: [boundary, runtime, memory, epistemic, reconciliation]
+- role: record-verification
+  instruction: jobs-engine/verify-records.md
   outputs: [verification]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-records.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
-    runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
-    epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
-    reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
-    record-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    runtime-answers: {address: output, source: 'runtime:answers', required: false}
-    memory-answers: {address: output, source: 'memory:answers', required: false}
-    epistemic-answers: {address: output, source: 'epistemic:answers', required: false}
-    refusal: {address: refusal, source: verify, required: false}
-    record-check: {address: output, source: 'record-check:findings'}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: record-verification}
-- name: apply-verify
-  kind: code
-  handler: commonplace.lib.agentic_analysis.verification.apply_verify
-  criteria: [check, reports, reconciliation, verification]
-  inputs:
-    candidate: {address: output, source: 'verify:verification', required: true}
-    verifier-attempt: {address: attempt, source: verify, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    record-check-seen: {address: handed, source: 'verifier-attempt:record-check'}
-    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
-  outputs: []
-- name: profile
-  kind: model
-  role: memory-profile
-  instruction: instruction
-  max_attempts: 3
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
+    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
+    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
+    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
+    reconciliation-contract: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+    record-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
+  reads: {boundary: required, runtime: required, memory: required, epistemic: required,
+          reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
+          'epistemic:answers': optional, 'record-check:findings': required}
+  checks: [commonplace.lib.agentic_analysis.verification.record_check_gate]
+  feedback: commonplace.lib.agentic_analysis.verification.cited_records
+- role: memory-profile
+  instruction: jobs-engine/map-memory-profile.md
   outputs: [profile, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/map-memory-profile.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:verifies:runtime', outcome: accepted}
-    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:verifies:memory', outcome: accepted}
-    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:verifies:epistemic', outcome: accepted}
-    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:verifies:reconciliation', outcome: accepted}
-    refusal: {address: refusal, source: profile, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: memory-profile}
-- name: check-profile
-  kind: code
-  handler: commonplace.lib.agentic_analysis.profile.check_profile
-  criteria: [check, reports, reconciliation, profile]
-  inputs:
-    candidate: {address: output, source: 'profile:profile', required: true}
-    answers: {address: output, source: 'profile:answers', required: false}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    producer-attempt: {address: attempt, source: profile, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    memory: {address: role, source: memory, required: true}
-    runtime: {address: role, source: runtime, required: true}
-  outputs: []
-- name: verify-profile
-  kind: model
-  role: profile-verification
-  instruction: instruction
-  max_attempts: 3
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    memory-profile-contract: agentic-system-analyses/types/agent-memory-profile.md
+  reads: {boundary: required, runtime: required, memory: required, epistemic: required,
+          reconciliation: required}
+  verified-by: [record-verification]
+  checks: [commonplace.lib.agentic_analysis.profile.comparison_version]
+- role: profile-verification
+  instruction: jobs-engine/verify-memory-profile.md
   outputs: [verification, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-memory-profile.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    profile-answers: {address: output, source: 'profile:answers', required: false}
-    profile-refusal: {address: refusal, source: profile, required: false}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-profile-contract: {address: file, source: agentic-system-analyses/types/agent-memory-profile.md}
-    profile-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    profile: {address: role, source: memory-profile, required: true}
-    refusal: {address: refusal, source: verify-profile, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: profile-verification}
-- name: apply-verify-profile
-  kind: code
-  handler: commonplace.lib.agentic_analysis.profile.apply_verify_profile
-  criteria: [check, reports, reconciliation, verification, profile]
-  inputs:
-    answers: {address: output, source: 'verify-profile:answers', required: false}
-    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
-    candidate: {address: output, source: 'verify-profile:verification', required: true}
-    verifier-attempt: {address: attempt, source: verify-profile, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    memory-profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
-  outputs: []
-- name: synthesize
-  kind: model
-  role: synthesis
-  instruction: instruction
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    memory-profile-contract: agentic-system-analyses/types/agent-memory-profile.md
+    profile-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
+  reads: {boundary: required, runtime: required, memory: required, epistemic: required,
+          reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
+          'refusal:memory-profile': optional}
+- role: synthesis
+  instruction: jobs-engine/synthesize-findings.md
   max_attempts: 2
   outputs: [synthesis, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-findings.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    memory-profile: {address: role, source: memory-profile, required: true}
-    record-verification: {address: role, source: record-verification, required: true}
-    profile-verification: {address: role, source: profile-verification, required: true}
-    runtime-verified: {address: judgment, source: runtime, required: true, relation: 'record-verification:verifies:runtime', outcome: accepted}
-    memory-verified: {address: judgment, source: memory, required: true, relation: 'record-verification:verifies:memory', outcome: accepted}
-    epistemic-verified: {address: judgment, source: epistemic, required: true, relation: 'record-verification:verifies:epistemic', outcome: accepted}
-    reconciliation-verified: {address: judgment, source: reconciliation, required: true, relation: 'record-verification:verifies:reconciliation', outcome: accepted}
-    profile-verified: {address: judgment, source: memory-profile, required: true, relation: 'profile-verification:verifies:memory-profile', outcome: accepted}
-    refusal: {address: refusal, source: synthesize, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: synthesis}
-- name: check-synthesize
-  kind: code
-  handler: commonplace.lib.agentic_analysis.profile.check_synthesize
-  criteria: [check, reports, reconciliation, verification, synthesis]
-  inputs:
-    candidate: {address: output, source: 'synthesize:synthesis', required: true}
-    answers: {address: output, source: 'synthesize:answers', required: false}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    record-verification: {address: role, source: record-verification, required: true}
-    profile-verification: {address: role, source: profile-verification, required: true}
-    producer-attempt: {address: attempt, source: synthesize, required: true}
-    answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
-    boundary: {address: role, source: boundary, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    memory: {address: role, source: memory, required: true}
-    runtime: {address: role, source: runtime, required: true}
-  outputs: []
-- name: verify-synthesis
-  kind: model
-  role: synthesis-verification
-  instruction: instruction
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    synthesis-contract: agentic-system-analyses/types/agentic-system-synthesis.md
+  reads: {boundary: required, runtime: required, memory: required, epistemic: required,
+          reconciliation: required, memory-profile: required, record-verification: required,
+          profile-verification: required}
+  verified-by: [record-verification, profile-verification]
+- role: synthesis-verification
+  instruction: jobs-engine/verify-synthesis.md
   max_attempts: 2
   outputs: [verification, answers]
   criteria: [worker]
-  inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-synthesis.md}
-    opening: {address: output, source: 'open:metadata', required: true}
-    synthesis-answers: {address: output, source: 'synthesize:answers', required: false}
-    synthesis-refusal: {address: refusal, source: synthesize, required: false}
-    records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
-    synthesis-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}
-    boundary: {address: role, source: boundary, required: true}
-    runtime: {address: role, source: runtime, required: true}
-    memory: {address: role, source: memory, required: true}
-    epistemic: {address: role, source: epistemic, required: true}
-    reconciliation: {address: role, source: reconciliation, required: true}
-    synthesis: {address: role, source: synthesis, required: true}
-    record-verification: {address: role, source: record-verification, required: true}
-    profile-verification: {address: role, source: profile-verification, required: true}
-    refusal: {address: refusal, source: verify-synthesis, required: false}
-  parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: synthesis-verification}
-- name: apply-verify-synthesis
-  kind: code
-  handler: commonplace.lib.agentic_analysis.profile.apply_verify_synthesis
-  criteria: [check, reports, reconciliation, verification, synthesis]
-  inputs:
-    answers: {address: output, source: 'verify-synthesis:answers', required: false}
-    answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
-    candidate: {address: output, source: 'verify-synthesis:verification', required: true}
-    verifier-attempt: {address: attempt, source: verify-synthesis, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    synthesis-seen: {address: handed, source: 'verifier-attempt:synthesis', required: true}
-    record-verification-seen: {address: handed, source: 'verifier-attempt:record-verification', required: true}
-    profile-verification-seen: {address: handed, source: 'verifier-attempt:profile-verification', required: true}
-  outputs: []
+  files:
+    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+    synthesis-contract: agentic-system-analyses/types/agentic-system-synthesis.md
+    synthesis-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
+  reads: {boundary: required, runtime: required, memory: required, epistemic: required,
+          reconciliation: required, synthesis: required, record-verification: required,
+          profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}
 - name: assemble
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
-  criteria: [check, reports, reconciliation, verification, profile, synthesis, publication]
-  inputs:
+  role: overview
+  criteria: [check, types, reports, reconciliation, verification, profile, synthesis, publication]
+  inputs: &published
     coverage: {address: coverage}
-    source: {address: output, source: 'acquire:source', required: true}
-    boundary-attempt: {address: attempt, source: boundary, required: true}
+    source: {address: output, source: 'acquire:source'}
+    metadata: {address: output, source: 'open:metadata'}
+    boundary-attempt: {address: attempt, source: boundary}
     runtime-attempt: {address: attempt, source: runtime, required: false}
     memory-attempt: {address: attempt, source: memory, required: false}
     epistemic-attempt: {address: attempt, source: epistemic, required: false}
-    reconciliation-attempt: {address: attempt, source: reconcile, required: false}
-    record-verification-attempt: {address: attempt, source: verify, required: false}
-    memory-profile-attempt: {address: attempt, source: profile, required: false}
-    profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
-    synthesis-attempt: {address: attempt, source: synthesize, required: false}
-    synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
-    boundary: {address: role, source: boundary, required: true}
+    reconciliation-attempt: {address: attempt, source: reconciliation, required: false}
+    record-verification-attempt: {address: attempt, source: record-verification, required: false}
+    memory-profile-attempt: {address: attempt, source: memory-profile, required: false}
+    profile-verification-attempt: {address: attempt, source: profile-verification, required: false}
+    synthesis-attempt: {address: attempt, source: synthesis, required: false}
+    synthesis-verification-attempt: {address: attempt, source: synthesis-verification, required: false}
+    boundary: {address: role, source: boundary}
     runtime: {address: role, source: runtime, required: false}
     memory: {address: role, source: memory, required: false}
     epistemic: {address: role, source: epistemic, required: false}
@@ -464,35 +226,12 @@ jobs:
     profile-verification: {address: role, source: profile-verification, required: false}
     synthesis-verification: {address: role, source: synthesis-verification, required: false}
   outputs: [overview, manifest]
-  role: overview
 - name: publish
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.publish_analysis
-  criteria: [check, reports, reconciliation, verification, profile, synthesis, publication]
+  criteria: [check, types, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
-    coverage: {address: coverage}
-    source: {address: output, source: 'acquire:source', required: true}
-    boundary-attempt: {address: attempt, source: boundary, required: true}
-    runtime-attempt: {address: attempt, source: runtime, required: false}
-    memory-attempt: {address: attempt, source: memory, required: false}
-    epistemic-attempt: {address: attempt, source: epistemic, required: false}
-    reconciliation-attempt: {address: attempt, source: reconcile, required: false}
-    record-verification-attempt: {address: attempt, source: verify, required: false}
-    memory-profile-attempt: {address: attempt, source: profile, required: false}
-    profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
-    synthesis-attempt: {address: attempt, source: synthesize, required: false}
-    synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
-    boundary: {address: role, source: boundary, required: true}
-    overview: {address: role, source: overview, required: true}
-    runtime: {address: role, source: runtime, required: false}
-    memory: {address: role, source: memory, required: false}
-    epistemic: {address: role, source: epistemic, required: false}
-    reconciliation: {address: role, source: reconciliation, required: false}
-    memory-profile: {address: role, source: memory-profile, required: false}
-    synthesis: {address: role, source: synthesis, required: false}
-    record-verification: {address: role, source: record-verification, required: false}
-    profile-verification: {address: role, source: profile-verification, required: false}
-    synthesis-verification: {address: role, source: synthesis-verification, required: false}
+    <<: *published
+    overview: {address: role, source: overview}
     manifest: {address: output, source: 'assemble:manifest'}
   outputs: [receipt]

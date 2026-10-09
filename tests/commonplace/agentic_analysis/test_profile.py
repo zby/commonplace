@@ -114,9 +114,9 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
             for name, (data, role) in values.items()}
     # Every criterion the shipped declaration's jobs apply, pinned as a file input.
     from commonplace.artifactrun import load_plan
-    from commonplace.lib.agentic_analysis.plan import PLAN
+    from commonplace.lib.agentic_analysis.plan import expanded
 
-    for declared in load_plan((run.library / PLAN).read_text()).jobs:
+    for declared in load_plan(yaml.safe_dump(expanded(run.library))).jobs:
         for name, spec in declared.inputs.items():
             if spec.address == "file" and name not in inputs:
                 data = (run.library / spec.source).read_bytes()

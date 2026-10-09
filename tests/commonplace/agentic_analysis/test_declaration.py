@@ -1,4 +1,4 @@
-"""Contracts for the analysis YAML declaration and its bound handlers.
+"""Contracts for the analysis plan's expansion and its bound handlers.
 
 Use the real shipped layout and instructions. No workers, network, source
 acquisition, publication or production command switches are involved.
@@ -13,32 +13,25 @@ from commonplace.artifactrun import CodeJob, ModelJob, advance, load_plan, start
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
-from commonplace.lib.agentic_analysis.plan import PLAN
+from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 
 REPORTS = ("runtime", "memory", "epistemic")
 RECORDS = (*REPORTS, "reconciliation")
-MODEL_ROLES = {
-    "boundary": "boundary",
-    "runtime": "runtime",
-    "memory": "memory",
-    "epistemic": "epistemic",
-    "reconcile": "reconciliation",
-    "verify": "record-verification",
-    "profile": "memory-profile",
-    "verify-profile": "profile-verification",
-    "synthesize": "synthesis",
-    "verify-synthesis": "synthesis-verification",
-}
+VERIFIERS = ("record-verification", "profile-verification", "synthesis-verification")
+# A job that fills a role takes the role's name.
+MODEL_ROLES = {role: role for role in (
+    "boundary", *RECORDS, "memory-profile", "synthesis", *VERIFIERS)}
 ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
 DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
     "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
-    "epistemic": "trace-epistemic", "reconcile": "reconcile-records", "verify": "verify-records",
-    "profile": "map-memory-profile", "verify-profile": "verify-memory-profile",
-    "synthesize": "synthesize-findings", "verify-synthesis": "verify-synthesis",
+    "epistemic": "trace-epistemic", "reconciliation": "reconcile-records",
+    "record-verification": "verify-records", "memory-profile": "map-memory-profile",
+    "profile-verification": "verify-memory-profile", "synthesis": "synthesize-findings",
+    "synthesis-verification": "verify-synthesis",
 }
 
 
@@ -47,7 +40,7 @@ def graph():
     document, error = parse_document((LIBRARY / ANALYSIS_TYPE).read_text(encoding="utf-8"))
     assert document is not None and not error
     layout = parse_layout(document.frontmatter["layout"])
-    return load_plan(DECLARATION.read_text(encoding="utf-8"), layout.roles), layout
+    return load_plan(yaml.safe_dump(expanded(LIBRARY)), layout.roles), layout
 
 
 def test_graph_covers_real_roles_once(graph):
@@ -98,21 +91,25 @@ def test_assembly_and_publication_are_gated_on_engine_coverage(graph):
 def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
     jobs, layout = graph
     for name, role in MODEL_ROLES.items():
-        if name.startswith("verify"):
+        if name in VERIFIERS:
             continue
         check = jobs.job(f"check-{name}")
         assert check.inputs["producer-attempt"].source == name
+        assert check.inputs["producer-attempt"].order_only, "an identical rerun is no signal"
         answered = check.inputs["answered-refusal"]
         assert (answered.address, answered.source, answered.required) == (
             "handed", "producer-attempt:refusal", False,
         )
-        partners = {source.role for source in layout.roles[role].identity} | set(layout.roles[role].cites)
-        assert partners - {role} <= {spec.source for spec in check.inputs.values() if spec.address == "role"}
+        # Identity sources are required partners; cited roles are optional ones.
+        roles = {spec.source: spec.required for spec in check.inputs.values() if spec.address == "role"}
+        for source in layout.roles[role].identity:
+            assert roles[source.role] is True, (name, source.role)
+        assert set(layout.roles[role].cites) - {role} <= set(roles)
     for name in REPORTS:
         assert jobs.job(f"check-{name}").inputs["answers"].source == f"{name}:answers"
-    for producer in ("profile", "synthesize", "verify-profile", "verify-synthesis"):
+    for producer in ("memory-profile", "synthesis", "profile-verification", "synthesis-verification"):
         assert jobs.job(producer).outputs[-1] == "answers"
-        verifies = producer.startswith("verify")
+        verifies = producer in VERIFIERS
         check = jobs.job(f"apply-{producer}" if verifies else f"check-{producer}")
         answers = check.inputs["answers"]
         assert (answers.address, answers.source, answers.required) == ("output", f"{producer}:answers", False)
@@ -121,44 +118,39 @@ def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
             assert (answered.address, answered.source, answered.required) == (
                 "handed", "verifier-attempt:refusal", False,
             )
-    records = {"boundary", *RECORDS}
-    for producer in ("profile", "synthesize", "reconcile"):
-        required = {spec.source for spec in jobs.job(f"check-{producer}").inputs.values()
-                    if spec.address == "role" and spec.required}
-        assert records - {MODEL_ROLES[producer]} <= required
+    # The carried-limits rule reads both verifications, which the synthesis cites.
     assert {"record-verification", "profile-verification"} <= {
-        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "role" and spec.required
+        spec.source for spec in jobs.job("check-synthesis").inputs.values() if spec.address == "role"
     }
-    for verifier, subject, producer in (
-        ("verify-profile", "profile", "profile"), ("verify-synthesis", "synthesis", "synthesize"),
-    ):
+    for verifier, subject in (("profile-verification", "memory-profile"), ("synthesis-verification", "synthesis")):
         job = jobs.job(verifier)
-        assert job.inputs[f"{subject}-answers"].source == f"{producer}:answers"
-        assert job.inputs[f"{subject}-refusal"].source == producer
+        assert job.inputs[f"{subject}-answers"].source == f"{subject}:answers"
+        assert job.inputs[f"{subject}-refusal"].source == subject
 
 
 def test_apply_jobs_judge_handed_members_not_current_slots(graph):
     jobs, _ = graph
-    for name in ("verify", "verify-profile", "verify-synthesis"):
+    for name in VERIFIERS:
         verifier = jobs.job(name)
         apply = jobs.job(f"apply-{name}")
         assert apply.inputs["verifier-attempt"].source == name
         assert not any(spec.address == "role" for spec in apply.inputs.values())
+        # Everything the verifier read as a member or an output, and its refusal.
         expected = {f"verifier-attempt:{key}" for key, spec in verifier.inputs.items()
-                    if spec.address == "role" or key in ("record-check", "refusal")}
+                    if spec.address in ("role", "output") and key != "opening" or key == "refusal"}
         handed = {spec.source for spec in apply.inputs.values() if spec.address == "handed"}
         assert handed == expected
 
 
 def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
     jobs, _ = graph
-    for name in ("profile", "synthesize"):
+    for name in ("memory-profile", "synthesis"):
         gates = {spec.source: spec for spec in jobs.job(name).inputs.values() if spec.address == "judgment"}
         assert set(RECORDS) <= set(gates)
         for role in RECORDS:
             assert gates[role].required and gates[role].outcome == "accepted"
             assert gates[role].relation == f"record-verification:verifies:{role}"
-    profile = jobs.job("synthesize").inputs["profile-verified"]
+    profile = jobs.job("synthesis").inputs["memory-profile-verified"]
     assert profile.relation == "profile-verification:verifies:memory-profile"
     # Runtime must be present initially but its version is not a rerun trigger.
     for name in ("memory", "epistemic"):
@@ -172,10 +164,10 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
     jobs, layout = graph
     role_contracts = {
         "boundary": {"boundary"}, "runtime": {"runtime"}, "memory": {"memory"},
-        "epistemic": {"epistemic"}, "reconcile": set(RECORDS),
-        "verify": {*RECORDS, "record-verification"}, "profile": {"memory-profile"},
-        "verify-profile": {"memory-profile", "profile-verification"},
-        "synthesize": {"synthesis"}, "verify-synthesis": {"synthesis", "synthesis-verification"},
+        "epistemic": {"epistemic"}, "reconciliation": set(RECORDS),
+        "record-verification": {*RECORDS, "record-verification"}, "memory-profile": {"memory-profile"},
+        "profile-verification": {"memory-profile", "profile-verification"},
+        "synthesis": {"synthesis"}, "synthesis-verification": {"synthesis", "synthesis-verification"},
     }
     shared = "agentic-system-analyses/instructions/agentic-analysis-"
     for name, roles in role_contracts.items():
@@ -188,16 +180,16 @@ def test_model_contracts_are_selected_for_substantive_work(graph):
         }
         if name != "boundary":
             expected.add(f"{shared}records.md")
-        if name in ("boundary", "verify"):
+        if name in ("boundary", "record-verification"):
             expected.add(f"{shared}boundary.md")
         assert {spec.source for spec in job.inputs.values() if spec.address == "file"} == expected
     # Worker instructions name the contracts by these input keys.
-    for name in ("reconcile", "verify"):
+    for name in ("reconciliation", "record-verification"):
         for role in RECORDS:
             assert jobs.job(name).inputs[f"{role}-contract"].source == layout.roles[role].type
-    assert "memory-profile-contract" in jobs.job("verify-profile").inputs
-    assert "synthesis-contract" in jobs.job("verify-synthesis").inputs
-    assert jobs.job("verify-profile").inputs["profile"].source == "memory-profile"
+    assert "memory-profile-contract" in jobs.job("profile-verification").inputs
+    assert "synthesis-contract" in jobs.job("synthesis-verification").inputs
+    assert jobs.job("profile-verification").inputs["memory-profile"].source == "memory-profile"
 
 
 def schema_dependencies(path):
@@ -256,10 +248,11 @@ def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     assert check.outputs == ("findings",) and check.role is None
     assert {spec.source for spec in check.inputs.values() if spec.address == "role"} == {"boundary", *RECORDS}
     assert all(spec.required for spec in check.inputs.values())
-    spec = jobs.job("verify").inputs["record-check"]
+    spec = jobs.job("record-verification").inputs["record-check"]
     assert (spec.address, spec.source, spec.required) == ("output", "record-check:findings", True)
-    assert [job.name for job in jobs.jobs].index("record-check") < [job.name for job in jobs.jobs].index("verify")
-    handed = jobs.job("apply-verify").inputs["record-check-seen"]
+    names = [job.name for job in jobs.jobs]
+    assert names.index("record-check") < names.index("record-verification")
+    handed = jobs.job("apply-record-verification").inputs["record-check-seen"]
     assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:record-check", True)
 
 
@@ -279,11 +272,14 @@ def engine_run(tmp_path, monkeypatch):
 def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(LIBRARY))
     run_dir = tmp_path / "run"
-    jobs = load_plan(DECLARATION.read_text(encoding="utf-8"))
+    jobs = load_plan(yaml.safe_dump(expanded(LIBRARY)))
     for job in jobs.jobs:
         if isinstance(job, CodeJob):
-            assert job.handler.startswith("commonplace.lib.agentic_analysis.")
+            assert job.handler.startswith(("commonplace.lib.agentic_analysis.", "commonplace.artifactrun.handlers."))
             assert callable(job.resolve_handler())
+            for check in job.options.get("checks", ()):
+                path = check["function"] if isinstance(check, dict) else check
+                assert path.startswith("commonplace.lib.agentic_analysis.")
     start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
     status = advance(run_dir)
     assert not status.handouts and not status.open_attempts and not status.publishable

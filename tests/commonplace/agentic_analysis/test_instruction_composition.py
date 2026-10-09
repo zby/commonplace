@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import yaml
+
 from commonplace.artifactrun import ModelJob, load_plan
-from commonplace.lib.agentic_analysis.plan import PLAN
+from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -11,8 +13,7 @@ LIBRARY = REPO_ROOT / "kb"
 
 
 def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs() -> None:
-    declaration = LIBRARY / PLAN
-    jobs = load_plan(declaration.read_text(encoding="utf-8"))
+    jobs = load_plan(yaml.safe_dump(expanded(LIBRARY)))
     declared = {
         LIBRARY / spec.source
         for job in jobs.jobs
@@ -30,7 +31,7 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     )
     assert LIBRARY / jobs.type_spec not in declared
     contracts.update((collection / "instructions").glob("agentic-analysis-*.md"))
-    workers = declaration.parent / "jobs-engine"
+    workers = (LIBRARY / PLAN).parent / "jobs-engine"
     contracts.update(workers.glob("*.md"))
     assert contracts <= declared
     assert all(path.is_file() for path in declared)

@@ -225,12 +225,14 @@ def declared_packet(job_name):
     """Inspect declared model inputs without executing jobs or manufacturing handouts."""
     from pathlib import Path
 
+    import yaml
+
     from commonplace.artifactrun import load_plan
     from commonplace.lib.agentic_analysis.analyses import analysis_layout
-    from commonplace.lib.agentic_analysis.plan import PLAN
+    from commonplace.lib.agentic_analysis.plan import expanded
 
     library = Path(__file__).resolve().parents[3] / "kb"
-    declaration = load_plan((library / PLAN).read_text(), analysis_layout().roles)
+    declaration = load_plan(yaml.safe_dump(expanded(library)), analysis_layout().roles)
     job = declaration.job(job_name)
     paths = [library / item.source for item in job.inputs.values() if item.address == "file"]
     assert paths
@@ -241,12 +243,12 @@ def declared_packet(job_name):
 @pytest.mark.parametrize("job_name, phrases", [
     ("memory", ["generic caller identity does not establish human control"]),
     ("epistemic", ["checking is never"]),
-    ("reconcile", ["never allocates ids"]),
-    ("verify", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
-    ("profile", ["generic caller identity alone leaves control unresolved"]),
-    ("verify-profile", ["an unsupported emitted value or strength"]),
-    ("synthesize", ["independent route/property conclusions"]),
-    ("verify-synthesis", ["structural acceptance does not establish support"]),
+    ("reconciliation", ["never allocates ids"]),
+    ("record-verification", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
+    ("memory-profile", ["generic caller identity alone leaves control unresolved"]),
+    ("profile-verification", ["an unsupported emitted value or strength"]),
+    ("synthesis", ["independent route/property conclusions"]),
+    ("synthesis-verification", ["structural acceptance does not establish support"]),
 ])
 def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
     packet = declared_packet(job_name).lower()
@@ -255,8 +257,8 @@ def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
 
 
 @pytest.mark.parametrize("job_name", [
-    "runtime", "memory", "epistemic", "reconcile", "verify", "profile",
-    "verify-profile", "synthesize", "verify-synthesis",
+    "runtime", "memory", "epistemic", "reconciliation", "record-verification", "memory-profile",
+    "profile-verification", "synthesis", "synthesis-verification",
 ])
 def test_self_improvement_test_reaches_declared_job_inputs(job_name):
     import re
@@ -319,7 +321,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert artifact_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
-    assert "an unsupported emitted value or strength" in declared_packet("verify-profile").lower()
+    assert "an unsupported emitted value or strength" in declared_packet("profile-verification").lower()
 
 
 def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):

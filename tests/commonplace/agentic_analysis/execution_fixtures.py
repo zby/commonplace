@@ -21,7 +21,7 @@ from commonplace.artifactrun import sources as agentic_checkout
 from commonplace.artifactrun import start_run, worktree
 from commonplace.artifactrun.sources import JOURNAL
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis.plan import PLAN
+from commonplace.lib.agentic_analysis.plan import expanded
 from tests.commonplace.artifactrun.support import Coordinator
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -71,7 +71,7 @@ class Prepared:
         self.monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(library or self.repo / "kb"))
         run_dir = self.repo / "kb/agentic-system-analyses/state" / name
         # Deliberately stop before acquisition despite the fully bound shipped graph.
-        data = yaml.safe_load((self.repo / "kb" / PLAN).read_text())
+        data = expanded(self.repo / "kb")
         data["jobs"] = data["jobs"][:2]
         data["jobs"][1]["handler"] = "tests.commonplace.agentic_analysis.execution_fixtures.stop_before_acquisition"
         declaration = self.repo.parent / "opening-only.yaml"
@@ -201,7 +201,7 @@ def acquisition(request, monkeypatch, tmp_path):
     def start(*, revision=None, identity=None, boundary=False, analysts=False, production=False):
         # No actual workers. Truncate the fully bound shipped declaration to
         # isolate acquisition, boundary or analysts unless production is requested.
-        data = yaml.safe_load((prepared.repo / "kb" / PLAN).read_text())
+        data = expanded(prepared.repo / "kb")
         if not production:
             data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
         if boundary or analysts:

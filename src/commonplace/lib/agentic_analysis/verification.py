@@ -10,6 +10,7 @@ import json
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
+    Candidate,
     blocker_entries,
     candidate,
     criterion_bytes,
@@ -19,6 +20,7 @@ from commonplace.artifactrun.checks import (
     review,
     snapshot,
 )
+from commonplace.artifactrun.handlers import SET_CHECK_HEADING
 from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.agentic_analysis.guards import checkout
 from commonplace.lib.agentic_analysis.records import (
@@ -141,3 +143,43 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
         for role in RECORDS:
             attempt.judge(role + "-seen", outcome="accepted", scope=(f"record-verification:verifies:{role}",))
     return {}
+
+
+# Declared check and feedback for the compact plan's record verification.
+
+
+def _set_check_failed(data: bytes) -> bool:
+    text = data.decode("utf-8").strip()
+    heading = SET_CHECK_HEADING
+    if not text.startswith(heading + "\n"):
+        raise ValueError(f"handed record-check must be a {heading.removeprefix('# ')} document")
+    body = text[len(heading):].strip()
+    if body == "none":
+        return False
+    if not body or not body.startswith("- "):
+        raise ValueError("handed record-check must contain none or findings")
+    return True
+
+
+def record_check_gate(check: Candidate) -> list[str]:
+    """A verifier handed structural findings must address them with at least one blocker."""
+    entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
+    if _set_check_failed(check.attempt.read("record-check-seen")) and not entries:
+        return [("structural failures require explicit blockers (code requires at least one; "
+                 "the verifier must address every finding)")]
+    return []
+
+
+def cited_records(role: str, blockers: list[str], verdict: Candidate) -> str:
+    """Peer record declarations the blockers addressed to `role` cite, for the author to read."""
+    layout = verdict.attempt.layout
+    prefixes = {"runtime": "RT-", "memory": "MEM-", "epistemic": "EPI-"}
+    fragments = []
+    for identifier in sorted(record_references("\n".join(blockers))):
+        for peer, prefix in prefixes.items():
+            body = verdict.snapshot.get(layout.path(peer))
+            if peer != role and identifier.startswith(prefix) and body is not None:
+                declaration = record_declaration(body.decode("utf-8"), identifier)
+                if declaration is not None:
+                    fragments.append(f"From the {peer} report:\n\n{declaration}")
+    return "\n## Cited records from other reports\n\n" + ("\n".join(fragments) or "none") + "\n"
