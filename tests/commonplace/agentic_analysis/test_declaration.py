@@ -242,7 +242,7 @@ def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     assert (spec.address, spec.source, spec.required) == ("output", "report-check:findings", True)
     names = [job.name for job in jobs.jobs]
     assert names.index("report-check") < names.index("report-verification")
-    handed = jobs.job("apply-report-verification").inputs["report-check-seen"]
+    handed = jobs.job("apply-report-verification").inputs["report-check-handed"]
     assert (handed.address, handed.source, handed.required) == ("handed", "verifier-attempt:report-check", True)
 
 

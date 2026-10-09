@@ -32,7 +32,7 @@ def _artifact_check_failed(data: bytes) -> bool:
 def record_check_gate(check: Candidate) -> list[str]:
     """A verifier handed structural findings must address them with at least one blocker."""
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
-    if _artifact_check_failed(check.attempt.read("report-check-seen")) and not entries:
+    if _artifact_check_failed(check.attempt.read("report-check-handed")) and not entries:
         return [("structural failures require explicit blockers (code requires at least one; "
                  "the verifier must address every finding)")]
     return []

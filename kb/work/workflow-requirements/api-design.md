@@ -83,12 +83,12 @@ example, an apply job can declare:
 inputs={
     "verdict": Input("output", "verify-records:verdict"),
     "verification-attempt": Input("attempt", "verify-records"),
-    "runtime-seen": Input("handed", "verification-attempt:runtime"),
+    "runtime-handed": Input("handed", "verification-attempt:runtime"),
 }
 ```
 
-`attempt.read("runtime-seen")` returns the bytes the verifier saw, and
-`attempt.judge("runtime-seen", ...)` takes that exact member version as its
+`attempt.read("runtime-handed")` returns the bytes the verifier saw, and
+`attempt.judge("runtime-handed", ...)` takes that exact member version as its
 subject. The engine keeps the version's role internally. This adds no
 public pin-construction or historical-storage method. The route is static;
 only the attempt record selecting the version changes.

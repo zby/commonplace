@@ -91,7 +91,7 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
         verifier = new.job(name.removeprefix("apply-"))
         for key, spec in verifier.inputs.items():
             if spec.address == "output" and key != "opening":
-                inputs[f"{key}-seen"] = Input("handed", f"verifier-attempt:{key}", required=spec.required)
+                inputs[f"{key}-handed"] = Input("handed", f"verifier-attempt:{key}", required=spec.required)
         # A handed input follows the verifier's renamed input.
         for old_key, new_key in INPUT_RENAMES.get(verifier.name, {}).items():
             for key, spec in list(inputs.items()):

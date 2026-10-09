@@ -110,7 +110,7 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
     assert {j["subject"]["role"] for j in applied} == {"report-verification", *RECORDS}
-    assert all({"verifier-attempt", "report-check-seen"} <= j["basis"].keys() for j in applied)
+    assert all({"verifier-attempt", "report-check-handed"} <= j["basis"].keys() for j in applied)
     assert not a.coordinator.status.publishable
 
 
@@ -195,7 +195,7 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
     a.coordinator.complete("report-verification", verdict(a))
-    attempt = code_attempt(a, "apply-report-verification", {"report-check-seen": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
+    attempt = code_attempt(a, "apply-report-verification", {"report-check-handed": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
@@ -212,7 +212,7 @@ def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
     ).encode()
     text = verdict(a, "- runtime: reconsider [MEM-OBJ-store](memory.md#mem-obj-store) and SRC-1.\n"
                    "- epistemic: reconsider SRC-1.").encode()
-    attempt = code_attempt(a, "apply-report-verification", {"candidate": text, "memory-seen": memory})
+    attempt = code_attempt(a, "apply-report-verification", {"candidate": text, "memory-handed": memory})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     runtime = next(j for j in result if j["subject"]["role"] == "runtime")

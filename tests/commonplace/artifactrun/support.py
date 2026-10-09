@@ -329,9 +329,9 @@ def plan(method: Path) -> dict:
                 # The handed report is validated at its role, under its contract.
                 "contract": {"address": "file", "source": CONTRACT},
                 "verifier-attempt": {"address": "attempt", "source": "verification"},
-                "report-seen": {"address": "handed", "source": "verifier-attempt:report"},
-                "other-seen": {"address": "handed", "source": "verifier-attempt:other"},
-                "summary-seen": {"address": "handed", "source": "verifier-attempt:summary"},
+                "report-handed": {"address": "handed", "source": "verifier-attempt:report"},
+                "other-handed": {"address": "handed", "source": "verifier-attempt:other"},
+                "summary-handed": {"address": "handed", "source": "verifier-attempt:summary"},
             }},
             model("digest", "digest", {
                 "report": _role("report"),

@@ -261,7 +261,7 @@ The syntax, stated so that the loader does not invent it:
   reconciliation for the profile, is not a check partner: a change to it
   re-readies the model job, which is what matters, and not the check. The derived apply receives, from the verifier's
   attempt, the handed version of every role the verifier read, named
-  `<role>-seen`, so its content acceptance covers the verdict's `cites`
+  `<role>-handed`, so its content acceptance covers the verdict's `cites`
   relations; the subjects are those the verifier role verifies. An
   incumbent or the opening metadata is an input of a declared check, not a
   derived one. An input only a declared

@@ -383,12 +383,12 @@ class _Expansion:
                 handed = {"address": "handed", "source": f"verifier-attempt:{read}"}
                 if spec.get("required") is False:
                     handed["required"] = False
-                inputs[f"{read}-seen"] = handed
+                inputs[f"{read}-handed"] = handed
         missing = [subject for subject in role.verifies if subject not in reads]
         if missing:
             raise PlanError(f"role {name}: verifies {', '.join(missing)} but does not read them")
         # The frozen source comes handed when the verifier read its member, else live.
-        if self.frozen is not None and self.frozen != name and f"{self.frozen}-seen" not in inputs:
+        if self.frozen is not None and self.frozen != name and f"{self.frozen}-handed" not in inputs:
             inputs[self.frozen] = {"address": "role", "source": self.frozen}
         inputs.update(self.check_inputs(entry))
         roles = [spec["source"] for read, spec in reads.items() if spec["address"] == "role"]

@@ -119,7 +119,7 @@ are the producer's name and kind and the worker identity.
 
 - **A version accessor.** Identity is the content hash (requirement 4), so a
   consumer computing `sha256` uses a public rule.
-- **Role-keyed snapshots.** The input-name tables (`-seen`, the `profile`
+- **Role-keyed snapshots.** The input-name tables (`-handed`, the `profile`
   alias in `profile.py:35`) come from inconsistent input naming in
   `plan.yaml`. Rename the inputs; roles stay internal.
 - **Splitting `run_dir`.** Its uses are the artifact path, which a Decision fixes;
@@ -278,7 +278,7 @@ before parsing it. Each runs the same skeleton, written four times
 1. locate the run's metadata and checkout;
 2. read the candidate;
 3. snapshot the partner members at their artifact paths, from current member
-   inputs or, in verdict applications, from handed `-seen` inputs (three
+   inputs or, in verdict applications, from handed `-handed` inputs (three
    implementations);
 4. validate the candidate as a draft at its role against that snapshot and
    the pinned criteria, keeping failures as `[set]` reasons;

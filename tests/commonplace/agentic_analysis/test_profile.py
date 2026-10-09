@@ -108,7 +108,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
     }).encode()
     values = {"candidate": candidate, "answers": answers, "answered-refusal": refusal,
               "verifier-attempt" if apply else "producer-attempt": record,
-              **{f"{name}-seen" if apply else name: data for name, data in snapshot.items()}}
+              **{f"{name}-handed" if apply else name: data for name, data in snapshot.items()}}
     pins = {}
     for name, spec in job.inputs.items():
         data = (run.library / spec.source).read_bytes() if spec.address == "file" else values.get(name)
@@ -172,7 +172,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
     relation = f"{stage}-verification:verifies:{'memory-profile' if stage == 'profile' else 'synthesis'}"
     assert relation not in {s["relation"] for s in valid["scope"]}
     assert subject["scope"][0]["relation"] == relation
-    assert subject["subject"]["version"] == ctx._pins[f"{'memory-profile' if stage == 'profile' else stage}-seen"].version
+    assert subject["subject"]["version"] == ctx._pins[f"{'memory-profile' if stage == 'profile' else stage}-handed"].version
     assert subject["outcome"] == ("accepted" if blockers == "none" else "refused")
     if blockers != "none":
         assert "Continued evidence explanation." in subject["findings"]
@@ -236,7 +236,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     assert "## Limits" in subject["findings"]
     # Same exact handed verdict, but a synthesis carrying its ID may pass.
     data = synthesis(a, "Store inspection incomplete | [RT-OBJ-store](runtime.md#rt-obj-store) | SRC-1 | complete comparison | inspect store")
-    ctx._pins["synthesis-seen"] = Resolved(hashlib.sha256(data).hexdigest(), data, "synthesis")
+    ctx._pins["synthesis-handed"] = Resolved(hashlib.sha256(data).hexdigest(), data, "synthesis")
     ctx._staged.clear()
     apply_verdict(ctx)
     assert judgments(ctx)[1]["outcome"] == "accepted"

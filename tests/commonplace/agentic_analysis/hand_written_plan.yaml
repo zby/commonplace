@@ -263,12 +263,12 @@ jobs:
   inputs:
     candidate: {address: output, source: 'verify:verification', required: true}
     verifier-attempt: {address: attempt, source: verify, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    report-check-seen: {address: handed, source: 'verifier-attempt:report-check'}
+    boundary-handed: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-handed: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-handed: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-handed: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-handed: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    report-check-handed: {address: handed, source: 'verifier-attempt:report-check'}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
   outputs: []
 - name: profile
@@ -341,12 +341,12 @@ jobs:
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-profile:verification', required: true}
     verifier-attempt: {address: attempt, source: verify-profile, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    memory-profile-seen: {address: handed, source: 'verifier-attempt:profile', required: true}
+    boundary-handed: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-handed: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-handed: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-handed: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-handed: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    memory-profile-handed: {address: handed, source: 'verifier-attempt:profile', required: true}
   outputs: []
 - name: synthesize
   kind: model
@@ -426,14 +426,14 @@ jobs:
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
     candidate: {address: output, source: 'verify-synthesis:verification', required: true}
     verifier-attempt: {address: attempt, source: verify-synthesis, required: true}
-    boundary-seen: {address: handed, source: 'verifier-attempt:boundary', required: true}
-    runtime-seen: {address: handed, source: 'verifier-attempt:runtime', required: true}
-    memory-seen: {address: handed, source: 'verifier-attempt:memory', required: true}
-    epistemic-seen: {address: handed, source: 'verifier-attempt:epistemic', required: true}
-    reconciliation-seen: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
-    synthesis-seen: {address: handed, source: 'verifier-attempt:synthesis', required: true}
-    report-verification-seen: {address: handed, source: 'verifier-attempt:report-verification', required: true}
-    profile-verification-seen: {address: handed, source: 'verifier-attempt:profile-verification', required: true}
+    boundary-handed: {address: handed, source: 'verifier-attempt:boundary', required: true}
+    runtime-handed: {address: handed, source: 'verifier-attempt:runtime', required: true}
+    memory-handed: {address: handed, source: 'verifier-attempt:memory', required: true}
+    epistemic-handed: {address: handed, source: 'verifier-attempt:epistemic', required: true}
+    reconciliation-handed: {address: handed, source: 'verifier-attempt:reconciliation', required: true}
+    synthesis-handed: {address: handed, source: 'verifier-attempt:synthesis', required: true}
+    report-verification-handed: {address: handed, source: 'verifier-attempt:report-verification', required: true}
+    profile-verification-handed: {address: handed, source: 'verifier-attempt:profile-verification', required: true}
   outputs: []
 - name: assemble
   kind: code
