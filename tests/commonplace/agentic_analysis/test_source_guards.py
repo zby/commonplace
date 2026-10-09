@@ -11,7 +11,7 @@ from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import (
     ValidationRun,
-    validate_draft_at_slot,
+    validate_draft_in_role,
     validate_pinned_artifact_snapshot,
 )
 
@@ -197,8 +197,8 @@ def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_artifact(
             tmp_path, (), criteria=CriterionSnapshot(tmp_path / "kb", criteria),
             content_overrides={directory / name: data for name, data in members.items()},
         ).validate(path)
-        draft = validate_draft_at_slot(
-            directory, "boundary.md", members["boundary.md"], repo_root=tmp_path,
+        draft = validate_draft_in_role(
+            directory, "boundary", members["boundary.md"], repo_root=tmp_path,
             members={"overview.md": members["overview.md"]}, manifest=manifest, criteria=criteria,
         )
         pinned = validate_pinned_artifact_snapshot(

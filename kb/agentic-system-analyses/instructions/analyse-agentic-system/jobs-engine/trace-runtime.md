@@ -51,7 +51,7 @@ unknown stays beside the affected finding.
 
 ## Check and return
 
-Run the shared draft-at-slot content check, repair findings and rerun. Code
+Run the shared content check, repair findings and rerun. Code
 also checks frozen-source integrity, identity, record preservation and the
 answers to the exact refusal handed to this attempt. A content pass is not
 acceptance or a semantic verification. Return one line naming the files written.

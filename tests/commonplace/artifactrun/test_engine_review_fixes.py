@@ -117,10 +117,10 @@ def pending_candidate(tmp_path, tmp_library):
     data["jobs"] = data["jobs"][:6]
     jobs = {job["name"]: job for job in data["jobs"]}
     jobs["check-report"]["inputs"]["other"] = {
-        "address": "member", "source": "other", "required": False,
+        "address": "role", "source": "other", "required": False,
     }
     jobs["other"]["inputs"]["report"] = {
-        "address": "member", "source": "report", "order_only": True,
+        "address": "role", "source": "report", "order_only": True,
     }
     declaration.write_text(yaml.safe_dump(data, sort_keys=False))
     start_run(tmp_path / "run", declaration, parameters={"subject": "toy"})

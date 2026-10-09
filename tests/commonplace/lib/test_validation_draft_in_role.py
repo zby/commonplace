@@ -9,7 +9,7 @@ from commonplace.lib.agentic_analysis.rules import validate_analysis_artifact
 from commonplace.lib.directory_artifact import ArtifactMember, DirectoryArtifact
 from commonplace.lib.directory_layout import layout_findings
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.validation import ValidationRun, validate_draft_at_slot
+from commonplace.lib.validation import ValidationRun, validate_draft_in_role
 
 
 def document(body, **metadata):
@@ -60,11 +60,11 @@ def test_overlay_filters_roles_and_never_writes(draft_artifact):
         for name in ("head.md", "body.md")
     }}))
     before = {path: path.read_bytes() for path in output.iterdir()}
-    findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
+    findings = validate_draft_in_role(output, "body", draft, repo_root=root)
     assert not findings
     assert {path: path.read_bytes() for path in output.iterdir()} == before
     draft.write_bytes(incumbent)
-    findings = validate_draft_at_slot(output, output / "body.md", draft, repo_root=root)
+    findings = validate_draft_in_role(output, "body", draft, repo_root=root)
     assert all(f.role == "body" for f in findings)
     assert any("identity field" in f.message for f in findings)
     assert all(f.repair and "Repair: " in f.render() for f in findings)
@@ -79,14 +79,14 @@ def test_exact_snapshot_ignores_disk_members_and_manifest(draft_artifact):
     (output / "intruder.md").write_text("---\ntype: [bad\n---\n")
     (output / "ARTIFACT.yaml").write_text("invalid: [manifest\n")
     before = {path: path.read_bytes() for path in output.iterdir()}
-    findings = validate_draft_at_slot(
-        output, "body.md", candidate, repo_root=root, members={"head.md": head},
+    findings = validate_draft_in_role(
+        output, "body", candidate, repo_root=root, members={"head.md": head},
         manifest=b"type: reports/types/set.md\n",
     )
     assert not findings
     assert {path: path.read_bytes() for path in output.iterdir()} == before
-    findings = validate_draft_at_slot(
-        output, "body.md", candidate, repo_root=root,
+    findings = validate_draft_in_role(
+        output, "body", candidate, repo_root=root,
         members={"head.md": head.replace(b"expected", b"wrong")},
         manifest=b"type: reports/types/set.md\n",
     )
@@ -97,8 +97,8 @@ def test_exact_snapshot_ignores_disk_members_and_manifest(draft_artifact):
 def test_snapshot_member_names_cannot_expand_scope(draft_artifact, name):
     root, output = draft_artifact
     with pytest.raises(ValueError, match="snapshot member"):
-        validate_draft_at_slot(
-            output, "body.md", b"# Body\n", repo_root=root,
+        validate_draft_in_role(
+            output, "body", b"# Body\n", repo_root=root,
             members={name: b"# Intruder\n"}, manifest=b"type: reports/types/set.md\n",
         )
 
@@ -106,9 +106,9 @@ def test_snapshot_member_names_cannot_expand_scope(draft_artifact, name):
 def test_snapshot_requires_its_manifest_and_refuses_unreadable_candidate(draft_artifact):
     root, output = draft_artifact
     with pytest.raises(ValueError, match="explicit manifest"):
-        validate_draft_at_slot(output, "body.md", b"# Body\n", repo_root=root, members={})
-    findings = validate_draft_at_slot(
-        output, "body.md", b"\xff", repo_root=root, members={},
+        validate_draft_in_role(output, "body", b"# Body\n", repo_root=root, members={})
+    findings = validate_draft_in_role(
+        output, "body", b"\xff", repo_root=root, members={},
         manifest=b"type: reports/types/set.md\n",
     )
     assert findings and all(f.role == "body" for f in findings)
@@ -118,7 +118,7 @@ def test_overlay_new_slot_and_candidate_file_failures(draft_artifact):
     root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("---\ntype: types/missing.md\nrun: expected\n---\n# Candidate\n")
-    findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
+    findings = validate_draft_in_role(output, "body", draft, repo_root=root)
     assert findings and all(f.role == "body" for f in findings)
     assert any("missing" in f.message for f in findings)
     assert not (output / "body.md").exists()
@@ -128,18 +128,18 @@ def test_bad_candidate_reports_failure_instead_of_aborting(draft_artifact):
     root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("---\ntype: [bad\n---\n# Candidate\n")
-    findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
+    findings = validate_draft_in_role(output, "body", draft, repo_root=root)
     assert findings and all(f.role == "body" for f in findings)
     assert all(f.repair for f in findings)
 
 
-@pytest.mark.parametrize("slot", ["../escape.md", "unknown.md"])
-def test_slot_must_be_declared_and_direct(draft_artifact, slot):
+@pytest.mark.parametrize("role", ["../escape", "unknown"])
+def test_role_must_be_declared(draft_artifact, role):
     root, output = draft_artifact
     draft = root / "candidate.md"
     draft.write_text("# Candidate\n")
     with pytest.raises(ValueError):
-        validate_draft_at_slot(output, slot, draft, repo_root=root)
+        validate_draft_in_role(output, role, draft, repo_root=root)
 
 
 def analysis_artifact(tmp_path, documents):
@@ -202,7 +202,7 @@ def test_context_parse_failure_is_explicit_and_nonwriting(draft_artifact):
     broken.write_text("---\ntype: [broken\n---\n# Later\n")
     draft = root / "candidate.md"
     draft.write_text("---\ntype: types/note.md\nrun: expected\ndescription: Body\n---\n# Body\n")
-    findings = validate_draft_at_slot(output, "body.md", draft, repo_root=root)
+    findings = validate_draft_in_role(output, "body", draft, repo_root=root)
     assert all(f.role == "body" for f in findings)
     assert any("artifact input cannot be checked" in f.message and "later.md" in f.message for f in findings)
     assert not (output / "body.md").exists()
@@ -259,10 +259,10 @@ def content_checks(content_member_artifact, role, body, **metadata):
     candidate.write_text(content)
     before = {path: path.read_bytes() for path in output.iterdir()}
     standalone = ValidationRun(root, ()).validate(incumbent)
-    draft = validate_draft_at_slot(output, incumbent.name, candidate, repo_root=root)
+    draft = validate_draft_in_role(output, role, candidate, repo_root=root)
     assert {path: path.read_bytes() for path in output.iterdir()} == before
     assert all(f.role == role and f.repair for f in draft)
-    # A defect must travel unchanged from the standalone type rule to the slot.
+    # A defect must travel unchanged from the standalone type rule to the role.
     for message in standalone.fails:
         assert any(message in f.message for f in draft)
     return standalone.fails

@@ -68,7 +68,7 @@ class Finding:
                 "required member is absent": "supply the member at its declared path",
                 "identity field": "use the expected identity value from the named source member",
                 "source member": "supply the named source member before checking this dependent identity",
-                "does not match": "use the expected value shown for this slot",
+                "does not match": "use the expected value shown for this role",
                 "unverified": "make the boundary's pinned source bytes available and check again",
                 "limit not carried": "carry the named limit and its affected IDs into synthesis Limitations",
                 "missing field": "supply the named field with an answer or an explicit evidence limit",

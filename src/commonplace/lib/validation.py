@@ -1964,19 +1964,19 @@ def run_validation(
     ).evaluate()
 
 
-def validate_draft_at_slot(
-    directory: Path, slot: Path | str, candidate: Path | bytes, *, repo_root: Path,
+def validate_draft_in_role(
+    directory: Path, role: str, candidate: Path | bytes, *, repo_root: Path,
     members: dict[str, bytes] | None = None, manifest: bytes | None = None,
     criteria: Mapping[str, bytes] | None = None,
     frozen_source: Mapping[str, object] | None = None,
 ) -> list[Finding]:
-    """Validate candidate bytes at a declared member slot, without writing.
+    """Validate candidate bytes in a role of a working artifact, without writing.
 
-    ``slot`` is a filename or the absolute intended member path. Ordinary
-    file checks use that intended path (including link resolution); artifact checks
-    see the replacement bytes everywhere and return only this member's role.
-    No absent findings are suppressed. Manifest pinning is not a draft check:
-    this judges member content and relations, not publication acceptance.
+    ``role`` is a role the artifact's type declares; the layout gives its path.
+    Ordinary file checks use that path (including link resolution); artifact
+    checks see the replacement bytes everywhere and return only this role's
+    findings. No absent findings are suppressed. Manifest pinning is not a
+    draft check: this judges content and relations, not publication acceptance.
     With ``members``, judge only that exact byte snapshot plus the candidate;
     an explicit manifest is required and disk discovery is disabled. Otherwise
     preserve the ordinary CLI's incumbent-overlay behavior. With ``criteria``,
@@ -1984,55 +1984,51 @@ def validate_draft_at_slot(
     ``frozen_source`` authorizes inspection of that exact pinned source only.
     """
     directory = directory.resolve()
-    intended = Path(slot)
-    if not intended.is_absolute():
-        intended = directory / intended
-    if intended.parent != directory:
-        raise ValueError("draft slot must be a direct member path")
     data = candidate.read_bytes() if isinstance(candidate, Path) else candidate
     if members is not None and manifest is None:
         raise ValueError("a member snapshot requires an explicit manifest")
-    snapshot = {} if members is None else {directory: {**members, intended.name: data}}
-    overrides = {intended: data}
-    if manifest is not None:
-        overrides[directory / MANIFEST_NAME] = manifest
-    run = ValidationRun(
-        repo_root, (), content_overrides=overrides, member_snapshots=snapshot,
-        criteria=CriterionSnapshot(kb_root(repo_root), criteria) if criteria is not None else None,
-        frozen_source=frozen_source,
-    )
-    if intended.is_symlink():
-        raise ValueError("draft slot must not be a symlink")
+    criterion_snapshot = CriterionSnapshot(kb_root(repo_root), criteria) if criteria is not None else None
+    manifest_override = {} if manifest is None else {directory / MANIFEST_NAME: manifest}
     from commonplace.lib.directory_artifact import UniqueKeyLoader
 
-    manifest = yaml.load(run.read_bytes(directory / MANIFEST_NAME), Loader=UniqueKeyLoader)
-    if not isinstance(manifest, dict) or not isinstance(manifest.get("type"), str):
+    # Resolve the type first: the role's path comes from its layout.
+    probe = ValidationRun(repo_root, (), content_overrides=dict(manifest_override),
+                          criteria=criterion_snapshot, frozen_source=frozen_source)
+    manifest_data = yaml.load(probe.read_bytes(directory / MANIFEST_NAME), Loader=UniqueKeyLoader)
+    if not isinstance(manifest_data, dict) or not isinstance(manifest_data.get("type"), str):
         raise TypeError("artifact manifest needs a mapping with a string type")
+    try:
+        layout = resolve_type(
+            directory / MANIFEST_NAME, manifest_data, repo_root=probe.repo_root,
+            load_frontmatter=probe.load_frontmatter, criteria=probe.criteria,
+        ).layout
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        return [Finding(None, f"{role}: artifact input cannot be checked: {exc}")]
+    if layout is None or role not in layout.roles:
+        raise ValueError(f"{role}: not a role the artifact type declares")
+    intended = directory / layout.path(role)
+    if intended.is_symlink():
+        raise ValueError("the draft's path must not be a symlink")
+    snapshot = {} if members is None else {directory: {**members, intended.name: data}}
+    run = ValidationRun(
+        repo_root, (), content_overrides={**manifest_override, intended: data}, member_snapshots=snapshot,
+        criteria=criterion_snapshot, frozen_source=frozen_source,
+    )
     # Published pins describe incumbent bytes, not a hypothetical replacement.
     # Strip them in memory so every relation sees the draft, even on replay.
     run.content_overrides[directory / MANIFEST_NAME] = yaml.safe_dump({
-        key: value for key, value in manifest.items() if key != "members"
+        key: value for key, value in manifest_data.items() if key != "members"
     })
     run._bytes.pop(directory / MANIFEST_NAME, None)
-    try:
-        layout = resolve_type(
-            directory / MANIFEST_NAME, manifest, repo_root=run.repo_root,
-            load_frontmatter=run.load_frontmatter, criteria=run.criteria,
-        ).layout
-    except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        return [Finding(None, f"{intended.name}: artifact input cannot be checked: {exc}")]
-    role = layout.role_at(intended.name) if layout is not None else None
-    if role is None:
-        raise ValueError(f"{intended.name}: no declared layout role")
     result = run.validate(intended)
     findings = [
-        Finding(role.name, f"{intended.name}: {message}", info=severity == "infos", warn=severity == "warns")
+        Finding(role, f"{intended.name}: {message}", info=severity == "infos", warn=severity == "warns")
         for severity in ("fails", "warns", "infos") for message in getattr(result, severity)
     ]
     try:
-        findings += [finding for finding in run.artifact_findings(directory) if finding.role == role.name]
+        findings += [finding for finding in run.artifact_findings(directory) if finding.role == role]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        findings.append(Finding(role.name, f"{intended.name}: artifact input cannot be checked: {exc}"))
+        findings.append(Finding(role, f"{intended.name}: artifact input cannot be checked: {exc}"))
     return findings
 
 

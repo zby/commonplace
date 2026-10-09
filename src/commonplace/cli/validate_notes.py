@@ -30,7 +30,7 @@ from commonplace.lib.validation import (
     ValidationRunResults,
     run_validation,
     validate_collection_landings,
-    validate_draft_at_slot,
+    validate_draft_in_role,
     validate_redirect_map,
 )
 
@@ -580,28 +580,28 @@ def _print_full_collection_report(
     print("\n===")
 
 
-def check_member_draft(
-    candidate: Path, *, directory: Path, slot: Path, repo_root: Path,
+def check_role_draft(
+    candidate: Path, *, directory: Path, role: str, repo_root: Path,
     json_output: bool = False,
 ) -> int:
-    """Print the shared member findings, not an invocation acceptance verdict."""
-    if slot.is_absolute() or len(slot.parts) != 1 or slot.name in {".", ".."}:
-        raise ValueError("--member must be a declared relative member filename")
+    """Print the shared findings for the draft in its role, not an acceptance verdict."""
+    if not role or "/" in role or role in {".", ".."}:
+        raise ValueError("--role must name a role the artifact type declares")
     findings = [
-        finding for finding in validate_draft_at_slot(
-            directory, slot, candidate, repo_root=repo_root,
+        finding for finding in validate_draft_in_role(
+            directory, role, candidate, repo_root=repo_root,
         ) if not finding.absent
     ]
     # Match acceptance: warnings do not refuse, but unverified evidence does.
     refused = any(not finding.warn for finding in findings)
     if json_output:
         print(json.dumps({
-            "schema": "commonplace.validation.member.v1",
+            "schema": "commonplace.validation.role-draft.v1",
             "status": "failed" if refused else "success",
             "draft": str(candidate.resolve()),
             "artifact": str(directory.resolve()),
-            "member": slot.as_posix(),
-            "scope": "member content; invocation residue not checked",
+            "role": role,
+            "scope": "content in the role; invocation residue not checked",
             "diagnostics": [
                 {
                     "role": finding.role,
@@ -642,11 +642,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--artifact", dest="artifact_directory", type=Path,
-        help="Working artifact directory in which to check the positional draft (requires --member).",
+        help="Working artifact directory in which to check the positional draft (requires --role).",
     )
     parser.add_argument(
-        "--member", type=Path,
-        help="Declared relative member slot for the positional draft (requires --artifact; writes nothing).",
+        "--role",
+        help="Role the positional draft is intended for; its path comes from the type (requires --artifact; writes nothing).",
     )
     parser.add_argument(
         "target",
@@ -656,23 +656,23 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
-    if (args.artifact_directory is None) != (args.member is None):
-        parser.error("--artifact and --member must be supplied together")
-    if args.member is not None and args.output is not None:
-        parser.error("draft-at-slot validation writes nothing; --output is not allowed")
+    if (args.artifact_directory is None) != (args.role is None):
+        parser.error("--artifact and --role must be supplied together")
+    if args.role is not None and args.output is not None:
+        parser.error("draft validation in a role writes nothing; --output is not allowed")
     if args.output is not None and not args.json:
         parser.error("--output requires --json")
 
     repo_root = Path.cwd().resolve()
 
-    if args.member is not None:
+    if args.role is not None:
         try:
-            return check_member_draft(
-                Path(args.target), directory=args.artifact_directory, slot=args.member,
+            return check_role_draft(
+                Path(args.target), directory=args.artifact_directory, role=args.role,
                 repo_root=repo_root, json_output=args.json,
             )
         except (OSError, UnicodeError, ValueError, TypeError) as exc:
-            print(f"member validation: {exc}", file=sys.stderr)
+            print(f"role validation: {exc}", file=sys.stderr)
             return 2
 
     if args.target == "lifecycle":

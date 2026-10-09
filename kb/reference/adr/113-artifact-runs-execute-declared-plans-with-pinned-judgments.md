@@ -32,7 +32,7 @@ replacing the member left no trace that the judgment was stale.
 A draft could be checked in its artifact's context only inside the
 workflow, through a private helper and a separate analyst command.
 `commonplace-validate` checked a file alone or a whole artifact, never one
-candidate at its slot.
+candidate in its role.
 
 Each of these recurs if the decision is reverted: an interpreted schedule
 drifts, an untracked read makes verdicts volatile, and a judgment without
@@ -98,10 +98,10 @@ directory. Versions, attempts, judgments, hand-outs and failure records
 are its siblings, never members, so the artifact validates as it stands at
 every moment and publication is a copy.
 
-**A draft validates at its slot.** `commonplace-validate <draft> --artifact
-<directory> --member <slot>` places the draft's bytes at its role's path,
+**A draft validates in its role.** `commonplace-validate <draft> --artifact
+<directory> --role <role>` places the draft's bytes at the role's path,
 validates the working artifact and reports the findings attributed to that
-role, with absent-member findings dropped. An unmatched slot or an
+role, with absent-member findings dropped. An undeclared role or an
 unavailable type fails explicitly; nothing is written. The engine's shared
 check and a worker's self-check call this same path.
 
@@ -212,7 +212,7 @@ a run exhausted under the fixed plan ends or is overridden, never raised.
 The decision reaches behaviour through four consumers. The analysis skill
 and its run driver bind the coordinator to `commonplace-analysis` and
 `commonplace-run`. The engine's loader consumes the plan file. The
-validator consumes `--artifact` and `--member`. The layout of ADR 111
+validator consumes `--artifact` and `--role`. The layout of ADR 111
 supplies roles and relations to both the engine and the validator.
 
 The decision is tested with one consumer, one coordinator per run and

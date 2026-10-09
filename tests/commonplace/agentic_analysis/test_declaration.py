@@ -68,7 +68,7 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
     incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
-    assert (incumbent.address, incumbent.source, incumbent.required) == ("member", "boundary", False)
+    assert (incumbent.address, incumbent.source, incumbent.required) == ("role", "boundary", False)
     for job in jobs.jobs:
         for name, spec in job.inputs.items():
             if spec.address != "file":
@@ -107,7 +107,7 @@ def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
             "handed", "producer-attempt:refusal", False,
         )
         partners = {source.role for source in layout.roles[role].identity} | set(layout.roles[role].cites)
-        assert partners - {role} <= {spec.source for spec in check.inputs.values() if spec.address == "member"}
+        assert partners - {role} <= {spec.source for spec in check.inputs.values() if spec.address == "role"}
     for name in REPORTS:
         assert jobs.job(f"check-{name}").inputs["answers"].source == f"{name}:answers"
     for producer in ("profile", "synthesize", "verify-profile", "verify-synthesis"):
@@ -124,10 +124,10 @@ def test_checks_pin_answers_answered_refusals_and_declared_partners(graph):
     records = {"boundary", *RECORDS}
     for producer in ("profile", "synthesize", "reconcile"):
         required = {spec.source for spec in jobs.job(f"check-{producer}").inputs.values()
-                    if spec.address == "member" and spec.required}
+                    if spec.address == "role" and spec.required}
         assert records - {MODEL_ROLES[producer]} <= required
     assert {"record-verification", "profile-verification"} <= {
-        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "member" and spec.required
+        spec.source for spec in jobs.job("check-synthesize").inputs.values() if spec.address == "role" and spec.required
     }
     for verifier, subject, producer in (
         ("verify-profile", "profile", "profile"), ("verify-synthesis", "synthesis", "synthesize"),
@@ -143,9 +143,9 @@ def test_apply_jobs_judge_handed_members_not_current_slots(graph):
         verifier = jobs.job(name)
         apply = jobs.job(f"apply-{name}")
         assert apply.inputs["verifier-attempt"].source == name
-        assert not any(spec.address == "member" for spec in apply.inputs.values())
+        assert not any(spec.address == "role" for spec in apply.inputs.values())
         expected = {f"verifier-attempt:{key}" for key, spec in verifier.inputs.items()
-                    if spec.address == "member" or key in ("record-check", "refusal")}
+                    if spec.address == "role" or key in ("record-check", "refusal")}
         handed = {spec.source for spec in apply.inputs.values() if spec.address == "handed"}
         assert handed == expected
 
@@ -164,7 +164,7 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
     for name in ("memory", "epistemic"):
         runtime = jobs.job(name).inputs["runtime"]
         assert (runtime.address, runtime.source, runtime.required, runtime.order_only) == (
-            "member", "runtime", True, True,
+            "role", "runtime", True, True,
         )
 
 
@@ -241,12 +241,12 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
                     assert schema_dependencies((path.parent / schema).resolve()) <= files, job.name
         # Candidate and partner type documents belong to checks, even when the
         # model needs only some of their substantive content contracts.
-        roles = {spec.source for spec in job.inputs.values() if spec.address == "member"}
+        roles = {spec.source for spec in job.inputs.values() if spec.address == "role"}
         if job.name.startswith("check-"):
             roles.add(MODEL_ROLES[job.name.removeprefix("check-")])
         elif job.name.startswith("apply-"):
             verifier = jobs.job(job.name.removeprefix("apply-"))
-            roles |= {verifier.role, *(spec.source for spec in verifier.inputs.values() if spec.address == "member")}
+            roles |= {verifier.role, *(spec.source for spec in verifier.inputs.values() if spec.address == "role")}
         assert {(LIBRARY / layout.roles[role].type).resolve() for role in roles} <= files
 
 
@@ -254,7 +254,7 @@ def test_round_close_check_is_a_required_pinned_verifier_input(graph):
     jobs, _ = graph
     check = jobs.job("record-check")
     assert check.outputs == ("findings",) and check.role is None
-    assert {spec.source for spec in check.inputs.values() if spec.address == "member"} == {"boundary", *RECORDS}
+    assert {spec.source for spec in check.inputs.values() if spec.address == "role"} == {"boundary", *RECORDS}
     assert all(spec.required for spec in check.inputs.values())
     spec = jobs.job("verify").inputs["record-check"]
     assert (spec.address, spec.source, spec.required) == ("output", "record-check:findings", True)

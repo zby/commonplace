@@ -108,8 +108,8 @@ def custom_run(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, edit) -> Coordin
     return coordinator
 
 
-def _member(role: str) -> dict:
-    return {"address": "member", "source": role}
+def _role(role: str) -> dict:
+    return {"address": "role", "source": role}
 
 
 def _optional(address: str, source: str) -> dict:
@@ -157,12 +157,12 @@ def plan(method: Path) -> dict:
         "jobs": [
             model("brief", "brief", {}, ["brief"], max_attempts=2),
             code("check-brief", "check_brief", {"candidate": candidate("brief")}),
-            {**model("report", "report", {"brief": _member("brief"), "refusal": _optional("refusal", "report")},
+            {**model("report", "report", {"brief": _role("brief"), "refusal": _optional("refusal", "report")},
                      ["report", "answers"], max_attempts=3),
-             "parameters": {"system": "{param:subject}", "validation-member": "{artifact}/report.md"}},
+             "parameters": {"system": "{param:subject}", "validation-role": "report"}},
             code("check-report", "check_report", {
                 "candidate": candidate("report"),
-                "brief": _member("brief"),
+                "brief": _role("brief"),
                 "contract": file("contract-report.md"),
                 # The refusal input lapses once the new candidate completes, so a
                 # check takes the refusal it answers from the attempt record.
@@ -170,27 +170,27 @@ def plan(method: Path) -> dict:
                 "answered": _optional("handed", "report-attempt:refusal"),
                 "answers": _optional("output", "report:answers"),
             }),
-            model("other", "other", {"brief": _member("brief"), "refusal": _optional("refusal", "other")},
+            model("other", "other", {"brief": _role("brief"), "refusal": _optional("refusal", "other")},
                   ["other"], max_attempts=3),
             code("check-other", "check_other", {
                 "candidate": candidate("other"),
-                "brief": _member("brief"),
-                "report": _optional("member", "report"),
+                "brief": _role("brief"),
+                "report": _optional("role", "report"),
             }),
             model("summary", "summary", {
-                "report": _member("report"),
-                "other": _member("other"),
+                "report": _role("report"),
+                "other": _role("other"),
                 "refusal": _optional("refusal", "summary"),
             }, ["summary"], max_attempts=3),
             code("check-summary", "check_summary", {
                 "candidate": candidate("summary"),
-                "report": _member("report"),
-                "other": _member("other"),
+                "report": _role("report"),
+                "other": _role("other"),
             }),
             model("verify", "verification", {
-                "report": _member("report"),
-                "other": _member("other"),
-                "summary": _member("summary"),
+                "report": _role("report"),
+                "other": _role("other"),
+                "summary": _role("summary"),
             }, ["verification"], max_attempts=3),
             code("apply-verification", "apply_verification", {
                 "verdict": {"address": "output", "source": "verify:verification"},
@@ -200,20 +200,20 @@ def plan(method: Path) -> dict:
                 "summary-seen": {"address": "handed", "source": "verification-attempt:summary"},
             }),
             model("digest", "digest", {
-                "report": _member("report"),
-                "other": _member("other"),
+                "report": _role("report"),
+                "other": _role("other"),
                 **accepted_by_verification,
             }, ["digest"], max_attempts=2),
             code("check-digest", "check_digest", {
                 "candidate": candidate("digest"),
-                "report": _member("report"),
-                "other": _member("other"),
+                "report": _role("report"),
+                "other": _role("other"),
             }),
             code("assemble", "assemble", {
-                "brief": _member("brief"),
+                "brief": _role("brief"),
                 # Assembly waits until the artifact minus its own role is covered.
                 "coverage": {"address": "coverage"},
-                **{role: _optional("member", role)
+                **{role: _optional("role", role)
                    for role in ("report", "other", "summary", "verification", "digest")},
             }, role="overview", outputs=["overview"]),
         ],

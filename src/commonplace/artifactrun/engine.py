@@ -174,10 +174,10 @@ def judge(
         filler = run.jobs.filler(role)
         if outcome == "refused" and not isinstance(filler, ModelJob):
             raise ValueError(f"role {role} is filled by no model job, so nothing can answer a refusal of it")
-        inputs = {"subject": Input("member", role)}
+        inputs = {"subject": Input("role", role)}
         pins = {"subject": Resolved(subject, store.get(subject), role, filler.name if filler else None)}
         for other in basis:
-            inputs[other] = Input("member", other)
+            inputs[other] = Input("role", other)
             pins[other] = run.resolve(other, inputs)
             if pins[other].version is None:
                 raise ValueError(f"role {other} has no member to rest on")
@@ -293,7 +293,7 @@ def _historical_bases(run: Run) -> list[dict]:
             alias, _, handed = entry["input"]["source"].partition(":")
             producer = run.jobs.job(basis[alias]["input"]["source"])
             original = producer.inputs.get(handed)
-            if (original is not None and original.address == "member"
+            if (original is not None and original.address == "role"
                     and entry["version"] != members.get(original.source)):
                 found.append({"judgment": judgment["id"], "input": name, "role": original.source,
                               "handed": entry["version"], "current": members.get(original.source)})
@@ -446,7 +446,7 @@ def _run_code_jobs(run: Run) -> Stop | None:
                             for peer in run.producers(job) & pending)), None)
         if job is None:
             return None
-        # A handler may read the artifact directory (draft-at-slot validation does),
+        # A handler may read the artifact directory (draft validation in a role does),
         # so it must hold the current members when the job's inputs are pinned.
         _materialize(run)
         stop = _run_code_job(run, job)
@@ -465,7 +465,7 @@ def _moved_members(run: Run, job: CodeJob, pins: Mapping[str, Resolved]) -> list
     """
     moved = []
     for name, spec in job.inputs.items():
-        if spec.address != "member" or pins[name].version is None:
+        if spec.address != "role" or pins[name].version is None:
             continue
         path = run.store.artifact_dir / run.layout.path(spec.source)
         if not path.is_file() or digest(path.read_bytes()) != pins[name].version:

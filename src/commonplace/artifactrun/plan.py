@@ -15,7 +15,7 @@ from typing import Any
 
 import yaml
 
-ADDRESSES = ("file", "member", "output", "attempt", "handed", "judgment", "refusal", "coverage")
+ADDRESSES = ("file", "role", "output", "attempt", "handed", "judgment", "refusal", "coverage")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
 RUN_PLACEHOLDERS = ("run", "run-id", "artifact", "workspace")
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
@@ -321,10 +321,10 @@ def _check(plan: Plan, roles: Mapping[str, Any] | None) -> None:
             raise PlanError(f"job {job.name}: role {job.role} is not declared by the type")
         for name, spec in job.inputs.items():
             where = f"job {job.name}: input {name}"
-            if spec.address in ("member", "judgment"):
+            if spec.address in ("role", "judgment"):
                 if roles is not None and spec.source not in roles:
                     raise PlanError(f"{where}: role {spec.source} is not declared by the type")
-                if spec.address == "member" and spec.source == job.role:
+                if spec.address == "role" and spec.source == job.role:
                     raise PlanError(f"{where}: a job never has its own role as input")
             elif spec.address in ("output", "attempt", "refusal"):
                 producer, _, output = spec.source.partition(":")

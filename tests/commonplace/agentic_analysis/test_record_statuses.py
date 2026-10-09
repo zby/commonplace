@@ -5,7 +5,7 @@ import pytest
 from commonplace.lib.agentic_analysis.records import (
     conclusion_status_errors,
 )
-from commonplace.lib.validation import validate_draft_at_slot
+from commonplace.lib.validation import validate_draft_in_role
 from tests.commonplace.agentic_analysis.fixtures import member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
@@ -19,10 +19,10 @@ def test_member_validator_rejects_and_accepts_corrected_status(tmp_path):
         "- implementation conclusion status: wired",
         "- operation conclusion status: unobserved",
     ))
-    findings = validate_draft_at_slot(directory, "runtime.md", runtime, repo_root=tmp_path)
+    findings = validate_draft_in_role(directory, "runtime", runtime, repo_root=tmp_path)
     assert any("conclusion status" in finding.message for finding in findings if not finding.info)
     runtime.write_text(valid)
-    findings = validate_draft_at_slot(directory, "runtime.md", runtime, repo_root=tmp_path)
+    findings = validate_draft_in_role(directory, "runtime", runtime, repo_root=tmp_path)
     assert not [finding for finding in findings if not finding.info and not finding.warn]
 
 

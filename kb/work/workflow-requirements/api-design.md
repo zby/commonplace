@@ -67,7 +67,7 @@ candidate among its inputs, while assembly can judge its own returned
 primary output. Both use the same `judge()` operation. The implementation
 must reject ambiguous output ownership and a job with its own role as input.
 
-Each input has an address: a file, a member, a job's latest completed output, a
+Each input has an address: a file, a role's current version, a job's latest completed output, a
 latest completed attempt record, a version that record says was handed, a
 judgment addressed by role, relation and outcome, a producer's current
 refusal, or the artifact's coverage, whose scope is the artifact minus the declaring

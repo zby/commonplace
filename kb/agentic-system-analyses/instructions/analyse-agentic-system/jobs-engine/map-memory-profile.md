@@ -45,7 +45,7 @@ a missing supporting record. Do not execute or install the target.
 
 ## Check and return
 
-Run the shared draft-at-slot content check and repair findings. Code additionally
+Run the shared content check and repair findings. Code additionally
 checks comparison revision, source and run identity, frozen-source integrity
 and correction answers; semantic verification checks support and coverage.
 A content pass is not acceptance. A missing required input, unauthorized scope

@@ -234,7 +234,7 @@ def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Pat
     candidate = write(run_dir / "runtime-report-1.md",
                       (output / "runtime.md").read_text().replace(f"run-id: {RUN_ID}", "run-id: AAS-2026-09-04-other-01"))
 
-    findings = validation.validate_draft_at_slot(output, "runtime.md", candidate, repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "runtime", candidate, repo_root=tmp_path)
 
     assert all(finding.role == "runtime" for finding in findings)
     assert [finding.message for finding in findings if not finding.info and not finding.warn] == [(
@@ -242,7 +242,7 @@ def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Pat
         f"expected '{RUN_ID}'"
     )]
     assert any("EPI-OBJ-dangling" in finding.message for finding in
-               validation.validate_draft_at_slot(output, "epistemic.md", epistemic, repo_root=tmp_path))
+               validation.validate_draft_in_role(output, "epistemic", epistemic, repo_root=tmp_path))
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
@@ -259,9 +259,9 @@ def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path
                          (output / "record-verification.md").read_text() + "\nSee RT-OBJ-store.\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
 
-    findings = validation.validate_draft_at_slot(output, "memory.md", candidate, repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "memory", candidate, repo_root=tmp_path)
     assert any("memory.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
-    findings = validation.validate_draft_at_slot(output, "record-verification.md", verification, repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "record-verification", verification, repo_root=tmp_path)
     assert any("record-verification.md: ambiguous record RT-OBJ-store" in finding.message for finding in findings)
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
@@ -274,7 +274,7 @@ def test_profile_rejects_missing_identity_source_without_requiring_whole_artifac
                       .replace(SOURCE, "https://example.invalid/unrelated"))
     memory_content = (output / "memory.md").read_text()
     (output / "memory.md").unlink()
-    findings = validation.validate_draft_at_slot(output, "memory-profile.md", candidate, repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "memory-profile", candidate, repo_root=tmp_path)
     assert [finding.message for finding in findings if not finding.info and not finding.warn] == [(
         "memory-profile.md: cannot check identity fields source-identity; "
         "source member memory.md is absent"
@@ -283,7 +283,7 @@ def test_profile_rejects_missing_identity_source_without_requiring_whole_artifac
     # candidate failure when no applicable check needs it.
     write(output / "memory.md", memory_content.replace(SOURCE, "https://example.invalid/unrelated"))
     (output / "epistemic.md").unlink()
-    findings = validation.validate_draft_at_slot(output, "memory-profile.md", candidate, repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "memory-profile", candidate, repo_root=tmp_path)
     assert not [finding for finding in findings if not finding.info and not finding.warn]
 
 
@@ -305,7 +305,7 @@ def test_quotations_without_their_frozen_source_are_unverified_not_failed(tmp_pa
     assert checked.fails == []
     assert any("memory.md:" in info and "quotations unverified, source unavailable" in info
                for info in checked.infos)
-    findings = validation.validate_draft_at_slot(output, "memory.md", output / "memory.md", repo_root=tmp_path)
+    findings = validation.validate_draft_in_role(output, "memory", output / "memory.md", repo_root=tmp_path)
     assert any(finding.info and "quotations unverified" in finding.message for finding in findings)
     assert not [finding for finding in findings if not finding.info and not finding.warn]
 

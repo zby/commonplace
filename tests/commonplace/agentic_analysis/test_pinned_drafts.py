@@ -6,7 +6,7 @@ import pytest
 
 from commonplace.artifactrun.checks import criterion_bytes
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
-from commonplace.lib.validation import validate_draft_at_slot
+from commonplace.lib.validation import validate_draft_in_role
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 BOUNDARY_TYPE = "agentic-system-analyses/types/agentic-system-boundary.md"
@@ -35,8 +35,8 @@ def fixed_type(**kwargs):
 
 
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
-    return validate_draft_at_slot(
-        tmp_path / "kb/agentic-system-analyses/state/fixture/artifact", "boundary.md", candidate,
+    return validate_draft_in_role(
+        tmp_path / "kb/agentic-system-analyses/state/fixture/artifact", "boundary", candidate,
         repo_root=tmp_path, members={}, manifest=f"type: {ANALYSIS_TYPE}\n".encode(),
         criteria=pinned, **kwargs,
     )
@@ -115,7 +115,7 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
         seen.append((args, kwargs))
         return []
 
-    monkeypatch.setattr(module, "validate_draft_at_slot", validate)
+    monkeypatch.setattr(module, "validate_draft_in_role", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
     check = module.candidate(attempt, "reconciliation", ("boundary",), repo=tmp_path, source_role="boundary")
     assert module.review(check) == []
@@ -141,7 +141,7 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
     monkeypatch.setattr(handlers, "locate", lambda *args, **kwargs: (metadata, tmp_path))
     seen = []
-    monkeypatch.setattr(candidate, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])
+    monkeypatch.setattr(candidate, "validate_draft_in_role", lambda *args, **kwargs: seen.append(kwargs) or [])
     handlers.check_boundary(attempt)
     assert seen[0]["criteria"] == pinned
     assert seen[0]["frozen_source"] is None

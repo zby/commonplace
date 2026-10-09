@@ -24,7 +24,7 @@ import yaml
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.note_parser import parse_document, section
-from commonplace.lib.validation import validate_draft_at_slot
+from commonplace.lib.validation import validate_draft_in_role
 
 
 def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
@@ -94,8 +94,8 @@ def candidate(attempt: CodeAttempt, role: str, partners: tuple[str, ...], *, rep
 def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | None = None,
                     members: dict[str, bytes] | None = None) -> list[str]:
     """Draft-validation failures at a role; warnings and absent partners do not refuse."""
-    findings = validate_draft_at_slot(
-        check.attempt.run_dir / "artifact", check.attempt.layout.path(role or check.role),
+    findings = validate_draft_in_role(
+        check.attempt.run_dir / "artifact", role or check.role,
         check.data if data is None else data, repo_root=check.repo,
         members=check.snapshot if members is None else members, manifest=manifest(check.attempt),
         criteria=criterion_bytes(check.attempt), frozen_source=check.source,

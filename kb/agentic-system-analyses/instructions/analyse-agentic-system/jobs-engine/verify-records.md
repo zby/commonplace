@@ -73,7 +73,7 @@ classification into Limitations to accept it.
 
 ## Check and return
 
-Run the shared draft-at-slot content check with the supplied validation paths,
+Run the shared content check with the supplied validation paths,
 repair findings and rerun. A pass establishes form and quotation occurrence,
 not independent analytical correctness or acceptance. Code validates the
 verdict and applies it to the exact versions this attempt was handed. A valid

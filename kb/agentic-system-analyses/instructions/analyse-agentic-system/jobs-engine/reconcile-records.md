@@ -56,7 +56,7 @@ its report.
 
 ## Check and return
 
-Run the shared draft-at-slot content check with the supplied validation paths.
+Run the shared content check with the supplied validation paths.
 Repair findings and rerun. A pass checks form and quotation occurrence, not
 semantic support or acceptance. Code separately checks the frozen source,
 method and invocation identity. An unavailable required input, necessary

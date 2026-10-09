@@ -450,7 +450,7 @@ def test_handout_prompt_keeps_the_legacy_shape(coordinator: Coordinator) -> None
     assert prompt[0] == f"Follow {c.method / 'report.md'} with:", "the instruction is handed at its own path"
     values = dict(line.split(" = ", 1) for line in prompt if " = " in line)
     assert values["system"] == "toy"
-    assert values["validation-member"] == str(c.run_dir / "artifact" / "report.md")
+    assert values["validation-role"] == "report"
     assert values["output"] == str(handout.outputs["report"])
     assert values["output-answers"] == str(handout.outputs["answers"])
     assert values["refusal"] == "absent"

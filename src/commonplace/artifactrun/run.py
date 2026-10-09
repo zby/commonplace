@@ -166,7 +166,7 @@ class Run:
                 return ABSENT
             data = path.read_bytes()
             return Resolved(digest(data), data)
-        if spec.address == "member":
+        if spec.address == "role":
             version = self.members().get(spec.source)
             filler = self.jobs.filler(spec.source)
             if version is None:
@@ -291,7 +291,7 @@ class Run:
     def _input_producers(self, job: Job, spec: Input) -> set[str]:
         """Declared producers for one input, before the completed-subject exception."""
         names = set()
-        if spec.address == "member":
+        if spec.address == "role":
             filler = self.jobs.filler(spec.source)
             names.add(filler.name if filler else None)
         elif spec.address in ("output", "attempt"):
@@ -328,7 +328,7 @@ class Run:
         peer_inputs = [spec for spec in job.inputs.values()
                        if peer.name in self._input_producers(job, spec)]
         if not peer_inputs or any(
-            spec.address != "member" or spec.required for spec in peer_inputs
+            spec.address != "role" or spec.required for spec in peer_inputs
         ):
             return False
         last = self.latest_completed(job.name)
@@ -345,7 +345,7 @@ class Run:
             if candidate is None or (last is not None
                     and last["pins"].get(name, {}).get("version") == candidate):
                 continue
-            if any(dependency.address == "member" and dependency.required
+            if any(dependency.address == "role" and dependency.required
                    and dependency.order_only and dependency.source == upstream.role
                    for dependency in peer.inputs.values()):
                 return True
@@ -385,7 +385,7 @@ class Run:
             pin = record["pins"].get(name)
             if declared is None or pin is None:
                 return False  # No exemption for an arbitrary historical address.
-            if (declared.address == "member" and declared.source != producer.role
+            if (declared.address == "role" and declared.source != producer.role
                     and pin["version"] is not None and pin["role"] == declared.source):
                 handed_member = True
         return handed_member

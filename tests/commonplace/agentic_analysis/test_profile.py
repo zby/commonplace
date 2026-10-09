@@ -108,7 +108,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         "outputs": {output: hashlib.sha256(candidate).hexdigest()},
         "previous_outputs": {} if previous is None else {output: hashlib.sha256(previous).hexdigest()},
     }).encode(), None)
-    inputs = {name: Input("member" if role else "output", role or name, required=False)
+    inputs = {name: Input("role" if role else "output", role or name, required=False)
               for name, (_, role) in values.items()}
     pins = {name: Resolved(hashlib.sha256(data).hexdigest() if data is not None else None, data, role)
             for name, (data, role) in values.items()}

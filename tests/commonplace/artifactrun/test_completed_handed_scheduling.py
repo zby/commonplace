@@ -166,7 +166,7 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     run = run_state(c)
     assert "verify" not in run.producers(apply)
     extra = {
-        "live-member": Input("member", "verification", required=False),
+        "live-member": Input("role", "verification", required=False),
         "live-judgment": Input("judgment", "report", required=False,
                                relation="verification:cites:report", outcome="accepted"),
         "live-refusal": Input("refusal", "verify", required=False),
@@ -183,6 +183,6 @@ def test_only_a_completed_record_consumer_skips_the_verifier_wait(late_run, vari
     }[variant]
     assert "verify" in run.producers(guarded)
     # Exemption is per producer, not a waiver for independent live dependencies.
-    mixed = replace(apply, inputs={**apply.inputs, "report-now": Input("member", "report")})
+    mixed = replace(apply, inputs={**apply.inputs, "report-now": Input("role", "report")})
     assert run.producers(mixed) == {"report"}
 

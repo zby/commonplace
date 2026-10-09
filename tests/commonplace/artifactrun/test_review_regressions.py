@@ -45,8 +45,8 @@ def test_a_gate_waits_for_the_verifier_behind_its_judgment(coordinator: Coordina
 
 def test_a_wait_cycle_stops_with_a_diagnosis(tmp_path: Path, tmp_library: None, monkeypatch: pytest.MonkeyPatch) -> None:
     def reciprocal(jobs):
-        jobs["report"]["inputs"]["other"] = {"address": "member", "source": "other", "required": False}
-        jobs["other"]["inputs"]["report"] = {"address": "member", "source": "report", "required": False}
+        jobs["report"]["inputs"]["other"] = {"address": "role", "source": "other", "required": False}
+        jobs["other"]["inputs"]["report"] = {"address": "role", "source": "report", "required": False}
 
     c = custom_run(tmp_path, monkeypatch, reciprocal)
     c.through_brief()
@@ -81,7 +81,7 @@ def test_relative_file_inputs_resolve_against_the_library(tmp_path: Path, tmp_li
 def test_an_order_only_input_orders_without_triggering(tmp_path: Path, tmp_library: None,
                                                          monkeypatch: pytest.MonkeyPatch) -> None:
     def after_report(jobs):
-        jobs["other"]["inputs"]["report-context"] = {"address": "member", "source": "report", "order_only": True}
+        jobs["other"]["inputs"]["report-context"] = {"address": "role", "source": "report", "order_only": True}
 
     c = custom_run(tmp_path, monkeypatch, after_report)
     c.through_brief()

@@ -55,11 +55,11 @@ A directory containing `ARTIFACT.yaml` receives artifact checks and ordinary mem
 checks, grouped as one artifact. Explicit file validation stays file-scoped.
 See [directory artifacts](./validation-contract.md#directory-artifacts).
 
-Check a draft at its intended slot with
-`commonplace-validate <draft> --artifact <directory> --member <slot>`.
-The slot is a declared relative member path, not a job or role name. The draft
+Check a draft in the role it is intended for with
+`commonplace-validate <draft> --artifact <directory> --role <role>`.
+The role is one the artifact's type declares; its path comes from the layout. The draft
 replaces the incumbent in memory for every check in the invocation. Findings
-are restricted to that slot's role, with rule, location and repair text;
+are restricted to that role, with rule, location and repair text;
 absent-member findings are deliberately omitted for a working artifact. This mode
 writes nothing and refuses `--output`. A content pass is not job acceptance:
 the workflow adds separately labelled invocation residue. It establishes

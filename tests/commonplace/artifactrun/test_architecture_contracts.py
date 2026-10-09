@@ -19,7 +19,7 @@ from tests.commonplace.artifactrun.support import Coordinator, plan
      "hand-out field"),
     (lambda d: d["jobs"][0].update(outputs=["brief", "brief"]), "unique"),
     (lambda d: d["jobs"][0].update(parameters={"where": "{nowhere}"}), "unknown placeholder"),
-    (lambda d: d["jobs"][2]["inputs"].update({"self": {"address": "member", "source": "report"}}),
+    (lambda d: d["jobs"][2]["inputs"].update({"self": {"address": "role", "source": "report"}}),
      "own role as input"),
     (lambda d: d["jobs"][1].update(max_attempts=3), "unknown keys"),
     (lambda d: d["jobs"][1]["inputs"].update({"c": {"address": "coverage", "source": "brief"}}), "derived"),
@@ -109,8 +109,8 @@ def test_a_scope_with_two_partner_versions_is_refused(coordinator: Coordinator) 
     c = coordinator
     c.through_records()
     run = Run(RunStore(c.run_dir))
-    job = CodeJob("probe", {"a": Input("member", "report"), "b": Input("member", "report"),
-                            "s": Input("member", "summary")}, (), "x.y")
+    job = CodeJob("probe", {"a": Input("role", "report"), "b": Input("role", "report"),
+                            "s": Input("role", "summary")}, (), "x.y")
     pins = {"a": Resolved("v1", b"", "report", "report"), "b": Resolved("v2", b"", "report", "report"),
             "s": Resolved("s1", b"", "summary", "summary")}
     attempt = CodeAttempt(run, job, pins)

@@ -41,7 +41,7 @@ expected nonzero exits explicitly.
 | `opening` | Pinned opening JSON, including the prepared `command-path` and source identity |
 | `refusal` | Optional refusal report: refused version, identity, scope and findings |
 | `previous-boundary`, `previous-report`, `previous-reconciliation`, `previous-profile`, `previous-synthesis`, `previous-verification`, `previous-answers` | Prior completed outputs by identity, when supplied; not current inputs |
-| `validation-artifact`, `validation-member` | Intended artifact directory and member slot for content validation |
+| `validation-artifact`, `validation-role` | Intended artifact directory and role for content validation |
 | `output`, `output-answers`, `problem` | Primary result, declared correction answers when supplied, or inability report |
 | `worker-runtime` | Path for the JSON runtime report: the `model` and `effort` your runtime states |
 | `workspace`, `scratch` | Per-attempt workspace and intermediate-file directory |
@@ -161,14 +161,14 @@ If it is missing or the command is unavailable, write `problem`; do not use
 a shared installation as a substitute. Run:
 
 ```text
-<command-path>/commonplace-validate <output> --artifact <validation-artifact> --member <validation-member>
+<command-path>/commonplace-validate <output> --artifact <validation-artifact> --role <validation-role>
 ```
 
 Use each supplied value unchanged. Run commands separately and inspect every
 exit status, or chain dependent commands with `&&`. Pipelines require
 `set -o pipefail`. Retain stderr as well as stdout. Repair findings and rerun
 until the content check passes; do not report a check you did not execute.
-Validation is read-only and reports this slot's content and relation findings.
+Validation is read-only and reports this role's content and relation findings.
 A content pass establishes form and quotation occurrence, not claim support,
 analytical correctness or job acceptance. Code also checks invocation-specific
 identity and source conditions.

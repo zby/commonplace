@@ -1,5 +1,5 @@
 ---
-description: "Proposal: register the synthesis and the three verifications as members of the analysis set, thin the overview to an entry page, check drafts at their slot through commonplace-validate, and retire the separate analyst check command."
+description: "Proposal: register the synthesis and the three verifications as members of the analysis set, thin the overview to an entry page, check drafts in their role through commonplace-validate, and retire the separate analyst check command."
 type: reference/types/design-proposal.md
 tags: [type-system]
 ---
@@ -11,14 +11,14 @@ acceptance, round-close and publication code moved onto the declared layout
 on 2026-10-06. This proposal is the remainder of that adoption: the run's
 products that still live outside the set, the overview sections that copy
 other members, and the separate check command that analysts run because
-`commonplace-validate` cannot check a draft at its slot.
+`commonplace-validate` cannot check a draft in its role.
 
 It is written as a mission for an implementer: the situation, the intent
 and the end state, the boundaries that hold, and what is left to the
 implementer's judgment. It does not prescribe the sequence of work. The
 operator selected this direction on 2026-10-06. It is not shipped behavior.
 
-Its validator side, draft validation at a member slot, shipped under
+Its validator side, draft validation in a role, shipped under
 [ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md);
 this plan had decided it in place of the measurement runs the earlier version
 of this proposal gated it on.
@@ -29,7 +29,7 @@ of this proposal gated it on.
   the boundary job, and the boundary is the set's first member; one helper,
   `set_findings` in `src/commonplace/lib/agentic_workflow.py`, validates
   `output/` as a directory artifact with a candidate's bytes placed at its
-  slot through content overrides, and the analyst, reconciliation and profile
+  role through content overrides, and the analyst, reconciliation and profile
   acceptance functions take their set findings from it filtered to the
   candidate's role; the round-close record check is that validation of the
   whole working instance with absent and later roles dropped; the
@@ -71,7 +71,7 @@ stay in workflow code and the retained set carries them only as code
 excerpts. The overview duplicates members under copy rules that exist
 because those members once were not members. And analysts need a second
 command for the same findings that validate computes, because validate has
-no way to receive a draft at its slot. Each is a place where the workflow
+no way to receive a draft in its role. Each is a place where the workflow
 and the type can drift.
 
 ## Intent
@@ -121,15 +121,15 @@ These hold throughout and are not the implementer's to trade.
 
 - **Membership stays closed and positional.** A member is a file at a
   declared path; nothing declares membership in frontmatter.
-- **One version per slot.** The set holds the current version of each
+- **One version per role.** The set holds the current version of each
   member. Earlier versions, the answers file, correction packets, change
   diffs, round set-check files and run state stay outside the set and are
   never published. The set type's statement that working inputs live outside
   is narrowed to name them, not removed.
-- **Validation writes nothing.** A draft placed at its slot replaces the
+- **Validation writes nothing.** A draft placed in its role replaces the
   incumbent for every check in one invocation and leaves `output/` as it was.
 - **Replay is byte-idempotent.** Copying a verification or synthesis into
-  its slot is a coordinator write in a replayable sequence and must behave
+  its role is a coordinator write in a replayable sequence and must behave
   as the report copies do.
 - **ADR 102 is unchanged.** The overview's path and its role as the public
   entry stay; the boundary and the new members are members, not entries.
@@ -145,7 +145,7 @@ These hold throughout and are not the implementer's to trade.
 Within the boundaries, the implementer decides, and need not ask:
 
 - The sequence and parallelism of the work. One ordering that respects the
-  dependencies: the validator's draft-at-slot invocation is independent of
+  dependencies: the validator's draft-in-role invocation is independent of
   the new roles and useful to analysts at once; retirement of the command
   needs both; the regeneration run comes last.
 - The validate flag's name and shape, and how repair text attaches to
@@ -210,7 +210,7 @@ companion proposal's decision on its stage two.
 - **Register every run file, including packets and diffs.** Rejected: they
   are derived from members, no check needs them once the verifications are
   members, and publishing them presents views as products.
-- **Check a synthesis draft at the overview slot by rendering it.** Rejected:
+- **Check a synthesis draft in the overview role by rendering it.** Rejected:
   the renderer needs the judged verifications and the validation account, so
   the candidate would not be the synthesizer's bytes.
 - **Keep the overview self-contained under copy rules.** Possible, and it
@@ -242,6 +242,6 @@ Everything under "Delegated to the implementer".
 
 The end state above, observed: the layout and a pinned retained set with the
 new roles; an overview without copies and a set rule without copy checks;
-validate checking a draft at its slot with acceptance equal to it plus the
+validate checking a draft in its role with acceptance equal to it plus the
 labelled residue, asserted by a test; the check command gone from code and
 documents; both runs recorded with their measurements.

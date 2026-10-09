@@ -49,8 +49,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 | The directory one command advances | artifact-run directory | `run_dir: Path` | The artifact-run directory holds one artifact and the state that produces it. | decided 2026-10-09: follows *artifact run*; was *run directory* |
 | The typed subdirectory | artifact | `artifact/` | The artifact is the typed directory the run produces; only members live in it. | decided 2026-10-09: the KB's word for a typed thing, and ADR 095's kind; was *set*, ordinary English and the validator's word for the membership as a whole. Renamed 2026-10-09 |
 | The type of the artifact | type | `Plan.type_spec` | The type declares the artifact's roles, relations and required members. | keep |
-| A declared position in the set | role | `ModelJob.role`, `CodeJob.role` | A role is a position the type declares, with a path and relations. | changed: the spec says *slot*, the sketch says *member* and *slot name*, the type layout says `roles` |
-| The accepted version in a role | member | — | A member is the version currently installed in a role. | keep; stop using it for the role itself |
+| A declared position in the artifact | role | `ModelJob.role`, `CodeJob.role`, `address: role` | A role is a position the type declares, with a path and relations. | changed: the spec said *slot*, the sketch *member* and *slot name*; decided 2026-10-09: *member* is ordinary English for a file of the artifact and names no concept; the input address resolving a role's current version is `role`, the validator's flag is `--role`, and *slot* is retired |
 | A declared link between two roles | relation | `"verification:cites:runtime"` | A relation is a link the type declares from an origin role to a partner role, of a kind such as `identity` or `cites`. | decided: `<origin>:<kind>:<partner>`, replacing `<kind>:<partner>`; see [Relation](#relation) |
 | Whether the set's disposition permits a role | permitted role | — | A permitted role is one the type permits given the members present; a job filling any other role is not ready. | changed: was *required role*; requiring admits only `always` roles until the discriminating member exists, so no complete run could start |
 
@@ -68,7 +67,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 | Version an attempt was given, via its record | handed input | `address="handed"` | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
 | A job's limit on attempts | max attempts | `ModelJob.max_attempts` | Max attempts is the most attempts a model job may make in the run, the first included. | borrowed: Temporal, Prefect and Airflow use it with this meaning, the first attempt counted; was *bound*, earlier `max_attempts` |
 | A job's produced files | output | `outputs` | An output is a file a job writes; the first is its primary output. | keep, once the set directory no longer uses the word |
-| An output not yet accepted | candidate | — | A candidate is an output not installed as a member. A status, not a separate thing. | keep in prose; no API name |
+| An output not yet accepted | candidate | — | A candidate is an output not installed in a role. A status, not a separate thing. | keep in prose; no API name |
 
 ## Running
 

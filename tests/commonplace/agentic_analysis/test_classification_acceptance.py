@@ -23,7 +23,7 @@ from commonplace.lib.agentic_analysis.records import (
     route_field_errors,
     section,
 )
-from commonplace.lib.validation import validate_draft_at_slot
+from commonplace.lib.validation import validate_draft_in_role
 from scripts import analyze_matrix as stats
 from tests.commonplace.agentic_analysis.fixtures import (
     comparison_schema,
@@ -311,11 +311,11 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     template = (directory / "profile-verification.md").read_text()
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     # Public validation judges list grammar and identity, not semantic support.
-    findings = validate_draft_at_slot(directory, "profile-verification.md", verdict, repo_root=tmp_path)
+    findings = validate_draft_in_role(directory, "profile-verification", verdict, repo_root=tmp_path)
     assert not [finding for finding in findings if not finding.info and not finding.warn]
     verdict.write_text(verdict.read_text().replace(expected_blocker, expected_blocker.removeprefix("- ")))
     assert any("Blockers must be exactly none or a Markdown list" in finding.message
-               for finding in validate_draft_at_slot(directory, "profile-verification.md", verdict, repo_root=tmp_path))
+               for finding in validate_draft_in_role(directory, "profile-verification", verdict, repo_root=tmp_path))
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert artifact_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
@@ -396,8 +396,8 @@ def test_public_contribution_and_independent_uncertainties(tmp_path, tmp_library
     candidate = directory.parent / "synthesis.md"
     candidate.write_text(synthesis)
     def check(path):
-        return [finding.message for finding in validate_draft_at_slot(
-            directory, "synthesis.md", path, repo_root=tmp_path,
+        return [finding.message for finding in validate_draft_in_role(
+            directory, "synthesis", path, repo_root=tmp_path,
         ) if not finding.info and not finding.warn]
 
     assert check(candidate) == []

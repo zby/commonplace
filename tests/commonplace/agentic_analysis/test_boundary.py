@@ -43,7 +43,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert p["refusal"] == "absent"
     assert p["output"] == str(h.outputs["boundary"])
     assert p["validation-artifact"] == str(a.coordinator.run_dir / "artifact")
-    assert p["validation-member"] == "boundary.md"
+    assert p["validation-role"] == "boundary"
     assert json.loads(Path(p["source"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
     assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
