@@ -19,6 +19,8 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 
+import yaml
+
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
@@ -404,7 +406,7 @@ def _materialize(run: Run) -> None:
     """
     members = run.members()
     wanted = {run.layout.path(role): version for role, version in members.items()}
-    wanted[MANIFEST_NAME] = run.store.put(f"type: {run.type_spec}\n".encode())
+    wanted[MANIFEST_NAME] = run.store.put(yaml.safe_dump({"type": run.type_spec}).encode())
     set_dir = run.store.set_dir
     set_dir.mkdir(parents=True, exist_ok=True)
     for path in set_dir.iterdir():

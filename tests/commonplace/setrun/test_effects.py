@@ -141,3 +141,13 @@ def test_effect_rejects_symlinked_destination_without_mutation(tmp_path):
     with pytest.raises(UncertainEffectError, match="symlinks"):
         effects.install_tree(**args)
     assert list(external.iterdir()) == []
+
+
+def test_an_incumbent_without_its_anchor_is_refused_before_mutation(tmp_path):
+    args, old = effect(tmp_path, incumbent=True)
+    (args["destination"] / "overview.md").unlink()
+    args["expected"] = sha256(b"").hexdigest()
+    with pytest.raises(ValueError, match="no overview.md"):
+        effects.install_tree(**args)
+    assert effects.tree(args["destination"]) == {k: v for k, v in old.items() if k != "overview.md"}
+    assert not args["journal"].exists()

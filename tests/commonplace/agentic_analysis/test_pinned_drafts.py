@@ -115,10 +115,9 @@ def test_candidate_review_forwards_declared_criteria_snapshot_and_boundary_sourc
         seen.append((args, kwargs))
         return []
 
-    monkeypatch.setattr(module, "checkout", lambda _: tmp_path)
     monkeypatch.setattr(module, "validate_draft_at_slot", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
-    check = module.candidate(attempt, "reconciliation", ("boundary",), source_role="boundary")
+    check = module.candidate(attempt, "reconciliation", ("boundary",), repo=tmp_path, source_role="boundary")
     assert module.review(check) == []
     args, kwargs = seen[0]
     assert args[2] == CANDIDATE
@@ -141,7 +140,6 @@ def test_boundary_handler_forwards_closed_criteria_with_null_acquisition(tmp_pat
                          relations=(), judge=lambda *args, **kwargs: judgments.append(kwargs))
     metadata = {"run-id": "fixture", "source-identity": "fixture", "capture-directory": str(tmp_path)}
     monkeypatch.setattr(handlers, "locate", lambda *args, **kwargs: (metadata, tmp_path))
-    monkeypatch.setattr(candidate, "checkout", lambda _: tmp_path)
     seen = []
     monkeypatch.setattr(candidate, "validate_draft_at_slot", lambda *args, **kwargs: seen.append(kwargs) or [])
     handlers.check_boundary(attempt)

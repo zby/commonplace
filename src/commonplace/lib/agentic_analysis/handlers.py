@@ -17,6 +17,7 @@ from pathlib import Path
 
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
+    checkout,
     inspect_destination,
     require_publishable_worktree,
 )
@@ -148,10 +149,7 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
 
 def locate(attempt: CodeAttempt) -> tuple[dict, Path]:
     """The opened run's metadata and checkout; opening and publication own the guards."""
-    repo = source_checkout(attempt.run_dir)
-    if repo is None:
-        raise ValueError("analysis jobs must run inside their analysis checkout")
-    return json.loads(attempt.read("metadata")), repo
+    return json.loads(attempt.read("metadata")), checkout(attempt.run_dir)
 
 
 def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
@@ -163,7 +161,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
     relations, so no scope is claimed.
     """
     metadata, repo = locate(attempt)
-    check = candidate(attempt, "boundary", ())
+    check = candidate(attempt, "boundary", (), repo=repo)
     frozen = json.loads(attempt.read("source"))
     if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
         raise ValueError("boundary check requires a Git source object or explicit JSON null")
@@ -194,7 +192,7 @@ def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
 
 def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
     check = candidate(attempt, member, ("boundary", *(role for role in ANALYSTS if role != member)),
-                      source_role="boundary")
+                      repo=checkout(attempt.run_dir), source_role="boundary")
     reasons = review(check) + answer_reasons(check, record="producer-attempt", output="report")
     # Other reports cite these IDs, so a corrected report keeps every one.
     incumbent = attempt.read("incumbent-report")

@@ -8,6 +8,7 @@ The declaration must supply all criterion files read by content validation.
 
 from __future__ import annotations
 
+from commonplace.lib.agentic_analysis.guards import checkout
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.setrun.checks import (
     answer_reasons,
@@ -24,7 +25,7 @@ _PRIOR_VERDICTS = ("record-verification", "profile-verification")
 
 def _check(attempt: CodeAttempt, *, role: str, output: str) -> dict[str, bytes]:
     roles = _RECORDS if role == "memory-profile" else (*_RECORDS, *_PRIOR_VERDICTS)
-    check = candidate(attempt, role, roles, source_role="boundary")
+    check = candidate(attempt, role, roles, repo=checkout(attempt.run_dir), source_role="boundary")
     # These stages declare no records. Record preservation applies to analysts;
     # retaining supported profile values and prose is judged semantically.
     reasons = review(check) + answer_reasons(check, record="producer-attempt", output=output)
@@ -53,7 +54,7 @@ def _apply(attempt: CodeAttempt, *, stage: str) -> dict[str, bytes]:
     roles = (*_RECORDS, subject_role)
     if stage == "synthesis":
         roles += _PRIOR_VERDICTS
-    check = candidate(attempt, role, roles, seen=True, source_role="boundary")
+    check = candidate(attempt, role, roles, repo=checkout(attempt.run_dir), seen=True, source_role="boundary")
     reasons = review(check) + answer_reasons(check, record="verifier-attempt", output="verification")
     # Content acceptance of the verdict cannot cover the semantic gate of its
     # subject. Only the separate blocker-free subject acceptance covers that.

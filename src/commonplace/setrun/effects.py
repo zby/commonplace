@@ -118,7 +118,9 @@ def install_tree(*, journal: Path, destination: Path, archive_root: Path,
     # Full incumbent validation and source ownership precede any effect.
     inspect_incumbent()
     old_tree = tree(destination)
-    actual = "absent" if old_tree is None else sha256(old_tree.get(anchor, b"")).hexdigest()
+    if old_tree is not None and anchor not in old_tree:
+        raise ValueError(f"incumbent has no {anchor}")
+    actual = "absent" if old_tree is None else sha256(old_tree[anchor]).hexdigest()
     if actual != expected:
         raise ValueError("publication destination changed since opening inspection")
     archive = None

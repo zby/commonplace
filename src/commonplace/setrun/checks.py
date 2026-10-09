@@ -19,9 +19,10 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+import yaml
+
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.lib.validation import validate_draft_at_slot
-from commonplace.setrun.isolation import source_checkout
 from commonplace.setrun.sources import frozen_source_refusals
 from commonplace.workflow import CodeAttempt
 
@@ -36,7 +37,7 @@ def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
 
 def manifest(attempt: CodeAttempt) -> bytes:
     """A minimal set manifest naming the run's set type."""
-    return f"type: {attempt.type_spec}\n".encode()
+    return yaml.safe_dump({"type": attempt.type_spec}).encode()
 
 
 @dataclass(frozen=True)
@@ -60,13 +61,6 @@ class Candidate:
         return (document.frontmatter or {}) if document is not None else {}
 
 
-def checkout(attempt: CodeAttempt) -> Path:
-    repo = source_checkout(attempt.run_dir)
-    if repo is None:
-        raise ValueError("set jobs must run inside their source checkout")
-    return repo
-
-
 def snapshot(attempt: CodeAttempt, partners: tuple[str, ...], *, seen: bool = False) -> dict[str, bytes]:
     """Partner members at their set paths, from inputs named by role or handed `<role>-seen`."""
     members = {}
@@ -86,12 +80,15 @@ def frozen_source(attempt: CodeAttempt, members: dict[str, bytes], role: str) ->
     return source
 
 
-def candidate(attempt: CodeAttempt, role: str, partners: tuple[str, ...], *, seen: bool = False,
-              source_role: str | None = None) -> Candidate:
-    """The `candidate` input at ``role`` with its partners; ``source_role`` pins the frozen source."""
+def candidate(attempt: CodeAttempt, role: str, partners: tuple[str, ...], *, repo: Path,
+              seen: bool = False, source_role: str | None = None) -> Candidate:
+    """The `candidate` input at ``role`` with its partners, validated in project ``repo``.
+
+    ``source_role`` names the member whose `source` pins the frozen source.
+    """
     members = snapshot(attempt, partners, seen=seen)
     source = frozen_source(attempt, members, source_role) if source_role in partners else None
-    return Candidate(attempt, role, attempt.read("candidate"), members, checkout(attempt), source)
+    return Candidate(attempt, role, attempt.read("candidate"), members, repo, source)
 
 
 def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | None = None,

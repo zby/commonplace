@@ -15,11 +15,19 @@ from commonplace.lib.agentic_analysis.sets import (
 )
 from commonplace.lib.source_identity import normalize_source_identity
 from commonplace.setrun import effects
-from commonplace.setrun.isolation import require_clean_worktree
+from commonplace.setrun.isolation import require_clean_worktree, source_checkout
 
 # A sibling run's publication may remain uncommitted while a batch runs.
 OUTPUT_LOCATIONS: tuple[str, ...] = (f"{RETAINED_ROOT.as_posix()}/", f"{ARCHIVE_ROOT.as_posix()}/")
 LOCK = Path("kb/agentic-system-analyses/state/.publication.lock")
+
+
+def checkout(run_dir: Path) -> Path:
+    """The Commonplace source checkout an analysis run belongs to; analyses run only there."""
+    repo = source_checkout(run_dir)
+    if repo is None:
+        raise ValueError("analysis jobs must run inside their analysis checkout")
+    return repo
 
 
 def _destination_path(repo_root: Path, raw: str) -> Path:

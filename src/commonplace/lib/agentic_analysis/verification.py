@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 
+from commonplace.lib.agentic_analysis.guards import checkout
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
@@ -20,7 +21,6 @@ from commonplace.lib.validation import ValidationRun
 from commonplace.setrun.checks import (
     blocker_entries,
     candidate,
-    checkout,
     criterion_bytes,
     frozen_source,
     judge,
@@ -38,7 +38,8 @@ PARTNERS = ("boundary", *RECORDS)
 
 def check_reconcile(attempt: CodeAttempt) -> dict[str, bytes]:
     """Check reconciliation content against pinned reports, without semantic acceptance."""
-    check = candidate(attempt, "reconciliation", ("boundary", *ANALYSTS), source_role="boundary")
+    check = candidate(attempt, "reconciliation", ("boundary", *ANALYSTS), repo=checkout(attempt.run_dir),
+                      source_role="boundary")
     judge(check, review(check))
     return {}
 
@@ -48,7 +49,7 @@ def set_check(attempt: CodeAttempt) -> dict[str, bytes]:
     members = snapshot(attempt, PARTNERS)
     source = frozen_source(attempt, members, "boundary")
     directory = (attempt.run_dir / "set").resolve()
-    repo = checkout(attempt)
+    repo = checkout(attempt.run_dir)
     run = ValidationRun(
         repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},
         member_snapshots={directory: members},
@@ -113,7 +114,8 @@ def apply_verify(attempt: CodeAttempt) -> dict[str, bytes]:
     delivery. No explicit overrides or current-member discovery are used here.
     """
     producer = json.loads(attempt.read("verifier-attempt"))
-    check = candidate(attempt, "record-verification", PARTNERS, seen=True, source_role="boundary")
+    check = candidate(attempt, "record-verification", PARTNERS, repo=checkout(attempt.run_dir), seen=True,
+                      source_role="boundary")
     # Validation refuses Blockers that are not none or addressed list entries.
     reasons = review(check)
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
