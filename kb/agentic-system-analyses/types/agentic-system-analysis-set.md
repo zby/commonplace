@@ -53,7 +53,7 @@ layout:
       type: agentic-system-analyses/types/agentic-system-synthesis.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, record-verification, profile-verification]
     record-verification:
       path: record-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md

@@ -22,7 +22,7 @@ boundary, runtime, memory, epistemic.
 | epistemic | `epistemic.md` | b r m e | | record-verification | complete |
 | reconciliation | `reconciliation.md` | b r m e | | record-verification | complete |
 | memory-profile | `memory-profile.md` | r m e | | profile-verification | complete |
-| synthesis | `synthesis.md` | b r m e | | synthesis-verification | complete |
+| synthesis | `synthesis.md` | b r m e record-verification profile-verification | | synthesis-verification | complete |
 | record-verification | `record-verification.md` | b r m e reconciliation | r m e reconciliation | | complete |
 | profile-verification | `profile-verification.md` | r m e memory-profile | memory-profile | | complete |
 | synthesis-verification | `synthesis-verification.md` | b r m e synthesis | synthesis | | complete |
