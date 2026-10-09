@@ -14,14 +14,16 @@ direct Markdown children that match a role of the type's layout.
 A **directory type** is a type spec whose frontmatter carries a `layout`.
 The layout declares the **roles** an instance has: for each, the file at
 the directory root that fills it, the document type expected there, the
-roles whose fields it repeats (`identity`), the roles whose declarations
+roles whose fields it repeats and must equal (`identity`), the roles whose declarations
 its references resolve against (`cites`) and the roles whose acceptance
 its verdict settles (`verifies`). It also declares which roles every
 instance has and which a discriminating field adds, and whether a file
 matching no role is a finding (`membership: closed`) or admitted
 (`membership: open`). A role is a position the type declares; the file
 that fills it is a member; a role's name is the same whatever file fills
-it.
+it. A role's `cites` bounds where its references may resolve: it does not
+require the role to cite each listed role, and it is not a list of what the
+role's author reads.
 
 The manifest selects the type and may pin members: an entry under
 `members` maps a filename to a digest that its bytes must match. Whether

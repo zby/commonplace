@@ -52,8 +52,8 @@ validation unit. Visible direct Markdown children are the candidate
 members; descendants remain independent traversal targets.
 
 A type spec's `layout` declares the members. Each role names a direct child
-file, the type expected there, the roles whose fields it repeats
-(`identity`) and the roles whose declarations its references resolve against
+file, the type expected there, the roles whose fields it repeats and
+must equal (`identity`) and the roles whose declarations its references resolve against
 (`cites`), and the roles it verifies (`verifies`). `required` lists the
 roles every instance has and, through a discriminating role and field, the
 roles each value requires and admits. `verifies` names must be roles; the
@@ -92,7 +92,7 @@ cycles fail.
 The analysis set's boundary is a member and declares its sources. Each
 member's references resolve against the members its role cites, including
 supersessions in the reconciliation, and the set rule checks the overview's
-index of them and its copy of the boundary's sections. Every member's
+index of them and that its repeated boundary sections equal the boundary's. Every member's
 quote-anchored citations resolve against the boundary's frozen `source`: a Git
 commit in the recorded checkout, or a capture file pinned by its digest. As
 with ingest snapshots, pinned bytes absent from this machine leave a member's
