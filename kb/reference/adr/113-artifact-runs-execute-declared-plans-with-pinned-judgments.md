@@ -201,9 +201,11 @@ stale and which relations are uncovered. A worker, the acceptance check
 and the operator validate a draft through one command. A second consumer
 needs a plan, a type and handlers, nothing in the engine.
 
-The engine is proven on scenario tests and a toy plan, not on a production
-analysis: no retained analysis has yet been produced through it, and the
-operator chose a coherence review over an end-to-end proof (2026-10-08).
+The engine is proven on scenario tests, a toy plan and one production
+analysis: the Dynamic Cheatsheet run of 2026-10-09, compared same-model in
+the log with the previous workflow's run. The operator chose a coherence
+review over an end-to-end proof before that run (2026-10-08), and one run
+does not establish production fitness.
 Every check job still needs a handler, mostly a wrapper naming its role
 and partners. Runs started under the first engine do not resume; their
 retained data is kept. Raising a job's max attempts is a plan change, so
