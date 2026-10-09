@@ -115,11 +115,10 @@ def _open(run: Run, job: ModelJob) -> Handout:
                 spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))
                 lines.append(f"- {path}: lines {spans}")
     lines += ["", "If you cannot produce the output, write the problem to the problem path.",
-              ('Write a JSON object to the worker-runtime path with exactly the string fields "model" and "effort". '
-               'Report the exact model ID and effective effort/thinking level stated by your runtime instructions '
-               'or environment; use "not stated" independently for each unavailable value. Do not infer values '
-               'from the requested worker profile. In Pi, inspect PI_PROVIDER, PI_MODEL and PI_REASONING_LEVEL '
-               'through Bash; report the model as provider/model when both are available. Do not scan session '
+              ('Write a JSON object to the worker-runtime path with exactly the string fields "model" and "effort": '
+               'the exact model ID and the effort level your runtime instructions or environment state, or '
+               '"not stated" for each value they do not state. Do not infer either from the requested worker '
+               'profile; a supplied instruction may say where your harness states them. Do not scan session '
                'logs or edit engine-owned run metadata.')]
     prompt = directory / "prompt.md"
     store.write_bytes(prompt, ("\n".join(lines) + "\n").encode("utf-8"))

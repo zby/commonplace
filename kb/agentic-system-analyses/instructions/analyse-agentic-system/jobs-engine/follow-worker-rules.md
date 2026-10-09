@@ -43,6 +43,7 @@ expected nonzero exits explicitly.
 | `previous-boundary`, `previous-report`, `previous-reconciliation`, `previous-profile`, `previous-synthesis`, `previous-verification`, `previous-answers` | Prior completed outputs by identity, when supplied; not current inputs |
 | `validation-artifact`, `validation-member` | Intended artifact directory and member slot for content validation |
 | `output`, `output-answers`, `problem` | Primary result, declared correction answers when supplied, or inability report |
+| `worker-runtime` | Path for the JSON runtime report: the `model` and `effort` your runtime states |
 | `workspace`, `scratch` | Per-attempt workspace and intermediate-file directory |
 
 The supplied contracts give the operative definitions for this job. Linked
@@ -55,7 +56,7 @@ uncertainty that only limits a conclusion stays beside that conclusion in
 ## Stay within authority
 
 Write only the supplied output paths (`output` and `output-answers` when
-present), `problem`, `worker-model` and intermediate files under `scratch`. The
+present), `problem`, `worker-runtime` and intermediate files under `scratch`. The
 boundary instruction separately permits immutable captures or bundles under
 `capture-directory` in `opening`, including creation of that directory. Do not
 modify existing captures. Closed hand-out workspaces are disposable; captures
@@ -74,6 +75,33 @@ If refusal findings are supplied, repair those defects and their consequences
 against the frozen source, preserving unrelated work. Use the supplied
 previous output as the baseline, not a mutable member copy. Do not repeat the
 whole analysis. The engine's max attempts do not reset after acceptance.
+
+## Report your runtime
+
+Before finishing, write a JSON object with exactly the string fields `model`
+and `effort` to `worker-runtime`: the exact model ID and the effort level your
+runtime states, each on one line, or `not stated` for a value it does not
+state. Do not infer either from the requested profile, a launch alias or the
+model's own account of itself, and do not scan session logs or run metadata
+to find them. Where the runtime states them depends on the harness that
+launched you.
+
+### Claude Code
+
+The system prompt names the model and its exact model ID; report the ID.
+Report the effort only when the system prompt or environment states it;
+otherwise write `not stated`.
+
+### Codex
+
+Report the model and the reasoning effort the system prompt or environment
+states; otherwise write `not stated` for the missing value.
+
+### Pi
+
+Read `PI_PROVIDER`, `PI_MODEL` and `PI_REASONING_LEVEL` through Bash. Report
+the model as `<provider>/<model>` when both are set, and the reasoning level
+as the effort.
 
 ## Answer correction obligations
 

@@ -200,7 +200,8 @@ records run parameters. `advance <run>` closes the attempts reported with
 `--effort` record the actual worker identity on those results), runs every ready
 code job, hands out every ready model job, and prints the exact prompt paths,
 open attempts, stops and whether the artifact is publishable; `--json` prints the
-same as data. The coordinator launches fresh workers without parent conversation
+same as data. It exits 0 when the run continues, 2 when the run stopped and
+1 when the command itself failed. The coordinator launches fresh workers without parent conversation
 and settles all round handouts before advancing. The analysis manifest still
 requires one consistent worker model/effort identity.
 `status <run>` lists members, open handouts with their original prompt paths,
