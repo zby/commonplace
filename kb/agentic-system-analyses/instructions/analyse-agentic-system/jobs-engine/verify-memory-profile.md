@@ -11,6 +11,8 @@ Judge the exact supplied `memory-profile` against
 `boundary`, `runtime`, `memory`, `epistemic` and `reconciliation`. Assess
 `memory-profile-answers` and `memory-profile-refusal`, when supplied, as
 arguments, not as established defects or repairs.
+Code has already checked what the verification type assigns to it; judge
+what that type assigns to the verifier.
 
 ## Judge classification
 

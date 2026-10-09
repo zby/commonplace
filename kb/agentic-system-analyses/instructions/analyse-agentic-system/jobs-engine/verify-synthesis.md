@@ -12,13 +12,15 @@ Judge the exact supplied `synthesis` against
 `report-verification` and `profile-verification`. Assess `synthesis-answers`
 and `synthesis-refusal`, when supplied, afresh, not as established repairs or
 defects.
+Code has already checked what the verification type assigns to it; judge
+what that type assigns to the verifier.
 
 ## Judge the public account
 
 Check every substantive statement against its cited records and reconciliation
 supersessions. Read the text as public readers will, without supporting-member
-context. Every limit declared in record and profile verifications and every
-`Unresolved conflict:` must appear in Limitations with affected IDs and the
+context. Every limit declared in report and profile verifications and every
+`Unresolved conflict:` must appear in Limitations, citing the affected records, with the
 conclusion readers should withhold. Reassess previous-verification limits on
 retry; retain still-warranted limits and verify that the public text carries
 their consequences. Preserve supported contributions beside unresolved parts

@@ -1,5 +1,5 @@
 ---
-description: "Use after record and profile verification to write a self-standing synthesis carrying all declared limits"
+description: "Use after report and profile verification to write a self-standing synthesis carrying all declared limits"
 type: types/instruction.md
 ---
 

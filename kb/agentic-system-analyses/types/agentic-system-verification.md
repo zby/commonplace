@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: agentic-system-verification
-description: "Independent verification of one stage of an analysis run — records, memory profile or synthesis — with the blockers that send work back and the limits the publication declares"
+description: "Independent verification of one stage of an analysis run — analyst reports, memory profile or synthesis — with the blockers that send work back and the limits the publication declares"
 schema: ./agentic-system-verification.schema.yaml
 ---
 
@@ -25,6 +25,17 @@ governs the records a verification cites and judges.
 | `description` | Yes | What was verified and at which boundary |
 | `run-id` | Yes | The run's ID |
 | `reviewed-boundary` | Yes | The run's immutable revision or capture identity |
+
+## What code checks and what the verifier judges
+
+Code checks form and agreement between members: each citation's destination
+and scope, the fields a role must equal, the set's deterministic
+cross-member constraints, relation coverage, and quotations against the
+frozen source. A verifier does not repeat these checks. The verifier judges
+meaning: whether the cited content supports each claim, and whether
+qualifications, disagreements between reports and required limitations are
+preserved. Each member's type still determines its required content. Code
+does not match quotations between members.
 
 ## Verification
 

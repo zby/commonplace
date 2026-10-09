@@ -52,9 +52,12 @@ validation unit. Visible direct Markdown children are the candidate
 members; descendants remain independent traversal targets.
 
 A type spec's `layout` declares the members. Each role names a direct child
-file, the type expected there, the roles whose fields it repeats and
-must equal (`identity`) and the roles whose declarations its references resolve against
-(`cites`), and the roles it verifies (`verifies`). `required` lists the
+file, the type expected there, the roles whose fields it repeats and must
+equal (`identity`), the roles whose declarations its references resolve
+against (`cites`) and the roles it verifies (`verifies`). The `cites` list
+is the scope a member's references may resolve in; it need not hold a
+citation to every listed role and does not enumerate what an authoring
+worker reads. `required` lists the
 roles every instance has and, through a discriminating role and field, the
 roles each value requires and admits. `verifies` names must be roles; the
 validator gives the key no other meaning, and the artifact-run engine

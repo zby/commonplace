@@ -9,6 +9,8 @@ Judge whether the reconciled records support a source-grounded bounded account, 
 
 Judge exactly the supplied `boundary`, `runtime`, `memory`, `epistemic`,
 `reconciliation` and `record-check`.
+Code has already checked what the verification type assigns to it; judge
+what that type assigns to the verifier.
 
 On a later attempt, read your previous verification and the supplied
 `runtime-answers`, `memory-answers` and `epistemic-answers`, then judge the
