@@ -71,14 +71,15 @@ whole analysis. The engine's max attempts do not reset after acceptance.
 
 ## Answer correction obligations
 
-For every role supplied `output-answers`, write an empty file when there are
-no blockers. This includes the analysts, profile, synthesis and the profile
-and synthesis verifiers. Boundary, reconciliation and record verification
-repair refusal findings in their primary output without an auxiliary answer.
-For roles with `output-answers`, on a retry repair Findings in `refusal` and
-answer every entry under its `## Blockers`, in order, using
-the record contract's `- corrected: ...` or `- declined: ...` grammar.
-`none` means no blockers. Unstructured operator findings constitute one
+Roles supplied `output-answers` are the analysts, profile, synthesis and the
+profile and synthesis verifiers. Boundary, reconciliation and record
+verification repair refusal findings in their primary output without an
+auxiliary answer. Whenever `refusal` is supplied and its `## Blockers` is not
+`none`, repair its Findings and answer every entry under `## Blockers`, in
+order, using the record contract's `- corrected: ...` or `- declined: ...`
+grammar. This holds for a verifier's correction of an accepted output as
+much as for a refused attempt. Write an empty answers file only when
+`refusal` is absent or its Blockers are `none`. Unstructured operator findings constitute one
 blocker. For analysts, the feedback's Cited records from other reports supplies
 peer fragments; do not reconstruct whole peer-report paths. A structural repair
 can retain earlier semantic blockers: answer those too, not just the latest
