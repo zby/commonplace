@@ -18,7 +18,7 @@ job's pinned criteria.
 A job's `options`, fixed with the plan, extend the standard handlers:
 `frozen-source` names the role whose `source` field pins the checkout the
 run may inspect; `checks` lists functions called with the built candidate,
-each returning refusal reasons; `feedback` names a function the verdict
+each returning refusal findings; `feedback` names a function the verdict
 application calls for each refused subject with the role, the blockers
 addressed to it and the verdict's candidate, appending the text it returns.
 
@@ -49,7 +49,7 @@ from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
     Candidate,
     blocker_entries,
-    content_reasons,
+    content_findings,
     correction_findings,
     criterion_bytes,
     judge,
@@ -126,17 +126,17 @@ def _resolve(path: str) -> Callable:
     return getattr(importlib.import_module(module), attribute)
 
 
-def extension_reasons(check: Candidate) -> list[str]:
+def extension_findings(check: Candidate) -> list[str]:
     """Reasons from the job's declared checks, each called with the built candidate.
 
     An entry of the `checks` option is a dotted path or a mapping with a
     `function`; the inputs a check declares are ordinary job inputs.
     """
-    reasons = []
+    findings = []
     for entry in check.attempt.options.get("checks", ()):
         path = entry["function"] if isinstance(entry, dict) else entry
-        reasons += list(_resolve(path)(check))
-    return reasons
+        findings += list(_resolve(path)(check))
+    return findings
 
 
 def _named(attempt: CodeAttempt, address: str, source: str) -> str | None:
@@ -177,7 +177,7 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """
     built = candidate(attempt)
     answers, answered = correction(attempt, built)
-    declared = extension_reasons(built)
+    declared = extension_findings(built)
     if attempt.options.get("frozen-source") == built.role:
         # The candidate names the source its quotations are checked against.
         # Its declared checks bind that source to what the run acquired; only
@@ -187,8 +187,8 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
             return {}
         built = replace(built, source=_source_field(built.data))
     # A declared check may restate a finding the standard review made.
-    reasons = list(dict.fromkeys(review(built) + answers + declared))
-    judge(built, reasons, answered=answered)
+    findings = list(dict.fromkeys(review(built) + answers + declared))
+    judge(built, findings, answered=answered)
     return {}
 
 
@@ -204,24 +204,24 @@ def _sections(body: str) -> dict[str, str | None]:
     return found
 
 
-def protocol_reasons(verdict: bytes, subjects: tuple[str, ...]) -> list[str]:
+def protocol_findings(verdict: bytes, subjects: tuple[str, ...]) -> list[str]:
     """Why a verdict does not follow the verification protocol for ``subjects``."""
     document, error = parse_document(verdict.decode("utf-8", errors="replace"))
     if document is None:
         return [f"[protocol] verdict cannot be read: {error}"]
-    reasons = []
+    findings = []
     for title, text in _sections(document.body).items():
         if text is None:
-            reasons.append(f"[protocol] ## {title} is missing")
+            findings.append(f"[protocol] ## {title} is missing")
         elif text != "none" and any(line.strip() and not line.startswith(("- ", " ", "\t"))
                                     for line in text.splitlines()) or text != "none" and not text.startswith("- "):
-            reasons.append(f"[protocol] ## {title} must be exactly none or a list of - entries")
+            findings.append(f"[protocol] ## {title} must be exactly none or a list of - entries")
     blockers = _sections(document.body)["Blockers"]
     if blockers and blockers != "none" and len(subjects) > 1:
         for entry in blocker_entries(blockers):
             if addressee(entry) not in subjects:
-                reasons.append(f"[protocol] blocker addresses none of {', '.join(subjects)}: {entry.splitlines()[0]}")
-    return reasons
+                findings.append(f"[protocol] blocker addresses none of {', '.join(subjects)}: {entry.splitlines()[0]}")
+    return findings
 
 
 def addressee(entry: str) -> str:
@@ -247,9 +247,9 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
     if missing:
         raise ValueError(f"job {attempt.job.name}: no handed input for verified roles {', '.join(missing)}")
     answers, answered = correction(attempt, verdict)
-    reasons = review(verdict) + answers + protocol_reasons(verdict.data, verified) + extension_reasons(verdict)
-    judge(verdict, reasons, answered=answered)
-    if reasons:
+    findings = review(verdict) + answers + protocol_findings(verdict.data, verified) + extension_findings(verdict)
+    judge(verdict, findings, answered=answered)
+    if findings:
         return {}  # A verdict that fails its own check judges nothing.
 
     document, _ = parse_document(verdict.data.decode("utf-8"))
@@ -261,19 +261,19 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
         path = layout.path(role)
         if path not in verdict.snapshot:
             continue  # Not handed: nothing to judge.
-        alone = content_reasons(verdict, role=role, data=verdict.snapshot[path], members=verdict.snapshot)
-        beside = content_reasons(verdict, role=role, data=verdict.snapshot[path],
+        alone = content_findings(verdict, role=role, data=verdict.snapshot[path], members=verdict.snapshot)
+        beside = content_findings(verdict, role=role, data=verdict.snapshot[path],
                                  members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
-        invalid = [reason for reason in beside if reason not in alone]
+        invalid = [finding for finding in beside if finding not in alone]
         own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
         relation = (f"{verdict.role}:verifies:{role}",)
         if invalid or own:
-            findings = ("## Findings\n\n" + ("\n".join(invalid) or "none")
-                        + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
-                        + "\n\n## Limits\n\n" + limits + "\n")
+            packet = ("## Findings\n\n" + ("\n".join(invalid) or "none")
+                      + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
+                      + "\n\n## Limits\n\n" + limits + "\n")
             if feedback is not None:
-                findings += feedback(role, own, verdict)
-            attempt.judge(handed[role], outcome="refused", scope=relation, findings=findings)
+                packet += feedback(role, own, verdict)
+            attempt.judge(handed[role], outcome="refused", scope=relation, findings=packet)
         elif not entries:
             attempt.judge(handed[role], outcome="accepted", scope=relation)
     return {}
@@ -306,12 +306,12 @@ def artifact_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
         criteria=CriterionSnapshot(kb_root(repo), criterion_bytes(attempt)),
         frozen_source=source,
     )
-    reasons = ["[invocation] " + reason for reason in frozen_source_refusals(source)] if source else []
-    reasons += [f"{path}: {failure}" for path in sorted(members) for failure in run.validate(directory / path).fails]
+    findings = ["[invocation] " + finding for finding in frozen_source_refusals(source)] if source else []
+    findings += [f"{path}: {failure}" for path in sorted(members) for failure in run.validate(directory / path).fails]
     try:
-        reasons += ["[artifact] " + finding.render() for finding in run.artifact_findings(directory)
+        findings += ["[artifact] " + finding.render() for finding in run.artifact_findings(directory)
                     if not finding.absent and not finding.info]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
-        reasons.append(f"[artifact] artifact input cannot be checked: {exc}")
-    text = f"{ARTIFACT_CHECK_HEADING}\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
+        findings.append(f"[artifact] artifact input cannot be checked: {exc}")
+    text = f"{ARTIFACT_CHECK_HEADING}\n\n" + ("\n".join(f"- {finding}" for finding in findings) or "none") + "\n"
     return {"findings": text.encode("utf-8")}

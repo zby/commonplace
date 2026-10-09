@@ -61,25 +61,25 @@ class Candidate:
         return (document.frontmatter or {}) if document is not None else {}
 
 
-def content_reasons(check: Candidate, *, role: str | None = None, data: bytes | None = None,
+def content_findings(check: Candidate, *, role: str | None = None, data: bytes | None = None,
                     members: dict[str, bytes] | None = None) -> list[str]:
     """Draft-validation failures at a role; warnings and absent partners do not refuse."""
-    findings = validate_draft_in_role(
+    results = validate_draft_in_role(
         check.attempt.run_dir / "artifact", role or check.role,
         check.data if data is None else data, repo_root=check.repo,
         members=check.snapshot if members is None else members, manifest=manifest(check.attempt),
         criteria=criterion_bytes(check.attempt), frozen_source=check.source,
     )
-    return ["[artifact] " + finding.render() for finding in findings
+    return ["[artifact] " + finding.render() for finding in results
             if not finding.info and not finding.warn and not finding.absent]
 
 
 def review(check: Candidate) -> list[str]:
     """Content failures and frozen-source refusals."""
-    reasons = content_reasons(check)
+    findings = content_findings(check)
     if check.source is not None:
-        reasons += ["[invocation] " + reason for reason in frozen_source_refusals(check.source)]
-    return reasons
+        findings += ["[invocation] " + refusal for refusal in frozen_source_refusals(check.source)]
+    return findings
 
 
 def correction_blockers(refusal: bytes | None, member: str) -> str:
@@ -127,9 +127,9 @@ def correction_findings(candidate: bytes, *, member: str, refusal: bytes | None,
     return []
 
 
-def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None) -> str:
+def refusal_findings(findings: list[str], *, member: str, answered: bytes | None) -> str:
     """Findings, the answered refusal's blockers, and its other sections carried forward."""
-    packet = "## Findings\n\n" + "\n".join(reasons) + "\n\n## Blockers\n\n" + correction_blockers(answered, member) + "\n"
+    packet = "## Findings\n\n" + "\n".join(findings) + "\n\n## Blockers\n\n" + correction_blockers(answered, member) + "\n"
     if answered is not None:
         document, _ = parse_document(answered.decode("utf-8"))
         body = document.body if document is not None else ""
@@ -141,7 +141,7 @@ def refusal_findings(reasons: list[str], *, member: str, answered: bytes | None)
     return packet
 
 
-def judge(check: Candidate, reasons: list[str], *, answered: str | None = "answered-refusal") -> None:
+def judge(check: Candidate, findings: list[str], *, answered: str | None = "answered-refusal") -> None:
     """Judge the candidate over the relations its validation examined.
 
     The scope is the type's `cites` and `identity` relations from the
@@ -154,7 +154,7 @@ def judge(check: Candidate, reasons: list[str], *, answered: str | None = "answe
     scope = tuple(name for origin, partner, name in check.attempt.relations
                   if origin == check.role and not name.startswith(f"{origin}:verifies:")
                   and layout.path(partner) in check.snapshot)
-    findings = refusal_findings(
-        reasons, member=check.role, answered=check.attempt.read(answered) if answered else None,
-    ) if reasons else ""
-    check.attempt.judge("candidate", outcome="refused" if reasons else "accepted", scope=scope, findings=findings)
+    packet = refusal_findings(
+        findings, member=check.role, answered=check.attempt.read(answered) if answered else None,
+    ) if findings else ""
+    check.attempt.judge("candidate", outcome="refused" if findings else "accepted", scope=scope, findings=packet)
