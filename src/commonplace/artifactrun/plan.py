@@ -28,6 +28,8 @@ HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
 """The input name under which a role-filling model job receives its refusals."""
+HANDOUT_INPUT = "handout"
+"""The input name under which every model job receives the plan's hand-out template."""
 OUTCOMES = ("accepted", "refused")
 
 
@@ -104,6 +106,8 @@ class Plan:
 
     type_spec: Path
     jobs: tuple[Job, ...]
+    handout: str | None = None
+    """The library path of the plan's hand-out template, or None for the bare frame."""
 
     def job(self, name: str) -> Job:
         for job in self.jobs:
@@ -251,7 +255,7 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
         raise PlanError("a plan must be a mapping")
-    unknown = set(data) - {"type_spec", "criteria", "jobs"}
+    unknown = set(data) - {"type_spec", "criteria", "jobs", "handout"}
     if unknown:
         raise PlanError(f"unknown keys {sorted(unknown)}")
     groups = _criteria_groups(data.get("criteria", {}))
@@ -263,7 +267,11 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     jobs = tuple(_job(_expand_criteria(raw, groups)) for raw in raw_jobs)
     if not jobs:
         raise PlanError("a plan declares at least one job")
-    plan = Plan(Path(data["type_spec"]), tuple(_with_refusal(job) for job in jobs))
+    handout = data.get("handout")
+    if handout is not None and (not isinstance(handout, str) or not handout):
+        raise PlanError("handout must name the hand-out template, relative to the KB root")
+    plan = Plan(Path(data["type_spec"]), tuple(_with_handout(_with_refusal(job), handout) for job in jobs),
+                handout)
     _check(plan, roles)
     return plan
 
@@ -299,6 +307,19 @@ def _expand_criteria(raw: Any, groups: Mapping[str, Mapping[str, str]]) -> Any:
                 raise PlanError(f"job {name}: input {key} disagrees with criteria group {group}")
             inputs[key] = given
     return {**{k: v for k, v in raw.items() if k != "criteria"}, "inputs": inputs}
+
+
+def _with_handout(job: Job, handout: str | None) -> Job:
+    """Give every model job the plan's hand-out template as a file input.
+
+    Pinned like the instruction, so editing the template is a change of
+    input, not a silent change of every later prompt.
+    """
+    if handout is None or not isinstance(job, ModelJob):
+        return job
+    if HANDOUT_INPUT in job.inputs:
+        raise PlanError(f"job {job.name}: input {HANDOUT_INPUT} is reserved for the plan's hand-out template")
+    return replace(job, inputs={**job.inputs, HANDOUT_INPUT: Input("file", handout)})
 
 
 def _with_refusal(job: Job) -> Job:

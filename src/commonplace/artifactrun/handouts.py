@@ -11,13 +11,15 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.lib.directory_layout import Layout
+from commonplace.lib.note_parser import parse_document
 from commonplace.lib.reading_batches import (
     READ_BATCH_BYTES,
     reading_batches,
     reading_ranges,
 )
 
-from .plan import PLACEHOLDER, ModelJob
+from .plan import HANDOUT_INPUT, PLACEHOLDER, ModelJob
 from .run import Run
 
 WORKER_RUNTIME = "worker-runtime.json"
@@ -43,6 +45,44 @@ def _substitute(value: str, values: Mapping[str, str], parameters: Mapping[str, 
             return parameters[name.removeprefix("param:")]
         return values[name]
     return PLACEHOLDER.sub(one, value)
+
+
+ANSWERS_MARKER = "[answers]"
+"""A template paragraph whose first line is this marker is kept only for jobs writing answers."""
+
+
+def handout_slots(job: ModelJob, layout: Layout, type_spec: str, values: Mapping[str, str]) -> dict[str, str]:
+    """The values a hand-out template may name, for one model job.
+
+    `values` are the job's substituted parameters; the validation slots
+    come from them, so a template naming one requires the parameter.
+    """
+    slots = {"role": job.role or "", "member-type": layout.roles[job.role].type if job.role else "",
+             "set-type": type_spec, "output": job.outputs[0],
+             "answers": job.outputs[1] if len(job.outputs) > 1 else ""}
+    for name in ("validation-artifact", "validation-role"):
+        if name in values:
+            slots[name] = values[name]
+    return slots
+
+
+def render_handout(text: str, slots: Mapping[str, str], parameters: Mapping[str, str]) -> str:
+    """The template's section for one job: frontmatter dropped, `[answers]` paragraphs
+    kept only when the job writes answers, `{slot}` and `{param:<name>}` filled.
+
+    An unknown placeholder raises KeyError naming it.
+    """
+    document, _ = parse_document(text)
+    body = document.body if document is not None else text
+    paragraphs = []
+    for paragraph in body.strip().split("\n\n"):
+        first, _, rest = paragraph.partition("\n")
+        if first.strip() == ANSWERS_MARKER:
+            if slots.get("answers"):
+                paragraphs.append(rest)
+            continue
+        paragraphs.append(paragraph)
+    return _substitute("\n\n".join(paragraphs), slots, parameters)
 
 
 def _open(run: Run, job: ModelJob) -> Handout:
@@ -84,7 +124,8 @@ def _open(run: Run, job: ModelJob) -> Handout:
                   "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
-    values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name != job.instruction}
+    framed = {job.instruction, HANDOUT_INPUT}
+    values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name not in framed}
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
     values |= {"problem": str(problem), "worker-runtime": str(worker_runtime),
@@ -97,7 +138,12 @@ def _open(run: Run, job: ModelJob) -> Handout:
             values[f"previous-{name}"] = str(path)
     instruction = paths[job.instruction]
     lines = [f"Follow {instruction} with:", *(f"{key} = {value}" for key, value in values.items())]
-    readable = [str(path) for name, path in paths.items() if path is not None and name != job.instruction]
+    template = pins.get(HANDOUT_INPUT)
+    if template is not None and template.data is not None:
+        # The plan's template fills one section of the engine's frame.
+        slots = handout_slots(job, run.layout, run.type_spec, values)
+        lines += ["", render_handout(template.data.decode("utf-8"), slots, run.parameters)]
+    readable = [str(path) for name, path in paths.items() if path is not None and name not in framed]
     readable += [value for key, value in values.items() if key.startswith("previous-")]
     if readable:
         lines += ["", "## Input reading batches", "",

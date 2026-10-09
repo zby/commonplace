@@ -26,8 +26,15 @@ from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
 from .compact import expand_text
-from .handouts import WORKER_RUNTIME, Handout, _open, handout_for
-from .plan import CodeJob, Input, ModelJob, check_relations, load_plan
+from .handouts import (
+    WORKER_RUNTIME,
+    Handout,
+    _open,
+    handout_for,
+    handout_slots,
+    render_handout,
+)
+from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
 from .store import RunStore, digest
 
@@ -98,6 +105,8 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
                       for name in job.run_parameters()} - set(given))
     if missing:
         raise ValueError(f"the plan substitutes run parameters not given: {', '.join(missing)}")
+    if jobs.handout is not None:
+        _check_handout(jobs, library, layout, str(type_spec), given)
     store.create({
         "plan": str(Path(plan).resolve()),
         "plan_sha256": digest(source),
@@ -107,6 +116,24 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
         "type": type_text,
         "parameters": dict(parameters or {}),
     })
+
+
+def _check_handout(jobs, library: Path, layout, type_spec: str, parameters: Mapping[str, str]) -> None:
+    """Render the hand-out template for every model job, so an unknown placeholder fails the plan at start."""
+    path = Path(jobs.handout)
+    path = path if path.is_absolute() else library / path
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise PlanError(f"handout {jobs.handout}: {error}") from error
+    for job in jobs.jobs:
+        if not isinstance(job, ModelJob):
+            continue
+        values = {key: value for key, value in job.parameters.items()}
+        try:
+            render_handout(text, handout_slots(job, layout, type_spec, values), parameters)
+        except KeyError as error:
+            raise PlanError(f"handout {jobs.handout}: job {job.name} has no value for {{{error.args[0]}}}") from None
 
 
 def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunStatus:

@@ -44,7 +44,7 @@ MODES = ("required", "optional", "order-only")
 ROLE_KEYS = {"role", "instruction", "max_attempts", "outputs", "reads", "criteria", "files",
              "parameters", "verified-by", "checks", "feedback"}
 JOB_KEYS = {"job", "handler", "inputs", "outputs"}
-PLAN_KEYS = {"type_spec", "criteria", "inputs", "defaults", "frozen-source", "jobs"}
+PLAN_KEYS = {"type_spec", "criteria", "inputs", "defaults", "frozen-source", "handout", "jobs"}
 
 
 def is_compact(data: Mapping[str, Any]) -> bool:
@@ -225,6 +225,16 @@ class _Expansion:
 
     # Criteria
 
+    def library_path(self, relative: Any, what: str) -> str:
+        """A path written relative to the plan file, as a library path."""
+        if not isinstance(relative, str) or not relative:
+            raise PlanError(f"{what} must name a file relative to the plan")
+        path = (self.plan_dir / relative).resolve()
+        try:
+            return path.relative_to(self.library).as_posix()
+        except ValueError as error:
+            raise PlanError(f"{what} {relative} is outside the library") from error
+
     def criteria(self, roles: list[str]) -> dict[str, dict]:
         types = [self.layout.roles[role].type for role in dict.fromkeys(roles)]
         own = (self.library / self.type_spec)
@@ -260,6 +270,8 @@ class _Expansion:
             else:
                 jobs.append(self.standard_job(entry))
         plan = {"type_spec": self.type_spec}
+        if self.data.get("handout") is not None:
+            plan["handout"] = self.library_path(self.data["handout"], "handout")
         if self.groups:
             plan["criteria"] = dict(self.groups)
         plan["jobs"] = jobs
@@ -274,11 +286,7 @@ class _Expansion:
         instruction = entry.get("instruction")
         if not isinstance(instruction, str):
             raise PlanError(f"role {role.name}: instruction must name a file")
-        path = (self.plan_dir / instruction).resolve()
-        try:
-            instruction_path = path.relative_to(self.library).as_posix()
-        except ValueError as error:
-            raise PlanError(f"role {role.name}: instruction {instruction} is outside the library") from error
+        instruction_path = self.library_path(instruction, f"role {role.name}: instruction")
         reads = self.reads(entry)
         inputs: dict[str, dict] = {"instruction": {"address": "file", "source": instruction_path}}
         inputs.update({key: {"address": "file", "source": value} for key, value in (entry.get("files") or {}).items()})
