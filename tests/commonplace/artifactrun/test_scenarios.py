@@ -86,10 +86,9 @@ def test_05_waiting_for_a_settled_stage(coordinator: Coordinator) -> None:
     c.forbid("report B")
     c.advance()
     assert "report" in c.handed()
-    # The contract change reruns the check and the verdict's application, which
-    # validates the handed B under the same contract; the application's
-    # refusal is the later one, in force, and has no blockers to answer.
-    c.complete("report", "report C\n", answers="")
+    # The contract's refusal of B carries forward the blocker B answered; the
+    # verdict's application does not repeat a finding B shows on its own.
+    c.complete("report", "report C\n", answers=CORRECTED)
     assert c.member("report") == "report C\n"
     assert "digest" not in c.handed(), "the acceptance of B no longer names the current member"
     c.complete("summary", "summary S3\n")

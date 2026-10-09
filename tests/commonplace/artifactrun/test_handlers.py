@@ -36,19 +36,32 @@ def test_a_blocker_free_verdict_accepts_every_subject(coordinator: Coordinator) 
         assert [e["relation"] for e in judged[role]["scope"]] == [f"verification:verifies:{role}"]
 
 
-def test_a_subject_failing_validation_is_refused_with_blockers_none(coordinator: Coordinator) -> None:
+def test_a_verdict_dependent_finding_refuses_its_subject_with_blockers_none(coordinator: Coordinator) -> None:
+    c = coordinator
+    c.through_records()
+    # The toy type's rule: the summary repeats each Limit of the verification.
+    c.complete("verify", blocking(limits=("the toy is small",)))
+    judged = applied(c)
+    assert judged["summary"]["outcome"] == "refused"
+    findings = judged["summary"]["findings"]
+    assert "limit not carried: the toy is small" in findings and "## Blockers\n\nnone\n" in findings
+    assert "## Limits\n\n- the toy is small\n" in findings
+    assert judged["report"]["outcome"] == judged["other"]["outcome"] == "accepted"
+
+
+def test_a_finding_the_subject_shows_alone_is_left_to_its_check(coordinator: Coordinator) -> None:
     c = coordinator
     c.through_records()
     verifier = c.handout("verify")
-    # The contract changes while the verifier holds report A.
+    # The contract changes while the verifier holds report A; check-report refuses A.
     c.forbid("report A")
     c.advance()
     c.advance(c.result_for(verifier, NO_BLOCKERS))
     judged = applied(c)
-    assert judged["report"]["outcome"] == "refused"
-    findings = judged["report"]["findings"]
-    assert "forbidden text 'report A'" in findings and "## Blockers\n\nnone\n" in findings
-    assert judged["other"]["outcome"] == judged["summary"]["outcome"] == "accepted"
+    assert judged["report"]["outcome"] == "accepted", "the verdict causes no finding at the report"
+    refusals = [r for r in Run(RunStore(c.run_dir)).judgments
+                if r["outcome"] == "refused" and r["subject"]["role"] == "report"]
+    assert [r["job"] for r in refusals] == ["check-report"]
 
 
 def test_a_verdict_breaking_the_protocol_judges_nothing_else(coordinator: Coordinator) -> None:

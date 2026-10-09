@@ -19,11 +19,14 @@ job's pinned criteria.
 document has `## Blockers` and `## Limits`, each exactly `none` or a list
 with one `- ` entry per finding. With several subjects every blocker starts
 with the role it addresses (`- <role>: ...`); with one subject, none does.
-A verdict whose Blockers are `none` accepts every handed subject validation
-did not refuse. Otherwise each addressed subject is refused with its
+A verdict whose Blockers are `none` accepts every handed subject it causes
+no finding at. Otherwise each addressed subject is refused with its
 blockers, and a subject no blocker addresses is not judged: its gate stays
-unsettled until a blocker-free verdict. A subject failing validation at
-its role, beside this verdict, is refused whatever Blockers says. Every
+unsettled until a blocker-free verdict. A subject is also refused, whatever
+Blockers says, for verdict-dependent findings: those at its role that appear
+with the verdict placed and not without it. A finding the subject shows on
+its own belongs to its check, whose refusal carries the subject's answered
+blockers forward; repeating it here would replace that refusal. Every
 refusal of a subject carries the verdict's Limits.
 """
 
@@ -192,8 +195,10 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
         path = layout.path(role)
         if path not in verdict.snapshot:
             continue  # Not handed: nothing to judge.
-        invalid = content_reasons(verdict, role=role, data=verdict.snapshot[path],
-                                  members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
+        alone = content_reasons(verdict, role=role, data=verdict.snapshot[path], members=verdict.snapshot)
+        beside = content_reasons(verdict, role=role, data=verdict.snapshot[path],
+                                 members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
+        invalid = [reason for reason in beside if reason not in alone]
         own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
         relation = (f"{verdict.role}:verifies:{role}",)
         if invalid or own:

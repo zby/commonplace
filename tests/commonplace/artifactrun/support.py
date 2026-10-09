@@ -60,6 +60,9 @@ from commonplace.artifactrun import (
     advance,
     start_run,
 )
+from commonplace.lib.directory_layout import Finding
+from commonplace.lib.note_parser import section
+from commonplace.lib.validation import directory_type_rule
 from tests.commonplace.artifactrun.handlers import INTERRUPT_ENV, LOG_ENV
 
 HANDLERS = "tests.commonplace.artifactrun.handlers"
@@ -117,9 +120,11 @@ NO_BLOCKERS = "## Blockers\n\nnone\n\n## Limits\n\nnone\n"
 """A verdict that accepts every handed subject."""
 
 
-def blocking(*blockers: str) -> str:
+def blocking(*blockers: str, limits: tuple[str, ...] = ()) -> str:
     """A verdict whose blockers are `<role>: <reason>` entries, each refusing its role."""
-    return "## Blockers\n\n" + "".join(f"- {b}\n" for b in blockers) + "\n## Limits\n\nnone\n"
+    listed = "".join(f"- {limit}\n" for limit in limits) or "none\n"
+    return ("## Blockers\n\n" + ("".join(f"- {b}\n" for b in blockers) or "none\n")
+            + "\n## Limits\n\n" + listed)
 
 
 CORRECTED = "- corrected: repaired what the verifier blocked\n"
@@ -165,6 +170,18 @@ def version(role: str, text: str) -> str:
     from commonplace.artifactrun.store import digest
 
     return digest(as_member(role, text).encode())
+
+
+@directory_type_rule("types/toy-set.md")
+def limits_carried(artifact, *, layout, run) -> list[Finding]:
+    """The summary repeats each of the verification's Limits: a finding that needs both members."""
+    summary, verification = artifact.members.get("summary.md"), artifact.members.get("verification.md")
+    if summary is None or verification is None:
+        return []
+    limits = section(verification.document.body, "Limits").strip()
+    entries = [] if limits in ("", "none") else [line[2:] for line in limits.splitlines() if line.startswith("- ")]
+    return [Finding("summary", f"summary.md: limit not carried: {entry}")
+            for entry in entries if entry not in summary.document.body]
 
 
 def record_calls(monkeypatch: pytest.MonkeyPatch) -> None:
