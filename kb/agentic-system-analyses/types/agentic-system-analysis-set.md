@@ -86,10 +86,9 @@ layout:
 
 # Agentic system analysis set
 
-A directory artifact: a retained analysis in the collection's `retained/`
-area, or the working set of a run. In a finished set the manifest pins a
-SHA-256 for every member and records the worker that produced the run under
-`worker`:
+A directory artifact, as the reference definitions define it: a retained
+analysis in the collection's `retained/` area, or the working set of a run. In a finished set the manifest pins a SHA-256 for every member and
+records the worker that produced the run under `worker`:
 
 - `profile`: the worker profile the run started with;
 - `harness`, `launch-model` and `effort`: that profile's harness, the name
@@ -142,10 +141,7 @@ workflow check, not a set check.
 
 ## Working and published sets
 
-A working set starts with a manifest naming only the type, so it is
-recognised from its first member. Until publication pins it, whole-set
-validation reports the unpinned manifest and any absent required members,
-and checks relations among the members present. A published set is frozen:
-its manifest pins every member, and a correction is a new run. Earlier
-versions, answers, attempts, judgments and prompts stay in the run's state
-and are never published.
+Until publication pins the manifest, whole-set validation reports it as
+unpinned. A published set is frozen: its manifest pins every member, and a
+correction is a new run. Earlier versions, answers, attempts, judgments and
+prompts stay in the run's state and are never published.

@@ -46,9 +46,10 @@ failures exit nonzero.
 
 ## Directory artifacts
 
-`ARTIFACT.yaml` makes its directory one additional validation unit. Its
-`type` selects a type spec. Visible direct Markdown children are the
-candidate members; descendants remain independent traversal targets.
+A [directory artifact](./definitions/directory-artifact.md) is a directory
+whose `ARTIFACT.yaml` names a directory type; it is one additional
+validation unit. Visible direct Markdown children are the candidate
+members; descendants remain independent traversal targets.
 
 A type spec's `layout` declares the members. Each role names a direct child
 file, the type expected there, the roles whose fields it repeats
