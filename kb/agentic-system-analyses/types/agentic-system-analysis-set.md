@@ -86,63 +86,66 @@ layout:
 
 # Agentic system analysis set
 
-A directory artifact in the agentic-system-analyses collection's `retained/`
-area or a local working run. The engine uses `state/<run-id>/set/` as
-its sole working set. Historical runs used `output/`; their execution format
-is retired and is not converted or mirrored by the current workflow.
-In a finished set the manifest records a SHA-256 for every member and
-names the worker that produced the run under `worker`: the worker `profile`
-the run started with, and that profile's `harness`, `launch-model` and
-reasoning `effort`, and the `model` every worker reported. The launch model
-is the name the harness selects a model by: an alias such as `sonnet` can
-later select a newer model. The reported model is the exact ID each worker's
-environment stated, or `not stated`; publication requires one value across
-the run. One profile writes a whole run, so the manifest carries it once.
-Sets published before 2026-10-06 have no `worker`.
+A directory artifact: a retained analysis in the collection's `retained/`
+area, or the working set of a run. In a finished set the manifest pins a
+SHA-256 for every member and records the worker that produced the run under
+`worker`:
+
+- `profile`: the worker profile the run started with;
+- `harness`, `launch-model` and `effort`: that profile's harness, the name
+  the harness selects a model by, and its reasoning effort;
+- `model`: the exact model ID every worker reported, or `not stated`.
+
+A launch model is an alias such as `sonnet` that may later select a newer
+model; the reported model is what ran. One profile writes a whole run, and
+publication requires every worker to have reported the same model.
+
+## Members
 
 The layout above declares the members. Every set has the boundary and the
-overview; a `complete` boundary disposition adds the four reports, the
-memory profile, the synthesis and three verifications. Any other disposition
-admits no other member. Membership
-is closed. Each member keeps its own type and passes ordinary file
-validation independently.
+overview. A boundary whose `result-disposition` is `complete` adds the four
+reports, the memory profile, the synthesis and the three verifications; any
+other disposition admits no other member. Membership is closed. Each member
+has its own type and passes ordinary file validation on its own.
 
-The boundary is the run's first member and the source of its identity and
-source declarations. Every other member repeats its run and boundary
-identity; the overview repeats all of its boundary fields and its
-disposition. The overview is an entry page, not a copy of member accounts.
-It declares no sources or records. Each member's record references
-resolve against the members its layout role cites. The profile cites only
-the three analyst reports: it declares or annotates no records, contributes
-no new evidence, cites no source directly, and its source identity matches
-the memory member.
+The boundary is written first. It declares the analysed source and the run
+and boundary identity that every other member repeats; the overview repeats
+all of its boundary fields and its disposition. The overview is an entry
+page: it declares no sources or records. A member's record references
+resolve against the members its role cites. The profile cites only the
+three analyst reports: it declares or annotates no records, contributes no
+new evidence, cites no source directly, and its source identity matches the
+memory report's.
 
-The set rule also checks that the manifest pins every member once it pins
-any, duplicate declarations, the overview's amendment index against the
-reconciliation, and the profile's comparison references. The three
-verification roles respectively require `verifies: records`, `profile` and
-`synthesis`. Their citation partners include the reconciliation, memory profile
-and synthesis respectively, alongside the reports declared in the layout.
-Each verification role also declares the roles it `verifies`. Validation
-gives that no meaning beyond the names existing; the engine derives one
-`verifies` relation per entry, requires an accepted judgment over it for
-publication, and lets no content check cover it (ADR 114).
-Their Blockers and Limits are `none` or Markdown lists; record
-blockers name the report owner. Every verification limit that cites IDs has
-at least one of those IDs in the synthesis's Limitations. This checks
-traceability, not whether the consequence is faithfully stated; review checks
-that meaning. Every member's quotations resolve against the boundary's frozen
-source; unavailable pinned bytes are reported as unverified. The set requires
-no run-state file. The memory analyst's provenance remains a workflow check.
+## Whole-set checks
+
+Beyond the layout, validation of the set checks that the manifest pins every
+member once it pins any, that no record is declared twice, the overview's
+amendment index against the reconciliation, the profile's comparison
+references, and that every member's quotations resolve against the
+boundary's frozen source, with unavailable pinned bytes reported as
+unverified rather than failed.
+
+The word `verifies` has two uses. A verification document's `verifies`
+field names its stage, `records`, `profile` or `synthesis`, and must match
+its role. A verification role's layout entry `verifies` names the roles
+whose acceptance its verdict settles; validation only checks that the names
+are roles, and the engine covers each such relation by a judgment of the
+verified version (ADR 114).
+
+A verification's Blockers and Limits are `none` or Markdown lists, and a
+record blocker starts with the report it addresses. Every limit that cites
+record IDs has at least one of those IDs in the synthesis's Limitations.
+This checks traceability, not whether the synthesis states the consequence
+faithfully; review judges that. The memory report's provenance is a
+workflow check, not a set check.
+
+## Working and published sets
 
 A working set starts with a manifest naming only the type, so it is
-recognized from its first member. Until code pins it, whole-set validation
-reports the unpinned manifest and any absent required members, and checks
-relations among the members present.
-
-The engine keeps a type-only working manifest in `set/`; assembly returns an
-exact-byte pinned manifest that publication consumes as an engine output, not a
-second mutable projection. Published sets are frozen; corrections require a new
-run. Earlier member versions, answers, attempts, judgments, effect journals and
-prompts live outside `set/` and are never published. Historical run-state files
-are evidence only; the current workflow neither writes nor consumes them.
+recognised from its first member. Until publication pins it, whole-set
+validation reports the unpinned manifest and any absent required members,
+and checks relations among the members present. A published set is frozen:
+its manifest pins every member, and a correction is a new run. Earlier
+versions, answers, attempts, judgments and prompts stay in the run's state
+and are never published.
