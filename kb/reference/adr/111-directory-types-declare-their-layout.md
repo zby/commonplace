@@ -12,6 +12,7 @@ status: accepted
 
 **Amended by:** [ADR 114](./114-directory-types-declare-what-a-role-verifies.md). A role may declare `verifies`, a relation kind the engine covers only by a judgment of the handed version; the sentence below that verifications are not members predates ADR 113.
 **Amended 2026-10-10:** the engine and validation vocabulary calls a directory-artifact instance an *artifact*, not a *set*: "artifact validation" below reads for "whole-set validation", and the standard handler is `artifact_check`. The type name `agentic-system-analysis-set` and the analysis types' "analysis set" prose keep the old word until a retained set is next regenerated and the type is relocated.
+**Amended 2026-10-10:** the memory member types are relocated to `agentic-system-memory-report` and `agentic-system-memory-profile`, so every member type shares the `agentic-system-` prefix ([ADR 116](./116-one-word-per-concept-across-prose-and-code.md)). Archived sets keep the old type paths in their members' frontmatter: their bytes are pinned, so they stay frozen history and are not re-pinned.
 
 ## Context
 
