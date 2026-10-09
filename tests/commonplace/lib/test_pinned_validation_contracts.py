@@ -4,13 +4,14 @@ from pathlib import Path
 import pytest
 import yaml
 
+from commonplace.lib.agentic_analysis.sets import SET_TYPE
 from commonplace.lib.type_resolver import (
     CriterionSnapshot,
     resolve_type,
     resolve_type_definition,
     validate_instance,
 )
-from commonplace.lib.validation import ValidationRun, validate_pinned_analysis_set
+from commonplace.lib.validation import ValidationRun, validate_pinned_set_snapshot
 
 TYPE = b"""---
 type: types/type-spec.md
@@ -134,8 +135,8 @@ def test_virtual_verbatim_sources_require_supplied_bytes(tmp_path):
 
 
 def test_public_adapter_missing_substantive_criterion(tmp_path):
-    result = validate_pinned_analysis_set(
-        repo=tmp_path, intended_set_path=Path("kb/agentic-system-analyses/state/local/set"),
+    result = validate_pinned_set_snapshot(
+        repo=tmp_path, set_type=SET_TYPE, intended_set_path=Path("kb/agentic-system-analyses/state/local/set"),
         members={}, manifest=b"type: ignored\n", criteria={},
     )
     assert any("missing pinned criterion" in failure for failure in result.fails)
@@ -178,8 +179,8 @@ def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path)
             "members": {name: {"sha256": sha256(data).hexdigest()}
                         for name, data in members.items()},
         }).encode()
-        return validate_pinned_analysis_set(
-            repo=tmp_path, intended_set_path=directory, members=members,
+        return validate_pinned_set_snapshot(
+            repo=tmp_path, set_type=SET_TYPE, intended_set_path=directory, members=members,
             manifest=manifest, criteria=criteria,
         )
 
@@ -196,11 +197,11 @@ def test_public_adapter_checks_exact_members_and_cross_member_identity(tmp_path)
 def test_frozen_git_reader_uses_committed_objects_not_checkout(tmp_path, monkeypatch):
     import subprocess
 
+    from commonplace.lib.quote_grounding import FrozenGitObjects
     from commonplace.lib.quote_matching import Citation
-    from commonplace.lib.validation import _FrozenGitObjects
 
     revision = "a" * 40
-    source = _FrozenGitObjects({"kind": "git", "path": str(tmp_path),
+    source = FrozenGitObjects({"kind": "git", "path": str(tmp_path),
                                 "identity": "https://github.com/fixture/repo", "revision": revision})
     (tmp_path / "tracked.md").write_text("mutated checkout text")
     (tmp_path / "untracked.md").write_text("untracked text")

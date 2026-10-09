@@ -32,7 +32,7 @@ from commonplace.lib.agentic_analysis.sets import (
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.validation import validate_pinned_analysis_set
+from commonplace.lib.validation import validate_pinned_set_snapshot
 from commonplace.setrun.checks import criterion_bytes
 from commonplace.setrun.effects import hashes, install_tree
 from commonplace.setrun.isolation import (
@@ -160,8 +160,8 @@ def validate_pinned_set(attempt: CodeAttempt, *, repo: Path, members: Mapping[st
                         manifest: bytes) -> None:
     """Validate all exact member, manifest and criterion bytes."""
     boundary = _document(members["boundary.md"])
-    result = validate_pinned_analysis_set(
-        repo=repo, intended_set_path=attempt.run_dir / "set", members=members,
+    result = validate_pinned_set_snapshot(
+        repo=repo, set_type=attempt.type_spec, intended_set_path=attempt.run_dir / "set", members=members,
         manifest=manifest, criteria=criterion_bytes(attempt),
         frozen_source=boundary.frontmatter.get("source"),
     )

@@ -21,8 +21,9 @@ adopted. This proposal does not authorize executing code supplied by a KB.
   canonical type paths; the type document does not select the implementation.
 - The analysis-set rule uses those hooks to check member identities, record
   references, its reconciliation index and comparison data. These checks
-  demonstrate a collection-local need, but their registrations are maintained
-  inside framework code.
+  demonstrate a collection-local need. Since 2026-10-09 they live in the
+  analysis package (`commonplace.lib.agentic_analysis.rules`), but
+  `validation.py` still imports that module by name to register them.
 - `ValidationRun` supplies shared byte reads, parsed documents, directory
   artifacts and candidate content overrides. Existing checks can consume that
   context instead of independently reopening files.

@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.lib import systems_matrix, validation
+from commonplace.lib import quote_grounding, systems_matrix, validation
 from commonplace.lib.agentic_analysis import sets as agentic_set
 from tests.commonplace.agentic_analysis.fixtures import (
     REPO_ROOT,
@@ -391,7 +391,7 @@ def test_github_citations_match_frozen_source_objects(tmp_path, citation, diagno
     blob = parse_github_blob(url)
     assert blob is not None
     anchor = Citation("", url, blob.revision)
-    source = validation._FrozenGitObjects({
+    source = quote_grounding.FrozenGitObjects({
         "identity": "https://github.com/example/system", "revision": revision,
         "path": str(root),
     })
@@ -411,7 +411,7 @@ def test_path_only_anchor_to_binary_blob_resolves(tmp_path):
     root, _ = git_checkout(tmp_path / "source")
     (root / "paper.pdf").write_bytes(b"%PDF-1.4\n\xff\xfe\x00binary\n")
     revision = commit_paths(root, "Add binary paper", "paper.pdf")
-    source = validation._FrozenGitObjects({
+    source = quote_grounding.FrozenGitObjects({
         "identity": "https://github.com/example/system", "revision": revision,
         "path": str(root),
     })

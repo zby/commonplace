@@ -408,9 +408,16 @@ section. The analysis data modules (`sets`, `records`, `ledger`) must import
 without the engine, so the helpers they share with `setrun` moved to
 `commonplace.lib` (`note_parser.section`, `source_identity`).
 
-Deferred: `lib/validation.py` still holds the analysis type rules and
-imports the analysis modules lazily. Registering those rules from the
-analysis side is a separate restructure.
+The analysis type rules now live in `agentic_analysis.rules` and register
+through the validator's `type_rule` and `directory_type_rule` tables. The
+validator imports that module once, by name, at the end of
+`lib/validation.py`; that line is the only reference left from generic
+validation to the analysis. The pinned-set adapter takes the set type as an
+argument (`validate_pinned_set_snapshot`), and the frozen Git reader moved
+to `quote_grounding`.
+
+Still in `commonplace.lib` and analysis-specific: `systems_matrix`, which
+compares retained analyses. Moving it is ordinary relocation.
 
 ## Outside the handler surface
 

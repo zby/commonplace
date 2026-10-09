@@ -20,14 +20,14 @@ the source, such as an analysis run, treats it as a failure.
 
 from __future__ import annotations
 
+import re
 import subprocess
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from hashlib import sha256
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Literal, Protocol
 
-from commonplace.lib.agentic_analysis.sets import is_normalized_relative
 from commonplace.lib.quote_generation import MAX_QUOTE_OCCURRENCES, quote_occurrences
 from commonplace.lib.quote_matching import (
     Citation,
@@ -38,6 +38,14 @@ from commonplace.lib.quote_matching import (
 from commonplace.lib.source_identity import normalize_source_identity
 
 Status = Literal["match", "mismatch", "unverified"]
+
+
+def is_normalized_relative(value: str) -> bool:
+    """Whether ``value`` is a nonempty relative POSIX path with no ``..`` or redundancy."""
+    pure = PurePosixPath(value)
+    return bool(pure.parts) and not pure.is_absolute() and value == pure.as_posix() and (
+        ".." not in pure.parts
+    )
 
 
 @dataclass(frozen=True)
@@ -205,6 +213,58 @@ class CapturePin:
                     except UnicodeError as exc:
                         self._text = SourceText(missing=f"cannot read frozen capture as UTF-8 text: {exc}")
         return self._text
+
+
+class FrozenGitObjects:
+    """Read committed blobs, never ignored/untracked checkout files.
+
+    The declaring document supplies the repository and full object identity. Git is only
+    used as a local object reader, not to acquire or execute source content.
+    """
+
+    def __init__(self, source: Mapping[str, object]) -> None:
+        self.pin = GitPin(str(source["identity"]), str(source["revision"]), Path(str(source["path"])))
+
+    def _git(self, *args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            ["git", "--no-replace-objects", "-C", str(self.pin.root), *args], capture_output=True,
+            check=False, timeout=10,
+        )
+
+    def missing(self) -> str | None:
+        if not re.fullmatch(r"[0-9a-f]{40}", self.pin.revision):
+            return "frozen Git source requires a full commit hash"
+        try:
+            found = self._git("rev-parse", "HEAD")
+            if found.returncode or found.stdout.decode().strip() != self.pin.revision:
+                return "frozen Git source is not at its declared revision"
+        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
+            return f"cannot inspect frozen Git source: {exc}"
+        return None
+
+    def attribution_error(self, citation) -> str | None:
+        return self.pin.attribution_error(citation)
+
+    def read(self, citation, *, text: bool = True):
+        missing = self.missing()
+        if missing:
+            return SourceText(missing=missing)
+        path, _ = git_citation_path(citation)
+        if not is_normalized_relative(path):
+            return SourceText(error="expected a normalized commit-relative path")
+        try:
+            obj = f"{self.pin.revision}:{path}"
+            kind = self._git("cat-file", "-t", obj)
+            if kind.returncode or kind.stdout.strip() != b"blob":
+                return SourceText(error="path does not name a committed blob", path=path)
+            if not text:
+                return SourceText("", path, f"{path} at the recorded commit")
+            blob = self._git("cat-file", "blob", obj)
+            if blob.returncode:
+                return SourceText(error="cannot read committed blob", path=path)
+            return SourceText(blob.stdout.decode("utf-8"), path, f"{path} at the recorded commit")
+        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
+            return SourceText(error=f"cannot read committed blob: {exc}", path=path)
 
 
 def frozen_source_pin(source: Mapping[str, Any]) -> GitPin | CapturePin:

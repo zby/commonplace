@@ -20,7 +20,7 @@ from commonplace.lib.directory_artifact import (
     load_directory_artifact,
     member_paths,
 )
-from commonplace.lib.directory_layout import Finding, Layout, layout_findings
+from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.full_pass import (
     FULL_PASS_REPORT_TYPE,
     parse_full_pass_report,
@@ -58,7 +58,6 @@ from commonplace.lib.project_paths import (
 from commonplace.lib.quote_grounding import SnapshotPin, resolve_citations
 from commonplace.lib.quote_matching import (
     parse_blockquotes,
-    ranged_prose_anchors,
 )
 from commonplace.lib.quote_verification import (
     INGEST_QUOTES_HEADING_RE,
@@ -445,7 +444,7 @@ class ValidationRun:
             if loaded.document is None:
                 continue
             for link in loaded.document.links:
-                target = _resolve_local_link_target(source, link)
+                target = resolve_local_link_target(source, link)
                 if target is None or target.suffix != ".md":
                     continue
                 if target == source:
@@ -669,7 +668,7 @@ def validate_title_and_slug(
         )
 
 
-def _resolve_local_link_target(source: Path, link: str) -> Path | None:
+def resolve_local_link_target(source: Path, link: str) -> Path | None:
     """Resolve a local relative link target with URL syntax normalized once."""
     parsed = urlsplit(link)
     if parsed.scheme or parsed.netloc:
@@ -691,7 +690,7 @@ def validate_links_from_document(
     """Resolve links against disk and normalized paths supplied by this validation run."""
     missing: list[str] = []
     for link in links:
-        target = _resolve_local_link_target(path, link)
+        target = resolve_local_link_target(path, link)
         if target is None:
             continue
         in_closed_set = closed_directory is not None and target.parent == closed_directory
@@ -742,7 +741,7 @@ def validate_proposal_archive_links(
 
     forbidden: list[str] = []
     for link in links:
-        target = _resolve_local_link_target(source, link)
+        target = resolve_local_link_target(source, link)
         if target is None or target == archive_readme:
             continue
         try:
@@ -1048,7 +1047,7 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     """Resolve the note's local markdown links to absolute paths."""
     targets: set[Path] = set()
     for link in parsed.document.links:
-        target = _resolve_local_link_target(parsed.path, link)
+        target = resolve_local_link_target(parsed.path, link)
         if target is None or target.suffix != ".md":
             continue
         targets.add(target)
@@ -1080,211 +1079,6 @@ def _quote_citation_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     validate_quote_citations(results, parsed.content)
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
-def _agentic_boundary_register_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """The register's shape and identity are content, not invocation checks."""
-    from collections import Counter
-
-    from commonplace.lib.agentic_analysis.records import (
-        source_register_ids,
-        source_register_rows,
-    )
-
-    body = parsed.document.body
-    rows = source_register_rows(body)
-    errors = [
-        f"source register: {row[0]} needs all eight columns from the boundary contract"
-        for row in rows if len(row) != 8
-    ]
-    errors.extend(
-        f"duplicate source declaration: {identifier}; keep one row per source ID "
-        "and separate evidence layers and scopes within that row"
-        for identifier, count in Counter(source_register_ids(body)).items() if count > 1
-    )
-    source = (parsed.document.frontmatter or {}).get("source")
-    if isinstance(source, dict):
-        expected = tuple(str(source.get(field) or "") for field in ("kind", "identity", "revision"))
-        if not any(
-            len(row) == 8 and tuple(cell.strip("`") for cell in row[1:4]) == expected
-            for row in rows
-        ):
-            errors.append(
-                "source register must declare the frozen source in a SRC-* row: "
-                f"kind `{expected[0]}`, identity `{expected[1]}`, revision or capture `{expected[2]}`"
-            )
-    results.fails.extend(errors)
-    if not errors:
-        results.passes.append("source register: eight-column rows, unique IDs and frozen source checked")
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
-def _agentic_reconciliation_amendment_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    from commonplace.lib.agentic_analysis.records import value_amendments
-
-    errors = [
-        "value amendment: reconciliation states connections between reports and does "
-        "not replace a record's value; describe the disagreement with both records and "
-        "their evidence, or use `Amendment: <ID> is superseded by <IDs>` for an "
-        f"identity judgment: {line[:120]}"
-        for line in value_amendments(parsed.document.body)
-    ]
-    results.fails.extend(errors)
-    if not errors:
-        results.passes.append("reconciliation amendments: only identity supersessions")
-
-
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
-def _agentic_evidence_and_references_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    from commonplace.lib.agentic_analysis.records import (
-        conclusion_status_errors,
-        record_reference_errors,
-        route_field_errors,
-    )
-
-    # A member validated alone cannot resolve references the set declares
-    # elsewhere; the analysis set's directory rule resolves them across the
-    # members.
-    errors = record_reference_errors(parsed.document.body)
-    results.fails.extend(errors)
-    if not errors:
-        results.passes.append("record references: explicit IDs and declarations checked")
-    field_errors = route_field_errors(parsed.document.body)
-    results.fails.extend(field_errors)
-    if not field_errors:
-        results.passes.append("route fields: required labels and non-empty answers checked")
-    status_errors = conclusion_status_errors(parsed.document.body)
-    results.fails.extend(status_errors)
-    if not status_errors:
-        results.passes.append("conclusion status: labelled route fields and controlled values checked")
-    validate_quote_citations(results, parsed.content)
-
-
-def agentic_set_member_link_failures(path: Path, links: tuple[str, ...]) -> list[str]:
-    """Links must survive moving a member into a retained set directory."""
-    directory = path.resolve().parent
-    return [
-        f"set member link: {link} leaves the set directory and breaks once "
-        "retained; name the file by path in a code span"
-        for link in links
-        if (target := _resolve_local_link_target(path, link)) is not None
-        and target.parent != directory
-    ]
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
-@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-system-analyses/types/generated-review.md")
-@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-verification.md")
-@type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
-def _agentic_plain_source_anchor_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """Only quote attributions carry line ranges; prose anchors cite paths."""
-    del run
-    found = ranged_prose_anchors(parsed.content)
-    for line, anchor in found:
-        results.fails.append(
-            f"source anchor at line {line}: {anchor} carries a line range; "
-            "cite the path without a range, or quote the passage"
-        )
-    if not found:
-        results.passes.append("source anchors: prose anchors cite paths without ranges")
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
-@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-verification.md")
-@type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
-@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
-@type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
-def _agentic_set_member_link_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """Relative links stay inside the set directory, which moves on retention."""
-    del run
-    failures = agentic_set_member_link_failures(parsed.path, parsed.document.links)
-    results.fails.extend(failures)
-    if not failures:
-        results.passes.append("set member links: relative links stay inside the set directory")
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
-def _record_prefix_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """A report declares records only under its type's ``record-prefix``."""
-    from commonplace.lib.agentic_analysis.records import declared_ids
-
-    assert parsed.profile.type_doc_path is not None
-    prefix = run.load_frontmatter(parsed.profile.type_doc_path).data.get("record-prefix")
-    if not isinstance(prefix, str) or not prefix:
-        results.fails.append(f"record declarations: {parsed.profile.type_name} declares no record-prefix")
-        return
-    foreign = [identifier for identifier in declared_ids(parsed.document.body)
-               if not identifier.startswith(prefix)]
-    if foreign:
-        results.fails.append(
-            f"record declarations: this report declares only {prefix} records: "
-            + ", ".join(foreign)
-            + "; keep supplied IDs unchanged in references and annotations"
-        )
-    else:
-        results.passes.append(f"record declarations: every declaration uses {prefix}")
-
-
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
-def _memory_report_pending_check_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    from commonplace.lib.note_parser import blank_fenced_code_blocks, section
-
-    checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
-    if re.search(r"(?im)^[ \t]*(?:\*\*)?Validation(?:\*\*)?:[ \t]*(?:`|\*\*)?pending\b", checks):
-        results.fails.append("memory checks: a report cannot retain 'Validation: pending'")
-
-
-@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
-def _epistemic_ledger_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
-
-    errors = epistemic_ledger_errors(parsed.document.body)
-    results.fails.extend(errors)
-    if not errors:
-        results.passes.append("epistemic ledger: table/record syntax and controlled function/status checked")
-
-
-@type_rule("agentic-system-analyses/types/agent-memory-profile.md")
-def _memory_profile_local_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """The profile's own content; its references resolve in the set rule."""
-    from commonplace.lib.agentic_analysis.records import annotated_ids, declared_ids
-
-    if re.search(r"(?m)^> ?", parsed.document.body):
-        results.fails.append("memory profile cannot add source quotations")
-    if declared_ids(parsed.document.body) or annotated_ids(parsed.document.body):
-        results.fails.append("memory profile cannot declare or annotate records")
 
 
 @type_rule("types/type-spec.md")
@@ -1437,7 +1231,7 @@ def validate_unquoted_sources(
     repo_root = run.repo_root.resolve()
     targets: dict[Path, bool] = {}
     for text, link in find_markdown_links_with_text(parsed.document.body):
-        target = _resolve_local_link_target(parsed.path, link)
+        target = resolve_local_link_target(parsed.path, link)
         if target is None or not target.name.endswith(".ingest.md"):
             continue
         try:
@@ -1793,13 +1587,15 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     return results
 
 
-def validate_pinned_analysis_set(
-    *, repo: Path, intended_set_path: Path, members: Mapping[str, bytes],
+def validate_pinned_set_snapshot(
+    *, repo: Path, set_type: str, intended_set_path: Path, members: Mapping[str, bytes],
     manifest: bytes, criteria: Mapping[str, bytes],
     frozen_source: Mapping[str, object] | None = None,
 ) -> CheckResults:
-    """Check an exact analysis publication snapshot without writing files.
+    """Check an exact snapshot of a set of ``set_type`` without writing files.
 
+    The set type belongs to a collection (``<collection>/types/...``); the set
+    and its members' types must lie in that collection.
     Criterion keys are relative to the library (not prefixed with kb/). The
     snapshot's virtual root is repo/kb. Supply every type, transitive schema and
     substantive contract dependency; missing dependencies fail closed. The
@@ -1807,23 +1603,24 @@ def validate_pinned_analysis_set(
     this is not an interpreter of arbitrary changed method prose. Callers must
     separately guard the opened method/code identity.
 
-    frozen_source must equal the boundary source mapping and explicitly grants
+    frozen_source must equal the source mapping the set pins and explicitly grants
     local inspection of that frozen checkout/capture only. Relative link
     existence and collection/type eligibility are stable-method environment
     guards; they do not authorize external content reads. Warnings are returned,
     not silently promoted to success. A caller must reject nonempty fails.
     """
-    from commonplace.lib.agentic_analysis.sets import SET_TYPE
-
+    collection, separator, _ = set_type.rpartition("/types/")
+    if not separator:
+        raise ValueError(f"{set_type} is not a collection-local type")
     repo = repo.resolve()
     directory = intended_set_path if intended_set_path.is_absolute() else repo / intended_set_path
     directory = directory.resolve()
-    if not directory.is_relative_to(repo / "kb" / "agentic-system-analyses"):
-        raise ValueError("intended set must be inside the analysis collection")
+    if not directory.is_relative_to(repo / "kb" / collection):
+        raise ValueError(f"intended set must be inside the {collection} collection")
     snapshot = CriterionSnapshot(kb_root(repo), criteria)
-    result = CheckResults(SET_TYPE)
+    result = CheckResults(set_type)
     try:
-        for required in ("agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md"):
+        for required in (f"{collection}/COLLECTION.md", "reference/validation-contract.md"):
             snapshot.read(snapshot.root / required)
         run = ValidationRun(
             repo, (directory,), member_snapshots={directory: dict(members)},
@@ -1831,8 +1628,8 @@ def validate_pinned_analysis_set(
             criteria=snapshot, frozen_source=frozen_source,
         )
         artifact = run.artifact(directory)
-        if artifact.manifest["type"] != SET_TYPE:
-            raise ValueError("pinned analysis adapter requires the analysis set type")
+        if artifact.manifest["type"] != set_type:
+            raise ValueError(f"pinned set adapter requires the {set_type} set type")
         pins = artifact.manifest.get("members")
         if (not isinstance(pins, dict) or set(pins) != set(members)
                 or any(not isinstance(entry, dict) or set(entry) != {"sha256"}
@@ -1840,7 +1637,7 @@ def validate_pinned_analysis_set(
             raise ValueError("publication manifest must pin every exact member")
         profile = run.artifact_profile(directory)
         if profile.layout is None:
-            raise ValueError("analysis set requires its pinned layout")
+            raise ValueError("the set type requires its pinned layout")
         allowed = {role.type for role in profile.layout.roles.values()}
         type_documents = {profile.type_doc_path, snapshot.root / "types/type-spec.md"}
         # This adapter cannot safely dispatch arbitrary library rules that do
@@ -1849,7 +1646,7 @@ def validate_pinned_analysis_set(
             fm = member.document.frontmatter or {}
             type_value = fm.get("type")
             if (type_value not in allowed or not isinstance(type_value, str)
-                    or not type_value.startswith("agentic-system-analyses/types/")
+                    or not type_value.startswith(f"{collection}/types/")
                     or type_value not in _TYPE_RULES):
                 raise ValueError(f"unsupported publication member type: {type_value}")
             member_profile, error = run.parse_note(member.path)
@@ -1859,7 +1656,7 @@ def validate_pinned_analysis_set(
                 raise ValueError(f"publication member {member.path.name} needs a pinned schema")
             type_documents.add(member_profile.profile.type_doc_path)
             if fm.get("tags") or "brief" in fm or member.path.name.endswith(".ingest.md"):
-                raise ValueError("pinned analysis adapter cannot bound tag/brief/ingest dependencies")
+                raise ValueError("pinned set adapter cannot bound tag/brief/ingest dependencies")
         result = run.validate(directory)
         meta_profile = resolve_type_definition(
             snapshot.root / "types/type-spec.md", repo_root=repo, criteria=snapshot,
@@ -2184,7 +1981,7 @@ def validate_draft_at_slot(
     an explicit manifest is required and disk discovery is disabled. Otherwise
     preserve the ordinary CLI's incumbent-overlay behavior. With ``criteria``,
     type and schema resolution use only the supplied closed criterion bytes.
-    ``frozen_source`` authorizes inspection of that exact boundary source only.
+    ``frozen_source`` authorizes inspection of that exact pinned source only.
     """
     directory = directory.resolve()
     intended = Path(slot)
@@ -2239,263 +2036,5 @@ def validate_draft_at_slot(
     return findings
 
 
-@directory_type_rule("agentic-system-analyses/types/agentic-system-analysis-set.md")
-def validate_analysis_set(artifact: DirectoryArtifact, *, layout: Layout | None, run: ValidationRun) -> list[Finding]:
-    """Relations the layout names but code must compute, over the members present."""
-    from commonplace.lib.agentic_analysis.records import (
-        amendment_index,
-        set_declarations,
-        set_record_findings,
-    )
-    from commonplace.lib.agentic_analysis.sets import RETAINED_ROOT, source_slug
-    from commonplace.lib.systems_matrix import validate_comparison
-
-    if layout is None:
-        return [Finding(None, "the analysis set type must declare a layout")]
-    documents = {
-        role.name: artifact.members[role.path].document
-        for role in layout.roles.values() if role.path in artifact.members
-    }
-    findings = []
-    pinned = artifact.manifest.get("members")
-    if isinstance(pinned, dict):
-        findings += [Finding(None, f"manifest: member {name} is not pinned")
-                     for name in sorted(set(artifact.members) - set(pinned))]
-
-    bodies = {layout.path(name): document.body for name, document in documents.items()}
-    cites = {role.path: [layout.path(cited) for cited in role.cites] for role in layout.roles.values()}
-    sources = layout.path("boundary")
-    _, record_findings = set_record_findings(sources, bodies, cites=cites)
-    for name, message in record_findings:
-        role = layout.role_at(name) if name else None
-        findings.append(Finding(role.name if role else None, message))
-
-    overview = documents.get("overview")
-    reconciliation = documents.get("reconciliation")
-    index = amendment_index(reconciliation.body) if reconciliation is not None else None
-    if index is not None and overview is not None and index not in overview.body.splitlines():
-        findings.append(Finding("overview", "overview amendment index does not match reconciliation"))
-    if overview is not None:
-        links = {link.split('#', 1)[0].removeprefix('./') for link in overview.links}
-        for name in documents:
-            if name != "overview" and layout.path(name) not in links:
-                findings.append(Finding("overview", f"{layout.path('overview')}: missing member link to {layout.path(name)}",
-                                        repair="link every present member from the overview's Members section"))
-
-    findings += _set_quotation_findings(artifact, layout, documents, run=run)
-    findings += _verification_findings(layout, documents)
-
-    profile = documents.get("memory-profile")
-    if profile is not None:
-        declared = set_declarations(sources, bodies)
-        scope = {identifier for cited in cites[layout.path("memory-profile")]
-                 for identifier in declared.get(cited, ())}
-        try:
-            validate_comparison((profile.frontmatter or {}).get("memory-comparison"), known_ids=scope)
-        except ValueError as exc:
-            findings.append(Finding("memory-profile", f"{layout.path('memory-profile')}: {exc}"))
-
-    if artifact.path.parent == run.repo_root / RETAINED_ROOT:
-        memory = documents.get("memory")
-        if memory is None or overview is None:
-            findings.append(Finding(None, "current analysis must be complete"))
-        else:
-            identity = (memory.frontmatter or {}).get("source-identity", "")
-            if artifact.path.name != source_slug(identity, (overview.frontmatter or {}).get("system", "")):
-                findings.append(Finding(None, "current directory name does not match its source"))
-    return findings
-
-
-def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
-    """Stage identity, list grammar and carried limits; meaning remains review."""
-    from commonplace.lib.agentic_analysis.records import record_references
-    from commonplace.lib.note_parser import section
-
-    findings = []
-    synthesis = documents.get("synthesis")
-    limitations = record_references(section(synthesis.body, "Limitations")) if synthesis else set()
-    for name, stage in (("record-verification", "records"),
-                        ("profile-verification", "profile"),
-                        ("synthesis-verification", "synthesis")):
-        document = documents.get(name)
-        if document is None:
-            continue
-        path = layout.path(name)
-        actual = (document.frontmatter or {}).get("verifies")
-        if actual != stage:
-            findings.append(Finding(name, f"{path}: verifies {actual!r} does not match {stage!r}"))
-        for title in ("Blockers", "Limits"):
-            text = section(document.body, title).strip()
-            if text == "none":
-                continue
-            lines = [line for line in text.splitlines() if line.strip()]
-            valid = lines and lines[0].startswith("- ") and all(
-                line.startswith(("- ", " ", "\t")) for line in lines
-            )
-            if not valid:
-                findings.append(Finding(name, f"{path}: {title} must be exactly none or a Markdown list",
-                                        repair=f"write none or one '- ' entry per {title.lower()} finding; indent continuation lines"))
-                continue
-            entries = re.split(r"(?m)^- ", text)[1:]
-            if title == "Blockers" and stage == "records":
-                for entry in entries:
-                    if not re.match(r"(?:runtime|memory|epistemic|reconciliation): +\S", entry):
-                        findings.append(Finding(name, f"{path}: record blocker has no report addressee",
-                                                repair="start each blocker with runtime:, memory:, epistemic: or reconciliation: and its finding"))
-            if title == "Limits" and synthesis is not None:
-                for entry in entries:
-                    cited = record_references(entry)
-                    if cited and not cited & limitations:
-                        findings.append(Finding("synthesis", f"{layout.path('synthesis')}: limit not carried: "
-                                                f"Limitations names none of {', '.join(sorted(cited))} "
-                                                f"for the limit {path} declares: {entry.splitlines()[0][:100]}"))
-    return findings
-
-
-class _FrozenGitObjects:
-    """Read committed blobs, never ignored/untracked checkout files.
-
-    The boundary supplies the repository and full object identity. Git is only
-    used as a local object reader, not to acquire or execute source content.
-    """
-
-    def __init__(self, source: Mapping[str, object]) -> None:
-        from commonplace.lib.quote_grounding import GitPin
-
-        self.pin = GitPin(str(source["identity"]), str(source["revision"]), Path(str(source["path"])))
-
-    def _git(self, *args: str) -> subprocess.CompletedProcess:
-        return subprocess.run(
-            ["git", "--no-replace-objects", "-C", str(self.pin.root), *args], capture_output=True,
-            check=False, timeout=10,
-        )
-
-    def missing(self) -> str | None:
-        if not re.fullmatch(r"[0-9a-f]{40}", self.pin.revision):
-            return "frozen Git source requires a full commit hash"
-        try:
-            found = self._git("rev-parse", "HEAD")
-            if found.returncode or found.stdout.decode().strip() != self.pin.revision:
-                return "frozen Git source is not at its declared revision"
-        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
-            return f"cannot inspect frozen Git source: {exc}"
-        return None
-
-    def attribution_error(self, citation) -> str | None:
-        return self.pin.attribution_error(citation)
-
-    def read(self, citation, *, text: bool = True):
-        from commonplace.lib.agentic_analysis.sets import is_normalized_relative
-        from commonplace.lib.quote_grounding import SourceText
-        from commonplace.lib.quote_matching import git_citation_path
-
-        missing = self.missing()
-        if missing:
-            return SourceText(missing=missing)
-        path, _ = git_citation_path(citation)
-        if not is_normalized_relative(path):
-            return SourceText(error="expected a normalized commit-relative path")
-        try:
-            obj = f"{self.pin.revision}:{path}"
-            kind = self._git("cat-file", "-t", obj)
-            if kind.returncode or kind.stdout.strip() != b"blob":
-                return SourceText(error="path does not name a committed blob", path=path)
-            if not text:
-                return SourceText("", path, f"{path} at the recorded commit")
-            blob = self._git("cat-file", "blob", obj)
-            if blob.returncode:
-                return SourceText(error="cannot read committed blob", path=path)
-            return SourceText(blob.stdout.decode("utf-8"), path, f"{path} at the recorded commit")
-        except (OSError, UnicodeError, subprocess.SubprocessError) as exc:
-            return SourceText(error=f"cannot read committed blob: {exc}", path=path)
-
-
-def _set_quotation_findings(
-    artifact: DirectoryArtifact, layout: Layout, documents: dict[str, ParsedDocument],
-    *, run: ValidationRun,
-) -> list[Finding]:
-    """Every member's quotations resolve against the boundary's frozen source.
-
-    Pinned bytes absent from this machine leave the quotations unverified,
-    reported once per member as information.
-    """
-    from commonplace.lib.quote_grounding import frozen_source_pin, resolve_citations
-    from commonplace.lib.quote_matching import parse_blockquotes
-
-    boundary = documents.get("boundary")
-    source = (boundary.frontmatter or {}).get("source") if boundary is not None else None
-    bounded = run.criteria is not None
-    authorized = not bounded or (isinstance(source, dict) and source == run.frozen_source)
-    complete_source = isinstance(source, dict) and all(
-        isinstance(source.get(key), str) and source[key] for key in ("identity", "revision", "path")
-    )
-    pin = frozen_source_pin(source) if complete_source and authorized else None
-    if bounded and pin is not None and source.get("kind") == "git":
-        pin = _FrozenGitObjects(source)
-    findings = []
-    if bounded and pin is None:
-        from commonplace.lib.quote_matching import URL_RE
-
-        if any("github.com/" in match.group() and "/blob/" in match.group()
-               for document in documents.values() for match in URL_RE.finditer(document.body)):
-            findings.append(Finding("boundary", "source anchors require authorized frozen source inspection"))
-    if bounded and isinstance(source, dict) and not authorized:
-        findings.append(Finding("boundary", "frozen source inspection requires the exact boundary source context"))
-    if bounded and pin is not None:
-        from commonplace.lib.quote_matching import (
-            URL_RE,
-            Citation,
-            blank_quote_bodies,
-            parse_github_blob,
-        )
-
-        if source.get("kind") not in {"git", "capture"} or not Path(str(source.get("path", ""))).is_absolute():
-            return [Finding("boundary", "frozen source needs a git/capture kind and absolute path")]
-        missing = pin.missing()
-        if missing is not None:
-            findings.append(Finding("boundary", f"frozen source unavailable: {missing}"))
-        for name, document in documents.items():
-            if source.get("kind") == "git":
-                for match in URL_RE.finditer(blank_quote_bodies(document.body)):
-                    url = match.group().rstrip(".,;")
-                    try:
-                        blob = parse_github_blob(url)
-                        if blob is None:
-                            continue
-                        citation = Citation("", url, blob.revision)
-                        error = pin.attribution_error(citation)
-                        found = pin.read(citation, text=False) if error is None else None
-                        error = error or (found.error or found.missing if found is not None else None)
-                        if error:
-                            findings.append(Finding(name, f"source citation: {error}: {url}"))
-                    except ValueError as exc:
-                        findings.append(Finding(name, f"source citation: {exc}"))
-            else:
-                # A GitHub blob citation cannot be established by a capture.
-                for match in URL_RE.finditer(document.body):
-                    url = match.group().rstrip(".,;")
-                    try:
-                        if parse_github_blob(url) is not None:
-                            findings.append(Finding(name, "GitHub source anchor cannot be verified against a capture"))
-                    except ValueError as exc:
-                        findings.append(Finding(name, f"source citation: {exc}"))
-    for role in layout.roles.values():
-        if role.name not in documents:
-            continue
-        citations = parse_blockquotes(artifact.members[role.path].content.decode("utf-8"))
-        if not citations:
-            continue
-        if pin is None:
-            findings.append(Finding(role.name, f"{role.path}: quotations need the boundary's frozen source"))
-            continue
-        unverified = []
-        for resolution in resolve_citations(citations, pin, kind="code"):
-            if resolution.status == "mismatch":
-                findings.append(Finding(role.name, f"{role.path}: quote-anchored citation at line "
-                                                   f"{resolution.citation.line}: {resolution.detail}"))
-            elif resolution.status == "unverified":
-                unverified.append(resolution)
-        if unverified:
-            findings.append(Finding(role.name, f"{role.path}: {len(unverified)} quotations unverified, "
-                                               f"{unverified[0].detail}", info=not bounded))
-    return findings
+# The analysis types' rules live with the analysis; importing them registers them.
+import commonplace.lib.agentic_analysis.rules  # noqa: F401

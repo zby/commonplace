@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from commonplace.lib.validation import ValidationRun
 
 from commonplace.lib.note_parser import ParsedDocument
+from commonplace.lib.quote_grounding import is_normalized_relative
 from commonplace.lib.source_identity import normalize_source_identity
 
 SET_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
@@ -45,14 +46,6 @@ def _spec_at(library: str, type_path: str) -> dict[str, Any]:
 @cache
 def _layout_at(library: str) -> Layout:
     return parse_layout(_spec_at(library, SET_TYPE).get("layout"), where=f"{SET_TYPE}: layout")
-
-
-def is_normalized_relative(value: str) -> bool:
-    """Whether ``value`` is a nonempty relative POSIX path with no ``..`` or redundancy."""
-    pure = PurePosixPath(value)
-    return bool(pure.parts) and not pure.is_absolute() and value == pure.as_posix() and (
-        ".." not in pure.parts
-    )
 
 
 def is_review_path(value: str) -> bool:

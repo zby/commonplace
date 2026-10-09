@@ -4,15 +4,12 @@ from hashlib import sha256
 import pytest
 import yaml
 
+from commonplace.lib.agentic_analysis.rules import validate_analysis_set
 from commonplace.lib.agentic_analysis.sets import analysis_layout
 from commonplace.lib.directory_artifact import ArtifactMember, DirectoryArtifact
 from commonplace.lib.directory_layout import layout_findings
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.validation import (
-    ValidationRun,
-    validate_analysis_set,
-    validate_draft_at_slot,
-)
+from commonplace.lib.validation import ValidationRun, validate_draft_at_slot
 
 
 def document(body, **metadata):

@@ -11,7 +11,7 @@ from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import (
     ValidationRun,
     validate_draft_at_slot,
-    validate_pinned_analysis_set,
+    validate_pinned_set_snapshot,
 )
 from commonplace.setrun import sources
 
@@ -201,8 +201,8 @@ def test_boundary_links_consistent_at_member_slot_and_relocated_pinned_set(tmp_p
             directory, "boundary.md", members["boundary.md"], repo_root=tmp_path,
             members={"overview.md": members["overview.md"]}, manifest=manifest, criteria=criteria,
         )
-        pinned = validate_pinned_analysis_set(
-            repo=tmp_path, intended_set_path=directory, members=members,
+        pinned = validate_pinned_set_snapshot(
+            repo=tmp_path, set_type=SET_TYPE, intended_set_path=directory, members=members,
             manifest=manifest, criteria=criteria,
         )
         assert not any("[pinned contracts]" in message for message in pinned.fails), pinned.fails
