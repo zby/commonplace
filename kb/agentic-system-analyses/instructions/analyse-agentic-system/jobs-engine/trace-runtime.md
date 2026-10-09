@@ -16,9 +16,8 @@ batches. Follow `worker-rules`, `collection`, `sources-contract`,
 `boundary` fixes the evidence and functional scope. `opening` is JSON metadata,
 including the prepared `command-path`. Use the supplied `system` and `run-id`.
 Write the whole runtime report to `output`, and correction answers to
-`output-answers`, using the shared worker rules' correction protocol. On a
-first attempt, write an empty answers file. `refusal = absent` means no refusal
-input. A retry supplies `previous-report` and possibly `previous-answers` by
+`output-answers`, using the shared worker rules' correction protocol.
+`refusal = absent` means no refusal input. A retry supplies `previous-report` and possibly `previous-answers` by
 identity. Both are read-only baselines, not mutable member paths.
 
 ## Trace and challenge
