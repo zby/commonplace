@@ -109,6 +109,13 @@ records the review of commits `c9a8b1f09` through `52f77aa8a`: an integration
 identity regression, three loader/readiness edge cases and a fidelity-test
 gap, with verification results and suggested fixes.
 
+## Naming review
+
+[Naming review](./naming-review.md), 2026-10-09: the engine and analysis
+vocabulary checked against Code Complete's and Clean Code's naming rules
+and the one-vocabulary rule; renames proposed in order, names to keep with
+their definitions fixed, and what is already consistent.
+
 ## The analysis layout
 
 [The analysis set's layout](./analysis-layout.md) writes out the roles,
