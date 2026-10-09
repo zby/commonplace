@@ -477,6 +477,12 @@ deletes checks the opener and the analyst check carry until then.
    evidence, in the records contract; the records contract is referred to
    from the seven record-citing member types; no worker receives the set
    type. One analysis to publication remains, the operator's call.
+   Alongside, [ADR 115](../adr/115-analysis-records-are-cited-by-markdown-links.md)
+   made record citations Markdown links resolved by the validator's link
+   code within the layout's `cites` scope, so the records contract keeps
+   what a record means and the custom token scanner is gone: the
+   citation relation is declared at both levels, `cites` as its schema
+   and links as its instances.
 
 ## Not taken
 
