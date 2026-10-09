@@ -93,9 +93,9 @@ engine-derived input rather than a handler recomputation.
 
 ## Related
 
-- [Code-scheduled workflows](../../reference/proposals/code-scheduled-workflows.md)
-  and its [workshop](../code-scheduled-workflows/README.md): the retired
-  engine's design and build.
-- [Record acceptance reads and judged versions](../../reference/proposals/record-acceptance-reads-and-judged-versions.md):
+- [Code-scheduled workflows](../../reference/proposals/archive/code-scheduled-workflows.md),
+  archived under ADR 113: the retired engine's design; its build workshop
+  was deleted at closure on 2026-10-09.
+- [Record acceptance reads and judged versions](../../reference/proposals/archive/record-acceptance-reads-and-judged-versions.md):
   the replay defect that prompted this workshop, and the repair proposed
   within the engine then in use.
