@@ -75,3 +75,18 @@ def test_editing_the_template_hands_out_the_job_again(tmp_path, monkeypatch):
     (c.method / "handout.md").write_text(TEMPLATE + "\nWrite carefully.\n", encoding="utf-8")
     c.advance()
     assert "brief" in c.handed(), "the template is a pinned input like the instruction"
+
+
+def test_workers_read_the_types_and_the_set_type_the_run_fixed(tmp_path, monkeypatch):
+    c = templated_run(tmp_path, monkeypatch)
+    types = c.method.parents[1] / "types"
+    fixed = (types / "toy-set.md").read_text(encoding="utf-8")
+    (types / "toy-set.md").write_text("an edited set type\n", encoding="utf-8")
+    c.through_brief()
+    prompt = c.handout("other").prompt.read_text(encoding="utf-8")
+    values = dict(line.split(" = ", 1) for line in prompt.splitlines() if " = " in line)
+    from pathlib import Path
+
+    assert Path(values["set-type"]).read_text(encoding="utf-8") == fixed, "the run's type, not the library file"
+    assert values["member-type"] == str(types / "toy-member.md")
+    assert values["brief-type"] == str(types / "toy-member.md"), "the type of each member it reads"

@@ -289,7 +289,13 @@ class _Expansion:
         instruction_path = self.library_path(instruction, f"role {role.name}: instruction")
         reads = self.reads(entry)
         inputs: dict[str, dict] = {"instruction": {"address": "file", "source": instruction_path}}
-        inputs.update({key: {"address": "file", "source": value} for key, value in (entry.get("files") or {}).items()})
+        inputs.update(self.type_inputs(role.name, reads))
+        files = entry.get("files") or {}
+        typed = {spec["source"] for spec in inputs.values() if spec["address"] == "file"} - {instruction_path}
+        listed = sorted(name for name, path in files.items() if path in typed)
+        if listed:
+            raise PlanError(f"role {role.name}: files {listed} name types the loader already hands out")
+        inputs.update({key: {"address": "file", "source": value} for key, value in files.items()})
         inputs.update(dict(self.data.get("inputs") or {}))
         inputs.update(reads)
         for verifier in entry.get("verified-by") or []:
@@ -315,6 +321,21 @@ class _Expansion:
             model["criteria"] = list(entry["criteria"])
         derived = self.apply_job(entry, reads) if role.verifies else self.check_job(entry)
         return [model, derived]
+
+    def type_inputs(self, role: str, reads: Mapping[str, dict]) -> dict[str, dict]:
+        """The types a model job writes and reads by: its member's, each read member's, and the set's.
+
+        Named `member-type`, `<role>-type` and `set-type`, so a hand-out names
+        them without a plan listing them. The set type is the run's fixed
+        text, the same bytes code validates against.
+        """
+        inputs = {"member-type": {"address": "file", "source": self.layout.roles[role].type},
+                  "set-type": {"address": "type"}}
+        for spec in reads.values():
+            if spec["address"] == "role" and spec["source"] != role:
+                inputs[f"{spec['source']}-type"] = {"address": "file",
+                                                    "source": self.layout.roles[spec["source"]].type}
+        return inputs
 
     def _correction_inputs(self, name: str, outputs: list[str], attempt: str, *, trigger: bool) -> dict[str, dict]:
         """The candidate and what checking its correction answers needs.

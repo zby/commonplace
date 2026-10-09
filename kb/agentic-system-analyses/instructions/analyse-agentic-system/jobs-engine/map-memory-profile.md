@@ -7,25 +7,13 @@ type: types/instruction.md
 
 Give comparison consumers supported memory values with the uncertainty each value carries expressed in the value itself.
 
-Read this instruction first, then all invocation Input reading batches. Follow
-`worker-rules`, `collection`, `sources-contract`, `records-contract` and
-`memory-profile-contract`.
-
-## Inputs and result
-
-`boundary` fixes the frozen source and scope. `runtime`, `memory`, `epistemic`
-and `reconciliation` are accepted records, gated by holding record-verification
-acceptances. Read their supplied versions, not reconstructed member paths.
-`opening` supplies the prepared command directory for the shared content check.
-
-Write the complete revision-2 profile to `output`. On a retry, use
-`previous-profile` and `previous-answers` as read-only baselines and answer
-`refusal` under the shared correction protocol. There are three attempts
-total, including failures; acceptance does not reset them.
+Classify from `runtime`, `memory`, `epistemic` and `reconciliation`, the
+accepted records, against `boundary`. Write a revision-2 profile.
 
 ## Classify from records
 
-Apply the profile and record contracts without added classification conditions.
+Apply the profile type and the record contract without added classification
+conditions.
 Each asserted value cites canonical accepted records, resolving supersessions
 through reconciliation. Keep the natural units, separate evidence bases and
 all supported positives beside unresolved parts. A positive witness does not
@@ -41,13 +29,4 @@ reopen record verification. Do not read incumbent or reference profiles.
 Source reading is limited to a named ambiguity in a cited record, at its
 cited paths and frozen revision. Log each read under Comparison rationale
 with path, lines and ambiguity resolved. Source understanding cannot replace
-a missing supporting record. Do not execute or install the target.
-
-## Check and return
-
-Run the shared content check and repair findings. Code additionally
-checks comparison revision, source and run identity, frozen-source integrity
-and correction answers; semantic verification checks support and coverage.
-A content pass is not acceptance. A missing required input, unauthorized scope
-change or inability to produce a faithful profile requires `problem` and stop.
-Do not delegate or publish. Return one line naming both output files.
+a missing supporting record.

@@ -7,23 +7,9 @@ type: types/instruction.md
 
 Give later analysts a source-grounded account of how the selected target performs consequential work within the frozen boundary.
 
-Read this instruction first, then complete the invocation's Input reading
-batches. Follow `worker-rules`, `collection`, `sources-contract`,
-`records-contract` and `runtime-contract`.
-
-## Inputs and results
-
-`boundary` fixes the evidence and functional scope. `opening` is JSON metadata,
-including the prepared `command-path`. Use the supplied `system` and `run-id`.
-Write the whole runtime report to `output`, and correction answers to
-`output-answers`, using the shared worker rules' correction protocol.
-`refusal = absent` means no refusal input. A retry supplies `previous-report` and possibly `previous-answers` by
-identity. Both are read-only baselines, not mutable member paths.
-
 ## Trace and challenge
 
-Follow `runtime-contract` for the report's fields and exact sections. Establish
-the consequential claimed work, shipped entry paths, one ordinary invocation
+Establish the consequential claimed work, shipped entry paths, one ordinary invocation
 end to end, material routes, load-bearing guarantees and their enforcement
 points, distributed-parametric components, and mechanisms admitting changes
 to the product, retained knowledge, capabilities or production machinery.
@@ -41,17 +27,8 @@ envelope. Leave memory revisions to the memory analyst.
 Inspect permissions, approval, delegation, dynamic extension, reliability,
 observability, providers, packaging and performance only where they change
 claimed work, a control path, evidence strength or a result later analysts
-will rely on. This report is not a product inventory. Do not execute the target.
+will rely on. This report is not a product inventory.
 
 Cite your own declarations, the boundary's Source register and declarations
-supplied in refusal feedback. Read evidence only from the frozen source. Do
-not read whole peer reports that the invocation did not supply. A missing
-required input or needed boundary expansion requires `problem`; a bounded
-unknown stays beside the affected finding.
-
-## Check and return
-
-Run the shared content check, repair findings and rerun. Code
-also checks frozen-source integrity, identity, record preservation and the
-answers to the exact refusal handed to this attempt. A content pass is not
-acceptance or a semantic verification. Return one line naming the files written.
+supplied in refusal feedback. A bounded unknown stays beside the affected
+finding.

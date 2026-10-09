@@ -3,14 +3,18 @@
 # entry becomes its model job plus a derived check-<role>, or apply-<role>
 # for a verifying role, whose partners, criteria and correction inputs come
 # from the type's layout. Entries declare mission only: instruction, reads,
-# gates, attempts and the analysis's own checks. Instructions are relative
-# to this file; other file inputs are library paths. Opening, acquisition,
+# gates, attempts and the analysis's own checks. Every model job also
+# receives its member type, the types of the members it reads, the set type
+# and the hand-out template, which the engine renders into its prompt.
+# Instructions and the template are relative to this file; other file
+# inputs are library paths. Opening, acquisition,
 # assembly and publication are the analysis's own code jobs in the engine's
 # full form. Opening consumes the run parameters system, source-identity,
 # source and optional source-revision; assembly and publication are gated
 # by the engine's coverage input.
 type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
+handout: jobs-engine/handout.md
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
@@ -79,7 +83,6 @@ jobs:
   max_attempts: 2
   criteria: [worker]
   files:
-    boundary-result-contract: agentic-system-analyses/types/agentic-system-boundary.md
     boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
   reads: {'acquire:source': required}
   checks:
@@ -92,7 +95,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
   reads: {boundary: required}
   checks:
   - function: commonplace.lib.agentic_analysis.handlers.preserved_records
@@ -103,7 +105,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
   reads: {boundary: required, runtime: order-only}
   checks:
   - function: commonplace.lib.agentic_analysis.handlers.preserved_records
@@ -116,7 +117,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
   reads: {boundary: required, runtime: order-only}
   checks:
   - function: commonplace.lib.agentic_analysis.handlers.preserved_records
@@ -126,10 +126,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
-    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
-    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
-    reconciliation-contract: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 - job: record-check
   handler: commonplace.artifactrun.handlers.set_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
@@ -140,11 +136,6 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
     boundary-contract: agentic-system-analyses/instructions/agentic-analysis-boundary.md
-    runtime-contract: agentic-system-analyses/types/agentic-system-runtime-report.md
-    memory-contract: agentic-system-analyses/types/agent-memory-analysis-report.md
-    epistemic-contract: agentic-system-analyses/types/agentic-system-epistemic-report.md
-    reconciliation-contract: agentic-system-analyses/types/agentic-system-reconciliation-report.md
-    record-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
           'epistemic:answers': optional, 'record-check:findings': required}
@@ -156,7 +147,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    memory-profile-contract: agentic-system-analyses/types/agent-memory-profile.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required}
   verified-by: [record-verification]
@@ -167,8 +157,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    memory-profile-contract: agentic-system-analyses/types/agent-memory-profile.md
-    profile-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
           'refusal:memory-profile': optional}
@@ -179,7 +167,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    synthesis-contract: agentic-system-analyses/types/agentic-system-synthesis.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, memory-profile: required, record-verification: required,
           profile-verification: required}
@@ -191,8 +178,6 @@ jobs:
   criteria: [worker]
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    synthesis-contract: agentic-system-analyses/types/agentic-system-synthesis.md
-    synthesis-verification-contract: agentic-system-analyses/types/agentic-system-verification.md
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, synthesis: required, record-verification: required,
           profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}

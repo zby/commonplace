@@ -48,6 +48,11 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     metadata = json.loads(Path(p["opening"]).read_bytes())
     assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
+    # The plan's template fills one section of the frame, for this job's role.
+    prompt = h.prompt.read_text()
+    assert "You write the `boundary` member of this agentic-system analysis." in prompt
+    assert f"--artifact {a.coordinator.run_dir / 'artifact'} --role boundary" in prompt
+    assert "output-answers" not in prompt, "the boundary writes no answers"
 
 
 @pytest.mark.slow

@@ -15,7 +15,7 @@ from typing import Any
 
 import yaml
 
-ADDRESSES = ("file", "role", "output", "attempt", "handed", "judgment", "refusal", "coverage")
+ADDRESSES = ("file", "role", "output", "attempt", "handed", "judgment", "refusal", "coverage", "type")
 PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
 RUN_PLACEHOLDERS = ("run", "run-id", "artifact", "workspace")
 """Values a parameter may substitute besides `param:<name>`, a run parameter."""
@@ -155,6 +155,11 @@ def _input(job: str, name: str, raw: Any) -> Input:
         # filled in once the job's role is known.
         if source is not None:
             raise PlanError(f"{where}: a coverage input has no source; its scope is derived")
+        source = ""
+    elif address == "type":
+        # The artifact's type as the run fixed it at start, never the library file.
+        if source is not None:
+            raise PlanError(f"{where}: a type input has no source; it is the run's type")
         source = ""
     elif not isinstance(source, str) or not source:
         raise PlanError(f"{where}: source must be a nonempty string")

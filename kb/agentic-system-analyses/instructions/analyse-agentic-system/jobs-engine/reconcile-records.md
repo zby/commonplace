@@ -7,35 +7,15 @@ type: types/instruction.md
 
 State how the three reports connect and where they disagree so the record verifier can judge them as one bounded account.
 
-Read this instruction first, then complete the invocation's Input reading
-batches, recovering truncated reads. Follow `worker-rules`, `collection`,
-`sources-contract`, `records-contract` and the supplied report contracts.
-The coordinator owns scheduling, acceptance and recovery.
-
-## Inputs, authority and result
-
-`boundary` fixes the frozen source and Source register. `runtime`, `memory`
-and `epistemic` are the pinned reports to connect. `opening` is JSON metadata
-including the prepared `command-path`. Use the supplied `system` and `run-id`.
-Write the whole member to `output` under `reconciliation-contract`, repeating
-`boundary`'s `reviewed-boundary`. Write only `output`, `problem` and intermediate
-files under `scratch`; all inputs and previous outputs are read-only. Do not
-edit reports, engine state or the working artifact, publish, stage, commit, delegate
-or launch a worker. Inspect source text, never execute or install the target.
-
-`refusal = absent` means no refusal input. When supplied, repair the named
-Findings and the blockers addressed to reconciliation. Use
-`previous-reconciliation`, when supplied, as the prior completed output by
-identity, not as a mutable member path. Reconcile the supplied reports again;
-do not copy an old connection after its evidence changes. If optional
-`runtime-answers`, `memory-answers` or `epistemic-answers` are supplied, assess
-what their corrections or declines mean for cross-report disagreements.
-There are no round numbers, request files, change files or run-state paths to
-reconstruct. Do not discover other workers' outputs.
+Connect `runtime`, `memory` and `epistemic` against `boundary`. Reconcile the
+supplied reports afresh; do not copy an old connection after its evidence
+changes. Where `runtime-answers`, `memory-answers` or `epistemic-answers` are
+supplied, assess what their corrections and declines mean for cross-report
+disagreements.
 
 ## Connect without judging
 
-Follow `reconciliation-contract` for exact sections and fields. State every
+State every
 identity between records as a supersession or rule it out. An unresolved
 disagreement is an `Unresolved conflict:` paragraph naming the full IDs, both
 findings, each finding's evidence and the conclusion it prevents. Faithful
@@ -53,13 +33,3 @@ combined ID, missing part in prose, evidence and prevented conclusion.
 Resolve references against the supplied Source register and analyst reports.
 Claim support is the verifier's question; only the declaring analyst changes
 its report.
-
-## Check and return
-
-Run the shared content check with the supplied validation paths.
-Repair findings and rerun. A pass checks form and quotation occurrence, not
-semantic support or acceptance. Code separately checks the frozen source,
-method and invocation identity. An unavailable required input, necessary
-boundary change or unauthorized consequential scope decision requires
-`problem`; bounded uncertainty belongs beside its affected conclusion.
-Return one line naming the file written.

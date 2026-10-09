@@ -212,6 +212,9 @@ class Run:
             text = refusal_document(refusal["id"], output, [e["relation"] for e in refusal["scope"]],
                                     refusal["findings"])
             return Resolved(digest(text), text, job.role, None, output)
+        if spec.address == "type":
+            data = self.type_text.encode("utf-8")
+            return Resolved(digest(data), data)
         if spec.address == "coverage":
             evidence = self.coverage(spec.source or None)
             if evidence is None:

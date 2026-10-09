@@ -52,7 +52,7 @@ def test_graph_covers_real_roles_once(graph):
 
 
 def test_declared_file_inputs_are_portable_library_paths(graph):
-    jobs, _ = graph
+    jobs, layout = graph
     for name in MODEL_ROLES:
         assert jobs.job(name).inputs["opening"].source == "open:metadata"
     boundary = jobs.job("boundary")
@@ -68,8 +68,10 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
             assert not path.is_absolute() and ".." not in path.parts, (job.name, name, path)
             assert (LIBRARY / path).is_file(), (job.name, name, path)
         if isinstance(job, ModelJob):
-            assert {"instruction", "worker-rules", "collection", "sources-contract"} <= set(job.inputs)
-            assert "set-type" not in job.inputs and "member-type" not in job.inputs
+            assert {"instruction", "worker-rules", "collection", "sources-contract", "handout"} <= set(job.inputs)
+            # Workers read their member's type and the set type the run fixed, never a schema.
+            assert job.inputs["member-type"].source == layout.roles[job.role].type
+            assert job.inputs["set-type"].address == "type"
             assert not any(spec.source.endswith(".schema.yaml") for spec in job.inputs.values())
 
 
@@ -158,35 +160,27 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
         )
 
 
-def test_model_contracts_are_selected_for_substantive_work(graph):
+def test_model_jobs_receive_the_types_of_what_they_write_and_read(graph):
     jobs, layout = graph
-    role_contracts = {
-        "boundary": {"boundary"}, "runtime": {"runtime"}, "memory": {"memory"},
-        "epistemic": {"epistemic"}, "reconciliation": set(RECORDS),
-        "record-verification": {*RECORDS, "record-verification"}, "memory-profile": {"memory-profile"},
-        "profile-verification": {"memory-profile", "profile-verification"},
-        "synthesis": {"synthesis"}, "synthesis-verification": {"synthesis", "synthesis-verification"},
-    }
     shared = "agentic-system-analyses/instructions/agentic-analysis-"
-    for name, roles in role_contracts.items():
+    for name in MODEL_ROLES:
         job = jobs.job(name)
+        read = {spec.source for spec in job.inputs.values() if spec.address == "role"}
         expected = {
             f"agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/{ENGINE_INSTRUCTIONS[name]}.md",
             "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md",
+            "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/handout.md",
             "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
-            *(layout.roles[role].type for role in roles),
+            *(layout.roles[role].type for role in {name, *read}),
         }
         if name != "boundary":
             expected.add(f"{shared}records.md")
         if name in ("boundary", "record-verification"):
             expected.add(f"{shared}boundary.md")
-        assert {spec.source for spec in job.inputs.values() if spec.address == "file"} == expected
-    # Worker instructions name the contracts by these input keys.
-    for name in ("reconciliation", "record-verification"):
-        for role in RECORDS:
-            assert jobs.job(name).inputs[f"{role}-contract"].source == layout.roles[role].type
-    assert "memory-profile-contract" in jobs.job("profile-verification").inputs
-    assert "synthesis-contract" in jobs.job("synthesis-verification").inputs
+        assert {spec.source for spec in job.inputs.values() if spec.address == "file"} == expected, name
+        # The hand-out names each read member's type after its role.
+        for role in read:
+            assert job.inputs[f"{role}-type"].source == layout.roles[role].type
     assert jobs.job("profile-verification").inputs["memory-profile"].source == "memory-profile"
 
 

@@ -41,3 +41,15 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     for area in ("state", "retained", "retained-archive", "reviews", "comparisons"):
         assert not any(path.is_relative_to(collection / area) for path in declared)
     assert REPO_ROOT / STATE_ROOT == collection / "state"
+
+
+def test_mission_files_leave_inputs_outputs_and_checks_to_the_template() -> None:
+    """Step 5's criterion: a job instruction names the inputs its mission uses, never
+    an output, an answers file or the check command, which the template supplies."""
+    workers = (LIBRARY / PLAN).parent / "jobs-engine"
+    missions = [path for path in workers.glob("*.md") if path.name not in ("follow-worker-rules.md", "handout.md")]
+    assert missions
+    for path in missions:
+        text = path.read_text(encoding="utf-8")
+        for named in ("`output`", "output-answers", "commonplace-validate", "validation-artifact", "Return one line"):
+            assert named not in text, (path.name, named)

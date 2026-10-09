@@ -7,22 +7,8 @@ type: types/instruction.md
 
 Establish whether and how the selected target acquires or produces truth-apt content, checks it, grants reliance and lets it affect later behavior.
 
-Read this instruction first, then complete the invocation's Input reading
-batches. Follow `worker-rules`, `collection`, `sources-contract`,
-`records-contract` and `epistemic-contract`.
-
-## Inputs and results
-
-`boundary` fixes scope and evidence. `opening` is JSON metadata with the
-prepared `command-path`. Read the supplied `runtime` as a provisional account,
-not the inspection limit. It is order-only: initial presence orders this job,
-but its revision alone does not schedule another epistemic attempt.
-
-Write the complete report to `output`, with answers at `output-answers` under
-the shared correction protocol. Write empty answers on a first attempt.
-A retry may supply `previous-report` and `previous-answers`; use those
-read-only baselines and the supplied `refusal`. The memory analyst works
-separately; do not read its whole report unless supplied.
+Treat `runtime` as a provisional account: it orders this job but is not an
+inspection limit, and the memory analyst works separately.
 
 ## Trace and assess
 
@@ -46,13 +32,4 @@ Cite your declarations, supplied runtime records, boundary sources and peer
 declarations in refusal feedback. Assess distributed-parametric state only
 from accessible sources and supplied execution evidence. Retain independent
 route/property conclusions and bounded uncertainty; no single score or
-unqualified system-wide verdict follows. Do not execute the target or read
-unsupplied peer reports. A needed boundary expansion or missing required
-input requires `problem`.
-
-## Check and return
-
-Run the shared content check, repair findings and rerun. Code also checks
-identity, frozen-source integrity, record preservation and the answers to
-the exact handed refusal. A content pass does not establish acceptance or
-analytical correctness. Return one line naming the files written.
+unqualified system-wide verdict follows.

@@ -22,6 +22,7 @@ from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 HAND_WRITTEN = Path(__file__).with_name("hand_written_plan.yaml")
+TEMPLATE = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/handout.md"
 
 JOB_RENAMES = {
     "reconcile": "reconciliation", "verify": "record-verification", "profile": "memory-profile",
@@ -69,6 +70,8 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
     name = job_name(old_job.name)
     renames = INPUT_RENAMES.get(name, {})
     inputs = {renames.get(key, key): renamed(spec) for key, spec in old_job.inputs.items() if spec.address != "file"}
+    if isinstance(old_job, ModelJob):
+        inputs["set-type"] = Input("type", "")  # Workers read the set type the run fixed.
     if name.startswith("check-") and name != "record-check":
         role = layout.roles[name.removeprefix("check-")]
         identity = {source.role for source in role.identity}
@@ -115,7 +118,11 @@ def test_each_job_equals_its_hand_written_form_after_the_intended_differences(pl
         assert job.outputs == old_job.outputs and job.role == old_job.role, job.name
         if isinstance(job, ModelJob):
             assert (job.parameters, job.max_attempts) == (old_job.parameters, old_job.max_attempts), job.name
-            assert files(job) == files(old_job), job.name
+            # Model jobs now receive the template and the type of every member they
+            # write or read, derived from the layout instead of listed by hand.
+            read = {spec.source for spec in job.inputs.values() if spec.address == "role"}
+            derived = {TEMPLATE, *(layout.roles[role].type for role in {job.role, *read})}
+            assert files(job) == files(old_job) | derived, job.name
 
 
 def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
