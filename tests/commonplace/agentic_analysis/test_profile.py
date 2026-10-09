@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import CodeAttempt
-from commonplace.artifactrun.handlers import apply_verdict, check
+from commonplace.artifactrun.handlers import apply_verification, check
 from commonplace.artifactrun.run import Resolved, Run
 from commonplace.artifactrun.store import RunStore
 from commonplace.lib.systems_matrix import AXES
@@ -135,7 +135,7 @@ def test_valid_content_is_accepted_with_only_declared_relations(opened, stage, h
         assert "memory-profile:identity:memory" in {s["relation"] for s in judgment["scope"]}
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", apply_verdict), ("synthesis", apply_verdict)])
+@pytest.mark.parametrize("stage,handler", [("profile", apply_verification), ("synthesis", apply_verification)])
 @pytest.mark.parametrize("defect", ["identity", "grammar", "citation", "utf8"])
 def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     a = opened
@@ -158,7 +158,7 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     assert not judgment["overrides"]
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", apply_verdict), ("synthesis", apply_verdict)])
+@pytest.mark.parametrize("stage,handler", [("profile", apply_verification), ("synthesis", apply_verification)])
 @pytest.mark.parametrize("blockers", ["none", "- RT-OBJ-store: materially unsupported conclusion; a caveat cannot contain it.\n  Continued evidence explanation."])
 def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_gate(opened, stage, handler, blockers):
     a = opened
@@ -181,7 +181,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
 
 @pytest.mark.parametrize("stage,handler,apply", [
     ("profile", check, False), ("synthesis", check, False),
-    ("profile", apply_verdict, True), ("synthesis", apply_verdict, True),
+    ("profile", apply_verification, True), ("synthesis", apply_verification, True),
 ])
 def test_correction_answers_use_exact_delivered_baseline(opened, stage, handler, apply):
     a = opened
@@ -229,7 +229,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     a = opened
     data = verdict(a, limits="- [RT-OBJ-store](runtime.md#rt-obj-store): missing inspection prevents complete store comparison.")
     ctx = attempt(a, "synthesis", data, apply=True)
-    apply_verdict(ctx)
+    apply_verification(ctx)
     valid, subject = judgments(ctx)
     assert valid["outcome"] == "accepted", valid["findings"]
     assert subject["outcome"] == "refused" and "limit not carried" in subject["findings"]
@@ -238,7 +238,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     data = synthesis(a, "Store inspection incomplete | [RT-OBJ-store](runtime.md#rt-obj-store) | SRC-1 | complete comparison | inspect store")
     ctx._pins["synthesis-handed"] = Resolved(hashlib.sha256(data).hexdigest(), data, "synthesis")
     ctx._staged.clear()
-    apply_verdict(ctx)
+    apply_verification(ctx)
     assert judgments(ctx)[1]["outcome"] == "accepted"
 
 

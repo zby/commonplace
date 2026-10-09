@@ -34,7 +34,7 @@ from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME
 
 STANDARD = "commonplace.artifactrun.handlers"
 CHECK = f"{STANDARD}.check"
-APPLY = f"{STANDARD}.apply_verdict"
+APPLY = f"{STANDARD}.apply_verification"
 ARTIFACT_CHECK = f"{STANDARD}.artifact_check"
 HANDLER_OUTPUTS = {ARTIFACT_CHECK: ["findings"]}
 """Outputs a `job:` entry gets when it declares none."""

@@ -41,7 +41,7 @@ INPUT_RENAMES = {
     "synthesis": {"profile-verified": "memory-profile-verified"},
 }
 STANDARD = {"check": "commonplace.artifactrun.handlers.check",
-            "apply": "commonplace.artifactrun.handlers.apply_verdict",
+            "apply": "commonplace.artifactrun.handlers.apply_verification",
             "report-check": "commonplace.artifactrun.handlers.artifact_check"}
 
 

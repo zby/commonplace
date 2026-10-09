@@ -323,7 +323,7 @@ def plan(method: Path) -> dict:
                 "other": _role("other"),
                 "summary": _role("summary"),
             }, ["verification"], max_attempts=3),
-            {"name": "apply-verification", "kind": "code", "handler": f"{STANDARD}.apply_verdict",
+            {"name": "apply-verification", "kind": "code", "handler": f"{STANDARD}.apply_verification",
              "criteria": ["toy"], "outputs": [], "inputs": {
                 "candidate": {"address": "output", "source": "verification:verification"},
                 # The handed report is validated at its role, under its contract.

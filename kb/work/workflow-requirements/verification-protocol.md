@@ -11,7 +11,7 @@ language, and the layout does not supply one.
 
 Since d17a53d4a (2026-10-09) the analysis runs from a compact plan, and
 the handlers named below are gone. The three apply handlers are the
-standard `artifactrun.handlers.apply_verdict`; the report check is the
+standard `artifactrun.handlers.apply_verification`; the report check is the
 standard `artifact_check`, which writes `# Artifact check`; the report-check gate,
 the cited-records feedback (`_feedback`) and record preservation
 (`_check_analyst`) are the declared checks `report_check_gate`,

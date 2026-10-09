@@ -22,7 +22,7 @@ each returning refusal findings; `feedback` names a function the verdict
 application calls for each refused subject with the role, the blockers
 addressed to it and the verdict's candidate, appending the text it returns.
 
-`apply_verdict` implements the verification protocol: a verifying role's
+`apply_verification` implements the verification protocol: a verifying role's
 document has `## Blockers` and `## Limits`, each exactly `none` or a list
 with one `- ` entry per finding. With several subjects every blocker starts
 with the role it addresses (`- <role>: ...`); with one subject, none does.
@@ -229,7 +229,7 @@ def addressee(entry: str) -> str:
     return entry[2:].partition(":")[0].strip()
 
 
-def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
+def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """Apply a verdict to the exact subject versions its verifier was handed.
 
     The candidate is the verdict at the verifier's role; the subjects are the

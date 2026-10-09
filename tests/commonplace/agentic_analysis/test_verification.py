@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import start_run
-from commonplace.artifactrun.handlers import apply_verdict, artifact_check
+from commonplace.artifactrun.handlers import apply_verification, artifact_check
 from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
 from commonplace.artifactrun.store import RunStore, digest
 from commonplace.lib.agentic_analysis.plan import expanded
@@ -196,7 +196,7 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
     to_verifier(a)
     a.coordinator.complete("report-verification", verdict(a))
     attempt = code_attempt(a, "apply-report-verification", {"report-check-handed": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
-    apply_verdict(attempt)
+    apply_verification(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
     assert "structural failures require explicit blockers" in result[0]["findings"]
@@ -213,7 +213,7 @@ def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
     text = verdict(a, "- runtime: reconsider [MEM-OBJ-store](memory.md#mem-obj-store) and SRC-1.\n"
                    "- epistemic: reconsider SRC-1.").encode()
     attempt = code_attempt(a, "apply-report-verification", {"candidate": text, "memory-handed": memory})
-    apply_verdict(attempt)
+    apply_verification(attempt)
     result = attempt.judgments({}, 100, "scripted")
     runtime = next(j for j in result if j["subject"]["role"] == "runtime")
     epistemic = next(j for j in result if j["subject"]["role"] == "epistemic")
