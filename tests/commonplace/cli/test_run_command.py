@@ -47,7 +47,7 @@ def test_advance_hands_out_and_takes_results(run: tuple[Path, Path], capsys: pyt
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     assert handout["job"] == "brief", "a failed attempt leaves the job ready"
     Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
-    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
+    Path(handout["worker_identity"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
 
     assert main(["advance", str(run_dir), "--completed", handout["attempt"], "--model", "m", "--effort", "e"]) == 0
     text = capsys.readouterr().out
@@ -62,7 +62,7 @@ def test_code_failures_keep_their_effect_distinction_on_status(run, capsys, monk
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
-    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
+    Path(handout["worker_identity"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     original = CodeJob.resolve_handler
 
     def fail(attempt):
@@ -93,7 +93,7 @@ def test_status_and_judge(run: tuple[Path, Path], capsys: pytest.CaptureFixture[
     run_dir, _ = run
     (handout,) = advance_json(run_dir, capsys)["handouts"]
     Path(handout["outputs"]["brief"]).write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
-    Path(handout["worker_runtime"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
+    Path(handout["worker_identity"]).write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
     advance_json(run_dir, capsys, "--completed", handout["attempt"])
 
     assert main(["judge", str(run_dir), "--role", "brief", "--outcome", "refused", "--findings", "wrong system"]) == 0

@@ -55,7 +55,7 @@ expected nonzero exits explicitly.
 | `artifact`, `role` | The run's artifact directory and the role you write, for content validation |
 | `command-path` | The prepared worktree's command directory; its commands, never a shared installation's |
 | `output`, `output-answers`, `problem` | Primary result, declared correction answers when supplied, or inability report |
-| `worker-runtime` | Path for the JSON runtime report: the `model` and `effort` your runtime states |
+| `worker-identity` | Path for the JSON identity report: the `model` and `effort` your runtime states |
 | `workspace`, `scratch` | Per-attempt workspace and intermediate-file directory |
 
 The supplied types and contracts give the operative definitions for this job. Linked
@@ -68,7 +68,7 @@ uncertainty that only limits a conclusion stays beside that conclusion in
 ## Stay within authority
 
 Write only the supplied output paths (`output` and `output-answers` when
-present), `problem`, `worker-runtime` and intermediate files under `scratch`. The
+present), `problem`, `worker-identity` and intermediate files under `scratch`. The
 boundary instruction separately permits immutable captures or bundles under
 `capture-directory` in `opening`, including creation of that directory. Do not
 modify existing captures. Closed hand-out workspaces are disposable; captures
@@ -91,7 +91,7 @@ whole analysis. The engine's max attempts do not reset after acceptance.
 ## Report your runtime
 
 Before finishing, write a JSON object with exactly the string fields `model`
-and `effort` to `worker-runtime`: the exact model ID and the effort level your
+and `effort` to `worker-identity`: the exact model ID and the effort level your
 runtime states, each on one line, or `not stated` for a value it does not
 state. Do not infer either from the requested profile, a launch alias or the
 model's own account of itself, and do not scan session logs or run metadata

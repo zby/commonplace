@@ -100,7 +100,7 @@ def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
     a = boundary
     h = a.coordinator.handout("boundary")
     h.outputs["boundary"].write_bytes(b"\xff")
-    h.worker_runtime.write_text('{"model": "test-model", "effort": "medium"}\n')
+    h.worker_identity.write_text('{"model": "test-model", "effort": "medium"}\n')
     status = a.coordinator.advance(AttemptResult(h.attempt, model="test-model", effort="low"))
     assert not status.stops and a.coordinator.handed() == {"boundary"}
     assert judgment(a)["outcome"] == "refused"

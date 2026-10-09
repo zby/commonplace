@@ -357,7 +357,7 @@ instruction holds only its mission.
 
 - **The engine keeps the frame.** The hand-out module still writes the
   "Follow <instruction> with:" line, the input lines, the reading batches,
-  the problem line and the worker-runtime section. A plan-level
+  the problem line and the worker-identity section. A plan-level
   `handout: <path>`, relative to the plan file like an entry's
   instruction, names a Markdown file the engine renders as one section of
   that frame, after the input lines and before the reading batches. A plan

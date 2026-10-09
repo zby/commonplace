@@ -22,7 +22,7 @@ from commonplace.lib.reading_batches import (
 from .plan import HANDOUT_PREFIXES, PLACEHOLDER, PROMPT_SECTION_INPUT, ModelJob
 from .run import Run
 
-WORKER_RUNTIME = "worker-runtime.json"
+WORKER_IDENTITY = "worker-identity.json"
 
 
 @dataclass(frozen=True)
@@ -34,7 +34,7 @@ class Handout:
     prompt: Path
     outputs: Mapping[str, Path]
     problem: Path
-    worker_runtime: Path
+    worker_identity: Path
 
 
 
@@ -58,7 +58,7 @@ def prompt_line_names(job: ModelJob) -> set[str]:
     `previous-<output>` lines exist only on a retry, so they are only
     conditions, never slots.
     """
-    names = {"job", "attempt", "run-id", "output", "problem", "worker-runtime", "workspace", "artifact", "scratch",
+    names = {"job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch",
              *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
     names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
     return names | ({"role"} if job.role else set())
@@ -127,7 +127,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
         paths[name] = path
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     problem = directory / "problem.md"
-    worker_runtime = directory / WORKER_RUNTIME
+    worker_identity = directory / WORKER_IDENTITY
     run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                   "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, **({"role": job.role} if job.role else {}),
@@ -137,7 +137,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name not in framed}
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
-    values |= {"problem": str(problem), "worker-runtime": str(worker_runtime),
+    values |= {"problem": str(problem), "worker-identity": str(worker_identity),
                "workspace": f"{directory}/", "artifact": str(store.artifact_dir), "scratch": f"{scratch}/"}
     previous = run.latest_completed(job.name)
     if previous is not None:
@@ -169,7 +169,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
                 spans = "; ".join(f"{start}-{end}" for start, end in reading_ranges(path))
                 lines.append(f"- {path}: lines {spans}")
     lines += ["", "If you cannot produce the output, write the problem to the problem path.",
-              ('Write a JSON object to the worker-runtime path with exactly the string fields "model" and "effort": '
+              ('Write a JSON object to the worker-identity path with exactly the string fields "model" and "effort": '
                'the exact model ID and the effort level your runtime instructions or environment state, or '
                '"not stated" for each value they do not state. Do not infer either from the requested worker '
                'profile; a supplied instruction may say where your harness states them. Do not scan session '
@@ -181,7 +181,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
         "pins": {name: pinned.pin() for name, pinned in pins.items()},
         "previous_outputs": {} if previous is None else dict(previous["outputs"]),
     })
-    return Handout(attempt, job.name, prompt, outputs, problem, worker_runtime)
+    return Handout(attempt, job.name, prompt, outputs, problem, worker_identity)
 
 
 def handout_for(run: Run, record: dict) -> Handout:
@@ -190,4 +190,4 @@ def handout_for(run: Run, record: dict) -> Handout:
     directory = run.store.handout_dir(record["id"])
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     return Handout(record["id"], job.name, directory / "prompt.md", outputs, directory / "problem.md",
-                   directory / WORKER_RUNTIME)
+                   directory / WORKER_IDENTITY)

@@ -219,7 +219,7 @@ def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> Non
                                      '{"model": "m", "effort": ""}',
                                      '{"model": "m\\nother", "effort": "medium"}',
                                      '{"model": "m", "effort": "medium", "extra": "x"}'])
-def test_a_completion_without_a_valid_worker_runtime_report_fails(coordinator: Coordinator, report) -> None:
+def test_a_completion_without_a_valid_worker_identity_report_fails(coordinator: Coordinator, report) -> None:
     from commonplace.artifactrun import AttemptResult
     from commonplace.artifactrun.store import RunStore
 
@@ -228,9 +228,9 @@ def test_a_completion_without_a_valid_worker_runtime_report_fails(coordinator: C
     handout = c.handout("report")
     c.write(handout, "report A\n", answers="")
     if report is None:
-        handout.worker_runtime.unlink()
+        handout.worker_identity.unlink()
     else:
-        handout.worker_runtime.write_text(report, encoding="utf-8")
+        handout.worker_identity.write_text(report, encoding="utf-8")
     c.advance(AttemptResult(handout.attempt))
     record = next(r for r in RunStore(c.run_dir).attempt_records() if r["id"] == handout.attempt)
-    assert record["state"] == "failed" and "worker-runtime" in record["reason"]
+    assert record["state"] == "failed" and "worker-identity" in record["reason"]

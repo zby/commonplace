@@ -27,7 +27,7 @@ from commonplace.lib.library import library_root
 
 from .compact import expand_text
 from .handouts import (
-    WORKER_RUNTIME,
+    WORKER_IDENTITY,
     Handout,
     _open,
     handout_for,
@@ -381,7 +381,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     directory = store.handout_dir(record["id"])
     problem_path = directory / "problem.md"
     problem = problem_path.read_text(encoding="utf-8", errors="replace") if problem_path.is_file() else ""
-    runtime_path = directory / WORKER_RUNTIME
+    identity_path = directory / WORKER_IDENTITY
 
     def fail(reason: str) -> Stop:
         # The worker's problem text is the failure's record; the hand-out
@@ -404,13 +404,13 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     if job.outputs[0] not in outputs:
         return fail("the worker reported a problem" if problem.strip() else "completed without its primary output")
     try:
-        worker_runtime = json.loads(runtime_path.read_text(encoding="utf-8"))
+        worker_identity = json.loads(identity_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, ValueError):
-        return fail("completed without a valid worker-runtime JSON report")
-    if (not isinstance(worker_runtime, dict) or set(worker_runtime) != {"model", "effort"}
+        return fail("completed without a valid worker-identity JSON report")
+    if (not isinstance(worker_identity, dict) or set(worker_identity) != {"model", "effort"}
             or any(not isinstance(value, str) or not value.strip() or "\n" in value or "\r" in value
-                   for value in worker_runtime.values())):
-        return fail("worker-runtime report needs exactly nonempty one-line model and effort strings")
+                   for value in worker_identity.values())):
+        return fail("worker-identity report needs exactly nonempty one-line model and effort strings")
     for name, spec in job.inputs.items():
         pinned = record["pins"].get(name, {}).get("version")
         if spec.address == "file" and pinned is not None:
@@ -431,8 +431,8 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
         if not changed_auxiliary:
             return fail("answered a refusal with the refused version unchanged and no new auxiliary version")
     store.commit_attempt({**record, "outputs": outputs, "model": result.model, "effort": result.effort,
-                          "worker_model": worker_runtime["model"].strip(),
-                          "worker_effort": worker_runtime["effort"].strip()})
+                          "worker_model": worker_identity["model"].strip(),
+                          "worker_effort": worker_identity["effort"].strip()})
     store.remove(directory)
     return None
 

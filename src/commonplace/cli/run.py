@@ -99,7 +99,7 @@ def _print_status(status: RunStatus, as_json: bool) -> None:
         for name, path in handout.outputs.items():
             print(f"  output {name}: {path}")
         print(f"  problem: {handout.problem}")
-        print(f"  worker-runtime: {handout.worker_runtime}")
+        print(f"  worker-identity: {handout.worker_identity}")
     if status.open_attempts:
         print("open: " + " ".join(status.open_attempts))
     for stop in status.stops:
