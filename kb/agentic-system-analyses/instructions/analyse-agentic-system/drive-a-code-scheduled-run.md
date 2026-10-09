@@ -40,8 +40,8 @@ For every printed handout:
    context, interpret its feedback, or do the job yourself. Use a harness option
    that excludes parent conversation (for Codex, `fork_turns=none`). If the
    harness cannot provide fresh isolation, report the launch failure rather
-   than weakening it. Select the model and effort of the run's worker profile
-   explicitly at every launch.
+   than weakening it. Select the `launch-model` and effort of the run's worker
+   profile explicitly at every launch.
 2. Launch all handouts from this advance as one round. Wait until every worker
    has finished or failed to start before advancing again. Retain the mapping
    between each worker and its exact attempt ID.

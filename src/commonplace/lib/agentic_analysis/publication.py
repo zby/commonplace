@@ -135,7 +135,7 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
             isinstance(worker.get(field), str) and worker[field].strip()
-            for field in ("profile", "harness", "model", "effort")):
+            for field in ("profile", "harness", "launch-model", "effort")):
         raise ValueError("the opening metadata records no worker profile")
     for role, data in members.items():
         if role == "overview":
@@ -148,10 +148,10 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
                 or record.get("job") != producer
                 or record.get("outputs", {}).get(primary) != _digest(data)):
             raise ValueError(f"{role} provenance does not identify its completed output")
-        for field in ("model", "effort"):
-            if record.get(field) is not None and record[field] != worker[field]:
+        for field, profiled in (("model", "launch-model"), ("effort", "effort")):
+            if record.get(field) is not None and record[field] != worker[profiled]:
                 raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
-                                 f"not the run profile's {worker[field]!r}")
+                                 f"not the run profile's {worker[profiled]!r}")
     return worker
 
 

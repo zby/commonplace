@@ -27,7 +27,7 @@ RUN_ID = "AAS-2026-10-07-example-0123456789ab-01"
 def doc(fields, body=""):
     return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
 
-WORKER = {"profile": "fixture", "harness": "fixture", "model": "fixture/model", "effort": "high"}
+WORKER = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model", "effort": "high"}
 
 
 class Attempt:

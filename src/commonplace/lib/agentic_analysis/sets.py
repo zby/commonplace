@@ -150,10 +150,10 @@ def worker_profile(data: bytes, name: str | None, *, harness: str | None = None)
     if name not in profiles:
         raise ValueError(f"unknown worker profile {name!r}; choose one of {', '.join(sorted(profiles))}")
     profile = profiles[name]
-    fields = ("harness", "model", "effort")
+    fields = ("harness", "launch-model", "effort")
     if (not isinstance(profile, dict) or set(profile) != set(fields)
             or any(not isinstance(profile[field], str) or not profile[field].strip() for field in fields)):
-        raise ValueError(f"worker profile {name} needs exactly a harness, model and effort")
+        raise ValueError(f"worker profile {name} needs exactly a harness, launch-model and effort")
     if harness is not None and profile["harness"] != harness:
         raise ValueError(f"worker profile {name} runs in {profile['harness']}, not {harness}")
     return {"profile": name, **{field: profile[field] for field in fields}}

@@ -39,7 +39,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
         "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
-            "defaults: {pi: pi-luna}\nprofiles:\n  pi-luna: {harness: pi, model: gpt-6-luna, effort: medium}\n",
+            "defaults: {pi: pi-luna}\nprofiles:\n  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}\n",
     }
     for name, content in files.items():
         path = root / name

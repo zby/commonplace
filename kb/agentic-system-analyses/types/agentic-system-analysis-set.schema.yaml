@@ -14,7 +14,10 @@ properties:
       worker:
         type: object
         required:
-        - model
+        - profile
+        - harness
+        - launch-model
+        - effort
         properties:
           profile:
             type: string
@@ -22,7 +25,7 @@ properties:
           harness:
             type: string
             minLength: 1
-          model:
+          launch-model:
             type: string
             minLength: 1
           effort:

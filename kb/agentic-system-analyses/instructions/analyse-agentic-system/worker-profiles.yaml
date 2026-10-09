@@ -1,16 +1,16 @@
 # Worker profiles for analyse-agentic-system runs. A run names one profile at
 # start, or its harness's default; opening records it, and every worker of
-# the run uses it. `model` is the name the harness selects the model by,
+# the run uses it. `launch-model` is the name the harness selects a model by,
 # such as Claude Code's aliases, not a resolved version.
 defaults:
   claude-code: sonnet
   codex: codex-sol
   pi: pi-sol
 profiles:
-  opus: {harness: claude-code, model: opus, effort: medium}
-  sonnet: {harness: claude-code, model: sonnet, effort: medium}
-  haiku: {harness: claude-code, model: haiku, effort: medium}
-  codex-sol: {harness: codex, model: gpt-6.1-sol, effort: medium}
-  codex-luna: {harness: codex, model: gpt-6-luna, effort: medium}
-  pi-sol: {harness: pi, model: gpt-6.1-sol, effort: medium}
-  pi-luna: {harness: pi, model: gpt-6-luna, effort: medium}
+  opus: {harness: claude-code, launch-model: opus, effort: medium}
+  sonnet: {harness: claude-code, launch-model: sonnet, effort: medium}
+  haiku: {harness: claude-code, launch-model: haiku, effort: medium}
+  codex-sol: {harness: codex, launch-model: gpt-6.1-sol, effort: medium}
+  codex-luna: {harness: codex, launch-model: gpt-6-luna, effort: medium}
+  pi-sol: {harness: pi, launch-model: gpt-6.1-sol, effort: medium}
+  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}
