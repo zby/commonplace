@@ -14,7 +14,13 @@ kb/work/workflow-requirements/analysis-workflow-as-job-set.md:
 | assemble | assemble, gated on coverage | code |
 
 Nothing here runs a model. `Coordinator` writes the files a worker would
-write at the hand-out paths and reports attempt results.
+write at the hand-out paths, each primary output as a member of its role's
+toy type, and reports attempt results. The checks and the verdict
+application are the engine's standard handlers on real validation: a body
+containing REFUSE fails every member schema, `Coordinator.forbid` edits the
+report's schema (a pinned criterion), the other report repeats the report's
+`claim` as a layout identity field, and verdicts follow the verification
+protocol (`NO_BLOCKERS`, `blocking`).
 
 Semantics these tests rely on, each now stated in the workshop documents:
 
@@ -31,8 +37,8 @@ Semantics these tests rely on, each now stated in the workshop documents:
   while the judgment holds and its subject is its role's current member.
   Without it, `digest` runs on a report the verifier never judged, because
   the apply job's basis holds handed versions that do not move.
-- File inputs are absolute paths; the declaration's relative-path base is
-  not specified.
+- Instruction inputs are absolute paths; criteria are library paths, which
+  the run resolves under the library recorded at start.
 """
 
 from __future__ import annotations
