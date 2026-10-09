@@ -1,4 +1,4 @@
-"""Local scripted profile/synthesis handlers; no models or retained publication.
+"""The profile and synthesis jobs on the standard handlers; no models or retained publication.
 
 Real CodeAttempt pins and real content contracts are used against the existing
 local-only prepared checkout fixture. No full analytical run is constructed.
@@ -12,10 +12,10 @@ import json
 import pytest
 import yaml
 
-from commonplace.artifactrun import CodeAttempt, CodeJob, Input
+from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.handlers import apply_verdict, check
 from commonplace.artifactrun.run import Resolved, Run
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import profile as handlers
 from commonplace.lib.systems_matrix import AXES
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
@@ -80,15 +80,17 @@ def opened(request):
 
 
 def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, previous=None):
-    store = RunStore(a.coordinator.run_dir)
-    run = Run(store)
-    opening = next(r for r in store.attempt_records() if r["job"] == "open")
-    values = {"metadata": (store.get(opening["outputs"]["metadata"]), None),
-              "candidate": (candidate, f"{stage}-verification" if apply else
-                            "memory-profile" if stage == "profile" else "synthesis"),
-              "answers": (answers, None), "answered-refusal": (refusal, None)}
+    """The derived check or apply job of the expanded plan, pinned to scripted bytes."""
+    from commonplace.artifactrun import load_plan
+    from commonplace.lib.agentic_analysis.plan import expanded
+
+    run = Run(RunStore(a.coordinator.run_dir))
+    run.jobs = load_plan(yaml.safe_dump(expanded(run.library)))  # The fixture ran only the opening.
+    subject = "memory-profile" if stage == "profile" else "synthesis"
+    role = f"{stage}-verification" if apply else subject
+    job = run.jobs.job(("apply-" if apply else "check-") + role)
     snapshot = {"boundary": boundary(a).encode(),
-                **{role: report(a, role).encode() for role in ("runtime", "memory", "epistemic")},
+                **{name: report(a, name).encode() for name in ("runtime", "memory", "epistemic")},
                 "reconciliation": encoded(identity(a, "agentic-system-reconciliation-report"),
                                            "# Fixture reconciliation\n\n## Reconciliation\n\nNo amendments.\n")}
     snapshot["runtime"] = snapshot["runtime"].replace(
@@ -96,33 +98,23 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         "### Operative objects\n\n#### RT-OBJ-store — Store\n\nSRC-1 fixes the fixture store.\n".encode(),
     )
     if stage == "synthesis":
-        snapshot.update({role: verdict(a, kind) for role, kind in
+        snapshot.update({name: verdict(a, kind) for name, kind in
                          (("record-verification", "records"), ("profile-verification", "profile"))})
     if apply:
-        snapshot["memory-profile" if stage == "profile" else stage] = profile(a) if stage == "profile" else synthesis(a)
-    for role, data in snapshot.items():
-        values[role + ("-seen" if apply else "")] = (data, role)
-    output = "verification" if apply else "profile" if stage == "profile" else "synthesis"
-    record_name = "verifier-attempt" if apply else "producer-attempt"
-    values[record_name] = (json.dumps({
+        snapshot[subject] = profile(a) if stage == "profile" else synthesis(a)
+    output = run.jobs.job(role).outputs[0]
+    record = json.dumps({
         "outputs": {output: hashlib.sha256(candidate).hexdigest()},
         "previous_outputs": {} if previous is None else {output: hashlib.sha256(previous).hexdigest()},
-    }).encode(), None)
-    inputs = {name: Input("role" if role else "output", role or name, required=False)
-              for name, (_, role) in values.items()}
-    pins = {name: Resolved(hashlib.sha256(data).hexdigest() if data is not None else None, data, role)
-            for name, (data, role) in values.items()}
-    # Every criterion the shipped declaration's jobs apply, pinned as a file input.
-    from commonplace.artifactrun import load_plan
-    from commonplace.lib.agentic_analysis.plan import expanded
-
-    for declared in load_plan(yaml.safe_dump(expanded(run.library))).jobs:
-        for name, spec in declared.inputs.items():
-            if spec.address == "file" and name not in inputs:
-                data = (run.library / spec.source).read_bytes()
-                inputs[name] = spec
-                pins[name] = Resolved(hashlib.sha256(data).hexdigest(), data)
-    job = CodeJob("scripted-profile", inputs, (), "unused")
+    }).encode()
+    values = {"candidate": candidate, "answers": answers, "answered-refusal": refusal,
+              "verifier-attempt" if apply else "producer-attempt": record,
+              **{f"{name}-seen" if apply else name: data for name, data in snapshot.items()}}
+    pins = {}
+    for name, spec in job.inputs.items():
+        data = (run.library / spec.source).read_bytes() if spec.address == "file" else values.get(name)
+        version = hashlib.sha256(data).hexdigest() if data is not None else None
+        pins[name] = Resolved(version, data, run.jobs.input_role(job, name))
     return CodeAttempt(run, job, pins)
 
 
@@ -130,7 +122,7 @@ def judgments(attempt):
     return attempt.judgments({}, 100, "scripted")
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.check_profile), ("synthesis", handlers.check_synthesize)])
+@pytest.mark.parametrize("stage,handler", [("profile", check), ("synthesis", check)])
 def test_valid_content_is_accepted_with_only_declared_relations(opened, stage, handler):
     a = opened
     data = profile(a) if stage == "profile" else synthesis(a)
@@ -144,7 +136,7 @@ def test_valid_content_is_accepted_with_only_declared_relations(opened, stage, h
         assert "memory-profile:identity:memory" in {s["relation"] for s in judgment["scope"]}
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.apply_verify_profile), ("synthesis", handlers.apply_verify_synthesis)])
+@pytest.mark.parametrize("stage,handler", [("profile", apply_verdict), ("synthesis", apply_verdict)])
 @pytest.mark.parametrize("defect", ["identity", "grammar", "wrong-stage", "citation", "utf8"])
 def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     a = opened
@@ -169,7 +161,7 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     assert not judgment["overrides"]
 
 
-@pytest.mark.parametrize("stage,handler", [("profile", handlers.apply_verify_profile), ("synthesis", handlers.apply_verify_synthesis)])
+@pytest.mark.parametrize("stage,handler", [("profile", apply_verdict), ("synthesis", apply_verdict)])
 @pytest.mark.parametrize("blockers", ["none", "- RT-OBJ-store: materially unsupported conclusion; a caveat cannot contain it.\n  Continued evidence explanation."])
 def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_gate(opened, stage, handler, blockers):
     a = opened
@@ -191,8 +183,8 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
 
 
 @pytest.mark.parametrize("stage,handler,apply", [
-    ("profile", handlers.check_profile, False), ("synthesis", handlers.check_synthesize, False),
-    ("profile", handlers.apply_verify_profile, True), ("synthesis", handlers.apply_verify_synthesis, True),
+    ("profile", check, False), ("synthesis", check, False),
+    ("profile", apply_verdict, True), ("synthesis", apply_verdict, True),
 ])
 def test_correction_answers_use_exact_delivered_baseline(opened, stage, handler, apply):
     a = opened
@@ -217,7 +209,7 @@ def test_structural_synthesis_refusal_preserves_semantic_blockers_and_limits(ope
                b"## Limits\n\n- RT-OBJ-store: do not infer complete inventory.\n")
     ctx = attempt(opened, "synthesis", data, refusal=refusal,
                   answers=b"- declined: retained the bounded finding.\n")
-    handlers.check_synthesize(ctx)
+    check(ctx)
     (judgment,) = judgments(ctx)
     assert judgment["outcome"] == "refused"
     assert "reconsider support" in judgment["findings"]
@@ -231,7 +223,7 @@ def test_profile_revision_and_source_identity_are_invocation_guards(opened):
     fields["memory-comparison"].pop("version")
     data = encoded(fields, "# Example System profile\n\n## Comparison rationale\n\nNo evidence added.\n")
     ctx = attempt(a, "profile", data)
-    handlers.check_profile(ctx)
+    check(ctx)
     text = judgments(ctx)[0]["findings"]
     assert "version: 2" in text and "source-identity" in text
 
@@ -240,7 +232,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     a = opened
     data = verdict(a, "synthesis", limits="- RT-OBJ-store: missing inspection prevents complete store comparison.")
     ctx = attempt(a, "synthesis", data, apply=True)
-    handlers.apply_verify_synthesis(ctx)
+    apply_verdict(ctx)
     valid, subject = judgments(ctx)
     assert valid["outcome"] == "accepted", valid["findings"]
     assert subject["outcome"] == "refused" and "limit not carried" in subject["findings"]
@@ -249,7 +241,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     data = synthesis(a, "Store inspection incomplete | RT-OBJ-store | SRC-1 | complete comparison | inspect store")
     ctx._pins["synthesis-seen"] = Resolved(hashlib.sha256(data).hexdigest(), data, "synthesis")
     ctx._staged.clear()
-    handlers.apply_verify_synthesis(ctx)
+    apply_verdict(ctx)
     assert judgments(ctx)[1]["outcome"] == "accepted"
 
 
@@ -260,7 +252,7 @@ def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_r
     data = verdict(a, "records" if prior_role == "record-verification" else "profile",
                    limits="- RT-OBJ-store: incomplete store inspection prevents complete comparison.")
     ctx._pins[prior_role] = Resolved(hashlib.sha256(data).hexdigest(), data, prior_role)
-    handlers.check_synthesize(ctx)
+    check(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"
     assert "limit not carried" in judgments(ctx)[0]["findings"]
 
@@ -269,6 +261,6 @@ def test_source_drift_refuses_acceptance(opened):
     a = opened
     (a.checkout / "README.md").write_text("Dirty frozen source\n")
     ctx = attempt(a, "profile", profile(a))
-    handlers.check_profile(ctx)
+    check(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"
     assert "checkout" in judgments(ctx)[0]["findings"]

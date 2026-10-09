@@ -9,6 +9,16 @@ consumer chooses, and which are this consumer's alone. Sol's review of
 that proposal asked for this: a standard apply handler assumes a verdict
 language, and the layout does not supply one.
 
+Since d17a53d4a (2026-10-09) the analysis runs from a compact plan, and
+the handlers named below are gone. The three apply handlers are the
+standard `artifactrun.handlers.apply_verdict`; the record check is the
+standard `set_check`, which writes `# Set check`; the record-check gate,
+the cited-records feedback (`_feedback`) and record preservation
+(`_check_analyst`) are the declared checks `record_check_gate`,
+`cited_records` and `preserved_records`. One rule changed: an apply refuses
+a subject only for findings its verdict causes. The rest of the protocol
+described here holds.
+
 The protocol has three layers. The engine fixes the first for every
 consumer. The reuse module `artifactrun/checks.py` implements the second
 and any consumer may use it. The analysis package, its types and its

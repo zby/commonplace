@@ -194,7 +194,9 @@ for coordination and stop rules.
 
 Run the generic engine on a plan, such as the active analysis workflow's.
 `start <run> <plan.yaml>` writes
-the run's metadata, fixing the declaration for the run; `--param key=value`
+the run's metadata, fixing the declaration for the run; a compact plan is
+expanded first, deriving each role's check or verdict application from the
+type's layout, and the expansion is what the run fixes. `--param key=value`
 records run parameters. `advance <run>` closes the attempts reported with
 `--completed <attempt>` and `--failed <attempt>=<reason>` (`--model` and
 `--effort` record the actual worker identity on those results), runs every ready

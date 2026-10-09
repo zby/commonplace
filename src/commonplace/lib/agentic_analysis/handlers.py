@@ -1,8 +1,9 @@
-"""Analysis opening, acquisition, boundary and analyst-check handlers.
+"""Analysis opening and acquisition handlers, and the boundary and analyst declared checks.
 
 Opening is read-only outside the engine's attempt commit. Acquisition passes
-the opening's source pins to the shared effect. Checks use pinned candidate
-and criterion bytes; environment guards stay separate from content validation.
+the opening's source pins to the shared effect. The declared checks run
+inside the standard check, on its pinned candidate and criterion bytes;
+environment guards stay separate from content validation.
 """
 
 from __future__ import annotations
@@ -11,19 +12,11 @@ import datetime
 import json
 import os
 import re
-from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
 
 from commonplace.artifactrun import CodeAttempt
-from commonplace.artifactrun.checks import (
-    Candidate,
-    answer_reasons,
-    candidate,
-    content_reasons,
-    judge,
-    review,
-)
+from commonplace.artifactrun.checks import Candidate
 from commonplace.artifactrun.sources import acquire, github_checkout_path
 from commonplace.artifactrun.worktree import (
     preparation_for,
@@ -48,8 +41,6 @@ from commonplace.lib.agentic_analysis.records import declared_ids
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
-
-ANALYSTS = ("runtime", "memory", "epistemic")
 
 
 def _head(repo: Path) -> str:
@@ -156,85 +147,8 @@ def locate(attempt: CodeAttempt) -> tuple[dict, Path]:
     return json.loads(attempt.read("metadata")), checkout(attempt.run_dir)
 
 
-def check_boundary(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Judge the pinned boundary, never a mutable artifact projection or hand-out file.
-
-    Content checks see a one-member snapshot at its intended artifact path. Invocation
-    checks bind its run identity and source to opening/acquisition; later checks
-    rely on that binding. Self-citations are content checks, not engine
-    relations, so no scope is claimed.
-    """
-    metadata, repo = locate(attempt)
-    check = candidate(attempt, "boundary", (), repo=repo)
-    frozen = json.loads(attempt.read("source"))
-    if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
-        raise ValueError("boundary check requires a Git source object or explicit JSON null")
-    # Only an accepted boundary establishes the capture pin. A declared member
-    # input preserves it across later corrections without a second source record.
-    incumbent_bytes = attempt.read("incumbent-boundary")
-    incumbent_source = None
-    if incumbent_bytes is not None:
-        incumbent, error = parse_document(incumbent_bytes.decode("utf-8"))
-        if incumbent is None or error:
-            raise ValueError("boundary check cannot read the incumbent boundary")
-        incumbent_source = (incumbent.frontmatter or {}).get("source")
-    reasons = ["[invocation] " + reason for reason in boundary_refusals(
-        check.data, repo_root=repo, run_id=metadata["run-id"],
-        identity=metadata["source-identity"], frozen=frozen,
-        capture_directory=Path(metadata["capture-directory"]),
-    )]
-    if incumbent_source is not None and incumbent_source != frozen:
-        reasons += ["[incumbent] " + reason for reason in boundary_refusals(
-            check.data, repo_root=repo, run_id=metadata["run-id"],
-            identity=metadata["source-identity"], frozen=incumbent_source,
-        )]
-    source_pin = frozen if frozen is not None or reasons else check.fields.get("source")
-    reasons += content_reasons(replace(check, source=source_pin))
-    judge(check, reasons)
-    return {}
-
-
-def _check_analyst(attempt: CodeAttempt, member: str) -> dict[str, bytes]:
-    check = candidate(attempt, member, ("boundary", *(role for role in ANALYSTS if role != member)),
-                      repo=checkout(attempt.run_dir), source_role="boundary")
-    reasons = review(check) + answer_reasons(check, record="producer-attempt", output="report")
-    # Other reports cite these IDs, so a corrected report keeps every one.
-    incumbent = attempt.read("incumbent-report")
-    if incumbent is not None:
-        dropped = sorted(set(declared_ids(incumbent.decode("utf-8")))
-                         - set(declared_ids(check.data.decode("utf-8", errors="replace"))))
-        if dropped:
-            reasons.append(
-                "[correction] record declarations: keep every record the accepted predecessor declared: "
-                + ", ".join(dropped) + "; correct its finding without changing its referent"
-            )
-    # The memory report is the source of the profile's source identity.
-    if member == "memory" and check.fields:
-        opened = locate(attempt)[0]["source-identity"]
-        if check.fields.get("source-identity") != opened:
-            reasons.append("[invocation] source-identity must be the opening's normalized source identity")
-    judge(check, reasons)
-    return {}
-
-
-def check_runtime(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Judge a runtime candidate and its correction answers against pinned inputs."""
-    return _check_analyst(attempt, "runtime")
-
-
-def check_memory(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Judge a memory candidate and its correction answers against pinned inputs."""
-    return _check_analyst(attempt, "memory")
-
-
-def check_epistemic(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Judge an epistemic candidate and its correction answers against pinned inputs."""
-    return _check_analyst(attempt, "epistemic")
-
-
-# Declared checks for the compact plan. The standard check calls each with
-# the candidate it built; each returns refusal reasons and reads only inputs
-# its plan entry declares.
+# Declared checks: the standard check calls each with the candidate it built;
+# each returns refusal reasons and reads only inputs its plan entry declares.
 
 
 def bound_boundary(check: Candidate) -> list[str]:

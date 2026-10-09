@@ -11,7 +11,6 @@ from commonplace.artifactrun import start_run
 from commonplace.artifactrun.handlers import apply_verdict, set_check
 from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
 from commonplace.artifactrun.store import RunStore, digest
-from commonplace.lib.agentic_analysis import verification as handlers
 from commonplace.lib.agentic_analysis.plan import expanded
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
@@ -31,6 +30,9 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.artifactrun.support import Coordinator
 
 pytestmark = pytest.mark.slow
+
+RECORDS = ("runtime", "memory", "epistemic", "reconciliation")
+"""The roles record verification verifies."""
 
 
 @pytest.fixture
@@ -109,7 +111,7 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
     applied = judgments(a, "apply-record-verification")
     assert len(applied) == 5
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
-    assert {j["subject"]["role"] for j in applied} == {"record-verification", *handlers.RECORDS}
+    assert {j["subject"]["role"] for j in applied} == {"record-verification", *RECORDS}
     assert all({"verifier-attempt", "record-check-seen"} <= j["basis"].keys() for j in applied)
     assert not a.coordinator.status.publishable
 
@@ -153,7 +155,7 @@ def test_routes_only_addressed_blockers_and_preserves_continuations(records):
     assert [j["subject"]["role"] for j in applied] == ["record-verification", "runtime", "reconciliation"]
     assert {e["relation"] for e in applied[0]["scope"]} == {
         "record-verification:identity:boundary",
-        *(f"record-verification:cites:{role}" for role in ("boundary", *handlers.RECORDS))}, \
+        *(f"record-verification:cites:{role}" for role in ("boundary", *RECORDS))}, \
         "a verdict's content acceptance covers its citations, never a verifies relation"
     p = parameters(a.coordinator.handout("runtime"))
     feedback = Path(p["refusal"]).read_text()
@@ -245,40 +247,3 @@ def test_source_drift_is_a_record_check_finding(records):
     attempt = code_attempt(a, "record-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
     assert "does not hold exactly" in set_check(attempt)["findings"].decode()
-
-
-def claims(attempt) -> list[tuple]:
-    """What judgments claim, without their record ids or findings wording."""
-    return sorted((j["subject"]["role"], j["subject"]["version"], j["outcome"],
-                   tuple(sorted(e["relation"] for e in j["scope"])))
-                  for j in attempt.judgments({}, 100, "scripted"))
-
-
-@pytest.mark.parametrize("verdict_blockers", ["none", "- runtime: reconsider SRC-1.\n- reconciliation: clarify it."])
-def test_standard_handlers_record_the_wrappers_judgments(records, verdict_blockers):
-    """Handler substitution: on the same pinned inputs, the consumer wrapper the
-    hand-written plan named and the standard handler with the entry's declared
-    checks record the same judgments."""
-    from commonplace.artifactrun import handlers as standard
-    from commonplace.lib.agentic_analysis import handlers as consumer
-
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("record-verification", verdict(a, verdict_blockers))
-    pairs = [
-        ("check-boundary", consumer.check_boundary, standard.check),
-        ("check-runtime", consumer.check_runtime, standard.check),
-        ("check-memory", consumer.check_memory, standard.check),
-        ("check-epistemic", consumer.check_epistemic, standard.check),
-        ("check-reconciliation", handlers.check_reconcile, standard.check),
-        ("apply-record-verification", handlers.apply_verify, standard.apply_verdict),
-    ]
-    for job, wrapper, replacement in pairs:
-        new = code_attempt(a, job)
-        # The wrapper read the same findings under the record check's former heading.
-        seen = new.read("record-check-seen") if job.startswith("apply-") else None
-        old = code_attempt(a, job, {"record-check-seen": seen.replace(b"# Set check", b"# Record check")}
-                           if seen is not None else None)
-        wrapper(old)
-        replacement(new)
-        assert claims(old) == claims(new), job
