@@ -15,9 +15,8 @@ or withholds reliance, retains or integrates it, and lets it affect later
 behavior. It cites the records other members declare, and it declares the
 records the epistemic analyst establishes under their `EPI-` IDs, with the
 evidence passages that support them. The
-[source contract](../instructions/agentic-analysis-sources.md) governs
-evidence; the [record contract](../instructions/agentic-analysis-records.md)
-governs identity, common fields and statuses.
+[record contract](../instructions/agentic-analysis-records.md) governs
+identity, common fields, statuses and evidence interpretation.
 
 ## Frontmatter
 
@@ -87,7 +86,7 @@ does not warrant the proposed mechanism or its transfer. Formal validity
 does not establish source truth, encoding fidelity, omitted premises or
 claims beyond the checked domain. Freshness does not establish endorsement;
 operational continuation does not establish epistemic warrant. Causal
-attribution follows the shared source contract's comparison limits.
+attribution follows the record contract's comparison limits.
 
 An intentionally operational or lab-tracking scope is not product failure;
 broader knowledge-production claims still require comparison with the

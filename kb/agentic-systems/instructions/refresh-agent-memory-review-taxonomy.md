@@ -28,9 +28,9 @@ within that request's scope; do not request authorization again.
 
 1. **Load the memory report contract.** Read
    `kb/agentic-system-analyses/types/agent-memory-profile.md`, including `memory-comparison`,
-   and the shared `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
-   `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` contracts for evidence and
-   record identity. Read `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md`
+   the boundary type `kb/agentic-system-analyses/types/agentic-system-boundary.md` for sources and
+   evidence layers, and the shared `kb/agentic-system-analyses/instructions/agentic-analysis-records.md`
+   contract for record identity and evidence interpretation. Read `kb/agentic-system-analyses/types/agentic-system-analysis-overview.md`
    for overview content.
    Record the procedure, contract, schema and reader identities used for the
    audit: this instruction, the shared contracts, those types and their `.schema.yaml` files,

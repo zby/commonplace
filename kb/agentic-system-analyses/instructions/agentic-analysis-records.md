@@ -6,10 +6,10 @@ description: "Shared record contract for agentic analyses: identity, annotations
 # Agentic analysis records
 
 This contract defines records used across the runtime, memory and
-epistemic members. Their authors, reconciliation and verification receive
-it as a declared dependency. Member types add their own fields and section
-placement; the [source contract](./agentic-analysis-sources.md) supplies
-evidence layers, anchors and quotations.
+epistemic members, and what any finding citing them may claim from its
+evidence. The member types that declare or cite records refer to it and add
+their own fields and section placement. The sources and evidence layers a
+record cites are declared in the boundary's Source register.
 
 ## Identity and grammar
 
@@ -233,6 +233,24 @@ required inputs or frozen scope prevent completing the task. Keep learning,
 reflection, autonomy and self-improvement, and each theory-builder condition,
 as independent route/property conclusions. A supported contribution coexists
 with independently unestablished properties; never bundle them into a negative.
+
+## Evidence interpretation
+
+Presence, delivery, activation and demonstrated benefit are distinct; so are
+claim, affordance, wiring, observation and causal support. Curation alone
+establishes no warrant. Every negative, thin, conflicting or uncertain
+finding names its inspected boundary and the conclusion it prevents. A
+casual search miss or uninspected branch supports a limitation, not an
+evidenced absence, and omission from an open-ended mechanism list is not
+evidence of absence.
+
+A contrast is necessary but not sufficient for causal identification:
+attribution is no finer than the treatment and comparison actually performed,
+and a component effect requires independent variation of that component.
+
+Source-native operation precedes a Commonplace interpretation. The fit and
+any partial or unresolved mapping are stated; ontology never replaces the
+operational account.
 
 ## Conditional route fields
 

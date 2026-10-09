@@ -4,12 +4,10 @@ type: types/instruction.md
 ---
 
 You write the `{role}` member of this agentic-system analysis. `member-type`
-says what that member contains; where it and the job instruction differ, the
-type wins. `set-type` says what every member shares: the layout, the records
-members declare and cite, and the form of evidence. Each member you read comes
-with its type as `<role>-type`. `worker-rules` says how you work: reading,
-write authority, frozen evidence, problems and corrections. The job
-instruction says what this member must establish.
+governs that member and wins over the job instruction where they differ;
+`worker-rules` governs how you work. Each member you read comes with its type
+as `<role>-type`, and the job instruction says what this member must
+establish.
 
 This prompt is your complete write procedure. The repository's authoring
 skills (`cp-skill-write`, `cp-skill-connect`, `cp-skill-ingest` and the like)

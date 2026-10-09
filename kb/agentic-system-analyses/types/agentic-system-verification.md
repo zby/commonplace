@@ -14,7 +14,8 @@ the accepted records; the synthesis verification judges the public synthesis
 against the records it cites. They are the set's `record-verification.md`,
 `profile-verification.md` and `synthesis-verification.md` members. Code reads
 their blockers to decide what happens next; the overview links each judgment
-without copying it.
+without copying it. The [record contract](../instructions/agentic-analysis-records.md)
+governs the records a verification cites and judges.
 
 ## Frontmatter
 

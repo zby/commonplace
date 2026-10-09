@@ -68,10 +68,10 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
             assert not path.is_absolute() and ".." not in path.parts, (job.name, name, path)
             assert (LIBRARY / path).is_file(), (job.name, name, path)
         if isinstance(job, ModelJob):
-            assert {"instruction", "worker-rules", "collection", "sources-contract", "prompt-section"} <= set(job.inputs)
-            # Workers read their member's type and the set type the run fixed, never a schema.
+            assert {"instruction", "worker-rules", "collection", "prompt-section"} <= set(job.inputs)
+            # Workers read their member's type, never the set type or a schema.
             assert job.inputs["member-type"].source == layout.roles[job.role].type
-            assert job.inputs["set-type"].address == "type"
+            assert "set-type" not in job.inputs
             assert not any(spec.source.endswith(".schema.yaml") for spec in job.inputs.values())
 
 
@@ -170,7 +170,7 @@ def test_model_jobs_receive_the_types_of_what_they_write_and_read(graph):
             f"agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/{ENGINE_INSTRUCTIONS[name]}.md",
             "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md",
             "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/prompt-section.md",
-            "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
+            "agentic-system-analyses/COLLECTION.md",
             *(layout.roles[role].type for role in {name, *read}),
         }
         if name != "boundary":
@@ -213,7 +213,7 @@ def test_code_checks_declare_type_schema_and_shared_criteria(graph):
             continue
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
         assert (LIBRARY / ANALYSIS_TYPE).resolve() not in files, "the artifact type is fixed for the run"
-        assert {"sources-contract", "records-contract"} <= set(job.inputs)
+        assert "records-contract" in job.inputs
         for path in files:
             if path.suffix == ".md":
                 document, error = parse_document(path.read_text(encoding="utf-8"))
@@ -273,7 +273,7 @@ def test_publication_declares_producer_provenance_and_full_criterion_closure(gra
         ANALYSIS_TYPE, "types/type-spec.md", "types/note.md",
         "agentic-system-analyses/COLLECTION.md", "reference/validation-contract.md",
         *(f"agentic-system-analyses/instructions/agentic-analysis-{name}.md"
-          for name in ("sources", "records")),
+          for name in ("records",)),
         *(role.type for role in layout.roles.values()),
     }
     for name in ("assemble", "publish"):

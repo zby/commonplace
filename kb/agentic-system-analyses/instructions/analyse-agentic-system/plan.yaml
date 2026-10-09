@@ -4,8 +4,8 @@
 # for a verifying role, whose partners, criteria and correction inputs come
 # from the type's layout. Entries declare mission only: instruction, reads,
 # gates, attempts and the analysis's own checks. Every model job also
-# receives its member type, the types of the members it reads, the set type
-# and the prompt section, which the engine renders into its prompt.
+# receives its member type, the types of the members it reads and the
+# prompt section, which the engine renders into its prompt.
 # Instructions and the prompt section are relative to this file; other file
 # inputs are library paths. Opening, acquisition,
 # assembly and publication are the analysis's own code jobs in the engine's
@@ -19,11 +19,9 @@ prompt-section: jobs-engine/prompt-section.md
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
-    sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
   # Read by type rules but referenced by no type; every derived job receives it.
   check:
-    sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
     note-type: types/note.md
   # Publication validates every member; these groups make its closure explicit.

@@ -10,8 +10,7 @@ schema: ./agentic-system-boundary.schema.yaml
 The first member of an analysis set. It fixes what the run analyses and from
 which frozen evidence; every other member works within it. The overview
 repeats its boundary fields in its frontmatter and links to it without
-copying its sections. The [source contract](../instructions/agentic-analysis-sources.md)
-gives the evidence layers a register row names.
+copying its sections.
 
 ## Frontmatter
 
@@ -78,11 +77,27 @@ inspected commit-relative paths and commit-pinned anchors; an access root
 such as `related-systems/<owner>--<repo>/` belongs in inspected scope, not
 the identity cell, because a mutable worktree is not the evidence identity.
 
-The registered Git source is the repository at that commit: listed paths
-record initial inspection, not an allowlist. A capture is limited to its
-frozen contents. A source with several evidence layers keeps one row, listing
-its layers and labelling each layer's inspected scope, anchors and limits
-within that row, never a second ID for a layer.
+Source IDs belong to this register alone. A source's durable evidence
+identity is its registered repository and reviewed commit, or its capture;
+a worktree path is only the access root. The registered Git source is the
+repository at that commit: listed paths record initial inspection, not an
+allowlist. A capture is limited to its frozen contents. Supplied execution
+traces and experimental results are registered like any other source, and
+their scope and conditions bound what they support.
+
+Each row names the evidence layers its source supplies:
+
+| Evidence layer | What it supports |
+|---|---|
+| `implementation` | Inspected executable behavior |
+| `doctrine/design` | Declared intent or contract |
+| `reported operation` | Attributed operation without inspectable run evidence |
+| `observed run` | An inspectable execution trace or artifact |
+| `causal experiment` | An observed intervention and comparison with evidence about the design; design and confounding limits bound attribution |
+
+A source with several evidence layers keeps one row, listing its layers and
+labelling each layer's inspected scope, anchors and limits within that row,
+never a second ID for a layer.
 
 ## Not reached
 

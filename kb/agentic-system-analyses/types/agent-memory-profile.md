@@ -12,7 +12,8 @@ record verification. It declares no records and adds no evidence. Values cite
 canonical records of the set, resolved through reconciliation. A source fact
 absent from those records cannot establish a value; the assessment and note
 retain that limitation. The profile is a separate member from the source-native
-memory account.
+memory account. The [record contract](../instructions/agentic-analysis-records.md)
+governs the records it cites.
 
 ## Frontmatter
 

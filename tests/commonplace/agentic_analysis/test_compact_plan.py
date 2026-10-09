@@ -23,7 +23,8 @@ from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 HAND_WRITTEN = Path(__file__).with_name("hand_written_plan.yaml")
 PROMPT_SECTION = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/prompt-section.md"
-RETIRED = {"agentic-system-analyses/instructions/agentic-analysis-boundary.md"}
+RETIRED = {"agentic-system-analyses/instructions/agentic-analysis-boundary.md",
+           "agentic-system-analyses/instructions/agentic-analysis-sources.md"}
 """Contracts whose content moved into types; jobs receive those types instead."""
 
 JOB_RENAMES = {
@@ -72,8 +73,6 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
     name = job_name(old_job.name)
     renames = INPUT_RENAMES.get(name, {})
     inputs = {renames.get(key, key): renamed(spec) for key, spec in old_job.inputs.items() if spec.address != "file"}
-    if isinstance(old_job, ModelJob):
-        inputs["set-type"] = Input("type", "")  # Workers read the set type the run fixed.
     if name.startswith("check-") and name != "record-check":
         role = layout.roles[name.removeprefix("check-")]
         identity = {source.role for source in role.identity}

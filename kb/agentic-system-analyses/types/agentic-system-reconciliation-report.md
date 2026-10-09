@@ -13,8 +13,7 @@ not judge one report's support and does not correct a report: the record
 verifier judges, and the declaring analyst corrects its own report. The
 reconciler writes the whole member, and the accepted report enters the set
 unchanged. The [record contract](../instructions/agentic-analysis-records.md) governs
-supersessions; the [source contract](../instructions/agentic-analysis-sources.md)
-governs evidence. The member declares no analyst records of its own.
+supersessions and what its connections may claim from evidence. The member declares no analyst records of its own.
 
 ## Frontmatter
 

@@ -98,20 +98,15 @@ def test_editing_the_section_hands_out_the_job_again(tmp_path, monkeypatch):
     assert "brief" in c.handed(), "the section is a pinned input like the instruction"
 
 
-def test_workers_read_the_types_and_the_set_type_the_run_fixed(tmp_path, monkeypatch):
+def test_workers_read_the_types_of_what_they_write_and_read_but_not_the_set_type(tmp_path, monkeypatch):
     c = sectioned_run(tmp_path, monkeypatch)
     types = c.method.parents[1] / "types"
-    fixed = (types / "toy-set.md").read_text(encoding="utf-8")
-    (types / "toy-set.md").write_text("an edited set type\n", encoding="utf-8")
     c.through_brief()
     prompt = c.handout("other").prompt.read_text(encoding="utf-8")
     values = dict(line.split(" = ", 1) for line in prompt.splitlines() if " = " in line)
-    from pathlib import Path
-
-    assert Path(values["set-type"]).read_text(encoding="utf-8") == fixed, "the run's type, not the library file"
     assert values["member-type"] == str(types / "toy-member.md")
     assert values["brief-type"] == str(types / "toy-member.md"), "the type of each member it reads"
-
+    assert "set-type" not in values and str(types / "toy-set.md") not in prompt
 
 def test_a_condition_no_job_prints_fails_the_plan_at_start(tmp_path, monkeypatch):
     with pytest.raises(PlanError, match="prints no line refusla"):

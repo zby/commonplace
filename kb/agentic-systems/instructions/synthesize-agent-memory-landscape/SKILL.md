@@ -36,9 +36,9 @@ directory before reading its members. The overview is the reader entry point,
 not a substitute for a member account or comparison assessment.
 
 Use `kb/agentic-system-analyses/types/agent-memory-profile.md` for the `memory-comparison`
-contract, `kb/agentic-system-analyses/instructions/agentic-analysis-sources.md` and
-`kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for shared evidence and record
-conventions, `kb/agentic-system-analyses/types/agentic-system-analysis-set.md`
+contract, `kb/agentic-system-analyses/types/agentic-system-boundary.md` for sources and
+evidence layers, `kb/agentic-system-analyses/instructions/agentic-analysis-records.md` for record
+conventions and evidence interpretation, `kb/agentic-system-analyses/types/agentic-system-analysis-set.md`
 for membership, and `kb/agentic-system-analyses/types/agentic-system-synthesis.md`
 for the cross-lens account. Each matrix row preserves its source revision, run,
 analysis cutoff, evidence tier, compared memory boundary, profile revision

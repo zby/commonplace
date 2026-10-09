@@ -12,9 +12,8 @@ The memory analyst's source-grounded findings and integration questions for one 
 frozen boundary. The last report the run accepts is the set's memory member
 byte for byte: it declares its records under their `MEM-` IDs, and only the
 memory analyst revises it, in a correction round.
-The [source contract](../instructions/agentic-analysis-sources.md) governs
-evidence; the [record contract](../instructions/agentic-analysis-records.md)
-governs identity, common fields and statuses.
+The [record contract](../instructions/agentic-analysis-records.md) governs
+identity, common fields, statuses and evidence interpretation.
 
 ## Frontmatter
 

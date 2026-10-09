@@ -49,8 +49,7 @@ usage and responsibilities, and give each exclusion its prevented conclusion.
    write `problem`, not a replacement source. `source.identity` must equal
    the opening identity. If no source was
    established, use frontmatter `source: null` and a non-complete disposition.
-4. Build the `SRC-*` register as `member-type` defines it, with the evidence
-   layers of the source contract.
+4. Build the `SRC-*` register as `member-type` defines it.
 
 The boundary type gives its sections, including `## Not reached` for a
 non-complete disposition.

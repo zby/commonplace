@@ -10,7 +10,9 @@ schema: ./agentic-system-synthesis.schema.yaml
 The public account of one analysis run, written after the records have
 passed independent verification. It is the set's `synthesis.md` member,
 linked from the [overview](./agentic-system-analysis-overview.md). The
-overview uses its retrieval description but does not copy its body.
+overview uses its retrieval description but does not copy its body. The
+[record contract](../instructions/agentic-analysis-records.md) governs the
+records it cites and what its findings may claim from evidence.
 
 ## Frontmatter
 
