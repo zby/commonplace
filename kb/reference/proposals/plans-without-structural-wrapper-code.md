@@ -387,18 +387,19 @@ instruction holds only its mission.
   parameter and the check command renders whole.
 - **Derived type inputs.** Each role-filling model job receives as file
   inputs its own role's type as `member-type` and the type of each role it
-  reads as `<role>-type`, and as `set-type` the run's type through a new
-  input address, `type`, with no source, resolving to the type text the
-  run fixed at start. Handing the library file instead broke that
-  guarantee: a mid-run edit of the type stopped an open attempt. Workers
-  read the bytes code validates against. These replace the `files:`
-  entries that named type specs; `files:` stays for files that are not
-  types. The template itself is a pinned file input of every model job,
-  rendered rather than listed, so editing it re-hands-out the job.
+  reads as `<role>-type`. These replace the `files:` entries that named
+  type specs; `files:` stays for shared contracts a member type refers
+  to, such as the records contract. The set type is not handed to
+  workers: a producer needs its member type, the types of what it reads
+  and the contracts those name, and nothing about the whole artifact,
+  whose shape it learns only through what it is handed and the check's
+  findings (decided 2026-10-09; the first version handed the set type
+  through a `type` input address, now unused). The template itself is a
+  pinned file input of every model job, rendered rather than listed, so
+  editing it re-hands-out the job.
 - **Precedence, stated once in the template.** The member type owns what
-  the member contains and wins over the mission file on conflict; the set
-  type owns shared and cross-member shape; the worker rules own
-  execution. The hand-out is the complete write procedure, and the
+  the member contains and wins over the mission file on conflict; the
+  worker rules own execution. The hand-out is the complete write procedure, and the
   repository's authoring skills do not apply to a worker: they assume an
   operator, the KB as evidence and KB destinations. This is the split the
   connect skill already makes, execution in the skill and the contract in
@@ -406,10 +407,14 @@ instruction holds only its mission.
 - **Mission files shrink** to a purpose sentence and what the job must
   establish and challenge. The loader does not police this.
 - **Ordering.** This lands with the contract moves: the boundary contract
-  into the boundary type, the records and evidence content into the set
-  type, the sources procedure into the worker rules. The set type becomes
-  a file workers read, which reverses the earlier cut of its body to
-  maintainer prose; its new sections are written for workers.
+  into the boundary type; the records contract stays a shared member-level
+  contract that the member types declaring or citing records refer to;
+  the sources contract splits into the boundary type, for what a source
+  declaration is, and the worker rules, for how to inspect and quote. The
+  set type keeps its minimal maintainer body and is read by the validator
+  and maintainers only. A member type with its referenced contracts is
+  then the complete contract for its producer, testable without a set,
+  and reusable by another directory artifact.
 
 ### Run binding as identity
 
@@ -560,7 +565,7 @@ form and relations, not analytical truth.
   template support; no analysis job instruction says what an input is or
   where it comes from, and none names an output, an answers file or the
   check command, though a mission names the inputs it works from; no model
-  job in the compact analysis plan
-  lists a type under `files:`; the three contract files are gone and
-  nothing links them; and one analysis runs to publication on the
-  templated hand-outs.
+  job in the compact analysis plan lists a type under `files:`; the
+  boundary and sources contract files are gone, the records contract is
+  referred to only from member types, and no worker receives the set
+  type; and one analysis runs to publication on the templated hand-outs.
