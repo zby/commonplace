@@ -94,6 +94,7 @@ def _print_status(status: RunStatus, as_json: bool) -> None:
         for name, path in handout.outputs.items():
             print(f"  output {name}: {path}")
         print(f"  problem: {handout.problem}")
+        print(f"  worker-model: {handout.worker_model}")
     if status.open_attempts:
         print("open: " + " ".join(status.open_attempts))
     for stop in status.stops:

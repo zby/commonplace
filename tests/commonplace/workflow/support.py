@@ -250,6 +250,7 @@ class Coordinator:
     def write(self, handout: Handout, primary: str, **auxiliary: str) -> None:
         names = list(handout.outputs)
         handout.outputs[names[0]].write_text(primary, encoding="utf-8")
+        handout.worker_model.write_text("test-model\n", encoding="utf-8")
         for name, text in auxiliary.items():
             handout.outputs[name].write_text(text, encoding="utf-8")
 

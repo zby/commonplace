@@ -61,7 +61,7 @@ class Attempt:
                 producer, primary = publication.PRODUCERS[role]
                 self.inputs[f"{role}-attempt"] = (json.dumps({
                     "job": producer, "state": "completed", "kind": "model", "model": "fixture/model",
-                    "effort": "high", "outputs": {primary: publication._digest(data)},
+                    "effort": "high", "worker_model": "fixture-model-1", "outputs": {primary: publication._digest(data)},
                 }).encode() if data else None)
         self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
                          "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
@@ -114,7 +114,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     (attempt.run_dir / "set" / "memory.md").write_bytes(b"untracked garbage")
     outputs = publication.assemble_analysis(attempt)
     manifest = yaml.safe_load(outputs["manifest"])
-    assert manifest["worker"] == WORKER
+    assert manifest["worker"] == {**WORKER, "model": "fixture-model-1"}
     assert manifest["members"]["overview.md"] == {"sha256": publication._digest(outputs["overview"])}
     assert set(manifest["members"]) == set(scripted[0]["members"])
     assert b"untracked garbage" not in outputs["overview"]
@@ -126,12 +126,17 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
 # coverage input; the engine scenario tests pin that it waits, not fails.
 @pytest.mark.parametrize("defect,reason", [
     ("provenance", "provenance"), ("mixed-worker", "not the run profile's"),
+    ("mixed-report", "every worker must report the same model"),
 ])
 def test_assembly_rejects_misattributed_complete_set(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")
     record = json.loads(attempt.inputs["memory-attempt"])
-    record["model" if defect == "mixed-worker" else "outputs"] = (
-        "other/model" if defect == "mixed-worker" else {"answers": publication._digest(attempt.inputs["memory"])})
+    if defect == "mixed-worker":
+        record["model"] = "other/model"
+    elif defect == "mixed-report":
+        record["worker_model"] = "fixture-model-2"
+    else:
+        record["outputs"] = {"answers": publication._digest(attempt.inputs["memory"])}
     attempt.inputs["memory-attempt"] = json.dumps(record).encode()
     with pytest.raises(ValueError, match=reason):
         publication.assemble_analysis(attempt)

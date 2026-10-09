@@ -25,7 +25,7 @@ from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.library import library_root
 
 from .declaration import CodeJob, Input, ModelJob, check_relations, load_job_set
-from .handouts import Handout, _open, handout_for
+from .handouts import WORKER_MODEL, Handout, _open, handout_for
 from .state import CodeAttempt, Resolved, Run, _parse_type
 from .store import RunStore, digest
 
@@ -257,7 +257,7 @@ def _inspect(run: Run) -> dict:
         "parameters": dict(run.parameters),
         "declaration": _declaration_identity(run),
         "attempts": [{key: record.get(key) for key in
-                      ("id", "job", "kind", "state", "model", "effort", "reason", "uncertain")}
+                      ("id", "job", "kind", "state", "model", "effort", "worker_model", "reason", "uncertain")}
                      for record in sorted(run.attempts.values(), key=lambda r: r["seq"])],
         "failed_attempts": failures,
         "exhausted_jobs": exhausted,
@@ -343,6 +343,9 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     directory = store.handout_dir(record["id"])
     problem_path = directory / "problem.md"
     problem = problem_path.read_text(encoding="utf-8", errors="replace") if problem_path.is_file() else ""
+    model_path = directory / WORKER_MODEL
+    worker_model = (model_path.read_text(encoding="utf-8", errors="replace").strip()
+                    if model_path.is_file() else "")
 
     def fail(reason: str) -> Stop:
         # The worker's problem text is the failure's record; the hand-out
@@ -364,6 +367,8 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
             outputs[name] = store.put(path.read_bytes())
     if job.outputs[0] not in outputs:
         return fail("the worker reported a problem" if problem.strip() else "completed without its primary output")
+    if not worker_model or "\n" in worker_model:
+        return fail("completed without a one-line worker-model report")
     for name, spec in job.inputs.items():
         pinned = record["pins"].get(name, {}).get("version")
         if spec.address == "file" and pinned is not None:
@@ -383,7 +388,8 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
         )
         if not changed_auxiliary:
             return fail("answered a refusal with the refused version unchanged and no new auxiliary version")
-    store.commit_attempt({**record, "outputs": outputs, "model": result.model, "effort": result.effort})
+    store.commit_attempt({**record, "outputs": outputs, "model": result.model, "effort": result.effort,
+                          "worker_model": worker_model})
     store.remove(directory)
     return None
 

@@ -34,7 +34,8 @@ def engine_fixture(repo, monkeypatch, name="fixture"):
     identity = f"https://example.invalid/{name}"
     destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, name)
     members = {"boundary": b"boundary", "overview": b"overview"}
-    worker = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model", "effort": "high"}
+    worker = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model",
+              "model": "fixture-model-1", "effort": "high"}
     manifest = engine._manifest(SimpleNamespace(layout=layout, type_spec=SET_TYPE), members, worker)
     metadata = {"system": name, "source-identity": identity,
                 "review-path": (destination / "overview.md").relative_to(repo).as_posix(),
