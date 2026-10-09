@@ -11,7 +11,7 @@ A `jobs` entry takes one of three forms:
 - `role: R` fills role R with a model job named R. Unless R verifies other
   roles, a derived `check-R` judges each candidate; a verifying role gets
   `apply-R`, which applies its verdicts instead.
-- `job: N` runs a standard handler over roles, such as the set check.
+- `job: N` runs a standard handler over roles, such as the artifact check.
 - `name: N` is a job in the engine's full form, kept as written.
 
 A plan without any `role:` or `job:` entry is already full and is returned
@@ -35,8 +35,8 @@ from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME
 STANDARD = "commonplace.artifactrun.handlers"
 CHECK = f"{STANDARD}.check"
 APPLY = f"{STANDARD}.apply_verdict"
-SET_CHECK = f"{STANDARD}.set_check"
-HANDLER_OUTPUTS = {SET_CHECK: ["findings"]}
+ARTIFACT_CHECK = f"{STANDARD}.artifact_check"
+HANDLER_OUTPUTS = {ARTIFACT_CHECK: ["findings"]}
 """Outputs a `job:` entry gets when it declares none."""
 CHECK_GROUP = "check"
 """The plan-level criteria group every derived job receives besides its type closure."""
@@ -327,7 +327,7 @@ class _Expansion:
         """The types a model job writes and reads by: its member's and each read member's.
 
         Named `member-type` and `<role>-type`, so a prompt names them without
-        a plan listing them. The set type is not among them: a producer's
+        a plan listing them. The artifact type is not among them: a producer's
         contract is its member type, the types of what it reads and the
         contracts those name.
         """

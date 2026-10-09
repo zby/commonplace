@@ -8,7 +8,7 @@ author refused by it reads the peer records its blockers cite.
 from __future__ import annotations
 
 from commonplace.artifactrun.checks import Candidate, blocker_entries
-from commonplace.artifactrun.handlers import SET_CHECK_HEADING
+from commonplace.artifactrun.handlers import ARTIFACT_CHECK_HEADING
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
@@ -16,9 +16,9 @@ from commonplace.lib.agentic_analysis.records import (
 from commonplace.lib.note_parser import section
 
 
-def _set_check_failed(data: bytes) -> bool:
+def _artifact_check_failed(data: bytes) -> bool:
     text = data.decode("utf-8").strip()
-    heading = SET_CHECK_HEADING
+    heading = ARTIFACT_CHECK_HEADING
     if not text.startswith(heading + "\n"):
         raise ValueError(f"handed record-check must be a {heading.removeprefix('# ')} document")
     body = text[len(heading):].strip()
@@ -32,7 +32,7 @@ def _set_check_failed(data: bytes) -> bool:
 def record_check_gate(check: Candidate) -> list[str]:
     """A verifier handed structural findings must address them with at least one blocker."""
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
-    if _set_check_failed(check.attempt.read("record-check-seen")) and not entries:
+    if _artifact_check_failed(check.attempt.read("record-check-seen")) and not entries:
         return [("structural failures require explicit blockers (code requires at least one; "
                  "the verifier must address every finding)")]
     return []

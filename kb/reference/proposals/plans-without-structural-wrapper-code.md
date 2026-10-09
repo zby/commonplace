@@ -39,7 +39,7 @@ worker's self-check both make.
 
 The analysis plan has twenty-five jobs. Four are the consumer's own code:
 `open`, `acquire`, `assemble` and `publish`. Ten are model jobs, one per
-role. The other eleven are check, apply or set-check jobs, and each
+role. The other eleven are check, apply or artifact-check jobs, and each
 restates what the layout already says about its roles: the candidate from
 the filling job's primary output, the incumbent, the producer attempt and
 its answered refusal, partner roles from cites and identity sources, the
@@ -114,7 +114,7 @@ checkout is still what a record says.
 ### Standard handlers in the reuse modules
 
 The engine's reuse modules ship one handler for each recurring code job: a
-check, a verdict application, a set check that validates its role inputs
+check, a verdict application, a artifact check that validates its role inputs
 as one snapshot and writes the findings as a document, a directory publish
 and a minimal opener. A consumer with a domain check writes its own, as the
 analysis does for its four jobs. The shared check learns its role and partners from the
@@ -210,7 +210,7 @@ mission:
   outputs: [report, answers]
   reads: {boundary: required, runtime: order-only}
 - job: record-check
-  handler: commonplace.artifactrun.handlers.set_check
+  handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
   reads: {boundary: required, record-check:findings: optional}
@@ -293,7 +293,7 @@ The syntax, stated so that the loader does not invent it:
   fills a role nor is derived, running a standard handler over roles. Its
   `inputs` as a list name roles; as a mapping they take the full read
   grammar. Its `outputs` default to the handler's documented outputs,
-  `findings` for the set check, and are declared otherwise. The set check
+  `findings` for the artifact check, and are declared otherwise. The artifact check
   validates its role inputs as one snapshot, writes the findings, and
   judges nothing. A consumer's own code jobs, opening, acquisition,
   assembly and publication, keep today's full form.
@@ -322,7 +322,7 @@ The syntax, stated so that the loader does not invent it:
   naming their groups explicitly, as today.
 - **The frozen source.** A plan-level `frozen-source: <role>` names the
   member whose `source` field pins the source the run may inspect. The
-  loader passes it to every derived check, apply and set check, which read
+  loader passes it to every derived check, apply and artifact check, which read
   the field from that role's input; where the job has no such input, the
   loader adds the role as a required role input, and a derived apply uses
   the handed version when the verifier read the role. It is a plan declaration because it
@@ -431,7 +431,7 @@ deletes checks the opener and the analyst check carry until then.
 ## Sequence
 
 1. Standard handlers and the input accessor, proven by deleting the engine
-   tests' check handlers. Done 2026-10-09 for the check and the set check;
+   tests' check handlers. Done 2026-10-09 for the check and the artifact check;
    the directory publish and the minimal opener wait for step 3, since the
    toy plan has nothing to test them on. No analysis shape check qualified
    for the type without rule selection or run binding, so that part folds

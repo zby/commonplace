@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import start_run
-from commonplace.artifactrun.handlers import apply_verdict, set_check
+from commonplace.artifactrun.handlers import apply_verdict, artifact_check
 from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
 from commonplace.artifactrun.store import RunStore, digest
 from commonplace.lib.agentic_analysis.plan import expanded
@@ -104,7 +104,7 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
             to_verifier(a)
     assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
     p = parameters(a.coordinator.handout("report-verification"))
-    assert Path(p["record-check"]).read_text() == "# Set check\n\nnone\n"
+    assert Path(p["record-check"]).read_text() == "# Artifact check\n\nnone\n"
     a.coordinator.complete("report-verification", verdict(a))
     applied = judgments(a, "apply-report-verification")
     assert len(applied) == 5
@@ -181,12 +181,12 @@ def test_record_check_uses_pinned_content_not_projection_or_later_members(record
     a = records
     to_verifier(a)
     clean = code_attempt(a, "record-check")
-    baseline = set_check(clean)
+    baseline = artifact_check(clean)
     (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
     (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
-    assert set_check(clean) == baseline
+    assert artifact_check(clean) == baseline
     bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
-    findings = set_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
+    findings = artifact_check(code_attempt(a, "record-check", {"runtime": bad}))["findings"].decode()
     assert "Runtime account" in findings
     assert "synthesis" not in findings and "overview" not in findings
 
@@ -195,7 +195,7 @@ def test_handed_record_check_failure_cannot_be_ignored(records):
     a = records
     to_verifier(a)
     a.coordinator.complete("report-verification", verdict(a))
-    attempt = code_attempt(a, "apply-report-verification", {"record-check-seen": b"# Set check\n\n- runtime.md: fixture failure\n"})
+    attempt = code_attempt(a, "apply-report-verification", {"record-check-seen": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
     apply_verdict(attempt)
     result = attempt.judgments({}, 100, "scripted")
     assert len(result) == 1 and result[0]["outcome"] == "refused"
@@ -244,4 +244,4 @@ def test_source_drift_is_a_record_check_finding(records):
     to_verifier(a)
     attempt = code_attempt(a, "record-check")
     (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
-    assert "does not hold exactly" in set_check(attempt)["findings"].decode()
+    assert "does not hold exactly" in artifact_check(attempt)["findings"].decode()

@@ -175,7 +175,7 @@ def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeyp
     ]
     monkeypatch.setattr(validate_notes, "validate_draft_in_role", lambda *a, **kw: findings)
     assert validate_notes.check_role_draft(
-        tmp_path / "draft.md", directory=tmp_path / "set", role="main", repo_root=tmp_path,
+        tmp_path / "draft.md", directory=tmp_path / "artifact", role="main", repo_root=tmp_path,
     ) == 1
     output = capsys.readouterr().out
     assert "absent" not in output

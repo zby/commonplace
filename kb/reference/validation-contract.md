@@ -89,7 +89,7 @@ In JSON, `analysed_artifacts` uses the directory path and full type-spec path;
 member diagnostics use the member's path. The existing `files_analysed` field
 counts these validation units. Explicit member-file validation checks only
 that file. A workflow calls `ValidationRun.validate(directory)` to check the
-set without starting traversal; repeated requests reuse results and active
+artifact without starting traversal; repeated requests reuse results and active
 cycles fail.
 
 The analysis set's boundary is a member and declares its sources. Each

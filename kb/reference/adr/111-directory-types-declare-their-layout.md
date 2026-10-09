@@ -11,6 +11,7 @@ status: accepted
 **Amends:** [ADR 095](./095-directory-artifacts-add-shared-set-validation.md): the layout, not the schema, owns membership; the schema keeps the manifest's instance metadata and hashes.
 
 **Amended by:** [ADR 114](./114-directory-types-declare-what-a-role-verifies.md). A role may declare `verifies`, a relation kind the engine covers only by a judgment of the handed version; the sentence below that verifications are not members predates ADR 113.
+**Amended 2026-10-10:** the engine and validation vocabulary calls a directory-artifact instance an *artifact*, not a *set*: "artifact validation" below reads for "whole-set validation", and the standard handler is `artifact_check`. The type name `agentic-system-analysis-set` and the analysis types' "analysis set" prose keep the old word until a retained set is next regenerated and the type is relocated.
 
 ## Context
 
@@ -57,7 +58,7 @@ Layout and type-rule checks run over the members present even when the schema
 or a member fails. An incomplete working instance therefore gets its absent
 required members as findings and its relations checked as far as they reach.
 A working instance may carry a type-only manifest from its first write; it
-fails whole-set validation until it is finished, with no phase concept.
+fails artifact validation until it is finished, with no phase concept.
 
 The analysis set declares a layout with seven roles. The boundary is a
 member, written at `output/boundary.md` as the run's first member, and is the

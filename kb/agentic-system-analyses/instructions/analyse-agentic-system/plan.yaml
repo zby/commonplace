@@ -123,7 +123,7 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
 - job: record-check
-  handler: commonplace.artifactrun.handlers.set_check
+  handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
   instruction: jobs-engine/verify-records.md

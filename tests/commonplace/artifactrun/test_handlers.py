@@ -88,13 +88,13 @@ def test_a_verdict_without_limits_is_refused(coordinator: Coordinator) -> None:
     assert "## Limits is missing" in judged["verification"]["findings"]
 
 
-def set_checked(tmp_path, monkeypatch) -> Coordinator:
-    """A toy run with a set check over the record roles, under the report's contract."""
+def artifact_checked(tmp_path, monkeypatch) -> Coordinator:
+    """A toy run with a artifact check over the record roles, under the report's contract."""
     from tests.commonplace.artifactrun.support import CONTRACT, STANDARD
 
     def add(jobs):
-        jobs["set-check"] = {
-            "name": "set-check", "kind": "code", "handler": f"{STANDARD}.set_check", "criteria": ["toy"],
+        jobs["artifact-check"] = {
+            "name": "artifact-check", "kind": "code", "handler": f"{STANDARD}.artifact_check", "criteria": ["toy"],
             "outputs": ["findings"],
             "inputs": {"contract": {"address": "file", "source": CONTRACT},
                        **{role: {"address": "role", "source": role, "required": False}
@@ -104,26 +104,26 @@ def set_checked(tmp_path, monkeypatch) -> Coordinator:
     return custom_run(tmp_path, monkeypatch, add)
 
 
-def test_the_set_check_writes_findings_over_the_members(tmp_path, tmp_library, monkeypatch) -> None:
+def test_the_artifact_check_writes_findings_over_the_members(tmp_path, tmp_library, monkeypatch) -> None:
     from commonplace.artifactrun import current_outputs
-    from commonplace.artifactrun.handlers import set_check
+    from commonplace.artifactrun.handlers import artifact_check
     from commonplace.artifactrun.run import CodeAttempt, Resolved
     from tests.commonplace.artifactrun.support import as_member
 
-    c = set_checked(tmp_path, monkeypatch)
+    c = artifact_checked(tmp_path, monkeypatch)
     c.through_records()
-    assert current_outputs(c.run_dir, "set-check") == {"findings": b"# Set check\n\nnone\n"}
+    assert current_outputs(c.run_dir, "artifact-check") == {"findings": b"# Artifact check\n\nnone\n"}
     run = Run(RunStore(c.run_dir))
-    attempt = run.latest_completed("set-check")["id"]
-    assert not [j for j in run.judgments if j["attempt"] == attempt], "the set check judges nothing"
+    attempt = run.latest_completed("artifact-check")["id"]
+    assert not [j for j in run.judgments if j["attempt"] == attempt], "the artifact check judges nothing"
 
-    # The engine runs the set check only on accepted members; a snapshot
+    # The engine runs the artifact check only on accepted members; a snapshot
     # holding a failing report shows what it writes.
-    job = run.jobs.job("set-check")
+    job = run.jobs.job("artifact-check")
     pins = {name: run.resolve(name, job.inputs) for name in job.inputs}
     pins["report"] = Resolved("v", as_member("report", "REFUSE\n").encode(), "report", "report")
-    findings = set_check(CodeAttempt(run, job, pins))["findings"].decode()
-    assert findings.startswith("# Set check\n\n- report.md: ") and "refused pattern REFUSE" in findings
+    findings = artifact_check(CodeAttempt(run, job, pins))["findings"].decode()
+    assert findings.startswith("# Artifact check\n\n- report.md: ") and "refused pattern REFUSE" in findings
 
 
 def vetoed(check) -> list[str]:

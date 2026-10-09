@@ -12,7 +12,7 @@ language, and the layout does not supply one.
 Since d17a53d4a (2026-10-09) the analysis runs from a compact plan, and
 the handlers named below are gone. The three apply handlers are the
 standard `artifactrun.handlers.apply_verdict`; the record check is the
-standard `set_check`, which writes `# Set check`; the record-check gate,
+standard `artifact_check`, which writes `# Artifact check`; the record-check gate,
 the cited-records feedback (`_feedback`) and record preservation
 (`_check_analyst`) are the declared checks `record_check_gate`,
 `cited_records` and `preserved_records`. The candidate is built by

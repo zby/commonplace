@@ -347,7 +347,7 @@ the handed profile input is named by its role, and the nine jobs that no
 longer read the opening metadata no longer declare it. The four copies,
 about 340 lines, became a 129-line helper plus per-job checks; the package
 shrank by 76 lines, less than estimated, because the helper keeps
-docstrings and also serves the record set check.
+docstrings and also serves the record-check job.
 
 ## Refusal and correction protocol
 
@@ -391,7 +391,7 @@ engine's reuse modules (2026-10-09):
 - `commonplace.artifactrun`, the engine. Its scheduling knows nothing of
   validation, Git or files outside its store. Its reuse modules serve any
   consumer of a typed artifact: the compact-plan loader (`compact`), the
-  standard check, verdict application and set check (`handlers`), candidate
+  standard check, verdict application and artifact check (`handlers`), candidate
   checks and the correction protocol (`checks`), frozen external sources and
   their acquisition (`sources`), the journaled directory install
   (`effects`), commit-bound worktrees and branch-and-merge transfer

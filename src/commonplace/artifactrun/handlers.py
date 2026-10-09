@@ -279,15 +279,15 @@ def apply_verdict(attempt: CodeAttempt) -> Mapping[str, bytes]:
     return {}
 
 
-SET_CHECK_HEADING = "# Set check"
+ARTIFACT_CHECK_HEADING = "# Artifact check"
 
 
-def set_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
+def artifact_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """Validate the role inputs as one snapshot and write the findings; judge nothing.
 
     The findings include the artifact-level findings a role's check filters
     out, so a verifier can read them. The output `findings` is a document
-    headed `# Set check` holding `none` or one `- ` line per finding.
+    headed `# Artifact check` holding `none` or one `- ` line per finding.
     """
     layout = attempt.layout
     members = {}
@@ -313,5 +313,5 @@ def set_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
                     if not finding.absent and not finding.info]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:
         reasons.append(f"[artifact] artifact input cannot be checked: {exc}")
-    text = f"{SET_CHECK_HEADING}\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
+    text = f"{ARTIFACT_CHECK_HEADING}\n\n" + ("\n".join(f"- {reason}" for reason in reasons) or "none") + "\n"
     return {"findings": text.encode("utf-8")}

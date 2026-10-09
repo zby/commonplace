@@ -42,7 +42,7 @@ INPUT_RENAMES = {
 }
 STANDARD = {"check": "commonplace.artifactrun.handlers.check",
             "apply": "commonplace.artifactrun.handlers.apply_verdict",
-            "record-check": "commonplace.artifactrun.handlers.set_check"}
+            "record-check": "commonplace.artifactrun.handlers.artifact_check"}
 
 
 def job_name(name: str) -> str:
