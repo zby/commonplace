@@ -101,9 +101,9 @@ every member once it pins any, that no record is declared twice, the
 overview's amendment index against the reconciliation, the profile's
 comparison references, the verifications' Blockers and Limits lists and
 each limit's trace into the synthesis, and that every member's quotations
-resolve against the boundary's frozen source. A verification document's
-`verifies` field names its stage and must match its role; the role's
-layout `verifies` names the roles its verdict settles (ADR 114).
+resolve against the boundary's frozen source. A verification's role names
+its stage; the role's layout `verifies` names the roles its verdict settles
+(ADR 114).
 
 A published set is frozen: a correction is a new run, and the run's earlier
 versions, answers, attempts, judgments and prompts are never published.

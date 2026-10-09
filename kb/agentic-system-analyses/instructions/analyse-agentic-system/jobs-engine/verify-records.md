@@ -8,7 +8,7 @@ type: types/instruction.md
 Judge whether the reconciled records support a source-grounded bounded account, distinguishing material blockers from local limits.
 
 Judge exactly the supplied `boundary`, `runtime`, `memory`, `epistemic`,
-`reconciliation` and `record-check`, with `verifies: records`.
+`reconciliation` and `record-check`.
 
 On a later attempt, read your previous verification and the supplied
 `runtime-answers`, `memory-answers` and `epistemic-answers`, then judge the

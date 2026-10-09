@@ -307,22 +307,17 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
 
 
 def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
-    """Stage identity, list grammar and carried limits; meaning remains review."""
+    """List grammar and carried limits; meaning remains review."""
     from commonplace.lib.note_parser import section
 
     findings = []
     synthesis = documents.get("synthesis")
     limitations = record_references(section(synthesis.body, "Limitations")) if synthesis else set()
-    for name, stage in (("record-verification", "records"),
-                        ("profile-verification", "profile"),
-                        ("synthesis-verification", "synthesis")):
+    for name in ("record-verification", "profile-verification", "synthesis-verification"):
         document = documents.get(name)
         if document is None:
             continue
         path = layout.path(name)
-        actual = (document.frontmatter or {}).get("verifies")
-        if actual != stage:
-            findings.append(Finding(name, f"{path}: verifies {actual!r} does not match {stage!r}"))
         for title in ("Blockers", "Limits"):
             text = section(document.body, title).strip()
             if text == "none":
@@ -336,7 +331,7 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
                                         repair=f"write none or one '- ' entry per {title.lower()} finding; indent continuation lines"))
                 continue
             entries = re.split(r"(?m)^- ", text)[1:]
-            if title == "Blockers" and stage == "records":
+            if title == "Blockers" and name == "record-verification":
                 for entry in entries:
                     if not re.match(r"(?:runtime|memory|epistemic|reconciliation): +\S", entry):
                         findings.append(Finding(name, f"{path}: record blocker has no report addressee",

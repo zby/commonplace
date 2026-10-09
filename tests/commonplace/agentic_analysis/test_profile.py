@@ -63,8 +63,8 @@ def synthesis(a, limitations="none", **changes):
                    f"## Limitations\n\n{limitations}\n")
 
 
-def verdict(a, stage, blockers="none", limits="none", **changes):
-    fields = identity(a, "agentic-system-verification", verifies=stage)
+def verdict(a, blockers="none", limits="none", **changes):
+    fields = identity(a, "agentic-system-verification")
     fields.update(changes)
     return encoded(fields, "# Example System verification\n\n## Verification\n\n"
                    "Scripted fixture only; no analytical verification was performed.\n\n"
@@ -98,8 +98,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
         b"### Operative objects\n\n#### RT-OBJ-store\n\nLabel: Store\n\nSRC-1 fixes the fixture store.\n",
     )
     if stage == "synthesis":
-        snapshot.update({name: verdict(a, kind) for name, kind in
-                         (("record-verification", "records"), ("profile-verification", "profile"))})
+        snapshot.update({name: verdict(a) for name in ("record-verification", "profile-verification")})
     if apply:
         snapshot[subject] = profile(a) if stage == "profile" else synthesis(a)
     output = run.jobs.job(role).outputs[0]
@@ -137,18 +136,16 @@ def test_valid_content_is_accepted_with_only_declared_relations(opened, stage, h
 
 
 @pytest.mark.parametrize("stage,handler", [("profile", apply_verdict), ("synthesis", apply_verdict)])
-@pytest.mark.parametrize("defect", ["identity", "grammar", "wrong-stage", "citation", "utf8"])
+@pytest.mark.parametrize("defect", ["identity", "grammar", "citation", "utf8"])
 def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
     a = opened
-    data = verdict(a, stage)
+    data = verdict(a)
     if defect == "identity":
-        data = verdict(a, stage, **{"reviewed-boundary": "wrong"})
+        data = verdict(a, **{"reviewed-boundary": "wrong"})
     elif defect == "grammar":
-        data = verdict(a, stage, blockers="a prose blocker is invalid")
-    elif defect == "wrong-stage":
-        data = verdict(a, "records")
+        data = verdict(a, blockers="a prose blocker is invalid")
     elif defect == "citation":
-        data = verdict(a, stage, blockers="- [MEM-OBJ-unhanded](memory.md#mem-obj-unhanded) is unsupported.")
+        data = verdict(a, blockers="- [MEM-OBJ-unhanded](memory.md#mem-obj-unhanded) is unsupported.")
     else:
         data = b"\xff"
     ctx = attempt(a, stage, data, apply=True)
@@ -165,7 +162,7 @@ def test_invalid_verdict_refuses_only_candidate(opened, stage, handler, defect):
 @pytest.mark.parametrize("blockers", ["none", "- RT-OBJ-store: materially unsupported conclusion; a caveat cannot contain it.\n  Continued evidence explanation."])
 def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_gate(opened, stage, handler, blockers):
     a = opened
-    ctx = attempt(a, stage, verdict(a, stage, blockers=blockers), apply=True)
+    ctx = attempt(a, stage, verdict(a, blockers=blockers), apply=True)
     # Poison the mutable projection. The handler must not read it.
     path = a.coordinator.run_dir / "artifact" / ("memory-profile.md" if stage == "profile" else "synthesis.md")
     path.write_bytes(b"newer unhanded bytes")
@@ -188,7 +185,7 @@ def test_semantic_verdict_judges_exact_handed_subject_without_covering_blocked_g
 ])
 def test_correction_answers_use_exact_delivered_baseline(opened, stage, handler, apply):
     a = opened
-    data = verdict(a, stage) if apply else profile(a) if stage == "profile" else synthesis(a)
+    data = verdict(a) if apply else profile(a) if stage == "profile" else synthesis(a)
     refusal = b"## Blockers\n\n- SRC-1: reconsider the bounded finding.\n"
     ctx = attempt(a, stage, data, apply=apply, refusal=refusal, answers=b"- corrected: fixed it.\n", previous=data)
     handler(ctx)
@@ -230,7 +227,7 @@ def test_profile_revision_and_source_identity_are_invocation_guards(opened):
 
 def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
     a = opened
-    data = verdict(a, "synthesis", limits="- [RT-OBJ-store](runtime.md#rt-obj-store): missing inspection prevents complete store comparison.")
+    data = verdict(a, limits="- [RT-OBJ-store](runtime.md#rt-obj-store): missing inspection prevents complete store comparison.")
     ctx = attempt(a, "synthesis", data, apply=True)
     apply_verdict(ctx)
     valid, subject = judgments(ctx)
@@ -249,8 +246,7 @@ def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):
 def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_role):
     a = opened
     ctx = attempt(a, "synthesis", synthesis(a))
-    data = verdict(a, "records" if prior_role == "record-verification" else "profile",
-                   limits="- [RT-OBJ-store](runtime.md#rt-obj-store): incomplete store inspection prevents complete comparison.")
+    data = verdict(a, limits="- [RT-OBJ-store](runtime.md#rt-obj-store): incomplete store inspection prevents complete comparison.")
     ctx._pins[prior_role] = Resolved(hashlib.sha256(data).hexdigest(), data, prior_role)
     check(ctx)
     assert judgments(ctx)[0]["outcome"] == "refused"

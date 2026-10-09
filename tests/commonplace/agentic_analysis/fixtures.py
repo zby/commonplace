@@ -510,7 +510,6 @@ type: agentic-system-analyses/types/agentic-system-verification.md
 description: "Independent fixture verification of the accepted {stage} at the frozen boundary"
 run-id: {RUN_ID}
 reviewed-boundary: {revision}
-verifies: {stage}
 ---
 
 # Example System {stage} verification

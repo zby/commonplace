@@ -99,7 +99,7 @@ verifier must say about a structural failure. Those are layer 3.
 ### The verdict language
 
 The verification type ([agentic-system-verification](../../agentic-system-analyses/types/agentic-system-verification.md))
-fixes the document: frontmatter `verifies: records | profile | synthesis`;
+fixes the document: its role names the stage, and it has the
 sections `## Verification`, `## Blockers`, `## Limits`. Blockers and Limits
 are each exactly `none` or a Markdown list with one `- ` entry per finding,
 continuation lines indented. A blocker is a defect that must be repaired

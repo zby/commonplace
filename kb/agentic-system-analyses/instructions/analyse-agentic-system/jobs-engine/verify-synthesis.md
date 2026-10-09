@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Give public readers an independent judgment of the synthesis's supported conclusions and the limitations that constrain them.
 
-Judge the exact supplied `synthesis`, with `verifies: synthesis`, against
+Judge the exact supplied `synthesis` against
 `boundary`, `runtime`, `memory`, `epistemic`, `reconciliation`,
 `record-verification` and `profile-verification`. Assess `synthesis-answers`
 and `synthesis-refusal`, when supplied, afresh, not as established repairs or

@@ -5,7 +5,7 @@ allOf:
     properties:
       frontmatter:
         type: object
-        required: [type, description, run-id, reviewed-boundary, verifies]
+        required: [type, description, run-id, reviewed-boundary]
         properties:
           type:
             const: agentic-system-analyses/types/agentic-system-verification.md
@@ -17,8 +17,6 @@ allOf:
           reviewed-boundary:
             type: string
             minLength: 1
-          verifies:
-            enum: [records, profile, synthesis]
         additionalProperties: false
       headings:
         type: array

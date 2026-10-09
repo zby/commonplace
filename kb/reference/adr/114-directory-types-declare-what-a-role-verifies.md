@@ -88,10 +88,13 @@ not cite, and the two lists would then diverge for a reason.
 engine semantics and one without is what the one directory type needs; a
 third kind with its own coverage rule can be added when a type needs it.
 
-**Left open:** whether the verification document keeps its own `verifies`
-frontmatter field naming the stage, now that the role's layout entry says
-what it verifies. The type rule checks the field against the role today;
-deriving it would remove one declaration.
+**A `verifies` frontmatter field naming the verification's stage.** The
+verification document carried `verifies: records | profile | synthesis`, and
+the type rule checked it against the role. Dropped: the role already names
+the stage, the field's only check was that it repeated the role, and it
+shared its name with the layout relation while meaning something else. A
+verification in progress that still carries the field fails the schema and
+is rewritten without it.
 
 ## Consequences
 

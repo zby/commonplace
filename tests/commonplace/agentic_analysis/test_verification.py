@@ -59,8 +59,6 @@ def document(a, kind, body, **changes):
     fields = {"type": f"agentic-system-analyses/types/agentic-system-{role_type}.md",
               "description": f"Example System {kind} at the frozen local fixture boundary",
               "run-id": a.coordinator.run_dir.name, "reviewed-boundary": a.source()["revision"]}
-    if kind == "verification":
-        fields["verifies"] = "records"
     fields.update(changes)
     return "---\n" + yaml.safe_dump(fields) + f"---\n\n# Example System {kind}\n\n" + body + "\n"
 
@@ -134,7 +132,6 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
     ("- boundary: change target.", {}, "addressee"),
     ("- runtime:", {}, "finding"),
     ("not a list", {}, "Markdown list"),
-    ("none", {"verifies": "profile"}, "verifies"),
     ("none", {"reviewed-boundary": "b" * 40}, "identity"),
 ])
 def test_malformed_verdict_never_judges_records(records, blockers, changes, reason):

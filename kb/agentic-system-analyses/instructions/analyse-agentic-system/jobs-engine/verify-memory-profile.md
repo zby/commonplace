@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Give comparison consumers an independent judgment of whether the handed profile's values and coverage assessments are supported.
 
-Judge the exact supplied `memory-profile`, with `verifies: profile`, against
+Judge the exact supplied `memory-profile` against
 `boundary`, `runtime`, `memory`, `epistemic` and `reconciliation`. Assess
 `memory-profile-answers` and `memory-profile-refusal`, when supplied, as
 arguments, not as established defects or repairs.

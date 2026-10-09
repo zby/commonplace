@@ -162,14 +162,13 @@ def test_complete_requires_four_new_members_and_identity_is_from_boundary():
     assert new <= {f.role for f in findings if f.absent}
 
 
-@pytest.mark.parametrize("name,stage", [("record-verification", "records"),
-    ("profile-verification", "profile"), ("synthesis-verification", "synthesis")])
-def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name, stage):
+@pytest.mark.parametrize("name", ["record-verification", "profile-verification", "synthesis-verification"])
+def test_limits_are_a_relation_owned_by_synthesis(tmp_path, name):
     layout = analysis_layout()
     documents = {
         name: document("# Judgment\n\n## Verification\nChecked.\n\n## Blockers\nnone\n\n## Limits\n"
                        "- [RT-OBJ-store](runtime.md#rt-obj-store): incomplete inspection.\n"
-                       "  Withhold complete coverage.\n", verifies=stage),
+                       "  Withhold complete coverage.\n"),
         "synthesis": document("# Synthesis\n\n## Bounded synthesis\nAccount.\n\n## Limitations\nnone\n"),
         "runtime": document("# Runtime\n\n## Shared records\n#### RT-OBJ-store\n\nLabel: Store\n"),
     }
@@ -210,12 +209,11 @@ def test_context_parse_failure_is_explicit_and_nonwriting(draft_artifact):
     assert not (output / "body.md").exists()
 
 
-def test_verification_stage_and_grammar_are_role_findings(tmp_path):
-    docs = {"record-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n", verifies="profile")}
+def test_verification_grammar_findings_are_role_findings(tmp_path):
+    docs = {"record-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n")}
     findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
-    assert len(findings) == 3
+    assert len(findings) == 2
     assert all(f.role == "record-verification" for f in findings)
-    assert any("verifies" in f.message for f in findings)
     assert any("addressee" in f.message for f in findings)
     assert any("Limits" in f.message for f in findings)
 

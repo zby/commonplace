@@ -25,7 +25,6 @@ governs the records a verification cites and judges.
 | `description` | Yes | What was verified and at which boundary |
 | `run-id` | Yes | The run's ID |
 | `reviewed-boundary` | Yes | The run's immutable revision or capture identity |
-| `verifies` | Yes | `records`, `profile` or `synthesis` |
 
 ## Verification
 
@@ -87,7 +86,6 @@ type: agentic-system-analyses/types/agentic-system-verification.md
 description: "Record verification of {system} at {boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 reviewed-boundary: "{immutable revision or capture identity}"
-verifies: records
 ---
 
 # {System} record verification
