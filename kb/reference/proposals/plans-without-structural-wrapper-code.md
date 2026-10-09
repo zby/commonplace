@@ -469,7 +469,14 @@ deletes checks the opener and the analyst check carry until then.
    boundary, records, sources. Independent of step 4. The first two parts
    are done 2026-10-09: the toy prompts are byte-identical, the ten
    mission files hold about 2,900 words from 4,950, and the plan is 219
-   lines. The contract moves are in progress.
+   lines. The contract moves are done the same day: the boundary contract
+   is in the boundary type; the sources contract is deleted, its
+   declaration rules and evidence-layer table in the boundary type, its
+   inspection and quotation rules in the worker rules, and its
+   evidence-interpretation rules, what a finding may claim from its
+   evidence, in the records contract; the records contract is referred to
+   from the seven record-citing member types; no worker receives the set
+   type. One analysis to publication remains, the operator's call.
 
 ## Not taken
 
