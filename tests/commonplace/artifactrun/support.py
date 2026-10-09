@@ -379,7 +379,9 @@ class Coordinator:
 
     def write(self, handout: Handout, primary: str, **auxiliary: str) -> None:
         names = list(handout.outputs)
-        handout.outputs[names[0]].write_text(as_member(MODEL_ROLES[handout.job], primary), encoding="utf-8")
+        # Toy jobs write toy members; another consumer's tests write their own documents.
+        text = as_member(MODEL_ROLES[handout.job], primary) if handout.job in MODEL_ROLES else primary
+        handout.outputs[names[0]].write_text(text, encoding="utf-8")
         handout.worker_runtime.write_text('{"model": "test-model", "effort": "medium"}\n', encoding="utf-8")
         for name, text in auxiliary.items():
             handout.outputs[name].write_text(text, encoding="utf-8")
