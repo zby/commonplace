@@ -392,10 +392,14 @@ form and relations, not analytical truth.
 
 - Step 1: the engine tests' toy plan runs to publication with no check
   handler outside the engine's reuse modules.
-- Step 2: the toy plan's apply job is the standard handler, and a test
-  shows a verdict with one blocker refuses the addressed subject, leaves
-  the others unsettled, and a subject failing validation is refused with
-  Blockers `none`.
+- Step 2: the toy plan's apply job is the standard handler, and tests
+  show a verdict with one blocker refuses the addressed subject and leaves
+  the others unsettled; a verdict-dependent finding refuses its subject
+  with Blockers `none`; a finding the subject shows on its own is left to
+  its check, and a blocker-free verdict still accepts that subject over
+  the `verifies` relation, since the verdict records what the verifier
+  judged and structural currency is the check's business. Done
+  2026-10-09.
 - Step 3: the loader's expansion of a compact analysis plan is equivalent
   to the hand-written plan, asserted by four tests. Equivalence is equality
   of each job's inputs, outputs and parameters after the renamings listed
