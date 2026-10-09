@@ -1,8 +1,8 @@
 ---
 type: types/type-spec.md
-name: agent-memory-analysis-report
+name: agentic-system-memory-report
 description: "Memory analyst's source-grounded findings and integration questions for one analysis run; the report is the set's memory member unchanged"
-schema: ./agent-memory-analysis-report.schema.yaml
+schema: ./agentic-system-memory-report.schema.yaml
 record-prefix: MEM-
 ---
 
@@ -19,7 +19,7 @@ identity, common fields, statuses and evidence interpretation.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `agentic-system-analyses/types/agent-memory-analysis-report.md` |
+| `type` | Yes | `agentic-system-analyses/types/agentic-system-memory-report.md` |
 | `description` | Yes | Subject and discriminating memory boundary |
 | `run-id` | Yes | The set's run ID |
 | `source-identity` | Yes | Exact repository or capture identity |
@@ -137,7 +137,7 @@ independently attest acceptance.
 
 ```markdown
 ---
-type: agentic-system-analyses/types/agent-memory-analysis-report.md
+type: agentic-system-analyses/types/agentic-system-memory-report.md
 description: "Memory mechanisms of {system} within {memory boundary}"
 run-id: AAS-YYYY-MM-DD-system-slug-token-nn
 source-identity: "{repository or capture identity}"

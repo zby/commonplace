@@ -25,7 +25,7 @@ layout:
       cites: [boundary, runtime, memory, epistemic]
     memory:
       path: memory.md
-      type: agentic-system-analyses/types/agent-memory-analysis-report.md
+      type: agentic-system-analyses/types/agentic-system-memory-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
       cites: [boundary, runtime, memory, epistemic]

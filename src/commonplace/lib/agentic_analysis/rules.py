@@ -110,7 +110,7 @@ def _agentic_reconciliation_amendment_rule(
         results.passes.append("reconciliation amendments: only identity supersessions")
 
 
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
@@ -150,7 +150,7 @@ def artifact_member_link_failures(path: Path, links: tuple[str, ...]) -> list[st
 
 @type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
@@ -172,7 +172,7 @@ def _agentic_plain_source_anchor_rule(
 
 @type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
@@ -191,7 +191,7 @@ def _artifact_member_link_rule(
 
 
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 def _record_prefix_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
@@ -214,7 +214,7 @@ def _record_prefix_rule(
         results.passes.append(f"record declarations: every declaration uses {prefix}")
 
 
-@type_rule("agentic-system-analyses/types/agent-memory-analysis-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 def _memory_report_pending_check_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

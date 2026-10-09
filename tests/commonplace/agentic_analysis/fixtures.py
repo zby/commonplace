@@ -160,7 +160,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
     """The specialist's report, which is the memory member unchanged: one
     `MEM-` record, one annotated seed, one quote."""
     values = {
-        "type": "agentic-system-analyses/types/agent-memory-analysis-report.md",
+        "type": "agentic-system-analyses/types/agentic-system-memory-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "run-id": RUN_ID,
         "source-identity": SOURCE,

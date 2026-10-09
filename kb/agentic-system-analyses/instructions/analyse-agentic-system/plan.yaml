@@ -35,8 +35,8 @@ criteria:
   reports:
     runtime-type: agentic-system-analyses/types/agentic-system-runtime-report.md
     runtime-schema: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml
-    memory-type: agentic-system-analyses/types/agent-memory-analysis-report.md
-    memory-schema: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml
+    memory-type: agentic-system-analyses/types/agentic-system-memory-report.md
+    memory-schema: agentic-system-analyses/types/agentic-system-memory-report.schema.yaml
     epistemic-type: agentic-system-analyses/types/agentic-system-epistemic-report.md
     epistemic-schema: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml
   reconciliation:

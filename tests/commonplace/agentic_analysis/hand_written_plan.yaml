@@ -25,8 +25,8 @@ criteria:
   reports:
     runtime-type: agentic-system-analyses/types/agentic-system-runtime-report.md
     runtime-schema: agentic-system-analyses/types/agentic-system-runtime-report.schema.yaml
-    memory-type: agentic-system-analyses/types/agent-memory-analysis-report.md
-    memory-schema: agentic-system-analyses/types/agent-memory-analysis-report.schema.yaml
+    memory-type: agentic-system-analyses/types/agentic-system-memory-report.md
+    memory-schema: agentic-system-analyses/types/agentic-system-memory-report.schema.yaml
     epistemic-type: agentic-system-analyses/types/agentic-system-epistemic-report.md
     epistemic-schema: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml
   reconciliation:
@@ -131,7 +131,7 @@ jobs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/analyse-memory.md}
     opening: {address: output, source: 'open:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-report.md}
     boundary: {address: role, source: boundary, required: true}
     refusal: {address: refusal, source: memory, required: false}
     runtime: {address: role, source: runtime, order-only: true}
@@ -195,7 +195,7 @@ jobs:
     opening: {address: output, source: 'open:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-report.md}
     epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
     boundary: {address: role, source: boundary, required: true}
@@ -241,7 +241,7 @@ jobs:
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
-    memory-contract: {address: file, source: agentic-system-analyses/types/agent-memory-analysis-report.md}
+    memory-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-report.md}
     epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     reconciliation-contract: {address: file, source: agentic-system-analyses/types/agentic-system-reconciliation-report.md}
     report-verification-contract: {address: file, source: agentic-system-analyses/types/agentic-system-verification.md}

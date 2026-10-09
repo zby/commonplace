@@ -36,7 +36,7 @@ PARAMETERS = {
 }
 IDENTITY = "https://github.com/example/system"
 REPORT_TYPES = {
-    "runtime": "agentic-system-runtime-report", "memory": "agent-memory-analysis-report",
+    "runtime": "agentic-system-runtime-report", "memory": "agentic-system-memory-report",
     "epistemic": "agentic-system-epistemic-report",
 }
 KINDS = ["Components", "Operative objects", "Routes", "Claims", "Evidenced absences", "Behavioral-authority paths"]
