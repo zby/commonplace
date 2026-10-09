@@ -116,8 +116,7 @@ use its controlled values rather than the set's conclusion-status vocabulary.
 the analysis question, assessed and unassessed route families, each
 missing item of evidence with the conclusion it prevents, and the
 system's knowledge-production or warrant claims by `CLM-*` ID, or `none
-found`. It cites the Source register supplied in the boundary input and does
-not copy it; code later copies that register into the overview.
+found`. It cites the boundary's Source register and does not copy it.
 
 Retain a compact coverage table: entry point or operation, source path,
 covering supplied or new IDs, or exclusion/uninspected reason and conclusion

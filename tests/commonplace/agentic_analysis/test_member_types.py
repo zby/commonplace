@@ -153,24 +153,6 @@ Conclusion.
 Record. Evidence: SRC-1.
 '''
 
-REVIEW_TEXT = f'''---
-type: agentic-system-analyses/types/generated-review.md
-description: "Example System's mechanism in one sentence."
-generated-by: analyse-agentic-system
-analysis-run: {RUN_ID}
-source-identity: https://example.invalid/example-system
-reviewed-revision: "{REVISION}"
-analysis-artifact: kb/agentic-system-analyses/retained/{RUN_ID}/ARTIFACT.yaml
-analysis-artifact-sha256: "{'b' * 64}"
----
-
-# Example System
-
-Evidence basis: source at `{REVISION}`, inspected 2026-09-28.
-
-Body.
-'''
-
 RECONCILIATION_TEXT = f'''---
 type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
 description: "Reconciled Example System records at the frozen source boundary"
@@ -260,13 +242,3 @@ def test_reconciliation_report_validates_and_has_one_section(tmp_path: Path) -> 
     assert validate(tmp_path, "reconciliation.md", RECONCILIATION_TEXT).fails == []
     extra = RECONCILIATION_TEXT + "\n## Open questions\n\nMEM-OBJ-store needs a second look.\n"
     assert validate(tmp_path, "reconciliation.md", extra).fails
-
-
-def test_generated_review_validates_and_pins_the_manifest(tmp_path: Path) -> None:
-    results = validate(tmp_path, "example-system.md", REVIEW_TEXT)
-    assert results.fails == []
-    assert results.note_type == "generated-review"
-    broken = REVIEW_TEXT.replace("/ARTIFACT.yaml", "/overview.md")
-    assert any("frontmatter" in failure for failure in validate(tmp_path, "example-system.md", broken).fails)
-    no_basis = REVIEW_TEXT.replace("Evidence basis: ", "Basis: ")
-    assert validate(tmp_path, "example-system.md", no_basis).fails != []

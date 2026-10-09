@@ -22,12 +22,10 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     }
     collection = LIBRARY / "agentic-system-analyses"
     contracts = {collection / "COLLECTION.md"}
-    # Historical projection and run-state schemas are not execution inputs,
-    # and the artifact type is fixed for the run rather than declared.
-    historical = ("generated-review.", "agentic-system-analysis-run-state.")
+    # The artifact type is fixed for the run rather than declared.
     contracts.update(
         path for path in (collection / "types").iterdir()
-        if not path.name.startswith(historical) and path != LIBRARY / jobs.type_spec
+        if path != LIBRARY / jobs.type_spec
     )
     assert LIBRARY / jobs.type_spec not in declared
     contracts.update((collection / "instructions").glob("agentic-analysis-*.md"))
@@ -35,7 +33,6 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     contracts.update(workers.glob("*.md"))
     assert contracts <= declared
     assert all(path.is_file() for path in declared)
-    assert not any(path.name.startswith(historical) for path in declared)
     for job in jobs.jobs:
         if isinstance(job, ModelJob):
             instruction = LIBRARY / job.inputs[job.instruction].source

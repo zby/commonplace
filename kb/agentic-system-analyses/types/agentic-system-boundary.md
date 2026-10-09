@@ -9,8 +9,8 @@ schema: ./agentic-system-boundary.schema.yaml
 
 The first result of an analysis run, written by the boundary job and read by
 every later job. It fixes what the run analyses and from which frozen evidence.
-Code copies its boundary fields into the overview's frontmatter and its two
-sections into the overview unchanged. The
+The overview repeats its boundary fields in its frontmatter and links to it
+without copying its sections. The
 [boundary contract](../instructions/agentic-analysis-boundary.md) gives the
 meaning of the fields, what Boundary and evidence must state and how the
 Source register is built; the
