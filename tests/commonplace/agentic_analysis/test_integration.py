@@ -53,7 +53,7 @@ def proof(tmp_path, monkeypatch):
         (destination / name).write_bytes(data)
     parameters = {"system": "Example", "source": "fixture", "source-identity": "identity"}
     view = {"declaration": {"plan": str(declaration), "plan_sha256": sha256(declaration.read_bytes()).hexdigest(),
-                            "sha256": sha256(b"an expansion the engine fixed\n").hexdigest(),
+                            "declaration_sha256": sha256(b"an expansion the engine fixed\n").hexdigest(),
                             "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
             "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
     receipt = {"published": True, "destination": str(destination), "members": effects.hashes(files),
@@ -214,4 +214,4 @@ def test_a_real_compact_plan_s_fixed_identity_names_the_shipped_file(tmp_path, m
     shipped = library / PLAN
     assert fixed["plan"] == str(shipped.resolve())
     assert fixed["plan_sha256"] == sha256(shipped.read_bytes()).hexdigest()
-    assert fixed["sha256"] != fixed["plan_sha256"], "the fixed declaration is the expansion, not the file"
+    assert fixed["declaration_sha256"] != fixed["plan_sha256"], "the fixed declaration is the expansion, not the file"

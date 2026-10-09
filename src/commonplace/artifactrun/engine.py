@@ -307,12 +307,12 @@ def _inspect(run: Run) -> dict:
 def _declaration_identity(run: Run) -> dict:
     """Which plan and type the run fixed at start, by path and content digest.
 
-    `plan_sha256` is the plan file as shipped; `sha256` is the declaration the
+    `plan_sha256` is the plan file as shipped; `declaration_sha256` is the declaration the
     run fixed, which differs for a compact plan the engine expanded.
     """
     metadata = run.store.read_metadata()
     return {"plan": metadata["plan"], "plan_sha256": metadata.get("plan_sha256"),
-            "sha256": digest(metadata["declaration"].encode("utf-8")),
+            "declaration_sha256": digest(metadata["declaration"].encode("utf-8")),
             "type_spec": metadata["type_spec"], "type_sha256": digest(metadata["type"].encode("utf-8"))}
 
 
