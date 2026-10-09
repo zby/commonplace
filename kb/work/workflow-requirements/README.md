@@ -99,7 +99,7 @@ module fixes, and what the analysis consumer's types, handlers and
 instructions add: the verdict language, the two routing policies, the
 record-check gate and the limits rule. It separates the parts a generic
 apply handler could take as protocol from this consumer's own content, for
-the [plans-without-consumer-code](../../reference/proposals/plans-without-consumer-code.md)
+the [plans-without-consumer-code](../../reference/proposals/plans-without-structural-wrapper-code.md)
 design.
 
 ## Related

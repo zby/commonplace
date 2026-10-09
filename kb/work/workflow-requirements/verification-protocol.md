@@ -3,7 +3,7 @@
 What the analysis workflow does today when a candidate is refused, when a
 producer answers a refusal, and when a verifier judges other members. This
 is a description of the code and instructions on 2026-10-09, written so
-that the [plans-without-consumer-code](../../reference/proposals/plans-without-consumer-code.md)
+that the [plans-without-consumer-code](../../reference/proposals/plans-without-structural-wrapper-code.md)
 design can say which parts are a reusable protocol, which are policy a
 consumer chooses, and which are this consumer's alone. Sol's review of
 that proposal asked for this: a standard apply handler assumes a verdict
