@@ -52,7 +52,8 @@ expected nonzero exits explicitly.
 | `acquire` | For the boundary: the exact Git source object acquisition froze, or JSON `null` when the boundary must establish a non-Git capture; JSON despite its `.md` extension |
 | `refusal` | Optional refusal report: refused version, identity, scope and findings |
 | `previous-boundary`, `previous-report`, `previous-reconciliation`, `previous-profile`, `previous-synthesis`, `previous-verification`, `previous-answers` | Prior completed outputs by identity, when supplied; not current inputs |
-| `validation-artifact`, `validation-role` | Intended artifact directory and role for content validation |
+| `artifact`, `role` | The run's artifact directory and the role you write, for content validation |
+| `command-path` | The prepared worktree's command directory; its commands, never a shared installation's |
 | `output`, `output-answers`, `problem` | Primary result, declared correction answers when supplied, or inability report |
 | `worker-runtime` | Path for the JSON runtime report: the `model` and `effort` your runtime states |
 | `workspace`, `scratch` | Per-attempt workspace and intermediate-file directory |
@@ -167,10 +168,9 @@ checkout as read-only. For a capture, read only its frozen contents.
 
 ## Check content and quotation
 
-Your hand-out names the content check command, from `command-path` in
-`opening`, the prepared worktree's command directory. If `command-path` is
-missing or the command is unavailable, write `problem`; do not use a shared
-installation as a substitute. Use each supplied value unchanged. Run commands separately and inspect every
+Your prompt gives the content check as a command to run as written. If the
+command is unavailable, write `problem`; do not use a shared installation as a
+substitute. Run commands separately and inspect every
 exit status, or chain dependent commands with `&&`. Pipelines require
 `set -o pipefail`. Retain stderr as well as stdout. Repair findings and rerun
 until the content check passes; do not report a check you did not execute.

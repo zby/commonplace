@@ -43,11 +43,11 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     assert REPO_ROOT / STATE_ROOT == collection / "state"
 
 
-def test_mission_files_leave_inputs_outputs_and_checks_to_the_template() -> None:
+def test_mission_files_leave_inputs_outputs_and_checks_to_the_prompt_section() -> None:
     """Step 5's criterion: a job instruction names the inputs its mission uses, never
-    an output, an answers file or the check command, which the template supplies."""
+    an output, an answers file or the check command, which the prompt section supplies."""
     workers = (LIBRARY / PLAN).parent / "jobs-engine"
-    missions = [path for path in workers.glob("*.md") if path.name not in ("follow-worker-rules.md", "handout.md")]
+    missions = [path for path in workers.glob("*.md") if path.name not in ("follow-worker-rules.md", "prompt-section.md")]
     assert missions
     for path in missions:
         text = path.read_text(encoding="utf-8")

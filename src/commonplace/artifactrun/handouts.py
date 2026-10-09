@@ -7,11 +7,11 @@ response to an invocation can retrieve the open hand-outs again.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.lib.directory_layout import Layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.reading_batches import (
     READ_BATCH_BYTES,
@@ -19,7 +19,7 @@ from commonplace.lib.reading_batches import (
     reading_ranges,
 )
 
-from .plan import HANDOUT_INPUT, PLACEHOLDER, ModelJob
+from .plan import HANDOUT_PREFIXES, PLACEHOLDER, PROMPT_SECTION_INPUT, ModelJob
 from .run import Run
 
 WORKER_RUNTIME = "worker-runtime.json"
@@ -47,42 +47,50 @@ def _substitute(value: str, values: Mapping[str, str], parameters: Mapping[str, 
     return PLACEHOLDER.sub(one, value)
 
 
-ANSWERS_MARKER = "[answers]"
-"""A template paragraph whose first line is this marker is kept only for jobs writing answers."""
+ABSENT_LINE = "absent"
+"""The value the frame prints for an optional input that is missing."""
+CONDITION = re.compile(r"\[([A-Za-z0-9][A-Za-z0-9_-]*)\]")
 
 
-def handout_slots(job: ModelJob, layout: Layout, type_spec: str, values: Mapping[str, str]) -> dict[str, str]:
-    """The values a hand-out template may name, for one model job.
+def prompt_line_names(job: ModelJob) -> set[str]:
+    """The `name = value` lines the frame prints for every attempt of `job`.
 
-    `values` are the job's substituted parameters; the validation slots
-    come from them, so a template naming one requires the parameter.
+    `previous-<output>` lines exist only on a retry, so they are only
+    conditions, never slots.
     """
-    slots = {"role": job.role or "", "member-type": layout.roles[job.role].type if job.role else "",
-             "set-type": type_spec, "output": job.outputs[0],
-             "answers": job.outputs[1] if len(job.outputs) > 1 else ""}
-    for name in ("validation-artifact", "validation-role"):
-        if name in values:
-            slots[name] = values[name]
-    return slots
+    names = {"job", "attempt", "run-id", "output", "problem", "worker-runtime", "workspace", "artifact", "scratch",
+             *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
+    names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
+    return names | ({"role"} if job.role else set())
 
 
-def render_handout(text: str, slots: Mapping[str, str], parameters: Mapping[str, str]) -> str:
-    """The template's section for one job: frontmatter dropped, `[answers]` paragraphs
-    kept only when the job writes answers, `{slot}` and `{param:<name>}` filled.
+def render_prompt_section(text: str, lines: Mapping[str, str], *, conditions: set[str] | None = None) -> str:
+    """The plan's prompt section filled from the frame's own lines.
 
-    An unknown placeholder raises KeyError naming it.
+    Frontmatter is dropped. A paragraph whose first line is `[<name>]` is
+    kept, without that line, only when the frame prints `<name>` with a
+    value other than `absent`. Every `{<name>}` is that line's value; an
+    unknown name raises KeyError. With `conditions`, the names some job of
+    the plan can print, a condition outside them and outside the frame's
+    `output-*` and `previous-*` families raises KeyError too: that is the
+    start-time check; at hand-out a missing condition drops its paragraph.
     """
     document, _ = parse_document(text)
     body = document.body if document is not None else text
     paragraphs = []
     for paragraph in body.strip().split("\n\n"):
         first, _, rest = paragraph.partition("\n")
-        if first.strip() == ANSWERS_MARKER:
-            if slots.get("answers"):
-                paragraphs.append(rest)
-            continue
+        condition = CONDITION.fullmatch(first.strip())
+        if condition:
+            name = condition.group(1)
+            if (conditions is not None and name not in lines and name not in conditions
+                    and not name.startswith(HANDOUT_PREFIXES)):
+                raise KeyError(name)
+            if lines.get(name, ABSENT_LINE) == ABSENT_LINE:
+                continue
+            paragraph = rest
         paragraphs.append(paragraph)
-    return _substitute("\n\n".join(paragraphs), slots, parameters)
+    return PLACEHOLDER.sub(lambda match: lines[match.group(1)], "\n\n".join(paragraphs))
 
 
 def _open(run: Run, job: ModelJob) -> Handout:
@@ -122,14 +130,15 @@ def _open(run: Run, job: ModelJob) -> Handout:
     worker_runtime = directory / WORKER_RUNTIME
     run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                   "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
-    values = {"job": job.name, "attempt": attempt, "run-id": store.run_dir.name}
+    values = {"job": job.name, **({"role": job.role} if job.role else {}),
+              "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
-    framed = {job.instruction, HANDOUT_INPUT}
+    framed = {job.instruction, PROMPT_SECTION_INPUT}
     values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name not in framed}
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
     values |= {"problem": str(problem), "worker-runtime": str(worker_runtime),
-               "workspace": f"{directory}/", "scratch": f"{scratch}/"}
+               "workspace": f"{directory}/", "artifact": str(store.artifact_dir), "scratch": f"{scratch}/"}
     previous = run.latest_completed(job.name)
     if previous is not None:
         for name, version in previous["outputs"].items():
@@ -138,11 +147,10 @@ def _open(run: Run, job: ModelJob) -> Handout:
             values[f"previous-{name}"] = str(path)
     instruction = paths[job.instruction]
     lines = [f"Follow {instruction} with:", *(f"{key} = {value}" for key, value in values.items())]
-    template = pins.get(HANDOUT_INPUT)
-    if template is not None and template.data is not None:
-        # The plan's template fills one section of the engine's frame.
-        slots = handout_slots(job, run.layout, run.type_spec, values)
-        lines += ["", render_handout(template.data.decode("utf-8"), slots, run.parameters)]
+    section = pins.get(PROMPT_SECTION_INPUT)
+    if section is not None and section.data is not None:
+        # The plan's section fills one part of the engine's frame, from the frame's own lines.
+        lines += ["", render_prompt_section(section.data.decode("utf-8"), values)]
     readable = [str(path) for name, path in paths.items() if path is not None and name not in framed]
     readable += [value for key, value in values.items() if key.startswith("previous-")]
     if readable:

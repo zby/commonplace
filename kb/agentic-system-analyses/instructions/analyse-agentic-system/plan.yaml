@@ -5,16 +5,17 @@
 # from the type's layout. Entries declare mission only: instruction, reads,
 # gates, attempts and the analysis's own checks. Every model job also
 # receives its member type, the types of the members it reads, the set type
-# and the hand-out template, which the engine renders into its prompt.
-# Instructions and the template are relative to this file; other file
+# and the prompt section, which the engine renders into its prompt.
+# Instructions and the prompt section are relative to this file; other file
 # inputs are library paths. Opening, acquisition,
 # assembly and publication are the analysis's own code jobs in the engine's
 # full form. Opening consumes the run parameters system, source-identity,
-# source and optional source-revision; assembly and publication are gated
+# source and optional source-revision; every model job prints system and
+# command-path, the prepared checkout's command directory; assembly and publication are gated
 # by the engine's coverage input.
 type_spec: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
-handout: jobs-engine/handout.md
+prompt-section: jobs-engine/prompt-section.md
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
@@ -63,7 +64,7 @@ inputs:
   opening: {address: output, source: 'open:metadata'}
 defaults:
   max_attempts: 3
-  parameters: {system: '{param:system}'}
+  parameters: {system: '{param:system}', command-path: '{param:command-path}'}
 jobs:
 - name: open
   kind: code

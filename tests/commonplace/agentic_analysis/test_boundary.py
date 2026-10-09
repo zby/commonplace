@@ -12,15 +12,16 @@ from commonplace.artifactrun import AttemptResult, judge
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
 from tests.commonplace.agentic_analysis.execution_fixtures import (
+    PARAMETERS,
+    candidate,
+    judgment,
+    parameters,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local-only acquisition fixture
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     boundary as boundary,  # noqa: PLC0414 - explicit fixture registration
-)
-from tests.commonplace.agentic_analysis.execution_fixtures import (
-    candidate,
-    judgment,
-    parameters,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local Git fixture
@@ -42,16 +43,18 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert "## Input reading batches" in h.prompt.read_text()
     assert p["refusal"] == "absent"
     assert p["output"] == str(h.outputs["boundary"])
-    assert p["validation-artifact"] == str(a.coordinator.run_dir / "artifact")
-    assert p["validation-role"] == "boundary"
+    assert p["artifact"] == str(a.coordinator.run_dir / "artifact")
+    assert p["role"] == "boundary"
+    assert p["command-path"] == PARAMETERS["command-path"]
     assert json.loads(Path(p["acquire"]).read_bytes()) == a.source()
     metadata = json.loads(Path(p["opening"]).read_bytes())
     assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
-    # The plan's template fills one section of the frame, for this job's role.
+    # The plan's prompt section fills one part of the frame, for this job's role.
     prompt = h.prompt.read_text()
     assert "You write the `boundary` member of this agentic-system analysis." in prompt
-    assert f"--artifact {a.coordinator.run_dir / 'artifact'} --role boundary" in prompt
+    assert (f"{PARAMETERS['command-path']}/commonplace-validate {h.outputs['boundary']} "
+            f"--artifact {a.coordinator.run_dir / 'artifact'} --role boundary") in prompt
     assert "output-answers" not in prompt, "the boundary writes no answers"
 
 

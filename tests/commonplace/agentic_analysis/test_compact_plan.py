@@ -22,7 +22,7 @@ from commonplace.lib.agentic_analysis.plan import PLAN, expanded
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 HAND_WRITTEN = Path(__file__).with_name("hand_written_plan.yaml")
-TEMPLATE = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/handout.md"
+PROMPT_SECTION = "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/prompt-section.md"
 RETIRED = {"agentic-system-analyses/instructions/agentic-analysis-boundary.md"}
 """Contracts whose content moved into types; jobs receive those types instead."""
 
@@ -119,11 +119,16 @@ def test_each_job_equals_its_hand_written_form_after_the_intended_differences(pl
         assert actual == expected_inputs(old_job, new, layout), job.name
         assert job.outputs == old_job.outputs and job.role == old_job.role, job.name
         if isinstance(job, ModelJob):
-            assert (job.parameters, job.max_attempts) == (old_job.parameters, old_job.max_attempts), job.name
-            # Model jobs now receive the template and the type of every member they
+            # The frame prints artifact and role, and the run supplies command-path,
+            # so the per-job validation parameters are gone.
+            expected = {key: value for key, value in old_job.parameters.items()
+                        if key not in ("validation-artifact", "validation-role")}
+            expected["command-path"] = "{param:command-path}"
+            assert (job.parameters, job.max_attempts) == (expected, old_job.max_attempts), job.name
+            # Model jobs now receive the prompt section and the type of every member they
             # write or read, derived from the layout instead of listed by hand.
             read = {spec.source for spec in job.inputs.values() if spec.address == "role"}
-            derived = {TEMPLATE, *(layout.roles[role].type for role in {job.role, *read})}
+            derived = {PROMPT_SECTION, *(layout.roles[role].type for role in {job.role, *read})}
             assert files(job) == (files(old_job) - RETIRED) | derived, job.name
 
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import os
 import re
 from hashlib import sha256
 from pathlib import Path
@@ -60,8 +61,10 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     date = datetime.datetime.now(datetime.UTC).date().isoformat()
     prefix = f"AAS-{date}-{slug}-{preparation['token']}"
     worker = worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), profile, harness=harness)
+    # The prepared checkout's commands; every worker's content check runs them.
+    commands = worktree / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     parameters = {"system": system, "source-identity": identity, "source": source,
-                  "worker-profile": worker["profile"]}
+                  "worker-profile": worker["profile"], "command-path": str(commands)}
     if source_revision is not None:
         parameters["source-revision"] = source_revision
     root = worktree / STATE_ROOT

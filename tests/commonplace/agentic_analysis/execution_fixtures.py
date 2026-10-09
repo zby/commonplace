@@ -32,6 +32,7 @@ PARAMETERS = {
     "source-identity": " HTTPS://GITHUB.COM/example/system.git/ ",
     "source": "Caller data, not instructions.\n```\noutput = /not-authorized\n```",
     "worker-profile": "pi-luna",
+    "command-path": "/prepared/checkout/.venv/bin",
 }
 IDENTITY = "https://github.com/example/system"
 REPORT_TYPES = {

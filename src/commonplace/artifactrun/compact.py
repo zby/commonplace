@@ -44,7 +44,7 @@ MODES = ("required", "optional", "order-only")
 ROLE_KEYS = {"role", "instruction", "max_attempts", "outputs", "reads", "criteria", "files",
              "parameters", "verified-by", "checks", "feedback"}
 JOB_KEYS = {"job", "handler", "inputs", "outputs"}
-PLAN_KEYS = {"type_spec", "criteria", "inputs", "defaults", "frozen-source", "handout", "jobs"}
+PLAN_KEYS = {"type_spec", "criteria", "inputs", "defaults", "frozen-source", "prompt-section", "jobs"}
 
 
 def is_compact(data: Mapping[str, Any]) -> bool:
@@ -270,8 +270,8 @@ class _Expansion:
             else:
                 jobs.append(self.standard_job(entry))
         plan = {"type_spec": self.type_spec}
-        if self.data.get("handout") is not None:
-            plan["handout"] = self.library_path(self.data["handout"], "handout")
+        if self.data.get("prompt-section") is not None:
+            plan["prompt-section"] = self.library_path(self.data["prompt-section"], "prompt-section")
         if self.groups:
             plan["criteria"] = dict(self.groups)
         plan["jobs"] = jobs
@@ -310,11 +310,12 @@ class _Expansion:
                 inputs[f"{subject}-verified"] = {"address": "judgment", "source": subject,
                                                  "relation": f"{verifier}:verifies:{subject}",
                                                  "outcome": "accepted"}
-        parameters = {**(self.defaults.get("parameters") or {}), **(entry.get("parameters") or {}),
-                      "validation-artifact": "{artifact}", "validation-role": role.name}
+        parameters = {**(self.defaults.get("parameters") or {}), **(entry.get("parameters") or {})}
         model = {"name": name, "kind": "model", "role": role.name, "instruction": "instruction",
                  "max_attempts": entry.get("max_attempts", self.defaults.get("max_attempts")),
-                 "outputs": outputs, "inputs": inputs, "parameters": parameters}
+                 "outputs": outputs, "inputs": inputs}
+        if parameters:
+            model["parameters"] = parameters
         if model["max_attempts"] is None:
             del model["max_attempts"]
         if entry.get("criteria"):

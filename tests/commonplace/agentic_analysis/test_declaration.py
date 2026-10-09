@@ -68,7 +68,7 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
             assert not path.is_absolute() and ".." not in path.parts, (job.name, name, path)
             assert (LIBRARY / path).is_file(), (job.name, name, path)
         if isinstance(job, ModelJob):
-            assert {"instruction", "worker-rules", "collection", "sources-contract", "handout"} <= set(job.inputs)
+            assert {"instruction", "worker-rules", "collection", "sources-contract", "prompt-section"} <= set(job.inputs)
             # Workers read their member's type and the set type the run fixed, never a schema.
             assert job.inputs["member-type"].source == layout.roles[job.role].type
             assert job.inputs["set-type"].address == "type"
@@ -169,7 +169,7 @@ def test_model_jobs_receive_the_types_of_what_they_write_and_read(graph):
         expected = {
             f"agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/{ENGINE_INSTRUCTIONS[name]}.md",
             "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md",
-            "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/handout.md",
+            "agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/prompt-section.md",
             "agentic-system-analyses/COLLECTION.md", f"{shared}sources.md",
             *(layout.roles[role].type for role in {name, *read}),
         }
@@ -258,7 +258,7 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
             for check in job.options.get("checks", ()):
                 path = check["function"] if isinstance(check, dict) else check
                 assert path.startswith("commonplace.lib.agentic_analysis.")
-    start_run(run_dir, DECLARATION, parameters={"system": "fixture"})
+    start_run(run_dir, DECLARATION, parameters={"system": "fixture", "command-path": "/checkout/.venv/bin"})
     status = advance(run_dir)
     assert not status.handouts and not status.open_attempts and not status.publishable
     assert len(status.stops) == 1

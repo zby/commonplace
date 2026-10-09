@@ -31,8 +31,8 @@ from .handouts import (
     Handout,
     _open,
     handout_for,
-    handout_slots,
-    render_handout,
+    prompt_line_names,
+    render_prompt_section,
 )
 from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
@@ -105,8 +105,8 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
                       for name in job.run_parameters()} - set(given))
     if missing:
         raise ValueError(f"the plan substitutes run parameters not given: {', '.join(missing)}")
-    if jobs.handout is not None:
-        _check_handout(jobs, library, layout, str(type_spec), given)
+    if jobs.prompt_section is not None:
+        _check_prompt_section(jobs, library)
     store.create({
         "plan": str(Path(plan).resolve()),
         "plan_sha256": digest(source),
@@ -118,22 +118,23 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
     })
 
 
-def _check_handout(jobs, library: Path, layout, type_spec: str, parameters: Mapping[str, str]) -> None:
-    """Render the hand-out template for every model job, so an unknown placeholder fails the plan at start."""
-    path = Path(jobs.handout)
+def _check_prompt_section(jobs, library: Path) -> None:
+    """Render the prompt section for every model job, so an unknown name fails the plan at start."""
+    path = Path(jobs.prompt_section)
     path = path if path.is_absolute() else library / path
     try:
         text = path.read_text(encoding="utf-8")
     except OSError as error:
-        raise PlanError(f"handout {jobs.handout}: {error}") from error
-    for job in jobs.jobs:
-        if not isinstance(job, ModelJob):
-            continue
-        values = {key: value for key, value in job.parameters.items()}
+        raise PlanError(f"prompt-section {jobs.prompt_section}: {error}") from error
+    models = [job for job in jobs.jobs if isinstance(job, ModelJob)]
+    printable = {name for job in models for name in prompt_line_names(job)}
+    for job in models:
+        lines = dict.fromkeys(prompt_line_names(job), "value")
         try:
-            render_handout(text, handout_slots(job, layout, type_spec, values), parameters)
+            render_prompt_section(text, lines, conditions=printable)
         except KeyError as error:
-            raise PlanError(f"handout {jobs.handout}: job {job.name} has no value for {{{error.args[0]}}}") from None
+            raise PlanError(f"prompt-section {jobs.prompt_section}: job {job.name} prints no line "
+                            f"{error.args[0]}") from None
 
 
 def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunStatus:

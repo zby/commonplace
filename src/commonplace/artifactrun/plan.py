@@ -23,13 +23,13 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
-HANDOUT_FIELDS = ("job", "attempt", "run-id", "output", "problem", "workspace", "scratch")
+HANDOUT_FIELDS = ("job", "role", "attempt", "run-id", "output", "problem", "workspace", "artifact", "scratch")
 HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
 """The input name under which a role-filling model job receives its refusals."""
-HANDOUT_INPUT = "handout"
-"""The input name under which every model job receives the plan's hand-out template."""
+PROMPT_SECTION_INPUT = "prompt-section"
+"""The input name under which every model job receives the plan's prompt section."""
 OUTCOMES = ("accepted", "refused")
 
 
@@ -106,8 +106,8 @@ class Plan:
 
     type_spec: Path
     jobs: tuple[Job, ...]
-    handout: str | None = None
-    """The library path of the plan's hand-out template, or None for the bare frame."""
+    prompt_section: str | None = None
+    """The library path of the plan's prompt section, or None for the bare frame."""
 
     def job(self, name: str) -> Job:
         for job in self.jobs:
@@ -260,7 +260,7 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
         raise PlanError("a plan must be a mapping")
-    unknown = set(data) - {"type_spec", "criteria", "jobs", "handout"}
+    unknown = set(data) - {"type_spec", "criteria", "jobs", "prompt-section"}
     if unknown:
         raise PlanError(f"unknown keys {sorted(unknown)}")
     groups = _criteria_groups(data.get("criteria", {}))
@@ -272,11 +272,11 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     jobs = tuple(_job(_expand_criteria(raw, groups)) for raw in raw_jobs)
     if not jobs:
         raise PlanError("a plan declares at least one job")
-    handout = data.get("handout")
-    if handout is not None and (not isinstance(handout, str) or not handout):
-        raise PlanError("handout must name the hand-out template, relative to the KB root")
-    plan = Plan(Path(data["type_spec"]), tuple(_with_handout(_with_refusal(job), handout) for job in jobs),
-                handout)
+    section = data.get("prompt-section")
+    if section is not None and (not isinstance(section, str) or not section):
+        raise PlanError("prompt-section must name the prompt section file, relative to the KB root")
+    plan = Plan(Path(data["type_spec"]), tuple(_with_prompt_section(_with_refusal(job), section) for job in jobs),
+                section)
     _check(plan, roles)
     return plan
 
@@ -314,17 +314,17 @@ def _expand_criteria(raw: Any, groups: Mapping[str, Mapping[str, str]]) -> Any:
     return {**{k: v for k, v in raw.items() if k != "criteria"}, "inputs": inputs}
 
 
-def _with_handout(job: Job, handout: str | None) -> Job:
-    """Give every model job the plan's hand-out template as a file input.
+def _with_prompt_section(job: Job, section: str | None) -> Job:
+    """Give every model job the plan's prompt section as a file input.
 
-    Pinned like the instruction, so editing the template is a change of
+    Pinned like the instruction, so editing the section is a change of
     input, not a silent change of every later prompt.
     """
-    if handout is None or not isinstance(job, ModelJob):
+    if section is None or not isinstance(job, ModelJob):
         return job
-    if HANDOUT_INPUT in job.inputs:
-        raise PlanError(f"job {job.name}: input {HANDOUT_INPUT} is reserved for the plan's hand-out template")
-    return replace(job, inputs={**job.inputs, HANDOUT_INPUT: Input("file", handout)})
+    if PROMPT_SECTION_INPUT in job.inputs:
+        raise PlanError(f"job {job.name}: input {PROMPT_SECTION_INPUT} is reserved for the plan's prompt section")
+    return replace(job, inputs={**job.inputs, PROMPT_SECTION_INPUT: Input("file", section)})
 
 
 def _with_refusal(job: Job) -> Job:

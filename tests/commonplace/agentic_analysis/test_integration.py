@@ -209,7 +209,7 @@ def test_a_real_compact_plan_s_fixed_identity_names_the_shipped_file(tmp_path, m
     monkeypatch.setattr("commonplace.artifactrun.engine.library_root", lambda: library)
     assert library_root() == library
     run = tmp_path / "run"
-    start_run(run, library / PLAN, parameters={"system": "x", "source": "y", "source-identity": "z"})
+    start_run(run, library / PLAN, parameters={"system": "x", "source": "y", "source-identity": "z", "command-path": "/c"})
     fixed = inspect(run)["declaration"]
     shipped = library / PLAN
     assert fixed["plan"] == str(shipped.resolve())
