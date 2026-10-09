@@ -1,5 +1,5 @@
 ---
-description: "Proposal: validate one draft of a directory artifact at its intended member path, in its set's context, in two stages: first the whole-set check filtered to the draft's role, then role-scoped context reading with explicit failure on unusable context."
+description: "Proposal: validate one draft of a directory artifact at its intended member path, in its artifact's context, in two stages: first the whole-artifact check filtered to the draft's role, then role-scoped context reading with explicit failure on unusable context."
 type: reference/types/design-proposal.md
 tags: [type-system, kb-maintenance]
 ---
@@ -18,7 +18,7 @@ member another target. Workflows continue to own scheduling, authority and
 progress-dependent acceptance.
 
 The proposal is staged, and each stage is adoptable on its own. Stage one
-exposes what the layout mechanism already computes: the whole-set check with
+exposes what the layout mechanism already computes: the whole-artifact check with
 a draft's bytes at its slot, filtered to the draft's role. Stage two changes
 what is read and how context defects are reported. Stage one is what
 [adopting the declared layout in the analysis workflow](./adopt-declared-layout-in-the-analysis-workflow.md)
@@ -29,7 +29,7 @@ selected this direction on 2026-10-06. Neither stage is shipped behavior.
 ## Current state (as of 2026-10-06)
 
 - [ADR 095](../adr/095-directory-artifacts-add-shared-set-validation.md)
-  recognizes a directory artifact by `ARTIFACT.yaml`. Set checks run when the
+  recognizes a directory artifact by `ARTIFACT.yaml`. Artifact checks run when the
   directory itself is validated. Explicit file validation checks that file
   alone and never reads a manifest.
 - The layout proposal shipped on 2026-10-06 (commit 3c5da8c85). A directory
@@ -37,7 +37,7 @@ selected this direction on 2026-10-06. Neither stage is shipped behavior.
   validation of a working instance reports absent members and relation
   findings per role.
 - The analysis workflow writes `output/ARTIFACT.yaml`, naming only the type,
-  at run opening, so the working set is recognized from its first member.
+  at run opening, so the working artifact is recognized from its first member.
   Its acceptance helper, `set_findings` in
   `src/commonplace/lib/agentic_workflow.py`, validates `output/` through
   `ValidationRun` with the candidate's bytes placed at its slot by content
@@ -79,7 +79,7 @@ fails that check explicitly, naming the candidate check and the blocking file.
 Context is not trusted merely because it is not a target; a conflicting
 declaration of a cited ID is a finding against the candidate's reference.
 
-Stage one meets this boundary by filtering: it reads the whole working set
+Stage one meets this boundary by filtering: it reads the whole working artifact
 and reports only the findings attributed to the candidate's role. Stage two
 meets it by construction: it reads only the context the role names.
 
@@ -110,7 +110,7 @@ identity fields, and the roles whose declarations may be cited. Only those
 files are read, and only for those checks. A context file that is absent,
 unparseable or ambiguous for a required check fails that check explicitly,
 naming the candidate check and the blocking file. The layout's completeness
-conditions are whole-set rules and do not apply. Only findings originating
+conditions are whole-artifact rules and do not apply. Only findings originating
 in the candidate are reported; a pooled checker that reports per-body
 failures is filtered to the target. Cross-member ambiguity, such as a cited
 ID declared twice among the cited roles, is reported because it blocks the
@@ -129,7 +129,7 @@ workflow acceptance and self-check, which call the same path instead of a
 workflow-private helper. Stage two's consumers are the same callers on a
 directory type where the conditions above hold; none is known today. The
 oracle for both is the actual declarations and identity facts in the located
-siblings. Whole-set validation of an unfinished working artifact still fails
+siblings. Whole-artifact validation of an unfinished working artifact still fails
 as a set when requested; that is correct, and it runs only at explicit
 points such as round close and assembly.
 
@@ -160,7 +160,7 @@ the boundary has a slot.
   bodies directly. Not the author-facing behavior; an explicit-context path
   must preserve the same target, replacement and checking semantics.
 - **Stage two first.** Rejected: it builds role-scoped reading before any
-  consumer has shown that whole-set reading with a filter is insufficient.
+  consumer has shown that whole-artifact reading with a filter is insufficient.
 
 ## Distinct operations
 
@@ -168,11 +168,11 @@ the boundary has a slot.
 |---|---|
 | Document validation in set context | Check the candidate and its outgoing references against the roles it relates to |
 | Change-impact validation | Determine which other artifacts need checking after a replacement, including broken incoming references |
-| Whole-set validation | Check collective consistency, membership and completion requirements at an integration or publication boundary |
+| Whole-artifact validation | Check collective consistency, membership and completion requirements at an integration or publication boundary |
 
 Removing a declaration from a replacement may break references in other
 members while the candidate's own references stay valid. That belongs to an
-explicit impact or whole-set check.
+explicit impact or whole-artifact check.
 [Generalized validation invalidation](./generalized-validation-invalidation-and-imperative-extension.md)
 addresses affected-target selection and is not prerequisite here.
 
@@ -198,7 +198,7 @@ addresses affected-target selection and is not prerequisite here.
 ## Free choices
 
 The flag's name and shape, how repair text attaches to findings, and whether
-whole-set rules and member-mode rules share one registration are
+whole-artifact rules and member-mode rules share one registration are
 implementation choices. Start with existing Python checks; the
 [type-selected Python validation proposal](./type-selected-python-validation-checks.md)
 is not a prerequisite, and selecting a role does not authorize loading
@@ -226,7 +226,7 @@ Stage two is adopted when, in addition:
 - The candidate's missing references and identity disagreements are
   reported; an unrelated broken outgoing reference in a context member is not.
 
-Incoming-reference failures and whole-set incompleteness stay visible when
+Incoming-reference failures and whole-artifact incompleteness stay visible when
 those operations are requested, not in this one. Test fixtures establish
 checking behavior, not model adherence or the semantic truth of a report. No
 live analysis run is prerequisite for either stage.

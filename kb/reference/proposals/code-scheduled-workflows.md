@@ -213,7 +213,7 @@ The offload workshop decided to fix all backlog items and then rerun batch 01 on
 
 The consumer is the analysis skill. Adoption would replace its step prose with the loop instruction; the judgment content moves into job prompts rendered by the definition. The skill binds the agent orchestrator through the harness's skill loading. Code binds order through what `step` returns, and binds the workers through the generated prompts. A blocked outcome binds through the same skill text, which states that the agent orchestrator acts only within the scope the outcome names. A report is consumed by code, which stores it, and by whoever later reads a failure record: the agent orchestrator, a repair worker, or the operator. It has no force over acceptance. No consumer exists yet: the skill must be rewritten in the same change that ships the command.
 
-The added automated evaluation is the validator run inside `step`. For the analysis workflow its warrant is the type schemas and the set checks `commonplace-validate --full` already runs, covering structure, identity and hash integrity. It does not cover whether a route judgment or synthesis is right; that is assigned to judgment jobs, whose outputs are again checked for structure only.
+The added automated evaluation is the validator run inside `step`. For the analysis workflow its warrant is the type schemas and the artifact checks `commonplace-validate --full` already runs, covering structure, identity and hash integrity. It does not cover whether a route judgment or synthesis is right; that is assigned to judgment jobs, whose outputs are again checked for structure only.
 
 ## Adoption criteria
 

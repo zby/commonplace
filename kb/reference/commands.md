@@ -51,16 +51,16 @@ model, schedule work, or become an authority for any displayed state.
 ### commonplace-validate
 
 Accepts a member file, artifact directory, ordinary subtree, or collection.
-A directory containing `ARTIFACT.yaml` receives set checks and ordinary member
+A directory containing `ARTIFACT.yaml` receives artifact checks and ordinary member
 checks, grouped as one artifact. Explicit file validation stays file-scoped.
 See [directory artifacts](./validation-contract.md#directory-artifacts).
 
 Check a draft at its intended slot with
-`commonplace-validate <draft> --set <directory> --member <slot>`.
+`commonplace-validate <draft> --artifact <directory> --member <slot>`.
 The slot is a declared relative member path, not a job or role name. The draft
 replaces the incumbent in memory for every check in the invocation. Findings
 are restricted to that slot's role, with rule, location and repair text;
-absent-member findings are deliberately omitted for a working set. This mode
+absent-member findings are deliberately omitted for a working artifact. This mode
 writes nothing and refuses `--output`. A content pass is not job acceptance:
 the workflow adds separately labelled invocation residue. It establishes
 neither claim support nor analytical correctness. Member mode's default and

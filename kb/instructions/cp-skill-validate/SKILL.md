@@ -13,12 +13,12 @@ Run the packaged validation command. For a draft at an intended set member
 slot, use the supplied paths as separate arguments:
 
 ```bash
-commonplace-validate <draft> --set <directory> --member <slot>
+commonplace-validate <draft> --artifact <directory> --member <slot>
 ```
 
 Quote each path as needed. The slot must be a declared relative member
 filename. This mode writes nothing, including no receipt or scratch log;
-do not use `--output`. It checks the candidate's content in the working set,
+do not use `--output`. It checks the candidate's content in the working artifact,
 not job acceptance. Acceptance may add labelled invocation residue. Report
 that distinction with a pass. Use `--json` for findings with explicit repair
 fields, or default/`--full` output for the shared rendered finding text.

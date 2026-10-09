@@ -68,7 +68,7 @@ that its file exists; each supplied digest must match exact bytes. Whether
 every member must be pinned is the type's rule. Metadata cannot authorize a
 member the layout forbids.
 
-Explicit directory validation runs set checks alongside ordinary file checks,
+Explicit directory validation runs artifact checks alongside ordinary file checks,
 even with a malformed manifest. Layout and type-rule checks run over the
 members present even when the schema or a member fails, so an incomplete
 working instance reports its absent required members and checks the relations

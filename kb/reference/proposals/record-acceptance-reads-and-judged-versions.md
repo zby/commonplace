@@ -85,7 +85,7 @@ output digest as it does today, then runs the validator against the recorded
 context, not the current `output/`. A changed declared input reopens the job
 as it does today. A recorded context read that now differs does not reopen
 the job. It is context drift: reported, and left to the job that owns the
-affected relation next, which is the correction job, or to whole-set
+affected relation next, which is the correction job, or to whole-artifact
 validation at publication.
 
 The split between what is pinned and what is read live follows
@@ -110,7 +110,7 @@ the recorded one. Staleness is one hop: a stale verification is a reason for
 a new verification, and nothing downstream of it is flagged until it is
 replaced. Publication refuses a set with a stale verification. The set
 relation that every declared limit is carried by the synthesis stays a
-whole-set check at publication.
+whole-artifact check at publication.
 
 The synthesis sequence becomes:
 
@@ -192,7 +192,7 @@ judgment, not a mechanical oracle.
   either direction reproduces a known failure: spurious reopening, or a
   stale verdict after a criteria change.
 - **Keep incomplete work visible.** Context drift and stale verifications are
-  reported, not treated as a whole-set pass or hidden by a rewrite of the
+  reported, not treated as a whole-artifact pass or hidden by a rewrite of the
   earlier acceptance.
 - **Do not absorb external effects.** Existing publication recognition and
   uncertain-effect stop rules are unchanged.

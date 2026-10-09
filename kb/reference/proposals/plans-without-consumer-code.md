@@ -41,7 +41,7 @@ Four things keep a new consumer from running on declarations alone:
 - Code jobs take no parameters, and a code attempt exposes neither its job
   name nor its declared inputs. A shared handler therefore cannot learn its
   configuration from the declaration.
-- Pinned-set validation refuses a member type that has no Python type rule
+- Pinned-artifact validation refuses a member type that has no Python type rule
   registered, and rules register through one hard import of the analysis
   rule module at the end of `src/commonplace/lib/validation.py`. A type with
   only a schema cannot publish.
@@ -112,7 +112,7 @@ declarative.
    layout, schema constants and type rules cover the analysis artifact's cases.
    A complex shape check is a type rule; how a type selects one without the
    hard import is the subject of [type-selected Python validation checks](./type-selected-python-validation-checks.md)
-   and is not re-decided here. Pinned-set validation would treat a type
+   and is not re-decided here. Pinned-artifact validation would treat a type
    with no rule as schema-only rather than unsupported.
 
 4. **Layout identity sources name the run parameters.** The engine fixes

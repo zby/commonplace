@@ -223,7 +223,7 @@ companion proposal's decision on its stage two.
 ## Forces
 
 - **Expected incompleteness.** Verifications are written after the member
-  they judge, so mid-run the working set lacks them. The layout already
+  they judge, so mid-run the working artifact lacks them. The layout already
   tolerates absent members in a working instance.
 - **Repair information.** An analyst acts on a finding only if it names the
   rule, the location and the repair; moving repair text onto findings is
@@ -231,7 +231,7 @@ companion proposal's decision on its stage two.
 - **Published site.** Retained sets gain four pages; readers who relied on
   the overview being self-contained follow one link.
 - **Evidence from runs.** The measurements are the only way to learn whether
-  whole-set reading with a role filter suffices; they must be recorded, not
+  whole-artifact reading with a role filter suffices; they must be recorded, not
   reconstructed.
 
 ## Free choices
