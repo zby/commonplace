@@ -215,7 +215,7 @@ mission:
 - role: report-verification
   reads: {boundary: required, report-check:findings: optional}
   checks:
-    - {function: commonplace.lib.agentic_analysis.verification.record_check_gate,
+    - {function: commonplace.lib.agentic_analysis.verification.report_check_gate,
        inputs: {findings: report-check:findings}}
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile

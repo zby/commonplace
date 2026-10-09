@@ -14,7 +14,7 @@ the handlers named below are gone. The three apply handlers are the
 standard `artifactrun.handlers.apply_verdict`; the report check is the
 standard `artifact_check`, which writes `# Artifact check`; the report-check gate,
 the cited-records feedback (`_feedback`) and record preservation
-(`_check_analyst`) are the declared checks `record_check_gate`,
+(`_check_analyst`) are the declared checks `report_check_gate`,
 `cited_records` and `preserved_records`. The candidate is built by
 `handlers.candidate` from the job's declared inputs; `checks.candidate`,
 its partner tuple and `answer_reasons` are gone. One rule changed: an apply refuses

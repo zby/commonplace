@@ -134,7 +134,7 @@ jobs:
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
           'epistemic:answers': optional, 'report-check:findings': required}
-  checks: [commonplace.lib.agentic_analysis.verification.record_check_gate]
+  checks: [commonplace.lib.agentic_analysis.verification.report_check_gate]
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile
   instruction: jobs-engine/map-memory-profile.md
