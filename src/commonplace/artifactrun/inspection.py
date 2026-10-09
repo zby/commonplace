@@ -1,6 +1,6 @@
-"""Read-only reports of an engine run and its effect journals.
+"""Read-only inspection of an engine run and its effect journals.
 
-This is an operator report, not a typed member or a recovery decision.
+This is an operator view, not a typed member or a recovery decision.
 Effect journals are reported as evidence only; the effect's handler must
 recognize their exact filesystem outcome before completing a failed attempt.
 """
@@ -13,7 +13,7 @@ from pathlib import Path
 from commonplace.artifactrun import RunStatus, current_outputs, inspect, run_lock
 
 
-def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> dict:
+def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> dict:
     """Report attempts, refusals, stops and effects without running jobs.
 
     The run is completed when it is publishable and ``final_job`` has a
@@ -21,7 +21,7 @@ def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None
     """
     run_dir = Path(run_dir).resolve()
     if not (run_dir / "run.json").exists():
-        raise ValueError("reporting requires an engine run's run.json")
+        raise ValueError("inspection requires an engine run's run.json")
     with run_lock(run_dir):
         view = inspect(run_dir)
         failures = [asdict(stop) for stop in view["failed_attempts"]]
@@ -44,7 +44,7 @@ def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None
                 and current_outputs(run_dir, final_job) is not None):
             state = "completed"
         return {
-            "format": "commonplace-engine-run-report-v1", "run-id": run_dir.name,
+            "format": "commonplace-engine-run-inspection-v1", "run-id": run_dir.name,
             "state": state, "artifact": str(run_dir / "artifact"), "publishable": view["publishable"],
             "parameters": view["parameters"], "members": view["members"],
             "open-attempts": view["open_attempts"], "failed-attempts": failures,
@@ -64,6 +64,6 @@ def engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None
         }
 
 
-def render_engine_run_report(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> str:
-    """Render the run report as JSON."""
-    return json.dumps(engine_run_report(run_dir, final_job=final_job, status=status), indent=2, sort_keys=True) + "\n"
+def render_run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> str:
+    """Render the run inspection as JSON."""
+    return json.dumps(run_inspection(run_dir, final_job=final_job, status=status), indent=2, sort_keys=True) + "\n"

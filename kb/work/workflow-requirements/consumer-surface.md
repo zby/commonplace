@@ -65,7 +65,7 @@ only publication reads it.
 
 Two modules reach past `CodeAttempt` into engine internals:
 
-- `report.py` uses `inspect`, `Run` and `RunStore`, and calls `ready`,
+- `inspection.py` uses `inspect`, `Run` and `RunStore`, and calls `ready`,
   `permitted`, `holds`, `attempt_count`, `latest_completed` and `members` to
   compute stale acceptances, exhausted jobs, canonical-peer drift and
   "completed".

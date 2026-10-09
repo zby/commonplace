@@ -166,7 +166,7 @@ prints its path without advancing or acquiring sources. Optional
 provenance is not an opening parameter: report actual model/effort with
 completed results through `commonplace-run advance`.
 
-`report <run>` emits JSON engine evidence without changing logical
+`inspect <run>` emits JSON engine evidence without changing logical
 state (locking may create a lock file). It distinguishes completed local
 `blocked`/`out-of-scope` dispositions from completion of the publication job.
 It reports attempts, failures, exhausted jobs, refusals and canonical peer drift;

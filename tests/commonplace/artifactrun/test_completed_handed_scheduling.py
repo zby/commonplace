@@ -120,11 +120,11 @@ def test_completed_verdict_applies_while_subsequent_verifier_attempt_is_open(lat
 
 
 def test_report_separates_holding_historical_basis_from_canonical_currency(late_run):
-    from commonplace.artifactrun.report import engine_run_report
+    from commonplace.artifactrun.inspection import run_inspection
 
     c, old = late_run
     c.advance(c.result_for(old, NO_BLOCKERS))
-    view = engine_run_report(c.run_dir, final_job="publish", status=c.status)
+    view = run_inspection(c.run_dir, final_job="publish", status=c.status)
     report_drift = [entry for entry in view["canonical-peer-drift"] if entry["role"] == "report"]
     assert report_drift
     assert all(entry["handed"] == version("report", "report A\n") for entry in report_drift)

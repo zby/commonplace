@@ -85,7 +85,7 @@ Recovery needs a separate operator decision; do not treat a journal label as
 proof that an external effect happened or was rolled back.
 
 When advance returns no handouts or open attempts, inspect
-`commonplace-analysis report <run>`. If it reports `completed`, return
+`commonplace-analysis inspect <run>`. If it reports `completed`, return
 its output under the skill's reporting rules. A local blocked/out-of-scope result
 is not publication. If it is not completed, report the unresolved state rather
 than repeatedly advancing or declaring success. `publishable: yes` alone is not

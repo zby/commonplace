@@ -1,4 +1,4 @@
-"""Analysis lifecycle: prepare, start, report and integrate; generic engine operations live in commonplace-run."""
+"""Analysis lifecycle: prepare, start, inspect and integrate; generic engine operations live in commonplace-run."""
 
 from __future__ import annotations
 
@@ -32,8 +32,8 @@ def main(argv: list[str] | None = None) -> int:
     integrate = commands.add_parser("integrate", help="commit exact published bytes and merge into main")
     integrate.add_argument("run", type=Path)
     integrate.add_argument("--model")
-    report = commands.add_parser("report", help="print engine evidence as JSON, not a publication audit")
-    report.add_argument("run", type=Path)
+    inspect = commands.add_parser("inspect", help="print engine evidence as JSON, not a publication audit")
+    inspect.add_argument("run", type=Path)
     arguments = parser.parse_args(sys.argv[1:] if argv is None else argv)
     try:
         if arguments.command == "start":
@@ -42,10 +42,10 @@ def main(argv: list[str] | None = None) -> int:
                                  profile=arguments.profile, harness=arguments.harness))
         elif arguments.command == "integrate":
             print(integrate_analysis(arguments.run, model=arguments.model))
-        elif arguments.command == "report":
-            from commonplace.artifactrun.report import render_engine_run_report
+        elif arguments.command == "inspect":
+            from commonplace.artifactrun.inspection import render_run_inspection
 
-            rendered = json.loads(render_engine_run_report(arguments.run, final_job="publish"))
+            rendered = json.loads(render_run_inspection(arguments.run, final_job="publish"))
             if rendered["state"] == "completed":
                 from hashlib import sha256
 
@@ -54,10 +54,10 @@ def main(argv: list[str] | None = None) -> int:
                 version = rendered["members"].get("boundary")
                 if version is None:
                     raise ValueError("completed analysis has no boundary member")
-                # The artifact directory holds the members materialized; content identity ties it to the report.
+                # The artifact directory holds the members materialized; content identity ties it to the inspection.
                 data = (Path(rendered["artifact"]) / "boundary.md").read_bytes()
                 if sha256(data).hexdigest() != version:
-                    raise ValueError("the materialized boundary differs from the reported member")
+                    raise ValueError("the materialized boundary differs from the inspected member")
                 document, error = parse_document(data.decode("utf-8"))
                 if error or document is None or not document.frontmatter:
                     raise ValueError("completed analysis has an unreadable boundary member")

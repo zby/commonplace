@@ -142,7 +142,7 @@ Follow [drive a code-scheduled run](./drive-a-code-scheduled-run.md) with `<run>
 
 ## 3. Report
 
-Run `commonplace-analysis report <run>` and include its JSON output
+Run `commonplace-analysis inspect <run>` and include its JSON output
 unchanged in the final response, together with any stops from the last advance.
 The report does not reconstruct invocation-specific scheduling stops or audit
 retained files. `publishable` is engine coverage, not proof of publication.

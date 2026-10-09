@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import RunStatus, Stop, UncertainEffectError, effects
-from commonplace.artifactrun.report import engine_run_report
+from commonplace.artifactrun.inspection import run_inspection
 from commonplace.artifactrun.run import _parse_type
 from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import publication
@@ -216,7 +216,7 @@ def test_engine_report_is_uncertain_without_recovery(tmp_path):
     (store.run_dir / "effects").mkdir()
     (store.run_dir / publication.JOURNAL).write_text('{"state": "completed"}')
     status = RunStatus((), (), (Stop("uncertain effect", "publish", "000001-publish", True),), False)
-    report = engine_run_report(store.run_dir, final_job="publish", status=status)
+    report = run_inspection(store.run_dir, final_job="publish", status=status)
     assert report["state"] == "uncertain"
     assert report["effects"]["publish"] == {"journal-state": "completed", "verified": False}
     assert report["failed-attempts"][0]["uncertain"]
@@ -306,7 +306,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     record = store.attempt_records()[0]
     assert record["state"] == "failed" and record["uncertain"] == uncertain
     assert not record["pins"] and "outputs" not in record
-    report = engine_run_report(store.run_dir, final_job="publish", status=status)
+    report = run_inspection(store.run_dir, final_job="publish", status=status)
     assert report["failed-attempts"][0]["uncertain"] == uncertain
     if uncertain:
         assert report["state"] == "uncertain"

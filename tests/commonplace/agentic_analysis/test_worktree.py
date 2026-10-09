@@ -295,19 +295,19 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
 
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
-def test_report_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
+def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
     from hashlib import sha256
 
-    from commonplace.artifactrun import report
+    from commonplace.artifactrun import inspection
 
     boundary = f"---\nresult-disposition: {disposition}\n---\n".encode()
     (tmp_path / "artifact").mkdir()
     (tmp_path / "artifact" / "boundary.md").write_bytes(boundary)
-    monkeypatch.setattr(report, "render_engine_run_report", lambda run, **kw: json.dumps({
+    monkeypatch.setattr(inspection, "render_run_inspection", lambda run, **kw: json.dumps({
         "state": "completed", "artifact": str(tmp_path / "artifact"), "members": {"boundary": sha256(boundary).hexdigest()},
         "effects": {"publish": {"verified": False}},
     }))
-    assert main(["report", str(tmp_path)]) == 0
+    assert main(["inspect", str(tmp_path)]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["result-disposition"] == disposition
     assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
