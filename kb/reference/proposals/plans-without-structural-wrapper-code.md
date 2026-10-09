@@ -379,7 +379,9 @@ instruction holds only its mission.
   start. One conditional: a paragraph whose first line is `[<name>]` is
   kept, without the marker, when the prompt has that line, so
   `[output-answers]` marks the answers paragraph and `[refusal]` would
-  mark a repair one. Decided 2026-10-09 after the first version gave
+  mark a repair one; a condition must name a line some job prints or one
+  of the frame's `output-*` or `previous-*` families, so a plan cut down
+  for a test does not fail on a paragraph no job needs. Decided 2026-10-09 after the first version gave
   `{output}` the output's name while the line gave its path, and the
   template used a third notation to reach the line. The same rule placed
   the command path: the opener had written it inside the opening JSON,
@@ -561,8 +563,8 @@ form and relations, not analytical truth.
   are met as of 2026-10-09; the run is the operator's call.
 - Step 4: the opener's run-binding checks are deleted after draft
   validation reports the same mismatches.
-- Step 5: the toy plan's prompts are byte-identical before and after
-  template support; no analysis job instruction says what an input is or
+- Step 5: the toy plan's prompts change only by the frame's `role` and
+  `artifact` lines, which the slots rule added; no analysis job instruction says what an input is or
   where it comes from, and none names an output, an answers file or the
   check command, though a mission names the inputs it works from; no model
   job in the compact analysis plan lists a type under `files:`; the
