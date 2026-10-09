@@ -102,6 +102,13 @@ apply handler could take as protocol from this consumer's own content, for
 the [plans-without-consumer-code](../../reference/proposals/plans-without-structural-wrapper-code.md)
 design.
 
+## Compact-plan implementation review
+
+[Compact-plan implementation review](./compact-plan-implementation-review.md)
+records the review of commits `c9a8b1f09` through `52f77aa8a`: an integration
+identity regression, three loader/readiness edge cases and a fidelity-test
+gap, with verification results and suggested fixes.
+
 ## The analysis layout
 
 [The analysis set's layout](./analysis-layout.md) writes out the roles,
