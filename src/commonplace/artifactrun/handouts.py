@@ -61,7 +61,7 @@ CONDITION = re.compile(r"\[([A-Za-z0-9][A-Za-z0-9_-]*)\]")
 
 
 def layout_lines(layout: Layout, role: str) -> dict[str, str]:
-    """The layout's facts about `role` as frame lines.
+    """The layout's facts about `role` as prompt lines.
 
     `identity` names the fields the role repeats and from which roles, or
     from `run` for fields that must equal the run's lines,
