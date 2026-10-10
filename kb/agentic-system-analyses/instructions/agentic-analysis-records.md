@@ -45,8 +45,8 @@ empty kind headings remain. IDs are unique across the artifact.
 A record citation is a Markdown link whose text is the full ID and whose
 destination is the declaring member and anchor:
 `[RT-OBJ-store](runtime.md#rt-obj-store)`, or `[RT-OBJ-store](#rt-obj-store)`
-within the declaring member. The citing member's type names the members it
-may cite. A bare ID is literal text, not a citation: write one to mention a
+within the declaring member. The layout's `cites` names the members a role
+may cite; the prompt prints it as the `cites` line. A bare ID is literal text, not a citation: write one to mention a
 record without asserting anything about it. Every citation must resolve to
 exactly one declaration in its destination; aliases and intervals are not
 inferred. Source quotations, fenced excerpts and inline code are excluded
@@ -76,11 +76,14 @@ corrected report keeps every ID its predecessor declared, because other
 reports cite them; a record whose finding no longer holds keeps its
 declaration and states the corrected finding.
 
-A corrected report comes with the analyst's answers: a list with exactly one
-entry per blocker addressed to that report, in the verification's order, each
-starting `- corrected: ` or `- declined: `, and no other line starting
-`- `. A report identical to its predecessor is accepted only when every
-entry is `declined`.
+A corrected member comes with its author's answers: a list with exactly one
+entry per blocker addressed to that member, in the refusal's order, each
+starting `- corrected: ` or `- declined: ` and a reason, and no other line
+starting `- `. A `corrected` answer requires a changed member, tested against
+the previous output the attempt was handed. When every answer is `declined`
+the member may stay byte-identical if the answers change; that completes the
+attempt and accepts nothing. Repeating both the member and the answers fails
+the attempt and counts toward max attempts.
 
 When other members are supplied, a new declaration cites its closest
 supplied records and states distinct identity, possible-duplicate evidence,
@@ -231,7 +234,7 @@ at the update consumer while its output gives a later agent knowledge; neither
 establishes improved capacity. Preserve these actual paths rather than a
 system-wide implication or score.
 
-Faithfully scoped uncertainty is an acceptable result, not a blocker by itself.
+Faithfully scoped uncertainty is an acceptable result.
 Unsupported findings, concealed included parts, unjustified complete coverage,
 unsupported negatives and malformed references remain defects. The declaring
 analyst may narrow or correct an assertion, and reconciliation may retain a
