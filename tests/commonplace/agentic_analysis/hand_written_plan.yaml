@@ -50,7 +50,7 @@ criteria:
     type-spec: types/type-spec.md
     type-spec-schema: types/type-spec.schema.yaml
 jobs:
-- name: open
+- name: opening
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.open_analysis
   inputs:
@@ -60,7 +60,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.acquire_analysis
   inputs:
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'opening:metadata', required: true}
   outputs: [source]
 - name: boundary
   kind: model
@@ -73,7 +73,7 @@ jobs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/declare-boundary.md}
     boundary-result-contract: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     source: {address: output, source: 'acquire:source', required: true}
     refusal: {address: refusal, source: boundary, required: false}
   parameters: {system: '{param:system}', validation-artifact: '{artifact}', validation-role: boundary}
@@ -84,7 +84,7 @@ jobs:
   inputs:
     candidate: {address: output, source: 'boundary:boundary', required: true}
     incumbent-boundary: {address: role, source: boundary, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'opening:metadata', required: true}
     producer-attempt: {address: attempt, source: boundary, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     source: {address: output, source: 'acquire:source', required: true}
@@ -99,7 +99,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-runtime.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
     boundary: {address: role, source: boundary, required: true}
@@ -129,7 +129,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/analyse-memory.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     memory-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-report.md}
     boundary: {address: role, source: boundary, required: true}
@@ -144,7 +144,7 @@ jobs:
     candidate: {address: output, source: 'memory:report', required: true}
     incumbent-report: {address: role, source: memory, required: false}
     note-type: {address: file, source: types/note.md}
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'opening:metadata', required: true}
     producer-attempt: {address: attempt, source: memory, required: true}
     answered-refusal: {address: handed, source: 'producer-attempt:refusal', required: false}
     boundary: {address: role, source: boundary, required: true}
@@ -161,7 +161,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-epistemic.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     epistemic-contract: {address: file, source: agentic-system-analyses/types/agentic-system-epistemic-report.md}
     boundary: {address: role, source: boundary, required: true}
@@ -192,7 +192,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/reconcile-records.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
     memory-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-report.md}
@@ -237,7 +237,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-reports.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
     runtime-contract: {address: file, source: agentic-system-analyses/types/agentic-system-runtime-report.md}
@@ -280,7 +280,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/map-memory-profile.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     memory-profile-contract: {address: file, source: agentic-system-analyses/types/agentic-system-memory-profile.md}
     boundary: {address: role, source: boundary, required: true}
@@ -318,7 +318,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-memory-profile.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     profile-answers: {address: output, source: 'profile:answers', required: false}
     profile-refusal: {address: refusal, source: profile, required: false}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -357,7 +357,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-analysis.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
     boundary: {address: role, source: boundary, required: true}
@@ -401,7 +401,7 @@ jobs:
   criteria: [worker]
   inputs:
     instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-synthesis.md}
-    opening: {address: output, source: 'open:metadata', required: true}
+    opening: {address: output, source: 'opening:metadata', required: true}
     synthesis-answers: {address: output, source: 'synthesize:answers', required: false}
     synthesis-refusal: {address: refusal, source: synthesize, required: false}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
@@ -452,7 +452,7 @@ jobs:
     profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
     synthesis-attempt: {address: attempt, source: synthesize, required: false}
     synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'opening:metadata', required: true}
     boundary: {address: role, source: boundary, required: true}
     runtime: {address: role, source: runtime, required: false}
     memory: {address: role, source: memory, required: false}
@@ -482,7 +482,7 @@ jobs:
     profile-verification-attempt: {address: attempt, source: verify-profile, required: false}
     synthesis-attempt: {address: attempt, source: synthesize, required: false}
     synthesis-verification-attempt: {address: attempt, source: verify-synthesis, required: false}
-    metadata: {address: output, source: 'open:metadata', required: true}
+    metadata: {address: output, source: 'opening:metadata', required: true}
     boundary: {address: role, source: boundary, required: true}
     overview: {address: role, source: overview, required: true}
     runtime: {address: role, source: runtime, required: false}

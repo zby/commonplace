@@ -59,12 +59,12 @@ criteria:
     type-spec: types/type-spec.md
     type-spec-schema: types/type-spec.schema.yaml
 inputs:
-  opening: {address: output, source: 'open:metadata'}
+  opening: {address: output, source: 'opening:metadata'}
 defaults:
   max-attempts: 3
   parameters: {system: '{param:system}', command-path: '{param:command-path}'}
 jobs:
-- name: open
+- name: opening
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.open_analysis
   inputs:
@@ -74,7 +74,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.acquire_analysis
   inputs:
-    metadata: {address: output, source: 'open:metadata'}
+    metadata: {address: output, source: 'opening:metadata'}
   outputs: [source]
 - role: boundary
   instruction: jobs-engine/declare-boundary.md
@@ -83,7 +83,7 @@ jobs:
   reads: {'acquire:source': required}
   checks:
   - function: commonplace.lib.agentic_analysis.declared_checks.bound_boundary
-    inputs: {metadata: 'open:metadata', source: 'acquire:source',
+    inputs: {metadata: 'opening:metadata', source: 'acquire:source',
              incumbent-boundary: {source: boundary, mode: optional}}
 - role: runtime
   instruction: jobs-engine/trace-runtime.md
@@ -106,7 +106,7 @@ jobs:
   - function: commonplace.lib.agentic_analysis.declared_checks.preserved_records
     inputs: {incumbent-report: {source: memory, mode: optional}}
   - function: commonplace.lib.agentic_analysis.declared_checks.memory_source_identity
-    inputs: {metadata: 'open:metadata'}
+    inputs: {metadata: 'opening:metadata'}
 - role: epistemic
   instruction: jobs-engine/trace-epistemic.md
   outputs: [report, answers]
@@ -184,7 +184,7 @@ jobs:
   inputs: &published
     coverage: {address: coverage}
     source: {address: output, source: 'acquire:source'}
-    metadata: {address: output, source: 'open:metadata'}
+    metadata: {address: output, source: 'opening:metadata'}
     boundary-attempt: {address: attempt, source: boundary}
     runtime-attempt: {address: attempt, source: runtime, required: false}
     memory-attempt: {address: attempt, source: memory, required: false}

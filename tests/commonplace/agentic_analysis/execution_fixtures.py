@@ -83,7 +83,7 @@ class Prepared:
 
 def output(c: Coordinator) -> dict:
     store = RunStore(c.run_dir)
-    records = [r for r in store.attempt_records() if r["job"] == "open" and r["state"] == "completed"]
+    records = [r for r in store.attempt_records() if r["job"] == "opening" and r["state"] == "completed"]
     assert len(records) == 1
     assert set(records[0]["pins"]) == {"worker-profiles"} and records[0]["judgments"] == []
     return json.loads(store.get(records[0]["outputs"]["metadata"]))

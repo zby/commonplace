@@ -54,7 +54,7 @@ def test_graph_covers_real_roles_once(graph):
 def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, layout = graph
     for name in MODEL_ROLES:
-        assert jobs.job(name).inputs["opening"].source == "open:metadata"
+        assert jobs.job(name).inputs["opening"].source == "opening:metadata"
     boundary = jobs.job("boundary")
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/declare-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
@@ -79,7 +79,7 @@ def test_assembly_and_publication_are_gated_on_engine_coverage(graph):
     jobs, _ = graph
     for name, scope in (("assemble", "overview"), ("publish", "")):
         job = jobs.job(name)
-        assert job.inputs["metadata"].source == "open:metadata"
+        assert job.inputs["metadata"].source == "opening:metadata"
         coverage = job.inputs["coverage"]
         assert (coverage.address, coverage.source, coverage.required) == ("coverage", scope, True)
         assert not any(spec.address == "judgment" for spec in job.inputs.values())
@@ -209,7 +209,7 @@ def schema_dependencies(path):
 def test_code_checks_declare_type_schema_and_shared_criteria(graph):
     jobs, layout = graph
     for job in jobs.jobs:
-        if job.name in ("open", "acquire") or isinstance(job, ModelJob):
+        if job.name in ("opening", "acquire") or isinstance(job, ModelJob):
             continue
         files = {(LIBRARY / spec.source).resolve() for spec in job.inputs.values() if spec.address == "file"}
         assert (LIBRARY / ANALYSIS_TYPE).resolve() not in files, "the artifact type is fixed for the run"
@@ -262,7 +262,7 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
     status = advance(run_dir)
     assert not status.handouts and not status.open_attempts and not status.publishable
     assert len(status.stops) == 1
-    assert status.stops[0].job == "open"
+    assert status.stops[0].job == "opening"
     assert "requires a nonempty source-identity run parameter" in status.stops[0].reason
     assert not (tmp_path / "retained").exists()
 

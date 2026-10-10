@@ -68,7 +68,7 @@ def test_opening_refuses_invalid_or_missing_parameters(prepared, changes, reason
     parameters = {name: value for name, value in {**PARAMETERS, **changes}.items() if value is not None}
     c = prepared.start(parameters=parameters)
     c.advance()
-    assert_stopped(c, "open", reason)
+    assert_stopped(c, "opening", reason)
     records = RunStore(c.run_dir).attempt_records()
     assert len(records) == 1 and records[0]["state"] == "failed"
     assert not records[0]["pins"] and "outputs" not in records[0]
@@ -89,7 +89,7 @@ def test_opening_enforces_ready_preparation_binding(prepared, changes, reason):
         prepared.record(**changes)
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "open", reason)
+    assert_stopped(c, "opening", reason)
 
 
 @pytest.mark.parametrize("name", (
@@ -100,7 +100,7 @@ def test_opening_enforces_ready_preparation_binding(prepared, changes, reason):
 def test_opening_requires_the_token_bearing_source_slug_run_id(prepared, name):
     c = prepared.start(name=name)
     c.advance()
-    assert_stopped(c, "open", "does not match the source slug and worktree preparation token")
+    assert_stopped(c, "opening", "does not match the source slug and worktree preparation token")
 
 
 @pytest.mark.parametrize("path,tracked", [
@@ -113,7 +113,7 @@ def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
     target.write_text("Uncommitted method content.\n")
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "open", "publication requires a clean worktree")
+    assert_stopped(c, "opening", "publication requires a clean worktree")
     if tracked:
         target.write_bytes(old)
     else:
@@ -130,8 +130,8 @@ def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, mo
     monkeypatch.setattr(worktree, "running_package_root", lambda: other)
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "open", "running commonplace source")
-    assert "differs from inputs-commit" in c.stop("open").reason
+    assert_stopped(c, "opening", "running commonplace source")
+    assert "differs from inputs-commit" in c.stop("opening").reason
     assert git(prepared.repo, "status", "--porcelain") == ""
 
 
@@ -139,7 +139,7 @@ def test_opening_refuses_a_library_outside_the_worktree(prepared):
     # Code and working-directory binding: test_worktree::test_run_code_must_be_the_runs_checkout.
     c = prepared.start(library=ROOT / "kb")
     c.advance()
-    assert_stopped(c, "open", "recorded library must be the analysis worktree's")
+    assert_stopped(c, "opening", "recorded library must be the analysis worktree's")
 
 
 def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
@@ -179,5 +179,5 @@ def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monk
     monkeypatch.setattr(opening, "inspect_destination", concurrent)
     c = prepared.start()
     c.advance()
-    assert_stopped(c, "open", reason)
+    assert_stopped(c, "opening", reason)
     assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
