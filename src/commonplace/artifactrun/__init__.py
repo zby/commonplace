@@ -16,7 +16,7 @@ line reuse: standard handlers a plan names directly (``handlers``),
 candidate checks and the correction protocol
 (``checks``), frozen external sources (``sources``),
 journaled effects (``effects``), commit-bound worktrees (``worktree``) and
-run reports (``report``). This package exports only the core's public names.
+run inspection (``inspection``). This package exports only the core's public names.
 
 The package never imports a consumer. A consumer such as the agentic-system
 analysis supplies handlers and domain rules; its constants (paths, role

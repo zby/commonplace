@@ -143,16 +143,13 @@ class _Expansion:
         self.type_spec = type_spec
         self.groups = data.get("criteria") or {}
         self.defaults = data.get("defaults") or {}
+        # load_plan checks the expansion's invariants: frozen-source names a role, job names are unique.
         self.frozen = data.get("frozen-source")
-        if self.frozen is not None and self.frozen not in layout.roles:
-            raise PlanError(f"frozen-source {self.frozen} is not a role of the type")
         self.entries = list(data.get("jobs") or [])
         self.outputs: dict[str, list[str]] = {}
         self.fillers: dict[str, str] = {}
         for entry in self.entries:
             name, outputs, role = self._shape(entry)
-            if name in self.outputs:
-                raise PlanError(f"two jobs are named {name}")
             self.outputs[name] = outputs
             if role is not None:
                 self.fillers[role] = name

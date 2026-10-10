@@ -17,6 +17,7 @@ from tests.commonplace.artifactrun.support import (
     NO_BLOCKERS,
     Coordinator,
     blocking,
+    covered,
     record_calls,
     toy_library,
     version,
@@ -75,7 +76,7 @@ def test_late_completed_verdict_applies_before_ready_or_exhausted_rerun(late_run
     assert not subject["installs"] and not subject["overrides"]
     assert c.member("report") == "report B\n"
     assert run.resolve("refusal", {"refusal": Input("refusal", "report")}).version is None
-    assert not run.covered("verification:verifies:report", "verification", "report")
+    assert not covered(run, "verification:verifies:report", "verification", "report")
     assert not c.status.publishable and "digest" not in c.handed()
     if run.jobs.job("verification").max_attempts == 1:
         assert c.stop("verification").reason == "max attempts (1) exhausted"

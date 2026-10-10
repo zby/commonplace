@@ -537,3 +537,19 @@ def toy_library(tmp_path: Path, *, compact: bool = False) -> tuple[Path, Path]:
     declaration.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
     return declaration, method
 
+
+def covered(run, relation: str, origin: str, partner: str) -> bool:
+    """Whether a holding acceptance covers `relation` between the two current members."""
+    members = run.members()
+    for judgment in run.judgments:
+        if judgment["outcome"] != "accepted" or not run.holds(judgment):
+            continue
+        subject = judgment["subject"]
+        for entry in judgment["scope"]:
+            if entry["relation"] != relation:
+                continue
+            other = partner if subject["role"] == origin else origin
+            if (subject["version"] == members.get(subject["role"])
+                    and entry["other_version"] == members.get(other)):
+                return True
+    return False

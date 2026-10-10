@@ -472,21 +472,6 @@ class Run:
         """The whole artifact is covered: requirement 9's three conditions hold."""
         return self.coverage() is not None
 
-    def covered(self, relation: str, origin: str, partner: str) -> bool:
-        members = self.members()
-        for judgment in self.judgments:
-            if judgment["outcome"] != "accepted" or not self.holds(judgment):
-                continue
-            subject = judgment["subject"]
-            for entry in judgment["scope"]:
-                if entry["relation"] != relation:
-                    continue
-                other = partner if subject["role"] == origin else origin
-                if (subject["version"] == members.get(subject["role"])
-                        and entry["other_version"] == members.get(other)):
-                    return True
-        return False
-
 
 # The published fields of an attempt-record input; the rest of the record is internal.
 PUBLISHED_ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort")

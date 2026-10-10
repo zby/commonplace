@@ -118,7 +118,7 @@ def source_field(data: bytes) -> dict | None:
 
 
 def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes]) -> dict | None:
-    """The source the run may inspect: the `source` field of the `frozen-source` option's role.
+    """The source the run may inspect: the `source` field of the plan's `frozen-source` role.
 
     None when the plan names no frozen source, and for a candidate filling
     that role: `check` gives such a candidate its own source only once the
@@ -139,7 +139,7 @@ def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes])
 def extension_findings(check: Candidate) -> list[str]:
     """Reasons from the job's declared checks, each called with the built candidate.
 
-    An entry of the `checks` option is a dotted path or a mapping with a
+    An entry of the `checks` extension is a dotted path or a mapping with a
     `function`; the inputs a check declares are ordinary job inputs.
     """
     findings = []

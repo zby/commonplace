@@ -2,7 +2,7 @@
 
 One invocation closes the attempts the coordinator reports, runs ready code
 jobs to a fixed point, and opens attempts for ready model jobs. This module
-owns those transitions; `state.py` interprets the records, `handouts.py`
+owns those transitions; `run.py` interprets the records, `handouts.py`
 prepares worker prompts, and `store.py` owns how records are committed.
 
 Words follow the workshop glossary: an input resolves to a version by its

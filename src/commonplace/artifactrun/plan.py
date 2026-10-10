@@ -227,7 +227,7 @@ def _job(raw: Any) -> Job:
         if not isinstance(key, str) or not NAME.fullmatch(key):
             raise PlanError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
         if key in HANDOUT_FIELDS or key.startswith(HANDOUT_PREFIXES):
-            raise PlanError(f"job {name}: input name {key} collides with a hand-out field")
+            raise PlanError(f"job {name}: input name {key} collides with a frame line")
     inputs = {str(key): _input(name, str(key), value) for key, value in raw_inputs.items()}
     raw_outputs = raw.get("outputs", [])
     if not isinstance(raw_outputs, list):
