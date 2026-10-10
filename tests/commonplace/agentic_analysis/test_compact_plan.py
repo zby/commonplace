@@ -119,10 +119,12 @@ def test_each_job_equals_its_hand_written_form_after_the_intended_differences(pl
         assert job.outputs == old_job.outputs and job.role == old_job.role, job.name
         if isinstance(job, ModelJob):
             # The frame prints artifact and role, and the run supplies command-path,
-            # so the per-job validation parameters are gone.
+            # so the per-job validation parameters are gone. The opening's identity
+            # and capture directory are lines too, so no worker reads the opening JSON.
             expected = {key: value for key, value in old_job.parameters.items()
                         if key not in ("validation-artifact", "validation-role")}
-            expected["command-path"] = "{param:command-path}"
+            expected |= {"command-path": "{param:command-path}", "source-identity": "{param:source-identity}",
+                         "capture-directory": "{run}/sources"}
             assert (job.parameters, job.max_attempts) == (expected, old_job.max_attempts), job.name
             # Model jobs now receive the prompt section and the type of every member they
             # write or read, derived from the layout instead of listed by hand.

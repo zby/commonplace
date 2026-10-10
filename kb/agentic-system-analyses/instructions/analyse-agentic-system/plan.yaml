@@ -62,7 +62,8 @@ inputs:
   opening: {address: output, source: 'opening:metadata'}
 defaults:
   max-attempts: 3
-  parameters: {system: '{param:system}', command-path: '{param:command-path}'}
+  parameters: {system: '{param:system}', command-path: '{param:command-path}',
+               source-identity: '{param:source-identity}', capture-directory: '{run}/sources'}
 jobs:
 - name: opening
   kind: code

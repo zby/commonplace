@@ -258,12 +258,12 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
             for check in job.extensions.get("checks", ()):
                 path = check["function"] if isinstance(check, dict) else check
                 assert path.startswith("commonplace.lib.agentic_analysis.")
-    start_run(run_dir, DECLARATION, parameters={"system": "fixture", "command-path": "/checkout/.venv/bin"})
+    start_run(run_dir, DECLARATION, parameters={"system": "fixture", "command-path": "/checkout/.venv/bin", "source-identity": "fixture"})
     status = advance(run_dir)
     assert not status.handouts and not status.open_attempts and not status.publishable
     assert len(status.stops) == 1
     assert status.stops[0].job == "opening"
-    assert "requires a nonempty source-identity run parameter" in status.stops[0].reason
+    assert "requires a nonempty source run parameter" in status.stops[0].reason
     assert not (tmp_path / "retained").exists()
 
 

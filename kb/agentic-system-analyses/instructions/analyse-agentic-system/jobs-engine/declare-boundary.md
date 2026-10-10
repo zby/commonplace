@@ -10,8 +10,8 @@ Write the boundary that fixes this run's target, disposition and frozen evidence
 `blocked` and `out-of-scope` are valid dispositions, not failures. Use
 `problem` only when you cannot write the boundary under these inputs: a
 missing required input, a changed source pin, a needed identity change or
-prior-analysis exposure. Use the opening's normalized `source-identity`
-unchanged; do not derive it from caller text.
+prior-analysis exposure. Use the `source-identity` line, the normalized
+identity, unchanged; do not derive it from caller text.
 
 ## Select the target
 
@@ -40,14 +40,14 @@ usage and responsibilities, and give each exclusion its prevented conclusion.
    frontmatter `source` and its `revision` into `reviewed-boundary`, even for
    `blocked` or `out-of-scope`. Another source or revision requires `problem`.
 3. When `acquire` is JSON `null`, freeze any non-Git source set as an immutable
-   capture or bundle in the opening's `capture-directory`, with a stable
+   capture or bundle in the `capture-directory` line's directory, with a stable
    identity, capture label, absolute path and exact-byte SHA-256. Set frontmatter
    `source.kind` to `capture` and `reviewed-boundary` to the capture label. Create that
    directory when needed; it survives hand-out cleanup. Do not modify existing
    captures or analyse a moving live page as frozen. On repair, preserve a
    previous boundary's established capture; if its pin cannot be verified,
    write `problem`, not a replacement source. `source.identity` must equal
-   the opening identity. If no source was
+   the `source-identity` line. If no source was
    established, use frontmatter `source: null` and a non-complete disposition.
 4. Build the `SRC-*` register as `member-type` defines it.
 
