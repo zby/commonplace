@@ -55,8 +55,10 @@ def test_graph_covers_real_roles_once(graph):
 def test_declared_file_inputs_are_portable_library_paths(graph):
     jobs, layout = graph
     for name in MODEL_ROLES:
-        assert jobs.job(name).inputs["opening"].source == "opening:metadata"
+        assert ("opening" in jobs.job(name).inputs) == (name == "boundary")
     boundary = jobs.job("boundary")
+    assert boundary.inputs["opening"].source == "opening:metadata"
+    assert jobs.job("check-boundary").inputs["metadata"].source == "opening:metadata"
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/declare-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
     incumbent = jobs.job("check-boundary").inputs["incumbent"]

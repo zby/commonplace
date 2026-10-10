@@ -74,6 +74,8 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
     name = job_name(old_job.name)
     renames = INPUT_RENAMES.get(name, {})
     inputs = {renames.get(key, key): renamed(spec) for key, spec in old_job.inputs.items() if spec.address != "file"}
+    if isinstance(old_job, ModelJob) and name != "boundary":
+        inputs.pop("opening", None)
     if name.startswith("check-") and name != "report-check":
         role = layout.roles[name.removeprefix("check-")]
         identity = {source.role for source in role.identity}
@@ -129,7 +131,8 @@ def test_each_job_equals_its_hand_written_form_after_the_intended_differences(pl
         if isinstance(job, ModelJob):
             # The frame prints artifact and role, and the run supplies command-path,
             # so the per-job validation parameters are gone. The opening's identity
-            # and capture directory are lines too, so no worker reads the opening JSON.
+            # and capture directory are bindings too. Only the boundary retains
+            # opening JSON for the caller's raw source input.
             expected = {key: value for key, value in old_job.parameters.items()
                         if key not in ("validation-artifact", "validation-role")}
             expected |= {"command-path": "{param:command-path}", "source-identity": "{param:source-identity}",

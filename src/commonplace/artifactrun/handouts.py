@@ -85,7 +85,8 @@ def prompt_variable_names(job: ModelJob, layout: Layout) -> set[str]:
     conditions, never slots.
     """
     names = {*FRAME_VARIABLES, *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
-    names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
+    names |= {name for name, spec in job.inputs.items()
+              if spec.address != "judgment" and name not in (job.instruction, PROMPT_SECTION_INPUT)}
     if job.role:
         names |= {"role", *layout_bindings(layout, job.role)}
     return names
@@ -139,11 +140,17 @@ def _open(run: Run, job: ModelJob) -> Handout:
     pins = {name: run.resolve(name, job.inputs) for name in job.inputs}
     paths: dict[str, Path | None] = {}
     for name, pinned in pins.items():
+        spec = job.inputs[name]
+        if spec.address == "judgment":
+            # A model's judgment inputs are engine gates, not worker evidence.
+            # Keep their pins below, but deliver no file, binding or reading entry.
+            if pinned.data is not None:
+                store.put(pinned.data)
+            continue
         if pinned.data is None:
             paths[name] = None
             continue
         store.put(pinned.data)
-        spec = job.inputs[name]
         if spec.address == "file":
             # A file is handed at its own path, so an instruction's relative
             # links still resolve. Its pinned version is recorded; a method

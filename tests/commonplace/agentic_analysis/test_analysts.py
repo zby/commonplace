@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
@@ -43,7 +42,7 @@ def test_three_analysts_install_pinned_members_and_cover_present_relations(analy
 
 
 @pytest.mark.slow
-def test_analyst_handouts_carry_opening_answers_and_pinned_boundary(analysts):
+def test_analyst_handouts_carry_answers_and_pinned_boundary_without_opening(analysts):
     a = analysts
     for member in REPORT_TYPES:
         if member == "memory":
@@ -53,8 +52,9 @@ def test_analyst_handouts_carry_opening_answers_and_pinned_boundary(analysts):
         assert "jobs-engine/" in h.prompt.read_text()
         assert "## Input reading batches" in h.prompt.read_text()
         assert "output-answers" in p
-        opening = json.loads(Path(p["opening"]).read_bytes())
-        assert opening["run-id"] == a.coordinator.run_dir.name
+        assert "opening" not in p
+        assert not (h.prompt.parent / "inputs" / "opening.md").exists()
+        assert p["run-id"] == a.coordinator.run_dir.name
         assert Path(p["boundary"]).read_text() == boundary_candidate(a)
 
 

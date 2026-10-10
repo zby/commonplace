@@ -59,8 +59,6 @@ criteria:
     overview-type: agentic-system-analyses/types/agentic-system-analysis-overview.md
     type-spec: types/type-spec.md
     type-spec-schema: types/type-spec.schema.yaml
-inputs:
-  opening: {address: output, source: 'opening:metadata'}
 defaults:
   max-attempts: 3
   parameters: {system: '{param:system}', command-path: '{param:command-path}',
@@ -82,7 +80,7 @@ jobs:
   instruction: jobs-engine/declare-boundary.md
   max-attempts: 2
   criteria: [worker]
-  reads: {'acquire:source': required}
+  reads: {'opening:metadata': required, 'acquire:source': required}
   checks:
   - function: commonplace.lib.agentic_analysis.declared_checks.bound_boundary
     inputs: {metadata: 'opening:metadata', source: 'acquire:source'}
