@@ -11,9 +11,10 @@ import yaml
 
 from commonplace.artifactrun import CodeJob, ModelJob, advance, load_plan, start_run
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
-from commonplace.lib.agentic_analysis.plan import PLAN, expanded
+from commonplace.lib.agentic_analysis.plan import PLAN
 from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
+from tests.commonplace.agentic_analysis.fixtures import expanded
 
 REPORTS = ("runtime", "memory", "epistemic")
 RECORDS = (*REPORTS, "reconciliation")

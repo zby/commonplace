@@ -16,7 +16,6 @@ from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     anchor,
     annotated_ids,
-    artifact_record_errors,
     artifact_record_findings,
     declared_ids,
     identifier_from_anchor,
@@ -28,6 +27,7 @@ from commonplace.lib.agentic_analysis.records import (
     source_register_rows,
     value_amendments,
 )
+from tests.commonplace.agentic_analysis.fixtures import artifact_record_errors
 
 ROUTE_ANSWERS = """- Immediate return: A stored preference is returned.
 - Later read-back: The next invocation reads the retained preference.

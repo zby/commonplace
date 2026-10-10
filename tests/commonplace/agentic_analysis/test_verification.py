@@ -11,7 +11,6 @@ from commonplace.artifactrun import start_run
 from commonplace.artifactrun.handlers import apply_verification, artifact_check
 from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
 from commonplace.artifactrun.store import RunStore, digest
-from commonplace.lib.agentic_analysis.plan import expanded
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     parameters,
@@ -27,6 +26,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
+from tests.commonplace.agentic_analysis.fixtures import expanded
 from tests.commonplace.artifactrun.support import Coordinator
 
 pytestmark = pytest.mark.slow

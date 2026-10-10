@@ -447,11 +447,3 @@ def artifact_record_findings(
             elif sources in bodies and declared[sources].count(identifier) > 1 and name != sources:
                 findings.append((name, f"{name}: ambiguous source {identifier}; the Source register declares it twice"))
     return known, findings
-
-
-def artifact_record_errors(
-    sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
-) -> tuple[set[str], list[str]]:
-    """``artifact_record_findings`` without attribution."""
-    known, findings = artifact_record_findings(sources, bodies, cites=cites)
-    return known, [message for _, message in findings]

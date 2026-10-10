@@ -19,7 +19,6 @@ from commonplace.lib import systems_matrix as sm
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     anchor,
-    artifact_record_errors,
     conclusion_status_errors,
     route_field_errors,
     section,
@@ -27,6 +26,7 @@ from commonplace.lib.agentic_analysis.records import (
 from commonplace.lib.validation import validate_draft_in_role
 from scripts import analyze_matrix as stats
 from tests.commonplace.agentic_analysis.fixtures import (
+    artifact_record_errors,
     comparison_schema,
     frontmatter,
     member_fixture,
@@ -232,7 +232,7 @@ def declared_packet(job_name):
 
     from commonplace.artifactrun import load_plan
     from commonplace.lib.agentic_analysis.analyses import analysis_layout
-    from commonplace.lib.agentic_analysis.plan import expanded
+    from tests.commonplace.agentic_analysis.fixtures import expanded
 
     library = Path(__file__).resolve().parents[3] / "kb"
     declaration = load_plan(yaml.safe_dump(expanded(library)), analysis_layout().roles)

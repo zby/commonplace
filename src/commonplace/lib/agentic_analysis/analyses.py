@@ -65,10 +65,6 @@ class Member:
     document: ParsedDocument
 
     @property
-    def text(self) -> str:
-        return self.content.decode("utf-8")
-
-    @property
     def frontmatter(self) -> dict[str, Any]:
         return self.document.frontmatter or {}
 

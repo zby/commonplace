@@ -18,7 +18,8 @@ import yaml
 from commonplace.artifactrun import CodeJob, Input, ModelJob, load_plan
 from commonplace.artifactrun.compact import expand
 from commonplace.lib.agentic_analysis.analyses import analysis_layout
-from commonplace.lib.agentic_analysis.plan import PLAN, expanded
+from commonplace.lib.agentic_analysis.plan import PLAN
+from tests.commonplace.agentic_analysis.fixtures import expanded
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
 HAND_WRITTEN = Path(__file__).with_name("hand_written_plan.yaml")

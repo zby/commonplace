@@ -87,13 +87,6 @@ def _frontmatter(text: str, path: Path) -> dict[str, object]:
     return document.frontmatter
 
 
-def _frontmatter(text: str, path: Path) -> dict[str, object]:
-    document, error = parse_document(text)
-    if error or document is None or not isinstance(document.frontmatter, dict):
-        raise ValueError(f"cannot read frontmatter in {path}: {error}")
-    return document.frontmatter
-
-
 def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tuple[list[str], str]:
     """Prove current engine completion AND exact publication, without recovery writes.
 

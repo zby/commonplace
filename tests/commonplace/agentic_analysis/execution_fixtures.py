@@ -21,7 +21,7 @@ from commonplace.artifactrun import sources as agentic_checkout
 from commonplace.artifactrun import start_run, worktree
 from commonplace.artifactrun.sources import JOURNAL
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis.plan import expanded
+from tests.commonplace.agentic_analysis.fixtures import expanded
 from tests.commonplace.artifactrun.support import Coordinator
 
 ROOT = Path(__file__).resolve().parents[3]

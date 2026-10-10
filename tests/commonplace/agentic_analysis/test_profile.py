@@ -82,7 +82,7 @@ def opened(request):
 def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, previous=None):
     """The derived check or apply job of the expanded plan, pinned to scripted bytes."""
     from commonplace.artifactrun import load_plan
-    from commonplace.lib.agentic_analysis.plan import expanded
+    from tests.commonplace.agentic_analysis.fixtures import expanded
 
     run = Run(RunStore(a.coordinator.run_dir))
     run.jobs = load_plan(yaml.safe_dump(expanded(run.library)))  # The fixture ran only the opening.

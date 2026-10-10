@@ -5,8 +5,9 @@ from pathlib import Path
 import yaml
 
 from commonplace.artifactrun import ModelJob, load_plan
-from commonplace.lib.agentic_analysis.plan import PLAN, expanded
+from commonplace.lib.agentic_analysis.plan import PLAN
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
+from tests.commonplace.agentic_analysis.fixtures import expanded
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = REPO_ROOT / "kb"
