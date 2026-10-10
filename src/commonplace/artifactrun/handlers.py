@@ -15,9 +15,9 @@ judges from the job's declared inputs, never from per-job configuration:
 Validation runs in the project the run's library belongs to, against the
 job's pinned criteria.
 
-A job's `options`, fixed with the plan, extend the standard handlers:
-`frozen-source` names the role whose `source` field pins the checkout the
-run may inspect; `checks` lists functions called with the built candidate,
+The plan's `frozen-source` names the role whose `source` field pins the
+checkout the run may inspect. A job's `extensions`, fixed with the plan,
+extend the standard handlers: `checks` lists functions called with the built candidate,
 each returning refusal findings; `feedback` names a function the verdict
 application calls for each refused subject with the role, the blockers
 addressed to it and the verdict's candidate, appending the text it returns.
@@ -111,7 +111,7 @@ def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes])
     named role whose member is absent or has no source is an error, never a
     silent unverified check.
     """
-    pinned = attempt.options.get("frozen-source")
+    pinned = attempt.frozen_source
     if pinned is None or pinned == role:
         return None
     holder = members.get(attempt.layout.path(pinned))
@@ -133,7 +133,7 @@ def extension_findings(check: Candidate) -> list[str]:
     `function`; the inputs a check declares are ordinary job inputs.
     """
     findings = []
-    for entry in check.attempt.options.get("checks", ()):
+    for entry in check.attempt.extensions.get("checks", ()):
         path = entry["function"] if isinstance(entry, dict) else entry
         findings += list(_resolve(path)(check))
     return findings
@@ -178,7 +178,7 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     built = candidate(attempt)
     answers, answered = correction(attempt, built)
     declared = extension_findings(built)
-    if attempt.options.get("frozen-source") == built.role:
+    if attempt.frozen_source == built.role:
         # The candidate names the source its quotations are checked against.
         # Its declared checks bind that source to what the run acquired; only
         # a bound candidate's own source is inspected.
@@ -256,7 +256,7 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     sections = _sections(document.body)
     entries = blocker_entries(sections["Blockers"]) if sections["Blockers"] != "none" else []
     limits = sections["Limits"]
-    feedback = _resolve(attempt.options["feedback"]) if attempt.options.get("feedback") else None
+    feedback = _resolve(attempt.extensions["feedback"]) if attempt.extensions.get("feedback") else None
     for role in verified:
         path = layout.path(role)
         if path not in verdict.snapshot:
@@ -298,7 +298,7 @@ def artifact_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
             members[layout.path(role)] = data
     directory = (attempt.run_dir / "artifact").resolve()
     repo = attempt.library.parent
-    pinned = attempt.options.get("frozen-source")
+    pinned = attempt.frozen_source
     source = frozen_source(attempt, "", members) if pinned is not None else None
     run = ValidationRun(
         repo, (), content_overrides={directory / MANIFEST_NAME: manifest(attempt)},

@@ -255,7 +255,7 @@ def test_bound_handlers_and_invalid_opening_fail_closed(tmp_path, monkeypatch):
         if isinstance(job, CodeJob):
             assert job.handler.startswith(("commonplace.lib.agentic_analysis.", "commonplace.artifactrun.handlers."))
             assert callable(job.resolve_handler())
-            for check in job.options.get("checks", ()):
+            for check in job.extensions.get("checks", ()):
                 path = check["function"] if isinstance(check, dict) else check
                 assert path.startswith("commonplace.lib.agentic_analysis.")
     start_run(run_dir, DECLARATION, parameters={"system": "fixture", "command-path": "/checkout/.venv/bin"})

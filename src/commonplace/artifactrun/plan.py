@@ -78,7 +78,7 @@ class ModelJob:
 class CodeJob:
     """A code job runs its handler under the command.
 
-    `options` is data for the handler that the engine stores with the plan
+    `extensions` is data for the handler that the engine stores with the plan
     and never interprets; a change to it is a change of plan, not an input.
     """
 
@@ -87,7 +87,7 @@ class CodeJob:
     outputs: tuple[str, ...]
     handler: str
     role: str | None = None
-    options: Mapping[str, Any] = field(default_factory=dict)
+    extensions: Mapping[str, Any] = field(default_factory=dict)
 
     def resolve_handler(self) -> Callable:
         module, _, attribute = self.handler.rpartition(".")
@@ -108,6 +108,8 @@ class Plan:
     jobs: tuple[Job, ...]
     prompt_section: str | None = None
     """The library path of the plan's prompt section, or None for the bare frame."""
+    frozen_source: str | None = None
+    """The role whose `source` field pins the checkout the run may inspect, or None."""
 
     def job(self, name: str) -> Job:
         for job in self.jobs:
@@ -246,14 +248,14 @@ def _job(raw: Any) -> Job:
                     raise PlanError(f"job {name}: parameter {key}: unknown placeholder {{{placeholder}}}")
         job: Job = ModelJob(name, inputs, outputs, instruction, role, max_attempts, dict(parameters))
     elif kind == "code":
-        allowed = {"name", "kind", "inputs", "outputs", "handler", "role", "options"}
+        allowed = {"name", "kind", "inputs", "outputs", "handler", "role", "extensions"}
         handler = raw.get("handler")
         if not isinstance(handler, str) or "." not in handler:
             raise PlanError(f"job {name}: handler must be a dotted path")
-        options = raw.get("options") or {}
-        if not isinstance(options, dict) or not all(isinstance(key, str) for key in options):
-            raise PlanError(f"job {name}: options must be a mapping with string keys")
-        job = CodeJob(name, inputs, outputs, handler, role, dict(options))
+        extensions = raw.get("extensions") or {}
+        if not isinstance(extensions, dict) or not all(isinstance(key, str) for key in extensions):
+            raise PlanError(f"job {name}: extensions must be a mapping with string keys")
+        job = CodeJob(name, inputs, outputs, handler, role, dict(extensions))
     else:
         raise PlanError(f"job {name}: kind must be model or code")
     unknown = set(raw) - allowed
@@ -268,7 +270,7 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     if not isinstance(data, dict):
         raise PlanError("a plan must be a mapping")
     reject_underscored_keys(data)
-    unknown = set(data) - {"type", "criteria", "jobs", "prompt-section"}
+    unknown = set(data) - {"type", "criteria", "jobs", "prompt-section", "frozen-source"}
     if unknown:
         raise PlanError(f"unknown keys {sorted(unknown)}")
     groups = _criteria_groups(data.get("criteria", {}))
@@ -283,8 +285,13 @@ def load_plan(text: str, roles: Mapping[str, Any] | None = None) -> Plan:
     section = data.get("prompt-section")
     if section is not None and (not isinstance(section, str) or not section):
         raise PlanError("prompt-section must name the prompt section file, relative to the KB root")
+    frozen = data.get("frozen-source")
+    if frozen is not None and (not isinstance(frozen, str) or not frozen):
+        raise PlanError("frozen-source must name a role")
+    if frozen is not None and roles is not None and frozen not in roles:
+        raise PlanError(f"frozen-source: role {frozen} is not declared by the type")
     plan = Plan(Path(data["type"]), tuple(_with_prompt_section(_with_refusal(job), section) for job in jobs),
-                section)
+                section, frozen)
     _check(plan, roles)
     return plan
 

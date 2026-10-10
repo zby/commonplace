@@ -284,10 +284,11 @@ The syntax, stated so that the loader does not invent it:
   inputs and any handed input without more plumbing. `feedback` names one function receiving the subject role,
   its blockers and the handed snapshot and returning text the refusal
   appends. Both are consumed by the standard handlers, which call them.
-- **Options.** A code job may carry an `options` mapping the engine fixes
-  with the declaration and never interprets, exposed to the handler. The
-  loader writes `frozen-source`, `checks` and `feedback` there; a check's
-  declared inputs become ordinary job inputs. The name is distinct from
+- **Extensions.** A code job may carry an `extensions` mapping the engine
+  fixes with the declaration and never interprets, exposed to the handler.
+  The loader writes `checks` and `feedback` there; a check's declared inputs
+  become ordinary job inputs. `frozen-source` stays a plan-level key in the
+  expanded plan too, and handlers read it from the run. The name is distinct from
   `parameters`, which on a model job are substituted into its hand-out
   and on an attempt are the run's.
 - **Publish.** The loader derives no publish job unless the plan asks for

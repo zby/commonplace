@@ -144,7 +144,6 @@ def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
             continue
         kind = "report-check" if job.name == "report-check" else job.name.partition("-")[0]
         assert job.handler == STANDARD[kind], job.name
-        assert job.options.get("frozen-source") == "boundary", job.name
 
 
 def compact_entries() -> dict[str, dict]:
@@ -164,13 +163,13 @@ def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plan
         derived = "apply-" if new.job(role).role in {"report-verification", "profile-verification",
                                                       "synthesis-verification"} else "check-"
         job = new.job(derived + role)
-        assert job.options.get("checks") == entry.get("checks"), job.name
-        assert job.options.get("feedback") == entry.get("feedback"), job.name
+        assert job.extensions.get("checks") == entry.get("checks"), job.name
+        assert job.extensions.get("feedback") == entry.get("feedback"), job.name
         for check in entry.get("checks") or []:
             if isinstance(check, dict):
                 for name in check["inputs"]:
                     assert name in job.inputs, f"{job.name}: declared check input {name} is wired"
-    assert new.job("apply-report-verification").options["feedback"].endswith("cited_records")
+    assert new.job("apply-report-verification").extensions["feedback"].endswith("cited_records")
 
 
 def test_derived_criteria_include_what_the_hand_written_jobs_pinned(plans):

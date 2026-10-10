@@ -543,9 +543,14 @@ class CodeAttempt:
         return self._job
 
     @property
-    def options(self) -> Mapping[str, object]:
-        """The job's declared handler options, read-only; the engine never reads them."""
-        return MappingProxyType(dict(self._job.options))
+    def extensions(self) -> Mapping[str, object]:
+        """The job's declared handler extensions, read-only; the engine never reads them."""
+        return MappingProxyType(dict(self._job.extensions))
+
+    @property
+    def frozen_source(self) -> str | None:
+        """The plan's frozen-source role, whose `source` field pins the inspectable checkout."""
+        return self._run.jobs.frozen_source
 
     @property
     def inputs(self) -> Mapping[str, Input]:

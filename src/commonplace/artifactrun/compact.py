@@ -249,15 +249,13 @@ class _Expansion:
         return {**{_criterion_name(path): {"address": "file", "source": path} for path in paths if path not in given},
                 **{name: {"address": "file", "source": path} for name, path in group.items()}}
 
-    def options(self, entry: Mapping[str, Any]) -> dict:
-        options: dict[str, Any] = {}
-        if self.frozen is not None:
-            options["frozen-source"] = self.frozen
+    def extensions(self, entry: Mapping[str, Any]) -> dict:
+        extensions: dict[str, Any] = {}
         if entry.get("checks"):
-            options["checks"] = entry["checks"]
+            extensions["checks"] = entry["checks"]
         if entry.get("feedback"):
-            options["feedback"] = entry["feedback"]
-        return options
+            extensions["feedback"] = entry["feedback"]
+        return extensions
 
     # Jobs
 
@@ -273,6 +271,8 @@ class _Expansion:
         plan = {"type": self.type_spec}
         if self.data.get("prompt-section") is not None:
             plan["prompt-section"] = self.library_path(self.data["prompt-section"], "prompt-section")
+        if self.frozen is not None:
+            plan["frozen-source"] = self.frozen
         if self.groups:
             plan["criteria"] = dict(self.groups)
         plan["jobs"] = jobs
@@ -373,7 +373,7 @@ class _Expansion:
         partners = [spec["source"] for spec in inputs.values() if spec["address"] == "role"]
         inputs.update(self.criteria([name, *partners]))
         return {"name": f"check-{name}", "kind": "code", "handler": CHECK, "inputs": inputs, "outputs": [],
-                "options": self.options(entry)}
+                "extensions": self.extensions(entry)}
 
     def apply_job(self, entry: Mapping[str, Any], reads: Mapping[str, dict]) -> dict:
         role = self.layout.roles[entry["role"]]
@@ -395,7 +395,7 @@ class _Expansion:
         roles = [spec["source"] for read, spec in reads.items() if spec["address"] == "role"]
         inputs.update(self.criteria([name, *roles]))
         return {"name": f"apply-{name}", "kind": "code", "handler": APPLY, "inputs": inputs, "outputs": [],
-                "options": self.options(entry)}
+                "extensions": self.extensions(entry)}
 
     def standard_job(self, entry: Mapping[str, Any]) -> dict:
         unknown = set(entry) - JOB_KEYS
@@ -410,6 +410,5 @@ class _Expansion:
             inputs[self.frozen] = {"address": "role", "source": self.frozen}
             roles.append(self.frozen)
         inputs.update(self.criteria(roles))
-        options = {"frozen-source": self.frozen} if self.frozen is not None else {}
         return {"name": entry["job"], "kind": "code", "handler": entry["handler"], "inputs": inputs,
-                "outputs": self.outputs[entry["job"]], "options": options}
+                "outputs": self.outputs[entry["job"]]}

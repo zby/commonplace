@@ -20,7 +20,8 @@ def expansion(tmp_path: Path, data: dict) -> dict:
 def test_a_derived_apply_gets_the_frozen_source_role_live_when_the_verifier_did_not_read_it(tmp_path):
     data = {**compact_plan(), "frozen-source": "brief"}  # The toy verifier reads its subjects only.
     apply = expansion(tmp_path, data)["apply-verification"]
-    assert apply["options"]["frozen-source"] == "brief"
+    assert expand(data, library=tmp_path / "kb", plan_dir=tmp_path / "kb")["frozen-source"] == "brief"
+    assert "extensions" not in apply or "frozen-source" not in apply["extensions"]
     assert apply["inputs"]["brief"] == {"address": "role", "source": "brief"}
     assert "brief-handed" not in apply["inputs"]
 
