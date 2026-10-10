@@ -12,6 +12,8 @@ status: accepted
 
 **Amended 2026-10-10:** revision 1 memory profiles and their compatibility path are removed, the schema requires version 2, and the profile's comparison-version check went with them; the analysis keeps two declared checks, the boundary's binding to acquisition and the report-check gate. The verification protocol's grammar is one layout finding for any role with `verifies`, its addressees taken from that list, so the apply handler enforces nothing the validator does not.
 
+**Amended 2026-10-10:** a model job's judgment inputs are engine gates, not worker evidence: the engine pins and enforces them, and delivers no file, binding or reading entry for them, since on the standard path they record an empty acceptance the worker can learn nothing from. Code jobs keep receiving theirs. The opening record is a read of the boundary entry only, whose acquisition may need the caller's raw source input; later workers have its useful values as prompt bindings. Order-only reads stay delivered: order-only is a rerun rule, and the report is content. The hand-out's reading list is de-duplicated and a repeated read is refused.
+
 ## Context
 
 ADR 113 gave the engine a plan and a type. The first consumer, the
