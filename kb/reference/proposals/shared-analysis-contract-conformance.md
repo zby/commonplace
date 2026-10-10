@@ -12,12 +12,15 @@ contains the whole contract.
 
 ## Current state (as of 2026-10-01)
 
-- Commit `d77388b4` separates the source contract (since split between the
-  [boundary type](../../agentic-system-analyses/types/agentic-system-boundary.md) and the worker rules)
-  and [record contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md) from four member
-  types. The analysis workflow declares both files to its analysts,
-  reconciliation and verification. Changes reopen the affected jobs and
-  block publication against an earlier method commit.
+- As of 2026-10-10 the shared contract is one file, the
+  [records contract](../../agentic-system-analyses/instructions/agentic-analysis-records.md),
+  referred to from the seven member types that declare or cite records; the
+  former source contract is split between the
+  [boundary type](../../agentic-system-analyses/types/agentic-system-boundary.md)
+  and the worker rules (ADR 117). The analysis plan hands the records
+  contract to every model job as a file input, and the derived checks pin
+  it as a criterion, so a change reopens the affected jobs and blocks
+  publication against an earlier method commit.
 - Generic type-conformance reviews capture the target artifact and its
   type-spec criterion. `src/commonplace/review/freshness.py` captures and
   compares those two texts, without the type's shared dependencies.

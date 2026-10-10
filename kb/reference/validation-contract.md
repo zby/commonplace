@@ -51,23 +51,18 @@ whose `ARTIFACT.yaml` names a directory type; it is one additional
 validation unit. Visible direct Markdown children are the candidate
 members; descendants remain independent traversal targets.
 
-A type spec's `layout` declares the members. Each role names a direct child
-file, the type expected there, the roles whose fields it repeats and must
-equal (`identity`), the roles whose declarations its references resolve
-against (`cites`) and the roles it verifies (`verifies`). The `cites` list
-is the scope a member's references may resolve in; it need not hold a
-citation to every listed role and does not enumerate what an authoring
-worker reads. `required` lists the
-roles every instance has and, through a discriminating role and field, the
-roles each value requires and admits. `verifies` names must be roles; the
-validator gives the key no other meaning, and the artifact-run engine
-covers each `verifies` relation only by a judgment of the verified version
-(ADR 114).
-`membership: closed` makes a file that matches no role a finding;
-`membership: open` admits it. The validator checks membership, expected
-types, requiredness and identity from the layout; type rules registered for
-the directory type compute what needs a grammar, such as record references
-within each role's citation scope.
+A type spec's `layout` declares the members; the definition states its
+keys. The validator checks from the layout: membership, with
+`membership: closed` making a file that matches no role a finding and
+`membership: open` admitting it; each member's expected type;
+requiredness, always and by the discriminating field's value; and
+`identity`, that the listed fields equal the source member's, or the run's
+values when the source is `run` and validation runs inside an engine run.
+`verifies` is checked only for naming roles; its meaning is the
+artifact-run engine's, which covers each `verifies` relation only by a
+judgment of the verified version (ADR 114). Type rules registered for the
+directory type compute what needs a grammar, such as record citations
+within each role's `cites` scope.
 
 The shared schema receives `{manifest, members}` and constrains the manifest.
 The manifest can contain only `type` when no metadata is required. Optional

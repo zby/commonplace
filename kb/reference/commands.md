@@ -178,7 +178,7 @@ handoff command.
 
 `integrate <run>` independently verifies engine completion, current
 coverage, exact pinned publication inputs, retained bytes, journal and archive
-evidence. After separate operator authorization it commits the published set and
+evidence. After separate operator authorization it commits the published artifact and
 incumbent archive on an analysis branch and merges into `main`. A conflict
 leaves the branch and worktree for review while `main` stays unchanged. An agent
 supplies `--model <model-id>` for its commit trailer.
@@ -206,9 +206,9 @@ code job, hands out every ready model job, and prints the exact prompt paths,
 open attempts, stops and whether the artifact is publishable; `--json` prints the
 same as data. It exits 0 when the run continues, 2 when the run stopped and
 1 when the command itself failed. The coordinator launches fresh workers without parent conversation
-and settles all round handouts before advancing. The analysis manifest still
+and settles all round hand-outs before advancing. The analysis manifest still
 requires one consistent worker model/effort identity.
-`status <run>` lists members, open handouts with their original prompt paths,
+`status <run>` lists members, open hand-outs with their original prompt paths,
 failed attempts and refusals with identifiers; use it before resuming.
 Publishability means engine coverage, not publication or content validation.
 `judge <run> --role <role> --outcome accepted|refused` records an operator

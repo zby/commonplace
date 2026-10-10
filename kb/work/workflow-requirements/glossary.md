@@ -56,7 +56,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 | The type of the artifact | type | derived | The type declares the artifact's roles, relations and required members. | keep |
 | A declared position in the artifact | role | derived | A role is a position the type declares, with a path and relations. | changed: the spec said *slot*, the sketch *member* and *slot name*; decided 2026-10-09: *member* is ordinary English for a file of the artifact and names no concept; the input address resolving a role's current version is `role`, the validator's flag is `--role`, and *slot* is retired |
 | A declared link between two roles | relation | derived | A relation is a link the type declares from an origin role to a partner role, of a kind such as `identity` or `cites`. | decided: `<origin>:<kind>:<partner>`, replacing `<kind>:<partner>`; see [Relation](#relation) |
-| Whether the set's disposition permits a role | permitted role | — | A permitted role is one the type permits given the members present; a job filling any other role is not ready. | changed: was *required role*; requiring admits only `always` roles until the discriminating member exists, so no complete run could start |
+| Whether the artifact's disposition permits a role | permitted role | — | A permitted role is one the type permits given the members present; a job filling any other role is not ready. | changed: was *required role*; requiring admits only `always` roles until the discriminating member exists, so no complete run could start |
 
 ## Declaration
 
@@ -66,7 +66,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 | A unit of work | job | derived | A model job is handed out to a worker; a code job runs under the command. | keep |
 | A code job's function | handler | derived | A handler is the package function a code job runs, named by dotted path. | keep |
 | A model job's instruction file | instruction | derived | The instruction is the input whose file the worker follows. | keep |
-| A declared dependency of a job | input | derived | An input is something a job depends on, required or optional. | changed: was *read* (`Read`, `reads`), an action named as a class, documented as a view |
+| A declared dependency of a job | input | derived | An input is something a job depends on, required or optional. | changed: was *read* (`Read`, `reads`), an action named as a class, documented as a view; exception: the compact plan's `reads` key names a model job's run-produced inputs, kept under ADR 117 because it is an author-facing key distinct from the engine's inputs |
 | An input that orders without triggering | order-only input | derived | An order-only input must be present for its job to be ready, but its change never makes the job ready again. | borrowed: GNU Make's order-only prerequisites, same meaning; was *presence-only* (`trigger: false`) |
 | What an input resolves to | address | derived | The address says where the engine resolves an input when an attempt opens. | changed: was `kind`, then `view`, which rule 5 rejects |
 | Version an attempt was given, via its record | handed input | derived | A handed input is the version a declared attempt record says that attempt was given. | changed: was `pinned`, but every input is pinned |
@@ -80,7 +80,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 |---|---|---|---|---|
 | Creating a run | start | derived | Starting a run writes the metadata that names its plan and parameters. | added: no operation created a run, so nothing could name the plan that `advance()` loads |
 | One call of the command | advance | derived | An advance runs ready code jobs and hands out ready model jobs. | keep the function; drop *round*, which the decisions use for the same thing; 2026-10-10: prose adopts the code's word, advance; *invocation* retires at the closure sweep |
-| What an invocation returns | run status | derived | The run status lists hand-outs, open attempts, stops and publishability after an invocation. | changed: was `Advance`, the same word as the function |
+| What an advance returns | run status | derived | The run status lists hand-outs, open attempts, stops and publishability after an advance. | changed: was `Advance`, the same word as the function |
 | The agent calling the command | coordinator | — | The coordinator calls the command, runs workers and reports their attempts. | changed: spec says *orchestrating agent* and *agent* |
 | The agent running a model job | worker | derived | A worker is the model run that carries out one attempt. | keep; drop `runner`, which is undefined; 2026-10-10: `AttemptResult.model` is the worker's model, not the worker; the code surface is `worker-identity` |
 | One execution of a job | attempt | derived | An attempt is one execution of a job against inputs pinned when it opens. | keep; *execution*, not *run*, so that *run* keeps one meaning |
@@ -94,7 +94,7 @@ itself be composite is out of scope (operator, 2026-10-09).
 | A code job's handle on its attempt | code attempt | derived | A code attempt gives a handler its pinned inputs and stages its judgments. | changed: was `CodeContext`, colliding with *context* |
 | What inspection says about a whole run | run condition | derived | The run condition is running, publishable, stopped or stuck. | added: replaces the analysis report's own "completed" and "stopped" |
 | A completion that still stands | current completion | derived | A completion is current while its pins still resolve unchanged, no attempt of the job is open and the job is not ready. | added: the narrow "completed" the publication handoff used |
-| An invocation ending for the operator | stop | derived | A stop names the job and attempt that ended the invocation. | keep |
+| An advance ending for the operator | stop | derived | A stop names the job and attempt that ended the advance. | keep |
 | A worker's declared inability | problem | derived | The problem file is where a worker reports why it cannot produce output. | keep |
 
 ## Judging
@@ -114,14 +114,14 @@ itself be composite is out of scope (operator, 2026-10-09).
 | Cancelling a refusal explicitly | override | derived | An override names a refusal the acceptance cancels. | keep; refusal identity must be exposed, see below |
 | A rerun having read a refusal | answers | — | An attempt answers the refusal it read. | keep |
 | A judgment's reasons | findings | derived | — | keep |
-| The engine's coverage evidence as an input | coverage input | derived | A coverage input is present while the set minus the declaring job's role is publishable; its version names the members and covering claims. | added: replaces per-relation judgment inputs on assembly and publication |
+| The engine's coverage evidence as an input | coverage input | derived | A coverage input is present while the artifact minus the declaring job's role is publishable; its version names the members and covering claims. | added: replaces per-relation judgment inputs on assembly and publication |
 | Coverage for publication | covers | — | A holding acceptance of the current member at one end covers a relation when the current member at the other end is in its basis. | keep |
 
 ## Relation
 
 A relation needs a name before `scope` can be typed. The type layout has
-two relation kinds, `identity` and `cites`, and one pair of roles can have
-both: the runtime report has an identity relation to the boundary and also
+three relation kinds, `identity`, `cites` and `verifies` (ADR 114), and one
+pair of roles can have more than one: the runtime report has an identity relation to the boundary and also
 cites it. So the partner role alone does not name a relation. Nor do kind
 and partner: an apply job refuses the runtime report under the relation
 from the verification to it, and `cites:runtime` would read as runtime
@@ -129,9 +129,11 @@ citing itself.
 
 Decision: a relation is named `<origin>:<kind>:<partner>`, such as
 `verification:cites:runtime`. A judgment may scope any declared relation
-its subject's role is at either end of. A relation is covered by a holding
-acceptance of the current member at either end whose basis has the current
-member at the other end. The three prose relations (synthesis limits, amendment
+its subject's role is at either end of. An `identity` or `cites` relation is
+covered by a holding acceptance of the current member at either end whose
+basis has the current member at the other end; a `verifies` relation is
+covered only by a judgment of the verified member's handed version, never
+by a content check (ADR 114). The three prose relations (synthesis limits, amendment
 index, profile source identity) need kinds when they are declared.
 
 ## Distinctions kept with one name each
@@ -154,9 +156,9 @@ Added 2026-10-10 from the [naming review](./naming-review.md).
   alternative, is a Python keyword and would need a second attribute name.
   Read `source` on an input as "addressed thing".
 - **Two senses of status.** `commonplace-run status` lists a run's members
-  and hand-outs; `RunStatus` is what `advance` returns after one invocation.
+  and hand-outs; `RunStatus` is what `advance` returns after one advance.
   The dataclass keeps its name; the subcommand reports the run, the
-  dataclass one invocation's result.
+  dataclass one advance's result.
 
 ## Borrowed vocabulary
 
