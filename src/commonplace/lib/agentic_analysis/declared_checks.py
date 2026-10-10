@@ -7,13 +7,11 @@ declares. Environment guards stay separate from content validation.
 
 from __future__ import annotations
 
-import json
-
 from commonplace.artifactrun.checks import Candidate
+from commonplace.artifactrun.handlers import source_field
 from commonplace.lib.agentic_analysis.analyses import CAPTURE_DIRECTORY
-from commonplace.lib.agentic_analysis.boundary import boundary_refusals
+from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
 from commonplace.lib.agentic_analysis.opening import locate
-from commonplace.lib.note_parser import parse_document
 
 
 def bound_boundary(check: Candidate) -> list[str]:
@@ -26,18 +24,10 @@ def bound_boundary(check: Candidate) -> list[str]:
     """
     attempt = check.attempt
     metadata, repo = locate(attempt)
-    frozen = json.loads(attempt.read("source"))
-    if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
-        raise ValueError("boundary check requires a Git source object or explicit JSON null")
+    frozen = acquired_source(attempt.read("source"), job="the boundary check")
     # Only an accepted boundary establishes the capture pin. The check's
     # incumbent input preserves it across later corrections without a second source record.
-    incumbent_bytes = check.incumbent
-    incumbent_source = None
-    if incumbent_bytes is not None:
-        incumbent, error = parse_document(incumbent_bytes.decode("utf-8"))
-        if incumbent is None or error:
-            raise ValueError("boundary check cannot read the incumbent boundary")
-        incumbent_source = (incumbent.frontmatter or {}).get("source")
+    incumbent_source = source_field(check.incumbent) if check.incumbent is not None else None
     findings = ["[invocation] " + refusal for refusal in boundary_refusals(
         check.data, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
         capture_directory=attempt.run_dir / CAPTURE_DIRECTORY,

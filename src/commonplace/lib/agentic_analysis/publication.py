@@ -32,7 +32,7 @@ from commonplace.lib.agentic_analysis.analyses import (
     RETAINED_ROOT,
     source_slug,
 )
-from commonplace.lib.agentic_analysis.boundary import boundary_refusals
+from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
     publication_lock,
@@ -198,24 +198,16 @@ def _manifest(attempt: CodeAttempt, members: Mapping[str, bytes], worker: dict) 
 def _environment(attempt: CodeAttempt, boundary, *, job: str, guard: bool = False):
     metadata, repo = (_opened_environment(attempt, attempt.read("metadata"), job=job) if guard
                       else locate(attempt))
-    source_bytes = attempt.read("source")
-    if source_bytes is None:
-        raise ValueError(f"{job} requires the pinned acquisition result")
-    frozen = json.loads(source_bytes)
-    if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
-        raise ValueError("acquisition result must be a Git source object or explicit JSON null")
+    frozen = acquired_source(attempt.read("source"), job=job)
     if boundary.frontmatter.get("result-disposition") == "complete" and not isinstance(
             boundary.frontmatter.get("source"), dict):
         raise ValueError("complete publication requires a frozen boundary source")
     reasons = boundary_refusals(
-        attempt.read("boundary"), repo_root=repo, run_id=metadata["run-id"],
-        identity=metadata["source-identity"], frozen=frozen,
+        attempt.read("boundary"), repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
         capture_directory=attempt.run_dir / CAPTURE_DIRECTORY,
     )
     if reasons:
         raise ValueError("source/opening identity: " + "; ".join(reasons))
-    if boundary.frontmatter.get("run-id") != metadata["run-id"]:
-        raise ValueError("boundary must name the opened run")
     return metadata, repo
 
 

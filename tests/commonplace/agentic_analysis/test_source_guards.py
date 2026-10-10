@@ -34,7 +34,7 @@ def source_at(path, kind="capture"):
 
 def check(data, root, **kwargs):
     return agentic_boundary.boundary_refusals(
-        data, repo_root=root, run_id="fixture", identity=IDENTITY, **kwargs,
+        data, repo_root=root, identity=IDENTITY, **kwargs,
     )
 
 
@@ -53,7 +53,7 @@ def test_unauthorized_source_is_refused_before_inspection(tmp_path, monkeypatch,
         source = {**frozen, field: "different"}
         if field == "path":
             source[field] = str(tmp_path / "unauthorized")
-        data = boundary(source, **{"run-id": "wrong"})
+        data = boundary(source)
         options = {"frozen": frozen}
     else:
         directory = tmp_path / "captures"
@@ -84,7 +84,6 @@ def test_unauthorized_source_is_refused_before_inspection(tmp_path, monkeypatch,
     assert reasons and not calls
     if mode == "frozen":
         assert any("source must" in reason for reason in reasons)
-        assert any("run-id" in reason for reason in reasons)
         if field == "identity":
             assert any("source.identity" in reason for reason in reasons)
 
@@ -136,17 +135,16 @@ def test_authorized_capture_is_read_and_independent_diagnostics_survive(tmp_path
     monkeypatch.setattr(Path, "read_bytes", read)
     options = {"frozen": source} if mode == "frozen" else (
         {"capture_directory": tmp_path} if mode == "capture-directory" else {})
-    fields = {"run-id": "wrong", "reviewed-boundary": "wrong"} if bad_member else {}
+    # Without a pin or a capture directory nothing binds reviewed-boundary.
+    fields = {"reviewed-boundary": "wrong"} if bad_member else {}
     reasons = check(boundary(source, **fields), tmp_path, **options)
     assert reads == [path]
-    assert bool(reasons) == bad_member
+    assert bool(reasons) == (bad_member and mode != "legacy")
     path.write_bytes(b"changed")
     reasons = check(boundary(source, **fields), tmp_path, **options)
     assert any("source.sha256" in reason for reason in reasons)
-    if bad_member:
-        assert any("run-id" in reason for reason in reasons)
-        if mode != "legacy":
-            assert any("reviewed-boundary" in reason for reason in reasons)
+    if bad_member and mode != "legacy":
+        assert any("reviewed-boundary" in reason for reason in reasons)
 
 
 @pytest.fixture

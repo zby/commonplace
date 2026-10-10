@@ -10,14 +10,23 @@ from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.note_parser import parse_document
 
 
+def acquired_source(data: bytes | None, *, job: str) -> dict | None:
+    """The acquisition result: a frozen Git source object, or None when the boundary must capture."""
+    if data is None:
+        raise ValueError(f"{job} requires the pinned acquisition result")
+    frozen = json.loads(data)
+    if frozen is not None and (not isinstance(frozen, dict) or frozen.get("kind") != "git"):
+        raise ValueError("acquisition result must be a Git source object or explicit JSON null")
+    return frozen
+
+
 def boundary_refusals(
-    candidate: Path | bytes, *, repo_root: Path, identity: str, run_id: str | None = None,
+    candidate: Path | bytes, *, repo_root: Path, identity: str,
     frozen: dict[str, Any] | None = None, capture_directory: Path | None = None,
 ) -> list[str]:
-    """Invocation-only checks against run parameters and pinned source bytes.
+    """The boundary's source bound to the run's source identity and pinned bytes.
 
-    Without ``run_id`` the boundary's run-id is left to draft validation,
-    which binds it to the run.
+    Its run-id is a run-bound identity field, which draft validation checks.
     """
     try:
         text = candidate.decode("utf-8") if isinstance(candidate, bytes) else candidate.read_text(encoding="utf-8")
@@ -28,8 +37,6 @@ def boundary_refusals(
         return []
     fields = dict(document.frontmatter or {})
     refusals = []
-    if run_id is not None and fields.get("run-id") != run_id:
-        refusals.append(f"member identity: run-id {fields.get('run-id')!r} does not match {run_id!r}")
     source = fields.get("source")
     # A non-complete disposition does not authorize discarding code's source pin.
     if frozen is not None and (

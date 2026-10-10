@@ -100,7 +100,8 @@ def candidate(attempt: CodeAttempt) -> Candidate:
                      frozen_source(attempt, role, members), incumbent)
 
 
-def _source_field(data: bytes) -> dict | None:
+def source_field(data: bytes) -> dict | None:
+    """A member's `source` mapping, or None when it is unreadable or has none."""
     document, error = parse_document(data.decode("utf-8", errors="replace"))
     source = (document.frontmatter or {}).get("source") if document is not None and not error else None
     return source if isinstance(source, dict) else None
@@ -119,7 +120,7 @@ def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes])
     if pinned is None or pinned == role:
         return None
     holder = members.get(attempt.layout.path(pinned))
-    source = _source_field(holder) if holder is not None else None
+    source = source_field(holder) if holder is not None else None
     if source is None:
         raise TypeError(f"job {attempt.job.name}: the frozen-source member {pinned} has no source field")
     return source
@@ -189,7 +190,7 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
         if declared:
             judge(built, declared + answers, answered=answered)
             return {}
-        built = replace(built, source=_source_field(built.data))
+        built = replace(built, source=source_field(built.data))
     # A declared check may restate a finding the standard review made.
     findings = list(dict.fromkeys(review(built) + answers + declared))
     judge(built, findings, answered=answered)
