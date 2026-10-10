@@ -14,7 +14,7 @@ import pytest
 
 from commonplace.artifactrun import worktree
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import handlers as agentic_job_handlers
+from commonplace.lib.agentic_analysis import opening
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     ROOT,
@@ -149,7 +149,7 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
         calls.append(arguments)
         return {"exists": True, "expected_incumbent_sha256": "c" * 64}
 
-    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", inspect)
+    monkeypatch.setattr(opening, "inspect_destination", inspect)
     c = prepared.start()
     c.advance()
     assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
@@ -166,7 +166,7 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
     ("dirty", "publication requires a clean worktree"),
 ])
 def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monkeypatch, change, reason):
-    original = agentic_job_handlers.inspect_destination
+    original = opening.inspect_destination
 
     def concurrent(**arguments):
         decision = original(**arguments)
@@ -176,7 +176,7 @@ def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monk
             (prepared.repo / "src/commonplace/artifactrun/engine.py").write_text("# Concurrent modification.\n")
         return decision
 
-    monkeypatch.setattr(agentic_job_handlers, "inspect_destination", concurrent)
+    monkeypatch.setattr(opening, "inspect_destination", concurrent)
     c = prepared.start()
     c.advance()
     assert_stopped(c, "open", reason)
