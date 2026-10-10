@@ -87,7 +87,7 @@ def test_a_role_may_declare_what_it_verifies() -> None:
 def test_a_run_source_binds_fields_to_the_run_values_when_given() -> None:
     layout = parse_layout({**LAYOUT, "roles": {**LAYOUT["roles"], "head": {
         "path": "head.md", "type": "t/head.md", "identity": [{"from": "run", "fields": ["run"]}]}}})
-    assert layout.roles["head"].run_binding == ("run",) and layout.roles["head"].identity == ()
+    assert layout.roles["head"].run_identity == ("run",) and layout.roles["head"].identity == ()
     members = {"head.md": document("type: t/head.md\nstate: blocked\nrun: R")}
     assert layout_findings(layout, members) == []  # Outside a run nothing binds.
     assert layout_findings(layout, members, {"run": "R"}) == []

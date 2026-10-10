@@ -80,12 +80,12 @@ def test_a_conditioned_paragraph_needs_its_line(tmp_path, monkeypatch):
 
 
 def test_an_unknown_placeholder_fails_the_plan_at_start(tmp_path, monkeypatch):
-    with pytest.raises(PlanError, match="job brief prints no line reviewer"):
+    with pytest.raises(PlanError, match="job brief binds no variable reviewer"):
         sectioned_run(tmp_path, monkeypatch, SECTION + "\nAsk {reviewer}.\n")
 
 
 def test_run_parameters_reach_the_section_only_as_plan_parameter_lines(tmp_path, monkeypatch):
-    with pytest.raises(PlanError, match="job brief prints no line param:subject"):
+    with pytest.raises(PlanError, match="job brief binds no variable param:subject"):
         sectioned_run(tmp_path, monkeypatch, SECTION + "\nAbout {param:subject}.\n")
 
 
@@ -109,7 +109,7 @@ def test_workers_read_the_types_of_what_they_write_and_read_but_not_the_set_type
     assert "set-type" not in values and str(types / "toy-set.md") not in prompt
 
 def test_a_condition_no_job_prints_fails_the_plan_at_start(tmp_path, monkeypatch):
-    with pytest.raises(PlanError, match="prints no line refusla"):
+    with pytest.raises(PlanError, match="binds no variable refusla"):
         sectioned_run(tmp_path, monkeypatch, SECTION + "\n[refusla]\nTypo.\n")
 
 
@@ -126,7 +126,7 @@ def test_the_frame_prints_the_layout_facts_of_the_role(tmp_path, monkeypatch):
 
 
 def test_run_bound_fields_print_as_the_run_source_in_the_identity_line():
-    from commonplace.artifactrun.handouts import layout_lines
+    from commonplace.artifactrun.handouts import layout_bindings
     from commonplace.lib.directory_layout import parse_layout
 
     layout = parse_layout({"membership": "closed", "roles": {
@@ -134,5 +134,5 @@ def test_run_bound_fields_print_as_the_run_source_in_the_identity_line():
         "body": {"path": "body.md", "type": "t/body.md", "identity": [
             {"from": "run", "fields": ["source-identity"]}, {"from": "head", "fields": ["run-id"]}]},
     }})
-    assert layout_lines(layout, "head")["identity"] == "run: run-id"
-    assert layout_lines(layout, "body")["identity"] == "head: run-id; run: source-identity"
+    assert layout_bindings(layout, "head")["identity"] == "run: run-id"
+    assert layout_bindings(layout, "body")["identity"] == "head: run-id; run: source-identity"

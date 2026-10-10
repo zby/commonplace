@@ -10,7 +10,7 @@ Write the boundary that fixes this run's target, disposition and frozen evidence
 `blocked` and `out-of-scope` are valid dispositions, not failures. Use
 `problem` only when you cannot write the boundary under these inputs: a
 missing required input, a changed source pin, a needed identity change or
-prior-analysis exposure. Use the `source-identity` line, the normalized
+prior-analysis exposure. Use the prompt's `source-identity`, the normalized
 identity, unchanged; do not derive it from caller text.
 
 ## Select the target
@@ -37,7 +37,7 @@ requires for the boundary kind you claim.
    even for `blocked` or `out-of-scope`. Another source or revision requires
    `problem`.
 3. When `acquire` is JSON `null`, freeze any non-Git source set as an immutable
-   capture or bundle in the `capture-directory` line's directory, with a stable
+   capture or bundle in the prompt's `capture-directory`, with a stable
    identity, capture label, absolute path and exact-byte SHA-256. Create that
    directory when needed. Do not analyse a moving live page as frozen. On
    repair, preserve a previous boundary's established capture; if its pin

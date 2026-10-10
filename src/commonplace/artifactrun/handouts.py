@@ -21,7 +21,7 @@ from commonplace.lib.reading_batches import (
 )
 
 from .plan import (
-    FRAME_LINES,
+    FRAME_VARIABLES,
     HANDOUT_PREFIXES,
     PLACEHOLDER,
     PROMPT_SECTION_INPUT,
@@ -60,45 +60,45 @@ ABSENT_LINE = "absent"
 CONDITION = re.compile(r"\[([A-Za-z0-9][A-Za-z0-9_-]*)\]")
 
 
-def layout_lines(layout: Layout, role: str) -> dict[str, str]:
-    """The layout's facts about `role` as prompt lines.
+def layout_bindings(layout: Layout, role: str) -> dict[str, str]:
+    """The layout's facts about `role` as prompt bindings.
 
     `identity` names the fields the role repeats and from which roles, or
-    from `run` for fields that must equal the run's lines,
+    from `run` for fields that must equal the run's values,
     `cites` the roles its references may resolve in, and, for a verifying
     role only, `verifies` the roles its verdict settles.
     """
     declared = layout.roles[role]
     sources = [(source.role, source.fields) for source in declared.identity]
-    sources += [(RUN, declared.run_binding)] if declared.run_binding else []
-    lines = {"identity": "; ".join(f"{source}: {', '.join(fields)}" for source, fields in sources) or "none",
+    sources += [(RUN, declared.run_identity)] if declared.run_identity else []
+    bindings = {"identity": "; ".join(f"{source}: {', '.join(fields)}" for source, fields in sources) or "none",
              "cites": ", ".join(declared.cites) or "none"}
     if declared.verifies:
-        lines["verifies"] = ", ".join(declared.verifies)
-    return lines
+        bindings["verifies"] = ", ".join(declared.verifies)
+    return bindings
 
 
-def prompt_line_names(job: ModelJob, layout: Layout) -> set[str]:
-    """The `name = value` lines the frame prints for every attempt of `job`.
+def prompt_variable_names(job: ModelJob, layout: Layout) -> set[str]:
+    """The variables the frame binds, as `name = value` lines, for every attempt of `job`.
 
-    `previous-<output>` lines exist only on a retry, so they are only
+    `previous-<output>` variables are bound only on a retry, so they are only
     conditions, never slots.
     """
-    names = {*FRAME_LINES, *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
+    names = {*FRAME_VARIABLES, *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
     names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
     if job.role:
-        names |= {"role", *layout_lines(layout, job.role)}
+        names |= {"role", *layout_bindings(layout, job.role)}
     return names
 
 
-def render_prompt_section(text: str, lines: Mapping[str, str], *, conditions: set[str] | None = None) -> str:
-    """The plan's prompt section filled from the frame's own lines.
+def render_prompt_section(text: str, bindings: Mapping[str, str], *, conditions: set[str] | None = None) -> str:
+    """The plan's prompt section filled from the frame's own bindings.
 
     Frontmatter is dropped. A paragraph whose first line is `[<name>]` is
-    kept, without that line, only when the frame prints `<name>` with a
-    value other than `absent`. Every `{<name>}` is that line's value; an
+    kept, without that line, only when the frame binds `<name>` to a
+    value other than `absent`. Every `{<name>}` is that variable's value; an
     unknown name raises KeyError. With `conditions`, the names some job of
-    the plan can print, a condition outside them and outside the frame's
+    the plan can bind, a condition outside them and outside the frame's
     `output-*` and `previous-*` families raises KeyError too: that is the
     start-time check; at hand-out a missing condition drops its paragraph.
     """
@@ -110,14 +110,14 @@ def render_prompt_section(text: str, lines: Mapping[str, str], *, conditions: se
         condition = CONDITION.fullmatch(first.strip())
         if condition:
             name = condition.group(1)
-            if (conditions is not None and name not in lines and name not in conditions
+            if (conditions is not None and name not in bindings and name not in conditions
                     and not name.startswith(HANDOUT_PREFIXES)):
                 raise KeyError(name)
-            if lines.get(name, ABSENT_LINE) == ABSENT_LINE:
+            if bindings.get(name, ABSENT_LINE) == ABSENT_LINE:
                 continue
             paragraph = rest
         paragraphs.append(paragraph)
-    return PLACEHOLDER.sub(lambda match: lines[match.group(1)], "\n\n".join(paragraphs))
+    return PLACEHOLDER.sub(lambda match: bindings[match.group(1)], "\n\n".join(paragraphs))
 
 
 def _open(run: Run, job: ModelJob) -> Handout:
@@ -156,7 +156,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     outputs, problem, worker_identity = handout.outputs, handout.problem, handout.worker_identity
     placeholders = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                     "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
-    values = {"job": job.name, **({"role": job.role, **layout_lines(run.layout, job.role)} if job.role else {}),
+    values = {"job": job.name, **({"role": job.role, **layout_bindings(run.layout, job.role)} if job.role else {}),
               "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, placeholders, run.parameters) for key, value in job.parameters.items()}
     framed = {job.instruction, PROMPT_SECTION_INPUT}
@@ -175,7 +175,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     lines = [f"Follow {instruction} with:", *(f"{key} = {value}" for key, value in values.items())]
     section = pins.get(PROMPT_SECTION_INPUT)
     if section is not None and section.data is not None:
-        # The plan's section fills one part of the engine's frame, from the frame's own lines.
+        # The plan's section fills one part of the engine's frame, from the frame's own bindings.
         lines += ["", render_prompt_section(section.data.decode("utf-8"), values)]
     readable = [str(path) for name, path in paths.items() if path is not None and name not in framed]
     readable += [value for key, value in values.items() if key.startswith("previous-")]

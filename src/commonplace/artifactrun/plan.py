@@ -23,11 +23,11 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
-FRAME_LINES = ("job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch")
-"""Lines the frame prints for every model attempt."""
-ROLE_LINES = ("role", "identity", "cites", "verifies")
-"""Lines the frame prints for a role-filling job: its role and the layout's facts about it."""
-PROMPT_LINES = FRAME_LINES + ROLE_LINES
+FRAME_VARIABLES = ("job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch")
+"""Variables the frame binds for every model attempt."""
+ROLE_VARIABLES = ("role", "identity", "cites", "verifies")
+"""Variables the frame binds for a role-filling job: its role and the layout's facts about it."""
+PROMPT_VARIABLES = FRAME_VARIABLES + ROLE_VARIABLES
 HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
@@ -226,8 +226,8 @@ def _job(raw: Any) -> Job:
     for key in raw_inputs:
         if not isinstance(key, str) or not NAME.fullmatch(key):
             raise PlanError(f"job {name}: input name {key!r} must be letters, digits, '-' or '_'")
-        if key in PROMPT_LINES or key.startswith(HANDOUT_PREFIXES):
-            raise PlanError(f"job {name}: input name {key} collides with a prompt line")
+        if key in PROMPT_VARIABLES or key.startswith(HANDOUT_PREFIXES):
+            raise PlanError(f"job {name}: input name {key} collides with a prompt variable")
     inputs = {str(key): _input(name, str(key), value) for key, value in raw_inputs.items()}
     raw_outputs = raw.get("outputs", [])
     if not isinstance(raw_outputs, list):
@@ -257,7 +257,7 @@ def _job(raw: Any) -> Job:
                 isinstance(k, str) and NAME.fullmatch(k) and isinstance(v, str) and "\n" not in v
                 for k, v in parameters.items()):
             raise PlanError(f"job {name}: parameters must map names to one-line strings")
-        reserved = {*PROMPT_LINES, *RUN_PLACEHOLDERS, *inputs}
+        reserved = {*PROMPT_VARIABLES, *RUN_PLACEHOLDERS, *inputs}
         clash = sorted(k for k in parameters if k in reserved or k.startswith(HANDOUT_PREFIXES))
         if clash:
             raise PlanError(f"job {name}: parameters {clash} collide with names the hand-out sets")

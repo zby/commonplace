@@ -163,7 +163,7 @@ class ValidationRun:
     criteria: CriterionSnapshot | None = None
     # Exact boundary source declaration authorizing local frozen inspection.
     frozen_source: Mapping[str, object] | None = None
-    # The run parameters and run-id that run-bound identity fields must equal.
+    # The run parameters and run-id that run identity fields must equal.
     run_values: Mapping[str, str] | None = None
     _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
     _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
@@ -2015,7 +2015,7 @@ def validate_draft_in_role(
     preserve the ordinary CLI's incumbent-overlay behavior. With ``criteria``,
     type and schema resolution use only the supplied closed criterion bytes.
     ``frozen_source`` authorizes inspection of that exact pinned source only.
-    ``run_values`` are the run's values that run-bound identity fields must equal.
+    ``run_values`` are the run's values that run identity fields must equal.
     ``incumbent`` is the role's accepted version; a draft must keep every
     identifier it declared. Without ``members`` it defaults to the file at the
     role's path.

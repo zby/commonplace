@@ -20,7 +20,7 @@ def bound_boundary(check: Candidate) -> list[str]:
     The boundary fills the plan's frozen-source role, so the standard check
     inspects the candidate's own source only after this binding passes. A
     corrected candidate must also bind to the incumbent's pinned source. The
-    run-id is a run-bound identity field, which draft validation checks.
+    run-id is a run identity field, which draft validation checks.
     """
     attempt = check.attempt
     metadata, repo = locate(attempt)

@@ -60,7 +60,7 @@ readers or comparison consumers would infer incorrectly and why a stated limit
 cannot preserve the bounded account. It cites the records
 it concerns, the passage holding the defective text, what is wrong and the
 evidence. When the verifying role verifies more than one member (the
-layout's `verifies`, printed as the `verifies` line), each blocker starts
+layout's `verifies`, which the prompt binds to `verifies`), each blocker starts
 with the one member whose text must change, `- <member>: `; code routes the
 correction by that name and refuses a blocker without it. A defect that needs
 changes in two members is two blockers, and a passage relying on a defective

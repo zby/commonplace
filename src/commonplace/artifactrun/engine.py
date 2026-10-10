@@ -29,8 +29,8 @@ from .handouts import (
     Handout,
     _open,
     handout_for,
-    layout_lines,
-    prompt_line_names,
+    layout_bindings,
+    prompt_variable_names,
     render_prompt_section,
 )
 from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
@@ -127,15 +127,15 @@ def _check_prompt_section(jobs, library: Path, layout: Layout) -> None:
     except OSError as error:
         raise PlanError(f"prompt-section {jobs.prompt_section}: {error}") from error
     models = [job for job in jobs.jobs if isinstance(job, ModelJob)]
-    printable = {name for job in models for name in prompt_line_names(job, layout)}
-    # The layout's lines are known names even where this plan omits the roles that print them.
-    printable |= {name for role in layout.roles for name in layout_lines(layout, role)}
+    printable = {name for job in models for name in prompt_variable_names(job, layout)}
+    # The layout's variables are known even where this plan omits the roles that bind them.
+    printable |= {name for role in layout.roles for name in layout_bindings(layout, role)}
     for job in models:
-        lines = dict.fromkeys(prompt_line_names(job, layout), "value")
+        bindings = dict.fromkeys(prompt_variable_names(job, layout), "value")
         try:
-            render_prompt_section(text, lines, conditions=printable)
+            render_prompt_section(text, bindings, conditions=printable)
         except KeyError as error:
-            raise PlanError(f"prompt-section {jobs.prompt_section}: job {job.name} prints no line "
+            raise PlanError(f"prompt-section {jobs.prompt_section}: job {job.name} binds no variable "
                             f"{error.args[0]}") from None
 
 

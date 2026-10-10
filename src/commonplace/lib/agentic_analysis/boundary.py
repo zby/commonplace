@@ -26,7 +26,7 @@ def boundary_refusals(
 ) -> list[str]:
     """The boundary's source bound to the run's source identity and pinned bytes.
 
-    Its run-id is a run-bound identity field, which draft validation checks.
+    Its run-id is a run identity field, which draft validation checks.
     """
     try:
         text = candidate.decode("utf-8") if isinstance(candidate, bytes) else candidate.read_text(encoding="utf-8")

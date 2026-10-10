@@ -46,7 +46,7 @@ A record citation is a Markdown link whose text is the full ID and whose
 destination is the declaring member and anchor:
 `[RT-OBJ-store](runtime.md#rt-obj-store)`, or `[RT-OBJ-store](#rt-obj-store)`
 within the declaring member. The layout's `cites` names the members a role
-may cite; the prompt prints it as the `cites` line. A bare ID is literal text, not a citation: write one to mention a
+may cite; the prompt binds it to `cites`. A bare ID is literal text, not a citation: write one to mention a
 record without asserting anything about it. Every citation must resolve to
 exactly one declaration in its destination; aliases and intervals are not
 inferred. Source quotations, fenced excerpts and inline code are excluded

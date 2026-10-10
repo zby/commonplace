@@ -60,7 +60,7 @@ def _input(raw: dict) -> Input:
 
 
 def run_values(parameters: Mapping[str, str], run_dir: Path) -> dict[str, str]:
-    """The run parameters and run-id: what run-bound identity fields must equal."""
+    """The run parameters and run-id: what run identity fields must equal."""
     return {**parameters, "run-id": run_dir.name}
 
 
@@ -538,7 +538,7 @@ class CodeAttempt:
 
     @property
     def run_values(self) -> dict[str, str]:
-        """The run parameters and run-id, which run-bound identity fields must equal."""
+        """The run parameters and run-id, which run identity fields must equal."""
         return run_values(self._parameters, self._run.store.run_dir)
 
     @property

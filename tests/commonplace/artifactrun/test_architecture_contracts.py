@@ -20,9 +20,9 @@ from tests.commonplace.artifactrun.support import (
 @pytest.mark.parametrize("edit, message", [
     (lambda d: d["jobs"][0].update(outputs="brief"), "outputs must be a list"),
     (lambda d: d.update(jobs={"brief": {}}), "jobs must be a list"),
-    (lambda d: d["jobs"][0]["inputs"].update({"output": {"address": "file", "source": "/x"}}), "prompt line"),
+    (lambda d: d["jobs"][0]["inputs"].update({"output": {"address": "file", "source": "/x"}}), "prompt variable"),
     (lambda d: d["jobs"][0]["inputs"].update({"previous-brief": {"address": "file", "source": "/x"}}),
-     "prompt line"),
+     "prompt variable"),
     (lambda d: d["jobs"][0].update(outputs=["brief", "brief"]), "unique"),
     (lambda d: d["jobs"][0].update(parameters={"where": "{nowhere}"}), "unknown placeholder"),
     (lambda d: d["jobs"][2]["inputs"].update({"self": {"address": "role", "source": "report"}}),

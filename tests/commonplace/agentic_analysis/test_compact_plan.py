@@ -88,7 +88,7 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
                 else:
                     del inputs[key]  # Partners come from the layout, not from the old list.
         if name == "check-memory":
-            # The memory report's source identity is bound to the run in the layout, not by the opening.
+            # The memory report's source identity is a run identity in the layout, not by the opening.
             del inputs["metadata"]
         # Every check reads its role's accepted version order-only; draft validation
         # keeps its declared identifiers, which the declared incumbent reads did by hand.

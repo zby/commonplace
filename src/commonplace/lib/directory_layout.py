@@ -5,7 +5,7 @@ one direct child file of the artifact, the document type expected there, the
 roles whose fields it must repeat (``identity``), the roles whose
 declarations its references may resolve against (``cites``) and the roles
 whose versions its verdict judges (``verifies``). An identity source named
-``run`` binds fields to the run's values instead, the run parameters and
+``run`` declares run identity instead: the fields equal the run's values, its parameters and
 ``run-id``, which only a caller inside a run supplies. The layout owns
 membership and requiredness; the type's schema keeps the manifest's instance
 metadata. A verifying role's document follows the verification protocol,
@@ -44,7 +44,7 @@ class Role:
     identity: tuple[IdentitySource, ...] = ()
     cites: tuple[str, ...] = ()
     verifies: tuple[str, ...] = ()
-    run_binding: tuple[str, ...] = ()
+    run_identity: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -151,7 +151,7 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
             raise ValueError(f"{at}.path: must name a direct Markdown file")
         if not isinstance(entry["type"], str) or not entry["type"].endswith(".md"):
             raise ValueError(f"{at}.type: must be a type path ending in .md")
-        identity, run_binding = [], ()
+        identity, run_identity = [], ()
         raw_identity = entry.get("identity", [])
         if not isinstance(raw_identity, list):
             raise TypeError(f"{at}.identity: must be a list of sources")
@@ -159,14 +159,14 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
             source = _mapping(source, f"{at}.identity[{index}]", {"from", "fields"}, {"from", "fields"})
             fields = _names(source["fields"], f"{at}.identity[{index}].fields")
             if source["from"] == RUN:
-                run_binding += fields
+                run_identity += fields
             else:
                 identity.append(IdentitySource(source["from"], fields))
         cites = _names(entry.get("cites", []), f"{at}.cites")
         verifies = _names(entry.get("verifies", []), f"{at}.verifies")
         if name in verifies:
             raise ValueError(f"{at}.verifies: a role cannot verify itself")
-        roles[name] = Role(name, path, entry["type"], tuple(identity), cites, verifies, run_binding)
+        roles[name] = Role(name, path, entry["type"], tuple(identity), cites, verifies, run_identity)
     paths = [role.path for role in roles.values()]
     if len(set(paths)) != len(paths):
         raise ValueError(f"{where}.roles: two roles share a path")
@@ -264,7 +264,7 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
                     run_values: Mapping[str, str] | None = None) -> list[Finding]:
     """Membership, document types, requiredness and identity over the members present.
 
-    Fields bound to the run are checked only when ``run_values`` is given.
+    Run identity fields are checked only when ``run_values`` is given.
     """
     findings: list[Finding] = []
     for name in sorted(members):
@@ -294,13 +294,13 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
         if role.verifies:
             findings += protocol_findings(role, document.body)
         values = document.frontmatter or {}
-        for name in role.run_binding if run_values is not None else ():
+        for name in role.run_identity if run_values is not None else ():
             if values.get(name) != run_values.get(name):
                 findings.append(Finding(
                     role.name,
                     f"{role.path}: identity field {name} {values.get(name)!r} does not match "
                     f"the run; expected {run_values.get(name)!r}",
-                    repair="use the run's value shown, which the prompt prints as the line of that name",
+                    repair="use the run's value, which the prompt binds to the variable of that name",
                 ))
         for source in role.identity:
             source_role = layout.roles[source.role]
