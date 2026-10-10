@@ -145,9 +145,8 @@ lifecycle integration.
 Table rows stay contiguous with their header and Markdown separator. Put
 supporting quotations after the table, or repeat the header and separator
 before resuming rows. Escape a literal pipe inside a cell as `\|`, including
-inside an inline code span. Structural validation rejects orphan rows,
-unequal cell counts, and invalid route-function or architectural-status
-values; it does not establish coverage or evidence support.
+inside an inline code span. Orphan rows, unequal cell counts, and invalid
+route-function or architectural-status values are refused.
 
 In compact records, start each record with `Route ID: <record citation or citations>`
 on its own line. Use `Route function: <value>` and
