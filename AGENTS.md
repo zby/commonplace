@@ -102,8 +102,14 @@ slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
   environment as described in [run setup](./kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
   There, call each command in the directory that setup reports.
 - Run development dependencies through uv: `uv run pytest`, `uv run ruff check .`.
-  All required tests must pass. Markdown KB data changes need relevant
-  `commonplace-validate` checks, not pytest, unless they affect test inputs or fixtures.
+  For code changes, follow [test selection](./tests/README.md): during work and
+  before committing, run general tests plus affected subsystem suites, including
+  relevant slow tests. Shared changes require consumer suites; uncertain impact
+  requires the full fast suite. Report selected coverage accurately. Before
+  pushing, run the complete suite with `uv run pytest -m ''`; the repository's
+  pre-push hook enforces this when installed. All required tests must pass.
+  Markdown KB data changes need relevant `commonplace-validate` checks, not
+  pytest, unless they affect test inputs or fixtures.
 - Do not run `commonplace-init` in this checkout. For initial command installation
   or dependency, entry-point, build-metadata or scaffold-package changes, follow
   [editable installation](./INSTALL.md#2-install-commonplace-as-a-user-level-tool).

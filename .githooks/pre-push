@@ -1,0 +1,24 @@
+#!/bin/sh
+# Verify the current checkout, not arbitrary historical refs in the push.
+set -eu
+
+root=$(git rev-parse --show-toplevel)
+cd "$root"
+
+require_clean() {
+    if [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
+        echo "Pre-push verification blocked: commit or stash working-tree changes first." >&2
+        exit 1
+    fi
+}
+
+require_clean
+head=$(git rev-parse HEAD)
+echo "Pre-push verification: running all tests, including slow tests (about five minutes)." >&2
+uv run pytest -m ''
+require_clean
+if [ "$(git rev-parse HEAD)" != "$head" ]; then
+    echo "Pre-push verification blocked: HEAD changed while tests were running. Retry the push." >&2
+    exit 1
+fi
+echo "Pre-push verification passed." >&2

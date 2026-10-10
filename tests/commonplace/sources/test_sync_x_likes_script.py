@@ -8,7 +8,7 @@ from urllib.error import HTTPError
 import pytest
 
 SPEC = importlib.util.spec_from_file_location(
-    'sync_x_likes', Path(__file__).resolve().parents[2] / 'scripts/sync_x_likes.py')
+    'sync_x_likes', Path(__file__).resolve().parents[3] / 'scripts/sync_x_likes.py')
 mod = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(mod)
 NOW = datetime(2026, 9, 17, tzinfo=UTC)

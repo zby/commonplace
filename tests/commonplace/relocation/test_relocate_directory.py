@@ -7,7 +7,7 @@ import pytest
 
 from commonplace.lib import relocation
 from commonplace.review import review_db, review_target_selector
-from tests.commonplace.cli.relocation_review_helpers import (
+from tests.commonplace.relocation.relocation_review_helpers import (
     GATE_ID,
     TEST_MODEL,
     make_gate,
@@ -15,7 +15,7 @@ from tests.commonplace.cli.relocation_review_helpers import (
     review_state_rows,
     seed_accepted_review,
 )
-from tests.commonplace.cli.write_brief_helpers import (
+from tests.commonplace.relocation.write_brief_helpers import (
     install_brief_types,
     pair_fails,
     write_pair,

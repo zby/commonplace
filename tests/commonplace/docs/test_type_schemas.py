@@ -2,7 +2,7 @@
 
 Each test validates a sample document against a real schema under kb/, through
 the validator's schema step, so a schema edit that changes what a type accepts
-fails here. Validator code paths are tested in tests/commonplace/cli/.
+fails here. Validator code paths are tested in tests/commonplace/validation/.
 """
 
 from __future__ import annotations

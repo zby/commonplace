@@ -59,7 +59,7 @@ def test_real_filesystem_boundary(installation, readonly):
     assert all(evidence["checks"].values())
     assert env["HOME"] == os.environ["HOME"]
     assert "CODEX_API_KEY" not in env
-    checkout = Path(__file__).resolve().parents[2]
+    checkout = Path(__file__).resolve().parents[3]
     check = subprocess.run(
         command
         + [
@@ -111,7 +111,7 @@ print(json.dumps(result))
 """
     process = subprocess.Popen(
         [sys.executable, "-c", code, str(tmp_path)],
-        cwd=Path(__file__).resolve().parents[2],
+        cwd=Path(__file__).resolve().parents[3],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
@@ -142,7 +142,7 @@ print(json.dumps(result))
 
 
 def test_rejects_checkout_as_run_directory():
-    checkout = Path(__file__).resolve().parents[2]
+    checkout = Path(__file__).resolve().parents[3]
     with pytest.raises(ValueError, match="outside the Commonplace checkout"):
         sandbox(checkout, checkout, authenticate=False)
 

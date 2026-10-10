@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.cli.guard_full_pass_report import main
-from tests.commonplace.lib.test_full_pass import write_packet
+from tests.commonplace.validation_helpers import write_packet
 
 
 @pytest.fixture(autouse=True)
