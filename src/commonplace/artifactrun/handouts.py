@@ -192,9 +192,10 @@ def _open(run: Run, job: ModelJob) -> Handout:
     if readable:
         lines += ["", "## Input reading batches", "",
                   f"Read the named job instruction {instruction} before these reading batches.", "",
-                  ("Load inputs in these batches to avoid truncated reads. Use one tool "
-                   "call per batch, return the complete command result, and recover any "
-                   "truncation before continuing. Read oversized files in bounded ranges."), ""]
+                  ("Load inputs in these batches to avoid truncated reads. Read each batch's "
+                   "files, grouping them in one tool call only when your read tool returns every "
+                   "file's complete result, and recover any truncation before continuing. Read "
+                   "oversized files in bounded ranges."), ""]
         lines += [f"{number}. " + ", ".join(batch) for number, batch in enumerate(reading_batches(readable), 1)]
         oversized = [Path(path) for path in readable if Path(path).stat().st_size > READ_BATCH_BYTES]
         if oversized:

@@ -69,6 +69,8 @@ Disposition, 2026-10-10: consolidated. The mission drops the operational-progres
 
 Proposal: retain tool-compatible generic reading guidance in the engine, which serves non-analysis consumers too. Keep analysis-specific source-reading constraints in worker rules. Fix the mismatch rather than merely deleting one copy. The separately proposed change to put worker rules before the reading they govern remains unimplemented.
 
+Disposition, 2026-10-10: consolidated. The engine's reading-batch text now tells workers to read each batch's files, grouping them in one tool call only when the read tool returns every file's complete result, so it no longer demands what a single-file read tool cannot do. The worker rules drop their grouping sentence and keep the analysis-specific constraints: source reads in bounded ranges, truncation recovery by a smaller range, and the runtime's read tool. Putting the worker rules before the reading they govern remains unimplemented and out of this finding.
+
 ## Repetitions to retain unless new evidence changes the assessment
 
 - Verification limits and synthesis limitations govern opposite ends of an interface: emitted findings versus required carried consequences.
