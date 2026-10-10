@@ -114,7 +114,7 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
         "type_spec": str(type_spec),
         "library": str(library),
         "type": type_text,
-        "parameters": dict(parameters or {}),
+        "parameters": given,
     })
 
 

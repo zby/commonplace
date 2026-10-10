@@ -84,6 +84,16 @@ def partners(attempt: CodeAttempt, *, exclude: str) -> dict[str, str]:
     return found
 
 
+def snapshot(attempt: CodeAttempt, inputs: Mapping[str, str]) -> dict[str, bytes]:
+    """The present members of ``inputs`` (role to input name), at their roles' paths."""
+    members = {}
+    for role, name in inputs.items():
+        data = attempt.read(name)
+        if data is not None:
+            members[attempt.layout.path(role)] = data
+    return members
+
+
 def candidate(attempt: CodeAttempt) -> Candidate:
     """The `candidate` input at its declared role, with its partners present."""
     role = attempt.input_role(CANDIDATE)
@@ -92,11 +102,7 @@ def candidate(attempt: CodeAttempt) -> Candidate:
     data = attempt.read(CANDIDATE)
     if data is None:
         raise ValueError(f"job {attempt.job.name}: no {CANDIDATE} to check")
-    members = {}
-    for partner, name in partners(attempt, exclude=role).items():
-        member = attempt.read(name)
-        if member is not None:
-            members[attempt.layout.path(partner)] = member
+    members = snapshot(attempt, partners(attempt, exclude=role))
     # The role's accepted version, when the job reads it: a correction keeps its declarations.
     incumbent = next((attempt.read(name) for name, spec in attempt.inputs.items()
                       if spec.address == "role" and spec.source == role), None)
@@ -255,13 +261,8 @@ def artifact_check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     out, so a verifier can read them. The output `findings` is a document
     headed `# Artifact check` holding `none` or one `- ` line per finding.
     """
-    layout = attempt.layout
-    members = {}
-    for name in attempt.inputs:
-        role = attempt.input_role(name)
-        data = attempt.read(name) if role is not None else None
-        if data is not None:
-            members[layout.path(role)] = data
+    members = snapshot(attempt, {attempt.input_role(name): name for name in attempt.inputs
+                                 if attempt.input_role(name) is not None})
     directory = (attempt.run_dir / "artifact").resolve()
     repo = attempt.library.parent
     pinned = attempt.frozen_source
