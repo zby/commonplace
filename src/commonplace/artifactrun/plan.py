@@ -23,8 +23,11 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
-HANDOUT_FIELDS = ("job", "role", "attempt", "run-id", "output", "problem", "worker-identity", "workspace",
-                  "artifact", "scratch", "identity", "cites", "verifies")
+FRAME_LINES = ("job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch")
+"""Lines the frame prints for every model attempt."""
+ROLE_LINES = ("role", "identity", "cites", "verifies")
+"""Lines the frame prints for a role-filling job: its role and the layout's facts about it."""
+HANDOUT_FIELDS = FRAME_LINES + ROLE_LINES
 HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"

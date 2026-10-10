@@ -19,7 +19,7 @@ import yaml
 from commonplace.lib.directory_layout import Layout, parse_layout
 from commonplace.lib.note_parser import parse_document
 
-from .plan import CodeJob, Input, Job, ModelJob, load_plan
+from .plan import OUTCOMES, CodeJob, Input, Job, ModelJob, load_plan
 from .store import RunStore, canonical, digest
 
 
@@ -196,7 +196,7 @@ class Run:
             record = self.latest_completed(spec.source)
             if record is None:
                 return ABSENT
-            data = canonical({key: record[key] for key in ATTEMPT_FIELDS if key in record})
+            data = canonical({key: record[key] for key in PUBLISHED_ATTEMPT_FIELDS if key in record})
             return Resolved(digest(data), data, None, spec.source)
         if spec.address == "handed":
             attempt_input, _, handed = spec.source.partition(":")
@@ -468,7 +468,7 @@ class Run:
 
 
 # The published fields of an attempt-record input; the rest of the record is internal.
-ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort")
+PUBLISHED_ATTEMPT_FIELDS = ("id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort")
 
 
 def refusal_document(refusal: str, version: str, scope: list[str], findings: str) -> bytes:
@@ -598,7 +598,7 @@ class CodeAttempt:
 
     def judge(self, subject: str, *, outcome: str, scope: tuple[str, ...] = (),
               findings: str = "", overrides: tuple[str, ...] = ()) -> None:
-        if outcome not in ("accepted", "refused"):
+        if outcome not in OUTCOMES:
             raise ValueError(f"outcome must be accepted or refused, not {outcome!r}")
         own = bool(self._job.outputs) and subject == self._job.outputs[0] and subject not in self._pins
         if not own:
@@ -647,7 +647,7 @@ class CodeAttempt:
                                      "a scoped relation needs exactly one")
                 scope.append({"relation": relation, "other_role": other, "other_version": ends.pop()})
             records.append({
-                "id": f"{seq:06d}-{job.name}-{index}",
+                "id": f"{attempt}-{index}",
                 "seq": seq * 1000 + index,
                 "attempt": attempt,
                 "job": job.name,

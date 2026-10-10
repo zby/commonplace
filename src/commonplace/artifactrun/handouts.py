@@ -20,8 +20,15 @@ from commonplace.lib.reading_batches import (
     reading_ranges,
 )
 
-from .plan import HANDOUT_PREFIXES, PLACEHOLDER, PROMPT_SECTION_INPUT, ModelJob
+from .plan import (
+    FRAME_LINES,
+    HANDOUT_PREFIXES,
+    PLACEHOLDER,
+    PROMPT_SECTION_INPUT,
+    ModelJob,
+)
 from .run import Run
+from .store import attempt_id
 
 WORKER_IDENTITY = "worker-identity.json"
 
@@ -77,8 +84,7 @@ def prompt_line_names(job: ModelJob, layout: Layout) -> set[str]:
     `previous-<output>` lines exist only on a retry, so they are only
     conditions, never slots.
     """
-    names = {"job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch",
-             *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
+    names = {*FRAME_LINES, *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
     names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
     if job.role:
         names |= {"role", *layout_lines(layout, job.role)}
@@ -124,8 +130,9 @@ def _open(run: Run, job: ModelJob) -> Handout:
     """
     store = run.store
     seq = store.next_seq()
-    attempt = f"{seq:06d}-{job.name}"
-    directory = store.handout_dir(attempt)
+    attempt = attempt_id(seq, job.name)
+    handout = handout_for(run, {"id": attempt, "job": job.name})
+    directory = handout.prompt.parent
     scratch = directory / "scratch"
     scratch.mkdir(parents=True, exist_ok=True)
     (directory / "outputs").mkdir(parents=True, exist_ok=True)
@@ -146,16 +153,14 @@ def _open(run: Run, job: ModelJob) -> Handout:
         path = directory / "inputs" / f"{name}.md"
         store.write_bytes(path, pinned.data)
         paths[name] = path
-    outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
-    problem = directory / "problem.md"
-    worker_identity = directory / WORKER_IDENTITY
+    outputs, problem, worker_identity = handout.outputs, handout.problem, handout.worker_identity
     placeholders = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                     "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, **({"role": job.role, **layout_lines(run.layout, job.role)} if job.role else {}),
               "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, placeholders, run.parameters) for key, value in job.parameters.items()}
     framed = {job.instruction, PROMPT_SECTION_INPUT}
-    values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name not in framed}
+    values |= {name: (str(path) if path else ABSENT_LINE) for name, path in paths.items() if name not in framed}
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
     values |= {"problem": str(problem), "worker-identity": str(worker_identity),
@@ -195,14 +200,13 @@ def _open(run: Run, job: ModelJob) -> Handout:
                '"not stated" for each value they do not state. Do not infer either from the requested worker '
                'profile; a supplied instruction may say where your harness states them. Do not scan session '
                'logs or edit engine-owned run metadata.')]
-    prompt = directory / "prompt.md"
-    store.write_bytes(prompt, ("\n".join(lines) + "\n").encode("utf-8"))
+    store.write_bytes(handout.prompt, ("\n".join(lines) + "\n").encode("utf-8"))
     store.open_attempt({
         "id": attempt, "seq": seq, "job": job.name, "kind": "model",
         "pins": {name: pinned.pin() for name, pinned in pins.items()},
         "previous_outputs": {} if previous is None else dict(previous["outputs"]),
     })
-    return Handout(attempt, job.name, prompt, outputs, problem, worker_identity)
+    return handout
 
 
 def handout_for(run: Run, record: dict) -> Handout:

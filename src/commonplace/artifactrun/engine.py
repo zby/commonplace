@@ -28,7 +28,6 @@ from commonplace.lib.library import library_root
 
 from .compact import expand_text
 from .handouts import (
-    WORKER_IDENTITY,
     Handout,
     _open,
     handout_for,
@@ -39,7 +38,7 @@ from .handouts import (
 from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
 from .run import run_values as _values
-from .store import RunStore, digest
+from .store import RunStore, attempt_id, digest
 
 MAX_CODE_RUNS = 10_000
 
@@ -219,7 +218,7 @@ def judge(
             if pins[other].version is None:
                 raise ValueError(f"role {other} has no member to rest on")
         seq = store.next_seq()
-        attempt = f"{seq:06d}-operator"
+        attempt = attempt_id(seq, "operator")
         code_attempt = CodeAttempt(run, CodeJob("operator", inputs, (), "operator"), pins)
         code_attempt.judge("subject", outcome=outcome, scope=scope, findings=findings, overrides=overrides)
         judgments = code_attempt.judgments({}, seq, attempt)
@@ -391,10 +390,9 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     if record["state"] != "open":
         return None  # First closure wins, including conflicting later reports.
     job = run.jobs.job(record["job"])
-    directory = store.handout_dir(record["id"])
-    problem_path = directory / "problem.md"
-    problem = problem_path.read_text(encoding="utf-8", errors="replace") if problem_path.is_file() else ""
-    identity_path = directory / WORKER_IDENTITY
+    handout = handout_for(run, record)
+    directory = handout.prompt.parent
+    problem = handout.problem.read_text(encoding="utf-8", errors="replace") if handout.problem.is_file() else ""
 
     def fail(reason: str) -> Stop:
         # The worker's problem text is the failure's record; the hand-out
@@ -410,14 +408,13 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     if result.outcome != "completed":
         raise ValueError(f"outcome must be completed or failed, not {result.outcome!r}")
     outputs = {}
-    for name in job.outputs:
-        path = directory / "outputs" / f"{name}.md"
+    for name, path in handout.outputs.items():
         if path.is_file():
             outputs[name] = store.put(path.read_bytes())
     if job.outputs[0] not in outputs:
         return fail("the worker reported a problem" if problem.strip() else "completed without its primary output")
     try:
-        worker_identity = json.loads(identity_path.read_text(encoding="utf-8"))
+        worker_identity = json.loads(handout.worker_identity.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, ValueError):
         return fail("completed without a valid worker-identity JSON report")
     if (not isinstance(worker_identity, dict) or set(worker_identity) != {"model", "effort"}
@@ -526,7 +523,7 @@ def _moved_members(run: Run, job: CodeJob, pins: Mapping[str, Resolved]) -> list
 def _run_code_job(run: Run, job: CodeJob) -> Stop | None:
     store = run.store
     seq = store.next_seq()
-    attempt = f"{seq:06d}-{job.name}"
+    attempt = attempt_id(seq, job.name)
     pins = {name: run.resolve(name, job.inputs) for name in job.inputs}
     for pinned in pins.values():
         if pinned.data is not None:

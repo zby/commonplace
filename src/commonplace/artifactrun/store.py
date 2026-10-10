@@ -25,6 +25,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+from .plan import OUTCOMES
+
 
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -39,6 +41,11 @@ _HELD: set[Path] = set()
 """Runs this thread holds; re-entry is per thread, so another thread waits on the run's lock below."""
 _LOCKS: dict[Path, threading.RLock] = {}
 _LOCKS_GUARD = threading.Lock()
+
+
+def attempt_id(seq: int, job: str) -> str:
+    """An attempt's ID: its sequence number and its job."""
+    return f"{seq:06d}-{job}"
 
 
 class RunStore:
@@ -192,5 +199,5 @@ def _check_judgment(record: Any) -> None:
     if missing:
         raise RecordError(f"judgment record {record.get('id') if isinstance(record, dict) else record!r} "
                           f"lacks {', '.join(missing)}")
-    if record["outcome"] not in ("accepted", "refused"):
+    if record["outcome"] not in OUTCOMES:
         raise RecordError(f"judgment record {record['id']}: outcome {record['outcome']!r}")

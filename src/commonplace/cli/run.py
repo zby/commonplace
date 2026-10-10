@@ -33,6 +33,7 @@ from commonplace.artifactrun import (
     open_handouts,
     start_run,
 )
+from commonplace.artifactrun.plan import OUTCOMES
 from commonplace.artifactrun.worktree import require_run_code
 
 # `advance` exits 1 when the command fails and nothing happened, and STOPPED
@@ -64,7 +65,7 @@ def _parser() -> argparse.ArgumentParser:
     verdict = commands.add_parser("judge", help="record an operator judgment of a role's member")
     verdict.add_argument("run", type=Path)
     verdict.add_argument("--role", required=True)
-    verdict.add_argument("--outcome", required=True, choices=("accepted", "refused"))
+    verdict.add_argument("--outcome", required=True, choices=OUTCOMES)
     verdict.add_argument("--version", help="an earlier version to judge as evidence; default: the member")
     verdict.add_argument("--scope", action="append", default=[], metavar="ORIGIN:KIND:PARTNER")
     verdict.add_argument("--findings", default="")
