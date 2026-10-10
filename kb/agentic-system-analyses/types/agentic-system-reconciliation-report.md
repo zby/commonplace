@@ -9,7 +9,7 @@ schema: ./agentic-system-reconciliation-report.schema.yaml
 
 The retained reconciliation of the runtime, memory and epistemic members.
 It states how their records connect and where the reports disagree. It does
-not judge one report's support and does not correct a report: the record
+not judge one report's support and does not correct a report: the report
 verifier judges, and the declaring analyst corrects its own report. The
 reconciler writes the whole member, and the accepted report enters the set
 unchanged. The [record contract](../instructions/agentic-analysis-records.md) governs
@@ -30,18 +30,8 @@ The body contains `## Reconciliation`: duplicate supersessions, anchored
 conflicts, independent convergence and integration-issue dispositions. Cite the records concerned and describe discrepancies
 without selecting the strongest-sounding status. A supersession paragraph
 starts `Amendment: <record citation> is superseded by <record citations>` and
-gives its identity evidence and affected findings. Both supersession IDs
-stay declared in their original members. An `Amendment:` paragraph that
-replaces a record's value is not accepted in a new set; sets published before
-report correction can contain them.
-
-A split supersedes a combined record only by parts already declared in the
-analyst members. Reconciliation never allocates IDs or declares parts. A
-valid container stays alongside its declared `Part of:` records; containment
-alone is no reason to supersede it. If a required part is missing, retain an
-`Unresolved conflict:` citing the combined record, the missing part in prose,
-evidence and prevented conclusion; the verifier addresses it to the analyst
-who should declare the part.
+gives its identity evidence and affected findings; the record contract says
+when a supersession or a split is allowed and what a missing part requires.
 
 Mark every disagreement between reports with a paragraph starting
 `Unresolved conflict:`, followed by citations of the affected records, conflicting findings,
