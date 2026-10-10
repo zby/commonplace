@@ -82,3 +82,31 @@ no run is in flight, and each removes a collision a worker meets in its
 prompt. The type relocations and the `set` to `artifact` change in the
 analysis type name wait for the next regeneration of a retained set. The
 rest are the implementing session's call as it touches each file.
+
+## Applied, and the drift test's register (2026-10-10)
+
+Every rename and keep row landed, each commit citing ADR 116; the
+implementing session's report is in `git log`. Decisions taken for the
+drift test the ADR names as its second channel:
+
+- The glossary's API column becomes a `Code` column with three values:
+  `—` for a prose-only word; `derived` when a spelling of the word must
+  exist in the package; else the one recorded exception spelling, with its
+  reason in Status. The test parses the table and requires the spelling.
+- `derived` admits the transformations ADR 116 names plus two it implies:
+  CamelCase collapses spaces and hyphens, so `Handout` derives from
+  hand-out; and inflections of one stem are one word, so `judge`,
+  `judgment` and `judged` derive from judgment, and `accept`, `accepted`
+  and `acceptance` from acceptance. A qualifier beside the word, as in
+  `start_run` for start and `condition` for run condition, is the
+  qualified concept and derives.
+- Two rows were second words, not exceptions: *invocation* beside
+  `advance()`, where the code's word is better and prose adopts it, so the
+  word is advance and *invocation* retires at the workshop's closure
+  sweep; and *worker* mapped to `AttemptResult.model`, which is the
+  worker's model, so the row becomes prose-only with `worker-identity` as
+  its derived surface. *Engine* beside package `artifactrun` stays the one
+  recorded exception: the package is named after what it runs.
+- The test does not detect second words. ADR 116 leaves whether a new word
+  is the right word to judgment; a detector would need a synonym register
+  that nothing keeps.
