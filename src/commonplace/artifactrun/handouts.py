@@ -12,6 +12,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.lib.directory_layout import Layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.reading_batches import (
     READ_BATCH_BYTES,
@@ -52,7 +53,23 @@ ABSENT_LINE = "absent"
 CONDITION = re.compile(r"\[([A-Za-z0-9][A-Za-z0-9_-]*)\]")
 
 
-def prompt_line_names(job: ModelJob) -> set[str]:
+def layout_lines(layout: Layout, role: str) -> dict[str, str]:
+    """The layout's facts about `role` as frame lines.
+
+    `identity` names the fields the role repeats and from which roles,
+    `cites` the roles its references may resolve in, and, for a verifying
+    role only, `verifies` the roles its verdict settles.
+    """
+    declared = layout.roles[role]
+    lines = {"identity": "; ".join(f"{source.role}: {', '.join(source.fields)}"
+                                   for source in declared.identity) or "none",
+             "cites": ", ".join(declared.cites) or "none"}
+    if declared.verifies:
+        lines["verifies"] = ", ".join(declared.verifies)
+    return lines
+
+
+def prompt_line_names(job: ModelJob, layout: Layout) -> set[str]:
     """The `name = value` lines the frame prints for every attempt of `job`.
 
     `previous-<output>` lines exist only on a retry, so they are only
@@ -61,7 +78,9 @@ def prompt_line_names(job: ModelJob) -> set[str]:
     names = {"job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch",
              *job.parameters, *(f"output-{name}" for name in job.outputs[1:])}
     names |= {name for name in job.inputs if name not in (job.instruction, PROMPT_SECTION_INPUT)}
-    return names | ({"role"} if job.role else set())
+    if job.role:
+        names |= {"role", *layout_lines(layout, job.role)}
+    return names
 
 
 def render_prompt_section(text: str, lines: Mapping[str, str], *, conditions: set[str] | None = None) -> str:
@@ -130,7 +149,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     worker_identity = directory / WORKER_IDENTITY
     run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
                   "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
-    values = {"job": job.name, **({"role": job.role} if job.role else {}),
+    values = {"job": job.name, **({"role": job.role, **layout_lines(run.layout, job.role)} if job.role else {}),
               "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
     framed = {job.instruction, PROMPT_SECTION_INPUT}

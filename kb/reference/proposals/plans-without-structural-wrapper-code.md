@@ -494,7 +494,9 @@ deletes checks the opener and the analyst check carry until then.
    boundary, records, sources. Independent of step 4. The first two parts
    are done 2026-10-09: the toy prompts are byte-identical, the ten
    mission files hold about 2,900 words from 4,950, and the plan is 219
-   lines. The contract moves are done the same day: the boundary contract
+   lines. From 2026-10-10 the toy prompts differ only by the layout lines:
+   every role-filling hand-out prints `identity` and `cites`, and a
+   verifying role's also `verifies`. The contract moves are done the same day: the boundary contract
    is in the boundary type; the sources contract is deleted, its
    declaration rules and evidence-layer table in the boundary type, its
    inspection and quotation rules in the worker rules, and its

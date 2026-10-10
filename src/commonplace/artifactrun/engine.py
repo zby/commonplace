@@ -23,6 +23,7 @@ from pathlib import Path
 import yaml
 
 from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.directory_layout import Layout
 from commonplace.lib.library import library_root
 
 from .compact import expand_text
@@ -31,6 +32,7 @@ from .handouts import (
     Handout,
     _open,
     handout_for,
+    layout_lines,
     prompt_line_names,
     render_prompt_section,
 )
@@ -106,7 +108,7 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
     if missing:
         raise ValueError(f"the plan substitutes run parameters not given: {', '.join(missing)}")
     if jobs.prompt_section is not None:
-        _check_prompt_section(jobs, library)
+        _check_prompt_section(jobs, library, layout)
     store.create({
         "plan": str(Path(plan).resolve()),
         "plan_sha256": digest(source),
@@ -118,7 +120,7 @@ def start_run(run_dir: Path, plan: Path, *, parameters: Mapping[str, str] | None
     })
 
 
-def _check_prompt_section(jobs, library: Path) -> None:
+def _check_prompt_section(jobs, library: Path, layout: Layout) -> None:
     """Render the prompt section for every model job, so an unknown name fails the plan at start."""
     path = Path(jobs.prompt_section)
     path = path if path.is_absolute() else library / path
@@ -127,9 +129,11 @@ def _check_prompt_section(jobs, library: Path) -> None:
     except OSError as error:
         raise PlanError(f"prompt-section {jobs.prompt_section}: {error}") from error
     models = [job for job in jobs.jobs if isinstance(job, ModelJob)]
-    printable = {name for job in models for name in prompt_line_names(job)}
+    printable = {name for job in models for name in prompt_line_names(job, layout)}
+    # The layout's lines are known names even where this plan omits the roles that print them.
+    printable |= {name for role in layout.roles for name in layout_lines(layout, role)}
     for job in models:
-        lines = dict.fromkeys(prompt_line_names(job), "value")
+        lines = dict.fromkeys(prompt_line_names(job, layout), "value")
         try:
             render_prompt_section(text, lines, conditions=printable)
         except KeyError as error:

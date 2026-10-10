@@ -111,3 +111,15 @@ def test_workers_read_the_types_of_what_they_write_and_read_but_not_the_set_type
 def test_a_condition_no_job_prints_fails_the_plan_at_start(tmp_path, monkeypatch):
     with pytest.raises(PlanError, match="prints no line refusla"):
         sectioned_run(tmp_path, monkeypatch, SECTION + "\n[refusla]\nTypo.\n")
+
+
+def test_the_frame_prints_the_layout_facts_of_the_role(tmp_path, monkeypatch):
+    c = sectioned_run(tmp_path, monkeypatch, SECTION + "\nRepeat {identity}; cite in {cites}.\n\n[verifies]\nYou verify {verifies}.\n")
+    c.through_brief()
+    assert "Repeat none; cite in brief." in section(c, "report")
+    assert "Repeat report: claim; cite in brief, report." in section(c, "other")
+    assert "You verify" not in section(c, "other"), "only a verifying role prints verifies"
+    c.complete("report", "report A\n", answers="")
+    c.complete("other", "other O1\n")
+    c.complete("summary", "summary S1\n")
+    assert "You verify report, other, summary." in section(c, "verification")

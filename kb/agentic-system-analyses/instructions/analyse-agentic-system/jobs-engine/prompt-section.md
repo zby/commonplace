@@ -14,7 +14,13 @@ skills (`cp-skill-write`, `cp-skill-connect`, `cp-skill-ingest` and the like)
 assume an operator, the KB as evidence and KB destinations; do not use them
 for this work.
 
-Write the whole member to `output`.
+Write the whole member to `output`. Fields your member repeats from other
+members must equal theirs exactly: {identity}. Your citations may resolve
+only in these members: {cites}.
+
+[verifies]
+You verify {verifies}. When that names more than one member, start every
+blocker with the one member whose text must change, as `- <member>: `.
 
 [refusal]
 Repair the Findings of `refusal` against frozen evidence, with your previous

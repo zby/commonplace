@@ -36,8 +36,7 @@ limits only while the remaining bounded conclusions hold. Faithfully scoped
 uncertainty alone is neither a blocker nor a limit. Assess objections rather
 than treating them as established defects.
 
-Write each blocker as `- runtime: ...`, `- memory: ...`, `- epistemic: ...`
-or `- reconciliation: ...`, citing the records, the defective passage, what is
+Write each blocker with its addressee, citing the records, the defective passage, what is
 wrong and its evidence. Indent continuation lines. A defect requiring two
 reports to change is two separately addressed blockers. Address dependent
 passages relying on a defective value to their own authors. Every structural
