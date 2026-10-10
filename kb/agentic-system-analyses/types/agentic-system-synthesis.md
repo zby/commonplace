@@ -64,8 +64,9 @@ in the set directory.
 
 Every `Unresolved conflict:` in the reconciliation appears here, and so does
 a record fault found during synthesis verification, with its prevented
-conclusion. Every limit declared by any of the three verification members
-is carried here with its record citations and analytical consequence. `none` means the
+conclusion. Every limit the report and profile verifications declare, and
+on a correction every limit the synthesis verification declared, is carried
+here with its record citations and analytical consequence. `none` means the
 whole set was checked and no limitation remains. A blocker also recorded in
 a verification still has its analytical consequence stated here.
 
