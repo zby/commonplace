@@ -26,7 +26,6 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
-from tests.commonplace.agentic_analysis.fixtures import expanded
 from tests.commonplace.artifactrun.support import Coordinator
 
 pytestmark = pytest.mark.slow
@@ -39,7 +38,7 @@ RECORDS = ("runtime", "memory", "epistemic", "reconciliation")
 def records(request, tmp_path):
     start, _ = request.getfixturevalue("local_acquisition")
     a = start(analysts=True)
-    data = expanded(a.prepared.repo / "kb")
+    data = a.prepared.plan()
     data["jobs"] = data["jobs"][:15]
     declaration = tmp_path / "restricted-record-jobs.yaml"
     declaration.write_text(yaml.safe_dump(data))

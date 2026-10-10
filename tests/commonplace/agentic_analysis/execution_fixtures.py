@@ -8,9 +8,12 @@ graphs deliberately isolate stages of the fully bound shipped declaration.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
+from copy import deepcopy
 from dataclasses import dataclass, field
+from hashlib import sha256
 from pathlib import Path
 
 import pytest
@@ -53,11 +56,40 @@ def git(repo: Path, *args: str) -> str:
     ).stdout.strip()
 
 
+def method_snapshot(library: Path) -> tuple[tuple[str, str], ...]:
+    """Hash fixture inputs, excluding only the generated analysis run state."""
+    files = []
+    for directory, dirs, names in os.walk(library):
+        directory = Path(directory)
+        if directory == library / "agentic-system-analyses":
+            dirs[:] = [name for name in dirs if name != "state"]
+        for name in names:
+            path = directory / name
+            files.append((path.relative_to(library).as_posix(), sha256(path.read_bytes()).hexdigest()))
+    return tuple(sorted(files))
+
+
+@dataclass(frozen=True)
+class PreparedTemplate:
+    repo: Path
+    commit: str
+    inputs: tuple[tuple[str, str], ...]
+    declaration: dict
+
+
 @dataclass
 class Prepared:
     repo: Path
     commit: str
     monkeypatch: pytest.MonkeyPatch
+    template: PreparedTemplate
+
+    def plan(self) -> dict:
+        """Fresh mutable plan; changed method inputs always get a real expansion."""
+        library = self.repo / "kb"
+        if method_snapshot(library) == self.template.inputs:
+            return deepcopy(self.template.declaration)
+        return expanded(library)
 
     @property
     def preparation(self) -> Path:
@@ -72,7 +104,7 @@ class Prepared:
         self.monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(library or self.repo / "kb"))
         run_dir = self.repo / "kb/agentic-system-analyses/state" / name
         # Deliberately stop before acquisition despite the fully bound shipped graph.
-        data = expanded(self.repo / "kb")
+        data = self.plan()
         data["jobs"] = data["jobs"][:2]
         data["jobs"][1]["handler"] = "tests.commonplace.agentic_analysis.execution_fixtures.stop_before_acquisition"
         declaration = self.repo.parent / "opening-only.yaml"
@@ -95,9 +127,10 @@ def assert_stopped(c: Coordinator, job: str, reason: str) -> None:
     assert not c.handed() and not c.open and not c.status.publishable
 
 
-@pytest.fixture
-def prepared(tmp_path, monkeypatch) -> Prepared:
-    repo = tmp_path / "analysis-worktree"
+@pytest.fixture(scope="session")
+def prepared_template(tmp_path_factory) -> PreparedTemplate:
+    """Build once; tests receive independent copies, including independent Git objects."""
+    repo = tmp_path_factory.mktemp("analysis-method") / "analysis-worktree"
     repo.mkdir()
     for relative in (
         "kb/types", "kb/agentic-system-analyses/types",
@@ -118,7 +151,17 @@ def prepared(tmp_path, monkeypatch) -> Prepared:
     git(repo, "config", "user.email", "fixture@example.invalid")
     git(repo, "add", "kb", "src", ".gitignore")
     git(repo, "commit", "--quiet", "-m", "Pin the local method fixture")
-    fixture = Prepared(repo, git(repo, "rev-parse", "HEAD"), monkeypatch)
+    return PreparedTemplate(
+        repo, git(repo, "rev-parse", "HEAD"), method_snapshot(repo / "kb"), expanded(repo / "kb"),
+    )
+
+
+@pytest.fixture
+def prepared(tmp_path, monkeypatch, prepared_template) -> Prepared:
+    repo = tmp_path / "analysis-worktree"
+    # Never hard-link mutable files or share Git worktrees with the baseline.
+    shutil.copytree(prepared_template.repo, repo)
+    fixture = Prepared(repo, prepared_template.commit, monkeypatch, prepared_template)
     fixture.record()
     monkeypatch.chdir(repo)
     # Exercise the real binding/package guards against this scripted checkout,
@@ -199,7 +242,7 @@ def acquisition(request, monkeypatch, tmp_path):
     def start(*, revision=None, identity=None, boundary=False, analysts=False, production=False):
         # No actual workers. Truncate the fully bound shipped declaration to
         # isolate acquisition, boundary or analysts unless production is requested.
-        data = expanded(prepared.repo / "kb")
+        data = prepared.plan()
         if not production:
             data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
         if boundary or analysts:

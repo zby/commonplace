@@ -66,6 +66,20 @@ checks; `installation/` holds scaffolding and package-build checks.
 For Markdown KB data changes, use the relevant Commonplace validation commands
 rather than pytest unless the change affects code contracts or test inputs.
 
+## Fixture isolation and performance
+
+Reuse static inputs, not mutable execution state. The agentic-analysis execution
+fixtures prepare one session-level repository and expanded plan, then copy the
+repository (including Git objects) for each test and deep-copy each requested
+plan. The helper hashes library inputs before using the baseline; changed,
+added, or removed inputs force a fresh expansion. Generated analysis run state
+is excluded from that method-input snapshot. Repositories, run state, preparation
+records, coordinators, and monkeypatches remain test-local.
+
+Measure changes with the same selected suite before and after. Keep production
+expansion tests uncached, and retain tests for baseline isolation and invalidation.
+Do not trade assertions or isolation for a shorter run.
+
 ## Pre-push hook
 
 The tracked hook at [`.githooks/pre-push`](../.githooks/pre-push) runs
