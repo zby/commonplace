@@ -51,6 +51,8 @@ The [record contract, Identity and grammar](../../agentic-system-analyses/instru
 
 Proposal: keep the grammar in the shared contract; have the reconciliation type name supersessions under that contract. Preserve its distinct `Unresolved conflict:` and integration-disposition requirements. Small, relatively straightforward reduction.
 
+Disposition, 2026-10-10: consolidated. The reconciliation type names each supersession as an `Amendment:` paragraph in the record contract's grammar and keeps its `Unresolved conflict:` and integration-disposition requirements; the syntax and support requirements live only in the contract. The reconciliation job receives the contract (`criteria: [worker, contracts]`), pinned by `test_every_worker_whose_types_defer_to_the_records_contract_receives_it`.
+
 ### D4 — Small mission/type overlap
 
 The [synthesis mission](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-analysis.md) repeats organization around operational progression and preservation of limits across corrections, already supplied by its type and worker rules.

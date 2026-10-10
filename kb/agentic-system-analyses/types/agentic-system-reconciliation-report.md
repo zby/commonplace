@@ -28,10 +28,9 @@ supersessions and what its connections may claim from evidence. The member decla
 
 The body contains `## Reconciliation`: duplicate supersessions, anchored
 conflicts, independent convergence and integration-issue dispositions. Cite the records concerned and describe discrepancies
-without selecting the strongest-sounding status. A supersession paragraph
-starts `Amendment: <record citation> is superseded by <record citations>` and
-gives its identity evidence and affected findings; the record contract says
-when a supersession or a split is allowed and what a missing part requires.
+without selecting the strongest-sounding status. Each supersession is an
+`Amendment:` paragraph in the record contract's grammar, which also says what
+it must show and what a split or a missing part requires.
 
 Mark every disagreement between reports with a paragraph starting
 `Unresolved conflict:`, followed by citations of the affected records, conflicting findings,
