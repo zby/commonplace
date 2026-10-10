@@ -116,6 +116,13 @@ vocabulary checked against Code Complete's and Clean Code's naming rules
 and the one-vocabulary rule; renames proposed in order, names to keep with
 their definitions fixed, and what is already consistent.
 
+## Redundancy sweep
+
+[Redundancy sweep](./redundancy-sweep.md), 2026-10-10: what the two days
+of changes stated twice, left dead or stale across the engine, the
+consumer code, the analysis instructions and types, and the reference and
+workshop documents, with a home proposed for each and an order.
+
 ## Notes bearing on the design
 
 [Notes bearing on the analysis design](./notes-bearing-on-the-design.md),
