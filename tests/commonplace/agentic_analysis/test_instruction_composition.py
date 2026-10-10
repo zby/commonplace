@@ -54,3 +54,20 @@ def test_mission_files_leave_inputs_outputs_and_checks_to_the_prompt_section() -
         text = path.read_text(encoding="utf-8")
         for named in ("`output`", "output-answers", "commonplace-validate", "validation-artifact", "Return one line"):
             assert named not in text, (path.name, named)
+
+
+def test_every_worker_whose_types_defer_to_the_records_contract_receives_it() -> None:
+    """The delivery invariant contract consolidation rests on: a rule moved from a
+    type into the records contract still reaches every worker that reads that type."""
+    jobs = load_plan(yaml.safe_dump(expanded(LIBRARY)))
+    contract = "agentic-system-analyses/instructions/agentic-analysis-records.md"
+    deferring = {path for path in (LIBRARY / "agentic-system-analyses/types").glob("*.md")
+                 if "agentic-analysis-records.md" in path.read_text(encoding="utf-8")}
+    assert deferring, "the record-citing types refer to the records contract"
+    for job in jobs.jobs:
+        if not isinstance(job, ModelJob):
+            continue
+        types = {LIBRARY / spec.source for name, spec in job.inputs.items()
+                 if spec.address == "file" and (name == "member-type" or name.endswith("-type"))}
+        if types & deferring:
+            assert any(spec.source == contract for spec in job.inputs.values() if spec.address == "file"), job.name
