@@ -99,7 +99,8 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
         h = a.coordinator.handout(name)
         assert "## Input reading batches" in h.prompt.read_text()
         assert "jobs-engine/" in h.prompt.read_text()
-        assert "opening" in parameters(h)
+        assert "opening" not in parameters(h)
+        assert not (h.prompt.parent / "inputs" / "opening.md").exists()
         if name == "reconciliation":
             to_verifier(a)
     assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
