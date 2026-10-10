@@ -28,7 +28,7 @@ including this overview.
 | `boundary-kind` | Yes | Extent of the selected target; `null` before establishment |
 | `reviewed-boundary` | Yes | Immutable revision or capture identity, or `null` before establishment |
 | `analysis-cutoff` | Yes | Applicability cutoff, or `null` before establishment |
-| `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline supports a tier |
+| `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before establishment |
 | `inputs-commit` | Yes | Full repository commit supplying the method; publication requires the method unchanged |
 
 ## Members
