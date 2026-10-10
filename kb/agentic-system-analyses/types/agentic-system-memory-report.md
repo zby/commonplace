@@ -25,11 +25,6 @@ identity, common fields, statuses and evidence interpretation.
 | `source-identity` | Yes | Exact repository or capture identity |
 | `reviewed-boundary` | Yes | Full Git commit or capture label |
 
-A justified unknown that only limits a conclusion may remain in the report,
-naming the included part, the missing fact and the conclusion it prevents.
-A condition that prevents completing the analysis is reported through the
-job's problem path, not as a report.
-
 ## Report sections
 
 ### Boundary and evidence
@@ -124,13 +119,9 @@ substitute for this section.
 ### Limitations and checks
 
 Name prevented conclusions, source and method identity rechecks, and the
-deterministic validation result. A self-check does not attest independence
-or correctness of the final integrated analysis. Do not omit weaknesses to
-make the report appear ready for integration.
-
-A complete report retains no `Validation: pending` line. Code's acceptance
-record is authoritative for structural acceptance; the report does not
-independently attest acceptance.
+deterministic validation result. Do not omit weaknesses to make the report
+appear ready for integration. A complete report retains no
+`Validation: pending` line.
 
 
 ## Template
