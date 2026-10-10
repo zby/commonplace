@@ -1,5 +1,5 @@
 ---
-description: "Use for the new engine's runtime analyst hand-out to trace source-native work, routes, guarantees and change-admission mechanisms"
+description: "Use for the runtime analyst to trace source-native work, routes, guarantees and change-admission mechanisms"
 type: types/instruction.md
 ---
 
@@ -13,7 +13,6 @@ Establish the consequential claimed work, shipped entry paths, one ordinary invo
 end to end, material routes, load-bearing guarantees and their enforcement
 points, distributed-parametric components, and mechanisms admitting changes
 to the product, retained knowledge, capabilities or production machinery.
-Declare runtime records with `RT-`; their fields follow `records-contract`.
 
 A guarantee covers only paths its enforcement point covers. Enumerate
 materially equivalent alternate paths before judging it: direct model calls,
@@ -28,7 +27,3 @@ Inspect permissions, approval, delegation, dynamic extension, reliability,
 observability, providers, packaging and performance only where they change
 claimed work, a control path, evidence strength or a result later analysts
 will rely on. This report is not a product inventory.
-
-Cite your own declarations, the boundary's Source register and declarations
-supplied in refusal feedback. A bounded unknown stays beside the affected
-finding.
