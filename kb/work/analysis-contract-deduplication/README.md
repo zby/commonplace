@@ -39,6 +39,8 @@ Repeated rules include existence versus complete coverage, uninspected evidence 
 
 Proposal: retain general principles in the record contract and keep only output-specific requirements in types. Preserve the synthesis's obligation to discuss particular properties when supported. Preserve the profile's exact `known`, `partial`, and other assessment semantics; those are additional requirements, not interchangeable warnings. This is the strongest first consolidation candidate.
 
+Disposition, 2026-10-10: consolidated. The general cautions live only in the record contract's Source-native coverage and uncertainty and Evidence interpretation sections. The synthesis type keeps its obligation to state each independent property separately where supported and to lead with the strongest supported contribution, and points to the contract for coverage, absence and uncertainty; the epistemic type keeps separate evaluators per route and points to the contract; the memory report keeps what its coverage table includes; the profile keeps every assessment's semantics and loses only the generic witness sentence. All four writers and their verifiers receive the contract, pinned by the delivery-invariant test.
+
 ### D2 — Memory distinctions have three descriptions
 
 The record contract's ten-dimension coverage table overlaps with the memory report's Write side and Read-back sections and the profile's Classification units, Write agency, Read-back, and Trace learning sections. Repeated distinctions include human admission versus authorship/I/O, requested delivery versus unsolicited supply, identifiers versus actual selection, and trace-fed writes with durable results and later consumers.

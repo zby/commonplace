@@ -38,9 +38,7 @@ path, citations of the supplied or new records covering it, or exclusion/uninspe
 conclusion prevented. Distinguish direct source reads from supplied
 runtime findings. The inventory includes unresolved operative parts and
 alternative admission/read-back paths, with missing facts and prevented
-conclusions beside them. It warrants coverage only within its evidenced
-boundary; one inspected primary store or positive route is not a complete
-inventory. Supported source-native facts survive uncertainty in another part.
+conclusions beside them, under the record contract's coverage rules.
 
 ### Core ideas
 

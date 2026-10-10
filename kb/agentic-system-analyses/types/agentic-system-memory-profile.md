@@ -72,7 +72,7 @@ records; `inapplicable` needs the relevant boundary and reason.
 Axis assessment covers the explicitly named inventory, not a separately
 authored complete-value assertion. `known` needs all included units resolved
 and accepted records supporting inventory coverage of the scoped boundary.
-A positive witness proves existence, never complete enumeration. `partial`
+`partial`
 needs positives plus unresolved coverage; without positives, unresolved
 inspection remains `uninspected` or `not-determinable`. Axis `absent` and
 `inapplicable` need their own bounded warrants. An inventory containing only
