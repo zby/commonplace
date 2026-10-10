@@ -5,6 +5,8 @@ type: reference/types/design-proposal.md
 
 # Plans without structural wrapper code
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 117](../../adr/117-plans-derive-their-structural-jobs-from-the-type.md), which carries the live decision. This file was edited by appending rulings over 2026-10-09 and 10, so a later paragraph can override an earlier one; the ADR is the reconciled statement. What remains here is the dated current state of the hand-written plan and its handlers, the option space, the forces, the syntax rulings in the order they were made, the step-by-step record and its measurements.
+
 The engine runs a typed directory artifact through a plan: model jobs
 write candidates, code jobs check and judge them, and a coverage gate
 releases publication ([ADR 113](../../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md)).

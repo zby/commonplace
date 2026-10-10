@@ -1,5 +1,5 @@
 ---
-description: "A generic engine runs the analysis workflow: a plan declares jobs over a typed artifact's roles, one command advances the run from disk, code jobs judge member versions against pinned inputs, and a draft validates at its member slot"
+description: "A generic engine runs the analysis workflow: a plan declares jobs over a typed artifact's roles, one command advances the run from disk, code jobs judge member versions against pinned inputs, and a draft validates in its role"
 type: reference/types/adr.md
 status: accepted
 ---
@@ -8,6 +8,8 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-10-09
+
+**Amended by:** [ADR 117](./117-plans-derive-their-structural-jobs-from-the-type.md). The two open items below, standard handlers and plan compaction, are decided there; the consequence that every check job needs a handler no longer holds; the analysis command's `report` subcommand is `inspect` (ADR 116).
 
 ## Context
 

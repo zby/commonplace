@@ -99,7 +99,7 @@ module fixes, and what the analysis consumer's types, handlers and
 instructions add: the verdict language, the two routing policies, the
 report-check gate and the limits rule. It separates the parts a generic
 apply handler could take as protocol from this consumer's own content, for
-the [plans-without-consumer-code](../../reference/proposals/archive/plans-without-structural-wrapper-code.md)
+the [ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md)
 design.
 
 ## Compact-plan implementation review

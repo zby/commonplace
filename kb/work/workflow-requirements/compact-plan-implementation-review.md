@@ -201,5 +201,5 @@ supported beyond the shipped analysis.
 
 ## Related design
 
-- [Plans without structural wrapper code](../../reference/proposals/archive/plans-without-structural-wrapper-code.md).
+- [ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md).
 - [The correction and verification protocol as implemented](./verification-protocol.md).

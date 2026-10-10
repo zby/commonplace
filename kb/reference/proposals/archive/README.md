@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Plans without structural wrapper code](./plans-without-structural-wrapper-code.md) — adopted by ADR 117, 2026-10-10. The 2026-10-09 state of the analysis plan with 25 hand-written jobs and wrapper handlers, the six options weighed, the compact-plan syntax rulings in the order made, the five implementation steps with their measurements, and the implementation review's findings.
 - [Code-scheduled workflows](./code-scheduled-workflows.md) — adopted by ADR 113, 2026-10-09. The 2026-09-29 state with a 518-line prose schedule, the `step`/`report`/`agent()` vocabulary of the first engine, and the recovery, core-placement and rerun-timing choices weighed before the engine was rebuilt.
 - [Record acceptance reads and judged versions](./record-acceptance-reads-and-judged-versions.md) — retired by ADR 113, 2026-10-09. The 2026-10-07 replay-recheck engine, the later-verification mismatch it could reach, the build-systems classification of that engine as a volatile verifying-trace rebuilder, and the snapshot-and-commit alternative set aside.
 - [Document validation in working-set context](./type-declared-cross-checks-and-one-validation-surface.md) — stage one adopted by ADR 113, 2026-10-09. The 2026-10-06 state with a workflow-private context helper and a separate analyst check command, the checking boundary, and the role-scoped stage two whose three triggers never appeared.
