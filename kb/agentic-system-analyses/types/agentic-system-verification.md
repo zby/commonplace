@@ -87,6 +87,14 @@ changes a central conclusion or a system-level comparison value, it is a
 blocker. Do not use a limit to excuse an unsupported emitted value or a false
 `known`, `absent` or `inapplicable` assessment.
 
+A request for additional inspection or correction names the material conclusion
+it could change and why it is needed to support, qualify or withdraw that
+conclusion. Completeness is relative to the required analysis questions and
+declared evidence boundary, not exhaustive inspection of repository contents.
+The presence of additional artifacts alone creates no coverage obligation;
+this does not excuse missing evidence needed for a required finding or an
+emitted claim.
+
 Faithfully scoped uncertainty is neither a blocker nor a limit. A review
 objection is evidence to assess, not an established defect.
 

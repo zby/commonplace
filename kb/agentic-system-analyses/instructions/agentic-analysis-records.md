@@ -256,6 +256,19 @@ casual search miss or uninspected branch supports a limitation, not an
 evidenced absence, and omission from an open-ended mechanism list is not
 evidence of absence.
 
+When a conclusion depends on information reaching a consumer, establish what
+that consumer receives after intervening selection, transformation or omission.
+Do not infer completeness, correctness or successful execution from the
+producer's output label. Inspect these transformations where they could change
+the conclusion, not as an exhaustive audit of data handling.
+
+Distinguish implemented capacity, exercised behavior and demonstrated benefit.
+Assess each property using the evidence required by its definition. Missing
+execution evidence limits claims about exercised behavior or benefit; it does
+not by itself make an inspectable architectural capacity indeterminable.
+Conversely, an implemented path does not establish that it was exercised or
+beneficial.
+
 A contrast is necessary but not sufficient for causal identification:
 attribution is no finer than the treatment and comparison actually performed,
 and a component effect requires independent variation of that component.
