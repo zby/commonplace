@@ -2,14 +2,17 @@
 
 A directory type spec may carry ``layout`` in its frontmatter. Each role names
 one direct child file of the artifact, the document type expected there, the
-roles whose fields it must repeat, and the roles whose declarations its
-references may resolve against. An identity source named ``run`` binds
-fields to the run's values instead, the run parameters and ``run-id``,
-which only a caller inside a run supplies. The layout owns membership and requiredness;
-the type's schema keeps the manifest's instance metadata.
+roles whose fields it must repeat (``identity``), the roles whose
+declarations its references may resolve against (``cites``) and the roles
+whose versions its verdict judges (``verifies``). An identity source named
+``run`` binds fields to the run's values instead, the run parameters and
+``run-id``, which only a caller inside a run supplies. The layout owns
+membership and requiredness; the type's schema keeps the manifest's instance
+metadata. A verifying role's document follows the verification protocol,
+whose grammar is a layout finding.
 
 Findings carry the role they belong to, so a caller that wants one member's
-findings filters by role.
+findings filters by role, and the repair the code that made them supplies.
 """
 
 from __future__ import annotations

@@ -1,8 +1,10 @@
 """The analysis types' validation rules, registered with the validator.
 
-Rules the analysis type specs and their schemas cannot express: record
-declarations, which a correction keeps, and references, the source register, the epistemic ledger, artifact
-member links, and the analysis artifact's cross-member relations, including
+Rules the analysis type specs and their schemas cannot express: the record
+grammar a correction keeps, record syntax and declarations in each member,
+the source register, the epistemic ledger, links that must stay inside the
+artifact, and the artifact's cross-member relations: citations resolved
+within each role's cites, carried limits, the profile's comparison and
 quotations resolved against the boundary's frozen source. Importing this
 module registers them.
 """
