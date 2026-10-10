@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [analysis-contract-deduplication](./analysis-contract-deduplication/README.md) — synthesis-packet audit of repeated requirements, ownership and consumer delivery; five consolidation candidates retained for disposition, no prose consolidation commissioned
+
 - [analysis-workflow-calibration](./analysis-workflow-calibration/README.md) — paired synthesis-support calibration cases and profile-pinned packets; Luna/low exploratory pilot completed, one control needs adjudication
 
 - [analysis-collection-split](./analysis-collection-split/README.md) — moving agentic-system analysis into a self-contained collection with stable per-system paths and a separate comparison-profile job; design decided 2026-10-03, implementation commissioned by its plan, nothing built yet
