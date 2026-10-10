@@ -174,7 +174,16 @@ glossary, which becomes the reference page.
   closure to the derived jobs; the `[verifies]` paragraph points to the
   verification type, which states addressing in terms of the `verifies`
   line.
-- Sections 3 and 2, the consumer and engine code: in progress.
+- Section 3, the consumer code: done 2026-10-10, 61990e1ba to 3559b5740.
+  Revision 1 profiles and their compatibility path are gone with the
+  profile's comparison-version check, leaving two declared checks;
+  repairs are supplied at origin and the phrase map is deleted; each
+  finding is reported once; run-id and the acquisition result are checked
+  once; a run-ids module holds the grammars; publication reads producers,
+  identity fields and paths from the layout; the protocol grammar is one
+  layout finding with addressees from `verifies`; the cited-records
+  feedback finds declarers; run values come from one function.
+- Section 2, the engine code: in progress.
 
 ## Order
 
