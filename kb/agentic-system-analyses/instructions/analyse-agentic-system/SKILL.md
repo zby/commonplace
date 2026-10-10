@@ -14,6 +14,33 @@ Analyse one external agentic system at one frozen evidence boundary and publish 
 
 Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained analysis under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
+## Confirm the target
+
+Before preparing a worktree or opening a run, identify the system and its source
+from the caller's input. If the target is missing or ambiguous, ask: “Which system
+should I evaluate? Please provide its repository URL or local checkout.” Stop
+and wait for the answer. Do not select a system from prior analyses or infer an
+unstated target from the current checkout. A supplied repository can identify
+the system without requiring the caller to repeat its name.
+
+For a remote repository, apply this quick shape check to the trimmed locator:
+
+```regex
+^(?:https?://[^/\s?#]+/|ssh://[^/\s?#]+/|git@[^:\s]+:)[^/\s?#]+/[^/\s?#]+/?$
+```
+
+This accepts common HTTPS, SSH URL and SCP-style repository locators, including
+`.git` suffixes. Use the repository root, not an issue, file or documentation URL.
+If the locator does not match, ask for a repository locator or clarification;
+less common repository forms may be confirmed by the caller. A local checkout
+or explicitly supplied snapshot, bundle or documents uses its existing source
+route rather than this remote-URL check. Do not silently treat a malformed
+repository locator as a document source.
+
+This is a plausibility check, not proof that cloning will succeed. Do not run
+`git ls-remote`, clone, fetch or test credentials during intake. Acquisition
+handles unavailable repositories, permissions and clone failures later.
+
 ## Isolated run setup
 
 Run each analysis in a dedicated Commonplace worktree at a committed method
