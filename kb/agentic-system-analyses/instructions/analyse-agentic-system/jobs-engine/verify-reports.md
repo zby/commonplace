@@ -9,6 +9,10 @@ Judge whether the reconciled records support a source-grounded bounded account, 
 
 ## Judge coverage and materiality
 
+Independently trace the behavior supporting consequential claims, then compare
+it with the submitted wording. Check conditions, scope, ordering and evidence
+strength; do not treat the analyst's checks as verification.
+
 Check every record, source anchor, evidence status, `Part of:` relation,
 supersession and unresolved conflict. State the checks and dispositions in
 Verification. Judge coverage against the frozen repository tree, not just

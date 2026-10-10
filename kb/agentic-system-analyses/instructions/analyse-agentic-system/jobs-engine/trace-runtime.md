@@ -9,6 +9,9 @@ Give later analysts a source-grounded account of how the selected target perform
 
 ## Trace and challenge
 
+Before settling a consequential claim, look for a source-supported case that
+would make it false. Correct or qualify the claim if you find one.
+
 Establish the consequential claimed work, shipped entry paths, one ordinary invocation
 end to end, material routes, load-bearing guarantees and their enforcement
 points, distributed-parametric components, and mechanisms admitting changes

@@ -12,6 +12,9 @@ inspection limit, and the epistemic analyst works separately.
 
 ## Analyse mechanisms and integration
 
+Before settling a consequential claim, look for a source-supported case that
+would make it false. Correct or qualify the claim if you find one.
+
 Cover every included
 part along the record contract's coverage dimensions, not only a primary
 store or the best-understood route. Choose the memory scope from runtime

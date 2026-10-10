@@ -253,8 +253,8 @@ claim, affordance, wiring, observation and causal support. Curation alone
 establishes no warrant. Every negative, thin, conflicting or uncertain
 finding names its inspected boundary and the conclusion it prevents. A
 casual search miss or uninspected branch supports a limitation, not an
-evidenced absence, and omission from an open-ended mechanism list is not
-evidence of absence.
+evidenced absence. Uninspected evidence is not absent or inaccessible, and
+omission from an open-ended mechanism list is not evidence of absence.
 
 When a conclusion depends on information reaching a consumer, establish what
 that consumer receives after intervening selection, transformation or omission.
@@ -267,7 +267,10 @@ Assess each property using the evidence required by its definition. Missing
 execution evidence limits claims about exercised behavior or benefit; it does
 not by itself make an inspectable architectural capacity indeterminable.
 Conversely, an implemented path does not establish that it was exercised or
-beneficial.
+beneficial. An implemented request for model behavior establishes the request,
+not reliable compliance; distinguish it from evidence that the requested
+behavior occurred. Source-supplied traces can support bounded observations
+without independently authenticating execution or establishing causal benefit.
 
 A contrast is necessary but not sufficient for causal identification:
 attribution is no finer than the treatment and comparison actually performed,

@@ -43,7 +43,10 @@ transfer recommendation. For learning and self-improvement findings it leads
 with the strongest supported contribution, including partial results, then
 states the unresolved question, at the level of the comparison actually
 performed. Its coverage, absence and uncertainty statements follow the record
-contract's coverage and evidence-interpretation rules.
+contract's coverage and evidence-interpretation rules. The synthesis does not
+strengthen supporting records. It preserves conditions whose omission changes
+whether a mechanism operates, what it guarantees, or what the evidence
+establishes.
 
 The Bounded synthesis must read without the members' context. State its
 evidence basis and boundary, and link the member records that support it so

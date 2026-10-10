@@ -12,6 +12,9 @@ inspection limit, and the memory analyst works separately.
 
 ## Trace and assess
 
+Before settling a consequential claim, look for a source-supported case that
+would make it false. Correct or qualify the claim if you find one.
+
 Record `not determinable` where accessible evidence cannot individuate
 truth-apt content. Flag a needed supersession or defective supplied fact
 beside the affected finding, with evidence.
