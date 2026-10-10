@@ -70,7 +70,7 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
     assert record["findings"] == ""
     assert record["scope"] == []  # Self-citations are content checks, not cross-role coverage.
     assert (a.coordinator.run_dir / "artifact/boundary.md").read_text() == text
-    assert {"candidate", "metadata", "source", "producer-attempt", "answered-refusal", "note-type"} <= record["basis"].keys()
+    assert {"candidate", "metadata", "source", "producer-attempt", "answered-refusal", "records-contract", "criterion-types-note-md"} <= record["basis"].keys()
     assert not (a.coordinator.run_dir / "output").exists()
 
 

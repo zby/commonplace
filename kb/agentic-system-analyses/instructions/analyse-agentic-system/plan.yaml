@@ -10,9 +10,10 @@
 # inputs are library paths. Opening, acquisition,
 # assembly and publication are the analysis's own code jobs in the engine's
 # full form. Opening consumes the run parameters system, source-identity,
-# source and optional source-revision; every model job prints system and
-# command-path, the prepared checkout's command directory; assembly and publication are gated
-# by the engine's coverage input.
+# source and optional source-revision. Every model job prints system,
+# command-path (the prepared checkout's command directory), source-identity
+# and capture-directory as lines. Assembly and publication are gated by the
+# engine's coverage input.
 type: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
 prompt-section: jobs-engine/prompt-section.md
@@ -20,10 +21,10 @@ criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
     worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
-  # Read by type rules but referenced by no type; every derived job receives it.
+  # The contract the record-citing member types refer to; their writers and
+  # every derived job receive it, the derived jobs with its own type.
   contracts:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
-    note-type: types/note.md
   # Publication validates every member; these groups make its closure explicit.
   types:
     note-schema: types/note.schema.yaml
@@ -88,38 +89,28 @@ jobs:
 - role: runtime
   instruction: jobs-engine/trace-runtime.md
   outputs: [report, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required}
 - role: memory
   instruction: jobs-engine/analyse-memory.md
   outputs: [report, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
 - role: epistemic
   instruction: jobs-engine/trace-epistemic.md
   outputs: [report, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
 - role: reconciliation
   instruction: jobs-engine/reconcile-records.md
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
 - job: report-check
   handler: commonplace.artifactrun.handlers.artifact_check
   inputs: [boundary, runtime, memory, epistemic, reconciliation]
 - role: report-verification
   instruction: jobs-engine/verify-reports.md
   outputs: [verification]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
           'epistemic:answers': optional, 'report-check:findings': required}
@@ -128,9 +119,7 @@ jobs:
 - role: memory-profile
   instruction: jobs-engine/map-memory-profile.md
   outputs: [profile, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required}
   verified-by: [report-verification]
@@ -138,9 +127,7 @@ jobs:
 - role: profile-verification
   instruction: jobs-engine/verify-memory-profile.md
   outputs: [verification, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
           'refusal:memory-profile': optional}
@@ -148,9 +135,7 @@ jobs:
   instruction: jobs-engine/synthesize-analysis.md
   max-attempts: 2
   outputs: [synthesis, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, memory-profile: required, report-verification: required,
           profile-verification: required}
@@ -159,9 +144,7 @@ jobs:
   instruction: jobs-engine/verify-synthesis.md
   max-attempts: 2
   outputs: [verification, answers]
-  criteria: [worker]
-  files:
-    records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
+  criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required, synthesis: required, report-verification: required,
           profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}

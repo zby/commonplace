@@ -39,7 +39,7 @@ ARTIFACT_CHECK = f"{STANDARD}.artifact_check"
 HANDLER_OUTPUTS = {ARTIFACT_CHECK: ["findings"]}
 """Outputs a `job:` entry gets when it declares none."""
 CONTRACTS_GROUP = "contracts"
-"""The plan-level criteria group every derived job receives besides its type closure."""
+"""The plan-level criteria group every derived job receives, with its files' types, besides its type closure."""
 MODES = ("required", "optional", "order-only")
 ROLE_KEYS = {"role", "instruction", "max-attempts", "outputs", "reads", "criteria", "files",
              "parameters", "verified-by", "checks", "feedback"}
@@ -127,6 +127,13 @@ def _refs(node: Any) -> list[str]:
     if isinstance(node, list):
         return [ref for value in node for ref in _refs(value)]
     return []
+
+
+def _document_type(path: Path) -> str | None:
+    """A library document's `type` field, or None."""
+    document, _ = parse_document(path.read_text(encoding="utf-8"))
+    value = (document.frontmatter or {}).get("type") if document is not None else None
+    return value if isinstance(value, str) else None
 
 
 def _criterion_name(path: str) -> str:
@@ -245,6 +252,9 @@ class _Expansion:
         if isinstance(schema, str):
             paths += [p for p in type_closure(self.library, [_relative(self.type_spec, schema)]) if p not in paths]
         group = dict(self.groups.get(CONTRACTS_GROUP) or {})
+        # Validating a contract file needs its own type too.
+        contract_types = [_document_type(self.library / path) for path in group.values()]
+        paths += [p for p in type_closure(self.library, [t for t in contract_types if t]) if p not in paths]
         given = set(group.values())
         return {**{_criterion_name(path): {"address": "file", "source": path} for path in paths if path not in given},
                 **{name: {"address": "file", "source": path} for name, path in group.items()}}

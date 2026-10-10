@@ -247,9 +247,10 @@ def declared_packet(job_name):
     ("memory", ["generic caller identity does not establish human control"]),
     ("epistemic", ["checking is never"]),
     ("reconciliation", ["never allocates ids"]),
-    ("report-verification", ["unsupported claims, evidence strengths, absence or completeness claims require correction"]),
+    # A verifier's materiality rules reach it through the verification type.
+    ("report-verification", ["asserts an unsupported comparison value, evidence strength"]),
     ("memory-profile", ["generic caller identity alone leaves control unresolved"]),
-    ("profile-verification", ["an unsupported emitted value or strength"]),
+    ("profile-verification", ["a limit on a profile value is admissible only"]),
     ("synthesis", ["independent route/property conclusions"]),
     ("synthesis-verification", ["structural acceptance does not establish support"]),
 ])
@@ -324,7 +325,7 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert artifact_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
-    assert "an unsupported emitted value or strength" in declared_packet("profile-verification").lower()
+    assert "asserts an unsupported comparison value" in declared_packet("profile-verification").lower()
 
 
 def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):
