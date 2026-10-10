@@ -63,14 +63,17 @@ def test_profile_resolves_canonical_record_declarations(tmp_path: Path, mutation
     memory.write_text(body)
     metadata = frontmatter(report)
     axes = metadata["memory-comparison"]["axes"]
+    store = ["memory.md#mem-obj-store"]
     axes["storage_substrate"] = {
-        "assessment": "known", "values": ["files"],
-        "evidence": {"files": {"basis": "wired", "records": ["MEM-OBJ-store"], "note": "Fixture witness."}},
-        "records": ["MEM-OBJ-store"], "note": "Fixture source writes files.",
+        "assessment": "known", "records": store, "note": "Fixture source writes files.",
+        "units": [{
+            "scope": "Fixture store", "assessment": "known", "records": store, "note": "The only store.",
+            "findings": [{"value": "files", "basis": "wired", "records": store, "note": "Fixture witness."}],
+        }],
     }
     axes["trace_learning"] = {
-        "assessment": "absent", "evidence": {}, "values": [],
-        "records": ["MEM-ABS-missing-route"], "note": "Fixture source was inspected.",
+        "assessment": "absent", "units": [],
+        "records": ["memory.md#mem-abs-missing-route"], "note": "Fixture source was inspected.",
     }
     expected_error = None
     if mutation == "outside":
@@ -115,7 +118,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     ]
     assert '"[""files"",""sqlite""]"' in matrix.read_text()
     assert render_systems_table.main(["--output", str(table)]) == 0
-    assert "files [wired], sqlite [wired]" in table.read_text()
+    assert "sqlite [wired], files [wired]" in table.read_text()
     assert "## code-grounded (1)" in table.read_text()
     assert digest(retained.with_name("ARTIFACT.yaml")) in table.read_text()
     assert validation.validate_note(table, repo_root=tmp_path).fails == []
@@ -272,6 +275,7 @@ def test_profile_rejects_missing_identity_source_without_requiring_whole_artifac
     output = run_dir / "artifact"
     candidate = write(run_dir / "profile-candidate.md", (output / "memory-profile.md").read_text()
                       .replace("MEM-OBJ-store", "RT-OBJ-store")
+                      .replace("memory.md#mem-obj-store", "runtime.md#rt-obj-store")
                       .replace(SOURCE, "https://example.invalid/unrelated"))
     memory_content = (output / "memory.md").read_text()
     (output / "memory.md").unlink()

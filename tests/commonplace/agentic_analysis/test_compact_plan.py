@@ -168,8 +168,8 @@ def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plan
     _, new = plans
     entries = compact_entries()
     expected_hooks = {role: entry.get("checks") for role, entry in entries.items() if entry.get("checks")}
-    # Record preservation and the memory source identity moved into draft validation.
-    assert set(expected_hooks) == {"boundary", "report-verification", "memory-profile"}
+    # Record preservation, the memory source identity and the profile version moved into validation.
+    assert set(expected_hooks) == {"boundary", "report-verification"}
     for role, entry in entries.items():
         derived = "apply-" if new.job(role).role in {"report-verification", "profile-verification",
                                                       "synthesis-verification"} else "check-"

@@ -123,7 +123,6 @@ jobs:
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           reconciliation: required}
   verified-by: [report-verification]
-  checks: [commonplace.lib.agentic_analysis.profile.comparison_version]
 - role: profile-verification
   instruction: jobs-engine/verify-memory-profile.md
   outputs: [verification, answers]

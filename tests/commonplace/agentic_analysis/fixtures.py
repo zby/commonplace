@@ -146,23 +146,28 @@ def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
 
 def uninspected_profile(scope: str) -> dict:
     return {
+        "version": 2,
         "scope": scope,
         "axes": {
-            axis: {"assessment": "uninspected", "evidence": {}, "values": [],
-                   "records": [], "note": "Not inspected in this fixture."}
+            axis: {"assessment": "uninspected", "units": [], "records": [],
+                   "note": "Not inspected in this fixture."}
             for axis in systems_matrix.AXES
         },
     }
 
 
 def profile_report_fixture(run_dir: Path, revision: str) -> Path:
-    """A revision-1 profile, the form historical readers consume."""
+    """A profile with one known axis, cited to the memory member's store record."""
     profile = uninspected_profile("The fixture's accumulated project memory and retrieval routes")
+    store = "memory.md#mem-obj-store"
     profile["axes"]["storage_substrate"] = {
-        "assessment": "known", "values": ["sqlite", "files"],
-        "evidence": {v: {"basis": "wired", "records": ["MEM-OBJ-store"], "note": "Fixture witness."}
-                     for v in ["sqlite", "files"]},
-        "records": ["MEM-OBJ-store"], "note": "Both stores occur within the fixture boundary.",
+        "assessment": "known", "records": [store], "note": "Both stores occur within the fixture boundary.",
+        "units": [{
+            "scope": "The fixture's store", "assessment": "known", "records": [store],
+            "note": "The store is the only retained object.",
+            "findings": [{"value": value, "basis": "wired", "records": [store], "note": "Fixture witness."}
+                         for value in ("sqlite", "files")],
+        }],
     }
     values = {
         "type": "agentic-system-analyses/types/agentic-system-memory-profile.md",

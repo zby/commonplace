@@ -29,25 +29,19 @@ def cell(text: str) -> str:
 def assessment(row: dict, axis: str) -> str:
     disposition = row[axis + "_assessment"]
     note = row[axis + "_note"]
-    if row.get("comparison_version") == 2:
-        units = []
-        for unit in row[axis + "_units"]:
-            findings = ", ".join(
-                f"{finding['value']} [{finding['basis']}]"
-                for finding in unit["findings"]
-            )
-            detail = f"{unit['scope']}: {unit['assessment']}"
-            if findings:
-                detail += f" — {findings}"
-            detail += f" ({unit['note']})"
-            units.append(detail)
-        detail = f"{disposition} coverage ({note})"
-        return detail + ("; " + "; ".join(units) if units else "")
-    if disposition not in {"known", "partial"}:
-        return f"{disposition} ({note})"
-    evidence = row[axis + "_evidence"]
-    values = ", ".join(f"{value} [{evidence[value]['basis']}]" for value in row[axis])
-    return values + ("; partial coverage" if disposition == "partial" else "") + f" ({note})"
+    units = []
+    for unit in row[axis + "_units"]:
+        findings = ", ".join(
+            f"{finding['value']} [{finding['basis']}]"
+            for finding in unit["findings"]
+        )
+        detail = f"{unit['scope']}: {unit['assessment']}"
+        if findings:
+            detail += f" — {findings}"
+        detail += f" ({unit['note']})"
+        units.append(detail)
+    detail = f"{disposition} coverage ({note})"
+    return detail + ("; " + "; ".join(units) if units else "")
 
 
 def render(rows: list[dict], output: Path) -> str:

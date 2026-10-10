@@ -41,41 +41,33 @@ def main(argv: list[str] | None = None) -> int:
     for path, digest in sorted(inputs.hashes.items()):
         print(f"input: {path} sha256={digest}")
     print(f"code-grounded rows: {len(selected)}")
-    versions = sorted({row["comparison_version"] for row in selected})
-    for version in versions:
-        cohort = [row for row in selected if row["comparison_version"] == version]
-        print(f"comparison version {version}: {len(cohort)} code-grounded rows (not pooled across revisions)")
-        for axis in AXES:
-            dispositions = Counter(row[axis + "_assessment"] for row in cohort)
-            bases = Counter()
-            for row in cohort:
-                if version == 2:
-                    # Count actual unit findings, including weaker alternative routes.
-                    for unit in row[axis + "_units"]:
-                        for finding in unit["findings"]:
-                            bases[unit["assessment"] + ":" + finding["basis"]] += 1
-                else:
-                    for support in row[axis + "_evidence"].values():
-                        bases[row[axis + "_assessment"] + ":" + support["basis"]] += 1
-            positives = Counter(
-                value for row in cohort for value in supported_values(row, axis)
-            )
-            profiles = Counter(
-                profile
-                for row in cohort
-                if (profile := complete_values(row, axis)) is not None
-            )
-            complete = sum(profiles.values())
-            shown = {",".join(p) or "none": n for p, n in sorted(profiles.items())}
-            print(
-                f"assessment {axis}: {dict(sorted(dispositions.items()))}; finding bases: {dict(sorted(bases.items()))}"
-            )
-            print(
-                f"supported {axis}: {dict(sorted(positives.items()))} / {len(cohort)} selected code-grounded systems (positive evidence only; remainder is not absence)"
-            )
-            print(
-                f"complete {axis}: {complete} of {len(cohort)} rows have a complete strong profile; profiles: {shown}"
-            )
+    for axis in AXES:
+        dispositions = Counter(row[axis + "_assessment"] for row in selected)
+        bases = Counter()
+        for row in selected:
+            # Count actual unit findings, including weaker alternative routes.
+            for unit in row[axis + "_units"]:
+                for finding in unit["findings"]:
+                    bases[unit["assessment"] + ":" + finding["basis"]] += 1
+        positives = Counter(
+            value for row in selected for value in supported_values(row, axis)
+        )
+        profiles = Counter(
+            profile
+            for row in selected
+            if (profile := complete_values(row, axis)) is not None
+        )
+        complete = sum(profiles.values())
+        shown = {",".join(p) or "none": n for p, n in sorted(profiles.items())}
+        print(
+            f"assessment {axis}: {dict(sorted(dispositions.items()))}; finding bases: {dict(sorted(bases.items()))}"
+        )
+        print(
+            f"supported {axis}: {dict(sorted(positives.items()))} / {len(selected)} selected code-grounded systems (positive evidence only; remainder is not absence)"
+        )
+        print(
+            f"complete {axis}: {complete} of {len(selected)} rows have a complete strong profile; profiles: {shown}"
+        )
     return 0
 
 

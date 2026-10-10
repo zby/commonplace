@@ -24,77 +24,59 @@ def unit(scope, assessment, value=None, basis="wired", note="Bounded finding."):
     }
 
 
-def profile_fixture(version=2):
-    if version == 2:
-        axes = {axis: {
-            "assessment": "uninspected",
-            "units": [unit("opaque part", "uninspected", note="Store not inspected.")],
-            "records": [], "note": "No controlled classification.",
-        } for axis in sm.AXES}
-        axes["write_agency"] = {
-            "assessment": "partial",
-            "units": [
-                unit("curator", "known", "automatic"),
-                unit("alternate API", "known", "automatic", "afforded"),
-                unit("initial sheet", "not-determinable", note="Caller identity unknown; manual control not established."),
-            ],
-            "records": ["memory.md#mem-rte-update"], "note": "Initial control unresolved.",
-        }
-        profile = {"version": 2, "scope": "synthetic memory", "axes": axes}
-    else:
-        axes = {axis: {
-            "assessment": "uninspected", "values": [], "evidence": {},
-            "records": [], "note": "Not inspected.",
-        } for axis in sm.AXES}
-        axes["write_agency"] = {
-            "assessment": "known", "values": ["manual"],
-            "evidence": {"manual": {"basis": "wired", "records": ["MEM-RTE-update"], "note": "Original caller-based meaning."}},
-            "records": ["MEM-RTE-update"], "note": "Original semantics.",
-        }
-        profile = {"scope": "synthetic memory", "axes": axes}
-    return profile
+def profile_fixture():
+    axes = {axis: {
+        "assessment": "uninspected",
+        "units": [unit("opaque part", "uninspected", note="Store not inspected.")],
+        "records": [], "note": "No controlled classification.",
+    } for axis in sm.AXES}
+    axes["write_agency"] = {
+        "assessment": "partial",
+        "units": [
+            unit("curator", "known", "automatic"),
+            unit("alternate API", "known", "automatic", "afforded"),
+            unit("initial sheet", "not-determinable", note="Caller identity unknown; manual control not established."),
+        ],
+        "records": ["memory.md#mem-rte-update"], "note": "Initial control unresolved.",
+    }
+    return {"version": 2, "scope": "synthetic memory", "axes": axes}
 
 
-def row(version=2, profile=None):
-    profile = profile if profile is not None else profile_fixture(version)
+def row(profile=None):
+    profile = profile if profile is not None else profile_fixture()
     sm.validate_comparison(profile, known_ids=dict.fromkeys(("MEM-RTE-update", "MEM-ABS-static"), "memory.md"))
     result = {key: "synthetic" for key in sm.METADATA}
     result.update(sm.project_comparison(profile))
-    result.update(source_tier="code-grounded", system_name=f"Synthetic v{version}",
+    result.update(source_tier="code-grounded", system_name="Synthetic",
                   comparison_scope=profile["scope"], review_file="kb/example/overview.md",
                   artifact_file="kb/example/ARTIFACT.yaml")
     return result
 
 
-def test_builder_exports_units_revision_and_compatibility_projection(tmp_path, monkeypatch):
-    rows = [row(1), row(2)]
+def test_builder_exports_units_and_projection(tmp_path, monkeypatch):
+    rows = [row()]
     monkeypatch.setattr(builder, "load_results", lambda *_: sm.MatrixInputs(rows, {}))
     output = tmp_path / "matrix.csv"
     assert builder.main(["--output", str(output)]) == 0
-    exported = list(csv.DictReader(StringIO(output.read_text())))
-    assert [r["comparison_version"] for r in exported] == ["1", "2"]
-    assert json.loads(exported[0]["write_agency_units"]) == []
-    assert json.loads(exported[1]["write_agency_units"]) == rows[1]["write_agency_units"]
-    assert json.loads(exported[1]["write_agency"]) == ["automatic"]
-    assert exported[1]["write_agency_assessment"] == "partial"
-    assert exported[1]["write_agency_note"] == "Initial control unresolved."
-    assert exported[0]["write_agency_note"] == "Original semantics."
-    assert json.loads(exported[1]["write_agency_evidence"])["automatic"]["basis"] == "wired"
-    assert exported[1]["write_agency_records"] == "MEM-RTE-update"
+    [exported] = list(csv.DictReader(StringIO(output.read_text())))
+    assert exported["comparison_version"] == "2"
+    assert json.loads(exported["write_agency_units"]) == rows[0]["write_agency_units"]
+    assert json.loads(exported["write_agency"]) == ["automatic"]
+    assert exported["write_agency_assessment"] == "partial"
+    assert exported["write_agency_note"] == "Initial control unresolved."
+    assert json.loads(exported["write_agency_evidence"])["automatic"]["basis"] == "wired"
+    assert exported["write_agency_records"] == "MEM-RTE-update"
 
 
 def test_table_keeps_local_weakness_and_uncertainty(tmp_path):
-    text = renderer.render([row(1), row(2)], tmp_path / "table.md")
-    assert "Profile revision" in text
+    text = renderer.render([row()], tmp_path / "table.md")
     assert "Write agency" in text
     assert "curator: known — automatic [wired]" in text
     assert "alternate API: known — automatic [afforded]" in text
     assert "initial sheet: not-determinable" in text
     assert "Caller identity unknown; manual control not established." in text
-    assert "manual [wired]" in text  # Original v1 value, not reclassified.
     assert "Store not inspected." in text
     assert "Initial control unresolved." in text
-    assert "Original semantics." in text
 
 
 def test_empty_unresolved_inventory_keeps_axis_limitation_in_table_and_csv(tmp_path):
@@ -107,28 +89,20 @@ def test_empty_unresolved_inventory_keeps_axis_limitation_in_table_and_csv(tmp_p
     assert "uninspected coverage (Provider inventory unavailable; complete storage classification prevented.)" in text
     exported = next(csv.DictReader(StringIO(sm.csv_text(sm.MatrixInputs([revised], {})))))
     assert exported["storage_substrate_note"] == profile["axes"]["storage_substrate"]["note"]
-    legacy = profile_fixture(1)
-    legacy["axes"]["storage_substrate"]["note"] = "Legacy storage scope unresolved."
-    assert "uninspected (Legacy storage scope unresolved.)" in renderer.render(
-        [row(1, profile=legacy)], tmp_path / "legacy.md",
-    )
 
 
-def test_statistics_stratify_revisions_and_keep_partial_positive(monkeypatch, capsys):
-    rows = [row(1), row(2), row(2)]
-    rows[2]["source_tier"] = "doc-grounded"
+def test_statistics_keep_partial_positive(monkeypatch, capsys):
+    rows = [row(), row()]
+    rows[1]["source_tier"] = "doc-grounded"
     monkeypatch.setattr(stats, "load_results", lambda *_: sm.MatrixInputs(rows, {}))
     assert stats.main([]) == 0
     text = capsys.readouterr().out
     assert "doc-grounded excluded from statistics: 1" in text
-    legacy, revised = text.split("comparison version 2:")
-    assert "comparison version 1: 1 code-grounded rows" in legacy
-    assert "supported write_agency: {'manual': 1} / 1" in legacy
-    assert "supported write_agency: {'automatic': 1} / 1" in revised
-    assert "finding bases: {'known:afforded': 1, 'known:wired': 1}" in revised
-    assert "complete write_agency: 0 of 1" in revised
-    assert "complete storage_substrate: 0 of 1" in revised
-    assert "remainder is not absence" in revised
+    assert "supported write_agency: {'automatic': 1} / 1" in text
+    assert "finding bases: {'known:afforded': 1, 'known:wired': 1}" in text
+    assert "complete write_agency: 0 of 1" in text
+    assert "complete storage_substrate: 0 of 1" in text
+    assert "remainder is not absence" in text
 
 
 def test_complete_statistics_do_not_upgrade_weak_duplicate_witness(monkeypatch, capsys):

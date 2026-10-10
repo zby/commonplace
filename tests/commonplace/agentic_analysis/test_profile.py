@@ -213,7 +213,7 @@ def test_structural_synthesis_refusal_preserves_semantic_blockers_and_limits(ope
     assert "## Limits" in judgment["findings"] and "do not infer complete inventory" in judgment["findings"]
 
 
-def test_profile_revision_and_source_identity_are_invocation_guards(opened):
+def test_profile_revision_and_source_identity_are_checked_by_validation(opened):
     a = opened
     data = profile(a, **{"source-identity": "wrong"})
     fields = yaml.safe_load(data.decode().split("---")[1])
@@ -222,7 +222,7 @@ def test_profile_revision_and_source_identity_are_invocation_guards(opened):
     ctx = attempt(a, "profile", data)
     check(ctx)
     text = judgments(ctx)[0]["findings"]
-    assert "version: 2" in text and "source-identity" in text
+    assert "'version' is a required property" in text and "source-identity" in text
 
 
 def test_synthesis_limit_traceability_refuses_subject_not_valid_verdict(opened):

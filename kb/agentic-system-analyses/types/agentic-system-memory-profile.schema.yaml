@@ -95,14 +95,8 @@
             },
             "memory-comparison": {
               "type": "object",
-              "allOf": [
-                {
-                  "if": {"required": ["version"]},
-                  "then": {"properties": {"axes": {"additionalProperties": {"$ref": "#/$defs/axis2"}}}},
-                  "else": {"properties": {"axes": {"additionalProperties": {"required": ["values", "evidence"]}}}}
-                }
-              ],
               "required": [
+                "version",
                 "scope",
                 "axes"
               ],
@@ -128,86 +122,7 @@
                   ],
                   "minProperties": 10,
                   "maxProperties": 10,
-                  "additionalProperties": {
-                    "oneOf": [
-                    {"$ref": "#/$defs/axis2"},
-                    {
-                    "$comment": "BACKCOMPAT: immutable retained Dynamic Cheatsheet revision-1 profiles; remove after no retained or archived consumer needs revision 1.",
-                    "type": "object",
-                    "required": [
-                      "assessment",
-                      "evidence",
-                      "values",
-                      "records",
-                      "note"
-                    ],
-                    "properties": {
-                      "assessment": {
-                        "enum": [
-                          "known",
-                          "partial",
-                          "absent",
-                          "inapplicable",
-                          "uninspected",
-                          "not-determinable"
-                        ]
-                      },
-                      "values": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "records": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "note": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "evidence": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "object",
-                          "required": [
-                            "basis",
-                            "records",
-                            "note"
-                          ],
-                          "properties": {
-                            "basis": {
-                              "enum": [
-                                "claimed",
-                                "afforded",
-                                "wired",
-                                "observed",
-                                "causally supported"
-                              ]
-                            },
-                            "records": {
-                              "type": "array",
-                              "minItems": 1,
-                              "uniqueItems": true,
-                              "items": {
-                                "type": "string"
-                              }
-                            },
-                            "note": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          },
-                          "additionalProperties": false
-                        }
-                      }
-                    },
-                    "additionalProperties": false
-                    }
-                    ]
-                  }
+                  "additionalProperties": {"$ref": "#/$defs/axis2"}
                 }
               },
               "additionalProperties": false
