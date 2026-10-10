@@ -178,6 +178,20 @@ class Run:
                 return True
         return False
 
+    def refusal_in_force(self, job: Job) -> dict | None:
+        """The latest refusal of the job's latest output, unless a later judgment superseded it."""
+        output = self.latest_output(job)
+        refusals = [j for j in self.judgments if j["outcome"] == "refused"
+                    and j["subject"]["producer"] == job.name and j["subject"]["version"] == output]
+        if output is None or not refusals or self.superseded(refusals[-1]):
+            return None
+        return refusals[-1]
+
+    def exhausted(self, job: Job) -> bool:
+        """Whether a model job has used every attempt its plan allows."""
+        return (isinstance(job, ModelJob) and job.max_attempts is not None
+                and self.attempt_count(job.name) >= job.max_attempts)
+
     def resolve(self, name: str, inputs: Mapping[str, Input]) -> Resolved:
         spec = inputs[name]
         if spec.address == "file":
@@ -217,12 +231,10 @@ class Run:
                             entry["producer"], entry.get("refused"))
         if spec.address == "refusal":
             job = self.jobs.job(spec.source)
-            output = self.latest_output(job)
-            refusals = [j for j in self.judgments if j["outcome"] == "refused"
-                        and j["subject"]["producer"] == job.name and j["subject"]["version"] == output]
-            if output is None or not refusals or self.superseded(refusals[-1]):
+            refusal = self.refusal_in_force(job)
+            if refusal is None:
                 return ABSENT
-            refusal = refusals[-1]
+            output = refusal["subject"]["version"]
             text = refusal_document(refusal["id"], output, [e["relation"] for e in refusal["scope"]],
                                     refusal["findings"])
             return Resolved(digest(text), text, job.role, None, output)

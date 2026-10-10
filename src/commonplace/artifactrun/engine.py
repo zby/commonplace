@@ -141,9 +141,7 @@ def _check_prompt_section(jobs, library: Path, layout: Layout) -> None:
 
 def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunStatus:
     """Run one invocation over the run directory and return its run status."""
-    store = RunStore(Path(run_dir))
-    if not store.metadata.exists():
-        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    store = _run_store(run_dir)
     with store.lock():
         run = Run(store)
         stops = []
@@ -165,9 +163,7 @@ def advance(run_dir: Path, *, results: tuple[AttemptResult, ...] = ()) -> RunSta
 
 def open_handouts(run_dir: Path) -> tuple[Handout, ...]:
     """The hand-outs of every open attempt, for a coordinator that lost them."""
-    store = RunStore(Path(run_dir))
-    if not store.metadata.exists():
-        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    store = _run_store(run_dir)
     with store.lock():
         run = Run(store)
         return tuple(handout_for(run, record) for record in
@@ -193,9 +189,7 @@ def judge(
     its partner among them. The record is the same as a code job's: an
     attempt by the job `operator`, completed, with the judgment inside.
     """
-    store = RunStore(Path(run_dir))
-    if not store.metadata.exists():
-        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    store = _run_store(run_dir)
     with store.lock():
         run = Run(store)
         if role not in run.layout.roles:
@@ -245,9 +239,7 @@ def inspect(run_dir: Path) -> dict:
     recognizers. Bounds and scheduling stops are invocation results, not failed
     attempts, and are not reconstructed here.
     """
-    store = RunStore(Path(run_dir))
-    if not store.metadata.exists():
-        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    store = _run_store(run_dir)
     with store.lock():
         return _inspect(Run(store))
 
@@ -257,22 +249,18 @@ def _inspect(run: Run) -> dict:
     for job in run.jobs.jobs:
         if not isinstance(job, ModelJob):
             continue
-        resolved = run.resolve("refusal", {"refusal": Input("refusal", job.name, required=False)})
-        if resolved.version is None:
+        latest = run.refusal_in_force(job)
+        if latest is None:
             continue
-        output = run.latest_output(job)
-        latest = [j for j in run.judgments if j["outcome"] == "refused"
-                  and j["subject"]["producer"] == job.name and j["subject"]["version"] == output][-1]
-        refusals.append(RefusalInForce(latest["id"], job.name, job.role, output or "", latest["findings"]))
+        refusals.append(RefusalInForce(latest["id"], job.name, job.role, latest["subject"]["version"],
+                                       latest["findings"]))
     latest = {}
     for record in sorted(run.attempts.values(), key=lambda r: r["seq"]):
         latest[record["job"]] = record
     failures = [Stop(r["reason"], r["job"], r["id"], r.get("uncertain", False))
                 for r in latest.values() if r["state"] == "failed"]
     permitted = run.permitted()
-    exhausted = [job.name for job in run.jobs.jobs
-                 if isinstance(job, ModelJob) and job.max_attempts is not None
-                 and run.attempt_count(job.name) >= job.max_attempts and run.ready(job, permitted)]
+    exhausted = [job.name for job in run.jobs.jobs if run.exhausted(job) and run.ready(job, permitted)]
     opened = sorted(r["id"] for r in run.attempts.values() if r["state"] == "open")
     failed = {stop.job for stop in failures}
     publishable = run.publishable()
@@ -341,10 +329,16 @@ def _historical_bases(run: Run) -> list[dict]:
 
 def run_values(run_dir: Path) -> dict[str, str]:
     """The run parameters and run-id, which run-bound identity fields must equal."""
+    store = _run_store(run_dir)
+    return _values(store.read_metadata().get("parameters", {}), store.run_dir)
+
+
+def _run_store(run_dir: Path) -> RunStore:
+    """The store of a started run; FileNotFoundError when the directory holds none."""
     store = RunStore(Path(run_dir))
     if not store.metadata.exists():
         raise FileNotFoundError(f"{run_dir} holds no run; start it first")
-    return _values(store.read_metadata().get("parameters", {}), store.run_dir)
+    return store
 
 
 def current_outputs(run_dir: Path, job: str) -> dict[str, bytes] | None:
@@ -353,7 +347,7 @@ def current_outputs(run_dir: Path, job: str) -> dict[str, bytes] | None:
     A completion is current while its pins still resolve to the same
     versions, no attempt of the job is open and the job is not ready.
     """
-    store = RunStore(Path(run_dir))
+    store = _run_store(run_dir)
     with store.lock():
         run = Run(store)
         declared = run.jobs.job(job)
@@ -563,7 +557,7 @@ def _open_model_attempts(run: Run) -> tuple[list[Handout], list[Stop]]:
         if waiting:
             withheld[job.name] = waiting
             continue
-        if job.max_attempts is not None and run.attempt_count(job.name) >= job.max_attempts:
+        if run.exhausted(job):
             stops.append(Stop(f"max attempts ({job.max_attempts}) exhausted", job.name))
             continue
         handouts.append(_open(run, job))
