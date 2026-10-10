@@ -25,10 +25,10 @@ ROOT = Path(__file__).resolve().parents[3]
 LIBRARY = ROOT / "kb"
 DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
-    "boundary": "fix-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
+    "boundary": "declare-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
     "epistemic": "trace-epistemic", "reconciliation": "reconcile-records",
     "report-verification": "verify-reports", "memory-profile": "map-memory-profile",
-    "profile-verification": "verify-memory-profile", "synthesis": "synthesize-findings",
+    "profile-verification": "verify-memory-profile", "synthesis": "synthesize-analysis",
     "synthesis-verification": "verify-synthesis",
 }
 
@@ -56,7 +56,7 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     for name in MODEL_ROLES:
         assert jobs.job(name).inputs["opening"].source == "open:metadata"
     boundary = jobs.job("boundary")
-    assert boundary.inputs["instruction"].source.endswith("jobs-engine/fix-boundary.md")
+    assert boundary.inputs["instruction"].source.endswith("jobs-engine/declare-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
     incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
     assert (incumbent.address, incumbent.source, incumbent.required) == ("role", "boundary", False)

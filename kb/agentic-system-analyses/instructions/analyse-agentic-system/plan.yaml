@@ -77,7 +77,7 @@ jobs:
     metadata: {address: output, source: 'open:metadata'}
   outputs: [source]
 - role: boundary
-  instruction: jobs-engine/fix-boundary.md
+  instruction: jobs-engine/declare-boundary.md
   max-attempts: 2
   criteria: [worker]
   reads: {'acquire:source': required}
@@ -156,7 +156,7 @@ jobs:
           reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
           'refusal:memory-profile': optional}
 - role: synthesis
-  instruction: jobs-engine/synthesize-findings.md
+  instruction: jobs-engine/synthesize-analysis.md
   max-attempts: 2
   outputs: [synthesis, answers]
   criteria: [worker]

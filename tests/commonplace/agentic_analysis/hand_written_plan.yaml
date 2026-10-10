@@ -70,7 +70,7 @@ jobs:
   outputs: [boundary]
   criteria: [worker]
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/fix-boundary.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/declare-boundary.md}
     boundary-result-contract: {address: file, source: agentic-system-analyses/types/agentic-system-boundary.md}
     boundary-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-boundary.md}
     opening: {address: output, source: 'open:metadata', required: true}
@@ -356,7 +356,7 @@ jobs:
   outputs: [synthesis, answers]
   criteria: [worker]
   inputs:
-    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-findings.md}
+    instruction: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/synthesize-analysis.md}
     opening: {address: output, source: 'open:metadata', required: true}
     records-contract: {address: file, source: agentic-system-analyses/instructions/agentic-analysis-records.md}
     synthesis-contract: {address: file, source: agentic-system-analyses/types/agentic-system-synthesis.md}
