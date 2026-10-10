@@ -51,6 +51,10 @@ class Requirement:
     values: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
 
 
+GENERIC_REPAIR = "correct the named field, section or citation to satisfy the stated rule and supplied type contract"
+"""The repair a finding carries when the code that made it supplies none."""
+
+
 @dataclass(frozen=True)
 class Finding:
     """One layout or relation finding; ``role`` is None for files no role matches
@@ -63,27 +67,8 @@ class Finding:
     message: str
     absent: bool = False
     info: bool = False
-    repair: str = ""
+    repair: str = field(default=GENERIC_REPAIR, compare=False)
     warn: bool = False
-
-    def __post_init__(self) -> None:
-        if not self.repair:
-            repairs = {
-                "unresolved record": "link to the member that declares the record, within this role's citation scope; remove unsupported references",
-                "duplicate": "keep one declaration per ID and give distinct records distinct names",
-                "required member is absent": "supply the member at its declared path",
-                "does not match the run": "use the run's value shown, which the run prints as the line of that name",
-                "identity field": "use the expected identity value from the named source member",
-                "source member": "supply the named source member before checking this dependent identity",
-                "does not match": "use the expected value shown for this role",
-                "unverified": "make the boundary's pinned source bytes available and check again",
-                "limit not carried": "carry the named limit, citing its affected records, into synthesis Limitations",
-                "missing field": "supply the named field with an answer or an explicit evidence limit",
-            }
-            object.__setattr__(self, "repair", next(
-                (text for phrase, text in repairs.items() if phrase in self.message),
-                "correct the named field, section or citation to satisfy the stated rule and supplied type contract",
-            ))
 
     def render(self) -> str:
         """Identical diagnostic text for self-check and workflow acceptance."""
@@ -215,7 +200,8 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
     findings: list[Finding] = []
     for name in sorted(members):
         if layout.role_at(name) is None and layout.membership == "closed":
-            findings.append(Finding(None, f"{name}: no layout role; this type has closed membership"))
+            findings.append(Finding(None, f"{name}: no layout role; this type has closed membership",
+                                    repair="remove the file, or write it at the path of the role it fills"))
     required, permitted = layout.requirement(members)
     discriminator = (
         f"{layout.path(layout.required.when_role)} {layout.required.when_field}"
@@ -225,14 +211,17 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
         document = members.get(role.path)
         if document is None:
             if role.name in required:
-                findings.append(Finding(role.name, f"{role.path}: required member is absent", absent=True))
+                findings.append(Finding(role.name, f"{role.path}: required member is absent", absent=True,
+                                        repair="supply the member at its declared path"))
             continue
         if permitted is not None and role.name not in permitted:
             value = (members[layout.path(layout.required.when_role)].frontmatter or {}).get(layout.required.when_field)
-            findings.append(Finding(role.name, f"{role.path}: not a member when {discriminator} is {value!r}"))
+            findings.append(Finding(role.name, f"{role.path}: not a member when {discriminator} is {value!r}",
+                                    repair="remove this member, which that value does not admit"))
         actual = (document.frontmatter or {}).get("type")
         if actual != role.type:
-            findings.append(Finding(role.name, f"{role.path}: type {actual!r} does not match the layout's {role.type}"))
+            findings.append(Finding(role.name, f"{role.path}: type {actual!r} does not match the layout's {role.type}",
+                                    repair=f"set the member's type to {role.type}"))
         values = document.frontmatter or {}
         for name in role.run_binding if run_values is not None else ():
             if values.get(name) != run_values.get(name):
@@ -240,6 +229,7 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
                     role.name,
                     f"{role.path}: identity field {name} {values.get(name)!r} does not match "
                     f"the run; expected {run_values.get(name)!r}",
+                    repair="use the run's value shown, which the prompt prints as the line of that name",
                 ))
         for source in role.identity:
             source_role = layout.roles[source.role]
@@ -249,6 +239,7 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
                     role.name,
                     f"{role.path}: cannot check identity fields {', '.join(source.fields)}; "
                     f"source member {source_role.path} is absent",
+                    repair="supply the named source member before checking this dependent identity",
                 ))
                 continue
             expected_values = origin.frontmatter or {}
@@ -258,5 +249,6 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
                         role.name,
                         f"{role.path}: identity field {name} {values.get(name)!r} does not match "
                         f"{source_role.path}; expected {expected_values.get(name)!r}",
+                        repair="use the expected identity value from the named source member",
                     ))
     return findings

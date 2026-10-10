@@ -127,13 +127,6 @@ def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
 
-    # A member validated alone cannot resolve references the artifact declares
-    # elsewhere; the analysis artifact's directory rule resolves them across the
-    # members.
-    errors = record_reference_errors(parsed.document.body)
-    results.fails.extend(errors)
-    if not errors:
-        results.passes.append("record references: declarations, labels and citation syntax checked")
     field_errors = route_field_errors(parsed.document.body)
     results.fails.extend(field_errors)
     if not field_errors:
@@ -143,6 +136,31 @@ def _agentic_evidence_and_references_rule(
     if not status_errors:
         results.passes.append("conclusion status: labelled route fields and controlled values checked")
     validate_quote_citations(results, parsed.content)
+
+
+@type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
+@type_rule("agentic-system-analyses/types/agentic-system-analysis-overview.md")
+@type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-verification.md")
+@type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
+@type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
+def _record_reference_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Record syntax and declarations one member shows alone.
+
+    A member validated alone cannot resolve references the artifact declares
+    elsewhere; the analysis artifact's directory rule resolves them across the
+    members.
+    """
+    del run
+    errors = record_reference_errors(parsed.document.body)
+    results.fails.extend(errors)
+    if not errors:
+        results.passes.append("record references: declarations, labels and citation syntax checked")
 
 
 def artifact_member_link_failures(path: Path, links: tuple[str, ...]) -> list[str]:
@@ -275,9 +293,9 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
     cites = {role.path: [layout.path(cited) for cited in role.cites] for role in layout.roles.values()}
     sources = layout.path("boundary")
     _, record_findings = artifact_record_findings(sources, bodies, cites=cites)
-    for name, message in record_findings:
+    for name, message, repair in record_findings:
         role = layout.role_at(name) if name else None
-        findings.append(Finding(role.name if role else None, message))
+        findings.append(Finding(role.name if role else None, message, repair=repair))
 
     overview = documents.get("overview")
     reconciliation = documents.get("reconciliation")
@@ -350,7 +368,8 @@ def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument])
                     if cited and not cited & limitations:
                         findings.append(Finding("synthesis", f"{layout.path('synthesis')}: limit not carried: "
                                                 f"Limitations names none of {', '.join(sorted(cited))} "
-                                                f"for the limit {path} declares: {entry.splitlines()[0][:100]}"))
+                                                f"for the limit {path} declares: {entry.splitlines()[0][:100]}",
+                                                repair="carry the named limit, citing its affected records, into synthesis Limitations"))
     return findings
 
 
@@ -430,5 +449,6 @@ def _artifact_quotation_findings(
                 unverified.append(resolution)
         if unverified:
             findings.append(Finding(role.name, f"{role.path}: {len(unverified)} quotations unverified, "
-                                               f"{unverified[0].detail}", info=not bounded))
+                                               f"{unverified[0].detail}", info=not bounded,
+                                    repair="make the boundary's pinned source bytes available and check again"))
     return findings

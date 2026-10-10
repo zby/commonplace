@@ -198,11 +198,12 @@ def test_a_missing_record_fails_even_when_the_member_exists() -> None:
         "memory.md: unresolved record citation [RT-OBJ-cache](runtime.md#rt-obj-cache): runtime.md declares no RT-OBJ-cache"]
 
 
-def test_a_non_record_fragment_fails() -> None:
+def test_a_non_record_fragment_fails_in_its_member() -> None:
     memory = MEMORY.replace("[RT-OBJ-store](runtime.md#rt-obj-store)", "[RT-OBJ-store](runtime.md#routes)")
-    assert errors(**{"memory.md": memory}) == [
-        ("memory.md: record citations: [RT-OBJ-store] links to #routes, which is not a record anchor; "
+    assert record_reference_errors(memory) == [
+        ("record citations: [RT-OBJ-store] links to #routes, which is not a record anchor; "
         "link to #rt-obj-store")]
+    assert errors(**{"memory.md": memory}) == []  # Syntax is the member's finding, reported once.
 
 
 def test_a_record_declared_in_another_member_than_the_link_names_fails_with_a_hint() -> None:
@@ -227,17 +228,17 @@ def test_a_within_member_citation_needs_the_member_in_its_own_cites() -> None:
         "this one may cite: boundary.md, memory.md")]
 
 
-def test_a_label_naming_another_record_fails() -> None:
+def test_a_label_naming_another_record_fails_in_its_member() -> None:
     memory = MEMORY.replace("[RT-OBJ-store](runtime.md#rt-obj-store)", "[RT-OBJ-cache](runtime.md#rt-obj-store)")
-    assert errors(**{"memory.md": memory}) == [
-        "memory.md: record citations: [RT-OBJ-cache] links to the record RT-OBJ-store; use that record's ID as the label"]
+    assert record_reference_errors(memory) == [
+        "record citations: [RT-OBJ-cache] links to the record RT-OBJ-store; use that record's ID as the label"]
+    assert errors(**{"memory.md": memory}) == []
 
 
-def test_a_cited_record_declared_twice_is_ambiguous_for_the_citer() -> None:
+def test_a_record_declared_twice_is_the_declaring_member_s_finding() -> None:
     runtime = RUNTIME + declaration("RT-OBJ-store")
-    found = errors(**{"runtime.md": runtime})
-    assert "memory.md: ambiguous record citation [RT-OBJ-store](runtime.md#rt-obj-store): runtime.md declares " \
-           "RT-OBJ-store more than once" in found
+    assert record_reference_errors(runtime) == ["record references: duplicate declarations: RT-OBJ-store"]
+    assert errors(**{"runtime.md": runtime}) == []  # Not repeated for the declarer or its citers.
 
 
 def test_changing_a_declarations_label_leaves_citations_valid() -> None:
@@ -268,9 +269,9 @@ def test_ordinary_links_stay_ordinary() -> None:
     assert record_links(memory)[-1].identifier == "RT-RTE-model-call", "only the record citations are collected"
 
 
-def test_a_citation_cannot_leave_the_artifact_directory() -> None:
+def test_a_citation_leaving_the_artifact_directory_is_left_to_the_member_link_rule() -> None:
     memory = MEMORY.replace("(runtime.md#rt-obj-store)", "(../other/runtime.md#rt-obj-store)")
-    assert any("leaves the artifact directory" in error for error in errors(**{"memory.md": memory}))
+    assert errors(**{"memory.md": memory}) == []
 
 
 # Annotations, parts and supersessions
@@ -331,10 +332,9 @@ def test_bare_source_ids_resolve_against_the_register_in_scope() -> None:
         "memory.md: unresolved source SRC-9; the Source register does not declare it"]
 
 
-def test_duplicate_source_rows_are_refused_and_ambiguous_for_their_users() -> None:
-    found = errors(**{"boundary.md": BOUNDARY + "| SRC-1 | Again |\n"})
-    assert "boundary.md: duplicate artifact declaration: SRC-1" in found
-    assert "runtime.md: ambiguous source SRC-1; the Source register declares it twice" in found
+def test_duplicate_source_rows_are_the_boundary_rule_s_finding() -> None:
+    # The boundary's register rule refuses the second row; resolution does not repeat it.
+    assert errors(**{"boundary.md": BOUNDARY + "| SRC-1 | Again |\n"}) == []
 
 
 @pytest.mark.parametrize("reference", [
@@ -358,4 +358,4 @@ def test_source_register_rows_preserve_escaped_pipes_and_ignore_examples() -> No
 def test_findings_name_the_member_they_belong_to() -> None:
     profile = "Uses [RT-OBJ-store](runtime.md#rt-obj-store).\n"
     _, findings = artifact_record_findings("boundary.md", bodies(**{"profile.md": profile}), cites=CITES)
-    assert [name for name, _ in findings] == ["profile.md"]
+    assert [name for name, _, _ in findings] == ["profile.md"]

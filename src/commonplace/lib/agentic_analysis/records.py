@@ -320,9 +320,9 @@ def route_field_errors(body: str) -> list[str]:
             )
             prefix = f"route fields: {declaration[1]}: {label}"
             if not values:
-                errors.append(f"{prefix}: missing field")
+                errors.append(f"{prefix}: missing field; supply it with an answer or an explicit evidence limit")
             elif len(values) != 1:
-                errors.append(f"{prefix}: duplicate field")
+                errors.append(f"{prefix}: duplicate field; keep one line with this label")
             elif not values[0].strip():
                 errors.append(f"{prefix}: empty field")
             elif re.match(r"(?i)^(inapplicable|uninspected)\b", values[0]) and not re.fullmatch(
@@ -392,28 +392,35 @@ def _destination(name: str, link: RecordLink) -> str:
     return name if not link.member else link.member.removeprefix("./")
 
 
+DUPLICATE_REPAIR = "keep one declaration per ID and give distinct records distinct names"
+CITATION_REPAIR = ("link to the member that declares the record, within this role's citation scope; "
+                   "remove unsupported references")
+SOURCE_REPAIR = "cite a source ID the boundary's Source register declares, or register the source there"
+
+
 def artifact_record_findings(
     sources: str, bodies: Mapping[str, str], *, cites: Mapping[str, Sequence[str]] | None = None,
-) -> tuple[set[str], list[tuple[str | None, str]]]:
+) -> tuple[set[str], list[tuple[str | None, str, str]]]:
     """Resolve every record citation to its declaration, and source IDs to the register.
 
     ``bodies`` maps artifact member names to bodies. A citation resolves when
     the member it names is present and among those its member may cite (with
-    ``cites``; every member otherwise), declares the addressed record exactly
-    once, and the label is that record's ID. Each finding names the body it
-    belongs to.
+    ``cites``; every member otherwise), declares the addressed record, and the
+    label is that record's ID. Each finding is the body it belongs to, its
+    message and its repair. Member rules report what one member shows alone:
+    syntax, a record declared twice in one member, and links leaving the
+    artifact directory.
     """
     declared = artifact_declarations(sources, bodies)
     known = {identifier for identifiers in declared.values() for identifier in identifiers}
-    findings: list[tuple[str | None, str]] = []
-    counts = Counter(identifier for identifiers in declared.values() for identifier in identifiers)
+    findings: list[tuple[str | None, str, str]] = []
+    holders = Counter(identifier for identifiers in declared.values() for identifier in set(identifiers))
     for name, identifiers in declared.items():
         findings.extend(
-            (name, f"{name}: duplicate artifact declaration: {identifier}")
-            for identifier in dict.fromkeys(identifiers) if counts[identifier] > 1
+            (name, f"{name}: duplicate artifact declaration: {identifier}", DUPLICATE_REPAIR)
+            for identifier in dict.fromkeys(identifiers) if holders[identifier] > 1
         )
     for name, body in bodies.items():
-        findings.extend((name, f"{name}: {error}") for error in _record_syntax_errors(body))
         scope = set(bodies) if cites is None or name not in cites else set(cites[name])
         prose = _analysis_prose(body)
         for link in record_links(prose):
@@ -423,27 +430,25 @@ def artifact_record_findings(
             member = _destination(name, link)
             where = f"[{identifier}]({link.member}#{link.fragment})"
             if "/" in member:
-                findings.append((name, f"{name}: record citation {where} leaves the artifact directory"))
-            elif member not in scope:
+                continue  # The member link rule reports a link leaving the directory.
+            if member not in scope:
                 findings.append((name, (f"{name}: record citation {where}: {member} is not among the "
-                                        f"documents this one may cite: {', '.join(sorted(scope)) or 'none'}")))
+                                        f"documents this one may cite: {', '.join(sorted(scope)) or 'none'}"),
+                                 CITATION_REPAIR))
             elif member not in bodies:
-                findings.append((name, f"{name}: record citation {where}: member {member} is not present"))
+                findings.append((name, f"{name}: record citation {where}: member {member} is not present",
+                                 CITATION_REPAIR))
             elif identifier not in declared.get(member, ()):
                 elsewhere = sorted(other for other, ids in declared.items() if identifier in ids)
                 hint = f"; it is declared in {', '.join(elsewhere)}" if elsewhere else ""
                 findings.append((name, (f"{name}: unresolved record citation {where}: {member} declares "
-                                        f"no {identifier}{hint}")))
-            elif declared[member].count(identifier) > 1:
-                findings.append((name, (f"{name}: ambiguous record citation {where}: {member} declares "
-                                        f"{identifier} more than once")))
+                                        f"no {identifier}{hint}"), CITATION_REPAIR))
         for identifier in sorted(_sources(prose)):
             if sources not in scope:
                 findings.append((name, (f"{name}: unresolved source {identifier}; the Source register is "
-                                        f"outside the documents this one may cite: {', '.join(sorted(scope)) or 'none'}")))
+                                        f"outside the documents this one may cite: {', '.join(sorted(scope)) or 'none'}"),
+                                 SOURCE_REPAIR))
             elif sources in bodies and identifier not in declared.get(sources, ()):
                 findings.append((name, (f"{name}: unresolved source {identifier}; the Source register "
-                                        "does not declare it")))
-            elif sources in bodies and declared[sources].count(identifier) > 1 and name != sources:
-                findings.append((name, f"{name}: ambiguous source {identifier}; the Source register declares it twice"))
+                                        "does not declare it"), SOURCE_REPAIR))
     return known, findings

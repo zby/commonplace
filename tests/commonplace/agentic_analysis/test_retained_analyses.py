@@ -250,23 +250,23 @@ def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Pat
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 
-def test_candidate_and_verification_reject_ambiguous_context_references(tmp_path: Path) -> None:
+def test_a_record_declared_twice_refuses_its_declarer_not_its_citers(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     output = run_dir / "artifact"
     runtime = output / "runtime.md"
-    runtime.write_text(runtime.read_text().replace(
+    duplicated = runtime.read_text().replace(
         "## Annotations", "#### RT-OBJ-store\n\nLabel: Duplicate object\n\n## Annotations",
-    ))
+    )
+    runtime.write_text(duplicated)
     candidate = write(run_dir / "memory-candidate.md",
                       (output / "memory.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
-    verification = write(run_dir / "verification.md",
-                         (output / "report-verification.md").read_text() + "\nSee [RT-OBJ-store](runtime.md#rt-obj-store).\n")
     before = {path.name: path.read_bytes() for path in output.iterdir()}
 
     findings = validation.validate_draft_in_role(output, "memory", candidate, repo_root=tmp_path)
-    assert any("memory.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
-    findings = validation.validate_draft_in_role(output, "report-verification", verification, repo_root=tmp_path)
-    assert any("report-verification.md: ambiguous record citation [RT-OBJ-store]" in finding.message for finding in findings)
+    assert not any("RT-OBJ-store" in finding.message for finding in findings)
+    draft = write(run_dir / "runtime-candidate.md", duplicated)
+    findings = validation.validate_draft_in_role(output, "runtime", draft, repo_root=tmp_path)
+    assert any("duplicate declarations: RT-OBJ-store" in finding.message for finding in findings)
     assert {path.name: path.read_bytes() for path in output.iterdir()} == before
 
 

@@ -47,7 +47,7 @@ def expanded(library: Path) -> dict:
 def artifact_record_errors(sources, bodies, *, cites=None):
     """``artifact_record_findings`` without attribution."""
     known, findings = artifact_record_findings(sources, bodies, cites=cites)
-    return known, [message for _, message in findings]
+    return known, [message for _, message, _ in findings]
 
 
 def comparison_schema():
