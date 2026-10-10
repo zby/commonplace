@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [analysis-contract-deduplication](./analysis-contract-deduplication/README.md) — synthesis-packet audit of repeated requirements, ownership and consumer delivery; five consolidation candidates retained for disposition, no prose consolidation commissioned
 
 - [analysis-workflow-calibration](./analysis-workflow-calibration/README.md) — paired synthesis-support calibration cases and profile-pinned packets; Luna/low exploratory pilot completed, one control needs adjudication
 

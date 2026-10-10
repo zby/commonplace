@@ -54,6 +54,18 @@ reviews, archives or workshops execution inputs.
 For run evidence records and failed-run retention, follow the collection
 contract. Do not make audit files workflow execution inputs.
 
+State each rule once, in its owner ([ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md)):
+a member type owns its member's content, the
+[record contract](./agentic-analysis-records.md) the shared record grammar
+and evidence rules, the worker rules execution, and a mission what its job
+establishes. Keep a second statement only when it adds an obligation, a
+specialization or a delivery path the first lacks; an interface stated from
+both sides, grammar beside its procedure, a prompt binding beside its
+definition, and a template's headings are not duplicates. Before moving a
+clause, confirm every consumer receives its new home; the instruction
+composition tests check that each worker reading a type that defers to the
+record contract receives it.
+
 Edit canonical instructions. Inspect projection, promotion and stub generation
 when names, skill metadata or promotion status change. Test the affected loading,
 authority, validation and result paths. Commit method changes before a new run;
