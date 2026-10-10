@@ -14,17 +14,16 @@ other sections forward, because only the latest refusal is in force.
 
 from __future__ import annotations
 
-import hashlib
 import re
 from dataclasses import dataclass
 from pathlib import Path
 
-import yaml
-
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.plan import relation_parts
 from commonplace.artifactrun.sources import frozen_source_refusals
-from commonplace.lib.directory_layout import blocker_entries
+from commonplace.artifactrun.store import digest
+from commonplace.lib.directory_artifact import type_manifest
+from commonplace.lib.directory_layout import blocker_entries, protocol_sections
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.lib.validation import validate_draft_in_role
 
@@ -39,7 +38,7 @@ def criterion_bytes(attempt: CodeAttempt) -> dict[str, bytes]:
 
 def manifest(attempt: CodeAttempt) -> bytes:
     """A minimal artifact manifest naming the run's type."""
-    return yaml.safe_dump({"type": attempt.type_spec}).encode()
+    return type_manifest(attempt.type_spec)
 
 
 @dataclass(frozen=True)
@@ -94,8 +93,9 @@ def correction_blockers(refusal: bytes | None, member: str) -> str:
     # The engine's published refusal format: fields as frontmatter, findings as body.
     document, _ = parse_document(refusal.decode("utf-8"))
     findings = (document.body if document is not None else "").strip()
-    if re.search(r"(?m)^## Blockers[ \t]*$", findings):
-        return section(findings, "Blockers").strip() or "none"
+    blockers = protocol_sections(findings)["Blockers"]
+    if blockers is not None:
+        return blockers or "none"
     if not findings:
         return "none"
     lines = findings.splitlines()
@@ -116,23 +116,26 @@ def correction_findings(candidate: bytes, *, member: str, refusal: bytes | None,
             f"correction answers: output-answers needs exactly {wanted} entries in blocker order, "
             "each starting `- corrected: ` or `- declined: ` with its reason"
         )]
-    if previous_version == hashlib.sha256(candidate).hexdigest() and any(line.startswith("- corrected:") for line in entries):
+    if previous_version == digest(candidate) and any(line.startswith("- corrected:") for line in entries):
         return ["correction answers: an entry says corrected but the output is identical to its predecessor"]
     return []
 
 
+def refusal_body(findings: list[str], blockers: str, sections: list[tuple[str, str]] = ()) -> str:
+    """A refusal's body: its Findings, its Blockers, then any further sections."""
+    body = "## Findings\n\n" + ("\n".join(findings) or "none") + "\n\n## Blockers\n\n" + (blockers or "none") + "\n"
+    return body + "".join(f"\n## {title}\n\n{text}\n" for title, text in sections)
+
+
 def refusal_findings(findings: list[str], *, member: str, answered: bytes | None) -> str:
     """Findings, the answered refusal's blockers, and its other sections carried forward."""
-    packet = "## Findings\n\n" + "\n".join(findings) + "\n\n## Blockers\n\n" + correction_blockers(answered, member) + "\n"
+    carried = []
     if answered is not None:
         document, _ = parse_document(answered.decode("utf-8"))
         body = document.body if document is not None else ""
-        for title in re.findall(r"(?m)^## (.+?)[ \t]*$", body):
-            if title not in ("Findings", "Blockers"):
-                text = section(body, title).strip()
-                if text:
-                    packet += f"\n## {title}\n\n{text}\n"
-    return packet
+        carried = [(title, section(body, title).strip()) for title in re.findall(r"(?m)^## (.+?)[ \t]*$", body)
+                   if title not in ("Findings", "Blockers")]
+    return refusal_body(findings, correction_blockers(answered, member), [item for item in carried if item[1]])
 
 
 def judge(check: Candidate, findings: list[str], *, answered: str | None = "answered-refusal") -> None:

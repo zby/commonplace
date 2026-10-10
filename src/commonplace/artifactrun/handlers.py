@@ -52,6 +52,7 @@ from commonplace.artifactrun.checks import (
     criterion_bytes,
     judge,
     manifest,
+    refusal_body,
     review,
 )
 from commonplace.artifactrun.plan import relation, resolve_dotted
@@ -235,9 +236,7 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
         own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
         relation_scope = (relation(verdict.role, "verifies", role),)
         if invalid or own:
-            packet = ("## Findings\n\n" + ("\n".join(invalid) or "none")
-                      + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
-                      + "\n\n## Limits\n\n" + limits + "\n")
+            packet = refusal_body(invalid, "\n".join(own), [("Limits", limits)])
             if feedback is not None:
                 packet += feedback(role, own, verdict)
             attempt.judge(handed[role], outcome="refused", scope=relation_scope, findings=packet)

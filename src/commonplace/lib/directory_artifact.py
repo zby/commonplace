@@ -14,6 +14,11 @@ import yaml
 from commonplace.lib.note_parser import ParsedDocument
 
 MANIFEST_NAME = "ARTIFACT.yaml"
+
+
+def type_manifest(type_spec: str) -> bytes:
+    """A working artifact's manifest: its type alone, before any member is pinned."""
+    return yaml.safe_dump({"type": type_spec}).encode()
 SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 
 

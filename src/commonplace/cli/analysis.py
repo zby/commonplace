@@ -47,8 +47,7 @@ def main(argv: list[str] | None = None) -> int:
 
             rendered = json.loads(render_run_inspection(arguments.run, final_job="publish"))
             if rendered["state"] == "completed":
-                from hashlib import sha256
-
+                from commonplace.artifactrun.store import digest
                 from commonplace.lib.note_parser import parse_document
 
                 version = rendered["members"].get("boundary")
@@ -56,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
                     raise ValueError("completed analysis has no boundary member")
                 # The artifact directory holds the members materialized; content identity ties it to the inspection.
                 data = (Path(rendered["artifact"]) / "boundary.md").read_bytes()
-                if sha256(data).hexdigest() != version:
+                if digest(data) != version:
                     raise ValueError("the materialized boundary differs from the inspected member")
                 document, error = parse_document(data.decode("utf-8"))
                 if error or document is None or not document.frontmatter:
