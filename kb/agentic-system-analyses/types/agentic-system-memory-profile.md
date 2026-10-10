@@ -28,12 +28,7 @@ governs the records it cites.
 
 ## Memory comparison fields
 
-New profiles use revision 2: the mapping has `version: 2`, `scope` and
-`axes`. Unversioned revision-1 profiles remain interpretable only as frozen
-historical outputs under their producing method; do not rewrite them or infer
-human admission control from their caller-based write classifications. Revision
-identity must accompany derived comparisons; do not silently pool changed
-write-agency semantics across revisions. `scope` names the memory
+The mapping has `version: 2`, `scope` and `axes`. `scope` names the memory
 boundary: retained objects accumulated or changed through use, their
 access structures, and their write, maintenance, and later-consumer
 routes. Do not substitute the whole runtime's storage, permissions, or
@@ -94,23 +89,13 @@ statistics need complete coverage and strong evidence for every positive unit
 finding, not merely a strong witness per value. A local trace-learning `"no"`
 is bounded absence in that unit, not a system-wide negative in a partial axis.
 A positive `"yes"` suppresses `"no"` only in the derived system union, never
-in local evidence. Quote both in YAML. Deterministic checks establish shape,
-references and compatible combinations; semantic verification judges support
-and inventory completeness.
+in local evidence. Quote both in YAML.
 
 The scope agrees across the profile, the declared and annotated records
 and the members' prose. Every value the prose supports appears in the
 profile; a value the profile asserts is supported by the records it
 cites. Identify included and excluded alternatives on each branch. An
 inspected display summary does not classify an opaque consumed payload.
-
-These are authoring requirements. Publication review uses the supplied
-[verification type](./agentic-system-verification.md)'s materiality threshold,
-not exhaustive conformity as a stop condition. A partial inventory can retain
-a declared local omission when its emitted findings remain valid and the
-omission does not change a central conclusion or system-level comparison
-value. Unsupported emitted findings and unjustified absence or complete
-coverage remain blockers.
 
 ### Classification units
 
@@ -237,8 +222,7 @@ imported lineage, not a trace source.
 
 Explain non-obvious mappings and unions without repeating the records. State
 which supersessions affect a value, and which missing recorded facts prevent a
-stronger assessment. Source inspection may disambiguate a cited record but
-cannot supply replacement evidence. Each classification keeps its warrant
+stronger assessment, and log each source read the worker rules allow. Each classification keeps its warrant
 in the cited records.
 
 ## Template
