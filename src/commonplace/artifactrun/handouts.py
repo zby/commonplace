@@ -179,6 +179,9 @@ def _open(run: Run, job: ModelJob) -> Handout:
         lines += ["", render_prompt_section(section.data.decode("utf-8"), values)]
     readable = [str(path) for name, path in paths.items() if path is not None and name not in framed]
     readable += [value for key, value in values.items() if key.startswith("previous-")]
+    # Several role aliases can name one contract. Keep their pins and prompt
+    # lines, but ask the worker to read that path only once, in first-use order.
+    readable = list(dict.fromkeys(readable))
     if readable:
         lines += ["", "## Input reading batches", "",
                   f"Read the named job instruction {instruction} before these reading batches.", "",
@@ -206,7 +209,52 @@ def _open(run: Run, job: ModelJob) -> Handout:
         "pins": {name: pinned.pin() for name, pinned in pins.items()},
         "previous_outputs": {} if previous is None else dict(previous["outputs"]),
     })
+    validate_handout(handout)
     return handout
+
+
+def validate_handout(handout: Handout) -> None:
+    """Reject duplicate reads in the rendered prompt without repairing evidence.
+
+    Named input aliases are not reading entries. An oversized-file batch entry
+    introduces its range hints; the hints are checked separately so distinct
+    ranges do not count as repeated full-file reads.
+    """
+    text = handout.prompt.read_text(encoding="utf-8")
+    head, separator, reading = text.partition("## Input reading batches\n")
+    if not separator:
+        return
+    reading = reading.split("\nIf you cannot produce the output,", 1)[0]
+    batches, _, ranges = reading.partition("Oversized-file ranges:")
+    aliases: dict[str, list[str]] = {}
+    for line in head.splitlines():
+        name, sep, path = line.partition(" = ")
+        if sep:
+            aliases.setdefault(path, []).append(name)
+    occurrences: dict[tuple[str, str], list[str]] = {}
+    for line in batches.splitlines():
+        match = re.fullmatch(r"(\d+)\. (.+)", line)
+        if match:
+            for item, entry in enumerate(match[2].split(", "), 1):
+                path = entry.removesuffix(" — read in bounded ranges")
+                occurrences.setdefault((path, ""), []).append(f"batch {match[1]}, item {item}")
+    for line_number, line in enumerate(ranges.splitlines(), 1):
+        match = re.fullmatch(r"- (.+): lines (.+)", line)
+        if match:
+            for item, span in enumerate(match[2].split("; "), 1):
+                occurrences.setdefault((match[1], span), []).append(
+                    f"range line {line_number}, item {item}")
+    duplicates = []
+    for (path, span), locations in occurrences.items():
+        if len(locations) > 1:
+            duplicates.append(f"path: {path}" + (f" (lines {span})" if span else "")
+                              + f"\noccurrences: {'; '.join(locations)}"
+                              + f"\ninput names: {', '.join(aliases.get(path, [])) or 'none'}")
+    if duplicates:
+        raise ValueError("Handout validation failed: duplicate reading entry\n"
+                         f"attempt: {handout.attempt}\nprompt: {handout.prompt}\n"
+                         + "\n".join(duplicates)
+                         + "\nDispatch blocked; handout preserved unchanged.")
 
 
 def handout_for(run: Run, record: dict) -> Handout:

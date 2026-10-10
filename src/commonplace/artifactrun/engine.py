@@ -32,6 +32,7 @@ from .handouts import (
     layout_bindings,
     prompt_variable_names,
     render_prompt_section,
+    validate_handout,
 )
 from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
@@ -166,8 +167,11 @@ def open_handouts(run_dir: Path) -> tuple[Handout, ...]:
     store = _run_store(run_dir)
     with store.lock():
         run = Run(store)
-        return tuple(handout_for(run, record) for record in
-                     sorted(run.attempts.values(), key=lambda r: r["seq"]) if record["state"] == "open")
+        handouts = tuple(handout_for(run, record) for record in
+                         sorted(run.attempts.values(), key=lambda r: r["seq"]) if record["state"] == "open")
+        for handout in handouts:
+            validate_handout(handout)
+        return handouts
 
 
 def judge(
