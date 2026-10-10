@@ -59,11 +59,12 @@ coverage. A repairable defect is not automatically a blocker. Explain what
 readers or comparison consumers would infer incorrectly and why a stated limit
 cannot preserve the bounded account. It cites the records
 it concerns, the passage holding the defective text, what is wrong and the
-evidence. In a report verification each blocker starts with the one report
-whose text must change, `runtime:`, `memory:`, `epistemic:` or
-`reconciliation:`; code routes the correction by that word and refuses a
-blocker without it. A defect that needs changes in two reports is two blockers.
-Profile and synthesis blockers go to the one author of that stage and need no
+evidence. When the verifying role verifies more than one member (the
+layout's `verifies`, printed as the `verifies` line), each blocker starts
+with the one member whose text must change, `- <member>: `; code routes the
+correction by that name and refuses a blocker without it. A defect that needs
+changes in two members is two blockers, and a passage relying on a defective
+value is addressed to its own author. A verifier of one member writes no
 addressee.
 
 A **limit** is a local unresolved issue the analysis can be published with:
