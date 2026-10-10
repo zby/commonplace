@@ -30,7 +30,7 @@ Two things followed. The invariant that a verdict's content acceptance must
 not cover its subjects' gates was kept by convention: every apply handler
 named its subjects by hand so the shared check could exclude them from its
 scope. And the compact plan proposed in
-[plans without structural wrapper code](../proposals/plans-without-structural-wrapper-code.md)
+[plans without structural wrapper code](../proposals/archive/plans-without-structural-wrapper-code.md)
 could not derive a verifier's apply job, because the subjects lived in
 handler constants, not in the declaration. A plan that omitted verification
 would have published an artifact the type declared complete.

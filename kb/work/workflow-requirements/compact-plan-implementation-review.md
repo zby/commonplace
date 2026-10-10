@@ -201,5 +201,5 @@ supported beyond the shipped analysis.
 
 ## Related design
 
-- [Plans without structural wrapper code](../../reference/proposals/plans-without-structural-wrapper-code.md).
+- [Plans without structural wrapper code](../../reference/proposals/archive/plans-without-structural-wrapper-code.md).
 - [The correction and verification protocol as implemented](./verification-protocol.md).

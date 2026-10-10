@@ -7,7 +7,7 @@ type: reference/types/design-proposal.md
 
 The engine runs a typed directory artifact through a plan: model jobs
 write candidates, code jobs check and judge them, and a coverage gate
-releases publication ([ADR 113](../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md)).
+releases publication ([ADR 113](../../adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md)).
 A consumer supplies a plan, a type and any handlers. The first consumer,
 the agentic-system analysis, needed a package of handlers beside a plan of
 498 lines. This proposal removes the wrapper code that restates the
@@ -22,8 +22,8 @@ what remains is the sequence and the adoption criteria.
 
 The engine (`src/commonplace/artifactrun/`) is driven by two declarations:
 the plan, loaded as `Plan`, and the type's `layout` frontmatter
-([ADR 111](../adr/111-directory-types-declare-their-layout.md),
-[ADR 114](../adr/114-directory-types-declare-what-a-role-verifies.md)).
+([ADR 111](../../adr/111-directory-types-declare-their-layout.md),
+[ADR 114](../../adr/114-directory-types-declare-what-a-role-verifies.md)).
 The layout gives each role its path, its document type, the identity
 fields it copies from other roles, the roles it cites, the roles it
 verifies and whether a disposition requires it. The engine derives
@@ -64,11 +64,11 @@ Pinned-artifact validation refuses a member type with no Python type rule,
 registered through one hard import at the end of
 `src/commonplace/lib/validation.py`.
 
-The workshop's [consumer surface](../../work/workflow-requirements/consumer-surface.md)
+The workshop's [consumer surface](../../../work/workflow-requirements/consumer-surface.md)
 review rejected engine-generated check pairs because the engine must not
 know what a content check is, and recorded a movable boundary: the
 coordinator may take over a code job's interpretation while bookkeeping
-stays in code. [The protocol as implemented](../../work/workflow-requirements/verification-protocol.md)
+stays in code. [The protocol as implemented](../../../work/workflow-requirements/verification-protocol.md)
 records what the engine, the shared check module and the analysis each
 fix today. One production analysis has run through the engine.
 
@@ -129,7 +129,7 @@ not used because it lets them drift from the inputs.
 Identity fields in the layout, schema constants and type rules cover the
 analysis artifact's shape checks. How a type selects a rule without the
 hard import is the subject of
-[type-selected Python validation checks](./type-selected-python-validation-checks.md)
+[type-selected Python validation checks](../type-selected-python-validation-checks.md)
 and is not re-decided here; pinned-artifact validation treats a type with
 no rule as schema-only rather than unsupported.
 
@@ -226,7 +226,7 @@ mission:
 
 Plan keys and names use hyphens in both the compact and the full form;
 the loader refuses a key or name with an underscore, so a misspelt plan
-fails at start ([ADR 116](../adr/116-one-word-per-concept-across-prose-and-code.md)).
+fails at start ([ADR 116](../../adr/116-one-word-per-concept-across-prose-and-code.md)).
 
 The syntax, stated so that the loader does not invent it:
 
@@ -418,7 +418,7 @@ instruction holds only its mission.
 - **Mission files shrink** to a purpose sentence and what the job must
   establish and challenge. The loader does not police this.
 - **Layout facts as lines** (decided 2026-10-10, under
-  [frontloading](../../notes/frontloading-spares-execution-context.md)).
+  [frontloading](../../../notes/frontloading-spares-execution-context.md)).
   The frame prints, for a role-filling job, `identity`, the fields it
   repeats and from which roles, and `cites`, the roles it may cite, and
   for a verifying role `verifies`; the prompt section says each in one
@@ -479,7 +479,7 @@ deletes checks the opener and the analyst check carry until then.
    replacement on the same pins before the wrappers went; the profile and
    synthesis checks were not compared, since their derived jobs lack the
    reconciliation partner. The
-   [implementation review](../../work/workflow-requirements/compact-plan-implementation-review.md)
+   [implementation review](../../../work/workflow-requirements/compact-plan-implementation-review.md)
    of 2026-10-09 found one regression and four gaps, with these rulings:
    the run metadata records the compact plan's own digest at expansion and
    integration compares that with the shipped file, keeping the type
@@ -529,7 +529,7 @@ deletes checks the opener and the analyst check carry until then.
    evidence, in the records contract; the records contract is referred to
    from the seven record-citing member types; no worker receives the set
    type. One analysis to publication remains, the operator's call.
-   Alongside, [ADR 115](../adr/115-analysis-records-are-cited-by-markdown-links.md)
+   Alongside, [ADR 115](../../adr/115-analysis-records-are-cited-by-markdown-links.md)
    made record citations Markdown links resolved by the validator's link
    code within the layout's `cites` scope, so the records contract keeps
    what a record means and the custom token scanner is gone: the
