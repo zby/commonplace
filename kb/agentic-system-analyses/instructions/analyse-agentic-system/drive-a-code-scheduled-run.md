@@ -47,8 +47,13 @@ For every printed handout:
    context, interpret its feedback, or do the job yourself. Use a harness option
    that excludes parent conversation (for Codex, `fork_turns=none`). If the
    harness cannot provide fresh isolation, report the launch failure rather
-   than weakening it. Select the `launch-model` and effort of the run's worker
-   profile explicitly at every launch.
+   than weakening it. At every launch, either select the `launch-model` and
+   effort of the run's worker profile explicitly or verify matching inherited
+   settings. Inheritance qualifies only when binding runtime instructions
+   establish that workers inherit the coordinator's model and effort, and
+   exposed coordinator settings match both profile values. Stop and report a
+   launch failure if either value is unknown or mismatched; do not infer a
+   match from a successful diagnostic.
 2. Launch all handouts from this advance as one round. Wait until every worker
    has finished or failed to start before advancing again. Retain the mapping
    between each worker and its exact attempt ID.

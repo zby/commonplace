@@ -130,9 +130,12 @@ Pass `commonplace-analysis start` this session's harness with `--harness <name>`
 (`claude-code`, `codex` or `pi`), and the worker profile the operator names
 with `--worker-profile <name>`. Without one, code uses the harness's default;
 it refuses a worker profile of another harness. Opening records it and
-publication writes it to the retained manifest. If the harness cannot select
-the profile's launch model and effort for a fresh worker, stop before starting
-the run and tell the operator.
+publication writes it to the retained manifest. The harness must either select
+the profile's launch model and effort for each fresh worker or verifiably inherit
+matching settings. For inheritance, verify that binding runtime instructions
+establish worker inheritance and that exposed coordinator settings match both
+profile values. Unknown or mismatched settings do not qualify. If neither route
+is available, stop before starting the run and tell the operator.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 
