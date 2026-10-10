@@ -155,6 +155,8 @@ interface SingleResult {
 	stderr: string;
 	usage: UsageStats;
 	model?: string;
+	/** Requested CLI level; Pi may clamp it to the selected model's capabilities. */
+	thinkingLevel?: ThinkingLevel;
 	stopReason?: string;
 	errorMessage?: string;
 	step?: number;
@@ -272,6 +274,7 @@ interface DispatchDefaults {
 async function runSingleAgent(
 	defaultCwd: string,
 	dispatchDefaults: DispatchDefaults,
+	overrides: DispatchDefaults,
 	agents: AgentConfig[],
 	agentName: string,
 	task: string,
@@ -298,12 +301,12 @@ async function runSingleAgent(
 	}
 
 	const args: string[] = ["--mode", "json", "-p", "--no-session"];
-	const inheritsDispatchConfig = !agent.model;
-	const model = agent.model ?? dispatchDefaults.model;
+	const inheritsDispatchConfig = overrides.model !== undefined || !agent.model;
+	const model = overrides.model ?? agent.model ?? dispatchDefaults.model;
+	const thinkingLevel =
+		overrides.thinkingLevel ?? (inheritsDispatchConfig ? dispatchDefaults.thinkingLevel : undefined);
 	if (model) args.push("--model", model);
-	if (inheritsDispatchConfig && dispatchDefaults.thinkingLevel) {
-		args.push("--thinking", dispatchDefaults.thinkingLevel);
-	}
+	if (thinkingLevel !== undefined) args.push("--thinking", thinkingLevel);
 	if (agent.tools && agent.tools.length > 0) args.push("--tools", agent.tools.join(","));
 
 	let tmpPromptDir: string | null = null;
@@ -318,6 +321,7 @@ async function runSingleAgent(
 		stderr: "",
 		usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
 		model,
+		thinkingLevel,
 		step,
 	};
 
@@ -439,13 +443,29 @@ async function runSingleAgent(
 	}
 }
 
+const LaunchOverrides = {
+	model: Type.Optional(
+		Type.String({
+			minLength: 1,
+			description: "Model override (Pi model ID or provider/ID); overrides the agent definition",
+		}),
+	),
+	thinkingLevel: Type.Optional(
+		StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const, {
+			description: "Thinking level override; Pi clamps it to the selected model's capabilities",
+		}),
+	),
+};
+
 const TaskItem = Type.Object({
+	...LaunchOverrides,
 	agent: Type.String({ description: "Name of the agent to invoke" }),
 	task: Type.String({ description: "Task to delegate to the agent" }),
 	cwd: Type.Optional(Type.String({ description: "Working directory for the agent process" })),
 });
 
 const ChainItem = Type.Object({
+	...LaunchOverrides,
 	agent: Type.String({ description: "Name of the agent to invoke" }),
 	task: Type.String({ description: "Task with optional {previous} placeholder for prior output" }),
 	cwd: Type.Optional(Type.String({ description: "Working directory for the agent process" })),
@@ -457,6 +477,7 @@ const AgentScopeSchema = StringEnum(["user", "project", "both"] as const, {
 });
 
 const SubagentParams = Type.Object({
+	...LaunchOverrides,
 	agent: Type.Optional(Type.String({ description: "Name of the agent to invoke (for single mode)" })),
 	task: Type.Optional(Type.String({ description: "Task to delegate (for single mode)" })),
 	tasks: Type.Optional(Type.Array(TaskItem, { description: "Array of {agent, task} for parallel execution" })),
@@ -475,6 +496,7 @@ export default function (pi: ExtensionAPI) {
 		description: [
 			"Delegate tasks to specialized subagents with isolated context.",
 			"Modes: single (agent + task), parallel (tasks array), chain (sequential with {previous} placeholder).",
+			"Optional model and thinkingLevel overrides apply call-wide; per-task or per-step overrides take precedence.",
 			`Default agent scope is "user" (from ${path.join(getAgentDir(), "agents")}).`,
 			`To enable project-local agents in ${CONFIG_DIR_NAME}/agents, set agentScope: "both" (or "project").`,
 		].join(" "),
@@ -573,6 +595,7 @@ export default function (pi: ExtensionAPI) {
 					const result = await runSingleAgent(
 						ctx.cwd,
 						dispatchDefaults,
+						{ model: step.model ?? params.model, thinkingLevel: step.thinkingLevel ?? params.thinkingLevel },
 						agents,
 						step.agent,
 						taskWithContext,
@@ -646,6 +669,7 @@ export default function (pi: ExtensionAPI) {
 					const result = await runSingleAgent(
 						ctx.cwd,
 						dispatchDefaults,
+						{ model: t.model ?? params.model, thinkingLevel: t.thinkingLevel ?? params.thinkingLevel },
 						agents,
 						t.agent,
 						t.task,
@@ -689,6 +713,7 @@ export default function (pi: ExtensionAPI) {
 				const result = await runSingleAgent(
 					ctx.cwd,
 					dispatchDefaults,
+					params,
 					agents,
 					params.agent,
 					params.task,

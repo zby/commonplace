@@ -30,10 +30,12 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
 - Always set `agentScope: "project"` for this worker. The extension's default
   scope is `user`, which does not search this project's `.pi/agents/`.
 - Single mode uses `agent` and `task`. Parallel mode uses `tasks`, an array of
-  objects containing `agent`, `task`, and optionally `cwd`, plus top-level
-  `agentScope: "project"`. Do not use a chain where isolation rules forbid
-  forwarding previous outputs.
-- The worker inherits the coordinator's model and thinking level. Each call
+  objects containing `agent`, `task`, and optionally `cwd`, `model`, and
+  `thinkingLevel`, plus top-level `agentScope: "project"`. Optional top-level
+  `model` and `thinkingLevel` apply to every task; per-task values override them.
+  Do not use a chain where isolation rules forbid forwarding previous outputs.
+- The Commonplace worker inherits the coordinator's model and thinking level
+  unless the call overrides them with `model` or `thinkingLevel`. Each call
   starts a fresh non-persisted session without the parent's conversation.
   Repository context still loads; this is not a filesystem sandbox.
 - For a code-scheduled job, pass the exact handoff prescribed by the workflow,

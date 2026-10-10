@@ -16,9 +16,10 @@ Pi's startup system prompt. It also loads in children; the coordinator rules
 apply only when the `subagent` tool is exposed. Worker selection excludes that
 tool. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
 
-`extensions/subagent/{index.ts,agents.ts}` are unchanged copies of the subagent
-example shipped with `@earendil-works/pi-coding-agent` 1.0.0. The original files
-came from:
+`extensions/subagent/{index.ts,agents.ts}` were copied from the subagent
+example shipped with `@earendil-works/pi-coding-agent` 1.0.0. `index.ts` now
+adds call-wide and per-task model and thinking-level overrides. The original
+files came from:
 
 ```text
 /home/zby/.pi/agent/install/releases/1.0.0/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/
@@ -32,7 +33,47 @@ applicable repository context and resources. This is not a filesystem sandbox.
 
 `agents/commonplace-worker.md` allows `read`, `bash`, `edit`, and `write`.
 It omits `model`, so the worker inherits the dispatching session's model and
-thinking level. Configure OpenAI authentication in Pi, not in this repository.
+thinking level unless the tool call overrides them. Configure OpenAI
+authentication in Pi, not in this repository.
+
+The tool accepts optional `model` and `thinkingLevel` at the top level in all
+modes and on each item in `tasks` or `chain`. Item values override top-level
+values independently. Model precedence is item, top-level, agent definition,
+then coordinator. Thinking precedence is item, top-level, then coordinator
+when the model is inherited or explicitly overridden. With no model override,
+an agent definition that pins a model retains Pi's own default thinking level
+unless the call supplies `thinkingLevel`.
+
+`thinkingLevel` accepts `off`, `minimal`, `low`, `medium`, `high`, `xhigh`, and
+`max`. Overrides become `--model` and `--thinking` arguments on the child Pi
+process. Pi may clamp the requested thinking level to the model's capabilities;
+result details record the requested level, not verified effective effort.
+
+Example single launch:
+
+```json
+{
+  "agent": "commonplace-worker",
+  "agentScope": "project",
+  "model": "openai/gpt-6.1-sol",
+  "thinkingLevel": "medium",
+  "task": "<workflow handoff>",
+  "cwd": "<absolute worktree root>"
+}
+```
+
+After editing the extension, use `/reload` before calling the new parameters.
+This does not change the schema already exposed to an in-flight invocation.
+
+Run the extension's mocked-process tests against an installed Pi package:
+
+```bash
+PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
+  node --test .pi/extensions/subagent/tests/launch-overrides.test.mjs
+```
+
+These tests load the extension and inspect child arguments without launching
+agents or making model calls.
 
 Select the worker with `agentScope: "project"`; the example defaults to user
 agents. Set `cwd` to this worktree's absolute root when dispatching jobs.
