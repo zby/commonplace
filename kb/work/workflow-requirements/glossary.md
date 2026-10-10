@@ -129,6 +129,30 @@ acceptance of the current member at either end whose basis has the current
 member at the other end. The three prose relations (synthesis limits, amendment
 index, profile source identity) need kinds when they are declared.
 
+## Distinctions kept with one name each
+
+Added 2026-10-10 from the [naming review](./naming-review.md).
+
+- **Held at a version.** Four verbs, one use each. An attempt's inputs are
+  *pinned* when it opens. The run's declaration and type are *fixed* at
+  start. External sources are *frozen* (the frozen source, `frozen-source`).
+  A manifest *records digests* of its members; it does not pin them.
+- **Three outcome vocabularies at three levels.** A judgment's outcome is
+  *accepted* or *refused*. An attempt's state is *open*, *completed* or
+  *failed*. A validation check's result *passes*, *fails* or *warns*. None
+  substitutes for another: a completed attempt can be refused, and a check
+  that fails refuses a candidate only through a judgment.
+- **Two senses of source.** The run parameter `source`, `frozen-source` and
+  the `sources` module are the analysed system's source, the problem-domain
+  word. An input's `source` key (`Input.source`) is what the input
+  addresses: a role, an output, an attempt or a file. It stays: `from`, the
+  alternative, is a Python keyword and would need a second attribute name.
+  Read `source` on an input as "addressed thing".
+- **Two senses of status.** `commonplace-run status` lists a run's members
+  and hand-outs; `RunStatus` is what `advance` returns after one invocation.
+  The dataclass keeps its name; the subcommand reports the run, the
+  dataclass one invocation's result.
+
 ## Borrowed vocabulary
 
 Established terms are borrowed only where their meaning matches exactly;

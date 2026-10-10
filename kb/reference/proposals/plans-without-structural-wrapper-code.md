@@ -230,6 +230,10 @@ fails at start ([ADR 116](../adr/116-one-word-per-concept-across-prose-and-code.
 
 The syntax, stated so that the loader does not invent it:
 
+A model job's inputs come from three keys: `reads` names what the run
+produces (roles and job outputs), `files` names library files, and the
+plan-level `inputs` reach every model job.
+
 - **Model entries.** `instruction` is a path relative to the plan file's
   directory, expanded to a library path. `files: {<name>: <library path>}`
   declares named file inputs such as contracts. `criteria` names groups as
