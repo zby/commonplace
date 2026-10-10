@@ -89,6 +89,9 @@ itself be composite is out of scope (operator, 2026-10-09).
 | The record written last for an attempt | attempt record | derived | An attempt record is the closed attempt with the versions it was handed. | keep |
 | Fixing an input's version at open | pin | — | Pinning fixes the version of every input when an attempt opens. | keep as internal verb; no API name |
 | What a hand-out gives a worker | hand-out | derived | A hand-out is an open model attempt's prompt and output paths. | keep |
+| The engine-composed part of a prompt | frame | derived | The frame is what the engine writes into every prompt: the instruction line, the prompt lines, the reading batches and the problem and worker-identity lines. | added 2026-10-10 (ADR 117) |
+| A `name = value` line of a prompt | prompt line | derived | A prompt line names one value the worker can use: an input's path, an output's path, a parameter or a layout fact; the prompt section's placeholders are exactly these. | added 2026-10-10 (ADR 117); the earlier "hand-out field" and "frame line" retire |
+| The plan's rendered section of a prompt | prompt section | derived | The prompt section is the file the plan names, rendered into the frame with its placeholders filled from the prompt lines. | added 2026-10-10 (ADR 117); not a hand-out |
 | Previous attempt's output in a hand-out | previous output | — | The previous output is supplied by identity and is not an input. | changed: the spec calls it *context*, colliding with untracked context |
 | What a worker reads beyond its inputs | untracked context | — | Untracked context is anything a worker reads that is not an input. | keep; reserve *context* for this |
 | A code job's handle on its attempt | code attempt | derived | A code attempt gives a handler its pinned inputs and stages its judgments. | changed: was `CodeContext`, colliding with *context* |

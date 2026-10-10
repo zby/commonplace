@@ -183,7 +183,14 @@ glossary, which becomes the reference page.
   identity fields and paths from the layout; the protocol grammar is one
   layout finding with addressees from `verifies`; the cited-records
   feedback finds declarers; run values come from one function.
-- Section 2, the engine code: in progress.
+- Section 2, the engine code: done 2026-10-10, 81b0c257a to e8e825acb,
+  which completes the sweep. One helper each for relation names, dotted
+  imports, the type's layout, the refusal body, the manifest and digests;
+  the prompt's line names built from one definition; hand-out paths from
+  one function; the loader no longer re-checks what load_plan checks;
+  `Run.covered` moved to the tests; stale words fixed. The glossary gained
+  frame, prompt line and prompt section, and "prompt line" is the word
+  where the code said "hand-out field" or "frame line".
 
 ## Order
 
