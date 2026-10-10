@@ -3,7 +3,7 @@ description: "Use for the boundary hand-out to classify one target and establish
 type: types/instruction.md
 ---
 
-# Fix the boundary from the engine inputs
+# Declare the boundary from the engine inputs
 
 Write the boundary that fixes this run's target, disposition and frozen evidence for every later job.
 

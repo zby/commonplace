@@ -3,7 +3,7 @@ description: "Use after report and profile verification to write a self-standing
 type: types/instruction.md
 ---
 
-# Synthesize findings
+# Synthesize the analysis
 
 Give public readers a supported account that remains intelligible without the other members and states the conclusions its evidence cannot support.
 
