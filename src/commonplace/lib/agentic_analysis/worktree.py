@@ -22,6 +22,7 @@ from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     WORKER_PROFILES,
+    analysis_layout,
     resolve_worker_profile,
     source_slug,
 )
@@ -123,7 +124,8 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     files = tree(destination)
     if files is None or hashes(files) != receipt["members"]:
         raise ValueError("exact retained bytes differ from the publication receipt")
-    overview = _frontmatter(files["overview.md"].decode("utf-8"), destination / "overview.md")
+    entry = analysis_layout().path("overview")
+    overview = _frontmatter(files[entry].decode("utf-8"), destination / entry)
     if (overview.get("run-id") != run_dir.name or overview.get("inputs-commit") != method
             or overview.get("result-disposition") != "complete"
             or not isinstance(overview.get("reviewed-boundary"), str)
@@ -135,11 +137,11 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     paths = [relative.as_posix()]
     # Compare the archive to Git's entire incumbent tree, not only its overview.
     old = committed_tree(worktree, method, relative.as_posix())
-    expected = "absent" if old is None else sha256(old["overview.md"]).hexdigest()
+    expected = "absent" if old is None else sha256(old[entry]).hexdigest()
     if receipt["expected-incumbent-sha256"] != expected:
         raise ValueError("opened incumbent differs from method commit")
     if old is not None:
-        old_id = _frontmatter(old["overview.md"].decode("utf-8"), relative / "overview.md").get("run-id")
+        old_id = _frontmatter(old[entry].decode("utf-8"), relative / entry).get("run-id")
         if not run_ids.is_archived_run_id(old_id):
             raise ValueError("incumbent has an invalid run ID")
         archive = worktree / ARCHIVE_ROOT / old_id

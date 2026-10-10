@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import yaml
@@ -47,7 +48,7 @@ class Attempt:
                            "analysis-cutoff": None, "evidence-tier": None}
         present = {"boundary"}
         if disposition == "complete":
-            present |= set(publication.PRODUCERS)
+            present |= set(layout.roles) - {"overview"}
         if overview:
             present.add("overview")
         for role in layout.roles:
@@ -57,10 +58,10 @@ class Attempt:
                         "description": "Fixture description"}) if role in present else None
             self.inputs[role] = data
             if role != "overview":
-                producer, primary = publication.PRODUCERS[role]
+                # The role-filling job is named after its role.
                 self.inputs[f"{role}-attempt"] = (json.dumps({
-                    "job": producer, "state": "completed", "kind": "model", "model": "fixture/model",
-                    "effort": "high", "worker_effort": "high", "worker_model": "fixture-model-1", "outputs": {primary: publication._digest(data)},
+                    "job": role, "state": "completed", "kind": "model", "model": "fixture/model",
+                    "effort": "high", "worker_effort": "high", "worker_model": "fixture-model-1", "outputs": {"primary": publication._digest(data)},
                 }).encode() if data else None)
         self.metadata = {"run-id": RUN_ID, "system": "Example", "run-date": "2026-10-07",
                          "inputs-commit": "a" * 40, "source-identity": "https://example.invalid/example",
@@ -70,6 +71,9 @@ class Attempt:
 
     def read(self, name):
         return self.inputs[name]  # Undeclared means error, never disk fallback.
+
+    def filler(self, role):
+        return SimpleNamespace(name=role, outputs=("primary",))  # Named after its role.
 
     def read_files(self):
         return dict(self.files)  # Pinned criteria by library path; none means none.
@@ -299,6 +303,8 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
                        "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
     monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))
+    # The one-job fixture plan has no role-filling jobs; the fake names them.
+    monkeypatch.setattr(CodeAttempt, "filler", lambda self, role: attempt.filler(role))
     status = advance(store.run_dir)
     assert len(status.stops) == 1
     uncertain = interruption == "archive"

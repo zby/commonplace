@@ -42,20 +42,6 @@ from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_artifact_snapshot
 
 JOURNAL = "effects/publish.json"
-PRODUCERS = {
-    "boundary": ("boundary", "boundary"), "runtime": ("runtime", "report"),
-    "memory": ("memory", "report"), "epistemic": ("epistemic", "report"),
-    "reconciliation": ("reconciliation", "reconciliation"),
-    "report-verification": ("report-verification", "verification"),
-    "memory-profile": ("memory-profile", "profile"),
-    "profile-verification": ("profile-verification", "verification"),
-    "synthesis": ("synthesis", "synthesis"),
-    "synthesis-verification": ("synthesis-verification", "verification"),
-}
-IDENTITY_FIELDS = (
-    "run-id", "result-disposition", "target-class", "boundary-kind",
-    "reviewed-boundary", "analysis-cutoff", "evidence-tier",
-)
 
 
 def _digest(data: bytes) -> str:
@@ -136,12 +122,12 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
         if role == "overview":
             continue  # Code-written, never a model worker.
         record = _json(attempt.read(f"{role}-attempt"), f"{role} producer attempt")
-        producer, primary = PRODUCERS[role]
+        filler = attempt.filler(role)
         # The member can be older than the producer's latest completed output,
         # so the digest ties the worker identity to the member actually published.
         if (record.get("kind") != "model"
-                or record.get("job") != producer
-                or record.get("outputs", {}).get(primary) != _digest(data)):
+                or record.get("job") != filler.name
+                or record.get("outputs", {}).get(filler.outputs[0]) != _digest(data)):
             raise ValueError(f"{role} provenance does not identify its completed output")
         for field, profiled in (("model", "launch-model"), ("effort", "effort")):
             if record.get(field) is not None and record[field] != worker[profiled]:
@@ -161,7 +147,7 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
 def validate_pinned_artifact(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
                         manifest: bytes) -> None:
     """Validate all exact member, manifest and criterion bytes."""
-    boundary = _document(members["boundary.md"])
+    boundary = _document(members[attempt.layout.path("boundary")])
     result = validate_pinned_artifact_snapshot(
         repo=repo, artifact_type=attempt.type_spec, intended_artifact_path=attempt.run_dir / "artifact", members=members,
         manifest=manifest, criteria=criterion_bytes(attempt),
@@ -213,7 +199,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
                    f"with {disposition} disposition")
     frontmatter = {
         "type": layout.roles["overview"].type, "description": " ".join(description.split()),
-        **{name: fields.get(name) for name in IDENTITY_FIELDS},
+        **{name: fields.get(name) for source in layout.roles["overview"].identity for name in source.fields},
         "system": metadata["system"], "run-date": metadata["run-date"],
         "inputs-commit": metadata["inputs-commit"],
     }
@@ -240,9 +226,9 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     return {"overview": overview, "manifest": manifest}
 
 
-def _archive_name(incumbent: Mapping[str, bytes], run_id: str) -> str:
+def _archive_name(incumbent: Mapping[str, bytes], run_id: str, overview: str) -> str:
     """An incumbent artifact is archived under its own run ID, never this run's."""
-    old_id = _document(incumbent["overview.md"]).frontmatter.get("run-id")
+    old_id = _document(incumbent[overview]).frontmatter.get("run-id")
     if not run_ids.is_archived_run_id(old_id) or old_id == run_id:
         raise ValueError("replacement requires a different valid incumbent run ID")
     return old_id
@@ -301,10 +287,10 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     # The engine already holds the per-run lock. Never take it inside this lock.
     with publication_lock(repo):
         install_tree(journal=attempt.run_dir / JOURNAL, destination=destination,
-                     archive_root=repo / ARCHIVE_ROOT, files=files, anchor="overview.md",
+                     archive_root=repo / ARCHIVE_ROOT, files=files, anchor=attempt.layout.path("overview"),
                      expected=metadata["expected-incumbent-sha256"],
                      identity={"run-id": attempt.run_dir.name, "source-identity": metadata["source-identity"]},
-                     archive_name=lambda old: _archive_name(old, attempt.run_dir.name),
+                     archive_name=lambda old: _archive_name(old, attempt.run_dir.name, attempt.layout.path("overview")),
                      inspect_incumbent=inspect_incumbent)
     return {"receipt": _receipt(published=True, destination=str(destination), members=hashes(files),
                                 **{name: metadata.get(name) for name in RECEIPT_PINS})}

@@ -562,6 +562,10 @@ class CodeAttempt:
         """The role input `name` holds by declaration; see `Plan.input_role`."""
         return self._run.jobs.input_role(self._job, name)
 
+    def filler(self, role: str) -> Job | None:
+        """The job whose primary output fills `role`; see `Plan.filler`."""
+        return self._run.jobs.filler(role)
+
     def producer(self, name: str) -> str | None:
         """The job whose output or attempt input `name` names, else None."""
         spec = self._job.inputs[name]
