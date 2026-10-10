@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import datetime
 import json
-import os
 import re
 from hashlib import sha256
 from pathlib import Path
@@ -56,8 +55,6 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     for name in ("system", "source-identity", "source", "worker-profile"):
         if not isinstance(parameters.get(name), str) or not parameters[name].strip():
             raise ValueError(f"analysis opening requires a nonempty {name} run parameter")
-    if "review-path" in parameters:
-        raise ValueError("review-path is no longer a run parameter; publication uses the source slug")
     system = parameters["system"]
     if "\n" in system or "\r" in system:
         raise ValueError("system must be a single-line name")
@@ -110,8 +107,6 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         "worker": worker,
         "inputs-commit": commit,
         "run-date": datetime.datetime.now(datetime.UTC).date().isoformat(),
-        "command-path": str(repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
-        "capture-directory": str(run_dir / "sources"),
         "review-path": destination,
         "expected-incumbent-sha256": str(incumbent["expected_incumbent_sha256"]),
     }
@@ -125,16 +120,10 @@ def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """
-    metadata_bytes = attempt.read("metadata")
     metadata, repo = locate(attempt)
-    identity = metadata.get("source-identity")
-    revision = metadata.get("source-revision")
-    if not isinstance(identity, str) or not identity or normalize_source_identity(identity) != identity:
-        raise ValueError("opening metadata must carry the normalized source identity")
-    if revision is not None and (not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision)):
-        raise ValueError("opening metadata source-revision must be a full 40-hex commit")
-    return {"source": acquire(repo, attempt.run_dir, identity=identity, revision=revision,
-                              inputs_digest=sha256(metadata_bytes).hexdigest())}
+    return {"source": acquire(repo, attempt.run_dir, identity=metadata["source-identity"],
+                              revision=metadata["source-revision"],
+                              inputs_digest=sha256(attempt.read("metadata")).hexdigest())}
 
 
 def locate(attempt: CodeAttempt) -> tuple[dict, Path]:

@@ -26,6 +26,8 @@ ANALYSIS_TYPE = "agentic-system-analyses/types/agentic-system-analysis-set.md"
 
 RETAINED_ROOT = Path("kb/agentic-system-analyses/retained")
 ARCHIVE_ROOT = Path("kb/agentic-system-analyses/retained-archive")
+CAPTURE_DIRECTORY = "sources"
+"""Where, under the run directory, a boundary freezes non-Git captures; the plan prints it."""
 
 
 def analysis_layout() -> Layout:

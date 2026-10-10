@@ -7,7 +7,6 @@ No workers, external source acquisition, package installation or publication run
 
 from __future__ import annotations
 
-import os
 import shutil
 
 import pytest
@@ -40,8 +39,6 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
         "source": PARAMETERS["source"], "source-revision": "a" * 40,
         "worker": {"profile": "pi-luna", "harness": "pi", "launch-model": "gpt-6-luna", "effort": "medium"},
         "inputs-commit": prepared.commit, "run-date": metadata["run-date"],
-        "command-path": str(prepared.repo / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
-        "capture-directory": str(c.run_dir / "sources"),
         "review-path": "kb/agentic-system-analyses/retained/system/overview.md",
         "expected-incumbent-sha256": "absent",
     }

@@ -47,8 +47,7 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     assert p["role"] == "boundary"
     assert p["command-path"] == PARAMETERS["command-path"]
     assert json.loads(Path(p["acquire"]).read_bytes()) == a.source()
-    metadata = json.loads(Path(p["opening"]).read_bytes())
-    assert metadata["capture-directory"] == str(a.coordinator.run_dir / "sources")
+    assert p["capture-directory"] == str(a.coordinator.run_dir / "sources")
     assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
     # The plan's prompt section fills one part of the frame, for this job's role.
     prompt = h.prompt.read_text()
@@ -141,8 +140,7 @@ def test_capture_in_the_supplied_directory_is_accepted_and_survives_cleanup(acqu
     a = start(boundary=True, identity="local capture identity")
     a.coordinator.advance()
     h = a.coordinator.handout("boundary")
-    opening = json.loads(Path(parameters(h)["opening"]).read_bytes())
-    capture = Path(opening["capture-directory"]) / "capture.txt"
+    capture = Path(parameters(h)["capture-directory"]) / "capture.txt"
     capture.parent.mkdir()
     capture.write_bytes(b"Local capture fixture; no web request.\n")
     source = {"kind": "capture", "identity": "local capture identity", "revision": "capture-1",

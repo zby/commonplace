@@ -8,9 +8,9 @@ declares. Environment guards stay separate from content validation.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 from commonplace.artifactrun.checks import Candidate
+from commonplace.lib.agentic_analysis.analyses import CAPTURE_DIRECTORY
 from commonplace.lib.agentic_analysis.boundary import boundary_refusals
 from commonplace.lib.agentic_analysis.opening import locate
 from commonplace.lib.note_parser import parse_document
@@ -40,7 +40,7 @@ def bound_boundary(check: Candidate) -> list[str]:
         incumbent_source = (incumbent.frontmatter or {}).get("source")
     findings = ["[invocation] " + refusal for refusal in boundary_refusals(
         check.data, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
-        capture_directory=Path(metadata["capture-directory"]),
+        capture_directory=attempt.run_dir / CAPTURE_DIRECTORY,
     )]
     if incumbent_source is not None and incumbent_source != frozen:
         findings += ["[incumbent] " + refusal for refusal in boundary_refusals(

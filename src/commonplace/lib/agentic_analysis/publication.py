@@ -28,6 +28,7 @@ from commonplace.artifactrun.worktree import (
 )
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
+    CAPTURE_DIRECTORY,
     RETAINED_ROOT,
     source_slug,
 )
@@ -209,7 +210,7 @@ def _environment(attempt: CodeAttempt, boundary, *, job: str, guard: bool = Fals
     reasons = boundary_refusals(
         attempt.read("boundary"), repo_root=repo, run_id=metadata["run-id"],
         identity=metadata["source-identity"], frozen=frozen,
-        capture_directory=Path(metadata["capture-directory"]),
+        capture_directory=attempt.run_dir / CAPTURE_DIRECTORY,
     )
     if reasons:
         raise ValueError("source/opening identity: " + "; ".join(reasons))
