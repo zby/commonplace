@@ -14,7 +14,7 @@ status: accepted
 
 ADR 022 and the root instruction file fix one term per concept for prose.
 The engine and the analysis gave the same concepts other surfaces: Python
-identifiers, plan keys, prompt lines, file and role names, relation tokens
+identifiers, plan keys, prompt variables, file and role names, relation tokens
 and command names. Nothing said how a word crosses from one surface to
 another, so each surface named things on its own. Within a week of the
 engine's adoption the glossary needed two columns, "Word" and "API name",
@@ -40,7 +40,7 @@ transformation and introduces no second word:
 |---|---|---|
 | prose | spaced | max attempts |
 | Python identifier | snake_case | `max_attempts` |
-| YAML key, prompt line, command, file and role name | kebab-case | `max-attempts` |
+| YAML key, prompt variable, command, file and role name | kebab-case | `max-attempts` |
 | relation token | words joined by colons | `memory:cites:runtime` |
 
 When surfaces disagree, code is renamed first and prose follows, unless
@@ -72,7 +72,7 @@ reads one file at a time; a collision spans two.
 
 **YAML keys as Python identifiers, underscores everywhere.** Half the
 plan file did this. Rejected because the keys are data read by authors
-and workers, the kebab-case convention already held for prompt lines,
+and workers, the kebab-case convention already held for prompt variables,
 file names and commands, and one rule per surface is simpler than one
 rule per key.
 

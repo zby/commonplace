@@ -39,7 +39,7 @@ Best effort:
   only when conventional and precise or when they clarify.
 - Use one term per concept, including the registered term where one exists.
   The same word names the concept on every surface: snake_case in Python,
-  kebab-case in YAML keys, prompt lines, files, roles and commands; when
+  kebab-case in YAML keys, prompt variables, files, roles and commands; when
   surfaces disagree, rename the code first (ADR 116).
 - Keep a paragraph only when it changes what the reader understands, infers
   or can do. Resolve ambiguity that affects truth, evidence or implications.

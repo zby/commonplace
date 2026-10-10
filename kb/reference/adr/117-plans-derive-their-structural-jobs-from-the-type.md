@@ -92,7 +92,7 @@ contract stays a shared member-level contract that the record-citing
 types refer to; the boundary contract is in the boundary type; the
 sources contract is split between the boundary type and the worker rules.
 
-**Run binding as identity.** A layout identity source may name `run`, so
+**Run identity.** A layout identity source may name `run`, so
 a member's binding to its run is a shape check in draft validation, and a
 member type registers its identifier grammar so that a correction cannot
 drop an identifier its accepted version declared. The analysis keeps
@@ -150,7 +150,7 @@ the same judgments before the wrappers went.
 Operativity: the analysis skill starts runs through `commonplace-analysis
 start`, which expands the compact plan; the loader, the standard handlers
 and the prompt renderer are the engine's reuse modules; draft validation
-consumes the run binding and the identifier grammar; the plan loader's
+consumes the run identity and the identifier grammar; the plan loader's
 refusal of underscores and the type-closure test enforce the declaration
 forms. Every rule a worker meets comes through the prompt, the member
 type, the records contract and the worker rules.
