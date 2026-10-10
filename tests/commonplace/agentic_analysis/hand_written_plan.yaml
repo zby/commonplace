@@ -13,7 +13,7 @@ criteria:
     collection: agentic-system-analyses/COLLECTION.md
     sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
-  check:
+  contracts:
     sources-contract: agentic-system-analyses/instructions/agentic-analysis-sources.md
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
     note-schema: types/note.schema.yaml
@@ -80,7 +80,7 @@ jobs:
 - name: check-boundary
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.check_boundary
-  criteria: [check]
+  criteria: [contracts]
   inputs:
     candidate: {address: output, source: 'boundary:boundary', required: true}
     incumbent-boundary: {address: role, source: boundary, required: false}
@@ -108,7 +108,7 @@ jobs:
 - name: check-runtime
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.check_runtime
-  criteria: [check, reports]
+  criteria: [contracts, reports]
   inputs:
     candidate: {address: output, source: 'runtime:report', required: true}
     incumbent-report: {address: role, source: runtime, required: false}
@@ -139,7 +139,7 @@ jobs:
 - name: check-memory
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.check_memory
-  criteria: [check, reports]
+  criteria: [contracts, reports]
   inputs:
     candidate: {address: output, source: 'memory:report', required: true}
     incumbent-report: {address: role, source: memory, required: false}
@@ -171,7 +171,7 @@ jobs:
 - name: check-epistemic
   kind: code
   handler: commonplace.lib.agentic_analysis.opening.check_epistemic
-  criteria: [check, reports]
+  criteria: [contracts, reports]
   inputs:
     candidate: {address: output, source: 'epistemic:report', required: true}
     incumbent-report: {address: role, source: epistemic, required: false}
@@ -207,7 +207,7 @@ jobs:
 - name: check-reconcile
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.check_reconcile
-  criteria: [check, reports, reconciliation]
+  criteria: [contracts, reports, reconciliation]
   inputs:
     candidate: {address: output, source: 'reconcile:reconciliation', required: true}
     producer-attempt: {address: attempt, source: reconcile, required: true}
@@ -221,7 +221,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.record_check
   outputs: [findings]
-  criteria: [check, reports, reconciliation]
+  criteria: [contracts, reports, reconciliation]
   inputs:
     boundary: {address: role, source: boundary}
     runtime: {address: role, source: runtime}
@@ -259,7 +259,7 @@ jobs:
 - name: apply-verify
   kind: code
   handler: commonplace.lib.agentic_analysis.verification.apply_verify
-  criteria: [check, reports, reconciliation, verification]
+  criteria: [contracts, reports, reconciliation, verification]
   inputs:
     candidate: {address: output, source: 'verify:verification', required: true}
     verifier-attempt: {address: attempt, source: verify, required: true}
@@ -297,7 +297,7 @@ jobs:
 - name: check-profile
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.check_profile
-  criteria: [check, reports, reconciliation, profile]
+  criteria: [contracts, reports, reconciliation, profile]
   inputs:
     candidate: {address: output, source: 'profile:profile', required: true}
     answers: {address: output, source: 'profile:answers', required: false}
@@ -335,7 +335,7 @@ jobs:
 - name: apply-verify-profile
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_profile
-  criteria: [check, reports, reconciliation, verification, profile]
+  criteria: [contracts, reports, reconciliation, verification, profile]
   inputs:
     answers: {address: output, source: 'verify-profile:answers', required: false}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
@@ -378,7 +378,7 @@ jobs:
 - name: check-synthesize
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.check_synthesize
-  criteria: [check, reports, reconciliation, verification, synthesis]
+  criteria: [contracts, reports, reconciliation, verification, synthesis]
   inputs:
     candidate: {address: output, source: 'synthesize:synthesis', required: true}
     answers: {address: output, source: 'synthesize:answers', required: false}
@@ -420,7 +420,7 @@ jobs:
 - name: apply-verify-synthesis
   kind: code
   handler: commonplace.lib.agentic_analysis.profile.apply_verify_synthesis
-  criteria: [check, reports, reconciliation, verification, synthesis]
+  criteria: [contracts, reports, reconciliation, verification, synthesis]
   inputs:
     answers: {address: output, source: 'verify-synthesis:answers', required: false}
     answered-refusal: {address: handed, source: 'verifier-attempt:refusal', required: false}
@@ -438,7 +438,7 @@ jobs:
 - name: assemble
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
-  criteria: [check, reports, reconciliation, verification, profile, synthesis, publication]
+  criteria: [contracts, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     coverage: {address: coverage}
     source: {address: output, source: 'acquire:source', required: true}
@@ -468,7 +468,7 @@ jobs:
 - name: publish
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.publish_analysis
-  criteria: [check, reports, reconciliation, verification, profile, synthesis, publication]
+  criteria: [contracts, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     coverage: {address: coverage}
     source: {address: output, source: 'acquire:source', required: true}

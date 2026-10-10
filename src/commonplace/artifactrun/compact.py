@@ -38,7 +38,7 @@ APPLY = f"{STANDARD}.apply_verification"
 ARTIFACT_CHECK = f"{STANDARD}.artifact_check"
 HANDLER_OUTPUTS = {ARTIFACT_CHECK: ["findings"]}
 """Outputs a `job:` entry gets when it declares none."""
-CHECK_GROUP = "check"
+CONTRACTS_GROUP = "contracts"
 """The plan-level criteria group every derived job receives besides its type closure."""
 MODES = ("required", "optional", "order-only")
 ROLE_KEYS = {"role", "instruction", "max-attempts", "outputs", "reads", "criteria", "files",
@@ -244,7 +244,7 @@ class _Expansion:
         paths = type_closure(self.library, types)
         if isinstance(schema, str):
             paths += [p for p in type_closure(self.library, [_relative(self.type_spec, schema)]) if p not in paths]
-        group = dict(self.groups.get(CHECK_GROUP) or {})
+        group = dict(self.groups.get(CONTRACTS_GROUP) or {})
         given = set(group.values())
         return {**{_criterion_name(path): {"address": "file", "source": path} for path in paths if path not in given},
                 **{name: {"address": "file", "source": path} for name, path in group.items()}}

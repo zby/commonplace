@@ -21,7 +21,7 @@ criteria:
     collection: agentic-system-analyses/COLLECTION.md
     worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
   # Read by type rules but referenced by no type; every derived job receives it.
-  check:
+  contracts:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
     note-type: types/note.md
   # Publication validates every member; these groups make its closure explicit.
@@ -180,7 +180,7 @@ jobs:
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
   role: overview
-  criteria: [check, types, reports, reconciliation, verification, profile, synthesis, publication]
+  criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
   inputs: &published
     coverage: {address: coverage}
     source: {address: output, source: 'acquire:source'}
@@ -209,7 +209,7 @@ jobs:
 - name: publish
   kind: code
   handler: commonplace.lib.agentic_analysis.publication.publish_analysis
-  criteria: [check, types, reports, reconciliation, verification, profile, synthesis, publication]
+  criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     <<: *published
     overview: {address: role, source: overview}
