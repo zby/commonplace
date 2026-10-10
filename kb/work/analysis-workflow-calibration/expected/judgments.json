@@ -1,0 +1,10 @@
+{
+  "c01": {"pair": "source-support", "blocker": true, "reason": "The synthesis promotes an uncalled serialization function into after-every-task invocation and working resumption. RT-01 establishes neither. The central operational claim must change; a caveat alone would leave it unsupported."},
+  "c02": {"pair": "source-support", "blocker": false, "reason": "The synthesis preserves implementation existence and explicitly withholds invocation and resumption claims. Faithful uncertainty is not a blocker."},
+  "c03": {"pair": "quotation-entailment", "blocker": true, "reason": "An optional client request does not establish enforced filtering or tenant isolation. The quotation is accurate but the guarantee and universal prevention claim are unsupported."},
+  "c04": {"pair": "quotation-entailment", "blocker": false, "reason": "The optional documented feature is stated at its supported strength and no isolation guarantee is inferred."},
+  "c05": {"pair": "inventory-coverage", "blocker": true, "reason": "MEM-01 is a positive witness with partial coverage. It cannot license complete enumeration or absence of other mechanisms."},
+  "c06": {"pair": "inventory-coverage", "blocker": false, "reason": "The inspected positive is retained beside explicitly incomplete inventory coverage. Exhaustive inspection is not necessary for this bounded claim."},
+  "c07": {"pair": "limit-consequence", "blocker": true, "reason": "The main account claims improved future capacity without outcome evidence. The limitation appears literally but its prevented conclusion is still asserted. The main claim must change."},
+  "c08": {"pair": "limit-consequence", "blocker": false, "reason": "The synthesis states the supported update mechanism and preserves the settled limit's prevented conclusion in both the account and limitations."}
+}

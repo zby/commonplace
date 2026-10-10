@@ -1,0 +1,187 @@
+{
+  "annotations-sha256": "59e61596fcedd9d8e73fe3eb6af5304402af67b18a4ffabd9352c8525700e190",
+  "cases": {
+    "c01": {
+      "annotation": {
+        "blocker": true,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Identifies unsupported after-every-task invocation and resumption in RT-01, and explains why a caveat cannot preserve the central assertion.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": true,
+        "pair": "source-support",
+        "reason": "The synthesis promotes an uncalled serialization function into after-every-task invocation and working resumption. RT-01 establishes neither. The central operational claim must change; a caveat alone would leave it unsupported."
+      },
+      "outcome": "detected",
+      "response-sha256": "5b3a6ba548d44bfee509c3b406e6eca8faae9fda4843b617d5b87884838fea24"
+    },
+    "c02": {
+      "annotation": {
+        "blocker": false,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Accepts implementation existence and explicitly unestablished invocation and resumption; Blockers and Limits none.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": false,
+        "pair": "source-support",
+        "reason": "The synthesis preserves implementation existence and explicitly withholds invocation and resumption claims. Faithful uncertainty is not a blocker."
+      },
+      "outcome": "supported-control",
+      "response-sha256": "92bd47d4e72ceb3af53796dccca8878f08e49ea1bec63183117a4a7adcf2abe3"
+    },
+    "c03": {
+      "annotation": {
+        "blocker": true,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Identifies the optional namespace filter being promoted to mandatory tenant isolation and prevention of all cross-tenant retrieval.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": true,
+        "pair": "quotation-entailment",
+        "reason": "An optional client request does not establish enforced filtering or tenant isolation. The quotation is accurate but the guarantee and universal prevention claim are unsupported."
+      },
+      "outcome": "detected",
+      "response-sha256": "9cd0a160c9aa585c106b6fc038b35b4eb98aad27706c9f33bb4c630d4afb9249"
+    },
+    "c04": {
+      "annotation": {
+        "blocker": false,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Accepts documented optional request parameter without inferring a tenant-isolation guarantee.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": false,
+        "pair": "quotation-entailment",
+        "reason": "The optional documented feature is stated at its supported strength and no isolation guarantee is inferred."
+      },
+      "outcome": "supported-control",
+      "response-sha256": "f691552c2d1383518082066dc24bfb4f2e7c49f6cc3bd55e9c78b27aa991697e"
+    },
+    "c05": {
+      "annotation": {
+        "blocker": true,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Identifies partial positive inventory being promoted into complete enumeration and absence of other stores.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": true,
+        "pair": "inventory-coverage",
+        "reason": "MEM-01 is a positive witness with partial coverage. It cannot license complete enumeration or absence of other mechanisms."
+      },
+      "outcome": "detected",
+      "response-sha256": "cd4b6fac553ac5f62c9a42c587bdaab9e9123c14fa7f285dcc61b9e17e606566"
+    },
+    "c06": {
+      "annotation": {
+        "blocker": false,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Accepts inspected DiskStore existence beside explicitly partial coverage; Blockers and Limits none.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": false,
+        "pair": "inventory-coverage",
+        "reason": "The inspected positive is retained beside explicitly incomplete inventory coverage. Exhaustive inspection is not necessary for this bounded claim."
+      },
+      "outcome": "supported-control",
+      "response-sha256": "fd4420d6bfe2c41eb9c3622543444c9afc98ff601fdf973bb2ebedbcb5e8371e"
+    },
+    "c07": {
+      "annotation": {
+        "blocker": true,
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Identifies affirmative improved-capacity claim contradicting the settled limitation, even though the limitation is literally repeated.",
+        "status": "completed"
+      },
+      "expected": {
+        "blocker": true,
+        "pair": "limit-consequence",
+        "reason": "The main account claims improved future capacity without outcome evidence. The limitation appears literally but its prevented conclusion is still asserted. The main claim must change."
+      },
+      "outcome": "detected",
+      "response-sha256": "dc4ee2757e49aec3a97201c3f88726ef035f0828132434231f98306fa8245057"
+    },
+    "c08": {
+      "annotation": {
+        "launch": {
+          "effort": "low",
+          "harness": "pi",
+          "isolation-evidence": "Fresh sessions by subagent tool contract; explicit packet-only read scope. No enforced filesystem sandbox, operator-approved exploratory relaxation.",
+          "launch-model": "gpt-6-luna",
+          "resolved-model": "unknown"
+        },
+        "reason": "Disputed control. The response accepts the main bounded claim but blocks the statement that an outcome comparison would resolve the limitation, citing the pinned contract's necessary-but-not-sufficient causal-identification rule. The original key says no blocker; its resolution wording may be overstrong. Leave the key unchanged and require independent adjudication rather than count this as a clean false blocker.",
+        "status": "unscorable"
+      },
+      "expected": {
+        "blocker": false,
+        "pair": "limit-consequence",
+        "reason": "The synthesis states the supported update mechanism and preserves the settled limit's prevented conclusion in both the account and limitations."
+      },
+      "outcome": "unscorable",
+      "response-sha256": "e83c31642c982546fa7560676ef5b154f3e970e13328edc7c5f4fb86d8c8a5f2"
+    }
+  },
+  "counts": {
+    "detected": 4,
+    "execution-failure": 0,
+    "false-blocker": 0,
+    "missed": 0,
+    "supported-control": 3,
+    "unscorable": 1
+  },
+  "method-commit": "6f335416fbf2b1506154e7a76373bee9decf98af",
+  "profile": "pi-luna-low",
+  "worker-profile": {
+    "effort": "low",
+    "harness": "pi",
+    "launch-model": "gpt-6-luna"
+  }
+}

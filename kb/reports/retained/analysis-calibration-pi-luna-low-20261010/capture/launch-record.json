@@ -1,0 +1,26 @@
+{
+  "profile": "pi-luna-low",
+  "date": "2026-10-10",
+  "harness": "pi",
+  "tool": "functions.subagent",
+  "agent": "commonplace-worker",
+  "agentScope": "project",
+  "cwd": "/home/zby/llm/commonplace",
+  "model_argument": "openai/gpt-6-luna",
+  "thinkingLevel_argument": "low",
+  "resolved_model": "unknown",
+  "elapsed_seconds": "unknown",
+  "token_usage": "unknown",
+  "cost": "unknown",
+  "dispatch_order": ["c05", "c02", "c07", "c01", "c08", "c03", "c06", "c04"],
+  "calls": [
+    {"mode": "single", "cases": ["c05"], "result": "Wrote the raw verdict to /tmp/analysis-calibration-pi-luna-low-01/packets/c05/response.md."},
+    {"mode": "parallel", "cases": ["c02", "c07", "c01", "c08", "c03", "c06", "c04"], "result": "Parallel: 7/7 succeeded; all seven workers reported response.md written."}
+  ],
+  "failures": [],
+  "retries": [],
+  "handoff": "Read the case's absolute prompt.md, then only its five named input files. Resolve relative paths against the packet directory. Write only that packet's response.md. Use read/write only, no shell, other files, skills, searches or delegation. This is a focused synthetic judgment assay, not the external-system workflow. Do not infer task conditions from other case IDs. Return completion after writing the raw verdict.",
+  "isolation": "Fresh conversations by the exposed subagent contract. Project context can load. Filesystem and tools restricted only by instructions, not enforced sandbox; operator approved this exploratory deviation.",
+  "diagnostic": "COMMONPLACE_WORKER_OK; agent-depth and nesting-limit unknown",
+  "annotation": "Coordinator annotation, not independent human review. c08 withheld from semantic scoring pending independent adjudication. Answer key remains unchanged and was not independently reviewed before this exploratory pilot."
+}

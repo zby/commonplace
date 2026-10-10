@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [analysis-workflow-calibration](./analysis-workflow-calibration/README.md) — paired synthesis-support calibration cases and profile-pinned packets; Luna/low exploratory pilot completed, one control needs adjudication
+
 - [analysis-collection-split](./analysis-collection-split/README.md) — moving agentic-system analysis into a self-contained collection with stable per-system paths and a separate comparison-profile job; design decided 2026-10-03, implementation commissioned by its plan, nothing built yet
 - [analyse-agentic-system-amendments](./analyse-agentic-system-amendments/README.md) — evaluate correction designs under the durable analysis design brief; current candidate and unresolved Sol follow-up are separate from historical ID investigations and run audits
 - [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open
