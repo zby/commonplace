@@ -161,3 +161,82 @@ def test_a_check_reruns_when_an_optional_partner_disappears_for_good(tmp_path: P
     assert c.member("report") is None and c.member("summary") is not None
     assert "check-summary" in c.ran(), "the summary's acceptance lapsed with its partners; the check renews it"
     assert c.status.publishable
+
+
+def test_historical_evidence_does_not_mask_the_current_judgment_gate(coordinator: Coordinator) -> None:
+    """Accepting an earlier version as evidence leaves the gate on the current version in place."""
+    from commonplace.artifactrun.run import Run
+    from commonplace.artifactrun.store import RunStore, digest
+    from tests.commonplace.artifactrun.support import NO_BLOCKERS, as_member
+
+    c = coordinator
+    c.through_records()
+    c.complete("verification", blocking("report: r1"))
+    c.complete("report", "report B\n", answers=CORRECTED)
+    c.complete("summary", "summary S2\n")  # the summary cites the report and is re-handed first
+    c.complete("verification", NO_BLOCKERS)
+    assert "digest" in c.handed(), "the report's gate is accepted on version B"
+    judge(c.run_dir, role="report", outcome="accepted", version=digest(as_member("report", "report A\n").encode()),
+          scope=("verification:verifies:report",), basis=("verification",), findings="historical evidence")
+    run = Run(RunStore(c.run_dir))
+    gate = run.jobs.job("digest").inputs["report-verified"]
+    resolved = run.resolve("report-verified", run.jobs.job("digest").inputs)
+    assert gate.address == "judgment" and resolved.version is not None, "the gate still resolves on version B"
+    c.advance()
+    assert not c.status.stops and any(a.endswith("-digest") for a in c.status.open_attempts), \
+        "the digest hand-out stays open; nothing stalls on a masked gate"
+
+
+def test_a_handed_reference_must_name_an_input_the_producer_declares(tmp_path: Path, tmp_library: None,
+                                                                     monkeypatch: pytest.MonkeyPatch) -> None:
+    def typo(jobs):
+        jobs["apply-verification"]["inputs"]["report-handed"]["source"] = "verifier-attempt:reprot"
+
+    with pytest.raises(PlanError, match="declares no input reprot"):
+        custom_run(tmp_path, monkeypatch, typo)
+
+
+def test_a_declared_input_cannot_take_the_worker_identity_line(tmp_path: Path, tmp_library: None,
+                                                               monkeypatch: pytest.MonkeyPatch) -> None:
+    def collide(jobs):
+        jobs["brief"]["inputs"]["worker-identity"] = {"address": "file", "source": "instructions/toy/brief.md"}
+
+    with pytest.raises(PlanError, match="worker-identity"):
+        custom_run(tmp_path, monkeypatch, collide)
+
+
+def test_the_run_lock_serializes_threads_of_one_process(tmp_path: Path) -> None:
+    import threading
+
+    from commonplace.artifactrun.store import RunStore
+
+    store = RunStore(tmp_path / "run")
+    store.create({"plan": "p"})
+    first_in = threading.Event()
+    release = threading.Event()
+    order: list[str] = []
+
+    def holder() -> None:
+        with store.lock():
+            with store.lock():  # same-thread re-entry is a no-op
+                order.append("first in")
+                first_in.set()
+                release.wait(5)
+            order.append("first out")
+
+    def contender() -> None:
+        first_in.wait(5)
+        with store.lock():
+            order.append("second in")
+
+    threads = [threading.Thread(target=holder), threading.Thread(target=contender)]
+    for thread in threads:
+        thread.start()
+    first_in.wait(5)
+    import time
+    time.sleep(0.2)
+    assert order == ["first in"], "the second thread waits while the first holds the lock"
+    release.set()
+    for thread in threads:
+        thread.join(5)
+    assert order == ["first in", "first out", "second in"]

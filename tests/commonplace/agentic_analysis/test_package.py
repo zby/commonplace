@@ -9,8 +9,8 @@ import commonplace
 
 PACKAGE = Path(commonplace.__file__).resolve().parent
 ARTIFACTRUN = PACKAGE / "artifactrun"
-CORE = ("plan", "run", "store", "handouts", "engine")
-REUSE = ("checks", "sources", "effects", "worktree", "report")
+CORE = ("plan", "run", "store", "handouts", "engine", "compact")
+REUSE = ("checks", "handlers", "sources", "effects", "worktree", "inspection")
 # The Commonplace modules the core imports today; widening this set is a design change.
 CORE_LIBRARY_IMPORTS = {
     "commonplace.lib.directory_artifact",
@@ -18,6 +18,8 @@ CORE_LIBRARY_IMPORTS = {
     "commonplace.lib.library",
     "commonplace.lib.note_parser",
     "commonplace.lib.reading_batches",
+    # The compact loader's criteria closure follows the validator's schema references.
+    "commonplace.lib.type_resolver",
 }
 
 

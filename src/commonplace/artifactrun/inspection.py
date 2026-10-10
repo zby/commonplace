@@ -11,6 +11,8 @@ from dataclasses import asdict
 from pathlib import Path
 
 from commonplace.artifactrun import RunStatus, current_outputs, inspect, run_lock
+from commonplace.artifactrun.run import Run
+from commonplace.artifactrun.store import RunStore
 
 
 def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> dict:
@@ -40,12 +42,19 @@ def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = 
                 effects[path.stem] = {"error": str(error), "verified": False}
         uncertain = any(stop["uncertain"] for stop in [*failures, *stops])
         state = "uncertain" if uncertain else "stopped" if (failures or stops or exhausted) else "running"
+        waiting: dict[str, list[str]] = {}
+        if state == "running" and view["condition"] == "stuck":
+            # The engine found no open attempt and no ready job: say what each
+            # unfinished job lacks, so nobody waits for progress that cannot come.
+            state = "stuck"
+            waiting = _waiting_on(run_dir)
         if (state == "running" and view["condition"] == "publishable"
                 and current_outputs(run_dir, final_job) is not None):
             state = "completed"
         return {
             "format": "commonplace-engine-run-inspection-v1", "run-id": run_dir.name,
             "state": state, "artifact": str(run_dir / "artifact"), "publishable": view["publishable"],
+            "waiting-on": waiting,
             "parameters": view["parameters"], "members": view["members"],
             "open-attempts": view["open_attempts"], "failed-attempts": failures,
             "invocation-stops": stops, "exhausted-jobs": exhausted,
@@ -67,3 +76,17 @@ def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = 
 def render_run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = None) -> str:
     """Render the run inspection as JSON."""
     return json.dumps(run_inspection(run_dir, final_job=final_job, status=status), indent=2, sort_keys=True) + "\n"
+
+
+def _waiting_on(run_dir: Path) -> dict[str, list[str]]:
+    """For each job without a current completion, the required inputs that resolve to nothing."""
+    run = Run(RunStore(run_dir))
+    waiting = {}
+    for job in run.jobs.jobs:
+        if run.latest_completed(job.name) is not None:
+            continue
+        absent = [name for name, spec in job.inputs.items()
+                  if spec.required and run.resolve(name, job.inputs).version is None]
+        if absent:
+            waiting[job.name] = absent
+    return waiting

@@ -23,8 +23,8 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
-HANDOUT_FIELDS = ("job", "role", "attempt", "run-id", "output", "problem", "workspace", "artifact", "scratch",
-                  "identity", "cites", "verifies")
+HANDOUT_FIELDS = ("job", "role", "attempt", "run-id", "output", "problem", "worker-identity", "workspace",
+                  "artifact", "scratch", "identity", "cites", "verifies")
 HANDOUT_PREFIXES = ("output-", "previous-")
 """Names a hand-out prompt sets itself; inputs and parameters may not reuse them."""
 REFUSAL_INPUT = "refusal"
@@ -405,6 +405,9 @@ def _check(plan: Plan, roles: Mapping[str, Any] | None) -> None:
                 if spec.address == "output" and output not in plan.job(producer).outputs:
                     raise PlanError(f"{where}: {producer} has no output {output}")
             elif spec.address == "handed":
-                attempt, _, _ = spec.source.partition(":")
+                attempt, _, handed = spec.source.partition(":")
                 if attempt not in job.inputs or job.inputs[attempt].address != "attempt":
                     raise PlanError(f"{where}: {attempt} must be an attempt input of this job")
+                producer = job.inputs[attempt].source
+                if handed not in plan.job(producer).inputs:
+                    raise PlanError(f"{where}: {producer} declares no input {handed} to hand")

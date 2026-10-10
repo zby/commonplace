@@ -204,6 +204,11 @@ def test_inspection_reports_a_run_stuck_on_an_uncovered_relation(
     view = inspect(c.run_dir)
     assert not c.handed() and not view["failed_attempts"] and not view["exhausted_jobs"]
     assert view["condition"] == "stuck"
+    from commonplace.artifactrun.inspection import run_inspection
+
+    report = run_inspection(c.run_dir, final_job="assemble")
+    assert report["state"] == "stuck", "the operator view keeps the engine's condition"
+    assert report["waiting-on"] == {"assemble": ["coverage"]}, "and names what the unfinished job lacks"
 
 
 def test_criteria_groups_expand_into_ordinary_file_inputs(tmp_path: Path) -> None:

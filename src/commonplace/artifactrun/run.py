@@ -222,12 +222,13 @@ class Run:
             matches = [j for j in self.judgments if j["subject"]["role"] == spec.source
                        and j["outcome"] == spec.outcome
                        and (spec.relation is None or spec.relation in {e["relation"] for e in j["scope"]})]
+            # Historical evidence never masks the gate: only a judgment of the
+            # current member that still holds can satisfy it, the latest such.
+            installed = self.members().get(spec.source)
+            matches = [j for j in matches if j["subject"]["version"] == installed and self.holds(j)]
             if not matches:
                 return ABSENT
             judgment = matches[-1]
-            current = self.members().get(spec.source) == judgment["subject"]["version"]
-            if not (current and self.holds(judgment)):
-                return ABSENT
             # Identity is the judged claim, not the record: re-recording the same
             # claim, as an apply job does after an unchanged verdict, is no change.
             data = canonical({

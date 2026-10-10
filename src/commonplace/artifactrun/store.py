@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import shutil
+import threading
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from pathlib import Path
@@ -35,6 +36,9 @@ def canonical(record: Any) -> bytes:
 
 # Run directories whose lock this process holds, so nested holders do not deadlock.
 _HELD: set[Path] = set()
+"""Runs this thread holds; re-entry is per thread, so another thread waits on the run's lock below."""
+_LOCKS: dict[Path, threading.RLock] = {}
+_LOCKS_GUARD = threading.Lock()
 
 
 class RunStore:
@@ -55,19 +59,26 @@ class RunStore:
 
     @contextmanager
     def lock(self) -> Iterator[None]:
-        """Hold the run lock; re-entering it in the same process is a no-op."""
+        """Hold the run lock; re-entering it on the same thread is a no-op.
+
+        Another thread of this process waits, as another process does on the
+        file lock, so concurrent advances cannot race on sequence numbers.
+        """
         key = self.run_dir.resolve()
-        if key in _HELD:
-            yield
-            return
-        with open(self.state / "lock", "a") as handle:
-            fcntl.flock(handle, fcntl.LOCK_EX)
-            _HELD.add(key)
-            try:
+        with _LOCKS_GUARD:
+            local = _LOCKS.setdefault(key, threading.RLock())
+        with local:
+            if key in _HELD:
                 yield
-            finally:
-                _HELD.discard(key)
-                fcntl.flock(handle, fcntl.LOCK_UN)
+                return
+            with open(self.state / "lock", "a") as handle:
+                fcntl.flock(handle, fcntl.LOCK_EX)
+                _HELD.add(key)
+                try:
+                    yield
+                finally:
+                    _HELD.discard(key)
+                    fcntl.flock(handle, fcntl.LOCK_UN)
 
     # Writing
 
