@@ -23,6 +23,7 @@ import yaml
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.sources import frozen_source_refusals
+from commonplace.lib.directory_layout import blocker_entries
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.lib.validation import validate_draft_in_role
 
@@ -98,17 +99,6 @@ def correction_blockers(refusal: bytes | None, member: str) -> str:
         return "none"
     lines = findings.splitlines()
     return f"- {member}: {lines[0]}" + "".join(f"\n  {line}" for line in lines[1:])
-
-
-def blocker_entries(blockers: str) -> list[str]:
-    """The `- ` entries of a Blockers list, continuation lines joined; `none` has none."""
-    entries = []
-    for line in blockers.splitlines():
-        if line.startswith("- "):
-            entries.append(line)
-        elif entries and line.strip():
-            entries[-1] += "\n" + line
-    return entries
 
 
 def correction_findings(candidate: bytes, *, member: str, refusal: bytes | None,

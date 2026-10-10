@@ -30,7 +30,7 @@ from commonplace.lib.agentic_analysis.records import (
     value_amendments,
 )
 from commonplace.lib.directory_artifact import DirectoryArtifact
-from commonplace.lib.directory_layout import Finding, Layout
+from commonplace.lib.directory_layout import Finding, Layout, blocker_entries
 from commonplace.lib.note_parser import (
     ParsedDocument,
     blank_fenced_code_blocks,
@@ -334,42 +334,27 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
 
 
 def _verification_findings(layout: Layout, documents: dict[str, ParsedDocument]) -> list[Finding]:
-    """List grammar and carried limits; meaning remains review."""
+    """Every limit a verification declares is carried into the synthesis's Limitations.
 
-    findings = []
+    The protocol's grammar is a layout finding of each verifying role.
+    """
     synthesis = documents.get("synthesis")
-    limitations = record_references(section(synthesis.body, "Limitations")) if synthesis else set()
-    for name in ("report-verification", "profile-verification", "synthesis-verification"):
-        document = documents.get(name)
-        if document is None:
+    if synthesis is None:
+        return []
+    findings = []
+    limitations = record_references(section(synthesis.body, "Limitations"))
+    for role in layout.roles.values():
+        document = documents.get(role.name)
+        if not role.verifies or document is None:
             continue
-        path = layout.path(name)
-        for title in ("Blockers", "Limits"):
-            text = section(document.body, title).strip()
-            if text == "none":
-                continue
-            lines = [line for line in text.splitlines() if line.strip()]
-            valid = lines and lines[0].startswith("- ") and all(
-                line.startswith(("- ", " ", "\t")) for line in lines
-            )
-            if not valid:
-                findings.append(Finding(name, f"{path}: {title} must be exactly none or a Markdown list",
-                                        repair=f"write none or one '- ' entry per {title.lower()} finding; indent continuation lines"))
-                continue
-            entries = re.split(r"(?m)^- ", text)[1:]
-            if title == "Blockers" and name == "report-verification":
-                for entry in entries:
-                    if not re.match(r"(?:runtime|memory|epistemic|reconciliation): +\S", entry):
-                        findings.append(Finding(name, f"{path}: report blocker has no report addressee",
-                                                repair="start each blocker with runtime:, memory:, epistemic: or reconciliation: and its finding"))
-            if title == "Limits" and synthesis is not None:
-                for entry in entries:
-                    cited = record_references(entry)
-                    if cited and not cited & limitations:
-                        findings.append(Finding("synthesis", f"{layout.path('synthesis')}: limit not carried: "
-                                                f"Limitations names none of {', '.join(sorted(cited))} "
-                                                f"for the limit {path} declares: {entry.splitlines()[0][:100]}",
-                                                repair="carry the named limit, citing its affected records, into synthesis Limitations"))
+        limits = section(document.body, "Limits").strip()
+        for entry in blocker_entries(limits) if limits != "none" else []:
+            cited = record_references(entry)
+            if cited and not cited & limitations:
+                findings.append(Finding("synthesis", f"{layout.path('synthesis')}: limit not carried: "
+                                        f"Limitations names none of {', '.join(sorted(cited))} "
+                                        f"for the limit {role.path} declares: {entry.splitlines()[0][:100]}",
+                                        repair="carry the named limit, citing its affected records, into synthesis Limitations"))
     return findings
 
 

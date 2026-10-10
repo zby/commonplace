@@ -42,14 +42,12 @@ from __future__ import annotations
 
 import importlib
 import json
-import re
 from collections.abc import Callable, Mapping
 from dataclasses import replace
 
 from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.checks import (
     Candidate,
-    blocker_entries,
     content_findings,
     correction_findings,
     criterion_bytes,
@@ -59,6 +57,11 @@ from commonplace.artifactrun.checks import (
 )
 from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.directory_layout import (
+    addressee,
+    blocker_entries,
+    protocol_sections,
+)
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import CriterionSnapshot
@@ -197,43 +200,6 @@ def check(attempt: CodeAttempt) -> Mapping[str, bytes]:
     return {}
 
 
-PROTOCOL_SECTIONS = ("Blockers", "Limits")
-
-
-def _sections(body: str) -> dict[str, str | None]:
-    """Each protocol section's text; None when its heading is absent."""
-    found = {}
-    for title in PROTOCOL_SECTIONS:
-        match = re.search(rf"(?ms)^## {title}[ \t]*\n(.*?)(?=^## |\Z)", body)
-        found[title] = match[1].strip() if match else None
-    return found
-
-
-def protocol_findings(verdict: bytes, subjects: tuple[str, ...]) -> list[str]:
-    """Why a verdict does not follow the verification protocol for ``subjects``."""
-    document, error = parse_document(verdict.decode("utf-8", errors="replace"))
-    if document is None:
-        return [f"[protocol] verdict cannot be read: {error}"]
-    findings = []
-    for title, text in _sections(document.body).items():
-        if text is None:
-            findings.append(f"[protocol] ## {title} is missing")
-        elif text != "none" and any(line.strip() and not line.startswith(("- ", " ", "\t"))
-                                    for line in text.splitlines()) or text != "none" and not text.startswith("- "):
-            findings.append(f"[protocol] ## {title} must be exactly none or a list of - entries")
-    blockers = _sections(document.body)["Blockers"]
-    if blockers and blockers != "none" and len(subjects) > 1:
-        for entry in blocker_entries(blockers):
-            if addressee(entry) not in subjects:
-                findings.append(f"[protocol] blocker addresses none of {', '.join(subjects)}: {entry.splitlines()[0]}")
-    return findings
-
-
-def addressee(entry: str) -> str:
-    """The role a `- <role>: ...` blocker addresses."""
-    return entry[2:].partition(":")[0].strip()
-
-
 def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     """Apply a verdict to the exact subject versions its verifier was handed.
 
@@ -252,13 +218,14 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     if missing:
         raise ValueError(f"job {attempt.job.name}: no handed input for verified roles {', '.join(missing)}")
     answers, answered = correction(attempt, verdict)
-    findings = review(verdict) + answers + protocol_findings(verdict.data, verified) + extension_findings(verdict)
+    # Review includes the protocol's grammar, a layout finding for a verifying role.
+    findings = review(verdict) + answers + extension_findings(verdict)
     judge(verdict, findings, answered=answered)
     if findings:
         return {}  # A verdict that fails its own check judges nothing.
 
     document, _ = parse_document(verdict.data.decode("utf-8"))
-    sections = _sections(document.body)
+    sections = protocol_sections(document.body)
     entries = blocker_entries(sections["Blockers"]) if sections["Blockers"] != "none" else []
     limits = sections["Limits"]
     feedback = _resolve(attempt.extensions["feedback"]) if attempt.extensions.get("feedback") else None

@@ -7,12 +7,13 @@ author refused by it reads the peer records its blockers cite.
 
 from __future__ import annotations
 
-from commonplace.artifactrun.checks import Candidate, blocker_entries
+from commonplace.artifactrun.checks import Candidate
 from commonplace.artifactrun.handlers import ARTIFACT_CHECK_HEADING
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
 )
+from commonplace.lib.directory_layout import blocker_entries
 from commonplace.lib.note_parser import section
 
 
@@ -41,13 +42,14 @@ def report_check_gate(check: Candidate) -> list[str]:
 def cited_records(role: str, blockers: list[str], verdict: Candidate) -> str:
     """Peer record declarations the blockers addressed to `role` cite, for the author to read."""
     layout = verdict.attempt.layout
-    prefixes = {"runtime": "RT-", "memory": "MEM-", "epistemic": "EPI-"}
     fragments = []
     for identifier in sorted(record_references("\n".join(blockers))):
-        for peer, prefix in prefixes.items():
+        # The member that declares the record, wherever it is, not a prefix table.
+        for peer in layout.roles:
             body = verdict.snapshot.get(layout.path(peer))
-            if peer != role and identifier.startswith(prefix) and body is not None:
-                declaration = record_declaration(body.decode("utf-8"), identifier)
-                if declaration is not None:
-                    fragments.append(f"From the {peer} report:\n\n{declaration}")
+            if peer == role or body is None:
+                continue
+            declaration = record_declaration(body.decode("utf-8"), identifier)
+            if declaration is not None:
+                fragments.append(f"From the {peer} report:\n\n{declaration}")
     return "\n## Cited records from other reports\n\n" + ("\n".join(fragments) or "none") + "\n"

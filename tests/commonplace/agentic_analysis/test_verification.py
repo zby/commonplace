@@ -129,7 +129,7 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
 
 
 @pytest.mark.parametrize("blockers,changes,reason", [
-    ("- boundary: change target.", {}, "addressee"),
+    ("- boundary: change target.", {}, "addresses none of"),
     ("- runtime:", {}, "finding"),
     ("not a list", {}, "Markdown list"),
     ("none", {"reviewed-boundary": "b" * 40}, "identity"),

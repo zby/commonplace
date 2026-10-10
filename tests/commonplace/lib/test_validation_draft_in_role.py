@@ -210,11 +210,13 @@ def test_context_parse_failure_is_explicit_and_nonwriting(draft_artifact):
 
 
 def test_verification_grammar_findings_are_role_findings(tmp_path):
-    docs = {"report-verification": document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n")}
-    findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
+    layout = analysis_layout()
+    verdict = document("# Judgment\n\n## Blockers\n- No addressee.\n\n## Limits\nprose\n")
+    findings = [f for f in layout_findings(layout, {layout.path("report-verification"): verdict})
+                if f.role == "report-verification" and not f.absent and "type" not in f.message
+                and "identity" not in f.message]
     assert len(findings) == 2
-    assert all(f.role == "report-verification" for f in findings)
-    assert any("addressee" in f.message for f in findings)
+    assert any("addresses none of" in f.message for f in findings)
     assert any("Limits" in f.message for f in findings)
 
 

@@ -68,7 +68,9 @@ def candidate(tmp_path, data: bytes, judged: list) -> checks.Candidate:
 
 
 def body(run: str) -> bytes:
-    return f"---\ntype: pairs/types/body.md\nname: body\ndescription: Body.\nrun: {run}\n---\n# Body\n".encode()
+    # The body verifies the head, so it follows the verification protocol.
+    return (f"---\ntype: pairs/types/body.md\nname: body\ndescription: Body.\nrun: {run}\n---\n# Body\n\n"
+            "## Blockers\n\nnone\n\n## Limits\n\nnone\n").encode()
 
 
 def test_a_matching_body_is_accepted_over_its_relations(tmp_path):

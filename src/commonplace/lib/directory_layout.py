@@ -14,12 +14,13 @@ findings filters by role.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import PurePosixPath
 from typing import Any
 
-from commonplace.lib.note_parser import ParsedDocument
+from commonplace.lib.note_parser import ParsedDocument, section
 
 MEMBERSHIP = ("open", "closed")
 RUN = "run"
@@ -191,6 +192,63 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
     return Layout(roles, Requirement(always, when_role, when_field, values), data["membership"])
 
 
+PROTOCOL_SECTIONS = ("Blockers", "Limits")
+"""The sections of a verifying role's document, each exactly `none` or a list of `- ` entries."""
+
+
+def protocol_sections(body: str) -> dict[str, str | None]:
+    """Each protocol section's text, stripped; None when its heading is absent."""
+    return {title: section(body, title).strip() if re.search(rf"(?m)^## {title}[ \t]*$", body) else None
+            for title in PROTOCOL_SECTIONS}
+
+
+def blocker_entries(blockers: str) -> list[str]:
+    """The `- ` entries of a Blockers list, continuation lines joined; `none` has none."""
+    entries = []
+    for line in blockers.splitlines():
+        if line.startswith("- "):
+            entries.append(line)
+        elif entries and line.strip():
+            entries[-1] += "\n" + line
+    return entries
+
+
+def addressee(entry: str) -> str:
+    """The role a `- <role>: ...` blocker addresses."""
+    return entry[2:].partition(":")[0].strip()
+
+
+def protocol_findings(role: Role, body: str) -> list[Finding]:
+    """How a verifying role's document departs from the verification protocol.
+
+    With more than one verified role, every blocker starts with the one it addresses.
+    """
+    findings = []
+    sections = protocol_sections(body)
+    for title, text in sections.items():
+        if text is None:
+            findings.append(Finding(role.name, f"{role.path}: ## {title} is missing",
+                                    repair=f"add ## {title} with none or one '- ' entry per finding"))
+        elif text != "none" and (not text.startswith("- ") or any(
+                line.strip() and not line.startswith(("- ", " ", "\t")) for line in text.splitlines())):
+            findings.append(Finding(role.name, f"{role.path}: {title} must be exactly none or a Markdown list",
+                                    repair=f"write none or one '- ' entry per {title.lower()} finding; "
+                                           "indent continuation lines"))
+    blockers = sections["Blockers"]
+    if blockers and blockers != "none" and len(role.verifies) > 1:
+        for entry in blocker_entries(blockers):
+            if addressee(entry) not in role.verifies:
+                findings.append(Finding(
+                    role.name, f"{role.path}: blocker addresses none of {', '.join(role.verifies)}: "
+                               f"{entry.splitlines()[0]}",
+                    repair="start the blocker with the one member whose text must change, as '- <member>: '"))
+            elif not entry.partition(":")[2].strip():
+                findings.append(Finding(
+                    role.name, f"{role.path}: blocker addressed to {addressee(entry)} states no finding",
+                    repair="follow the addressee with the finding, its records and its evidence"))
+    return findings
+
+
 def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
                     run_values: Mapping[str, str] | None = None) -> list[Finding]:
     """Membership, document types, requiredness and identity over the members present.
@@ -222,6 +280,8 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
         if actual != role.type:
             findings.append(Finding(role.name, f"{role.path}: type {actual!r} does not match the layout's {role.type}",
                                     repair=f"set the member's type to {role.type}"))
+        if role.verifies:
+            findings += protocol_findings(role, document.body)
         values = document.frontmatter or {}
         for name in role.run_binding if run_values is not None else ():
             if values.get(name) != run_values.get(name):
