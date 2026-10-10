@@ -9,6 +9,8 @@ layout:
     boundary:
       path: boundary.md
       type: agentic-system-analyses/types/agentic-system-boundary.md
+      identity:
+        - {from: run, fields: [run-id]}
       cites: [boundary]
     overview:
       path: overview.md
@@ -28,6 +30,7 @@ layout:
       type: agentic-system-analyses/types/agentic-system-memory-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
+        - {from: run, fields: [source-identity]}
       cites: [boundary, runtime, memory, epistemic]
     epistemic:
       path: epistemic.md

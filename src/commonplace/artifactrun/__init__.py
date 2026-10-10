@@ -37,6 +37,7 @@ from commonplace.artifactrun.engine import (
     judge,
     open_handouts,
     run_lock,
+    run_values,
     start_run,
 )
 from commonplace.artifactrun.plan import (
@@ -67,5 +68,6 @@ __all__ = [
     "load_plan",
     "open_handouts",
     "run_lock",
+    "run_values",
     "start_run",
 ]

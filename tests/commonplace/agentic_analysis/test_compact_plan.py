@@ -86,6 +86,9 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
                     inputs[key] = Input("role", spec.source, required=False)  # Cited roles are optional.
                 else:
                     del inputs[key]  # Partners come from the layout, not from the old list.
+        if name == "check-memory":
+            # The memory report's source identity is bound to the run in the layout, not by the opening.
+            del inputs["metadata"]
     elif name.startswith("apply-"):
         # The apply receives every read of its verifier, outputs as well as members.
         verifier = new.job(name.removeprefix("apply-"))

@@ -123,3 +123,16 @@ def test_the_frame_prints_the_layout_facts_of_the_role(tmp_path, monkeypatch):
     c.complete("other", "other O1\n")
     c.complete("summary", "summary S1\n")
     assert "You verify report, other, summary." in section(c, "verification")
+
+
+def test_run_bound_fields_print_as_the_run_source_in_the_identity_line():
+    from commonplace.artifactrun.handouts import layout_lines
+    from commonplace.lib.directory_layout import parse_layout
+
+    layout = parse_layout({"membership": "closed", "roles": {
+        "head": {"path": "head.md", "type": "t/head.md", "identity": [{"from": "run", "fields": ["run-id"]}]},
+        "body": {"path": "body.md", "type": "t/body.md", "identity": [
+            {"from": "run", "fields": ["source-identity"]}, {"from": "head", "fields": ["run-id"]}]},
+    }})
+    assert layout_lines(layout, "head")["identity"] == "run: run-id"
+    assert layout_lines(layout, "body")["identity"] == "head: run-id; run: source-identity"

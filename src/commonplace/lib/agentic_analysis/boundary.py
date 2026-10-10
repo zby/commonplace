@@ -11,10 +11,14 @@ from commonplace.lib.note_parser import parse_document
 
 
 def boundary_refusals(
-    candidate: Path | bytes, *, repo_root: Path, run_id: str, identity: str,
+    candidate: Path | bytes, *, repo_root: Path, identity: str, run_id: str | None = None,
     frozen: dict[str, Any] | None = None, capture_directory: Path | None = None,
 ) -> list[str]:
-    """Invocation-only checks against run parameters and pinned source bytes."""
+    """Invocation-only checks against run parameters and pinned source bytes.
+
+    Without ``run_id`` the boundary's run-id is left to draft validation,
+    which binds it to the run.
+    """
     try:
         text = candidate.decode("utf-8") if isinstance(candidate, bytes) else candidate.read_text(encoding="utf-8")
         document, error = parse_document(text)
@@ -24,7 +28,7 @@ def boundary_refusals(
         return []
     fields = dict(document.frontmatter or {})
     refusals = []
-    if fields.get("run-id") != run_id:
+    if run_id is not None and fields.get("run-id") != run_id:
         refusals.append(f"member identity: run-id {fields.get('run-id')!r} does not match {run_id!r}")
     source = fields.get("source")
     # A non-complete disposition does not authorize discarding code's source pin.

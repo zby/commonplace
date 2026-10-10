@@ -107,7 +107,7 @@ def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path,
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
     files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
-    attempt = fixed_type(run_dir=tmp_path, read_files=lambda: dict(files))
+    attempt = fixed_type(run_dir=tmp_path, read_files=lambda: dict(files), parameters={"source-identity": "fixture"})
     seen = []
 
     def validate(*args, **kwargs):
@@ -123,3 +123,4 @@ def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path,
     assert kwargs["members"] == {"boundary.md": boundary}
     assert kwargs["criteria"] == pinned
     assert kwargs["frozen_source"] == source
+    assert kwargs["run_values"] == {"source-identity": "fixture", "run-id": tmp_path.name}

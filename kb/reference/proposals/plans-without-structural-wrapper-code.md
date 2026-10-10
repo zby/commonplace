@@ -490,7 +490,18 @@ deletes checks the opener and the analyst check carry until then.
    test asserts every derived job's declared checks and feedback. All five
    are fixed as of 2026-10-09.
 4. Run binding as identity, deleting the opener's and the analyst check's
-   remaining duplicates.
+   remaining duplicates. The binding is done 2026-10-10: a layout identity
+   source `from: run` binds fields to the run's values, the parameters and
+   `run-id`; draft validation checks them inside an engine run, in the
+   shared check and the worker's self-check alike, and skips them outside
+   one. The boundary binds `run-id` and the memory report `source-identity`,
+   so the boundary check no longer compares the run-id and the memory
+   source-identity check is deleted. The opening now refuses an
+   unnormalized `source-identity` instead of normalizing it, because the run
+   value is what members must equal. The boundary's `source.identity` stays
+   in the boundary check: it authorizes source inspection and is nested in
+   the source object. The generic rule that declared identifiers survive a
+   correction is not done; `preserved_records` still carries it.
 5. The hand-out template, in three parts: template support in the engine
    and loader with the toy plan untouched; the analysis template, the
    mission-file shrink and the derived type inputs with the old contract

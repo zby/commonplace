@@ -12,7 +12,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.lib.directory_layout import Layout
+from commonplace.lib.directory_layout import RUN, Layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.reading_batches import (
     READ_BATCH_BYTES,
@@ -56,13 +56,15 @@ CONDITION = re.compile(r"\[([A-Za-z0-9][A-Za-z0-9_-]*)\]")
 def layout_lines(layout: Layout, role: str) -> dict[str, str]:
     """The layout's facts about `role` as frame lines.
 
-    `identity` names the fields the role repeats and from which roles,
+    `identity` names the fields the role repeats and from which roles, or
+    from `run` for fields that must equal the run's lines,
     `cites` the roles its references may resolve in, and, for a verifying
     role only, `verifies` the roles its verdict settles.
     """
     declared = layout.roles[role]
-    lines = {"identity": "; ".join(f"{source.role}: {', '.join(source.fields)}"
-                                   for source in declared.identity) or "none",
+    sources = [(source.role, source.fields) for source in declared.identity]
+    sources += [(RUN, declared.run_binding)] if declared.run_binding else []
+    lines = {"identity": "; ".join(f"{source}: {', '.join(fields)}" for source, fields in sources) or "none",
              "cites": ", ".join(declared.cites) or "none"}
     if declared.verifies:
         lines["verifies"] = ", ".join(declared.verifies)
@@ -147,11 +149,11 @@ def _open(run: Run, job: ModelJob) -> Handout:
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     problem = directory / "problem.md"
     worker_identity = directory / WORKER_IDENTITY
-    run_values = {"run": str(store.run_dir), "run-id": store.run_dir.name,
-                  "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
+    placeholders = {"run": str(store.run_dir), "run-id": store.run_dir.name,
+                    "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
     values = {"job": job.name, **({"role": job.role, **layout_lines(run.layout, job.role)} if job.role else {}),
               "attempt": attempt, "run-id": store.run_dir.name}
-    values |= {key: _substitute(value, run_values, run.parameters) for key, value in job.parameters.items()}
+    values |= {key: _substitute(value, placeholders, run.parameters) for key, value in job.parameters.items()}
     framed = {job.instruction, PROMPT_SECTION_INPUT}
     values |= {name: (str(path) if path else "absent") for name, path in paths.items() if name not in framed}
     values["output"] = str(outputs[job.outputs[0]])

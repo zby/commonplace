@@ -106,8 +106,6 @@ jobs:
   checks:
   - function: commonplace.lib.agentic_analysis.declared_checks.preserved_records
     inputs: {incumbent-report: {source: memory, mode: optional}}
-  - function: commonplace.lib.agentic_analysis.declared_checks.memory_source_identity
-    inputs: {metadata: 'opening:metadata'}
 - role: epistemic
   instruction: jobs-engine/trace-epistemic.md
   outputs: [report, answers]

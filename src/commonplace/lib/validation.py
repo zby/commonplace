@@ -163,6 +163,8 @@ class ValidationRun:
     criteria: CriterionSnapshot | None = None
     # Exact boundary source declaration authorizing local frozen inspection.
     frozen_source: Mapping[str, object] | None = None
+    # The run parameters and run-id that run-bound identity fields must equal.
+    run_values: Mapping[str, str] | None = None
     _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
     _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
     _evaluating: list[Path] = field(default_factory=list, init=False)
@@ -504,7 +506,7 @@ class ValidationRun:
         if profile.layout is not None:
             findings += layout_findings(profile.layout, {
                 name: member.document for name, member in artifact.members.items()
-            })
+            }, self.run_values)
         for rule in _DIRECTORY_TYPE_RULES.get(profile.type_path, []):
             findings += rule(artifact, layout=profile.layout, run=self)
         return findings
@@ -1969,6 +1971,7 @@ def validate_draft_in_role(
     members: dict[str, bytes] | None = None, manifest: bytes | None = None,
     criteria: Mapping[str, bytes] | None = None,
     frozen_source: Mapping[str, object] | None = None,
+    run_values: Mapping[str, str] | None = None,
 ) -> list[Finding]:
     """Validate candidate bytes in a role of a working artifact, without writing.
 
@@ -1982,6 +1985,7 @@ def validate_draft_in_role(
     preserve the ordinary CLI's incumbent-overlay behavior. With ``criteria``,
     type and schema resolution use only the supplied closed criterion bytes.
     ``frozen_source`` authorizes inspection of that exact pinned source only.
+    ``run_values`` are the run's values that run-bound identity fields must equal.
     """
     directory = directory.resolve()
     data = candidate.read_bytes() if isinstance(candidate, Path) else candidate
@@ -2012,7 +2016,7 @@ def validate_draft_in_role(
     snapshot = {} if members is None else {directory: {**members, intended.name: data}}
     run = ValidationRun(
         repo_root, (), content_overrides={**manifest_override, intended: data}, member_snapshots=snapshot,
-        criteria=criterion_snapshot, frozen_source=frozen_source,
+        criteria=criterion_snapshot, frozen_source=frozen_source, run_values=run_values,
     )
     # Published pins describe incumbent bytes, not a hypothetical replacement.
     # Strip them in memory so every relation sees the draft, even on replay.

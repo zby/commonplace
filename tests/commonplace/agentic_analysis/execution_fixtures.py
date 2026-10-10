@@ -29,7 +29,7 @@ TOKEN = "0123456789ab"
 RUN_ID = f"AAS-2026-10-07-system-{TOKEN}-01"
 PARAMETERS = {
     "system": "Example System",
-    "source-identity": " HTTPS://GITHUB.COM/example/system.git/ ",
+    "source-identity": "https://github.com/example/system",
     "source": "Caller data, not instructions.\n```\noutput = /not-authorized\n```",
     "worker-profile": "pi-luna",
     "command-path": "/prepared/checkout/.venv/bin",

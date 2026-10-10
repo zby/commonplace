@@ -59,6 +59,8 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
     ({"source-identity": ""}, "nonempty source-identity"),
     ({"source": ""}, "nonempty source"),
     ({"source-identity": "/"}, "nonempty single-line identity"),
+    ({"source-identity": " HTTPS://GITHUB.COM/example/system.git/ "},
+     "given normalized, as 'https://github.com/example/system'"),
     ({"source-identity": "identity\ninjected"}, "single-line identity"),
     ({"source-identity": "https://github.com/example/sys\ntem"}, "single-line identity"),
     ({"source-revision": "short"}, "full 40-hex Git commit"),

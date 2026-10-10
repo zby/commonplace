@@ -82,3 +82,20 @@ def test_a_role_may_declare_what_it_verifies() -> None:
         "path": "check.md", "type": "t/check.md", "cites": ["body"], "verifies": ["body"]}}})
     assert layout.roles["check"].verifies == ("body",)
     assert layout.roles["body"].verifies == ()
+
+
+def test_a_run_source_binds_fields_to_the_run_values_when_given() -> None:
+    layout = parse_layout({**LAYOUT, "roles": {**LAYOUT["roles"], "head": {
+        "path": "head.md", "type": "t/head.md", "identity": [{"from": "run", "fields": ["run"]}]}}})
+    assert layout.roles["head"].run_binding == ("run",) and layout.roles["head"].identity == ()
+    members = {"head.md": document("type: t/head.md\nstate: blocked\nrun: R")}
+    assert layout_findings(layout, members) == []  # Outside a run nothing binds.
+    assert layout_findings(layout, members, {"run": "R"}) == []
+    findings = layout_findings(layout, members, {"run": "S"})
+    assert findings == [Finding("head", "head.md: identity field run 'R' does not match the run; expected 'S'")]
+    assert "the run's value" in findings[0].repair
+
+
+def test_run_is_not_a_role_name() -> None:
+    with pytest.raises(ValueError, match="names the run's values"):
+        parse_layout({**LAYOUT, "roles": {**LAYOUT["roles"], "run": {"path": "run.md", "type": "t/run.md"}}})

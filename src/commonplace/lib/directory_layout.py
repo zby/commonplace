@@ -3,7 +3,9 @@
 A directory type spec may carry ``layout`` in its frontmatter. Each role names
 one direct child file of the artifact, the document type expected there, the
 roles whose fields it must repeat, and the roles whose declarations its
-references may resolve against. The layout owns membership and requiredness;
+references may resolve against. An identity source named ``run`` binds
+fields to the run's values instead, the run parameters and ``run-id``,
+which only a caller inside a run supplies. The layout owns membership and requiredness;
 the type's schema keeps the manifest's instance metadata.
 
 Findings carry the role they belong to, so a caller that wants one member's
@@ -20,6 +22,8 @@ from typing import Any
 from commonplace.lib.note_parser import ParsedDocument
 
 MEMBERSHIP = ("open", "closed")
+RUN = "run"
+"""The identity source that names the run's values; no role may take the name."""
 
 
 @dataclass(frozen=True)
@@ -36,6 +40,7 @@ class Role:
     identity: tuple[IdentitySource, ...] = ()
     cites: tuple[str, ...] = ()
     verifies: tuple[str, ...] = ()
+    run_binding: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -67,6 +72,7 @@ class Finding:
                 "unresolved record": "link to the member that declares the record, within this role's citation scope; remove unsupported references",
                 "duplicate": "keep one declaration per ID and give distinct records distinct names",
                 "required member is absent": "supply the member at its declared path",
+                "does not match the run": "use the run's value shown, which the run prints as the line of that name",
                 "identity field": "use the expected identity value from the named source member",
                 "source member": "supply the named source member before checking this dependent identity",
                 "does not match": "use the expected value shown for this role",
@@ -147,6 +153,8 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
         at = f"{where}.roles.{name}"
         if not isinstance(name, str) or not name:
             raise ValueError(f"{where}.roles: role names must be nonempty strings")
+        if name == RUN:
+            raise ValueError(f"{at}: {RUN} names the run's values, not a role")
         entry = _mapping(raw, at, {"path", "type", "identity", "cites", "verifies"}, {"path", "type"})
         path = entry["path"]
         if (not isinstance(path, str) or PurePosixPath(path).name != path
@@ -154,18 +162,22 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
             raise ValueError(f"{at}.path: must name a direct Markdown file")
         if not isinstance(entry["type"], str) or not entry["type"].endswith(".md"):
             raise ValueError(f"{at}.type: must be a type path ending in .md")
-        identity = []
+        identity, run_binding = [], ()
         raw_identity = entry.get("identity", [])
         if not isinstance(raw_identity, list):
             raise TypeError(f"{at}.identity: must be a list of sources")
         for index, source in enumerate(raw_identity):
             source = _mapping(source, f"{at}.identity[{index}]", {"from", "fields"}, {"from", "fields"})
-            identity.append(IdentitySource(source["from"], _names(source["fields"], f"{at}.identity[{index}].fields")))
+            fields = _names(source["fields"], f"{at}.identity[{index}].fields")
+            if source["from"] == RUN:
+                run_binding += fields
+            else:
+                identity.append(IdentitySource(source["from"], fields))
         cites = _names(entry.get("cites", []), f"{at}.cites")
         verifies = _names(entry.get("verifies", []), f"{at}.verifies")
         if name in verifies:
             raise ValueError(f"{at}.verifies: a role cannot verify itself")
-        roles[name] = Role(name, path, entry["type"], tuple(identity), cites, verifies)
+        roles[name] = Role(name, path, entry["type"], tuple(identity), cites, verifies, run_binding)
     paths = [role.path for role in roles.values()]
     if len(set(paths)) != len(paths):
         raise ValueError(f"{where}.roles: two roles share a path")
@@ -194,8 +206,12 @@ def parse_layout(value: Any, *, where: str = "layout") -> Layout:
     return Layout(roles, Requirement(always, when_role, when_field, values), data["membership"])
 
 
-def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> list[Finding]:
-    """Membership, document types, requiredness and identity over the members present."""
+def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
+                    run_values: Mapping[str, str] | None = None) -> list[Finding]:
+    """Membership, document types, requiredness and identity over the members present.
+
+    Fields bound to the run are checked only when ``run_values`` is given.
+    """
     findings: list[Finding] = []
     for name in sorted(members):
         if layout.role_at(name) is None and layout.membership == "closed":
@@ -218,6 +234,13 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument]) -> li
         if actual != role.type:
             findings.append(Finding(role.name, f"{role.path}: type {actual!r} does not match the layout's {role.type}"))
         values = document.frontmatter or {}
+        for name in role.run_binding if run_values is not None else ():
+            if values.get(name) != run_values.get(name):
+                findings.append(Finding(
+                    role.name,
+                    f"{role.path}: identity field {name} {values.get(name)!r} does not match "
+                    f"the run; expected {run_values.get(name)!r}",
+                ))
         for source in role.identity:
             source_role = layout.roles[source.role]
             origin = members.get(source_role.path)

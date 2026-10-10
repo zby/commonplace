@@ -60,7 +60,9 @@ Check a draft in the role it is intended for with
 The role is one the artifact's type declares; its path comes from the layout. The draft
 replaces the incumbent in memory for every check in the invocation. Findings
 are restricted to that role, with rule, location and repair text;
-absent-member findings are deliberately omitted for a working artifact. This mode
+absent-member findings are deliberately omitted for a working artifact. When the
+directory is an engine run's `artifact/`, fields the layout binds to `run` are
+checked against the run's parameters and `run-id`. This mode
 writes nothing and refuses `--output`. A content pass is not job acceptance:
 the workflow adds separately labelled invocation residue. It establishes
 neither claim support nor analytical correctness. Member mode's default and

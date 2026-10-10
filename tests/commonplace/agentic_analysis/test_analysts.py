@@ -93,7 +93,7 @@ def test_structural_repair_retains_original_semantic_blockers(analysts):
 @pytest.mark.slow
 @pytest.mark.parametrize("member,changes,reason", [
     ("runtime", {"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "run-id"),
-    ("memory", {"source-identity": "wrong identity"}, "source-identity"),
+    ("memory", {"source-identity": "wrong identity"}, "identity field source-identity 'wrong identity' does not match the run"),
     ("epistemic", {"reviewed-boundary": "b" * 40}, "identity"),
 ])
 def test_member_identity_is_checked_against_pinned_inputs(analysts, member, changes, reason):

@@ -587,9 +587,16 @@ def check_role_draft(
     """Print the shared findings for the draft in its role, not an acceptance verdict."""
     if not role or "/" in role or role in {".", ".."}:
         raise ValueError("--role must name a role the artifact type declares")
+    # An engine run's working artifact binds identity fields to the run's values.
+    run_dir = directory.resolve().parent
+    values = None
+    if directory.resolve().name == "artifact" and (run_dir / "run.json").is_file():
+        from commonplace.artifactrun import run_values
+
+        values = run_values(run_dir)
     findings = [
         finding for finding in validate_draft_in_role(
-            directory, role, candidate, repo_root=repo_root,
+            directory, role, candidate, repo_root=repo_root, run_values=values,
         ) if not finding.absent
     ]
     # Match acceptance: warnings do not refuse, but unverified evidence does.

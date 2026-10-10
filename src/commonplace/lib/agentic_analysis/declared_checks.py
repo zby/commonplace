@@ -1,4 +1,4 @@
-"""The analysis's declared checks: the boundary binding and the analyst checks.
+"""The analysis's declared checks: the boundary's source binding and record preservation.
 
 The standard check calls each with the candidate it built; each returns
 refusal findings and reads only inputs its plan entry declares. Environment
@@ -18,11 +18,12 @@ from commonplace.lib.note_parser import parse_document
 
 
 def bound_boundary(check: Candidate) -> list[str]:
-    """Bind the boundary to its run: run id and source from opening and acquisition.
+    """Bind the boundary's source to its run's acquisition and capture directory.
 
     The boundary fills the plan's frozen-source role, so the standard check
     inspects the candidate's own source only after this binding passes. A
-    corrected candidate must also bind to the incumbent's pinned source.
+    corrected candidate must also bind to the incumbent's pinned source. The
+    run-id is a run-bound identity field, which draft validation checks.
     """
     attempt = check.attempt
     metadata, repo = locate(attempt)
@@ -39,14 +40,12 @@ def bound_boundary(check: Candidate) -> list[str]:
             raise ValueError("boundary check cannot read the incumbent boundary")
         incumbent_source = (incumbent.frontmatter or {}).get("source")
     findings = ["[invocation] " + refusal for refusal in boundary_refusals(
-        check.data, repo_root=repo, run_id=metadata["run-id"],
-        identity=metadata["source-identity"], frozen=frozen,
+        check.data, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
         capture_directory=Path(metadata["capture-directory"]),
     )]
     if incumbent_source is not None and incumbent_source != frozen:
         findings += ["[incumbent] " + refusal for refusal in boundary_refusals(
-            check.data, repo_root=repo, run_id=metadata["run-id"],
-            identity=metadata["source-identity"], frozen=incumbent_source,
+            check.data, repo_root=repo, identity=metadata["source-identity"], frozen=incumbent_source,
         )]
     return findings
 
@@ -62,13 +61,3 @@ def preserved_records(check: Candidate) -> list[str]:
         return []
     return ["[correction] record declarations: keep every record the accepted predecessor declared: "
             + ", ".join(dropped) + "; correct its finding without changing its referent"]
-
-
-def memory_source_identity(check: Candidate) -> list[str]:
-    """The memory report carries the opening's normalized source identity, which the profile copies."""
-    if not check.fields:
-        return []
-    opened = json.loads(check.attempt.read("metadata"))["source-identity"]
-    if check.fields.get("source-identity") != opened:
-        return ["[invocation] source-identity must be the opening's normalized source identity"]
-    return []

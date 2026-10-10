@@ -15,7 +15,8 @@ assume an operator, the KB as evidence and KB destinations; do not use them
 for this work.
 
 Write the whole member to `output`. Fields your member repeats from other
-members must equal theirs exactly: {identity}. Your citations may resolve
+members, or from `run` for this prompt's lines of the same name, must equal
+them exactly: {identity}. Your citations may resolve
 only in these members: {cites}.
 
 [verifies]

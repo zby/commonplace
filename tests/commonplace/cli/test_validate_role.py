@@ -181,3 +181,15 @@ def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeyp
     assert "absent" not in output
     assert "WARN: [artifact] " + findings[1].render() in output
     assert "[artifact] " + findings[2].render() in output
+
+
+def test_an_engine_run_s_artifact_is_checked_against_the_run_values(tmp_path, monkeypatch, capsys):
+    run = tmp_path / "AAS-run-01"
+    (run / "artifact").mkdir(parents=True)
+    (run / "run.json").write_text(json.dumps({"parameters": {"source-identity": "fixture"}}))
+    seen = []
+    monkeypatch.setattr(validate_notes, "validate_draft_in_role", lambda *a, **kw: seen.append(kw) or [])
+    for directory in (run / "artifact", tmp_path / "elsewhere"):
+        validate_notes.check_role_draft(tmp_path / "draft.md", directory=directory, role="memory",
+                                        repo_root=tmp_path)
+    assert [kw["run_values"] for kw in seen] == [{"source-identity": "fixture", "run-id": "AAS-run-01"}, None]

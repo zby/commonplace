@@ -61,12 +61,13 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     system = parameters["system"]
     if "\n" in system or "\r" in system:
         raise ValueError("system must be a single-line name")
-    raw_identity = parameters["source-identity"].strip()
-    if "\n" in raw_identity or "\r" in raw_identity:
+    identity = parameters["source-identity"]
+    normalized = "" if "\n" in identity or "\r" in identity else normalize_source_identity(identity)
+    if not normalized:
         raise ValueError("source-identity must normalize to a nonempty single-line identity")
-    identity = normalize_source_identity(raw_identity)
-    if not identity:
-        raise ValueError("source-identity must normalize to a nonempty single-line identity")
+    # Members bind their source identity to this run value, so it must already be canonical.
+    if normalized != identity:
+        raise ValueError(f"source-identity must be given normalized, as {normalized!r}")
     worker = resolve_worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
     revision = parameters.get("source-revision")
     if revision is not None:

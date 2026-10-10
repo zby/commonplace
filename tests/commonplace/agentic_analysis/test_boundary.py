@@ -76,7 +76,7 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
 
 @pytest.mark.slow
 @pytest.mark.parametrize("changes,reason", [
-    ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "member identity: run-id"),
+    ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "identity field run-id 'AAS-2026-10-07-other-0123456789ab-01' does not match the run"),
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
     # A non-complete disposition does not authorize dropping code's source pin.
     ({"result-disposition": "blocked", "source": None, "reviewed-boundary": None}, "exactly the checkout code froze"),

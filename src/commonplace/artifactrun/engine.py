@@ -341,6 +341,14 @@ def _historical_bases(run: Run) -> list[dict]:
     return found
 
 
+def run_values(run_dir: Path) -> dict[str, str]:
+    """The run parameters and run-id, which run-bound identity fields must equal."""
+    store = RunStore(Path(run_dir))
+    if not store.metadata.exists():
+        raise FileNotFoundError(f"{run_dir} holds no run; start it first")
+    return {**store.read_metadata().get("parameters", {}), "run-id": store.run_dir.name}
+
+
 def current_outputs(run_dir: Path, job: str) -> dict[str, bytes] | None:
     """A job's outputs while its completion is current, else None.
 

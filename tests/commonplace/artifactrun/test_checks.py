@@ -55,7 +55,7 @@ def attempt(tmp_path, candidate: bytes, judged: list) -> SimpleNamespace:
     inputs = {"candidate": candidate,
               "head": b"---\ntype: pairs/types/head.md\nname: head\ndescription: Head.\nrun: R1\n---\n# Head\n"}
     return SimpleNamespace(
-        run_dir=tmp_path / "kb/pairs/state/run", layout=layout, relations=tuple(relations),
+        run_dir=tmp_path / "kb/pairs/state/run", parameters={}, layout=layout, relations=tuple(relations),
         type_spec=ARTIFACT_TYPE, type_text=PAIR, read=inputs.get, read_files=lambda: dict(files),
         judge=lambda subject, **verdict: judged.append(verdict),
     )
