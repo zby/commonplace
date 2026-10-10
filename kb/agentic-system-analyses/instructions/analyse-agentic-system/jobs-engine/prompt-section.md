@@ -20,22 +20,17 @@ them exactly: {identity}. Your citations may resolve
 only in these members: {cites}.
 
 [verifies]
-You verify {verifies}. When that names more than one member, start every
-blocker with the one member whose text must change, as `- <member>: `.
+You verify {verifies}; the verification type says how a blocker names the
+member it addresses.
 
 [refusal]
-Repair the Findings of `refusal` against frozen evidence, with your previous
-output as the baseline.
+`refusal` is supplied: correct it under the worker rules.
 
 [output-answers]
-Answer the refusal's Blockers in `output-answers`, one `- corrected:` or
-`- declined:` entry per blocker in order, under the worker rules' correction
-protocol. Write an empty file when no refusal is supplied or its Blockers are
-`none`.
+Write your answers to the refusal's Blockers to `output-answers`, in the
+records contract's grammar.
 
 Before returning, run
 `{command-path}/commonplace-validate {output} --artifact {artifact} --role {role}`
-as written, and repair findings until it passes. A pass
-establishes form and quotation occurrence, not acceptance: code checks
-identity and frozen sources, and an independent verifier judges support.
-Return one line naming the files you wrote, or `problem`.
+as written, and repair findings until it passes. Return one line naming the
+files you wrote, or `problem`, without summarizing them.
