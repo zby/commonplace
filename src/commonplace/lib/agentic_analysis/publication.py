@@ -37,7 +37,7 @@ from commonplace.lib.agentic_analysis.guards import (
     publication_lock,
     require_publishable_worktree,
 )
-from commonplace.lib.agentic_analysis.handlers import locate
+from commonplace.lib.agentic_analysis.opening import locate
 from commonplace.lib.agentic_analysis.records import amendment_index
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader

@@ -66,13 +66,13 @@ defaults:
 jobs:
 - name: open
   kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.open_analysis
+  handler: commonplace.lib.agentic_analysis.opening.open_analysis
   inputs:
     worker-profiles: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml}
   outputs: [metadata]
 - name: acquire
   kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
+  handler: commonplace.lib.agentic_analysis.opening.acquire_analysis
   inputs:
     metadata: {address: output, source: 'open:metadata'}
   outputs: [source]
@@ -82,7 +82,7 @@ jobs:
   criteria: [worker]
   reads: {'acquire:source': required}
   checks:
-  - function: commonplace.lib.agentic_analysis.handlers.bound_boundary
+  - function: commonplace.lib.agentic_analysis.opening.bound_boundary
     inputs: {metadata: 'open:metadata', source: 'acquire:source',
              incumbent-boundary: {source: boundary, mode: optional}}
 - role: runtime
@@ -93,7 +93,7 @@ jobs:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required}
   checks:
-  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+  - function: commonplace.lib.agentic_analysis.opening.preserved_records
     inputs: {incumbent-report: {source: runtime, mode: optional}}
 - role: memory
   instruction: jobs-engine/analyse-memory.md
@@ -103,9 +103,9 @@ jobs:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: order-only}
   checks:
-  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+  - function: commonplace.lib.agentic_analysis.opening.preserved_records
     inputs: {incumbent-report: {source: memory, mode: optional}}
-  - function: commonplace.lib.agentic_analysis.handlers.memory_source_identity
+  - function: commonplace.lib.agentic_analysis.opening.memory_source_identity
     inputs: {metadata: 'open:metadata'}
 - role: epistemic
   instruction: jobs-engine/trace-epistemic.md
@@ -115,7 +115,7 @@ jobs:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: order-only}
   checks:
-  - function: commonplace.lib.agentic_analysis.handlers.preserved_records
+  - function: commonplace.lib.agentic_analysis.opening.preserved_records
     inputs: {incumbent-report: {source: epistemic, mode: optional}}
 - role: reconciliation
   instruction: jobs-engine/reconcile-records.md

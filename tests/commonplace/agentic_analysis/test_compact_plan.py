@@ -137,8 +137,8 @@ def test_handlers_are_substituted_by_standard_ones_and_declared_checks(plans):
         job = new.job(job_name(old_job.name))
         if not isinstance(job, CodeJob):
             continue
-        if old_job.handler.startswith(("commonplace.lib.agentic_analysis.handlers.open",
-                                       "commonplace.lib.agentic_analysis.handlers.acquire",
+        if old_job.handler.startswith(("commonplace.lib.agentic_analysis.opening.open",
+                                       "commonplace.lib.agentic_analysis.opening.acquire",
                                        "commonplace.lib.agentic_analysis.publication.")):
             assert job.handler == old_job.handler, job.name  # The analysis's own jobs stay.
             continue
