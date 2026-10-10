@@ -426,8 +426,12 @@ instruction holds only its mission.
   no job instruction restates the layout and no producer learns its scope
   from a failed check. The opening's `capture-directory` and
   `source-identity` become plan parameters printed as lines, as
-  `command-path` did, so no worker reads the opening JSON. Deferred with
-  its trigger: a list of the limits the synthesis must carry would need a
+  `command-path` did, so no worker reads the opening JSON. Done
+  2026-10-10, with two refinements: the start-time check accepts a
+  layout-declared line name as a condition, since a plan cut down for a
+  test may have no verifying job; and the `[verifies]` paragraph asks for
+  the member prefix only when the verifier has more than one subject, as
+  the protocol requires. Deferred with its trigger: a list of the limits the synthesis must carry would need a
   consumer code job reading the verdicts; it waits for a run in which the
   limit-not-carried refusal actually fires. A list of citable records was
   considered and dropped: the writer reads the cited members anyway, and
