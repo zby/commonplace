@@ -22,8 +22,8 @@ from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     WORKER_PROFILES,
+    resolve_worker_profile,
     source_slug,
-    worker_profile,
 )
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
@@ -32,11 +32,11 @@ STATE_ROOT = Path("kb/agentic-system-analyses/state")
 
 
 def start_analysis(worktree: Path, *, system: str, source_identity: str,
-                   source: str, source_revision: str | None = None, profile: str | None = None,
+                   source: str, source_revision: str | None = None, worker_profile: str | None = None,
                    harness: str | None = None) -> Path:
     """Allocate a prepared analysis and pin its declaration, without advancing.
 
-    ``profile`` names the run's worker profile; without it, ``harness``'s default applies.
+    ``worker_profile`` names the run's worker profile; without it, ``harness``'s default applies.
     """
     from commonplace.artifactrun import start_run
     from commonplace.artifactrun.sources import github_checkout_path
@@ -60,7 +60,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     slug = source_slug(identity, system)
     date = datetime.datetime.now(datetime.UTC).date().isoformat()
     prefix = f"AAS-{date}-{slug}-{preparation['token']}"
-    worker = worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), profile, harness=harness)
+    worker = resolve_worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), worker_profile, harness=harness)
     # The prepared checkout's commands; every worker's content check runs them.
     commands = worktree / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     parameters = {"system": system, "source-identity": identity, "source": source,

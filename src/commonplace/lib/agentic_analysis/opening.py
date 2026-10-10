@@ -25,8 +25,8 @@ from commonplace.artifactrun.worktree import (
 from commonplace.lib.agentic_analysis.analyses import (
     RETAINED_ROOT,
     analysis_layout,
+    resolve_worker_profile,
     source_slug,
-    worker_profile,
 )
 from commonplace.lib.agentic_analysis.guards import (
     checkout,
@@ -67,7 +67,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     identity = normalize_source_identity(raw_identity)
     if not identity:
         raise ValueError("source-identity must normalize to a nonempty single-line identity")
-    worker = worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
+    worker = resolve_worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
     revision = parameters.get("source-revision")
     if revision is not None:
         if not isinstance(revision, str) or re.fullmatch(r"[0-9a-f]{40}", revision) is None:

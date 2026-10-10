@@ -316,10 +316,10 @@ def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch,
 
 
 @pytest.mark.parametrize("choice,reason", [
-    ({"profile": "opus"}, "unknown worker profile 'opus'; choose one of pi-luna"),
+    ({"worker_profile": "opus"}, "unknown worker profile 'opus'; choose one of pi-luna"),
     ({}, "name a worker profile or a harness with a default: pi"),
     ({"harness": "codex"}, "name a worker profile or a harness with a default: pi"),
-    ({"profile": "pi-luna", "harness": "codex"}, "worker profile pi-luna runs in pi, not codex"),
+    ({"worker_profile": "pi-luna", "harness": "codex"}, "worker profile pi-luna runs in pi, not codex"),
 ])
 def test_analysis_start_refuses_an_unresolvable_worker_profile(origin: Path, tmp_path: Path, monkeypatch,
                                                                choice, reason) -> None:

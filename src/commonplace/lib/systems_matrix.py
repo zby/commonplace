@@ -441,7 +441,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         data = analysis.overview.frontmatter
         source = analysis.memory.frontmatter["source-identity"]
         meta = {**data, "analysis-run": data["run-id"]}
-        member = analysis.profile
+        member = analysis.memory_profile
         assert member is not None  # complete analyses require the separate profile
         cited = layout.roles["memory-profile"].cites
         profile = profile_member_comparison(member.frontmatter, record_bodies={

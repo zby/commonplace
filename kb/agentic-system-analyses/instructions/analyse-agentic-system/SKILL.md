@@ -103,7 +103,7 @@ commonplace-analysis start \
   --system "<source-native system name>" \
   --source-identity "<stable source identity, e.g. https://github.com/owner/repo>" \
   --source "<the caller's source input, as given>" \
-  --harness <this harness> [--profile <operator-named profile>]
+  --harness <this harness> [--worker-profile <operator-named worker profile>]
 ```
 
 Code normalizes the source identity and allocates
@@ -127,9 +127,9 @@ foreign origin or unavailable commit stops the run for the operator.
 Every worker of a run uses one worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, `launch-model` and effort.
 Pass `commonplace-analysis start` this session's harness with `--harness <name>`
-(`claude-code`, `codex` or `pi`), and the profile the operator names with
-`--profile <name>`. Without a named profile, code uses the harness's default;
-it refuses a profile of another harness. Opening records the profile and
+(`claude-code`, `codex` or `pi`), and the worker profile the operator names
+with `--worker-profile <name>`. Without one, code uses the harness's default;
+it refuses a worker profile of another harness. Opening records it and
 publication writes it to the retained manifest. If the harness cannot select
 the profile's launch model and effort for a fresh worker, stop before starting
 the run and tell the operator.

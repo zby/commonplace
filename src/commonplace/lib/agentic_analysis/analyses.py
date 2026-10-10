@@ -101,7 +101,7 @@ class Analysis:
         return self.roles.get("memory")
 
     @property
-    def profile(self) -> Member | None:
+    def memory_profile(self) -> Member | None:
         return self.roles.get("memory-profile")
 
 
@@ -133,7 +133,7 @@ WORKER_PROFILES = "agentic-system-analyses/instructions/analyse-agentic-system/w
 """Library-relative path of the named worker identities a run chooses from."""
 
 
-def worker_profile(data: bytes, name: str | None, *, harness: str | None = None) -> dict[str, str]:
+def resolve_worker_profile(data: bytes, name: str | None, *, harness: str | None = None) -> dict[str, str]:
     """Resolve a worker profile by name, or the harness's default, to its identity.
 
     A named profile must belong to ``harness`` when one is given.

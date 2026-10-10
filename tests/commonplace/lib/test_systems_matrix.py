@@ -396,7 +396,7 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
         frontmatter={"memory-comparison": data},
     )
     analysis = SimpleNamespace(
-        overview=overview, memory=memory, profile=profile_member,
+        overview=overview, memory=memory, memory_profile=profile_member,
         artifact=SimpleNamespace(path=overview.path.parent, content=b"manifest"),
         documents=[overview, memory, profile_member],
         roles={"overview": overview, "runtime": runtime, "memory": memory, "memory-profile": profile_member},

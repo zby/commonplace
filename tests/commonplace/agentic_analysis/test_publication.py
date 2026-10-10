@@ -124,7 +124,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
 # Membership, acceptance and coverage now gate assembly through the engine's
 # coverage input; the engine scenario tests pin that it waits, not fails.
 @pytest.mark.parametrize("defect,reason", [
-    ("provenance", "provenance"), ("mixed-worker", "not the run profile's"),
+    ("provenance", "provenance"), ("mixed-worker", "not the run's worker profile's"),
     ("mixed-report", "every worker must report the same model"),
     ("wrong-effort", "reported worker effort"),
     ("missing-effort", "reported worker effort"),
