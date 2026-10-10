@@ -16,10 +16,19 @@ from types import MappingProxyType
 
 import yaml
 
-from commonplace.lib.directory_layout import Layout, parse_layout
+from commonplace.lib.directory_layout import Layout, type_layout
 from commonplace.lib.note_parser import parse_document
 
-from .plan import OUTCOMES, CodeJob, Input, Job, ModelJob, load_plan
+from .plan import (
+    OUTCOMES,
+    CodeJob,
+    Input,
+    Job,
+    ModelJob,
+    load_plan,
+    relation,
+    relation_parts,
+)
 from .store import RunStore, canonical, digest
 
 
@@ -327,7 +336,7 @@ class Run:
             # model jobs filling the subject and the relation's ends.
             roles = {spec.source}
             if spec.relation:
-                origin, _, partner = spec.relation.split(":")
+                origin, _, partner = relation_parts(spec.relation)
                 roles |= {origin, partner}
             for role in roles:
                 filler = self.jobs.filler(role)
@@ -478,20 +487,17 @@ def refusal_document(refusal: str, version: str, scope: list[str], findings: str
 
 
 def _parse_type(text: str, where: str) -> tuple[Layout, list[tuple[str, str, str]]]:
-    document, error = parse_document(text)
-    if document is None or not document.frontmatter or "layout" not in document.frontmatter:
-        raise ValueError(f"{where}: not a type with a layout ({error or 'no layout'})")
-    layout = parse_layout(document.frontmatter["layout"], where=f"{where}: layout")
+    layout = type_layout(text, where)
     relations = []
     for role in layout.roles.values():
         for partner in role.cites:
             if partner != role.name:
-                relations.append((role.name, partner, f"{role.name}:cites:{partner}"))
+                relations.append((role.name, partner, relation(role.name, "cites", partner)))
         for source in role.identity:
             if source.role != role.name:
-                relations.append((role.name, source.role, f"{role.name}:identity:{source.role}"))
+                relations.append((role.name, source.role, relation(role.name, "identity", source.role)))
         for partner in role.verifies:
-            relations.append((role.name, partner, f"{role.name}:verifies:{partner}"))
+            relations.append((role.name, partner, relation(role.name, "verifies", partner)))
     return layout, relations
 
 
@@ -632,20 +638,20 @@ class CodeAttempt:
                 producing = run.jobs.job(producer) if producer else None
                 installs = producing is not None and run.latest_output(producing) == version
             scope = []
-            for relation in staged["scope"]:
-                if relation not in declared:
-                    raise ValueError(f"{relation} is not a relation the type declares")
-                origin, _, partner = relation.split(":")
+            for name in staged["scope"]:
+                if name not in declared:
+                    raise ValueError(f"{name} is not a relation the type declares")
+                origin, _, partner = relation_parts(name)
                 if role not in (origin, partner):
-                    raise ValueError(f"{relation} does not have {role} at either end")
+                    raise ValueError(f"{name} does not have {role} at either end")
                 other = partner if role == origin else origin
                 ends = {p.version for p in self._pins.values() if p.role == other and p.version is not None}
                 if not ends:
-                    raise ValueError(f"{relation}: no version of {other} is in the basis")
+                    raise ValueError(f"{name}: no version of {other} is in the basis")
                 if len(ends) > 1:
-                    raise ValueError(f"{relation}: the basis holds {len(ends)} versions of {other}; "
+                    raise ValueError(f"{name}: the basis holds {len(ends)} versions of {other}; "
                                      "a scoped relation needs exactly one")
-                scope.append({"relation": relation, "other_role": other, "other_version": ends.pop()})
+                scope.append({"relation": name, "other_role": other, "other_version": ends.pop()})
             records.append({
                 "id": f"{attempt}-{index}",
                 "seq": seq * 1000 + index,

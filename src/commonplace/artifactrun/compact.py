@@ -27,8 +27,8 @@ from typing import Any
 
 import yaml
 
-from commonplace.artifactrun.plan import PlanError, reject_underscored_keys
-from commonplace.lib.directory_layout import Layout, parse_layout
+from commonplace.artifactrun.plan import PlanError, reject_underscored_keys, relation
+from commonplace.lib.directory_layout import Layout, type_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME
 
@@ -70,17 +70,10 @@ def expand(data: Mapping[str, Any], *, library: Path, plan_dir: Path) -> dict:
     type_spec = data.get("type")
     if not isinstance(type_spec, str):
         raise PlanError("type must name the artifact's type, relative to the KB root")
-    layout = _layout(library, type_spec)
+    layout = type_layout((library / type_spec).read_text(encoding="utf-8"), type_spec)
     expansion = _Expansion(data, layout=layout, library=library.resolve(), plan_dir=plan_dir.resolve(),
                            type_spec=type_spec)
     return expansion.run()
-
-
-def _layout(library: Path, type_spec: str) -> Layout:
-    document, error = parse_document((library / type_spec).read_text(encoding="utf-8"))
-    if document is None or not document.frontmatter or "layout" not in document.frontmatter:
-        raise PlanError(f"{type_spec}: not a type with a layout ({error or 'no layout'})")
-    return parse_layout(document.frontmatter["layout"], where=f"{type_spec}: layout")
 
 
 def type_closure(library: Path, type_paths: list[str]) -> list[str]:
@@ -319,7 +312,7 @@ class _Expansion:
             for read in gated:
                 subject = reads[read]["source"]
                 inputs[f"{subject}-verified"] = {"address": "judgment", "source": subject,
-                                                 "relation": f"{verifier}:verifies:{subject}",
+                                                 "relation": relation(verifier, "verifies", subject),
                                                  "outcome": "accepted"}
         parameters = {**(self.defaults.get("parameters") or {}), **(entry.get("parameters") or {})}
         model = {"name": name, "kind": "model", "role": role.name, "instruction": "instruction",

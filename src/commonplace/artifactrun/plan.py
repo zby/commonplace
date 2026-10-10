@@ -41,6 +41,23 @@ class PlanError(ValueError):
     """A plan that cannot be run as declared."""
 
 
+def relation(origin: str, kind: str, partner: str) -> str:
+    """A relation's name, `<origin>:<kind>:<partner>`."""
+    return f"{origin}:{kind}:{partner}"
+
+
+def relation_parts(name: str) -> tuple[str, str, str]:
+    """A relation's origin, kind and partner."""
+    origin, kind, partner = name.split(":")
+    return origin, kind, partner
+
+
+def resolve_dotted(path: str) -> Callable:
+    """The callable a dotted `module.attribute` path names."""
+    module, _, attribute = path.rpartition(".")
+    return getattr(importlib.import_module(module), attribute)
+
+
 @dataclass(frozen=True)
 class Input:
     """An input is something a job depends on, required or optional.
@@ -94,9 +111,8 @@ class CodeJob:
     extensions: Mapping[str, Any] = field(default_factory=dict)
 
     def resolve_handler(self) -> Callable:
-        module, _, attribute = self.handler.rpartition(".")
         try:
-            return getattr(importlib.import_module(module), attribute)
+            return resolve_dotted(self.handler)
         except (ImportError, AttributeError) as error:
             raise PlanError(f"job {self.name}: handler {self.handler} does not resolve: {error}") from error
 
@@ -376,7 +392,7 @@ def check_relations(plan: Plan, relations: Sequence[str]) -> None:
             if spec.relation not in declared:
                 raise PlanError(
                     f"job {job.name}: input {name}: relation {spec.relation} is not declared by the type")
-            origin, _, partner = spec.relation.split(":")
+            origin, _, partner = relation_parts(spec.relation)
             if spec.source not in (origin, partner):
                 raise PlanError(
                     f"job {job.name}: input {name}: role {spec.source} is at neither end of {spec.relation}")

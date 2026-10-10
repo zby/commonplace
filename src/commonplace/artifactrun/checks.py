@@ -22,6 +22,7 @@ from pathlib import Path
 import yaml
 
 from commonplace.artifactrun import CodeAttempt
+from commonplace.artifactrun.plan import relation_parts
 from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.directory_layout import blocker_entries
 from commonplace.lib.note_parser import parse_document, section
@@ -145,7 +146,7 @@ def judge(check: Candidate, findings: list[str], *, answered: str | None = "answ
     """
     layout = check.attempt.layout
     scope = tuple(name for origin, partner, name in check.attempt.relations
-                  if origin == check.role and not name.startswith(f"{origin}:verifies:")
+                  if origin == check.role and relation_parts(name)[1] != "verifies"
                   and layout.path(partner) in check.snapshot)
     packet = refusal_findings(
         findings, member=check.role, answered=check.attempt.read(answered) if answered else None,

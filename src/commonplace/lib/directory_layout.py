@@ -23,7 +23,7 @@ from dataclasses import dataclass, field
 from pathlib import PurePosixPath
 from typing import Any
 
-from commonplace.lib.note_parser import ParsedDocument, section
+from commonplace.lib.note_parser import ParsedDocument, parse_document, section
 
 MEMBERSHIP = ("open", "closed")
 RUN = "run"
@@ -250,6 +250,14 @@ def protocol_findings(role: Role, body: str) -> list[Finding]:
                     role.name, f"{role.path}: blocker addressed to {addressee(entry)} states no finding",
                     repair="follow the addressee with the finding, its records and its evidence"))
     return findings
+
+
+def type_layout(text: str, where: str) -> Layout:
+    """The layout a directory type spec's text declares; ValueError when it declares none."""
+    document, error = parse_document(text)
+    if document is None or not document.frontmatter or "layout" not in document.frontmatter:
+        raise ValueError(f"{where}: not a type with a layout ({error or 'no layout'})")
+    return parse_layout(document.frontmatter["layout"], where=f"{where}: layout")
 
 
 def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],

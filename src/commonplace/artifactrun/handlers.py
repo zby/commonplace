@@ -40,9 +40,8 @@ refusal of a subject carries the verdict's Limits.
 
 from __future__ import annotations
 
-import importlib
 import json
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from dataclasses import replace
 
 from commonplace.artifactrun import CodeAttempt
@@ -55,6 +54,7 @@ from commonplace.artifactrun.checks import (
     manifest,
     review,
 )
+from commonplace.artifactrun.plan import relation, resolve_dotted
 from commonplace.artifactrun.sources import frozen_source_refusals
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 from commonplace.lib.directory_layout import (
@@ -129,11 +129,6 @@ def frozen_source(attempt: CodeAttempt, role: str, members: Mapping[str, bytes])
     return source
 
 
-def _resolve(path: str) -> Callable:
-    module, _, attribute = path.rpartition(".")
-    return getattr(importlib.import_module(module), attribute)
-
-
 def extension_findings(check: Candidate) -> list[str]:
     """Reasons from the job's declared checks, each called with the built candidate.
 
@@ -143,7 +138,7 @@ def extension_findings(check: Candidate) -> list[str]:
     findings = []
     for entry in check.attempt.extensions.get("checks", ()):
         path = entry["function"] if isinstance(entry, dict) else entry
-        findings += list(_resolve(path)(check))
+        findings += list(resolve_dotted(path)(check))
     return findings
 
 
@@ -228,7 +223,7 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
     sections = protocol_sections(document.body)
     entries = blocker_entries(sections["Blockers"]) if sections["Blockers"] != "none" else []
     limits = sections["Limits"]
-    feedback = _resolve(attempt.extensions["feedback"]) if attempt.extensions.get("feedback") else None
+    feedback = resolve_dotted(attempt.extensions["feedback"]) if attempt.extensions.get("feedback") else None
     for role in verified:
         path = layout.path(role)
         if path not in verdict.snapshot:
@@ -238,16 +233,16 @@ def apply_verification(attempt: CodeAttempt) -> Mapping[str, bytes]:
                                  members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
         invalid = [finding for finding in beside if finding not in alone]
         own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
-        relation = (f"{verdict.role}:verifies:{role}",)
+        relation_scope = (relation(verdict.role, "verifies", role),)
         if invalid or own:
             packet = ("## Findings\n\n" + ("\n".join(invalid) or "none")
                       + "\n\n## Blockers\n\n" + ("\n".join(own) or "none")
                       + "\n\n## Limits\n\n" + limits + "\n")
             if feedback is not None:
                 packet += feedback(role, own, verdict)
-            attempt.judge(handed[role], outcome="refused", scope=relation, findings=packet)
+            attempt.judge(handed[role], outcome="refused", scope=relation_scope, findings=packet)
         elif not entries:
-            attempt.judge(handed[role], outcome="accepted", scope=relation)
+            attempt.judge(handed[role], outcome="accepted", scope=relation_scope)
     return {}
 
 
