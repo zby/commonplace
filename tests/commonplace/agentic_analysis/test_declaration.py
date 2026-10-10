@@ -58,8 +58,9 @@ def test_declared_file_inputs_are_portable_library_paths(graph):
     boundary = jobs.job("boundary")
     assert boundary.inputs["instruction"].source.endswith("jobs-engine/declare-boundary.md")
     assert boundary.inputs["worker-rules"].source.endswith("jobs-engine/follow-worker-rules.md")
-    incumbent = jobs.job("check-boundary").inputs["incumbent-boundary"]
-    assert (incumbent.address, incumbent.source, incumbent.required) == ("role", "boundary", False)
+    incumbent = jobs.job("check-boundary").inputs["incumbent"]
+    assert (incumbent.address, incumbent.source, incumbent.required, incumbent.order_only) == (
+        "role", "boundary", False, True)
     for job in jobs.jobs:
         for name, spec in job.inputs.items():
             if spec.address != "file":

@@ -333,3 +333,28 @@ def test_overview_has_links_not_copy_relations(tmp_path):
     }
     findings = validate_analysis_artifact(analysis_artifact(tmp_path, docs), layout=analysis_layout(), run=ValidationRun(tmp_path, ()))
     assert not findings
+
+
+def test_a_correction_keeps_the_identifiers_its_accepted_version_declared(draft_artifact, monkeypatch):
+    import re
+
+    from commonplace.lib import validation
+
+    root, output = draft_artifact
+    monkeypatch.setitem(validation._DECLARATION_GRAMMARS, "types/note.md",
+                        lambda body: re.findall(r"(?m)^## (ID-\w+)$", body))
+    head = (output / "head.md").read_bytes()
+    accepted = b"---\ntype: types/note.md\nrun: expected\ndescription: Body\n---\n# Body\n\n## ID-a\n\n## ID-b\n"
+    draft = accepted.replace(b"## ID-b\n", b"## ID-c\n")
+
+    def check(**kwargs):
+        return [f for f in validate_draft_in_role(output, "body", draft, repo_root=root, **kwargs)
+                if "drops identifiers" in f.message]
+
+    snapshot = {"members": {"head.md": head}, "manifest": b"type: reports/types/set.md\n"}
+    assert check(**snapshot) == []  # A first draft has no accepted version.
+    [finding] = check(**snapshot, incumbent=accepted)
+    assert finding.role == "body" and finding.message.endswith("declared: ID-b")
+    assert "without changing what it names" in finding.repair
+    (output / "body.md").write_bytes(accepted)
+    assert len(check()) == 1  # Outside a snapshot the incumbent is the file at the role's path.

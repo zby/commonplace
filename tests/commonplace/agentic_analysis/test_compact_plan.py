@@ -89,6 +89,11 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
         if name == "check-memory":
             # The memory report's source identity is bound to the run in the layout, not by the opening.
             del inputs["metadata"]
+        # Every check reads its role's accepted version order-only; draft validation
+        # keeps its declared identifiers, which the declared incumbent reads did by hand.
+        for key in ("incumbent-report", "incumbent-boundary"):
+            inputs.pop(key, None)
+        inputs["incumbent"] = Input("role", role.name, required=False, order_only=True)
     elif name.startswith("apply-"):
         # The apply receives every read of its verifier, outputs as well as members.
         verifier = new.job(name.removeprefix("apply-"))
@@ -162,8 +167,8 @@ def test_every_derived_job_carries_its_entry_s_declared_checks_and_feedback(plan
     _, new = plans
     entries = compact_entries()
     expected_hooks = {role: entry.get("checks") for role, entry in entries.items() if entry.get("checks")}
-    assert set(expected_hooks) == {"boundary", "runtime", "memory", "epistemic", "report-verification",
-                                   "memory-profile"}, "the migrated hooks, one per wrapper that had a check"
+    # Record preservation and the memory source identity moved into draft validation.
+    assert set(expected_hooks) == {"boundary", "report-verification", "memory-profile"}
     for role, entry in entries.items():
         derived = "apply-" if new.job(role).role in {"report-verification", "profile-verification",
                                                       "synthesis-verification"} else "check-"

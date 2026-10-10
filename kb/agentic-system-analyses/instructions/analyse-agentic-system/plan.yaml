@@ -84,8 +84,7 @@ jobs:
   reads: {'acquire:source': required}
   checks:
   - function: commonplace.lib.agentic_analysis.declared_checks.bound_boundary
-    inputs: {metadata: 'opening:metadata', source: 'acquire:source',
-             incumbent-boundary: {source: boundary, mode: optional}}
+    inputs: {metadata: 'opening:metadata', source: 'acquire:source'}
 - role: runtime
   instruction: jobs-engine/trace-runtime.md
   outputs: [report, answers]
@@ -93,9 +92,6 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required}
-  checks:
-  - function: commonplace.lib.agentic_analysis.declared_checks.preserved_records
-    inputs: {incumbent-report: {source: runtime, mode: optional}}
 - role: memory
   instruction: jobs-engine/analyse-memory.md
   outputs: [report, answers]
@@ -103,9 +99,6 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: order-only}
-  checks:
-  - function: commonplace.lib.agentic_analysis.declared_checks.preserved_records
-    inputs: {incumbent-report: {source: memory, mode: optional}}
 - role: epistemic
   instruction: jobs-engine/trace-epistemic.md
   outputs: [report, answers]
@@ -113,9 +106,6 @@ jobs:
   files:
     records-contract: agentic-system-analyses/instructions/agentic-analysis-records.md
   reads: {boundary: required, runtime: order-only}
-  checks:
-  - function: commonplace.lib.agentic_analysis.declared_checks.preserved_records
-    inputs: {incumbent-report: {source: epistemic, mode: optional}}
 - role: reconciliation
   instruction: jobs-engine/reconcile-records.md
   criteria: [worker]

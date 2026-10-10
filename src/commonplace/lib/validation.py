@@ -613,6 +613,35 @@ def directory_type_rule(type_path: str) -> Callable[[TypeRule], TypeRule]:
 
 
 
+# A member type's identifier grammar: the identifiers a document body declares,
+# in order. A correction keeps every identifier its accepted version declared.
+DeclarationGrammar = Callable[[str], list[str]]
+_DECLARATION_GRAMMARS: dict[str, DeclarationGrammar] = {}
+
+
+def declaration_grammar(*type_paths: str) -> Callable[[DeclarationGrammar], DeclarationGrammar]:
+    """Register the function that reads the identifiers a body of these types declares."""
+
+    def register(grammar: DeclarationGrammar) -> DeclarationGrammar:
+        for type_path in type_paths:
+            _DECLARATION_GRAMMARS[type_path] = grammar
+        return grammar
+
+    return register
+
+
+def dropped_declarations(type_path: str, incumbent: bytes, draft: bytes) -> list[str]:
+    """Identifiers the accepted version declared that the draft does not, by the type's grammar."""
+    grammar = _DECLARATION_GRAMMARS.get(type_path)
+    if grammar is None:
+        return []
+    bodies = []
+    for data in (incumbent, draft):
+        document, _ = parse_document(data.decode("utf-8", errors="replace"))
+        bodies.append(document.body if document is not None else "")
+    return sorted(set(grammar(bodies[0])) - set(grammar(bodies[1])))
+
+
 def type_rule(*type_paths: str) -> Callable[[TypeRule], TypeRule]:
     """Register a rule for the given canonical type paths."""
 
@@ -1972,6 +2001,7 @@ def validate_draft_in_role(
     criteria: Mapping[str, bytes] | None = None,
     frozen_source: Mapping[str, object] | None = None,
     run_values: Mapping[str, str] | None = None,
+    incumbent: bytes | None = None,
 ) -> list[Finding]:
     """Validate candidate bytes in a role of a working artifact, without writing.
 
@@ -1986,6 +2016,9 @@ def validate_draft_in_role(
     type and schema resolution use only the supplied closed criterion bytes.
     ``frozen_source`` authorizes inspection of that exact pinned source only.
     ``run_values`` are the run's values that run-bound identity fields must equal.
+    ``incumbent`` is the role's accepted version; a draft must keep every
+    identifier it declared. Without ``members`` it defaults to the file at the
+    role's path.
     """
     directory = directory.resolve()
     data = candidate.read_bytes() if isinstance(candidate, Path) else candidate
@@ -2013,6 +2046,8 @@ def validate_draft_in_role(
     intended = directory / layout.path(role)
     if intended.is_symlink():
         raise ValueError("the draft's path must not be a symlink")
+    if incumbent is None and members is None and intended.is_file():
+        incumbent = intended.read_bytes()
     snapshot = {} if members is None else {directory: {**members, intended.name: data}}
     run = ValidationRun(
         repo_root, (), content_overrides={**manifest_override, intended: data}, member_snapshots=snapshot,
@@ -2029,6 +2064,12 @@ def validate_draft_in_role(
         Finding(role, f"{intended.name}: {message}", info=severity == "infos", warn=severity == "warns")
         for severity in ("fails", "warns", "infos") for message in getattr(result, severity)
     ]
+    dropped = [] if incumbent is None else dropped_declarations(layout.roles[role].type, incumbent, data)
+    if dropped:
+        findings.append(Finding(
+            role, f"{intended.name}: correction drops identifiers its accepted version declared: {', '.join(dropped)}",
+            repair="keep every identifier the accepted version declared; correct what it says without changing what it names",
+        ))
     try:
         findings += [finding for finding in run.artifact_findings(directory) if finding.role == role]
     except (OSError, UnicodeError, ValueError, TypeError) as exc:

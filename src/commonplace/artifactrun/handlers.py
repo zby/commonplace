@@ -7,7 +7,8 @@ judges from the job's declared inputs, never from per-job configuration:
   job whose primary output it is;
 - the partners are the other inputs that hold a role by declaration, each
   placed at its role's path in the snapshot the candidate is validated
-  against;
+  against; a read of the candidate's own role is its incumbent, whose
+  declared identifiers the candidate must keep;
 - the producer's correction answers are checked when the job declares the
   producer's attempt record: the answered refusal is that record's handed
   `refusal`, and the answers are the producer's other declared output.
@@ -92,8 +93,11 @@ def candidate(attempt: CodeAttempt) -> Candidate:
         member = attempt.read(name)
         if member is not None:
             members[attempt.layout.path(partner)] = member
+    # The role's accepted version, when the job reads it: a correction keeps its declarations.
+    incumbent = next((attempt.read(name) for name, spec in attempt.inputs.items()
+                      if spec.address == "role" and spec.source == role), None)
     return Candidate(attempt, role, data, members, attempt.library.parent,
-                     frozen_source(attempt, role, members))
+                     frozen_source(attempt, role, members), incumbent)
 
 
 def _source_field(data: bytes) -> dict | None:

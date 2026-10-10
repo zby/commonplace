@@ -1,7 +1,7 @@
 """The analysis types' validation rules, registered with the validator.
 
 Rules the analysis type specs and their schemas cannot express: record
-declarations and references, the source register, the epistemic ledger, artifact
+declarations, which a correction keeps, and references, the source register, the epistemic ledger, artifact
 member links, and the analysis artifact's cross-member relations, including
 quotations resolved against the boundary's frozen source. Importing this
 module registers them.
@@ -54,11 +54,20 @@ from commonplace.lib.validation import (
     CheckResults,
     ParsedNote,
     ValidationRun,
+    declaration_grammar,
     directory_type_rule,
     resolve_local_link_target,
     type_rule,
     validate_quote_citations,
 )
+
+# The analysts' records keep their IDs for the life of the artifact: a
+# correction rewrites a finding without changing what its record names.
+declaration_grammar(
+    "agentic-system-analyses/types/agentic-system-runtime-report.md",
+    "agentic-system-analyses/types/agentic-system-memory-report.md",
+    "agentic-system-analyses/types/agentic-system-epistemic-report.md",
+)(declared_ids)
 
 
 @type_rule("agentic-system-analyses/types/agentic-system-boundary.md")

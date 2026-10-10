@@ -50,6 +50,7 @@ class Candidate:
     snapshot: dict[str, bytes]
     repo: Path
     source: dict | None
+    incumbent: bytes | None = None
 
     @property
     def fields(self) -> dict:
@@ -70,6 +71,7 @@ def content_findings(check: Candidate, *, role: str | None = None, data: bytes |
         members=check.snapshot if members is None else members, manifest=manifest(check.attempt),
         criteria=criterion_bytes(check.attempt), frozen_source=check.source,
         run_values={**check.attempt.parameters, "run-id": check.attempt.run_dir.name},
+        incumbent=check.incumbent if role in (None, check.role) and data is None else None,
     )
     return ["[artifact] " + finding.render() for finding in results
             if not finding.info and not finding.warn and not finding.absent]

@@ -500,8 +500,18 @@ deletes checks the opener and the analyst check carry until then.
    unnormalized `source-identity` instead of normalizing it, because the run
    value is what members must equal. The boundary's `source.identity` stays
    in the boundary check: it authorizes source inspection and is nested in
-   the source object. The generic rule that declared identifiers survive a
-   correction is not done; `preserved_records` still carries it.
+   the source object. The generic correction rule is done the same day: a
+   member type registers its identifier grammar with the validator, every
+   derived check reads its role's accepted version order-only as
+   `incumbent`, and draft validation refuses a draft that drops an
+   identifier the accepted version declared. The worker's self-check reads
+   the incumbent from the working artifact, so it catches the drop too.
+   The analysis registers its record grammar for the three analyst
+   reports, and `preserved_records` and the declared incumbent reads are
+   deleted. Three declared checks remain: the boundary's source binding to
+   the run's acquisition, the report-check gate, and the profile's
+   comparison version, which the schema cannot require while retained
+   profiles carry version 1.
 5. The hand-out template, in three parts: template support in the engine
    and loader with the toy plan untouched; the analysis template, the
    mission-file shrink and the derived type inputs with the old contract

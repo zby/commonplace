@@ -369,6 +369,9 @@ class _Expansion:
                 inputs[partner] = {"address": "role", "source": partner, "required": False}
         if self.frozen is not None and self.frozen != name and self.frozen not in inputs:
             inputs[self.frozen] = {"address": "role", "source": self.frozen}
+        # The accepted version, whose declared identifiers a correction keeps.
+        # Order-only: installing the candidate it judged is no reason to judge again.
+        inputs["incumbent"] = {"address": "role", "source": name, "required": False, "order-only": True}
         inputs.update(self.check_inputs(entry))
         partners = [spec["source"] for spec in inputs.values() if spec["address"] == "role"]
         inputs.update(self.criteria([name, *partners]))

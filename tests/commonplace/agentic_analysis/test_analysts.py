@@ -37,7 +37,7 @@ def test_three_analysts_install_pinned_members_and_cover_present_relations(analy
         j = judgments(a, member)[-1]
         assert j["outcome"] == "accepted", j["findings"]
         assert f"{member}:identity:boundary" in {r["relation"] for r in j["scope"]}
-        assert {"candidate", "producer-attempt", "answered-refusal", "incumbent-report"} <= j["basis"].keys()
+        assert {"candidate", "producer-attempt", "answered-refusal", "incumbent"} <= j["basis"].keys()
         assert (a.coordinator.run_dir / "artifact" / f"{member}.md").read_text() == report(a, member)
     assert not a.coordinator.status.handouts and not a.coordinator.status.publishable
 

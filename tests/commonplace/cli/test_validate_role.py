@@ -193,3 +193,15 @@ def test_an_engine_run_s_artifact_is_checked_against_the_run_values(tmp_path, mo
         validate_notes.check_role_draft(tmp_path / "draft.md", directory=directory, role="memory",
                                         repo_root=tmp_path)
     assert [kw["run_values"] for kw in seen] == [{"source-identity": "fixture", "run-id": "AAS-run-01"}, None]
+
+
+def test_an_analyst_s_self_check_refuses_a_correction_that_drops_a_record(tmp_path, monkeypatch, capsys):
+    role, record = "runtime", "RT-OBJ-store"
+    directory = member_fixture(tmp_path) / "artifact"
+    accepted = (directory / f"{role}.md").read_text()
+    assert f"#### {record}\n" in accepted
+    candidate = tmp_path / "draft.md"
+    candidate.write_text(accepted.replace(f"#### {record}\n", f"#### {record}-renamed\n"))
+    monkeypatch.chdir(tmp_path)
+    assert validate_notes.main([str(candidate), "--artifact", str(directory), "--role", role]) == 1
+    assert f"drops identifiers its accepted version declared: {record}" in capsys.readouterr().out
