@@ -627,7 +627,9 @@ form and relations, not analytical truth.
   and the consumer's apply handlers deleted. All but the production run
   are met as of 2026-10-09; the run is the operator's call.
 - Step 4: the opener's run-binding checks are deleted after draft
-  validation reports the same mismatches.
+  validation reports the same mismatches. Met 2026-10-10; the generic
+  correction rule met the same day, with three declared checks left in
+  the analysis.
 - Step 5: the toy plan's prompts change only by the frame's `role` and
   `artifact` lines, which the slots rule added; no analysis job instruction says what an input is or
   where it comes from, and none names an output, an answers file or the
