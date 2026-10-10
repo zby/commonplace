@@ -9,8 +9,7 @@ Give public readers a supported account that remains intelligible without the ot
 
 ## Write the bounded account
 
-Write the synthesis `member-type` describes from the accepted members,
-organized around the system's operational progression. Preserve limits
-across corrections. Do not reconcile records, add evidence or write
-verification text: a record fault you discover becomes a limitation, or
-`problem` when no limitation can contain it without misleading.
+Write the synthesis `member-type` describes from the accepted members. Do
+not reconcile records, add evidence or write verification text: a record
+fault you discover becomes a limitation, or `problem` when no limitation can
+contain it without misleading.

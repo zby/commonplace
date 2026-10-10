@@ -61,6 +61,8 @@ The [synthesis mission](../../agentic-system-analyses/instructions/analyse-agent
 
 Proposal: optionally trim those repetitions. Low priority: the mission is already short. Keep its authority boundary against reconciling records, adding evidence, or writing verification text.
 
+Disposition, 2026-10-10: consolidated. The mission drops the operational-progression order (the synthesis type's) and the preservation of limits across corrections (the synthesis type's Limitations rule and the worker rules' correction section), and keeps its authority boundary and the record-fault path.
+
 ### D5 — Reading guidance overlaps and disagrees
 
 `src/commonplace/artifactrun/handouts.py` says one tool call per batch. [Worker rules, Read the prompt](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md#read-the-prompt) permit grouped reads only when the tool supports complete delivery. A single-file read tool does not support the former requirement.
