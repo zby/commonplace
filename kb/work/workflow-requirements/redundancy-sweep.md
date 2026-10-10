@@ -161,6 +161,21 @@ nowhere else), the notes sweep (open opportunities), scenarios (until
 encoded as tests), requirements (decisions ADR 113 lacks), and the
 glossary, which becomes the reference page.
 
+## Status
+
+- Section 4, the documents: done 2026-10-10 by this session; ADR 117
+  closes the proposal, the four workshop files are retired, the naming
+  review and the API design stay because a note and a live proposal cite
+  them.
+- Section 1, instructions and types: done 2026-10-10 by the implementing
+  session in 22 commits, one per file family. Model entries now name
+  `criteria: [worker, contracts]` instead of listing the records contract
+  under `files:` nine times, and the loader adds each contract's type
+  closure to the derived jobs; the `[verifies]` paragraph points to the
+  verification type, which states addressing in terms of the `verifies`
+  line.
+- Sections 3 and 2, the consumer and engine code: in progress.
+
 ## Order
 
 1. The proposal's rewrite, as its conversion to an ADR, and the amendment
