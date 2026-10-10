@@ -3,7 +3,7 @@
 Each scenario names a situation, walks it under
 [requirements](./requirements.md), and states the expected outcome. The
 numbers in brackets are requirement numbers. Jobs are from
-[the analysis mapping](./analysis-workflow-as-job-set.md); `R` is a model
+the analysis plan ([ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md)); `R` is a model
 job producing a member, `check-R` its code check, `V` a verifier whose
 blockers an apply job turns into refusals.
 

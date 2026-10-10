@@ -2,7 +2,7 @@
 
 Each concept in [requirements](./requirements.md) gets one word, used
 unchanged in the requirements, the scenarios, the
-[mapping](./analysis-workflow-as-job-set.md), the [API design](./api-design.md)
+mapping (retired 2026-10-10; carried by ADR 117), the [API design](./api-design.md)
 and the [sketch](./api_sketch.py). Applied to all five on 2026-10-07, and its 2026-10-09 decisions on
 2026-10-09; the
 mapping's Spec needs items keep their original wording as a record. The

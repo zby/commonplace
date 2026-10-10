@@ -70,7 +70,7 @@ The workshop's [consumer surface](../../../work/workflow-requirements/consumer-s
 review rejected engine-generated check pairs because the engine must not
 know what a content check is, and recorded a movable boundary: the
 coordinator may take over a code job's interpretation while bookkeeping
-stays in code. [The protocol as implemented](../../../work/workflow-requirements/verification-protocol.md)
+stays in code. The protocol as implemented (a workshop write-up, retired 2026-10-10; ADR 117 carries it)
 records what the engine, the shared check module and the analysis each
 fix today. One production analysis has run through the engine.
 
@@ -481,7 +481,7 @@ deletes checks the opener and the analyst check carry until then.
    replacement on the same pins before the wrappers went; the profile and
    synthesis checks were not compared, since their derived jobs lack the
    reconciliation partner. The
-   [implementation review](../../../work/workflow-requirements/compact-plan-implementation-review.md)
+   implementation review (retired 2026-10-10; its findings and rulings are recorded here and in git)
    of 2026-10-09 found one regression and four gaps, with these rulings:
    the run metadata records the compact plan's own digest at expansion and
    integration compares that with the shipped file, keeping the type

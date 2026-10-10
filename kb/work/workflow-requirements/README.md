@@ -4,9 +4,15 @@
   proposal showed that the current engine's model had grown past its problem.
 - **Closes when:** the operator has accepted or amended each requirement in
   [requirements](./requirements.md) and a design proposal has been derived
-  from the accepted set. Implementing that design for the analysis
-  workflow also needs the artifact type to declare the relations its prose now
-  states; see the type needs in [the mapping](./analysis-workflow-as-job-set.md).
+  from the accepted set. Status 2026-10-10: the design is decided and shipped
+  in [ADR 113](../../reference/adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md), ADR 114, ADR 115, ADR 116 and [ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md);
+  the mapping, the verification write-up, the layout rendering and the
+  implementation review are retired, their content carried by those ADRs
+  and the archived proposal. What remains open here: the glossary's
+  extraction into a reference vocabulary page (ADR 116), the scenarios'
+  encoding as tests, the requirements' decisions ADR 113 does not carry,
+  the consumer-surface measurements, the notes sweep's open opportunities
+  and the redundancy sweep's remaining parts.
 
 ## Goal
 
@@ -23,10 +29,9 @@ dependencies, one command advances the directory, and a single relative
 judgment record, acceptance or refusal of a version against named inputs,
 carries acceptance, correction and publication. The abstraction is stated
 as requirements in [requirements](./requirements.md); the analysis workflow
-is its first consumer and the test of whether it is enough. That test is
-[the analysis workflow as a plan](./analysis-workflow-as-job-set.md),
-which maps the current workflow onto the spec and reports what the spec
-lacks, without changing it. [Scenarios](./scenarios.md) walks the
+is its first consumer and the test of whether it is enough. That test was
+the mapping of the analysis workflow onto the spec, retired once ADR 113
+and ADR 117 absorbed its findings. [Scenarios](./scenarios.md) walks the
 situations the spec must cover and names those it does not yet.
 
 ## Future direction: a movable boundary
@@ -91,24 +96,6 @@ checks re-prove engine invariants, and two requirement-level resolutions,
 settled 2026-10-08: the artifact type is fixed for the run, and coverage is an
 engine-derived input rather than a handler recomputation.
 
-## Verification protocol
-
-[The correction and verification protocol as implemented](./verification-protocol.md)
-describes, as of 2026-10-09, what the engine fixes, what the shared check
-module fixes, and what the analysis consumer's types, handlers and
-instructions add: the verdict language, the two routing policies, the
-report-check gate and the limits rule. It separates the parts a generic
-apply handler could take as protocol from this consumer's own content, for
-the [ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md)
-design.
-
-## Compact-plan implementation review
-
-[Compact-plan implementation review](./compact-plan-implementation-review.md)
-records the review of commits `c9a8b1f09` through `52f77aa8a`: an integration
-identity regression, three loader/readiness edge cases and a fidelity-test
-gap, with verification results and suggested fixes.
-
 ## Naming review
 
 [Naming review](./naming-review.md), 2026-10-09: the engine and analysis
@@ -130,12 +117,6 @@ workshop documents, with a home proposed for each and an order.
 the engine, the plan, the prompts, the correction and verification
 protocol and the records; opportunities in order, cautions, and what is
 already applied.
-
-## The analysis layout
-
-[The analysis set's layout](./analysis-layout.md) writes out the roles,
-what each cites, verifies and is verified by, and which job covers each
-kind of relation, under ADR 114.
 
 ## Related
 
