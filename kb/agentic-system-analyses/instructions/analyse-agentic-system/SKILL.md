@@ -14,8 +14,6 @@ Analyse one external agentic system at one frozen evidence boundary and publish 
 
 Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained analysis under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
-Run the orchestrator's commands from the root of the prepared worktree throughout the run. The run's files, `related-systems/` and the retained analysis are found from there.
-
 ## Isolated run setup
 
 Run each analysis in a dedicated Commonplace worktree at a committed method
@@ -96,7 +94,7 @@ skill there. This session then stops after preparation.
 
 ## 1. Open the run
 
-From the prepared worktree root, using its command directory, allocate the run:
+Allocate the run:
 
 ```bash
 commonplace-analysis start \
@@ -130,12 +128,10 @@ Pass `commonplace-analysis start` this session's harness with `--harness <name>`
 (`claude-code`, `codex` or `pi`), and the worker profile the operator names
 with `--worker-profile <name>`. Without one, code uses the harness's default;
 it refuses a worker profile of another harness. Opening records it and
-publication writes it to the retained manifest. The harness must either select
-the profile's launch model and effort for each fresh worker or verifiably inherit
-matching settings. For inheritance, verify that binding runtime instructions
-establish worker inheritance and that exposed coordinator settings match both
-profile values. Unknown or mismatched settings do not qualify. If neither route
-is available, stop before starting the run and tell the operator.
+publication writes it to the retained manifest. If this harness can launch
+workers neither with the profile's model and effort nor with verified inherited
+settings, as the driver defines them, stop before starting the run and tell
+the operator.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 
@@ -162,11 +158,6 @@ claim completion. After a published analysis, add that outputs under
 authority, and a prior landscape synthesis is historical unless refreshed under
 separate authority. Transfer scans and landscape synthesis need separate
 commissions; this run does not launch them.
-
-Old or mixed run directories are explicitly rejected. Preserve their retained
-data and failed-run evidence. If the operator independently chooses to handle
-old evidence, that requires its archived method checkout and command environment;
-there is no compatibility adapter or legacy execution route in this tree.
 
 ---
 

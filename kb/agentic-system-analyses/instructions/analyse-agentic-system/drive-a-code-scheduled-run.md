@@ -1,5 +1,5 @@
 ---
-description: "Use when coordinating a prepared analysis run: advance the engine, launch its printed handouts in fresh contexts, report attempt results, and stop on unresolved failures."
+description: "Use when coordinating a prepared analysis run: advance the engine, launch its printed hand-outs in fresh contexts, report attempt results, and stop on unresolved failures."
 type: types/instruction.md
 ---
 
@@ -16,24 +16,19 @@ Keep code, method files, lockfile and environment unchanged throughout the run.
 
 ## Advance and launch
 
-For a new run, call `commonplace-run advance <run>`. Inspect the exit status,
-stdout and stderr; wait for the command to finish before taking another action.
-Code runs ready code jobs and prints model handouts, open attempts, stops and
-publishability. There is no separate launch/done outcome line. Exit status 0
-means the run continues, 2 means it stopped, and 1 means the command failed.
-
-Preserve and expose each shell command's exit code alongside stdout and stderr.
-Wait for completion and inspect the exit code before using the result. When
-calling through a script or tool wrapper, forward the complete command result;
-successful wrapper execution does not establish command success. Handle
-expected nonzero exits explicitly.
+For a new run, call `commonplace-run advance <run>`. Code runs ready code jobs
+and prints model hand-outs, open attempts, stops and publishability. Wait for
+each command to finish and inspect its exit status, stdout and stderr before
+acting; through a script or tool wrapper, forward the complete result, since
+the wrapper's success is not the command's. Exit status 0 means the run
+continues, 2 means it stopped, and 1 means the command failed.
 
 Source acquisition runs during advance. If its network requirement is known to
 be blocked by the sandbox, request approval for that advance command before
 running it. Do not perform a standalone clone or fetch as a repair. Approval does
 not override a stop or authorize changing recorded state.
 
-For every printed handout:
+For every printed hand-out:
 
 1. Launch one fresh worker with no parent conversation and this whole message,
    replacing `<prompt-path>` with the exact printed `prompt:` path:
@@ -54,7 +49,7 @@ For every printed handout:
    exposed coordinator settings match both profile values. Stop and report a
    launch failure if either value is unknown or mismatched; do not infer a
    match from a successful diagnostic.
-2. Launch all handouts from this advance as one round. Wait until every worker
+2. Launch all hand-outs from this advance as one round. Wait until every worker
    has finished or failed to start before advancing again. Retain the mapping
    between each worker and its exact attempt ID.
 3. Report each successful worker completion explicitly, and each launch or
@@ -71,7 +66,7 @@ For every printed handout:
    `--model` or `--effort`. Completion means the worker finished, not that its
    output is accepted. Code judges the submitted bytes. Never launch a worker
    on another model or effort than the profile's.
-4. Launch the next handouts only as code prints them. Do not choose jobs,
+4. Launch the next hand-outs only as code prints them. Do not choose jobs,
    schedule retries yourself, or advance while a worker from the round is still
    running.
 
@@ -89,7 +84,7 @@ is an operator judgment surface, not routine worker-result submission.
 Recovery needs a separate operator decision; do not treat a journal label as
 proof that an external effect happened or was rolled back.
 
-When advance returns no handouts or open attempts, inspect
+When advance returns no hand-outs or open attempts, inspect
 `commonplace-analysis inspect <run>`. If it reports `completed`, return
 its output under the skill's reporting rules. A local blocked/out-of-scope result
 is not publication. If it is not completed, report the unresolved state rather
@@ -100,16 +95,16 @@ its invocation-specific stops are not reconstructed by the later report.
 ## Resume without duplicate workers
 
 Before advancing a run from an earlier session, call
-`commonplace-run status <run>`. It reprints open handouts with their original
+`commonplace-run status <run>`. It reprints open hand-outs with their original
 attempt IDs and prompt paths. Confirm that prior workers have stopped before
 launching replacements or closing attempts; ask the operator if this is unknown,
 and stop if confirmation is unavailable.
 
 For each open attempt, explicitly settle whether its worker completed, failed,
 or never ran. Report completed and failed attempts through the result flags
-above. An unlaunched handout may be launched using its exact printed prompt once
+above. An unlaunched hand-out may be launched using its exact printed prompt once
 no earlier worker can still write it. Do not assume that missing output means
-failure or that existing output proves completion. Finish all open handouts of
+failure or that existing output proves completion. Finish all open hand-outs of
 the round before the next advance. Never fabricate result events to clear them.
 
 Old or mixed run directories are rejected, not resumed or converted. Preserve
