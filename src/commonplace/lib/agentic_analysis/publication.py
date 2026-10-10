@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 from collections.abc import Mapping
 from hashlib import sha256
 from pathlib import Path
@@ -21,11 +20,8 @@ from commonplace.artifactrun.checks import criterion_bytes
 from commonplace.artifactrun.effects import hashes, install_tree
 from commonplace.artifactrun.worktree import (
     preparation_for,
-    require_run_code,
-    require_running_package_unchanged,
-    run_command,
-    source_checkout,
 )
+from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     CAPTURE_DIRECTORY,
@@ -36,11 +32,11 @@ from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_
 from commonplace.lib.agentic_analysis.guards import (
     inspect_destination,
     publication_lock,
-    require_publishable_worktree,
+    require_prepared_method,
+    run_checkout,
 )
 from commonplace.lib.agentic_analysis.opening import locate
 from commonplace.lib.agentic_analysis.records import amendment_index
-from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_artifact_snapshot
@@ -84,13 +80,9 @@ def _document(data: bytes):
 
 def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
     preparation = preparation_for(repo)
-    if metadata["run-id"].rsplit("-", 2)[-2:-1] != [preparation["token"]]:
+    if run_ids.run_token(metadata["run-id"]) != preparation["token"]:
         raise ValueError(f"{job} preparation token differs from the opened run")
-    commit = metadata.get("inputs-commit")
-    if run_command(["git", "rev-parse", "HEAD"], cwd=repo) != commit or preparation.get("commit") != commit:
-        raise ValueError(f"{job} worktree differs from the opened preparation commit")
-    require_publishable_worktree(repo)
-    require_running_package_unchanged(commit)
+    require_prepared_method(repo, metadata.get("inputs-commit"), preparation, job=job)
 
 
 def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
@@ -99,10 +91,7 @@ def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, j
     metadata = json.loads(metadata_bytes)
     if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
         raise ValueError(f"{job} opening metadata must name this run")
-    repo = source_checkout(attempt.run_dir)
-    if repo is None or attempt.run_dir.parent != repo / STATE_ROOT or attempt.library != repo / "kb":
-        raise ValueError(f"{job} must use this run's analysis checkout and recorded library")
-    require_run_code(attempt.run_dir, cwd=Path.cwd())
+    repo = run_checkout(attempt.run_dir, attempt.library, job=job)
     _require_opened_method(repo, metadata, job=job)
     return metadata, repo
 
@@ -254,7 +243,7 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
 def _archive_name(incumbent: Mapping[str, bytes], run_id: str) -> str:
     """An incumbent artifact is archived under its own run ID, never this run's."""
     old_id = _document(incumbent["overview.md"]).frontmatter.get("run-id")
-    if not isinstance(old_id, str) or not re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) or old_id == run_id:
+    if not run_ids.is_archived_run_id(old_id) or old_id == run_id:
         raise ValueError("replacement requires a different valid incumbent run ID")
     return old_id
 

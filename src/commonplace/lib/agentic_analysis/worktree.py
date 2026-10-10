@@ -5,7 +5,6 @@ from __future__ import annotations
 import datetime
 import json
 import os
-import re
 from hashlib import sha256
 from pathlib import Path
 
@@ -18,6 +17,7 @@ from commonplace.artifactrun.worktree import (
     require_run_code,
     run_command,
 )
+from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
@@ -51,7 +51,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     identity = normalize_source_identity(source_identity.strip())
     if not identity:
         raise ValueError("source-identity normalizes to an empty identity")
-    if source_revision is not None and (re.fullmatch(r"[0-9a-f]{40}", source_revision) is None
+    if source_revision is not None and (not run_ids.is_commit(source_revision)
                                        or github_checkout_path(identity) is None):
         raise ValueError("source-revision requires a full 40-hex commit and GitHub repository identity")
     if run_command(["git", "rev-parse", "HEAD"], cwd=worktree) != preparation["commit"]:
@@ -59,7 +59,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     require_committed_startup(worktree, str(preparation["commit"]))
     slug = source_slug(identity, system)
     date = datetime.datetime.now(datetime.UTC).date().isoformat()
-    prefix = f"AAS-{date}-{slug}-{preparation['token']}"
+
     worker = resolve_worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), worker_profile, harness=harness)
     # The prepared checkout's commands; every worker's content check runs them.
     commands = worktree / ".venv" / ("Scripts" if os.name == "nt" else "bin")
@@ -70,7 +70,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str,
     root = worktree / STATE_ROOT
     root.mkdir(parents=True, exist_ok=True)
     for number in range(1, 100):
-        run = root / f"{prefix}-{number:02d}"
+        run = root / run_ids.run_id(date, slug, preparation["token"], number)
         try:
             run.mkdir()  # Atomic allocation: never reuse another run's state.
         except FileExistsError:
@@ -140,7 +140,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
         raise ValueError("opened incumbent differs from method commit")
     if old is not None:
         old_id = _frontmatter(old["overview.md"].decode("utf-8"), relative / "overview.md").get("run-id")
-        if not isinstance(old_id, str) or re.fullmatch(r"AAS-[a-zA-Z0-9-]+", old_id) is None:
+        if not run_ids.is_archived_run_id(old_id):
             raise ValueError("incumbent has an invalid run ID")
         archive = worktree / ARCHIVE_ROOT / old_id
         if tree(archive) != old:
@@ -174,7 +174,7 @@ def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
     with run_lock(run_dir), publication_lock(worktree):
         record, origin, method = prepared_origin(worktree)
         run_id = run_dir.name
-        if re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-[a-z0-9-]+-{record['token']}-\d{{2}}", run_id) is None:
+        if not run_ids.is_run_id(run_id, token=record["token"]):
             raise ValueError("run ID does not match the worktree preparation token")
         paths, source_revision = _integration_publication(run_dir, worktree, method)
         body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"

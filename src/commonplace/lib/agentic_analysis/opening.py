@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import datetime
 import json
-import re
 from hashlib import sha256
 from pathlib import Path
 
@@ -16,11 +15,10 @@ from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.sources import acquire, github_checkout_path
 from commonplace.artifactrun.worktree import (
     preparation_for,
-    require_run_code,
     require_running_package_unchanged,
     run_command,
-    source_checkout,
 )
+from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     RETAINED_ROOT,
     analysis_layout,
@@ -30,15 +28,16 @@ from commonplace.lib.agentic_analysis.analyses import (
 from commonplace.lib.agentic_analysis.guards import (
     checkout,
     inspect_destination,
+    require_prepared_method,
     require_publishable_worktree,
+    run_checkout,
 )
-from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.source_identity import normalize_source_identity
 
 
 def _head(repo: Path) -> str:
     commit = run_command(["git", "rev-parse", "HEAD"], cwd=repo)
-    if re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+    if not run_ids.is_commit(commit):
         raise ValueError("analysis worktree HEAD must be a full 40-hex commit")
     return commit
 
@@ -68,28 +67,20 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     worker = resolve_worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
     revision = parameters.get("source-revision")
     if revision is not None:
-        if not isinstance(revision, str) or re.fullmatch(r"[0-9a-f]{40}", revision) is None:
+        if not run_ids.is_commit(revision):
             raise ValueError("source-revision must be a full 40-hex Git commit")
         if github_checkout_path(identity) is None:
             raise ValueError("source-revision requires a GitHub repository identity")
 
     run_dir = attempt.run_dir
-    repo = source_checkout(run_dir)
-    if repo is None or run_dir.parent != repo / STATE_ROOT:
-        raise ValueError(f"a new-engine analysis run must be directly under its checkout's {STATE_ROOT}")
-    if attempt.library != repo / "kb":
-        raise ValueError("the run's recorded library must be the analysis worktree's kb directory")
-    require_run_code(run_dir, cwd=Path.cwd())
+    repo = run_checkout(run_dir, attempt.library, job="opening")
     preparation = preparation_for(repo)
     slug = source_slug(identity, system)
     token = preparation["token"]
-    if re.fullmatch(rf"AAS-\d{{4}}-\d{{2}}-\d{{2}}-{re.escape(slug)}-{token}-\d{{2}}", run_dir.name) is None:
+    if not run_ids.is_run_id(run_dir.name, token=token, slug=slug):
         raise ValueError("analysis run ID does not match the source slug and worktree preparation token")
     commit = _head(repo)
-    if preparation.get("commit") != commit:
-        raise ValueError("analysis worktree HEAD differs from its preparation commit")
-    require_publishable_worktree(repo)
-    require_running_package_unchanged(commit)
+    require_prepared_method(repo, commit, preparation, job="opening")
     destination = (RETAINED_ROOT / slug / analysis_layout().path("overview")).as_posix()
     incumbent = inspect_destination(
         repo_root=repo, generated_destination=destination, source_identity=identity,

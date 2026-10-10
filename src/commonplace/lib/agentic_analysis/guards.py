@@ -8,13 +8,20 @@ from hashlib import sha256
 from pathlib import Path
 
 from commonplace.artifactrun import effects
-from commonplace.artifactrun.worktree import require_clean_worktree, source_checkout
+from commonplace.artifactrun.worktree import (
+    require_clean_worktree,
+    require_run_code,
+    require_running_package_unchanged,
+    run_command,
+    source_checkout,
+)
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     current_analyses,
     is_review_path,
 )
+from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.source_identity import normalize_source_identity
 
 # A sibling run's publication may remain uncommitted while a batch runs.
@@ -28,6 +35,25 @@ def checkout(run_dir: Path) -> Path:
     if repo is None:
         raise ValueError("analysis jobs must run inside their analysis checkout")
     return repo
+
+
+def run_checkout(run_dir: Path, library: Path, *, job: str) -> Path:
+    """The analysis checkout a run belongs to, after the location, library and running-code guards."""
+    repo = source_checkout(run_dir)
+    if repo is None or run_dir.parent != repo / STATE_ROOT:
+        raise ValueError(f"{job}: an analysis run must be directly under its checkout's {STATE_ROOT}")
+    if library != repo / "kb":
+        raise ValueError(f"{job}: the run's recorded library must be the analysis worktree's kb directory")
+    require_run_code(run_dir, cwd=Path.cwd())
+    return repo
+
+
+def require_prepared_method(repo: Path, commit: str, preparation: dict, *, job: str) -> None:
+    """The worktree is at its preparation commit, clean, and runs that commit's package."""
+    if run_command(["git", "rev-parse", "HEAD"], cwd=repo) != commit or preparation.get("commit") != commit:
+        raise ValueError(f"{job}: analysis worktree HEAD differs from its preparation commit")
+    require_publishable_worktree(repo)
+    require_running_package_unchanged(commit)
 
 
 def _destination_path(repo_root: Path, raw: str) -> Path:
