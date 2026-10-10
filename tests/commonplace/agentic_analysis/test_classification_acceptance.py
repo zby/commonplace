@@ -244,7 +244,7 @@ def declared_packet(job_name):
 
 
 @pytest.mark.parametrize("job_name, phrases", [
-    ("memory", ["generic caller identity does not establish human control"]),
+    ("memory", ["generic caller identity leaves human control unresolved"]),  # via the records contract
     ("epistemic", ["checking is never"]),
     ("reconciliation", ["never allocates ids"]),
     # A verifier's materiality rules reach it through the verification type.

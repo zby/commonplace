@@ -75,34 +75,25 @@ are no annotations.
 ### Write side
 
 Trace acquisition, authoring, automatic transformation, maintenance,
-rejection and withdrawal. Separate content authorship, physical I/O and
-admission control for each mechanism: explicit human decisions supplying,
-editing, approving or replacing that content versus software/model admission.
-Generic caller identity does not establish human control. Starting an automatic
-workflow is not approval of each later write; reading or selecting an existing
-checkpoint does not establish a write. Retain unknown initialization control
-without suppressing known subsequent transformations. For
-trace-fed transformations, including compaction, show the
-raw-to-derived-to-later-consumer chain, including alternative checkpoint
-forms. State whether derived behavior-shaping material retains its reasons
+rejection and withdrawal. Give each mechanism its admission control, kept apart
+from authorship and physical I/O as the record contract's coverage table
+requires. Retain unknown initialization control without suppressing known
+subsequent transformations. For trace-fed transformations, including
+compaction, show the raw-to-derived-to-later-consumer chain, including
+alternative checkpoint forms. State whether derived behavior-shaping material retains its reasons
 and whether a later route reads them. Link to the records rather than
 repeating their full artifact classifications.
 
 ### Read-back
 
 Identify the later consumer, selection operation and delivery channel for
-each route. Distinguish requested reads from automatic supply, API
-affordance from wiring, and availability, delivery, activation and
-demonstrated benefit. A storage method or an API with an unspecified
+each route, keeping the record contract's read-back, selection and evidence
+distinctions. A storage method or an API with an unspecified
 hypothetical caller establishes only a storage capability, not a consumer
 route; a documented external consumer role may establish an afforded route
 without deployed wiring. A push route names its automatic selector's
 trigger, inputs, selected parts, budget and consumption channel. Record
 targeting inputs, budgets and authority where they affect a conclusion.
-Request, selection and delivery in one chain retain separate operation findings;
-automatic delivery fulfilling a request is not independent unsolicited supply.
-A file identifier does not by itself establish a targeting selector. Known
-requested read-back does not resolve an opaque alternative.
 
 ### Integration issues
 

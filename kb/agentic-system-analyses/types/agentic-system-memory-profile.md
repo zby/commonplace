@@ -118,9 +118,9 @@ inspected display summary does not classify an opaque consumed payload.
 approving or replacing that retained content. Software/model admission without
 that decision is `automatic`. Starting a workflow does not make subsequent
 admission manual. Generic caller identity alone leaves control unresolved.
-Content authorship, physical I/O and behavioral authority are independent.
-Selecting or reading an existing checkpoint does not establish a write;
-classify any separately evidenced replacement at its own admission mechanism.
+Behavioral authority is independent of write agency. Classify a separately
+evidenced replacement of a checkpoint at its own admission mechanism, not at
+the read that selects it.
 
 ### Behavioral authority
 
@@ -138,15 +138,14 @@ the consumed part, consumer and effect supporting each value:
 | `routing` | Retained state selects an operation, destination, scope or input window, such as a checkpoint selecting the next events to extract. |
 | `validation` | Retained criteria determine whether a candidate conforms or is admissible, such as a schema or blocked-ID set checked before admission. |
 
-These forces can coexist. Trace-fed artifact updates may establish learning
-authority at their update consumer; downstream knowledge consumption is a
-separate path. Check both on the actual routes, without inferring improved
-capacity or imposing a blanket implication between authority and trace learning. A blocked-ID set used to reject a candidate
+These forces can coexist. A trace-fed update's learning authority at its
+update consumer and its output's downstream authority are separate paths,
+as the record contract describes; check both on the actual routes without a
+blanket implication between authority and trace learning. A blocked-ID set used to reject a candidate
 supplies a validation criterion and an enforced veto. Ranking influence
 does not require retained ranking policy or a learned scoring algorithm;
 retained text scored by fixed code is a ranking input. Unconsumed metadata
-has no authority. Delivery wiring and actual host compliance retain their
-separate evidence bases.
+has no authority.
 
 ### Curation operations
 
@@ -188,12 +187,10 @@ separate from targeted selection.
 
 Traces record activity or experience, including agent sessions, tool use
 and environmental events. Trace learning requires automatic trace-fed writes
-producing durable behavior-shaping artifacts or learned parameters; storing
-raw logs alone does not qualify. Its source describes that learning route and is
+producing durable behavior-shaping artifacts or learned parameters. Its source describes that learning route and is
 inapplicable only for a bounded, completely assessed absence of qualifying
 trace learning. One unresolved write cannot be made inapplicable by another
-route's negative. Improved capacity remains an independent epistemic claim.
-A generated continuation summary qualifies when traces
+route's negative. A generated continuation summary qualifies when traces
 feed its automatic production, it is retained, and a later consumer
 receives it as context or guidance; calling the transformation reshaping
 does not exclude it. Neither new knowledge nor observed improvement is
