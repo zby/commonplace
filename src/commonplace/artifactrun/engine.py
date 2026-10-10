@@ -38,6 +38,7 @@ from .handouts import (
 )
 from .plan import CodeJob, Input, ModelJob, PlanError, check_relations, load_plan
 from .run import CodeAttempt, Resolved, Run, _parse_type
+from .run import run_values as _values
 from .store import RunStore, digest
 
 MAX_CODE_RUNS = 10_000
@@ -346,7 +347,7 @@ def run_values(run_dir: Path) -> dict[str, str]:
     store = RunStore(Path(run_dir))
     if not store.metadata.exists():
         raise FileNotFoundError(f"{run_dir} holds no run; start it first")
-    return {**store.read_metadata().get("parameters", {}), "run-id": store.run_dir.name}
+    return _values(store.read_metadata().get("parameters", {}), store.run_dir)
 
 
 def current_outputs(run_dir: Path, job: str) -> dict[str, bytes] | None:

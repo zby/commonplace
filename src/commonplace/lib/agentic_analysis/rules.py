@@ -18,7 +18,6 @@ from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     annotated_ids,
-    artifact_declarations,
     artifact_record_findings,
     conclusion_status_errors,
     declared_ids,
@@ -49,7 +48,7 @@ from commonplace.lib.quote_matching import (
     parse_github_blob,
     ranged_prose_anchors,
 )
-from commonplace.lib.systems_matrix import validate_comparison
+from commonplace.lib.systems_matrix import profile_member_comparison
 from commonplace.lib.validation import (
     CheckResults,
     ParsedNote,
@@ -314,11 +313,9 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
 
     profile = documents.get("memory-profile")
     if profile is not None:
-        declared = artifact_declarations(sources, bodies)
-        scope = {identifier: cited for cited in cites[layout.path("memory-profile")]
-                 for identifier in declared.get(cited, ())}
+        cited = {path: bodies[path] for path in cites[layout.path("memory-profile")] if path in bodies}
         try:
-            validate_comparison((profile.frontmatter or {}).get("memory-comparison"), known_ids=scope)
+            profile_member_comparison(profile.frontmatter or {}, record_bodies=cited)
         except ValueError as exc:
             findings.append(Finding("memory-profile", f"{layout.path('memory-profile')}: {exc}"))
 

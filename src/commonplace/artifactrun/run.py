@@ -50,6 +50,11 @@ def _input(raw: dict) -> Input:
                  raw.get("outcome"), raw.get("order_only", False))
 
 
+def run_values(parameters: Mapping[str, str], run_dir: Path) -> dict[str, str]:
+    """The run parameters and run-id: what run-bound identity fields must equal."""
+    return {**parameters, "run-id": run_dir.name}
+
+
 class Run:
     """One consistent reading of a run directory."""
 
@@ -527,6 +532,11 @@ class CodeAttempt:
     def type_spec(self) -> str:
         """The type's library path recorded at start, for keying its text."""
         return self._run.type_spec
+
+    @property
+    def run_values(self) -> dict[str, str]:
+        """The run parameters and run-id, which run-bound identity fields must equal."""
+        return run_values(self._parameters, self._run.store.run_dir)
 
     @property
     def run_dir(self) -> Path:
