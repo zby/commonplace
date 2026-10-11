@@ -1,5 +1,12 @@
 # Current arrangement
 
+This records the pre-change baseline used by the comparison. The operator has
+since adopted the [comparison's](./coverage-policy-comparison.md) prose-only
+clarification: report-verifier omission selection, effort-sensitive stopping,
+source-search authority and brief coverage reporting. The roles and dependencies
+below are unchanged; the selection and authority gaps described below are the
+ones that change addressed, not outstanding live-contract gaps.
+
 What the live method already decides about layers, lens inputs, depth, stopping
 and coverage. Read this before the open questions: several of them already have
 an answer in the plan, and the workshop compares options against that answer
@@ -13,9 +20,11 @@ files before relying on a detail; the method may have moved.
 The plan (`plan.yaml`) runs: opening, acquire, boundary, runtime, memory,
 epistemic, reconciliation, report-verification, memory-profile,
 profile-verification, synthesis, synthesis-verification, overview, publish.
-Each analytical role gets a derived check job. Verification is one role that
-judges boundary, runtime, memory, epistemic and reconciliation together; there
-is no per-role semantic verifier.
+Each analytical role gets a derived check job. One report verifier judges
+runtime, memory, epistemic and reconciliation together, with boundary as a
+required input. The layout's `report-verification.verifies` names those four
+members, not boundary; boundary is not a correction addressee. There is no
+per-analyst semantic verifier.
 
 ## The general layer exists: it is the runtime role
 
@@ -73,11 +82,19 @@ a central conclusion or leave the analysis materially misleading.
 So the method does bound coverage, by materiality and by the declared
 boundary, and the type says completeness is "not exhaustive inspection of
 repository contents". What it does not state is how the verifier selects
-where to search for omissions and when to stop; the instruction's "against
-the frozen repository tree" leans exhaustive without saying how far. That
-missing selection and stopping rule applies equally to the general layer and
-to the lenses, and it is the concrete locus of the
+where to search for omissions and when to stop. Reading the instruction and
+type together does not create an exhaustive duty: the frozen tree is the
+comparison basis, while materiality limits the obligation. The operational
+gap applies to runtime and both lenses, and is the locus of the
 [verification coverage bounds proposal](./proposals/verification-coverage-bounds.md).
+
+There is also a source-read authority tension. Shared worker rules restrict
+roles after the analysts to resolving named ambiguities in cited records at
+cited paths. That is narrower than independent tree-based omission checking.
+A clarification must explicitly reconcile those clauses; it must not assume
+that a search-selection rule alone grants additional read authority. The
+[comparison](./coverage-policy-comparison.md) proposes a report-verifier-only
+clarification, leaving later profile and synthesis roles record-based.
 
 ## What this means for the open questions
 

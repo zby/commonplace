@@ -15,16 +15,21 @@ boundary, not exhaustive inspection of repository contents, and
 verifier should select and stop an omission search: which parts of the frozen
 tree to look in for mechanisms the records missed, and when looking further is
 no longer warranted. The instruction's wording, "judge coverage against the
-frozen repository tree", leans exhaustive without saying how far. The gap is a
-missing operational stopping rule, not an exhaustive duty to remove, and it
+frozen repository tree", names the comparison basis but gives no selection
+procedure. Read with the type, it does not establish an exhaustive duty. The
+gap is a missing operational stopping rule, not an exhaustive duty to remove, and it
 falls equally on the general layer and on lenses whose questions touch a
 fraction of the tree.
 
 ## Proposal
 
-Concentrate the exhaustive coverage duty at the general layer and make the
-runtime record the coverage bound for everything downstream. Memory already
-scopes itself from runtime routes, so this follows the existing grain.
+The operator's original intent was to concentrate an exhaustive coverage duty
+at the general layer and make the runtime record the downstream coverage bound.
+The checked baseline has no existing exhaustive duty to relocate. As a candidate
+policy, this would add structural accounting at runtime and restrict lens
+omission checking, not remove a live exhaustive requirement. Memory scopes from
+runtime routes, but both lenses explicitly treat runtime as provisional and
+not an inspection limit; preserve that independent discovery authority.
 
 1. **Runtime coverage is checked against the whole tree, at module and
    entry-point granularity.** Every top-level package, shipped entry path (CLI
@@ -41,14 +46,15 @@ scopes itself from runtime routes, so this follows the existing grain.
 2. **Lens omission checks are bounded to runtime-located paths plus the
    lens's own anchors.** Correctness checking follows a lens's anchors wherever
    they go. Omission checking, the expensive part, searches only the
-   runtime-located paths relevant to the lens's question. A mechanism found
-   outside both sets is routed as a runtime coverage finding, not a lens
+   runtime-located paths and lens-owned anchors relevant to the lens's question.
+   A mechanism found outside both sets is routed as a runtime coverage finding, not a lens
    finding. Lens discovery stays unbounded; only the search for what a lens
    missed is bounded.
 
 3. **The bound is stated as a limit.** The verification record says that
    omission judgment for memory and epistemic was bounded to runtime-located
-   paths, so synthesis carries it and unknown does not read as absence.
+   paths plus lens-owned anchors, and names affected records and conclusions.
+   Synthesis carries those limits; unknown must not read as absence.
 
 "Runtime-located paths" is the union of source anchors in the runtime record's
 shared records. No new contract surface is needed, but file anchors are an
@@ -89,9 +95,10 @@ Across the retained runs, from the records and frozen worktrees:
   verifier that rarely searches for omissions.
 
 Both are deterministic over retained records and are within the workshop's
-scope. Neither establishes sufficiency. Only a bounded coverage audit of the
-frozen source, independent of the existing records, can challenge the shared
-blind spots; it does not need to be exhaustive.
+scope. Neither establishes sufficiency. Independent bounded source inspection can
+challenge shared blind spots, as the selected audit omissions already show.
+A separately commissioned coverage audit is one route, not a prerequisite or
+an exhaustive check.
 
 ## What would count against adoption
 
@@ -123,11 +130,15 @@ Instructions and type prose only.
   roles depend on.
 - The verification type already says completeness is "relative to the
   required analysis questions and declared evidence boundary, not exhaustive
-  inspection of repository contents". The instruction currently reaches
-  further than its type; placement one brings it back. The type's Limits
-  section carries rule 3 unchanged, and the existing rule in `rules.py` that
-  every declared limit is carried into the synthesis's Limitations propagates
-  it for free. The schema checks section headings only, so no schema change.
+  inspection of repository contents". The instruction lacks an operational
+  selection rule, not an exhaustive duty contradicted by its type. The type's
+  Limits section can carry rule 3 without a new field. `rules.py` checks that
+  synthesis Limitations cites an affected record from each cited limit; it
+  does not certify faithful prose propagation. Author and verifier judgment
+  still matter. No schema change is needed for this prose policy.
+- `jobs-engine/follow-worker-rules.md`: explicitly reconcile report-verifier
+  omission searches with the later-role restriction to cited-path ambiguities.
+  Neither placement should silently override that restriction.
 
 ### Lens reruns on runtime correction
 

@@ -1,9 +1,10 @@
 # Open questions
 
 Each question records its current answer in the live method, where one exists,
-and what evidence would discriminate between options. Current answers come
-from [current arrangement](./current-arrangement.md). No question here is
-decided by being listed.
+and what evidence would discriminate between options. Baseline answers come
+from [current arrangement](./current-arrangement.md). The operator subsequently
+adopted the comparison's report-verification clarification; other questions
+remain open. No question here is decided by being listed.
 
 ## How much of the general layer does the runtime role already provide?
 
@@ -60,11 +61,14 @@ yet examined.
 
 Current answer: runtime has a stopping rule for guarantee paths (two to four
 forcing cases, state what remains unobserved); memory has a coverage-dimensions
-rule; epistemic and the verifier have none stated.
+rule; epistemic has no explicit omission-search stopping rule. Report verification
+now has consequential-question selection and effort-sensitive stopping, with a
+brief retained account. Both lenses already require countercases and bounded
+uncertainty.
 
-The missing piece is a form for the stopping statement itself: what was
-searched, by what method, what was found, and what remains unobserved, placed
-beside the claims it limits rather than in a general disclaimer.
+The verification type now requires a brief account of consequential omission
+questions, search basis, dispositions and stopping rationale. Whether this
+improves resource allocation remains unmeasured.
 
 ## What should a verifier check without becoming a second exhaustive analysis?
 
@@ -74,6 +78,12 @@ to select and stop an omission search.
 
 Proposed answer under examination:
 [verification coverage bounds](./proposals/verification-coverage-bounds.md).
+The [comparison](./coverage-policy-comparison.md) instead led to adoption of
+consequential-question selection without a hard file bound. Retained cases support
+its rationale, not measured detection or effort improvement. The shared worker
+rules now explicitly permit report-verifier searches beyond cited paths; later
+profile and synthesis roles keep their existing source restrictions.
+No new verifier or lens rerun dependency is justified by this comparison.
 
 ## Can the existing reports and comparison profile express the result unchanged?
 

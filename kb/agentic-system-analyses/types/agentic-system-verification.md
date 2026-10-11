@@ -45,6 +45,15 @@ consequential limits. It is the verifier's retained account, linked from the ove
 It contains no corrected text: the verifier marks and explains defects, and the
 owner of the defective text corrects it.
 
+For report verification, this section briefly identifies consequential omission
+questions investigated, their search basis and dispositions, and why further
+omission search stopped. It is not a query-by-query ledger or a list of every
+unselected question. Material uninspected or inconclusive alternatives state
+which conclusions remain supported and which comparisons cannot be made;
+unsearched behavior is not evidenced absence. This account does not replace
+Blockers or Limits, and does not expand the source authority of profile or
+synthesis verification.
+
 ## Blockers and limits
 
 Every finding the verifier does not dismiss is either a blocker or a limit.

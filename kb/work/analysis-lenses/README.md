@@ -41,7 +41,8 @@ roles, not whether to introduce the shape. See
 | [Evidence base](./evidence-base.md) | Audits, trace measurements and the frozen source worktrees; what each can and cannot show about coverage |
 | [First deliverable](./first-deliverable.md) | The first comparison to produce, its evaluation criteria and the return-to-operator condition |
 | [Comparison plan](./comparison-plan.md) | Executable handoff for correcting workshop premises and comparing three coverage policies using retained cases; no live method changes |
-| [Proposal: verification coverage bounds](./proposals/verification-coverage-bounds.md) | Operator proposal of 2026-10-11: exhaustive coverage duty at the runtime layer, bounded omission checks for lenses |
+| [Coverage policy comparison](./coverage-policy-comparison.md) | Adopted prose-only clarification: consequential-question omission checks with effort-sensitive stopping and brief coverage reporting; retained-case evidence and implementation footprint |
+| [Proposal: verification coverage bounds](./proposals/verification-coverage-bounds.md) | Unadopted operator proposal of 2026-10-11: add structural accounting at runtime and bound lens omission checks; original exhaustive-duty premise qualified against the live type |
 
 ## Scope and coordination
 
@@ -54,10 +55,16 @@ workshop asks for. The
 related correction and contract-design history; its candidates are not an
 implementation backlog for this workshop.
 
-The current commission authorizes workshop framing, navigation and comparison,
-not changes to the method, code, schemas, worker prompts, retained analyses or
-run state. It does not authorize analysis runs, transfer scans, integration,
-commits or worktree disposal. Deterministic measurements over retained records
+The initial commission authorized workshop framing, navigation and comparison.
+The operator subsequently authorized revising and implementing the comparison's
+prose-only recommendation: report-verifier stopping and search authority, and
+brief coverage reporting. That change is implemented in the canonical worker
+instructions and verification type; no roles, dependencies, schemas or engine
+code changed. Existing analyses and run state remain unchanged. Quality and cost
+improvements remain unmeasured. Commit the method before new runs; repeat-run
+commands requested by the operator are a separate invocation, not a run launched
+by this workshop. Transfer scans, integration, commits and worktree disposal
+still need separate authorization. Deterministic measurements over retained records
 and frozen worktrees are within scope when they write only under this workshop.
 Before separately authorized method work, follow
 [method maintenance](../../agentic-system-analyses/instructions/maintain-analysis-method.md).

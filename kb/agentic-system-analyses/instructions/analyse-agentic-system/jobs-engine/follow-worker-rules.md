@@ -152,11 +152,18 @@ material shipped responsibility outside the selected functional boundary
 requires `problem` with its path, responsibility and prevented conclusion.
 Treat the checkout as read-only. For a capture, read only its frozen contents.
 
-Roles after the analysts work from the accepted records. They read the source
-only to resolve a named ambiguity in a cited record, at its cited paths and
-frozen revision, and log each read in their member with path, lines and the
-ambiguity resolved. Source understanding cannot replace a missing supporting
-record.
+Roles after the analysts work from the accepted records. Except for report
+verification, they read the source only to resolve a named ambiguity in a
+cited record, at its cited paths and frozen revision, and log each read in
+their member with path, lines and the ambiguity resolved.
+
+Report verification may also search and trace the frozen source beyond cited
+paths to check consequential claims and investigate selected omission questions
+under its mission's stopping rule. Retain source anchors for consequential
+findings and the bounded search account required by the verification type,
+not a log of every exploratory read. This exception changes neither the frozen
+boundary nor correction ownership. Source understanding cannot replace a missing
+supporting record; route necessary record corrections to the declaring analyst.
 
 ## Check content and quotation
 

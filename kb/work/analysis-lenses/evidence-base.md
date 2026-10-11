@@ -53,11 +53,12 @@ Within scope, writing only under this workshop:
 
 - For each retained run, the set of source paths anchored by the runtime
   record's shared records, and the share of memory and epistemic anchors
-  outside that set. This tests whether runtime-located paths are a tight
-  enough bound for lens verification.
+  outside that set. This describes path overlap, not whether runtime-located
+  paths are a sufficient bound for lens verification; shared omissions remain
+  invisible.
 - For each retained run, verification findings addressed to runtime coverage,
-  by materiality. This tests how often the general map is found incomplete
-  after lenses have scoped from it.
+  by materiality. This counts recorded challenges after lenses have scoped
+  from the map, not undetected gaps or a coverage rate.
 - Read counts per role from the navigation audit, as the baseline allocation.
 
 Record run id, method commit and source revision with every measurement. Do

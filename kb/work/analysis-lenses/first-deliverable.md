@@ -18,8 +18,15 @@ options, none of which adds a process or touches the engine:
 2. Bound lens omission searches by runtime and lens anchors, as the
    [verification coverage bounds proposal](./proposals/verification-coverage-bounds.md)
    describes.
-3. Give each verifier a small, question-driven omission search budget with
-   explicit unresolved coverage.
+3. Select a small, justified set of consequential claims for the existing
+   report verifier's question-driven omission checks, with an explicit stopping
+   decision and unresolved coverage. Do not invent a numerical budget.
+
+The [completed comparison](./coverage-policy-comparison.md) recommends the third
+as an operational clarification of the first, not a new architecture. The operator
+adopted it with effort-sensitive stopping and brief reporting; the prose-only
+implementation is recorded in the comparison. The return condition below governed
+the initial comparison and still applies to any further trial.
 
 The proposal is one option among these, not the conclusion.
 

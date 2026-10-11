@@ -15,11 +15,29 @@ strength; do not treat the analyst's checks as verification.
 
 Check every record, source anchor, evidence status, `Part of:` relation,
 supersession and unresolved conflict. State the checks and dispositions in
-Verification. Judge coverage against the frozen repository tree, not just
-listed anchors. A shipped caller is not external merely because it calls an
-API. Preserve supported findings; do not weaken them to produce uniform
-coverage or avoid a content warning. Apply the verification type's
-materiality threshold.
+Verification. Apply the verification type's materiality threshold. Select
+omission questions by the central runtime and lens conclusions they could
+change, using the frozen repository tree, alternate shipped paths and
+producer/consumer dependencies, not only listed anchors. A shipped caller is
+not external merely because it calls an API. These questions guide additional
+omission searches; they do not replace the required checks above or demand
+an exhaustive inventory.
+
+Continue an omission search while further inspection is reasonably likely to
+change a consequential conclusion and retaining that conclusion's breadth
+justifies the investigation effort. Otherwise stop the search: retain a limit
+only if the existing wording remains supported, or request that the analyst
+narrow, withhold or qualify the unsupported claim. Do not write the correction
+yourself. A search stopping decision does not settle acceptance: unsupported
+emitted claims and known contradictions still require disposition under the
+verification type. Preserve supported findings; do not weaken them merely to
+save work, produce uniform coverage or avoid a content warning.
+
+Stop optional omission expansion when selected questions have a supported
+disposition or a correction request, and no identified material challenge is
+left without a disposition. Additional artifacts alone do not require more
+inspection. If reduced scope cannot preserve a faithful bounded account,
+request correction or return `problem` under the conditions below.
 
 Every structural failure in `report-check` requires an explicit blocker
 addressed to its report; if the finding cannot be routed within this job's
