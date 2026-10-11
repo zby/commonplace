@@ -5,8 +5,8 @@ description: "Shared record contract for agentic analyses: identity, annotations
 
 # Agentic analysis records
 
-This contract defines records used across the runtime, memory and
-epistemic members, and what any finding citing them may claim from its
+This contract defines records used across the runtime, memory, epistemic and
+workflow members, and what any finding citing them may claim from its
 evidence. The member types that declare or cite records refer to it and add
 their own fields and section placement. The sources and evidence layers a
 record cites are declared in the boundary's Source register.
@@ -18,7 +18,8 @@ routes (`RTE-*`), claims (`CLM-*`), evidenced absences (`ABS-*`) and
 behavioral-authority paths (`BAP-*`). `SRC-*` sources belong only to the
 Source register. The analyst that establishes a record declares it in its
 member, with its permanent prefix: runtime has `RT-` (`RT-OBJ-store`), memory has
-`MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`).
+`MEM-` (`MEM-OBJ-store`), epistemic has `EPI-` (`EPI-OBJ-store`), and workflow
+has `WF-` (`WF-RTE-review-handoff`).
 Each report type declares its prefix as `record-prefix`, and validating the
 report checks every declaration against it. The prefix identifies the declaring analyst, not the member discussing the
 record. Keep a supplied ID unchanged in citations, annotations and supersessions.

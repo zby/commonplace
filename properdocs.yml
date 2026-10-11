@@ -26,11 +26,17 @@ exclude_docs: |
   agentic-system-analyses/retained/**
   !agentic-system-analyses/retained/*/ARTIFACT.yaml
   !agentic-system-analyses/retained/*/overview.md
+  !agentic-system-analyses/retained/*/boundary.md
   !agentic-system-analyses/retained/*/runtime.md
   !agentic-system-analyses/retained/*/memory.md
   !agentic-system-analyses/retained/*/memory-profile.md
   !agentic-system-analyses/retained/*/epistemic.md
+  !agentic-system-analyses/retained/*/workflow.md
   !agentic-system-analyses/retained/*/reconciliation.md
+  !agentic-system-analyses/retained/*/synthesis.md
+  !agentic-system-analyses/retained/*/report-verification.md
+  !agentic-system-analyses/retained/*/profile-verification.md
+  !agentic-system-analyses/retained/*/synthesis-verification.md
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md

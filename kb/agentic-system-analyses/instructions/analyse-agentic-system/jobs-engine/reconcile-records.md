@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Reconcile the pinned analyst records
 
-State how the three reports connect and where they disagree so the report verifier can judge them as one bounded account.
+State how the analyst reports connect and where they disagree so the report verifier can judge them as one bounded account.
 
 Reconcile the reports afresh; do not copy an old connection after its
 evidence changes. Where the analysts' answers are supplied, assess what their

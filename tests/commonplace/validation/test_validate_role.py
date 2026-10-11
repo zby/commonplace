@@ -144,7 +144,7 @@ def test_unknown_role_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, c
 
 
 @pytest.mark.parametrize("role", [
-    "boundary", "runtime", "memory", "epistemic", "reconciliation",
+    "boundary", "runtime", "memory", "epistemic", "workflow", "reconciliation",
     "memory-profile", "report-verification", "profile-verification",
     "synthesis", "synthesis-verification", "overview",
 ])

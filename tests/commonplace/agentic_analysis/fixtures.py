@@ -376,6 +376,53 @@ Object the epistemic lens established. Evidence: SRC-1.
 """
 
 
+def workflow_text(revision: str) -> str:
+    return f'''---
+type: agentic-system-analyses/types/agentic-system-workflow-report.md
+description: "Example System workflow evidence is limited to the frozen fixture boundary"
+run-id: {RUN_ID}
+reviewed-boundary: {revision}
+---
+
+# Example System workflow report
+
+## Workflow account
+
+No multi-step workflow is established by this fixture. SRC-1 supplies only
+store and invocation evidence; delegation and delivery remain uninspected.
+
+## Shared records
+
+### Components
+
+none declared in this member
+
+### Operative objects
+
+none declared in this member
+
+### Routes
+
+none declared in this member
+
+### Claims
+
+none declared in this member
+
+### Evidenced absences
+
+none declared in this member
+
+### Behavioral-authority paths
+
+none declared in this member
+
+## Annotations
+
+none
+'''
+
+
 MEMBER_NAMES = tuple(role.path for role in analyses.analysis_layout().roles.values())
 
 
@@ -478,6 +525,7 @@ def write_artifact(run_dir: Path, revision: str, *, source_path: Path | None = N
         "memory.md": memory_report_fixture(run_dir, revision),
         "memory-profile.md": profile_report_fixture(run_dir, revision),
         "epistemic.md": write(run_dir / "artifact/epistemic.md", epistemic_text(revision)),
+        "workflow.md": write(run_dir / "artifact/workflow.md", workflow_text(revision)),
         "reconciliation.md": write(run_dir / "artifact/reconciliation.md", reconciliation_text(revision)),
     }
     write(run_dir / "artifact/synthesis.md", f'''---

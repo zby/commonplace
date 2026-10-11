@@ -7,7 +7,7 @@ schema: ./agentic-system-reconciliation-report.schema.yaml
 
 # Agentic system reconciliation report
 
-The retained reconciliation of the runtime, memory and epistemic members.
+The retained reconciliation of the runtime, memory, epistemic and workflow members.
 It states how their records connect and where the reports disagree. It does
 not judge one report's support and does not correct a report: the report
 verifier judges, and the declaring analyst corrects its own report. The

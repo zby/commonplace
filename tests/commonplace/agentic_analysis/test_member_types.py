@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import validation
+from tests.commonplace.agentic_analysis.fixtures import workflow_text
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-28-example-system-01"
@@ -210,6 +213,34 @@ def test_runtime_report_validates(tmp_path: Path) -> None:
     results = validate(tmp_path, "runtime.md", RUNTIME_TEXT)
     assert results.fails == []
     assert results.note_type == "agentic-system-runtime-report"
+
+
+def test_workflow_can_report_no_established_workflow(tmp_path: Path) -> None:
+    results = validate(tmp_path, "workflow.md", workflow_text(REVISION))
+    assert results.fails == []
+    assert results.note_type == "agentic-system-workflow-report"
+
+
+WORKFLOW_TEXT = (RUNTIME_TEXT.replace("runtime", "workflow").replace("Runtime", "Workflow")
+                 .replace("RT-", "WF-"))
+
+
+@pytest.mark.parametrize("change,expected", [
+    (lambda text: text, None),
+    (lambda text: text.replace("WF-CMP-model", "RT-CMP-model"), "only WF- records"),
+    (lambda text: text.replace("- Selection predicate: The caller selects the object.\n", ""),
+     "WF-RTE-model-call: Selection predicate: missing field"),
+    (lambda text: text.replace("conclusion status: wired", "conclusion status: invented"), "invalid value"),
+    (lambda text: text.replace("## Workflow account", "## Other account"), "Workflow account"),
+    (lambda text: text.replace("### Claims\n\nnone declared in this member.\n\n", ""), "Claims"),
+    (lambda text: text + "\nSee [outside](../outside.md).\n", "leaves the artifact"),
+])
+def test_workflow_uses_shared_report_checks(tmp_path: Path, change, expected) -> None:
+    failures = validate(tmp_path, "workflow.md", change(WORKFLOW_TEXT)).fails
+    if expected is None:
+        assert failures == []
+    else:
+        assert any(expected in failure for failure in failures), failures
 
 
 def test_member_validation_rejects_missing_route_answers(tmp_path: Path) -> None:

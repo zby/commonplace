@@ -40,6 +40,8 @@ criteria:
     memory-schema: agentic-system-analyses/types/agentic-system-memory-report.schema.yaml
     epistemic-type: agentic-system-analyses/types/agentic-system-epistemic-report.md
     epistemic-schema: agentic-system-analyses/types/agentic-system-epistemic-report.schema.yaml
+    workflow-type: agentic-system-analyses/types/agentic-system-workflow-report.md
+    workflow-schema: agentic-system-analyses/types/agentic-system-workflow-report.schema.yaml
   reconciliation:
     reconciliation-type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
     reconciliation-schema: agentic-system-analyses/types/agentic-system-reconciliation-report.schema.yaml
@@ -99,19 +101,25 @@ jobs:
   outputs: [report, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
+- role: workflow
+  instruction: jobs-engine/trace-workflow.md
+  outputs: [report, answers]
+  criteria: [worker, contracts]
+  reads: {boundary: required, runtime: order-only}
 - role: reconciliation
   instruction: jobs-engine/reconcile-records.md
   criteria: [worker, contracts]
 - job: report-check
   handler: commonplace.artifactrun.handlers.artifact_check
-  inputs: [boundary, runtime, memory, epistemic, reconciliation]
+  inputs: [boundary, runtime, memory, epistemic, workflow, reconciliation]
 - role: report-verification
   instruction: jobs-engine/verify-reports.md
   outputs: [verification]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, 'runtime:answers': optional, 'memory:answers': optional,
-          'epistemic:answers': optional, 'report-check:findings': required}
+          workflow: required, reconciliation: required, 'runtime:answers': optional,
+          'memory:answers': optional, 'epistemic:answers': optional,
+          'workflow:answers': optional, 'report-check:findings': required}
   checks: [commonplace.lib.agentic_analysis.verification.report_check_gate]
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile
@@ -119,14 +127,14 @@ jobs:
   outputs: [profile, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required}
+          workflow: required, reconciliation: required}
   verified-by: [report-verification]
 - role: profile-verification
   instruction: jobs-engine/verify-memory-profile.md
   outputs: [verification, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
+          workflow: required, reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
           'refusal:memory-profile': optional}
 - role: synthesis
   instruction: jobs-engine/synthesize-analysis.md
@@ -134,7 +142,7 @@ jobs:
   outputs: [synthesis, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, memory-profile: required, report-verification: required,
+          workflow: required, reconciliation: required, memory-profile: required, report-verification: required,
           profile-verification: required}
   verified-by: [report-verification, profile-verification]
 - role: synthesis-verification
@@ -143,7 +151,7 @@ jobs:
   outputs: [verification, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          reconciliation: required, synthesis: required, report-verification: required,
+          workflow: required, reconciliation: required, synthesis: required, report-verification: required,
           profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}
 - name: assemble
   kind: code
@@ -158,6 +166,7 @@ jobs:
     runtime-attempt: {address: attempt, source: runtime, required: false}
     memory-attempt: {address: attempt, source: memory, required: false}
     epistemic-attempt: {address: attempt, source: epistemic, required: false}
+    workflow-attempt: {address: attempt, source: workflow, required: false}
     reconciliation-attempt: {address: attempt, source: reconciliation, required: false}
     report-verification-attempt: {address: attempt, source: report-verification, required: false}
     memory-profile-attempt: {address: attempt, source: memory-profile, required: false}
@@ -168,6 +177,7 @@ jobs:
     runtime: {address: role, source: runtime, required: false}
     memory: {address: role, source: memory, required: false}
     epistemic: {address: role, source: epistemic, required: false}
+    workflow: {address: role, source: workflow, required: false}
     reconciliation: {address: role, source: reconciliation, required: false}
     memory-profile: {address: role, source: memory-profile, required: false}
     synthesis: {address: role, source: synthesis, required: false}

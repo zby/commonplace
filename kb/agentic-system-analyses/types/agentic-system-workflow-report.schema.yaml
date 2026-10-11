@@ -1,0 +1,43 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required: [description, type, run-id, reviewed-boundary]
+        properties:
+          type:
+            const: agentic-system-analyses/types/agentic-system-workflow-report.md
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          reviewed-boundary:
+            type: string
+            minLength: 1
+        additionalProperties: true
+      headings:
+        type: array
+        minItems: 10
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - enum: ["## Workflow account", "## Shared records", "## Annotations"]
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Workflow account"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Shared records"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Annotations"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Components"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Operative objects"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Routes"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Claims"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Evidenced absences"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Behavioral-authority paths"}, minContains: 1, maxContains: 1}
+      body:
+        allOf:
+          - description: "The workflow sections must appear in their canonical reading order."
+            pattern: '(?ms)^## Workflow account\s*$.*?^## Shared records\s*$.*?^## Annotations\s*$'
+          - description: "Shared-record subheadings must appear under Shared records in canonical order."
+            pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Annotations\s*$)'

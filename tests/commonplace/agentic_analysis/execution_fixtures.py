@@ -41,6 +41,7 @@ IDENTITY = "https://github.com/example/system"
 REPORT_TYPES = {
     "runtime": "agentic-system-runtime-report", "memory": "agentic-system-memory-report",
     "epistemic": "agentic-system-epistemic-report",
+    "workflow": "agentic-system-workflow-report",
 }
 KINDS = ["Components", "Operative objects", "Routes", "Claims", "Evidenced absences", "Behavioral-authority paths"]
 
@@ -244,7 +245,7 @@ def acquisition(request, monkeypatch, tmp_path):
         # isolate acquisition, boundary or analysts unless production is requested.
         data = prepared.plan()
         if not production:
-            data["jobs"] = data["jobs"][:10 if analysts else 4 if boundary else 2]
+            data["jobs"] = data["jobs"][:12 if analysts else 4 if boundary else 2]
         if boundary or analysts:
             assert not production
         declaration = tmp_path / "code-only-acquisition.yaml"
@@ -342,6 +343,7 @@ def report(a, member, **changes):
     fields.update(changes)
     sections = {
         "runtime": ["Runtime account", "Shared records", "Annotations"],
+        "workflow": ["Workflow account", "Shared records", "Annotations"],
         "memory": ["Boundary and evidence", "Core ideas", "Shared records", "Write side", "Read-back",
                    "Integration issues", "Limitations and checks"],
         "epistemic": ["Source-and-claim boundary", "Epistemic-object inventory", "Authority-route ledger",
@@ -368,7 +370,7 @@ def judgments(a, member):
 def through_analysts(a):
     c = a.coordinator
     c.complete("runtime", report(a, "runtime"), answers="")
-    assert c.handed() == {"memory", "epistemic"}
-    c.advance(c.result("memory", report(a, "memory"), answers=""),
-              c.result("epistemic", report(a, "epistemic"), answers=""))
+    assert c.handed() == {"memory", "epistemic", "workflow"}
+    c.advance(*(c.result(member, report(a, member), answers="")
+                for member in ("memory", "epistemic", "workflow")))
     assert not c.status.stops

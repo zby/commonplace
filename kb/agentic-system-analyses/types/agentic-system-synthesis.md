@@ -27,7 +27,8 @@ records it cites and what its findings may claim from evidence.
 
 `## Bounded synthesis` gives the evidence basis and boundary, architectural
 characterization and claimed work, runtime map, only the discriminating
-mechanisms this target needs, scenario-relative assessment, and concrete
+mechanisms this target needs, the representative workflow or its evidence gap,
+scenario-relative assessment, and concrete
 evidence or system changes that would alter the assessment. Where the
 runtime report supports it, the synthesis states separately whether the
 system meets theory-builder conditions 1–4, whether criticism of a consumed

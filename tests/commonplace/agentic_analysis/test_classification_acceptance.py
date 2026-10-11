@@ -246,6 +246,7 @@ def declared_packet(job_name):
 @pytest.mark.parametrize("job_name, phrases", [
     ("memory", ["generic caller identity leaves human control unresolved"]),  # via the records contract
     ("epistemic", ["checking is never"]),
+    ("workflow", ["do not invent a workflow", "who recovers from failure"]),
     ("reconciliation", ["never allocates ids"]),
     # A verifier's materiality rules reach it through the verification type.
     ("report-verification", ["asserts an unsupported comparison value, evidence strength"]),
@@ -261,7 +262,7 @@ def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
 
 
 @pytest.mark.parametrize("job_name", [
-    "runtime", "memory", "epistemic", "reconciliation", "report-verification", "memory-profile",
+    "runtime", "memory", "epistemic", "workflow", "reconciliation", "report-verification", "memory-profile",
     "profile-verification", "synthesis", "synthesis-verification",
 ])
 def test_self_improvement_test_reaches_declared_job_inputs(job_name):

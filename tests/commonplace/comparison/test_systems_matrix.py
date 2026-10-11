@@ -127,6 +127,16 @@ def test_comparison_resolves_canonical_runtime_ids():
     ) == data
 
 
+def test_existing_memory_axes_can_cite_workflow_records():
+    data = revision2()
+    data["axes"]["storage_substrate"] = known(["files"], ["workflow.md#wf-obj-store"])
+    assert list(comparison_schema().iter_errors(data)) == []
+    body = "## Shared records\n\n### Operative objects\n\n#### WF-OBJ-store\n\nLabel: Fixture store\n"
+    assert sm.profile_member_comparison(
+        {"memory-comparison": data}, record_bodies={"workflow.md": body},
+    ) == data
+
+
 def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
     data = revision2()
     data["axes"]["read_back_direction"] = known(["pull"], [CALL])

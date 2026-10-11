@@ -68,6 +68,7 @@ declaration_grammar(
     "agentic-system-analyses/types/agentic-system-runtime-report.md",
     "agentic-system-analyses/types/agentic-system-memory-report.md",
     "agentic-system-analyses/types/agentic-system-epistemic-report.md",
+    "agentic-system-analyses/types/agentic-system-workflow-report.md",
 )(declared_ids)
 
 
@@ -124,6 +125,7 @@ def _agentic_reconciliation_amendment_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -148,6 +150,7 @@ def _agentic_evidence_and_references_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
 @type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
+@type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _record_reference_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -183,6 +186,7 @@ def artifact_member_link_failures(path: Path, links: tuple[str, ...]) -> list[st
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-verification.md")
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
+@type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _agentic_plain_source_anchor_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -207,6 +211,7 @@ def _agentic_plain_source_anchor_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-synthesis.md")
 @type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
 @type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
+@type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _artifact_member_link_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -221,6 +226,7 @@ def _artifact_member_link_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-runtime-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
+@type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _record_prefix_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

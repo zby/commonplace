@@ -18,65 +18,71 @@ layout:
       identity:
         - from: boundary
           fields: [run-id, result-disposition, target-class, boundary-kind, reviewed-boundary, analysis-cutoff, evidence-tier]
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, workflow]
     runtime:
       path: runtime.md
       type: agentic-system-analyses/types/agentic-system-runtime-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, workflow]
     memory:
       path: memory.md
       type: agentic-system-analyses/types/agentic-system-memory-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
         - {from: run, fields: [source-identity]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, workflow]
     epistemic:
       path: epistemic.md
       type: agentic-system-analyses/types/agentic-system-epistemic-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, workflow]
+    workflow:
+      path: workflow.md
+      type: agentic-system-analyses/types/agentic-system-workflow-report.md
+      identity:
+        - {from: boundary, fields: [run-id, reviewed-boundary]}
+      cites: [boundary, runtime, memory, epistemic, workflow]
     reconciliation:
       path: reconciliation.md
       type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic]
+      cites: [boundary, runtime, memory, epistemic, workflow]
     memory-profile:
       path: memory-profile.md
       type: agentic-system-analyses/types/agentic-system-memory-profile.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
         - {from: memory, fields: [source-identity]}
-      cites: [runtime, memory, epistemic]
+      cites: [runtime, memory, epistemic, workflow]
     synthesis:
       path: synthesis.md
       type: agentic-system-analyses/types/agentic-system-synthesis.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic, report-verification, profile-verification]
+      cites: [boundary, runtime, memory, epistemic, workflow, report-verification, profile-verification]
     report-verification:
       path: report-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic, reconciliation]
-      verifies: [runtime, memory, epistemic, reconciliation]
+      cites: [boundary, runtime, memory, epistemic, workflow, reconciliation]
+      verifies: [runtime, memory, epistemic, workflow, reconciliation]
     profile-verification:
       path: profile-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [runtime, memory, epistemic, memory-profile]
+      cites: [runtime, memory, epistemic, workflow, memory-profile]
       verifies: [memory-profile]
     synthesis-verification:
       path: synthesis-verification.md
       type: agentic-system-analyses/types/agentic-system-verification.md
       identity:
         - {from: boundary, fields: [run-id, reviewed-boundary]}
-      cites: [boundary, runtime, memory, epistemic, synthesis]
+      cites: [boundary, runtime, memory, epistemic, workflow, synthesis]
       verifies: [synthesis]
   required:
     always: [boundary, overview]
@@ -84,7 +90,7 @@ layout:
       role: boundary
       field: result-disposition
       values:
-        complete: [runtime, memory, epistemic, reconciliation, memory-profile, synthesis, report-verification, profile-verification, synthesis-verification]
+        complete: [runtime, memory, epistemic, workflow, reconciliation, memory-profile, synthesis, report-verification, profile-verification, synthesis-verification]
 ---
 
 # Agentic system analysis set

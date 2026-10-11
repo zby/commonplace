@@ -1,4 +1,4 @@
-"""Script the three analyst interfaces against real types and local Git only."""
+"""Script the analyst interfaces against real types and local Git only."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 
 
 @pytest.mark.slow
-def test_three_analysts_install_pinned_members_and_cover_present_relations(analysts):
+def test_analysts_install_pinned_members_and_cover_present_relations(analysts):
     a = analysts
     through_analysts(a)
     for member in REPORT_TYPES:
@@ -95,6 +95,7 @@ def test_structural_repair_retains_original_semantic_blockers(analysts):
     ("runtime", {"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "run-id"),
     ("memory", {"source-identity": "wrong identity"}, "identity field source-identity 'wrong identity' does not match the run"),
     ("epistemic", {"reviewed-boundary": "b" * 40}, "identity"),
+    ("workflow", {"reviewed-boundary": "b" * 40}, "identity"),
 ])
 def test_member_identity_is_checked_against_pinned_inputs(analysts, member, changes, reason):
     a = analysts
@@ -103,34 +104,33 @@ def test_member_identity_is_checked_against_pinned_inputs(analysts, member, chan
     if member == "runtime":
         a.coordinator.complete(member, report(a, member, **changes), answers="")
     else:
-        peer = "memory" if member == "epistemic" else "epistemic"
-        a.coordinator.advance(
-            a.coordinator.result(member, report(a, member, **changes), answers=""),
-            a.coordinator.result(peer, report(a, peer), answers=""),
-        )
+        a.coordinator.advance(*(a.coordinator.result(
+            peer, report(a, peer, **(changes if peer == member else {})), answers="",
+        ) for peer in ("memory", "epistemic", "workflow")))
     j = judgments(a, member)[-1]
     assert j["outcome"] == "refused" and reason in j["findings"]
 
 
 @pytest.mark.slow
-def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts):
+@pytest.mark.parametrize("member,prefix", [("runtime", "RT"), ("workflow", "WF")])
+def test_accepted_record_ids_cannot_be_dropped_on_correction(analysts, member, prefix):
     a = analysts
-    original = report(a, "runtime").replace(
+    identifier = f"{prefix}-OBJ-store"
+    original = report(a, member).replace(
         "### Operative objects\n\nnone declared in this member\n",
-        "### Operative objects\n\n#### RT-OBJ-store\n\nLabel: Fixture store\n\nA symbolic fixture object in README.md at SRC-1.\n",
+        f"### Operative objects\n\n#### {identifier}\n\nLabel: Fixture store\n\nA symbolic fixture object in README.md at SRC-1.\n",
     )
-    a.coordinator.complete("runtime", original, answers="")
-    assert judgments(a, "runtime")[-1]["outcome"] == "accepted"
-    a.coordinator.advance(
-        a.coordinator.result("memory", report(a, "memory"), answers=""),
-        a.coordinator.result("epistemic", report(a, "epistemic"), answers=""),
-    )
-    judge(a.coordinator.run_dir, role="runtime", outcome="refused", findings="Correct the object finding.")
+    a.coordinator.complete("runtime", original if member == "runtime" else report(a, "runtime"), answers="")
+    a.coordinator.advance(*(a.coordinator.result(
+        peer, original if peer == member else report(a, peer), answers="",
+    ) for peer in ("memory", "epistemic", "workflow")))
+    assert judgments(a, member)[-1]["outcome"] == "accepted"
+    judge(a.coordinator.run_dir, role=member, outcome="refused", findings="Correct the object finding.")
     a.coordinator.advance()
-    a.coordinator.complete("runtime", report(a, "runtime"), answers="- corrected: removed the object.\n")
-    assert judgments(a, "runtime")[-1]["outcome"] == "refused"
-    assert "RT-OBJ-store" in judgments(a, "runtime")[-1]["findings"]
-    assert (a.coordinator.run_dir / "artifact/runtime.md").read_text() == original
+    a.coordinator.complete(member, report(a, member), answers="- corrected: removed the object.\n")
+    assert judgments(a, member)[-1]["outcome"] == "refused"
+    assert identifier in judgments(a, member)[-1]["findings"]
+    assert (a.coordinator.run_dir / "artifact" / f"{member}.md").read_text() == original
 
 
 @pytest.mark.slow

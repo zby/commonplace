@@ -14,18 +14,17 @@ Produce a selective current account of the external mechanisms that matter to a 
 ## Prerequisites
 
 - Use the analysis manifest and interest brief supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. If either cannot be identified unambiguously, stop and ask for the missing input.
-- One complete `analyse-agentic-system` set, entered through
-  `kb/agentic-system-analyses/state/<run-id>/output/ARTIFACT.yaml`, with its
-  run’s `../run-state.md`. Both `run-status` and `result-disposition` must be
-  `complete`. The set is the authority for what the external system does: the
+- One published complete `analyse-agentic-system` set, entered through
+  `kb/agentic-system-analyses/retained/<source-slug>/ARTIFACT.yaml`. The set is the authority for what the external system does: the
   code-written `overview.md` holds identity, disposition, member links, the
   amendment index and deterministic validation. `boundary.md` holds the
   evidence boundary and source register; `runtime.md` the runtime account and
   runtime-declared records; `memory.md` the memory findings and memory-declared
-  records; `epistemic.md` the five epistemic blocks; `reconciliation.md` the
+  records; `epistemic.md` the five epistemic blocks; `workflow.md` the
+  representative multi-step workflow and its evidence limits; `reconciliation.md` the
   amendments, supersessions and unresolved conflicts; `memory-profile.md` the
   comparison profile; and `synthesis.md` the cross-lens account and limitations.
-  `record-verification.md`, `profile-verification.md` and
+  `report-verification.md`, `profile-verification.md` and
   `synthesis-verification.md` retain the independent judgments. Do not reacquire
   or refresh its sources during this scan.
 - An explicit current question, design problem, or priority. A generic request to find every difference is not a valid brief. If the user asks broadly what is interesting, state the bounded standing concern you will use before selecting findings.
@@ -47,13 +46,12 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
 ## Steps
 
 0. **Verify the main-review input.** From the repository root, run
-   `commonplace-agentic-analysis-handoff <run-state-path>` on the run state.
-   Require exit status zero and substantive result disposition `complete`;
-   a completed blocked or out-of-scope run is not a transfer input. Require the
-   supplied manifest path to match `run-state.artifact.path`. If the caller
-   supplied a manifest SHA-256, require it to match
-   `run-state.artifact.sha256` and the file's bytes. The handoff verifies the
-   manifest; then read the overview and every member the manifest pins:
+   `commonplace-validate <artifact-directory>` on the supplied manifest's
+   directory. Require exit status zero, no failures or warnings, and overview
+   `result-disposition: complete`. Require every member to be pinned in the
+   manifest; if the caller supplied a manifest SHA-256, check it against the
+   file's bytes. Historical sets require their matching method checkout, not
+   hand-patched members. Read the overview and every member the manifest pins:
    the evidence boundary and source register in `boundary.md`, the records and
    lens findings in the analyst reports, amendments and unresolved conflicts
    in `reconciliation.md`, the comparison profile in `memory-profile.md`, the
@@ -63,7 +61,7 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
    findings; report the failure to the caller for correction
    through the main review workflow.
 1. **Fix the three substantive inputs and production provenance.** Copy the
-   current interest brief exactly. Record the run ID, run-state path, source
+   current interest brief exactly. Record the run ID, artifact directory, source
    identity and reviewed boundary, and the manifest's path, byte length, and
    SHA-256; the manifest pins every member. Identify only the Commonplace
    artifacts actually
@@ -94,7 +92,7 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
 
 Open with:
 
-`subject | analysis run ID and run-state path | source identity and reviewed boundary | manifest path, byte length, and SHA-256 | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
+`subject | analysis run ID and artifact directory | source identity and reviewed boundary | manifest path, byte length, and SHA-256 | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
 
 Then give the selected findings and finish with:
 

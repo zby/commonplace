@@ -4,7 +4,8 @@
 here. The expansion must equal it after the renamings and the intended
 differences listed below, each a decision recorded in
 kb/reference/proposals/plans-without-structural-wrapper-code.md; any other
-difference fails. Handlers are compared by substitution: a consumer wrapper
+difference fails. The later workflow lens is an explicit additive delta; the
+historical plan stays unchanged. Handlers are compared by substitution: a consumer wrapper
 is replaced by the standard handler plus the entry's declared checks.
 """
 
@@ -108,6 +109,22 @@ def expected_inputs(old_job, new, layout) -> dict[str, Input]:
             for key, spec in list(inputs.items()):
                 if spec.address == "handed" and spec.source == f"verifier-attempt:{old_key}":
                     inputs[key] = Input("handed", f"verifier-attempt:{new_key}", spec.required)
+    # The workflow lens adds one report to the existing structural relations.
+    if name.startswith("check-") and name != "check-boundary":
+        inputs["workflow"] = Input("role", "workflow", required=False)
+    if name in ("reconciliation", "report-check", "report-verification", "memory-profile",
+                "profile-verification", "synthesis", "synthesis-verification"):
+        inputs["workflow"] = Input("role", "workflow")
+    if name == "report-verification":
+        inputs["workflow-answers"] = Input("output", "workflow:answers", required=False)
+    if name.startswith("apply-"):
+        inputs["workflow-handed"] = Input("handed", "verifier-attempt:workflow")
+    if name in ("memory-profile", "synthesis"):
+        inputs["workflow-verified"] = Input(
+            "judgment", "workflow", relation="report-verification:verifies:workflow", outcome="accepted")
+    if name in ("assemble", "publish"):
+        inputs["workflow"] = Input("role", "workflow", required=False)
+        inputs["workflow-attempt"] = Input("attempt", "workflow", required=False)
     return inputs
 
 
@@ -117,7 +134,10 @@ def files(job) -> set[str]:
 
 def test_the_expansion_has_the_hand_written_jobs_renamed(plans):
     old, new = plans
-    assert [job_name(job.name) for job in old.jobs] == [job.name for job in new.jobs]
+    expected = [job_name(job.name) for job in old.jobs]
+    insertion = expected.index("reconciliation")
+    expected[insertion:insertion] = ["workflow", "check-workflow"]
+    assert expected == [job.name for job in new.jobs]
 
 
 def test_each_job_equals_its_hand_written_form_after_the_intended_differences(plans):
@@ -208,6 +228,8 @@ def test_verdict_gates_keep_their_verifies_relations(plans):
         gates = {(spec.source, spec.relation) for spec in old_job.inputs.values() if spec.address == "judgment"}
         derived = {(spec.source, spec.relation) for spec in new.job(job_name(old_job.name)).inputs.values()
                    if spec.address == "judgment"}
+        if job_name(old_job.name) in ("memory-profile", "synthesis"):
+            gates.add(("workflow", "report-verification:verifies:workflow"))
         assert gates == derived, old_job.name
         assert all(relation.split(":")[1] == "verifies" for _, relation in derived)
 

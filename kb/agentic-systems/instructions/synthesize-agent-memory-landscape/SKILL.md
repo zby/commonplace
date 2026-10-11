@@ -22,13 +22,14 @@ in the response. Load the output collection's contract before writing there.
 The evidence inputs are current accepted sets enumerated from
 `kb/agentic-system-analyses/retained/<system-slug>/`. Use the shared current-set
 enumerator through the comparison tools; no separate review metadata selects
-or pins the population. Each complete set has eleven members:
+or pins the population. The current set contract declares its members:
 `boundary.md` holds the evidence boundary and source register; `runtime.md`
 the runtime account and runtime-declared records; `memory.md` the memory
 findings and memory-declared records; `epistemic.md` the epistemic blocks;
+`workflow.md` the representative multi-step workflow and its evidence limits;
 `reconciliation.md` the amendments, supersessions and unresolved conflicts;
 `memory-profile.md` the `memory-comparison` profile; and `synthesis.md` the
-cross-lens account and limitations. `record-verification.md`,
+cross-lens account and limitations. `report-verification.md`,
 `profile-verification.md` and `synthesis-verification.md` retain the independent
 judgments. The code-written `overview.md` holds identity, disposition, member
 links, the amendment index and deterministic validation. Validate the artifact

@@ -9,7 +9,7 @@ record-prefix: RT-
 # Agentic system runtime report
 
 The runtime baseline gives source-grounded invocations, alternate/forcing
-routes and `RT-` records. It precedes both specialists, who read it; a
+routes and `RT-` records. It precedes the specialists, who read it; a
 correction round can revise it.
 The [record contract](../instructions/agentic-analysis-records.md) governs
 identity, fields, statuses, evidence interpretation and theory assessments.

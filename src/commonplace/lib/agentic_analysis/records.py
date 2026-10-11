@@ -22,12 +22,12 @@ from urllib.parse import unquote, urlsplit
 from commonplace.lib.note_parser import find_markdown_links_with_text, section
 
 # A record ID carries the prefix of the analyst that established it, for the
-# life of the artifact: `RT-`, `MEM-`, or `EPI-`.
-_PREFIX = r"(?:RT|MEM|EPI)-"
+# life of the artifact: `RT-`, `MEM-`, `EPI-`, or `WF-`.
+_PREFIX = r"(?:RT|MEM|EPI|WF)-"
 _KIND = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)"
 _NAME = r"[a-z][a-z0-9]*(?:-[a-z][a-z0-9]*){0,2}"
 _RECORD_ID = rf"{_PREFIX}{_KIND}-{_NAME}"
-_ANCHOR = rf"(?:rt|mem|epi)-(?:cmp|obj|rte|clm|abs|bap)-{_NAME}"
+_ANCHOR = rf"(?:rt|mem|epi|wf)-(?:cmp|obj|rte|clm|abs|bap)-{_NAME}"
 _DECLARATION = re.compile(rf"(?m)^####[ \t]+({_RECORD_ID})[ \t]*$")
 _ANNOTATION = re.compile(r"(?m)^####[ \t]+On[ \t]+(\S[^\n]*?)[ \t]*$")
 # A heading that names a record but carries more than its ID.

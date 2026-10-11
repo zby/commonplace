@@ -89,7 +89,7 @@ def attempt(a, stage, candidate, *, apply=False, answers=b"", refusal=None, prev
     role = f"{stage}-verification" if apply else subject
     job = run.jobs.job(("apply-" if apply else "check-") + role)
     snapshot = {"boundary": boundary(a).encode(),
-                **{name: report(a, name).encode() for name in ("runtime", "memory", "epistemic")},
+                **{name: report(a, name).encode() for name in ("runtime", "memory", "epistemic", "workflow")},
                 "reconciliation": encoded(identity(a, "agentic-system-reconciliation-report"),
                                            "# Fixture reconciliation\n\n## Reconciliation\n\nNo amendments.\n")}
     snapshot["runtime"] = snapshot["runtime"].replace(

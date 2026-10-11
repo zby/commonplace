@@ -30,7 +30,7 @@ from tests.commonplace.artifactrun.support import Coordinator
 
 pytestmark = pytest.mark.slow
 
-RECORDS = ("runtime", "memory", "epistemic", "reconciliation")
+RECORDS = ("runtime", "memory", "epistemic", "workflow", "reconciliation")
 """The roles report verification verifies."""
 
 
@@ -39,7 +39,7 @@ def records(request, tmp_path):
     start, _ = request.getfixturevalue("local_acquisition")
     a = start(analysts=True)
     data = a.prepared.plan()
-    data["jobs"] = data["jobs"][:15]
+    data["jobs"] = data["jobs"][:17]
     declaration = tmp_path / "restricted-record-jobs.yaml"
     declaration.write_text(yaml.safe_dump(data))
     run_dir = a.coordinator.run_dir.with_name(a.coordinator.run_dir.name[:-2] + "02")
@@ -107,7 +107,7 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
     assert Path(p["report-check"]).read_text() == "# Artifact check\n\nnone\n"
     a.coordinator.complete("report-verification", verdict(a))
     applied = judgments(a, "apply-report-verification")
-    assert len(applied) == 5
+    assert len(applied) == 6
     assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
     assert {j["subject"]["role"] for j in applied} == {"report-verification", *RECORDS}
     assert all({"verifier-attempt", "report-check-handed"} <= j["basis"].keys() for j in applied)
@@ -161,20 +161,23 @@ def test_routes_only_addressed_blockers_and_preserves_continuations(records):
     assert "## Cited records from other reports" in feedback
 
 
-def test_declined_answers_rerun_verifier_without_semantic_override(records):
+@pytest.mark.parametrize("member", ["runtime", "workflow"])
+def test_declined_answers_rerun_verifier_without_semantic_override(records, member):
     a = records
     to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a, "- runtime: reconsider SRC-1."))
-    a.coordinator.complete("runtime", report(a, "runtime"), answers="- declined: SRC-1 still supports the bounded finding.\n")
+    blocker = f"- {member}: reconsider SRC-1."
+    a.coordinator.complete("report-verification", verdict(a, blocker))
+    a.coordinator.complete(member, report(a, member), answers="- declined: SRC-1 still supports the bounded finding.\n")
     assert a.coordinator.handed() == {"report-verification"}, a.coordinator.status
-    assert judgments(a, "check-runtime")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
+    assert judgments(a, f"check-{member}")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
     refused = next(j for j in judgments(a, "apply-report-verification") if j["outcome"] == "refused")
-    assert refused["id"] not in judgments(a, "check-runtime")[-1]["overrides"]
+    assert refused["id"] not in judgments(a, f"check-{member}")[-1]["overrides"]
     p = parameters(a.coordinator.handout("report-verification"))
-    assert Path(p["runtime-answers"]).read_text().startswith("- declined:")
-    assert Path(p["previous-verification"]).read_text() == verdict(a, "- runtime: reconsider SRC-1.")
+    assert Path(p[f"{member}-answers"]).read_text().startswith("- declined:")
+    assert Path(p["previous-verification"]).read_text() == verdict(a, blocker)
     a.coordinator.complete("report-verification", verdict(a))
-    assert judgments(a, "apply-report-verification")[-4]["outcome"] == "accepted"
+    accepted = judgments(a, "apply-report-verification")[-(len(RECORDS) + 1):]
+    assert all(j["outcome"] == "accepted" for j in accepted)
 
 
 def test_record_check_uses_pinned_content_not_projection_or_later_members(records):

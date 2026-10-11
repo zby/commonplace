@@ -16,7 +16,7 @@ from commonplace.lib.directory_layout import parse_layout
 from commonplace.lib.note_parser import parse_document
 from tests.commonplace.agentic_analysis.fixtures import expanded
 
-REPORTS = ("runtime", "memory", "epistemic")
+REPORTS = ("runtime", "memory", "epistemic", "workflow")
 RECORDS = (*REPORTS, "reconciliation")
 VERIFIERS = ("report-verification", "profile-verification", "synthesis-verification")
 # A job that fills a role takes the role's name.
@@ -27,7 +27,8 @@ LIBRARY = ROOT / "kb"
 DECLARATION = LIBRARY / PLAN
 ENGINE_INSTRUCTIONS = {
     "boundary": "declare-boundary", "runtime": "trace-runtime", "memory": "analyse-memory",
-    "epistemic": "trace-epistemic", "reconciliation": "reconcile-records",
+    "epistemic": "trace-epistemic", "workflow": "trace-workflow",
+    "reconciliation": "reconcile-records",
     "report-verification": "verify-reports", "memory-profile": "map-memory-profile",
     "profile-verification": "verify-memory-profile", "synthesis": "synthesize-analysis",
     "synthesis-verification": "verify-synthesis",
@@ -157,7 +158,7 @@ def test_profile_and_synthesis_have_explicit_verdict_gates(graph):
     profile = jobs.job("synthesis").inputs["memory-profile-verified"]
     assert profile.relation == "profile-verification:verifies:memory-profile"
     # Runtime must be present initially but its version is not a rerun trigger.
-    for name in ("memory", "epistemic"):
+    for name in ("memory", "epistemic", "workflow"):
         runtime = jobs.job(name).inputs["runtime"]
         assert (runtime.address, runtime.source, runtime.required, runtime.order_only) == (
             "role", "runtime", True, True,

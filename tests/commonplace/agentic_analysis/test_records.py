@@ -46,7 +46,7 @@ def route_body(identifier: str = "RT-RTE-model-call", answers: str = ROUTE_ANSWE
 # Route fields
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", "WF-"])
 def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
     assert route_field_errors(route_body(prefix + "RTE-model-call")) == []
     errors = route_field_errors(route_body(prefix + "RTE-model-call", ""))
@@ -152,10 +152,21 @@ def test_record_headings_outside_shared_records_do_not_declare() -> None:
     assert declared_ids("## Discussion\n\n#### RT-OBJ-missing\n") == []
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-"])
+@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", "WF-"])
 def test_duplicate_declarations_are_refused(prefix: str) -> None:
     body = "## Shared records\n\n" + declaration(f"{prefix}OBJ-store") + declaration(f"{prefix}OBJ-store")
     assert record_reference_errors(body) == [f"record references: duplicate declarations: {prefix}OBJ-store"]
+
+
+def test_workflow_records_resolve_across_members() -> None:
+    workflow = "## Shared records\n\n" + declaration("WF-CLM-review-handoff", text="SRC-1.")
+    synthesis = "See [WF-CLM-review-handoff](workflow.md#wf-clm-review-handoff).\n"
+    members = {"boundary.md": BOUNDARY, "workflow.md": workflow, "synthesis.md": synthesis}
+    cites = {"workflow.md": ["boundary.md", "workflow.md"], "synthesis.md": ["workflow.md"]}
+    assert artifact_record_errors("boundary.md", members, cites=cites)[1] == []
+    members["synthesis.md"] = synthesis.replace("review-handoff", "missing-handoff")
+    assert any("unresolved record citation" in error
+               for error in artifact_record_errors("boundary.md", members, cites=cites)[1])
 
 
 def test_a_record_declared_by_two_members_is_refused_in_both() -> None:

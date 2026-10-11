@@ -3,6 +3,8 @@ from pathlib import Path
 import yaml
 from properdocs.config.config_options import PathSpec
 
+from commonplace.lib.agentic_analysis.analyses import analysis_layout
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -29,12 +31,12 @@ def test_only_retained_analysis_sets_are_published() -> None:
     assert excluded.match_file("reports/state/reviews/example.md")
     assert excluded.match_file("reports/retained/example.md")
     run = "example/"
-    for member in ("overview.md", "runtime.md", "memory.md", "memory-profile.md", "epistemic.md", "reconciliation.md"):
+    for member in ("ARTIFACT.yaml", *(role.path for role in analysis_layout().roles.values())):
         assert not excluded.match_file("agentic-system-analyses/retained/" + run + member)
         assert excluded.match_file("agentic-system-analyses/state/" + run + member)
     assert excluded.match_file("agentic-system-analyses/retained/" + run + "result.md")
     assert excluded.match_file("agentic-system-analyses/retained/" + run + "run-state.md")
     archive = "AAS-2026-09-05-example-01/"
-    for member in ("ARTIFACT.yaml", "overview.md", "runtime.md", "memory.md", "memory-profile.md", "epistemic.md", "reconciliation.md"):
+    for member in ("ARTIFACT.yaml", *(role.path for role in analysis_layout().roles.values())):
         assert excluded.match_file("agentic-system-analyses/retained-archive/" + archive + member)
     assert not excluded.match_file("agentic-systems/reports/retained/" + archive + "overview.md")
