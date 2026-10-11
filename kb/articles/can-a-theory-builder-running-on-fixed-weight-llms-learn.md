@@ -224,7 +224,11 @@ base develops each in its
 why. A stated diagnosis directs the next attempt differently from a bare
 failure signal, and can save search that variant-and-select methods would
 spend. A wrong diagnosis can also waste search. The conjecture concerns what
-a supplied reason buys on balance.
+a supplied reason buys on balance. A 2026 harness-evolution study,
+[Harness Evolution Hits a Ceiling](../sources/harness-evolution-ceiling-weight-training.ingest.md),
+is the comparison case run at scale: its loop proposed harness edits from
+score summaries and kept the ones that scored, and it stalled on a failure
+its scorer saw in a quarter of runs and its proposer was never told about.
 
 *Theories can be revised in parts.* A theory whose assumptions and parts
 can be inspected and revised individually lets criticism name a part, and
@@ -267,7 +271,12 @@ Sutton himself leans toward the folk version. In a 2026
 [interview](https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again),
 he and Khurram Javed argue that forming new concepts needs continued weight
 updating. That is a separate hypothesis: the bet runs against it, and the
-essay does not establish it. The essay's own cases separate production from
+essay does not establish it. The harness-evolution study above reaches the
+same hypothesis from experiment, sending the failures its loop could not fix
+to weight training. Its own data say less: the authors locate the ceiling in
+what their loop was shown, not in harness evolution, and their strongest line
+raised plan quality by editing a natural-language lessons file, which an
+adapter then absorbed. The essay's own cases separate production from
 form. Scale displaced hand-tuned weights as well as hand-written feature
 extractors. The displaced methods spanned both forms, so what decided the
 outcome was how the content was produced.
