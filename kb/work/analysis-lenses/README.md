@@ -40,6 +40,7 @@ roles, not whether to introduce the shape. See
 | [Open questions](./open-questions.md) | Each unresolved question with its current answer and the evidence that would discriminate |
 | [Evidence base](./evidence-base.md) | Audits, trace measurements and the frozen source worktrees; what each can and cannot show about coverage |
 | [First deliverable](./first-deliverable.md) | The first comparison to produce, its evaluation criteria and the return-to-operator condition |
+| [Comparison plan](./comparison-plan.md) | Executable handoff for correcting workshop premises and comparing three coverage policies using retained cases; no live method changes |
 | [Proposal: verification coverage bounds](./proposals/verification-coverage-bounds.md) | Operator proposal of 2026-10-11: exhaustive coverage duty at the runtime layer, bounded omission checks for lenses |
 
 ## Scope and coordination
