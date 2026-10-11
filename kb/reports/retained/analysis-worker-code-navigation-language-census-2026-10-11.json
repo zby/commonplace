@@ -1,0 +1,4816 @@
+{
+  "measurement-date": "2026-10-11",
+  "purpose": "Language coverage for analysis-worker navigation tool selection; not historical review reconstruction",
+  "unit": "committed Git-tree source files at recorded cached HEADs",
+  "population-records": [
+    {
+      "review": "kb/agent-memory-systems/reviews/Closure-SDK.md",
+      "repos": [
+        "faltz009--Closure-SDK"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/agent-r.md",
+      "repos": [
+        "Agent-R"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/lacp.md",
+      "repos": [
+        "lacp"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/gbrain.md",
+      "repos": [
+        "gbrain"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Memori.md",
+      "repos": [
+        "Memori"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/engraph.md",
+      "repos": [
+        "engraph"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/playground.md",
+      "repos": [
+        "triblespace--playground"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/halo.md",
+      "repos": [
+        "context-labs--halo"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/agent-workflow-memory.md",
+      "repos": [
+        "zorazrw--agent-workflow-memory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/interview-doc-agent.md",
+      "repos": [
+        "Shilren--interview-doc-agent"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/WeKnora.md",
+      "repos": [
+        "Tencent--WeKnora"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/claude-context-guard.md",
+      "repos": [
+        "claude-context-guard"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/byterover-cli.md",
+      "repos": [
+        "byterover-cli"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/SkillRL.md",
+      "repos": [
+        "aiming-lab--SkillRL"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/exocomp.md",
+      "repos": [
+        "cookiengineer--exocomp"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/letta.md",
+      "repos": [
+        "letta-ai--letta"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/voyager.md",
+      "repos": [
+        "Voyager"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/MemoryOS.md",
+      "repos": [
+        "BAI-LAB--MemoryOS"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/tolaria.md",
+      "repos": [
+        "refactoringhq--tolaria"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/mem0.md",
+      "repos": [
+        "mem0ai--mem0"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md",
+      "repos": [
+        "muratcankoylan--Agent-Skills-for-Context-Engineering"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/openwiki.md",
+      "repos": [
+        "langchain-ai--openwiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/AI-Context-OS.md",
+      "repos": [
+        "alexdcd--AI-Context-OS"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/link.md",
+      "repos": [
+        "gowtham0992--link"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/spacebot.md",
+      "repos": [
+        "spacedriveapp--spacebot"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/clawvault.md",
+      "repos": [
+        "clawvault"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/g-memory.md",
+      "repos": [
+        "GMemory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/amazon-science--SAGE.md",
+      "repos": [
+        "amazon-science--SAGE"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/browzy-ai.md",
+      "repos": [
+        "browzy.ai"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cass_memory_system.md",
+      "repos": [
+        "cass_memory_system"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/claude-obsidian.md",
+      "repos": [
+        "AgriciDaniel--claude-obsidian"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/napkin.md",
+      "repos": [
+        "Michaelliv--napkin",
+        "napkin"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/hyalo.md",
+      "repos": [
+        "ractive--hyalo"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/siftly.md",
+      "repos": [
+        "viperrcrypto--Siftly"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/SkillWeaver.md",
+      "repos": [
+        "OSU-NLP-Group--SkillWeaver"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/signetai.md",
+      "repos": [
+        "Signet-AI--signetai"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/AutoSci.md",
+      "repos": [
+        "skyllwt--AutoSci"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/smriti-mcp.md",
+      "repos": [
+        "deepak-bhardwaj-ps--smriti-mcp"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/ReframeWeb.md",
+      "repos": [
+        "jubjub727--ReframeWeb"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/mentisdb.md",
+      "repos": [
+        "mentisdb"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/equipa.md",
+      "repos": [
+        "equipa"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cq.md",
+      "repos": [
+        "cq"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/LLM-Wiki-v3.md",
+      "repos": [
+        "vvvvvivekkk--LLM-Wiki-v3"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/semiont.md",
+      "repos": [
+        "The-AI-Alliance--semiont"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/MiroShark.md",
+      "repos": [
+        "MiroShark"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/openviking.md",
+      "repos": [
+        "OpenViking",
+        "volcengine--OpenViking"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/reasoning-bank.md",
+      "repos": [
+        "reasoning-bank"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/skillnote.md",
+      "repos": [
+        "luna-prompts--skillnote"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/wuphf.md",
+      "repos": [
+        "nex-crm--wuphf"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/sift-kg.md",
+      "repos": [
+        "juanceresa--sift-kg"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/dense-mem.md",
+      "repos": [
+        "markhuangai--dense-mem"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/TheKnowledge.md",
+      "repos": [
+        "badwally--TheKnowledge"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/beever-atlas.md",
+      "repos": [
+        "Beever-AI--beever-atlas"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/supermemory.md",
+      "repos": [
+        "supermemoryai--supermemory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/agentic-harness-engineering.md",
+      "repos": [
+        "china-qijizhifeng--agentic-harness-engineering"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/AgentFly.md",
+      "repos": [
+        "Agent-on-the-Fly--AgentFly"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/sparks.md",
+      "repos": [
+        "yogirk--sparks"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/thalo.md",
+      "repos": [
+        "rejot-dev--thalo"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/getsentry-skills.md",
+      "repos": [
+        "getsentry--skills"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/mempalace.md",
+      "repos": [
+        "mempalace"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/llm-wiki-coordination.md",
+      "repos": [
+        "AEVYRA--llm-wiki-coordination"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/echel.md",
+      "repos": [
+        "alirezabbasi--echel"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/OS-Copilot.md",
+      "repos": [
+        "OS-Copilot--OS-Copilot"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/nuggets.md",
+      "repos": [
+        "nuggets"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/swamp.md",
+      "repos": [
+        "swamp-club--swamp"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/a-mem.md",
+      "repos": [
+        "WujiangXu--A-mem-sys"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/origin.md",
+      "repos": [
+        "7xuanlu--origin"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Kompl.md",
+      "repos": [
+        "tuirk--Kompl"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/hindsight.md",
+      "repos": [
+        "hindsight"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/sage.md",
+      "repos": [
+        "sage"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Self-Training-LLM.md",
+      "repos": [
+        "wj210--Self-Training-LLM"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/funes.md",
+      "repos": [
+        "ulyssestenn--funes"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/archie.md",
+      "repos": [
+        "gchamon--archie"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/eidetic.md",
+      "repos": [
+        "LARIkoz--eidetic"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cobusgreyling--llm-wiki.md",
+      "repos": [
+        "cobusgreyling--llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/context-constitution.md",
+      "repos": [
+        "letta-ai--context-constitution"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/tracecraft.md",
+      "repos": [
+        "Arrmlet--tracecraft"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/xMemory.md",
+      "repos": [
+        "xMemory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/basic-memory.md",
+      "repos": [
+        "basicmachines-co--basic-memory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/echoes-vault-opencode.md",
+      "repos": [
+        "psinetron--echoes-vault-opencode"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/stash.md",
+      "repos": [
+        "alash3al--stash"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/atlas.md",
+      "repos": []
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Zikkaron.md",
+      "repos": [
+        "amanhij--Zikkaron"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/tendril.md",
+      "repos": [
+        "serverless-dna--tendril"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/deja-vu.md",
+      "repos": [
+        "vshulcz--deja-vu"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/AriGraph.md",
+      "repos": [
+        "AIRI-Institute--AriGraph"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/binder.md",
+      "repos": [
+        "mpazik--binder"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/compound-engineering-plugin.md",
+      "repos": [
+        "EveryInc--compound-engineering-plugin"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/reflexion.md",
+      "repos": [
+        "noahshinn--reflexion",
+        "reflexion"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/kgai.md",
+      "repos": []
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Auto-claude-code-research-in-sleep.md",
+      "repos": [
+        "wanshuiyin--Auto-claude-code-research-in-sleep"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/scroll.md",
+      "repos": [
+        "niceIrene--QwenPaw"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/graphiti.md",
+      "repos": [
+        "getzep--graphiti"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/synthadoc.md",
+      "repos": [
+        "axoviq-ai--synthadoc"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Awesome-Agent-Memory.md",
+      "repos": [
+        "Awesome-Agent-Memory"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/autocontext.md",
+      "repos": [
+        "autocontext"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/meta-harness.md",
+      "repos": [
+        "stanford-iris-lab--meta-harness"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/virtual-context.md",
+      "repos": [
+        "virtual-context"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/quicky-wiki.md",
+      "repos": [
+        "anzal1--quicky-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/docmason.md",
+      "repos": [
+        "DocMason"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/llmwiki-marimo.md",
+      "repos": [
+        "Clod--llmwiki-marimo"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/ai-memex-cli.md",
+      "repos": [
+        "zelixag--ai-memex-cli"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/crewai-memory.md",
+      "repos": [
+        "crewAIInc--crewAI"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/LLM-WIKI-MCP.md",
+      "repos": [
+        "Electro-resonance--LLM-WIKI-MCP"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/SkillX.md",
+      "repos": [
+        "zjunlp--SkillX"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/pi-self-learning.md",
+      "repos": [
+        "pi-self-learning"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cognee.md",
+      "repos": [
+        "cognee"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/VLM-wiki.md",
+      "repos": [
+        "VeniVeci--VLM-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/decapod.md",
+      "repos": [
+        "decapod"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cludebot.md",
+      "repos": [
+        "cludebot"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/theafh--ai-modules.md",
+      "repos": [
+        "theafh--ai-modules"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/pond.md",
+      "repos": [
+        "tenequm--pond"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Pratiyush--llm-wiki.md",
+      "repos": [
+        "Pratiyush--llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/agentic-local-brain.md",
+      "repos": [
+        "agent-creativity--agentic-local-brain"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/openclerk.md",
+      "repos": [
+        "yazanabuashour--openclerk"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/KBLaM.md",
+      "repos": [
+        "microsoft--KBLaM"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/okf-harness.md",
+      "repos": [
+        "pumblus--okf-harness"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/synto.md",
+      "repos": [
+        "kytmanov--synto"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/expel.md",
+      "repos": [
+        "ExpeL"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/phantom.md",
+      "repos": [
+        "ghostwright--phantom"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/nao.md",
+      "repos": [
+        "getnao--nao"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/claude-workstream-kit.md",
+      "repos": [
+        "ChristopherA--claude-workstream-kit"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/atomic.md",
+      "repos": [
+        "kenforthewin--atomic"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/OpenSage.md",
+      "repos": [
+        "OpenSage"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/llm-project-wiki.md",
+      "repos": [
+        "akash-r34--llm-project-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/voiden.md",
+      "repos": [
+        "VoidenHQ--voiden"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/llm-context-base.md",
+      "repos": [
+        "asakin--llm-context-base"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/arscontexta.md",
+      "repos": [
+        "agenticnotetaking--arscontexta"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/ace.md",
+      "repos": [
+        "ace"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/hermes-agent.md",
+      "repos": [
+        "nousresearch--hermes-agent"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/llm-wiki.md",
+      "repos": [
+        "nvk--llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/operational-ontology-framework.md",
+      "repos": [
+        "fstech-digital--operational-ontology-framework"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/hyperagents.md",
+      "repos": [
+        "Hyperagents"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/secure-llm-wiki.md",
+      "repos": [
+        "NicoBleh--secure-llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/dynamic-cheatsheet.md",
+      "repos": [
+        "dynamic-cheatsheet",
+        "suzgunmirac--dynamic-cheatsheet"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/echowiki.md",
+      "repos": [
+        "mohammadmaso--echowiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/pal.md",
+      "repos": [
+        "agno-agi--pal"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/kenhuangus--llm-wiki.md",
+      "repos": [
+        "kenhuangus--llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/CORAL.md",
+      "repos": [
+        "CORAL"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/auto-harness.md",
+      "repos": [
+        "neosigmaai--auto-harness"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/exo.md",
+      "repos": [
+        "exoharness--exo"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cocoindex.md",
+      "repos": [
+        "cocoindex-io--cocoindex"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/HippoRAG.md",
+      "repos": [
+        "OSU-NLP-Group--HippoRAG"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/memex.md",
+      "repos": [
+        "wastedcode--memex"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/synapptic.md",
+      "repos": [
+        "synapptic"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/gnosis.md",
+      "repos": [
+        "skorokithakis--gnosis"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/sage-wiki.md",
+      "repos": [
+        "xoai--sage-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/Agent-S.md",
+      "repos": [
+        "simular-ai--Agent-S"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/ai-research-os-workshop.md",
+      "repos": [
+        "iusztinpaul--ai-research-os-workshop"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/MehmetGoekce--llm-wiki.md",
+      "repos": [
+        "MehmetGoekce--llm-wiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/continuity.md",
+      "repos": [
+        "uziiuzair--continuity"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/memwiki.md",
+      "repos": [
+        "hereisSwapnil--memwiki"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/REM.md",
+      "repos": [
+        "REM"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/cortex.md",
+      "repos": [
+        "abbacusgroup--cortex"
+      ]
+    },
+    {
+      "review": "kb/agent-memory-systems/reviews/o-o.md",
+      "repos": [
+        "jahala--o-o"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/autogenesis.md",
+      "repos": [
+        "DVampire--Autogenesis"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/swamp.md",
+      "repos": [
+        "swamp-club--swamp"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/fractal.md",
+      "repos": [
+        "Trampoline-AI--fractal"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/semantic-engine.md",
+      "repos": [
+        "Open-Research-Institute--semantic-engine"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/claude-code-dynamic-workflows.md",
+      "repos": []
+    },
+    {
+      "review": "kb/agentic-systems/reviews/compound-engineering-plugin.md",
+      "repos": [
+        "EveryInc--compound-engineering-plugin"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/ai-agent-book.md",
+      "repos": [
+        "ai-agent-book"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/beads-rust.md",
+      "repos": [
+        "Dicklesworthstone--beads_rust"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/eigenius.md",
+      "repos": [
+        "eigenius"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/exo.md",
+      "repos": [
+        "exoharness--exo"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/academic-research-skills.md",
+      "repos": [
+        "academic-research-skills"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews/agno-agentos.md",
+      "repos": [
+        "agno-agi--agent-platform-railway",
+        "agno-agi--agno"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/skilllift.md",
+      "repos": [
+        "WalteR-MittY-pro--SkillLift"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/oh-my-pi.md",
+      "repos": [
+        "can1357--oh-my-pi"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/arex-skill.md",
+      "repos": [
+        "VectorSpaceLab--AREX-Skill"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/company-brain.md",
+      "repos": [
+        "supermemoryai--company-brain"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/mem0.md",
+      "repos": [
+        "mem0ai--mem0"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md",
+      "repos": [
+        "jasonkneen--instinctual-memory"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/rsiagent.md",
+      "repos": [
+        "AetherLabsAI--RSIAgent"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/napkin.md",
+      "repos": [
+        "Michaelliv--napkin",
+        "napkin"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/swarmworld.md",
+      "repos": [
+        "lamm-mit--SwarmWorld"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/contextpilot.md",
+      "repos": [
+        "Tencent--ContextPilot"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/modularrsi.md",
+      "repos": [
+        "IQuestLab--ModularRSI"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/primescientist.md",
+      "repos": [
+        "Henri-XYu02--PrimeScientist"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jepa-anything.md",
+      "repos": [
+        "Gen-Verse--JEPA-Anything"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/merchantbench.md",
+      "repos": [
+        "KhanCold--merchantbench"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/eal-bench.md",
+      "repos": [
+        "tommasocerruti--eal-bench"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/openviking.md",
+      "repos": [
+        "OpenViking",
+        "volcengine--OpenViking"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/arsumbris.md",
+      "repos": [
+        "arsumbris--au-mcp",
+        "arsumbris--au-mcp-adapter-cc",
+        "arsumbris--au-mcp-adapter-codex"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/supermemory.md",
+      "repos": [
+        "supermemoryai--supermemory"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/prime-agent.md",
+      "repos": [
+        "PrimeIntellect-ai--prime-agent"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/enoch.md",
+      "repos": [
+        "our-ark--enoch"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/fragility-grid.md",
+      "repos": [
+        "NikolaTesla-007--fragility-grid"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/openrsi.md",
+      "repos": [
+        "FrontisAI--OpenRSI"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/meta-n.md",
+      "repos": [
+        "minnesotanlp--meta-n"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/apache-maka.md",
+      "repos": [
+        "apache--maka"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/wikiskill-stahl-g.md",
+      "repos": [
+        "Stahl-G--wikiskill"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/prove2me.md",
+      "repos": [
+        "prove2me--prove2me_workspace"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/tardigrade.md",
+      "repos": [
+        "clavia-labs--tardigrade"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/ecdysis.md",
+      "repos": [
+        "cuiyu-ai--Ecdysis"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/instinctual-memory.md",
+      "repos": [
+        "jasonkneen--instinctual-memory"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/reflexion.md",
+      "repos": [
+        "noahshinn--reflexion",
+        "reflexion"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/dualgraph.md",
+      "repos": [
+        "microsoft--DKI_LLM"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/aide2.md",
+      "repos": []
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jaz.md",
+      "repos": [
+        "jaz-lang--jaz"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/lhtb.md",
+      "repos": [
+        "zli12321--LHTB"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/pond.md",
+      "repos": [
+        "tenequm--pond"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/sol-pi.md",
+      "repos": [
+        "NVlabs--SoL-Pi"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/evoontology.md",
+      "repos": [
+        "ruc-datalab--EvoOntology"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/gbrain-garrytan.md",
+      "repos": [
+        "gbrain"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/jaz-evals.md",
+      "repos": [
+        "jaz-lang--jaz-evals"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/wikiskill.md",
+      "repos": []
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/dynamic-cheatsheet.md",
+      "repos": [
+        "dynamic-cheatsheet",
+        "suzgunmirac--dynamic-cheatsheet"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/pi-posthorse.md",
+      "repos": [
+        "fitchmultz--pi-posthorse"
+      ]
+    },
+    {
+      "review": "kb/agentic-systems/reviews-archive/pageindex-2026-09-29-02.md",
+      "repos": [
+        "VectifyAI--PageIndex"
+      ]
+    },
+    {
+      "review": "kb/agentic-system-analyses/retained-archive/AAS-2026-10-04-dynamic-cheatsheet-01/overview.md",
+      "repos": [
+        "dynamic-cheatsheet",
+        "suzgunmirac--dynamic-cheatsheet"
+      ]
+    },
+    {
+      "review": "recent-run:AAS-2026-10-11-letta-code-88afa3263646-01",
+      "repos": [
+        "letta-ai--letta-code"
+      ]
+    }
+  ],
+  "repositories": [
+    {
+      "name": "7xuanlu--origin",
+      "identity": "7xuanlu/origin",
+      "head": "0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb",
+      "files": {
+        "Python": 4,
+        "JavaScript": 3,
+        "Rust": 221,
+        "Ruby": 1,
+        "Shell": 16
+      },
+      "filtered_files": {
+        "Python": 4,
+        "JavaScript": 3,
+        "Rust": 191,
+        "Ruby": 1,
+        "Shell": 13
+      },
+      "markdown_files": 37,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "AEVYRA--llm-wiki-coordination",
+      "identity": "aevyra/llm-wiki-coordination",
+      "head": "126749634d1c8c2fd6141f59711c882c2d629699",
+      "files": {
+        "Python": 1
+      },
+      "filtered_files": {
+        "Python": 1
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "AIRI-Institute--AriGraph",
+      "identity": "airi-institute/arigraph",
+      "head": "e884b76d7fa5185a3a8a55e5a67393b5a43f5ef2",
+      "files": {
+        "Python": 29,
+        "JavaScript": 4
+      },
+      "filtered_files": {
+        "Python": 29,
+        "JavaScript": 4
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "AetherLabsAI--RSIAgent",
+      "identity": "aetherlabsai/rsiagent",
+      "head": "a9e56263f6deaa493496ad6b155fe24bf131bc12",
+      "files": {
+        "Python": 134,
+        "Shell": 3
+      },
+      "filtered_files": {
+        "Python": 52,
+        "Shell": 2
+      },
+      "markdown_files": 17,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Agent-R",
+      "identity": "bytedance-seed/agent-r",
+      "head": "82fcc1ca7873b460949ed49022146dd988c32e31",
+      "files": {
+        "Python": 10
+      },
+      "filtered_files": {
+        "Python": 10
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Agent-on-the-Fly--AgentFly",
+      "identity": "agent-on-the-fly/agentfly",
+      "head": "42fbbcac63dd58ed6856c0761357345a58e4f032",
+      "files": {
+        "Python": 27
+      },
+      "filtered_files": {
+        "Python": 27
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "AgriciDaniel--claude-obsidian",
+      "identity": "agricidaniel/claude-obsidian",
+      "head": "32ac5a02c4e082e4a5628ca810776375e134708e",
+      "files": {
+        "Python": 64,
+        "Shell": 11
+      },
+      "filtered_files": {
+        "Python": 30,
+        "Shell": 8
+      },
+      "markdown_files": 85,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Arrmlet--tracecraft",
+      "identity": "arrmlet/tracecraft",
+      "head": "7d77daaaf17d3f18b7718e3ddfc8ee2576446adc",
+      "files": {
+        "Python": 36
+      },
+      "filtered_files": {
+        "Python": 33
+      },
+      "markdown_files": 14,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Awesome-Agent-Memory",
+      "identity": "teleai-uagi/awesome-agent-memory",
+      "head": "3538c0d23cad673a797385686380c5bd8f434a7c",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "BAI-LAB--MemoryOS",
+      "identity": "bai-lab/memoryos",
+      "head": "1d717060350931af33d1d0dc3d4e50a72c125a48",
+      "files": {
+        "Python": 52,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 52,
+        "Shell": 1
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Beever-AI--beever-atlas",
+      "identity": "beever-ai/beever-atlas",
+      "head": "74a8dbc6d7a382d4d592a762bdc8230305c869c8",
+      "files": {
+        "JavaScript": 3,
+        "TypeScript": 344,
+        "Python": 710,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "JavaScript": 3,
+        "TypeScript": 263,
+        "Python": 318,
+        "Shell": 1
+      },
+      "markdown_files": 56,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "CORAL",
+      "identity": "human-agent-society/coral",
+      "head": "6bcefed8e8262b0d01ab41201873d35454fe8864",
+      "files": {
+        "Python": 896,
+        "Shell": 22,
+        "JavaScript": 5,
+        "TypeScript": 25,
+        "C/C++": 528
+      },
+      "filtered_files": {
+        "Python": 71,
+        "Shell": 5,
+        "JavaScript": 3,
+        "TypeScript": 16
+      },
+      "markdown_files": 432,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ChristopherA--claude-workstream-kit",
+      "identity": "christophera/claude-workstream-kit",
+      "head": "35327d7e398faa86d0e0a83f9e7cea90a122a342",
+      "files": {
+        "Shell": 3
+      },
+      "filtered_files": {
+        "Shell": 2
+      },
+      "markdown_files": 17,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Clod--llmwiki-marimo",
+      "identity": "clod/llmwiki-marimo",
+      "head": "0dc8e731df6a4bbb03926b17a891d03736f1267a",
+      "files": {
+        "Python": 122
+      },
+      "filtered_files": {
+        "Python": 75
+      },
+      "markdown_files": 109,
+      "notebooks": 0,
+      "sql_files": 2
+    },
+    {
+      "name": "DVampire--Autogenesis",
+      "identity": "dvampire/autogenesis",
+      "head": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+      "files": {
+        "Python": 1080,
+        "Shell": 12,
+        "JavaScript": 96,
+        "TypeScript": 60
+      },
+      "filtered_files": {
+        "Python": 1027,
+        "Shell": 12,
+        "JavaScript": 28,
+        "TypeScript": 60
+      },
+      "markdown_files": 359,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Dicklesworthstone--beads_rust",
+      "identity": "dicklesworthstone/beads_rust",
+      "head": "c807e36f81881ec0a7b12d4218c5234436656201",
+      "files": {
+        "Rust": 289,
+        "Shell": 167,
+        "Ruby": 1,
+        "Python": 1
+      },
+      "filtered_files": {
+        "Rust": 118,
+        "Shell": 22,
+        "Ruby": 1,
+        "Python": 1
+      },
+      "markdown_files": 219,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "DocMason",
+      "identity": "jetxu-llm/docmason",
+      "head": "b3e3e0ea0937309b4218f7ebf77bf72641fc1a5b",
+      "files": {
+        "Shell": 6,
+        "JavaScript": 1,
+        "Python": 82
+      },
+      "filtered_files": {
+        "Shell": 6,
+        "JavaScript": 1,
+        "Python": 53
+      },
+      "markdown_files": 43,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "Electro-resonance--LLM-WIKI-MCP",
+      "identity": "electro-resonance/llm-wiki-mcp",
+      "head": "25efb7631082fa3732723fee08e24d39b43311fa",
+      "files": {
+        "Shell": 1,
+        "Python": 26
+      },
+      "filtered_files": {
+        "Python": 7
+      },
+      "markdown_files": 33,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "EveryInc--compound-engineering-plugin",
+      "identity": "everyinc/compound-engineering-plugin",
+      "head": "63b6b260c345ba70ce9d9a393eeedefb64e4e0a0",
+      "files": {
+        "Python": 17,
+        "Shell": 12,
+        "TypeScript": 102
+      },
+      "filtered_files": {
+        "Python": 17,
+        "Shell": 12,
+        "TypeScript": 50
+      },
+      "markdown_files": 383,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ExpeL",
+      "identity": "leaplabthu/expel",
+      "head": "e41ec9a24823e7b560c561ab191441b56d9bcefc",
+      "files": {
+        "Python": 29
+      },
+      "filtered_files": {
+        "Python": 29
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "FrontisAI--OpenRSI",
+      "identity": "frontisai/openrsi",
+      "head": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+      "files": {
+        "Python": 265,
+        "Shell": 20
+      },
+      "filtered_files": {
+        "Python": 233,
+        "Shell": 20
+      },
+      "markdown_files": 77,
+      "notebooks": 0,
+      "sql_files": 2
+    },
+    {
+      "name": "GMemory",
+      "identity": "bingreeky/gmemory",
+      "head": "7b581c51d993bd600df14691d101d7e601040cc6",
+      "files": {
+        "Python": 139,
+        "Shell": 5,
+        "C/C++": 4
+      },
+      "filtered_files": {
+        "Python": 129,
+        "Shell": 5,
+        "C/C++": 4
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Gen-Verse--JEPA-Anything",
+      "identity": "gen-verse/jepa-anything",
+      "head": "c6e6c88f3ef75a4ce7acd660d6fa5779d995512c",
+      "files": {
+        "Python": 15
+      },
+      "filtered_files": {
+        "Python": 9
+      },
+      "markdown_files": 12,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Henri-XYu02--PrimeScientist",
+      "identity": "henri-xyu02/primescientist",
+      "head": "29971beac6f4f4b41309b1326762e1b83ceece98",
+      "files": {
+        "Python": 76,
+        "Shell": 60,
+        "C/C++": 40,
+        "Go": 21,
+        "Rust": 20
+      },
+      "filtered_files": {
+        "Python": 5,
+        "Shell": 4
+      },
+      "markdown_files": 64,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Hyperagents",
+      "identity": "facebookresearch/hyperagents",
+      "head": "59a68f672dfb92c74aeb7e61535d776fb36e172d",
+      "files": {
+        "Python": 120,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "Python": 120,
+        "Shell": 2
+      },
+      "markdown_files": 9,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "IQuestLab--ModularRSI",
+      "identity": "iquestlab/modularrsi",
+      "head": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+      "files": {
+        "Python": 1028,
+        "Shell": 231,
+        "Java": 1,
+        "TypeScript": 78,
+        "JavaScript": 3
+      },
+      "filtered_files": {
+        "Python": 687,
+        "Shell": 110,
+        "Java": 1,
+        "TypeScript": 48
+      },
+      "markdown_files": 224,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "KhanCold--merchantbench",
+      "identity": "khancold/merchantbench",
+      "head": "f44ce969aeccfd65d1eef6afe50f69868e510946",
+      "files": {
+        "Python": 100
+      },
+      "filtered_files": {
+        "Python": 58
+      },
+      "markdown_files": 4,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "LARIkoz--eidetic",
+      "identity": "larikoz/eidetic",
+      "head": "7e152876dc87319cb2d864aefba540e986f335fe",
+      "files": {
+        "Python": 29,
+        "Shell": 15
+      },
+      "filtered_files": {
+        "Python": 20,
+        "Shell": 15
+      },
+      "markdown_files": 43,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "MehmetGoekce--llm-wiki",
+      "identity": "mehmetgoekce/llm-wiki",
+      "head": "96ce7ad1ccec75c9100a71c7472c46ac41eb2825",
+      "files": {
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Shell": 1
+      },
+      "markdown_files": 30,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Memori",
+      "identity": "memorilabs/memori",
+      "head": "819a55fe9357a09fddaf1d9deccece473d18a40b",
+      "files": {
+        "Python": 301,
+        "JavaScript": 7,
+        "Rust": 52,
+        "TypeScript": 104
+      },
+      "filtered_files": {
+        "Python": 141,
+        "JavaScript": 7,
+        "Rust": 48,
+        "TypeScript": 56
+      },
+      "markdown_files": 34,
+      "notebooks": 2,
+      "sql_files": 0
+    },
+    {
+      "name": "Michaelliv--napkin",
+      "identity": "michaelliv/napkin",
+      "head": "7582d6a46f5a11995956e60a59c41a5b242109f1",
+      "files": {
+        "Shell": 1,
+        "TypeScript": 107,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "JavaScript": 2,
+        "TypeScript": 67
+      },
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "MiroShark",
+      "identity": "aaronjmars/miroshark",
+      "head": "570cd00ea20682145a55b6c3c4f5fa20a73693a2",
+      "files": {
+        "Python": 252,
+        "JavaScript": 19,
+        "Vue": 36,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 189,
+        "JavaScript": 19,
+        "Vue": 36,
+        "Shell": 1
+      },
+      "markdown_files": 44,
+      "notebooks": 0,
+      "sql_files": 37
+    },
+    {
+      "name": "NVlabs--SoL-Pi",
+      "identity": "nvlabs/sol-pi",
+      "head": "1559b5cb12c72da4a485bc50fe326586b216fb19",
+      "files": {
+        "JavaScript": 4,
+        "TypeScript": 42
+      },
+      "filtered_files": {
+        "JavaScript": 3,
+        "TypeScript": 23
+      },
+      "markdown_files": 10,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "NicoBleh--secure-llm-wiki",
+      "identity": "nicobleh/secure-llm-wiki",
+      "head": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+      "files": {
+        "Python": 26
+      },
+      "filtered_files": {
+        "Python": 20
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "NikolaTesla-007--fragility-grid",
+      "identity": "nikolatesla-007/fragility-grid",
+      "head": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+      "files": {
+        "Python": 33,
+        "Shell": 6
+      },
+      "filtered_files": {
+        "Python": 33,
+        "Shell": 6
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "OS-Copilot--OS-Copilot",
+      "identity": "os-copilot/os-copilot",
+      "head": "f720af8807e49a92dda64572d2c6bc6c0ac7ee7e",
+      "files": {
+        "Python": 76,
+        "JavaScript": 13
+      },
+      "filtered_files": {
+        "Python": 65,
+        "JavaScript": 13
+      },
+      "markdown_files": 10,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "OSU-NLP-Group--HippoRAG",
+      "identity": "osu-nlp-group/hipporag",
+      "head": "d437bfb1805278b81e20c82357ed3f7d90f14901",
+      "files": {
+        "Python": 62
+      },
+      "filtered_files": {
+        "Python": 62
+      },
+      "markdown_files": 5,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "OSU-NLP-Group--SkillWeaver",
+      "identity": "osu-nlp-group/skillweaver",
+      "head": "f2a63d65d0f6ff46ac30e817cede8797f8f25b97",
+      "files": {
+        "Python": 49,
+        "JavaScript": 1,
+        "TypeScript": 2
+      },
+      "filtered_files": {
+        "Python": 49,
+        "JavaScript": 1,
+        "TypeScript": 2
+      },
+      "markdown_files": 15,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Open-Research-Institute--semantic-engine",
+      "identity": "open-research-institute/semantic-engine",
+      "head": "7e2481671cad01f0b4c89f2a1877d6733d7e552c",
+      "files": {
+        "JavaScript": 6,
+        "TypeScript": 13,
+        "Python": 2
+      },
+      "filtered_files": {
+        "JavaScript": 6,
+        "TypeScript": 12,
+        "Python": 2
+      },
+      "markdown_files": 5,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "OpenSage",
+      "identity": "opensage-agent/opensage",
+      "head": "481b4344f3d07de42082f367ecda4381f81c22c8",
+      "files": {
+        "Python": 255,
+        "Shell": 18,
+        "Scala": 1
+      },
+      "filtered_files": {
+        "Shell": 18,
+        "Python": 157,
+        "Scala": 1
+      },
+      "markdown_files": 47,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "volcengine--OpenViking",
+      "identity": "volcengine/openviking",
+      "head": "4edc30b068934893bc94a4e1b8e87bab2100bce5",
+      "files": {
+        "JavaScript": 332,
+        "Shell": 63,
+        "Python": 1926,
+        "TypeScript": 566,
+        "Rust": 150,
+        "C/C++": 69,
+        "Vue": 8,
+        "Go": 21
+      },
+      "filtered_files": {
+        "JavaScript": 16,
+        "Shell": 43,
+        "Python": 1012,
+        "TypeScript": 322,
+        "Rust": 145,
+        "C/C++": 66,
+        "Go": 20
+      },
+      "markdown_files": 460,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Pratiyush--llm-wiki",
+      "identity": "pratiyush/llm-wiki",
+      "head": "06c30e2b0c9018b11463b4fa37de0d75248cde5c",
+      "files": {
+        "Shell": 8,
+        "Python": 272,
+        "Ruby": 1,
+        "TypeScript": 4,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Shell": 8,
+        "Ruby": 1,
+        "TypeScript": 3,
+        "Python": 102,
+        "JavaScript": 1
+      },
+      "markdown_files": 175,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "PrimeIntellect-ai--prime-agent",
+      "identity": "primeintellect-ai/prime-agent",
+      "head": "514633727bf26d74f39f3119c2b0e31a5ceb2a9d",
+      "files": {
+        "Shell": 8,
+        "TypeScript": 950,
+        "JavaScript": 18,
+        "C/C++": 1,
+        "Python": 25
+      },
+      "filtered_files": {
+        "Shell": 7,
+        "TypeScript": 379,
+        "JavaScript": 17,
+        "Python": 19
+      },
+      "markdown_files": 104,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "REM",
+      "identity": "satyammistari/rem",
+      "head": "935e8be0a1fca5b23dbabfe16c48b562c1cd24cc",
+      "files": {
+        "Python": 29,
+        "JavaScript": 2,
+        "TypeScript": 46,
+        "Go": 34
+      },
+      "filtered_files": {
+        "JavaScript": 2,
+        "TypeScript": 46,
+        "Go": 33,
+        "Python": 23
+      },
+      "markdown_files": 5,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "Shilren--interview-doc-agent",
+      "identity": "shilren/interview-doc-agent",
+      "head": "db4da8f7dd1065e725bff1b185c6dbbdb2425276",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Signet-AI--signetai",
+      "identity": "signet-ai/signetai",
+      "head": "9e8909e7d210644caad27bf88c603cf322b6fb12",
+      "files": {
+        "Shell": 10,
+        "JavaScript": 13,
+        "TypeScript": 1012,
+        "Python": 15,
+        "C/C++": 10,
+        "C#": 1,
+        "Rust": 110,
+        "Svelte": 205
+      },
+      "filtered_files": {
+        "Shell": 8,
+        "JavaScript": 7,
+        "TypeScript": 722,
+        "Python": 14,
+        "C/C++": 10,
+        "C#": 1,
+        "Rust": 105,
+        "Svelte": 205
+      },
+      "markdown_files": 145,
+      "notebooks": 0,
+      "sql_files": 65
+    },
+    {
+      "name": "Stahl-G--wikiskill",
+      "identity": "stahl-g/wikiskill",
+      "head": "9df975b2145a0e924f344f2a3d116e11d3f025ac",
+      "files": {
+        "Python": 86,
+        "Shell": 1,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "Python": 56,
+        "Shell": 1,
+        "JavaScript": 2
+      },
+      "markdown_files": 89,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Tencent--ContextPilot",
+      "identity": "tencent/contextpilot",
+      "head": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+      "files": {
+        "Python": 537,
+        "Shell": 215,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "Python": 383,
+        "Shell": 72
+      },
+      "markdown_files": 60,
+      "notebooks": 1,
+      "sql_files": 0
+    },
+    {
+      "name": "Tencent--WeKnora",
+      "identity": "tencent/weknora",
+      "head": "4bb8906520a9e16ccbf3312a1b65ba36210dbd9e",
+      "files": {
+        "Ruby": 1,
+        "Go": 1113,
+        "Python": 63,
+        "Shell": 18,
+        "TypeScript": 87,
+        "JavaScript": 12,
+        "Vue": 122
+      },
+      "filtered_files": {
+        "Ruby": 1,
+        "Go": 1112,
+        "Python": 53,
+        "Shell": 18,
+        "TypeScript": 86,
+        "JavaScript": 11,
+        "Vue": 122
+      },
+      "markdown_files": 109,
+      "notebooks": 0,
+      "sql_files": 121
+    },
+    {
+      "name": "The-AI-Alliance--semiont",
+      "identity": "the-ai-alliance/semiont",
+      "head": "e44737844808ab209effa26978cf412957e50ea3",
+      "files": {
+        "Python": 5,
+        "TypeScript": 1073,
+        "Shell": 16,
+        "JavaScript": 41,
+        "Rust": 2
+      },
+      "filtered_files": {
+        "Python": 2,
+        "TypeScript": 688,
+        "Shell": 16,
+        "JavaScript": 40,
+        "Rust": 2
+      },
+      "markdown_files": 214,
+      "notebooks": 0,
+      "sql_files": 3
+    },
+    {
+      "name": "Trampoline-AI--fractal",
+      "identity": "trampoline-ai/fractal",
+      "head": "5954a07d464feeaf6c311a9fa5ca2e54200a6794",
+      "files": {
+        "JavaScript": 1,
+        "TypeScript": 4,
+        "Shell": 1,
+        "Python": 43
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "TypeScript": 4,
+        "Shell": 1,
+        "Python": 23
+      },
+      "markdown_files": 11,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "VectifyAI--PageIndex",
+      "identity": "vectifyai/pageindex",
+      "head": "d2693d80791a86345ef78b3234834f5fe53a70a0",
+      "files": {
+        "JavaScript": 1,
+        "Shell": 1,
+        "Python": 109
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "Shell": 1,
+        "Python": 97
+      },
+      "markdown_files": 4,
+      "notebooks": 5,
+      "sql_files": 0
+    },
+    {
+      "name": "VectorSpaceLab--AREX-Skill",
+      "identity": "vectorspacelab/arex-skill",
+      "head": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+      "files": {
+        "TypeScript": 569,
+        "Shell": 172,
+        "C/C++": 160,
+        "JavaScript": 39,
+        "Python": 7909,
+        "Lua": 1,
+        "C#": 1
+      },
+      "filtered_files": {
+        "TypeScript": 247,
+        "JavaScript": 37,
+        "Python": 7209,
+        "Shell": 171,
+        "C/C++": 159,
+        "Lua": 1,
+        "C#": 1
+      },
+      "markdown_files": 23840,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "VeniVeci--VLM-wiki",
+      "identity": "veniveci/vlm-wiki",
+      "head": "9813fb12de9b82c9279a47c537a8c94a68292de0",
+      "files": {
+        "Python": 6
+      },
+      "filtered_files": {
+        "Python": 6
+      },
+      "markdown_files": 27,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "VoidenHQ--voiden",
+      "identity": "voidenhq/voiden",
+      "head": "c0776cb399ab452dc942b606c7b34f80b95c4412",
+      "files": {
+        "TypeScript": 532,
+        "JavaScript": 9,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "TypeScript": 524,
+        "JavaScript": 9,
+        "Shell": 2
+      },
+      "markdown_files": 42,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "Voyager",
+      "identity": "minedojo/voyager",
+      "head": "55e45a880755d0c8c66ca7fb5fe7962ac8974f89",
+      "files": {
+        "Python": 19,
+        "JavaScript": 205,
+        "TypeScript": 8
+      },
+      "filtered_files": {
+        "Python": 19,
+        "JavaScript": 202,
+        "TypeScript": 8
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "WalteR-MittY-pro--SkillLift",
+      "identity": "walter-mitty-pro/skilllift",
+      "head": "599358b4d4c4a27c0e004df8228ab93026600653",
+      "files": {
+        "Python": 178,
+        "Shell": 15
+      },
+      "filtered_files": {
+        "Python": 104,
+        "Shell": 15
+      },
+      "markdown_files": 63,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "WujiangXu--A-mem-sys",
+      "identity": "wujiangxu/a-mem-sys",
+      "head": "f303dfc71e07bdc787f4bc135d4cea328ae30e99",
+      "files": {
+        "Python": 8
+      },
+      "filtered_files": {
+        "Python": 4
+      },
+      "markdown_files": 4,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "abbacusgroup--cortex",
+      "identity": "abbacusgroup/cortex",
+      "head": "a51c2209eb6d26812c19c97aaade3cb64ccfc23c",
+      "files": {
+        "Python": 130,
+        "Ruby": 1,
+        "Shell": 1,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Ruby": 1,
+        "Shell": 1,
+        "Python": 50,
+        "JavaScript": 1
+      },
+      "markdown_files": 7,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "academic-research-skills",
+      "identity": "imbad0202/academic-research-skills",
+      "head": "94436237913091d4739870159d241660527e8338",
+      "files": {
+        "Python": 430,
+        "Shell": 8,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "Python": 416,
+        "Shell": 8,
+        "JavaScript": 1
+      },
+      "markdown_files": 978,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ace",
+      "identity": "ace-agent/ace",
+      "head": "bcb7cea0504afad6f55fec4845dd4864c9f9eee7",
+      "files": {
+        "Python": 24
+      },
+      "filtered_files": {
+        "Python": 24
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "agent-creativity--agentic-local-brain",
+      "identity": "agent-creativity/agentic-local-brain",
+      "head": "d1e5f846351a8433edea54053ddb5fc3158229c6",
+      "files": {
+        "Python": 122,
+        "JavaScript": 4,
+        "Shell": 4
+      },
+      "filtered_files": {
+        "Python": 78,
+        "JavaScript": 3,
+        "Shell": 4
+      },
+      "markdown_files": 51,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "agenticnotetaking--arscontexta",
+      "identity": "agenticnotetaking/arscontexta",
+      "head": "2acfd5cc4473c4d06c46be63df748e77e00e2746",
+      "files": {
+        "Shell": 7
+      },
+      "filtered_files": {
+        "Shell": 7
+      },
+      "markdown_files": 359,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "agno-agi--agent-platform-railway",
+      "identity": "agno-agi/agent-platform-railway",
+      "head": "6fe7af1bb11162b6aa46e68e43b74b3599a6e1c4",
+      "files": {
+        "Python": 19,
+        "Shell": 9
+      },
+      "filtered_files": {
+        "Python": 19,
+        "Shell": 9
+      },
+      "markdown_files": 7,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "agno-agi--agno",
+      "identity": "agno-agi/agno",
+      "head": "21d274d63052a229fccd6b2621ea2a7da8eb1527",
+      "files": {
+        "Python": 4296,
+        "Shell": 47
+      },
+      "filtered_files": {
+        "Python": 3223,
+        "Shell": 46
+      },
+      "markdown_files": 716,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "agno-agi--pal",
+      "identity": "agno-agi/pal",
+      "head": "6516b8ede0c085e48f39f3bd04cb85b475a855dc",
+      "files": {
+        "Python": 40,
+        "Shell": 9
+      },
+      "filtered_files": {
+        "Python": 40,
+        "Shell": 9
+      },
+      "markdown_files": 16,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ai-agent-book",
+      "identity": "bojieli/ai-agent-book",
+      "head": "a18a5f764589396d903d8faeaed205489a21bf4b",
+      "files": {
+        "Shell": 37,
+        "Python": 1747,
+        "Lua": 30,
+        "JavaScript": 59,
+        "TypeScript": 16
+      },
+      "filtered_files": {
+        "Shell": 37,
+        "Python": 1332,
+        "Lua": 30,
+        "JavaScript": 53,
+        "TypeScript": 16
+      },
+      "markdown_files": 1396,
+      "notebooks": 0,
+      "sql_files": 3
+    },
+    {
+      "name": "aiming-lab--SkillRL",
+      "identity": "aiming-lab/skillrl",
+      "head": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "files": {
+        "Python": 493,
+        "C/C++": 22,
+        "Shell": 84,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Python": 389,
+        "C/C++": 22,
+        "Shell": 17
+      },
+      "markdown_files": 34,
+      "notebooks": 3,
+      "sql_files": 0
+    },
+    {
+      "name": "akash-r34--llm-project-wiki",
+      "identity": "akash-r34/llm-project-wiki",
+      "head": "1fdfba9129a46afd18aa68a83f12d6716ab694c6",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "alash3al--stash",
+      "identity": "alash3al/stash",
+      "head": "93601c1f4e0fb42df99d2de33567095020fb6d7e",
+      "files": {
+        "Go": 42
+      },
+      "filtered_files": {
+        "Go": 42
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 19
+    },
+    {
+      "name": "alexdcd--AI-Context-OS",
+      "identity": "alexdcd/ai-context-os",
+      "head": "f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5",
+      "files": {
+        "JavaScript": 1,
+        "Rust": 48,
+        "TypeScript": 47
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "Rust": 47,
+        "TypeScript": 47
+      },
+      "markdown_files": 14,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "alirezabbasi--echel",
+      "identity": "alirezabbasi/echel",
+      "head": "70edcf63f0625c7878a1829ff6ab9e3c9b529ae4",
+      "files": {
+        "Python": 38
+      },
+      "filtered_files": {
+        "Python": 38
+      },
+      "markdown_files": 168,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "amanhij--Zikkaron",
+      "identity": "amanhij/zikkaron",
+      "head": "dda34a5d903d04ecb5517af214d437873c833302",
+      "files": {
+        "Python": 83,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "Python": 38,
+        "Shell": 2
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "amazon-science--SAGE",
+      "identity": "amazon-science/sage",
+      "head": "3c9244e82244abb1adc5467ee601a03ba0f433a0",
+      "files": {
+        "Shell": 4,
+        "Python": 140
+      },
+      "filtered_files": {
+        "Shell": 4,
+        "Python": 140
+      },
+      "markdown_files": 5,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "anzal1--quicky-wiki",
+      "identity": "anzal1/quicky-wiki",
+      "head": "65ef29b9dcc76237aa797a0d16c50bc8fd89baf7",
+      "files": {
+        "TypeScript": 43
+      },
+      "filtered_files": {
+        "TypeScript": 43
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "apache--maka",
+      "identity": "apache/maka",
+      "head": "74a20f60c9a7bb6947e2c428f07ca2e83fad92a1",
+      "files": {
+        "TypeScript": 2881,
+        "JavaScript": 171,
+        "Rust": 35,
+        "Shell": 1,
+        "Python": 14,
+        "Swift": 2
+      },
+      "filtered_files": {
+        "TypeScript": 1751,
+        "JavaScript": 120,
+        "Rust": 34,
+        "Shell": 1,
+        "Python": 14,
+        "Swift": 2
+      },
+      "markdown_files": 165,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "arsumbris--au-mcp",
+      "identity": "arsumbris/au-mcp",
+      "head": "3ddc3b62ed0b339a89a57f11026676df18d3b2eb",
+      "files": {
+        "TypeScript": 62
+      },
+      "filtered_files": {
+        "TypeScript": 34
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "arsumbris--au-mcp-adapter-cc",
+      "identity": "arsumbris/au-mcp-adapter-cc",
+      "head": "333b2117f338cd4815eeeb9ab7b3932b29fa7d62",
+      "files": {
+        "TypeScript": 43
+      },
+      "filtered_files": {
+        "TypeScript": 27
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "arsumbris--au-mcp-adapter-codex",
+      "identity": "arsumbris/au-mcp-adapter-codex",
+      "head": "3b0e3a3cf67b3143819c61c590efc85d36c23bc5",
+      "files": {
+        "TypeScript": 86,
+        "Python": 1
+      },
+      "filtered_files": {
+        "TypeScript": 43
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "asakin--llm-context-base",
+      "identity": "asakin/llm-context-base",
+      "head": "6d01cba8e2c22f9ca2519c70073a05cd54378a8c",
+      "files": {
+        "Python": 1
+      },
+      "filtered_files": {
+        "Python": 1
+      },
+      "markdown_files": 52,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "autocontext",
+      "identity": "greyhaven-ai/autocontext",
+      "head": "d381f21e17e405885aab4ff3a4e6475402bae8db",
+      "files": {
+        "Python": 1172,
+        "TypeScript": 1697,
+        "Shell": 3,
+        "JavaScript": 28
+      },
+      "filtered_files": {
+        "Python": 619,
+        "Shell": 3,
+        "TypeScript": 890,
+        "JavaScript": 23
+      },
+      "markdown_files": 82,
+      "notebooks": 0,
+      "sql_files": 24
+    },
+    {
+      "name": "axoviq-ai--synthadoc",
+      "identity": "axoviq-ai/synthadoc",
+      "head": "a77bdaeace7b3a461837936090624462690ee4ed",
+      "files": {
+        "Python": 187,
+        "TypeScript": 19,
+        "JavaScript": 3
+      },
+      "filtered_files": {
+        "Python": 96,
+        "TypeScript": 17,
+        "JavaScript": 3
+      },
+      "markdown_files": 57,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "badwally--TheKnowledge",
+      "identity": "badwally/theknowledge",
+      "head": "c573953baf79695a0fd065e0309689803b3f2e86",
+      "files": {
+        "Shell": 7,
+        "Python": 341,
+        "TypeScript": 30
+      },
+      "filtered_files": {
+        "Shell": 7,
+        "Python": 200,
+        "TypeScript": 30
+      },
+      "markdown_files": 5215,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "basicmachines-co--basic-memory",
+      "identity": "basicmachines-co/basic-memory",
+      "head": "78f36e8dbaf0f1cff00e6ca9967d32ccd3f7cbe6",
+      "files": {
+        "Python": 1188,
+        "Shell": 7,
+        "TypeScript": 57
+      },
+      "filtered_files": {
+        "Python": 588,
+        "TypeScript": 31,
+        "Shell": 3
+      },
+      "markdown_files": 334,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "browzy.ai",
+      "identity": "viharikanukollu/browzy.ai",
+      "head": "56c253042041ee2f483a5e9b824174d746891cf4",
+      "files": {
+        "TypeScript": 82
+      },
+      "filtered_files": {
+        "TypeScript": 75
+      },
+      "markdown_files": 16,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "byterover-cli",
+      "identity": "campfirein/byterover-cli",
+      "head": "faf456d6bb47cb441b61c73051a581f4488868af",
+      "files": {
+        "JavaScript": 5,
+        "Shell": 5,
+        "TypeScript": 1890
+      },
+      "filtered_files": {
+        "JavaScript": 5,
+        "Shell": 5,
+        "TypeScript": 1360
+      },
+      "markdown_files": 28,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "can1357--oh-my-pi",
+      "identity": "can1357/oh-my-pi",
+      "head": "be6cb8217cd4c1dafcc86793ae5d809ea4d7396a",
+      "files": {
+        "TypeScript": 4739,
+        "Rust": 359,
+        "Objective-C": 1,
+        "Python": 179,
+        "Shell": 12,
+        "JavaScript": 13,
+        "Julia": 1
+      },
+      "filtered_files": {
+        "TypeScript": 2196,
+        "Rust": 334,
+        "Objective-C": 1,
+        "Python": 144,
+        "Shell": 12,
+        "JavaScript": 13,
+        "Julia": 1
+      },
+      "markdown_files": 542,
+      "notebooks": 2,
+      "sql_files": 0
+    },
+    {
+      "name": "cass_memory_system",
+      "identity": "dicklesworthstone/cass_memory_system",
+      "head": "4d76f61969cbc382a030bdcaab2cdd159058fcfe",
+      "files": {
+        "TypeScript": 213,
+        "Shell": 4,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "TypeScript": 59,
+        "Shell": 3,
+        "JavaScript": 1
+      },
+      "markdown_files": 20,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "china-qijizhifeng--agentic-harness-engineering",
+      "identity": "china-qijizhifeng/agentic-harness-engineering",
+      "head": "cb6ea4e0055d60946424e8c608b4265ffaf99a09",
+      "files": {
+        "Python": 90,
+        "Shell": 5
+      },
+      "filtered_files": {
+        "Python": 74,
+        "Shell": 4
+      },
+      "markdown_files": 37,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "claude-context-guard",
+      "identity": "atreiou/claude-context-guard",
+      "head": "7e09e5b53099ef7b11fd400db39656e766d2e6fa",
+      "files": {
+        "Shell": 3
+      },
+      "filtered_files": {
+        "Shell": 3
+      },
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "clavia-labs--tardigrade",
+      "identity": "clavia-labs/tardigrade",
+      "head": "1c4f4efaab2aaeec0bc482bc38e8ddf3be6f8267",
+      "files": {
+        "TypeScript": 822
+      },
+      "filtered_files": {
+        "TypeScript": 453
+      },
+      "markdown_files": 25,
+      "notebooks": 0,
+      "sql_files": 2
+    },
+    {
+      "name": "clawvault",
+      "identity": "versatly/clawvault",
+      "head": "bd702e9cce436bc3065827714cd576e8be20c375",
+      "files": {
+        "TypeScript": 255,
+        "Shell": 4,
+        "JavaScript": 45,
+        "Python": 9
+      },
+      "filtered_files": {
+        "TypeScript": 146,
+        "Shell": 4,
+        "JavaScript": 20,
+        "Python": 8
+      },
+      "markdown_files": 58,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "cludebot",
+      "identity": "sebbsssss/cludebot",
+      "head": "e4df0881b88223699930147631db3660d5c1f4e7",
+      "files": {
+        "TypeScript": 418,
+        "JavaScript": 15,
+        "Kotlin": 4,
+        "Swift": 3,
+        "C/C++": 1,
+        "Shell": 8,
+        "Rust": 10,
+        "Python": 1
+      },
+      "filtered_files": {
+        "TypeScript": 343,
+        "JavaScript": 15,
+        "Kotlin": 4,
+        "Swift": 3,
+        "C/C++": 1,
+        "Shell": 7,
+        "Rust": 10,
+        "Python": 1
+      },
+      "markdown_files": 31,
+      "notebooks": 0,
+      "sql_files": 32
+    },
+    {
+      "name": "cobusgreyling--llm-wiki",
+      "identity": "cobusgreyling/llm-wiki",
+      "head": "a424e6875aa2d5736d9c0d03d7c28bdbe32892a5",
+      "files": {
+        "Shell": 4,
+        "Python": 33
+      },
+      "filtered_files": {
+        "Shell": 4,
+        "Python": 15
+      },
+      "markdown_files": 94,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "cocoindex-io--cocoindex",
+      "identity": "cocoindex-io/cocoindex",
+      "head": "fea514024a9ac8d6d85d2026024b23f7948904f2",
+      "files": {
+        "Shell": 13,
+        "Python": 234,
+        "Rust": 183,
+        "JavaScript": 11,
+        "TypeScript": 5
+      },
+      "filtered_files": {
+        "Shell": 12,
+        "Python": 84,
+        "Rust": 122
+      },
+      "markdown_files": 109,
+      "notebooks": 0,
+      "sql_files": 2
+    },
+    {
+      "name": "cognee",
+      "identity": "topoteretes/cognee",
+      "head": "cfb0aa4d0b3ae0154cf9f24e5908263d565341f4",
+      "files": {
+        "Shell": 9,
+        "JavaScript": 7,
+        "TypeScript": 237,
+        "Python": 1577
+      },
+      "filtered_files": {
+        "Shell": 9,
+        "JavaScript": 6,
+        "TypeScript": 237,
+        "Python": 1183
+      },
+      "markdown_files": 57,
+      "notebooks": 6,
+      "sql_files": 1
+    },
+    {
+      "name": "context-labs--halo",
+      "identity": "context-labs/halo",
+      "head": "d59bb5dde1b074d1a33dc9f875bc051e36dc34e2",
+      "files": {
+        "TypeScript": 152,
+        "Python": 309,
+        "Shell": 2,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "TypeScript": 137,
+        "Python": 205,
+        "Shell": 2,
+        "JavaScript": 1
+      },
+      "markdown_files": 15,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "cookiengineer--exocomp",
+      "identity": "cookiengineer/exocomp",
+      "head": "eb7dc19d408a1e1ac55f847c07cbb8881808cfcc",
+      "files": {
+        "Go": 209,
+        "JavaScript": 25,
+        "C/C++": 4
+      },
+      "filtered_files": {
+        "Go": 209,
+        "JavaScript": 25,
+        "C/C++": 4
+      },
+      "markdown_files": 7,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "cq",
+      "identity": "mozilla-ai/cq",
+      "head": "36ae42ae4b7c30628133455bde128efe91986235",
+      "files": {
+        "Go": 113,
+        "Python": 131,
+        "Shell": 6,
+        "TypeScript": 26
+      },
+      "filtered_files": {
+        "Go": 113,
+        "Python": 78,
+        "Shell": 6,
+        "TypeScript": 23
+      },
+      "markdown_files": 26,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "crewAIInc--crewAI",
+      "identity": "crewaiinc/crewai",
+      "head": "aed69237d4eb7ad6ba8fe3d0b4777979fe949869",
+      "files": {
+        "Python": 1207,
+        "JavaScript": 3,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 871,
+        "JavaScript": 1
+      },
+      "markdown_files": 96,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "cuiyu-ai--Ecdysis",
+      "identity": "cuiyu-ai/ecdysis",
+      "head": "cf93866d545b0974dbb0bc83b39c31fbbdeeecb8",
+      "files": {
+        "Python": 19
+      },
+      "filtered_files": {
+        "Python": 11
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "decapod",
+      "identity": "decapodlabs/decapod",
+      "head": "deea0f186770737758f94d146ef637811a6ee958",
+      "files": {
+        "Rust": 144
+      },
+      "filtered_files": {
+        "Rust": 80
+      },
+      "markdown_files": 48,
+      "notebooks": 0,
+      "sql_files": 3
+    },
+    {
+      "name": "deepak-bhardwaj-ps--smriti-mcp",
+      "identity": "deepak-bhardwaj-ps/smriti-mcp",
+      "head": "012d89fc922560505426ddc5992b8b90673671a1",
+      "files": {
+        "Python": 10
+      },
+      "filtered_files": {
+        "Python": 6
+      },
+      "markdown_files": 7,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "dynamic-cheatsheet",
+      "identity": "suzgunmirac/dynamic-cheatsheet",
+      "head": "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9",
+      "files": {
+        "Python": 10
+      },
+      "filtered_files": {
+        "Python": 10
+      },
+      "markdown_files": 1,
+      "notebooks": 2,
+      "sql_files": 0
+    },
+    {
+      "name": "eigenius",
+      "identity": "eigenius/eigenius",
+      "head": "4bc3bb21181ef3736cbbc81f25ae97edf635e9e0",
+      "files": {
+        "Rust": 483,
+        "TypeScript": 106,
+        "C/C++": 2,
+        "R": 16,
+        "Shell": 29,
+        "Python": 7,
+        "Julia": 10,
+        "JavaScript": 3
+      },
+      "filtered_files": {
+        "Rust": 368,
+        "TypeScript": 94,
+        "C/C++": 2,
+        "R": 16,
+        "Shell": 27,
+        "Python": 7,
+        "Julia": 10,
+        "JavaScript": 3
+      },
+      "markdown_files": 263,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "engraph",
+      "identity": "devwhodevs/engraph",
+      "head": "f9a95bc96accc792c02ee384d9e6bf768a88c8c8",
+      "files": {
+        "Rust": 32
+      },
+      "filtered_files": {
+        "Rust": 30
+      },
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "equipa",
+      "identity": "sbknana/equipa",
+      "head": "6aa4af8d4505b12ae6877c1068162a8bec8e3d70",
+      "files": {
+        "Python": 194,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "Python": 81,
+        "Shell": 2
+      },
+      "markdown_files": 155,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "exoharness--exo",
+      "identity": "exoharness/exo",
+      "head": "ef4cfe057af02955a73c85beb6ab79e253253114",
+      "files": {
+        "Rust": 88,
+        "TypeScript": 82,
+        "JavaScript": 9,
+        "Python": 2,
+        "Shell": 3
+      },
+      "filtered_files": {
+        "Rust": 77,
+        "Shell": 2,
+        "TypeScript": 28,
+        "JavaScript": 8
+      },
+      "markdown_files": 64,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "faltz009--Closure-SDK",
+      "identity": "faltz009/closure-sdk",
+      "head": "9a3d721e60a4f63f8d085d672b30e41c38844866",
+      "files": {
+        "Python": 95,
+        "Rust": 45,
+        "JavaScript": 9
+      },
+      "filtered_files": {
+        "Python": 59,
+        "Rust": 32
+      },
+      "markdown_files": 26,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "fitchmultz--pi-posthorse",
+      "identity": "fitchmultz/pi-posthorse",
+      "head": "5bdba3536e186a7be845844d0398c3485a7f8e2b",
+      "files": {
+        "JavaScript": 12,
+        "TypeScript": 6,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "JavaScript": 5,
+        "TypeScript": 2,
+        "Shell": 1
+      },
+      "markdown_files": 4,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "fstech-digital--operational-ontology-framework",
+      "identity": "fstech-digital/operational-ontology-framework",
+      "head": "0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 17,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "gbrain",
+      "identity": "garrytan/gbrain",
+      "head": "61d577470a03631e8821fcbdacb192cca8538ff7",
+      "files": {
+        "TypeScript": 6980,
+        "Shell": 114,
+        "Python": 4,
+        "JavaScript": 45,
+        "C/C++": 7
+      },
+      "filtered_files": {
+        "TypeScript": 2653,
+        "JavaScript": 26,
+        "C/C++": 6,
+        "Shell": 95
+      },
+      "markdown_files": 1031,
+      "notebooks": 0,
+      "sql_files": 5
+    },
+    {
+      "name": "gchamon--archie",
+      "identity": "gchamon/archie",
+      "head": "698900ee209f471698987adb595df72b4a4a5961",
+      "files": {
+        "Shell": 30,
+        "Lua": 16,
+        "Python": 6
+      },
+      "filtered_files": {
+        "Shell": 30,
+        "Lua": 16,
+        "Python": 4
+      },
+      "markdown_files": 71,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "getnao--nao",
+      "identity": "getnao/nao",
+      "head": "b109f5f7318c92ec0ec4341c53bbd5e0214c5432",
+      "files": {
+        "TypeScript": 668,
+        "JavaScript": 6,
+        "Python": 123,
+        "Shell": 4
+      },
+      "filtered_files": {
+        "TypeScript": 642,
+        "JavaScript": 6,
+        "Python": 71,
+        "Shell": 4
+      },
+      "markdown_files": 51,
+      "notebooks": 0,
+      "sql_files": 105
+    },
+    {
+      "name": "getsentry--skills",
+      "identity": "getsentry/skills",
+      "head": "b10e2db21d3165de1904bdf3fa64285016765fe5",
+      "files": {
+        "Python": 7
+      },
+      "filtered_files": {
+        "Python": 7
+      },
+      "markdown_files": 124,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "getzep--graphiti",
+      "identity": "getzep/graphiti",
+      "head": "34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6",
+      "files": {
+        "Shell": 3,
+        "Python": 247
+      },
+      "filtered_files": {
+        "Shell": 3,
+        "Python": 183
+      },
+      "markdown_files": 23,
+      "notebooks": 2,
+      "sql_files": 0
+    },
+    {
+      "name": "ghostwright--phantom",
+      "identity": "ghostwright/phantom",
+      "head": "f8c7ab42d885936ee54abc785528000260f4acc5",
+      "files": {
+        "JavaScript": 14,
+        "TypeScript": 532,
+        "Shell": 4
+      },
+      "filtered_files": {
+        "JavaScript": 14,
+        "TypeScript": 339,
+        "Shell": 4
+      },
+      "markdown_files": 96,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "gowtham0992--link",
+      "identity": "gowtham0992/link",
+      "head": "a1aaa55050a0c9db221771e4424ab4f7a56b3e2a",
+      "files": {
+        "JavaScript": 1,
+        "Shell": 16,
+        "Python": 124,
+        "Ruby": 1
+      },
+      "filtered_files": {
+        "Shell": 16,
+        "Python": 65,
+        "Ruby": 1
+      },
+      "markdown_files": 16,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "hereisSwapnil--memwiki",
+      "identity": "hereisswapnil/memwiki",
+      "head": "8034a3da991ac2639b87875172a9572903ecf1d5",
+      "files": {
+        "TypeScript": 2,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "TypeScript": 2,
+        "JavaScript": 1
+      },
+      "markdown_files": 11,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "hindsight",
+      "identity": "vectorize-io/hindsight",
+      "head": "7683f29004ab9d88e0ef3f0f18b8ffe6fc741905",
+      "files": {
+        "Shell": 58,
+        "TypeScript": 309,
+        "Python": 843,
+        "Rust": 26,
+        "Go": 161,
+        "JavaScript": 20
+      },
+      "filtered_files": {
+        "Shell": 38,
+        "TypeScript": 261,
+        "Python": 507,
+        "Rust": 23,
+        "Go": 142,
+        "JavaScript": 8
+      },
+      "markdown_files": 525,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "iusztinpaul--ai-research-os-workshop",
+      "identity": "iusztinpaul/ai-research-os-workshop",
+      "head": "dc6660555266239cd36483cf51b5ab39febacf02",
+      "files": {
+        "Python": 13
+      },
+      "filtered_files": {
+        "Python": 13
+      },
+      "markdown_files": 90,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "jahala--o-o",
+      "identity": "jahala/o-o",
+      "head": "b0d5063e37b4eafdbc23c1899a31f1836168b989",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "jasonkneen--instinctual-memory",
+      "identity": "jasonkneen/instinctual-memory",
+      "head": "6acb13dc35765bf5ccfc87e445dd09c480f1c28a",
+      "files": {
+        "Rust": 34
+      },
+      "filtered_files": {
+        "Rust": 32
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "jaz-lang--jaz",
+      "identity": "jaz-lang/jaz",
+      "head": "0803d4971be785e95b80054b02259664d70fa3da",
+      "files": {
+        "Python": 99
+      },
+      "filtered_files": {
+        "Python": 99
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "jaz-lang--jaz-evals",
+      "identity": "jaz-lang/jaz-evals",
+      "head": "83dc51ebbd02c9299890b6db93ddc773f07b74b9",
+      "files": {
+        "Python": 45,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 45,
+        "Shell": 1
+      },
+      "markdown_files": 11,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "juanceresa--sift-kg",
+      "identity": "juanceresa/sift-kg",
+      "head": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+      "files": {
+        "Python": 56,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Python": 40,
+        "JavaScript": 1
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "jubjub727--ReframeWeb",
+      "identity": "jubjub727/reframeweb",
+      "head": "5b8726b39da4ad01f03bb67294b286b4652cb0f1",
+      "files": {
+        "Python": 284,
+        "JavaScript": 6
+      },
+      "filtered_files": {
+        "Python": 213,
+        "JavaScript": 6
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "kenforthewin--atomic",
+      "identity": "kenforthewin/atomic",
+      "head": "dd9a43a29e2afeb815f15f65a9c09bfc01873049",
+      "files": {
+        "TypeScript": 250,
+        "Rust": 170,
+        "JavaScript": 30,
+        "Java": 3,
+        "Swift": 7,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "TypeScript": 239,
+        "Rust": 163,
+        "JavaScript": 30,
+        "Java": 2,
+        "Swift": 7,
+        "Shell": 2
+      },
+      "markdown_files": 53,
+      "notebooks": 0,
+      "sql_files": 23
+    },
+    {
+      "name": "kenhuangus--llm-wiki",
+      "identity": "kenhuangus/llm-wiki",
+      "head": "d2bd485921f6c7b6071afbb389f44ab8e4e83c69",
+      "files": {
+        "JavaScript": 7,
+        "Python": 40,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "JavaScript": 7,
+        "Python": 40,
+        "Shell": 1
+      },
+      "markdown_files": 199,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "kytmanov--synto",
+      "identity": "kytmanov/synto",
+      "head": "6b336034b1849443939dcc868feeac1af2fc8c35",
+      "files": {
+        "Python": 159,
+        "Shell": 9
+      },
+      "filtered_files": {
+        "Python": 52,
+        "Shell": 9
+      },
+      "markdown_files": 21,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "lacp",
+      "identity": "0xnyk/lacp",
+      "head": "003eef16a583dbaa3fdd56e5efe393397f463f3f",
+      "files": {
+        "Ruby": 1,
+        "Python": 98,
+        "Shell": 129
+      },
+      "filtered_files": {
+        "Ruby": 1,
+        "Python": 98,
+        "Shell": 129
+      },
+      "markdown_files": 60,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "lamm-mit--SwarmWorld",
+      "identity": "lamm-mit/swarmworld",
+      "head": "6af7ae9fa36d98b07b0492cf139658e8af1f6eab",
+      "files": {
+        "Python": 71,
+        "JavaScript": 7,
+        "TypeScript": 24
+      },
+      "filtered_files": {
+        "Python": 47,
+        "JavaScript": 7,
+        "TypeScript": 17
+      },
+      "markdown_files": 28,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "langchain-ai--openwiki",
+      "identity": "langchain-ai/openwiki",
+      "head": "23428de0cc0b1b6d3e5d09be413e92a5d6ee451f",
+      "files": {
+        "JavaScript": 1,
+        "TypeScript": 10
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "TypeScript": 9
+      },
+      "markdown_files": 9,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "letta-ai--context-constitution",
+      "identity": "letta-ai/context-constitution",
+      "head": "0f0a23b66c262f41ce7e060a4da628dc983fb24f",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "letta-ai--letta",
+      "identity": "letta-ai/letta",
+      "head": "1131535716e8a31c9a437f8695e25ac98f203a24",
+      "files": {
+        "Python": 878,
+        "Shell": 6,
+        "TypeScript": 3,
+        "Go": 1,
+        "C/C++": 1,
+        "JavaScript": 1,
+        "Java": 1
+      },
+      "filtered_files": {
+        "Python": 712,
+        "Shell": 6,
+        "TypeScript": 3
+      },
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "letta-ai--letta-code",
+      "identity": "letta-ai/letta-code",
+      "head": "271f119dcf37d58649a18e6c733386b3c710a456",
+      "files": {
+        "JavaScript": 31,
+        "Shell": 7,
+        "TypeScript": 2274,
+        "Python": 7
+      },
+      "filtered_files": {
+        "JavaScript": 28,
+        "Shell": 7,
+        "TypeScript": 1264,
+        "Python": 7
+      },
+      "markdown_files": 125,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "luna-prompts--skillnote",
+      "identity": "luna-prompts/skillnote",
+      "head": "7303ba7ab2098f9675e320fd68296458b4703752",
+      "files": {
+        "Ruby": 1,
+        "Python": 140,
+        "Shell": 18,
+        "JavaScript": 6,
+        "TypeScript": 217
+      },
+      "filtered_files": {
+        "Ruby": 1,
+        "Python": 81,
+        "Shell": 15,
+        "JavaScript": 6,
+        "TypeScript": 152
+      },
+      "markdown_files": 37,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "markhuangai--dense-mem",
+      "identity": "markhuangai/dense-mem",
+      "head": "96158d8b672883d1239f4acc7ab0b7296638d0d7",
+      "files": {
+        "Go": 408,
+        "Shell": 3,
+        "JavaScript": 7,
+        "TypeScript": 42
+      },
+      "filtered_files": {
+        "Go": 389,
+        "Shell": 3,
+        "JavaScript": 4,
+        "TypeScript": 14
+      },
+      "markdown_files": 22,
+      "notebooks": 0,
+      "sql_files": 11
+    },
+    {
+      "name": "mem0ai--mem0",
+      "identity": "mem0ai/mem0",
+      "head": "64b9646e7dd2c97ed20233732f79ca3d94037c65",
+      "files": {
+        "TypeScript": 532,
+        "JavaScript": 23,
+        "Python": 367,
+        "Shell": 28
+      },
+      "filtered_files": {
+        "TypeScript": 350,
+        "JavaScript": 9,
+        "Python": 254,
+        "Shell": 26
+      },
+      "markdown_files": 114,
+      "notebooks": 7,
+      "sql_files": 0
+    },
+    {
+      "name": "mempalace",
+      "identity": "milla-jovovich/mempalace",
+      "head": "db1fbe888b59514a66c43e745f095d762b9bf276",
+      "files": {
+        "Shell": 8,
+        "Python": 174,
+        "Vue": 9,
+        "TypeScript": 1,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Shell": 8,
+        "Python": 55,
+        "Vue": 9,
+        "TypeScript": 1,
+        "JavaScript": 1
+      },
+      "markdown_files": 78,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "mentisdb",
+      "identity": "cloudllm-ai/mentisdb",
+      "head": "204afbdceff3e3f69cb779e3c7a30002076f7f22",
+      "files": {
+        "Rust": 86,
+        "Shell": 4,
+        "Python": 9
+      },
+      "filtered_files": {
+        "Shell": 4,
+        "Python": 7,
+        "Rust": 53
+      },
+      "markdown_files": 19,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "microsoft--DKI_LLM",
+      "identity": "microsoft/dki_llm",
+      "head": "c090b7d57e3996c8900e86fecd16085b27e07f29",
+      "files": {
+        "Python": 919,
+        "Shell": 259,
+        "JavaScript": 32,
+        "Java": 22
+      },
+      "filtered_files": {
+        "Python": 594,
+        "Shell": 102,
+        "Java": 1
+      },
+      "markdown_files": 175,
+      "notebooks": 5,
+      "sql_files": 0
+    },
+    {
+      "name": "microsoft--KBLaM",
+      "identity": "microsoft/kblam",
+      "head": "4db377fa4dad2134a38fbc06f80938e66b9b5897",
+      "files": {
+        "Python": 20
+      },
+      "filtered_files": {
+        "Python": 18
+      },
+      "markdown_files": 6,
+      "notebooks": 1,
+      "sql_files": 0
+    },
+    {
+      "name": "minnesotanlp--meta-n",
+      "identity": "minnesotanlp/meta-n",
+      "head": "b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8",
+      "files": {
+        "Python": 287,
+        "Shell": 12
+      },
+      "filtered_files": {
+        "Python": 78,
+        "Shell": 12
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "mohammadmaso--echowiki",
+      "identity": "mohammadmaso/echowiki",
+      "head": "11446997423e88177dba62d6a3d5c1e8b4886c62",
+      "files": {
+        "JavaScript": 1,
+        "TypeScript": 27
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "TypeScript": 27
+      },
+      "markdown_files": 6,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "mpazik--binder",
+      "identity": "mpazik/binder",
+      "head": "da86cb6166e207099a205076107cf626da16ba56",
+      "files": {
+        "JavaScript": 3,
+        "TypeScript": 282,
+        "Kotlin": 6
+      },
+      "filtered_files": {
+        "JavaScript": 3,
+        "Kotlin": 6,
+        "TypeScript": 195
+      },
+      "markdown_files": 62,
+      "notebooks": 0,
+      "sql_files": 5
+    },
+    {
+      "name": "muratcankoylan--Agent-Skills-for-Context-Engineering",
+      "identity": "muratcankoylan/agent-skills-for-context-engineering",
+      "head": "25e1fa79a33f0985793bcab3c64dde8d020c5132",
+      "files": {
+        "Python": 45,
+        "Shell": 7,
+        "JavaScript": 1,
+        "TypeScript": 19
+      },
+      "filtered_files": {
+        "Shell": 5,
+        "Python": 26
+      },
+      "markdown_files": 153,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "neosigmaai--auto-harness",
+      "identity": "neosigmaai/auto-harness",
+      "head": "de6b3ed51517909ff7a92466908e9ea161964865",
+      "files": {
+        "Python": 13
+      },
+      "filtered_files": {
+        "Python": 13
+      },
+      "markdown_files": 6,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "nex-crm--wuphf",
+      "identity": "nex-crm/wuphf",
+      "head": "fa7449550ce42c8f163a5f78388751a92937bfc6",
+      "files": {
+        "TypeScript": 1056,
+        "JavaScript": 57,
+        "Shell": 64,
+        "Go": 1072,
+        "Python": 3
+      },
+      "filtered_files": {
+        "TypeScript": 724,
+        "JavaScript": 50,
+        "Shell": 48,
+        "Go": 1069,
+        "Python": 3
+      },
+      "markdown_files": 151,
+      "notebooks": 0,
+      "sql_files": 9
+    },
+    {
+      "name": "niceIrene--QwenPaw",
+      "identity": "niceirene/qwenpaw",
+      "head": "3db60c5975187fc7c549e16573567a7cd21fd51f",
+      "files": {
+        "JavaScript": 15,
+        "Rust": 41,
+        "TypeScript": 1175,
+        "Shell": 18,
+        "Python": 2110
+      },
+      "filtered_files": {
+        "JavaScript": 14,
+        "Rust": 41,
+        "TypeScript": 848,
+        "Shell": 18,
+        "Python": 1309
+      },
+      "markdown_files": 366,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "noahshinn--reflexion",
+      "identity": "noahshinn/reflexion",
+      "head": "218cf0ef1df84b05ce379dd4a8e47f17766733a0",
+      "files": {
+        "Python": 55,
+        "Shell": 20
+      },
+      "filtered_files": {
+        "Python": 55,
+        "Shell": 20
+      },
+      "markdown_files": 3,
+      "notebooks": 3,
+      "sql_files": 0
+    },
+    {
+      "name": "nousresearch--hermes-agent",
+      "identity": "nousresearch/hermes-agent",
+      "head": "d59b79fadd1e9edd7afc5c679cc3b143838e7c01",
+      "files": {
+        "Python": 3083,
+        "JavaScript": 67,
+        "Rust": 9,
+        "TypeScript": 1411,
+        "Shell": 24,
+        "Ruby": 1
+      },
+      "filtered_files": {
+        "Python": 913,
+        "JavaScript": 59,
+        "Rust": 9,
+        "TypeScript": 1071,
+        "Shell": 24,
+        "Ruby": 1
+      },
+      "markdown_files": 1428,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "nuggets",
+      "identity": "neovertex1/nuggets",
+      "head": "714cab8a3b1fb843aa98dfb51584d2c07a6739f3",
+      "files": {
+        "TypeScript": 34,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "TypeScript": 32,
+        "JavaScript": 2
+      },
+      "markdown_files": 7,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "nvk--llm-wiki",
+      "identity": "nvk/llm-wiki",
+      "head": "1224fbcdf3827f4ba56d225a9e359f5e8a5594e5",
+      "files": {
+        "TypeScript": 2,
+        "Python": 4,
+        "Shell": 21,
+        "JavaScript": 3
+      },
+      "filtered_files": {
+        "Python": 1,
+        "TypeScript": 1,
+        "Shell": 5
+      },
+      "markdown_files": 884,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "our-ark--enoch",
+      "identity": "our-ark/enoch",
+      "head": "81000d502e776a7fd2ff39904f71f14084c9b4a8",
+      "files": {
+        "Python": 235,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 156,
+        "Shell": 1
+      },
+      "markdown_files": 41,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "pi-self-learning",
+      "identity": "mcollina/pi-self-learning",
+      "head": "b1add8631cb621bc2caba3c9f70376dcddf6ca36",
+      "files": {
+        "TypeScript": 1
+      },
+      "filtered_files": {
+        "TypeScript": 1
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "prove2me--prove2me_workspace",
+      "identity": "prove2me/prove2me_workspace",
+      "head": "326b972580e0640b1f3739ec7b12d2b34d8d3527",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 17,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "psinetron--echoes-vault-opencode",
+      "identity": "psinetron/echoes-vault-opencode",
+      "head": "1f12282a1452153c851aba7af312e82f28880d49",
+      "files": {
+        "TypeScript": 1
+      },
+      "filtered_files": {
+        "TypeScript": 1
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "pumblus--okf-harness",
+      "identity": "pumblus/okf-harness",
+      "head": "0dd4f806c454a68088c5a3e64b4cbebbe2c216be",
+      "files": {
+        "Shell": 1,
+        "TypeScript": 94,
+        "JavaScript": 4
+      },
+      "filtered_files": {
+        "Shell": 1,
+        "TypeScript": 50,
+        "JavaScript": 4
+      },
+      "markdown_files": 147,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ractive--hyalo",
+      "identity": "ractive/hyalo",
+      "head": "9d105bc10ade62287c3f8d64a691ff9d04539c30",
+      "files": {
+        "Shell": 3,
+        "Rust": 305,
+        "JavaScript": 17,
+        "TypeScript": 69
+      },
+      "filtered_files": {
+        "Shell": 3,
+        "Rust": 188,
+        "JavaScript": 11,
+        "TypeScript": 62
+      },
+      "markdown_files": 575,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "reasoning-bank",
+      "identity": "google-research/reasoning-bank",
+      "head": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "files": {
+        "Python": 31,
+        "Shell": 2
+      },
+      "filtered_files": {
+        "Python": 31,
+        "Shell": 2
+      },
+      "markdown_files": 2,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "refactoringhq--tolaria",
+      "identity": "refactoringhq/tolaria",
+      "head": "82b2ff2ac455334a255c7c2a2a1d2173083c6d59",
+      "files": {
+        "Shell": 1,
+        "TypeScript": 1127,
+        "JavaScript": 18,
+        "Python": 1,
+        "Vue": 2,
+        "Rust": 120,
+        "C/C++": 1
+      },
+      "filtered_files": {
+        "Shell": 1,
+        "JavaScript": 16,
+        "TypeScript": 572,
+        "Python": 1,
+        "Vue": 2,
+        "Rust": 119,
+        "C/C++": 1
+      },
+      "markdown_files": 304,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "rejot-dev--thalo",
+      "identity": "rejot-dev/thalo",
+      "head": "cdb9aae983e6bc0b75eff1606bc99b088c3aebff",
+      "files": {
+        "TypeScript": 365,
+        "JavaScript": 8,
+        "C/C++": 7
+      },
+      "filtered_files": {
+        "JavaScript": 7,
+        "TypeScript": 162,
+        "C/C++": 7
+      },
+      "markdown_files": 32,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "ruc-datalab--EvoOntology",
+      "identity": "ruc-datalab/evoontology",
+      "head": "ddbb1c991de5a33e27eb32bc86a4212a7537e01e",
+      "files": {
+        "Python": 180
+      },
+      "filtered_files": {
+        "Python": 77
+      },
+      "markdown_files": 44,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "sage",
+      "identity": "l33tdawg/sage",
+      "head": "6abd18e7f00d259bdd2c3af800b12d05759d4fb6",
+      "files": {
+        "Shell": 15,
+        "Go": 257,
+        "Python": 36,
+        "Swift": 1,
+        "JavaScript": 26
+      },
+      "filtered_files": {
+        "Shell": 15,
+        "Go": 246,
+        "Swift": 1,
+        "JavaScript": 19,
+        "Python": 9
+      },
+      "markdown_files": 25,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "serverless-dna--tendril",
+      "identity": "serverless-dna/tendril",
+      "head": "e671a4143d28de68289efd81580002041bb4cb6a",
+      "files": {
+        "Shell": 10,
+        "TypeScript": 40,
+        "Rust": 9
+      },
+      "filtered_files": {
+        "Shell": 10,
+        "TypeScript": 33,
+        "Rust": 9
+      },
+      "markdown_files": 88,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "simular-ai--Agent-S",
+      "identity": "simular-ai/agent-s",
+      "head": "73ea17225bae73ab45d077cc442978d3ff8e286a",
+      "files": {
+        "Python": 92,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 91,
+        "Shell": 1
+      },
+      "markdown_files": 12,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "skorokithakis--gnosis",
+      "identity": "skorokithakis/gnosis",
+      "head": "cd1f9921605c6fd43fda2128030b9b43ac72422f",
+      "files": {
+        "Go": 32
+      },
+      "filtered_files": {
+        "Go": 32
+      },
+      "markdown_files": 57,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "skyllwt--AutoSci",
+      "identity": "skyllwt/autosci",
+      "head": "71469e89eb1381e557661da0b90c0585c48288d7",
+      "files": {
+        "Python": 24,
+        "JavaScript": 11,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "JavaScript": 11,
+        "Python": 23,
+        "Shell": 1
+      },
+      "markdown_files": 150,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "spacedriveapp--spacebot",
+      "identity": "spacedriveapp/spacebot",
+      "head": "ac52277404d3813045aa053b78c95810ab85e7c5",
+      "files": {
+        "Rust": 225,
+        "Swift": 2,
+        "Shell": 8,
+        "TypeScript": 166,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "Rust": 214,
+        "Swift": 2,
+        "Shell": 8,
+        "TypeScript": 152
+      },
+      "markdown_files": 100,
+      "notebooks": 0,
+      "sql_files": 47
+    },
+    {
+      "name": "stanford-iris-lab--meta-harness",
+      "identity": "stanford-iris-lab/meta-harness",
+      "head": "95175f70c758dd1145b395edfe8b67e6f9d80fbd",
+      "files": {
+        "Python": 23,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 22,
+        "Shell": 1
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "supermemoryai--company-brain",
+      "identity": "supermemoryai/company-brain",
+      "head": "0071d6164991ce5dccddbd645bcac631ee477572",
+      "files": {
+        "TypeScript": 368
+      },
+      "filtered_files": {
+        "TypeScript": 356
+      },
+      "markdown_files": 26,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "supermemoryai--supermemory",
+      "identity": "supermemoryai/supermemory",
+      "head": "c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77",
+      "files": {
+        "TypeScript": 409,
+        "Python": 39,
+        "JavaScript": 5
+      },
+      "filtered_files": {
+        "TypeScript": 369,
+        "JavaScript": 3,
+        "Python": 22
+      },
+      "markdown_files": 29,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "swamp-club--swamp",
+      "identity": "swamp-club/swamp",
+      "head": "cf38c4ec1068613bb7d3432eb74a1ad854156dd7",
+      "files": {
+        "Python": 3,
+        "TypeScript": 1810,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 3,
+        "TypeScript": 1810,
+        "Shell": 1
+      },
+      "markdown_files": 161,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "synapptic",
+      "identity": "appcuarium/synapptic",
+      "head": "bcde026770daa5cd9a8ca18ca7182b0aeaa87d1f",
+      "files": {
+        "Python": 47,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Python": 31,
+        "Shell": 1
+      },
+      "markdown_files": 5,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "tenequm--pond",
+      "identity": "tenequm/pond",
+      "head": "9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808",
+      "files": {
+        "TypeScript": 20,
+        "Python": 17,
+        "Shell": 2,
+        "Rust": 65
+      },
+      "filtered_files": {
+        "Python": 10,
+        "Shell": 2,
+        "TypeScript": 9,
+        "Rust": 29
+      },
+      "markdown_files": 37,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "theafh--ai-modules",
+      "identity": "theafh/ai-modules",
+      "head": "e99e355e91816c542a84ef588915b2bb20d53b66",
+      "files": {
+        "Shell": 237,
+        "Python": 36
+      },
+      "filtered_files": {
+        "Shell": 13,
+        "Python": 7
+      },
+      "markdown_files": 340,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "tommasocerruti--eal-bench",
+      "identity": "tommasocerruti/eal-bench",
+      "head": "51648690bc52d7a9c7ac080a2c67a784fe9d56cb",
+      "files": {
+        "Python": 193
+      },
+      "filtered_files": {
+        "Python": 192
+      },
+      "markdown_files": 77,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "triblespace--playground",
+      "identity": "triblespace/playground",
+      "head": "3f55072517b9dc47802b9b1199d3a83607610cd0",
+      "files": {
+        "Rust": 31,
+        "Shell": 1
+      },
+      "filtered_files": {
+        "Rust": 31,
+        "Shell": 1
+      },
+      "markdown_files": 11,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "tuirk--Kompl",
+      "identity": "tuirk/kompl",
+      "head": "8f16a0bb43105591daf4f15ececb788f66434305",
+      "files": {
+        "TypeScript": 205,
+        "JavaScript": 5,
+        "Shell": 13,
+        "Python": 42
+      },
+      "filtered_files": {
+        "TypeScript": 145,
+        "JavaScript": 5,
+        "Shell": 13,
+        "Python": 27
+      },
+      "markdown_files": 10,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "ulyssestenn--funes",
+      "identity": "ulyssestenn/funes",
+      "head": "872d82f65119306739a6c7a761df5add0736d0df",
+      "files": {},
+      "filtered_files": {},
+      "markdown_files": 15,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "uziiuzair--continuity",
+      "identity": "uziiuzair/continuity",
+      "head": "4ca8f6b4108aa4494e3861ed33c8019dbd662c67",
+      "files": {
+        "TypeScript": 250,
+        "JavaScript": 6,
+        "Rust": 3
+      },
+      "filtered_files": {
+        "TypeScript": 243,
+        "JavaScript": 6,
+        "Rust": 3
+      },
+      "markdown_files": 15,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "viperrcrypto--Siftly",
+      "identity": "viperrcrypto/siftly",
+      "head": "b25daa45b858f4be096b5c368671c34db4407d8e",
+      "files": {
+        "TypeScript": 80,
+        "Shell": 3,
+        "JavaScript": 2
+      },
+      "filtered_files": {
+        "TypeScript": 76,
+        "Shell": 3,
+        "JavaScript": 2
+      },
+      "markdown_files": 9,
+      "notebooks": 0,
+      "sql_files": 2
+    },
+    {
+      "name": "virtual-context",
+      "identity": "virtual-context/virtual-context",
+      "head": "4acad1285455e61ad88db312dc909f1bbeeb2917",
+      "files": {
+        "Python": 383,
+        "Shell": 2,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Shell": 2,
+        "Python": 122,
+        "JavaScript": 1
+      },
+      "markdown_files": 13,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "vshulcz--deja-vu",
+      "identity": "vshulcz/deja-vu",
+      "head": "c76ece2629683a4a10b861b498c8dab99610e8e2",
+      "files": {
+        "Go": 29,
+        "Shell": 3,
+        "JavaScript": 1
+      },
+      "filtered_files": {
+        "Go": 29,
+        "Shell": 2,
+        "JavaScript": 1
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "vvvvvivekkk--LLM-Wiki-v3",
+      "identity": "vvvvvivekkk/llm-wiki-v3",
+      "head": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+      "files": {
+        "Python": 42
+      },
+      "filtered_files": {
+        "Python": 32
+      },
+      "markdown_files": 34,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "wanshuiyin--Auto-claude-code-research-in-sleep",
+      "identity": "wanshuiyin/auto-claude-code-research-in-sleep",
+      "head": "f0dde3eee942e6630f2f62d78daafcd8c52ed033",
+      "files": {
+        "Shell": 17,
+        "Python": 69
+      },
+      "filtered_files": {
+        "Shell": 17,
+        "Python": 40
+      },
+      "markdown_files": 359,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "wastedcode--memex",
+      "identity": "wastedcode/memex",
+      "head": "1e223b6045be31b70b1ab9e4b28dd403150d29e7",
+      "files": {
+        "JavaScript": 1,
+        "TypeScript": 32,
+        "C/C++": 1
+      },
+      "filtered_files": {
+        "JavaScript": 1,
+        "TypeScript": 32,
+        "C/C++": 1
+      },
+      "markdown_files": 4,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "wj210--Self-Training-LLM",
+      "identity": "wj210/self-training-llm",
+      "head": "97839b29d0fd8bb474f5549fa3e9d6ca504732e0",
+      "files": {
+        "Shell": 4,
+        "Python": 11
+      },
+      "filtered_files": {
+        "Shell": 4,
+        "Python": 11
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "xMemory",
+      "identity": "hu-xiaobai/xmemory",
+      "head": "375ae1495095aa14a39eb169f83737f4779391c6",
+      "files": {
+        "Python": 52
+      },
+      "filtered_files": {
+        "Python": 52
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "xoai--sage-wiki",
+      "identity": "xoai/sage-wiki",
+      "head": "2260770053873e46669ec2a7ebaee6c24634c133",
+      "files": {
+        "Go": 229,
+        "Python": 2,
+        "TypeScript": 11
+      },
+      "filtered_files": {
+        "Go": 229,
+        "Python": 2,
+        "TypeScript": 11
+      },
+      "markdown_files": 55,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "yazanabuashour--openclerk",
+      "identity": "yazanabuashour/openclerk",
+      "head": "662b276afd84dc8f25436cd66b735011f86265ca",
+      "files": {
+        "Go": 177,
+        "JavaScript": 1,
+        "Shell": 10
+      },
+      "filtered_files": {
+        "Go": 177,
+        "Shell": 9
+      },
+      "markdown_files": 355,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "yogirk--sparks",
+      "identity": "yogirk/sparks",
+      "head": "49abddc848ea55f78518bfbbbe04c3d37a5f2705",
+      "files": {
+        "Go": 84
+      },
+      "filtered_files": {
+        "Go": 84
+      },
+      "markdown_files": 8,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "zelixag--ai-memex-cli",
+      "identity": "zelixag/ai-memex-cli",
+      "head": "4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f",
+      "files": {
+        "JavaScript": 19,
+        "TypeScript": 151
+      },
+      "filtered_files": {
+        "JavaScript": 17,
+        "TypeScript": 128
+      },
+      "markdown_files": 79,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "zjunlp--SkillX",
+      "identity": "zjunlp/skillx",
+      "head": "0137cb8c2f9e69d5cc499e562dea789b2c5a8e35",
+      "files": {
+        "Python": 90
+      },
+      "filtered_files": {
+        "Python": 82
+      },
+      "markdown_files": 1,
+      "notebooks": 0,
+      "sql_files": 0
+    },
+    {
+      "name": "zli12321--LHTB",
+      "identity": "zli12321/lhtb",
+      "head": "d78f5eb52ad754c5ee9154741af73130a85a65b8",
+      "files": {
+        "Python": 1321,
+        "Shell": 366,
+        "Java": 1,
+        "TypeScript": 78,
+        "JavaScript": 4,
+        "C/C++": 6
+      },
+      "filtered_files": {
+        "Python": 899,
+        "Shell": 165,
+        "Java": 1,
+        "TypeScript": 48,
+        "C/C++": 6,
+        "JavaScript": 1
+      },
+      "markdown_files": 396,
+      "notebooks": 0,
+      "sql_files": 1
+    },
+    {
+      "name": "zorazrw--agent-workflow-memory",
+      "identity": "zorazrw/agent-workflow-memory",
+      "head": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+      "files": {
+        "Python": 29
+      },
+      "filtered_files": {
+        "Python": 29
+      },
+      "markdown_files": 3,
+      "notebooks": 0,
+      "sql_files": 0
+    }
+  ],
+  "excluded-path-components": [
+    "node_modules",
+    "vendor",
+    "third_party",
+    "third-party",
+    "dist",
+    "build",
+    ".venv"
+  ],
+  "filtered-additional-excluded-path-components": [
+    "test",
+    "tests",
+    "__tests__",
+    "fixtures",
+    "fixture",
+    "examples",
+    "example",
+    "bench",
+    "benches",
+    "benchmarks",
+    "docs",
+    "legacy_pi_mono_code"
+  ],
+  "filtered-additional-excluded-filename-regex": "\\.(test|spec)\\.[^.]+$",
+  "excluded-entry-kinds": "Non-blob entries and symlinks",
+  "language-extensions": {
+    "Python": [
+      ".py",
+      ".pyi"
+    ],
+    "TypeScript": [
+      ".ts",
+      ".tsx"
+    ],
+    "JavaScript": [
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".cjs"
+    ],
+    "Rust": [
+      ".rs"
+    ],
+    "Go": [
+      ".go"
+    ],
+    "C/C++": [
+      ".c",
+      ".h",
+      ".cpp",
+      ".cc",
+      ".cxx",
+      ".hpp"
+    ],
+    "Java": [
+      ".java"
+    ],
+    "Kotlin": [
+      ".kt",
+      ".kts"
+    ],
+    "C#": [
+      ".cs"
+    ],
+    "Swift": [
+      ".swift"
+    ],
+    "Ruby": [
+      ".rb"
+    ],
+    "Shell": [
+      ".sh",
+      ".bash"
+    ],
+    "Vue": [
+      ".vue"
+    ],
+    "Svelte": [
+      ".svelte"
+    ],
+    "Lua": [
+      ".lua"
+    ],
+    "Elixir": [
+      ".ex",
+      ".exs"
+    ],
+    "Zig": [
+      ".zig"
+    ],
+    "Julia": [
+      ".jl"
+    ],
+    "R": [
+      ".r",
+      ".R"
+    ],
+    "PHP": [
+      ".php"
+    ],
+    "Scala": [
+      ".scala"
+    ],
+    "Clojure": [
+      ".clj",
+      ".cljs"
+    ],
+    "Solidity": [
+      ".sol"
+    ],
+    "Objective-C": [
+      ".m"
+    ]
+  },
+  "additional-format-counts": [
+    ".md",
+    ".ipynb",
+    ".sql"
+  ],
+  "limitations": [
+    "Repository matching is a metadata heuristic, not a manually adjudicated complete system census.",
+    "Largest language is by file count; ties follow Git-tree traversal insertion order.",
+    "An initial blob-count attempt triggered Git lazy fetching and timed out; final file counts use Git trees."
+  ]
+}
