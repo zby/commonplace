@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [analysis-lenses](./analysis-lenses/README.md) — decide how limited analysis resources should cover large repositories; compare depth, stopping and coverage rules against the current runtime-plus-lenses arrangement with minimal change
+
 - [analysis-audit-evidence](./analysis-audit-evidence/README.md) — accumulate correctness and session-trace audits; require cross-report evidence before recommending general analysis-method changes
 
 - [analysis-workflow-calibration](./analysis-workflow-calibration/README.md) — paired synthesis-support calibration cases and profile-pinned packets; Luna/low exploratory pilot completed, one control needs adjudication
