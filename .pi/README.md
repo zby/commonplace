@@ -5,16 +5,16 @@ extension. Use `/reload` after changing resources in an already-running Pi
 session whose working directory is this worktree.
 
 For an analysis run, prepare the dedicated worktree's local command environment
-using [isolated run setup](../kb/agentic-systems/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup)
-before starting Pi; `commonplace-workflow prepare-analysis --name <system> -- pi`
+using [isolated run setup](../kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup)
+before starting Pi; `commonplace-analysis prepare --name <system> -- pi`
 prepares and launches it in one command. Worker processes inherit its `PATH`.
 Starting Pi from a worktree alone does not isolate the shared editable Commonplace installation.
 Keep the run's code and method files unchanged until completion.
 
 `APPEND_SYSTEM.md` supplies the worker call format and coordinator preflight in
 Pi's startup system prompt. It also loads in children; the coordinator rules
-apply only when the `subagent` tool is exposed. Worker selection excludes that
-tool. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
+apply only when the `subagent` tool is exposed. Ordinary worker selection
+excludes that tool; coordinator selection includes it. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
 
 `extensions/subagent/{index.ts,agents.ts}` were copied from the subagent
 example shipped with `@earendil-works/pi-coding-agent` 1.0.0. `index.ts` now
@@ -35,6 +35,15 @@ applicable repository context and resources. This is not a filesystem sandbox.
 It omits `model`, so the worker inherits the dispatching session's model and
 thinking level unless the tool call overrides them. Configure OpenAI
 authentication in Pi, not in this repository.
+
+`agents/commonplace-coordinator.md` additionally selects `subagent`. Use it
+when commissioning an entire standard skill that must launch its own workers;
+keep individual scheduled jobs on `commonplace-worker`. Both definitions are
+discovered afresh on each invocation, so this role selection needs no extension
+reload. A newly launched coordinator loads its own startup instructions.
+Before opening a run, it must successfully launch the required diagnostic
+worker. This tests the intended parent → coordinator → worker path, not a
+maximum supported depth. Do not use agent CLIs through Bash as a substitute.
 
 The tool accepts optional `model` and `thinkingLevel` at the top level in all
 modes and on each item in `tasks` or `chain`. Item values override top-level
@@ -90,15 +99,17 @@ files, use tools, invoke skills, spawn workers, or modify anything.
 
 Success establishes that one worker can run, not a maximum depth or capacity.
 For code-scheduled analysis jobs, use the exact handoff prescribed by
-`kb/agentic-systems/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`.
+`kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`.
 Do not add parent conversation or source interpretations to the job handoff.
 
 ## Limits
 
 The example permits at most eight tasks per parallel call and runs at most four
 concurrently. It has no explicit nesting limit or continuing-worker interface.
-The configured worker does not have the `subagent` tool, but `bash` is not a
-sandbox: the no-launch and write-scope rules are instructions, not OS enforcement.
+The ordinary worker does not have `subagent`; the coordinator does. Neither
+selection is a filesystem sandbox: the no-launch and write-scope rules are
+instructions, not OS enforcement. Nested results remain embedded in the
+parent's tool details; coordinators also use non-persisted sessions.
 
 Loading this extension does not release an already-blocked workflow. Follow the
 workflow's operator recovery procedure separately; do not edit workflow state.

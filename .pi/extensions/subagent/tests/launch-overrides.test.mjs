@@ -45,6 +45,11 @@ for (const [name, model] of [["inherited", ""], ["pinned", "model: pinned-model\
   fs.writeFileSync(path.join(root, ".pi", "agents", `${name}.md`),
     `---\nname: ${name}\ndescription: Test agent\n${model}---\n`);
 }
+// Exercise the shipped definitions, not a duplicate tools fixture.
+for (const name of ["commonplace-worker", "commonplace-coordinator"]) {
+  fs.copyFileSync(fileURLToPath(new URL(`../../../agents/${name}.md`, import.meta.url)),
+    path.join(root, ".pi", "agents", `${name}.md`));
+}
 let tool;
 try {
   const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
@@ -83,6 +88,19 @@ test("launch overrides and inheritance", async t => {
       assert.equal(flag(0, "--thinking"), "medium");
       assert.equal(result.details.results[0].thinkingLevel, "medium");
       assert.ok(launches[0].args.includes("--no-session"));
+    });
+    await t.test("coordinator can select delegation without exposing it to ordinary workers", async () => {
+      for (const [agent, tools] of [
+        ["commonplace-worker", "read,bash,edit,write"],
+        ["commonplace-coordinator", "read,bash,edit,write,subagent"],
+      ]) {
+        await launch({ agent, task: "test", model: "openai/gpt-6.1-sol", thinkingLevel: "medium", cwd: root });
+        assert.equal(flag(0, "--tools"), tools);
+        assert.equal(flag(0, "--model"), "openai/gpt-6.1-sol");
+        assert.equal(flag(0, "--thinking"), "medium");
+        assert.equal(launches[0].options.cwd, root);
+        assert.ok(launches[0].args.includes("--no-session"));
+      }
     });
     await t.test("pinned model preserves original thinking default", async () => {
       await launch({ agent: "pinned", task: "test" });

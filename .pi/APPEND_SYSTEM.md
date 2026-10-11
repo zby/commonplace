@@ -25,9 +25,12 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
 
 ## Dispatch format
 
-- `agent` is an agent definition's name: use `commonplace-worker`, not `single`,
-  a workflow job name, or a model name.
-- Always set `agentScope: "project"` for this worker. The extension's default
+- `agent` is an agent definition's name, not `single`, a workflow job name,
+  or a model name. Use `commonplace-worker` for individual jobs. Use
+  `commonplace-coordinator` only when commissioning a whole workflow whose
+  standard skill requires worker launches; it exposes `subagent` while the
+  ordinary worker does not. Delegation still requires the workflow's preflight.
+- Always set `agentScope: "project"` for these agents. The extension's default
   scope is `user`, which does not search this project's `.pi/agents/`.
 - Single mode uses `agent` and `task`. Parallel mode uses `tasks`, an array of
   objects containing `agent`, `task`, and optionally `cwd`, `model`, and
