@@ -33,12 +33,42 @@ workflow.
 | [Graphiti 85a21a06d35c analysis and trace audit](./reports/graphiti-85a21a06d35c-analysis-and-trace-audit.md) | `AAS-2026-10-10-graphiti-85a21a06d35c-01` | Static correctness, same-revision comparison, all ten original worker traces and publication-byte check | Separate Graphiti run; local correction recommendation and bounded comparison with Napkin, no adopted method change |
 | [Letta analysis and trace audit](./reports/letta-analysis-and-trace-audit.md) | `AAS-2026-10-11-letta-d460b458ddad-01` | Supported blocked boundary, complete embedded worker trace, local byte checks and bounded timing comparison | Successful early stop; recurring quotation repair and late prerequisite read, with an unresolved operator-reporting gap |
 | [Letta Code analysis and trace audit](./reports/letta-code-analysis-and-trace-audit.md) | `AAS-2026-10-11-letta-code-88afa3263646-01` | Publication-byte checks, selected source claims, failure-oriented scans of all twelve analytical worker traces and bounded timing comparison | No new substantive correction in the sample; successful profile repair, recurring quotation and shell-status failures, and timely publication-prerequisite read |
+| [Napkin repeat analysis and trace audit](./reports/napkin-1b60c5d21780-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-napkin-1b60c5d21780-01` | Same-source comparison, both sets of worker traces, byte checks and timing | Explicit denominator qualification and earlier evaluator qualification; retained-consumer and documented-delivery issues remain |
+| [Graphiti repeat analysis and trace audit](./reports/graphiti-4896fccada9e-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-graphiti-4896fccada9e-01` | Comparison with both prior same-source runs, all fifteen new worker traces and byte checks | Bulk-retention correction succeeds; provenance, saga and instruction qualifications remain; masked failures and transport recovery retained |
+| [Letta Code repeat analysis and trace audit](./reports/letta-code-f54d2479889e-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-letta-code-f54d2479889e-01` | Same-source comparison, all twelve new worker traces, byte checks and timing | Supported new mod-adaptation account, some old coverage lost; profile repair, masked validators and provider recovery retained |
 
 The first Graphiti report compares its findings with Napkin at the same method commit
 and worker profile. Masked command failures occurred and semantic review repaired
 a candidate in both runs. These observations do not establish a method defect,
 an error rate, or an adopted change. Multiple reviewers, findings, or retries
 within one run do not constitute multiple independent runs.
+
+## Repeat-run evidence after the coverage clarification
+
+The three October 11 repeats above used method
+`0275b8abb307039d0bc975b5699e5b86fe6ca1d5`, their prior source revisions and
+pi-sol/medium. All published in isolated worktrees; the audits independently
+checked publication bytes. All three report verifiers exercised consequential
+omission questions and retained stopping explanations. Quality is mixed rather
+than uniformly improved, and all three took longer than their comparators.
+Concurrent runs, changed inspection scope, repair work and service failures
+prevent causal claims about the method revision.
+
+The failure-oriented scans cover 37 new analytical workers. They found seven
+masked failed shell commands across Graphiti and Letta Code; Napkin had risky
+wrappers but no demonstrated new masked failure. Four embedded model transport
+errors across Graphiti and Letta Code recovered inside successful workers.
+Thirteen failed validation invocations across the three runs also recovered;
+these categories overlap and must not be summed as distinct incidents. No
+publication-byte mismatch or demonstrated unauthorized analytical mutation was
+found. This is bounded trace evidence, not an exhaustive correctness certificate.
+
+Coordinator adjudication corrected a Graphiti audit false positive: the cited
+relative output paths were supplied that way by the handout. The remaining issue
+is rule/handout wording consistency, not demonstrated worker misrouting. Preserve
+that distinction when considering changes. The reports make local correction
+recommendations separately from method hypotheses; this comparison adopts no
+further method change and authorizes no integration or frozen-result edits.
 
 ## Working approach
 
