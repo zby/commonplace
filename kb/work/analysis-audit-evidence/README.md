@@ -36,6 +36,9 @@ workflow.
 | [Napkin repeat analysis and trace audit](./reports/napkin-1b60c5d21780-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-napkin-1b60c5d21780-01` | Same-source comparison, both sets of worker traces, byte checks and timing | Explicit denominator qualification and earlier evaluator qualification; retained-consumer and documented-delivery issues remain |
 | [Graphiti repeat analysis and trace audit](./reports/graphiti-4896fccada9e-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-graphiti-4896fccada9e-01` | Comparison with both prior same-source runs, all fifteen new worker traces and byte checks | Bulk-retention correction succeeds; provenance, saga and instruction qualifications remain; masked failures and transport recovery retained |
 | [Letta Code repeat analysis and trace audit](./reports/letta-code-f54d2479889e-repeat-analysis-and-trace-audit.md) | `AAS-2026-10-11-letta-code-f54d2479889e-01` | Same-source comparison, all twelve new worker traces, byte checks and timing | Supported new mod-adaptation account, some old coverage lost; profile repair, masked validators and provider recovery retained |
+| [Graphiti amendment-effects audit](./reports/graphiti-72c99440b180-amendment-effects-audit.md) | `AAS-2026-10-11-graphiti-72c99440b180-01` | Same-source result comparison, all thirteen analytical traces, amendment delivery/adoption and byte checks | Direct validation and path-only quotations adopted; path reconstruction persists; result gains and regressions coexist |
+| [Napkin amendment-effects audit](./reports/napkin-28752ba411ea-amendment-effects-audit.md) | `AAS-2026-10-11-napkin-28752ba411ea-01` | Same-source result comparison, all fourteen analytical traces, amendment delivery/adoption and byte checks | Two prior result issues qualified; documented delivery remains partial; absolute handouts do not ensure exact reuse |
+| [Letta Code amendment-effects audit](./reports/letta-code-9d060e7dab7e-amendment-effects-audit.md) | `AAS-2026-10-11-letta-code-9d060e7dab7e-01` | Same-source result comparison, all eighteen analytical traces, amendment delivery/adoption and byte checks | Semantic repairs supported; five reconstructed validator paths and one recovered out-of-scope identity write |
 
 The first Graphiti report compares its findings with Napkin at the same method commit
 and worker profile. Masked command failures occurred and semantic review repaired
@@ -69,6 +72,86 @@ is rule/handout wording consistency, not demonstrated worker misrouting. Preserv
 that distinction when considering changes. The reports make local correction
 recommendations separately from method hypotheses; this comparison adopts no
 further method change and authorizes no integration or frozen-result edits.
+
+## Repeat-run evidence after the three operational amendments
+
+On October 11 the operator commissioned monitoring the remaining runs every
+five minutes, followed by another result-and-trace comparison focused on the
+three amendments. Graphiti and Napkin were already complete at the initial
+check. Letta Code was running at 16:54 and 16:59 UTC and reported
+`publication-job-completed` at the 17:04 check. The audits then independently
+checked publication bytes rather than treating engine completion as an audit.
+
+All three new runs used method
+`48453a8110bd36bc51fbcad3e9b2b394b694f603`, the same source revisions as their
+comparators, and pi-sol/medium. They do not include the later workflow lens.
+The relevant method changes from the preceding repeat were path-only quotation
+attributions (`d823ef621`), direct validator calls (`4eed3876d`), and absolute
+handout paths (`b38982da2`). All three changes were delivered together; these
+are observational comparisons, not isolated causal tests.
+
+**Recommendation: retain the amendments, but do not treat absolute path delivery
+as enforcement of worker behavior.** The three reports above support different
+conclusions for each change:
+
+| Amendment | Observed operation across this batch | Limit |
+|---|---|---|
+| Path-only quotation attributions | Adopted in all three runs; the prior revision/attribution-format failures did not recur | Four quotation failures still required ambiguity or range repair; no semantic-correctness guarantee follows |
+| Direct validation | All 60 validator calls were direct; all 11 failures propagated and recovered | Seven failures were incorrect artifact arguments, not content checks; risky non-validator shell constructions persist |
+| Absolute handout paths | All 45 analytical workers received absolute filesystem bindings | Workers still shortened or reconstructed paths; seven validators used an invented artifact directory; Letta Code Memory briefly wrote an empty identity file outside its assigned handout |
+
+The 60 validator calls comprise Graphiti 16, Napkin 18 and Letta Code 26;
+the 11 failures comprise 2, 2 and 7 respectively. They divide into four
+quotation failures and seven artifact-path failures, not independent incidents
+to add to those totals. No demonstrated masked shell failure was found in the
+190 inspected Bash results, versus seven in the preceding batch's audits.
+Different inspected opportunities and lingering risky wrappers prevent a claim
+that all shell failures are now visible. The strongest evidence is narrower:
+actual validator failures now reach the worker as failures in all eleven cases.
+Quotation occurrence counts differ in sampling across the reports and are not
+pooled as independent trials.
+
+The coordinator independently checked the Letta Code identity-write recovery
+against its trace (report A4, L29/R0/m89–94): successful wrong-location write,
+removal, then correct assigned write. No data loss is established, but recovery
+does not erase the write-scope violation. The producer supplied the correct
+path. This and the seven reconstructed validator arguments are worker errors,
+not evidence of a defective absolute-path generator. Mere relative spelling
+that resolved to the assigned file is recorded separately from misrouting.
+
+Accepted-result quality remains mixed. The Napkin audit finds that the distill
+create-example mismatch and saved-report/current-array confusion are now
+qualified; documented automatic delivery remains partly underclassified.
+The Graphiti audit retains successful bulk-retention and evaluator corrections,
+but reconfirms provenance and saga-reset omissions, finds a context-count
+regression, and catches another false verifier typo allegation. The Letta Code
+audit supports the repaired concurrency, reflection and selector claims without
+establishing a new accepted-claim correction in its sample; prior hook/Workflow
+coverage is not fully replaced. These are bounded source checks, not exhaustive
+correctness judgments or effects attributed to the operational amendments.
+
+| Run | Previous → new wall minutes | Previous → new summed worker minutes | Previous → new analytical workers |
+|---|---:|---:|---:|
+| Graphiti | 65.68 → 71.60 | 68.63 → 74.83 | 15 → 13 |
+| Napkin | 49.37 → 75.53 | 53.30 → 78.36 | 10 → 14 |
+| Letta Code | 64.38 → 89.67 | 68.18 → 90.51 | 12 → 18 |
+
+Each pair uses its report's timing boundary: Graphiti preparation record to
+publication, Napkin run-start result to publication, and Letta Code preparation
+call to publication. Do not pool these wall times as one identically measured
+benchmark. Extra repair/review work, changed exploration and four recovered
+provider interruptions accompany the new batch. Less quotation-format friction
+did not produce lower total elapsed time; the evidence does not isolate the
+amendments' contribution to cost or quality.
+
+All three frozen-method set validations and report validations passed; all
+three publications matched their receipts and pinned members. The reports
+retain exact identities, trace locators, count definitions and limitations.
+This comparison recommends no additional instruction or gate. Local correction
+candidates remain separate decisions. No new analysis, integration, frozen
+artifact edit, method edit, commit or worktree disposal is authorized by this
+comparison. Broader graph discovery, if useful later, belongs to a separately
+commissioned `cp-skill-connect` task.
 
 ## Working approach
 
