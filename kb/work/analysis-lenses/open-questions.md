@@ -27,9 +27,11 @@ contract's coverage dimensions.
 
 Discriminating evidence: memory worker traces showing context pressure or
 truncated coverage, and audit findings that a coverage dimension was skipped
-rather than bounded. Three narrower workers triple discovery cost and add
-reconciliation; the split must show omissions the single worker could not have
-closed with a sharper stopping rule.
+rather than bounded. The hypothesis against a split is duplicated discovery
+and added reconciliation; narrower scope may also reduce each worker's
+discovery effort, so the net cost is to be measured, not assumed. The split
+must show omissions the single worker could not have closed with a sharper
+stopping rule.
 
 ## Where do feedback and adaptation belong relative to the epistemic role?
 
@@ -66,8 +68,9 @@ beside the claims it limits rather than in a general disclaimer.
 
 ## What should a verifier check without becoming a second exhaustive analysis?
 
-Current answer: judge coverage against the frozen repository tree, for every
-record, with a materiality threshold but no stopping rule.
+Current answer: coverage is bounded by materiality and the declared
+boundary, and the type disclaims exhaustive inspection, but no rule says how
+to select and stop an omission search.
 
 Proposed answer under examination:
 [verification coverage bounds](./proposals/verification-coverage-bounds.md).

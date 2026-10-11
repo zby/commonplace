@@ -10,9 +10,18 @@ those needs and recommend the smallest sufficient change. Distinguish reducing
 avoidable work from deliberately leaving questions unanswered.
 
 Start from [current arrangement](./current-arrangement.md) and the read-count
-baseline in [evidence base](./evidence-base.md). Treat the
-[verification coverage bounds proposal](./proposals/verification-coverage-bounds.md)
-as one option among those compared, not as the conclusion.
+baseline in [evidence base](./evidence-base.md). Compare at least these three
+options, none of which adds a process or touches the engine:
+
+1. Clarify the existing materiality-based stopping rule for omission
+   searches, without changing coverage territory.
+2. Bound lens omission searches by runtime and lens anchors, as the
+   [verification coverage bounds proposal](./proposals/verification-coverage-bounds.md)
+   describes.
+3. Give each verifier a small, question-driven omission search budget with
+   explicit unresolved coverage.
+
+The proposal is one option among these, not the conclusion.
 
 Do not begin with a replacement workflow, a predetermined memory split or an
 assumption that more processes produce better coverage.

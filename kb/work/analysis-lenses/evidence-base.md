@@ -26,10 +26,14 @@ standard. Its own reading cost is part of what this workshop weighs.
 
 The audit workshop holds five reports: Napkin, two Graphiti runs, Letta and
 Letta Code. They are correctness, publication-byte and trace audits. None was
-commissioned to find mechanisms the analyses missed, and an auditor who read
-no more source than the workers cannot measure missed mechanisms. They do
-supply evidence on recovery cost, masked command failures, quotation repair
-and timing, which bear on the production side of resource allocation.
+commissioned as a coverage audit, so none supplies a coverage denominator or
+an estimate of completeness. Both Graphiti reports do contain source-backed
+findings of omitted mechanisms, such as server-wired MCP instructions and a
+bulk-ingest index consumed by provenance retrieval. That is selected omission
+evidence: it shows the kind of mechanism the method can miss and what the
+omission cost, without showing how much was missed. The audits also supply
+evidence on recovery cost, masked command failures, quotation repair and
+timing, which bear on the production side of resource allocation.
 
 ## Trace measurements
 

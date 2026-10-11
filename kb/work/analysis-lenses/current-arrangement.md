@@ -70,9 +70,13 @@ materiality threshold, and not to weaken supported findings to produce uniform
 coverage. The verification type sets the threshold at findings that undermine
 a central conclusion or leave the analysis materially misleading.
 
-This is the one place where the method states an exhaustive-leaning duty with
-no stopping rule for the verifier itself. It applies equally to the general
-layer and to the lenses, and it is the concrete locus of the
+So the method does bound coverage, by materiality and by the declared
+boundary, and the type says completeness is "not exhaustive inspection of
+repository contents". What it does not state is how the verifier selects
+where to search for omissions and when to stop; the instruction's "against
+the frozen repository tree" leans exhaustive without saying how far. That
+missing selection and stopping rule applies equally to the general layer and
+to the lenses, and it is the concrete locus of the
 [verification coverage bounds proposal](./proposals/verification-coverage-bounds.md).
 
 ## What this means for the open questions
@@ -84,4 +88,5 @@ layer and to the lenses, and it is the concrete locus of the
   is whether that anchors discovery, and whether a runtime correction should
   trigger lens reruns.
 - "What is a defensible stopping point?" Runtime has one for guarantees;
-  memory has a coverage-dimensions rule; the verifier has none.
+  memory has a coverage-dimensions rule; the verifier has a materiality
+  threshold but no selection or stopping rule for omission searches.

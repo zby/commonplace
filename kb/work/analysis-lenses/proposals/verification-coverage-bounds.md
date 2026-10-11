@@ -1,16 +1,24 @@
 # Proposal: verification coverage bounds
 
-Operator proposal, 2026-10-11, refined in discussion. Status: option for the
-[first deliverable](../first-deliverable.md) to compare. Not adopted, not
-authorized for implementation.
+Operator proposal, 2026-10-11, refined in discussion and tightened after a
+reviewer's reading the same day. Status: one option for the
+[first deliverable](../first-deliverable.md) to compare, alongside clarifying
+the existing materiality rule and a question-driven omission budget. Not
+adopted, not authorized for implementation.
 
 ## Problem
 
-`verify-reports.md` tells the single verification role to judge coverage
-against the frozen repository tree for every record. On a large repository
-that is a second exhaustive analysis, and the method states no stopping rule
-for it. The duty also falls equally on the general layer and on lenses whose
-questions touch a fraction of the tree.
+The method already limits coverage by materiality. The verification type
+says completeness is relative to the required questions and the declared
+boundary, not exhaustive inspection of repository contents, and
+`verify-reports.md` invokes that threshold. What neither states is how the
+verifier should select and stop an omission search: which parts of the frozen
+tree to look in for mechanisms the records missed, and when looking further is
+no longer warranted. The instruction's wording, "judge coverage against the
+frozen repository tree", leans exhaustive without saying how far. The gap is a
+missing operational stopping rule, not an exhaustive duty to remove, and it
+falls equally on the general layer and on lenses whose questions touch a
+fraction of the tree.
 
 ## Proposal
 
@@ -23,8 +31,12 @@ scopes itself from runtime routes, so this follows the existing grain.
    dispatch, hooks, registered tools, service and library operations) and
    packaging manifest in the frozen tree is either placed in Components or
    Routes, or declared immaterial with a reason. Depth checks follow the
-   runtime record's anchors. This bounds the exhaustive duty by the tree's
-   structure rather than its size.
+   runtime record's anchors. The structural inventory can be enumerated
+   mechanically from package layout, manifests and registration points, but
+   judging each item's materiality is worker effort, and the count of entry
+   paths grows with the repository. This check therefore needs its own
+   prioritization or stopping rule, or it moves the unbounded obligation
+   rather than resolving it.
 
 2. **Lens omission checks are bounded to runtime-located paths plus the
    lens's own anchors.** Correctness checking follows a lens's anchors wherever
@@ -39,7 +51,12 @@ scopes itself from runtime routes, so this follows the existing grain.
    paths, so synthesis carries it and unknown does not read as absence.
 
 "Runtime-located paths" is the union of source anchors in the runtime record's
-shared records. No new contract surface is needed.
+shared records. No new contract surface is needed, but file anchors are an
+imprecise bound: one anchor in a large file admits a large search space, a
+relevant helper in an unanchored file falls outside it, and an anchored file
+does not show which mechanisms were investigated. The comparison should test
+whether the existing anchors are a useful proxy against a question- or
+mechanism-based stopping rule before making them authoritative.
 
 ## Placement options
 
@@ -64,20 +81,23 @@ second.
 
 Across the retained runs, from the records and frozen worktrees:
 
-- Share of memory and epistemic anchors outside runtime-located paths. If
-  small, the bound is tight and lenses rarely need paths runtime missed.
-- Runtime coverage findings raised by the verifier, by materiality. If rare,
-  the single-verifier placement is enough; if common, early runtime
-  verification earns its stage.
+- Share of memory and epistemic anchors outside runtime-located paths. A
+  small share is consistent with a tight bound; it is also consistent with
+  lenses anchoring on the map and sharing its omissions.
+- Runtime coverage findings raised by the verifier, by materiality. A low
+  count is consistent with an adequate map; it is also consistent with a
+  verifier that rarely searches for omissions.
 
 Both are deterministic over retained records and are within the workshop's
-scope. Neither distinguishes good runtime coverage from lens anchoring on the
-map; only a coverage audit of the source does.
+scope. Neither establishes sufficiency. Only a bounded coverage audit of the
+frozen source, independent of the existing records, can challenge the shared
+blind spots; it does not need to be exhaustive.
 
 ## What would count against adoption
 
-- A coverage audit finds material mechanisms outside runtime-located paths
-  that lenses reached and the bounded verifier would not have checked.
+- A coverage audit finds a material mechanism outside both runtime-located
+  paths and the lens's own anchors, so bounded omission checking would not
+  have looked there, and its omission makes a central conclusion misleading.
 - Module-granularity tree checks still exceed the verifier's budget on the
   largest retained repositories.
 - The declared-immaterial list grows into the product inventory the runtime
