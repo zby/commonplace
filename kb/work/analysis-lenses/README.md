@@ -42,6 +42,8 @@ roles, not whether to introduce the shape. See
 | [First deliverable](./first-deliverable.md) | The first comparison to produce, its evaluation criteria and the return-to-operator condition |
 | [Comparison plan](./comparison-plan.md) | Executable handoff for correcting workshop premises and comparing three coverage policies using retained cases; no live method changes |
 | [Multi-repository scope plan](./multi-repository-scope-plan.md) | Use Ars Umbris to compare component analyses with a fixed repository bundle, balancing coverage against workflow and implementation complexity |
+| [Retained multi-repository scope comparison](../../reports/retained/multi-repository-analysis-scope-2026-10-11/multi-repository-scope-comparison.md) | Prefer one frozen source tree for the Ars Umbris cross-component question; retain component evidence, quotation/source-ID audit and change footprint |
+| [Proposal: multi-repository agentic-system analysis](../../reference/proposals/multi-repository-agentic-system-analysis.md) | Cover multi-repository systems using repository directories while preserving roles, source IDs and path-only quotations; unadopted |
 | [Coverage policy comparison](./coverage-policy-comparison.md) | Adopted prose-only clarification: consequential-question omission checks with effort-sensitive stopping and brief coverage reporting; retained-case evidence and implementation footprint |
 | [Proposal: verification coverage bounds](./proposals/verification-coverage-bounds.md) | Unadopted operator proposal of 2026-10-11: add structural accounting at runtime and bound lens omission checks; original exhaustive-duty premise qualified against the live type |
 

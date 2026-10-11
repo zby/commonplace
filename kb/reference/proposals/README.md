@@ -9,6 +9,10 @@ This README is navigation only; it states no rules ([ADR 084](../adr/084-kind-ru
 - [Design proposal type](../types/design-proposal.md) — what a proposal must be, its lifecycle states, and the procedure for each transition.
 - [`kb/reference/COLLECTION.md`](../COLLECTION.md) — where proposals and archived proposals may live.
 
+## Multi-repository analysis
+
+- [Multi-repository agentic-system analysis](./multi-repository-agentic-system-analysis.md) — cover systems such as Ars Umbris through one frozen source tree while preserving roles, source IDs and path-only quotations.
+
 ## Lifecycle at a glance
 
 Workshop (`kb/work/`, active exploration, closes) → proposal here (finished, undecided, waits) → ADR (decided and implemented) — or retirement, when a later decision forecloses it — or withdrawal, when its problem or trigger lapses with no decision. Partial adoption keeps a proposal here with only its undecided part. Procedures:

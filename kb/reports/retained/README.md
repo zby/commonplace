@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Multi-repository analysis scope comparison](./multi-repository-analysis-scope-2026-10-11/multi-repository-scope-comparison.md) — Ars Umbris component pins and option comparison supporting one frozen source tree with repository directories; source-ID consumers, quotation limits and change footprint.
+
 - [Analysis offload closure](./analysis-offload-closure-20261002.md) — bounded publication and amendment evidence, selected failure cases, and backlog disposition; obsolete full trial sets retired.
 - [Agentic analysis consumer-migration closure](./agentic-analysis-consumer-migration-20261002/README.md) — active reader acceptance, historical publication dispositions, and the retained citation boundary.
 - [Agentic analysis output-documents closure](./agentic-analysis-output-documents-20261002/README.md) — fixture sizes, fresh publication and reader acceptance, trace limits, and the adopted set contract.
