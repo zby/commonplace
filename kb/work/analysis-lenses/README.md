@@ -41,10 +41,17 @@ roles, not whether to introduce the shape. See
 | [Evidence base](./evidence-base.md) | Audits, trace measurements and the frozen source worktrees; what each can and cannot show about coverage |
 | [First deliverable](./first-deliverable.md) | The first comparison to produce, its evaluation criteria and the return-to-operator condition |
 | [Comparison plan](./comparison-plan.md) | Executable handoff for correcting workshop premises and comparing three coverage policies using retained cases; no live method changes |
+| [Multi-repository scope plan](./multi-repository-scope-plan.md) | Use Ars Umbris to compare component analyses with a fixed repository bundle, balancing coverage against workflow and implementation complexity |
 | [Coverage policy comparison](./coverage-policy-comparison.md) | Adopted prose-only clarification: consequential-question omission checks with effort-sensitive stopping and brief coverage reporting; retained-case evidence and implementation footprint |
 | [Proposal: verification coverage bounds](./proposals/verification-coverage-bounds.md) | Unadopted operator proposal of 2026-10-11: add structural accounting at runtime and bound lens omission checks; original exhaustive-duty premise qualified against the live type |
 
 ## Scope and coordination
+
+The operator also commissioned the
+[multi-repository scope plan](./multi-repository-scope-plan.md): use Ars Umbris
+to compare bounded component runs with an explicitly frozen repository bundle.
+This authorizes local read-only scoping and workshop design work, not acquisition,
+source-ID removal or bundle implementation.
 
 This workshop owns resource allocation and coverage limits in analysis; lens
 and scope design are possible means of addressing that question. The
