@@ -155,14 +155,14 @@ def _open(run: Run, job: ModelJob) -> Handout:
             # A file is handed at its own path, so an instruction's relative
             # links still resolve. Its pinned version is recorded; a method
             # that changes mid-run makes the run unpublishable anyway.
-            paths[name] = run.file_path(spec)
+            paths[name] = run.file_path(spec).absolute()
             continue
         path = directory / "inputs" / f"{name}.md"
         store.write_bytes(path, pinned.data)
         paths[name] = path
     outputs, problem, worker_identity = handout.outputs, handout.problem, handout.worker_identity
-    placeholders = {"run": str(store.run_dir), "run-id": store.run_dir.name,
-                    "artifact": str(store.artifact_dir), "workspace": f"{directory}/"}
+    placeholders = {"run": str(store.run_dir.absolute()), "run-id": store.run_dir.name,
+                    "artifact": str(store.artifact_dir.absolute()), "workspace": f"{directory}/"}
     values = {"job": job.name, **({"role": job.role, **layout_bindings(run.layout, job.role)} if job.role else {}),
               "attempt": attempt, "run-id": store.run_dir.name}
     values |= {key: _substitute(value, placeholders, run.parameters) for key, value in job.parameters.items()}
@@ -171,7 +171,7 @@ def _open(run: Run, job: ModelJob) -> Handout:
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
     values |= {"problem": str(problem), "worker-identity": str(worker_identity),
-               "workspace": f"{directory}/", "artifact": str(store.artifact_dir), "scratch": f"{scratch}/"}
+               "workspace": f"{directory}/", "artifact": str(store.artifact_dir.absolute()), "scratch": f"{scratch}/"}
     previous = run.latest_completed(job.name)
     if previous is not None:
         for name, version in previous["outputs"].items():
@@ -268,7 +268,9 @@ def validate_handout(handout: Handout) -> None:
 def handout_for(run: Run, record: dict) -> Handout:
     """The hand-out of an open attempt, from its record and the hand-out layout."""
     job = run.jobs.job(record["job"])
-    directory = run.store.handout_dir(record["id"])
+    # Handouts are worktree-bound execution paths, independent of how the caller
+    # spelled the run directory. Preserve symlink spelling for file-relative links.
+    directory = run.store.handout_dir(record["id"]).absolute()
     outputs = {name: directory / "outputs" / f"{name}.md" for name in job.outputs}
     return Handout(record["id"], job.name, directory / "prompt.md", outputs, directory / "problem.md",
                    directory / WORKER_IDENTITY)
