@@ -32,5 +32,9 @@ records contract's grammar.
 
 Before returning, run
 `{command-path}/commonplace-validate {output} --artifact {artifact} --role {role}`
-as written, and repair findings until it passes. Return one line naming the
-files you wrote, or `problem`, without summarizing them.
+as written, directly in a separate shell call, and inspect its complete result.
+The shell tool already reports its exit status. Appending a status-printing
+command can replace the validator's failure status with the printing command's
+success, making a failed check appear successful to the caller.
+Repair findings until validation passes. Return one line naming the files you
+wrote, or `problem`, without summarizing them.
