@@ -1,4 +1,5 @@
 """Occurrence diagnostics preserve the passage and only propose checked ranges."""
+import subprocess
 from dataclasses import replace
 from hashlib import sha256
 
@@ -111,6 +112,39 @@ def test_capture_path_and_hash_are_checked_even_without_version(tmp_path):
     result, = resolve_citations(parse_blockquotes(block(source, "changed")), replace(source), kind="code")
     assert result.status == "unverified"
     assert "source unavailable" in result.detail and "SHA-256 mismatch" in result.detail
+
+
+def test_path_only_git_attribution_uses_frozen_revision(tmp_path):
+    def git(*args):
+        return subprocess.run(
+            ["git", "-C", str(tmp_path), *args], check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    git("init")
+    (tmp_path / "example.py").write_text("unique passage\nrepeated\nrepeated\n")
+    git("add", "example.py")
+    git("-c", "user.name=Test", "-c", "user.email=test@example.invalid",
+        "commit", "-m", "Freeze quotation fixture")
+    revision = git("rev-parse", "HEAD")
+    source = GitPin("https://github.com/example/repo", revision, tmp_path)
+
+    def resolve(passage, attribution, pin=source):
+        citation, = parse_blockquotes(f"> {passage}\n> --- {attribution}\n")
+        return resolve_citations([citation], pin, kind="code")[0]
+
+    assert resolve("unique passage", "`example.py`").status == "match"
+    assert resolve("repeated", "`example.py:2-2`").status == "match"
+    assert resolve("repeated", "`example.py`").status == "mismatch"
+    assert resolve("missing passage", "`example.py`").status == "mismatch"
+    assert resolve("unique passage", f"`example.py` @ `{revision}`").status == "match"
+    wrong = resolve("unique passage", f"`example.py` @ `{'0' * 40}`")
+    assert wrong.status == "mismatch"
+    assert "attribution uses revision" in wrong.detail
+
+    (tmp_path / "example.py").write_text("changed passage\n")
+    unverified = resolve("changed passage", "`example.py`", replace(source))
+    assert unverified.status == "unverified"
+    assert "source unavailable" in unverified.detail
 
 
 def test_missing_git_checkout_is_unverified(tmp_path):

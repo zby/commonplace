@@ -183,8 +183,18 @@ that commit. Only quotation attributions carry line ranges.
 Load-bearing findings, including disputed mechanisms, comparison
 classifications and assessments, retain minimum verbatim passages; a supplied
 member's record can supply the passage, so cite it rather than repeat it.
-Write each passage as a blockquote ending in a `> ---` attribution naming the
-commit-relative path in a code span, or the registered capture path. Under
+Write each passage as a blockquote ending in a `> ---` attribution containing
+only the commit-relative path in a code span, or the registered capture path.
+The boundary's frozen source supplies the revision or capture identity.
+For example:
+
+```markdown
+> exact source passage
+> --- `src/example.py`
+```
+
+When needed, paste a checked range inside the same code span, for example
+``> --- `src/example.py:42-47` ``. Under
 whitespace normalization the quote occurs exactly once in the frozen blob or
 capture, or within a supplied line range containing all of it. Display line
 numbers, invented ellipses and formatting fences are not quote text;
