@@ -30,7 +30,7 @@ no integration authority. Each slot proceeds to an independent audit before refi
 
 | Target | Worktree suffix | Analysis handle | Source input | Status |
 |---|---|---|---|---|
-| Agent Workflow Memory | `agent-workflow-memory-cb2da079273e` | `80f7fbc9-9752-4aab-8cc0-7f1cb4722d23` | `https://github.com/zorazrw/agent-workflow-memory` | Analysis dispatched |
+| Agent Workflow Memory | `agent-workflow-memory-cb2da079273e` | `80f7fbc9-9752-4aab-8cc0-7f1cb4722d23` | `https://github.com/zorazrw/agent-workflow-memory` | Published; independent audit active |
 | AgentFly | `agentfly-bbfc9fb2d5c7` | `b55174af-ae49-4386-b448-5e74cc778ed2` | `https://github.com/Agent-on-the-Fly/AgentFly` | Published; fresh audit active |
 | Agentic Harness Engineering | `agentic-harness-engineering-b7fb59b2f7bd` | `67d3d133-e1c2-4874-ab7d-b673e7ffc030` | `https://github.com/china-qijizhifeng/agentic-harness-engineering` | Stopped: boundary API 503; no publication |
 | Agentic Local Brain | `agentic-local-brain-f00cbd577178` | `42f2fa7d-5187-44d3-a183-9bba7bfd5bca` | `https://github.com/agent-creativity/agentic-local-brain` | Analysis dispatched |
@@ -43,9 +43,20 @@ uncommitted outcome bookkeeping excluded. New worktree suffix
 `ai-context-os-4f81c8c12f62`, analysis handle
 `64ec8fa3-d0cd-4c88-886b-f6403d89887e`, source
 `https://github.com/alexdcd/AI-Context-OS`, default-branch tip, Sol/medium
-coordinator and `pi-sol` workers. Status: analysis dispatched.
+coordinator and `pi-sol` workers. Status: stopped at synthesis API 503, no publication.
 
 ## Results and integration queue
+
+Agent Workflow Memory published run
+`AAS-2026-10-12-agent-workflow-memory-cb2da079273e-01`, frozen source
+`8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1`. Last advance exited 0,
+stdout `publishable: yes`, stderr empty. No failed/open attempts or recorded
+worker problems. Unchanged inspection retained as
+`rolling-05-agent-workflow-memory-inspect.json`. Publication is in the
+worktree's `kb/agentic-system-analyses/retained/agent-workflow-memory/`.
+Fresh Sol/medium auditor handle `6c95e574-9f5a-4765-8383-166aa6b90476`
+owns `audits/rolling-05-agent-workflow-memory.md`. Not integrated or complete
+for checklist purposes.
 
 AgentFly published run `AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01`, frozen source
 `42fbbcac63dd58ed6856c0761357345a58e4f032`. Last advance exited 0, stdout
@@ -91,8 +102,33 @@ stop boundary 000003-boundary: OpenAI API error (503): 503 upstream connect erro
 publishable: no
 ```
 
-Corpus progress: nine complete, 193 pending (four currently assigned), four
-held. AI-Context-OS and ai-memex-cli fill the released slots.
+AI-Context-OS returned stopped, run
+`AAS-2026-10-12-ai-context-os-4f81c8c12f62-01`, frozen source
+`9ed263080cadf98702bebb42d5260b45bd526f6c`. Attempt `000028-synthesis`
+failed; no open attempts or recorded worker problems, no publication. Prior
+accepted stages are retained, not certified as a completed analysis. Inspection
+exited 0 and is retained as `rolling-05-ai-context-os-inspect.json`.
+Last advance exited 2, no separate stderr exposed:
+
+```text
+stop synthesis 000028-synthesis: OpenAI API error (503): 503 upstream connect error or disconnect/reset before headers. retried and the latest reset reason: remote connection failure, transport failure reason: delayed connect error: Connection refused
+publishable: no
+```
+
+A source-path lookup used lowercase instead of actual `alexdcd--AI-Context-OS`
+and returned `fatal: cannot change to 'related-systems/alexdcd--ai-context-os': No such file or directory` (exit 128); the corrected read-only lookup succeeded.
+This is not a failed validation call.
+
+Replacement dispatch is operationally paused after provider API 503 failures
+stopped two independent pipelines. Already-running analyses continue; their
+publications may be audited and integrated. No method defect is established.
+Resume fresh dispatch after provider availability is demonstrated and ownership
+reconciled; failed-run recovery remains a separate supported decision. Do not
+silently retry or discard the stopped runs. This is not a reinstated operator
+dispatch stop or a change to the commission.
+
+Corpus progress: nine complete, 192 pending (three currently assigned), five
+held. AI-Context-OS releases its slot, unfilled during the provider pause.
 Other frozen run identifiers and source boundaries will be recorded
 when available. No cleanup, push, method
 change, comparison regeneration or landscape synthesis is commissioned.
