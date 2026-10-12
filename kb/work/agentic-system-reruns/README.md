@@ -88,8 +88,8 @@ as well as completing the standing worker-launch preflight. An older loaded
 extension requires `/reload` before any jobs are started. Reload or orderly
 shutdown cancels active jobs; handles do not survive it. Reconcile interrupted
 assignments before replacement. If asynchronous operations are unavailable,
-report the runtime blocker. Do not silently fall back to batches, agent CLIs or
-additional scheduling coordinators.
+report the runtime blocker. Do not substitute wait-for-all dispatch, agent CLIs
+or additional scheduling coordinators.
 
 The orchestrator owns assignments, checklist updates, recovery decisions
 and serial integration into `main`. Per-system coordinators own their isolated
@@ -106,7 +106,7 @@ After each new publication, commission a fresh auditor in that slot under
 [Audit a rerun before integration](./audit-a-rerun.md), while other pipelines
 continue. Once the audit disposition is recorded, queue a cleared result for
 serial integration and refill the slot with the next eligible target. Do not
-wait for the other slots or a shared batch checkpoint. Integration is owned by
+wait for the other slots or a shared completion checkpoint. Integration is owned by
 the orchestrator, outside the four analysis/audit slots; queued results are not
 yet complete. Drain that queue as results arrive rather than deferring it until
 all analyses finish. Audit clearance does not replace integration's publication

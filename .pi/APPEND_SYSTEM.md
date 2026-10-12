@@ -48,7 +48,7 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
   reload, which cancel active jobs. Record assignments and results durably;
   reconcile ownership after interruption rather than blindly relaunching.
   See `.pi/README.md` for lifecycle and platform limits. An old schema requires
-  reload before launching work, not a fallback to synchronous batches.
+  reload before launching work, not a fallback to wait-for-all dispatch.
 - The Commonplace worker inherits the coordinator's model and thinking level
   unless the call overrides them with `model` or `thinkingLevel`. Each call
   starts a fresh non-persisted session without the parent's conversation.
