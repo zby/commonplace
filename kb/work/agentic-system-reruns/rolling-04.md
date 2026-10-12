@@ -150,4 +150,19 @@ A fifth bounded retrospective checks the substance of those four newly affected
 drafts, not just their commands. Handle `de49617a-2484-423f-953e-b5735b91948e`
 owns `audits/path-confusion-rolling-04-content.md`. It may read the completed
 runs and frozen sources but cannot recover, change or finish them. Its result
-is pending. All four original system pipelines remain stopped.
+returned normally: [current affected drafts](./audits/path-confusion-rolling-04-content.md)
+are reasonable partial analyses on the decisive claims independently checked.
+AgentFly runtime is only a trace-retained candidate, not an installed result.
+Harness Engineering's three affected members are installed but not a completed
+analysis. Quote repair contexts are meaningful. Independent source inspection
+confirms the omitted exported shell guard: it can deny selected commands before
+execution, so the epistemic inventory cannot support complete task-level
+admission coverage. This is a retained coverage limit, not acceptance of the
+failed verifier or clearance to finish the run.
+
+All five retrospective reports passed validation. All dispatched coordinators
+and check workers have returned. No active job remains in this session. The
+operator's stop remains in force; no replacement, recovery, method change or
+simpler command implementation was performed. Corpus progress remains eight
+complete, 191 pending and seven recovery-required. No new result awaits
+integration. Worktrees, failed attempts and historical traces are preserved.
