@@ -120,6 +120,11 @@ def _print_inspection(view: dict, as_json: bool) -> None:
         print(f"open hand-out {handout.attempt} {handout.job}: {handout.prompt}")
     for stop in view["failed_attempts"]:
         _print_stop(stop)
+    for problem in view["worker_problems"]:
+        print(f"worker problem {problem['id']} {problem['job']} ({problem['state']}):")
+        print(problem["problem"], end="" if problem["problem"].endswith("\n") else "\n")
+    for limitation in view["limitations"]:
+        print(f"limitation: {limitation}")
     for refusal in view["refusals"]:
         first = refusal.findings.strip().splitlines()[:1]
         print(f"refusal {refusal.id} of {refusal.job} ({refusal.version[:12]}): {first[0] if first else ''}")

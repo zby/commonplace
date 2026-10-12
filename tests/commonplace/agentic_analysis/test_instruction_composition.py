@@ -44,6 +44,22 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     assert REPO_ROOT / STATE_ROOT == collection / "state"
 
 
+def test_coordinator_discloses_problems_without_expanding_worker_inputs() -> None:
+    driver = "agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md"
+    text = (LIBRARY / driver).read_text(encoding="utf-8")
+    assert "disclose retained `worker-problems`" in text
+    assert "including completed attempts" in text
+    assert "Name their attempt IDs and what later evidence" in text
+    assert "Do not infer recovery" in text
+    assert "earlier worker performed its required check" in text
+    jobs = load_plan(yaml.safe_dump(expanded(LIBRARY)))
+    assert all(spec.source != driver for job in jobs.jobs for spec in job.inputs.values())
+    for job in jobs.jobs:
+        if isinstance(job, ModelJob):
+            rules = LIBRARY / job.inputs["worker-rules"].source
+            assert "Do not report a check you did not\nexecute." in rules.read_text(encoding="utf-8")
+
+
 def test_mission_files_leave_inputs_outputs_and_checks_to_the_prompt_section() -> None:
     """Step 5's criterion: a job instruction names the inputs its mission uses, never
     an output, an answers file or the check command, which the prompt section supplies."""

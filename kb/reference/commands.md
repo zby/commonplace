@@ -171,8 +171,12 @@ completed results through `commonplace-run advance`.
 `inspect <run>` emits JSON engine evidence without changing logical
 state (locking may create a lock file). It distinguishes completed local
 `blocked`/`out-of-scope` dispositions from completion of the publication job.
-It reports attempts, failures, exhausted jobs, refusals and canonical peer drift;
-journal labels are unverified, and invocation-specific stops require the
+It reports attempts, current failures, historical `worker-problems` (including
+completed attempts), exhausted jobs, refusals and canonical peer drift.
+Completion does not establish that every worker obligation was fulfilled or
+every reported problem resolved. Missing historical problem text means not
+recorded, not proof that no problem occurred. Journal labels are unverified,
+and invocation-specific stops require the
 original advance result. It is not a retained-filesystem audit or an old-style
 handoff command.
 
@@ -209,7 +213,10 @@ same as data. It exits 0 when the run continues, 2 when the run stopped and
 and settles all round hand-outs before advancing. The analysis manifest still
 requires one consistent worker model/effort identity.
 `status <run>` lists members, open hand-outs with their original prompt paths,
-failed attempts and refusals with identifiers; use it before resuming.
+current failed attempts, historical `worker_problems` with full retained report
+text, and refusals with identifiers; use it before resuming. `--json` includes
+these independently: a completed attempt can retain a worker problem without
+being a current failure. See the inspection limitations above.
 Publishability means engine coverage, not publication or content validation.
 `judge <run> --role <role> --outcome accepted|refused` records an operator
 judgment of a role's member: `--findings` carries the reason, `--scope`

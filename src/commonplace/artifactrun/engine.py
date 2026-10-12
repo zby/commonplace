@@ -281,11 +281,18 @@ def _inspect(run: Run) -> dict:
         condition = "stuck"
     return {
         "condition": condition,
+        "limitations": [
+            "Completion does not establish that every worker obligation was fulfilled or every reported problem resolved.",
+            "Missing historical problem text means not recorded, not proof that no problem occurred.",
+        ],
         "parameters": dict(run.parameters),
         "declaration": _declaration_identity(run),
         "attempts": [{key: record.get(key) for key in
-                      ("id", "job", "kind", "state", "model", "effort", "worker_model", "worker_effort", "reason", "uncertain")}
+                      ("id", "job", "kind", "state", "model", "effort", "worker_model", "worker_effort", "reason", "uncertain", "problem")}
                      for record in sorted(run.attempts.values(), key=lambda r: r["seq"])],
+        "worker_problems": [{key: record[key] for key in ("id", "job", "state", "problem")}
+                            for record in sorted(run.attempts.values(), key=lambda r: r["seq"])
+                            if record["state"] != "open" and record.get("problem", "").strip()],
         "failed_attempts": failures,
         "exhausted_jobs": exhausted,
         "members": dict(run.members()),
@@ -388,7 +395,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
     job = run.jobs.job(record["job"])
     handout = handout_for(run, record)
     directory = handout.prompt.parent
-    problem = handout.problem.read_text(encoding="utf-8", errors="replace") if handout.problem.is_file() else ""
+    problem = handout.problem.read_bytes().decode("utf-8", errors="replace") if handout.problem.is_file() else ""
 
     def fail(reason: str) -> Stop:
         # The worker's problem text is the failure's record; the hand-out
@@ -438,7 +445,7 @@ def _close(run: Run, result: AttemptResult) -> Stop | None:
             return fail("answered a refusal with the refused version unchanged and no new auxiliary version")
     store.commit_attempt({**record, "outputs": outputs, "model": result.model, "effort": result.effort,
                           "worker_model": worker_identity["model"].strip(),
-                          "worker_effort": worker_identity["effort"].strip()})
+                          "worker_effort": worker_identity["effort"].strip()}, problem=problem)
     store.remove(directory)
     return None
 

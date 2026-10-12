@@ -57,6 +57,7 @@ def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = 
             "waiting-on": waiting,
             "parameters": view["parameters"], "members": view["members"],
             "open-attempts": view["open_attempts"], "failed-attempts": failures,
+            "worker-problems": view["worker_problems"],
             "invocation-stops": stops, "exhausted-jobs": exhausted,
             "stale-acceptances": view["stale_acceptances"], "canonical-peer-drift": view["historical_bases"],
             "refusals": [asdict(item) for item in view["refusals"]],
@@ -65,6 +66,7 @@ def run_inspection(run_dir: Path, *, final_job: str, status: RunStatus | None = 
             "limitations": [
                 "Publishable means engine coverage (required roles, holding acceptances, covered relations), not publication or content validation.",
                 "Completed means the final job completed against unchanged inputs, not a fresh filesystem audit.",
+                *view["limitations"],
                 "Holding handed judgments can refer to historical peers; canonical-peer-drift reports that separately.",
                 "Reporting does not change logical run state; acquiring its lock may create state/lock.",
                 "Journal state is unverified; only the effect handler recognizes completion.",

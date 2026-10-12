@@ -148,8 +148,10 @@ class RunStore:
         """Record an attempt as open: handed out, not yet reported."""
         self._write_attempt({**record, "state": "open"})
 
-    def commit_attempt(self, record: dict, judgments: Sequence[dict] = ()) -> None:
-        """Complete an attempt with its judgments; the attempt record goes last."""
+    def commit_attempt(self, record: dict, judgments: Sequence[dict] = (), *, problem: str | None = None) -> None:
+        """Complete with judgments and optional full worker report; write the record last."""
+        if problem is not None:
+            record = {**record, "problem": problem}
         for judgment in judgments:
             _check_judgment(judgment)
             self.write_json(self.judgments / f"{judgment['id']}.json", judgment)

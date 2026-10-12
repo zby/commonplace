@@ -154,8 +154,10 @@ def test_attempt_record_input_has_only_the_published_fields(coordinator: Coordin
 
     c = coordinator
     c.through_brief()
+    c.handout("report").problem.write_text("worker check unavailable\n", encoding="utf-8")
     c.complete("report", "report A\n", answers="")
     run = Run(RunStore(c.run_dir))
+    assert run.latest_completed("report")["problem"] == "worker check unavailable\n"
     record = json.loads(run.resolve("r", {"r": Input("attempt", "report")}).data)
     assert set(record) == {"id", "job", "kind", "outputs", "previous_outputs", "model", "effort", "worker_model", "worker_effort"}
     assert record["job"] == "report" and record["kind"] == "model" and record["worker_model"] == "test-model"

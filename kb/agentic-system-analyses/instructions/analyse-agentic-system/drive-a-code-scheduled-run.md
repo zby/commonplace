@@ -92,6 +92,12 @@ than repeatedly advancing or declaring success. `publishable: yes` alone is not
 completion or a retained-filesystem audit. Preserve the last advance output:
 its invocation-specific stops are not reconstructed by the later report.
 
+In the final inspection and operator report, disclose retained `worker-problems`,
+including completed attempts. Name their attempt IDs and what later evidence
+establishes; summarize rather than reproduce long reports. Do not infer recovery
+from later completion or publication. A later passing content check does not
+establish that the earlier worker performed its required check.
+
 ## Resume without duplicate workers
 
 Before advancing a run from an earlier session, call
