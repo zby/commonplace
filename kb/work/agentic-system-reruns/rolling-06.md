@@ -37,7 +37,7 @@ records retain setup evidence.
 | Amazon Science SAGE | `amazon-science-sage-8387fc4221ab` | `https://github.com/amazon-science/SAGE` | `3ea66a91-d4f9-4384-b637-2e29b1d6a689` | Stopped; slot released |
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
 | Archie | `archie-aef788232ea1` | `https://github.com/gchamon/archie` | `39264316-510e-466e-ab26-5fa2a2af5850` | Stopped; slot released |
-| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Published; fresh audit running |
+| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Audit cleared with recorded limits; queued for integration |
 | Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | `a105d59f-75ab-4a0f-89bb-f3852b79f5b2` | Coordinator running; refilled Archie slot |
 
 Run identifiers and frozen boundaries will be recorded from returned workflow
@@ -179,9 +179,31 @@ no failures/open attempts/worker-problems. Code scheduled runtime and subsequent
 reconciliation/report-verification replacement plus second memory-profile round.
 Fresh auditor owns `audits/rolling-06-arigraph.md`; integration pending.
 
+## Session-capacity checkpoint
+
+This orchestrator is nearing its safe retained-context capacity after ten
+system launches, several long workflow returns and three completed audits.
+New dispatch stops for this session only; finish already-launched pipelines,
+audit publications and drain integration. This is not a provider pause, a
+shared-method finding or an operator dispatch hold. The standing authorization
+to resume eligible pending work remains in force for the next orchestrator after
+ownership reconciliation and runtime preflight. Do not duplicate active runs.
+
+## Audit clearance: AriGraph
+
+[Independent audit](./audits/rolling-06-arigraph.md): **integrate with recorded limits**.
+No consequential historical coverage regression established. Code-scheduled
+replacement corrected the recent-episode exclusion claim in runtime and synthesis;
+profile replacement separates wired text logging from afforded JSON serialization.
+Incomplete Hypergraph inventory and grouped-profile limits are public. All 13
+publication hashes match; sampled validation calls have actual results, including
+corrected boundary quotation ambiguity. No target execution or exhaustive audit.
+
 ## Integration queue
 
-Empty. AI Research OS Workshop integrated with the prepared commands,
+AriGraph: audit-cleared with recorded limits, queued for immediate integration.
+
+Earlier integrations: AI Research OS Workshop integrated with the prepared commands,
 `--model openai/gpt-6.1-sol`, exit 0, merge
 `07e73341ad64b4faab06290e9b437ea0c10518b4` verified on `main`.
 Publication commit `753f35389`; origin clean before and after integration;
