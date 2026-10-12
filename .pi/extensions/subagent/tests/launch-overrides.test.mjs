@@ -82,11 +82,16 @@ const flag = (index, name) => {
 test("launch overrides and inheritance", async t => {
   try {
     await t.test("schema exposes both overrides in every mode", () => {
-      for (const schema of [tool.parameters, tool.parameters.properties.tasks.items, tool.parameters.properties.chain.items]) {
+      for (const schema of [tool.parameters, tool.parameters.properties.tasks.items]) {
         assert.ok(schema.properties.model);
         assert.equal(schema.properties.model.minLength, 1);
         assert.deepEqual(schema.properties.thinkingLevel.enum, ["off", "minimal", "low", "medium", "high", "xhigh", "max"]);
       }
+    });
+    await t.test("chain is absent and rejected rather than silently ignored", async () => {
+      assert.equal(tool.parameters.properties.chain, undefined);
+      await assert.rejects(launch({ agent: "inherited", task: "test", chain: [] }), /Chain mode/);
+      assert.equal(launches.length, 0);
     });
     await t.test("omitted fields preserve coordinator inheritance", async () => {
       const result = await launch({ agent: "inherited", task: "test" });
@@ -126,6 +131,36 @@ test("launch overrides and inheritance", async t => {
       assert.equal(launches[0].args.at(-1), `Task: ${task}`);
       assert.equal(launches[0].options.cwd, root);
     });
+    await t.test("destination definitions, tools and trust are not borrowed from the parent", async () => {
+      const destination = path.join(root, "destination");
+      const definitions = path.join(destination, ".pi", "agents");
+      fs.mkdirSync(definitions, { recursive: true });
+      fs.writeFileSync(path.join(definitions, "inherited.md"), "---\nname: inherited\ndescription: Destination\ntools: [read]\n---\nDESTINATION PROMPT\n");
+      await assert.rejects(launch({ agent: "inherited", task: "test", cwd: destination }), /Destination project definitions require approval/);
+      assert.equal(launches.length, 0);
+      const confirmations = [];
+      await tool.execute("test", { agentScope: "project", agent: "inherited", task: "test", cwd: destination }, undefined, undefined,
+        { ...ctx, hasUI: true, isProjectTrusted: () => true, ui: { confirm: async (...args) => { confirmations.push(args); return true; } } });
+      assert.match(confirmations[0][1], /destination/);
+      assert.equal(flag(0, "--tools"), "read");
+      assert.match(launches[0].systemPrompt, /DESTINATION PROMPT/);
+      await launch({ confirmProjectAgents: false, tasks: [
+        { agent: "inherited", task: "parent" }, { agent: "inherited", task: "child", cwd: destination },
+      ] });
+      const child = launches.find(l => l.options.cwd === destination);
+      assert.match(child.systemPrompt, /DESTINATION PROMPT/);
+      assert.equal(launches.find(l => l.options.cwd === root).systemPrompt, undefined);
+    });
+    await t.test("invalid tool lists fail closed without breaking unrelated definitions", async () => {
+      const file = path.join(root, ".pi", "agents", "bad.md");
+      for (const tools of ["[]", "''", "null", "42", "{read: true}", "[read, 42]", "'read,,bash'"]) {
+        fs.writeFileSync(file, `---\nname: bad\ndescription: Invalid\ntools: ${tools}\n---\n`);
+        await assert.rejects(launch({ agent: "bad", task: "test" }), /tools must be/);
+        assert.equal(launches.length, 0);
+        await launch({ agent: "inherited", task: "still valid" });
+      }
+      fs.unlinkSync(file);
+    });
     await t.test("pinned model preserves original thinking default", async () => {
       await launch({ agent: "pinned", task: "test" });
       assert.equal(flag(0, "--model"), "pinned-model");
@@ -147,7 +182,7 @@ test("launch overrides and inheritance", async t => {
       await launch({ agent: "pinned", task: "test", model: "chosen" });
       assert.equal(flag(0, "--thinking"), "medium");
     });
-    for (const mode of ["tasks", "chain"]) {
+    for (const mode of ["tasks"]) {
       await t.test(`${mode}: item overrides are independent and beat call-wide values`, async () => {
         await launch({ model: "call-model", thinkingLevel: "low", [mode]: [
           { agent: "pinned", task: "one", model: "item-model" },

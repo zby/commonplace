@@ -71,7 +71,7 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
       const handles = [];
       for (let i = 0; i < 4; i++) handles.push(handle(await start({ model: "chosen", thinkingLevel: "off", cwd: root })));
       await spawned(4);
-      await assert.rejects(start(), /Four asynchronous/);
+      await assert.rejects(start(), /Four jobs/);
       for (const launch of launches) {
         assert.ok(launch.args.includes("--no-session"));
         assert.equal(launch.args[launch.args.indexOf("--model") + 1], "chosen");
@@ -234,6 +234,40 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
       await job.done;
       assert.equal(job.state, "failed");
       await registry.shutdown();
+    });
+    await t.test("blocking calls share capacity with async jobs and wait without oversubscription", async () => {
+      const handles = [];
+      for (let i = 0; i < 4; i++) handles.push(handle(await start()));
+      await spawned(4);
+      const blocking = call({ agent: "worker", task: "blocking", agentScope: "project" });
+      await new Promise(resolve => setTimeout(resolve, 20));
+      assert.equal(launches.length, 4);
+      launches[0].proc.finish();
+      await spawned(5);
+      await assert.rejects(start(), /Four jobs/);
+      launches[4].proc.finish();
+      assert.equal((await blocking).isError, undefined);
+      assert.equal((await call({ action: "status" })).details.jobs.length, 4, "blocking handle auto-released");
+      await reset();
+    });
+    await t.test("interrupting a blocking call cancels its child and releases ownership", async () => {
+      const controller = new AbortController();
+      const pending = call({ agent: "worker", task: "blocking", agentScope: "project" }, controller.signal);
+      await spawned(1);
+      controller.abort();
+      assert.equal((await pending).isError, true);
+      assert.deepEqual(launches[0].proc.signals, ["SIGTERM"]);
+      assert.deepEqual((await call({ action: "status" })).details.jobs, []);
+      await reset();
+    });
+    await t.test("shutdown owns blocking children and prevents queued spawns", async () => {
+      const pending = call({ agentScope: "project", tasks: Array.from({ length: 8 }, () => ({ agent: "worker", task: "work" })) });
+      await spawned(4);
+      await events.session_shutdown();
+      assert.equal((await pending).isError, true);
+      assert.equal(launches.length, 4);
+      assert.ok(launches.every(l => l.proc.signals.includes("SIGTERM")));
+      await reset();
     });
     await t.test("cancel escalates even after TERM was delivered", async () => {
       const h = handle(await start()); await spawned(1);

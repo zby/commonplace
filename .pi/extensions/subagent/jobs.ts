@@ -21,7 +21,7 @@ export class Jobs<T> {
 	start(run: (signal: AbortSignal) => Promise<T>, failed: (result: T) => boolean, label = "subagent"): Job<T> {
 		if (this.closed) throw new Error("Subagent session is shutting down");
 		if (this.jobs.size >= 128) throw new Error("128 retained handles; forget completed jobs before starting more");
-		if ([...this.jobs.values()].filter(j => !j.order).length >= 4) throw new Error("Four asynchronous jobs are already active");
+		if ([...this.jobs.values()].filter(j => !j.order).length >= 4) throw new Error("Four jobs are already active");
 		const job: Job<T> = { handle: randomUUID(), label, state: "running", controller: new AbortController(), done: Promise.resolve() };
 		this.jobs.set(job.handle, job);
 		job.done = Promise.resolve().then(() => run(job.controller.signal)).then(result => {
@@ -35,6 +35,31 @@ export class Jobs<T> {
 			for (const notify of this.listeners) notify();
 		});
 		return job;
+	}
+
+	/** Blocking calls share ownership/capacity; interruption cancels their child. */
+	async execute(run: (signal: AbortSignal) => Promise<T>, failed: (result: T) => boolean,
+		label: string, signal?: AbortSignal): Promise<T> {
+		while (true) {
+			if (this.closed) throw new Error("Subagent session is shutting down");
+			if (signal?.aborted) throw new Error("Subagent call aborted");
+			const active = this.select().filter(job => !job.order);
+			if (active.length < 4) break;
+			await this.wait(active, signal);
+		}
+		const job = this.start(run, failed, label);
+		const abort = () => this.cancel([job]);
+		signal?.addEventListener("abort", abort, { once: true });
+		if (signal?.aborted) abort();
+		try {
+			await job.done;
+			if (job.error) throw new Error(job.error);
+			if (job.result === undefined) throw new Error("Subagent returned no result");
+			return job.result;
+		} finally {
+			signal?.removeEventListener("abort", abort);
+			this.forget([job]);
+		}
 	}
 
 	select(handles?: string[]): Job<T>[] {

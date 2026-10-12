@@ -22,8 +22,11 @@ exposed. Ordinary worker selection excludes that tool; coordinator selection
 includes it. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
 
 `extensions/subagent/{index.ts,agents.ts}` were copied from the subagent
-example shipped with `@earendil-works/pi-coding-agent` 1.0.0. `index.ts` now
-adds call-wide and per-task model and thinking-level overrides. The original
+example shipped with `@earendil-works/pi-coding-agent` 1.0.0. The adapter now uses
+one session-local job owner for blocking and asynchronous launches, with compact
+rendering. `index.ts` owns tool dispatch, `agents.ts` discovery, `jobs.ts` job
+ownership, `launcher.ts` Pi arguments and JSON collection, and `process.ts`
+process cancellation. The original
 files came from:
 
 ```text
@@ -53,7 +56,7 @@ worker. This tests the intended parent → coordinator → worker path, not a
 maximum supported depth. Do not use agent CLIs through Bash as a substitute.
 
 The tool accepts optional `model` and `thinkingLevel` at the top level in all
-modes and on each item in `tasks` or `chain`. Item values override top-level
+modes and on each item in `tasks`. Item values override top-level
 values independently. Model precedence is item, top-level, agent definition,
 then coordinator. Thinking precedence is item, top-level, then coordinator
 when the model is inherited or explicitly overridden. With no model override,
@@ -81,18 +84,32 @@ Example single launch:
 After editing the extension, use `/reload` before calling the new parameters.
 This does not change the schema already exposed to an in-flight invocation.
 
-Run the extension's mocked-process tests against an installed Pi package:
+Run the extension tests against an installed Pi package:
 
 ```bash
 PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
   node --test .pi/extensions/subagent/tests/*.test.mjs
 ```
 
-These tests load the extension and inspect child arguments without launching
-agents or making model calls.
+Mocked tests cover discovery, trust, argument construction, shared capacity and
+lifecycle. Real-process tests launch harmless Node children to check output,
+shutdown, escalation and (on Linux) descendant termination. No test launches Pi
+agents or makes model calls. Real model/resource inheritance remains untested.
 
-Select the worker with `agentScope: "project"`; the example defaults to user
-agents. Set `cwd` to this worktree's absolute root when dispatching jobs.
+Select the worker with `agentScope: "project"`; the default remains user agents.
+Definitions are discovered afresh from each child's effective `cwd`, not the
+parent checkout. Set it to the prepared worktree's absolute root. For parallel
+calls each item can name its own worktree. Results identify the child directory.
+
+Parent project trust does not approve a different destination's definitions.
+Interactive launches ask for confirmation; non-interactive cross-project
+launches require an explicit `confirmProjectAgents: false` authorization in the
+call after the destination has been approved. Do not add it merely to bypass a
+trust failure. The option retains its explicit opt-out meaning for all modes.
+Malformed explicit `tools` values (including empty lists) reject the selected
+agent, never fall back to Pi's defaults. Omitting `tools` still selects defaults.
+Names are syntax-checked, not checked against the destination's loaded tool
+registry; extension-defined tools can differ between worktrees.
 
 Before starting or resuming a workflow, use the exposed `subagent` tool for a
 single diagnostic with this task:
@@ -147,6 +164,8 @@ that distinction. Synchronous parallel mode remains a wait-for-all operation.
 Other handle-only calls accept `action` and `handles`, not launch fields:
 
 - `status`: list states and agent/worktree labels; omit handles to list all.
+  Blocking calls also appear while running; their handles are released when
+  the blocking call returns.
 - `cancel`: request cancellation; a `cancelling` job still occupies its slot.
   Use `wait` to observe termination before reassigning its destination.
 - `forget`: release terminal handles after recording their results. Active jobs
@@ -157,7 +176,7 @@ identify the handle; they do not replace reading its result. Full result details
 retain the child messages, while model-facing summaries may be truncated.
 
 Handles and results are session-local, not a durable job service. Orderly
-shutdown, session replacement and reload cancel active jobs and wait for process
+shutdown, session replacement and reload cancel active jobs in all modes and wait for process
 closure; they invalidate handles. POSIX root launches use process groups so
 cancellation also targets descendants that remain in that group, escalating
 from TERM to KILL after five seconds. Windows cancellation targets the direct
@@ -168,10 +187,16 @@ process exit. Do not end a print-mode parent with jobs still pending.
 
 ## Limits
 
-The example permits at most eight tasks per parallel call and runs at most four
-concurrently. Asynchronous mode separately permits four active jobs per session;
-do not mix modes to evade a workflow's capacity limit. It has no explicit nesting
-limit or continuing-worker interface: each start creates a fresh child.
+Parallel calls permit at most eight tasks. All modes share one four-active-job
+limit per session. Blocking calls wait for capacity and release their handles
+when they return; async `start` rejects when full. Interrupting a blocking call
+cancels its children, unlike interrupting async `wait`. Shutdown prevents queued
+blocking tasks from spawning. Nested coordinators have independent pools; four
+outer system pipelines can still launch their own analytical workers.
+
+There is no chain mode or automatic answer forwarding. Use explicit workflow
+handoffs. There is no explicit nesting limit or continuing-worker interface:
+each launch creates a fresh child.
 The ordinary worker does not have `subagent`; the coordinator does. Neither
 selection is a filesystem sandbox: the no-launch and write-scope rules are
 instructions, not OS enforcement. Nested results remain embedded in the

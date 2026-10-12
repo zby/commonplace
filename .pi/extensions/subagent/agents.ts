@@ -12,6 +12,7 @@ export interface AgentConfig {
 	name: string;
 	description: string;
 	tools?: string[];
+	configurationError?: string;
 	model?: string;
 	systemPrompt: string;
 	source: "user" | "project";
@@ -46,17 +47,15 @@ type AgentFrontmatter = {
  *     tools: read, bash        # string
  *     tools: [read, bash]      # array
  *
- * so accept either. Anything else (a number, a map, a nested list) yields no
- * tools rather than throwing: this runs inside agent discovery, where a single
- * bad file must not take down every other agent in the same directory.
+ * Omission keeps Pi's default selection. An explicit malformed or empty value
+ * is an error, never a fallback to those defaults.
  */
 function parseToolList(value: unknown): string[] | undefined {
+	if (value === undefined) return undefined;
 	const raw = Array.isArray(value) ? value : typeof value === "string" ? value.split(",") : [];
-	const tools = raw
-		.filter((t): t is string => typeof t === "string")
-		.map((t) => t.trim())
-		.filter(Boolean);
-	return tools.length > 0 ? tools : undefined;
+	if (!raw.length || raw.some(t => typeof t !== "string" || !/^[\w.-]+$/.test(t.trim())))
+		throw new Error("tools must be a nonempty comma-separated string or list of tool names");
+	return [...new Set(raw.map(t => (t as string).trim()))];
 }
 
 function loadAgentsFromDir(dir: string, source: "user" | "project"): AgentConfig[] {
@@ -91,10 +90,15 @@ function loadAgentsFromDir(dir: string, source: "user" | "project"): AgentConfig
 			continue;
 		}
 
+		let tools: string[] | undefined;
+		let configurationError: string | undefined;
+		try { tools = parseToolList(frontmatter.tools); }
+		catch (error) { configurationError = `${filePath}: ${error}`; }
 		agents.push({
 			name: frontmatter.name,
 			description: frontmatter.description,
-			tools: parseToolList(frontmatter.tools),
+			tools,
+			configurationError,
 			model: typeof frontmatter.model === "string" ? frontmatter.model : undefined,
 			systemPrompt: body,
 			source,
@@ -114,7 +118,7 @@ function isDirectory(p: string): boolean {
 }
 
 function findNearestProjectAgentsDir(cwd: string): string | null {
-	let currentDir = cwd;
+	let currentDir = path.resolve(cwd);
 	while (true) {
 		const candidate = path.join(currentDir, CONFIG_DIR_NAME, "agents");
 		if (isDirectory(candidate)) return candidate;
