@@ -51,6 +51,49 @@ The helper launches no models and does not alter a live analysis run.
 isolated single-packet launcher and its predeclared limits; see the
 [execution preflight](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/execution-preflight.md).
 
+## Agentic analysis rerun statistics
+
+`python3 scripts/agentic_system_rerun_stats.py` is a fast, stdlib-only,
+report-only snapshot of `kb/agentic-system-analyses/retained/`. It reads only
+named Markdown report members, plus `report-check.md` if an Artifact check
+report has been exported under that name. It does not run validation or read
+source snapshots, traces, logs, runtime stores, manifests, Git or the workshop
+inventory. There is no inventory denominator; no reports is not success.
+
+```bash
+# Default: all currently retained sets, including older run dates.
+python3 scripts/agentic_system_rerun_stats.py
+# Restrict to this rerun cohort by report run-id date, not file mtime.
+python3 scripts/agentic_system_rerun_stats.py --since 2026-10-12 --json
+# Supplied roots replace the default; repeat --root to include both.
+python3 scripts/agentic_system_rerun_stats.py \
+  --root kb/agentic-system-analyses/retained \
+  --root /path/to/inflight-run/artifact --run-id AAS-2026-10-12-example-token-01
+```
+
+A root is a report directory or its immediate parent. Discovery does not
+recurse into run stores or historical attempt directories. Supply in-flight
+`artifact/` directories explicitly. Archives are not included by default.
+Each directory is one report set; overlapping roots are deduplicated, but
+separate copies of the same run stay separate and display their run IDs.
+`--run-id` is repeatable. `--since` excludes unidentified sets; excluded counts
+are shown. Without filters, older retained runs remain visible, not evidence
+that the current workshop rerun has finished.
+
+Recorded failures are verification **Blockers** entries or exported Artifact
+check findings, never prose mentions of failure. Verification **Limits** are
+warnings, not failures. Blocked dispositions, incomplete sets, accepted sets
+with limits, clean accepted sets and out-of-scope stops are separate statuses.
+Missing/malformed fields or findings, inconsistent identities, missing members,
+and absent recorded passing checks prevent clean acceptance. Failure status
+has priority; JSON also exposes overlapping blocked/incomplete/limit counts
+and the findings behind them. Clean acceptance means the reports record a
+complete overview, all named members with passing snapshot-check rows, and
+blocker-free, limit-free verifications. This does not independently establish
+publication, runner success, or semantic correctness. In-flight attempts that
+never produced reports cannot be detected. Exit status is 2 for root scan
+errors, otherwise 0 even when report findings exist. See `--help` for options.
+
 ## X likes reading inbox
 
 Run from this checkout:
