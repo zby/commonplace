@@ -59,5 +59,31 @@ feature list. Record recurring extraction/search needs for the later workshop.
 
 ## Results
 
-Pending. Record exact run/worktree identities and integration outcomes here as
-the sequence progresses. Keep all run worktrees and session traces for the audit.
+The operator brought the audit forward after five follow-up analyses on
+2026-10-12: publish/integrate Instinctual Memory, commit, then audit now. The
+remaining five selected targets are on hold, not completed or replaced. One Sol
+audit invocation covers all five completed follow-ups together. GBrain remains
+the separately checked pilot, not a sixth batch run.
+
+All five workflow reports were read by the parent before integration. Frozen
+set validation passed without failures or warnings for each; integration
+independently checked publication evidence before committing and merging. These
+checks are not a substitute for the commissioned source-and-trace audit.
+
+Worktrees below are under `/home/zby/llm/commonplace/.commonplace/worktrees/`.
+Their commands are in `.venv/bin`; each run is under its worktree's
+`kb/agentic-system-analyses/state/<run-id>/`. Keep all worktrees and traces.
+
+| System | Run ID | Worktree name | Integration result commit |
+|---|---|---|---|
+| Graphiti | `AAS-2026-10-12-graphiti-1d535ca565a4-01` | `graphiti-workflow-1d535ca565a4` | `69199c6ec09fa32b13f1bbc61d844f768cc4d7d4` |
+| Napkin | `AAS-2026-10-12-napkin-2b85bef38252-01` | `napkin-workflow-2b85bef38252` | `83cb44a89bfb56f17efb1a141ec77eaf2f859a2d` |
+| Letta Code | `AAS-2026-10-12-letta-code-be76afeab9b7-01` | `letta-code-workflow-be76afeab9b7` | `bb155f68660d0c7294f410e3aea4816ae3c6e2b1` |
+| Dynamic Cheatsheet | `AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01` | `dynamic-cheatsheet-workflow-ca0a0b29d273` | `86006bf574c274b715667386ae2e3a1793538db1` |
+| Instinctual Memory | `AAS-2026-10-12-instinctual-memory-af48437aa60c-01` | `instinctual-memory-workflow-af48437aa60c` | `74beaf33ced506f24934e99d9eb9a5cd1c3c45c5` |
+
+The GBrain integration result was `cbf65a4a38e476d59b3f0ffefb668c2faaabc094`.
+Batch coordinator/worker traces are nested in this parent session:
+`/home/zby/.pi/agent/sessions/--home-zby-llm-commonplace--/2026-10-11T15-31-10-091Z_01a12b96-de8a-711e-8a12-57ef261a7126.jsonl`.
+Locate each result by its run ID and nested tool results, not by assumed fixed
+line numbers. Trace coverage and stable locators belong in the audit report.
