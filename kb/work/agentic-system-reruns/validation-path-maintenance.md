@@ -9,6 +9,13 @@ no method correction is necessary. Existing instructions already require the
 supplied absolute paths and literal command. This decision does not certify
 old attempts or release individual recovery holds.
 
+Subsequent [rolling execution 04](./rolling-04.md) recorded recurrence of worker
+path confusion despite correct supplied commands. The operator then stopped new
+dispatch and requested substantive checks before a simpler worker verification
+command is added. This later stop controls scheduling; the diagnosis below does
+not authorize restarting or establish that the current interface prevents
+transcription errors.
+
 The operator authorized this investigation in the [workshop plan](./README.md).
 Origin method inspected: `0603655112dd7942004648ef732e930841d99910`.
 Runtime: `openai/gpt-6.1-sol`, medium; worker-launch diagnostic succeeded,

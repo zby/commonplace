@@ -120,4 +120,34 @@ workers have disjoint report ownership:
 
 These are retrospective checks, not replacement analysis pipelines. Agent Skills'
 changing worktree is excluded pending owner coordination. No simpler validator
-command is implemented in this pass. Reports and their limitations are pending.
+command is implemented in this pass.
+
+The four reports returned and passed report validation:
+
+- [AgeMem](./audits/path-confusion-agemem.md): substantively reasonable with
+  published limits. Runtime and epistemic candidates match publication; the
+  first profile's provenance completeness overclaim was corrected by later
+  semantic verification. All three affected workers restored the supplied-path
+  validation and passed. Initial path deviations remain procedural failures.
+- [Agent-R](./audits/path-confusion-agent-r.md): substantively reasonable with
+  published limits. Boundary coverage and export-quote repair are supported;
+  final export/training qualifications match source. Correct-path checking
+  exposed and repaired the ambiguity. Initial path deviation remains recorded.
+- [Agent Skills](./audits/path-confusion-agent-skills.md): hold. Directly
+  retained mechanisms are locally reasonable, but a conflict rule strengthens
+  a preference into a prohibition, inherited route claims lack sufficient
+  retained bodies for independent assessment, and the altered-path call never
+  performed content validation. No owner reservation or recovery hold is lifted.
+- [Current execution](./audits/rolling-04-execution-check.md): path confusion
+  recurred in AgentFly runtime and Harness Engineering memory, epistemic and
+  workflow. Each restored the supplied path and passed; all 13 dispatched
+  workers have paired content passes. Four quotation failures were repaired.
+  Provider termination still prevents completion. Harness Engineering runtime
+  also briefly wrote identity outside its supplied workspace, then removed it;
+  its failed verifier retained an operational-authority inventory omission.
+
+A fifth bounded retrospective checks the substance of those four newly affected
+drafts, not just their commands. Handle `de49617a-2484-423f-953e-b5735b91948e`
+owns `audits/path-confusion-rolling-04-content.md`. It may read the completed
+runs and frozen sources but cannot recover, change or finish them. Its result
+is pending. All four original system pipelines remain stopped.
