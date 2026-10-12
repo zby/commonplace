@@ -3,7 +3,7 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Progress: 6 complete with the new engine; 198 pending; 2 blocked before preparation.** Checked rows have
+**Progress: 6 complete with the new engine; 198 pending; 2 blocked (one stopped run, one preparation failure).** Checked rows have
 published current-engine analysis sets; their overview links list all 12 reports.
 All six sets are accepted with recorded limits, not limit-free results.
 Historical records are inclusion and identity references, not fresh-run evidence.
@@ -14,8 +14,8 @@ append the overview, audit link and integration commit. Record blockers explicit
 ## Rerun checklist
 
 - [ ] **A-mem** (`a-mem`) — pending; [legacy review](../../agent-memory-systems/reviews/a-mem.md).
-- [ ] **Academic Research Skills** (`academic-research-skills`) — blocked before preparation in [batch 01](./batch-01.md): nested worker lookup failed; no run or source boundary allocated; unblock requires a successful project-scoped worker diagnostic from the per-system coordinator; [authored account](../../agentic-systems/reviews/academic-research-skills.md).
-- [ ] **ACE** (`ace`) — blocked before preparation in [batch 01](./batch-01.md): nested worker lookup failed; no run or source boundary allocated; unblock requires a successful project-scoped worker diagnostic from the per-system coordinator; [legacy review](../../agent-memory-systems/reviews/ace.md).
+- [ ] **Academic Research Skills** (`academic-research-skills`) — stopped in [batch 02](./batch-02.md); run `AAS-2026-10-12-academic-research-skills-af879d1883bd-01`; boundary `d1e51716e53fc371727ea6164dd709fc8ea28c97`; runtime worker reported audit-derived findings exposed in upstream source; no publication; unblock requires an operator recovery decision on the source-exposure rule; nested lookup diagnostic now succeeds; [authored account](../../agentic-systems/reviews/academic-research-skills.md).
+- [ ] **ACE** (`ace`) — preparation failed in [batch 02](./batch-02.md): coordinator supplied uppercase `ACE`, rejected by the label validator; no run or source boundary allocated; unblock requires authorization to retry with lowercase `ace`; nested lookup diagnostic now succeeds; [legacy review](../../agent-memory-systems/reviews/ace.md).
 - [ ] **AgeMem** (`agemem`) — pending; [lightweight review](../../agent-memory-systems/lightweight/agemem.md).
 - [ ] **Agent-R** (`agent-r`) — pending; [legacy review](../../agent-memory-systems/reviews/agent-r.md).
 - [ ] **Agent-S** (`agent-s`) — pending; [legacy review](../../agent-memory-systems/reviews/Agent-S.md).

@@ -1,0 +1,123 @@
+{
+  "artifact": "/home/zby/llm/commonplace/.commonplace/worktrees/academic-research-skills-af879d1883bd/kb/agentic-system-analyses/state/AAS-2026-10-12-academic-research-skills-af879d1883bd-01/artifact",
+  "attempts": [
+    {
+      "effort": null,
+      "id": "000001-opening",
+      "job": "opening",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000002-acquire",
+      "job": "acquire",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000003-boundary",
+      "job": "boundary",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": "medium",
+      "worker_model": "openai/gpt-6.1-sol"
+    },
+    {
+      "effort": null,
+      "id": "000004-check-boundary",
+      "job": "check-boundary",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000005-runtime",
+      "job": "runtime",
+      "kind": "model",
+      "model": null,
+      "problem": "# Problem\n\nStopped under `follow-worker-rules.md` \u00a7 Avoid prior-analysis exposure. A source search of `shared/cross_model_verification.md` exposed audit-derived bakeoff findings in line 67, including measured recall and latency comparisons attributed to `audits/bakeoff-gpt-5-6-sol-codex-2026-08-19.md`. The audit file itself was not opened, but its findings were delivered in the tool result. The worker rule requires stopping when any tool exposes audit findings and states that this run cannot use the worker's work.\n\nNo runtime report was written. No target code, tests, examples, providers or services were executed; no source or coordinator-owned state was modified. Report validation was not run because no report was produced. Recovery requires coordinator action; this worker has no authority to resume after the exposure.\n",
+      "reason": "the worker reported a problem; the worker wrote: # Problem\n\nStopped under `follow-worker-rules.md` \u00a7 Avoid prior-analysis exposure. A source search of `shared/cross_model_verification.md` exposed audit-derived bakeoff findings in line 67, including measured recall and latency comparisons attributed to `audits/bakeoff-gpt-5-6-sol-codex-2026-08-19.md`. The audit file itself was not opened, but its findings were delivered in the tool result. The worker rule requires stopping when any tool exposes audit findings and states that this run cannot use the worker's work.\n\nNo runtime report was written. No target code, tests, examples, providers or services were executed; no source or coordinator-owned state was modified. Report validation was not run because no report was produced. Recovery requires coordinator action; this worker has no authority to resume after the exposure.",
+      "state": "failed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    }
+  ],
+  "canonical-peer-drift": [],
+  "effects": {
+    "acquire": {
+      "journal-state": "completed",
+      "verified": false
+    }
+  },
+  "exhausted-jobs": [],
+  "failed-attempts": [
+    {
+      "attempt": "000005-runtime",
+      "job": "runtime",
+      "reason": "the worker reported a problem; the worker wrote: # Problem\n\nStopped under `follow-worker-rules.md` \u00a7 Avoid prior-analysis exposure. A source search of `shared/cross_model_verification.md` exposed audit-derived bakeoff findings in line 67, including measured recall and latency comparisons attributed to `audits/bakeoff-gpt-5-6-sol-codex-2026-08-19.md`. The audit file itself was not opened, but its findings were delivered in the tool result. The worker rule requires stopping when any tool exposes audit findings and states that this run cannot use the worker's work.\n\nNo runtime report was written. No target code, tests, examples, providers or services were executed; no source or coordinator-owned state was modified. Report validation was not run because no report was produced. Recovery requires coordinator action; this worker has no authority to resume after the exposure.",
+      "uncertain": false
+    }
+  ],
+  "format": "commonplace-engine-run-inspection-v1",
+  "invocation-stops": [],
+  "limitations": [
+    "Publishable means engine coverage (required roles, holding acceptances, covered relations), not publication or content validation.",
+    "Completed means the final job completed against unchanged inputs, not a fresh filesystem audit.",
+    "Completion does not establish that every worker obligation was fulfilled or every reported problem resolved.",
+    "Missing historical problem text means not recorded, not proof that no problem occurred.",
+    "Holding handed judgments can refer to historical peers; canonical-peer-drift reports that separately.",
+    "Reporting does not change logical run state; acquiring its lock may create state/lock.",
+    "Journal state is unverified; only the effect handler recognizes completion.",
+    "Invocation scheduling stops require the supplied RunStatus; they are not reconstructed."
+  ],
+  "members": {
+    "boundary": "27c3aa3794857e60297d3c52c26e2b828b70db908bceb8aa23fa944e6cbff648"
+  },
+  "open-attempts": [],
+  "parameters": {
+    "command-path": "/home/zby/llm/commonplace/.commonplace/worktrees/academic-research-skills-af879d1883bd/.venv/bin",
+    "source": "https://github.com/Imbad0202/academic-research-skills",
+    "source-identity": "https://github.com/Imbad0202/academic-research-skills",
+    "system": "Academic Research Skills",
+    "worker-profile": "pi-sol"
+  },
+  "publishable": false,
+  "refusals": [],
+  "run-id": "AAS-2026-10-12-academic-research-skills-af879d1883bd-01",
+  "stale-acceptances": [],
+  "state": "stopped",
+  "waiting-on": {},
+  "worker-problems": [
+    {
+      "id": "000005-runtime",
+      "job": "runtime",
+      "problem": "# Problem\n\nStopped under `follow-worker-rules.md` \u00a7 Avoid prior-analysis exposure. A source search of `shared/cross_model_verification.md` exposed audit-derived bakeoff findings in line 67, including measured recall and latency comparisons attributed to `audits/bakeoff-gpt-5-6-sol-codex-2026-08-19.md`. The audit file itself was not opened, but its findings were delivered in the tool result. The worker rule requires stopping when any tool exposes audit findings and states that this run cannot use the worker's work.\n\nNo runtime report was written. No target code, tests, examples, providers or services were executed; no source or coordinator-owned state was modified. Report validation was not run because no report was produced. Recovery requires coordinator action; this worker has no authority to resume after the exposure.\n",
+      "state": "failed"
+    }
+  ]
+}
