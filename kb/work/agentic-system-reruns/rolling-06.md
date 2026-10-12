@@ -37,8 +37,8 @@ records retain setup evidence.
 | Amazon Science SAGE | `amazon-science-sage-8387fc4221ab` | `https://github.com/amazon-science/SAGE` | `3ea66a91-d4f9-4384-b637-2e29b1d6a689` | Stopped; slot released |
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
 | Archie | `archie-aef788232ea1` | `https://github.com/gchamon/archie` | `39264316-510e-466e-ab26-5fa2a2af5850` | Stopped; slot released |
-| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Audit cleared with recorded limits; queued for integration |
-| Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | `a105d59f-75ab-4a0f-89bb-f3852b79f5b2` | Coordinator running; refilled Archie slot |
+| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Audited and integrated with recorded limits |
+| Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | analysis `a105d59f-75ab-4a0f-89bb-f3852b79f5b2`; audit `e2e4956b-6ff3-4629-8483-a817a56fd383` | Audit cleared with recorded limits; queued for integration |
 
 Run identifiers and frozen boundaries will be recorded from returned workflow
 evidence. Handles are session-local; do not duplicate these assignments after
@@ -199,9 +199,34 @@ Incomplete Hypergraph inventory and grouped-profile limits are public. All 13
 publication hashes match; sampled validation calls have actual results, including
 corrected boundary quotation ambiguity. No target execution or exhaustive audit.
 
+## Publication: Ars Contexta
+
+Run `AAS-2026-10-12-arscontexta-f9e5f2f34166-01` froze
+`2acfd5cc4473c4d06c46be63df748e77e00e2746`, published in the worktree at
+`kb/agentic-system-analyses/retained/arscontexta/`. Last advance supplied
+completed `000047-synthesis-verification`, exit 0, `publishable: yes`, empty
+stderr. [Inspection](./rolling-06-arscontexta-inspect.json) reports completed
+publication, no failed/open attempts or worker-problems. Several replacement
+rounds were code-scheduled. Auditor owns `audits/rolling-06-arscontexta.md`.
+
+## Audit clearance: Ars Contexta
+
+[Independent audit](./audits/rolling-06-arscontexta.md): **integrate with recorded limits**.
+Historical coverage retained; public qualifications limit transcript continuity,
+processing completion, validation enforcement, inventory and improvement claims.
+Code-scheduled replacements corrected originating records. Worker path typo was
+followed by an executed correct-path validation pass; no new producer defect.
+All 13 publication hashes match. Bounded audit, no installed-vault execution.
+
 ## Integration queue
 
-AriGraph: audit-cleared with recorded limits, queued for immediate integration.
+Ars Contexta: audit-cleared and queued for serial integration.
+
+Earlier integration: AriGraph integrated with prepared commands and
+`--model openai/gpt-6.1-sol`, exit 0; merge
+`25cf8549f9b2a107d0334acca0ba0a907e442685` verified on `main`.
+Publication commit `a1b2863d9`; origin clean before/after; origin validation
+passed (one directory artifact, zero diagnostics).
 
 Earlier integrations: AI Research OS Workshop integrated with the prepared commands,
 `--model openai/gpt-6.1-sol`, exit 0, merge
@@ -215,6 +240,6 @@ Integration independently checked publication evidence and returned merge commit
 `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
 Origin was clean before and after integration. Publication commit `5eadb2197`.
 Origin directory validation passed (one directory artifact, zero diagnostics).
-Corpus progress: 13 complete, 183 pending, ten held; four pipelines active.
+Corpus progress: 14 complete, 182 pending, ten held; two pipelines active, draining.
 Comparison outputs remain stale and prior landscape synthesis historical;
 no regeneration, cleanup or push commissioned.
