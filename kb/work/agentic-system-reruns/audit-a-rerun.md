@@ -1,6 +1,6 @@
 # Audit a rerun before integration
 
-Help the batch coordinator decide whether a newly published analysis is ready
+Help the orchestrator decide whether a newly published analysis is ready
 to integrate. Catch consequential omissions, contradictions and hidden
 operational problems cheaply. Compare with legacy accounts to detect coverage
 regressions, not to preserve every old detail or treat the old account as truth.
@@ -20,8 +20,8 @@ accuracy may explain apparent losses. This access belongs only to the audit
 and must not feed legacy findings back into the source-first analysis.
 
 Write only your audit report. Do not edit analysis content, sources, engine
-state or the checklist; advance runs; integrate; commit; or delegate. The batch
-coordinator owns recovery and integration.
+state or the checklist; advance runs; integrate; commit; or delegate. The
+orchestrator owns recovery and integration.
 
 ## Judgment sought
 

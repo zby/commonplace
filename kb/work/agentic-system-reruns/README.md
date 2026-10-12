@@ -6,9 +6,10 @@ The operator commissioned this workshop on 2026-10-12 to rerun all systems
 analysed under the previous analysis system. Produce fresh, source-grounded
 coverage through the current
 [`analyse-agentic-system` workflow](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md),
-not conversions of old reviews. The operator subsequently selected batches of
-four parallel system pipelines, each with a quick independent audit before
-integration. This document is the handoff; revising it does not launch runs.
+not conversions of old reviews. Use a rolling pool of four parallel system
+pipelines, each with a quick independent audit before integration. Refill each
+slot when its audit is resolved, without waiting for the other pipelines.
+This document is the handoff; revising it does not launch runs.
 
 Success means published, audited and integrated analyses for the checklist,
 with consequential limits visible and unresolved targets honestly blocked.
@@ -49,43 +50,67 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Execution and ownership
 
-Use `openai/gpt-6.1-sol`, medium thinking, for the batch coordinator, fresh
-per-system coordinators and fresh auditors; analytical workers use `pi-sol`.
-Keep at most **four system pipelines active**, where a pipeline includes analysis
-and its audit. Each analysis follows the standard skill in its own worktree;
-its internal worker scheduling remains unchanged. Verify runtime support using
-the standing launch rules rather than assuming nested delegation works.
+On a fresh start or resume, reconcile the checklist and retained execution
+records with any active coordinators and assigned runs before dispatching.
+Do not duplicate an assignment or assume a procedure edit stopped existing work.
+If another orchestrator may still own the queue, establish an explicit handoff
+or stop for clarification. Existing runs retain their frozen method and evidence;
+this procedure does not authorize rewriting or discarding them. Then verify the
+runtime prerequisites below before launching new work.
 
-The batch coordinator owns assignments, checklist updates, recovery decisions
+Use `openai/gpt-6.1-sol`, medium thinking, for the orchestrator, fresh
+per-system coordinators and fresh auditors; analytical workers use `pi-sol`.
+Keep **four system pipelines active while eligible work remains**, unless a
+blocker requires a pause. A slot holds one analysis followed by its fresh audit;
+four is the limit on these pipelines, not on their internal analytical workers.
+Each analysis follows the standard skill in its own worktree; its internal
+worker scheduling remains unchanged.
+
+Rolling dispatch requires a runtime that lets the orchestrator launch work,
+receive an individual completion and dispatch its successor while other work
+continues. The current Pi `subagent` parallel call waits for the entire call's
+task set; progress updates alone do not satisfy this requirement. Before launch,
+verify asynchronous launch and completion handling as well as the standing
+worker-launch preflight. If unavailable, report the runtime blocker. Do not
+silently fall back to batches, agent CLIs or additional scheduling coordinators.
+This procedure does not itself implement the missing runtime support.
+
+The orchestrator owns assignments, checklist updates, recovery decisions
 and serial integration into `main`. Per-system coordinators own their isolated
 runs and return results without integrating. Auditors own distinct reports
 under `audits/`, not analysis outputs or shared bookkeeping. No two active runs
 may own the same publication destination.
 
 Keep analyses source-first: do not supply legacy findings, comparison values or
-previous results to analysis coordinators or workers. The batch coordinator may
+previous results to analysis coordinators or workers. The orchestrator may
 use historical records for identity; only the subsequent auditor may compare
 old and new findings. Preserve the skill's frozen-source and isolation rules.
 
-After each new publication, commission a fresh auditor under
-[Audit a rerun before integration](./audit-a-rerun.md). An audit may overlap the
-other systems' analyses. Reconcile all pipeline outcomes in the batch, integrate
-cleared results serially through the standard route, and commit owned bookkeeping
-before starting the next batch. Audit clearance does not replace integration's
-publication checks.
+After each new publication, commission a fresh auditor in that slot under
+[Audit a rerun before integration](./audit-a-rerun.md), while other pipelines
+continue. Once the audit disposition is recorded, queue a cleared result for
+serial integration and refill the slot with the next eligible target. Do not
+wait for the other slots or a shared batch checkpoint. Integration is owned by
+the orchestrator, outside the four analysis/audit slots; queued results are not
+yet complete. Drain that queue as results arrive rather than deferring it until
+all analyses finish. Audit clearance does not replace integration's publication
+checks.
 
-A held system need not prevent integrating its cleared peers or proceeding to
-another batch once its blocker and unblock condition are recorded. A suspected
-shared-method defect pauses affected work and requires a maintenance decision.
+A held or failed system releases its slot once its evidence, blocker and unblock
+condition are recorded. It does not prevent other eligible systems from running.
+A suspected shared-method defect pauses affected work and requires a maintenance
+decision.
 Do not repair accepted content outside a supported workflow or quietly broaden
 the commission to work around a blocker.
 
 Preparation permits unrelated uncommitted origin changes by default, excludes
 their bytes, and records their exclusion; startup instructions and configuration
 must still match the selected commit. `--require-clean-origin` requests strict
-preparation. Integration still requires a clean origin on `main`. Resolve
-pre-existing uncommitted work with its owner before integration; this commission
-does not authorize staging unrelated files. Preserve run worktrees and traces.
+preparation. Integration still requires a clean origin on `main`. Coordinate origin writes
+and commit owned audit/checklist bookkeeping at each integration boundary;
+parallel analyses need not stop, but shared writes must not race with integration.
+Resolve pre-existing uncommitted work with its owner before integration; this
+commission does not authorize staging unrelated files. Preserve run worktrees and traces.
 No cleanup, push or method edits are commissioned.
 
 ## Progress and checkpoints
@@ -97,8 +122,10 @@ Distinguish work awaiting audit or integration from completed work. Failures and
 local blocked/out-of-scope results remain incomplete unless the operator
 explicitly approves exclusion.
 
-At each batch boundary, report outcomes, consequential audit findings, worker
-problems and unresolved blockers. Choose the next batch of up to four eligible targets.
+Record each pipeline outcome as it arrives and report consequential findings,
+worker problems and unresolved blockers without waiting for other slots. Keep
+active assignments and the integration queue recoverable so an interruption
+does not cause duplicate dispatch. Choose replacement targets from eligible work.
 Escalate unresolved identity, authority or recovery decisions rather than
 inventing an answer. Partial progress is useful; do not describe it as a
 completed corpus refresh.
