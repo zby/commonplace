@@ -9,9 +9,9 @@ coverage through the current
 not conversions of old reviews. Use a rolling pool of four parallel system
 pipelines, each with a quick independent audit before integration. Refill each
 slot when its audit is resolved, without waiting for the other pipelines.
-This document is the handoff; revising it does not launch runs. New dispatch is
-currently stopped by operator direction, as recorded in the checkpoint below;
-that stop takes precedence over the rolling-pool instructions.
+This document is the handoff; revising it does not launch runs. The operator has
+explicitly released the dispatch stop. Resume the four-pipeline rolling pool
+after ownership reconciliation and runtime preflight; individual holds remain.
 
 Success means published, audited and integrated analyses for the checklist,
 with consequential limits visible and unresolved targets honestly blocked.
@@ -76,9 +76,14 @@ by path confusion. [Rolling execution 04](./rolling-04.md) records four stopped
 runs, no new publications and the retrospective checks. The operator then
 marked those four systems for fresh reruns rather than recovery of their old
 runs. Progress is now eight complete, 195 pending (including four marked for
-fresh rerun) and three recovery-required. **Do not resume the pool until the
-operator releases this stop.** The earlier maintenance release does not override
-this later execution stop.
+fresh rerun) and three recovery-required.
+
+**The operator has now explicitly released that dispatch stop and authorized
+resumption of the four-pipeline rolling pool.** This release supersedes the
+no-replacement instruction in rolling execution 04. Reconcile ownership and
+runtime prerequisites, then dispatch eligible systems without requesting this
+release again. The four stopped systems remain designated for fresh runs, not
+recovery of their old runs. The individual holds below remain in force.
 
 The separately authorized worker convenience command is implemented in commit
 `9b110e2f5`: [`commonplace-run validate-output <prompt-path>`](../../reference/commands.md#commonplace-run)
@@ -86,8 +91,9 @@ resolves validation parameters from the recorded open handout. Generated worker
 instructions use it for immediate write–check–repair feedback; workflow-side
 validation is unchanged. The command and instructions passed 1,161 selected
 tests, including relevant slow tests. This implementation does not certify
-historical drafts, modify frozen runs or release the operator stop. After release,
-prepare fresh runs from a committed method containing this command and reconcile
+historical drafts or modify frozen runs. The dispatch release above is separate
+operator authorization. Prepare fresh runs from a committed method containing
+this command and reconcile
 all reserved assignments before filling the four slots.
 
 The maintenance commission below retains the authority and evidence boundary
@@ -107,16 +113,16 @@ Reserved or blocked assignments:
   recovery decision; see the checklist. Validation-path maintenance does not
   waive source-isolation rules.
 
-After the operator releases the current dispatch stop, these individual holds
-do not block other eligible systems. Preserve their evidence and keep them incomplete unless a
+These individual holds do not block other eligible systems under the released
+dispatch commission. Preserve their evidence and keep them incomplete unless a
 supported recovery or operator-approved exclusion is recorded.
 
 ## Bounded validation-path maintenance
 
 Status: resolved by the linked maintenance decision. The following is the
 retained scope of the investigation, not pending startup work. Reopen it only
-if new validation-path evidence contradicts that decision; any such maintenance
-release remains subject to the separate operator dispatch stop.
+if new validation-path evidence contradicts that decision. A maintenance
+release does not override any subsequent operator stop.
 
 Purpose: establish whether nonexistent validation artifact paths came from the
 supplied invocation or worker execution, and make new analyses safe to resume.
@@ -153,7 +159,7 @@ correction, regression coverage and an evidence-based maintenance disposition.
    traces, and do not retrospectively certify old failed validation attempts.
 5. Once evidence and checks justify lifting a maintenance pause, record that
    disposition. Resume the rolling pool only when no operator dispatch stop is
-   in force; the current stop requires explicit operator release. Supply fresh
+   in force. The previously recorded stop has been explicitly released above. Supply fresh
    analysis coordinators only their source-first commissions, not historical
    findings or maintenance audit conclusions. Keep individual recovery holds
    separate. Escalate only missing evidence, unresolved ownership, or a repair
