@@ -3,10 +3,13 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-All targets start pending, including those with existing current analysis sets.
+**Progress: 6 complete with the new engine; 200 pending.** Checked rows have
+published current-engine analysis sets; their overview links list all 12 reports.
+All six sets are accepted with recorded limits, not limit-free results.
 Historical records are inclusion and identity references, not fresh-run evidence.
-After assignment, append the run identifier and source boundary; after acceptance,
-append the published overview link and check the box. Record blockers explicitly.
+After assignment, append the run identifier and source boundary. For new runs,
+check the box only after publication, audit clearance and verified integration;
+append the overview, audit link and integration commit. Record blockers explicitly.
 
 ## Rerun checklist
 
@@ -73,7 +76,7 @@ append the published overview link and check the box. Record blockers explicitly
 - [ ] **dense-mem** (`dense-mem`) — pending; [legacy review](../../agent-memory-systems/reviews/dense-mem.md).
 - [ ] **DocMason** (`docmason`) — pending; [legacy review](../../agent-memory-systems/reviews/docmason.md).
 - [ ] **DualGraph** (`dualgraph`) — pending; [archived review](../../agentic-systems/reviews-archive/dualgraph.md).
-- [ ] **Dynamic Cheatsheet** (`dynamic-cheatsheet`) — pending; [legacy review](../../agent-memory-systems/reviews/dynamic-cheatsheet.md); [archived review](../../agentic-systems/reviews-archive/dynamic-cheatsheet.md); [current overview](../../agentic-system-analyses/retained/dynamic-cheatsheet/overview.md).
+- [x] **Dynamic Cheatsheet** (`dynamic-cheatsheet`) — complete with new engine; run `AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01`; boundary `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`; accepted with limits; [legacy review](../../agent-memory-systems/reviews/dynamic-cheatsheet.md); [archived review](../../agentic-systems/reviews-archive/dynamic-cheatsheet.md); [current overview](../../agentic-system-analyses/retained/dynamic-cheatsheet/overview.md).
 - [ ] **EAL-bench** (`eal-bench`) — pending; [archived review](../../agentic-systems/reviews-archive/eal-bench.md).
 - [ ] **Ecdysis** (`ecdysis`) — pending; [archived review](../../agentic-systems/reviews-archive/ecdysis.md).
 - [ ] **Echel** (`echel`) — pending; [legacy review](../../agent-memory-systems/reviews/echel.md).
@@ -93,10 +96,10 @@ append the published overview link and check the box. Record blockers explicitly
 - [ ] **fragility-grid collection and resume subsystem** (`fragility-grid`) — pending; [archived review](../../agentic-systems/reviews-archive/fragility-grid.md).
 - [ ] **Funes** (`funes`) — pending; [legacy review](../../agent-memory-systems/reviews/funes.md).
 - [ ] **G-Memory** (`g-memory`) — pending; [legacy review](../../agent-memory-systems/reviews/g-memory.md).
-- [ ] **GBrain** (`gbrain`) — pending; [legacy review](../../agent-memory-systems/reviews/gbrain.md); [archived review](../../agentic-systems/reviews-archive/gbrain-garrytan.md); [current overview](../../agentic-system-analyses/retained/gbrain/overview.md).
+- [x] **GBrain** (`gbrain`) — complete with new engine; run `AAS-2026-10-11-gbrain-9de8e3c225d3-01`; boundary `da434385572e0dc0d825649179aabed4107d6e60`; accepted with limits; [legacy review](../../agent-memory-systems/reviews/gbrain.md); [archived review](../../agentic-systems/reviews-archive/gbrain-garrytan.md); [current overview](../../agentic-system-analyses/retained/gbrain/overview.md).
 - [ ] **getsentry/skills** (`getsentry-skills`) — pending; [legacy review](../../agent-memory-systems/reviews/getsentry-skills.md).
 - [ ] **Gnosis** (`gnosis`) — pending; [legacy review](../../agent-memory-systems/reviews/gnosis.md).
-- [ ] **Graphiti** (`graphiti`) — pending; [legacy review](../../agent-memory-systems/reviews/graphiti.md); [current overview](../../agentic-system-analyses/retained/graphiti/overview.md).
+- [x] **Graphiti** (`graphiti`) — complete with new engine; run `AAS-2026-10-12-graphiti-1d535ca565a4-01`; boundary `964bb11d1e7020e3cc67fab244268b0736b6c219`; accepted with limits; [legacy review](../../agent-memory-systems/reviews/graphiti.md); [current overview](../../agentic-system-analyses/retained/graphiti/overview.md).
 - [ ] **HALO** (`halo`) — pending; [legacy review](../../agent-memory-systems/reviews/halo.md).
 - [ ] **Hermes Agent** (`hermes-agent`) — pending; [legacy review](../../agent-memory-systems/reviews/hermes-agent.md).
 - [ ] **Hindsight** (`hindsight`) — pending; [legacy review](../../agent-memory-systems/reviews/hindsight.md).
@@ -104,7 +107,7 @@ append the published overview link and check the box. Record blockers explicitly
 - [ ] **hyalo** (`hyalo`) — pending; [legacy review](../../agent-memory-systems/reviews/hyalo.md).
 - [ ] **HyperAgents** (`hyperagents`) — pending; [legacy review](../../agent-memory-systems/reviews/hyperagents.md).
 - [ ] **Incremental Self-Improvement** (`incremental-self-improvement`) — pending; [lightweight review](../../agent-memory-systems/lightweight/incremental-self-improvement.md).
-- [ ] **Instinctual Memory** (`instinctual-memory`) — pending; [archived review](../../agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md); [archived review](../../agentic-systems/reviews-archive/instinctual-memory.md); [current overview](../../agentic-system-analyses/retained/instinctual-memory/overview.md).
+- [x] **Instinctual Memory** (`instinctual-memory`) — complete with new engine; run `AAS-2026-10-12-instinctual-memory-af48437aa60c-01`; boundary `6acb13dc35765bf5ccfc87e445dd09c480f1c28a`; accepted with limits; [archived review](../../agentic-systems/reviews-archive/instinctual-memory-2026-09-30-02.md); [archived review](../../agentic-systems/reviews-archive/instinctual-memory.md); [current overview](../../agentic-system-analyses/retained/instinctual-memory/overview.md).
 - [ ] **interview-doc-agent** (`interview-doc-agent`) — pending; [legacy review](../../agent-memory-systems/reviews/interview-doc-agent.md).
 - [ ] **Mnemosyne / IsaacCLupus mnemosyn spec** (`isaacclupus_mnemosyn_spec`) — pending; [lightweight review](../../agent-memory-systems/lightweight/IsaacCLupus_mnemosyn_spec.md).
 - [ ] **JAZ** (`jaz`) — pending; [archived review](../../agentic-systems/reviews-archive/jaz.md).
@@ -116,7 +119,7 @@ append the published overview link and check the box. Record blockers explicitly
 - [ ] **Kompl** (`kompl`) — pending; [legacy review](../../agent-memory-systems/reviews/Kompl.md).
 - [ ] **LACP** (`lacp`) — pending; [legacy review](../../agent-memory-systems/reviews/lacp.md).
 - [ ] **Letta** (`letta`) — pending; [legacy review](../../agent-memory-systems/reviews/letta.md).
-- [ ] **Letta Code agentic-system analysis** (`letta-code`) — pending; [current overview](../../agentic-system-analyses/retained/letta-code/overview.md).
+- [x] **Letta Code** (`letta-code`) — complete with new engine; run `AAS-2026-10-12-letta-code-be76afeab9b7-01`; boundary `271f119dcf37d58649a18e6c733386b3c710a456`; accepted with limits; [current overview](../../agentic-system-analyses/retained/letta-code/overview.md).
 - [ ] **LHTB bundled continuation mechanism** (`lhtb`) — pending; [archived review](../../agentic-systems/reviews-archive/lhtb.md).
 - [ ] **Link** (`link`) — pending; [legacy review](../../agent-memory-systems/reviews/link.md).
 - [ ] **llm-context-base** (`llm-context-base`) — pending; [legacy review](../../agent-memory-systems/reviews/llm-context-base.md).
@@ -141,7 +144,7 @@ append the published overview link and check the box. Record blockers explicitly
 - [ ] **ModularRSI** (`modularrsi`) — pending; [archived review](../../agentic-systems/reviews-archive/modularrsi.md).
 - [ ] **Neo4j Agent Memory Service (NAMS)** (`nams`) — pending; [lightweight review](../../agent-memory-systems/lightweight/nams.md).
 - [ ] **nao** (`nao`) — pending; [legacy review](../../agent-memory-systems/reviews/nao.md).
-- [ ] **napkin** (`napkin`) — pending; [legacy review](../../agent-memory-systems/reviews/napkin.md); [archived review](../../agentic-systems/reviews-archive/napkin.md); [current overview](../../agentic-system-analyses/retained/napkin/overview.md).
+- [x] **Napkin** (`napkin`) — complete with new engine; run `AAS-2026-10-12-napkin-2b85bef38252-01`; boundary `7582d6a46f5a11995956e60a59c41a5b242109f1`; accepted with limits; [legacy review](../../agent-memory-systems/reviews/napkin.md); [archived review](../../agentic-systems/reviews-archive/napkin.md); [current overview](../../agentic-system-analyses/retained/napkin/overview.md).
 - [ ] **Nuggets** (`nuggets`) — pending; [legacy review](../../agent-memory-systems/reviews/nuggets.md).
 - [ ] **o-o** (`o-o`) — pending; [legacy review](../../agent-memory-systems/reviews/o-o.md).
 - [ ] **oh-my-pi** (`oh-my-pi`) — pending; [archived review](../../agentic-systems/reviews-archive/oh-my-pi.md).
