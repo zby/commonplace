@@ -63,8 +63,13 @@ per-system coordinators and fresh auditors; analytical workers use `pi-sol`.
 Keep **four system pipelines active while eligible work remains**, unless a
 blocker requires a pause. A slot holds one analysis followed by its fresh audit;
 four is the limit on these pipelines, not on their internal analytical workers.
-Each analysis follows the standard skill in its own worktree; its internal
-worker scheduling remains unchanged.
+Launch one fresh `commonplace-coordinator` for each system through the
+`subagent` tool with `agentScope: "project"` and `cwd` set to that system's
+isolated worktree. These per-system coordinators occupy the rolling window of
+four pipelines; do not assign whole system analyses to `commonplace-worker`.
+Each coordinator follows the standard skill and delegates its code-scheduled
+analytical jobs to `commonplace-worker`; internal worker scheduling remains
+unchanged.
 
 Rolling dispatch requires a runtime that lets the orchestrator launch work,
 receive an individual completion and dispatch its successor while other work
