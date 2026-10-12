@@ -60,7 +60,12 @@ and stale-pool deletion remain qualified, and incomplete side-file inventory
 prevents complete cleanup comparisons. Nested traces paired final validation
 passes for all 11 model jobs; one citation-label preflight repair, no established
 validation-path recurrence. Audit report validated with no diagnostics.
-AgentFly is queued for serial integration, not yet counted complete.
+AgentFly integrated after committing owned audit/bookkeeping and confirming
+clean origin on main. Its original command environment ran
+`commonplace-analysis integrate kb/agentic-system-analyses/state/AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01 --model openai/gpt-6.1-sol`.
+Exit 0, stdout `e388725cefffb01c94bc5967cee74a8ccba68120`, no stderr.
+The integration command independently verified publication evidence before
+committing and merging. Target now counts complete with recorded limits.
 
 After audit disposition, the slot is refilled by ai-memex-cli, source locator
 `https://github.com/zelixag/ai-memex-cli`, selected from inventory metadata only.
@@ -70,7 +75,7 @@ bookkeeping. Worktree `ai-memex-cli-8e14b4b6efdc`, handle
 `9395d7bf-2067-4a28-ab57-1a2431cf3f1d`, default-tip source-first analysis,
 Sol/medium coordinator and `pi-sol` workers. Status: analysis dispatched.
 
-Integration queue: AgentFly, cleared with recorded limits. Harness Engineering stopped at boundary attempt
+Integration queue empty. Harness Engineering stopped at boundary attempt
 `000003-boundary`, run `AAS-2026-10-12-agentic-harness-engineering-b7fb59b2f7bd-01`.
 The coordinator returned; no open attempts remain. Acquired checkout HEAD is
 `8b2a55d97590363fe50c3cc6b5e833b020a4bb4c`; boundary artifact did not complete.
@@ -86,8 +91,8 @@ stop boundary 000003-boundary: OpenAI API error (503): 503 upstream connect erro
 publishable: no
 ```
 
-Corpus progress remains eight complete, 194 pending (three currently assigned),
-four held. AI-Context-OS fills the released slot (four analyses active).
+Corpus progress: nine complete, 193 pending (four currently assigned), four
+held. AI-Context-OS and ai-memex-cli fill the released slots.
 Other frozen run identifiers and source boundaries will be recorded
 when available. No cleanup, push, method
 change, comparison regeneration or landscape synthesis is commissioned.
