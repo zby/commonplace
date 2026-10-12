@@ -54,7 +54,14 @@ stdout `publishable: yes`, stderr empty. No failed/open attempts or recorded
 worker problems. Inspection retained as `rolling-05-agentic-local-brain-inspect.json`.
 Publication is in the worktree's `kb/agentic-system-analyses/retained/agentic-local-brain/`.
 Fresh Sol/medium auditor handle `7ab65d68-665b-4f12-9d97-3faf3db9b6b7`
-owns `audits/rolling-05-agentic-local-brain.md`. Not integrated or counted complete.
+owns `audits/rolling-05-agentic-local-brain.md`. Audit returned
+**integrate with recorded limits**, validated without diagnostics. Conditional
+conversation reuse, summary-fed mining and entity-card lineage are supported;
+inventory/consistency/execution limits are published. The earlier semantic
+refusal was corrected and later accepted. All 13 publication hashes match and
+14 model attempts have paired final validation passes; boundary/runtime
+quotation ambiguity was repaired. Queued after Agent Workflow Memory for serial
+integration. Replacement slot remains empty during the provider pause.
 
 Agent Workflow Memory published run
 `AAS-2026-10-12-agent-workflow-memory-cb2da079273e-01`, frozen source
