@@ -33,11 +33,11 @@ records retain setup evidence.
 | Target | Worktree basename | Source identity | Handle | Status |
 |---|---|---|---|---|
 | AI Agents in Depth | `ai-agent-book-d56e8121d636` | `https://github.com/bojieli/ai-agent-book` | analysis `f357e523-6582-40b5-9dd3-6f6e8f008fd1`; audit `ad8c7fc7-abc5-4695-87e8-6c8caa2a02a0` | Audited and integrated with recorded limits |
-| AI Research OS Workshop | `ai-research-os-workshop-1a93869f8e7f` | `https://github.com/iusztinpaul/ai-research-os-workshop` | analysis `88f5dc89-3776-4e6c-b276-8dba3847a364`; audit `6a3f4cec-9d13-41db-9afe-0a2bd720d24e` | Audit cleared with recorded limits; queued for integration |
+| AI Research OS Workshop | `ai-research-os-workshop-1a93869f8e7f` | `https://github.com/iusztinpaul/ai-research-os-workshop` | analysis `88f5dc89-3776-4e6c-b276-8dba3847a364`; audit `6a3f4cec-9d13-41db-9afe-0a2bd720d24e` | Audited and integrated with recorded limits |
 | Amazon Science SAGE | `amazon-science-sage-8387fc4221ab` | `https://github.com/amazon-science/SAGE` | `3ea66a91-d4f9-4384-b637-2e29b1d6a689` | Stopped; slot released |
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
 | Archie | `archie-aef788232ea1` | `https://github.com/gchamon/archie` | `39264316-510e-466e-ab26-5fa2a2af5850` | Stopped; slot released |
-| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | `9a7740a3-a7a6-4323-b71f-8c0162b711a0` | Coordinator running; refilled Maka slot |
+| AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Published; fresh audit running |
 | Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | `a105d59f-75ab-4a0f-89bb-f3852b79f5b2` | Coordinator running; refilled Archie slot |
 
 Run identifiers and frozen boundaries will be recorded from returned workflow
@@ -121,7 +121,7 @@ The cleared audit releases its slot. Replacement arsumbris was prepared from
 `bf78f4227daa08faee9dd3f296df0021eb135d87`; the uncommitted audit report was
 excluded and startup files matched. Worktree `arsumbris-247284e3101a`, source
 `https://github.com/arsumbris/arsumbris`, coordinator handle
-`94474085-3b73-4479-b375-161c1fdfb7ff`; running, no boundary returned yet.
+`94474085-3b73-4479-b375-161c1fdfb7ff`; stopped, slot released.
 
 ## Publication: AI Research OS Workshop
 
@@ -150,10 +150,42 @@ worktree `atlas-b28ea1ea613f`, coordinator `0dbd44cc-6beb-40be-8e9d-c6590f61e3c5
 Preparation used `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`, excluded
 uncommitted outcome/audit bookkeeping and verified matching startup inputs.
 
+## Outcome: arsumbris
+
+Run `AAS-2026-10-12-arsumbris-247284e3101a-01` froze
+`716bb14f2bf50e249d414525c8e07c50478fc786`. Report-verification attempt
+`000022-report-verification` failed with
+`OpenAI Responses stream ended before a terminal response event`.
+Last advance exited 2, stdout `stop report-verification 000022-report-verification: OpenAI Responses stream ended before a terminal response event`
+and `publishable: no`; no separate stderr. No publication/open attempts/recovery.
+[Inspection](./rolling-06-arsumbris-inspect.json), acquisition record, failed
+attempt and handout preserve evidence. Unblock requires supported recovery
+direction. Individual slot released; successful publications and auditors still
+contradict an established blanket provider outage.
+
+Atomic refills the arsumbris slot: source `https://github.com/kenforthewin/atomic`,
+worktree `atomic-f98683232831`, handle `03463281-44a3-415b-a3f7-eb827c71207b`.
+Preparation from `07e73341ad64b4faab06290e9b437ea0c10518b4` excluded
+uncommitted outcome bookkeeping and verified startup inputs. Coordinator running.
+
+## Publication: AriGraph
+
+Run `AAS-2026-10-12-arigraph-fd0f6f1c1383-01` froze revision
+`e884b76d7fa5185a3a8a55e5a67393b5a43f5ef2`, published in the worktree at
+`kb/agentic-system-analyses/retained/arigraph/`. Last advance completed
+`000044-synthesis-verification`, exit 0, `publishable: yes`, empty stderr.
+[Inspection](./rolling-06-arigraph-inspect.json) reports publication-job-completed,
+no failures/open attempts/worker-problems. Code scheduled runtime and subsequent
+reconciliation/report-verification replacement plus second memory-profile round.
+Fresh auditor owns `audits/rolling-06-arigraph.md`; integration pending.
+
 ## Integration queue
 
-AI Research OS Workshop is audit-cleared and queued for immediate serial
-integration after committing owned bookkeeping.
+Empty. AI Research OS Workshop integrated with the prepared commands,
+`--model openai/gpt-6.1-sol`, exit 0, merge
+`07e73341ad64b4faab06290e9b437ea0c10518b4` verified on `main`.
+Publication commit `753f35389`; origin clean before and after integration;
+origin directory validation passed (one directory artifact, zero diagnostics).
 
 AI Agents in Depth integrated using the prepared worktree's
 `commonplace-analysis integrate` with `--model openai/gpt-6.1-sol`, exit 0.
@@ -161,6 +193,6 @@ Integration independently checked publication evidence and returned merge commit
 `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
 Origin was clean before and after integration. Publication commit `5eadb2197`.
 Origin directory validation passed (one directory artifact, zero diagnostics).
-Corpus progress: 12 complete, 185 pending, nine held; four pipelines active.
+Corpus progress: 13 complete, 183 pending, ten held; four pipelines active.
 Comparison outputs remain stale and prior landscape synthesis historical;
 no regeneration, cleanup or push commissioned.
