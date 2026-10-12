@@ -4,10 +4,11 @@
  * Spawns a separate `pi` process for each subagent invocation,
  * giving it an isolated context window.
  *
- * Supports three modes:
+ * Supports three synchronous modes and session-local asynchronous handles:
  *   - Single: { agent: "name", task: "..." }
  *   - Parallel: { tasks: [{ agent: "name", task: "..." }, ...] }
  *   - Chain: { chain: [{ agent: "name", task: "... {previous} ..." }, ...] }
+ *   - Async: action=start (agent/task), then status/wait/cancel/forget (handles)
  *
  * Uses JSON mode to capture structured output from subagents.
  */
@@ -29,6 +30,7 @@ import {
 import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { type AgentConfig, type AgentScope, discoverAgents } from "./agents.ts";
+import { Jobs, type Job } from "./jobs.ts";
 
 const MAX_PARALLEL_TASKS = 8;
 const MAX_CONCURRENCY = 4;
@@ -182,7 +184,7 @@ function getFinalOutput(messages: Message[]): string {
 }
 
 function isFailedResult(result: SingleResult): boolean {
-	return result.exitCode !== 0 || result.stopReason === "error" || result.stopReason === "aborted";
+	return result.exitCode !== 0 || Boolean(result.errorMessage) || result.stopReason === "error" || result.stopReason === "aborted";
 }
 
 function getResultOutput(result: SingleResult): string {
@@ -242,9 +244,14 @@ async function writePromptToTempFile(agentName: string, prompt: string): Promise
 	const tmpDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "pi-subagent-"));
 	const safeName = agentName.replace(/[^\w.-]+/g, "_");
 	const filePath = path.join(tmpDir, `prompt-${safeName}.md`);
-	await withFileMutationQueue(filePath, async () => {
-		await fs.promises.writeFile(filePath, prompt, { encoding: "utf-8", mode: 0o600 });
-	});
+	try {
+		await withFileMutationQueue(filePath, async () => {
+			await fs.promises.writeFile(filePath, prompt, { encoding: "utf-8", mode: 0o600 });
+		});
+	} catch (error) {
+		await fs.promises.rm(tmpDir, { recursive: true, force: true });
+		throw error;
+	}
 	return { dir: tmpDir, filePath };
 }
 
@@ -342,17 +349,38 @@ async function runSingleAgent(
 			args.push("--append-system-prompt", tmpPromptPath);
 		}
 
+		if (signal?.aborted) throw new Error("Subagent was aborted before spawn");
 		args.push(`Task: ${task}`);
 		let wasAborted = false;
 
 		const exitCode = await new Promise<number>((resolve) => {
 			const invocation = getPiInvocation(args);
+			// Root jobs own a POSIX process group; nested subagents stay in that group.
+			const ownsGroup = process.platform !== "win32" && !process.env.PI_SUBAGENT_PROCESS_GROUP;
 			const proc = spawn(invocation.command, invocation.args, {
 				cwd: cwd ?? defaultCwd,
 				shell: false,
 				stdio: ["ignore", "pipe", "pipe"],
+				detached: ownsGroup,
+				env: { ...process.env, ...(ownsGroup ? { PI_SUBAGENT_PROCESS_GROUP: "1" } : {}) },
 			});
 			let buffer = "";
+			let closed = false;
+			let killTimer: ReturnType<typeof setTimeout> | undefined;
+			const kill = (kind: NodeJS.Signals) => {
+				try {
+					if (ownsGroup && proc.pid) process.kill(-proc.pid, kind);
+					else proc.kill(kind);
+				} catch (error) {
+					if ((error as NodeJS.ErrnoException).code !== "ESRCH") currentResult.stderr += `\nCancellation: ${error}`;
+				}
+			};
+			const killProc = () => {
+				if (closed || wasAborted) return;
+				wasAborted = true;
+				kill("SIGTERM");
+				killTimer = setTimeout(() => { if (!closed) kill("SIGKILL"); }, 5000);
+			};
 
 			const processLine = (line: string) => {
 				if (!line.trim()) return;
@@ -402,30 +430,34 @@ async function runSingleAgent(
 				currentResult.stderr += data.toString();
 			});
 
-			proc.on("close", (code) => {
+			proc.on("close", (code, exitSignal) => {
+				if (closed) return;
+				closed = true;
+				if (killTimer) clearTimeout(killTimer);
+				signal?.removeEventListener("abort", killProc);
+				// Reap remaining members even if the group leader closed promptly.
+				if (wasAborted && ownsGroup && proc.pid) kill("SIGKILL");
 				if (buffer.trim()) processLine(buffer);
-				resolve(code ?? 0);
+				if (exitSignal) currentResult.stderr += `\nSubagent exited on ${exitSignal}`;
+				resolve(code ?? 1);
 			});
 
-			proc.on("error", () => {
-				resolve(1);
+			proc.on("error", (error) => {
+				currentResult.errorMessage = error.message;
+				// Node emits close after error; wait for it before releasing ownership.
 			});
 
-			if (signal) {
-				const killProc = () => {
-					wasAborted = true;
-					proc.kill("SIGTERM");
-					setTimeout(() => {
-						if (!proc.killed) proc.kill("SIGKILL");
-					}, 5000);
-				};
-				if (signal.aborted) killProc();
-				else signal.addEventListener("abort", killProc, { once: true });
-			}
+			if (signal?.aborted) killProc();
+			else signal?.addEventListener("abort", killProc, { once: true });
 		});
 
 		currentResult.exitCode = exitCode;
-		if (wasAborted) throw new Error("Subagent was aborted");
+		if (exitCode === 0 && !currentResult.messages.some(message => message.role === "assistant"))
+			currentResult.errorMessage = "Subagent exited without an assistant result";
+		if (wasAborted) {
+			currentResult.stopReason = "aborted";
+			currentResult.errorMessage = "Subagent was aborted";
+		}
 		return currentResult;
 	} finally {
 		if (tmpPromptPath)
@@ -478,6 +510,10 @@ const AgentScopeSchema = StringEnum(["user", "project", "both"] as const, {
 
 const SubagentParams = Type.Object({
 	...LaunchOverrides,
+	action: Type.Optional(StringEnum(["start", "status", "wait", "cancel", "forget"] as const, {
+		description: "Omit for synchronous modes. start launches one isolated job; wait returns the first finished supplied handle without consuming it. Cancelled waits leave jobs running.",
+	})),
+	handles: Type.Optional(Type.Array(Type.String(), { minItems: 1, description: "Session-local handles for status/wait/cancel/forget. status may omit to list all." })),
 	agent: Type.Optional(Type.String({ description: "Name of the agent to invoke (for single mode)" })),
 	task: Type.Optional(Type.String({ description: "Task to delegate (for single mode)" })),
 	tasks: Type.Optional(Type.Array(TaskItem, { description: "Array of {agent, task} for parallel execution" })),
@@ -490,12 +526,27 @@ const SubagentParams = Type.Object({
 });
 
 export default function (pi: ExtensionAPI) {
+	let jobs = new Jobs<SingleResult>();
+	pi.on("session_shutdown", async () => { await jobs.shutdown(); });
+	pi.on("session_start", async () => {
+		// Never orphan processes if a host starts a new session without shutdown.
+		await jobs.shutdown();
+		jobs = new Jobs<SingleResult>();
+	});
+	const jobReply = (selected: Job<SingleResult>[], includeOutput = false) => ({
+		content: [{ type: "text" as const, text: selected.map(job =>
+			`${job.handle}: ${job.state} — ${job.label}${includeOutput ? `\n${truncateParallelOutput(job.error ?? (job.result ? getResultOutput(job.result) : "(still running)"))}` : ""}`,
+		).join("\n\n") || "No asynchronous jobs." }],
+		details: { jobs: selected.map(({ handle, label, state, result, error }) => ({ handle, label, state, ...(includeOutput ? { result, error } : {}) })) },
+		isError: includeOutput && selected.some(job => job.state === "failed" || job.state === "cancelled"),
+	});
 	pi.registerTool({
 		name: "subagent",
 		label: "Subagent",
 		description: [
 			"Delegate tasks to specialized subagents with isolated context.",
 			"Modes: single (agent + task), parallel (tasks array), chain (sequential with {previous} placeholder).",
+			"Async: action=start with agent/task returns a handle immediately (max four active). action=status lists states; action=wait with handles returns one first-finished result; remove that handle before waiting again. action=cancel requests cancellation; action=forget releases terminal handles. Handles last only until session shutdown/reload; wait cancellation leaves jobs running. Launch fields are only valid for start or synchronous modes.",
 			"Optional model and thinkingLevel overrides apply call-wide; per-task or per-step overrides take precedence.",
 			`Default agent scope is "user" (from ${path.join(getAgentDir(), "agents")}).`,
 			`To enable project-local agents in ${CONFIG_DIR_NAME}/agents, set agentScope: "both" (or "project").`,
@@ -503,6 +554,23 @@ export default function (pi: ExtensionAPI) {
 		parameters: SubagentParams,
 
 		async execute(_toolCallId, params, signal, onUpdate, ctx) {
+			const registry = jobs; // Capture ownership before any trust-dialog await.
+			if (params.action && params.action !== "start") {
+				if (Object.keys(params).some(key => !["action", "handles"].includes(key)))
+					throw new Error("Handle operations accept only action and handles");
+				if (params.action !== "status" && !params.handles) throw new Error("This action requires handles");
+				const selected = registry.select(params.handles);
+				if (params.action === "wait") return jobReply([await registry.wait(selected, signal)], true);
+				if (params.action === "cancel") registry.cancel(selected);
+				if (params.action === "forget") {
+					registry.forget(selected);
+					return { content: [{ type: "text", text: "Forgot handles: " + params.handles!.join(", ") }], details: undefined };
+				}
+				return jobReply(selected);
+			}
+			if (params.handles) throw new Error("Launches do not accept handles");
+			if (params.action === "start" && (!params.agent || !params.task || params.tasks || params.chain))
+				throw new Error("Async start requires agent and task only, not tasks or chain");
 			const agentScope: AgentScope = params.agentScope ?? "user";
 			const dispatchDefaults: DispatchDefaults = {
 				model: ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined,
@@ -567,6 +635,20 @@ export default function (pi: ExtensionAPI) {
 							details: makeDetails(hasChain ? "chain" : hasTasks ? "parallel" : "single")([]),
 						};
 				}
+			}
+
+			if (params.action === "start") {
+				if (signal?.aborted) throw new Error("Subagent start aborted");
+				const job = registry.start(jobSignal => runSingleAgent(
+					ctx.cwd, dispatchDefaults, params, agents, params.agent!, params.task!, params.cwd,
+					undefined, jobSignal, undefined, makeDetails("single"),
+				), isFailedResult, `${params.agent} @ ${params.cwd ?? ctx.cwd}`);
+				// UI notification is informational; wait/status remain the source of results.
+				if (ctx.hasUI) void job.done.then(() => {
+					ctx.ui.notify(`Subagent ${job.label}: ${job.state} (${job.handle})`,
+						job.state === "completed" ? "info" : "warning");
+				}).catch(() => { /* A disposed UI must not reject background work. */ });
+				return jobReply([job]);
 			}
 
 			if (params.chain && params.chain.length > 0) {
@@ -679,7 +761,7 @@ export default function (pi: ExtensionAPI) {
 						// Per-task update callback
 						(partial) => {
 							if (partial.details?.results[0]) {
-								allResults[index] = partial.details.results[0];
+								allResults[index] = { ...partial.details.results[0], exitCode: -1 };
 								emitParallelUpdate();
 							}
 						},
@@ -746,6 +828,7 @@ export default function (pi: ExtensionAPI) {
 		},
 
 		renderCall(args, theme, _context) {
+			if (args.action) return new Text(`subagent ${args.action} ${args.agent ?? args.handles?.join(", ") ?? "all"}`, 0, 0);
 			const scope: AgentScope = args.agentScope ?? "user";
 			if (args.chain && args.chain.length > 0) {
 				let text =
@@ -789,9 +872,9 @@ export default function (pi: ExtensionAPI) {
 			return new Text(text, 0, 0);
 		},
 
-		renderResult(result, { expanded }, theme, _context) {
+		renderResult(result, { expanded, isPartial }, theme, _context) {
 			const details = result.details as SubagentDetails | undefined;
-			if (!details || details.results.length === 0) {
+			if (!details || !details.results || details.results.length === 0) {
 				const text = result.content[0];
 				return new Text(text?.type === "text" ? text.text : "(no output)", 0, 0);
 			}
@@ -817,7 +900,7 @@ export default function (pi: ExtensionAPI) {
 			if (details.mode === "single" && details.results.length === 1) {
 				const r = details.results[0];
 				const isError = isFailedResult(r);
-				const icon = isError ? theme.fg("error", "✗") : theme.fg("success", "✓");
+				const icon = isPartial ? theme.fg("warning", "⏳") : isError ? theme.fg("error", "✗") : theme.fg("success", "✓");
 				const displayItems = getDisplayItems(r.messages);
 				const finalOutput = getFinalOutput(r.messages);
 

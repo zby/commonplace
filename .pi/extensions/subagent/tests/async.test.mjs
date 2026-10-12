@@ -1,0 +1,253 @@
+import assert from "node:assert/strict";
+import { EventEmitter } from "node:events";
+import fs from "node:fs";
+import { createRequire, syncBuiltinESMExports } from "node:module";
+import os from "node:os";
+import path from "node:path";
+import { PassThrough } from "node:stream";
+import { test } from "node:test";
+import { fileURLToPath } from "node:url";
+
+const packageDir = process.env.PI_PACKAGE_DIR;
+assert.ok(packageDir, "Set PI_PACKAGE_DIR");
+const requirePi = createRequire(path.join(packageDir, "package.json"));
+const { createJiti } = requirePi("jiti");
+const aliases = Object.fromEntries([
+  "@earendil-works/pi-agent-core", "@earendil-works/pi-ai",
+  "@earendil-works/pi-coding-agent", "@earendil-works/pi-tui", "typebox",
+].map(name => [name, name.startsWith("@earendil-works/")
+  ? path.join(path.dirname(packageDir), name.split("/")[1], "dist", "index.js")
+  : requirePi.resolve(name)]));
+const jiti = createJiti(import.meta.url, { alias: aliases, moduleCache: true });
+const childProcess = createRequire(import.meta.url)("node:child_process");
+const originalSpawn = childProcess.spawn;
+const launches = [];
+let throwSpawn = false;
+const mockSpawn = (command, args, options) => {
+  if (throwSpawn) throw new Error("mock spawn failure");
+  const proc = new EventEmitter();
+  proc.stdout = new PassThrough();
+  proc.stderr = new PassThrough();
+  proc.signals = [];
+  proc.kill = signal => {
+    proc.signals.push(signal);
+    // Deliberately use killed=true on TERM: escalation must not rely on it.
+    proc.killed = true;
+    if (!proc.ignoreTerm || signal === "SIGKILL") queueMicrotask(() => proc.emit("close", null, signal));
+    return true;
+  };
+  proc.finish = (text = "OK", code = 0, stopReason = "stop") => {
+    proc.stdout.write(JSON.stringify({ type: "message_end", message: {
+      role: "assistant", content: [{ type: "text", text }], stopReason,
+    } }) + "\n");
+    proc.emit("close", code);
+  };
+  launches.push({ proc, args, options });
+  return proc;
+};
+const root = fs.mkdtempSync(path.join(os.tmpdir(), "subagent-async-test-"));
+fs.mkdirSync(path.join(root, ".pi", "agents"), { recursive: true });
+fs.writeFileSync(path.join(root, ".pi", "agents", "worker.md"), "---\nname: worker\ndescription: Test\n---\nTest prompt\n");
+let tool;
+const events = {};
+const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
+childProcess.spawn = mockSpawn;
+syncBuiltinESMExports();
+extension({ registerTool(value) { tool = value; }, on(name, fn) { events[name] = fn; } });
+const ctx = { cwd: root, model: { provider: "test", id: "parent" }, thinkingLevel: "medium", hasUI: false };
+const call = (params, signal, context = ctx) => tool.execute("test", params, signal, undefined, context);
+const start = (params = {}, signal, context) => call({ action: "start", agent: "worker", task: "test", agentScope: "project", ...params }, signal, context);
+const handle = result => result.details.jobs[0].handle;
+const spawned = async count => {
+  for (let i = 0; i < 200 && launches.length < count; i++) await new Promise(resolve => setTimeout(resolve, 5));
+  assert.equal(launches.length, count);
+};
+const wait = handles => call({ action: "wait", handles });
+const reset = async () => { await events.session_shutdown(); await events.session_start(); launches.length = 0; };
+
+test("asynchronous subagent lifecycle (mock processes only)", async t => {
+  try {
+    await t.test("four-job rolling window returns first finish and refills without a barrier", async () => {
+      const handles = [];
+      for (let i = 0; i < 4; i++) handles.push(handle(await start({ model: "chosen", thinkingLevel: "off", cwd: root })));
+      await spawned(4);
+      await assert.rejects(start(), /Four asynchronous/);
+      for (const launch of launches) {
+        assert.ok(launch.args.includes("--no-session"));
+        assert.equal(launch.args[launch.args.indexOf("--model") + 1], "chosen");
+        assert.equal(launch.args[launch.args.indexOf("--thinking") + 1], "off");
+        assert.equal(launch.options.cwd, root);
+      }
+      const pending = wait(handles);
+      launches[2].proc.finish("third finishes first");
+      const first = await pending;
+      assert.equal(handle(first), handles[2]);
+      assert.equal(first.details.jobs[0].state, "completed");
+      assert.match(first.content[0].text, /third finishes first/);
+      const replacement = handle(await start());
+      await spawned(5);
+      const states = (await call({ action: "status" })).details.jobs;
+      assert.equal(states.filter(j => j.state === "running").length, 4);
+      assert.equal(states.find(j => j.handle === handles[0]).state, "running");
+      assert.equal(states.find(j => j.handle === replacement).state, "running");
+      // Completed results are repeatable, not implicitly consumed.
+      assert.equal(handle(await wait(handles)), handles[2]);
+      await call({ action: "forget", handles: [handles[2]] });
+      await assert.rejects(wait([handles[2]]), /Unknown subagent handle/);
+      await reset();
+    });
+    await t.test("wait interruption leaves workers running; duplicate/unknown/mixed inputs fail", async () => {
+      const h = handle(await start());
+      await spawned(1);
+      const controller = new AbortController();
+      const pending = call({ action: "wait", handles: [h] }, controller.signal);
+      controller.abort();
+      await assert.rejects(pending, /jobs continue running/);
+      assert.deepEqual(launches[0].proc.signals, []);
+      await assert.rejects(call({ action: "wait", handles: [h, "bad"] }), /Unknown/);
+      await assert.rejects(wait([h, h]), /distinct/);
+      await assert.rejects(call({ action: "forget", handles: [h] }), /active/);
+      await assert.rejects(call({ action: "status", task: "ignored?" }), /only action/);
+      await assert.rejects(start({ tasks: [] }), /requires agent/);
+      const cancel = await call({ action: "cancel", handles: [h] });
+      assert.equal(cancel.details.jobs[0].state, "cancelling");
+      assert.equal((await wait([h])).details.jobs[0].state, "cancelled");
+      await reset();
+    });
+    await t.test("trust refusal, already aborted start and pending trust shutdown never spawn", async () => {
+      const denied = await start({}, undefined, { ...ctx, hasUI: true, isProjectTrusted: () => false, ui: { confirm: async () => false } });
+      assert.match(denied.content[0].text, /not approved/);
+      const controller = new AbortController(); controller.abort();
+      await assert.rejects(start({}, controller.signal), /start aborted/);
+      let approve;
+      const pending = start({}, undefined, { ...ctx, hasUI: true, isProjectTrusted: () => false, ui: { confirm: () => new Promise(resolve => { approve = resolve; }) } });
+      await events.session_shutdown(); await events.session_start();
+      approve(true);
+      await assert.rejects(pending, /shutting down/);
+      assert.equal(launches.length, 0);
+    });
+    await t.test("unknown agent and setup/spawn rejection become retained failures", async () => {
+      const unknown = handle(await start({ agent: "missing" }));
+      const result = await wait([unknown]);
+      assert.equal(result.isError, true);
+      assert.match(result.content[0].text, /Unknown agent: "missing"/);
+      throwSpawn = true;
+      const h = handle(await start());
+      assert.match((await wait([h])).content[0].text, /mock spawn failure/);
+      throwSpawn = false;
+      await reset();
+    });
+    await t.test("process error, signal exit and model error are failures, not successful progress", async () => {
+      for (const mode of ["error", "signal", "model", "empty"])  {
+        const h = handle(await start()); await spawned(1);
+        const proc = launches.at(-1).proc;
+        if (mode === "error") { proc.emit("error", new Error("ENOENT mock")); proc.emit("close", -2); }
+        if (mode === "signal") proc.emit("close", null, "SIGTERM");
+        if (mode === "model") proc.finish("model failed", 0, "error");
+        if (mode === "empty") proc.emit("close", 0);
+        assert.equal((await wait([h])).isError, true);
+        await reset();
+      }
+    });
+    await t.test("shutdown cancels, waits for close, cleans prompts, invalidates handles and is idempotent", async () => {
+      const h = handle(await start()); await spawned(1);
+      const prompt = launches[0].args[launches[0].args.indexOf("--append-system-prompt") + 1];
+      assert.ok(fs.existsSync(prompt));
+      const pending = wait([h]);
+      await events.session_shutdown();
+      assert.equal((await pending).details.jobs[0].state, "cancelled");
+      assert.ok(!fs.existsSync(prompt));
+      await events.session_shutdown();
+      await assert.rejects(wait([h]), /Unknown/);
+      await assert.rejects(start(), /shutting down/);
+      await events.session_start(); launches.length = 0;
+    });
+    await t.test("session replacement cancels old ownership and completion is visible", async () => {
+      const notifications = [];
+      const h = handle(await start({}, undefined, { ...ctx, hasUI: true,
+        isProjectTrusted: () => true,
+        ui: { notify: (...args) => notifications.push(args) },
+      }));
+      await spawned(1);
+      assert.match((await call({ action: "status" })).details.jobs[0].label, /worker @/);
+      await events.session_start();
+      assert.deepEqual(launches[0].proc.signals, ["SIGTERM"]);
+      assert.match(notifications[0][0], /cancelled/);
+      await assert.rejects(wait([h]), /Unknown/);
+      launches.length = 0;
+    });
+    await t.test("POSIX root cancellation targets the group; nested launches inherit it", async () => {
+      if (process.platform === "win32") return;
+      const originalKill = process.kill;
+      const originalGroup = process.env.PI_SUBAGENT_PROCESS_GROUP;
+      const signals = [];
+      try {
+        delete process.env.PI_SUBAGENT_PROCESS_GROUP;
+        const h = handle(await start()); await spawned(1);
+        launches[0].proc.pid = 123456;
+        process.kill = (pid, signal) => {
+          signals.push([pid, signal]);
+          if (signal === "SIGTERM") queueMicrotask(() => launches[0].proc.emit("close", null, signal));
+          return true;
+        };
+        assert.equal(launches[0].options.detached, true);
+        assert.equal(launches[0].options.env.PI_SUBAGENT_PROCESS_GROUP, "1");
+        await call({ action: "cancel", handles: [h] });
+        await wait([h]);
+        assert.deepEqual(signals, [[-123456, "SIGTERM"], [-123456, "SIGKILL"]]);
+        await reset();
+        process.env.PI_SUBAGENT_PROCESS_GROUP = "1";
+        const nested = handle(await start()); await spawned(1);
+        assert.equal(launches[0].options.detached, false);
+        launches[0].proc.finish(); await wait([nested]);
+        await reset();
+      } finally {
+        process.kill = originalKill;
+        if (originalGroup === undefined) delete process.env.PI_SUBAGENT_PROCESS_GROUP;
+        else process.env.PI_SUBAGENT_PROCESS_GROUP = originalGroup;
+      }
+    });
+    await t.test("streaming a synchronous parallel task does not mark it complete", async () => {
+      const updates = [];
+      const pending = tool.execute("parallel", { agentScope: "project", tasks: [
+        { agent: "worker", task: "one" }, { agent: "worker", task: "two" },
+      ] }, undefined, result => updates.push(result), ctx);
+      await spawned(2);
+      launches[0].proc.stdout.write(JSON.stringify({ type: "message_end", message: {
+        role: "assistant", content: [{ type: "text", text: "interim" }],
+      } }) + "\n");
+      assert.match(updates.at(-1).content[0].text, /0\/2 done/);
+      launches.forEach(launch => launch.proc.finish());
+      await pending;
+      launches.length = 0;
+    });
+    await t.test("retained handle bound requires explicit forget; settled jobs free active slots", async () => {
+      const { Jobs } = await jiti.import(fileURLToPath(new URL("../jobs.ts", import.meta.url)));
+      const registry = new Jobs();
+      for (let i = 0; i < 128; i++) {
+        const job = registry.start(async () => "ok", () => false);
+        await job.done;
+      }
+      assert.throws(() => registry.start(async () => "ok", () => false), /128 retained/);
+      registry.forget(registry.select());
+      const job = registry.start(() => { throw new Error("sync exception"); }, () => false);
+      await job.done;
+      assert.equal(job.state, "failed");
+      await registry.shutdown();
+    });
+    await t.test("cancel escalates even after TERM was delivered", async () => {
+      const h = handle(await start()); await spawned(1);
+      launches[0].proc.ignoreTerm = true;
+      await call({ action: "cancel", handles: [h] });
+      await wait([h]);
+      assert.deepEqual(launches[0].proc.signals, ["SIGTERM", "SIGKILL"]);
+      await reset();
+    });
+  } finally {
+    throwSpawn = false;
+    await events.session_shutdown();
+    childProcess.spawn = originalSpawn;
+    syncBuiltinESMExports();
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});

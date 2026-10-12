@@ -85,7 +85,7 @@ Run the extension's mocked-process tests against an installed Pi package:
 
 ```bash
 PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
-  node --test .pi/extensions/subagent/tests/launch-overrides.test.mjs
+  node --test .pi/extensions/subagent/tests/*.test.mjs
 ```
 
 These tests load the extension and inspect child arguments without launching
@@ -109,10 +109,69 @@ For code-scheduled analysis jobs, use the exact handoff prescribed by
 `kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`.
 Do not add parent conversation or source interpretations to the job handoff.
 
+## Rolling dispatch
+
+After updating the extension, use `/reload` **before** launching work. Check that
+`subagent` exposes `action` and `handles`; an already-loaded old schema cannot
+use these operations. Do not reload while jobs are active.
+
+Start each independent system pipeline separately:
+
+```json
+{
+  "action": "start",
+  "agent": "commonplace-coordinator",
+  "agentScope": "project",
+  "cwd": "<absolute prepared system worktree>",
+  "model": "openai/gpt-6.1-sol",
+  "thinkingLevel": "medium",
+  "task": "<source-only workflow commission>"
+}
+```
+
+`start` returns a handle without awaiting the child. Keep a handle-to-assignment
+map in the workflow's bookkeeping. Start up to four jobs, then call:
+
+```json
+{"action": "wait", "handles": ["<handle-1>", "<handle-2>", "<handle-3>", "<handle-4>"]}
+```
+
+`wait` returns the first finished selected job, including failure or cancellation,
+not the whole group. Remove that handle from the pending set. A completed result
+is repeatable: passing its handle again returns it again. Launch the next job
+for that slot while the others continue. For the rerun workshop, the next job is
+the fresh audit; only after its disposition may the slot receive a new system.
+The extension limits active jobs, not workflow pipelines; the orchestrator owns
+that distinction. Synchronous parallel mode remains a wait-for-all operation.
+
+Other handle-only calls accept `action` and `handles`, not launch fields:
+
+- `status`: list states and agent/worktree labels; omit handles to list all.
+- `cancel`: request cancellation; a `cancelling` job still occupies its slot.
+  Use `wait` to observe termination before reassigning its destination.
+- `forget`: release terminal handles after recording their results. Active jobs
+  cannot be forgotten. At most 128 handles are retained per session.
+
+An interrupted `wait` leaves jobs running. Interactive completion notifications
+identify the handle; they do not replace reading its result. Full result details
+retain the child messages, while model-facing summaries may be truncated.
+
+Handles and results are session-local, not a durable job service. Orderly
+shutdown, session replacement and reload cancel active jobs and wait for process
+closure; they invalidate handles. POSIX root launches use process groups so
+cancellation also targets descendants that remain in that group, escalating
+from TERM to KILL after five seconds. Windows cancellation targets the direct
+child only. An abrupt parent crash or a descendant that detaches is not covered:
+reconcile ownership and retained workflow evidence before any replacement run.
+No workflow failure or recovery decision is automatically resolved by a job's
+process exit. Do not end a print-mode parent with jobs still pending.
+
 ## Limits
 
 The example permits at most eight tasks per parallel call and runs at most four
-concurrently. It has no explicit nesting limit or continuing-worker interface.
+concurrently. Asynchronous mode separately permits four active jobs per session;
+do not mix modes to evade a workflow's capacity limit. It has no explicit nesting
+limit or continuing-worker interface: each start creates a fresh child.
 The ordinary worker does not have `subagent`; the coordinator does. Neither
 selection is a filesystem sandbox: the no-launch and write-scope rules are
 instructions, not OS enforcement. Nested results remain embedded in the

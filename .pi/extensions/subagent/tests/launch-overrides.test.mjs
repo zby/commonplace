@@ -19,7 +19,7 @@ const aliases = Object.fromEntries([
 ].map(name => [name, name.startsWith("@earendil-works/")
   ? path.join(path.dirname(packageDir), name.split("/")[1], "dist", "index.js")
   : requirePi.resolve(name)]));
-const jiti = createJiti(import.meta.url, { alias: aliases, moduleCache: false });
+const jiti = createJiti(import.meta.url, { alias: aliases, moduleCache: true });
 const childProcess = createRequire(import.meta.url)("node:child_process");
 const originalSpawn = childProcess.spawn;
 const launches = [];
@@ -59,7 +59,7 @@ const coordinatorBody = fs.readFileSync(
 let tool;
 try {
   const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
-  extension({ registerTool: registered => { tool = registered; } });
+  extension({ registerTool: registered => { tool = registered; }, on() {} });
 } catch (error) {
   childProcess.spawn = originalSpawn;
   syncBuiltinESMExports();

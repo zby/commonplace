@@ -73,12 +73,23 @@ unchanged.
 
 Rolling dispatch requires a runtime that lets the orchestrator launch work,
 receive an individual completion and dispatch its successor while other work
-continues. The current Pi `subagent` parallel call waits for the entire call's
-task set; progress updates alone do not satisfy this requirement. Before launch,
-verify asynchronous launch and completion handling as well as the standing
-worker-launch preflight. If unavailable, report the runtime blocker. Do not
-silently fall back to batches, agent CLIs or additional scheduling coordinators.
-This procedure does not itself implement the missing runtime support.
+continues. The Pi `subagent` parallel call waits for the entire call's task set;
+progress updates alone do not satisfy this requirement. Use the project
+extension's asynchronous `action: "start"` for each coordinator, then
+`action: "wait"` with the active handles to receive one completion. Remove the
+completed handle from the pending set and launch that slot's auditor without
+waiting for the other slots. After audit disposition, refill with the next
+eligible system. Record the handle-to-assignment map and each result before
+forgetting terminal handles. See [Pi rolling dispatch](../../../.pi/README.md#rolling-dispatch)
+for call examples and lifecycle limits.
+
+Before launch, verify that the loaded schema exposes `action` and `handles`,
+as well as completing the standing worker-launch preflight. An older loaded
+extension requires `/reload` before any jobs are started. Reload or orderly
+shutdown cancels active jobs; handles do not survive it. Reconcile interrupted
+assignments before replacement. If asynchronous operations are unavailable,
+report the runtime blocker. Do not silently fall back to batches, agent CLIs or
+additional scheduling coordinators.
 
 The orchestrator owns assignments, checklist updates, recovery decisions
 and serial integration into `main`. Per-system coordinators own their isolated

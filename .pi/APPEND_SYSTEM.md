@@ -37,6 +37,18 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
   `thinkingLevel`, plus top-level `agentScope: "project"`. Optional top-level
   `model` and `thinkingLevel` apply to every task; per-task values override them.
   Do not use a chain where isolation rules forbid forwarding previous outputs.
+- For rolling dispatch, when the loaded schema exposes `action` and `handles`,
+  use `action: "start"` with the single-job launch fields. Keep its returned
+  handle. Start at most four jobs, then use `action: "wait"` with their handles
+  to receive the first finished result; remove that handle before waiting again
+  and refill according to the workflow's analysis/audit slot rules. Handle
+  operations take only `action` and `handles`. `status` may omit handles to list
+  all jobs; `cancel` requests termination; `forget` releases terminal results.
+  Interrupted waits leave jobs running. Handles do not survive shutdown or
+  reload, which cancel active jobs. Record assignments and results durably;
+  reconcile ownership after interruption rather than blindly relaunching.
+  See `.pi/README.md` for lifecycle and platform limits. An old schema requires
+  reload before launching work, not a fallback to synchronous batches.
 - The Commonplace worker inherits the coordinator's model and thinking level
   unless the call overrides them with `model` or `thinkingLevel`. Each call
   starts a fresh non-persisted session without the parent's conversation.
