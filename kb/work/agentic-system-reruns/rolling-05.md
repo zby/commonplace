@@ -31,7 +31,7 @@ no integration authority. Each slot proceeds to an independent audit before refi
 | Target | Worktree suffix | Analysis handle | Source input | Status |
 |---|---|---|---|---|
 | Agent Workflow Memory | `agent-workflow-memory-cb2da079273e` | `80f7fbc9-9752-4aab-8cc0-7f1cb4722d23` | `https://github.com/zorazrw/agent-workflow-memory` | Analysis dispatched |
-| AgentFly | `agentfly-bbfc9fb2d5c7` | `b55174af-ae49-4386-b448-5e74cc778ed2` | `https://github.com/Agent-on-the-Fly/AgentFly` | Analysis dispatched |
+| AgentFly | `agentfly-bbfc9fb2d5c7` | `b55174af-ae49-4386-b448-5e74cc778ed2` | `https://github.com/Agent-on-the-Fly/AgentFly` | Published; fresh audit active |
 | Agentic Harness Engineering | `agentic-harness-engineering-b7fb59b2f7bd` | `67d3d133-e1c2-4874-ab7d-b673e7ffc030` | `https://github.com/china-qijizhifeng/agentic-harness-engineering` | Stopped: boundary API 503; no publication |
 | Agentic Local Brain | `agentic-local-brain-f00cbd577178` | `42f2fa7d-5187-44d3-a183-9bba7bfd5bca` | `https://github.com/agent-creativity/agentic-local-brain` | Analysis dispatched |
 
@@ -47,7 +47,30 @@ coordinator and `pi-sol` workers. Status: analysis dispatched.
 
 ## Results and integration queue
 
-Integration queue empty. Harness Engineering stopped at boundary attempt
+AgentFly published run `AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01`, frozen source
+`42fbbcac63dd58ed6856c0761357345a58e4f032`. Last advance exited 0, stdout
+`publishable: yes`, stderr empty. Inspection has no failed/open attempts or
+recorded worker problems; retained unchanged as `rolling-05-agentfly-inspect.json`.
+Publication is in its worktree's `kb/agentic-system-analyses/retained/agentfly/`.
+Fresh Sol/medium auditor handle `7f6aac32-6689-45d9-9e6f-a85f694e8aaf`
+owns `audits/rolling-05-agentfly.md`; historical account and operational traces
+are audit-only inputs. Audit returned **integrate with recorded limits**: whole-answer labels are not
+case-usefulness evidence, offline training is not live refresh, partial writes
+and stale-pool deletion remain qualified, and incomplete side-file inventory
+prevents complete cleanup comparisons. Nested traces paired final validation
+passes for all 11 model jobs; one citation-label preflight repair, no established
+validation-path recurrence. Audit report validated with no diagnostics.
+AgentFly is queued for serial integration, not yet counted complete.
+
+After audit disposition, the slot is refilled by ai-memex-cli, source locator
+`https://github.com/zelixag/ai-memex-cli`, selected from inventory metadata only.
+No earlier refresh handoff names it. Ready preparation at
+`b74bbce5c5eb39d918a826d5182d200a56387db8` excluded current outcome/audit
+bookkeeping. Worktree `ai-memex-cli-8e14b4b6efdc`, handle
+`9395d7bf-2067-4a28-ab57-1a2431cf3f1d`, default-tip source-first analysis,
+Sol/medium coordinator and `pi-sol` workers. Status: analysis dispatched.
+
+Integration queue: AgentFly, cleared with recorded limits. Harness Engineering stopped at boundary attempt
 `000003-boundary`, run `AAS-2026-10-12-agentic-harness-engineering-b7fb59b2f7bd-01`.
 The coordinator returned; no open attempts remain. Acquired checkout HEAD is
 `8b2a55d97590363fe50c3cc6b5e833b020a4bb4c`; boundary artifact did not complete.
