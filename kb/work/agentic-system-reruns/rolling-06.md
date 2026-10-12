@@ -32,8 +32,8 @@ records retain setup evidence.
 
 | Target | Worktree basename | Source identity | Handle | Status |
 |---|---|---|---|---|
-| AI Agents in Depth | `ai-agent-book-d56e8121d636` | `https://github.com/bojieli/ai-agent-book` | analysis `f357e523-6582-40b5-9dd3-6f6e8f008fd1`; audit `ad8c7fc7-abc5-4695-87e8-6c8caa2a02a0` | Audit cleared with recorded limits; awaiting serial integration |
-| AI Research OS Workshop | `ai-research-os-workshop-1a93869f8e7f` | `https://github.com/iusztinpaul/ai-research-os-workshop` | `88f5dc89-3776-4e6c-b276-8dba3847a364` | Coordinator running |
+| AI Agents in Depth | `ai-agent-book-d56e8121d636` | `https://github.com/bojieli/ai-agent-book` | analysis `f357e523-6582-40b5-9dd3-6f6e8f008fd1`; audit `ad8c7fc7-abc5-4695-87e8-6c8caa2a02a0` | Audited and integrated with recorded limits |
+| AI Research OS Workshop | `ai-research-os-workshop-1a93869f8e7f` | `https://github.com/iusztinpaul/ai-research-os-workshop` | analysis `88f5dc89-3776-4e6c-b276-8dba3847a364`; audit `6a3f4cec-9d13-41db-9afe-0a2bd720d24e` | Audit cleared with recorded limits; queued for integration |
 | Amazon Science SAGE | `amazon-science-sage-8387fc4221ab` | `https://github.com/amazon-science/SAGE` | `3ea66a91-d4f9-4384-b637-2e29b1d6a689` | Stopped; slot released |
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
 | Archie | `archie-aef788232ea1` | `https://github.com/gchamon/archie` | `39264316-510e-466e-ab26-5fa2a2af5850` | Stopped; slot released |
@@ -123,8 +123,44 @@ excluded and startup files matched. Worktree `arsumbris-247284e3101a`, source
 `https://github.com/arsumbris/arsumbris`, coordinator handle
 `94474085-3b73-4479-b375-161c1fdfb7ff`; running, no boundary returned yet.
 
+## Publication: AI Research OS Workshop
+
+Run `AAS-2026-10-12-ai-research-os-workshop-1a93869f8e7f-01` froze
+`dc6660555266239cd36483cf51b5ab39febacf02` and published in its worktree at
+`kb/agentic-system-analyses/retained/ai-research-os-workshop/`.
+Last advance exited 0, stdout `publishable: yes`, no stderr or stops.
+[Inspection](./rolling-06-ai-research-os-workshop-inspect.json) reports completed,
+publication-job-completed, no failed/open attempts or retained worker-problems.
+Code scheduled the second memory-profile round. A fresh independent audit owns
+`audits/rolling-06-ai-research-os-workshop.md`; not integrated or complete yet.
+
+## Audit clearance: AI Research OS Workshop
+
+[Independent audit](./audits/rolling-06-ai-research-os-workshop.md): **integrate with recorded limits**.
+Public qualifications distinguish retained research and prompt-directed workflows
+from observed execution, factual acceptance and improved capacity. GitHub
+copy/pointer mismatch, query save-back permission conflict and coarse lint-part
+inventory remain publicly qualified. All 13 publication hashes match; traces
+show passing checks for 13 analytical jobs and repaired deterministic feedback.
+Legacy catalog-scaling and packaging warnings are less explicit, without an
+established contradictory public guarantee. Bounded checks, no target execution.
+
+Audit clearance releases the slot to ATLAS, source `https://github.com/cargofy/ATLAS`,
+worktree `atlas-b28ea1ea613f`, coordinator `0dbd44cc-6beb-40be-8e9d-c6590f61e3c5`.
+Preparation used `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`, excluded
+uncommitted outcome/audit bookkeeping and verified matching startup inputs.
+
 ## Integration queue
 
-AI Agents in Depth: audit cleared with recorded limits, queued for immediate
-serial integration after committing owned bookkeeping. No target in this
-execution is checklist-complete yet.
+AI Research OS Workshop is audit-cleared and queued for immediate serial
+integration after committing owned bookkeeping.
+
+AI Agents in Depth integrated using the prepared worktree's
+`commonplace-analysis integrate` with `--model openai/gpt-6.1-sol`, exit 0.
+Integration independently checked publication evidence and returned merge commit
+`3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
+Origin was clean before and after integration. Publication commit `5eadb2197`.
+Origin directory validation passed (one directory artifact, zero diagnostics).
+Corpus progress: 12 complete, 185 pending, nine held; four pipelines active.
+Comparison outputs remain stale and prior landscape synthesis historical;
+no regeneration, cleanup or push commissioned.
