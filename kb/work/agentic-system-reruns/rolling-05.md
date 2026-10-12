@@ -33,7 +33,7 @@ no integration authority. Each slot proceeds to an independent audit before refi
 | Agent Workflow Memory | `agent-workflow-memory-cb2da079273e` | `80f7fbc9-9752-4aab-8cc0-7f1cb4722d23` | `https://github.com/zorazrw/agent-workflow-memory` | Published; independent audit active |
 | AgentFly | `agentfly-bbfc9fb2d5c7` | `b55174af-ae49-4386-b448-5e74cc778ed2` | `https://github.com/Agent-on-the-Fly/AgentFly` | Published; fresh audit active |
 | Agentic Harness Engineering | `agentic-harness-engineering-b7fb59b2f7bd` | `67d3d133-e1c2-4874-ab7d-b673e7ffc030` | `https://github.com/china-qijizhifeng/agentic-harness-engineering` | Stopped: boundary API 503; no publication |
-| Agentic Local Brain | `agentic-local-brain-f00cbd577178` | `42f2fa7d-5187-44d3-a183-9bba7bfd5bca` | `https://github.com/agent-creativity/agentic-local-brain` | Analysis dispatched |
+| Agentic Local Brain | `agentic-local-brain-f00cbd577178` | `42f2fa7d-5187-44d3-a183-9bba7bfd5bca` | `https://github.com/agent-creativity/agentic-local-brain` | Published; independent audit active |
 
 Harness Engineering's stopped assignment releases its slot. Its replacement is
 AI-Context-OS, identified by the historical repository locator only; no old
@@ -47,6 +47,15 @@ coordinator and `pi-sol` workers. Status: stopped at synthesis API 503, no publi
 
 ## Results and integration queue
 
+Agentic Local Brain published run
+`AAS-2026-10-12-agentic-local-brain-f00cbd577178-01`, frozen source
+`41ea0cb104686eb0d39f32c94c2b84d37cdff0e7`. Last advance exited 0,
+stdout `publishable: yes`, stderr empty. No failed/open attempts or recorded
+worker problems. Inspection retained as `rolling-05-agentic-local-brain-inspect.json`.
+Publication is in the worktree's `kb/agentic-system-analyses/retained/agentic-local-brain/`.
+Fresh Sol/medium auditor handle `7ab65d68-665b-4f12-9d97-3faf3db9b6b7`
+owns `audits/rolling-05-agentic-local-brain.md`. Not integrated or counted complete.
+
 Agent Workflow Memory published run
 `AAS-2026-10-12-agent-workflow-memory-cb2da079273e-01`, frozen source
 `8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1`. Last advance exited 0,
@@ -56,7 +65,14 @@ worker problems. Unchanged inspection retained as
 worktree's `kb/agentic-system-analyses/retained/agent-workflow-memory/`.
 Fresh Sol/medium auditor handle `6c95e574-9f5a-4765-8383-166aa6b90476`
 owns `audits/rolling-05-agent-workflow-memory.md`. Not integrated or complete
-for checklist purposes.
+for checklist purposes. Audit returned **integrate with recorded limits**;
+report validated without diagnostics. Default pipeline handoff, optional retrieval,
+annotation-dependent observations and alternate-backend defects are public limits,
+not evidence of working end-to-end operation or benefit. All 13 publication
+hashes match; all 16 model attempts have paired final validation passes, with
+two deterministic preflight repairs and no established path recurrence.
+Integration queue: Agent Workflow Memory. Replacement slot stays empty during
+the provider pause.
 
 AgentFly published run `AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01`, frozen source
 `42fbbcac63dd58ed6856c0761357345a58e4f032`. Last advance exited 0, stdout
@@ -86,7 +102,7 @@ bookkeeping. Worktree `ai-memex-cli-8e14b4b6efdc`, handle
 `9395d7bf-2067-4a28-ab57-1a2431cf3f1d`, default-tip source-first analysis,
 Sol/medium coordinator and `pi-sol` workers. Status: analysis dispatched.
 
-Integration queue empty. Harness Engineering stopped at boundary attempt
+AgentFly's integration queue entry is drained. Harness Engineering stopped at boundary attempt
 `000003-boundary`, run `AAS-2026-10-12-agentic-harness-engineering-b7fb59b2f7bd-01`.
 The coordinator returned; no open attempts remain. Acquired checkout HEAD is
 `8b2a55d97590363fe50c3cc6b5e833b020a4bb4c`; boundary artifact did not complete.
