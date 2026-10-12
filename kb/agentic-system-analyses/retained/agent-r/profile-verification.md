@@ -1,0 +1,32 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Agent-R's ten memory comparison axes against the accepted records at the frozen repository revision."
+run-id: AAS-2026-10-12-agent-r-216224d4270a-01
+reviewed-boundary: "82fcc1ca7873b460949ed49022146dd988c32e31"
+---
+
+# Agent-R profile verification
+
+## Verification
+
+Checked all ten axes in the [memory profile](memory-profile.md#comparison-rationale): each positive value and evidence basis, unit and axis coverage, included unresolved alternatives, and the distinction between retained memory and ordinary rollout context. The supplied reconciliation resolves the duplicate rewrite route to [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite); the separate [EPI-OBJ-conversation](epistemic.md#epi-obj-conversation) remains an output object. No unresolved report conflict changes a classification.
+
+- **Storage substrate and representational form:** The file and process-memory findings cover the recorded tree parts, export parts, evaluation results, progress index and converted output. The text/framing units name both natural-language content and symbolic consumer rules; numerical metadata and loss fields are separately classified. The records establish readable operative content, not a display summary of an opaque payload. See [MEM-OBJ-extended-node](memory.md#mem-obj-extended-node), [MEM-OBJ-node-statistics](memory.md#mem-obj-node-statistics), [MEM-OBJ-revise-log](memory.md#mem-obj-revise-log), [MEM-OBJ-loss-flags](memory.md#mem-obj-loss-flags), [MEM-OBJ-revise-feedback](memory.md#mem-obj-revise-feedback), [MEM-OBJ-final-result](memory.md#mem-obj-final-result), [MEM-OBJ-progress-file](memory.md#mem-obj-progress-file) and [EPI-OBJ-conversation](epistemic.md#epi-obj-conversation). Known coverage concerns these recorded objects, not an established trained checkpoint or opaque provider retention.
+- **Lineage:** Imported environment text, interaction-derived material and software transformations have distinct warrants. Known derivation from recorded inputs does not certify those inputs' original provenance. The partial tree/evaluation units and unresolved progress origin preserve that distinction, including the supplied-prefix alternative. See [MEM-OBJ-extended-node](memory.md#mem-obj-extended-node), [MEM-OBJ-final-result](memory.md#mem-obj-final-result) and [MEM-OBJ-progress-file](memory.md#mem-obj-progress-file).
+- **Behavioral authority:** Knowledge at the verifier, learning at training-artifact construction, and ranking/eligibility effects at path selection concern actual separate consumers. Conversion supplies input content, not a demonstrated parameter update. Claimed external learning remains distinct from unestablished mask interpretation, retained-feedback reuse and checkpoint adoption. See [RT-RTE-revision-export](runtime.md#rt-rte-revision-export), [MEM-OBJ-node-statistics](memory.md#mem-obj-node-statistics), [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite) and [RT-CLM-iterative-training](runtime.md#rt-clm-iterative-training).
+- **Write agency:** Internal software/model admission supports automatic findings. Batch configuration does not establish manual approval. Converter input supply, progress input control and external checkpoint admission remain unresolved rather than inheriting the known automatic transformations. See [RT-RTE-tree-collection](runtime.md#rt-rte-tree-collection), [RT-RTE-revision-export](runtime.md#rt-rte-revision-export), [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite) and [MEM-OBJ-progress-file](memory.md#mem-obj-progress-file).
+- **Curation operations:** Selected path assembly supports consolidation; initial response equality suppression supports deduplication; inserted unentailed self-error admissions support synthesis. Conversion reduces retained content and metadata at an afforded, separate operation. These are transformation findings, not claims that append/overwrite or raw history deletion constitutes semantic maintenance. See [EPI-RTE-conversation-splice](epistemic.md#epi-rte-conversation-splice) and [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite).
+- **Read-back direction and signal:** Requested batch tree loading is pull, as is afforded conversion of supplied retained rows. Selection and delivery fulfilling that request do not independently establish push. Signal inapplicability is local to those operations; unresolved external and auxiliary delivery prevents an axis-wide pull-only conclusion. See [RT-RTE-tree-collection](runtime.md#rt-rte-tree-collection), [RT-RTE-revision-export](runtime.md#rt-rte-revision-export), [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite) and [MEM-CMP-context-helpers](memory.md#mem-cmp-context-helpers).
+- **Trace learning and trace source:** Automatic production of durable behavior-shaping training artifacts qualifies without demonstrated improvement or new knowledge. Wired construction, afforded conversion and claimed parameter training remain separate findings. Linked state/action/outcome paths support trajectories; chat serialization alone does not establish additional session-log, tool-trace or event-stream sources. Unresolved alternate update chains and optimizer inputs remain partial or not determinable. See [MEM-OBJ-revise-log](memory.md#mem-obj-revise-log), [MEM-OBJ-extended-node](memory.md#mem-obj-extended-node), [MEM-OBJ-node-statistics](memory.md#mem-obj-node-statistics), [MEM-RTE-dataset-rewrite](memory.md#mem-rte-dataset-rewrite) and [RT-CLM-iterative-training](runtime.md#rt-clm-iterative-training).
+
+The export's float/string threshold defects are consequential but already qualified beside the affected architectural findings. Wired does not assert successful nonempty export. The [workflow account](workflow.md#workflow-account) corroborates the conditional downstream path, while [RT-ABS-training-machinery](runtime.md#rt-abs-training-machinery) prevents treating external training intent as a closed implemented loop. Missing observed-run and causal evidence is not upgraded by any profile finding. No unsupported comparison value, absence or complete-coverage assertion was established, and no additional publication limit is needed for uncertainty already faithfully expressed by the profile.
+
+Source reads: none. This judgment used the handed records and reconciliation; it adds no evidence or replacement classification.
+
+## Blockers
+
+none
+
+## Limits
+
+none
