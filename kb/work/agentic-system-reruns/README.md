@@ -7,7 +7,7 @@ analysed under the previous analysis system. Produce fresh, source-grounded
 coverage through the current
 [`analyse-agentic-system` workflow](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md),
 not conversions of old reviews. The operator subsequently selected batches of
-two parallel system pipelines, each with a quick independent audit before
+four parallel system pipelines, each with a quick independent audit before
 integration. This document is the handoff; revising it does not launch runs.
 
 Success means published, audited and integrated analyses for the checklist,
@@ -51,7 +51,7 @@ published new-engine sets do. Preserve the historical evidence.
 
 Use `openai/gpt-6.1-sol`, medium thinking, for the batch coordinator, fresh
 per-system coordinators and fresh auditors; analytical workers use `pi-sol`.
-Keep at most **two system pipelines active**, where a pipeline includes analysis
+Keep at most **four system pipelines active**, where a pipeline includes analysis
 and its audit. Each analysis follows the standard skill in its own worktree;
 its internal worker scheduling remains unchanged. Verify runtime support using
 the standing launch rules rather than assuming nested delegation works.
@@ -69,13 +69,13 @@ old and new findings. Preserve the skill's frozen-source and isolation rules.
 
 After each new publication, commission a fresh auditor under
 [Audit a rerun before integration](./audit-a-rerun.md). An audit may overlap the
-other system's analysis. Reconcile both pipeline outcomes, integrate cleared
-results serially through the standard route, and commit owned bookkeeping
-before starting the next pair. Audit clearance does not replace integration's
+other systems' analyses. Reconcile all pipeline outcomes in the batch, integrate
+cleared results serially through the standard route, and commit owned bookkeeping
+before starting the next batch. Audit clearance does not replace integration's
 publication checks.
 
-A held system need not prevent integrating its cleared peer or proceeding to
-another pair once its blocker and unblock condition are recorded. A suspected
+A held system need not prevent integrating its cleared peers or proceeding to
+another batch once its blocker and unblock condition are recorded. A suspected
 shared-method defect pauses affected work and requires a maintenance decision.
 Do not repair accepted content outside a supported workflow or quietly broaden
 the commission to work around a blocker.
@@ -98,7 +98,7 @@ local blocked/out-of-scope results remain incomplete unless the operator
 explicitly approves exclusion.
 
 At each batch boundary, report outcomes, consequential audit findings, worker
-problems and unresolved blockers. Choose the next pair from eligible targets.
+problems and unresolved blockers. Choose the next batch of up to four eligible targets.
 Escalate unresolved identity, authority or recovery decisions rather than
 inventing an answer. Partial progress is useful; do not describe it as a
 completed corpus refresh.
