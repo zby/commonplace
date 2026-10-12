@@ -1,0 +1,37 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of AgentFly's local accumulated-memory profile at commit 42fbbcac63dd58ed6856c0761357345a58e4f032."
+run-id: AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01
+reviewed-boundary: "42fbbcac63dd58ed6856c0761357345a58e4f032"
+---
+
+# AgentFly profile verification
+
+## Verification
+
+I checked all ten axes in the handed profile, their units, positive findings, evidence bases and coverage assessments against the accepted records. The [comparison rationale](memory-profile.md#comparison-rationale) keeps local opaque payloads inside the inventory and excludes external provider state, static prompts and ordinary temporary conversation. Those exclusions do not imply absent provider learning or retention. No correction answers or refusal were supplied. No source reread was needed; this judgment adds no evidence.
+
+The reconciliation's supersession of the epistemic training-entry object is respected: the profile uses [MEM-OBJ-training-data](memory.md#mem-obj-training-data). The combined [EPI-OBJ-case-entry](epistemic.md#epi-obj-case-entry) remains compatible with the two bank-specific objects. Container routes are not treated as identical to their outputs. The reports' exceptional-history, configuration and withdrawal qualifications do not contradict the profile: temporary carryover is excluded as such, text reload is not weight reload, and no immediate withdrawal guarantee is emitted.
+
+| Axis | Disposition and support |
+|---|---|
+| storage_substrate | Supported as known for the declared local inventory. The banks, results and pairs use files; loaded views use process memory. Checkpoints additionally supply numerical model state. Opaque tool payloads have known file storage without known contents. See [MEM-OBJ-memory](memory.md#mem-obj-memory), [MEM-OBJ-query-record](memory.md#mem-obj-query-record), [MEM-OBJ-training-data](memory.md#mem-obj-training-data), [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint), [MEM-OBJ-workspace-files](memory.md#mem-obj-workspace-files) and [MEM-OBJ-tool-files](memory.md#mem-obj-tool-files). |
+| representational_form | Supported as partial. Descriptive text, fixed control fields and numerical checkpoint state are distinguished by consumption. Grouped workspace text/code findings identify their different consumers; binary metadata does not classify the binary payload. See [MEM-RTE-workspace-read](memory.md#mem-rte-workspace-read), [RT-RTE-terminal-execution](runtime.md#rt-rte-terminal-execution) and [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint). |
+| lineage | Supported as partial. Known subsequent driver extraction and gradient compilation do not authenticate initial corpora or deployed assets. Imported document/media contributions and authored workspace content remain distinct from unresolved transformations. See [MEM-OBJ-dummy-memo](memory.md#mem-obj-dummy-memo), [MEM-OBJ-training-data](memory.md#mem-obj-training-data), [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint) and [MEM-OBJ-tool-files](memory.md#mem-obj-tool-files). |
+| behavioral_authority | Supported as partial. Example advice, retained scoring inputs, optimizer inputs and restart keys have separate consumers and effects. Restart matching both selects skipped work and prevents its processing; routing and enforcement can coexist. Generic script execution and unread rationale do not inherit a controlled force. See [RT-BAP-case-guidance](runtime.md#rt-bap-case-guidance), [MEM-OBJ-training-data](memory.md#mem-obj-training-data) and [MEM-OBJ-query-record](memory.md#mem-obj-query-record). |
+| write_agency | Supported as partial. Software/model admissions are automatic even when an operator starts training or selects scripts. Unknown initial supply and generic callers remain unresolved rather than manual. See [RT-RTE-case-admission](runtime.md#rt-rte-case-admission), [RT-RTE-retriever-training](runtime.md#rt-rte-retriever-training) and [MEM-OBJ-workspace-files](memory.md#mem-obj-workspace-files). |
+| curation_operations | Supported as partial. Reduced cases/pairs consolidate existing run content; parameter revision and explicit file replacement evolve retained state. Plain append, parsing and arbitrary conversion do not establish additional operations. See [MEM-OBJ-query-record](memory.md#mem-obj-query-record), [MEM-OBJ-memory](memory.md#mem-obj-memory), [MEM-OBJ-training-data](memory.md#mem-obj-training-data), [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint) and [MEM-OBJ-workspace-files](memory.md#mem-obj-workspace-files). |
+| read_back_direction | Supported as partial. Query-requested selection and fulfilled delivery are pull. Automatic initialization/reload supplies retained pools, parameters and restart keys to later consumers as a separate push operation. The profile does not count fulfilled query delivery again as push. See [MEM-RTE-embedding-examples](memory.md#mem-rte-embedding-examples), [MEM-RTE-classifier-examples](memory.md#mem-rte-classifier-examples), [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint) and [MEM-OBJ-query-record](memory.md#mem-obj-query-record). |
+| read_back_signal | Supported as partial. The push unit names startup/reload triggers, configured availability inputs and supplied retained parts, supporting coarse selection. Requested paths do not establish identifier-targeted push; relevance scoring on pull routes is not a push signal. Unresolved consumer alternatives prevent whole-axis inapplicability. See [MEM-RTE-classifier-examples](memory.md#mem-rte-classifier-examples), [MEM-OBJ-query-record](memory.md#mem-obj-query-record) and [MEM-OBJ-checkpoint](memory.md#mem-obj-checkpoint). |
+| trace_learning | Supported as partial. Automatic case reduction produces durable later example guidance; automatic pair-fed optimization produces parameters for later ranking. Operator launch and unobserved benefit do not defeat wired classification. Raw logs and arbitrary file writes retain unresolved qualifying chains. See [RT-RTE-case-admission](runtime.md#rt-rte-case-admission), [MEM-RTE-embedding-examples](memory.md#mem-rte-embedding-examples), [MEM-OBJ-training-data](memory.md#mem-obj-training-data) and [RT-RTE-retriever-training](runtime.md#rt-rte-retriever-training). |
+| trace_source | Supported as partial. Linked benchmark query, proposed task plan and judged outcome support reduced trajectory experience for the known writes. The profile does not claim that full tool histories enter the case bank or trainer. Unknown prior-case genealogy remains local. See [MEM-OBJ-dummy-memo](memory.md#mem-obj-dummy-memo), [MEM-OBJ-memory](memory.md#mem-obj-memory), [MEM-OBJ-training-data](memory.md#mem-obj-training-data) and [RT-RTE-case-admission](runtime.md#rt-rte-case-admission). |
+
+The grouped units share the emitted findings' scope and coverage while their notes preserve consequential part, mechanism and consumer distinctions. No grouping upgrades an opaque alternative to known. All positive findings remain wired; none asserts observed reliance, causal utility or successful improvement. The partial axes and unresolved units already express the missing provenance, payload and consumer facts where extracted comparison values retain them. These are faithfully scoped uncertainties, not additional publication limits. No unsupported positive, complete-coverage assertion, absence or inapplicability was established by this review.
+
+## Blockers
+
+none
+
+## Limits
+
+none
