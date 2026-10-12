@@ -6,6 +6,9 @@ Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 **Progress: 8 complete with the new engine; 195 pending; 3 blocked or recovery-required; none awaiting integration.** [Resume](./resume-2026-10-12.md) records current integration and scheduling disposition; [batch 03](./batch-03.md) retains prior evidence. Checked rows have
 published current-engine analysis sets. Completed sets are accepted with recorded limits, not limit-free results.
 Historical records are inclusion and identity references, not fresh-run evidence.
+The [validation-path maintenance decision](./validation-path-maintenance.md)
+lifts the shared pause for fresh eligible runs. The three individual recovery
+holds remain in force; Agent Skills is reserved to its reported owner.
 After assignment, append the run identifier and source boundary. For new runs,
 check the box only after publication, audit clearance and verified integration;
 append the overview, audit link and integration commit. Record blockers explicitly.
