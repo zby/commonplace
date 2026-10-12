@@ -80,10 +80,13 @@ shared-method defect pauses affected work and requires a maintenance decision.
 Do not repair accepted content outside a supported workflow or quietly broaden
 the commission to work around a blocker.
 
-Honor clean-origin requirements at preparation and integration boundaries.
-Resolve pre-existing uncommitted work with its owner; this commission does not
-authorize staging unrelated files or a dirty-origin exception. Preserve run
-worktrees and traces. No cleanup, push or method edits are commissioned.
+Preparation permits unrelated uncommitted origin changes by default, excludes
+their bytes, and records their exclusion; startup instructions and configuration
+must still match the selected commit. `--require-clean-origin` requests strict
+preparation. Integration still requires a clean origin on `main`. Resolve
+pre-existing uncommitted work with its owner before integration; this commission
+does not authorize staging unrelated files. Preserve run worktrees and traces.
+No cleanup, push or method edits are commissioned.
 
 ## Progress and checkpoints
 

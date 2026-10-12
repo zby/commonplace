@@ -151,9 +151,10 @@ observation under a basename ending in the capture date.
 `prepare --name <system>` creates a dedicated Commonplace source
 worktree and installs and verifies its local command environment. It pins a
 commit and a 12-hex worktree token in the preparation record for distinct
-analysis run IDs. It excludes uncommitted origin changes only with
-`--allow-dirty-origin`;
-changed startup instructions and configuration always stop preparation. An
+analysis run IDs. By default it permits unrelated uncommitted origin changes,
+excludes their bytes from the worktree, and records their exclusion.
+`--require-clean-origin` instead rejects a dirty origin; startup instructions and
+configuration that differ from the selected commit always stop preparation. An
 optional command after `--` launches a fresh harness with the prepared working
 directory and environment. Without `--revision` it refuses a `HEAD` behind the
 default branch. It does not open or advance an analysis. Analysis mutation
@@ -183,7 +184,8 @@ handoff command.
 `integrate <run>` independently verifies engine completion, current
 coverage, exact pinned publication inputs, retained bytes, journal and archive
 evidence. After separate operator authorization it commits the published artifact and
-incumbent archive on an analysis branch and merges into `main`. A conflict
+incumbent archive on an analysis branch and merges into `main`. The origin
+checkout must be clean and on `main`, regardless of preparation mode. A conflict
 leaves the branch and worktree for review while `main` stays unchanged. An agent
 supplies `--model <model-id>` for its commit trailer.
 

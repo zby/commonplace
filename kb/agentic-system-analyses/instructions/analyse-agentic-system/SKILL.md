@@ -64,10 +64,11 @@ Preparation uses `HEAD`. It stops when `HEAD` is behind the default branch:
 this session then loaded an older method. Stop and tell the operator; only the
 operator selects another method with `--revision <commit>`.
 
-By default, uncommitted changes stop preparation. `--allow-dirty-origin` permits
-unrelated changes in the originating checkout and excludes them from the new
-worktree; use it only when the operator asks. It never permits changed startup
-instructions or configuration: instruction files such as `AGENTS.md`, project
+By default, preparation permits unrelated uncommitted changes in the originating
+checkout, excludes them from the new worktree, and records their exclusion in
+its JSON record. `--require-clean-origin` instead stops preparation when the
+origin is dirty. Startup instructions and configuration must always match the
+selected commit, in either mode: instruction files such as `AGENTS.md`, project
 harness settings and system prompts, skill and agent directories, extensions,
 hooks and prompt resources, and repository-local targets of skill symlinks must
 match the selected commit. Staged, unstaged, untracked and ignored startup files

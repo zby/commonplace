@@ -50,7 +50,7 @@ def _git_paths(origin: Path, args: list[str]) -> set[str]:
 
 
 def require_committed_startup(origin: Path, commit: str) -> None:
-    """The dirty-origin exception never permits different startup instructions.
+    """Preparation never permits startup instructions that differ from the commit.
 
     Inspect index and working tree independently (their changes can cancel),
     plus untracked and ignored startup files, except ignored local harness
@@ -97,7 +97,7 @@ def require_committed_startup(origin: Path, commit: str) -> None:
         raise ValueError(
             "startup instructions or configuration differ from the selected commit: "
             + ", ".join(changed)
-            + "; commit or remove these changes first; --allow-dirty-origin does not bypass this check"
+            + "; commit or remove these changes first; this check is mandatory even without --require-clean-origin"
         )
 
 
@@ -227,7 +227,7 @@ def prepare_worktree(
     origin: Path,
     *,
     name: str,
-    allow_dirty_origin: bool = False,
+    require_clean_origin: bool = False,
     revision: str | None = None,
     worktree: Path | None = None,
 ) -> dict[str, object]:
@@ -247,10 +247,10 @@ def prepare_worktree(
         _require_current_revision(origin, commit)
     require_committed_startup(origin, commit)
     dirty = bool(run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin))
-    if dirty and not allow_dirty_origin:
+    if dirty and require_clean_origin:
         raise ValueError(
-            "origin has uncommitted changes; commit them or use --allow-dirty-origin "
-            "to exclude them from the worktree"
+            "origin has uncommitted changes; --require-clean-origin requires a clean checkout; "
+            "commit or remove these changes first"
         )
     try:
         project = tomllib.loads(run_command(["git", "show", f"{commit}:pyproject.toml"], cwd=origin))

@@ -57,21 +57,21 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
     return root
 
 
-def test_dirty_origin_is_refused_without_creating_a_worktree(origin: Path) -> None:
+def test_strict_dirty_origin_is_refused_without_creating_a_worktree(origin: Path) -> None:
     (origin / "note.md").write_text("Pending edit\n")
-    with pytest.raises(ValueError, match="--allow-dirty-origin"):
-        iso.prepare_worktree(origin, name="example")
+    with pytest.raises(ValueError, match="--require-clean-origin"):
+        iso.prepare_worktree(origin, name="example", require_clean_origin=True)
     assert not (origin / ".commonplace").exists()
 
 
-def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(origin: Path) -> None:
+def test_dirty_default_uses_clean_committed_bytes_and_leaves_origin_alone(origin: Path) -> None:
     commit = git(origin, "rev-parse", "HEAD")
     (origin / "note.md").write_text("Pending edit\n")
     git(origin, "add", "note.md")
     (origin / "untracked.md").write_text("Not in the analysis\n")
     before = git(origin, "status", "--porcelain")
 
-    prepared = iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)
+    prepared = iso.prepare_worktree(origin, name="example")
     tree = Path(str(prepared["worktree"]))
 
     assert tree.parent == origin / ".commonplace/worktrees"
@@ -88,6 +88,38 @@ def test_dirty_exception_uses_clean_committed_bytes_and_leaves_origin_alone(orig
     assert git(tree, "rev-parse", "--show-toplevel") == str(tree)
     assert git(origin, "status", "--porcelain") == before
     assert json.loads(Path(str(prepared["record"])).read_text()) == prepared
+
+
+def test_clean_origin_succeeds_in_strict_mode(origin: Path) -> None:
+    prepared = iso.prepare_worktree(origin, name="example", require_clean_origin=True)
+    assert prepared["status"] == "ready"
+    assert prepared["origin-dirty"] is False
+    assert prepared["uncommitted-changes-excluded"] is False
+
+
+@pytest.mark.parametrize("strict", [False, True])
+def test_prepare_cli_forwards_clean_origin_option(origin: Path, monkeypatch, capsys, strict: bool) -> None:
+    import commonplace.cli.analysis as cli
+
+    calls = []
+    monkeypatch.chdir(origin)
+    monkeypatch.setattr(cli, "prepare_worktree", lambda *args, **kwargs: calls.append((args, kwargs)) or {})
+    options = ["--require-clean-origin"] if strict else []
+    assert main(["prepare", "--name", "example", *options]) == 0
+    assert calls == [((origin,), {
+        "name": "example", "require_clean_origin": strict, "revision": None, "worktree": None,
+    })]
+    assert json.loads(capsys.readouterr().out) == {}
+
+
+def test_prepare_cli_rejects_obsolete_dirty_origin_option(monkeypatch, capsys) -> None:
+    import commonplace.cli.analysis as cli
+
+    monkeypatch.setattr(cli, "prepare_worktree", lambda *args, **kwargs: pytest.fail("must not prepare"))
+    with pytest.raises(SystemExit) as error:
+        main(["prepare", "--name", "example", "--allow-dirty-origin"])
+    assert error.value.code == 2
+    assert "unrecognized arguments: --allow-dirty-origin" in capsys.readouterr().err
 
 
 def _startup_change(origin: Path, kind: str) -> Path | None:
@@ -128,24 +160,35 @@ def _startup_change(origin: Path, kind: str) -> Path | None:
 
 @pytest.mark.parametrize("kind", ["unstaged", "staged", "cancelling", "untracked", "ignored", "skill",
                                   "local-settings", "ignored-local-settings", "harness-state"])
-def test_startup_changes_are_never_omitted(origin: Path, kind: str) -> None:
+@pytest.mark.parametrize("require_clean_origin", [False, True])
+def test_startup_changes_are_never_omitted(origin: Path, kind: str, require_clean_origin: bool) -> None:
     changed = _startup_change(origin, kind)
     if changed is None:
-        assert iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)["status"] == "ready"
+        if require_clean_origin and git(origin, "status", "--porcelain"):
+            with pytest.raises(ValueError, match="--require-clean-origin"):
+                iso.prepare_worktree(origin, name="example", require_clean_origin=True)
+        else:
+            assert iso.prepare_worktree(
+                origin, name="example", require_clean_origin=require_clean_origin,
+            )["status"] == "ready"
         return
     with pytest.raises(ValueError, match="startup instructions or configuration") as error:
-        iso.prepare_worktree(origin, name="example", allow_dirty_origin=True)
+        iso.prepare_worktree(origin, name="example", require_clean_origin=require_clean_origin)
     assert changed.relative_to(origin).as_posix() in str(error.value)
+    assert "mandatory even without --require-clean-origin" in str(error.value)
     assert not (origin / ".commonplace").exists()
 
 
-def test_selected_revision_must_match_the_origins_startup_instructions(origin: Path) -> None:
+@pytest.mark.parametrize("require_clean_origin", [False, True])
+def test_selected_revision_must_match_the_origins_startup_instructions(
+    origin: Path, require_clean_origin: bool,
+) -> None:
     old = git(origin, "rev-parse", "HEAD")
     (origin / "AGENTS.md").write_text("New committed instructions\n")
     git(origin, "add", "AGENTS.md")
     git(origin, "commit", "--quiet", "-m", "Change startup instructions")
     with pytest.raises(ValueError, match="AGENTS.md"):
-        iso.prepare_worktree(origin, name="example", revision=old, allow_dirty_origin=True)
+        iso.prepare_worktree(origin, name="example", revision=old, require_clean_origin=require_clean_origin)
 
 
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:

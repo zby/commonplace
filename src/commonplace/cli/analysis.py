@@ -20,7 +20,10 @@ def main(argv: list[str] | None = None) -> int:
     prepare.add_argument("--name", required=True)
     prepare.add_argument("--revision")
     prepare.add_argument("--worktree", type=Path)
-    prepare.add_argument("--allow-dirty-origin", action="store_true")
+    prepare.add_argument(
+        "--require-clean-origin", action="store_true",
+        help="reject unrelated uncommitted origin changes (otherwise excluded); startup mismatches always fail",
+    )
     prepare.add_argument("launch", nargs=argparse.REMAINDER, help="optional fresh harness command after --")
     start = commands.add_parser("start", help="allocate a run without advancing or acquiring sources")
     start.add_argument("--system", required=True)
@@ -68,7 +71,7 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(rendered, indent=2, sort_keys=True))
         else:
             preparation = prepare_worktree(
-                Path.cwd(), name=arguments.name, allow_dirty_origin=arguments.allow_dirty_origin,
+                Path.cwd(), name=arguments.name, require_clean_origin=arguments.require_clean_origin,
                 revision=arguments.revision, worktree=arguments.worktree,
             )
             print(json.dumps(preparation, indent=2), flush=True)
