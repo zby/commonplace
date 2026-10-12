@@ -11,10 +11,15 @@ prepares and launches it in one command. Worker processes inherit its `PATH`.
 Starting Pi from a worktree alone does not isolate the shared editable Commonplace installation.
 Keep the run's code and method files unchanged until completion.
 
-`APPEND_SYSTEM.md` supplies the worker call format and coordinator preflight in
-Pi's startup system prompt. It also loads in children; the coordinator rules
-apply only when the `subagent` tool is exposed. Ordinary worker selection
-excludes that tool; coordinator selection includes it. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
+[`APPEND_SYSTEM.md`](APPEND_SYSTEM.md) is the canonical Pi delegation contract,
+including the worker call format and coordinator preflight. Pi can load it at
+startup when project trust permits; do not assume a child inherits it. The
+coordinator definition explicitly requires reading the complete file from the
+current worktree's repository root before any delegation or opening a workflow,
+then following it. An absent or unreadable file is a blocker, not permission to
+guess launch arguments. The coordinator rules apply only when `subagent` is
+exposed. Ordinary worker selection excludes that tool; coordinator selection
+includes it. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
 
 `extensions/subagent/{index.ts,agents.ts}` were copied from the subagent
 example shipped with `@earendil-works/pi-coding-agent` 1.0.0. `index.ts` now
@@ -40,7 +45,9 @@ authentication in Pi, not in this repository.
 when commissioning an entire standard skill that must launch its own workers;
 keep individual scheduled jobs on `commonplace-worker`. Both definitions are
 discovered afresh on each invocation, so this role selection needs no extension
-reload. A newly launched coordinator loads its own startup instructions.
+reload. The extension passes the definition body through a temporary file via
+`--append-system-prompt`; that body instructs the child coordinator to explicitly
+read the canonical contract rather than relying on automatic startup loading.
 Before opening a run, it must successfully launch the required diagnostic
 worker. This tests the intended parent → coordinator → worker path, not a
 maximum supported depth. Do not use agent CLIs through Bash as a substitute.

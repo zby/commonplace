@@ -24,7 +24,10 @@ const childProcess = createRequire(import.meta.url)("node:child_process");
 const originalSpawn = childProcess.spawn;
 const launches = [];
 childProcess.spawn = (command, args, options) => {
-  launches.push({ command, args, options });
+  // Capture prompt files while they exist; the extension removes them on exit.
+  const promptIndex = args.indexOf("--append-system-prompt");
+  const systemPrompt = promptIndex < 0 ? undefined : fs.readFileSync(args[promptIndex + 1], "utf8");
+  launches.push({ command, args, options, systemPrompt });
   const proc = new EventEmitter();
   proc.stdout = new PassThrough();
   proc.stderr = new PassThrough();
@@ -50,6 +53,9 @@ for (const name of ["commonplace-worker", "commonplace-coordinator"]) {
   fs.copyFileSync(fileURLToPath(new URL(`../../../agents/${name}.md`, import.meta.url)),
     path.join(root, ".pi", "agents", `${name}.md`));
 }
+const coordinatorBody = fs.readFileSync(
+  path.join(root, ".pi", "agents", "commonplace-coordinator.md"), "utf8",
+).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "").trim();
 let tool;
 try {
   const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
@@ -101,6 +107,24 @@ test("launch overrides and inheritance", async t => {
         assert.equal(launches[0].options.cwd, root);
         assert.ok(launches[0].args.includes("--no-session"));
       }
+    });
+    await t.test("shipped coordinator explicitly loads the canonical contract and fails closed", () => {
+      const body = coordinatorBody.replace(/\s+/g, " ");
+      assert.match(body, /Before any delegation or opening a workflow, read the complete `\.pi\/APPEND_SYSTEM\.md`/);
+      assert.match(body, /from the repository root of your current worktree and follow it as the canonical Pi delegation contract/);
+      assert.match(body, /Do not assume it was inherited from the parent or loaded at startup/);
+      assert.match(body, /If it is absent or unreadable, stop and report the exact path and read failure; do not guess the launch contract/);
+      // Launch details belong in APPEND_SYSTEM.md, not a second contract here.
+      assert.doesNotMatch(body, /agentScope|COMMONPLACE_WORKER_OK/);
+    });
+    await t.test("coordinator launch transports the full contract-loading instruction without commission help", async () => {
+      const task = "Coordinate the commissioned workflow.";
+      await launch({ agent: "commonplace-coordinator", task, cwd: root });
+      assert.equal(launches.length, 1);
+      assert.ok(flag(0, "--append-system-prompt"));
+      assert.equal(launches[0].systemPrompt.trim(), coordinatorBody);
+      assert.equal(launches[0].args.at(-1), `Task: ${task}`);
+      assert.equal(launches[0].options.cwd, root);
     });
     await t.test("pinned model preserves original thinking default", async () => {
       await launch({ agent: "pinned", task: "test" });
