@@ -55,7 +55,13 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
-**Latest checkpoint:** [rolling execution 05](./rolling-05.md) resumed the
+**Current ownership:** [rolling execution 06](./rolling-06.md) has taken over
+under the operator's restart direction. Four eligible source-first pipelines
+are active: AI Agents in Depth, AI Research OS Workshop, Amazon Science SAGE
+and Apache Maka. The execution record owns their handles, outcomes and integration
+queue. The six individual holds remain unchanged.
+
+**Previous checkpoint:** [rolling execution 05](./rolling-05.md) resumed the
 released four-pipeline pool from the committed validation-output method. It
 integrated audited AgentFly, Agent Workflow Memory and Agentic Local Brain
 publications. Harness Engineering, AI-Context-OS and ai-memex-cli stopped at
