@@ -13,7 +13,7 @@ tags: [learning-theory, computational-model, constraining, llm-reliability]
 
 LLM-based systems differ from traditional programs in two ways that are often conflated but are conceptually distinct:
 
-**1. Semantic underspecification.** Natural language specifications don't have precise denotations. "Write a summary" admits a *space* of valid interpretations — different lengths, emphases, structures. This is a property of the specification language itself, not the engine.
+**1. Semantic underspecification.** Natural language specifications don't have precise denotations in general; how far a given text falls short is a matter of degree. "Write a summary" admits a *space* of valid interpretations — different lengths, emphases, structures. This is a property of the specification language itself, not the engine.
 
 **2. Execution indeterminism.** The same prompt can produce different outputs across runs due to sampling (temperature > 0). This is a property of the execution engine — conceptually simpler than semantic underspecification, and largely eliminable via temperature=0, though implementation details (floating-point non-determinism, batching, infrastructure changes) make true determinism hard to guarantee in practice. Deployed systems run with indeterminism anyway, and often benefit from it.
 
@@ -39,7 +39,7 @@ This makes LLMs different from compilers — but the contrast has to be stated c
 
 An LLM has no such aim. It too has operational behavior once fixed to a model, prompt, context, decoding settings, and runtime — but that behavior is not a model-independent semantics of the natural-language prompt that another conforming interpreter is expected to preserve. The prompt still admits a space of valid interpretations, and the LLM performs a *projection*: it collapses that space to one concrete program.
 
-Nor could the aim be adopted. For programming languages, formal semantics is a plausible ideal even when practice falls short. For ordinary natural-language instructions it is not attainable even in principle: a general language rich enough to talk about truth, meaning, and computation runs into Tarski/Gödel/halting-style impossibility results, so a complete executable semantics would have to drop that openness and become a constrained formal language.
+Nor could the aim be adopted. For programming languages, formal semantics is a plausible ideal even when practice falls short. For natural language as a whole it is not attainable even in principle: a general language rich enough to talk about truth, meaning, and computation runs into Tarski/Gödel/halting-style impossibility results, so a complete executable semantics would have to drop that openness and become a constrained formal language. This limits the language, not every text in it; an individual instruction can still come close to a single reading.
 
 The two phenomena layer on top of each other: the projection picks an interpretation (semantic underspecification), then execution of that interpretation may vary across runs (indeterminism). But the more interesting variation comes from the first source — qualitatively different strategies, not noisy executions of the same one.
 
@@ -62,7 +62,7 @@ The usual tools are system prompts, few-shot examples, tool definitions, output 
 
 Temperature is often cited as purely an indeterminism control, but it's subtler than that. Lowering temperature concentrates the sampling distribution — which can change *which interpretation* you see, not just how noisily you see it. At temperature=0 the LLM still picks one interpretation from the space the spec admits; you just get the same one every time. This is why lowering temperature alone doesn't solve the "wrong interpretation" problem — it eliminates variation without ensuring the remaining interpretation is the one you wanted.
 
-None of these tools eliminates ambiguity entirely. Natural language specs remain underspecified even under maximum constraint. So real systems don't just manage underspecification *within* LLM components — they also manage the transitions between LLM and code.
+None of these tools eliminates ambiguity in general, but how much remains is measurable. The space is measured relative to a reference set of interpreters and a rule for when two outputs count as the same answer ([epistemic stance](../reference/epistemic-stance.md), point 3): a text is near-determinate when the reference converges on one reading, underspecified when stable competing readings survive. [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) shows the near-determinate end: over about a million Towers of Hanoi steps, voting across independent samples converged on the correct move every time. Most specs sit far from that end even under heavy constraint. So real systems don't just manage underspecification *within* LLM components — they also manage the transitions between LLM and code.
 
 ## Boundaries
 

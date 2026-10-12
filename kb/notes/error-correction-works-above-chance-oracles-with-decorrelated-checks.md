@@ -6,7 +6,7 @@ tags: [llm-reliability, learning-theory]
 
 # Error correction works with above-chance oracles and decorrelated checks
 
-Error correction builds reliable systems from unreliable parts through redundancy and verification. The [MAKER paper](https://arxiv.org/abs/2511.09030) demonstrates this for LLM execution tasks: voting across independent samples achieves zero errors over a million steps. But MAKER uses hard oracles (deterministic verification). The general principle is broader — error correction works whenever the oracle has discriminative power, provided the checks are sufficiently decorrelated. This note develops both conditions: what discriminative power means precisely, how many repetitions it costs, and why decorrelation is the binding constraint for LLM-based checks.
+Error correction builds reliable systems from unreliable parts through redundancy and verification. The [MAKER paper](https://arxiv.org/abs/2511.09030) demonstrates this for LLM execution tasks: voting across independent samples achieves zero errors over a million steps. MAKER's steps each have one correct move, so the LLM's own per-step judgment is a noisy but discriminating oracle that voting strengthens — the easy case. The general principle is broader — error correction works whenever the oracle has discriminative power, provided the checks are sufficiently decorrelated. This note develops both conditions: what discriminative power means precisely, how many repetitions it costs, and why decorrelation is the binding constraint for LLM-based checks.
 
 ## The amplification condition: TPR > FPR
 
@@ -45,7 +45,7 @@ This makes the practical question not "how strong is your oracle?" but "how chea
 
 ## Decorrelation: the binding constraint for LLM checks
 
-Signal strength alone is not enough. Repetitions must produce independent errors. If all checks share the same systematic bias — same model, same prompt, same training data — voting converges to the shared bias, not to the truth. Correlated noise does not average out.
+Signal strength alone is not enough. Repetitions must produce independent errors. If all checks share the same systematic bias — same model, same prompt, same training data — voting converges to the shared bias, not to the truth. Correlated noise does not average out. A shared reading of the task is one such bias: voting removes a checker's deviation from its own most common verdict, so a verdict every sample reproduces survives any number of votes ([epistemic stance](../reference/epistemic-stance.md), point 3). Only changing the task statement or the checkers moves it.
 
 The ceiling on reliability is the product of signal strength and independence. A strong but correlated oracle plateaus fast. A weak but independent oracle converges slowly but surely. The design problem is maximising this product per unit cost.
 
@@ -90,7 +90,7 @@ The progression from [oracle hardening](./oracle-strength-spectrum.md) to error 
 Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the spectrum of oracle strength this note extends with error correction as an amplification mechanism
-- [MAKER paper](https://arxiv.org/abs/2511.09030) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
+- [MAKER paper](https://arxiv.org/abs/2511.09030) — example: voting over a noisy per-step oracle achieves O(s ln s) scaling where each step has one correct move; this note generalises to softer oracles
 - [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: bounds the distribution-selection explanation so this note's error-correction account rests on explicit constraints and checks
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
 - [codification](./definitions/codification.md) — parallel: codification moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles

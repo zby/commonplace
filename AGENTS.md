@@ -15,6 +15,8 @@ limits, revise the methods and record episodes as research evidence.
 
 Support agents and maintainers deciding KB architecture, types, writing,
 context engineering and knowledge organization in Commonplace and consuming KBs.
+The KB's assertions assume the Popperian tradition declared in
+[epistemic stance](./kb/reference/epistemic-stance.md).
 
 ### Scope
 
