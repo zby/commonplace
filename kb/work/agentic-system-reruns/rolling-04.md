@@ -166,3 +166,25 @@ operator's stop remains in force; no replacement, recovery, method change or
 simpler command implementation was performed. Corpus progress remains eight
 complete, 191 pending and seven recovery-required. No new result awaits
 integration. Worktrees, failed attempts and historical traces are preserved.
+
+## Operator disposition: fresh reruns, not recovery
+
+After discussing continuation from accepted stages, the operator chose to mark
+all four stopped systems for fresh reruns rather than resume their existing
+runs. This applies to Agent Workflow Memory, AgentFly, Agentic Harness
+Engineering and Agentic Local Brain. Their checklist rows return to pending,
+explicitly marked **fresh rerun required**. Do not advance or recover the four
+old runs; retain their worktrees, attempts, partial outputs, inspections and
+audit evidence unchanged.
+
+This decision schedules future replacements; it does not launch them or release
+the stop on new dispatch. Once the operator releases that stop and the selected
+method is ready, prepare new isolated source-first runs. Do not supply these
+partial findings or audit conclusions as analytical inputs to replacements.
+No cleanup, source revision choice or frozen-method edit is authorized here.
+
+AgeMem and Agent-R remain complete and integrated. Agent Skills' owner
+reservation and substantive hold, ACE's prior-worker-status requirement and
+Academic Research Skills' source-exposure hold remain separate. Updated
+population: eight complete, 195 pending (four explicitly marked for fresh
+rerun), three blocked or recovery-required, none awaiting integration.
