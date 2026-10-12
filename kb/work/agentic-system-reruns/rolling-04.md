@@ -32,10 +32,10 @@ through its independent audit. No coordinator integrates.
 
 | Target | Worktree suffix | Analysis handle | Source input | Status |
 |---|---|---|---|---|
-| Agent Workflow Memory | `agent-workflow-memory-116175117a61` | `a889322d-9fc2-4fcc-87ac-fa8112f3484b` | `https://github.com/zorazrw/agent-workflow-memory` | Coordinator dispatched; run/boundary pending |
-| AgentFly | `agentfly-987dd174e8a2` | `7432f0b3-7e13-4aac-8a8e-6da984de7f53` | `https://github.com/Agent-on-the-Fly/AgentFly` | Coordinator dispatched; run/boundary pending |
-| Agentic Harness Engineering | `agentic-harness-engineering-49c4f24b03c3` | `4e7e65ce-3adf-4fbe-b79c-5c240b4150e9` | `https://github.com/china-qijizhifeng/agentic-harness-engineering` | Coordinator dispatched; run/boundary pending |
-| Agentic Local Brain | `agentic-local-brain-27587657c512` | `0b68dce5-6f53-4dd8-aa6a-82a7855dc3fe` | `https://github.com/agent-creativity/agentic-local-brain` | Coordinator dispatched; run/boundary pending |
+| Agent Workflow Memory | `agent-workflow-memory-116175117a61` | `a889322d-9fc2-4fcc-87ac-fa8112f3484b` | `https://github.com/zorazrw/agent-workflow-memory` | Stopped; runtime worker API 503; no publication |
+| AgentFly | `agentfly-987dd174e8a2` | `7432f0b3-7e13-4aac-8a8e-6da984de7f53` | `https://github.com/Agent-on-the-Fly/AgentFly` | Stopped; runtime worker stream failure; no publication |
+| Agentic Harness Engineering | `agentic-harness-engineering-49c4f24b03c3` | `4e7e65ce-3adf-4fbe-b79c-5c240b4150e9` | `https://github.com/china-qijizhifeng/agentic-harness-engineering` | Stopped; report-verification stream failure; no publication |
+| Agentic Local Brain | `agentic-local-brain-27587657c512` | `0b68dce5-6f53-4dd8-aa6a-82a7855dc3fe` | `https://github.com/agent-creativity/agentic-local-brain` | Stopped; runtime worker stream failure; no publication |
 
 These targets have no matching unfinished named assignments in the earlier
 agentic-memory-refresh workshop. A-mem and Agent-S were not selected because
@@ -44,8 +44,80 @@ The three individual recovery/reservation holds remain unchanged.
 
 ## Outcomes and integration queue
 
-No result received yet. No target is complete or awaiting integration.
-Receive an individual completion, retain its result here, and dispatch its
-fresh auditor under [the audit procedure](./audit-a-rerun.md) before refilling
-that slot. Drain cleared results serially when clean-origin integration is
-available. Keep the other pipelines running; no wait-for-all checkpoint.
+The operator amended execution while these four coordinators were assigned:
+let the currently running analyses finish, then stop and check whether everything
+was OK, particularly worker confusion about validation paths. No replacement
+pipeline is authorized after this instruction. The operator intends a simpler
+worker verification command; implementing it is not part of this pass. Preserve
+results and inspect operational evidence before any later restart. Publication
+still needs independent audit and clean-origin integration to count complete.
+
+### Agent Workflow Memory: failed runtime worker
+
+Run `AAS-2026-10-12-agent-workflow-memory-116175117a61-01`; acquired source
+HEAD `8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1`. Coordinator returned normally
+with a stopped engine. Boundary completed; `000005-runtime` failed. No open
+attempt or publication; `worker-problems` is empty, while `failed-attempts`
+records the execution failure. This is not a path-validation diagnosis.
+
+Last advance exited 2; no separate stderr returned:
+
+```text
+stop runtime 000005-runtime: Agent stop: OpenAI API error (503): 503 upstream connect error or disconnect/reset before headers. retried and the latest reset reason: connection termination
+publishable: no
+```
+
+Run evidence remains under this worktree's
+`kb/agentic-system-analyses/state/AAS-2026-10-12-agent-workflow-memory-116175117a61-01/`.
+No retry or recovery was launched. No target is complete or awaiting integration.
+
+### Other three outcomes
+
+| Target | Run | Acquired source HEAD | Failed attempt |
+|---|---|---|---|
+| AgentFly | `AAS-2026-10-12-agentfly-987dd174e8a2-01` | `42fbbcac63dd58ed6856c0761357345a58e4f032` | `000005-runtime` |
+| Agentic Local Brain | `AAS-2026-10-12-agentic-local-brain-27587657c512-01` | `41ea0cb104686eb0d39f32c94c2b84d37cdff0e7` | `000005-runtime` |
+| Agentic Harness Engineering | `AAS-2026-10-12-agentic-harness-engineering-49c4f24b03c3-01` | `8b2a55d97590363fe50c3cc6b5e833b020a4bb4c` | `000022-report-verification` |
+
+Each coordinator returned normally; its last advance exited 2, with no separate
+stderr reported. AgentFly and Agentic Local Brain returned exactly:
+
+```text
+stop runtime 000005-runtime: Agent stop: OpenAI Responses stream ended before a terminal response event
+publishable: no
+```
+
+Agentic Harness Engineering returned exactly:
+
+```text
+stop report-verification 000022-report-verification: Agent stop: OpenAI Responses stream ended before a terminal response event
+publishable: no
+```
+
+Harness Engineering completed boundary, runtime, memory, epistemic, workflow
+and reconciliation, but not report verification or publication. All four runs
+report stopped, no open attempts and one failed attempt each. No replacement,
+retry or recovery is launched. New analyses are now stopped by operator direction,
+independently of the resolved producer suspicion.
+
+Read-only inspection commands were rerun in each original command environment;
+all exited 0 with empty stderr. Unchanged outputs are retained as
+`rolling-04-<worktree-suffix>-inspect.json` alongside this record. These are
+engine reports, not independent source or worker-compliance certification.
+
+## Requested retrospective checks
+
+The operator clarified that checking path confusion must assess substantive
+reasonableness, not just command correctness. Four independent Sol/medium
+workers have disjoint report ownership:
+
+| Check | Handle | Owned report |
+|---|---|---|
+| AgeMem affected members and final conclusions | `1568e2b0-17c8-444d-a841-0f0f2e9f520d` | `audits/path-confusion-agemem.md` |
+| Agent-R boundary and final conclusions | `e5da88d2-57df-4169-9191-7e1e731b97fa` | `audits/path-confusion-agent-r.md` |
+| Agent Skills affected draft, historical trace only | `a802e2d0-202c-45bc-946c-d3398262f612` | `audits/path-confusion-agent-skills.md` |
+| Four current runs' operational evidence | `855fe727-5968-44bd-9b6a-691f72a23af3` | `audits/rolling-04-execution-check.md` |
+
+These are retrospective checks, not replacement analysis pipelines. Agent Skills'
+changing worktree is excluded pending owner coordination. No simpler validator
+command is implemented in this pass. Reports and their limitations are pending.
