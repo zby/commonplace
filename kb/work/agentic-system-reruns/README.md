@@ -56,10 +56,11 @@ published new-engine sets do. Preserve the historical evidence.
 ## Current execution checkpoint and next action
 
 **Current ownership:** [rolling execution 06](./rolling-06.md) has taken over
-under the operator's restart direction. Four eligible source-first pipelines
-are active: AI Agents in Depth, AI Research OS Workshop, Amazon Science SAGE
-and Apache Maka. The execution record owns their handles, outcomes and integration
-queue. The six individual holds remain unchanged.
+under the operator's restart direction. The four-pipeline pool is active; see that record and the checklist for
+current analysis/audit assignments, outcomes and integration queue. AI Agents
+in Depth has published and is under independent audit. New individual stream
+failures are recorded as recovery holds, without a blanket provider pause.
+The original six individual holds remain unchanged.
 
 **Previous checkpoint:** [rolling execution 05](./rolling-05.md) resumed the
 released four-pipeline pool from the committed validation-output method. It
