@@ -38,7 +38,7 @@ records retain setup evidence.
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
 | Archie | `archie-aef788232ea1` | `https://github.com/gchamon/archie` | `39264316-510e-466e-ab26-5fa2a2af5850` | Stopped; slot released |
 | AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Audited and integrated with recorded limits |
-| Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | analysis `a105d59f-75ab-4a0f-89bb-f3852b79f5b2`; audit `e2e4956b-6ff3-4629-8483-a817a56fd383` | Audit cleared with recorded limits; queued for integration |
+| Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | analysis `a105d59f-75ab-4a0f-89bb-f3852b79f5b2`; audit `e2e4956b-6ff3-4629-8483-a817a56fd383` | Audited and integrated with recorded limits |
 
 Run identifiers and frozen boundaries will be recorded from returned workflow
 evidence. Handles are session-local; do not duplicate these assignments after
@@ -218,9 +218,35 @@ Code-scheduled replacements corrected originating records. Worker path typo was
 followed by an executed correct-path validation pass; no new producer defect.
 All 13 publication hashes match. Bounded audit, no installed-vault execution.
 
+## Publication: ATLAS
+
+Run `AAS-2026-10-12-atlas-b28ea1ea613f-01` froze
+`65b91b4fd5d703e8a82ad8fa2a9b8d2f38754988`, published in its worktree at
+`kb/agentic-system-analyses/retained/atlas/`. Last advance completed
+`000030-synthesis-verification`, exit 0, stdout `publishable: yes`, empty stderr.
+[Inspection](./rolling-06-atlas-inspect.json) reports publication-job-completed,
+no failures/open attempts/worker-problems. Fresh auditor
+`db597bbe-be9c-42e1-bf2f-d851ada1c114` owns `audits/rolling-06-atlas.md`.
+
+## Audit clearance: ATLAS
+
+[Independent audit](./audits/rolling-06-atlas.md): **integrate with recorded limits**.
+New account corrects legacy additive-only and hard-budget guarantees; public
+synthesis preserves metadata-only scheduled enrichment, absent semantic approval,
+unobserved benefit and incomplete inventories. All 13 publication hashes match.
+Traces show passing results for all 11 model jobs with corrected quote ambiguity,
+worker path typo and profile classification feedback. No outstanding blocker or
+new validation producer defect established; bounded audit, no target execution.
+
 ## Integration queue
 
-Ars Contexta: audit-cleared and queued for serial integration.
+ATLAS: audit-cleared and queued for serial integration.
+
+Earlier integration: Ars Contexta integrated with prepared commands and
+`--model openai/gpt-6.1-sol`, exit 0, merge
+`e4d703463fc5a4443f615abefb8cd222a31c8507` verified on `main`.
+Publication commit `097b28401`; clean origin before/after; origin validation
+passed (one directory artifact, zero diagnostics).
 
 Earlier integration: AriGraph integrated with prepared commands and
 `--model openai/gpt-6.1-sol`, exit 0; merge
@@ -240,6 +266,6 @@ Integration independently checked publication evidence and returned merge commit
 `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
 Origin was clean before and after integration. Publication commit `5eadb2197`.
 Origin directory validation passed (one directory artifact, zero diagnostics).
-Corpus progress: 14 complete, 182 pending, ten held; two pipelines active, draining.
+Corpus progress: 15 complete, 181 pending, ten held; one pipeline active, draining.
 Comparison outputs remain stale and prior landscape synthesis historical;
 no regeneration, cleanup or push commissioned.
