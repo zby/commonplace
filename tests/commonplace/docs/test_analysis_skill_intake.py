@@ -25,6 +25,20 @@ def test_missing_target_requires_an_answer_before_preparation():
     assert "local checkout" in text and "snapshot, bundle or documents" in text
 
 
+def test_preparation_label_correction_is_not_general_setup_recovery():
+    text = " ".join(SKILL.read_text().split("## Isolated run setup\n", 1)[1].split("## 1. Open the run", 1)[0].split())
+    assert "only lowercase letters, digits and hyphens" in text
+    assert "starting with a letter or digit (`[a-z0-9][a-z0-9-]*`)" in text
+    assert 'use `--name ace` here and `--system "ACE"`' in text
+    assert "For a label-only rejection, you may correct only `--name` and retry without operator escalation" in text
+    assert "only before any worktree or run has been created" in text
+    assert "with the target, source and scope unchanged" in text
+    assert "For every other preparation failure, stop" in text
+    assert "do not retry automatically" in text
+    assert "Do not open a run in the originating checkout" in text
+    assert "If preparation fails, stop" not in text
+
+
 @pytest.mark.parametrize("locator,accepted", [
     ("https://github.com/owner/repo", True),
     ("https://github.com/owner/repo.git/", True),

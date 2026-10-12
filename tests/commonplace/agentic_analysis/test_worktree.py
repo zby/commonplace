@@ -57,6 +57,14 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
     return root
 
 
+@pytest.mark.parametrize("name", ["ACE", "", "-ace", "ace_name", "ace name"])
+def test_invalid_label_is_rejected_before_any_preparation(tmp_path: Path, monkeypatch, name: str) -> None:
+    monkeypatch.setattr(iso, "run_command", lambda *args, **kwargs: pytest.fail("must not run setup commands"))
+    with pytest.raises(ValueError, match="name must contain lowercase letters, digits and hyphens"):
+        iso.prepare_worktree(tmp_path, name=name)
+    assert list(tmp_path.iterdir()) == []
+
+
 def test_strict_dirty_origin_is_refused_without_creating_a_worktree(origin: Path) -> None:
     (origin / "note.md").write_text("Pending edit\n")
     with pytest.raises(ValueError, match="--require-clean-origin"):

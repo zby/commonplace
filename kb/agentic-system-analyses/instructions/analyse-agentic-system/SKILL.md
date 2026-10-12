@@ -50,6 +50,11 @@ revision. Prepare it first, from the checkout this session started in:
 commonplace-analysis prepare --name <system-label>
 ```
 
+Use a nonempty label containing only lowercase letters, digits and hyphens,
+starting with a letter or digit (`[a-z0-9][a-z0-9-]*`). This preparation label
+is not the source-native display name: for example, use `--name ace` here and `--system "ACE"`
+when opening the run.
+
 Code creates a detached worktree under `.commonplace/worktrees/`, installs
 its local commands from the committed lockfile, verifies their binding, and
 prints a JSON record. Keep its `worktree` and `path-prefix` values.
@@ -57,8 +62,11 @@ prints a JSON record. Keep its `worktree` and `path-prefix` values.
 Failed installations retain the worktree and a sibling `.preparation.json`
 record for diagnosis. Preparation writes Git metadata and may download
 packages: when the sandbox blocks it, request escalation for this command
-alone. If preparation fails, stop and give the operator its
-message; do not open a run in the originating checkout.
+alone. For a label-only rejection, you may correct only `--name` and retry
+without operator escalation, but only before any worktree or run has been
+created and with the target, source and scope unchanged. For every other
+preparation failure, stop and give the operator its message; do not retry
+automatically. Do not open a run in the originating checkout.
 
 Preparation uses `HEAD`. It stops when `HEAD` is behind the default branch:
 this session then loaded an older method. Stop and tell the operator; only the
