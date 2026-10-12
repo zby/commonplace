@@ -4,6 +4,7 @@
     commonplace-run advance RUN [--completed ATTEMPT ...] [--failed ATTEMPT=REASON ...]
                                 [--model ID] [--effort LEVEL] [--json]
     commonplace-run status RUN [--json]          # also re-prints open hand-outs
+    commonplace-run validate-output PROMPT_PATH # read-only worker feedback
     commonplace-run judge RUN --role ROLE --outcome accepted|refused
                           [--version V] [--scope RELATION ...] [--findings TEXT]
                           [--override JUDGMENT_ID ...] [--basis ROLE ...]
@@ -61,6 +62,9 @@ def _parser() -> argparse.ArgumentParser:
     status = commands.add_parser("status", help="members, open attempts, refusals in force, publishability")
     status.add_argument("run", type=Path)
     status.add_argument("--json", action="store_true")
+
+    validation = commands.add_parser("validate-output", help="validate an open handout's primary draft")
+    validation.add_argument("prompt", type=Path)
 
     verdict = commands.add_parser("judge", help="record an operator judgment of a role's member")
     verdict.add_argument("run", type=Path)
@@ -134,6 +138,13 @@ def _print_inspection(view: dict, as_json: bool) -> None:
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     try:
+        if arguments.command == "validate-output":
+            from commonplace.artifactrun.handouts import validation_target
+            from commonplace.cli.validate_notes import main as validate
+
+            output, artifact, role = validation_target(arguments.prompt)
+            require_run_code(artifact.parent, cwd=Path.cwd())
+            return validate([str(output), "--artifact", str(artifact), "--role", role])
         if arguments.command != "status":
             require_run_code(arguments.run, cwd=Path.cwd())
         if arguments.command == "start":

@@ -28,7 +28,7 @@ from .plan import (
     ModelJob,
 )
 from .run import Run
-from .store import attempt_id
+from .store import RunStore, attempt_id
 
 WORKER_IDENTITY = "worker-identity.json"
 
@@ -171,7 +171,8 @@ def _open(run: Run, job: ModelJob) -> Handout:
     values["output"] = str(outputs[job.outputs[0]])
     values |= {f"output-{name}": str(path) for name, path in outputs.items() if name != job.outputs[0]}
     values |= {"problem": str(problem), "worker-identity": str(worker_identity),
-               "workspace": f"{directory}/", "artifact": str(store.artifact_dir.absolute()), "scratch": f"{scratch}/"}
+               "workspace": f"{directory}/", "artifact": str(store.artifact_dir.absolute()), "scratch": f"{scratch}/",
+               "prompt-path": str(handout.prompt)}
     previous = run.latest_completed(job.name)
     if previous is not None:
         for name, version in previous["outputs"].items():
@@ -263,6 +264,32 @@ def validate_handout(handout: Handout) -> None:
                          f"attempt: {handout.attempt}\nprompt: {handout.prompt}\n"
                          + "\n".join(duplicates)
                          + "\nDispatch blocked; handout preserved unchanged.")
+
+
+def validation_target(prompt: Path) -> tuple[Path, Path, str]:
+    """Resolve a worker's primary draft from its canonical prompt, without writes.
+
+    Coupled to RunStore.handout_dir: RUN/state/handouts/ATTEMPT/prompt.md.
+    The location identifies the record; prompt prose is never configuration.
+    Keep this resolver and its rejection tests in sync with layout changes.
+    """
+    prompt = prompt.resolve(strict=True)
+    if (prompt.name != "prompt.md" or prompt.parent.parent.name != "handouts"
+            or prompt.parent.parent.parent.name != "state"):
+        raise ValueError("expected RUN/state/handouts/ATTEMPT/prompt.md")
+    run = Run(RunStore(prompt.parents[3]))
+    record = run.attempts.get(prompt.parent.name)
+    if record is None:
+        raise ValueError(f"unknown handout attempt: {prompt.parent.name}")
+    job = run.jobs.job(record["job"])
+    if not isinstance(job, ModelJob) or not job.role or not job.outputs:
+        raise ValueError("attempt has no model output with a validation role")
+    if record["state"] != "open":
+        raise ValueError("validate-output requires an open worker attempt")
+    handout = handout_for(run, record)
+    if handout.prompt.resolve() != prompt:
+        raise ValueError("prompt does not match the recorded attempt's canonical handout")
+    return handout.outputs[job.outputs[0]], run.store.artifact_dir, job.role
 
 
 def handout_for(run: Run, record: dict) -> Handout:

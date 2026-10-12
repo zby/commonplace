@@ -23,7 +23,7 @@ NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 """Job, input, output and parameter names: they become file and record names."""
 RESERVED_JOBS = ("operator",)
 """Job names the engine uses for its own records."""
-FRAME_VARIABLES = ("job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch")
+FRAME_VARIABLES = ("job", "attempt", "run-id", "output", "problem", "worker-identity", "workspace", "artifact", "scratch", "prompt-path")
 """Variables the frame binds for every model attempt."""
 ROLE_VARIABLES = ("role", "identity", "cites", "verifies")
 """Variables the frame binds for a role-filling job: its role and the layout's facts about it."""

@@ -220,6 +220,24 @@ text, and refusals with identifiers; use it before resuming. `--json` includes
 these independently: a completed attempt can retain a worker problem without
 being a current failure. See the inspection limitations above.
 Publishability means engine coverage, not publication or content validation.
+
+`validate-output <prompt-path>` gives a worker read-only validation feedback for
+its open attempt's primary output. It resolves the output, artifact directory
+and role from recorded run metadata and invokes the same role-draft validator
+as `commonplace-validate <draft> --artifact <directory> --role <role>`.
+Diagnostics and validation exit statuses are preserved; path/attempt lookup
+errors exit 1. It neither completes the attempt nor replaces workflow checks.
+Auxiliary outputs remain subject to their existing workflow checks.
+
+**Layout coupling:** this command identifies the run and attempt from the
+canonical `RUN/state/handouts/ATTEMPT/prompt.md` location, then verifies the
+recorded model job and reconstructed handout path. It does not parse prompt
+prose or infer a role from the attempt name. Copied prompts outside that layout,
+unknown or closed attempts, and jobs without a validation role are rejected.
+Moving the handout layout requires updating the resolver in
+`src/commonplace/artifactrun/handouts.py`, its tests and generated invocations
+together. Use the run's own command environment, as with `advance`.
+
 `judge <run> --role <role> --outcome accepted|refused` records an operator
 judgment of a role's member: `--findings` carries the reason, `--scope`
 names covered relations with their partners among `--basis` roles,

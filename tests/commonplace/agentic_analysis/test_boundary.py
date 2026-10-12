@@ -52,8 +52,8 @@ def test_handout_is_context_complete_and_uses_engine_names(boundary):
     # The plan's prompt section fills one part of the frame, for this job's role.
     prompt = h.prompt.read_text()
     assert "You write the `boundary` member of this agentic-system analysis." in prompt
-    assert (f"{PARAMETERS['command-path']}/commonplace-validate {h.outputs['boundary']} "
-            f"--artifact {a.coordinator.run_dir / 'artifact'} --role boundary") in prompt
+    assert p["prompt-path"] == str(h.prompt)
+    assert f"{PARAMETERS['command-path']}/commonplace-run validate-output {h.prompt}" in prompt
     assert "output-answers" not in prompt, "the boundary writes no answers"
 
 

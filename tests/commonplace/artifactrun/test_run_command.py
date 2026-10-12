@@ -30,6 +30,46 @@ def advance_json(run_dir: Path, capsys: pytest.CaptureFixture[str], *args: str, 
     return json.loads(capsys.readouterr().out)
 
 
+def test_validate_output_matches_direct_validation_without_writes(run, capsys):
+    from commonplace.cli.validate_notes import main as validate
+
+    run_dir, _ = run
+    (handout,) = advance_json(run_dir, capsys)["handouts"]
+    output = Path(handout["outputs"]["brief"])
+    output.write_text(as_member("brief", COMPLETE_BRIEF), encoding="utf-8")
+    before = {p.relative_to(run_dir): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+    expected = validate([str(output), "--artifact", str(run_dir / "artifact"), "--role", "brief"])
+    expected_text = capsys.readouterr()
+    assert main(["validate-output", handout["prompt"]]) == expected
+    assert capsys.readouterr() == expected_text
+    assert {p.relative_to(run_dir): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()} == before
+    # Missing drafts retain the validator's diagnostics and error status.
+    output.unlink()
+    assert main(["validate-output", handout["prompt"]]) == 2
+    assert "role validation:" in capsys.readouterr().err
+
+
+def test_validate_output_rejects_copies_unknown_and_closed_attempts(run, capsys, tmp_path):
+    run_dir, _ = run
+    (handout,) = advance_json(run_dir, capsys)["handouts"]
+    prompt = Path(handout["prompt"])
+    copy = tmp_path / "prompt.md"
+    copy.write_bytes(prompt.read_bytes())
+    assert main(["validate-output", str(copy)]) == 1
+    assert "expected RUN/state/handouts" in capsys.readouterr().err
+    unknown = prompt.parent.parent / "unknown" / "prompt.md"
+    unknown.parent.mkdir()
+    unknown.write_bytes(prompt.read_bytes())
+    assert main(["validate-output", str(unknown)]) == 1
+    assert "unknown handout attempt" in capsys.readouterr().err
+    advance_json(run_dir, capsys, "--failed", f"{handout['attempt']}=stopped", exit_code=2)
+    # The engine archives closed handouts; restoring a copy cannot reopen one.
+    prompt.parent.mkdir(parents=True)
+    prompt.write_bytes(copy.read_bytes())
+    assert main(["validate-output", str(prompt)]) == 1
+    assert "open worker attempt" in capsys.readouterr().err
+
+
 def test_start_refuses_a_second_start(run: tuple[Path, Path], capsys: pytest.CaptureFixture[str]) -> None:
     run_dir, declaration = run
     assert main(["start", str(run_dir), str(declaration)]) == 1
