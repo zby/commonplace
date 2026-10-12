@@ -9,13 +9,17 @@ coverage through the current
 not conversions of old reviews. Use a rolling pool of four parallel system
 pipelines, each with a quick independent audit before integration. Refill each
 slot when its audit is resolved, without waiting for the other pipelines.
-This document is the handoff; revising it does not launch runs.
+This document is the handoff; revising it does not launch runs. New dispatch is
+currently stopped by operator direction, as recorded in the checkpoint below;
+that stop takes precedence over the rolling-pool instructions.
 
 Success means published, audited and integrated analyses for the checklist,
 with consequential limits visible and unresolved targets honestly blocked.
-Choose target order and execution details within the boundaries below. Method
-changes, comparison regeneration and public landscape synthesis are separate
-commissions.
+Choose target order and execution details within the boundaries below. The
+operator authorizes the bounded validation-path maintenance below as part of
+execution. Other method changes, comparison regeneration and public landscape
+synthesis remain separate commissions. This handoff includes the authority and
+resume conditions; execution must not depend on the commissioning conversation.
 
 ## Population
 
@@ -29,7 +33,8 @@ analysis records**, initially drawn from:
 - Six current-engine sets already counted as complete by operator direction.
 
 The six completed sets retain their recorded limits and prior audits; do not
-reopen them for this commission. The remaining 200 targets are pending.
+reopen them for this commission. There were initially 200 remaining targets;
+use the checklist and the current execution checkpoint below for progress.
 
 Repeated reviews of the same named system share a row. Dated Instinctual Memory
 reviews are grouped, and `gbrain-garrytan` is grouped with GBrain. Four
@@ -47,6 +52,112 @@ The earlier [agentic-memory-refresh workshop](../agentic-memory-refresh/README.m
 retains its pilots and history. Coordinate with unfinished assignments there
 before assigning the same system. Legacy-engine completion does not count here;
 published new-engine sets do. Preserve the historical evidence.
+
+## Current execution checkpoint and next action
+
+The [resume record](./resume-2026-10-12.md) records eight completed targets,
+195 pending and three blocked or recovery-required. AgeMem and Agent-R are
+integrated; the retained integration queue is empty. These are recorded facts,
+not proof of current process ownership. Reconcile newer checklist entries,
+execution records and active assignments before making writes or dispatching.
+
+Rolling-dispatch support is implemented in the project Pi extension. Verify the
+loaded tool schema as described below; do not treat the older runtime blocker
+as current when `action` and `handles` are available.
+
+The [validation-path maintenance decision](./validation-path-maintenance.md)
+resolves the shared producer suspicion and lifts the pause for fresh eligible
+runs. Worker path transcription, not supplied invocations, caused the inspected
+failures. Individual recovery holds remain unchanged.
+
+The operator subsequently directed the execution session to finish the running analyses,
+stop new dispatch and check substantive reasonableness of the analyses affected
+by path confusion. [Rolling execution 04](./rolling-04.md) records four stopped
+runs, no new publications and the retrospective checks. The operator then
+marked those four systems for fresh reruns rather than recovery of their old
+runs. Progress is now eight complete, 195 pending (including four marked for
+fresh rerun) and three recovery-required. **Do not resume the pool until the
+operator releases this stop.** The earlier maintenance release does not override
+this later execution stop.
+
+The separately authorized worker convenience command is implemented in commit
+`9b110e2f5`: [`commonplace-run validate-output <prompt-path>`](../../reference/commands.md#commonplace-run)
+resolves validation parameters from the recorded open handout. Generated worker
+instructions use it for immediate write–check–repair feedback; workflow-side
+validation is unchanged. The command and instructions passed 1,161 selected
+tests, including relevant slow tests. This implementation does not certify
+historical drafts, modify frozen runs or release the operator stop. After release,
+prepare fresh runs from a committed method containing this command and reconcile
+all reserved assignments before filling the four slots.
+
+The maintenance commission below retains the authority and evidence boundary
+for the completed investigation. It superseded the older requirement for a
+separate maintenance commission; it is not a requirement to repeat the work or
+an independent authorization to restart dispatch.
+
+Reserved or blocked assignments:
+
+- **Agent Skills for Context Engineering:** the operator reported another agent
+  still working on this target after the historical stop record. Treat it as
+  reserved until its owner confirms completion, termination or an explicit
+  handoff. An empty session-local job registry does not release that ownership.
+- **ACE:** its open reconciliation attempt requires prior-worker status and a
+  supported recovery decision before any replacement; see the checklist.
+- **Academic Research Skills:** its source-exposure stop requires a separate
+  recovery decision; see the checklist. Validation-path maintenance does not
+  waive source-isolation rules.
+
+After the operator releases the current dispatch stop, these individual holds
+do not block other eligible systems. Preserve their evidence and keep them incomplete unless a
+supported recovery or operator-approved exclusion is recorded.
+
+## Bounded validation-path maintenance
+
+Status: resolved by the linked maintenance decision. The following is the
+retained scope of the investigation, not pending startup work. Reopen it only
+if new validation-path evidence contradicts that decision; any such maintenance
+release remains subject to the separate operator dispatch stop.
+
+Purpose: establish whether nonexistent validation artifact paths came from the
+supplied invocation or worker execution, and make new analyses safe to resume.
+The bounded authority covers investigation, the minimum necessary current-method
+correction, regression coverage and an evidence-based maintenance disposition.
+
+1. Read the validation-path findings and evidence locations in the
+   [prior execution record](./batch-03.md), the
+   [AgeMem audit](./audits/batch-03-agemem.md), and the
+   [Agent-R audit](./audits/batch-03-agent-r.md). Inspect the retained handouts,
+   exact tool calls and returned validation results in their referenced run
+   worktrees and traces. Include Agent Skills' `000008-epistemic` attempt only
+   as read-only evidence; coordinate with its owner before accessing changing
+   files. Do not reconstruct a missing result as if it had executed.
+2. Compare the frozen invocation with the actual command and intended artifact
+   path, then check the current producer and validation contract. Distinguish a
+   producer defect, worker transcription error and unsupported command
+   substitution. Successful publication alone does not discharge a worker's
+   validation obligation. If evidence is unavailable, record the specific gap
+   and keep the affected scope paused rather than inferring compliance.
+3. If necessary, fix only the current validation-invocation producer, its
+   associated instructions or path handling and regression tests. Follow
+   repository test selection, including affected analysis suites and relevant
+   slow tests for changed behavior. Do not weaken validation or isolation
+   requirements. If the current method is already correct, document the
+   evidence and the execution check needed to prevent recurrence instead of
+   inventing a code change.
+4. Retain a maintenance decision in this workshop with exact evidence locators,
+   diagnosis, affected scope, any correction commit, checks and results, and an
+   explicit lift-or-retain disposition for the shared pause. Link it from this
+   README and update the checklist's operational status. Commit owned method
+   corrections before preparing new runs so their frozen method includes the
+   fix. Do not edit frozen methods, run states, retained outputs or historical
+   traces, and do not retrospectively certify old failed validation attempts.
+5. Once evidence and checks justify lifting a maintenance pause, record that
+   disposition. Resume the rolling pool only when no operator dispatch stop is
+   in force; the current stop requires explicit operator release. Supply fresh
+   analysis coordinators only their source-first commissions, not historical
+   findings or maintenance audit conclusions. Keep individual recovery holds
+   separate. Escalate only missing evidence, unresolved ownership, or a repair
+   requiring broader method or acceptance changes than authorized here.
 
 ## Execution and ownership
 
@@ -115,7 +226,10 @@ checks.
 A held or failed system releases its slot once its evidence, blocker and unblock
 condition are recorded. It does not prevent other eligible systems from running.
 A suspected shared-method defect pauses affected work and requires a maintenance
-decision.
+decision. For the known validation-path issue, use the retained maintenance
+decision; do not repeat the resolved investigation as a startup gate. New
+contradictory evidence follows the bounded scope above. A different shared
+defect requires a new maintenance decision.
 Do not repair accepted content outside a supported workflow or quietly broaden
 the commission to work around a blocker.
 
@@ -127,7 +241,8 @@ and commit owned audit/checklist bookkeeping at each integration boundary;
 parallel analyses need not stop, but shared writes must not race with integration.
 Resolve pre-existing uncommitted work with its owner before integration; this
 commission does not authorize staging unrelated files. Preserve run worktrees and traces.
-No cleanup, push or method edits are commissioned.
+No cleanup or push is commissioned. Method edits are limited to the bounded
+validation-path maintenance authorized above.
 
 ## Progress and checkpoints
 
