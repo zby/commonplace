@@ -63,12 +63,23 @@ provider/API or stream boundaries and remain recovery-required. Progress is
 **11 complete, 189 pending, six held**, with no active assignments or retained
 integration queue. All worktrees and traces are preserved.
 
-Replacement dispatch is operationally paused after three independent provider/
-harness failures, not by a renewed operator stop or an established method defect.
-Before fresh dispatch, establish provider availability and reconcile ownership;
-the existing dispatch release still applies. New failed runs require supported
-recovery decisions, separate from fresh eligible targets and the older four-run
-replacement disposition. The three original individual holds remain unchanged.
+**Next action: resume the four-pipeline rolling pool on eligible pending targets.**
+The operator authorized restart after rolling execution 05. That session's
+provider pause is lifted: intermittent API/stream failures did not establish a
+shared outage or method defect, and other pipelines and auditors succeeded.
+Reconcile ownership and complete runtime preflight, then dispatch without asking
+for another release or imposing a separate provider-availability gate. Individual
+failures release their slots after evidence and unblock conditions are recorded;
+continue other eligible work unless evidence establishes a shared blocker.
+
+The next orchestrator takes the queue; the rolling execution 05 orchestrator has
+finished all launched jobs and retains no active assignment or integration queue.
+Recheck for newer assignments before dispatch. The six held targets remain held:
+Agent Skills for Context Engineering, ACE, Academic Research Skills, Agentic
+Harness Engineering, AI-Context-OS and ai-memex-cli. New failed runs require
+supported recovery decisions, separate from fresh eligible targets and the older
+four-run replacement disposition. Restart does not authorize recovery, automatic
+retries, fresh replacements of these held runs, cleanup or method changes.
 The records below retain the earlier resume and release history; use the
 checklist and rolling execution 05 for current progress.
 

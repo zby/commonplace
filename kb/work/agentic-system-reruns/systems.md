@@ -9,10 +9,12 @@ Historical records are inclusion and identity references, not fresh-run evidence
 The [validation-path maintenance decision](./validation-path-maintenance.md)
 resolved the shared producer suspicion. The operator released the dispatch stop;
 [rolling execution 05](./rolling-05.md) resumes four fresh source-first pipelines
-from the committed validation-output method. Replacement dispatch is now
-operationally paused after two independent provider API 503 failures and a
-third stream failure. All dispatched analyses and audits have now returned. The individual recovery holds remain
-in force; Agent Skills is reserved to its reported owner.
+from the committed validation-output method. All dispatched analyses and audits
+have returned. The operator subsequently authorized restart and lifted that
+session's overly broad provider pause; resume eligible pending targets after
+ownership reconciliation and runtime preflight, as stated in the workshop README.
+The six individual holds remain in force; Agent Skills is reserved to its
+reported owner.
 After assignment, append the run identifier and source boundary. For new runs,
 check the box only after publication, audit clearance and verified integration;
 append the overview, audit link and integration commit. Record blockers explicitly.

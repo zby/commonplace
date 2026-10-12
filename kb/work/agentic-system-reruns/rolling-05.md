@@ -183,6 +183,24 @@ authorized fresh replacements from the older four-target disposition.
 
 Corpus progress: eleven complete, 189 pending, six held. No publication awaits
 audit or integration. AI-Context-OS releases its slot, unfilled during the provider pause.
-Other frozen run identifiers and source boundaries will be recorded
-when available. No cleanup, push, method
-change, comparison regeneration or landscape synthesis is commissioned.
+No cleanup, push, method change, comparison regeneration or landscape synthesis
+is commissioned.
+
+## Subsequent restart and queue handoff
+
+The operator subsequently authorized restart. The orchestrator acknowledged
+that the provider pause above was too broad: intermittent failures alongside
+successful analyses and audits did not establish a shared outage or method defect.
+The pause is lifted; its earlier rationale and empty-slot records are historical,
+not current startup gates. Resume the four-pipeline pool on eligible pending
+targets after ownership reconciliation and runtime preflight. No additional
+operator release or separate provider-availability demonstration is required.
+Record individual failures and refill their slots unless a shared blocker is
+established. All six individual holds remain separate; restart does not authorize
+recovering, retrying or replacing their failed runs.
+
+This orchestrator has finished all launched jobs and hands off the queue with no
+active assignments or integration backlog. The next orchestrator must check for
+newer ownership records rather than treat this historical checkpoint as proof
+that no later agent is working. Current scheduling authority remains systems.md
+and the workshop README. No new pipeline was launched by this handoff update.
