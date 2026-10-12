@@ -1,0 +1,169 @@
+{
+  "artifact": "/home/zby/llm/commonplace/.commonplace/worktrees/ai-memex-cli-8e14b4b6efdc/kb/agentic-system-analyses/state/AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01/artifact",
+  "attempts": [
+    {
+      "effort": null,
+      "id": "000001-opening",
+      "job": "opening",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000002-acquire",
+      "job": "acquire",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000003-boundary",
+      "job": "boundary",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": "medium",
+      "worker_model": "openai/gpt-6.1-sol"
+    },
+    {
+      "effort": null,
+      "id": "000004-check-boundary",
+      "job": "check-boundary",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000005-runtime",
+      "job": "runtime",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": "medium",
+      "worker_model": "openai/gpt-6.1-sol"
+    },
+    {
+      "effort": null,
+      "id": "000006-check-runtime",
+      "job": "check-runtime",
+      "kind": "code",
+      "model": null,
+      "problem": null,
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000007-memory",
+      "job": "memory",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": "medium",
+      "worker_model": "openai/gpt-6.1-sol"
+    },
+    {
+      "effort": null,
+      "id": "000008-epistemic",
+      "job": "epistemic",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": "OpenAI Responses stream ended before a terminal response event",
+      "state": "failed",
+      "uncertain": null,
+      "worker_effort": null,
+      "worker_model": null
+    },
+    {
+      "effort": null,
+      "id": "000009-workflow",
+      "job": "workflow",
+      "kind": "model",
+      "model": null,
+      "problem": "",
+      "reason": null,
+      "state": "completed",
+      "uncertain": null,
+      "worker_effort": "medium",
+      "worker_model": "openai/gpt-6.1-sol"
+    }
+  ],
+  "canonical-peer-drift": [],
+  "effects": {
+    "acquire": {
+      "journal-state": "completed",
+      "verified": false
+    }
+  },
+  "exhausted-jobs": [],
+  "failed-attempts": [
+    {
+      "attempt": "000008-epistemic",
+      "job": "epistemic",
+      "reason": "OpenAI Responses stream ended before a terminal response event",
+      "uncertain": false
+    }
+  ],
+  "format": "commonplace-engine-run-inspection-v1",
+  "invocation-stops": [],
+  "limitations": [
+    "Publishable means engine coverage (required roles, holding acceptances, covered relations), not publication or content validation.",
+    "Completed means the final job completed against unchanged inputs, not a fresh filesystem audit.",
+    "Completion does not establish that every worker obligation was fulfilled or every reported problem resolved.",
+    "Missing historical problem text means not recorded, not proof that no problem occurred.",
+    "Holding handed judgments can refer to historical peers; canonical-peer-drift reports that separately.",
+    "Reporting does not change logical run state; acquiring its lock may create state/lock.",
+    "Journal state is unverified; only the effect handler recognizes completion.",
+    "Invocation scheduling stops require the supplied RunStatus; they are not reconstructed."
+  ],
+  "members": {
+    "boundary": "547aaf678f94c9222800c79be3a651955b07fed61a66396be540a402d5b8d137",
+    "runtime": "57c195b69900dc0d5f317523229a79f5db8441913d8585d852b2fd49a26b3cdb"
+  },
+  "open-attempts": [],
+  "parameters": {
+    "command-path": "/home/zby/llm/commonplace/.commonplace/worktrees/ai-memex-cli-8e14b4b6efdc/.venv/bin",
+    "source": "https://github.com/zelixag/ai-memex-cli",
+    "source-identity": "https://github.com/zelixag/ai-memex-cli",
+    "system": "ai-memex-cli",
+    "worker-profile": "pi-sol"
+  },
+  "publishable": false,
+  "refusals": [],
+  "run-id": "AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01",
+  "stale-acceptances": [],
+  "state": "stopped",
+  "waiting-on": {},
+  "worker-problems": []
+}

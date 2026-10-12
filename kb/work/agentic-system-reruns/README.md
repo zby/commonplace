@@ -55,6 +55,23 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
+**Latest checkpoint:** [rolling execution 05](./rolling-05.md) resumed the
+released four-pipeline pool from the committed validation-output method. It
+integrated audited AgentFly, Agent Workflow Memory and Agentic Local Brain
+publications. Harness Engineering, AI-Context-OS and ai-memex-cli stopped at
+provider/API or stream boundaries and remain recovery-required. Progress is
+**11 complete, 189 pending, six held**, with no active assignments or retained
+integration queue. All worktrees and traces are preserved.
+
+Replacement dispatch is operationally paused after three independent provider/
+harness failures, not by a renewed operator stop or an established method defect.
+Before fresh dispatch, establish provider availability and reconcile ownership;
+the existing dispatch release still applies. New failed runs require supported
+recovery decisions, separate from fresh eligible targets and the older four-run
+replacement disposition. The three original individual holds remain unchanged.
+The records below retain the earlier resume and release history; use the
+checklist and rolling execution 05 for current progress.
+
 The [resume record](./resume-2026-10-12.md) records eight completed targets,
 195 pending and three blocked or recovery-required. AgeMem and Agent-R are
 integrated; the retained integration queue is empty. These are recorded facts,

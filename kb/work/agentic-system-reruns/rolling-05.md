@@ -18,7 +18,7 @@ Runtime is `openai/gpt-6.1-sol`, medium. The standing diagnostic returned
 `COMMONPLACE_WORKER_OK`, agent depth and nesting limit unknown. The loaded
 schema exposes `action` and `handles`.
 
-## Active assignments
+## Assignments (all returned)
 
 Owner session: `01a13175-3102-76ed-b2e9-63d6c88be8db`.
 Handles are session-local; process ownership must be reconciled after interruption.
@@ -159,8 +159,30 @@ reconciled; failed-run recovery remains a separate supported decision. Do not
 silently retry or discard the stopped runs. This is not a reinstated operator
 dispatch stop or a change to the commission.
 
-Corpus progress: eleven complete, 190 pending (ai-memex-cli still assigned),
-five held. No publication awaits audit or integration. AI-Context-OS releases its slot, unfilled during the provider pause.
+ai-memex-cli returned stopped, run
+`AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01`, frozen source
+`4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f`. Epistemic attempt
+`000008-epistemic` failed. Memory and workflow workers returned, but their
+completion is not installed acceptance; inspection lists only boundary/runtime
+members. No open attempts, no recorded worker problems, no publication or
+recovery. Inspection exited 0 and is retained in `rolling-05-ai-memex-cli-inspect.json`.
+Last advance exited 2, no stderr text returned:
+
+```text
+stop epistemic 000008-epistemic: OpenAI Responses stream ended before a terminal response event
+publishable: no
+```
+
+All six coordinators and three auditors have returned. No active assignment or
+integration queue remains in this session. Three fresh publications were audited
+and integrated; three new runs stopped at provider/harness boundaries. This
+strengthens the operational basis for the replacement-dispatch pause, not a
+shared-method diagnosis. All historical and new worktrees, partial outputs and
+traces are retained. Failed runs need supported recovery decisions; do not infer
+authorized fresh replacements from the older four-target disposition.
+
+Corpus progress: eleven complete, 189 pending, six held. No publication awaits
+audit or integration. AI-Context-OS releases its slot, unfilled during the provider pause.
 Other frozen run identifiers and source boundaries will be recorded
 when available. No cleanup, push, method
 change, comparison regeneration or landscape synthesis is commissioned.

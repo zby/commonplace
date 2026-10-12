@@ -3,15 +3,15 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Progress: 11 complete with the new engine; 190 pending (1 assigned in rolling execution 05); 5 blocked or recovery-required; none awaiting integration.** [Rolling execution 04](./rolling-04.md) records four API/stream failures and the operator's decision to replace those runs with fresh reruns rather than resume them. [Resume](./resume-2026-10-12.md) records current integration and scheduling disposition; [batch 03](./batch-03.md) retains prior evidence. Checked rows have
+**Progress: 11 complete with the new engine; 189 pending; 6 blocked or recovery-required; no active assignments or publications awaiting integration.** [Rolling execution 04](./rolling-04.md) records four API/stream failures and the operator's decision to replace those runs with fresh reruns rather than resume them. [Resume](./resume-2026-10-12.md) records current integration and scheduling disposition; [batch 03](./batch-03.md) retains prior evidence. Checked rows have
 published current-engine analysis sets. Completed sets are accepted with recorded limits, not limit-free results.
 Historical records are inclusion and identity references, not fresh-run evidence.
 The [validation-path maintenance decision](./validation-path-maintenance.md)
 resolved the shared producer suspicion. The operator released the dispatch stop;
 [rolling execution 05](./rolling-05.md) resumes four fresh source-first pipelines
 from the committed validation-output method. Replacement dispatch is now
-operationally paused after two independent provider API 503 failures; running
-analyses continue. The individual recovery holds remain
+operationally paused after two independent provider API 503 failures and a
+third stream failure. All dispatched analyses and audits have now returned. The individual recovery holds remain
 in force; Agent Skills is reserved to its reported owner.
 After assignment, append the run identifier and source boundary. For new runs,
 check the box only after publication, audit clearance and verified integration;
@@ -33,7 +33,7 @@ append the overview, audit link and integration commit. Record blockers explicit
 - [ ] **Agno AgentOS** (`agno-agentos`) — pending; [authored account](../../agentic-systems/reviews/agno-agentos.md).
 - [ ] **AI Agents in Depth** (`ai-agent-book`) — pending; [authored account](../../agentic-systems/reviews/ai-agent-book.md).
 - [ ] **AI-Context-OS** (`ai-context-os`) — stopped in [rolling execution 05](./rolling-05.md), run `AAS-2026-10-12-ai-context-os-4f81c8c12f62-01`, frozen source `9ed263080cadf98702bebb42d5260b45bd526f6c`; synthesis worker API 503, no publication or open attempts; recovery requires a supported decision after provider availability is established; [legacy review](../../agent-memory-systems/reviews/AI-Context-OS.md).
-- [ ] **ai-memex-cli** (`ai-memex-cli`) — assigned in [rolling execution 05](./rolling-05.md), worktree `ai-memex-cli-8e14b4b6efdc`, source `https://github.com/zelixag/ai-memex-cli`, default-branch tip; [legacy review](../../agent-memory-systems/reviews/ai-memex-cli.md).
+- [ ] **ai-memex-cli** (`ai-memex-cli`) — stopped in [rolling execution 05](./rolling-05.md), run `AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01`, frozen source `4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f`; epistemic worker stream ended before terminal response, no publication or open attempts; recovery requires a supported decision after provider availability is established; [legacy review](../../agent-memory-systems/reviews/ai-memex-cli.md).
 - [ ] **AI Research OS Workshop** (`ai-research-os-workshop`) — pending; [legacy review](../../agent-memory-systems/reviews/ai-research-os-workshop.md).
 - [ ] **AIDE2** (`aide2`) — pending; [archived review](../../agentic-systems/reviews-archive/aide2.md).
 - [ ] **Amazon Science SAGE** (`amazon-science--sage`) — pending; [legacy review](../../agent-memory-systems/reviews/amazon-science--SAGE.md).
