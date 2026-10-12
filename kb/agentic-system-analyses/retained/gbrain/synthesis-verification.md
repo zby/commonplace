@@ -1,0 +1,46 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of GBrain's publication, context supply, conditional grounding and feedback adaptation at the frozen partial-loop boundary."
+run-id: AAS-2026-10-11-gbrain-9de8e3c225d3-01
+reviewed-boundary: da434385572e0dc0d825649179aabed4107d6e60
+---
+
+# GBrain synthesis verification
+
+## Verification
+
+The [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded implementation account. I checked every substantive statement against its cited handed records, the reconciliation's consolidation supersession, and the supplied report and profile judgments. I also read it without assuming the reader knows the supporting members. No source reads, target execution or new evidence were needed. Citation form and quotation occurrence are not the basis of this semantic judgment.
+
+The opening preserves the frozen revision, cutoff, code-grounded evidence basis and complete artifact, partial loop scope of [the boundary](boundary.md#boundary-and-evidence). Cross-agent availability is attributed as declared work, not demonstrated continuity. The account consistently distinguishes implemented paths from observed operation, successful outcomes and causal benefit.
+
+### Publication and later consumption
+
+The capture account correctly distinguishes proposal, durable admission, publication, settlement and separately queued effects. Replay identity, live authority, source incarnation, revision and canonical-byte checks are scoped to the inspected journaled paths. Recovery is not presented as an atomic filesystem/database transaction or universal exactly-once guarantee. See [RT-RTE-capture-write](runtime.md#rt-rte-capture-write) and [RT-OBJ-persistence-requests](runtime.md#rt-obj-persistence-requests). Remember and extraction retain their different visibility defaults and DB-only alternatives. Provenance and confidence are not promoted to factual warrant; session loss through fence reconstruction is preserved. See [MEM-RTE-remember-write](memory.md#mem-rte-remember-write), [MEM-RTE-extraction-write](memory.md#mem-rte-extraction-write), [MEM-OBJ-fact-metadata](memory.md#mem-obj-fact-metadata) and [MEM-OBJ-facts-fence](memory.md#mem-obj-facts-fence).
+
+Requested evidence delivery is kept separate from unsolicited context and final-answer correctness. Core's disabled default, owner designation versus edit approval, source/sensitivity/withdrawal filters and character budget remain explicit. Pack reservation does not become an exact enclosing-token guarantee. Host interpretation and compaction remain external responsibilities. See [RT-RTE-query-read](runtime.md#rt-rte-query-read), [MEM-RTE-recall-delivery](memory.md#mem-rte-recall-delivery), [MEM-RTE-core-delivery](memory.md#mem-rte-core-delivery), [MEM-RTE-context-pack](memory.md#mem-rte-context-pack) and [RT-RTE-context-assembly](runtime.md#rt-rte-context-assembly).
+
+Checkpoint banking, extraction and pointer delivery retain separate conditions and consumers. The synthesis distinguishes rendered/redacted file input from the SQL manifest, verifies the pointer rather than full-page delivery claim, and preserves FIFO receipt repair versus inline fallback's best-effort links. Independent cleanup horizons do not imply verified scheduling. See [MEM-RTE-checkpoint-harvest](memory.md#mem-rte-checkpoint-harvest), [MEM-OBJ-checkpoint-corpus](memory.md#mem-obj-checkpoint-corpus) and [MEM-OBJ-checkpoint-manifest](memory.md#mem-obj-checkpoint-manifest). The withdrawal and confirmation account likewise supports scoped suppression and tier endorsement, not universal erasure or evidence-consuming truth acceptance. See [MEM-RTE-fact-withdrawal](memory.md#mem-rte-fact-withdrawal), [EPI-RTE-memory-withdrawal](epistemic.md#epi-rte-memory-withdrawal) and [EPI-RTE-owner-confirmation](epistemic.md#epi-rte-owner-confirmation).
+
+### Checks, adaptation and independent properties
+
+The account of generated content preserves the difference between production requests, mechanical checks, model judgments, disposition and repair retention. Post-write timing, unchanged-unit exemptions, selected excerpts, calibrated acting policy, adequate coverage, margin protection and fail-open paths constrain the claimed force. It does not equate kept candidates with accepted propositions. See [EPI-RTE-dream-candidates](epistemic.md#epi-rte-dream-candidates), [EPI-RTE-mechanical-check](epistemic.md#epi-rte-mechanical-check), [EPI-RTE-mechanical-disposition](epistemic.md#epi-rte-mechanical-disposition), [EPI-RTE-grounding-check](epistemic.md#epi-rte-grounding-check), [EPI-RTE-grounding-disposition](epistemic.md#epi-rte-grounding-disposition) and [EPI-RTE-repair-retention](epistemic.md#epi-rte-repair-retention). Live-answer quotation matching and warn-only citations are correctly narrower than semantic certification. Consolidation cites the canonical [MEM-RTE-facts-consolidation](memory.md#mem-rte-facts-consolidation), preserving existing-text selection rather than inferring novel synthesis from its name. See also [EPI-RTE-answer-check](epistemic.md#epi-rte-answer-check) and [EPI-RTE-answer-delivery](epistemic.md#epi-rte-answer-delivery).
+
+The strongest supported adaptation is not reduced to logging: admitted ratings derive retained weights that a later numerical selector reads. The text preserves disabled/zero influence, read-failure bypass, revision damping and attribution loss after pruning. It separates this wired route and automatic trace-fed context from improved capacity. See [MEM-RTE-feedback-update](memory.md#mem-rte-feedback-update), [MEM-OBJ-ranking-weights](memory.md#mem-obj-ranking-weights) and [MEM-BAP-ranking-weights](memory.md#mem-bap-ranking-weights). The self-improvement passage marks a bounded dispositional contribution with an improvement-directed objective and identifies the missing subsequent exercise, rather than claiming successful improvement. It does not attribute model-parameter training to local weights or configurable inference interfaces.
+
+Theory-builder conditions 1–4, content-directed criticism improving future capacity, reflection and autonomy are separately left unestablished. These statements describe what the accepted records establish, not demonstrated system-wide absences. No formulated-theory route in the supplied runtime supports a stronger assessment; numerical feedback and operational replay alone do not supply the missing theory or self-representation findings. The synthesis preserves the positive computational update and execution alongside those unknowns. See [RT-RTE-maintenance-run](runtime.md#rt-rte-maintenance-run), [RT-RTE-subagent-loop](runtime.md#rt-rte-subagent-loop), [MEM-RTE-feedback-update](memory.md#mem-rte-feedback-update) and [the epistemic bounded conclusion](epistemic.md#bounded-conclusion).
+
+### Workflow, scenarios and limitations
+
+The representative workflow is connected by its task, owner and grant identities, rather than assembled from unrelated capabilities. Conditional gateway selection, the selected caller's durable callbacks, live-grant narrowing, receipt waiting, replay refusal, worker recovery ownership and owner-filtered polling are supported. Completion is not semantic success; supplemental accounting is not mandatory write verification for this submission. See [WF-RTE-agent-submission](workflow.md#wf-rte-agent-submission), [RT-RTE-subagent-loop](runtime.md#rt-rte-subagent-loop) and [WF-RTE-agent-delivery](workflow.md#wf-rte-agent-delivery). Shared-skill publication is not confused with downstream activation or improved behavior; see [RT-RTE-skill-publication](runtime.md#rt-rte-skill-publication).
+
+Scenario-relative conclusions follow those mechanisms without product ranking or transfer advice. Proposed resolving evidence is specific: linked publication/consumption and recovery traces, independently varied feedback influence with a quality outcome, candidate-linked acceptance decisions, and additional producer/consumer records. The BrainBench qualification correctly separates injected-gold plumbing from real-extractor evaluation; see [EPI-RTE-writeback-evaluation](epistemic.md#epi-rte-writeback-evaluation).
+
+The [Limitations table](synthesis.md#limitations) faithfully carries the profile verifier's sole limit: retrieval-event/history pruning is missing as a separately classified curation transformation, while existing values and partial coverage remain valid. It names the mechanism, the incomplete cleanup/forgetting comparison and unresolved scheduling, using [MEM-OBJ-retrieval-events](memory.md#mem-obj-retrieval-events), [MEM-OBJ-retrieval-feedback](memory.md#mem-obj-retrieval-feedback) and [MEM-OBJ-ranking-weights](memory.md#mem-obj-ranking-weights). The report verification declares no additional limits, reconciliation retains no unresolved conflict, and no previous synthesis verification or refusal was supplied. The remaining limitation rows preserve the consequences of partial coverage, conditional checks, scoped withdrawal, checkpoint failure contracts and unobserved benefit. No additional record fault or material unsupported comparison was established. Faithfully scoped uncertainties need no new verification finding.
+
+## Blockers
+
+none
+
+## Limits
+
+none
