@@ -32,7 +32,7 @@ records retain setup evidence.
 
 | Target | Worktree basename | Source identity | Handle | Status |
 |---|---|---|---|---|
-| AI Agents in Depth | `ai-agent-book-d56e8121d636` | `https://github.com/bojieli/ai-agent-book` | analysis `f357e523-6582-40b5-9dd3-6f6e8f008fd1`; audit `ad8c7fc7-abc5-4695-87e8-6c8caa2a02a0` | Published; fresh audit running |
+| AI Agents in Depth | `ai-agent-book-d56e8121d636` | `https://github.com/bojieli/ai-agent-book` | analysis `f357e523-6582-40b5-9dd3-6f6e8f008fd1`; audit `ad8c7fc7-abc5-4695-87e8-6c8caa2a02a0` | Audit cleared with recorded limits; awaiting serial integration |
 | AI Research OS Workshop | `ai-research-os-workshop-1a93869f8e7f` | `https://github.com/iusztinpaul/ai-research-os-workshop` | `88f5dc89-3776-4e6c-b276-8dba3847a364` | Coordinator running |
 | Amazon Science SAGE | `amazon-science-sage-8387fc4221ab` | `https://github.com/amazon-science/SAGE` | `3ea66a91-d4f9-4384-b637-2e29b1d6a689` | Stopped; slot released |
 | Apache Maka | `apache-maka-c1fa0818ba04` | `https://github.com/apache/maka` | `bbcd5373-153f-46fb-b236-250d0d0fddbe` | Stopped; slot released |
@@ -106,6 +106,25 @@ success is not a fresh filesystem or worker-obligation audit. Fresh independent
 auditor owns `audits/rolling-06-ai-agent-book.md`; not integrated or checklist-complete.
 This successful pipeline also contradicts a blanket provider-outage inference.
 
+## Audit clearance: AI Agents in Depth
+
+[Independent audit](./audits/rolling-06-ai-agent-book.md): **integrate with recorded limits**.
+The selected context, user-memory and retry-policy workflows are not whole-book
+coverage. Public synthesis carries no-execution and two local verification
+qualifications. Candidate checking and shadow eligibility do not establish live
+installation or improved capacity. All 13 published files matched journal hashes.
+Nested traces show validation passes and repairs after a runtime schema failure
+and memory-worker path transcription error; these are not a new producer defect.
+Audit coverage is bounded, not certification of every worker obligation.
+
+The cleared audit releases its slot. Replacement arsumbris was prepared from
+`bf78f4227daa08faee9dd3f296df0021eb135d87`; the uncommitted audit report was
+excluded and startup files matched. Worktree `arsumbris-247284e3101a`, source
+`https://github.com/arsumbris/arsumbris`, coordinator handle
+`94474085-3b73-4479-b375-161c1fdfb7ff`; running, no boundary returned yet.
+
 ## Integration queue
 
-Empty. No target in this execution is complete yet.
+AI Agents in Depth: audit cleared with recorded limits, queued for immediate
+serial integration after committing owned bookkeeping. No target in this
+execution is checklist-complete yet.
