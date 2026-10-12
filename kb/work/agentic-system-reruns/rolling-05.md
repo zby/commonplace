@@ -61,7 +61,11 @@ inventory/consistency/execution limits are published. The earlier semantic
 refusal was corrected and later accepted. All 13 publication hashes match and
 14 model attempts have paired final validation passes; boundary/runtime
 quotation ambiguity was repaired. Queued after Agent Workflow Memory for serial
-integration. Replacement slot remains empty during the provider pause.
+integration. Integrated serially from its original command environment:
+`commonplace-analysis integrate kb/agentic-system-analyses/state/AAS-2026-10-12-agentic-local-brain-f00cbd577178-01 --model openai/gpt-6.1-sol`.
+Exit 0, stdout `0c56e3be1f167ef71fb9711897b89a2f27fe33b6`, no stderr.
+Verified merge on main; target counts complete with recorded limits.
+Replacement slot remains empty during the provider pause.
 
 Agent Workflow Memory published run
 `AAS-2026-10-12-agent-workflow-memory-cb2da079273e-01`, frozen source
@@ -78,8 +82,13 @@ annotation-dependent observations and alternate-backend defects are public limit
 not evidence of working end-to-end operation or benefit. All 13 publication
 hashes match; all 16 model attempts have paired final validation passes, with
 two deterministic preflight repairs and no established path recurrence.
-Integration queue: Agent Workflow Memory. Replacement slot stays empty during
-the provider pause.
+Integrated from its original command environment after owned bookkeeping/audits
+were committed and origin was clean on main:
+`commonplace-analysis integrate kb/agentic-system-analyses/state/AAS-2026-10-12-agent-workflow-memory-cb2da079273e-01 --model openai/gpt-6.1-sol`.
+Exit 0, stdout `c4ca27c0b366f1f61819af18379dad8cb15b130f`, no stderr.
+Verified merge on main; target counts complete with recorded limits. The
+integration command independently checks publication evidence. Queue drained.
+Replacement slot stays empty during the provider pause.
 
 AgentFly published run `AAS-2026-10-12-agentfly-bbfc9fb2d5c7-01`, frozen source
 `42fbbcac63dd58ed6856c0761357345a58e4f032`. Last advance exited 0, stdout
@@ -150,8 +159,8 @@ reconciled; failed-run recovery remains a separate supported decision. Do not
 silently retry or discard the stopped runs. This is not a reinstated operator
 dispatch stop or a change to the commission.
 
-Corpus progress: nine complete, 192 pending (three currently assigned), five
-held. AI-Context-OS releases its slot, unfilled during the provider pause.
+Corpus progress: eleven complete, 190 pending (ai-memex-cli still assigned),
+five held. No publication awaits audit or integration. AI-Context-OS releases its slot, unfilled during the provider pause.
 Other frozen run identifiers and source boundaries will be recorded
 when available. No cleanup, push, method
 change, comparison regeneration or landscape synthesis is commissioned.
