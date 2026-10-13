@@ -55,7 +55,16 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
-**Latest checkpoint — dispatch stopped for reload:** [rolling execution 07](./rolling-07.md)
+**Current scheduling disposition:** the operator [released nine targets without
+substantial accepted analysis](./partial-outcomes-2026-10-13.md) to pending for
+fresh reruns. The six verification-stage holds remain unchanged; ACE and
+ai-memex-cli also stay held because they have substantial accepted partial
+analysis. Corpus: **17 complete, 181 pending, eight held**. Preserve all failed
+runs, partial outputs and traces. Release to pending does not authorize recovery
+of those runs or lift the reload dispatch stop. No active assignments or
+integration backlog remain.
+
+**Historical execution checkpoint — dispatch stopped for reload:** [rolling execution 07](./rolling-07.md)
 has drained all seven launched pipelines. No publication, audit or integration
 occurred. Auto-claude-code-research-in-sleep, auto-harness, Autocontext, AutoSci,
 Beever Atlas and Binder stopped on API/stream failures; browzy.ai's coordinator

@@ -1,5 +1,16 @@
 # Rolling execution 07
 
+## Subsequent target release
+
+The operator's [partial-outcome disposition](./partial-outcomes-2026-10-13.md)
+supersedes the held-target scheduling status below. Five of this execution's
+targets (Autocontext, AutoSci, Beever Atlas, Binder and browzy.ai) are pending
+for fresh reruns because they lack substantial accepted analysis. The two
+report-verification-stage targets remain held unchanged. Corpus scheduling
+status is now 17 complete, 181 pending, eight held across the workshop.
+All failed runs remain preserved; reload dispatch stop remains in force.
+The checkpoint below retains historical execution facts, not current eligibility.
+
 ## Final checkpoint for reload
 
 Seven system pipelines launched; all returned terminal results. No new
