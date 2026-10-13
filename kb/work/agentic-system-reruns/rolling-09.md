@@ -41,7 +41,7 @@ Both handoffs carry source-only authority, command binding, approved project-age
 launch settings and explicit bounded transient-worker retry permission.
 Initial corpus: 17 complete, 171 pending, 18 held. After Autogenesis and
 cass_memory_system integration: 18 complete, 169 pending, 19 held.
-No audit or integration backlog; only claude-obsidian remains active.
+No integration backlog; only claude-obsidian's audit remains active.
 After Claude Context Guard coordinator failure: 18 complete, 168 pending,
 20 held. This commission does not authorize recovery
 of held runs, source edits, method changes, cleanup, comparisons, synthesis or push.
@@ -104,7 +104,7 @@ Slot released to fresh claude-obsidian, source identity
 Ready worktree `claude-obsidian-c5e56e25c8bb`, method
 `b9955680c508c97e8903d8d4365c971c9e8733a7`, command prefix its `.venv/bin`.
 Preparation excluded dirty bookkeeping/audit bytes and verified startup inputs.
-Active handle `a41606da-64ca-460a-8f0f-796a8b899f91`; same source-only
+Analysis handle `a41606da-64ca-460a-8f0f-796a8b899f91` completed; audit active. Same source-only
 commission and explicit bounded transient-worker retry authority.
 
 cass_memory_system integrated through its prepared command environment into
@@ -143,3 +143,23 @@ held and incomplete despite a discoverable publication; unblock requires a
 supported reconciliation/recovery decision and then fresh audit/integration
 clearance. Preserve worktree, publication and traces. Slot released without
 refill under the session drain, not a new dispatch hold.
+
+## Publication: claude-obsidian
+
+Run `AAS-2026-10-13-claude-obsidian-c5e56e25c8bb-01`, frozen source
+`32ac5a02c4e082e4a5628ca810776375e134708e`, completed with
+publication-job-completed at `kb/agentic-system-analyses/retained/claude-obsidian/`
+in its prepared worktree. [Inspection](./rolling-09-claude-obsidian-inspect.json)
+retains exact state. Last advance exited 0, stdout `publishable: yes`, empty
+stderr. No open attempts/current refusals/worker problems.
+
+Memory attempt `000007-memory` failed with
+`OpenAI Responses stream ended before a terminal response event`. Coordinator
+reported the failure through advance (exit 2, empty stderr, stdout stop memory
+000007-memory with that error and publishable: no), inspected one recorded failure
+and no exhausted jobs, waited 30 seconds and launched code-scheduled replacement
+`000010-memory`, which completed. One authorized additional launch, no coordinator
+restart; the historical failure is preserved despite empty terminal failed-attempts.
+Fresh audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` owns
+`audits/rolling-09-claude-obsidian.md`. Target incomplete until clearance and
+verified integration. No refill under session drain.
