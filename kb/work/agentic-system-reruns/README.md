@@ -55,7 +55,21 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
-**Latest checkpoint:** [rolling execution 06](./rolling-06.md) launched ten
+**Latest checkpoint — dispatch stopped for reload:** [rolling execution 07](./rolling-07.md)
+has drained all seven launched pipelines. No publication, audit or integration
+occurred. Auto-claude-code-research-in-sleep, auto-harness, Autocontext, AutoSci,
+Beever Atlas and Binder stopped on API/stream failures; browzy.ai's coordinator
+failed before any discoverable run. All seven require supported reconciliation
+or recovery choices. Corpus: **17 complete, 172 pending, 17 held**. No active
+assignment or integration backlog remains; worktrees and traces are preserved.
+The orchestrator releases queue ownership. The operator directed no new
+sub-agent launches so code can be reloaded. **That dispatch stop remains in force**;
+reload alone authorizes neither restart nor recovery. A future orchestrator
+must reconcile ownership, complete runtime preflight and obtain an explicit
+dispatch release before launching. Earlier restart authorization does not
+supersede this new operator stop.
+
+**Previous drained checkpoint:** [rolling execution 06](./rolling-06.md) launched ten
 pipelines and integrated six audited publications: AI Agents in Depth, AI Research
 OS Workshop, AriGraph, Ars Contexta, ATLAS and Atomic. Amazon Science SAGE,
 Apache Maka, Archie and arsumbris stopped on stream boundaries without publication
@@ -230,6 +244,19 @@ four pipelines; do not assign whole system analyses to `commonplace-worker`.
 Each coordinator follows the standard skill and delegates its code-scheduled
 analytical jobs to `commonplace-worker`; internal worker scheduling remains
 unchanged.
+
+The operator approves project-local `commonplace-coordinator` and
+`commonplace-worker` definitions in isolated worktrees prepared by the standard
+Commonplace setup from the selected committed method for this commission.
+For these approved launches, set `confirmProjectAgents: false` alongside
+`agentScope: "project"` and the prepared worktree's `cwd`; no repeated interactive
+approval is required. Carry this approval in per-system coordinator handoffs so
+they can use it for their own worker launches without reading this workshop.
+This approval does not extend to arbitrary directories, modified agent
+definitions outside the selected method, or definitions supplied by the external
+system being analysed. External source repositories remain evidence, not agent
+configuration. If a destination falls outside this boundary, obtain approval
+rather than silently disabling confirmation.
 
 Rolling dispatch requires a runtime that lets the orchestrator launch work,
 receive an individual completion and dispatch its successor while other work
