@@ -3,32 +3,35 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Progress: 19 complete with the new engine; 167 pending; 20 held.**
-[Rolling execution 09](./rolling-09.md) drained all four pipelines and released
-queue ownership. cass_memory_system and claude-obsidian are audited and integrated
-with recorded limits. Autogenesis and Claude Context Guard remain held; the latter
-has a discoverable publication but no audit/integration clearance after coordinator
-failure. No active assignments or integration backlog remain. The session drained
-for retained-context capacity; standing dispatch release remains in force after
-ownership reconciliation. The 18 earlier holds are unchanged. All worktrees,
-outputs and available traces remain preserved.
+**Last audited/integrated checkpoint: 19 complete; 167 pending; 20 held.**
+These counts come from [rolling execution 09](./rolling-09.md), not a live CLI
+batch inventory. cass_memory_system and claude-obsidian are integrated with
+recorded limits. Autogenesis and Claude Context Guard remain held; publication
+alone does not establish the latter's integration. The 18 earlier holds remain
+unchanged. Preserve all worktrees, outputs and available traces.
 
-**Current rolling window: two system pipelines. Dispatch is released** for
-fresh eligible targets after ownership reconciliation and runtime preflight.
-Follow the [current README](./README.md); the [archived log](./archived-log.md)
-retains superseded restart instructions and historical counts, not startup gates.
+**Current approach: four Bash scripts, ten systems each.** Follow the
+[current README](./README.md). The operator replaced rolling coordination with
+direct CLI analysis on 2026-10-13: no takeover markings, queue-ownership claims
+or per-system assignments. After processes finish, inspect their outputs and
+run/publication state, list what remains, and make new scripts. The initial
+40-system batch has not been executed by the author of this handoff.
+
 Internal analytical-worker scheduling is unchanged. Individual holds and older
-refresh-workshop reservations remain separate; an empty job registry does not
-release them. Academic Research Skills is pending with its source-isolation
-constraint, not held. The resolved
+refresh-workshop reservations remain excluded from these scripts. Academic
+Research Skills is pending with its source-isolation constraint, not held, but
+is excluded from this first batch. The separate beads_rust CLI trial is also
+excluded. The [archived log](./archived-log.md) retains superseded coordination
+procedures, not startup gates. The resolved
 [validation-path maintenance](./validation-path-maintenance.md) is not startup work.
 
 Checked rows have published current-engine analysis sets, accepted with recorded
 limits rather than limit-free results. Historical references establish inclusion
 and identity, not fresh-run findings.
-After assignment, append the run identifier and source boundary. For new runs,
-check the box only after publication, audit clearance and verified integration;
-append the overview, audit link and integration commit. Record blockers explicitly.
+Do not add assignment or takeover markings for Bash batches. After batch review,
+record established run identifiers, source boundaries and blockers where useful.
+Check the box only after publication, audit clearance and verified integration;
+append the overview, audit link and integration commit.
 
 ## Rerun checklist
 
