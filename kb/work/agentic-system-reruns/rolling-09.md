@@ -1,12 +1,33 @@
 # Rolling execution 09
 
+## Final drained checkpoint
+
+Four pipelines launched; all coordinator and audit handles returned terminal
+results and were recorded before forgetting. cass_memory_system and
+claude-obsidian published, passed fresh independent audits with recorded limits,
+and integrated through their prepared command environments. Autogenesis stopped
+before publication; Claude Context Guard's coordinator failed after a
+discoverable publication and remains held under the coordinator-failure rule.
+No coordinator was restarted. All worktrees, partial/published outputs and
+available traces are preserved. No method edits, cleanup, comparisons, synthesis
+or push occurred.
+
+Final corpus: **19 complete, 167 pending, 20 held**. No active assignments or
+integration backlog remain. Session-local job status reports no active or
+retained jobs. This session releases queue ownership. The drain was for
+retained-context capacity, not a shared provider pause or new dispatch hold.
+Fresh eligible dispatch remains released after the next owner reconciles
+assignments and completes preflight. Individual holds and older reservations
+remain separate; no held target is released by an empty job registry.
+
 ## Ownership and preflight
 
 Owner: Pi session `01a135fb-cacf-71b3-8a11-18c6e0cb47c1`,
 `openai/gpt-6.1-sol`, medium thinking. This session follows the operator's
 commission to execute the workshop README. Rolling-08 released queue ownership;
 no newer rolling record or assignment was found. Session-local subagent status
-reported no active or retained jobs. This session claims queue ownership.
+reported no active or retained jobs. This session claimed queue ownership;
+it is now released at the final checkpoint.
 Existing holds and older refresh reservations remain untouched.
 
 Loaded tool schema exposes `action` and `handles`. The standing diagnostic
@@ -30,21 +51,20 @@ validation-path maintenance commit `9b110e2f5`. Window: two pipelines.
 Both preparations used method `ec261ee6fd6ce6f1b7d891650e3f38dbce73f80b`,
 excluded uncommitted bookkeeping bytes and verified matching startup inputs.
 Their command prefixes are each worktree's `.venv/bin`; sibling preparation
-records retain exact setup. Both publication destinations are reserved here.
+records retain exact setup. Both publication destinations were reserved here.
 
 Handle map:
 - Autogenesis: `35904bd2-7254-4bc8-9cf4-3a5dd1c6778f`, terminal; stopped, slot released.
-- cass_memory_system analysis: `c5699cca-9ddf-4f8e-80ff-57757c437026`, terminal; published, audit active.
+- cass_memory_system analysis: `c5699cca-9ddf-4f8e-80ff-57757c437026`, terminal; audited and integrated.
 - cass_memory_system audit: `718e6f07-4715-43ea-8843-007caf7a2a0d`, terminal; integrate with recorded limits.
 
 Both handoffs carry source-only authority, command binding, approved project-agent
 launch settings and explicit bounded transient-worker retry permission.
 Initial corpus: 17 complete, 171 pending, 18 held. After Autogenesis and
 cass_memory_system integration: 18 complete, 169 pending, 19 held.
-No active jobs; claude-obsidian audit cleared with recorded limits and is queued
-for serial integration.
 After Claude Context Guard coordinator failure: 18 complete, 168 pending,
-20 held. This commission does not authorize recovery
+20 held. After claude-obsidian integration: 19 complete, 167 pending, 20 held.
+No active jobs or integration backlog. This commission does not authorize recovery
 of held runs, source edits, method changes, cleanup, comparisons, synthesis or push.
 
 ## Outcome: Autogenesis
@@ -88,9 +108,9 @@ in its prepared worktree. [Inspection](./rolling-09-cass-memory-system-inspect.j
 retains exact state. Last advance exited 0, stdout `publishable: yes`, empty
 stderr. No failed attempts, worker problems or transient retries recorded;
 code-scheduled revision rounds occurred. Publication success does not certify
-worker obligations or integration checks. Target remains incomplete until audit
-and integration. Fresh audit owns `audits/rolling-09-cass-memory-system.md`,
-handle `718e6f07-4715-43ea-8843-007caf7a2a0d`; other pipeline continues.
+worker obligations or integration checks. Fresh audit owned
+`audits/rolling-09-cass-memory-system.md`, handle
+`718e6f07-4715-43ea-8843-007caf7a2a0d`, while the other pipeline continued.
 
 Audit returned **integrate with recorded limits**. The
 [audit report](./audits/rolling-09-cass-memory-system.md) finds no consequential
@@ -105,7 +125,7 @@ Slot released to fresh claude-obsidian, source identity
 Ready worktree `claude-obsidian-c5e56e25c8bb`, method
 `b9955680c508c97e8903d8d4365c971c9e8733a7`, command prefix its `.venv/bin`.
 Preparation excluded dirty bookkeeping/audit bytes and verified startup inputs.
-Analysis handle `a41606da-64ca-460a-8f0f-796a8b899f91` completed; audit active. Same source-only
+Analysis handle `a41606da-64ca-460a-8f0f-796a8b899f91` completed; audited and integrated. Same source-only
 commission and explicit bounded transient-worker retry authority.
 
 cass_memory_system integrated through its prepared command environment into
@@ -116,7 +136,7 @@ Audit/checklist bookkeeping was committed before integration; origin was clean.
 
 ## Session drain
 
-Four system pipelines have been launched. This session now drains safely for
+Four system pipelines have been launched. This session began a safe drain for
 retained-context capacity: settle the remaining Claude Context Guard and
 claude-obsidian analyses, commission fresh audits for any publications, and
 integrate only cleared results. Do not refill released slots during this drain.
@@ -161,9 +181,8 @@ reported the failure through advance (exit 2, empty stderr, stdout stop memory
 and no exhausted jobs, waited 30 seconds and launched code-scheduled replacement
 `000010-memory`, which completed. One authorized additional launch, no coordinator
 restart; the historical failure is preserved despite empty terminal failed-attempts.
-Fresh audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` owns
-`audits/rolling-09-claude-obsidian.md`. Target incomplete until clearance and
-verified integration. No refill under session drain.
+Fresh audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` owned
+`audits/rolling-09-claude-obsidian.md`. No refill under session drain.
 
 Audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` returned **integrate with
 recorded limits**. [Audit](./audits/rolling-09-claude-obsidian.md) establishes no
@@ -173,3 +192,10 @@ disagreement, incomplete downstream withdrawal handling and coarse curation
 inventory. Worker tool traces were not located, so validation-call compliance
 and exact retry delay are not independently certified. Report validation passed
 with zero failures/warnings. Result queued for standard integration; no refill.
+
+claude-obsidian integrated through its prepared command environment into `main`,
+merge commit `3060c79dfe2d8ebdcbe8c9eef799b4511330171f`. Integration returned
+0 with that commit and no error. Verified commit ancestry and all 13 origin
+publication files byte-for-byte against the preserved worktree. Owned audit and
+checklist bookkeeping was committed first; origin was clean. Terminal audit
+handle was recorded and forgotten. No integration queue remains.

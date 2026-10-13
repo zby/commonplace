@@ -3,15 +3,15 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Progress: 18 complete with the new engine; 168 pending; 20 held.**
-[Rolling execution 09](./rolling-09.md) owns the queue and has launched fresh
-no active pipelines. claude-obsidian is audit-cleared with recorded limits and
-queued for integration. Autogenesis and Claude Context Guard are held. cass_memory_system is audited and integrated.
-This session is draining for retained-context capacity;
-standing dispatch release remains in force after ownership reconciliation.
-Rolling-08 drained and released ownership; its ten targets remain held in
-addition to the eight prior holds. All failed runs and partial outputs remain
-preserved.
+**Progress: 19 complete with the new engine; 167 pending; 20 held.**
+[Rolling execution 09](./rolling-09.md) drained all four pipelines and released
+queue ownership. cass_memory_system and claude-obsidian are audited and integrated
+with recorded limits. Autogenesis and Claude Context Guard remain held; the latter
+has a discoverable publication but no audit/integration clearance after coordinator
+failure. No active assignments or integration backlog remain. The session drained
+for retained-context capacity; standing dispatch release remains in force after
+ownership reconciliation. The 18 earlier holds are unchanged. All worktrees,
+outputs and available traces remain preserved.
 
 **Current rolling window: two system pipelines. Dispatch is released** for
 fresh eligible targets after ownership reconciliation and runtime preflight.
@@ -73,7 +73,7 @@ append the overview, audit link and integration commit. Record blockers explicit
 - [x] **cass_memory_system** (`cass_memory_system`) — complete with recorded limits in [rolling execution 09](./rolling-09.md); run `AAS-2026-10-13-cass-memory-system-30c18219cf68-01`, source `8aca3bbb6732321dca041b32c155617784687897`; [overview](../../agentic-system-analyses/retained/cass-memory-system/overview.md); [audit](./audits/rolling-09-cass-memory-system.md); integration `473c576a263a7249f716eb2afbf1a48a4f045470`;  [legacy review](../../agent-memory-systems/reviews/cass_memory_system.md).
 - [ ] **Claude Code dynamic workflows** (`claude-code-dynamic-workflows`) — pending; [authored account](../../agentic-systems/reviews/claude-code-dynamic-workflows.md).
 - [ ] **Claude Context Guard** (`claude-context-guard`) — held after [rolling execution 09](./rolling-09.md), run `AAS-2026-10-13-claude-context-guard-357cd90664df-01`, source `efcd0a1815887483a862b32bfb3fbfd6aac79aa6`; coordinator stream failure, read-only reconciliation finds publication-job-completed with no open attempts; publication preserved in worktree `claude-context-guard-357cd90664df`, unaudited/unintegrated; requires supported reconciliation/recovery decision under coordinator-failure rule; [legacy review](../../agent-memory-systems/reviews/claude-context-guard.md).
-- [ ] **claude-obsidian** (`claude-obsidian`) — published, audit-cleared with recorded limits, integration queued in [rolling execution 09](./rolling-09.md); run `AAS-2026-10-13-claude-obsidian-c5e56e25c8bb-01`, source `32ac5a02c4e082e4a5628ca810776375e134708e`; one authorized memory-worker transient retry; publication preserved in worktree `claude-obsidian-c5e56e25c8bb`, not integrated; [legacy review](../../agent-memory-systems/reviews/claude-obsidian.md).
+- [x] **claude-obsidian** (`claude-obsidian`) — complete with recorded limits in [rolling execution 09](./rolling-09.md); run `AAS-2026-10-13-claude-obsidian-c5e56e25c8bb-01`, source `32ac5a02c4e082e4a5628ca810776375e134708e`; one authorized memory-worker transient retry; [overview](../../agentic-system-analyses/retained/claude-obsidian/overview.md); [audit](./audits/rolling-09-claude-obsidian.md); integration `3060c79dfe2d8ebdcbe8c9eef799b4511330171f`; [legacy review](../../agent-memory-systems/reviews/claude-obsidian.md).
 - [ ] **Claude Workstream Kit** (`claude-workstream-kit`) — pending; [legacy review](../../agent-memory-systems/reviews/claude-workstream-kit.md).
 - [ ] **ClawVault** (`clawvault`) — pending; [legacy review](../../agent-memory-systems/reviews/clawvault.md).
 - [ ] **Closure-SDK** (`closure-sdk`) — pending; [legacy review](../../agent-memory-systems/reviews/Closure-SDK.md).

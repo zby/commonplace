@@ -32,29 +32,21 @@ validation-path maintenance retains only its bounded authority below.
 
 ## Current execution checkpoint and next action
 
-[Rolling execution 09](./rolling-09.md) owns the queue. No jobs remain active;
-claude-obsidian is audit-cleared with recorded limits and queued for standard
-integration. cass_memory_system is audited and integrated with recorded limits.
-Autogenesis stopped before publication; Claude Context Guard's coordinator
-failed after a discoverable publication. Both remain held pending supported
-reconciliation/recovery; publication alone does not clear the latter.
-Current corpus: **18 complete, 168 pending, 20 held**. The session is draining
-for retained-context capacity, not imposing a new dispatch hold.
-Its assignment record is authoritative for active work; do not duplicate it.
-The checkpoint below describes the preceding drained execution.
+[Rolling execution 09](./rolling-09.md) has drained all four launched pipelines.
+cass_memory_system and claude-obsidian are published, independently audited and
+integrated with recorded limits. Autogenesis stopped before publication;
+Claude Context Guard's coordinator failed after a discoverable publication.
+Both remain held pending supported reconciliation/recovery; publication alone
+does not clear the latter. All worktrees, outputs and available traces remain
+preserved. The audits do not certify individual worker validation calls where
+tool traces were not located.
 
-[Rolling execution 08](./rolling-08.md) has drained all ten launched pipelines.
-No new publication, audit or integration occurred. Nine discoverable runs are
-stopped with no open attempts; browzy.ai failed before any discoverable run.
-Agentic Harness Engineering retains substantial analysis through profile
-verification, but its memory profile was refused and its revision worker failed.
-All worktrees, partial outputs and available traces remain preserved.
-
-**Corpus: 17 complete, 171 pending, 18 held. No active assignments or integration
+**Corpus: 19 complete, 167 pending, 20 held. No active assignments or integration
 backlog remain. Queue ownership is released.** The session drained for
 retained-context capacity, not a new operator stop or shared provider pause.
-A session-local job check during handoff cleanup found no active or retained
-jobs; this does not release another owner's reserved target.
+A session-local job check found no active or retained jobs; this does not
+release another owner's reserved target. Standing fresh dispatch remains
+released after ownership reconciliation and runtime preflight.
 
 To start the next execution:
 
@@ -87,7 +79,7 @@ held targets. Partial progress is useful; it is not a completed corpus refresh.
 ## Holds and reservations
 
 [Systems](./systems.md) records each held target's run, evidence and unblock
-conditions. All 18 remain incomplete:
+conditions. All 20 remain incomplete:
 
 - Eight prior holds: Agent Skills for Context Engineering, ACE, AI-Context-OS,
   ai-memex-cli, Archie, arsumbris, Auto-claude-code-research-in-sleep and
@@ -95,6 +87,9 @@ conditions. All 18 remain incomplete:
 - Ten rolling-08 holds: Autocontext, AutoSci, Binder, browzy.ai, Beever Atlas,
   Apache Maka, Amazon Science SAGE, AREX-Skill, byterover-cli and Agentic Harness
   Engineering.
+- Two rolling-09 holds: Autogenesis and Claude Context Guard. The latter has a
+  discoverable publication but no audit/integration clearance after its
+  coordinator's terminal stream failure.
 
 Agent Skills for Context Engineering remains reserved to its reported owner
 until completion, termination or explicit handoff is confirmed. Do not access
@@ -153,7 +148,7 @@ analysts** (`commonplace-coordinator`), not to the outer workshop coordinator.
 If the per-system coordinator itself fails, the outer coordinator records its
 terminal error, reconciles the run read-only, preserves evidence, holds the
 target and refills the slot with the next eligible analysis. It does not restart
-the failed coordinator. All 18 existing holds remain unchanged; this permission
+the failed coordinator. All 20 existing holds remain unchanged; this permission
 is not retroactive recovery or replacement authority for them.
 
 Use `openai/gpt-6.1-sol`, medium thinking, for the orchestrator, fresh per-system
