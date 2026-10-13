@@ -28,9 +28,9 @@ Worktree root: `/home/zby/llm/commonplace/.commonplace/worktrees/`.
 
 | Target | Worktree basename | Source identity | Handle | Status |
 |---|---|---|---|---|
-| Autocontext | `autocontext-6f1e750351ab` | `https://github.com/greyhaven-ai/autocontext` | `272ea2a1-3926-4415-812a-87ea1df29ea3` | Analysis running |
+| Autocontext | `autocontext-6f1e750351ab` | `https://github.com/greyhaven-ai/autocontext` | `272ea2a1-3926-4415-812a-87ea1df29ea3` | Coordinator failed; runtime stopped; slot released |
 | AutoSci | `autosci-19b6498edffe` | `https://github.com/skyllwt/AutoSci` | `82acaef6-470d-4a48-b03b-586ae2130aae` | Boundary failed; slot released |
-| Binder | `binder-15e0514441cf` | `https://github.com/mpazik/binder` | `e434e8ec-6ebc-4d04-9dd6-3e395be94532` | Analysis running |
+| Binder | `binder-15e0514441cf` | `https://github.com/mpazik/binder` | `e434e8ec-6ebc-4d04-9dd6-3e395be94532` | Epistemic worker failed; run stopped; slot released |
 | browzy.ai | `browzy-ai-289663718f22` | `https://github.com/VihariKanukollu/browzy.ai` | `53db413c-60a3-402d-bdf0-7e82f6f1e231` | Coordinator failed before discoverable run; slot released |
 
 Beever Atlas refills the released slot:
@@ -51,12 +51,33 @@ excluded uncommitted origin bytes and verified matching startup inputs.
 Amazon Science SAGE refills Apache Maka's released slot:
 worktree `amazon-science-sage-5e8c3d911f22`, source identity
 `https://github.com/amazon-science/SAGE`, handle
-`14d6e3e6-bc08-4a99-a7f6-31ec026fdb0f`, analysis running.
+`14d6e3e6-bc08-4a99-a7f6-31ec026fdb0f`, runtime failed; run stopped and slot released.
 Preparation used current committed HEAD `0a8ae3c43b8f57bd75375da95531d039034222fe`,
 excluded uncommitted origin bytes and verified matching startup inputs.
 
+AREX-Skill refills Autocontext's released slot:
+worktree `arex-skill-db1b68297b6b`, source identity
+`https://github.com/VectorSpaceLab/AREX-Skill`, handle
+`c1a03017-1d5c-41b4-94f0-f037e989823c`, analysis running.
+Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
+excluded uncommitted origin bytes and verified matching startup inputs.
+
+byterover-cli refills Binder's released slot:
+worktree `byterover-cli-38a4302dafd9`, source identity
+`https://github.com/campfirein/byterover-cli`, handle
+`22cc4a72-9011-49aa-9ba0-9642d177d724`, analysis running.
+Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
+excluded uncommitted origin bytes and verified matching startup inputs.
+
+Agentic Harness Engineering refills Amazon Science SAGE's released slot:
+worktree `agentic-harness-engineering-914fd0094689`, source identity
+`https://github.com/china-qijizhifeng/agentic-harness-engineering`, handle
+`b8cf78b0-4a35-46ed-9001-9dcaf1a45a0a`, analysis running.
+Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
+excluded uncommitted origin bytes and verified matching startup inputs.
+
 No integration queue yet. Initial corpus: 17 complete, 181 pending, eight held.
-After browzy.ai, AutoSci and Apache Maka failures: 17 complete, 178 pending, 11 held.
+After six target failures: 17 complete, 175 pending, 14 held.
 No recovery, cleanup, method edits, comparison regeneration, synthesis or push.
 
 ## Outcome: browzy.ai
@@ -112,6 +133,66 @@ No recovery, retry or advance occurred during reconciliation. Preserve all
 evidence; unblock requires a supported recovery decision. Slot released;
 Amazon Science SAGE selected as the next eligible target. Other pipelines
 remain active; these individual failures do not yet establish a blanket outage.
+
+## Outcome: Autocontext
+
+Coordinator handle failed with `Our servers are currently overloaded. Please try again later.`
+without a final report. Read-only reconciliation found run
+`AAS-2026-10-13-autocontext-6f1e750351ab-01` stopped at runtime
+`000005-runtime`, reason `OpenAI Responses stream ended before a terminal response event`.
+Boundary is installed; no publication or open attempts. Frozen source HEAD
+`f72c154152397f54d55407508b153d28861888a5`. Status exited 0:
+
+```text
+member boundary: 17a18a7a8431
+stop runtime 000005-runtime: OpenAI Responses stream ended before a terminal response event
+limitation: Completion does not establish that every worker obligation was fulfilled or every reported problem resolved.
+limitation: Missing historical problem text means not recorded, not proof that no problem occurred.
+publishable: no
+```
+
+This is not a reconstruction of the unavailable final advance return.
+[Inspection](./rolling-08-autocontext-inspect.json) retains engine state.
+No advance/recovery/retry occurred during reconciliation. Preserve evidence;
+unblock requires a supported recovery decision. Slot released to AREX-Skill.
+Successful boundary work is intervening evidence against a blanket outage;
+continue eligible work under the standing commission.
+
+## Outcome: Binder
+
+Run `AAS-2026-10-13-binder-15e0514441cf-01`, source revision
+`e4066d750ac5c6918706f44b12daa261b261106e`, stopped after specialist
+round: memory and workflow workers completed, epistemic `000008-epistemic`
+failed. Boundary and runtime are installed; no publication or open attempts.
+Last advance exited 2, empty stderr, stdout:
+
+```text
+stop epistemic 000008-epistemic: An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID req_202a5d582b5942b1b70ea189e147e445 in your message.
+publishable: no
+```
+
+[Inspection](./rolling-08-binder-inspect.json) retains state. Empty
+worker-problems does not negate the failure. All evidence preserved; unblock
+requires supported recovery direction, not automatic retry. Slot released to
+byterover-cli. Four Binder model workers completed, further evidence against
+a blanket provider outage; this does not certify every worker obligation.
+
+## Outcome: Amazon Science SAGE
+
+Run `AAS-2026-10-13-sage-5e8c3d911f22-01`, source revision
+`3c9244e82244abb1adc5467ee601a03ba0f433a0`, stopped at runtime
+`000005-runtime`; boundary is installed. No publication or open attempts.
+Last advance exited 2, empty stderr, stdout:
+
+```text
+stop runtime 000005-runtime: An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID req_375c590a74514f939573b68ab392cac8 in your message.
+publishable: no
+```
+
+[Inspection](./rolling-08-amazon-science-sage-inspect.json) retains exact
+state. Empty worker-problems does not negate failure. Preserve evidence;
+unblock requires supported recovery direction. Slot released without retry;
+Agentic Harness Engineering is selected from eligible pending work.
 
 ## Concurrent origin changes
 
