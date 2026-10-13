@@ -32,9 +32,9 @@ validation-path maintenance retains only its bounded authority below.
 
 ## Current execution checkpoint and next action
 
-[Rolling execution 09](./rolling-09.md) owns the queue. Only claude-obsidian
-remains active, now in fresh post-publication audit. cass_memory_system is
-audited and integrated with recorded limits.
+[Rolling execution 09](./rolling-09.md) owns the queue. No jobs remain active;
+claude-obsidian is audit-cleared with recorded limits and queued for standard
+integration. cass_memory_system is audited and integrated with recorded limits.
 Autogenesis stopped before publication; Claude Context Guard's coordinator
 failed after a discoverable publication. Both remain held pending supported
 reconciliation/recovery; publication alone does not clear the latter.

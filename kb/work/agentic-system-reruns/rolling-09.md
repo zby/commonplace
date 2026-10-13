@@ -41,7 +41,8 @@ Both handoffs carry source-only authority, command binding, approved project-age
 launch settings and explicit bounded transient-worker retry permission.
 Initial corpus: 17 complete, 171 pending, 18 held. After Autogenesis and
 cass_memory_system integration: 18 complete, 169 pending, 19 held.
-No integration backlog; only claude-obsidian's audit remains active.
+No active jobs; claude-obsidian audit cleared with recorded limits and is queued
+for serial integration.
 After Claude Context Guard coordinator failure: 18 complete, 168 pending,
 20 held. This commission does not authorize recovery
 of held runs, source edits, method changes, cleanup, comparisons, synthesis or push.
@@ -163,3 +164,12 @@ restart; the historical failure is preserved despite empty terminal failed-attem
 Fresh audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` owns
 `audits/rolling-09-claude-obsidian.md`. Target incomplete until clearance and
 verified integration. No refill under session drain.
+
+Audit handle `c9f54ff2-b5f3-4da6-ae0a-e587475b45ba` returned **integrate with
+recorded limits**. [Audit](./audits/rolling-09-claude-obsidian.md) establishes no
+consequential hold within scope, verifies all 13 publication hashes, and confirms
+stored failure/replacement attempts. The publication itself retains fold-status
+disagreement, incomplete downstream withdrawal handling and coarse curation
+inventory. Worker tool traces were not located, so validation-call compliance
+and exact retry delay are not independently certified. Report validation passed
+with zero failures/warnings. Result queued for standard integration; no refill.
