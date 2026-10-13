@@ -187,9 +187,11 @@ publication. `completion: publication-job-completed` is still not a fresh
 filesystem audit; separately authorized integration independently verifies exact
 evidence before committing.
 
-If the loop stops or reports an uncertain effect, preserve its evidence and give
-the operator the exact command output and error. Do not edit engine state or
-claim completion. After a published analysis, add that outputs under
+The driver's bounded transient-worker retry route applies only with explicit
+caller authorization; it does not recover a failed coordinator. If the loop
+stops outside that route or reports an uncertain effect, preserve its evidence
+and give the operator the exact command output and error. Do not edit engine
+state or claim completion. After a published analysis, add that outputs under
 `kb/agentic-systems/comparisons/` are stale unless rebuilt under separate
 authority, and a prior landscape synthesis is historical unless refreshed under
 separate authority. Transfer scans and landscape synthesis need separate

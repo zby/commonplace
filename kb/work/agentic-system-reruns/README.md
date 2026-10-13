@@ -61,8 +61,10 @@ To start the next execution:
 4. Prepare each isolated worktree from a committed method through the standard
    skill, then launch one fresh per-system coordinator in each slot. Carry the
    source-only commission, command prefix, ownership boundaries and approved
-   project-agent launch settings in each handoff. The coordinator performs its
-   own required preflight and uses harness `pi`, worker profile `pi-sol`.
+   project-agent launch settings in each handoff. Explicitly authorize the
+   driver's bounded transient-worker retries in that commission; do not repeat
+   the old unconditional stop-on-worker-failure instruction. The coordinator
+   performs its own required preflight and uses harness `pi`, profile `pi-sol`.
 5. Follow the rolling analysis–audit–integration loop below. Record each outcome
    as it arrives. Preserve failures, release their slots and continue eligible
    work unless evidence establishes a shared blocker.
@@ -125,6 +127,23 @@ resolve identity, not fresh findings. Unreviewed TODOs, ingests alone and
 workshop trials are not extra targets.
 
 ## Execution and ownership
+
+The operator authorizes **instruction-level bounded transient-worker recovery**
+for fresh runs prepared from the committed method containing this advice. The
+[run driver](../../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md#retry-transient-worker-failures-when-authorized)
+owns the rule. Carry this explicit permission in each per-system coordinator
+handoff; the coordinator must read and follow that driver. A transient analyst
+request failure need not discard completed analytical work, but retry never
+waives source isolation, engine bounds or validation. No new retry tooling or
+orchestrator-restart mechanism is commissioned.
+
+This recovery advice applies only to the **per-system coordinator that launches
+analysts** (`commonplace-coordinator`), not to the outer workshop coordinator.
+If the per-system coordinator itself fails, the outer coordinator records its
+terminal error, reconciles the run read-only, preserves evidence, holds the
+target and refills the slot with the next eligible analysis. It does not restart
+the failed coordinator. All 18 existing holds remain unchanged; this permission
+is not retroactive recovery or replacement authority for them.
 
 Use `openai/gpt-6.1-sol`, medium thinking, for the orchestrator, fresh per-system
 coordinators and fresh auditors; analytical workers use `pi-sol`. Keep **two
