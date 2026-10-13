@@ -1,5 +1,23 @@
 # Rolling execution 06
 
+## Final checkpoint and handoff
+
+Ten system pipelines launched; six publications independently audited and
+integrated, four stopped on stream boundaries without publication. Corpus:
+**17 complete, 179 pending, ten held**. All ten coordinators and six auditors
+returned; session-local status reports no asynchronous jobs. No active assignment
+or integration backlog remains. All worktrees, attempts and traces are preserved.
+Origin is clean after committing this checkpoint. No method edits, cleanup,
+comparison regeneration, landscape refresh or push.
+
+This orchestrator releases queue ownership. The next orchestrator may resume
+eligible pending targets under the standing restart authorization after checking
+for newer assignments and completing runtime preflight; no renewed operator
+release or provider gate is required. Six original holds plus Amazon Science
+SAGE, Apache Maka, Archie and arsumbris remain held for supported recovery
+choices. Do not automatically retry or replace their preserved failed runs.
+Earlier refresh handoff targets remain outside this execution's cleared ownership.
+
 ## Ownership and preflight
 
 The operator directed this session to take over the queue and resume eligible
@@ -40,9 +58,11 @@ records retain setup evidence.
 | AriGraph | `arigraph-fd0f6f1c1383` | `https://github.com/AIRI-Institute/AriGraph` | analysis `9a7740a3-a7a6-4323-b71f-8c0162b711a0`; audit `cadbb22c-102a-400a-8308-5530cc9c4ad5` | Audited and integrated with recorded limits |
 | Ars Contexta | `arscontexta-f9e5f2f34166` | `https://github.com/agenticnotetaking/arscontexta` | analysis `a105d59f-75ab-4a0f-89bb-f3852b79f5b2`; audit `e2e4956b-6ff3-4629-8483-a817a56fd383` | Audited and integrated with recorded limits |
 
-Run identifiers and frozen boundaries will be recorded from returned workflow
-evidence. Handles are session-local; do not duplicate these assignments after
-interruption without reconciling their workers and retained run state.
+The remaining assignments are recorded in the outcome sections: arsumbris
+`arsumbris-247284e3101a` stopped; ATLAS `atlas-b28ea1ea613f` and Atomic
+`atomic-f98683232831` audited and integrated. All historical handles are terminal
+and forgotten after durable recording. Run identifiers and boundaries below
+come from returned workflow evidence; reconcile newer ownership before dispatch.
 
 Archie, AriGraph and Ars Contexta preparation used `ccd7aae348bc2bc6c86e69fa50de732fd2b56ea6`,
 which changes only workshop bookkeeping from the first four worktrees' method.
@@ -103,7 +123,7 @@ exited 0, stdout `publishable: yes`, empty stderr and no stops.
 publication-job-completed, no failed/open attempts and no retained worker-problems.
 The engine scheduled a second memory-profile verification round. Publication
 success is not a fresh filesystem or worker-obligation audit. Fresh independent
-auditor owns `audits/rolling-06-ai-agent-book.md`; not integrated or checklist-complete.
+auditor owned `audits/rolling-06-ai-agent-book.md`; later audit/integration below.
 This successful pipeline also contradicts a blanket provider-outage inference.
 
 ## Audit clearance: AI Agents in Depth
@@ -132,7 +152,7 @@ Last advance exited 0, stdout `publishable: yes`, no stderr or stops.
 [Inspection](./rolling-06-ai-research-os-workshop-inspect.json) reports completed,
 publication-job-completed, no failed/open attempts or retained worker-problems.
 Code scheduled the second memory-profile round. A fresh independent audit owns
-`audits/rolling-06-ai-research-os-workshop.md`; not integrated or complete yet.
+`audits/rolling-06-ai-research-os-workshop.md`; later audit/integration below.
 
 ## Audit clearance: AI Research OS Workshop
 
@@ -166,7 +186,7 @@ contradict an established blanket provider outage.
 Atomic refills the arsumbris slot: source `https://github.com/kenforthewin/atomic`,
 worktree `atomic-f98683232831`, handle `03463281-44a3-415b-a3f7-eb827c71207b`.
 Preparation from `07e73341ad64b4faab06290e9b437ea0c10518b4` excluded
-uncommitted outcome bookkeeping and verified startup inputs. Publication completed; audit running.
+uncommitted outcome bookkeeping and verified startup inputs. Later publication, audit and integration are recorded below.
 
 ## Publication: AriGraph
 
@@ -177,7 +197,7 @@ Run `AAS-2026-10-12-arigraph-fd0f6f1c1383-01` froze revision
 [Inspection](./rolling-06-arigraph-inspect.json) reports publication-job-completed,
 no failures/open attempts/worker-problems. Code scheduled runtime and subsequent
 reconciliation/report-verification replacement plus second memory-profile round.
-Fresh auditor owns `audits/rolling-06-arigraph.md`; integration pending.
+Fresh auditor owned `audits/rolling-06-arigraph.md`; later clearance/integration below.
 
 ## Session-capacity checkpoint
 
@@ -261,7 +281,11 @@ inspection, no target execution or exhaustive worker-obligation certification.
 
 ## Integration queue
 
-Atomic: audit-cleared and queued for serial integration.
+Empty. Atomic integrated with prepared commands and
+`--model openai/gpt-6.1-sol`, exit 0; merge
+`ad80113c9fb69e7b024f16f1203167c076035936` verified on `main`.
+Publication commit `7b944f69d`; origin clean before/after; origin validation
+passed (one directory artifact, zero diagnostics).
 
 Earlier integration: ATLAS integrated with prepared commands and `--model openai/gpt-6.1-sol`,
 exit 0, merge `707e4c8e3099af04ff13035086afb62eb7295134` verified on main.
@@ -292,6 +316,6 @@ Integration independently checked publication evidence and returned merge commit
 `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
 Origin was clean before and after integration. Publication commit `5eadb2197`.
 Origin directory validation passed (one directory artifact, zero diagnostics).
-Corpus progress: 16 complete, 180 pending, ten held; no active pipeline, Atomic queued for integration.
+Corpus progress: 17 complete, 179 pending, ten held; no active pipeline or integration backlog.
 Comparison outputs remain stale and prior landscape synthesis historical;
 no regeneration, cleanup or push commissioned.

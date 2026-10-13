@@ -55,12 +55,20 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
-**Current ownership:** [rolling execution 06](./rolling-06.md) has taken over
-under the operator's restart direction. The four-pipeline pool is active; see that record and the checklist for
-current analysis/audit assignments, outcomes and integration queue. AI Agents
-in Depth has published and is under independent audit. New individual stream
-failures are recorded as recovery holds, without a blanket provider pause.
-The original six individual holds remain unchanged.
+**Latest checkpoint:** [rolling execution 06](./rolling-06.md) launched ten
+pipelines and integrated six audited publications: AI Agents in Depth, AI Research
+OS Workshop, AriGraph, Ars Contexta, ATLAS and Atomic. Amazon Science SAGE,
+Apache Maka, Archie and arsumbris stopped on stream boundaries without publication
+and require supported recovery decisions. Corpus progress is **17 complete,
+179 pending, ten held**, with no active assignments or integration backlog.
+The session drained for retained-context capacity, not a provider outage or a
+new operator hold. Worktrees and traces are preserved; queue ownership is released.
+
+**Next action:** the next orchestrator may resume the four-pipeline rolling pool
+on eligible pending targets after ownership reconciliation and runtime preflight.
+Standing restart authorization remains in force; no new operator release or
+provider-availability gate is required. Keep all ten individual holds separate
+from fresh eligible work. Rolling-06 releases no older refresh-workshop reservation.
 
 **Previous checkpoint:** [rolling execution 05](./rolling-05.md) resumed the
 released four-pipeline pool from the committed validation-output method. It
