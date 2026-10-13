@@ -32,6 +32,11 @@ validation-path maintenance retains only its bounded authority below.
 
 ## Current execution checkpoint and next action
 
+[Rolling execution 09](./rolling-09.md) now owns the queue and has launched
+fresh Autogenesis and cass_memory_system analyses in the two pipeline slots.
+Its assignment record is authoritative for active work; do not duplicate it.
+The checkpoint below describes the preceding drained execution.
+
 [Rolling execution 08](./rolling-08.md) has drained all ten launched pipelines.
 No new publication, audit or integration occurred. Nine discoverable runs are
 stopped with no open attempts; browzy.ai failed before any discoverable run.
@@ -48,7 +53,7 @@ jobs; this does not release another owner's reserved target.
 To start the next execution:
 
 1. Read [systems](./systems.md) and the latest execution checkpoint, currently
-   [rolling-08](./rolling-08.md). Check for newer assignments and establish queue
+   [rolling-09](./rolling-09.md). Check for newer assignments and establish queue
    ownership. Do not duplicate a publication destination or assume process
    existence alone assigns this queue. Escalate unresolved ownership.
 2. Verify the selected model and effort, loaded asynchronous tool schema and
