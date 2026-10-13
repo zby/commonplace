@@ -35,6 +35,11 @@ properties:
           effort:
             type: string
             minLength: 1
+          reported-effort:
+            type: object
+            additionalProperties:
+              type: string
+              minLength: 1
         additionalProperties: false
       members:
         type: object

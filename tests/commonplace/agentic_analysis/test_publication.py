@@ -117,7 +117,9 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     (attempt.run_dir / "artifact" / "memory.md").write_bytes(b"untracked garbage")
     outputs = publication.assemble_analysis(attempt)
     manifest = yaml.safe_load(outputs["manifest"])
-    assert manifest["worker"] == {**WORKER, "model": "fixture-model-1"}
+    efforts = {name.removesuffix("-attempt"): "high" for name, data in attempt.inputs.items()
+               if name.endswith("-attempt") and data}
+    assert manifest["worker"] == {**WORKER, "model": "fixture-model-1", "reported-effort": efforts}
     assert manifest["members"]["overview.md"] == {"sha256": publication._digest(outputs["overview"])}
     assert set(manifest["members"]) == set(scripted[0]["members"])
     assert b"untracked garbage" not in outputs["overview"]
@@ -125,13 +127,23 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     assert "overview:identity:boundary" in attempt.judgments[0][1]["scope"]
 
 
+def test_assembly_retains_harness_native_reported_effort(tmp_path, scripted):
+    # Claude Code states effort as a number; it is evidence, not a profile mismatch.
+    attempt = Attempt(tmp_path, "complete")
+    record = json.loads(attempt.inputs["memory-attempt"])
+    record["worker_effort"] = "5"
+    attempt.inputs["memory-attempt"] = json.dumps(record).encode()
+    manifest = yaml.safe_load(publication.assemble_analysis(attempt)["manifest"])
+    assert manifest["worker"]["effort"] == WORKER["effort"]
+    assert manifest["worker"]["reported-effort"]["memory"] == "5"
+
+
 # Membership, acceptance and coverage now gate assembly through the engine's
 # coverage input; the engine scenario tests pin that it waits, not fails.
 @pytest.mark.parametrize("defect,reason", [
     ("provenance", "provenance"), ("mixed-worker", "not the run's worker profile's"),
     ("mixed-report", "every worker must report the same model"),
-    ("wrong-effort", "reported worker effort"),
-    ("missing-effort", "reported worker effort"),
+    ("missing-effort", "reported no worker effort"),
 ])
 def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, defect, reason):
     attempt = Attempt(tmp_path, "complete")
@@ -140,8 +152,6 @@ def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, de
         record["model"] = "other/model"
     elif defect == "mixed-report":
         record["worker_model"] = "fixture-model-2"
-    elif defect == "wrong-effort":
-        record["worker_effort"] = "low"
     elif defect == "missing-effort":
         record.pop("worker_effort")
     else:

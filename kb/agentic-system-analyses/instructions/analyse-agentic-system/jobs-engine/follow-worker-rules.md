@@ -88,8 +88,9 @@ the model and effort depends on the harness that launched you.
 ### Claude Code
 
 The system prompt names the model and its exact model ID; report the ID.
-Report the effort only when the system prompt or environment states it;
-otherwise write `not stated`.
+When the system prompt or environment states a reasoning effort, report it
+verbatim, including a bare number; do not convert it to a level name.
+Otherwise write `not stated`.
 
 ### Codex
 

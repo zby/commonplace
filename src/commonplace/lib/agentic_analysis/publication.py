@@ -108,9 +108,10 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
     Opening resolved the worker profile the run started with; every worker uses it.
     A producer record that a coordinator reported with a model or effort must
     agree with it. Every producer must report the same model from its
-    environment, which may be `not stated`. Reported effective effort must
-    match the worker profile when available; unavailable effort remains explicit in
-    the attempt record.
+    environment, which may be `not stated`. Reported effort is retained per
+    role as the harness states it, not compared with the profile: harnesses
+    express effort on their own scales, and the launch-side effort above is
+    the gate.
     """
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
@@ -118,6 +119,7 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
             for field in ("profile", "harness", "launch-model", "effort")):
         raise ValueError("the opening metadata records no worker profile")
     reported = set()
+    efforts = {}
     for role, data in members.items():
         if role == "overview":
             continue  # Code-written, never a model worker.
@@ -133,15 +135,15 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
             if record.get(field) is not None and record[field] != worker[profiled]:
                 raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
                                  f"not the run's worker profile's {worker[profiled]!r}")
-        effective_effort = record.get("worker_effort")
-        if effective_effort not in (worker["effort"], "not stated"):
-            raise ValueError(f"{role} reported worker effort {effective_effort!r}, "
-                             f"not the run's worker profile's {worker['effort']!r}")
+        reported_effort = record.get("worker_effort")
+        if not isinstance(reported_effort, str) or not reported_effort:
+            raise ValueError(f"{role} reported no worker effort")
+        efforts[role] = reported_effort
         reported.add(record.get("worker_model"))
     if len(reported) != 1 or not all(isinstance(model, str) and model for model in reported):
         raise ValueError("every worker must report the same model; reported: "
                          + ", ".join(sorted(map(str, reported))))
-    return {**worker, "model": reported.pop()}
+    return {**worker, "model": reported.pop(), "reported-effort": efforts}
 
 
 def validate_pinned_artifact(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],

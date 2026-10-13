@@ -103,7 +103,10 @@ A finished set's manifest pins a SHA-256 for every member and records the
 worker that produced the run under `worker`: the `profile` the run started
 with, its `harness`, `launch-model` and `effort`, and the exact `model`
 every worker reported, or `not stated`. The launch model is the name the
-harness selects a model by; the reported model is what ran.
+harness selects a model by; the reported model is what ran. `reported-effort`
+maps each worker-produced member's role to the effort its worker reported, verbatim
+in the harness's own terms or `not stated`; it is evidence, not checked
+against the profile's `effort`.
 
 Beyond the layout, validation of the set checks that the manifest pins
 every member once it pins any, that no record is declared twice, the
