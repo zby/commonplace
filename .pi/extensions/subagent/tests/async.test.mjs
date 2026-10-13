@@ -114,16 +114,24 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
       assert.equal((await wait([h])).details.jobs[0].state, "cancelled");
       await reset();
     });
-    await t.test("trust refusal, already aborted start and pending trust shutdown never spawn", async () => {
-      const denied = await start({}, undefined, { ...ctx, hasUI: true, isProjectTrusted: () => false, ui: { confirm: async () => false } });
-      assert.match(denied.content[0].text, /not approved/);
+    await t.test("async destination launches do not ask for approval", async () => {
+      const destination = path.join(root, "destination");
+      fs.mkdirSync(path.join(destination, ".pi", "agents"), { recursive: true });
+      fs.copyFileSync(path.join(root, ".pi", "agents", "worker.md"), path.join(destination, ".pi", "agents", "worker.md"));
+      for (const context of [ctx, { ...ctx, hasUI: true, isProjectTrusted: () => false,
+        ui: { confirm: () => { assert.fail("No destination approval dialog"); }, notify() {} },
+      }]) {
+        const h = handle(await start({ cwd: destination }, undefined, context));
+        await spawned(1);
+        assert.equal(launches[0].options.cwd, destination);
+        launches[0].proc.finish();
+        assert.equal((await wait([h])).details.jobs[0].state, "completed");
+        await reset();
+      }
+    });
+    await t.test("already aborted starts never spawn", async () => {
       const controller = new AbortController(); controller.abort();
       await assert.rejects(start({}, controller.signal), /start aborted/);
-      let approve;
-      const pending = start({}, undefined, { ...ctx, hasUI: true, isProjectTrusted: () => false, ui: { confirm: () => new Promise(resolve => { approve = resolve; }) } });
-      await events.session_shutdown(); await events.session_start();
-      approve(true);
-      await assert.rejects(pending, /shutting down/);
       assert.equal(launches.length, 0);
     });
     await t.test("unknown agent and setup/spawn rejection become retained failures", async () => {

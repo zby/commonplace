@@ -91,8 +91,8 @@ PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
   node --test .pi/extensions/subagent/tests/*.test.mjs
 ```
 
-Mocked tests cover discovery, trust, argument construction, shared capacity and
-lifecycle. Real-process tests launch harmless Node children to check output,
+Mocked tests cover discovery, approval-free destination launches, argument
+construction, shared capacity and lifecycle. Real-process tests launch harmless Node children to check output,
 shutdown, escalation and (on Linux) descendant termination. No test launches Pi
 agents or makes model calls. Real model/resource inheritance remains untested.
 
@@ -101,11 +101,12 @@ Definitions are discovered afresh from each child's effective `cwd`, not the
 parent checkout. Set it to the prepared worktree's absolute root. For parallel
 calls each item can name its own worktree. Results identify the child directory.
 
-Parent project trust does not approve a different destination's definitions.
-Interactive launches ask for confirmation; non-interactive cross-project
-launches require an explicit `confirmProjectAgents: false` authorization in the
-call after the destination has been approved. Do not add it merely to bypass a
-trust failure. The option retains its explicit opt-out meaning for all modes.
+The subagent extension loads destination agent definitions without a separate
+approval dialog in either interactive or non-interactive mode. Choose only
+trusted destinations within the commission's scope: definitions supply the
+child's system instructions and tools. Pi's project trust still controls loading
+project configuration and extensions; this removes only the subagent-specific
+destination confirmation.
 Malformed explicit `tools` values (including empty lists) reject the selected
 agent, never fall back to Pi's defaults. Omitting `tools` still selects defaults.
 Names are syntax-checked, not checked against the destination's loaded tool

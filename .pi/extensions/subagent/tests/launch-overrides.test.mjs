@@ -88,6 +88,9 @@ test("launch overrides and inheritance", async t => {
         assert.deepEqual(schema.properties.thinkingLevel.enum, ["off", "minimal", "low", "medium", "high", "xhigh", "max"]);
       }
     });
+    await t.test("destination approval parameter is absent", () => {
+      assert.equal(tool.parameters.properties.confirmProjectAgents, undefined);
+    });
     await t.test("chain is absent and rejected rather than silently ignored", async () => {
       assert.equal(tool.parameters.properties.chain, undefined);
       await assert.rejects(launch({ agent: "inherited", task: "test", chain: [] }), /Chain mode/);
@@ -131,20 +134,23 @@ test("launch overrides and inheritance", async t => {
       assert.equal(launches[0].args.at(-1), `Task: ${task}`);
       assert.equal(launches[0].options.cwd, root);
     });
-    await t.test("destination definitions, tools and trust are not borrowed from the parent", async () => {
+    await t.test("destination definitions and tools are selected without an approval gate", async () => {
       const destination = path.join(root, "destination");
       const definitions = path.join(destination, ".pi", "agents");
       fs.mkdirSync(definitions, { recursive: true });
       fs.writeFileSync(path.join(definitions, "inherited.md"), "---\nname: inherited\ndescription: Destination\ntools: [read]\n---\nDESTINATION PROMPT\n");
-      await assert.rejects(launch({ agent: "inherited", task: "test", cwd: destination }), /Destination project definitions require approval/);
-      assert.equal(launches.length, 0);
-      const confirmations = [];
-      await tool.execute("test", { agentScope: "project", agent: "inherited", task: "test", cwd: destination }, undefined, undefined,
-        { ...ctx, hasUI: true, isProjectTrusted: () => true, ui: { confirm: async (...args) => { confirmations.push(args); return true; } } });
-      assert.match(confirmations[0][1], /destination/);
+      await launch({ agent: "inherited", task: "test", cwd: destination });
+      assert.equal(launches.length, 1);
       assert.equal(flag(0, "--tools"), "read");
       assert.match(launches[0].systemPrompt, /DESTINATION PROMPT/);
-      await launch({ confirmProjectAgents: false, tasks: [
+      launches.length = 0;
+      const result = await tool.execute("test", { agentScope: "project", agent: "inherited", task: "test", cwd: destination }, undefined, undefined,
+        { ...ctx, hasUI: true, isProjectTrusted: () => false, ui: { confirm: () => { assert.fail("No destination approval dialog"); } } });
+      assert.equal(result.isError, undefined);
+      assert.equal(launches.length, 1);
+      assert.equal(flag(0, "--tools"), "read");
+      assert.match(launches[0].systemPrompt, /DESTINATION PROMPT/);
+      await launch({ tasks: [
         { agent: "inherited", task: "parent" }, { agent: "inherited", task: "child", cwd: destination },
       ] });
       const child = launches.find(l => l.options.cwd === destination);

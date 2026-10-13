@@ -170,12 +170,14 @@ skill's frozen-source and isolation rules.
 The operator approves project-local `commonplace-coordinator` and
 `commonplace-worker` definitions in isolated worktrees prepared by the standard
 Commonplace setup from the selected committed method for this commission.
-Set `confirmProjectAgents: false` alongside `agentScope: "project"` and that
-worktree's `cwd` for these approved launches. Carry this approval in coordinator
-handoffs so they can launch their workers without reading this workshop.
+Set `agentScope: "project"` and that worktree's `cwd` for these launches.
+The current Pi subagent extension has no separate destination-approval gate.
+Carry the approved destination boundary in coordinator handoffs so they can
+launch their workers without reading this workshop.
 Approval does not extend to arbitrary directories, modified definitions outside
 the selected method or agent definitions in external source repositories.
-Obtain approval for destinations outside this boundary; do not bypass trust.
+Obtain operator approval for destinations outside this commission's boundary;
+removing the runtime gate does not expand the commission.
 
 Verify that the loaded schema exposes `action` and `handles`, and complete the
 standing worker-launch diagnostic before launch. An older schema requires

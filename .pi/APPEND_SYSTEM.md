@@ -32,10 +32,10 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
   ordinary worker does not. Delegation still requires the workflow's preflight.
 - Always set `agentScope: "project"` for these agents. The extension's default
   scope is `user`, which does not search this project's `.pi/agents/`.
-  Definitions are selected from the child's effective `cwd`. Parent trust does
-  not approve a different destination project. Confirm it interactively, or
-  supply `confirmProjectAgents: false` only after explicit destination approval
-  when running non-interactively. Do not bypass an unresolved trust failure.
+  Definitions are selected from the child's effective `cwd`. The extension
+  loads destination agent definitions without a separate approval dialog in
+  either interactive or non-interactive mode. Use only destinations within the
+  commission's scope; tool availability does not expand mutation authority.
 - Single mode uses `agent` and `task`. Parallel mode uses `tasks`, an array of
   objects containing `agent`, `task`, and optionally `cwd`, `model`, and
   `thinkingLevel`, plus top-level `agentScope: "project"`. Optional top-level

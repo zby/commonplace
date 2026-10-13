@@ -25,9 +25,6 @@ const parameters = Type.Object({
 	agent: Type.Optional(taskFields.agent), task: Type.Optional(taskFields.task), cwd: taskFields.cwd,
 	tasks: Type.Optional(Type.Array(Type.Object(taskFields), { minItems: 1, maxItems: 8 })),
 	agentScope: Type.Optional(StringEnum(["user", "project", "both"] as const, { default: "user" })),
-	confirmProjectAgents: Type.Optional(Type.Boolean({
-		default: true, description: "Confirm untrusted or different project definitions. false explicitly authorizes destination definitions in non-interactive mode.",
-	})),
 });
 
 function jobReply(selected: Job<SingleResult>[], includeOutput = false) {
@@ -54,7 +51,7 @@ export default function (pi: ExtensionAPI) {
 			"Shutdown/reload cancels jobs and loses handles. Project definitions are discovered from each child's cwd; select agentScope=project for Commonplace. " +
 			"Model/thinking overrides apply per call or per task. There is no chain mode or automatic forwarding of outputs.",
 		async execute(_id, params, signal, onUpdate, ctx) {
-			const registry = jobs; // A trust dialog must not transfer ownership into a new session.
+			const registry = jobs;
 			if ("chain" in params) throw new Error("Chain mode is not supported; use explicit isolated handoffs");
 			if (params.action && params.action !== "start") {
 				if (Object.keys(params).some(key => !["action", "handles"].includes(key)))
@@ -85,17 +82,6 @@ export default function (pi: ExtensionAPI) {
 				if (agent?.configurationError) throw new Error(agent.configurationError);
 				return { item, cwd, discovery, agent };
 			});
-			// Parent trust is not evidence of trust in a different destination project.
-			const parentDir = discoverAgents(ctx.cwd, scope).projectAgentsDir;
-			const confirmations = new Set(prepared.filter(p => p.agent?.source === "project" &&
-				(p.discovery.projectAgentsDir !== parentDir || (ctx.hasUI && !ctx.isProjectTrusted())))
-				.map(p => p.discovery.projectAgentsDir!));
-			if ((params.confirmProjectAgents ?? true) && confirmations.size) {
-				if (!ctx.hasUI) throw new Error("Destination project definitions require approval; explicitly authorize with confirmProjectAgents=false");
-				const approved = await ctx.ui.confirm("Run project-local agents?",
-					`Sources:\n${[...confirmations].join("\n")}\nProject definitions are repo-controlled. Approve only trusted destinations.`);
-				if (!approved) return { content: [{ type: "text", text: "Canceled: project-local agents not approved." }], details: undefined };
-			}
 			if (signal?.aborted) throw new Error("Subagent start aborted");
 			const defaults = { model: ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined, thinkingLevel: ctx.thinkingLevel };
 			const mode = parallel ? "parallel" : "single";
