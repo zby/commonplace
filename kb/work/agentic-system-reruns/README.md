@@ -57,10 +57,12 @@ published new-engine sets do. Preserve the historical evidence.
 
 **Active execution:** [rolling execution 08](./rolling-08.md) owns the queue
 following ownership reconciliation and successful runtime preflight. Four fresh
-source-first pipelines are running: Autocontext, AutoSci, Binder and browzy.ai.
+source-first pipelines are running: Autocontext, Binder, Beever Atlas and Amazon
+Science SAGE. AutoSci, Apache Maka and browzy.ai stopped on provider overload
+and are newly held.
 The current commission's explicit dispatch release supersedes the historical
-reload stop below. Eight individual holds remain untouched. Corpus remains
-17 complete, 181 pending (including assigned work), eight held; no integration
+reload stop below. Eight prior individual holds remain untouched. Corpus is
+17 complete, 178 pending (including assigned work), 11 held; no integration
 queue yet. Refer to rolling-08 for live assignments and outcomes.
 
 **Current scheduling disposition:** the operator [released nine targets without
