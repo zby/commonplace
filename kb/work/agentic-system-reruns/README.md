@@ -55,6 +55,14 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
+**Active execution:** [rolling execution 08](./rolling-08.md) owns the queue
+following ownership reconciliation and successful runtime preflight. Four fresh
+source-first pipelines are running: Autocontext, AutoSci, Binder and browzy.ai.
+The current commission's explicit dispatch release supersedes the historical
+reload stop below. Eight individual holds remain untouched. Corpus remains
+17 complete, 181 pending (including assigned work), eight held; no integration
+queue yet. Refer to rolling-08 for live assignments and outcomes.
+
 **Current scheduling disposition:** the operator [released nine targets without
 substantial accepted analysis](./partial-outcomes-2026-10-13.md) to pending for
 fresh reruns. The six verification-stage holds remain unchanged; ACE and
