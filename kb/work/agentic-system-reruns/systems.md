@@ -5,8 +5,9 @@ Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 
 **Progress: 17 complete with the new engine; 170 pending; 19 held.**
 [Rolling execution 09](./rolling-09.md) owns the queue and has launched fresh
-cass_memory_system audit and Claude Context Guard analysis pipelines.
-Autogenesis stopped and is held. No integration backlog.
+Claude Context Guard and claude-obsidian analysis pipelines.
+Autogenesis stopped and is held. cass_memory_system is audit-cleared and queued
+for serial integration.
 Rolling-08 drained and released ownership; its ten targets remain held in
 addition to the eight prior holds. All failed runs and partial outputs remain
 preserved.
@@ -68,10 +69,10 @@ append the overview, audit link and integration commit. Record blockers explicit
 - [ ] **Binder** (`binder`) — held after [rolling execution 08](./rolling-08.md), run `AAS-2026-10-13-binder-15e0514441cf-01`, source `e4066d750ac5c6918706f44b12daa261b261106e`; epistemic provider failure, boundary/runtime accepted, no publication/open attempts; requires supported recovery; previously [released for a fresh rerun](./partial-outcomes-2026-10-13.md); preserve [rolling execution 07](./rolling-07.md) run `AAS-2026-10-13-binder-0ac507351cd6-01`, boundary `e4066d750ac5c6918706f44b12daa261b261106e`; only boundary accepted; runtime worker API 503, no publication/open attempts; [legacy review](../../agent-memory-systems/reviews/binder.md).
 - [ ] **browzy.ai** (`browzy-ai`) — held after [rolling execution 08](./rolling-08.md): coordinator provider overload before a discoverable run in fresh worktree `browzy-ai-289663718f22`; no established source boundary or publication; requires supported reconciliation/recovery; previously [released for a fresh rerun](./partial-outcomes-2026-10-13.md); preserve [rolling execution 07](./rolling-07.md) worktree `browzy-ai-3eb115584672`; coordinator provider overload before any discoverable run/source acquisition; no run identity, accepted member or publication established; [legacy review](../../agent-memory-systems/reviews/browzy-ai.md).
 - [ ] **byterover-cli** (`byterover-cli`) — held after [rolling execution 08](./rolling-08.md), run `AAS-2026-10-13-byterover-cli-38a4302dafd9-01`, source `1052ac1a5dd0fde4da8693d4712064f7876c269c`; memory provider overload, boundary/runtime installed, no publication/open attempts; requires supported recovery; [legacy review](../../agent-memory-systems/reviews/byterover-cli.md).
-- [ ] **cass_memory_system** (`cass_memory_system`) — published, audit active in [rolling execution 09](./rolling-09.md); run `AAS-2026-10-13-cass-memory-system-30c18219cf68-01`, source `8aca3bbb6732321dca041b32c155617784687897`; publication in prepared worktree `cass-memory-system-30c18219cf68`, not integrated;  [legacy review](../../agent-memory-systems/reviews/cass_memory_system.md).
+- [ ] **cass_memory_system** (`cass_memory_system`) — published, audit cleared with recorded limits, integration queued in [rolling execution 09](./rolling-09.md); run `AAS-2026-10-13-cass-memory-system-30c18219cf68-01`, source `8aca3bbb6732321dca041b32c155617784687897`; publication in prepared worktree `cass-memory-system-30c18219cf68`, not integrated;  [legacy review](../../agent-memory-systems/reviews/cass_memory_system.md).
 - [ ] **Claude Code dynamic workflows** (`claude-code-dynamic-workflows`) — pending; [authored account](../../agentic-systems/reviews/claude-code-dynamic-workflows.md).
 - [ ] **Claude Context Guard** (`claude-context-guard`) — analysis active in [rolling execution 09](./rolling-09.md), worktree `claude-context-guard-357cd90664df`; source `https://github.com/atreiou/claude-context-guard`; [legacy review](../../agent-memory-systems/reviews/claude-context-guard.md).
-- [ ] **claude-obsidian** (`claude-obsidian`) — pending; [legacy review](../../agent-memory-systems/reviews/claude-obsidian.md).
+- [ ] **claude-obsidian** (`claude-obsidian`) — analysis active in [rolling execution 09](./rolling-09.md), worktree `claude-obsidian-c5e56e25c8bb`; source `https://github.com/AgriciDaniel/claude-obsidian`; [legacy review](../../agent-memory-systems/reviews/claude-obsidian.md).
 - [ ] **Claude Workstream Kit** (`claude-workstream-kit`) — pending; [legacy review](../../agent-memory-systems/reviews/claude-workstream-kit.md).
 - [ ] **ClawVault** (`clawvault`) — pending; [legacy review](../../agent-memory-systems/reviews/clawvault.md).
 - [ ] **Closure-SDK** (`closure-sdk`) — pending; [legacy review](../../agent-memory-systems/reviews/Closure-SDK.md).

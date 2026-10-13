@@ -33,8 +33,8 @@ validation-path maintenance retains only its bounded authority below.
 ## Current execution checkpoint and next action
 
 [Rolling execution 09](./rolling-09.md) owns the queue. Its two active pipelines
-are cass_memory_system's post-publication audit and Claude Context Guard's fresh
-analysis. Autogenesis stopped before publication and is now held pending a
+are Claude Context Guard and claude-obsidian fresh analyses. cass_memory_system
+is audit-cleared with recorded limits and queued for serial integration. Autogenesis stopped before publication and is now held pending a
 supported recovery decision. Current corpus: **17 complete, 170 pending, 19 held**.
 Its assignment record is authoritative for active work; do not duplicate it.
 The checkpoint below describes the preceding drained execution.

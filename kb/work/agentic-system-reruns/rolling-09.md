@@ -35,7 +35,7 @@ records retain exact setup. Both publication destinations are reserved here.
 Handle map:
 - Autogenesis: `35904bd2-7254-4bc8-9cf4-3a5dd1c6778f`, terminal; stopped, slot released.
 - cass_memory_system analysis: `c5699cca-9ddf-4f8e-80ff-57757c437026`, terminal; published, audit active.
-- cass_memory_system audit: `718e6f07-4715-43ea-8843-007caf7a2a0d`, active.
+- cass_memory_system audit: `718e6f07-4715-43ea-8843-007caf7a2a0d`, terminal; integrate with recorded limits.
 
 Both handoffs carry source-only authority, command binding, approved project-agent
 launch settings and explicit bounded transient-worker retry permission.
@@ -88,3 +88,19 @@ code-scheduled revision rounds occurred. Publication success does not certify
 worker obligations or integration checks. Target remains incomplete until audit
 and integration. Fresh audit owns `audits/rolling-09-cass-memory-system.md`,
 handle `718e6f07-4715-43ea-8843-007caf7a2a0d`; other pipeline continues.
+
+Audit returned **integrate with recorded limits**. The
+[audit report](./audits/rolling-09-cass-memory-system.md) finds no consequential
+hold within its bounded scope; all 13 publication files match journal hashes.
+Public synthesis retains two operative-part inventory gaps and partial comparison
+coverage. Run-tree tool traces were not located, so individual validate-output
+execution and full worker compliance are not certified. No analysis repair or
+qualification confined to the audit was used to clear the result. Audit validation
+passed with zero failures/warnings. Result queued for serial standard integration.
+Slot released to fresh claude-obsidian, source identity
+`https://github.com/AgriciDaniel/claude-obsidian`.
+Ready worktree `claude-obsidian-c5e56e25c8bb`, method
+`b9955680c508c97e8903d8d4365c971c9e8733a7`, command prefix its `.venv/bin`.
+Preparation excluded dirty bookkeeping/audit bytes and verified startup inputs.
+Active handle `a41606da-64ca-460a-8f0f-796a8b899f91`; same source-only
+commission and explicit bounded transient-worker retry authority.
