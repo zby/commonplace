@@ -39,9 +39,9 @@ Handle map:
 
 Both handoffs carry source-only authority, command binding, approved project-agent
 launch settings and explicit bounded transient-worker retry permission.
-No audit or integration backlog. Initial corpus:
-17 complete, 171 pending, 18 held. After Autogenesis: 17 complete, 170 pending,
-19 held. This commission does not authorize recovery
+Initial corpus: 17 complete, 171 pending, 18 held. After Autogenesis and
+cass_memory_system integration: 18 complete, 169 pending, 19 held.
+No audit or integration backlog; two active analyses remain. This commission does not authorize recovery
 of held runs, source edits, method changes, cleanup, comparisons, synthesis or push.
 
 ## Outcome: Autogenesis
@@ -104,3 +104,18 @@ Ready worktree `claude-obsidian-c5e56e25c8bb`, method
 Preparation excluded dirty bookkeeping/audit bytes and verified startup inputs.
 Active handle `a41606da-64ca-460a-8f0f-796a8b899f91`; same source-only
 commission and explicit bounded transient-worker retry authority.
+
+cass_memory_system integrated through its prepared command environment into
+`main`, merge commit `473c576a263a7249f716eb2afbf1a48a4f045470`.
+Integration returned 0 with that commit and no error. Verified commit ancestry
+and all 13 origin publication files byte-for-byte against the preserved worktree.
+Audit/checklist bookkeeping was committed before integration; origin was clean.
+
+## Session drain
+
+Four system pipelines have been launched. This session now drains safely for
+retained-context capacity: settle the remaining Claude Context Guard and
+claude-obsidian analyses, commission fresh audits for any publications, and
+integrate only cleared results. Do not refill released slots during this drain.
+This is not an operator stop, provider-wide pause or new dispatch hold. Release
+queue ownership explicitly once all handles and integration work are settled.
