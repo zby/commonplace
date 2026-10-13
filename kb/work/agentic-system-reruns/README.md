@@ -97,12 +97,14 @@ Pi exits.
 
 ## Retained limits and history
 
-The last audited/integrated checkpoint is
-[rolling execution 09](./rolling-09.md): **19 complete, 167 pending, 20 held**.
-These are historical acceptance counts, not a live Bash-batch status. The
-checklist retains the individual holds and unblock conditions. The CLI trial
-failures are not included in those counts. The separately produced Claude
-Context Guard audit does not by itself establish integration.
+Audited/integrated progress is **20 complete, 167 pending, 19 held** after
+[Claude Context Guard integration](./claude-context-guard-integration.md).
+[Rolling execution 09](./rolling-09.md) retains its earlier checkpoint of
+19 complete, 167 pending and 20 held. These are acceptance counts, not a live
+Bash-batch status. The checklist retains remaining holds and unblock conditions.
+CLI trial failures are not included in these counts. Claude Context Guard's
+coordinator failure and missing worker traces remain preserved as evidence;
+operator-authorized integration does not certify unavailable worker compliance.
 
 Older [agentic-memory-refresh](../agentic-memory-refresh/README.md) reservations
 remain excluded: Agent-S, MemoryOS, Basic Memory, OS-Copilot, A-mem and HippoRAG.
