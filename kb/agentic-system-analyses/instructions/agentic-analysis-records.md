@@ -169,8 +169,8 @@ Read-back is material accumulated or changed through use that reaches a
 later consumer invocation; static shipped material and ordinary current-run
 state are excluded. A summary that compacts or replaces current-run state
 is retained memory when a later invocation receives it, within or across
-runs. Eviction of current-run state is still described under the
-working-context eviction dimension below, even when nothing retained results.
+runs. Isolation and eviction of current-run state are still described under
+the working-context control dimension below, even when nothing retained results.
 Activation requires evidence that delivered material changed behavior.
 
 ### Route field syntax
@@ -229,7 +229,7 @@ values. Preserve enough source-native detail for later classification:
 | Selection | Actual selector input and selected retained part; an identifier on a requested file is not evidence of targeted selection. |
 | Trace-fed update | Each automatic trace-fed write, its durable behavior-shaping result and later consumer; retaining raw logs alone is insufficient. |
 | Trace origin | Original input to each qualifying write, including mixed or opaque provenance; adapter labels do not establish origin. |
-| Working-context eviction | Each mechanism that removes material from the model-visible context between invocations, whether or not anything retained results. Record its trigger (budget, position, turn count, explicit agent call, host compaction), the deciding agent (code rule, a runtime model call, the foreground agent through its own tool, a human, an opaque host), what it removes preferentially (tool results, old turns, injected skill or instruction bodies), what remains in the window or reachable afterwards (verbatim tail, summary, extracted store, pointer or stub, nothing), and any route that brings evicted material back. Describe in source-native terms; this dimension has no controlled values yet, and the first runs collect the mechanisms from which a vocabulary may later be derived. |
+| Working-context control | Each mechanism that determines what the model-visible context contains at an invocation, other than plain accumulation of turns and tool results, whether or not anything retained results. This covers keeping material out by isolating work in a separate context (sub-agents, forked skill invocations, per-task frames) and what crosses back to the caller; removing material from an accumulated context (trimming, summarization, filtering, discarding a frame, host compaction); and bringing removed or external material back on demand. For each, record the trigger, the deciding agent (code rule, a runtime model call, the foreground agent through its own tool, a human, an opaque host), what is kept out or removed preferentially (tool results, old turns, injected skill or instruction bodies), what remains in the window or reachable afterwards (verbatim tail, summary, return value, extracted store, pointer or stub, nothing), and any reload route. Describe in source-native terms; this dimension has no controlled values yet, and the first runs collect the mechanisms from which a vocabulary may later be derived. |
 
 Several effects or transformations can coexist without resolving an opaque
 alternative. Group only units sharing the same scope, control and coverage.
