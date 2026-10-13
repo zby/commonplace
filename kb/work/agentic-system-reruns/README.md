@@ -32,11 +32,12 @@ validation-path maintenance retains only its bounded authority below.
 
 ## Current execution checkpoint and next action
 
-[Rolling execution 09](./rolling-09.md) owns the queue. Its two active pipelines
-are Claude Context Guard and claude-obsidian fresh analyses. cass_memory_system
-is audited and integrated with recorded limits. Autogenesis stopped before
-publication and is held pending supported recovery.
-Current corpus: **18 complete, 169 pending, 19 held**. The session is draining
+[Rolling execution 09](./rolling-09.md) owns the queue. Only claude-obsidian
+remains active. cass_memory_system is audited and integrated with recorded limits.
+Autogenesis stopped before publication; Claude Context Guard's coordinator
+failed after a discoverable publication. Both remain held pending supported
+reconciliation/recovery; publication alone does not clear the latter.
+Current corpus: **18 complete, 168 pending, 20 held**. The session is draining
 for retained-context capacity, not imposing a new dispatch hold.
 Its assignment record is authoritative for active work; do not duplicate it.
 The checkpoint below describes the preceding drained execution.

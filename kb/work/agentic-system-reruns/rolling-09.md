@@ -41,7 +41,9 @@ Both handoffs carry source-only authority, command binding, approved project-age
 launch settings and explicit bounded transient-worker retry permission.
 Initial corpus: 17 complete, 171 pending, 18 held. After Autogenesis and
 cass_memory_system integration: 18 complete, 169 pending, 19 held.
-No audit or integration backlog; two active analyses remain. This commission does not authorize recovery
+No audit or integration backlog; only claude-obsidian remains active.
+After Claude Context Guard coordinator failure: 18 complete, 168 pending,
+20 held. This commission does not authorize recovery
 of held runs, source edits, method changes, cleanup, comparisons, synthesis or push.
 
 ## Outcome: Autogenesis
@@ -72,7 +74,7 @@ to fresh Claude Context Guard, source identity
 Ready worktree `claude-context-guard-357cd90664df`, method
 `25896d8f7968214784f7fd692ec6f622bcb9636b`, command prefix its `.venv/bin`.
 Preparation excluded dirty bookkeeping bytes and verified startup inputs.
-Active handle `f5e9e802-2b88-4f9d-8691-b27e0ef7125f`; same bounded source-only
+Handle `f5e9e802-2b88-4f9d-8691-b27e0ef7125f` failed; slot released. Same bounded source-only
 commission and explicit transient-worker retry authority.
 This failure does not establish a shared outage or method defect.
 
@@ -119,3 +121,25 @@ claude-obsidian analyses, commission fresh audits for any publications, and
 integrate only cleared results. Do not refill released slots during this drain.
 This is not an operator stop, provider-wide pause or new dispatch hold. Release
 queue ownership explicitly once all handles and integration work are settled.
+
+## Outcome: Claude Context Guard
+
+Coordinator handle `f5e9e802-2b88-4f9d-8691-b27e0ef7125f` failed with
+`OpenAI Responses stream ended before a terminal response event`; no final
+report returned. Read-only reconciliation found run
+`AAS-2026-10-13-claude-context-guard-357cd90664df-01` **completed**, with
+`completion: publication-job-completed`, no open/failed attempts or current
+refusals and empty worker-problems. Source revision
+`efcd0a1815887483a862b32bfb3fbfd6aac79aa6`. Publication remains in the prepared
+worktree at `kb/agentic-system-analyses/retained/claude-context-guard/`.
+[Inspection](./rolling-09-claude-context-guard-inspect.json) retains exact state.
+
+Status returned 0 with all 12 members and `publishable: yes`, and the two standard
+limitations concerning obligations and unrecorded historical problems. This is
+not a reconstruction of the unavailable final advance result or a fresh
+filesystem audit. No advance, retry, restart, audit or integration occurred in
+reconciliation. Under the README's coordinator-failure rule the target remains
+held and incomplete despite a discoverable publication; unblock requires a
+supported reconciliation/recovery decision and then fresh audit/integration
+clearance. Preserve worktree, publication and traces. Slot released without
+refill under the session drain, not a new dispatch hold.
