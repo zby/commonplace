@@ -55,17 +55,26 @@ published new-engine sets do. Preserve the historical evidence.
 
 ## Current execution checkpoint and next action
 
-**Active execution:** [rolling execution 08](./rolling-08.md) owns the queue
-following ownership reconciliation and successful runtime preflight. Four fresh
-source-first pipelines are running: Beever Atlas, AREX-Skill, byterover-cli
-and Agentic Harness Engineering. Six targets stopped on provider/API failures
-and are newly held; rolling-08 retains their evidence.
-The current commission's explicit dispatch release supersedes the historical
-reload stop below. Eight prior individual holds remain untouched. Corpus is
-17 complete, 175 pending (including assigned work), 14 held; no integration
-queue yet. Refer to rolling-08 for live assignments and outcomes.
+**Latest drained execution:** [rolling execution 08](./rolling-08.md) launched
+ten fresh source-first pipelines after reconciliation and runtime preflight.
+All returned terminal failures; no publication, audit or integration occurred.
+Nine discoverable runs are stopped with no open attempts; browzy.ai failed
+before any discoverable run. Agentic Harness Engineering retains substantial
+analysis through profile verification, but its installed memory profile was
+refused and the revision worker failed. All evidence is preserved. Corpus:
+**17 complete, 171 pending, 18 held**. No active assignment or integration
+backlog remains; rolling-08 releases queue ownership.
 
-**Current scheduling disposition:** the operator [released nine targets without
+The session drained for retained-context capacity, not a new operator dispatch
+stop or shared provider pause. The current commission's explicit release
+supersedes the historical reload stop below. The next orchestrator may resume
+four fresh eligible pipelines after ownership reconciliation and runtime
+preflight, without requesting another dispatch release. Eighteen individual
+holds remain separate: the eight prior holds plus all ten rolling-08 targets.
+Fresh dispatch does not authorize recovery, retry or replacement of these held
+runs, cleanup or method changes.
+
+**Historical scheduling disposition before rolling-08:** the operator [released nine targets without
 substantial accepted analysis](./partial-outcomes-2026-10-13.md) to pending for
 fresh reruns. The six verification-stage holds remain unchanged; ACE and
 ai-memex-cli also stay held because they have substantial accepted partial

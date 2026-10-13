@@ -1,5 +1,24 @@
 # Rolling execution 08
 
+## Final drained checkpoint
+
+Ten pipelines launched; every handle returned a terminal result. No publication,
+audit or integration occurred. Nine discoverable runs stopped on provider/API
+failures with no open attempts; browzy.ai failed before any discoverable run.
+All ten targets are held pending supported reconciliation/recovery decisions.
+Corpus: **17 complete, 171 pending, 18 held**. No active assignment or
+integration backlog remains. All worktrees, preparation records, partial outputs
+and available traces are preserved. Terminal results were recorded before
+forgetting handles. No cleanup, method edits, comparisons, synthesis or push.
+
+The session drained for retained-context capacity, not a provider-wide pause
+or new operator stop. Successful intervening workers do not establish a healthy
+provider, but contradict a blanket outage claim. The standing dispatch release
+remains in force for fresh eligible targets after the next orchestrator
+reconciles ownership and completes runtime preflight. Individual recovery
+holds remain separate; restart does not authorize retrying these stopped runs.
+This orchestrator releases queue ownership with no retained integration queue.
+
 ## Ownership and preflight
 
 Owner: Pi session `01a1343c-d7f8-71b3-8a11-18c43e3c3144`,
@@ -36,7 +55,7 @@ Worktree root: `/home/zby/llm/commonplace/.commonplace/worktrees/`.
 Beever Atlas refills the released slot:
 worktree `beever-atlas-a2fa789f9578`, source identity
 `https://github.com/Beever-AI/beever-atlas`, handle
-`86494b61-e6e5-48cf-b927-bcb85b12166b`, analysis running.
+`86494b61-e6e5-48cf-b927-bcb85b12166b`, memory/epistemic failures; run stopped and slot released.
 Preparation used method `723bfeab4e914033c2386480f3c6819d0b621725`,
 excluded uncommitted origin bytes and verified matching startup inputs.
 Existing runs retain their original frozen method.
@@ -58,26 +77,26 @@ excluded uncommitted origin bytes and verified matching startup inputs.
 AREX-Skill refills Autocontext's released slot:
 worktree `arex-skill-db1b68297b6b`, source identity
 `https://github.com/VectorSpaceLab/AREX-Skill`, handle
-`c1a03017-1d5c-41b4-94f0-f037e989823c`, analysis running.
+`c1a03017-1d5c-41b4-94f0-f037e989823c`, memory worker failed; run stopped and slot released.
 Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
 excluded uncommitted origin bytes and verified matching startup inputs.
 
 byterover-cli refills Binder's released slot:
 worktree `byterover-cli-38a4302dafd9`, source identity
 `https://github.com/campfirein/byterover-cli`, handle
-`22cc4a72-9011-49aa-9ba0-9642d177d724`, analysis running.
+`22cc4a72-9011-49aa-9ba0-9642d177d724`, memory worker failed; run stopped and slot released.
 Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
 excluded uncommitted origin bytes and verified matching startup inputs.
 
 Agentic Harness Engineering refills Amazon Science SAGE's released slot:
 worktree `agentic-harness-engineering-914fd0094689`, source identity
 `https://github.com/china-qijizhifeng/agentic-harness-engineering`, handle
-`b8cf78b0-4a35-46ed-9001-9dcaf1a45a0a`, analysis running.
+`b8cf78b0-4a35-46ed-9001-9dcaf1a45a0a`, coordinator stream failure; memory-profile revision stopped and slot released.
 Preparation used method `5b1351b860d489dad9d4c3bfb53f70ec5e43f333`,
 excluded uncommitted origin bytes and verified matching startup inputs.
 
 No integration queue yet. Initial corpus: 17 complete, 181 pending, eight held.
-After six target failures: 17 complete, 175 pending, 14 held.
+Final corpus after ten target failures: 17 complete, 171 pending, 18 held.
 No recovery, cleanup, method edits, comparison regeneration, synthesis or push.
 
 ## Outcome: browzy.ai
@@ -193,6 +212,112 @@ publishable: no
 state. Empty worker-problems does not negate failure. Preserve evidence;
 unblock requires supported recovery direction. Slot released without retry;
 Agentic Harness Engineering is selected from eligible pending work.
+
+## Outcome: Beever Atlas
+
+Run `AAS-2026-10-13-beever-atlas-a2fa789f9578-01`, source revision
+`7d791af27ef4aa19644cb385c7ca24619bc4f848`, stopped after specialist
+round. Workflow worker completed; memory `000007-memory` and epistemic
+`000008-epistemic` failed. Boundary/runtime installed; no publication or open
+attempts. Last advance exited 2, empty stderr, stdout:
+
+```text
+stop memory 000007-memory: Our servers are currently overloaded. Please try again later.
+stop epistemic 000008-epistemic: An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID req_cebc59de7f944a7e8c86a88c9102334e in your message.
+publishable: no
+```
+
+[Inspection](./rolling-08-beever-atlas-inspect.json) retains exact state.
+Empty worker-problems does not negate failures. Preserve all evidence;
+unblock requires supported recovery direction. Slot released without refill
+under this session's context-capacity drain, not an operator dispatch stop.
+
+## Outcome: AREX-Skill
+
+Run `AAS-2026-10-13-arex-skill-db1b68297b6b-01`, source revision
+`ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6`, stopped after specialist
+round. Epistemic/workflow workers completed; memory `000007-memory` failed.
+Boundary/runtime installed; no publication or open attempts. Last advance
+exited 2, empty stderr, stdout:
+
+```text
+stop memory 000007-memory: Our servers are currently overloaded. Please try again later.
+publishable: no
+```
+
+[Inspection](./rolling-08-arex-skill-inspect.json) retains exact state.
+Empty worker-problems does not negate failure. Preserve all evidence;
+unblock requires supported recovery direction. Slot released without refill
+under the session's context-capacity drain.
+
+## Outcome: byterover-cli
+
+Run `AAS-2026-10-13-byterover-cli-38a4302dafd9-01`, source revision
+`1052ac1a5dd0fde4da8693d4712064f7876c269c`, stopped after specialist
+round. Epistemic/workflow workers completed; memory `000007-memory` failed.
+Boundary/runtime installed; no publication or open attempts. Last advance
+exited 2, empty stderr, stdout:
+
+```text
+stop memory 000007-memory: Our servers are currently overloaded. Please try again later.
+publishable: no
+```
+
+[Inspection](./rolling-08-byterover-cli-inspect.json) retains exact state.
+Empty worker-problems does not negate failure. Preserve all evidence;
+unblock requires supported recovery direction. Slot released without refill
+under the session's context-capacity drain.
+
+## Outcome: Agentic Harness Engineering
+
+Coordinator handle failed with
+`OpenAI Responses stream ended before a terminal response event`, without a
+final report. Read-only reconciliation found run
+`AAS-2026-10-13-agentic-harness-engineering-914fd0094689-01` stopped,
+no publication or open attempts. Frozen source HEAD
+`8b2a55d97590363fe50c3cc6b5e833b020a4bb4c`. It retains substantial
+analysis: boundary, runtime, memory, epistemic, workflow, reconciliation,
+report-verification, memory profile and profile-verification members.
+The profile-verification result refused the installed memory profile, and
+code scheduled a revision; that worker `000028-memory-profile` failed with
+`Our servers are currently overloaded. Please try again later.`
+
+The refusal is consequential: the profile asserted complete representational-
+form coverage from structured JSON without separating consumed natural-language
+payloads, and mixed rationale with symbolic prediction/status parts having
+different consumers. Verification requires splitting those paths and retaining
+uncertainty. Its additional limit identifies omitted learning authority of
+retained messages at an emergency-summary update consumer. The installed profile
+is not cleared for publication; presence in members does not mean current
+acceptance or independent verification passed. This summary records a retained
+refusal, not an orchestrator's new content audit.
+
+Status exited 0, stdout:
+
+```text
+member boundary: 12d6d219a442
+member runtime: 1b21c6dff732
+member memory: 22f23b26f11a
+member epistemic: 8cb55c32f461
+member workflow: fa51e457887b
+member reconciliation: c7fc8b462957
+member report-verification: 74339a864edd
+member memory-profile: 1489fe796786
+member profile-verification: 4eb9d7fb2355
+stop memory-profile 000028-memory-profile: Our servers are currently overloaded. Please try again later.
+limitation: Completion does not establish that every worker obligation was fulfilled or every reported problem resolved.
+limitation: Missing historical problem text means not recorded, not proof that no problem occurred.
+refusal 000027-apply-profile-verification-1 of memory-profile (1489fe796786): ## Findings
+publishable: no
+```
+
+This is not a reconstruction of the unavailable final advance return.
+[Inspection](./rolling-08-harness-engineering-inspect.json) retains exact state,
+refusal and stale acceptance identifiers. Empty worker-problems does not negate
+the failed attempt or semantic refusal. No advance, retry or recovery occurred
+during reconciliation. Preserve all evidence; unblock requires supported
+recovery direction that also resolves the profile refusal before publication.
+Slot released without refill under the context-capacity drain.
 
 ## Concurrent origin changes
 
