@@ -166,7 +166,7 @@ contradict an established blanket provider outage.
 Atomic refills the arsumbris slot: source `https://github.com/kenforthewin/atomic`,
 worktree `atomic-f98683232831`, handle `03463281-44a3-415b-a3f7-eb827c71207b`.
 Preparation from `07e73341ad64b4faab06290e9b437ea0c10518b4` excluded
-uncommitted outcome bookkeeping and verified startup inputs. Coordinator running.
+uncommitted outcome bookkeeping and verified startup inputs. Publication completed; audit running.
 
 ## Publication: AriGraph
 
@@ -238,9 +238,35 @@ Traces show passing results for all 11 model jobs with corrected quote ambiguity
 worker path typo and profile classification feedback. No outstanding blocker or
 new validation producer defect established; bounded audit, no target execution.
 
+## Publication: Atomic
+
+Run `AAS-2026-10-12-atomic-f98683232831-01` froze
+`983bea6baf449d060514c94b3b15b5f85f77ba9b` and published in the worktree at
+`kb/agentic-system-analyses/retained/atomic/`. Last advance completed
+`000047-synthesis-verification`, exit 0, stdout `publishable: yes`, no stderr.
+[Inspection](./rolling-06-atomic-inspect.json) reports publication-job-completed,
+no failed/open attempts or worker-problems; replacements were code-scheduled.
+Fresh auditor `4a2cfd1a-5036-4cc9-bbdb-e901c742311e` owns
+`audits/rolling-06-atomic.md`. This is the final active pipeline of this session.
+
+## Audit clearance: Atomic
+
+[Independent audit](./audits/rolling-06-atomic.md): **integrate with recorded limits**.
+Source checks support consumer-specific generated-content filters and research
+transcript-to-product wiring. Citation lineage is not factual support, structural
+admission is not semantic review and implemented reuse is not observed benefit;
+those limits are public. All 13 publication hashes match; traces show executed
+passes and repaired quotation feedback plus code-scheduled replacements. Bounded
+inspection, no target execution or exhaustive worker-obligation certification.
+
 ## Integration queue
 
-ATLAS: audit-cleared and queued for serial integration.
+Atomic: audit-cleared and queued for serial integration.
+
+Earlier integration: ATLAS integrated with prepared commands and `--model openai/gpt-6.1-sol`,
+exit 0, merge `707e4c8e3099af04ff13035086afb62eb7295134` verified on main.
+Publication commit `4551be005`; origin clean before/after; origin validation
+passed (one directory artifact, zero diagnostics).
 
 Earlier integration: Ars Contexta integrated with prepared commands and
 `--model openai/gpt-6.1-sol`, exit 0, merge
@@ -266,6 +292,6 @@ Integration independently checked publication evidence and returned merge commit
 `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; it is an ancestor of `main`.
 Origin was clean before and after integration. Publication commit `5eadb2197`.
 Origin directory validation passed (one directory artifact, zero diagnostics).
-Corpus progress: 15 complete, 181 pending, ten held; one pipeline active, draining.
+Corpus progress: 16 complete, 180 pending, ten held; no active pipeline, Atomic queued for integration.
 Comparison outputs remain stale and prior landscape synthesis historical;
 no regeneration, cleanup or push commissioned.
