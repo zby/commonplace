@@ -3,18 +3,26 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Progress: 17 complete with the new engine; 171 pending; 18 held. The operator [released nine targets without substantial accepted analysis](./partial-outcomes-2026-10-13.md) for fresh reruns; six verification-stage holds plus ACE and ai-memex-cli remain held. [Rolling execution 08](./rolling-08.md) has drained ten launched pipelines for retained-context capacity and releases queue ownership; no active assignments or integration backlog remain. All ten targets stopped without publication and are held pending supported reconciliation/recovery. The current workshop commission releases the historical reload dispatch stop; individual holds and preserved failures remain untouched. No integration backlog yet.** [Rolling execution 04](./rolling-04.md) records four API/stream failures and the operator's decision to replace those runs with fresh reruns rather than resume them. [Resume](./resume-2026-10-12.md) records current integration and scheduling disposition; [batch 03](./batch-03.md) retains prior evidence. Checked rows have
-published current-engine analysis sets. Completed sets are accepted with recorded limits, not limit-free results.
-Historical records are inclusion and identity references, not fresh-run evidence.
-The [validation-path maintenance decision](./validation-path-maintenance.md)
-resolved the shared producer suspicion. The operator released the dispatch stop;
-[rolling execution 05](./rolling-05.md) resumes four fresh source-first pipelines
-from the committed validation-output method. All dispatched analyses and audits
-have returned. The operator subsequently authorized restart and lifted that
-session's overly broad provider pause; resume eligible pending targets after
-ownership reconciliation and runtime preflight, as stated in the workshop README.
-The six individual holds remain in force; Agent Skills is reserved to its
-reported owner.
+**Progress: 17 complete with the new engine; 171 pending; 18 held.**
+[Rolling execution 08](./rolling-08.md) has drained all ten launched pipelines
+and released queue ownership. No active assignments or integration backlog
+remain. Its ten targets are held pending supported reconciliation/recovery,
+in addition to the eight prior holds. All failed runs and partial outputs remain
+preserved.
+
+**Current rolling window: two system pipelines. Dispatch is released** for
+fresh eligible targets after ownership reconciliation and runtime preflight.
+Follow the [current README](./README.md); the [archived log](./archived-log.md)
+retains superseded restart instructions and historical counts, not startup gates.
+Internal analytical-worker scheduling is unchanged. Individual holds and older
+refresh-workshop reservations remain separate; an empty job registry does not
+release them. Academic Research Skills is pending with its source-isolation
+constraint, not held. The resolved
+[validation-path maintenance](./validation-path-maintenance.md) is not startup work.
+
+Checked rows have published current-engine analysis sets, accepted with recorded
+limits rather than limit-free results. Historical references establish inclusion
+and identity, not fresh-run findings.
 After assignment, append the run identifier and source boundary. For new runs,
 check the box only after publication, audit clearance and verified integration;
 append the overview, audit link and integration commit. Record blockers explicitly.
