@@ -1,0 +1,33 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Exocomp's memory comparison classifications against the pinned analyst records."
+run-id: AAS-2026-10-14-exocomp-692bb27c35f9-01
+reviewed-boundary: b36f7ba1f3e2eee25bbcd2711db7d2d5d4824251
+---
+
+# Exocomp profile verification
+
+## Verification
+
+I checked all ten axes in the handed profile against the accepted records: scope, positive findings, evidence bases, local and axis coverage, and natural classification units. I resolved the two superseded epistemic object records through the supplied reconciliation; the profile uses the canonical memory bug-description and changelog-entry records. No source files were read and no new evidence was added.
+
+The previous page-form blocker is repaired. The conversation/report/answer prose unit now excludes format-selected page payloads. Separate page-text and HTML/Markdown serialization units retain the natural-language and symbolic findings supported by [EPI-OBJ-website-content](epistemic.md#epi-obj-website-content) and [EPI-RTE-website-fetch](epistemic.md#epi-rte-website-fetch). The axis inventory, note and [comparison rationale](memory-profile.md#comparison-rationale) preserve both parts without claiming extraction fidelity. The author's correction answer agrees with the changed classification; it is not the basis for accepting it.
+
+Storage findings distinguish filesystem and in-process retention from encoding. Lineage findings distinguish recording, explicit report authoring, imports and source-derived reconstruction from unresolved initial provenance. Form findings preserve prose versus fixed-rule structures and do not classify opaque provider state from readable summaries. These distinctions are supported by [MEM-OBJ-agent-messages](memory.md#mem-obj-agent-messages), [MEM-OBJ-debug-snapshot](memory.md#mem-obj-debug-snapshot), [MEM-RTE-requirement-update](memory.md#mem-rte-requirement-update) and [MEM-RTE-role-discovery](memory.md#mem-rte-role-discovery).
+
+Authority findings follow the actual consumers: report/context interpretation, standing directions, visibility and persistence vetoes, duplicate criteria, date ordering, grants and script selection. Software admission supports automatic write agency without establishing upstream human control. Ordinary qualified skill calls change loaded state and generic notices; instruction-body delivery belongs to the separate helper/bare-name capacity. Qualified human answers have advisory message delivery, not authenticated acceptance or guaranteed browser operation. See [MEM-BAP-retained-content](memory.md#mem-bap-retained-content), [MEM-RTE-project-records](memory.md#mem-rte-project-records), [RT-OBJ-role-grants](runtime.md#rt-obj-role-grants), [RT-RTE-skill-loading](runtime.md#rt-rte-skill-loading) and [EPI-RTE-human-answers](epistemic.md#epi-rte-human-answers).
+
+Curation findings have transformation support: summary consolidation, report replacement, bug withdrawal, content-tuple duplicate suppression, requirement forgetting and skill withdrawal. Changelog suppression compares retained description as well as identity metadata; it is not merely a primary-key collision check. The profile does not infer synthesis from imperfect compression. Read-back separates requested fulfillment from automatic checkpoint/message supply. Coarse wholesale supply and actual role-key replacement support the push signals; pull request identifiers do not become push signals. See [MEM-OBJ-changelog-entry](memory.md#mem-obj-changelog-entry), [MEM-RTE-session-recovery](memory.md#mem-rte-session-recovery), [MEM-RTE-role-discovery](memory.md#mem-rte-role-discovery) and [RT-RTE-agent-inquire](runtime.md#rt-rte-agent-inquire).
+
+Inquire supports afforded trace-learning yes and session-log origin. Recorded child user/assistant prose feeds automatic condensation; the returned summary can enter retained Session messages and later inference. No improvement, original-transcript replacement or epistemically accepted new claim is required for that classification. Omitted tool messages do not support tool-trace origin. Raw backup and source-fed requirement refresh remain locally nonqualifying, not system-wide negative findings. See [RT-RTE-agent-inquire](runtime.md#rt-rte-agent-inquire), [EPI-RTE-inquire-projection](epistemic.md#epi-rte-inquire-projection), [MEM-OBJ-agent-messages](memory.md#mem-obj-agent-messages) and [MEM-RTE-session-recovery](memory.md#mem-rte-session-recovery).
+
+All axes remain partial. Their opaque alternatives and narrower provenance, diagnostic-consumer and extension/coordination-reload uncertainties are faithfully scoped, not additional defects. No finding is upgraded to observed operation or causal benefit. The two remaining issues below concern incomplete inventories and counting granularity, not unsupported emitted values or false absence assertions.
+
+## Blockers
+
+none
+
+## Limits
+
+- The partial curation inventory omits separately classified replacement of a registered role template and replacement of an existing loaded skill object after catalog refresh. [MEM-RTE-role-discovery](memory.md#mem-rte-role-discovery) records template-map overwrite; [RT-RTE-skill-loading](runtime.md#rt-rte-skill-loading) records same-name loaded-object replacement independently of body insertion. [The profile](memory-profile.md#comparison-rationale) preserves partial maintenance coverage and supported curation findings, so no system-level existence conclusion changes. Consumers should withhold complete comparisons of extension/template revision mechanisms; catalog refresh alone does not replace loaded objects, and insertion of differing text does not replace an older instruction body.
+- Some form and authority units are coarser than their natural units. The profile joins Inquire input learning authority with output knowledge authority, changelog duplicate admission with date ordering, and diagnostic envelopes with prose payloads. [RT-RTE-agent-inquire](runtime.md#rt-rte-agent-inquire), [EPI-RTE-inquire-projection](epistemic.md#epi-rte-inquire-projection), [MEM-OBJ-changelog-entry](memory.md#mem-obj-changelog-entry), [MEM-RTE-project-records](memory.md#mem-rte-project-records) and [MEM-OBJ-debug-snapshot](memory.md#mem-obj-debug-snapshot) support the individual findings, and [the profile](memory-profile.md#comparison-rationale) identifies their different effects. The positive existence findings remain valid. Consumers should withhold part-by-part and consumer-by-consumer counts from these grouped units and must not infer that every grouped part has every listed force or form.
