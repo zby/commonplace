@@ -104,6 +104,20 @@ integrated 18 with recorded limits; ContextPilot is held. This is not a live
 inventory of later publications or a takeover list. No real analysis was launched
 while preparing scripts 05–08.
 
+## Clean residue batch
+
+On 2026-10-14 the operator requested the untouched remainder, with nothing from
+previous runs. [bash-09.sh](./bash-09.sh) contains **76 eligible targets** in one
+sequential script: 69 repositories and 7 explicitly identified document sources.
+[Selection and exclusions](./residue-09.md) retain the snapshot checks. It excludes
+all targets in scripts 01–08, separately attempted systems, holds, completions
+and existing reservations. It contains no retry of ContextPilot or other previous
+runs. Preparing the script did not launch it or change acceptance counts.
+
+Run with `bash kb/work/agentic-system-reruns/bash-09.sh` when desired. Running it
+alongside existing scripts adds another analysis pipeline; it does not reduce the
+recent overload pressure. Recheck the selection if other work starts before it.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
