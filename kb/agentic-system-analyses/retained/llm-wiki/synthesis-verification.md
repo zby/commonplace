@@ -1,0 +1,34 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of LLM Wiki's public account of delegated Markdown maintenance and bounded toolkit support at the frozen commit."
+run-id: AAS-2026-10-14-llm-wiki-b437987c5802-01
+reviewed-boundary: a424e6875aa2d5736d9c0d03d7c28bdbe32892a5
+---
+
+# llm-wiki synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded account of an external-agent maintenance protocol and implemented toolkit support. I checked every substantive paragraph, the separate theory-condition findings and all limitation rows against the supplied records, annotations and reconciliation dispositions. I read the report and profile judgments and the empty synthesis answers. No refusal or earlier synthesis-verification judgment was supplied. I added no evidence, read no frozen-source files and performed no target execution. Evidence remains SRC-1 at the [registered boundary](boundary.md#source-register).
+
+**Boundary and runtime progression.** The public text states the repository, full commit, cutoff, whole-system functional scope and excluded implementations before attributing behavior. Its distinction between code-grounded toolkit capacity, prescribed semantic maintenance and illustrative reported operation matches the [boundary account](boundary.md#boundary-and-evidence). The allocation of human curation and agent writing follows [RT-CLM-agent-bookkeeping](runtime.md#rt-clm-agent-bookkeeping); compiled, current and compounding knowledge remains a declared claim rather than demonstrated benefit, as required by [EPI-CLM-compiled-knowledge](epistemic.md#epi-clm-compiled-knowledge). Initialization and instruction delivery are supported by [RT-RTE-project-init](runtime.md#rt-rte-project-init) and [RT-BAP-maintainer-instructions](runtime.md#rt-bap-maintainer-instructions). The synthesis does not convert optional Git or MCP configuration into rollback, prompt compliance or host isolation.
+
+**Ingest, retention and delivery.** The selected workflow preserves the complete-source read, image handling, batch-mode exception, dependent semantic writes, conditional synthesis/conflict updates and index/log obligations of [RT-RTE-source-ingest](runtime.md#rt-rte-source-ingest) and the [workflow account](workflow.md#workflow-account). It distinguishes prescribed delivery from observed success, source mapping and conversational reporting. The retained-object account follows the memory declarations rather than treating summaries, topic claims, synthesis, contradictions and history as interchangeable raw evidence. Reconciliation's supersessions of epistemic raw, source-page and contradiction identities are respected through citations of the memory objects; the valid broader [EPI-OBJ-wiki-pages](epistemic.md#epi-obj-wiki-pages) container remains appropriately cited for shared semantic uncertainty. No supersession changes evidence strength.
+
+Human guidance is not overstated as per-claim approval. [RT-RTE-page-create](runtime.md#rt-rte-page-create) supports the distinct template writer, force override and unfinished integration obligations. [MEM-OBJ-answers](memory.md#mem-obj-answers) supports the availability of incomplete templates and unresolved filing acceptance. Interrupted multi-page repair remains an external responsibility, consistent with the workflow, not a transactional guarantee.
+
+**Read-back and correction.** [RT-RTE-wiki-query](runtime.md#rt-rte-wiki-query) and its memory annotation support requested BM25 search, frontmatter scoring, agent-selected expansion and response-level selection. The synthesis neither claims total-token control nor confuses these routes with host compaction or isolated execution. [RT-RTE-qmd-search](runtime.md#rt-rte-qmd-search) supports the separate external selector and unresolved freshness, provenance and containment contracts. Metadata and log summaries are correctly distinguished from evidence passages and complete history through [MEM-RTE-metadata-read](memory.md#mem-rte-metadata-read) and [MEM-CLM-log-parser](memory.md#mem-clm-log-parser).
+
+The diagnostic account preserves each evaluator's actual domain: filename association in [EPI-RTE-source-coverage](epistemic.md#epi-rte-source-coverage), notification in [RT-RTE-pending-watch](runtime.md#rt-rte-pending-watch), lexical predicates in [EPI-RTE-contradiction-check](epistemic.md#epi-rte-contradiction-check), and CLI status versus MCP reporting in [RT-RTE-wiki-lint](runtime.md#rt-rte-wiki-lint). The negative retrieval-gate finding remains confined to the inspected toolkit connection established by [MEM-ABS-withdrawal-gate](memory.md#mem-abs-withdrawal-gate), not manual criticism or external host controls.
+
+**Revision and independent properties.** The strongest supported contribution leads the assessment: editable persistent accounts, criticism/reason affordances and selective reload. The separate conditions 1–4 retain the afforded, claimed and uninspected distinctions of [RT-RTE-source-ingest](runtime.md#rt-rte-source-ingest). Learning, reflection, autonomous theory building and exercised self-improvement are not inferred from one another or bundled into a system-wide negative. [RT-RTE-instruction-sync](runtime.md#rt-rte-instruction-sync) supports convention propagation, not an automatically log-fed improvement loop. The missing operation and causal links are kept beside the conclusions they prevent. The [epistemic bounded conclusion](epistemic.md#bounded-conclusion) supports unknown source warrant, indeterminate semantic correspondence and the distinction between retained claims and evidence-consuming acceptance.
+
+**Limit carriage and public usability.** The [Limitations table](synthesis.md#limitations) faithfully carries both profile-verification limits: omitted symbolic template-renderer classification and grouping of known software template reading with unknown host loading. Their citations include [RT-RTE-page-create](runtime.md#rt-rte-page-create) and [RT-BAP-maintainer-instructions](runtime.md#rt-bap-maintainer-instructions); their consequences withhold complete comparisons without withdrawing supported positive findings. The report verification adds no limits, and reconciliation identifies no unresolved conflict. The remaining limitation rows preserve execution, host, warrant, improvement, qmd and parsed-history boundaries already present in the records. The closing scenario assessment names concrete evidence or mechanism changes that would alter each affected conclusion without ranking products or recommending Commonplace adoption. The account is understandable without opening the supporting members. No material unsupported conclusion, misleading coverage claim or additional unresolved record fault was found.
+
+## Blockers
+
+none
+
+## Limits
+
+none
