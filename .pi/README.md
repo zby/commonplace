@@ -37,6 +37,13 @@ The extension launches separate Pi processes with fresh, non-persisted
 sessions. It does not copy the coordinator's conversation. Children still load
 applicable repository context and resources. This is not a filesystem sandbox.
 
+Worker results use the latest assistant response and process outcome to classify
+failure. An earlier assistant error recovered by Pi's built-in retries remains
+in the returned messages but does not make the final result fail. A terminal
+assistant error or abort, nonzero process exit, process error or missing assistant
+result still fails. Recovery does not certify the worker's output; the workflow
+checks it through its normal completion and acceptance path.
+
 ## Worker configuration
 
 `agents/commonplace-worker.md` allows `read`, `bash`, `edit`, and `write`.

@@ -88,8 +88,10 @@ export async function launch(
 				result.usage.contextTokens = message.usage.totalTokens || 0;
 			}
 			if (!result.model && message.model) result.model = message.model;
-			if (message.stopReason) result.stopReason = message.stopReason;
-			if (message.errorMessage) result.errorMessage = message.errorMessage;
+			// Pi can recover an earlier assistant error within this process. Keep its
+			// message as evidence, but classify the latest assistant response.
+			result.stopReason = message.stopReason;
+			result.errorMessage = message.errorMessage;
 		}
 		onUpdate?.(result);
 	};

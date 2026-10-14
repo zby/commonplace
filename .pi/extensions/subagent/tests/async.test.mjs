@@ -36,10 +36,14 @@ const mockSpawn = (command, args, options) => {
     if (!proc.ignoreTerm || signal === "SIGKILL") queueMicrotask(() => proc.emit("close", null, signal));
     return true;
   };
-  proc.finish = (text = "OK", code = 0, stopReason = "stop") => {
+  proc.respond = (text, stopReason, errorMessage) => {
     proc.stdout.write(JSON.stringify({ type: "message_end", message: {
       role: "assistant", content: [{ type: "text", text }], stopReason,
+      ...(errorMessage === undefined ? {} : { errorMessage }),
     } }) + "\n");
+  };
+  proc.finish = (text = "OK", code = 0, stopReason = "stop", errorMessage) => {
+    proc.respond(text, stopReason, errorMessage);
     proc.emit("close", code);
   };
   launches.push({ proc, args, options });
@@ -154,6 +158,63 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
         if (mode === "model") proc.finish("model failed", 0, "error");
         if (mode === "empty") proc.emit("close", 0);
         assert.equal((await wait([h])).isError, true);
+        await reset();
+      }
+    });
+    await t.test("recovered assistant errors do not fail async or blocking workers", async () => {
+      const transient = "OpenAI Responses stream ended before a terminal response event";
+      for (const mode of ["async", "blocking"]) {
+        const pending = mode === "async"
+          ? wait([handle(await start())])
+          : call({ agent: "worker", task: "blocking", agentScope: "project" });
+        await spawned(1);
+        const proc = launches[0].proc;
+        proc.respond("", "error", transient);
+        assert.equal((await call({ action: "status" })).details.jobs[0].state, "running");
+        proc.finish("Recovered final result");
+        const result = await pending;
+        assert.notEqual(result.isError, true);
+        const worker = mode === "async" ? result.details.jobs[0].result : result.details.results[0];
+        assert.equal(worker.exitCode, 0);
+        assert.equal(worker.stopReason, "stop");
+        assert.equal(worker.errorMessage, undefined);
+        assert.equal(worker.messages[0].errorMessage, transient, "retain the intermediate error as evidence");
+        assert.match(result.content[0].text, /Recovered final result/);
+        await reset();
+      }
+    });
+    await t.test("terminal errors replace earlier error text and remain failures", async () => {
+      for (const finalError of ["Final provider failure", undefined]) {
+        const h = handle(await start()); await spawned(1);
+        const proc = launches[0].proc;
+        proc.respond("", "error", "Earlier transient failure");
+        proc.respond("Continue with tools", "toolUse");
+        proc.finish("Final error response", 0, "error", finalError);
+        const result = await wait([h]);
+        const worker = result.details.jobs[0].result;
+        assert.equal(result.isError, true);
+        assert.equal(worker.stopReason, "error");
+        assert.equal(worker.errorMessage, finalError);
+        assert.equal(worker.messages[0].errorMessage, "Earlier transient failure");
+        assert.doesNotMatch(result.content[0].text, /Earlier transient failure/);
+        assert.match(result.content[0].text, /Final/);
+        await reset();
+      }
+    });
+    await t.test("recovery does not hide nonzero process exit or a terminal abort", async () => {
+      for (const [code, stopReason] of [[7, "stop"], [0, "aborted"]]) {
+        const h = handle(await start()); await spawned(1);
+        const proc = launches[0].proc;
+        proc.respond("", "error", "Earlier transient failure");
+        proc.stderr.write("Retained diagnostic\n");
+        proc.finish("Final response", code, stopReason);
+        const result = await wait([h]);
+        const worker = result.details.jobs[0].result;
+        assert.equal(result.isError, true);
+        assert.equal(worker.exitCode, code);
+        assert.equal(worker.stopReason, stopReason);
+        assert.equal(worker.errorMessage, undefined);
+        assert.match(worker.stderr, /Retained diagnostic/);
         await reset();
       }
     });
