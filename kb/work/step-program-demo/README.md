@@ -233,6 +233,20 @@ Beads Lite's motivating relay (implement, verify, paste findings back, repair)
 is then a step program with reported `verify` and `repair` jobs; the queue
 holds the claims and the history of who did each round.
 
+How to characterise it. The build system is the core and the queue is how its
+jobs are handed out, so "beads-like" works only as a qualifier: unlike Beads,
+the queue holds no written tasks and no dependency links.
+
+- General: a monadic build system whose actions are done by agents, with a
+  beads-style queue for handing them out.
+- For build-system people: Shake for agent work; reported actions are claimed
+  from a queue instead of run locally.
+- For coders who do not know the build-system terms: a task tracker where
+  tasks are computed, not written; a program decides what work is needed, and
+  agents pull it from a queue.
+- For Beads users: Beads without dependencies; the dependencies live in a
+  program that is replayed, so the queue holds only what is ready now.
+
 Open: whether the package keeps cachier or stores results in the queue's
 SQLite database, which would remove cachier's three dependencies; how much of
 Beads Lite's current 4,700 lines survives once dependencies and authored task
