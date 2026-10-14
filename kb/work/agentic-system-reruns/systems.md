@@ -10,12 +10,14 @@ counts, not a live CLI batch inventory. cass_memory_system, claude-obsidian and
 Claude Context Guard are integrated with recorded limits. Autogenesis and the
 18 earlier held targets remain held. Preserve worktrees, outputs and traces.
 
-**Current approach: four Bash scripts, ten systems each.** Follow the
+**Current approach: Bash batches, ten systems per script.** Follow the
 [current README](./README.md). The operator replaced rolling coordination with
 direct CLI analysis on 2026-10-13: no takeover markings, queue-ownership claims
 or per-system assignments. After processes finish, inspect their outputs and
 run/publication state, list what remains, and make new scripts. The initial
-40-system batch has not been executed by the author of this handoff.
+40-system batch was launched by the operator; scripts 05–08 add another 40
+distinct pending targets. [Unaudited publications](./unaudited-publications.md)
+tracks published worktree results separately from these acceptance counts.
 
 Internal analytical-worker scheduling is unchanged. Individual holds and older
 refresh-workshop reservations remain excluded from these scripts. Academic

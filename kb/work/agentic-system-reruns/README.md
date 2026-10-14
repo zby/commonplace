@@ -73,6 +73,36 @@ preparation uses a committed method and refuses changed startup files. Start a
 fresh Pi process to load the new extension. Do not patch the preserved trial
 worktrees or resume them implicitly.
 
+## Second Bash batch
+
+Prepared on 2026-10-14: another **40 distinct pending systems**, disjoint from
+scripts 01–04 and without matching retained publications in the origin or
+preserved worktrees at selection time. No held targets, older reservations or
+failed-run recovery are included. Memori and OpenClerk already had separate
+runs and output files at verification time; Letta also had a preserved run.
+They were excluded to avoid duplicating existing work. The scripts use the same command, output
+naming and sequential execution as the first batch.
+
+- [bash-05.sh](./bash-05.sh): HALO, Hermes Agent, Hindsight, hyalo, HyperAgents,
+  interview-doc-agent, KBLaM, kgai, Kompl, LACP.
+- [bash-06.sh](./bash-06.sh): Playground, Link, llm-context-base, llm-project-wiki,
+  llm-wiki-coordination, LLM-WIKI-MCP, LLM-Wiki-v3, llmwiki-marimo, Mem0, Memex.
+- [bash-07.sh](./bash-07.sh): Pond, MemPalace, memwiki, MentisDB, Meta-Harness,
+  MiroShark, nao, Nuggets, o-o, OKF Harness.
+- [bash-08.sh](./bash-08.sh): Prime Agent, OpenSage, OpenViking, OpenWiki,
+  Operational Ontology Framework, Origin, PageIndex, Pal, Phantom, pi-self-learning.
+
+Run these scripts by the same `bash <path>` route. Starting all four while older
+batches remain active increases the total number of simultaneous analyses.
+Fresh Pi sessions use the committed subagent error-handling fix; existing
+sessions and frozen worktrees retain their versions. No retry settings changed.
+
+[Unaudited worktree publications](./unaudited-publications.md) lists the first
+batch's new publications awaiting independent audit, separately from older
+experimental publications. It is an audit inventory, not a takeover list or
+integration clearance. No real analysis was launched while preparing scripts
+05–08.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
