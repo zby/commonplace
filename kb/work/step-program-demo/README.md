@@ -52,6 +52,60 @@ drafts and hands out both reviews; step 3 assembles. Editing the `review`
 prompt re-asks only the reviews. State lives in `.run/` (ignored); delete it to
 start over.
 
+## Using it as a workflow mechanism
+
+This is how Commonplace runs its analysis workflow, with a step program in
+place of the engine. A coordinating agent (a Claude Code or Codex session)
+drives the program; workers do the reported jobs; the program decides what
+comes next.
+
+1. The coordinator runs `step`. Computed jobs run; every reported job whose
+   inputs exist and that has no answer yet comes back as an open prompt.
+2. For each open prompt the coordinator launches a fresh worker (a sub-agent)
+   and gives it only the prompt file. Independent prompts come out in the same
+   step, so their workers can run in parallel. The worker writes its answer to
+   a file.
+3. The coordinator runs `fill ID FILE` for each answer, then `step` again.
+4. When `step` returns a result and no prompts, the workflow is done.
+
+The coordinator carries no workflow state in its own context. The schedule is
+the program and the progress is the cache, so a crashed or ended conversation
+resumes by running `step` again, possibly from a different agent.
+
+Checks and correction loops are ordinary code. A check is a computed job; a
+correction is a reported job whose arguments include the problems found, so
+each round has a new key and is asked once:
+
+```python
+@computed
+def check(text):                      # deterministic validation, rerun only on new text
+    return problems_in(text)
+
+@reported
+def revise(topic, text, problems):
+    return f"Revise this paragraph about {topic} to fix: {problems}\n\n{text}"
+
+def program(topic, max_revisions=2):
+    text = draft(topic)
+    for _ in range(max_revisions):
+        problems = check(text)
+        if problems == []:            # a plain read: ends the replay until text exists
+            return text
+        text = revise(topic, text, problems)
+    ...                               # out of revisions: report failure
+```
+
+The attempt limit is the loop bound; the verdict a check gave is pinned to the
+text it judged, because the text is in its key. A plain read such as
+`problems == []` ends the replay, so prompts that would come after it in the
+program wait for a later step; put independent jobs before such reads.
+
+Compared with the engine, the plan becomes the program, `advance` becomes
+`step`, closing an attempt becomes `fill`, hand-outs become prompt files, and
+judgments pinned to input versions become cache keys over the inputs. Not
+covered yet: a worker reporting failure or refusal, recording which worker and
+model produced an answer, and locking for concurrent fills.
+
 ## Relation to Commonplace
 
 The current engine (`src/commonplace/artifactrun/`, ADR 113) is not a replayed
