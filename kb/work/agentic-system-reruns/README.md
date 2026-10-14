@@ -116,10 +116,27 @@ all targets in scripts 01–08, separately attempted systems, holds, completions
 and existing reservations. It contains no retry of ContextPilot or other previous
 runs. Preparing the script did not launch it or change acceptance counts.
 
-Run any script with `bash kb/work/agentic-system-reruns/bash-09.sh` (substitute
-10, 11 or 12 as needed). Each script runs its targets sequentially; running all
-four concurrently adds four analysis pipelines. This does not reduce the recent
-overload pressure. Recheck the selection if other work starts before execution.
+Scripts 09–10 subsequently stopped during the disk-full incident. Do not use
+them as restart entry points. [Disk recovery batches](./disk-recovery-batches.md)
+retarget unstarted scripts 11–12 to the external disk and add scripts 13–14 for
+38 eligible zero-output targets. Three same-name wiki repositories are deferred
+for the known publication-path collision. The six interrupted runs and earlier
+nonempty failures remain outside these fresh batches.
+
+## External logs and audit prompt
+
+Scripts 11–14 write under
+`/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/`, with separate
+`batch-13/` and `batch-14/` subdirectories for new outputs. Complete the
+operator-owned move and ensure directory write permission before execution.
+The scripts refuse an unmounted disk; worktrees and other runtime storage still
+use the primary filesystem. See [disk recovery batches](./disk-recovery-batches.md)
+for selection and remaining disk risks.
+
+[Audit-unintegrated prompt](./audit-unintegrated-prompt.md) supplies the requested
+fresh-coordinator audit commission for all exact own-worktree publications not
+integrated into main, including older alternatives. Creating it does not launch
+auditors, authorize integration or clear existing holds.
 
 ## After the processes finish
 

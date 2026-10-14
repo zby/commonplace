@@ -3,11 +3,16 @@
 # Selection boundary and exclusions: residue-09.md. This script does not launch itself.
 set -u
 cd "$(dirname "${BASH_SOURCE[0]}")/../../.." || exit 1
-mkdir -p kb/work/agentic-system-reruns/outputs || exit 1
+output_disk="/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372"
+output_dir="$output_disk/outputs"
+mountpoint -q "$output_disk" || { printf 'Output disk is not mounted: %s\n' "$output_disk" >&2; exit 1; }
+mkdir -p "$output_dir" || exit 1
+[[ -w "$output_dir" ]] || { printf 'Output directory is not writable: %s\n' "$output_dir" >&2; exit 1; }
 
 run() {
   local system=$1 source=$2 source_kind=${3:-repository}
-  local output="kb/work/agentic-system-reruns/outputs/$system.output"
+  mountpoint -q "$output_disk" || { printf 'Output disk is not mounted: %s\n' "$output_disk" >&2; exit 1; }
+  local output="$output_dir/$system.output"
   local prompt="/analyse-agentic-system $source"
   if [[ "$source_kind" == document ]]; then
     prompt="/analyse-agentic-system Analyse $system from this document source, not a repository: $source. Use a document-grounded boundary; do not use historical reviews or infer an implementation repository."

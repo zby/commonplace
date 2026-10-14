@@ -63,7 +63,10 @@ comparison refresh or push is added. A zero process exit remains insufficient
 analysis evidence. Each analysis has its standard internal workers; sequential
 outer execution does not cap total requests if other scripts remain active.
 
-Run any file when desired:
+The initial split's commands below are historical. After the disk-full stop,
+do not restart scripts 09–10. Scripts 11–12 now use the external output disk;
+[disk recovery batches](./disk-recovery-batches.md) define current execution
+entry points and the fresh zero-output batches.
 
 ```bash
 bash kb/work/agentic-system-reruns/bash-09.sh
