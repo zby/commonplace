@@ -8,7 +8,7 @@ Initial counts: {'integrated': 37, 'candidate': 44}. This snapshot does not alte
 
 ## Scheduling
 
-At most four active Sol/medium workers. Ownership and handles are recorded here and in exact-run entries. Active assignment: `audit-deja-vu`, report `audits/unintegrated/AAS-2026-10-14-deja-vu-22137d4d39a5-01.md`; handle `99b9fdd1-2a04-458a-ac21-6ee3ebb58228`. Next assigned owners (launch pending): `audit-engraph`, `audit-fractal`, `audit-halo`, each owning only its exact run-ID report specified below. ContextPilot's byte-matching existing hold is preserved without duplicate dispatch. Other exact-run records await disposition review and scheduling.
+At most four active Sol/medium workers. Ownership and handles are recorded here and in exact-run entries. Active assignment: `audit-deja-vu`, report `audits/unintegrated/AAS-2026-10-14-deja-vu-22137d4d39a5-01.md`; handle `99b9fdd1-2a04-458a-ac21-6ee3ebb58228`. Assignment details below are authoritative; this paragraph is launch history. Initial owners: `audit-engraph` handle `b63796fa-e10b-4587-bc82-0c5a8edbb757`; `audit-fractal` handle `9c8ef427-5173-403a-9f51-93db05f2bf72`; `audit-halo` handle `5403e4df-a9b9-4e23-9ae2-24089fd7b33c`. Engraph completed and was replaced by Hermes. Each owns only its exact run-ID report specified below. ContextPilot's byte-matching existing hold is preserved without duplicate dispatch. Other exact-run records await disposition review and scheduling.
 
 ## Own publication records
 
@@ -1611,10 +1611,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "existing bash-current-contextpilot auditor",
   "active-handle": null,
-  "audit-status": "pending record review",
-  "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md"
+  "audit-status": "hold — reused exact-run byte-matching audit; selector qualification absent; see existing report for unblock conditions",
+  "report": "kb/work/agentic-system-reruns/audits/bash-current-contextpilot.md"
 }
 ```
 
@@ -1944,9 +1944,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "audit-deja-vu",
   "active-handle": null,
-  "audit-status": "pending record review",
+  "completed-handle": "99b9fdd1-2a04-458a-ac21-6ee3ebb58228",
+  "audit-status": "integrate with recorded limits — coordinator read full report; validation passed; no blocker",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-deja-vu-22137d4d39a5-01.md"
 }
 ```
@@ -2660,9 +2661,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "audit-engraph",
   "active-handle": null,
-  "audit-status": "pending record review",
+  "completed-handle": "b63796fa-e10b-4587-bc82-0c5a8edbb757",
+  "audit-status": "integrate with recorded limits — coordinator read complete report; publication/report validation passed; no blocker in bounded scope",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-engraph-0cd4f00695b0-01.md"
 }
 ```
@@ -3078,9 +3080,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "audit-fractal",
   "active-handle": null,
-  "audit-status": "pending record review",
+  "completed-handle": "9c8ef427-5173-403a-9f51-93db05f2bf72",
+  "audit-status": "integrate with recorded limits — full report reviewed; validation passed; no blocker",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-fractal-ee03010af4c2-01.md"
 }
 ```
@@ -3778,9 +3781,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "audit-halo",
   "active-handle": null,
-  "audit-status": "pending record review",
+  "completed-handle": "5403e4df-a9b9-4e23-9ae2-24089fd7b33c",
+  "audit-status": "integrate with recorded limits — full report reviewed; missing handouts limit retained; validation passed",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-halo-c4ed89d7f99f-01.md"
 }
 ```
@@ -3856,9 +3860,10 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
+  "owner": "audit-hermes-agent",
   "active-handle": null,
-  "audit-status": "pending record review",
+  "completed-handle": "cb8b9b57-53a3-4a4a-ac48-4038d68710ab",
+  "audit-status": "integrate with recorded limits — full report reviewed; validation passed; no blocker",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-hermes-agent-bfb4bdc54d37-01.md"
 }
 ```
@@ -3934,9 +3939,9 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
-  "active-handle": null,
-  "audit-status": "pending record review",
+  "owner": "audit-hindsight",
+  "active-handle": "6ab4fc54-191e-48b6-9cfe-563f23032b7e",
+  "audit-status": "running",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-hindsight-34c2ca821edf-01.md"
 }
 ```
@@ -4012,9 +4017,9 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
-  "active-handle": null,
-  "audit-status": "pending record review",
+  "owner": "audit-hyalo",
+  "active-handle": "f0b9e742-75ed-4276-85fc-e8cb4ae280c4",
+  "audit-status": "running",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-hyalo-ffe11d6a6d56-01.md"
 }
 ```
@@ -4090,9 +4095,9 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
-  "active-handle": null,
-  "audit-status": "pending record review",
+  "owner": "audit-hyperagents",
+  "active-handle": "8af7ba90-cf5f-4106-b18b-cd1a80ee8545",
+  "audit-status": "running",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-hyperagents-dd9d501b160c-01.md"
 }
 ```
@@ -4250,9 +4255,9 @@ At most four active Sol/medium workers. Ownership and handles are recorded here 
   ],
   "trace-limits": [],
   "issues": [],
-  "owner": null,
-  "active-handle": null,
-  "audit-status": "pending record review",
+  "owner": "audit-interview-doc-agent",
+  "active-handle": "a933f1ae-5d70-4c27-a927-7eaae3b922c5",
+  "audit-status": "running",
   "report": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-interview-doc-agent-c7597c33f23d-01.md"
 }
 ```
@@ -7496,4 +7501,86 @@ The five initial parser limits are resolved below. Document acquisition can retu
 }
 ```
 
-Reconciled snapshot count: **86 own publications; 38 integrated exclusions; 48 unintegrated candidates**, including **16 same-source alternatives**. All 86 destination file sets match effect-listed hashes. No different-owner collision among these own publications was found; prepared LLM-Wiki owners without their own effects are not corpus additions.
+Reconciled snapshot count: **86 own publications; 38 integrated exclusions; 48 unintegrated candidates**, including **16 same-source alternatives**. All 86 destination file sets match effect-listed hashes. No different-owner collision among these own publications was found; prepared LLM-Wiki owners without their own effects are not corpus additions. The known `llm-wiki` namespace collision remains: main belongs to cobusgreyling; Pratiyush's prepared run and the deferred kenhuangus, nvk and MehmetGoekce sources do not authorize replacement. See [disk recovery boundaries](./disk-recovery-batches.md).
+
+## Binding common auditor handoff
+
+Each newly assigned exact-run auditor must read this section, its own JSON entry, root AGENTS.md, kb/work/COLLECTION.md, the workshop README and the complete audit-a-rerun.md. Purpose: independent readiness judgment, not second analysis. No doctrine deviations. Choose a bounded discrepancy-led method; inspect necessary public overview/synthesis qualifications and consequential omissions/contradictions against only the frozen source path/revision supplied in your entry. Historical accounts are coverage leads, not current truth. State when the account moved outside agent-memory-systems. Older alternatives must also compare the integrated incumbent's current origin publication and say whether there is a reason for replacement; this does not authorize replacement. Existing holds remain in force unless separately authorized evidence resolves them. Existing audit records in your entry may supply discrepancy leads, not a substitute pass.
+
+Your sole write authority is the origin `report` path in your exact-run entry. Do not delegate or edit shared inventory, accepted analysis outputs, sources, frozen methods or engine state. Do not acquire more sources, execute target code, advance/resume/retry, run state-writing inspect, integrate, commit, push, clean up worktrees, move/delete logs, copy huge streams, rebuild comparisons or synthesize a landscape. Coordinator retains scheduling, integration and recovery.
+
+Check actual publication bytes against the effect and enough operational evidence to distinguish acceptance from performed worker obligations. Trace paths in the entry have exact-run matches; old audit/session locators may be checked read-only when relevant. Investigate traces only for consequential operational questions. Pair executed calls/results within the same worker; proposals and duplicate snapshots are not operation. Missing/truncated/unreadable evidence remains a limit, not successful compliance. Do not certify target operation, causal benefit or exhaustive compliance from publication.
+
+Return `integrate`, `integrate with recorded limits`, or `hold` with concrete unblock conditions. An audit-only qualification cannot repair its absence publicly. Stop bounded if substantial reanalysis, source expansion, mutation or an unstated consequential decision is needed. Preserve exact errors and any partial report. Validate publication and the owned report with the entry's prepared `command-prefix`/commonplace-validate, called from its `worktree`; retain actual scope/output. Do not use state-writing commands. Prefer a concise report (about 80 lines where the findings permit), with run/method/source/auditor identity, historical/incumbent boundaries, evidence locators, findings, byte checks, validation and limits. Return report path and blocker.
+
+## Rolling assignment ledger
+
+This append-only ledger supersedes the JSON entries' scheduling fields when newer. Completed handles are removed from the pending set, but retained as provenance. Positive audits do not mean integration. Other candidates with existing audits need supplements because those records concern historical drafts or pre-incumbent comparison scopes; no old hold is cleared by dispatch.
+
+- Hindsight (`AAS-2026-10-14-hindsight-34c2ca821edf-01`): completed handle `6ab4fc54-191e-48b6-9cfe-563f23032b7e`; full report reviewed; **integrate with recorded limits**; validation passed, no blocker. Remove from pending.
+- Link (`AAS-2026-10-14-link-595f6f9cba36-01`): owner `audit-link`, assigned sole exact-run report; active handle `09b81160-1de1-4527-a7d5-cef12f166606`.
+
+- Hyalo: completed `f0b9e742-75ed-4276-85fc-e8cb4ae280c4`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-llm-context-base-f63a7c0fb5f2-01`: owner `audit-llm-context-base`; sole exact-run report; active `4bd7a077-8c58-48ae-85d1-a7002a3195c6`.
+
+- HyperAgents: completed `8af7ba90-cf5f-4106-b18b-cd1a80ee8545`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-llm-project-wiki-c6c664168f3e-01`: owner `audit-llm-project-wiki`; sole exact-run report; active `67d584fe-c6a1-4ffa-b2d2-8f3726b6261b`.
+
+- Interview-doc-agent: completed `a933f1ae-5d70-4c27-a927-7eaae3b922c5`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-llm-wiki-coordination-a12f3c7007f2-01`: owner `audit-llm-wiki-coordination`; sole exact-run report; active `3753de6d-9973-4f17-b242-f0eab3a5e26a`.
+
+- Link: completed `09b81160-1de1-4527-a7d5-cef12f166606`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-mempalace-ed71875aea5a-01`: owner `audit-mempalace`; sole exact-run report; active `0be4f370-d539-4093-8ca6-32558268d540`.
+
+- LLM-context-base: completed `4bd7a077-8c58-48ae-85d1-a7002a3195c6`; full report reviewed; **integrate with recorded limits**, validation passed; confirmed historical worker out-of-scope placeholder write/removal retained, no accepted-byte impact established; remove from pending.
+- `AAS-2026-10-14-memwiki-79dcc4d04bcb-01`: owner `audit-memwiki`; sole exact-run report; active `2b18ce9b-d1bd-4528-87ef-ee82508b556e`.
+
+- LLM-project-wiki: completed `67d584fe-c6a1-4ffa-b2d2-8f3726b6261b`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-mentisdb-a8b5903ae3e2-01`: owner `audit-mentisdb`; sole exact-run report; active `fa2e44ff-84bb-42dc-926f-116131a835ea`.
+
+- LLM-wiki-coordination: completed `3753de6d-9973-4f17-b242-f0eab3a5e26a`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-meta-harness-5e480e270fee-01`: owner `audit-meta-harness`; sole exact-run report; active `3878ca50-2aed-4929-8b7f-ad785df7d8af`.
+
+- MemPalace: completed `0be4f370-d539-4093-8ca6-32558268d540`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-openrsi-c72dec9967a3-01`: owner `audit-openrsi`; sole exact-run report; active `0c27ee89-c996-4aa9-aef5-90026d450bc3`.
+
+- Memwiki: completed `2b18ce9b-d1bd-4528-87ef-ee82508b556e`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-opensage-291d1ed79d37-01`: owner `audit-opensage`; sole exact-run report; active `9f2f1e58-fa45-439c-a701-10d1c419acf0`.
+
+- MentisDB: completed `fa2e44ff-84bb-42dc-926f-116131a835ea`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-openviking-7b5b57541af5-01`: owner `audit-openviking`; sole exact-run report; active `e6a657ce-cdee-4931-b035-0b6d3d4bc3b5`.
+
+- Meta-Harness: completed `3878ca50-2aed-4929-8b7f-ad785df7d8af`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-openwiki-8f502f680f75-01`: owner `audit-openwiki`; sole exact-run report; active `8d2fe450-94aa-43d7-9778-ab2357e77c34`.
+
+- OpenRSI: completed `0c27ee89-c996-4aa9-aef5-90026d450bc3`; full report reviewed; **hold** — default read-only shared mount exposes private answers to candidate reads, absent specific public qualification. Unblock: separately authorized correction/reverification/republication and new byte audit; no actual leakage inferred. Validation passed; remove from pending.
+- `AAS-2026-10-14-pi-posthorse-58b9647d2f29-01`: owner `audit-pi-posthorse`; sole exact-run report; active `d698c3c1-6a31-4b44-8f63-50cd750de64f`.
+
+- OpenSage: completed `9f2f1e58-fa45-439c-a701-10d1c419acf0`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-playground-88ee8a292f9b-01`: owner `audit-playground`; sole exact-run report; active `6227461b-bf2a-42db-ac21-c967841326f0`.
+
+- OpenViking: completed `e6a657ce-cdee-4931-b035-0b6d3d4bc3b5`; full report reviewed; **integrate with recorded limits**, corrected validation invocation passed for set/members/report, no blocker; remove from pending.
+- `AAS-2026-10-14-pond-7a589a889ca1-01`: owner `audit-pond`; sole exact-run report; active `64abed7b-1824-4ad2-b0b5-fef77db029d8`.
+
+- OpenWiki: completed `8d2fe450-94aa-43d7-9778-ab2357e77c34`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-prime-agent-8ec59ae12476-01`: owner `audit-prime-agent`; sole exact-run report; active `eb476b09-755a-43d5-93c4-ae277f2501cc`.
+
+- pi-posthorse: completed `d698c3c1-6a31-4b44-8f63-50cd750de64f`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-primescientist-f880686cf98a-01`: owner `audit-primescientist`; sole exact-run report; active `2a59b7e2-31e3-4d45-9144-5d75ec23a9df`.
+
+- Playground: completed `6227461b-bf2a-42db-ac21-c967841326f0`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-prove2me-workspace-187ef30582c9-01`: owner `audit-prove2me`; sole exact-run report; active `b6fb883c-4bcb-4bde-9653-171faf034a90`.
+
+- Pond: completed `64abed7b-1824-4ad2-b0b5-fef77db029d8`; full report reviewed; **integrate with recorded limits**, set/members/report validation passed; no performed-worker or target-operation certification, no blocker; remove from pending.
+- `AAS-2026-10-14-2609-26457-6b3bcd4791cf-01`: owner `audit-aide2`; sole exact-run report; active `a7c89039-89c5-48a5-8b28-051288d8ed00`.
+
+- Prime Agent: completed `eb476b09-755a-43d5-93c4-ae277f2501cc`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-workflows-f9c2f80a3a94-01`: owner `audit-claude-workflows`; sole exact-run report; active `8549b5e2-4afc-4d35-a517-9d92286b38e6`.
+
+- PrimeScientist: completed `2a59b7e2-31e3-4d45-9144-5d75ec23a9df`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-14-fki198-94-pdf-90fb0a2a9508-01`: owner `audit-incremental-self-improvement`; sole exact-run report; active `0a858b4f-9723-444e-9308-3ec6da85f880`.
+
+- Prove2Me: completed `b6fb883c-4bcb-4bde-9653-171faf034a90`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
+- `AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01`: owner `audit-agent-skills`; sole exact-run report; active `0bf80fc0-61b3-4219-b0a7-13ac7ac92973`. Existing historical-draft hold/reservation remains; publication evidence now contradicts the checklist's old no-publication status but does not clear that hold.
+
+<!-- rolling-ledger -->
