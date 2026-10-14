@@ -107,16 +107,19 @@ while preparing scripts 05–08.
 ## Clean residue batch
 
 On 2026-10-14 the operator requested the untouched remainder, with nothing from
-previous runs. [bash-09.sh](./bash-09.sh) contains **76 eligible targets** in one
-sequential script: 69 repositories and 7 explicitly identified document sources.
+previous runs. The **76 eligible targets** are split across four sequential
+scripts: [bash-09.sh](./bash-09.sh), [bash-10.sh](./bash-10.sh) and
+[bash-11.sh](./bash-11.sh) have 20 runs each; [bash-12.sh](./bash-12.sh) has 16.
+Together they cover 69 repositories and 7 explicitly identified document sources.
 [Selection and exclusions](./residue-09.md) retain the snapshot checks. It excludes
 all targets in scripts 01–08, separately attempted systems, holds, completions
 and existing reservations. It contains no retry of ContextPilot or other previous
 runs. Preparing the script did not launch it or change acceptance counts.
 
-Run with `bash kb/work/agentic-system-reruns/bash-09.sh` when desired. Running it
-alongside existing scripts adds another analysis pipeline; it does not reduce the
-recent overload pressure. Recheck the selection if other work starts before it.
+Run any script with `bash kb/work/agentic-system-reruns/bash-09.sh` (substitute
+10, 11 or 12 as needed). Each script runs its targets sequentially; running all
+four concurrently adds four analysis pipelines. This does not reduce the recent
+overload pressure. Recheck the selection if other work starts before execution.
 
 ## After the processes finish
 

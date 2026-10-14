@@ -1,12 +1,15 @@
-# Clean residue batch 09
+# Clean residue batches 09–12
 
 ## Commission and boundary
 
 On 2026-10-14 the operator requested one more Bash batch, then specified that it
 must include nothing from previous runs: only the clean residue. The resulting
-[bash-09.sh](./bash-09.sh) contains **76 untouched eligible targets**, rather than
-another ten-target sample. It runs them sequentially in one script. This is
-preparation only; the script and no analysis were launched by this commission.
+The **76 untouched eligible targets** are split into four files as subsequently
+requested: [bash-09.sh](./bash-09.sh), [bash-10.sh](./bash-10.sh) and
+[bash-11.sh](./bash-11.sh) have 20 runs each; [bash-12.sh](./bash-12.sh) has the
+remaining 16. Each file runs sequentially. No targets were added to reach 80,
+removed or reordered across the split. This is preparation only; no script or
+analysis was launched by this commission.
 
 Selection uses [the checklist](./systems.md) at the acceptance checkpoint of
 38 complete, 148 pending and 20 held. Historical reviews supply source identities
@@ -44,7 +47,7 @@ output key for the checklist's underscore-bearing Mnemosyne identifier.
 
 ## Source and execution contract
 
-The script contains **69 repository sources and 7 document sources**. Repository
+The four scripts together contain **69 repository sources and 7 document sources**. Repository
 locators come from the targets' retained inclusion references. The document
 sources are AIDE2, Claude Code dynamic workflows, Fintool, Incremental
 Self-Improvement, NAMS, Trajectory-Informed Memory Generation and WikiSkill.
@@ -60,22 +63,27 @@ comparison refresh or push is added. A zero process exit remains insufficient
 analysis evidence. Each analysis has its standard internal workers; sequential
 outer execution does not cap total requests if other scripts remain active.
 
-Run when desired:
+Run any file when desired:
 
 ```bash
 bash kb/work/agentic-system-reruns/bash-09.sh
+bash kb/work/agentic-system-reruns/bash-10.sh
+bash kb/work/agentic-system-reruns/bash-11.sh
+bash kb/work/agentic-system-reruns/bash-12.sh
 ```
 
-Starting it while existing batches are active adds another analysis pipeline;
-recent overload errors remain a reason to choose timing deliberately, not proof
-of a particular concurrency cause. Selection is a snapshot, not a reservation.
-If execution is delayed or another operator starts these targets, recheck source
-ownership and run state. The output-exists guard catches only the matching output
+These commands run the files one after another in a single shell. Adding `&` to
+each and then `wait` runs all four concurrently. Concurrent execution adds four
+analysis pipelines on top of any existing batches; recent overload errors remain
+a reason to choose timing deliberately, not proof of a particular concurrency
+cause. Selection is a snapshot, not a reservation. If execution is delayed or
+another operator starts these targets, recheck source ownership and run state. The output-exists guard catches only the matching output
 key and is not a source-level lock.
 
 ## Verification
 
-Passed `bash -n` and a source-identity/checklist check: 76 unique output keys
+The original selection passed `bash -n` and a source-identity/checklist check:
+76 unique output keys
 and source locators; no intersection with scripts 01–08 or 129 preserved run
 records; no existing selected outputs, reservations, holds or completed rows;
 and exact coverage of the untouched eligible residue, including nvk. The check
@@ -89,6 +97,13 @@ zero failures or warnings. General and agentic-analysis tests
 passed **469 tests**, with **96 deselected** by the default marker filter,
 in 57.57 seconds. No slow-test behavior, production
 method or engine code was changed. The real script was not executed as a test.
+
+The four-file split passed `bash -n` for each file and exact ordered comparison
+against the committed original 76 run lines. Per-file counts are 20/20/20/16,
+all output keys and sources remain unique, and the runner bodies are unchanged.
+Both changed Markdown files passed validation. The same general/agentic-analysis
+test selection passed again: 469 passed, 96 deselected, in 58.18 seconds.
+No real script was executed as a test.
 
 Preparation does not change checklist completion counts or mutate any run,
 publication, source, original log or unrelated workshop work.
