@@ -1,13 +1,14 @@
 """Toy step program: draft a section per topic, review each draft, assemble.
 
-    uv run --no-project --with cachier python toy.py step            # replay; prints the open prompts
-    uv run --no-project --with cachier python toy.py fill ID FILE    # store an answer, then step again
+    uv run --no-project --with cachier python toy.py step [--max-open N]   # replay; prints new prompts
+    uv run --no-project --with cachier python toy.py fill ID FILE          # store an answer
+    uv run --no-project --with cachier python toy.py release ID            # take back an unanswered prompt
 """
 
 import sys
 from pathlib import Path
 
-from stepprog import MISSING, computed, fill, reported, short, step
+from stepprog import MISSING, computed, fill, release, reported, short, step
 
 @reported
 def draft(topic):
@@ -37,12 +38,17 @@ def program(topics):
     return assemble([(t, reviewed[t]) for t in topics])
 
 
-TOPICS = ["memoized replay", "agents as executors"]
+TOPICS = ["memoized replay", "agents as executors", "prompt IDs"]
 
 if __name__ == "__main__":
-    if sys.argv[1] == "fill":
-        fill(sys.argv[2], Path(sys.argv[3]).read_text())
-    result, prompts = step(program, TOPICS)
-    for path in prompts:
-        print("open prompt:", short(path.stem), "->", path.read_text().splitlines()[0])
-    print("DONE\n" + result if result is not MISSING else f"{len(prompts)} prompt(s) open")
+    command, rest = sys.argv[1], sys.argv[2:]
+    if command == "fill":
+        fill(rest[0], Path(rest[1]).read_text())
+    elif command == "release":
+        release(rest[0])
+    elif command == "step":
+        max_open = int(rest[1]) if rest[:1] == ["--max-open"] else None
+        result, new, issued = step(program, TOPICS, max_open=max_open)
+        for path in new:
+            print("new prompt:", short(path.stem), "->", path.read_text().splitlines()[0])
+        print("DONE\n" + result if result is not MISSING else f"{issued} prompt(s) issued, {len(new)} new")
