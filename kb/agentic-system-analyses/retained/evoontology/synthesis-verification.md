@@ -1,0 +1,44 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of EvoOntology's semantic guidance and conditional evolution account at c94389b764394379086ff25e50d0e0f4396167b4."
+run-id: AAS-2026-10-13-evoontology-f2d0c7992c6e-01
+reviewed-boundary: c94389b764394379086ff25e50d0e0f4396167b4
+---
+
+# EvoOntology synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication with the carried inventory limit below. I checked its substantive statements and limitation rows against the handed boundary, runtime, memory, epistemic and workflow members, the reconciliation's supersessions and missing-part conflict, and both settled verifications. The synthesis answers file is empty and no refusal was supplied. I made no target-source reads and added no evidence. This judgment concerns support and meaning, not a repetition of deterministic structural checks.
+
+### Boundary, construction and consumption
+
+The opening distinguishes the shipped knowledge layer from its external enclosing hosts, includes both plugins and all three benchmark consumers, and gives the frozen revision, cutoff and evidence layers. Its whole-system statement is responsibility coverage, expressly not exhaustive inspection or observed operation. This agrees with the [boundary](boundary.md#boundary-and-evidence) and [Source register](boundary.md#source-register).
+
+The construction account correctly separates host semantic judgment from deterministic persistence and structural vetoes. Its five families use the canonical memory declarations after the reconciliation's identity supersessions; no supersession is used to strengthen an epistemic assessment. Mixed prose/symbolic consumption and asserted evidence are supported by [MEM-OBJ-term](memory.md#mem-obj-term), [MEM-OBJ-mapping](memory.md#mem-obj-mapping), [MEM-OBJ-relation](memory.md#mem-obj-relation), [MEM-OBJ-constraint](memory.md#mem-obj-constraint) and [MEM-OBJ-evidence](memory.md#mem-obj-evidence). The contrast between declared grounding and implemented validation preserves [EPI-CLM-grounded-commitment](epistemic.md#epi-clm-grounded-commitment), [EPI-RTE-version-validation](epistemic.md#epi-rte-version-validation) and [RT-RTE-build-publication](runtime.md#rt-rte-build-publication); it does not infer accepted novel knowledge from file publication.
+
+Root reload, lexical selection, item/mention limits, omitted qualifications and advisory constraint force agree with [RT-RTE-semantic-retrieval](runtime.md#rt-rte-semantic-retrieval) and [EPI-RTE-semantic-projection](epistemic.md#epi-rte-semantic-projection). The synthesis does not generalize their evidence-body delivery or withdrawal rules across local consumers. BIRD's lifecycle loss, DDR's shipped untargeted manifest versus optional targeting, and InsightBench's deduplication and binding alternatives retain the consequential distinctions in [MEM-RTE-bird-guidance](memory.md#mem-rte-bird-guidance), [MEM-RTE-ddr-guidance](memory.md#mem-rte-ddr-guidance) and [MEM-RTE-insight-guidance](memory.md#mem-rte-insight-guidance). In particular, the repaired DDR finding is carried as ordinary delivery without task ranking or the optional cap, not merely caveated.
+
+The task account preserves executor-local SQLite restrictions, unauthenticated manual observations, completion shape versus answer correctness, and mutable-name pinning from [RT-RTE-task-execution](runtime.md#rt-rte-task-execution) and [RT-RTE-version-override](runtime.md#rt-rte-version-override). Trace reduction and BIRD version-label uncertainty match [MEM-RTE-trace-retention](memory.md#mem-rte-trace-retention). The frame comparison is explicitly about inspected ToolCallingChat, not all InsightBench execution. Neither retained previews nor transient reply suppression is represented as model-window compaction; see [RT-RTE-benchmark-tool-loop](runtime.md#rt-rte-benchmark-tool-loop) and its memory annotation.
+
+### Updating, admission and delivery
+
+The synthesis leads with the supported durable history-to-workload transformation while withholding improved-capacity attribution. Its fixed-split and rolling conditions and non-hard user-question ceiling agree with [MEM-RTE-workload-reuse](memory.md#mem-rte-workload-reuse). This contribution is not conflated with automatic semantic revision.
+
+The selected evolution progression follows the [workflow account](workflow.md#workflow-account): authorized scope and budget, host diagnosis and separate candidate, controlled comparison instructions, caller-owned formal gate submission, rejection continuation, guarded incomplete termination, publication and terminal presentation. Reminders remain prompting opportunities, not automatic evolution launch, as supported by [MEM-RTE-reminder-delivery](memory.md#mem-rte-reminder-delivery).
+
+The arithmetic and judge conditions are accurately scoped to recorded inputs in [EPI-RTE-gate-aggregation](epistemic.md#epi-rte-gate-aggregation). The necessary adapter-to-caller handoff is preserved from [RT-RTE-benchmark-evaluation](runtime.md#rt-rte-benchmark-evaluation); no adapter result is treated as a publication decision. BIRD's reference-row license remains database-local and conditional in [EPI-RTE-sql-comparison](epistemic.md#epi-rte-sql-comparison), while downstream DDR/InsightBench evaluator licenses remain unassessed. Administrative bypass, mutable files, nontransactional writes and host-managed code changes prevent an all-path improvement guarantee. Separate reporting and visible delivery obligations remain beside terminal return, consistent with [RT-RTE-evolution-admission](runtime.md#rt-rte-evolution-admission), [RT-RTE-version-override](runtime.md#rt-rte-version-override) and the workflow annotation.
+
+### Independent properties and limits
+
+The synthesis preserves each status in [RT-RTE-evolution-admission](runtime.md#rt-rte-evolution-admission): localized hypothesis persistence is wired; content-dependent consumption, criticism and iteration are claimed; learning is uninspected; reflection and autonomous theory building are claimed; reflective theory building is uninspected; self-improvement is afforded, not exercised or successful. The boundary, later-task horizon and independently stated improvement objective travel with the dormant pathway. Proposed resolving evidence distinguishes subsequent causal dependence, outcome improvement and independently varied component attribution. No generic product ranking or transfer recommendation is introduced.
+
+I checked every row of [Limitations](synthesis.md#limitations). The report verification's InsightBench limit and the reconciliation's missing-part conflict are carried with the affected records and prevented comparisons. The fallback row additionally preserves the important distinction between losing the explicit semantic manifest and proving no semantic influence: enriched schema can remain an input. Missing fallback/history declarations do not overturn the retained ontology or selected Codex workflow conclusions. The profile verification declares no separate limits; its partial-axis, opaque-control and origin qualifications are nevertheless retained without claiming complete memory enumeration. The remaining rows faithfully constrain grounding, observation integrity, admission coverage, replay lineage, local projections, evaluator licenses, metadata, external controls and visible delivery. Those scoped uncertainties require no new defect finding.
+
+## Blockers
+
+none
+
+## Limits
+
+- The selective InsightBench inventory in [RT-RTE-benchmark-tool-loop](runtime.md#rt-rte-benchmark-tool-loop), [MEM-RTE-insight-guidance](memory.md#mem-rte-insight-guidance), [MEM-RTE-trace-retention](memory.md#mem-rte-trace-retention) and [MEM-OBJ-trajectory](memory.md#mem-obj-trajectory) does not declare the additional fallback and checkpoint/history parts. The handed report verification establishes SRC-1, `benchmarks/insightbench/insightbench/agents.py`, as the basis for RuntimeError fallback to baseline code generation without an explicit semantic manifest, and checkpoint restoration/consumption of analytical history and semantic metadata. The synthesis already carries this settled limit in [Limitations](synthesis.md#limitations). Withhold complete InsightBench recovery/history/context and memory-axis enumeration, all-execution ToolCallingChat comparisons, fallback semantic-tool continuity, and normalized-trajectory exhaustiveness. Also withhold absence of semantic influence in fallback, successful fallback and exercised checkpoint reuse. The inspected frame, guidance, ontology-admission and selected Codex workflow conclusions remain supported; resolving the inventory needs canonical part and consumer declarations, while exercised recovery additionally needs run evidence.
