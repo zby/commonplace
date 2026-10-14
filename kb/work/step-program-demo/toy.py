@@ -8,7 +8,7 @@
 import sys
 from pathlib import Path
 
-from stepprog import MISSING, computed, fill, release, reported, short, step
+from stepprog import MISSING, computed, fill, job_of, release, reported, short, step
 
 @reported
 def draft(topic):
@@ -50,5 +50,5 @@ if __name__ == "__main__":
         max_open = int(rest[1]) if rest[:1] == ["--max-open"] else None
         result, new, issued = step(program, TOPICS, max_open=max_open)
         for path in new:
-            print("new prompt:", short(path.stem), "->", path.read_text().splitlines()[0])
+            print("new prompt:", short(path.stem), "->", job_of(path))
         print("DONE\n" + result if result is not MISSING else f"{issued} prompt(s) issued, {len(new)} new")

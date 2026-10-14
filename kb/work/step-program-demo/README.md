@@ -7,41 +7,50 @@ the idea should be extracted from Commonplace as a standalone Python module.
 ## The idea
 
 A step program is an ordinary function that is replayed from the top on every
-step. Its jobs are memoized, and they come in two kinds that differ only in
+step. Its jobs are memoized, and there are two primitives that differ only in
 what happens on a cache miss:
 
-- a `@computed` job is run, and its result is stored;
-- a `@reported` job is reported: its body builds a prompt, the prompt is
-  handed to an outside worker (an agent), and the worker's answer is stored
-  later with `fill()`.
+- a computed job is run by the program, and its result is stored;
+- an external job waits for someone outside (an agent, a person) to produce
+  the result.
+
+The demo's only external job is an answer to a prompt, keyed by the prompt's
+text. A `@reported` job composes the two: its body is a computed job that
+builds the prompt, and its result is the external answer to that prompt, which
+the worker delivers with `fill()`. Consumers depend on the answer, the answer
+on the prompt, the prompt on its inputs.
 
 A job called with a missing argument does nothing, and the caller gets the
 missing marker. Plain code that reads a missing value ends the replay.
 
-Two kinds of state are stored. The cache holds results: each entry says what a
-job, with this code and these arguments, produced; entries are only added.
+Two kinds of state are stored. The cache holds results: computed values,
+prompts and answers; entries are only added.
 The prompt directory holds issued prompts, handed out and not yet answered.
 That is operational state, and it can be wrong (a worker died), so `release`
 takes a prompt back. Everything else, including what is ready and what comes
 next, is recomputed by every replay.
 
 The cache is [cachier](https://github.com/python-cachier/cachier), a disk
-memoization library. A computed job is a plain cachier function. A reported job
-is a cachier function whose body records the prompt and raises, so cachier
-stores nothing; `fill()` stores the answer with cachier's `precache_value`.
-What `stepprog.py` adds is the missing marker, the reported kind and the prompt
-files. A prompt is named by cachier's key for the job call and shown by its first six
-characters; `fill()` accepts any prefix that matches one issued prompt, as git
-does with commit hashes. It recomputes
-that key and refuses an answer to a prompt whose job has changed since.
+memoization library. A computed job is a plain cachier function. The external
+answer is one cachier function keyed by the hash of the prompt text; on a miss
+it raises, so cachier stores nothing, and `fill()` stores the answer with
+cachier's `precache_value`. What `stepprog.py` adds is the missing marker, the
+external answer and the prompt files.
+
+A prompt file holds exactly the prompt text and is named by its hash, shown by
+the first six characters; `fill()` accepts any prefix that matches one issued
+prompt, as git does with commit hashes. Because the answer is keyed by the
+text the worker saw, it stays correct for that text even if the program has
+since stopped asking it.
 
 The contract: computed jobs must be idempotent, because replay may run them
-again; reported jobs must be cached, because they are expensive and
-nondeterministic; and a job's cache key must cover everything it reads. cachier's
-key covers only the arguments. The demo passes a `hash_func` that also hashes
-the job's source, so changing a job's code or inputs makes it miss again.
-
-`stepprog.py` documents each case in `computed` and `reported`.
+again; answers must be cached, because they are expensive and
+nondeterministic; and a job's cache key must cover everything it reads.
+cachier's key covers only the arguments, so computed jobs (prompt builders
+included) use a `hash_func` that also hashes the job's source. Answers need no
+such help: their key is the prompt itself. An edit that leaves the prompt text
+unchanged, such as a comment in a prompt builder, rebuilds the prompt but keeps
+the answer.
 
 ## Running the toy
 
@@ -59,8 +68,9 @@ are filled, the next step runs `word_count` and issues the three reviews; the
 step after that assembles. Stepping again before answers arrive issues
 nothing new. With `--max-open 2`, two drafts go out and the third waits for a
 free slot; with `--max-open 1` the run takes seven steps, one prompt at a
-time. Editing the `review` prompt withdraws issued reviews and re-asks them;
-an answer to a withdrawn prompt is refused. State lives in `.run/` (ignored); delete it to
+time. Editing the `review` wording withdraws issued reviews and re-asks them;
+restoring the old wording brings the old answers back, and a comment-only edit
+to `draft` re-asks nothing. State lives in `.run/` (ignored); delete it to
 start over.
 
 ## Using it as a workflow mechanism
@@ -259,16 +269,44 @@ program: a plan declares jobs and their inputs, and `advance` decides readiness
 from pinned input versions. Its rule for a job whose producer is pending
 matches the "does nothing" case here. Durable-execution libraries (DBOS,
 Inngest) were checked and key steps by position, not content; memoization
-libraries key by content but have no reported kind, which is why the demo
-extends one.
+libraries key by content but have no external kind, which is why the demo
+extends one. Luigi has both primitives (`Task` and `ExternalTask`, the latter
+waiting for an output to exist); the same split of a reported job into a
+computed prompt and an external answer would fit it without failing a task
+on purpose.
+
+## Relation to Colvin's "The code IS the graph"
+
+Samuel Colvin ([ingest](../../sources/the-code-is-the-graph-2110055467007303729.ingest.md))
+argues from building and partly removing pydantic-graph that ordinary control
+flow is the orchestration graph, and that a graph API gives only two of type
+safety, parallel nodes and resumable snapshots, because parallel writers to a
+shared state object need merge rules no type checker can verify. The step
+program takes his side: the workflow is a program, jobs pass values and share
+no mutable state, so a join is the line of code after the calls. Its split
+between computed and external jobs is his effect-boundary declaration, with
+idempotency as the retry contract.
+
+His two durability routes are Temporal replay, which keys recorded results by
+position and needs the code to stay deterministic and stable, and Monty
+snapshots of a resource-free interpreter at host-call barriers. A step program
+is a third route: replay against results keyed by content. An edited job
+misses, an unedited one hits, and restoring an edit brings its old answers
+back, so the code need not stay stable. That fits his Pydantic AI Harness
+pattern, where a model rewrites the orchestration script every turn: a
+rewritten step program reuses every answer whose prompt did not change, so
+the script is disposable and its results are not.
+
+Monty snapshots when every in-flight branch waits on a host call, which is a
+suspending scheduler; a step program written with `async` and `gather` could
+do the same and lift the restarting scheduler's limit at blocking reads.
 
 ## Known gaps
 
-Results must be picklable and reported-job arguments JSON (the prompt file
-records them for `fill()`); job modules are named `__main__` in cachier's cache
+Results must be picklable and prompts strings; job modules are named `__main__` in cachier's cache
 when run as a script; undeclared reads (files, globals) make the cache unsound
 and are not detected; `str.join` over a missing value raises `TypeError`, not
-`Suspend`; no failure or retry limits for reported jobs; no locking; an issued prompt
+`Suspend`; no failure or retry limits for answers; no locking; an issued prompt
 whose worker died stays issued until someone runs `release`.
 
 ## Closes when

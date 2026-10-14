@@ -1,25 +1,32 @@
-"""Step programs: memoized replay with two kinds of job, on top of cachier.
+"""Step programs: memoized replay over two primitives, on top of cachier.
 
 A step program is an ordinary function. Every `step()` replays it from the top.
 cachier (https://github.com/python-cachier/cachier) is the disk cache.
 
-- `@computed` job: on a cache miss, run it and store the result.
-  Must be idempotent: replay may call it again.
-- `@reported` job: its body only builds a prompt. On a cache miss, the replay
-  records the prompt for an outside worker (an agent); the caller gets
-  MISSING. `fill()` stores the worker's answer in cachier under the same
-  arguments.
+Two primitives, which differ only in what happens on a cache miss:
+
+- computed: the program runs the job and stores the result. Must be
+  idempotent, because replay may run it again.
+- external: the program waits for someone outside (an agent, a person) to
+  produce the result. Here the only external job is an answer to a prompt,
+  keyed by the prompt's text.
+
+`@reported` composes them: a computed job builds the prompt, and an external
+answer to that prompt is the job's result. Consumers depend on the answer, the
+answer on the prompt, the prompt on its inputs. An answer is pinned to the
+exact text the worker saw: change an input or the prompt wording and the
+prompt changes, so the old answer no longer applies.
 
 A job called with a MISSING argument does nothing; the caller gets MISSING.
 Plain code that reads a MISSING value raises Suspend, which ends the replay.
 
-Two kinds of state are stored. The cachier cache holds results; they are only
-added, never edited. The prompt directory holds issued prompts: prompts
-handed out and not yet answered. That is operational state; it can be wrong
-(a worker died), so `release()` takes a prompt back.
+Two kinds of state are stored. The cachier cache holds results (computed
+values, prompts, answers); they are only added, never edited. The prompt
+directory holds issued prompts: handed out and not yet answered. That is
+operational state; it can be wrong (a worker died), so `release()` takes a
+prompt back.
 """
 
-import functools
 import hashlib
 import inspect
 import json
@@ -36,8 +43,8 @@ class Suspend(Exception):
     """Plain code needed a value that is not available yet."""
 
 
-class Reported(Exception):
-    """Raised inside cachier on a reported miss, so cachier stores nothing."""
+class Unanswered(Exception):
+    """Raised inside cachier when an answer does not exist, so cachier stores nothing."""
 
 
 class _Missing:
@@ -70,7 +77,7 @@ def _has_missing(value):
 
 def _hash_with_source(func):
     """cachier's key covers the arguments only; add the job's source code,
-    so editing a job makes it miss again."""
+    so editing a computed job makes it miss again."""
     source = inspect.getsource(func)
 
     def hash_func(args, kwds):
@@ -80,79 +87,62 @@ def _hash_with_source(func):
     return hash_func
 
 
-def _cached(func, body, hash_func):
-    if body is not func:
-        body = functools.wraps(func)(body)  # cachier names the cache and reads the signature from func
-    return cachier(cache_dir=CACHE, hash_func=hash_func)(body)
-
-
-def _cachier_key(func, hash_func, args, kwargs):
-    """The key cachier computes for this call: it passes every argument as a
-    keyword, with defaults filled in, to `hash_func`."""
-    bound = inspect.signature(func).bind(*args, **kwargs)
-    bound.apply_defaults()
-    return hash_func((), dict(bound.arguments))
-
-
 def computed(func):
-    """A job the program can do itself: cheap, or at least runnable here.
+    """A job the program does itself.
 
     The body is the work. It must be idempotent, because a later replay may
     run it again (for example after its code changed).
     """
-    cached = _cached(func, func, _hash_with_source(func))
+    cached = cachier(cache_dir=CACHE, hash_func=_hash_with_source(func))(func)
 
     def call(*args, **kwargs):
-        # Case 1, an argument is missing: an upstream reported job has no
-        # answer yet. Do nothing; no record, no run. The caller gets MISSING.
+        # An argument is missing: an upstream answer does not exist yet.
+        # Do nothing; no record, no run. The caller gets MISSING.
         if _has_missing((args, kwargs)):
             return MISSING
-        # Case 2, cache hit: cachier returns the stored result without running the body.
-        # Case 3, cache miss: cachier runs the body, stores the result and
-        # returns it. The replay continues with a real value.
+        # Cache hit: cachier returns the stored result without running the body.
+        # Cache miss: cachier runs the body, stores the result and returns it.
         return cached(*args, **kwargs)
 
     return call
 
 
-_reported_jobs = {}
-_misses = {}  # key -> (job, prompt, arguments), in replay order; filled by one step
+def prompt_key(prompt):
+    """An answer's key: the hash of the exact prompt text."""
+    return hashlib.sha256(prompt.encode()).hexdigest()
+
+
+@cachier(cache_dir=CACHE, hash_func=lambda args, kwds: prompt_key(kwds["prompt"]))
+def _answer(prompt):
+    # The external primitive. The program cannot produce an answer, so a miss
+    # stores nothing; `fill()` stores the answer under the prompt's key.
+    raise Unanswered
+
+
+_misses = {}  # prompt key -> (job, prompt), in replay order; collected by one step
 
 
 def reported(func):
-    """A job the program cannot do itself: an agent or a person does it.
+    """A job someone outside does: a computed prompt plus an external answer.
 
-    The body does not do the work; it only builds the prompt that describes
-    it. The answer arrives later through `fill()`. It must be cached, because
-    it is expensive and asking twice could give a different answer.
+    The body builds the prompt; it is a computed job like any other. The job's
+    result is the answer to that prompt, which arrives through `fill()`.
     """
-    hash_func = _hash_with_source(func)
-
-    def on_miss(*args, **kwargs):
-        # Case 3, cache miss: report it. The prompt is named by cachier's own
-        # key for this call. The arguments are saved beside it because
-        # `fill()` can store a value in cachier only through them
-        # (`precache_value`). Then raise, so cachier stores nothing.
-        key = _cachier_key(func, hash_func, args, kwargs)
-        call_args = inspect.signature(func).bind(*args, **kwargs).arguments
-        _misses.setdefault(key, (func.__qualname__, func(*args, **kwargs), call_args))
-        raise Reported
-
-    cached = _cached(func, on_miss, hash_func)
-    _reported_jobs[func.__qualname__] = (func, cached, hash_func)
+    prompt_job = computed(func)
 
     def call(*args, **kwargs):
-        # Case 1, an argument is missing: the prompt cannot be built yet.
-        # Do nothing; no prompt, no record. The caller gets MISSING.
-        if _has_missing((args, kwargs)):
+        # The prompt is computed; it is MISSING only if an argument is.
+        prompt = prompt_job(*args, **kwargs)
+        if prompt is MISSING:
             return MISSING
         try:
-            # Case 2, cache hit: an answer was filled earlier. cachier returns
-            # it; the agent is not asked again.
-            return cached(*args, **kwargs)
-        except Reported:
-            # Case 3 continued: the caller gets MISSING and the replay goes on,
-            # so other independent prompts are reported in the same step.
+            # Answer hit: someone answered this exact prompt. Return the answer.
+            return _answer(prompt)
+        except Unanswered:
+            # Answer miss: record the prompt as wanted. The caller gets MISSING
+            # and the replay goes on, so other independent prompts are
+            # collected in the same step.
+            _misses.setdefault(prompt_key(prompt), (func.__qualname__, prompt))
             return MISSING
 
     return call
@@ -172,16 +162,21 @@ def _issued():
 
 
 def _withdraw(key):
-    for suffix in (".md", ".json"):
+    for suffix in (".md", ".job"):
         (PROMPTS / f"{key}{suffix}").unlink(missing_ok=True)
 
 
 def _match(prefix):
-    matches = sorted(PROMPTS.glob(f"{prefix}*.json"))
+    matches = sorted(PROMPTS.glob(f"{prefix}*.md"))
     if len(matches) != 1:
         raise ValueError(f"{len(matches)} issued prompts match {prefix!r}; "
                          "give more characters, or step again if it was withdrawn")
     return matches[0].stem
+
+
+def job_of(path):
+    """The name of the job that asked an issued prompt, for display."""
+    return path.with_suffix(".job").read_text()
 
 
 def step(program, *args, max_open=None, **kwargs):
@@ -189,12 +184,12 @@ def step(program, *args, max_open=None, **kwargs):
 
     Returns (result or MISSING, newly issued prompt paths, number issued in total).
 
-    A miss that is already issued is not issued again: its worker is still on
-    it. An issued prompt that is no longer a miss (its job changed) is
-    withdrawn. New prompts are issued in replay order until `max_open` prompts
-    are issued in total; None means no limit. The caller can pass the same
-    `max_open` on every step: 10 for ten parallel workers, 1 to answer the
-    prompts itself one at a time.
+    A wanted prompt that is already issued is not issued again: its worker is
+    still on it. An issued prompt that is no longer wanted (an input or the
+    wording changed) is withdrawn. New prompts are issued in replay order until
+    `max_open` prompts are issued in total; None means no limit. The caller can
+    pass the same `max_open` on every step: 10 for ten parallel workers, 1 to
+    answer the prompts itself one at a time.
     """
     PROMPTS.mkdir(parents=True, exist_ok=True)
     _misses.clear()
@@ -207,13 +202,13 @@ def step(program, *args, max_open=None, **kwargs):
         _withdraw(key)
     issued = _issued()
     new = []
-    for key, (job, prompt, call_args) in _misses.items():
+    for key, (job, prompt) in _misses.items():
         if key in issued:
             continue
         if max_open is not None and len(issued) + len(new) >= max_open:
             break
-        (PROMPTS / f"{key}.json").write_text(json.dumps({"job": job, "args": call_args}))
-        (PROMPTS / f"{key}.md").write_text(f"<!-- job: {job} -->\n{prompt}\n")
+        (PROMPTS / f"{key}.job").write_text(job)
+        (PROMPTS / f"{key}.md").write_text(prompt)  # exactly the text the answer is keyed by
         new.append(PROMPTS / f"{key}.md")
     return result, new, len(issued) + len(new)
 
@@ -225,17 +220,14 @@ def release(key):
 
 
 def fill(key, answer):
-    """Store an outside worker's answer for an open prompt.
+    """Store an outside worker's answer to an issued prompt.
 
-    `key` is the prompt's name, which is cachier's key for the job call, or
-    any prefix of it that matches one issued prompt, as with git hashes. If
-    the job's code changed since the prompt was written, the key no longer
-    matches and the answer is refused: it answers a prompt nobody asks now.
+    `key` is the prompt's key, or any prefix of it that matches one issued
+    prompt, as with git hashes. The answer is stored under the prompt's text,
+    so it answers exactly what the worker was shown, even if the program has
+    since stopped asking it.
     """
     key = _match(key)
-    meta = json.loads((PROMPTS / f"{key}.json").read_text())
-    func, cached, hash_func = _reported_jobs[meta["job"]]
-    if _cachier_key(func, hash_func, (), meta["args"]) != key:
-        raise ValueError(f"{meta['job']} changed since prompt {key} was written; step again")
-    cached.precache_value(**meta["args"], value_to_cache=answer)
+    prompt = (PROMPTS / f"{key}.md").read_text()
+    _answer.precache_value(prompt=prompt, value_to_cache=answer)
     _withdraw(key)  # answered: no longer issued
