@@ -1,5 +1,7 @@
 # Exact unintegrated publication audit inventory
 
+**Audit complete at the 2026-10-14T16:25:51Z inventory cutoff: 51 candidates, 38 positive with recorded limits, 13 holds. No integration performed.** See [final dispositions and closure](#final-dispositions-and-closure). JSON scheduling fields and earlier launch paragraphs are retained snapshots; the completed assignment ledger and final closure supersede them. **Pending set is empty; no active audit owner or handle remains.** Do not relaunch from an old `running` or `pending` field.
+
 Snapshot: 2026-10-14T15:13:54.453995+00:00; origin main `ff452f2f7cf4b88c40b33747df7b987fb5be2f1f`.
 
 Audit-only commission: [prompt](./audit-unintegrated-prompt.md), [procedure](./audit-a-rerun.md). Worker diagnostic: `COMMONPLACE_WORKER_OK`; depth and nesting limit unknown. No integration, recovery, acquisition, accepted-output edits, cleanup, commits or pushes authorized. Coordinator owns this file; workers own only their assigned reports.
@@ -7586,4 +7588,155 @@ This append-only ledger supersedes the JSON entries' scheduling fields when newe
 - AIDE2: completed `a7c89039-89c5-48a5-8b28-051288d8ed00`; full report reviewed; **integrate with recorded limits**, capture/13 publication bytes matched, corrected per-member validation passed; no blocker; remove from pending.
 - `AAS-2026-10-10-dynamic-cheatsheet-004374829a63-01`: owner `audit-dynamic-cheatsheet-004374829a63`; sole exact-run report; active `2a50b741-4b62-4f78-8d1d-3da2d3fe79c1`; alternative compared with integrated incumbent, not new coverage.
 
-<!-- rolling-ledger -->
+- Claude dynamic workflows: completed `8549b5e2-4afc-4d35-a517-9d92286b38e6`; full report reviewed; **integrate with recorded limits**, capture/bytes/validation passed, no blocker; remove from pending.
+- `AAS-2026-10-09-dynamic-cheatsheet-2529cdc2795b-01`: owner `audit-dynamic-cheatsheet-2529cdc2795b`; sole exact-run report; active `cabbaaa7-c363-41b8-884e-8adc3d9d80f1`; alternative, not new coverage.
+
+- Agent Skills: completed `0bf80fc0-61b3-4219-b0a7-13ac7ac92973`; full report reviewed; **hold**, prior hold/reservation preserved; current claim overstates conflict preference as prohibition. Unblock: reserved-owner coordination, authorized correction/reverification/republication, explicit disposition of old grounding/worker-validation concerns, new byte audit. Validation passed; remove from pending.
+- `AAS-2026-10-10-dynamic-cheatsheet-41e85fccfcaf-01`: owner `audit-dynamic-cheatsheet-41e85fccfcaf`; sole exact-run report; active `14189f40-b396-4c7b-85a1-069ccd4dde50`; alternative, not new coverage.
+
+- Incremental Self-Improvement: completed `0a858b4f-9723-444e-9308-3ec6da85f880`; full report reviewed; **integrate with recorded limits**, capture/bytes/validation passed, no blocker; remove from pending.
+- `AAS-2026-10-10-dynamic-cheatsheet-43cd203254e8-01`: owner `audit-dynamic-cheatsheet-43cd203254e8`; sole exact-run report; active `a34fed0c-ab39-4ca7-a553-cc83a98e4d85`; alternative, not new coverage.
+
+- Dynamic Cheatsheet `004374829a63`: completed `2a50b741-4b62-4f78-8d1d-3da2d3fe79c1`; full report reviewed; **integrate with recorded limits**, 12-byte identities/validation passed; missing worker traces retained; no replacement reason, no new coverage; remove from pending.
+- `AAS-2026-10-13-gbrain-ab46e8c48dba-01`: owner `audit-gbrain-opus`; sole exact-run report; active `c576fbe9-8315-416a-ab32-010db17386d4`; alternative, not new coverage.
+
+- Dynamic Cheatsheet `2529cdc2795b`: completed `cabbaaa7-c363-41b8-884e-8adc3d9d80f1`; full report reviewed; **hold** — synthesis carry-forward denied, curator-path condition absent, available historical outputs mislabeled unavailable. Unblock: authorized correction/reverification/republication/new byte audit and replacement justification. Validation passed; incumbent kept; remove from pending.
+- `AAS-2026-10-11-graphiti-4896fccada9e-01`: owner `audit-graphiti-4896fccada9e`; sole exact-run report; active `49661b97-8d97-42a6-8214-df4dfdc953be`; supplemental incumbent comparison, preserve existing blockers.
+
+- Dynamic Cheatsheet `41e85fccfcaf`: completed `14189f40-b396-4c7b-85a1-069ccd4dde50`; full report reviewed; **integrate with recorded limits**, validation passed; missing traces, no replacement reason, not new coverage; remove from pending.
+- `AAS-2026-10-10-graphiti-5833fd846841-01`: owner `audit-graphiti-5833fd846841`; sole exact-run report; active `a4a27e7f-f60f-48b2-975c-6c67c35abc39`; supplemental incumbent scope, prior blockers preserved.
+
+- Dynamic Cheatsheet `43cd203254e8`: completed `a34fed0c-ab39-4ca7-a553-cc83a98e4d85`; full report reviewed; **integrate with recorded limits**, validation passed; missing traces, no replacement reason, not new coverage; remove from pending.
+- `AAS-2026-10-11-graphiti-72c99440b180-01`: owner `audit-graphiti-72c99440b180`; sole exact-run report; active `c609c936-83f3-49b6-8242-d25474c23da3`; supplemental incumbent scope, prior blockers preserved.
+
+- GBrain Opus `ab46e8c48dba`: completed `c576fbe9-8315-416a-ab32-010db17386d4`; full report reviewed; **hold** — public journal-bypass account lacks unmanaged-brain condition. Unblock: authorized public correction/reverification/republication/new-byte audit and replacement rationale; validation passed, incumbent kept; remove from pending.
+- `AAS-2026-10-10-graphiti-85a21a06d35c-01`: owner `audit-graphiti-85a21a06d35c`; sole exact-run report; active `b7ad4b16-4cc5-42f4-a7f3-184225d8e846`; supplemental incumbent scope, prior blockers preserved.
+
+- Graphiti `4896fccada9e`: completed `49661b97-8d97-42a6-8214-df4dfdc953be`; full report reviewed; **hold**, existing bulk provenance, named-saga reset, tied-time backlog, server-instruction blockers preserved. Unblock: authorized correction/disposition/reverification/republication/new audit, replacement rationale. Validation passed; no replacement/new coverage; remove from pending.
+- `AAS-2026-10-11-letta-code-88afa3263646-01`: owner `audit-letta-code-88afa3263646`; sole exact-run report; active `09f70709-4de1-4343-a7a8-de0e0f23a1ed`; supplemental incumbent scope.
+
+- Graphiti `5833fd846841`: completed `a4a27e7f-f60f-48b2-975c-6c67c35abc39`; full report reviewed; **hold**, G1–G8 preserved (named-saga reset, bulk raw retention/provenance plus narrower defects). Unblock: authorized correction/disposition/reverification/republication/new audit and replacement rationale. Validation passed; no new coverage; remove from pending.
+- `AAS-2026-10-11-letta-code-9d060e7dab7e-01`: owner `audit-letta-code-9d060e7dab7e`; sole exact-run report; active `d230d391-5b90-4318-8e80-7decd10af797`; supplemental incumbent scope.
+
+- Graphiti `72c99440b180`: completed `c609c936-83f3-49b6-8242-d25474c23da3`; full report reviewed; **hold**, named-saga reset, bulk reverse index, server instruction channel, ordinary count defects preserved. Unblock: authorized disposition/correction/reverification/republication/new audit and replacement rationale. Validation passed; incumbent integration does not clear prior audit objections; remove from pending.
+- `AAS-2026-10-13-letta-code-7b0fd36d07f0-01`: owner `audit-letta-code-opus`; sole exact-run report; active `0a41b568-c16b-491f-a5c8-3522f42d082a`; alternative, not new coverage.
+
+- Graphiti `85a21a06d35c`: completed `b7ad4b16-4cc5-42f4-a7f3-184225d8e846`; full report reviewed; **hold**, bulk raw suppression/provenance, saga ties, character/byte defects preserved. Unblock: authorized public correction/reverification/republication/new audit/prior-hold disposition plus replacement rationale. Validation passed; no new coverage; remove from pending.
+- `AAS-2026-10-11-letta-code-f54d2479889e-01`: owner `audit-letta-code-f54d2479889e`; sole exact-run report; active `db659aab-c270-4ef8-88ec-8e032664134e`; supplemental incumbent scope.
+
+- Letta Code `88afa3263646`: completed `09f70709-4de1-4343-a7a8-de0e0f23a1ed`; full report reviewed; **integrate with recorded limits**, validation passed; historical-collection account absent, prior operational findings attributed; no replacement/new coverage; remove from pending.
+- `AAS-2026-10-11-napkin-1b60c5d21780-01`: owner `audit-napkin-1b60c5d21780`; sole exact-run report; active `bc640d3e-3f30-4f08-b146-0e54ed7083ef`; supplemental incumbent scope, prior blockers preserved.
+
+- Letta Code Opus `7b0fd36d07f0`: completed `0a41b568-c16b-491f-a5c8-3522f42d082a`; full report reviewed; **integrate with recorded limits**, byte/set/member checks passed; replacement reason found (local update horizon and confinement qualifications), but loses incumbent runtime coverage and needs separate operator decision. Missing historical account/traces retained. Report validation output to be independently rechecked by coordinator; remove from pending.
+- `AAS-2026-10-11-napkin-28752ba411ea-01`: owner `audit-napkin-28752ba411ea`; sole exact-run report; active `1705d1c2-3ed9-444b-af3e-546e8493077b`; supplemental incumbent scope, prior blockers preserved.
+
+- Letta Code `9d060e7dab7e`: completed `d230d391-5b90-4318-8e80-7decd10af797`; full report reviewed; **integrate with recorded limits**, validation passed; prior out-of-scope write/recovery retained, no blanket compliance; no replacement/new coverage; remove from pending.
+- `AAS-2026-10-10-napkin-b831630d0978-01`: owner `audit-napkin-b831630d0978`; sole exact-run report; active `a097b659-9fc6-47ae-9134-50e75468896f`; supplemental incumbent scope, prior blockers preserved.
+
+- Napkin `1b60c5d21780`: completed `bc640d3e-3f30-4f08-b146-0e54ed7083ef`; full report reviewed; **hold**, distill filename semantics, saved-result authority, documented automatic-delivery findings preserved. Unblock: authorized correction/disposition/reverification/republication/new audit plus replacement rationale. Validation passed; no new coverage; remove from pending.
+
+## Closing inventory extension (2026-10-14T16:17:29Z)
+
+Two own publications appeared after the initial enumeration; include both, not inherited copies. Both ready preparations explicitly pin tokens and method `ff452f2f7cf4b88c40b33747df7b987fb5be2f1f`, matching worktree HEAD. Source HEADs match and statuses are clean. Each completed `000033-publish` attempt/effect has exactly 13 actual matching files: ARTIFACT.yaml and boundary, epistemic, memory-profile, memory, overview, profile-verification, reconciliation, report-verification, runtime, synthesis-verification, synthesis, workflow Markdown members. All SHA-256 bytes were independently checked. Map digests below are SHA-256 of `json.dumps(effect.new, sort_keys=True).encode()`, binding the exact per-file map at the effect locator. No exact run-ID occurs in main publication history for either, no incumbent and no existing run-specific audit found. Method ancestry is not integration. Reconciled totals now **88 own publications, 38 integrated exclusions, 50 candidates**, still 16 alternatives.
+
+### AAS-2026-10-14-sig-releases-50379145ac31-01
+
+```json
+{"run-id":"AAS-2026-10-14-sig-releases-50379145ac31-01","worktree":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31","token":"50379145ac31","preparation":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31.preparation.json","preparation-status":"ready","command-prefix":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31/.venv/bin","method-revision":"ff452f2f7cf4b88c40b33747df7b987fb5be2f1f","source":{"identity":"https://github.com/sig-ai-app/sig-releases","revision":"314bbea9d1cef911cea0f201eec66a57c2e59020","path":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31/related-systems/sig-ai-app--sig-releases"},"publication":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31/kb/agentic-system-analyses/retained/sig-releases","publication-effect":"/home/zby/llm/commonplace/.commonplace/worktrees/sig-releases-50379145ac31/kb/agentic-system-analyses/state/AAS-2026-10-14-sig-releases-50379145ac31-01/effects/publish.json","published-map-sha256":"e716652ae2dc32080493d40e1173a6e623fa80c41ddac05860b79111eceedc67","assembled-manifest-sha256":"3283a1ebedb8cc34979524db8b4dd3f1626238bef403ad2a845de0ab4b03f934","working-declaration-sha256":"093c6e4a6c7cab7e4e1a9db63f6d2d45eec6a24bf51f7b287dd1db929b388322","integrated":false,"main-incumbent":null,"historical-accounts":["kb/agent-memory-systems/lightweight/sig.md"],"existing-audit-records":[],"traces":[{"path":"/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sig.output","bytes":126588411,"exact-run-id-found":true}],"trace-limits":[],"owner":"audit-sig","active-handle":null,"audit-status":"assigned — launch pending","report":"kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-sig-releases-50379145ac31-01.md"}
+```
+
+### AAS-2026-10-14-kgai-54bcae52e039-01
+
+```json
+{"run-id":"AAS-2026-10-14-kgai-54bcae52e039-01","worktree":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039","token":"54bcae52e039","preparation":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039.preparation.json","preparation-status":"ready","command-prefix":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039/.venv/bin","method-revision":"ff452f2f7cf4b88c40b33747df7b987fb5be2f1f","source":{"identity":"https://github.com/kgaidev/kgai","revision":"0ac7f1fae4528805c1d5f504c1bfd6cc34ac953b","path":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039/related-systems/kgaidev--kgai"},"publication":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039/kb/agentic-system-analyses/retained/kgai","publication-effect":"/home/zby/llm/commonplace/.commonplace/worktrees/kgai-54bcae52e039/kb/agentic-system-analyses/state/AAS-2026-10-14-kgai-54bcae52e039-01/effects/publish.json","published-map-sha256":"559cfcff862e3c3a2cb3c5988398c1d6798c745dced2e99ab5b5995a0d39d060","assembled-manifest-sha256":"d47537a7fc0e1cc06b44d2688f5c89d06e8c373734681fa029e324838633bc14","working-declaration-sha256":"093c6e4a6c7cab7e4e1a9db63f6d2d45eec6a24bf51f7b287dd1db929b388322","integrated":false,"main-incumbent":null,"historical-accounts":["kb/agent-memory-systems/reviews/kgai.md"],"existing-audit-records":[],"traces":[],"trace-limits":["External outputs/kgai.output is zero bytes; no successful launch or worker-compliance evidence inferred."],"owner":"audit-kgai","active-handle":null,"audit-status":"assigned — launch pending","report":"kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-kgai-54bcae52e039-01.md"}
+```
+
+- Sig `AAS-2026-10-14-sig-releases-50379145ac31-01`: owner `audit-sig`; active `caa6a72e-7c9c-432c-a2bc-5c0b6b992dbc`.
+
+- Letta Code `f54d2479889e`: completed `db659aab-c270-4ef8-88ec-8e032664134e`; full report reviewed; **hold** — unrestricted-child public summary lacks Task-only scope versus Workflow permission propagation. Unblock: authorized qualification/disposition/reverification/republication/new-byte audit. Validation passed; no replacement/new coverage; remove from pending.
+- kgai `AAS-2026-10-14-kgai-54bcae52e039-01`: owner `audit-kgai`; assigned sole exact-run report; active `baaaeb2c-1b23-4f3f-ae49-2a2fa6343503`.
+
+- Napkin `28752ba411ea`: completed `1705d1c2-3ed9-444b-af3e-546e8493077b`; full report reviewed; **hold**, C3 documented automatic supply/selection is not erased by missing implementation. Unblock: authorized claimed-strength correction/disposition or explicit supported scope exclusion, dependent verification/republication/new-byte audit. Validation passed; no replacement/new coverage; remove from pending.
+- Letta Code Opus report validation independently rechecked by coordinator from its prepared worktree: `VALIDATION SUCCESS`; exact absolute report scope, Files analysed 1, Text files 1, 0 failures, 0 warnings. Exit 0.
+
+- Napkin `b831630d0978`: completed `a097b659-9fc6-47ae-9134-50e75468896f`; full report reviewed; **hold**, original distill path, saved-result consumer, documented automatic-delivery blockers retained plus narrower N4–N6 findings. Unblock: authorized correction/disposition/dependent reverification/republication/new-byte audit. Validation passed; no replacement/new coverage; remove from pending.
+
+- Sig: completed `caa6a72e-7c9c-432c-a2bc-5c0b6b992dbc`; full report reviewed; **integrate with recorded limits**, byte/set/member/report validation passed, no blocker; remove from pending.
+
+- kgai: completed `baaaeb2c-1b23-4f3f-ae49-2a2fa6343503`; full report reviewed; **integrate with recorded limits**, byte/set/member/report validation passed, no blocker. Zero-byte log confirmed, no performed-worker certification; remove from pending.
+
+## Final inventory cutoff extension (2026-10-14T16:25:51Z)
+
+Thalo published during audit dispatch and is included. This fixes the audit cutoff; later publications from concurrently running operator batches need a later inventory rather than an unbounded moving finish line. At cutoff: **89 own publications, 38 integrated exclusions, 51 candidates, 16 alternatives**. Main is now `8414ddbd35da24645c020789bd824cb9749fa677`; its retained publication subtree has no changes since the original main snapshot, so earlier integration exclusions and candidate absence checks still hold. Concurrent operator commits have recorded some audit artifacts; this coordinator made no commits and does not own those operations.
+
+### AAS-2026-10-14-thalo-86fcc3efe983-01
+
+Ready preparation explicitly pins token `86fcc3efe983`; worktree HEAD and method equal `ff452f2f7cf4b88c40b33747df7b987fb5be2f1f`. Source HEAD matches and status is clean. `000037-publish` and publish effect are completed; all 13 exact files match the effect map with no extras. Map digest uses the same sorted-JSON convention above. Working declaration differs from assembled manifest as expected. No exact-run main publication history, incumbent or existing run-specific audit was found. Assigned `audit-thalo`, active handle `af933c0c-b928-40bc-a335-c68c6da86a2f`.
+
+```json
+{"run-id":"AAS-2026-10-14-thalo-86fcc3efe983-01","worktree":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983","token":"86fcc3efe983","preparation":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983.preparation.json","preparation-status":"ready","command-prefix":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983/.venv/bin","method-revision":"ff452f2f7cf4b88c40b33747df7b987fb5be2f1f","source":{"identity":"https://github.com/rejot-dev/thalo","revision":"cdb9aae983e6bc0b75eff1606bc99b088c3aebff","path":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983/related-systems/rejot-dev--thalo"},"publication":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983/kb/agentic-system-analyses/retained/thalo","publication-effect":"/home/zby/llm/commonplace/.commonplace/worktrees/thalo-86fcc3efe983/kb/agentic-system-analyses/state/AAS-2026-10-14-thalo-86fcc3efe983-01/effects/publish.json","published-map-sha256":"b6e338ab70ec1c2c5bd4a6c35aa783a7a7bf2bec0e4c51532be77aace0a0993c","assembled-manifest-sha256":"ba119d67e693ef41bda3efefe6d93cb1f2019709bfd142aff834d89ac79846d9","working-declaration-sha256":"093c6e4a6c7cab7e4e1a9db63f6d2d45eec6a24bf51f7b287dd1db929b388322","integrated":false,"main-incumbent":null,"historical-accounts":["kb/agent-memory-systems/reviews/thalo.md"],"existing-audit-records":[],"traces":[{"path":"/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/thalo.output","bytes":309958245,"exact-run-id-found":true}],"trace-limits":[],"owner":"audit-thalo","active-handle":null,"audit-status":"assigned — launch pending","report":"kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-thalo-86fcc3efe983-01.md"}
+```
+
+- Thalo: completed `af933c0c-b928-40bc-a335-c68c6da86a2f`; full report reviewed; **integrate with recorded limits**, byte/set/member/report validation passed, no blocker; remove from pending.
+
+## Final dispositions and closure
+
+All **50 fresh auditor reports** were returned and read completely by the coordinator. ContextPilot's existing exact-run report was read and reused against matching publication bytes. Tool status confirms all 50 audit handles completed; none failed, remains active or is pending. No disposition relies on a missing report. Every candidate has a disposition, not an invented pass or implicit audit stop.
+
+| Category | Count | Meaning |
+|---|---:|---|
+| Own publications through the final cutoff | 89 | Each destination's exact file set and all per-file SHA-256 values verified. |
+| Integrated exclusions | 38 | Exact run and all publication bytes established at a main commit; not method ancestry or another run for the source. |
+| Unintegrated candidates | 51 | Integration remains a separate decision. |
+| Fresh audits | 50 | Sol/medium, project worker, origin cwd, no delegation; maximum four active; rolling start/wait. |
+| Existing audit reused without duplicate dispatch | 1 | ContextPilot's hold. |
+| Positive fresh dispositions | 38 | All `integrate with recorded limits`; no unrestricted `integrate` disposition. |
+| Held candidates | 13 | Four newly established holds, eight prior correction requirements reaffirmed, one existing hold reused. |
+| Older/alternative same-source candidates | 16 | Six positive bounded alternatives; ten held. None adds corpus coverage. |
+| Same-ID existing audit records | 12 | Three earlier bounded positives, two explicit holds (including a historical-draft hold), seven correction-required accounts. Eleven needed current-publication/incumbent supplements. |
+| Uncertain own publications at cutoff | 0 | Five initial parser limits resolved; empty suffix directories are not publications. |
+| Missing reports / active auditors | 0 / 0 | All ownership reconciled. |
+
+The only positive alternative with an identified replacement reason is [Letta Code Opus](./audits/unintegrated/AAS-2026-10-13-letta-code-7b0fd36d07f0-01.md): clearer local prompt-update horizon and conditional confinement. It loses some incumbent runtime coverage and has a different source revision. That is a tradeoff for a separately authorized operator decision, not authority to replace or combine frozen outputs. Other positive alternatives found no replacement reason. Incumbent comparisons do not certify every incumbent claim; integration of an incumbent does not clear retained objections in earlier audit records.
+
+### Held runs and concrete unblock conditions
+
+Each linked report fixes the exact run, source boundary, public defect and evidence. General recovery prerequisite: separate authority for correction/disposition, dependent verification and republication, then an audit of the new exact bytes. No correction is authorized here; audit prose cannot patch a public qualification. Older alternatives additionally need a replacement justification.
+
+| Exact held run/report | Blocker | Additional unblock requirement |
+|---|---|---|
+| [ContextPilot 30d0d09e6cdc](./audits/bash-current-contextpilot.md) | Public training route omits dataset/configuration selector and generic fallback. | Preserve selector hold; qualify selected route or establish selection from authorized frozen evidence. |
+| [Agent Skills 2423c2f20f83](./audits/unintegrated/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01.md) | Conflict preference is attributed as unconditional publication prohibition. | Reserved-owner coordination and explicit disposition of old grounding/worker-validation concerns; reservation remains. |
+| [OpenRSI c72dec9967a3](./audits/unintegrated/AAS-2026-10-14-openrsi-c72dec9967a3-01.md) | Default read-only shared mount lets candidate code read nominally private answers; public evaluation qualification absent. | State possible access, not actual leakage; qualify this shipped route, not all deployments. |
+| [Dynamic Cheatsheet 2529cdc2795b](./audits/unintegrated/AAS-2026-10-09-dynamic-cheatsheet-2529cdc2795b-01.md) | Synthesis carry-forward denied; curator-path condition absent; available historical outputs called unavailable. | Correct all three distinctions and preserve historical provenance/causal limits. |
+| [GBrain Opus ab46e8c48dba](./audits/unintegrated/AAS-2026-10-13-gbrain-ab46e8c48dba-01.md) | Journal bypass account drops unmanaged-brain conditions. | Publicly distinguish managed refusal/coordinated import from unmanaged writes and credential-level SQL bypass. |
+| [Graphiti 4896fccada9e](./audits/unintegrated/AAS-2026-10-11-graphiti-4896fccada9e-01.md) | Bulk provenance, named-saga reset, tied-time backlog and separate server instruction channel. | Explicit disposition of preserved C2–C5; do not treat general fidelity caveats as route-specific repair. |
+| [Graphiti 5833fd846841](./audits/unintegrated/AAS-2026-10-10-graphiti-5833fd846841-01.md) | Named-saga reset, successful bulk raw retention, bulk navigation/cleanup and narrower G4–G8 defects. | Explicit disposition of G1–G8 under their static/fallback-path conditions. |
+| [Graphiti 72c99440b180](./audits/unintegrated/AAS-2026-10-11-graphiti-72c99440b180-01.md) | Named-saga reset, bulk reverse index, server instruction channel and ordinary-ingestion count. | Preserve prior objections and resolve incorrect count plus source-channel qualifications. |
+| [Graphiti 85a21a06d35c](./audits/unintegrated/AAS-2026-10-10-graphiti-85a21a06d35c-01.md) | Bulk raw retention/provenance, saga ties and character-versus-byte budget error. | Resolve G1–G4 and explicitly dispose of the prior hold. |
+| [Letta Code f54d2479889e](./audits/unintegrated/AAS-2026-10-11-letta-code-f54d2479889e-01.md) | Unrestricted-child public summary omits Task-only scope versus Workflow permission propagation. | Public Task-only qualification or supported disposition; do not infer deployed SDK enforcement. |
+| [Napkin 1b60c5d21780](./audits/unintegrated/AAS-2026-10-11-napkin-1b60c5d21780-01.md) | Distill filename condition, saved-result authority and documented automatic-delivery scope. | Resolve C1–C3 across dependent records/profile/synthesis; retain narrower recommendations. |
+| [Napkin 28752ba411ea](./audits/unintegrated/AAS-2026-10-11-napkin-28752ba411ea-01.md) | Missing implementation erases documented supply/selection at claimed strength. | Resolve C3 at claimed strength or explicitly support a functional scope exclusion; retain other qualifications. |
+| [Napkin b831630d0978](./audits/unintegrated/AAS-2026-10-10-napkin-b831630d0978-01.md) | Distill path, saved-result consumer and documented automatic delivery. | Resolve N1–N3 and explicitly dispose of narrower N4–N6 findings. |
+
+### Operational and evidence limits
+
+Publication acceptance is not worker compliance, operated target success or causal benefit. Fresh audits sampled performed actions only where consequential; prior exhaustive trace findings were attributed rather than blindly repeated. Missing older traces remain missing. kgai's external log is zero bytes, so its positive content audit certifies neither launch success nor performed worker obligations. Several closed handouts are absent; available nested same-worker call/result evidence establishes selected historical actions, not replayability or complete compliance.
+
+Confirmed historical out-of-scope placeholder/identity writes and their removals are retained in [LLM-context-base](./audits/unintegrated/AAS-2026-10-14-llm-context-base-f63a7c0fb5f2-01.md) and [Letta Code 9d060e7dab7e](./audits/unintegrated/AAS-2026-10-11-letta-code-9d060e7dab7e-01.md). Recovery does not authorize the original writes. Recovered masked shell/validation/provider failures remain in the exact-run reports. Auditor navigation or wrong-mode validation errors were retained and corrected; none is silently counted as a successful invocation. All final required deterministic checks passed. No new worker launch failure or partial-delivery audit occurred.
+
+The coordinator's closing SHA-256 sweep recomputed **all 89 own publication file sets/maps** with zero mismatches. Original main integration evidence remains valid because the retained subtree is unchanged through checked main `8414ddbd35da24645c020789bd824cb9749fa677`. Assembled manifests are separately bound from working type-only declarations; the earlier Dynamic Cheatsheet layout is treated explicitly, not rejected for a modern working path's absence.
+
+All worktrees and logs remain intact. This coordinator and its auditors acquired no sources, patched no accepted outputs, advanced/resumed/retried no analyses, integrated nothing, changed no method/source state, moved/deleted/copied no huge logs, rebuilt no comparisons, synthesized no landscape, and made no commits or pushes. Concurrent operator commits recorded some reports and inventory while this audit was running; those operations are not claimed as coordinator actions. Completion counts remain unchanged. Publications after the fixed cutoff require a later inventory/audit commission, not a fabricated disposition here.
+
+### Coordinator validation
+
+Workers recorded prepared-worktree publication/report validation in each report. The coordinator additionally validated the owned report collection and reused ContextPilot report from origin, and independently rechecked the Letta Code Opus report from its prepared worktree. Final collection/inventory validation output is recorded after execution below.
+
+- `commonplace-validate kb/work/agentic-system-reruns/audits/unintegrated`: **VALIDATION SUCCESS**; Files analysed 50; Text files 50; Diagnostics 0 failures across 0 subjects, 0 warnings across 0 subjects.
+- `commonplace-validate kb/work/agentic-system-reruns/audits/bash-current-contextpilot.md`: **VALIDATION SUCCESS**; Files analysed 1; Text files 1; Diagnostics 0 failures across 0 subjects, 0 warnings across 0 subjects.
+- `commonplace-validate kb/work/agentic-system-reruns/unintegrated-audit-inventory.md`: **VALIDATION SUCCESS**; Files analysed 1; Text files 1; Diagnostics 0 failures across 0 subjects, 0 warnings across 0 subjects.
+- Final independent reconciliation: 89 unique own-publication runs, 38 exclusions, 51 candidate reports; 38 positive/13 hold; no missing reports or changed publication maps.
+- `git diff --check`: exit 0, no output. Reviewed status/diff; only audit artifacts were written by this commission. Unrelated operator state is untouched. No staging or commit.
+
+<!-- final-validation -->
