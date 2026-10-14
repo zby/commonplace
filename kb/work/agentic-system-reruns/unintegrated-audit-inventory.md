@@ -7583,4 +7583,7 @@ This append-only ledger supersedes the JSON entries' scheduling fields when newe
 - Prove2Me: completed `b6fb883c-4bcb-4bde-9653-171faf034a90`; full report reviewed; **integrate with recorded limits**, validation passed, no blocker; remove from pending.
 - `AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01`: owner `audit-agent-skills`; sole exact-run report; active `0bf80fc0-61b3-4219-b0a7-13ac7ac92973`. Existing historical-draft hold/reservation remains; publication evidence now contradicts the checklist's old no-publication status but does not clear that hold.
 
+- AIDE2: completed `a7c89039-89c5-48a5-8b28-051288d8ed00`; full report reviewed; **integrate with recorded limits**, capture/13 publication bytes matched, corrected per-member validation passed; no blocker; remove from pending.
+- `AAS-2026-10-10-dynamic-cheatsheet-004374829a63-01`: owner `audit-dynamic-cheatsheet-004374829a63`; sole exact-run report; active `2a50b741-4b62-4f78-8d1d-3da2d3fe79c1`; alternative compared with integrated incumbent, not new coverage.
+
 <!-- rolling-ledger -->
