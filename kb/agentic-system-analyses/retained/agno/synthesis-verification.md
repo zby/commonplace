@@ -1,0 +1,56 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Synthesis verification of Agno's frozen SDK/AgentOS account: supported implementation conclusions and faithful carriage of three local inventory limits."
+run-id: AAS-2026-10-13-agno-60e6e09dd4a6-01
+reviewed-boundary: "00497422d4a386d93ab3b45c1a11faf42fcc932f"
+---
+
+# Agno synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded implementation account. I read all supplied members and contracts completely, checked every substantive synthesis statement against the cited records and their retained passages, applied the reconciliation's two duplicate supersessions, and assessed carriage of the report and profile verification limits. The synthesis answers file is empty; no synthesis refusal was supplied. No source reads, new evidence, target execution or correction text were added. This judgment concerns meaning and qualifications, not repetition of deterministic form or quotation checks.
+
+### Request, effects and delivery
+
+The opening states the subsystem boundary, revision, cutoff and implementation/design evidence basis without implying whole-platform coverage or observed operation. This agrees with [boundary and evidence](boundary.md#boundary-and-evidence) and the [Source register](boundary.md#source-register). The distinction between wired capacity and successful work remains visible throughout the public account.
+
+The host/model/tool progression and separate session/run writes follow [RT-RTE-agent-run](runtime.md#rt-rte-agent-run). The account correctly distinguishes natural-language instruction force from executable dispatch, host credentials from sandboxing, and cleanup from reversal of external effects. Its finance conclusion remains acquisition and generation, not an independently verified current price or correct brief: [EPI-RTE-finance-import](epistemic.md#epi-rte-finance-import) and [RT-CLM-market-brief](runtime.md#rt-clm-market-brief).
+
+The admission paragraph preserves the conditions that change guarantees: marked local Functions versus provider-native/direct paths, configuration-dependent HTTP admission versus SDK invocation, and committed queue acceptance versus nondurable in-process acceptance. Neither program-supplied confirmation nor leases/retries become universal human control or exactly-once effects. The corresponding qualifications in [RT-RTE-tool-confirmation](runtime.md#rt-rte-tool-confirmation) and [RT-RTE-queue-dispatch](runtime.md#rt-rte-queue-dispatch) remain operative in the public reading.
+
+The handoff and delivery account follows [RT-RTE-team-delegation](runtime.md#rt-rte-team-delegation), [RT-RTE-workflow-step](runtime.md#rt-rte-workflow-step) and [WF-RTE-sequential-delivery](workflow.md#wf-rte-sequential-delivery). It does not combine unrelated capabilities into an invented workflow. Selected messages are not represented as complete evidence transmission or full state isolation. Default outer skipping, missing configured review/database, event-before-storage behavior, cancellation's completed-event sentinel and the nested synchronous pause exception all constrain the claimed delivery. Readers are not led to infer that lifecycle completion means every stage succeeded, financial correctness was checked, or durable receipt occurred.
+
+### Retention, checks and later change
+
+The retention account preserves distinct stores, retained parts, admission doors and consumers. Identity-based supply is not upgraded to semantic relevance selection; query/entity/recency selection is not made into one algorithm or a shared token budget. Rendered content is distinguished from stored provenance and reasons. [MEM-RTE-learning-context](memory.md#mem-rte-learning-context), [MEM-RTE-decision-memory](memory.md#mem-rte-decision-memory) and [MEM-BAP-retained-context](memory.md#mem-bap-retained-context) support the delivery claims without establishing actual reliance.
+
+Automatic snapshot timing and no-op entity/decision processing remain separate from foreground capture and direct editing. PROPOSE remains approval guidance, not a writer-level approval-artifact gate: [MEM-RTE-learned-knowledge](memory.md#mem-rte-learned-knowledge), [MEM-RTE-memory-editing](memory.md#mem-rte-memory-editing). The incomplete manual-capture comparison is explicitly carried in [Limitations](synthesis.md#limitations); the automatic timing finding is not promoted to a claim covering every capture door.
+
+Compaction, archive, offload and compression retain their distinct payload and consumer consequences. Intact session history does not imply lossless archived display or delivered context; offload IDs require explicit capped retrieval, and refusal limits recoverability. Compression's hedging-removal instruction and unresolved later provider consumption prevent a fidelity guarantee. These distinctions are supported by [RT-RTE-context-window](runtime.md#rt-rte-context-window), [MEM-OBJ-compaction-archive](memory.md#mem-obj-compaction-archive), [MEM-RTE-result-offload](memory.md#mem-rte-result-offload) and [MEM-RTE-tool-compression](memory.md#mem-rte-tool-compression).
+
+Withdrawal does not become factual criticism or universal erasure. The synthesis uses the canonical [MEM-RTE-profile-curation](memory.md#mem-rte-profile-curation) identity while preserving the normalization qualification and conditional profile part in [EPI-OBJ-profile-memories](epistemic.md#epi-obj-profile-memories). It also uses canonical [MEM-OBJ-learned-knowledge](memory.md#mem-obj-learned-knowledge), without dropping epistemic save/recall qualifications. The reconciliation declares no unresolved cross-report conflict; differences in inspection scope are not silently resolved into stronger findings.
+
+The output/parser description preserves different inputs, ordered substitution, parsed-versus-text selection and uncertain replay, as recorded in [EPI-RTE-output-generation](epistemic.md#epi-rte-output-generation) and [EPI-RTE-parser-rewriting](epistemic.md#epi-rte-parser-rewriting). Evaluator findings retain their distinct licenses: criteria-relative opinion and optional callback; assumed-correct reference comparison; recorded-call expectations rather than service success; lexical PII membership; and error status without automatic content revocation. [EPI-RTE-judge-check](epistemic.md#epi-rte-judge-check), [EPI-RTE-accuracy-check](epistemic.md#epi-rte-accuracy-check), [EPI-RTE-reliability-check](epistemic.md#epi-rte-reliability-check), [EPI-RTE-pii-input](epistemic.md#epi-rte-pii-input) and [EPI-RTE-output-hooks](epistemic.md#epi-rte-output-hooks) support that bounded account.
+
+Scored export is correctly treated as a consequential evaluator consumer, not an inert report or a trained model. The only_passed alternate remains explicit. Configuration's published-row/current-pointer invariant stays scoped to inspected PostgreSQL methods and does not freeze live objects, callable implementations or provider endpoints. [EPI-RTE-sft-selection](epistemic.md#epi-rte-sft-selection) and [RT-RTE-config-admission](runtime.md#rt-rte-config-admission) support these positive capacities without closing an improvement loop.
+
+### Independent properties and retained limitations
+
+The assessment leads with the strongest supported trace-fed update contribution: derived durable context has later consumers, unlike raw log retention alone. It then withholds improved capacity, actual dependence and causal benefit rather than erasing that positive. [MEM-RTE-context-extraction](memory.md#mem-rte-context-extraction), [MEM-RTE-session-summary](memory.md#mem-rte-session-summary) and [RT-RTE-context-window](runtime.md#rt-rte-context-window) support the chain.
+
+The theory-builder paragraph assigns each condition an independently unestablished finding, not an evidenced absence. It does not infer criticism from scores, consumption from delivery, or iteration from persistence. Reflection and autonomous theory-building remain independent unresolved properties; task/tool choice is not promoted to either. The self-improvement paragraph distinguishes retained guidance and live change capacity from objective-linked, exercised evidence-responsive self-change. These qualifications agree with [epistemic bounded conclusion](epistemic.md#bounded-conclusion), [EPI-RTE-learning-extraction](epistemic.md#epi-rte-learning-extraction), [EPI-RTE-learning-recall](epistemic.md#epi-rte-learning-recall) and [EPI-RTE-sft-selection](epistemic.md#epi-rte-sft-selection). No unsupported system-wide negative follows from missing runs or unassessed stores/hooks.
+
+The final scenario assessment follows the mechanisms rather than ranking products or recommending adoption. Its proposed evidence and control changes name the conclusions they could alter without claiming those changes already exist or independently confer factual warrant.
+
+All three settled local inventory limits retain their citations and prevented conclusions in [Limitations](synthesis.md#limitations): manual capture timing, downstream dataset consumers, and per-mechanism configuration/offload curation. They remain local limits, not grounds to withdraw the supported route findings or partial comparison union. The additional boundary, fidelity, alternate-route and evidence uncertainties are faithfully scoped and create no new defect. No synthesis record fault or material support failure was found.
+
+## Blockers
+
+none
+
+## Limits
+
+- [MEM-RTE-profile-extraction](memory.md#mem-rte-profile-extraction), [MEM-RTE-memories-extraction](memory.md#mem-rte-memories-extraction) and [MEM-RTE-learning-context](memory.md#mem-rte-learning-context) leave manual capture incompletely inventoried. The handed report verification identifies capture of run_output.messages and a shipped post-hook composition caller as a separate producer door. Its consequence is carried in [Limitations](synthesis.md#limitations). Automatic concurrent-snapshot and store-transformation findings hold; readers should withhold a complete automatic-versus-manual timing, completion-guarantee or trace-coverage comparison.
+- [EPI-RTE-sft-selection](epistemic.md#epi-rte-sft-selection) leaves downstream dataset consumers incompletely inventoried. The handed report verification identifies a shipped message-array loader and count assertion that stop before training; [Limitations](synthesis.md#limitations) carries this consequence. Export admission remains supported, but readers should withhold complete downstream-consumer coverage or training-loop closure. Export and loading establish neither weight updates nor improvement.
+- [RT-RTE-config-admission](runtime.md#rt-rte-config-admission) and [MEM-RTE-result-offload](memory.md#mem-rte-result-offload) establish local configuration revision and TTL/session-deletion forgetting that the partial profile curation inventory does not separately classify. [Limitations](synthesis.md#limitations) carries the profile verification's consequence. Existing positive values remain valid; readers should withhold a complete per-mechanism curation inventory or comparisons of which retained surfaces undergo revision and forgetting.
