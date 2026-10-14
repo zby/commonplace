@@ -110,7 +110,34 @@ publication paths or log bytes. Commit the complete audit artifacts explicitly
 before serial standard integrations. Stop on any integration failure; retain
 branches/worktrees and report the exact error rather than copying files.
 
-After successful integration, update only the affected checklist rows, acceptance
-counts and inventory dispositions, preserving all pre-existing content. Preserve
-all worktrees and traces. Comparisons remain stale and any prior landscape
-synthesis remains historical; neither refresh is commissioned.
+## Verified integration outcome
+
+All 18 positive publications were integrated serially using each prepared
+worktree's `commonplace-analysis integrate <run> --model openai/gpt-6.1-sol`.
+Every command returned exit zero and its merge commit matched origin `HEAD`.
+The merge series runs from `c25d5bcd780866ba6d74cc3b96d979a3f5a76f2c` (Agno) to
+`e9b8ec3a0726c99f366b8c72e5db88e1bf57fbf9` (getsentry/skills). Per-run commits,
+overviews and audit links are retained in [the checklist](./systems.md).
+ContextPilot was skipped and remains only in its preserved worktree.
+
+After integration, independently checked all 18 exact run IDs in origin
+overviews, all 234 publication files byte-for-byte against the audited own
+worktrees, and ancestry of all 18 `analysis/<run-id>` branches in `main`.
+No publication file was copied manually or edited. The temporary exclusion of
+`outputs/` was removed immediately after the last merge; original local Git
+visibility is restored. Logs were neither moved nor rewritten by this commission.
+
+All 19 audit reports and this commission passed coordinator deterministic
+validation with zero failures or warnings. An initial attempt to pass multiple
+report targets to one validator call was rejected as CLI usage; the corrected
+one-target-per-call loop passed all reports. Each auditor separately validated
+its prepared-worktree publication. Post-merge checks validate the 18 origin
+publication directories as well. No pytest is required for these Markdown/data
+changes; no code or test fixture was edited.
+
+Acceptance totals are **38 complete, 148 pending, 20 held** (206 targets).
+The affected checklist rows and inventory dispositions are updated, preserving
+historical inclusion references and all unrelated content. All worktrees,
+analysis branches, raw outputs and traces remain preserved. Comparisons remain
+stale and any prior landscape synthesis remains historical; neither refresh is
+commissioned. No cleanup, retry/reanalysis, recovery or push was performed.

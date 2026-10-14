@@ -1,14 +1,28 @@
-# Unaudited worktree publications
+# Worktree publication audit inventory
 
-## Inventory boundary
+## Current disposition
+
+The 19-row queue below was audited on 2026-10-14. **Eighteen publications are
+integrated into `main` with recorded limits; ContextPilot is held and not
+integrated. No unaudited publication remains from this original queue.** See
+[current-batch audits and integration](./audit-current-batch.md) for the method,
+operational limits and results, and [systems](./systems.md) for per-run merge
+commits. ContextPilot's [audit](./audits/bash-current-contextpilot.md) requires
+the training-route selector/fallback qualification in the publication, followed
+by reverification, or frozen evidence that establishes selection.
+
+This does not inventory publications produced by still-running batches after the
+snapshot. The older experimental publications remain outside this commission.
+
+## Original inventory boundary
 
 Snapshot on 2026-10-14, after the operator requested a list of analyses published
-in worktrees but not audited. The current Bash batch has **19 publications
-awaiting audit**. Decapod published after the earlier progress check.
+in worktrees but not audited. At that snapshot the Bash batch had **19
+publications awaiting audit**. Decapod published after the earlier progress check.
 
-Each current entry has a completed publication job and an overview in its own
-prepared worktree. Its run ID is absent from integrated origin overviews, and no
-report under this workshop's `audits/` names that run ID. This is a filesystem
+At that snapshot, each entry had a completed publication job and an overview in
+its own prepared worktree. Its run ID was absent from integrated origin overviews,
+and no report under this workshop's `audits/` named that run ID. This is a filesystem
 and audit-record inventory, not an independent publication audit, proof that
 no audit exists elsewhere, or integration clearance. It does not change system
 completion counts or reserve targets to an auditor.
@@ -18,7 +32,7 @@ publication slugs differ from checklist names in three cases: Agno AgentOS uses
 `agno`, LLM Wiki (cobusgreyling) uses `llm-wiki`, and getsentry/skills uses `skills`.
 Do not confuse those publication paths with another system of the same name.
 
-## Current batch: 19 awaiting audit
+## Original queue: 19 now audited
 
 | System | Batch | Run | Preserved overview |
 |---|---|---|---|
@@ -42,9 +56,10 @@ Do not confuse those publication paths with another system of the same name.
 | ExpeL | 04 | `AAS-2026-10-14-expel-efd908f05069-01` | [overview](../../../.commonplace/worktrees/expel-efd908f05069/kb/agentic-system-analyses/retained/expel/overview.md) |
 | getsentry/skills | 04 | `AAS-2026-10-14-skills-2719567f917c-01` | [overview](../../../.commonplace/worktrees/getsentry-skills-2719567f917c/kb/agentic-system-analyses/retained/skills/overview.md) |
 
-The [audit procedure](./audit-a-rerun.md) governs any separately commissioned
-review. No audits or integration were launched to produce this list. Refresh it
-after still-running analyses finish or new audit reports appear.
+No audits or integration were launched to produce the original list. The later
+operator commission followed the [audit procedure](./audit-a-rerun.md); its
+results are above. Refresh the pending inventory separately after still-running
+analyses finish; do not count these 18 integrated runs again.
 
 ## Other preserved publications: not the current audit queue
 

@@ -97,11 +97,12 @@ batches remain active increases the total number of simultaneous analyses.
 Fresh Pi sessions use the committed subagent error-handling fix; existing
 sessions and frozen worktrees retain their versions. No retry settings changed.
 
-[Unaudited worktree publications](./unaudited-publications.md) lists the first
-batch's new publications awaiting independent audit, separately from older
-experimental publications. It is an audit inventory, not a takeover list or
-integration clearance. No real analysis was launched while preparing scripts
-05–08.
+[Worktree publication audit inventory](./unaudited-publications.md) retains the
+first batch's 19-publication snapshot separately from older experimental runs.
+A subsequent operator commission [audited all 19](./audit-current-batch.md) and
+integrated 18 with recorded limits; ContextPilot is held. This is not a live
+inventory of later publications or a takeover list. No real analysis was launched
+while preparing scripts 05–08.
 
 ## After the processes finish
 
@@ -118,20 +119,22 @@ interrupted process is not proof that all its workers have stopped; check before
 scheduling the same system again. Preserve logs, worktrees and partial evidence.
 No automatic retry or recovery of held runs is included in these scripts.
 
-Publication is separate from audited, integrated corpus completion. The current
-batch does not launch audits or integration, update comparisons, synthesize a
-landscape, clean up worktrees or push. Subsequent acceptance uses the existing
-[audit procedure](./audit-a-rerun.md) and standard integration command, not copied
-publication files. Update completed checklist rows after those checks, not when
-Pi exits.
+Publication is separate from audited, integrated corpus completion. The Bash
+scripts do not launch audits or integration, update comparisons, synthesize a
+landscape, clean up worktrees or push. Separately commissioned acceptance uses
+the existing [audit procedure](./audit-a-rerun.md) and standard integration
+command, not copied publication files. Update completed checklist rows after
+those checks, not when Pi exits.
 
 ## Retained limits and history
 
-Audited/integrated progress is **20 complete, 167 pending, 19 held** after
-[Claude Context Guard integration](./claude-context-guard-integration.md).
-[Rolling execution 09](./rolling-09.md) retains its earlier checkpoint of
-19 complete, 167 pending and 20 held. These are acceptance counts, not a live
-Bash-batch status. The checklist retains remaining holds and unblock conditions.
+Audited/integrated progress is **38 complete, 148 pending, 20 held** after
+[current-batch audits and integration](./audit-current-batch.md). Eighteen
+publications cleared; ContextPilot adds one hold for an omitted training-route
+selector qualification. [Claude Context Guard integration](./claude-context-guard-integration.md)
+and [rolling execution 09](./rolling-09.md) retain earlier checkpoints. These
+are acceptance counts, not a live Bash-batch status. The checklist retains
+remaining holds and unblock conditions.
 CLI trial failures are not included in these counts. Claude Context Guard's
 coordinator failure and missing worker traces remain preserved as evidence;
 operator-authorized integration does not certify unavailable worker compliance.
