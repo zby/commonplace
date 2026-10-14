@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [step-program-demo](./step-program-demo/README.md) — meetup demo of memoized replay with computed and reported jobs; decide whether to extract it as a standalone module
+
 - [agentic-system-reruns](./agentic-system-reruns/README.md) — rerun the full previously analysed population through the current workflow; 206 targets inventoried, with a fast report-only stats script
 
 - [analysis-lenses](./analysis-lenses/README.md) — decide how limited analysis resources should cover large repositories; compare depth, stopping and coverage rules against the current runtime-plus-lenses arrangement with minimal change
