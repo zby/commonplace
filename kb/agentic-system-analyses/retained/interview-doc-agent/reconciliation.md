@@ -1,0 +1,52 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of Interview Doc Agent's runtime, memory, epistemic and workflow records at the frozen prompt-and-document revision."
+run-id: AAS-2026-10-14-interview-doc-agent-c7597c33f23d-01
+reviewed-boundary: "6ebfe9aba989d7949dadea0fc4af6fb64892c6aa"
+---
+
+# Interview Doc Agent reconciliation
+
+## Reconciliation
+
+### Shared boundary and route connections
+
+All four reports use the same frozen revision and the doctrine/design evidence registered in [boundary](boundary.md#source-register). The runtime's `claimed` doctrine and `uninspected` operation fields and the epistemic ledger's `doctrine only` architectural status describe different dimensions, not conflicting assessments. No member supplies observed execution or causal evidence. The reconciliation uses the supplied members alone; no additional source reads were needed.
+
+[RT-RTE-initialize-workspace](runtime.md#rt-rte-initialize-workspace) supplies the starter layout, not populated personal memory. The memory annotation identifies the later profile/index consumers. [RT-RTE-consolidate-experience](runtime.md#rt-rte-consolidate-experience) connects raw records to retained dossiers and updated indexes. The memory annotation supplies the raw-to-derived-to-later-consumer chain; the epistemic ledger separates transformation, retention and requested refresh within that same route. These are fields and functions of the supplied route, not duplicate route declarations.
+
+[RT-RTE-generate-document](runtime.md#rt-rte-generate-document) is the later consumer of dossiers, profile, index and templates, with optional JD and raw-detail inputs. The memory annotation describes selection and context limits; the epistemic ledger separates selection, transformation and output retention. [Workflow](workflow.md#workflow-account) traces these routes through separate user requests to local document placement and optional user adjustment. Its annotations add handoff and delivery findings without declaring new records. It does not establish autonomous end-to-end scheduling or verified factual delivery.
+
+### Duplicate identities and retained overlaps
+
+Amendment: [EPI-OBJ-materials](epistemic.md#epi-obj-materials) is superseded by [MEM-OBJ-materials](memory.md#mem-obj-materials). Both identify the user-populated raw experience records under `materials/`, including project reports and chats, with local-file and adapted-cloud storage. Their retained passages from SRC-1, `materials/README.md`, establish the same input object. Epistemic findings about unknown source warrant remain findings on this referent; the amendment does not authenticate the inputs or change either report's values.
+
+Amendment: [EPI-OBJ-job-description](epistemic.md#epi-obj-job-description) is superseded by [MEM-OBJ-jd](memory.md#mem-obj-jd). Both identify per-role user-supplied documents under `jd/` consumed for capability matching and emphasis, not factual checking. Their matching retained passage from SRC-1, `jd/README.md`, establishes identity. The affected inventory and generation-ledger findings retain the distinction between relevance guidance and factual warrant.
+
+Amendment: [EPI-OBJ-style-templates](epistemic.md#epi-obj-style-templates) is superseded by [MEM-OBJ-templates](memory.md#mem-obj-templates). Both identify the resume and interview-script example templates, including user replacement and optional LaTeX guidance. Their source anchors name the same two shipped template files. The epistemic example warnings and the memory style-consumption findings concern the same guidance objects. This does not merge them with [RT-OBJ-skill](runtime.md#rt-obj-skill), whose referent is the procedural skill file or copied instruction body.
+
+Amendment: [EPI-OBJ-output-documents](epistemic.md#epi-obj-output-documents) is superseded by [MEM-OBJ-output](memory.md#mem-obj-output). Both identify intended generated resumes, scripts and tailored variants in local files, cloud documents or conversation text. Both retain the same output-use passage from SRC-1, `docs/04-使用指南.md`. The affected output inventory and retention findings remain about intended human-facing products, not observed results or future agent instructions.
+
+[EPI-OBJ-experience-library](epistemic.md#epi-obj-experience-library) is not identical to [MEM-OBJ-experience-dossiers](memory.md#mem-obj-experience-dossiers): the former also includes personal-profile factual/persona fields, while the latter explicitly excludes the profile. Nor is it identical to [MEM-OBJ-personal-profile](memory.md#mem-obj-personal-profile), which includes biography, persona and locator entries but not all project dossiers. The epistemic record remains a valid factual-content container alongside the memory records. No split supersession is warranted merely by their different grouping; their findings do not become wrong when these scopes are distinguished.
+
+[EPI-OBJ-wiki-index](epistemic.md#epi-obj-wiki-index) is not identical to [MEM-OBJ-wiki-index](memory.md#mem-obj-wiki-index). The epistemic record also includes personal-profile dossier locators. It overlaps the locator portion of [MEM-OBJ-personal-profile](memory.md#mem-obj-personal-profile), while the memory wiki record names `wiki/index.md` alone. The declarations describe that overlap explicitly: the profile is not merely a pointer list, and its locators do not become factual endorsement. Neither record is superseded by a differently scoped record. The broader index container can remain without reallocating the profile's referent.
+
+[MEM-CLM-retrieval-reliability](memory.md#mem-clm-retrieval-reliability) and [EPI-CLM-retrieval-reliability](epistemic.md#epi-clm-retrieval-reliability) share the same attributed 100% retrieval assertion and verbatim passage from SRC-1, `docs/01-理念-karpathy-wiki.md`. Their whole referents are not identical: the epistemic claim additionally includes more precise global inference and retains its separate source passage. The broader claim can remain alongside the narrower retrieval claim; no whole-record supersession would preserve both scopes unchanged. Both reports distinguish possible whole-library delivery from prescribed selective reading and lack observed or comparative support.
+
+[EPI-CLM-source-consistency](epistemic.md#epi-clm-source-consistency) is not identical to [RT-CLM-numeric-fidelity](runtime.md#rt-clm-numeric-fidelity). The former isolates the across-output agreement claim from common source selection; the latter identifies preservation, genuine-number use and missing-number policy, while also discussing stronger alignment language. This overlap does not turn the distinct claimed operations into one referent. The retrieval claim is also distinct from both: it concerns selection/delivery rather than numerical preservation or cross-output agreement.
+
+[MEM-ABS-memory-maintenance](memory.md#mem-abs-memory-maintenance) and [EPI-ABS-content-check](epistemic.md#epi-abs-content-check) are not identical. Their searched questions overlap on evaluation and withdrawal, but the memory absence covers broader maintenance, cleanup, transactions, compaction and method revision; the epistemic absence concerns truth checks, acceptance and post-acceptance integration. Preserve both scoped negatives rather than substituting one for the other.
+
+[RT-BAP-skill-instructions](runtime.md#rt-bap-skill-instructions), [MEM-BAP-dossier-context](memory.md#mem-bap-dossier-context) and [MEM-BAP-template-guidance](memory.md#mem-bap-template-guidance) share the host model as consumer but are not identical. Their channels and force differ: procedural skill guidance, asserted factual/persona context, and selected style guidance respectively. Generation consumes all three; common consumption does not establish a common authority-path identity.
+
+### Integration dispositions and independent convergence
+
+The memory report's [integration issues](memory.md#integration-issues) request no correction of runtime facts. Root resolution, profile naming and missing-template behavior remain setup uncertainties connected to [RT-RTE-initialize-workspace](runtime.md#rt-rte-initialize-workspace) and [RT-RTE-generate-document](runtime.md#rt-rte-generate-document). These uncertainties prevent guaranteed read-back, not a description of the instructed maintenance and generation routes. Unknown initial profile values and claim-level lineage do not negate the specified subsequent index updates.
+
+The reports converge on direct model admission in the local workflow, distinct from physical tool writes or per-content human approval. [RT-RTE-feishu-writeback](runtime.md#rt-rte-feishu-writeback) and the memory/workflow annotations preserve the writable and denied-write branches separately. Human copying can admit returned text but is not specified evidence-consuming factual acceptance. The epistemic ledger makes the same distinction. Host retrieval, permissions, transformations and synchronization remain uninspected, so the local whole-file description does not establish cloud delivery fidelity.
+
+[RT-CLM-numeric-fidelity](runtime.md#rt-clm-numeric-fidelity) retains a real placeholder/reminder policy. The workflow's refusal to fabricate missing numbers describes that requested behavior, not an independent checking route, and therefore does not conflict with [EPI-ABS-content-check](epistemic.md#epi-abs-content-check). Likewise, user-triggered refresh in consolidation does not conflict with [MEM-ABS-memory-maintenance](memory.md#mem-abs-memory-maintenance): the latter's negative concerns additional shipped protocols, not all updating.
+
+[RT-CLM-local-privacy](runtime.md#rt-clm-local-privacy) remains an attributed local-deployment claim with external provider handling uninspected. The epistemic comparison and boundary exclusions retain that limit. None treats cloud copying or local storage as proof that model inputs remain local.
+
+No cross-report finding requires the opposite of another supplied finding, and no dependent report relies on a corrected-away record value in these inputs. No correction answers or declined objections were supplied. There is consequently no unresolved cross-report conflict to mark. Shared uncertainty about successful writes, factual preservation, actual context delivery and benefit remains a limitation, not disagreement. The amendments connect duplicate identities only; they neither adjudicate support nor strengthen or narrow the analysts' findings.
