@@ -3,7 +3,7 @@ name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agent runtime, orchestration system, agent operating layer, agent memory/knowledge/context-engineering system, or narrower model-dependent operational mechanism from inspectable sources."
 type: types/instruction.md
 user-invocable: true
-argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents), optional Git commit"
+argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents), optional Git commit and worker profile"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 model: opus
 ---
@@ -168,6 +168,20 @@ publication writes it to the retained manifest. If this harness can launch
 workers neither with the profile's model and effort nor with verified inherited
 settings, as the driver defines them, stop before starting the run and tell
 the operator.
+
+To select workers when invoking this skill, name the profile in the request:
+
+```text
+/analyse-agentic-system https://github.com/suzgunmirac/dynamic-cheatsheet
+Use worker profile pi-ultramarine for all analysis and verification jobs.
+```
+
+The coordinator translates that request into `--worker-profile pi-ultramarine`
+on `commonplace-analysis start`. Changing only the coordinator's interactive
+model does not change the worker profile. Without an explicit selection, Pi
+still defaults to `pi-sol`. The profile applies to every model job, including
+verification, and is fixed for the run; select another profile in a fresh run,
+not by changing an existing run or its prepared method.
 
 Do not read `kb/agentic-systems/reviews/` or `kb/agentic-system-analyses/retained/` at any point; the jobs analyse from sources only.
 

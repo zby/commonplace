@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from commonplace.lib.agentic_analysis import analyses
 from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.note_parser import parse_document
@@ -7,6 +9,22 @@ def document(values: str):
     parsed, error = parse_document(f"---\n{values}\n---\n# Member\n")
     assert error is None and parsed is not None
     return parsed
+
+
+def test_shipped_ultramarine_profile_does_not_change_pi_default() -> None:
+    profiles = (Path(__file__).resolve().parents[3] / "kb" / analyses.WORKER_PROFILES).read_bytes()
+    assert analyses.resolve_worker_profile(profiles, "pi-ultramarine", harness="pi") == {
+        "profile": "pi-ultramarine",
+        "harness": "pi",
+        "launch-model": "paperinstruments/ultramarine-1-flash",
+        "effort": "off",
+    }
+    assert analyses.resolve_worker_profile(profiles, None, harness="pi") == {
+        "profile": "pi-sol",
+        "harness": "pi",
+        "launch-model": "gpt-6.1-sol",
+        "effort": "medium",
+    }
 
 
 def test_identity_findings_belong_to_the_member_that_disagrees() -> None:
