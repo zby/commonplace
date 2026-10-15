@@ -1,0 +1,44 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of LLM Project Wiki's runtime, memory, epistemic and workflow records at commit 1fdfba9129a46afd18aa68a83f12d6716ab694c6."
+run-id: AAS-2026-10-14-llm-project-wiki-c6c664168f3e-01
+reviewed-boundary: "1fdfba9129a46afd18aa68a83f12d6716ab694c6"
+---
+
+# LLM Project Wiki reconciliation
+
+## Reconciliation
+
+### Shared boundary and route connections
+
+All four reports concern the same frozen prompt package and preserve the [boundary's distinction](boundary.md#boundary-and-evidence) between shipped instructions and an unavailable generated installation. Runtime routes carry claimed design and uninspected operation; the epistemic ledger calls their architecture doctrine only. These are different status fields, not competing findings. Neither establishes deployed enforcement, successful cross-session use or benefit. The [Source register](boundary.md#source-register) supplies no execution or causal evidence.
+
+[RT-RTE-vault-bootstrap](runtime.md#rt-rte-vault-bootstrap) connects project inspection, scaffolding, copying, page construction, consumer wiring and final self-audit. The [workflow account](workflow.md#workflow-account) selects that same route and annotates its phase handoffs and delivery. It declares no competing route. Memory annotations describe the resulting stores and later reads; the epistemic ledger separates transformation, checking, admission and retention within the route. Function-level ledger entries are not new declarations or duplicate route identities.
+
+[RT-RTE-source-sync](runtime.md#rt-rte-source-sync), [RT-RTE-diff-ingest](runtime.md#rt-rte-diff-ingest) and [RT-RTE-wiki-lookup](runtime.md#rt-rte-wiki-lookup) form the prescribed copy → model revision → later consumption chain. Open gaps add a task-derived input to revision. [RT-RTE-gap-audit](runtime.md#rt-rte-gap-audit) is broader repair across invocations, not an automatic bootstrap exception handler. Workflow and memory both retain this separation. The reports do not infer complete inputs from a sync completion message or complete refresh from a single Git comparison.
+
+### Duplicate identities and valid containers
+
+Amendment: [EPI-OBJ-sources](epistemic.md#epi-obj-sources) is superseded by [MEM-OBJ-sources](memory.md#mem-obj-sources). Both name the generated Sources/Memory, Sources/Rules and Sources/Docs snapshots, copied from project files and subsequently interpreted by bootstrap/ingest/audit models. Both retain mixed prose and symbolic excerpts, unknown original authorship/warrant and the selected interpretive warning header. Their evidence is SRC-1's Phase 1–2 design, with copying passages retained in these records and [RT-RTE-source-sync](runtime.md#rt-rte-source-sync). This connects the epistemic inventory and acquisition ledger to the memory store; it changes no finding or status. The producer route and current invocation prompt are different referents, not duplicate objects.
+
+Amendment: [EPI-OBJ-log](epistemic.md#epi-obj-log) is superseded by [MEM-OBJ-log](memory.md#mem-obj-log). Both identify generated log.md: instructed append-only Markdown carrying gap diagnoses and maintenance summaries for later model repair. Their retained G0/Phase 4 passages support the same read-back and deferral role. The epistemic record's distinction between reports and verified acceptance history remains intact alongside memory's distinction between summaries and raw traces. A consuming command or repair route is not the log itself.
+
+Exact identity is ruled out between [EPI-OBJ-wiki-pages](epistemic.md#epi-obj-wiki-pages) and [MEM-OBJ-wiki](memory.md#mem-obj-wiki): the former includes page content and frontmatter, while the latter explicitly excludes access metadata and the health dashboard. [MEM-OBJ-page-metadata](memory.md#mem-obj-page-metadata) separately declares the frontmatter/path/date/status part. The epistemic record distinguishes those parts and their consumers without assigning metadata checks a semantic truth license. It can remain a valid container alongside the declared content and metadata parts; no split supersession is warranted by an incompatible combined finding. The epistemic inventory and ledger's page references include both functions, whereas memory's content-only conclusions concern the narrower part.
+
+Exact identity is likewise ruled out between [EPI-OBJ-index](epistemic.md#epi-obj-index) and either [MEM-OBJ-index](memory.md#mem-obj-index) or [MEM-OBJ-health](memory.md#mem-obj-health) alone. The epistemic container names index.md and Wiki/_Health.md; memory separately declares intent/TOC navigation and the diagnostic dashboard. Both parts already have records, and the container preserves their distinct model-selection and plugin-predicate functions and evidence limits. Retain the container rather than supersede it merely because memory uses finer records.
+
+[MEM-OBJ-templates](memory.md#mem-obj-templates) has no epistemic or runtime object duplicate. Templates, [RT-OBJ-schema](runtime.md#rt-obj-schema), [RT-OBJ-wiki-ingest](runtime.md#rt-obj-wiki-ingest) and [RT-OBJ-setup-prompt](runtime.md#rt-obj-setup-prompt) are different specified files with different production or instruction roles, not alternate labels for compiled page instances.
+
+[EPI-RTE-schema-check](epistemic.md#epi-rte-schema-check) and [EPI-RTE-link-check](epistemic.md#epi-rte-link-check) are declared diagnostic parts of [RT-RTE-gap-audit](runtime.md#rt-rte-gap-audit). They inspect text and return diagnostics; the parent also selects repairs, changes files and retains an audit summary. Neither part duplicates the whole audit, and neither supersedes its repair findings.
+
+The claim records also retain distinct subjects. [EPI-CLM-compiled-knowledge](epistemic.md#epi-clm-compiled-knowledge) concerns accumulation and compilation; [EPI-CLM-answer-coverage](epistemic.md#epi-clm-answer-coverage) concerns wiki-only task sufficiency. Neither is identical to [RT-CLM-wiki-first](runtime.md#rt-clm-wiki-first), a selection policy, or [RT-CLM-audit-completeness](runtime.md#rt-clm-audit-completeness), a repair-breadth claim. [MEM-CLM-retention-limits](memory.md#mem-clm-retention-limits) concerns deletion/withdrawal rather than [RT-CLM-sources-immutability](runtime.md#rt-clm-sources-immutability)'s layer authority and write policy. Shared supporting mechanisms do not establish claim identity.
+
+### Independent convergence and integration dispositions
+
+Runtime, memory, epistemic and workflow converge on model-directed admission without required per-content human approval. The epistemic report distinguishes that admission from recorded epistemic acceptance; this does not contradict the runtime's requested source comparisons, quality guidance or self-audit. The narrower [EPI-RTE-schema-check](epistemic.md#epi-rte-schema-check) strengthens the account of the example's limits without replacing [RT-CLM-audit-completeness](runtime.md#rt-clm-audit-completeness). The link diagnostic adds a separate text-matching limitation, not a competing account of all model review.
+
+The [memory integration issues](memory.md#integration-issues) require no runtime correction. Initial entity coverage remains unknown because standard sync copies memory/rules/docs while bootstrap inspection and audit permit broader code reads. Metadata path consistency, ingest status reset, closed-gap notation and source-deletion propagation remain unspecified; these limit universal freshness and withdrawal conclusions, not the existence of the prescribed routes. The G1/G6 step references disagree with Phase 2's seven-step numbering, but the substantive gap-resolution instruction remains in [RT-RTE-diff-ingest](runtime.md#rt-rte-diff-ingest). This is a discrepancy inside the source design, not a disagreement between these reports.
+
+The audit's method-file repairs connect to two different intended authority channels: [RT-BAP-project-rules](runtime.md#rt-bap-project-rules) guides later project work, while [RT-BAP-maintenance-rules](runtime.md#rt-bap-maintenance-rules) guides later maintenance. Neither is duplicate Wiki factual content or an archived Sources instruction copy. Memory's retained summaries and epistemic policy-adaptation row agree with the runtime's claimed reflection and improvement-directed self-change pathway. They do not establish criticism-dependent theory iteration, successful learning or exercised self-improvement; the runtime's independent statuses remain unchanged.
+
+No supplied correction answers or declined objections require a separate disposition. No cross-report disagreement remains after these identity and containment distinctions. No analyst record or status is rewritten here, and no frozen source was read beyond the supplied members.
