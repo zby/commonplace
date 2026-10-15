@@ -156,6 +156,38 @@ Wait for the active four pipelines to finish and recheck ownership/publication
 and disk capacity before running the new scripts. This authorizes fresh attempts,
 not old-run recovery or a change to acceptance counts.
 
+## Audited integration and expanded failure batch, 2026-10-15
+
+The operator requested integration of the cleared analyses, a new batch for all
+rerunnable failures, then continued audits of the 61 new publications.
+[Integration evidence](./audit-integration-2026-10-15.md) records **32 unchanged
+new-source integrations**, bringing the retained corpus to **70 sets**. Six
+positive older alternatives were not substituted for incumbents; all 13
+exact-run semantic holds remain held.
+
+The [fresh-failure batch](./fresh-failure-batch-2026-10-15.md) comprises **39 fresh
+starts** across scripts 15–17: retain 15–16's 22 targets and add
+[bash-17.sh](./bash-17.sh) for 16 older provider failures plus o-o's prompt-path
+failure. The new commission releases those 16 operational target holds for fresh
+starts only, not recovery of preserved attempts. The [independent selection](./retry-selection-2026-10-15.md)
+retains exact sources, failed runs and deferrals. Preparation did not launch
+analyses; all three scripts use external worktrees and logs. A later
+[read-only execution follow-up](./fresh-failure-batch-2026-10-15.md#observed-execution-follow-up)
+at 08:49 UTC found scripts 15–17 running outside this coordinator's launches.
+Do not start duplicates or treat process/output presence as acceptance. Recheck
+ownership/publications and capacity before any further launch.
+
+The [next audit commission](./audit-next-61-commission.md) fixes its 61-run intake
+at the previous 2026-10-15 06:29 UTC status snapshot. Its
+[separate inventory](./next-publication-audit-inventory.md) records verified byte
+maps and completed fresh Sol/medium audits. **All 61 reports are reviewed:
+55 recommendations to integrate with recorded limits, three semantic holds and
+three operational holds.** The coordinator rechecked all 793 publication files
+and validated 71 explicit Markdown targets without failures, warnings or notices.
+No candidate from this pass was integrated. Later Synto, Sift-KG and fresh-batch
+publications do not move its finish line. All audit assignments have finished;
+new positive recommendations require separate integration authorization.
+
 ## Worktree storage
 
 The operator approved external storage and verified completed-worktree cleanup.
@@ -211,13 +243,18 @@ those checks, not when Pi exits.
 
 ## Retained limits and history
 
-Audited/integrated progress is **38 complete, 148 pending, 20 held** after
-[current-batch audits and integration](./audit-current-batch.md). Eighteen
-publications cleared; ContextPilot adds one hold for an omitted training-route
-selector qualification. [Claude Context Guard integration](./claude-context-guard-integration.md)
-and [rolling execution 09](./rolling-09.md) retain earlier checkpoints. These
-are acceptance counts, not a live Bash-batch status. The checklist retains
-remaining holds and unblock conditions.
+The checklist checkpoint is **70 complete, 132 pending, 4 older target holds** after
+[32 new-source integrations](./audit-integration-2026-10-15.md) and the
+[fresh-start release of 16 operational holds](./fresh-failure-batch-2026-10-15.md).
+Four older target-level holds remain: ACE, Agentic Harness Engineering, Agent
+Skills and ContextPilot. All 13 exact-run semantic audit holds remain, including
+alternatives for sources with integrated incumbents. [Current-batch audits](./audit-current-batch.md),
+[Claude Context Guard integration](./claude-context-guard-integration.md) and
+[rolling execution 09](./rolling-09.md) retain earlier checkpoints. These are
+acceptance counts, not a live Bash-batch status. Exact-run audit holds and the
+next-61 pass's new dispositions are tracked in their audit inventories rather
+than silently changing this checkpoint. The checklist retains older holds,
+historical stops and unblock conditions.
 CLI trial failures are not included in these counts. Claude Context Guard's
 coordinator failure and missing worker traces remain preserved as evidence;
 operator-authorized integration does not certify unavailable worker compliance.
