@@ -1,0 +1,34 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of LLM Wiki Coordination's corrected memory profile at the frozen repository commit."
+run-id: AAS-2026-10-14-llm-wiki-coordination-a12f3c7007f2-01
+reviewed-boundary: "126749634d1c8c2fd6141f59711c882c2d629699"
+---
+
+# LLM Wiki Coordination profile verification
+
+## Verification
+
+I checked all ten axes of the handed [memory profile](memory-profile.md#comparison-rationale), including scope, natural units, findings, evidence bases and inventory coverage. I resolved duplicate identities through the supplied reconciliation and considered the previous objections and the author's answers afresh. No source files were read, and no new evidence, records or quotations were added.
+
+The memory boundary includes accumulated downstream discussion, metadata, pages, endorsements, manifests and maintenance records. It correctly excludes unchanged shipped instructions, current-audit caches/results and external model parameters. The common claimed file substrate is supported across the inventory by [MEM-OBJ-thread-context](memory.md#mem-obj-thread-context), [MEM-OBJ-thread-meta](memory.md#mem-obj-thread-meta), [MEM-OBJ-thread-entries](memory.md#mem-obj-thread-entries), [MEM-OBJ-canon-pages](memory.md#mem-obj-canon-pages), [MEM-OBJ-consensus-block](memory.md#mem-obj-consensus-block), [MEM-OBJ-anchor-form](memory.md#mem-obj-anchor-form), [MEM-OBJ-audit-reports](memory.md#mem-obj-audit-reports) and [MEM-OBJ-cemetery-log](memory.md#mem-obj-cemetery-log). Grouping objects with the same substrate and coverage does not hide a different supported substrate. Known coverage here describes the prescribed inventory, not observed deployment.
+
+Representational form distinguishes interpreted prose, fixed-rule metadata consumption and mixed external coordination paths. Its partial assessment retains unspecified maintenance-output formats. Lineage distinguishes authored content, historical acquisition and derived assessments, summaries, estimates and diagnoses. Unknown historical provenance and profile initialization remain local uncertainty rather than absence. These distinctions are supported by the object records, [EPI-RTE-archival-import](epistemic.md#epi-rte-archival-import), [EPI-RTE-peer-judgment](epistemic.md#epi-rte-peer-judgment) and [MEM-RTE-profile-refinement](memory.md#mem-rte-profile-refinement). Other-compiled canon lineage does not claim semantic novelty or faithful preservation of source reasons.
+
+Behavioral authority keeps context supply, assessment updates, priority, direction choice, re-review obligations, admission criteria and normative vetoes distinct. The claimed participant effects are not upgraded to implemented enforcement; the archival flag's routing effect is separately wired. Write agency separates agent admission without per-content approval from user recognition and canonical promotion. Generic import/deletion operators and the unidentified estimate writer remain unresolved. The relevant controls and consumers are retained in [RT-RTE-thread-participation](runtime.md#rt-rte-thread-participation), [RT-RTE-canon-admission](runtime.md#rt-rte-canon-admission), [RT-CLM-canon-enforcement](runtime.md#rt-clm-canon-enforcement), [RT-RTE-archival-audit](runtime.md#rt-rte-archival-audit) and [MEM-RTE-profile-refinement](memory.md#mem-rte-profile-refinement). Grouped units retain separate effect findings and do not imply an observed host or a shipped writer.
+
+Curation assigns consolidation to closing summaries/checkpoints, evolution to existing-page and endorsement revision, invalidation to withdrawn endorsement reliance, and promotion to approved maturity transitions. The profile does not infer synthesis from a canon label. [MEM-OBJ-thread-entries](memory.md#mem-obj-thread-entries), [MEM-OBJ-canon-pages](memory.md#mem-obj-canon-pages), [MEM-OBJ-consensus-block](memory.md#mem-obj-consensus-block) and [MEM-RTE-profile-refinement](memory.md#mem-rte-profile-refinement) support these local claimed or afforded findings. Unspecified canon transformations and other maintenance changes remain included in partial coverage; their uncertainty does not negate the supported operations.
+
+Read-back direction distinguishes requested participant/page reads from the requested audit and its automatic filesystem supply to individual checks. [RT-RTE-audit-invocation](runtime.md#rt-rte-audit-invocation) supports the wired pull/push chain and coarse selection from the caller-selected root. The corrected cross-protocol signal unit is inapplicable for an additional push selector: [EPI-RTE-cross-check](epistemic.md#epi-rte-cross-check) checks referenced-path existence and field presence, not delivery of retained canon-page parts. Its pointers arrive within already selected metadata. The unsupported identifier finding has been removed, and the axis note and rationale no longer export targeted delivery. Requested thread/page filenames likewise do not become push signals. Unresolved profile, manifest and maintenance delivery prevents complete direction or signal coverage.
+
+Trace learning's local claimed positive follows the prescribed automatic agent evaluation and closing-summary/checkpoint writes from retained discussion to later participation. [MEM-OBJ-thread-entries](memory.md#mem-obj-thread-entries), [EPI-RTE-peer-judgment](epistemic.md#epi-rte-peer-judgment) and [RT-RTE-thread-participation](runtime.md#rt-rte-thread-participation) establish the input, durable derived material and intended subsequent consumer. This classification requires neither new knowledge nor improved capacity; the profile does not claim wiring. Those same records support the corrected claimed session-logs finding: retained conversational contributions from agent work qualify without a verbatim provider-transcript requirement. The corrected trace-source unit, axis assessment and rationale consistently preserve that positive while leaving additional inputs and other qualifying routes unresolved. Both previous blockers are therefore resolved on their merits.
+
+Canonical manifest, consensus and estimate-route citations preserve the reconciliation's supersessions without strengthening evidence. The estimate route's afforded/claimed disagreement remains beside its local formula finding and unresolved writer/admission/delivery. The closure-sum instruction disagreement prevents assuming uniform participant arithmetic, but does not undermine the existence of retained evaluations or summary production. The profile's partial and not-determinable assessments already express consequential gaps in provenance, transformation and later consumption. These faithfully scoped uncertainties do not require additional verification limits. No unsupported comparison value, evidence upgrade, absence assertion or complete-coverage assessment remains.
+
+## Blockers
+
+none
+
+## Limits
+
+none
