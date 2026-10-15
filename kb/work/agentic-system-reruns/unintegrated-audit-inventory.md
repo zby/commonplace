@@ -2,6 +2,8 @@
 
 **Audit complete at the 2026-10-14T16:25:51Z inventory cutoff: 51 candidates, 38 positive with recorded limits, 13 holds. No integration performed.** See [final dispositions and closure](#final-dispositions-and-closure). JSON scheduling fields and earlier launch paragraphs are retained snapshots; the completed assignment ledger and final closure supersede them. **Pending set is empty; no active audit owner or handle remains.** Do not relaunch from an old `running` or `pending` field.
 
+**Storage follow-up:** 37 integrated-exclusion worktrees were subsequently archived externally and removed under operator approval; Agemem remains deferred for missing audit retention. See [storage and restore record](./worktree-storage.md). Their absolute paths below are historical inspection locators, not current live worktrees. The external archive index binds their preserved bytes and restoration metadata. No unintegrated candidate was removed and no audit disposition or completion count changed.
+
 Snapshot: 2026-10-14T15:13:54.453995+00:00; origin main `ff452f2f7cf4b88c40b33747df7b987fb5be2f1f`.
 
 Audit-only commission: [prompt](./audit-unintegrated-prompt.md), [procedure](./audit-a-rerun.md). Worker diagnostic: `COMMONPLACE_WORKER_OK`; depth and nesting limit unknown. No integration, recovery, acquisition, accepted-output edits, cleanup, commits or pushes authorized. Coordinator owns this file; workers own only their assigned reports.

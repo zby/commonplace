@@ -138,6 +138,55 @@ fresh-coordinator audit commission for all exact own-worktree publications not
 integrated into main, including older alternatives. Creating it does not launch
 auditors, authorize integration or clear existing holds.
 
+## Fresh reruns for previous batch failures
+
+The operator requested new batches on 2026-10-14 while scripts 11–14 were still
+processing. [Failed-batch inventory and decisions](./failed-batch-reruns.md)
+reconcile the 30 nonempty unpublished outcomes in scripts 01–10: 27 failures or
+interruptions and three completed local results. Prepare **22 fresh analyses**:
+[bash-15.sh](./bash-15.sh) has 16 stopped targets; [bash-16.sh](./bash-16.sh) has
+six disk-full interruptions. Both use new external log subdirectories and leave
+old worktrees, open attempts, partial outputs and logs unchanged.
+
+Five failed targets remain deferred for source/access, source-isolation,
+boundary or publication-namespace decisions. The three completed local outcomes,
+all sources already assigned to scripts 11–14, retained publications and existing
+holds/reservations are excluded. No analysis was launched during preparation.
+Wait for the active four pipelines to finish and recheck ownership/publication
+and disk capacity before running the new scripts. This authorizes fresh attempts,
+not old-run recovery or a change to acceptance counts.
+
+## Worktree storage
+
+The operator approved external storage and verified completed-worktree cleanup.
+[Storage record and restore procedure](./worktree-storage.md) retain the result:
+**37 integrated worktrees archived externally and removed locally**, with an
+original-path restore pilot; Agemem remains pending audit retention. Running,
+unintegrated, failed and held worktrees were not removed. Primary-disk free space
+increased from about 44 GiB to 51 GiB during the operation.
+
+Unstarted scripts 15–16 now instruct fresh coordinators to prepare worktrees
+under external `outputs/commonplace-worktrees/`, alongside but separate from
+logs. Future inventories must include those external preparation records and
+archived integration evidence. Failed/held cold-storage decisions return at the
+finished-run checkpoint; they are not routine completed-worktree cleanup.
+
+## Publication namespace follow-up after all runs finish
+
+The operator deferred the naming change until **all analysis runs have finished**.
+Then change GitHub publication names from project-only slugs to
+`owner--project`, matching the cloned-repository naming convention. Plan the
+existing-publication path migration and affected links/validators together;
+preserve immutable run IDs and do not patch frozen worktrees. Document-source
+naming is outside this GitHub collision fix.
+
+After the namespace change is implemented and committed, prepare fresh reruns
+for the four deferred repositories: Pratiyush/llm-wiki, kenhuangus/llm-wiki,
+nvk/llm-wiki and MehmetGoekce/llm-wiki. Keep cobusgreyling's existing publication
+as its own source; do not replace it with another owner's wiki. Different log
+keys alone do not resolve the publication collision. This records follow-up
+work only and authorizes no naming change or rerun launch now.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
