@@ -1,0 +1,30 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of Basic Memory's public partial-loop account at the frozen revision."
+run-id: AAS-2026-10-16-basic-memory-46fe4c6cfdc3-01
+reviewed-boundary: a72751c5d626380dedeed30f55f7a80ba3dc710d
+---
+
+# Basic Memory synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded source-level account. I checked its substantive statements and limitation rows against the supplied boundary, analyst records, annotations and reconciliation, and assessed carriage of the supplied report and profile verification findings. No previous synthesis verification or synthesis refusal was supplied. The synthesis answers file is empty. No source checkout reads, target execution or new evidence were used.
+
+**Evidence and runtime progression.** The opening preserves SRC-1's frozen revision, cutoff, implementation/doctrine evidence and complete-artifact, partial-loop boundary. It does not attribute an enclosing assistant's reasoning to Basic Memory. The write account preserves the distinction between caller proposal, deterministic transactional admission and deferred publication. Its replacement qualifications match [RT-RTE-note-write](runtime.md#rt-rte-note-write), including the relay exception and alternative admission paths. Its recovery account preserves process-local serialization and the separate file check/write boundary in [RT-RTE-note-materialization](runtime.md#rt-rte-note-materialization). It makes no durability or global stale-write guarantee. The body/state/graph distinctions and None-only structured reload fallback follow [MEM-OBJ-markdown-content](memory.md#mem-obj-markdown-content), [MEM-OBJ-sync-state](memory.md#mem-obj-sync-state), [MEM-OBJ-graph-publication](memory.md#mem-obj-graph-publication) and [MEM-RTE-note-reload](memory.md#mem-rte-note-reload).
+
+**Selection and representative workflow.** The context account correctly separates bounded graph returns and explicit note reload from a total host context budget ([RT-RTE-context-build](runtime.md#rt-rte-context-build)). The Pi narrative is the selected direct-capture workflow, not a concatenation of unrelated capabilities. Trust/configuration gates, role-filtered extraction, stable-title replacement, clipped recall and the host's continuing task ownership agree with [RT-RTE-pi-checkpoint](runtime.md#rt-rte-pi-checkpoint), [EPI-OBJ-capture-draft](epistemic.md#epi-obj-capture-draft) and the [workflow account](workflow.md#workflow-account). The public account retains the consequential distinction between parseable subprocess output and verified write success, as well as capture and recall retry weaknesses ([workflow delivery](workflow.md#verification-rejection-recovery-and-delivery)). The reference-only warning is not promoted into enforced model instruction/data separation ([RT-BAP-recall-data](runtime.md#rt-bap-recall-data)).
+
+**Host differences and withdrawal.** The synthesis keeps Python hooks, raw metadata archival, Tau model synthesis, Hermes extraction and OpenClaw system-prompt placement separate. It does not infer child read-back from handoff creation or semantic fidelity from summarization instructions. These statements follow [RT-RTE-hook-checkpoint](runtime.md#rt-rte-hook-checkpoint), [MEM-RTE-trace-archive](memory.md#mem-rte-trace-archive), [MEM-RTE-tau-handoff](memory.md#mem-rte-tau-handoff), [MEM-RTE-hermes-continuity](memory.md#mem-rte-hermes-continuity) and [MEM-RTE-openclaw-context](memory.md#mem-rte-openclaw-context). Its rejection of universal recall and universal archive-only retention is supported by the named omissions, selection constraints and [MEM-RTE-note-withdrawal](memory.md#mem-rte-note-withdrawal), not by missing execution alone.
+
+**Checking and independent properties.** The synthesis uses the canonical [EPI-RTE-schema-validation](epistemic.md#epi-rte-schema-validation) after reconciliation's duplicate-route supersession. It preserves warning-mode pass, structural rather than factual license, advisory schema suggestions and drift diagnostics. Research/reflection remain prescriptions, and benchmark scoring remains gold-relative metric accounting rather than unrestricted factual acceptance or production feedback ([EPI-RTE-research-note](epistemic.md#epi-rte-research-note), [EPI-RTE-reflect-notes](epistemic.md#epi-rte-reflect-notes), [EPI-RTE-qa-answer](epistemic.md#epi-rte-qa-answer), [EPI-RTE-qa-judge](epistemic.md#epi-rte-qa-judge)). The learning paragraph leads with connected trace-fed durable-context mechanisms and explicitly distinguishes that comparison meaning from improved future-action capacity. Theory-builder conditions, reflection, autonomy and self-improvement remain independent, locally unestablished assessments rather than system-wide absences. Provider inference is not presented as training or immutable model identity. The proposed evidence changes distinguish activation, benefit and component attribution.
+
+**Limit carriage and materiality.** The [Limitations](synthesis.md#limitations) table carries the report verification's additional Codex handoff and continuation-prompt surfaces, their record citations and the withheld exhaustive route comparisons. The profile verification declares no limits; its partial coverage and local trace-learning qualifications remain visible in the public text. Reconciliation declares no unresolved conflict. Other table rows retain publication/withdrawal, evaluation, host-consumer and source-only evidence consequences. No unsupported emitted comparison value, strengthened evidence status or complete-coverage implication was found. Faithfully scoped uncertainties already stated in the synthesis do not require additional verification limits. The supported account remains intelligible without reading the member reports, while its citations expose the underlying mechanisms.
+
+## Blockers
+
+none
+
+## Limits
+
+none
