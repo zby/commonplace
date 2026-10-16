@@ -2,8 +2,8 @@
 
 ## Commission
 
-On 2026-10-15 the operator authorized moving to audit and integration of published
-analyses after the owner-qualified publication migration. Batch 18 is running
+The operator authorized moving to audit and integration of published analyses
+after the owner-qualified publication migration. Batch 18 is running
 separately; its 17 sources are outside this fixed intake. Preserve all existing
 semantic and operational holds, frozen worktrees, attempts, source checkouts,
 logs and unrelated edits. Do not interpret this task as approval to repair held
@@ -83,10 +83,26 @@ rolling audits. Read complete reports before recording reviewed dispositions;
 reuse no active handle after reload without reconciling ownership. The first 13 complete reports are coordinator-reviewed: nine positive with
 recorded limits, four held (AI-Context-OS operational authority deviation;
 AI Memex CLI attribution; AREX-Skill reflection-assessment mismatch;
-Autogenesis startup defect). All nine positives require normal per-result
-integration checks; none of the four holds is waived. The remaining 33 rows
-are planned, not audited, and no audit worker remains active at this checkpoint.
-Commit complete reports before integrating the nine positives, then record the
-result and leave an explicit resumable checkpoint rather than implying that
-all 46 audits are finished. The fixed intake stays immutable; live
-acceptance/assignment state belongs in the separate ledger.
+Autogenesis startup defect). Complete reports were committed as `d9d900170`,
+then all nine positives passed normal per-result integration and namespace
+checks. See [the nine-result integration](./integration-later-nine-2026-10-16.md).
+The pass has now integrated **64 sets; origin has 134 retained sets**. None of
+the four new holds or older holds is waived. The remaining **33 rows are planned,
+not audited**; no audit worker remains active. This is an explicit resumable
+checkpoint, not closure of all 46 audits. The fixed intake stays immutable;
+live acceptance/assignment state belongs in the separate ledger.
+
+Final bookkeeping worker `e3c0955d-8b5d-443b-93e6-13e1614e4c01` completed;
+its full [reconciliation report](./integration-checklist-reconciliation-2026-10-16.md)
+and checklist changes were parent-reviewed. Exactly 64 rows now name their run,
+canonical overview, audit and integration/namespace commits; all 142 other rows
+are unchanged. Parent independently checked the one-to-one links and count.
+Checklist: **134 complete, 68 pending, four older target holds**. New exact-run
+holds remain separately recorded, not cleared by target completion.
+
+No workers remain active. Resume the 33 planned rows from the ledger (next:
+Byterover CLI), not from stale live handles or report existence. No pending row
+has an assigned worker or accepted report. Renew the launch diagnostic after a
+reload, preserve fresh Sol/medium isolation and full parent review, and keep
+integration separate from concurrent report writes. The pass has not closed
+the remaining audit intake or the workshop.

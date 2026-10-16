@@ -29,7 +29,15 @@
       "status": "coordinator-reviewed",
       "handle": "97c6670b-37fa-47cd-89ed-ad12f6e07db9",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "4e3b6abed5d249fcb759474f457a47c3f03fe95ee9c84206305fbad032ac3d84"
+      "report-sha256": "4e3b6abed5d249fcb759474f457a47c3f03fe95ee9c84206305fbad032ac3d84",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/gchamon--archie",
+        "merge-commit": "f46d20299715fa608787287c8488638867ea7ee9",
+        "final-commit": "133bf698a2159d0c0acbd14e802fa45ff9b2c12c",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-archie-1ab3d8b8ff03-01.migration.json",
+        "migration-ledger-sha256": "c2bb6b9a7c26f2e4b49b73a2fc9c07080d717751a7878a35e90b04348117d971"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-arex-skill-1871063034b5-01",
@@ -46,7 +54,15 @@
       "status": "coordinator-reviewed",
       "handle": "1b858c70-e5a7-4ae1-8afc-7680419502db",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "499749bae7ce96e808f3bc8dece8d3d22b65d0a62f39d0b214f798420dab00e5"
+      "report-sha256": "499749bae7ce96e808f3bc8dece8d3d22b65d0a62f39d0b214f798420dab00e5",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/arsumbris--arsumbris",
+        "merge-commit": "1084a6e777b1ca4b31bcac440d1c5684f55978dc",
+        "final-commit": "a9dbe7347b36d83c19ec4635ab4d32d48fc8c59d",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-arsumbris-a9be6bac297f-01.migration.json",
+        "migration-ledger-sha256": "041e6f1258da67b393a605862d130a178e3cb7fd5bca14bc9fbd6a4c567aa422"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-auto-claude-code-research-in-sleep-a8abf5f80cbb-01",
@@ -54,7 +70,15 @@
       "status": "coordinator-reviewed",
       "handle": "fa2d21ce-e9e5-48d4-8ae4-bc5422bf443d",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "7d2304961b4afaa150ab88f91091b8b4c4ce13ea31d73b7eb5a816e9afe57836"
+      "report-sha256": "7d2304961b4afaa150ab88f91091b8b4c4ce13ea31d73b7eb5a816e9afe57836",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/wanshuiyin--auto-claude-code-research-in-sleep",
+        "merge-commit": "115a09449f37516935f2e9f097a2faf438197631",
+        "final-commit": "0e23de8b7519ebe43e112a3d3c633d6a94281f6b",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-auto-claude-code-research-in-sleep-a8abf5f80cbb-01.migration.json",
+        "migration-ledger-sha256": "c179ebe34aed232a6bf758918758b8e958967fbaffa5b3518c43c3dcb248bc5f"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-auto-harness-92303e444cb2-01",
@@ -62,7 +86,15 @@
       "status": "coordinator-reviewed",
       "handle": "f7c1bed2-608e-4afd-904b-363e2a305e1f",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "b94a1b4ba8f32ac7b34645b53c7d4b2101d1feb9be31008ff8ac47ec57f30100"
+      "report-sha256": "b94a1b4ba8f32ac7b34645b53c7d4b2101d1feb9be31008ff8ac47ec57f30100",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/neosigmaai--auto-harness",
+        "merge-commit": "609120eba8d85e1515bcbcffadad0e8770a95d36",
+        "final-commit": "094ccffeb2692a115f39016402db37a4b4c61f7a",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-auto-harness-92303e444cb2-01.migration.json",
+        "migration-ledger-sha256": "4e26a53aaf93a173686e634c3bda5aaa52a27b94c36b941f39763d42d818fd3e"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-autocontext-b7f59f8405c4-01",
@@ -70,7 +102,15 @@
       "status": "coordinator-reviewed",
       "handle": "2e9ca620-85d2-47fb-9dc2-da3d5fb73864",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "09ec0dc2195dd0a64ce5e909f212c08a2cb9ad7d22b8e991bb3d095f68a70f48"
+      "report-sha256": "09ec0dc2195dd0a64ce5e909f212c08a2cb9ad7d22b8e991bb3d095f68a70f48",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/greyhaven-ai--autocontext",
+        "merge-commit": "7cd7787055a4257a0d1ab9b72e6e76412f516a3f",
+        "final-commit": "c0aed974817e4ee3bddf673f6ee6bd4fca284179",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-autocontext-b7f59f8405c4-01.migration.json",
+        "migration-ledger-sha256": "6bbcd7ae170111cb57ec89dc64a85e51d23ad81602e6921b39f69fdfbd3a4a44"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
@@ -87,7 +127,15 @@
       "status": "coordinator-reviewed",
       "handle": "deb15f30-76bd-480c-91f1-60a2e8e534f5",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "908581a6578b70e658bf29950095fce5f5cdbe440b7c254f5bb4f160dd78fd34"
+      "report-sha256": "908581a6578b70e658bf29950095fce5f5cdbe440b7c254f5bb4f160dd78fd34",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/skyllwt--autosci",
+        "merge-commit": "f0d947175c09c626c6d58657b82b5db3b53b20f4",
+        "final-commit": "6107c67d231bf5613abb42525a0502839e9286c1",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-autosci-430df584df8f-01.migration.json",
+        "migration-ledger-sha256": "09f03a7c14c05c3758b15fbfb616d5cb6afa0da5fdb1a6009054e31c0e4e5d7f"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-beever-atlas-10a3512c094c-01",
@@ -95,7 +143,15 @@
       "status": "coordinator-reviewed",
       "handle": "3adee8e8-6201-4553-8180-6c5b109a2a6a",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "0e11000c6a8fffe3171e3aa38851064f79ec55f534bad75200365a7ad3ec93e4"
+      "report-sha256": "0e11000c6a8fffe3171e3aa38851064f79ec55f534bad75200365a7ad3ec93e4",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/beever-ai--beever-atlas",
+        "merge-commit": "6b776ea0673528867ec29a7840a245f1369c87c9",
+        "final-commit": "649cfb8089f6b9f229d84a6137716b452b112a41",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-beever-atlas-10a3512c094c-01.migration.json",
+        "migration-ledger-sha256": "45acc3785dd74c7dda46c8347093fcc07d5aa3db15837f9422ccac0bd705806e"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-binder-a35c41531d40-01",
@@ -103,7 +159,15 @@
       "status": "coordinator-reviewed",
       "handle": "02f72799-db3f-4078-a061-5a5806744470",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "4de00c1545d4b6a6e41a59b476ad9368f00ccf4db08052e115a7147f4c7ed03e"
+      "report-sha256": "4de00c1545d4b6a6e41a59b476ad9368f00ccf4db08052e115a7147f4c7ed03e",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/mpazik--binder",
+        "merge-commit": "8cb7b1d90e10ef70172b2078bda21347c86b140b",
+        "final-commit": "74b274e854abe96e407bf3710bbd2eea05c98762",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-binder-a35c41531d40-01.migration.json",
+        "migration-ledger-sha256": "7613a6a0877229eeb7549f108783294599ca38b802d6461f76331ec075859b3f"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-browzy-ai-0a823a13a7b6-01",
@@ -111,7 +175,15 @@
       "status": "coordinator-reviewed",
       "handle": "f981628d-9496-43d7-a651-a7aacb57ed7b",
       "disposition": "integrate with recorded limits",
-      "report-sha256": "387957d040fec5d1b8e3584ab4593634f260145595706e1ba87e30566c004b80"
+      "report-sha256": "387957d040fec5d1b8e3584ab4593634f260145595706e1ba87e30566c004b80",
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/viharikanukollu--browzy.ai",
+        "merge-commit": "e0f56937baba5a02ffd6522f479ef075f30048ee",
+        "final-commit": "c42aa84f4d64ccd87d914289aba131f253868f6d",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16/AAS-2026-10-15-browzy-ai-0a823a13a7b6-01.migration.json",
+        "migration-ledger-sha256": "4abd7cf74db4de13a728236311d2ff626fc6e1bbddd1f24d2ccdfcaaa11dd36f"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-byterover-cli-71610aaf716b-01",
@@ -312,5 +384,5 @@
       "handle": null
     }
   ],
-  "checkpoint": "13 complete reports coordinator-reviewed: nine positives, four holds; 33 unassigned planned. No active audit workers. Integrate the nine positives after committing complete audit evidence, then retain a resumable checkpoint."
+  "checkpoint": "13 reviewed: nine integrated with recorded limits, four holds; 33 unassigned planned. No active audit workers. Origin has 134 retained sets; batch18 excluded."
 }

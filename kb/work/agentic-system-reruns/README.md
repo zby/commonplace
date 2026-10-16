@@ -233,6 +233,19 @@ the current project-only slug before creating logs or worktrees. Implement and
 commit the namespace migration above before execution; preparing this script
 does not implement that migration or release other blockers.
 
+## Resumed audit and integration after namespace migration
+
+The [resumed commission](./audit-integration-current.md) excludes independently
+running batch 18 and fixes 127 unintegrated candidates. The parent integrated
+[55 previously cleared results](./integration-next61-cleared-2026-10-16.md),
+then reviewed the first 13 of 46 later-publication audits and integrated their
+[nine positive results](./integration-later-nine-2026-10-16.md). Origin now has
+**134 retained sets**; all transferred bytes and existing publication maps were
+preserved. Four new exact-run holds remain. The other **33 audits are planned,
+not completed**, in the [live ledger](./audit-integration-later-46.json).
+Older holds, canonical-incumbent alternatives and batch-18 ownership remain
+unchanged. This is a resumable checkpoint, not audit-workshop closure.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
