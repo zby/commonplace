@@ -62,6 +62,31 @@ migration ledgers outside the origin, then retain a durable integration summary.
 Stop on the first uncertain or failed integration invariant rather than retrying
 or repairing evidence. Audit the 46 later candidates in a subsequent rolling
 round so worker report writes do not violate the clean-origin integration guard.
-Keep the origin private from site/current-analysis readers between any future
-legacy integration and its namespace-migration commit; do not push intermediate
+Keep the origin private from site/current-analysis readers between legacy
+integration and its namespace-migration commit; do not push intermediate
 legacy-name states.
+
+## Completed integration and active audits
+
+All 55 previously cleared results were integrated with unchanged accepted bytes;
+53 GitHub paths received separate namespace commits and two captures retained
+their names. The corpus now contains 125 sets. Every cycle preserved all prior
+publication maps. Full corpus validation succeeded with 0 failures and warnings,
+plus retained source-unavailable quotation notices on older sets. See the
+[complete integration record](./integration-next61-cleared-2026-10-16.md).
+A preliminary bare-ID command refusal was resolved by using the full recorded
+run-directory path; no publication recovery or guard bypass was performed.
+
+The [46-run audit commission](./audit-later-publications-commission.md) and
+[durable assignment ledger](./audit-integration-later-46.json) now govern fresh
+rolling audits. Read complete reports before recording reviewed dispositions;
+reuse no active handle after reload without reconciling ownership. The first 13 complete reports are coordinator-reviewed: nine positive with
+recorded limits, four held (AI-Context-OS operational authority deviation;
+AI Memex CLI attribution; AREX-Skill reflection-assessment mismatch;
+Autogenesis startup defect). All nine positives require normal per-result
+integration checks; none of the four holds is waived. The remaining 33 rows
+are planned, not audited, and no audit worker remains active at this checkpoint.
+Commit complete reports before integrating the nine positives, then record the
+result and leave an explicit resumable checkpoint rather than implying that
+all 46 audits are finished. The fixed intake stays immutable; live
+acceptance/assignment state belongs in the separate ledger.
