@@ -219,6 +219,20 @@ as its own source; do not replace it with another owner's wiki. Different log
 keys alone do not resolve the publication collision. This records follow-up
 work only and authorizes no naming change or rerun launch now.
 
+## Batch 18 preparation after the finished-batch reconciliation
+
+The operator reported all batches finished and requested one more batch.
+[Reconciliation](./finished-batch-residue-2026-10-15.md) verified all 39 targets
+in scripts 15–17 published, with 507 files matching their recorded hashes.
+[Batch 18](./batch-18.md) prepares seventeen sources in [bash-18.sh](./bash-18.sh):
+the four deferred wiki repositories, four historical pinned local sources,
+Memori, OpenClerk, beads_rust and six operator-released older refresh targets.
+It has not launched. The batch record also lists the ten unpublished targets still
+outside this selection. Its naming preflight refuses
+the current project-only slug before creating logs or worktrees. Implement and
+commit the namespace migration above before execution; preparing this script
+does not implement that migration or release other blockers.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
