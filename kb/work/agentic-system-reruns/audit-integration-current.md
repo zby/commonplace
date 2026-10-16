@@ -1,6 +1,22 @@
 # Resume publication audit and integration
 
-## Latest checkpoint: qualified AI Memex integrated
+## Current preparation: batch 19 and held-error depth
+
+[Batch 19](./batch-19.md) is prepared, not launched: seven selected runs, with
+Supermemory first from `runtime`. The [completed depth investigation](./batch-19-depth-results.md)
+covers 23 held runs. All four independent reports on the other 22 are fully
+parent-reviewed; no worker remains active. ContextPilot and Autogenesis need
+`boundary` narrative regeneration; AREX begins at `report-verification`; the
+other four selected runs begin at `runtime`. Eleven incumbent alternatives,
+four operational-only holds and reserved Agent Skills remain excluded.
+
+No run was reset, analysis launched or publication integrated in this preparation.
+The [commission](./batch-19-depth-commission.md) and [ledger](./batch-19.json)
+retain assignments, exact selected jobs and report hashes. The 33 later-publication
+audits and batch 18 were untouched. Earlier worker-status statements below are
+historical checkpoints, not current ownership.
+
+## Latest integration checkpoint: qualified AI Memex integrated
 
 The operator subsequently authorized publication with a marked limitation,
 integration, a second re-entry trial and another independent check. See

@@ -246,6 +246,20 @@ not completed**, in the [live ledger](./audit-integration-later-46.json).
 Older holds, canonical-incumbent alternatives and batch-18 ownership remain
 unchanged. This is a resumable checkpoint, not audit-workshop closure.
 
+## Batch 19: depth-aware recovery preparation
+
+After [qualified AI Memex integration and the Supermemory re-entry check](./reentry-pilots.md),
+the operator requested [batch 19](./batch-19.md) and a check of where the other
+held accounts first went wrong. The [completed investigation](./batch-19-depth-results.md)
+covers 23 held runs, with all four independent reports parent-reviewed. Seven
+recoveries are selected at their evidenced restart depths; no reset or recovery
+run has launched and no worker remains active. The [depth commission](./batch-19-depth-commission.md)
+and [ledger](./batch-19.json) retain the scope and assignments. They exclude batch
+18 and the 33 unaudited later publications. Historical checkpoints above retain
+their then-current counts; the latest canonical count is 135 sets. Content depth,
+incumbent-transfer stops and operational violations remain separate decisions.
+Preparation does not authorize reset or integration.
+
 ## After the processes finish
 
 Inspect the output files and retained run/publication state. Make lists of:
