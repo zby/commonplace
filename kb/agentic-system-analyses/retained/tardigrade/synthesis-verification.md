@@ -1,0 +1,34 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Tardigrade's public synthesis against its accepted records and carried publication limits."
+run-id: AAS-2026-10-15-tardigrade-455e1aaccd4d-01
+reviewed-boundary: "1b9f1e5760d1d4d4a63eb1f87af9e5a2341de7e8"
+---
+
+# Tardigrade synthesis verification
+
+## Verification
+
+I checked every substantive statement in the [public synthesis](synthesis.md#bounded-synthesis) against the supplied records, applied the reconciliation's three identity supersessions, and assessed the account without assuming that a public reader has read the supporting members. I also checked carriage of all three report-verification limits and the profile-verification limit. No refusal or substantive synthesis answers were supplied. This judgment uses the handed members only: no source reread, new evidence or target execution was needed. The evidence boundary remains SRC-1, implementation and doctrine/design at the revision in the [Source register](boundary.md#source-register), without observed-run or causal evidence.
+
+The request-to-delivery account is supported by [RT-RTE-bun-message](runtime.md#rt-rte-bun-message) and the [workflow account](workflow.md#workflow-account). The synthesis distinguishes caller-supplied problems, code-owned progression, model proposals, runtime tool dispatch, continuation and final method settlement. It does not present the greeting example as an exercised tool workflow or treat protocol completion as answer correctness. Unknown-tool feedback, generation failure and cancellation retain their different consequences. The public account is intelligible without the underlying atom identifiers.
+
+The authority account preserves composition conditions. [RT-RTE-governed-tools](runtime.md#rt-rte-governed-tools) supports conditional permission/budget enforcement, not universal human approval or an always-active cap. [RT-RTE-code-execution](runtime.md#rt-rte-code-execution) supports separate package dispatch and replay checks, not demonstrated ordinary-wrapper coverage of each inner method or universal isolation. The current child route and deprecated server remain separate in [RT-RTE-child-invocation](runtime.md#rt-rte-child-invocation) and [RT-RTE-legacy-server](runtime.md#rt-rte-legacy-server). The synthesis explicitly withholds a complete legacy delegation/control inventory rather than inferring absent controls from the current record.
+
+The recovery and context account preserves the records' guarantees and their limits. [RT-CLM-request-before-execution](runtime.md#rt-clm-request-before-execution) and [RT-OBJ-journal](runtime.md#rt-obj-journal) support committed requests and conditional checkpoint/suffix recovery, not exactly-once external effects. [MEM-OBJ-trajectory](memory.md#mem-obj-trajectory), [MEM-RTE-atom-compaction](memory.md#mem-rte-atom-compaction) and [MEM-RTE-content-replay](memory.md#mem-rte-content-replay) support the distinction between retained history and actual provider input, including summary-plus-tail delivery and continuation/file transformations. The synthesis preserves boundary and pending-tool exceptions, nonempty/matching-call checks rather than fidelity checks, and the absence of a hard provider-token guarantee. It keeps semantic summaries separate from [MEM-OBJ-effect-checkpoint](memory.md#mem-obj-effect-checkpoint), and caller conversion responsibility beside [MEM-RTE-state-adoption](memory.md#mem-rte-state-adoption).
+
+The reload discussion correctly separates current keyed text from legacy spill pointers and hydration. [MEM-RTE-text-workspace](memory.md#mem-rte-text-workspace), [MEM-RTE-spill-readback](memory.md#mem-rte-spill-readback), [MEM-RTE-legacy-compaction](memory.md#mem-rte-legacy-compaction) and [MEM-RTE-event-inspection](memory.md#mem-rte-event-inspection) support its positive mechanisms. The public limitations preserve incomplete spill-producer/binding coverage and the recorded-result fallback when bytes are unavailable; they do not promise loss-tolerant reconstruction. They also preserve the unresolved advertised model log consumer while retaining actual operator inspection and other positive reload routes. Repair-history omission is not represented as deletion or proof of factual error.
+
+The checks and future-capacity discussion respects evaluator domains. [EPI-RTE-response-check](epistemic.md#epi-rte-response-check), [EPI-RTE-legacy-output](epistemic.md#epi-rte-legacy-output), [EPI-RTE-resource-import](epistemic.md#epi-rte-resource-import) and [EPI-RTE-repository-gate](epistemic.md#epi-rte-repository-gate) support consequential but local checks, acquisition lineage and conditional hook enforcement. No system-wide factual oracle or absence verdict is inferred. The synthesis leads with implemented trace-fed summary and conditional correction updates, then separates those contributions from unestablished improved capacity. It uses the reconciled memory declarations for current compaction and workspace operations without losing the epistemic qualifications.
+
+The separate theory-builder conditions and learning, reflection, autonomy and self-improvement conclusions remain within [RT-RTE-optimization-guidance](runtime.md#rt-rte-optimization-guidance). Afforded localized content and consumption are not reported as an exercised theory; claimed criticism and iteration are not strengthened into observations. Prescribed self-trace inspection is not asserted to prove both causal directions of reflection. The dormant improvement pathway is distinguished from exercised self-change and successful improvement. [RT-RTE-artifact-admission](runtime.md#rt-rte-artifact-admission) supplies a distinct installation mechanism, not evidence that optimization used it or that integrity admission validates behavior. The scenario-relative closing assessment and proposed resolving evidence stay within these established distinctions rather than ranking products or recommending transfer.
+
+The [Limitations table](synthesis.md#limitations) carries every supplied verification limit with its affected records and analytical consequence: unresolved model log reload, omitted legacy delegation controls, incomplete spill coverage/loss recovery, and omitted separate classification of corrective-guidance delivery in partial profile inventories. Additional rows preserve context fidelity/size, opaque payload/provenance, recovery/control, repair-rationale and broader evaluator/optimizer boundaries. No unresolved reconciliation conflict was supplied. These caveats preserve the supported positive mechanisms without excusing an unsupported central claim or complete-coverage assertion. I found no material defect requiring correction and no additional unresolved issue to declare as a synthesis-verification limit.
+
+## Blockers
+
+none
+
+## Limits
+
+none
