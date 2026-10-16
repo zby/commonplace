@@ -1,0 +1,32 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Autocontext's memory profile against accepted records at the frozen revision."
+run-id: AAS-2026-10-15-autocontext-b7f59f8405c4-01
+reviewed-boundary: f72c154152397f54d55407508b153d28861888a5
+---
+
+# Autocontext profile verification
+
+## Verification
+
+I checked all ten axes in the [memory profile](memory-profile.md#comparison-rationale), including each unit's scope, assessment, positive findings, evidence basis and inventory coverage. The comparison concerns retained material and its access, maintenance and later-consumer mechanisms, not unchanged shipped prompts or all transient runtime state. No unsupported emitted value or materially misleading coverage claim was established.
+
+- **Storage and form:** [MEM-OBJ-context-bundle](memory.md#mem-obj-context-bundle), [MEM-OBJ-generation-artifacts](memory.md#mem-obj-generation-artifacts), [MEM-OBJ-compaction-entry](memory.md#mem-obj-compaction-entry), [MEM-RTE-component-compaction](memory.md#mem-rte-component-compaction) and [RT-CMP-training-checkpoints](runtime.md#rt-cmp-training-checkpoints) support the file, SQLite, cache and checkpoint distinctions. [RT-RTE-training-experiments](runtime.md#rt-rte-training-experiments) supports repository-backed source revision. Grouped storage units share a substrate finding; form findings separate text, typed metadata, executable source and weights. The helper's interpretive reference path is distinguished from execution. No display summary classifies opaque host state.
+- **Lineage:** [MEM-OBJ-bundle-advice](memory.md#mem-obj-bundle-advice), [MEM-OBJ-routing-config](memory.md#mem-obj-routing-config), [MEM-RTE-lesson-maintenance](memory.md#mem-rte-lesson-maintenance) and [MEM-RTE-package-import](memory.md#mem-rte-package-import) support subsequent authorship, compilation, extraction and import as distinct derivation paths. Unknown initialization and dataset ancestry remain unresolved rather than being inferred from subsequent transformations.
+- **Behavioral authority:** [RT-BAP-context-delivery](runtime.md#rt-bap-context-delivery) supports interpreted directions; [MEM-OBJ-tool-spec](memory.md#mem-obj-tool-spec) supports reference consumption. [MEM-OBJ-routing-config](memory.md#mem-obj-routing-config) has a fixed-rule routing consumer. [MEM-OBJ-harness-validator](memory.md#mem-obj-harness-validator) supports both validation and conditional enforcement, unlike the advisory [MEM-OBJ-completion-check](memory.md#mem-obj-completion-check). Stale-marker suppression, lexical search ranking, updater learning authority and ambient registry selection each have named consumers in [MEM-RTE-lesson-lifecycle](memory.md#mem-rte-lesson-lifecycle), [MEM-RTE-requested-readback](memory.md#mem-rte-requested-readback), [MEM-RTE-lesson-maintenance](memory.md#mem-rte-lesson-maintenance) and [RT-RTE-ambient-promotion](runtime.md#rt-rte-ambient-promotion). The profile does not extend those forces to untraced imported validators or opaque weights.
+- **Write agency:** Automatic admission is supported independently of model authorship and operator run initiation. The explicit operator package-selection branch in [MEM-RTE-package-import](memory.md#mem-rte-package-import) supports the local afforded manual finding. Generic lifecycle/import callers and optional approval interfaces remain unresolved; stronger automatic witnesses do not upgrade them.
+- **Curation:** [MEM-RTE-lesson-maintenance](memory.md#mem-rte-lesson-maintenance) supports implemented duplicate suppression and replacement, with a separately weaker consolidation affordance. [MEM-RTE-component-compaction](memory.md#mem-rte-component-compaction) supports implemented reduction, not synthesis inferred from possible fidelity loss. Lifecycle withdrawal, deletion and reactivation support their local operations. Bundle overlays, package merge and model activation support revision, deduplication and tier change without establishing universal withdrawal or successful semantic preservation.
+- **Read-back direction and signal:** [RT-RTE-context-assembly](runtime.md#rt-rte-context-assembly) and its memory annotation support generation-triggered push, actual identity targeting and separate coarse filters. Compaction adds lexical and positional selection. [MEM-RTE-requested-readback](memory.md#mem-rte-requested-readback) supports pull, not an extra push at tool return; [MEM-CLM-file-consumption](memory.md#mem-clm-file-consumption) supports only afforded file pull. Signal inapplicability is local to those assessed pull operations. Campaign selection findings retain incomplete serving/reload coverage.
+- **Trace learning and source:** [MEM-RTE-lesson-maintenance](memory.md#mem-rte-lesson-maintenance) supplies the automatic experience-to-durable-warning/lesson-to-later-prompt chain. The [workflow annotation](workflow.md#annotations) confirms that this does not require support roles to see the current tournament before it runs. [RT-RTE-training-experiments](runtime.md#rt-rte-training-experiments) and [RT-RTE-kernel-evolution](runtime.md#rt-rte-kernel-evolution) support local feedback-fed retained source updates. Execution feedback and linked action/outcome experience support tool-trace and trajectory findings without classifying all training data. Compaction-ledger continuation and [MEM-RTE-consolidation-preview](memory.md#mem-rte-consolidation-preview) remain unresolved because their qualifying durable consumer chains are not established. Neither naming nor candidate return is treated as durable promotion.
+
+I applied the handed reconciliation's lifecycle/import supersessions when judging canonical route support. The package payload parts remain distinct, and no unresolved cross-report conflict requires a different profile value. All axes retain partial coverage; known local findings do not claim a complete system inventory. Uninspected writers, datasets, serving reload and opaque host alternatives remain included. These uncertainties are already expressed in the extracted assessments and notes, not deferred to a synthesis caveat. Architectural findings are not upgraded to observed operation, learning benefit or causal improvement. No additional publication limit is needed to preserve this bounded account.
+
+Source reads: none. This verification used the supplied reports, reconciliation, profile and governing contracts; it added no evidence, records or replacement classifications.
+
+## Blockers
+
+none
+
+## Limits
+
+none
