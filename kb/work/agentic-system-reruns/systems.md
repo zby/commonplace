@@ -3,10 +3,11 @@
 Inventory captured on 2026-10-12: **206 targets from 223 records**. See the
 [workshop README](./README.md) for scope, deduplication and completion rules.
 
-**Checklist checkpoint, 2026-10-16: 134 complete; 68 pending; 4 older target holds (206 targets).**
+**Checklist checkpoint, 2026-10-16: 135 complete; 67 pending; 4 older target holds (206 targets).**
 The [55 cleared integrations](./integration-next61-cleared-2026-10-16.md) and
 [nine later integrations](./integration-later-nine-2026-10-16.json) add 64
-uniquely matched completions to the prior 70. The
+uniquely matched completions to the prior 70. The [AI Memex qualification and integration](./reentry-pilots.md)
+adds one independently checked completion. The
 [checklist reconciliation](./integration-checklist-reconciliation-2026-10-16.md)
 records exact-byte, run, audit and commit checks and source-identity distinctions.
 All completions retain their recorded limits. The active batch 18's seventeen
@@ -17,8 +18,9 @@ older target holds remain: ACE, Agentic Harness Engineering, Agent Skills for
 Context Engineering and ContextPilot. All thirteen earlier exact-run semantic
 holds, six next-61 holds and the temporary Dynamic Cheatsheet hold remain;
 positive incumbent alternatives were not substituted. The
-[later audit ledger](./audit-integration-later-46.json) retains four new holds
-(AI-Context-OS, ai-memex-cli, AREX-Skill and Autogenesis) and **33 unassigned
+[later audit ledger](./audit-integration-later-46.json) retains three new holds
+(AI-Context-OS, AREX-Skill and Autogenesis); AI Memex was qualified and integrated.
+It also retains **33 unassigned
 planned audits, not completions**. These held and unaudited targets remain
 within the unchecked rows; exact-run holds on alternatives can coexist with a
 checked incumbent. The [fresh-failure batch](./fresh-failure-batch-2026-10-15.md)
@@ -69,7 +71,7 @@ append the overview, audit link and integration commit.
 - [x] **Agno AgentOS** (`agno-agentos`) — complete with recorded limits; run `AAS-2026-10-13-agno-60e6e09dd4a6-01`; [overview](../../agentic-system-analyses/retained/agno-agi--agno/overview.md); [audit](./audits/bash-current-agno.md); integration `c25d5bcd780866ba6d74cc3b96d979a3f5a76f2c`; SDK/AgentOS boundary, not replacement for the historical external-builder/control-plane breadth; [authored account](../../agentic-systems/reviews/agno-agentos.md).
 - [x] **AI Agents in Depth** (`ai-agent-book`) — complete with recorded limits in [rolling execution 06](./rolling-06.md); run `AAS-2026-10-12-ai-agent-book-d56e8121d636-01`, boundary `dbc046eb896ac4e39aa19c7774c8bf49583b89a6`; selected-workflow coverage, not whole-book replacement; [overview](../../agentic-system-analyses/retained/bojieli--ai-agent-book/overview.md); [audit](./audits/rolling-06-ai-agent-book.md); integration `3ba7f91dac4bc68f4dee73c9aefabe167271ec4a`; [authored account](../../agentic-systems/reviews/ai-agent-book.md).
 - [ ] **AI-Context-OS** (`ai-context-os`) — fresh start released in [batch 17](./fresh-failure-batch-2026-10-15.md); historical stop in [rolling execution 05](./rolling-05.md), run `AAS-2026-10-12-ai-context-os-4f81c8c12f62-01`, frozen source `9ed263080cadf98702bebb42d5260b45bd526f6c`; synthesis worker API 503, no publication or open attempts; recovery requires a supported decision after provider availability is established; [legacy review](../../agent-memory-systems/reviews/AI-Context-OS.md).
-- [ ] **ai-memex-cli** (`ai-memex-cli`) — fresh start released in [batch 17](./fresh-failure-batch-2026-10-15.md); historical stop in [rolling execution 05](./rolling-05.md), run `AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01`, frozen source `4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f`; epistemic worker stream ended before terminal response, no publication or open attempts; recovery requires a supported decision after provider availability is established; [legacy review](../../agent-memory-systems/reviews/ai-memex-cli.md).
+- [x] **ai-memex-cli** (`ai-memex-cli`) — complete with an explicit public source-attribution limitation; run `AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01`; [overview](../../agentic-system-analyses/retained/zelixag--ai-memex-cli/overview.md); [qualified-publication audit](./audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01-qualified.md); integration `8571849b44910a3f7bcc1d44265d4231eda7ead6`, namespace `1cdba0c477f20cf71f6b74f368febabcd75bbb24`. Historical provider stop: [rolling execution 05](./rolling-05.md), run `AAS-2026-10-12-ai-memex-cli-8e14b4b6efdc-01`; original and no-feedback re-entry audit holds remain historical evidence. [Legacy review](../../agent-memory-systems/reviews/ai-memex-cli.md).
 - [x] **AI Research OS Workshop** (`ai-research-os-workshop`) — complete with recorded limits in [rolling execution 06](./rolling-06.md); run `AAS-2026-10-12-ai-research-os-workshop-1a93869f8e7f-01`, boundary `dc6660555266239cd36483cf51b5ab39febacf02`; [overview](../../agentic-system-analyses/retained/iusztinpaul--ai-research-os-workshop/overview.md); [audit](./audits/rolling-06-ai-research-os-workshop.md); integration `07e73341ad64b4faab06290e9b437ea0c10518b4`; [legacy review](../../agent-memory-systems/reviews/ai-research-os-workshop.md).
 - [x] **AIDE2** (`aide2`) — complete with recorded limits; run `AAS-2026-10-14-2609-26457-6b3bcd4791cf-01`; [overview](../../agentic-system-analyses/retained/2609-26457/overview.md); [audit](./audits/unintegrated/AAS-2026-10-14-2609-26457-6b3bcd4791cf-01.md); integration `c74d2bced00c`;  [archived review](../../agentic-systems/reviews-archive/aide2.md).
 - [ ] **Amazon Science SAGE** (`amazon-science--sage`) — fresh start released in [batch 17](./fresh-failure-batch-2026-10-15.md); historical hold after [rolling execution 08](./rolling-08.md), run `AAS-2026-10-13-sage-5e8c3d911f22-01`, source `3c9244e82244abb1adc5467ee601a03ba0f433a0`; runtime provider failure, boundary installed, no publication/open attempts; requires supported recovery; previously [released for a fresh rerun](./partial-outcomes-2026-10-13.md); preserve [rolling execution 06](./rolling-06.md) run `AAS-2026-10-12-sage-8387fc4221ab-01`, acquired revision `3c9244e82244abb1adc5467ee601a03ba0f433a0`; boundary worker stream ended before terminal response; no accepted member/publication/open attempts; [legacy review](../../agent-memory-systems/reviews/amazon-science--SAGE.md).

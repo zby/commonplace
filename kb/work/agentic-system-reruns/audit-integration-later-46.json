@@ -16,12 +16,33 @@
     },
     {
       "run-id": "AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01",
-      "report": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01.md",
+      "report": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01-qualified.md",
       "status": "coordinator-reviewed",
-      "handle": "f63afb8a-c44d-41b1-9692-1c0d0374f432",
-      "disposition": "hold",
-      "report-sha256": "a820fdcd616b2d2b01e674dfe3041e4b0e31b4c61f0a50264d831de0a90965d5",
-      "blocker": "Public synthesis attributes contradiction resolution instead of source-stated flagging; verifier caveat absent publicly."
+      "handle": "cc5f6b30-0a6f-4efc-9183-0ddcc7cdbfec",
+      "disposition": "integrate with recorded limits",
+      "report-sha256": "6ee7331fd47a0f4e607b3c834272698f89491307857966470d7289370a2c58f3",
+      "audit-history": [
+        {
+          "report": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01.md",
+          "report-sha256": "a820fdcd616b2d2b01e674dfe3041e4b0e31b4c61f0a50264d831de0a90965d5",
+          "handle": "f63afb8a-c44d-41b1-9692-1c0d0374f432",
+          "disposition": "hold",
+          "blocker": "Public synthesis attributes contradiction resolution instead of source-stated flagging; verifier caveat absent publicly."
+        },
+        {
+          "report": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01-reentry.md",
+          "disposition": "hold",
+          "blocker": "No-feedback re-entry changed verification, not the public attribution."
+        }
+      ],
+      "integration": {
+        "publication": "/home/zby/llm/commonplace/kb/agentic-system-analyses/retained/zelixag--ai-memex-cli",
+        "merge-commit": "8571849b44910a3f7bcc1d44265d4231eda7ead6",
+        "final-commit": "1cdba0c477f20cf71f6b74f368febabcd75bbb24",
+        "migration-ledger": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/reentry-pilots-ai-memex-supermemory/ai-memex-namespace.json",
+        "migration-ledger-sha256": "a5edc1904c0b04cb6e6ddf6de3db92102db8822eaf723a8622d309bbd038b54d"
+      },
+      "integrated": true
     },
     {
       "run-id": "AAS-2026-10-15-archie-1ab3d8b8ff03-01",

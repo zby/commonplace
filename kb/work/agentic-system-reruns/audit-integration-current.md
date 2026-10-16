@@ -1,5 +1,24 @@
 # Resume publication audit and integration
 
+## Latest checkpoint: qualified AI Memex integrated
+
+The operator subsequently authorized publication with a marked limitation,
+integration, a second re-entry trial and another independent check. See
+[re-entry pilots](./reentry-pilots.md) for the commission, exact evidence and
+active assignment. AI Memex is now integrated with its flagging-versus-resolution
+qualification public in the synthesis; its original and first re-entry holds
+remain historical evidence. The qualified-publication audit is the current
+clearance. Corpus count: **135 sets**; checklist: **135 complete, 67 pending,
+four older target holds**. The later-46 ledger has ten integrated results,
+three current holds and 33 still-planned audits.
+
+Supermemory is the second no-feedback re-entry trial. Its standard coordinator
+was assigned handle `33a2a0ba-8ce5-41d6-b1a0-e53e72edde3a`; the independent check
+is pending. Do not relaunch on stale handle evidence after interruption. The
+earlier checkpoints below retain their then-current counts and worker states;
+they are not live claims about this new assignment. Other holds and batch-18
+boundaries remain unchanged.
+
 ## Commission
 
 The operator authorized moving to audit and integration of published analyses
