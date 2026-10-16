@@ -106,3 +106,24 @@ has an assigned worker or accepted report. Renew the launch diagnostic after a
 reload, preserve fresh Sol/medium isolation and full parent review, and keep
 integration separate from concurrent report writes. The pass has not closed
 the remaining audit intake or the workshop.
+
+## AI Memex CLI re-entry pilot
+
+**Hold remains after re-entry.** The external reset at `synthesis-verification`
+archived the original run and publication, preserved upstream work and withdrew
+the four downstream completions. After fixing Pi trust for this exact external
+worktree, the fresh coordinator completed attempts `000034`–`000037` through
+publication without audit feedback. No integration was performed.
+
+The [independent re-entry audit](./audits/post-migration/AAS-2026-10-15-ai-memex-cli-4324549b4bc0-01-reentry.md)
+compares the renewed bytes with the archived publication and same-revision
+historical review. Parent review confirmed all thirteen files match the current
+effect: eleven are unchanged, including synthesis and overview; only synthesis
+verification and its manifest pin changed. The new verifier acknowledges
+flagging versus resolution but drops the earlier explicit attribution limit.
+The synthesis still attributes the stronger implication to the README. No
+additional consequential coverage regression was established in this bounded
+audit. Workflow re-entry and publication succeeded; content repair did not.
+The original audit remains historical evidence for the original bytes. The new
+report binds the renewed bytes; neither completion nor this comparison clears
+the hold or changes the other 33 planned audits.
