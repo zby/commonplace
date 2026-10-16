@@ -1,0 +1,38 @@
+{
+  "commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
+  "intake": "kb/work/agentic-system-reruns/publication-audit-current-intake.json",
+  "intake-sha256": "29c5a94a2c926f9c8b895cf5a5f50b0157461fa2a8aff39779131d14ab6d530e",
+  "status": "44 substantive audits complete and parent-read; all audit workers terminal; no integration performed",
+  "fresh-audit-count": 44,
+  "partitioned-audit-count": 43,
+  "supplemental": [
+    {"run-id": "AAS-2026-10-12-2601-01885v1-32274e5bddc1-01", "status": "complete-parent-read", "handle": "441f3ad1-4f1f-4ea7-a991-4e54838b6837", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-12-2601-01885v1-32274e5bddc1-01.md", "reason": "initial intake lookup did not link existing audits/batch-03-agemem.md; fresh supplement was already commissioned before parent rediscovered/read it; lookup/binding gap, not absence of all historical audits"}
+  ],
+  "partition-rule": "Sort intake.publications with classification starting 'needs fresh audit' by run-id; group zero-based index n owns rows[n::4]. Each row's proposed-report is its sole case report path.",
+  "auditor-profile": "fresh independent commonplace-worker, openai/gpt-6.1-sol, medium; one session per disjoint group, not per run; no delegation",
+  "max-active-auditors": 4,
+  "followups": [
+    {"run-id": "AAS-2026-10-15-eal-bench-f9a76e2fa858-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-eal-bench-f9a76e2fa858-01-followup.md", "status": "complete-parent-read", "handle": "0452fdb5-1069-4536-9b4f-6c44928e699d"},
+    {"run-id": "AAS-2026-10-15-equipa-32016e8dd9ae-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-equipa-32016e8dd9ae-01-followup.md", "status": "complete-parent-read", "handle": "0e8281cc-7420-42bf-97c8-3f52eeabd8f7"},
+    {"run-id": "AAS-2026-10-15-gnosis-5bfb42422ce3-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-gnosis-5bfb42422ce3-01-followup.md", "status": "complete-parent-read", "handle": "a271a554-c4e8-4ab6-b717-c52ae7c310f8"},
+    {"run-id": "AAS-2026-10-15-maka-4a8b73e41579-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-maka-4a8b73e41579-01-followup.md", "status": "complete-parent-read", "handle": "62984e24-8aa1-4a00-a615-a24c51d61a48"},
+    {"run-id": "AAS-2026-10-15-origin-805d03bc599f-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-origin-805d03bc599f-01-followup.md", "status": "complete-parent-read", "handle": "d5ec6ee3-f85e-48d2-be9f-21ece1777f26"},
+    {"run-id": "AAS-2026-10-15-siftly-71a1181fbc3d-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-siftly-71a1181fbc3d-01-followup.md", "status": "complete-parent-read; operational hold retained", "handle": "35a1f0d8-eb04-40ab-a380-29dbadc97eb5"},
+    {"run-id": "AAS-2026-10-15-tendril-f560fb299a37-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-tendril-f560fb299a37-01-followup.md", "status": "complete-parent-read", "handle": "7aef07ee-ed0e-4873-9967-8257dac716f5"},
+    {"run-id": "AAS-2026-10-16-beads-rust-e82d5506d2ff-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-beads-rust-e82d5506d2ff-01-followup.md", "status": "complete-parent-read", "handle": "2316e392-a328-4a14-9598-dff4fedd9de8"},
+    {"run-id": "AAS-2026-10-16-openclerk-ec0e00c2bb0a-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-openclerk-ec0e00c2bb0a-01-followup.md", "status": "complete-parent-read", "handle": "de91b8d4-1ae3-447a-8bf8-6967b2931c1a"},
+    {"run-id": "AAS-2026-10-15-llm-wiki-mcp-5dff0dd0576a-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-llm-wiki-mcp-5dff0dd0576a-01-followup.md", "status": "complete-parent-read", "handle": "297ea546-d4fd-4318-8403-292bf500b055"},
+    {"run-id": "AAS-2026-10-15-o-o-b6fd0055e5c1-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-o-o-b6fd0055e5c1-01-followup.md", "status": "complete-parent-read", "handle": "4600ca59-83d2-4e7f-b32c-faddc991afb8"},
+    {"run-id": "AAS-2026-10-15-sift-kg-dca68bc45a2c-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md", "status": "complete-parent-read; operational hold retained", "handle": "714710fa-f46b-4351-af15-cb6503ed4d94"},
+    {"run-id": "AAS-2026-10-15-tardigrade-455e1aaccd4d-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-tardigrade-455e1aaccd4d-01-followup.md", "status": "complete-parent-read", "handle": "c39ba2a0-35b4-4df4-aaad-3121dc635164"},
+    {"run-id": "AAS-2026-10-16-basic-memory-46fe4c6cfdc3-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-basic-memory-46fe4c6cfdc3-01-followup.md", "status": "complete-parent-read", "handle": "a7aa6dcb-2d87-4211-be78-ed68993e40c9"},
+    {"run-id": "AAS-2026-10-16-memoryos-bb72a1b70e03-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-memoryos-bb72a1b70e03-01-followup.md", "status": "complete-parent-read", "handle": "6726bdef-e64c-45de-bbd8-415bed994cd0"}
+  ],
+  "scheduling-observation": "Group 2 completed only two semantic audits before context pressure. Nine binding-only reports are NOT completed audits or production defects. Preserve them; use fresh single-case followups. No integrations before all acceptance evidence is committed.",
+  "groups": [
+    {"index": 0, "count": 11, "status": "parent-read; six incomplete cases completed by single-case followups", "semantic-complete": 5, "incomplete": 6, "handle": "159b2daa-66ba-4ada-a5ce-b611a00a39b5", "summary": "kb/work/agentic-system-reruns/audits/current-publications/group-1.md"},
+    {"index": 1, "count": 11, "status": "parent-read; nine incomplete cases completed by single-case followups", "semantic-complete": 2, "incomplete": 9, "handle": "ba143887-3adf-4877-8257-66a30f4a1cc4", "summary": "kb/work/agentic-system-reruns/audits/current-publications/group-2.md"},
+    {"index": 2, "count": 11, "status": "complete-parent-read", "semantic-complete": 11, "incomplete": 0, "handle": "bfbb258b-ce03-4607-99a8-f6477ece1786", "summary": "kb/work/agentic-system-reruns/audits/current-publications/group-3.md"},
+    {"index": 3, "count": 10, "status": "complete-parent-read", "semantic-complete": 10, "incomplete": 0, "handle": "6941e5dc-73b7-4b47-997b-ac6d45caa462", "summary": "kb/work/agentic-system-reruns/audits/current-publications/group-4.md"}
+  ]
+}

@@ -246,18 +246,39 @@ not completed**, in the [live ledger](./audit-integration-later-46.json).
 Older holds, canonical-incumbent alternatives and batch-18 ownership remain
 unchanged. This is a resumable checkpoint, not audit-workshop closure.
 
+## Audit all current worktree publications
+
+The [current commission](./publication-audit-current-commission.md) expands intake
+to all own completed worktree publications, including completed batch-18 results.
+The [fixed inventory](./publication-audit-current-intake.md) contains 169 live
+publications with exact effect/manifest binding; active and unpublished runs
+remain excluded. The [assignment ledger](./publication-audit-current-ledger.json)
+tracks 43 new/unbound cases plus a supplemental Agemem audit commissioned for
+an intake lookup/binding gap; an existing batch-03 audit was later rediscovered.
+The [reviewed results](./publication-audit-current-results.md) account for all
+169: 98 already integrated, 40 newly approved transfers, six positive incumbent
+alternatives and 25 holds. All 44 fresh substantive audits are complete and
+parent-read; their [sealed decisions](./publication-audit-current-decisions.json)
+retain exact report bindings. No audit worker remains active. Integration is
+pending the evidence commit and ordinary guarded route. Deep holds go to batch
+19; local faults and separate operational stops go to the [reset-and-rework list](./reset-and-rework.md).
+No reset or recovery launch is implied. Historical checkpoints retain their
+then-current counts and scope; use the reviewed results before resuming work.
+
 ## Batch 19: depth-aware recovery preparation
 
 After [qualified AI Memex integration and the Supermemory re-entry check](./reentry-pilots.md),
 the operator requested [batch 19](./batch-19.md) and a check of where the other
 held accounts first went wrong. The [completed investigation](./batch-19-depth-results.md)
-covers 23 held runs, with all four independent reports parent-reviewed. Seven
-recoveries are selected at their evidenced restart depths; no reset or recovery
-run has launched and no worker remains active. The [depth commission](./batch-19-depth-commission.md)
-and [ledger](./batch-19.json) retain the scope and assignments. They exclude batch
-18 and the 33 unaudited later publications. Historical checkpoints above retain
-their then-current counts; the latest canonical count is 135 sets. Content depth,
-incumbent-transfer stops and operational violations remain separate decisions.
+covers the original 23 held runs, with all four independent reports parent-reviewed.
+The later deep/local split leaves six selected deep recoveries and eleven blocked
+deep cases. AREX moves to local rework; mixed cases retain independent profile
+repairs. No reset or recovery run has launched. The [depth commission](./batch-19-depth-commission.md)
+and [ledger](./batch-19.json) preserve their original scope and assignments;
+the separate publication sweep now includes completed batch-18 results and the
+previous unaudited queue. The canonical baseline remains 135 sets before the
+approved transfers. Content depth, incumbent-transfer stops and operational
+violations remain separate decisions.
 Preparation does not authorize reset or integration.
 
 ## After the processes finish

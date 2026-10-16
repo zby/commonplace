@@ -1,0 +1,246 @@
+{
+  "intake-sha256": "29c5a94a2c926f9c8b895cf5a5f50b0157461fa2a8aff39779131d14ab6d530e",
+  "status": "parent-reviewed; only standard guarded integration; no incumbent replacements",
+  "rows": [
+    {
+      "run-id": "AAS-2026-10-15-byterover-cli-71610aaf716b-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-byterover-cli-71610aaf716b-01.md",
+      "report-sha256": "ec13a9b67c652f55efe4d7ce37bb0ca42e44dea327888368e43ae6bfc0f2ca93",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-claude-workstream-kit-103204afa1ab-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-claude-workstream-kit-103204afa1ab-01.md",
+      "report-sha256": "aca64c194edb67c1e3e6757fd20e12390400e12985f0915f2820afa31ba08869",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-cludebot-cb70d11d215b-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-cludebot-cb70d11d215b-01.md",
+      "report-sha256": "0a2d5ff3fd904f05bbbbf25dc727a34da76cd72670329c6eec7f804ceb0696f7",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-cocoindex-3514227a0537-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-cocoindex-3514227a0537-01.md",
+      "report-sha256": "d854a98bedd9c337ad24002accece2248e800f17f27f519f7061d53b232ccc07",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-context-constitution-7a352d7408f6-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-context-constitution-7a352d7408f6-01.md",
+      "report-sha256": "a84d0d6c0f26a45c98d4129879668b259d83eba0c147fe2625ac88ee557c2ae7",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-coral-25e5fdab9dc4-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-coral-25e5fdab9dc4-01.md",
+      "report-sha256": "93a79e4483052495974e8234f2072af28fd9dada40531fceed19963b9506e4f7",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-crewai-62e53db969a7-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-crewai-62e53db969a7-01.md",
+      "report-sha256": "9de5643ed2737818f9a1d72d5b539340b034b2ef5f3b46011d8a2d63579bf3be",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-dense-mem-1a314bed9a5c-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-dense-mem-1a314bed9a5c-01.md",
+      "report-sha256": "157f7b81ccf0734333f5e1ffb91fa81c010801d90b904a41f81c91e9707f38e4",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-eal-bench-f9a76e2fa858-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-eal-bench-f9a76e2fa858-01-followup.md",
+      "report-sha256": "d8ed489f71104fa78f88914b0f8cc89ad783c4377e0881aeaf7521ffc5496dbb",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-echel-08d27848b99a-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-echel-08d27848b99a-01.md",
+      "report-sha256": "11dd12c4922ad780747e21375577ab9074d576f3c20e61ac2f52409e31ea548b",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-echoes-vault-opencode-239c6738bb9e-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-echoes-vault-opencode-239c6738bb9e-01.md",
+      "report-sha256": "0eee45539660fb682e5c31411859ddada83adf9de901bb0938deafb82b899235",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-eigenius-fe68ed89519b-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-eigenius-fe68ed89519b-01.md",
+      "report-sha256": "fd6f4eae82565ea1eacbddbdac01abe111e7f8eb6f9cfe10e3fabf3893cf7771",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-equipa-32016e8dd9ae-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-equipa-32016e8dd9ae-01-followup.md",
+      "report-sha256": "6c960da191b305211f600827ca437067efee7cb6fac9fc4abd8f2e1a6ecd6fd8",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-exo-f0905e2cf44b-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-exo-f0905e2cf44b-01.md",
+      "report-sha256": "9a151d31d8132bb03f7266b4e9f2622967969dbdae0f5448db466372e980950d",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-funes-a9e6dbb3946a-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-funes-a9e6dbb3946a-01.md",
+      "report-sha256": "0ce57a8a9fccfafebbc480159f6921f76a61d8730ac34d218edbda271ddb828a",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-gmemory-a2192cc823f7-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-gmemory-a2192cc823f7-01.md",
+      "report-sha256": "2f919f1e2330be08fea4e96a4bed68c4c1b94f6959957692991b68eaea3491c8",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-gnosis-5bfb42422ce3-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-gnosis-5bfb42422ce3-01-followup.md",
+      "report-sha256": "3a01bb2676503f70a92604836bdc22854ab907885ab8597441d07cb1920118bf",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-isaacclupus-mnemosyn-spec-1887e13dcc13-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-isaacclupus-mnemosyn-spec-1887e13dcc13-01.md",
+      "report-sha256": "6321c5eb9114d429a84eec75573621b1e467ffde7ad42311a8c40297fec5c6cb",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-kblam-5a0c2fe96cc1-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-kblam-5a0c2fe96cc1-01.md",
+      "report-sha256": "c4a4e8f5b3cd8d125909f0f672637b896bf02bca349115683327889ff2db850c",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-llm-wiki-mcp-5dff0dd0576a-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-llm-wiki-mcp-5dff0dd0576a-01-followup.md",
+      "report-sha256": "b2b97e48926bdc2303ba367bd854c8ed9775e5f4f95c699878d3ec359a4b9088",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-maka-4a8b73e41579-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-maka-4a8b73e41579-01-followup.md",
+      "report-sha256": "6af99ecad0dfc931bf8d2622f86ab97d78c4e871478a4b4fcfc266d7dd5d5234",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-merchantbench-d2f4d78dbe37-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-merchantbench-d2f4d78dbe37-01.md",
+      "report-sha256": "ae5b1c3482b1328b6ec16da4870c273114be0a1293fbee2066e3fb4a38b75dc9",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-miroshark-b3df0e053a29-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-miroshark-b3df0e053a29-01.md",
+      "report-sha256": "746c0386563e9a4bf3c03e664f30e006eba9e2cc80107d097c6e3dac993ab979",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-o-o-b6fd0055e5c1-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-o-o-b6fd0055e5c1-01-followup.md",
+      "report-sha256": "16d2fcc1a7713e390d4b6ae7428137ce113e1ae5f6a43ac55ec5ee1cea00bb0c",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-origin-805d03bc599f-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-origin-805d03bc599f-01-followup.md",
+      "report-sha256": "5fe3a2e5b55afeddc83ce9c424592359f169425889c3e8889e0f5d0d3290b054",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-quicky-wiki-628f7d7cc628-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-quicky-wiki-628f7d7cc628-01.md",
+      "report-sha256": "4c11ccc34cc860dcfea4cb70138d4883d441eaebdf25fc2d13c7e1f160b4d86f",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-sage-d0de15ae5730-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sage-d0de15ae5730-01.md",
+      "report-sha256": "715b841efd94b08bc44c06613f8975ccaa4f7bd254efdfe4e583e7bfcdd67ef2",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-synto-eabcdcce3da2-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-synto-eabcdcce3da2-01.md",
+      "report-sha256": "5e5eed8a464cf1da6b0b0b224fb8dd0641ab16c38ce594fe7169b10cb1ca75ae",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-talorys-7bce41ba9401-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-talorys-7bce41ba9401-01.md",
+      "report-sha256": "eda64a56e085382f449827d82dc7cc06c499648f3251448f8a83e18666624500",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-tardigrade-455e1aaccd4d-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-tardigrade-455e1aaccd4d-01-followup.md",
+      "report-sha256": "c9d2b3eb6b60a3fccde4e9b3a68f118716c5b437662a7ba2fc97f27b80dca531",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-15-tendril-f560fb299a37-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-tendril-f560fb299a37-01-followup.md",
+      "report-sha256": "7f88f3b7627aefcf87cc89973c0662a997bcdf35064cdc2313652f7a73709b7c",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-a-mem-sys-eff95cd80440-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-a-mem-sys-eff95cd80440-01.md",
+      "report-sha256": "fe105458c1ab923853e6066a880c47e107186977b5bfeda2dc4b5d85a046bf11",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-agent-s-db6fee212353-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-agent-s-db6fee212353-01.md",
+      "report-sha256": "be299f102f0eef18e4d372ae200e08a20fcd328a5f04dd9b0361b21d9e028600",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-basic-memory-46fe4c6cfdc3-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-basic-memory-46fe4c6cfdc3-01-followup.md",
+      "report-sha256": "99bfbb03fb21f206ac83523b68eb1137d7622aac50e78bdce2c960e4da84daf3",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-beads-rust-e82d5506d2ff-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-beads-rust-e82d5506d2ff-01-followup.md",
+      "report-sha256": "7663855035b2ce92f07d1ed7fa52980280cfa10ce28f676875d11e6930f0d0d4",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-hipporag-2b37edfc7ade-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-hipporag-2b37edfc7ade-01.md",
+      "report-sha256": "4e73668ec11e51a14f9df417d1bae2d19ba90921d089fbfe1779cb244c539e82",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-llm-wiki-6786c5985cdc-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-llm-wiki-6786c5985cdc-01.md",
+      "report-sha256": "9fddcd3e55d57078bd35a42697ae9050b8271dc7cf5a2bcd4cb364ae47ede98f",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-memoryos-bb72a1b70e03-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-memoryos-bb72a1b70e03-01-followup.md",
+      "report-sha256": "092ab1742bdddb70b94644cfda4c1fa7617c91a5fc22996c57fae85b94625f60",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-openclerk-ec0e00c2bb0a-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-openclerk-ec0e00c2bb0a-01-followup.md",
+      "report-sha256": "053d92c380437f96e5ccd1b65f146ba3fa4d9b7f47eb8fd323cdf41a585d93c8",
+      "disposition": "integrate with recorded limits"
+    },
+    {
+      "run-id": "AAS-2026-10-16-os-copilot-7cef03148c53-01",
+      "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-16-os-copilot-7cef03148c53-01.md",
+      "report-sha256": "0a38ccf687ec8425912f41c347017bc25b887735663e1176c07471cf845f9f20",
+      "disposition": "integrate with recorded limits"
+    }
+  ]
+}

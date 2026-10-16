@@ -11,14 +11,19 @@ The first selected target is Supermemory, restarting its analytical chain from
 
 The [batch ledger](./batch-19.json) owns selection and assignment status.
 The [completed depth investigation](./batch-19-depth-results.md) covers 23 held
-runs and supports seven selected recoveries. Four isolated reports covering the
-other 22 runs are complete and parent-reviewed; no worker remains active.
-Only a parent-reviewed depth finding can support another selection. If a case
-needs a different source boundary, an unavailable source, incumbent replacement,
-reserved-owner coordination or disposition of an authority violation, retain
-that decision rather than automatically scheduling it.
-Batch 18's seventeen identities and worktrees are outside this commission.
-The 33 unaudited later publications are a separate queue, not known errors.
+runs and initially supported seven selected recoveries. Under the subsequent
+[all-publication audit commission](./publication-audit-current-commission.md),
+AREX moves to the [local reset-and-rework list](./reset-and-rework.md), leaving
+six selected deep recoveries. Eleven other deep cases are recorded here as
+**blocked**, not selected for incumbent replacement or reserved work. The four
+baseline depth reports are complete and parent-reviewed. New sweep findings
+extend these lists only after complete review.
+
+A different source boundary, unavailable source, incumbent replacement,
+reserved-owner coordination or authority violation remains an explicit decision,
+not automatic scheduling permission. Completed batch-18 results now enter the
+separate all-publication audit; active runs remain untouched. Unreviewed results
+are not presumed erroneous or selected for recovery.
 
 ## First selected target: Supermemory
 
@@ -59,13 +64,12 @@ checkpoint, not permission to skip a new preflight.
 | 3 | OpenRSI | `c72dec9967a3` | `runtime` |
 | 4 | ModularRSI | `96b89989168e` | `runtime` |
 | 5 | JAZ | `a94bea79c61a` | `runtime` |
-| 6 | AREX-Skill | `1871063034b5` | `report-verification` |
-| 7 | Autogenesis | `9bcfa57fd7c1` | `boundary` |
+| 6 | Autogenesis | `9bcfa57fd7c1` | `boundary` |
 
 The immutable intake named by the ledger resolves each exact run, worktree,
-command directory and frozen source/method identity. All seven current
-publications match their own completed effects, have no open attempts, and have
-no canonical incumbent in the current 135-set boundary-identity scan. These
+command directory and frozen source/method identity. The initial seven
+publications matched their own completed effects, had no open attempts, and had
+no canonical incumbent in the then-current 135-set boundary-identity scan. These
 point-in-time checks do not authorize skipping launch preflight.
 
 ContextPilot and Autogenesis have misleading boundary **narratives**, not a need
@@ -74,11 +78,15 @@ analytical dependents while keeping opening/acquisition and source identity,
 revision, method and run identity. Independent rechecking must inspect the new
 functional scope as well as the repaired narrative. All other selected runs
 retain boundary. AREX retains its useful records and reopens the verifier's own
-assessment; do not force a positive conclusion through a special handoff.
+assessment through the separate local-rework list; do not force a positive
+conclusion through a special handoff.
 
-The other sixteen cases are explicitly excluded: eleven incumbent alternatives,
-four operational-only holds and reserved Agent Skills. Their depth findings and
-separate decisions remain in the completed investigation; no hold is waived.
+The ledger retains eleven blocked deep cases: ten incumbent alternatives and
+reserved Agent Skills. Their per-fault depths remain in the completed
+investigation. GBrain's incumbent alternative and AREX are local rework instead.
+The four original operational-only holds and two added by the current sweep
+require the separate operational dispositions in the local-list companion, not
+automatic content restarts. No hold is waived by appearing in either list.
 
 ## Execution boundary for the future launch
 

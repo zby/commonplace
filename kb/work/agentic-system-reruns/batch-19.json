@@ -1,16 +1,32 @@
 {
   "commission": "kb/work/agentic-system-reruns/batch-19.md",
   "depth-commission": "kb/work/agentic-system-reruns/batch-19-depth-commission.md",
-  "status": "prepared-not-launched; depth investigation parent-reviewed",
+  "status": "prepared-not-launched; publication sweep classified deep, local and operational stops",
+  "current-commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
+  "local-rework-list": "kb/work/agentic-system-reruns/reset-and-rework.json",
   "depth-results": "kb/work/agentic-system-reruns/batch-19-depth-results.md",
-  "selected-count": 7,
-  "excluded-count": 16,
+  "selected-count": 6,
+  "excluded-count": 17,
+  "deep-queue-count": 17,
+  "blocked": [
+    {"run-id": "AAS-2026-10-09-dynamic-cheatsheet-2529cdc2795b-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-10-graphiti-5833fd846841-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-10-graphiti-85a21a06d35c-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-10-napkin-b831630d0978-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-11-graphiti-4896fccada9e-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-11-graphiti-72c99440b180-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-11-letta-code-f54d2479889e-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-11-napkin-1b60c5d21780-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
+    {"run-id": "AAS-2026-10-11-napkin-28752ba411ea-01", "from-job": "memory", "stop": "canonical-incumbent transfer; separate profile direction fault also requires rework"},
+    {"run-id": "AAS-2026-10-15-dynamic-cheatsheet-11e3e77c2265-01", "from-job": "runtime", "stop": "canonical-incumbent transfer; historical audit-byte gap; separate profile history fault also requires rework"},
+    {"run-id": "AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01", "from-job": "epistemic", "stop": "reserved owner and historical compliance disposition"}
+  ],
   "parent-checks": {
-    "scope": "exact 23 held runs; excludes AI Memex, batch 18 and 33 unaudited later publications",
+    "scope": "baseline depth investigation: original 23 held runs, excluding qualified AI Memex, batch 18 and then-unaudited publications; later sweep governed separately",
     "publication-effects": "all 23 current recursive maps match completed effects; no open attempts",
     "intake-maps": "22 unchanged; Supermemory matches its bound renewed publication",
-    "canonical-incumbents": "none for the seven selected identities in the current 135-set canonical boundary scan",
-    "worker-status": "all four completed; complete reports parent-reviewed; no active workers",
+    "canonical-incumbents": "none for the original seven at the baseline 135-set scan; six deep selections remain after moving AREX to local rework; renew preflight before launch",
+    "worker-status": "all four baseline depth workers completed and complete reports parent-reviewed; later audit assignments are separate",
     "reset-status": "no reset, analysis launch, recovery or integration performed"
   },
   "intake": "kb/work/agentic-system-reruns/audit-integration-intake-2026-10-15.json",
@@ -59,15 +75,6 @@
       "status": "selected-not-reset-not-launched",
       "current-attempts-in-reset-closure": 33,
       "reason": "initial replay account omits sequential-invocation condition; dependent epistemic qualification is inconsistent",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
-    },
-    {
-      "run-id": "AAS-2026-10-15-arex-skill-1871063034b5-01",
-      "from-job": "report-verification",
-      "status": "selected-not-reset-not-launched",
-      "current-attempts-in-reset-closure": 12,
-      "preserve": ["opening", "acquire", "boundary", "analyst reports", "reconciliation", "source revision", "method revision", "run identity", "debug history"],
-      "reason": "blanket architectural assessment in verifier and synthesis does not dispose of existing installed-state witness; no predetermined positive classification",
       "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
     },
     {

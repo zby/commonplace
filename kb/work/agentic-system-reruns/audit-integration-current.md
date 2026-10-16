@@ -1,6 +1,37 @@
 # Resume publication audit and integration
 
-## Current preparation: batch 19 and held-error depth
+## Current sweep: all own worktree publications
+
+The operator commissioned [all-publication audit and integration](./publication-audit-current-commission.md).
+The [fresh intake](./publication-audit-current-intake.md) fixes 169 live own
+completed publications, including nine completed batch-18 results. All maps
+match their own effects. Seven unpublished batch-18 runs and a missing ClawVault
+worktree remain outside the published snapshot; no active jobs or logs were
+inspected. This explicitly expands the earlier completed-batch-18 exclusion.
+
+The [reviewed results](./publication-audit-current-results.md) and
+[sealed decisions](./publication-audit-current-decisions.json) account for all 169:
+98 already integrated, 40 approved new transfers, six positive incumbent
+alternatives, and 25 held publications. All 44 fresh substantive audits are
+complete and completely parent-read; 125 assessments are reused on exact bytes.
+The [assignment ledger](./publication-audit-current-ledger.json) retains the two
+partial groups and 15 completed fresh single-case followups. No audit worker
+remains active. Commit this evidence before the 40-entry guarded serial transfer.
+No integration has occurred in this sweep yet.
+
+Agemem's supplement closed an intake lookup/binding gap. Parent subsequently
+found and read the existing `audits/batch-03-agemem.md`; not all historical
+evidence was missing. Keep both reports and do not integrate Agemem again.
+AI Memex's qualified clearance has its separate explicit retained-byte binding.
+
+Deep cases go to [batch 19](./batch-19.md), including explicit blocked entries;
+local assessment/profile/synthesis faults go to [reset and rework](./reset-and-rework.md).
+AREX moves to local rework; GBrain remains locally reworkable but transfer-blocked.
+Operational and incumbent stops remain separate. Siftly and Sift-KG add two
+operational holds, taking that list to six; no semantic reset is invented for
+them. No recovery queue is launched.
+
+## Prior preparation: batch 19 and held-error depth
 
 [Batch 19](./batch-19.md) is prepared, not launched: seven selected runs, with
 Supermemory first from `runtime`. The [completed depth investigation](./batch-19-depth-results.md)

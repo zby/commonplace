@@ -1,0 +1,40 @@
+{
+  "commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
+  "status": "planned; no resets or rework launched",
+  "pure-local-count": 2,
+  "mixed-local-count": 3,
+  "operational-only-stops": [
+    {"run-id":"AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01","first-operation":"000022-report-verification","restart":null},
+    {"run-id":"AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01","first-operation":"000024-memory-profile","restart":null},
+    {"run-id":"AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01","first-operation":"000032-synthesis","restart":null},
+    {"run-id":"AAS-2026-10-15-ai-context-os-4a0e34822f96-01","first-operation":"000038-synthesis","restart":null},
+    {"run-id":"AAS-2026-10-15-siftly-71a1181fbc3d-01","first-operation":"000008-epistemic","restart":null,"fault":"out-of-handout run-root identity write then removal; prior contents unknown","audit":"kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-siftly-71a1181fbc3d-01-followup.md","missed-barrier":"coordinator/parent operational acceptance; report-verification mission checks source records, not operational traces","conditional-lineage-replacement":"epistemic then ordinary report-verification/dependents, only if separately required; does not cure historical authority stop"},
+    {"run-id":"AAS-2026-10-15-sift-kg-dca68bc45a2c-01","first-operation":"000009-workflow","restart":null,"fault":"successful empty report write into a sibling worktree-like path, followed by rm and rmdir of its containing chain; prior file contents unknown","audit":"kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md","missed-barrier":"worker path check and disclosure, then coordinator/parent operational acceptance; report-verification mission is source/content review","conditional-lineage-replacement":"workflow then ordinary report-verification/dependents, only if separately required; does not cure historical authority stop"}
+  ],
+  "operational-stop-policy":"Resolve prior foreign-path ownership, contents and collateral effects; no semantic restart justified merely by an operational violation. Prior violations remain historical facts. Evidence: audits/depth/batch-19-operational.md.",
+  "mixed-case-policy":"These classification faults have usable upstream facts. The same runs also remain in blocked batch-19 deep reconstruction. Coordinate a combined dependency-aware recovery; never launch independent concurrent resets.",
+  "rows": [
+    {
+      "run-id": "AAS-2026-10-15-arex-skill-1871063034b5-01",
+      "verification-restart": "report-verification",
+      "author-rework": ["synthesis"],
+      "conditional-author-addition": "runtime/epistemic only if an explicit aspect-level record is needed; existing mechanism records not established false",
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "status": "planned-not-reset; moved from batch 19 under deep/local split",
+      "canonical-incumbent-stop": false,
+      "assessment-scope-ambiguity": "earlier exercised versus architectural wording is partly ambiguous; do not force a positive classification"
+    },
+    {
+      "run-id": "AAS-2026-10-13-gbrain-ab46e8c48dba-01",
+      "verification-restart": "synthesis-verification",
+      "author-rework": ["synthesis"],
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-graphiti-and-authority.md",
+      "status": "blocked-incumbent-transfer; not-reset",
+      "canonical-incumbent-stop": true,
+      "required-coverage": "managed-write conditions plus the other scope and limit-carriage faults enumerated in depth report"
+    },
+    {"run-id":"AAS-2026-10-11-napkin-1b60c5d21780-01","verification-restart":"profile-verification","author-rework":["memory-profile"],"fault":"C2 profile simultaneously grants saved reports wired authority and correctly limits later human review to afforded; preserve improved upstream result-object distinction","status":"blocked-incumbent-transfer; coordinate with deep report repair","canonical-incumbent-stop":true,"depth-report":"kb/work/agentic-system-reruns/audits/depth/batch-19-napkin-and-cheatsheet.md"},
+    {"run-id":"AAS-2026-10-11-napkin-28752ba411ea-01","verification-restart":"profile-verification","author-rework":["memory-profile"],"fault":"C3 known timer-driven separate-model delivery is left indeterminate; selector-detail omission remains separate deep memory work","status":"blocked-incumbent-transfer; coordinate with deep report repair","canonical-incumbent-stop":true,"depth-report":"kb/work/agentic-system-reruns/audits/depth/batch-19-napkin-and-cheatsheet.md"},
+    {"run-id":"AAS-2026-10-15-dynamic-cheatsheet-11e3e77c2265-01","verification-restart":"profile-verification","author-rework":["memory-profile"],"fault":"F1 local history clearing/replacement is grouped with opaque hosted maintenance despite supported upstream operations; preserve correct memory-history records","status":"blocked-incumbent-transfer and historical audit-byte gap; coordinate with deep runtime repair","canonical-incumbent-stop":true,"depth-report":"kb/work/agentic-system-reruns/audits/depth/batch-19-napkin-and-cheatsheet.md","fresh-audit":"kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-dynamic-cheatsheet-11e3e77c2265-01.md"}
+  ]
+}
