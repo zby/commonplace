@@ -221,6 +221,30 @@ these independently: a completed attempt can retain a worker problem without
 being a current failure. See the inspection limitations above.
 Publishability means engine coverage, not publication or content validation.
 
+`reset <run> --from <job>` archives debugging evidence outside active discovery,
+withdraws that job's active attempts and dependent completions, and rebuilds the
+working artifact from retained upstream acceptance records. It does not launch
+workers or supply audit feedback. After the external reset, the agent follows
+the existing step program without special instructions. Verification can send
+retained author work through the normal correction loop. Correction attempt
+budgets restart, including for retained authors. Independent work stays active.
+`--json` reports the reset jobs and debugging archive path.
+
+Reset requires no open attempts or unresolved uncertain effects. Settle workers
+before invoking it; do not delete open records to simulate idleness. Refusals
+and optional candidate-check context are not forward reset edges. The debugging
+archive holds the pre-reset run, withdrawn external effects and prepared next
+state. A pending-reset marker blocks normal engine operations after interruption;
+repeat the same reset command to finish applying that prepared state.
+
+Handlers with external effects must supply the reset hook described in
+`src/commonplace/artifactrun/reset.py`. The analysis publication hook withdraws
+an exact unreleased worktree publication and restores its opening incumbent, if
+any, so unchanged opening metadata can support ordinary replacement publication.
+It rejects altered publication bytes and already integrated results. Reset does
+not alter the frozen plan, opening method commit, source snapshot or run identity;
+use the run's matching command environment.
+
 `validate-output <prompt-path>` gives a worker read-only validation feedback for
 its open attempt's primary output. It resolves the output, artifact directory
 and role from recorded run metadata and invokes the same role-draft validator

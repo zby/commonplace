@@ -3,6 +3,7 @@
     commonplace-run start RUN PLAN.yaml [--param key=value ...]
     commonplace-run advance RUN [--completed ATTEMPT ...] [--failed ATTEMPT=REASON ...]
                                 [--model ID] [--effort LEVEL] [--json]
+    commonplace-run reset RUN --from JOB [--json]
     commonplace-run status RUN [--json]          # also re-prints open hand-outs
     commonplace-run validate-output PROMPT_PATH # read-only worker feedback
     commonplace-run judge RUN --role ROLE --outcome accepted|refused
@@ -58,6 +59,11 @@ def _parser() -> argparse.ArgumentParser:
     step.add_argument("--model", help="worker model identity for the reported attempts")
     step.add_argument("--effort", help="worker effort for the reported attempts")
     step.add_argument("--json", action="store_true")
+
+    reset = commands.add_parser("reset", help="archive debugging evidence and reset active downstream state")
+    reset.add_argument("run", type=Path)
+    reset.add_argument("--from", dest="job", required=True, metavar="JOB")
+    reset.add_argument("--json", action="store_true")
 
     status = commands.add_parser("status", help="members, open attempts, refusals in force, publishability")
     status.add_argument("run", type=Path)
@@ -158,6 +164,15 @@ def main(argv: list[str] | None = None) -> int:
             _print_status(status, arguments.json)
             if status.stops:
                 return STOPPED
+        elif arguments.command == "reset":
+            from commonplace.artifactrun.reset import reset_run
+
+            report = reset_run(arguments.run, arguments.job)
+            if arguments.json:
+                print(json.dumps(report, indent=1))
+            else:
+                print("reset: " + " ".join(report["jobs"]))
+                print(f"debug archive: {report['archive']}")
         elif arguments.command == "status":
             view = inspect(arguments.run)
             view["handouts"] = open_handouts(arguments.run)

@@ -48,6 +48,7 @@ from commonplace.artifactrun.plan import (
     PlanError,
     load_plan,
 )
+from commonplace.artifactrun.reset import reset_run
 
 __all__ = [
     "AttemptResult",
@@ -67,6 +68,7 @@ __all__ = [
     "judge",
     "load_plan",
     "open_handouts",
+    "reset_run",
     "run_lock",
     "run_values",
     "start_run",

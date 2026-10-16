@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 from collections.abc import Mapping
+from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 
@@ -17,7 +18,7 @@ import yaml
 
 from commonplace.artifactrun import CodeAttempt, UncertainEffectError
 from commonplace.artifactrun.checks import criterion_bytes
-from commonplace.artifactrun.effects import hashes, install_tree
+from commonplace.artifactrun.effects import hashes, install_tree, safe, tree
 from commonplace.artifactrun.worktree import (
     preparation_for,
 )
@@ -296,6 +297,82 @@ def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
                      inspect_incumbent=inspect_incumbent)
     return {"receipt": _receipt(published=True, destination=str(destination), members=hashes(files),
                                 **{name: metadata.get(name) for name in RECEIPT_PINS})}
+
+
+@contextmanager
+def reset_publish_analysis(run_dir: Path, job):
+    """Lock publication, then prepare withdrawal of this run's unreleased effect.
+
+    Restore the opening incumbent (if any), so ordinary publication can run again
+    with its unchanged opening metadata. The debugging snapshot retains withdrawn
+    bytes and journals. Already integrated results are not reset by this hook.
+    """
+    from commonplace.artifactrun.reset import Replacement
+    from commonplace.artifactrun.run import Run
+    from commonplace.artifactrun.store import RunStore
+
+    # Acquisition of the same lock also works while a reset is pending; do not
+    # read active records until the returned preparation callable is invoked.
+    from commonplace.artifactrun.worktree import source_checkout
+
+    repo = source_checkout(run_dir)
+    if repo is None:
+        raise ValueError("publication reset requires an analysis worktree")
+
+    def prepare():
+        run = Run(RunStore(run_dir))
+        opened = run.latest_completed("opening")
+        if opened is None:
+            raise ValueError("publication reset requires opening metadata")
+        metadata = _json(run.store.get(opened["outputs"]["metadata"]), "opening metadata")
+        overview = safe(repo / metadata["review-path"])
+        destination = overview.parent
+        if destination.parent != repo / RETAINED_ROOT or overview.name != run.layout.path("overview"):
+            raise ValueError("publication reset destination is not a retained analysis")
+        preparation = preparation_for(repo)
+        origin = Path(str(preparation["origin"]))
+        if origin == repo:
+            raise ValueError("publication reset only replaces an unreleased worktree result")
+        for overview in [*(origin / RETAINED_ROOT).glob("*/overview.md"),
+                         origin / ARCHIVE_ROOT / run_dir.name / "overview.md"]:
+            if overview.is_file() and _document(overview.read_bytes()).frontmatter.get("run-id") == run_dir.name:
+                raise ValueError("publication is already integrated; reset only supports unreleased results")
+        journal = safe(run_dir / JOURNAL)
+        expected = metadata["expected-incumbent-sha256"]
+        if not journal.exists():
+            incumbent = tree(destination)
+            anchor = run.layout.path("overview")
+            actual = "absent" if incumbent is None else hashes(incumbent).get(anchor)
+            if actual != expected:
+                raise ValueError("publication reset has no journal establishing the changed destination")
+            return []
+        record = json.loads(journal.read_bytes())
+        if (record.get("run-id") != run_dir.name or record.get("destination") != str(destination)
+                or record.get("source-identity") != metadata["source-identity"]
+                or record.get("expected") != expected):
+            raise ValueError("publication reset journal differs from opening identity")
+        old, new = record.get("old"), record.get("new")
+        if not isinstance(new, dict) or (old is not None and not isinstance(old, dict)):
+            raise ValueError("invalid publication reset byte maps")
+        anchor = run.layout.path("overview")
+        if ("absent" if old is None else old.get(anchor)) != expected:
+            raise ValueError("publication reset incumbent differs from opening")
+        archive = safe(Path(record["archive"])) if record.get("archive") else None
+        if (old is None) != (archive is None) or (archive and archive.parent != repo / ARCHIVE_ROOT):
+            raise ValueError("invalid publication reset archive")
+        now = hashes(tree(destination))
+        archived = hashes(tree(archive)) if archive else None
+        if record.get("state") == "rolled-back" and now == old and archived is None:
+            return [Replacement(journal)]
+        if record.get("state") not in ("started", "completed") or now != new or archived != old:
+            raise ValueError("publication reset requires exact established publication bytes")
+        replacements = [Replacement(destination, archive), Replacement(journal)]
+        if archive is not None:
+            replacements.append(Replacement(archive))
+        return replacements
+
+    with publication_lock(repo):
+        yield prepare
 
 
 RECEIPT_PINS = ("run-id", "inputs-commit", "system", "source-identity", "source", "source-revision",

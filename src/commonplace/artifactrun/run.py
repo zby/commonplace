@@ -9,6 +9,7 @@ writes: commits are the store's, transitions are the engine's.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
@@ -69,6 +70,9 @@ class Run:
 
     def __init__(self, store: RunStore) -> None:
         self.store = store
+        pending = store.run_dir / ".reset-pending.json"
+        if pending.exists():
+            raise ValueError("active-state reset is incomplete; repeat the same reset command to finish it")
         metadata = store.read_metadata()
         # The type is fixed for the run like the declaration: read from run.json,
         # never from the library, so a later edit or another checkout changes nothing.
@@ -77,6 +81,8 @@ class Run:
         self.type_text = metadata["type"]
         self.parameters = metadata.get("parameters", {})
         self.library = Path(metadata["library"])
+        budget = store.state / "attempt-budget.json"
+        self.attempt_budget = json.loads(budget.read_text()) if budget.exists() else {}
         self.jobs = load_plan(metadata["declaration"], self.layout.roles)
         self.reload()
 
@@ -101,7 +107,8 @@ class Run:
         return next((r for r in self.attempts.values() if r["job"] == job and r["state"] == "open"), None)
 
     def attempt_count(self, job: str) -> int:
-        return sum(1 for r in self.attempts.values() if r["job"] == job)
+        return sum(1 for r in self.attempts.values()
+                   if r["job"] == job and r["seq"] > self.attempt_budget.get(job, 0))
 
     def latest_output(self, job: Job) -> str | None:
         """The producing job's latest completed primary output."""
