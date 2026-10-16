@@ -1,4 +1,4 @@
-# Batch 18: eleven remaining sources
+# Batch 18: seventeen remaining sources
 
 ## Commission and readiness
 
@@ -11,10 +11,10 @@ subsequently released the older refresh-workshop reservation for Agent-S,
 MemoryOS, Basic Memory, OS-Copilot, A-mem and HippoRAG and added all six.
 
 [Script 18](./bash-18.sh) contains seventeen sequential fresh analyses. **Prepared,
-not launched; blocked until the owner-qualified namespace migration is implemented
-and committed.** Current `source_slug` still returns `llm-wiki` for every source.
-This preparation changes no engine code or publication path. The script refuses
-the old naming behavior before creating any logs or worktrees. It also refuses
+not launched.** The [publication namespace migration](./publication-namespace-migration.md)
+separates `publication_slug` from the immutable run-ID slug and moves existing
+GitHub publications to owner-qualified paths. Commit the migration before any
+launch. The script refuses old publication naming before creating logs or worktrees. It also refuses
 uncommitted changes to the naming implementation: isolated preparation uses HEAD,
 not uncommitted code. The guard checks naming, not completion of every migration
 or validation obligation.

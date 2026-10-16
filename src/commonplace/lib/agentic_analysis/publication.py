@@ -26,7 +26,7 @@ from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     CAPTURE_DIRECTORY,
     RETAINED_ROOT,
-    source_slug,
+    publication_slug,
 )
 from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
@@ -254,7 +254,7 @@ def _prepare_publication(attempt: CodeAttempt):
         if os.path.lexists(attempt.run_dir / JOURNAL):
             raise UncertainEffectError("non-complete artifact has a publication effect journal")
         return None  # Accepted artifact remains local; no retained or archive output.
-    destination = repo / RETAINED_ROOT / source_slug(metadata["source-identity"], metadata["system"])
+    destination = repo / RETAINED_ROOT / publication_slug(metadata["source-identity"], metadata["system"])
     if metadata["review-path"] != (destination / layout.path("overview")).relative_to(repo).as_posix():
         raise ValueError("opened publication destination differs from the canonical source path")
 

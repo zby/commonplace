@@ -29,7 +29,10 @@ coordinator tasks.
 ## Placement and types
 
 `state/` holds working analyses. `retained/` holds the current accepted
-analysis of each system, one directory per system. `retained-archive/` holds
+analysis of each source, one directory per source. GitHub publications use
+lowercase `<owner>--<project>` directory names, preserving repository punctuation.
+Other sources retain their existing directory naming. Publication names are
+independent of immutable run IDs. `retained-archive/` holds
 superseded analyses. `instructions/` holds the analysis method.
 Comparative writing belongs in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
 its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;

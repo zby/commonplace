@@ -15,7 +15,7 @@ from commonplace.artifactrun import effects
 from commonplace.artifactrun.run import _parse_type
 from commonplace.lib.agentic_analysis import guards
 from commonplace.lib.agentic_analysis import publication as engine
-from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE, source_slug
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE, publication_slug
 from commonplace.lib.directory_artifact import MANIFEST_NAME
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -32,7 +32,7 @@ def engine_fixture(repo, monkeypatch, name="fixture"):
     run.mkdir()
     layout, _ = _parse_type((ROOT / "kb" / ANALYSIS_TYPE).read_text(), ANALYSIS_TYPE)
     identity = f"https://example.invalid/{name}"
-    destination = repo / "kb/agentic-system-analyses/retained" / source_slug(identity, name)
+    destination = repo / "kb/agentic-system-analyses/retained" / publication_slug(identity, name)
     members = {"boundary": b"boundary", "overview": b"overview"}
     worker = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model",
               "model": "fixture-model-1", "effort": "high"}

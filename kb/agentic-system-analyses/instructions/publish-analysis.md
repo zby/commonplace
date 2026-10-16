@@ -18,7 +18,10 @@ manifest separately from the engine's type-only working projection in `artifact/
 Publication consumes the pinned manifest and members, not a second `output/` artifact.
 There is no standalone finalize, handoff or publication command.
 
-A `complete` disposition publishes to `retained/<source-slug>/`. An incumbent
+A `complete` disposition publishes GitHub sources to
+`retained/<owner>--<project>/`, lowercasing both components and preserving
+repository punctuation. Other source kinds retain their existing naming.
+Publication names do not change run IDs. An incumbent
 moves unchanged to `retained-archive/<its-run-id>/`, then the accepted manifest
 and members are copied unchanged. `blocked` and `out-of-scope` dispositions
 complete locally without retained mutation. Use `commonplace-analysis
@@ -47,6 +50,19 @@ not establish the filesystem outcome. Never edit state to claim completion.
 Old/mixed run directories are rejected. Keep old retained data; independently
 chosen old-evidence handling requires its archived method checkout, not an
 adapter in this tree.
+
+A frozen pre-namespace-migration worktree still uses its pinned publication
+name and integration code. Do not patch its members, receipts, method or run ID.
+Before separately authorized integration, compare its source identity with the
+origin's current publications. If an owner-qualified incumbent exists, stop:
+the old integration path does not establish replacement or archive correctness
+at the new path. Preserve the audit hold for a separately planned transfer.
+If no incumbent exists, an authorized legacy integration may use its pinned
+commands, followed immediately by the separately authorized
+`uv run python scripts/migrate_analysis_publications.py --apply --record <new-record-path>`
+in the origin. Review its dry run first. The migration rejects duplicate sources,
+destination collisions and member edits; validate before exposing the result.
+This migration command belongs to this checkout, not the installed framework.
 
 The site and comparison tools use the shared current-analyses enumerator. It rejects
 partial sets, duplicate sources and directory names that disagree with source

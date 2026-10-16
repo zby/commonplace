@@ -51,6 +51,16 @@ The helper launches no models and does not alter a live analysis run.
 isolated single-packet launcher and its predeclared limits; see the
 [execution preflight](../kb/reports/retained/synthesis-distinction-pilot-20261005/protocol/execution-preflight.md).
 
+## Agentic analysis publication namespace
+
+`uv run python scripts/migrate_analysis_publications.py` plans owner-qualified
+GitHub publication moves. Add `--apply --record <new-record-path>` to move them
+and rewrite backlinks in one repository pass. It rejects manifest mismatches,
+duplicate sources, occupied destinations and required member edits; it never
+repins accepted files. Use exclusive mutation ownership. Frozen legacy
+integrations need the separate checks in the
+[publication instruction](../kb/agentic-system-analyses/instructions/publish-analysis.md).
+
 ## Agentic analysis rerun statistics
 
 `python3 scripts/agentic_system_rerun_stats.py` is a fast, stdlib-only,

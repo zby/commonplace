@@ -22,6 +22,7 @@ from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     RETAINED_ROOT,
     analysis_layout,
+    publication_slug,
     resolve_worker_profile,
     source_slug,
 )
@@ -81,7 +82,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         raise ValueError("analysis run ID does not match the source slug and worktree preparation token")
     commit = _head(repo)
     require_prepared_method(repo, commit, preparation, job="opening")
-    destination = (RETAINED_ROOT / slug / analysis_layout().path("overview")).as_posix()
+    destination = (RETAINED_ROOT / publication_slug(identity, system) / analysis_layout().path("overview")).as_posix()
     incumbent = inspect_destination(
         repo_root=repo, generated_destination=destination, source_identity=identity,
     )

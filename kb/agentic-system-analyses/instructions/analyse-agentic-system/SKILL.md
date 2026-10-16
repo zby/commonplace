@@ -12,7 +12,7 @@ model: opus
 
 Analyse one external agentic system at one frozen evidence boundary and publish its accepted artifact with the overview as the public entry point. Code runs the analysis as a workflow: it names each job, judges each result, and publishes. You open the run, launch the workers it names, and report.
 
-Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained analysis under `kb/agentic-system-analyses/retained/<system-slug>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
+Invocation authorizes the artifact-run directory under `kb/agentic-system-analyses/state/`, the retained analysis under `kb/agentic-system-analyses/retained/<publication-name>/`; code writes all of them. Code acquires and freezes a GitHub source's checkout under `related-systems/`; the boundary job may freeze other sources under its source rules; later jobs read them read-only. Invocation does not authorize editing source content, auxiliary indexes or surveys, transfer scans, landscape synthesis, other retained reports, or Git staging and commits.
 
 ## Confirm the target
 
@@ -143,8 +143,10 @@ commonplace-analysis start \
 Code normalizes the source identity and allocates
 `AAS-<date>-<source-slug>-<worktree-token>-<nn>` under
 `kb/agentic-system-analyses/state/`. The token comes from the ready preparation
-record, including with `--worktree`. The source slug determines the stable
-publication directory; there is no public-path override. The command pins the
+record, including with `--worktree`. The run's source slug is independent of
+its publication name. GitHub sources publish under lowercase `<owner>--<project>`,
+preserving repository punctuation; other sources keep their existing naming.
+There is no public-path override. The command pins the
 plan and prints the run path. It does not advance, acquire sources
 or launch workers. The first advance opens the analysis and pins the prepared
 method commit; publication requires it unchanged.

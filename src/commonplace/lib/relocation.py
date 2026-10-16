@@ -399,6 +399,12 @@ def rebase_and_rewrite_in_moved_file(
         else:
             return match.group(0)
 
+        # Keep the author's spelling when it still resolves correctly. In
+        # particular, moving a whole artifact must not normalize sibling links
+        # and invalidate its member hashes for an otherwise byte-preserving move.
+        if (new_source_file.parent / bare_target).resolve() == destination:
+            return match.group(0)
+
         new_target = format_relative_link(new_source_file, destination)
         if anchor:
             new_target = f"{new_target}{anchor}"

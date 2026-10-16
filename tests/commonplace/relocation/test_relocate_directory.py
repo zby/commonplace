@@ -28,6 +28,17 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
+@pytest.mark.parametrize("target", ["bar.md", "./bar.md", "bar.md#section"])
+def test_moving_siblings_preserves_link_spelling(tmp_path: Path, target: str) -> None:
+    old = tmp_path / "old" / "foo.md"
+    new = tmp_path / "owner--old" / "foo.md"
+    content = f"[sibling]({target})\n"
+    moves = {old.with_name("bar.md"): new.with_name("bar.md")}
+    updated, changes = relocation.rebase_and_rewrite_in_moved_file(content, old, new, moves)
+    assert updated == content
+    assert changes == []
+
+
 def _init_git(repo_root: Path) -> None:
     subprocess.run(["git", "init", "-q"], cwd=repo_root, check=True)
     subprocess.run(["git", "config", "user.email", "t@t.t"], cwd=repo_root, check=True)

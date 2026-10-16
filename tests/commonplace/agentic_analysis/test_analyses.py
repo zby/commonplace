@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.agentic_analysis import analyses
 from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.note_parser import parse_document
@@ -25,6 +27,26 @@ def test_shipped_ultramarine_profile_does_not_change_pi_default() -> None:
         "launch-model": "gpt-6.1-sol",
         "effort": "medium",
     }
+
+
+@pytest.mark.parametrize("identity,expected", [
+    ("https://github.com/Pratiyush/llm-wiki", "pratiyush--llm-wiki"),
+    ("https://github.com/kenhuangus/llm-wiki.git/", "kenhuangus--llm-wiki"),
+    ("https://github.com/nvk/llm-wiki", "nvk--llm-wiki"),
+    ("https://github.com/MehmetGoekce/llm-wiki", "mehmetgoekce--llm-wiki"),
+    ("https://github.com/noirblue/IsaacCLupus_mnemosyn_spec", "noirblue--isaacclupus_mnemosyn_spec"),
+    ("https://arxiv.org/html/2601.01885v1", "2601-01885v1"),
+    ("https://example.invalid/llm-wiki", "llm-wiki"),
+    ("local snapshot", "display-name"),
+])
+def test_publication_namespace_is_owner_qualified_only_for_github(identity, expected):
+    assert analyses.publication_slug(identity, "Display Name") == expected
+
+
+def test_publication_migration_does_not_change_run_slug():
+    identity = "https://github.com/Pratiyush/llm-wiki"
+    assert analyses.source_slug(identity, "Wiki") == "llm-wiki"
+    assert analyses.publication_slug(identity, "Wiki") == "pratiyush--llm-wiki"
 
 
 def test_identity_findings_belong_to_the_member_that_disagrees() -> None:

@@ -245,7 +245,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
 
     attempt = assembled_publish_attempt(tmp_path, scripted)
     repo = attempt.run_dir.parent
-    destination = repo / publication.RETAINED_ROOT / publication.source_slug(
+    destination = repo / publication.RETAINED_ROOT / publication.publication_slug(
         attempt.metadata["source-identity"], attempt.metadata["system"])
     attempt.metadata["review-path"] = (destination / "overview.md").relative_to(repo).as_posix()
     old_id = "AAS-2026-10-06-example-0123456789ab-01"

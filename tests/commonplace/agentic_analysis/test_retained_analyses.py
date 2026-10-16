@@ -30,6 +30,24 @@ from tests.commonplace.agentic_analysis.fixtures import (
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
 
+def test_current_namespace_allows_distinct_owners_of_one_project(tmp_path: Path) -> None:
+    original = retained_fixture(tmp_path)
+    for owner in ("nvk", "Pratiyush"):
+        directory = original.with_name(f"{owner.lower()}--llm-wiki")
+        shutil.copytree(original, directory)
+        for member in directory.glob("*.md"):
+            member.write_text(member.read_text().replace(SOURCE, f"https://github.com/{owner}/llm-wiki"))
+        repin(directory)
+    shutil.rmtree(original)
+    current = analyses.current_analyses(tmp_path)
+    assert {item.artifact.path.name for item in current} == {"nvk--llm-wiki", "pratiyush--llm-wiki"}
+    assert {item.overview.frontmatter["run-id"] for item in current} == {RUN_ID}
+    # Neither source can pass under the former project-only publication name.
+    (tmp_path / analyses.RETAINED_ROOT / "nvk--llm-wiki").rename(tmp_path / analyses.RETAINED_ROOT / "llm-wiki")
+    with pytest.raises(ValueError, match="directory name"):
+        analyses.current_analyses(tmp_path)
+
+
 def test_overview_amendment_index_cannot_hide_an_amendment(tmp_path: Path) -> None:
     run = member_fixture(tmp_path)
     reconciliation = run / "artifact/reconciliation.md"
@@ -375,7 +393,7 @@ def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_
     repin(directory)
     # The source identity change also changes the stable retained directory slug.
     if citation_kind == "github":
-        directory = directory.rename(directory.with_name("system"))
+        directory = directory.rename(directory.with_name("example--system"))
     checked = validation.validate_note(directory, repo_root=tmp_path)
     assert checked.fails == []
     assert not any("unverified" in item for item in checked.infos)

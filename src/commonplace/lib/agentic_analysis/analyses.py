@@ -168,6 +168,18 @@ def source_slug(identity: str, system: str) -> str:
     return slug
 
 
+def publication_slug(identity: str, system: str) -> str:
+    """Owner-qualified GitHub publication name, independent of immutable run IDs.
+
+    Other source kinds retain their existing naming. GitHub owner/repository
+    spelling follows the source-checkout convention, lowercased for stable paths.
+    """
+    from commonplace.artifactrun.sources import github_checkout_path
+
+    checkout = github_checkout_path(identity)
+    return checkout.name.lower() if checkout is not None else source_slug(identity, system)
+
+
 def current_analyses(repo_root: Path, *, run=None) -> list[Analysis]:
     """Enumerate and validate one current artifact per source at its stable path."""
     from commonplace.lib.validation import ValidationRun
@@ -206,7 +218,7 @@ def current_analyses(repo_root: Path, *, run=None) -> list[Analysis]:
         if identity in identities:
             raise ValueError(f"multiple current analyses of source {identity}")
         identities.add(identity)
-        if directory.name != source_slug(identity, data["system"]):
+        if directory.name != publication_slug(identity, data["system"]):
             raise ValueError(f"current directory name does not match its source: {directory}")
         result.append(analysis)
     return result

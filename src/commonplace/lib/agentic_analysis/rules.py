@@ -15,7 +15,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis.analyses import RETAINED_ROOT, source_slug
+from commonplace.lib.agentic_analysis.analyses import RETAINED_ROOT, publication_slug
 from commonplace.lib.agentic_analysis.ledger import epistemic_ledger_errors
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
@@ -333,7 +333,7 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
             findings.append(Finding(None, "current analysis must be complete"))
         else:
             identity = (memory.frontmatter or {}).get("source-identity", "")
-            if artifact.path.name != source_slug(identity, (overview.frontmatter or {}).get("system", "")):
+            if artifact.path.name != publication_slug(identity, (overview.frontmatter or {}).get("system", "")):
                 findings.append(Finding(None, "current directory name does not match its source"))
     return findings
 

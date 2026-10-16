@@ -12,11 +12,11 @@ git diff --quiet HEAD -- src/commonplace/lib/agentic_analysis/analyses.py || {
   exit 1
 }
 uv run --no-sync python - <<'PY' || exit 1
-from commonplace.lib.agentic_analysis.analyses import source_slug
+from commonplace.lib.agentic_analysis.analyses import publication_slug
 
 for owner in ("Pratiyush", "kenhuangus", "nvk", "MehmetGoekce"):
     expected = owner.lower() + "--llm-wiki"
-    actual = source_slug(f"https://github.com/{owner}/llm-wiki", "llm-wiki")
+    actual = publication_slug(f"https://github.com/{owner}/llm-wiki", "llm-wiki")
     if actual != expected:
         raise SystemExit(
             "Batch 18 blocked: the committed owner-qualified publication namespace "

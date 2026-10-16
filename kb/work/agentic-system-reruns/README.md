@@ -205,19 +205,19 @@ finished-run checkpoint; they are not routine completed-worktree cleanup.
 
 ## Publication namespace follow-up after all runs finish
 
-The operator deferred the naming change until **all analysis runs have finished**.
-Then change GitHub publication names from project-only slugs to
-`owner--project`, matching the cloned-repository naming convention. Plan the
-existing-publication path migration and affected links/validators together;
-preserve immutable run IDs and do not patch frozen worktrees. Document-source
-naming is outside this GitHub collision fix.
+After the operator reported all batches finished, they authorized the
+[owner-qualified migration](./publication-namespace-migration.md) on 2026-10-15.
+It moves 66 GitHub publications to lowercase `owner--project` paths and updates
+links and validators. All 910 files across 70 publication sets remain byte-identical;
+run IDs and frozen worktrees are unchanged. Four document-source names stay as-is.
+The record also states the integration limits for old prepared worktrees.
 
 After the namespace change is implemented and committed, prepare fresh reruns
 for the four deferred repositories: Pratiyush/llm-wiki, kenhuangus/llm-wiki,
 nvk/llm-wiki and MehmetGoekce/llm-wiki. Keep cobusgreyling's existing publication
 as its own source; do not replace it with another owner's wiki. Different log
-keys alone do not resolve the publication collision. This records follow-up
-work only and authorizes no naming change or rerun launch now.
+keys alone do not resolve the publication collision. This migration authorizes
+no rerun launch or release of outstanding audit holds.
 
 ## Batch 18 preparation after the finished-batch reconciliation
 

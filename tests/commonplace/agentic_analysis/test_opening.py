@@ -39,7 +39,7 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
         "source": PARAMETERS["source"], "source-revision": "a" * 40,
         "worker": {"profile": "pi-luna", "harness": "pi", "launch-model": "gpt-6-luna", "effort": "medium"},
         "inputs-commit": prepared.commit, "run-date": metadata["run-date"],
-        "review-path": "kb/agentic-system-analyses/retained/system/overview.md",
+        "review-path": "kb/agentic-system-analyses/retained/example--system/overview.md",
         "expected-incumbent-sha256": "absent",
     }
     assert len(metadata["run-date"]) == 10
@@ -155,7 +155,7 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
     assert output(c)["expected-incumbent-sha256"] == "c" * 64
     assert calls == [{
         "repo_root": prepared.repo,
-        "generated_destination": "kb/agentic-system-analyses/retained/system/overview.md",
+        "generated_destination": "kb/agentic-system-analyses/retained/example--system/overview.md",
         "source_identity": "https://github.com/example/system",
     }]
 
