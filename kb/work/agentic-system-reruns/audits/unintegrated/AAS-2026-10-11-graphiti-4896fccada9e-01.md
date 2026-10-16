@@ -22,7 +22,7 @@ Evidence leads: [repeat/trace audit](../../../analysis-audit-evidence/reports/gr
 
 The [historical review](../../../../agent-memory-systems/reviews/graphiti.md) remains in `agent-memory-systems`; no moved review was substituted. It covers `34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6`, last checked 2026-06-04, not the candidate revision. Its graph/extraction/invalidation/retrieval/MCP account survives at greater resolution in N. Its pull-only shorthand is usefully refined by N's distinction between requested retrieval and notebook-owned context supply. Its explicit server-instruction coverage supplies a still-relevant omission lead, not current truth by inheritance.
 
-Origin [retained/graphiti](../../../../agentic-system-analyses/retained/graphiti/overview.md) is `AAS-2026-10-12-graphiti-1d535ca565a4-01`, method `682d5e7e6fa87af0f60d6a8a35266c41cb0e2913`, at the **same source revision**, cutoff 2026-10-12. This comparison establishes no source evolution.
+Origin [retained/graphiti](../../../../agentic-system-analyses/retained/getzep--graphiti/overview.md) is `AAS-2026-10-12-graphiti-1d535ca565a4-01`, method `682d5e7e6fa87af0f60d6a8a35266c41cb0e2913`, at the **same source revision**, cutoff 2026-10-12. This comparison establishes no source evolution.
 
 | Comparison | Readiness implication |
 |---|---|

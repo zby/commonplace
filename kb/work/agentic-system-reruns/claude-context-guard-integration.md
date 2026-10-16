@@ -42,7 +42,7 @@ of `main`. All 13 origin publication files match the preserved worktree
 byte-for-byte and match the recorded publication hashes. Origin artifact
 validation returned zero failures and zero warnings.
 
-The [published overview](../../agentic-system-analyses/retained/claude-context-guard/overview.md)
+The [published overview](../../agentic-system-analyses/retained/atreiou--claude-context-guard/overview.md)
 is now in the integrated KB. Claude Context Guard is complete with recorded
 limits; the checklist totals become 20 complete, 167 pending and 19 held.
 No coordinator restart, run advance, analysis repair, comparison regeneration,

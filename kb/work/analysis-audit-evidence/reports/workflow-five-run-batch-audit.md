@@ -43,7 +43,7 @@ The evidence route is expressly commissioned frozen-source inspection. No target
 
 ### W1 — Graphiti: connected conversation, tool and memory boundaries
 
-The [workflow](../../../agentic-system-analyses/retained/graphiti/workflow.md) selects the shipped LangGraph shoe-sales notebook, not an imagined MCP host episode. `examples/langgraph-agent/agent.ipynb`, especially `chatbot`, shoe-search tool, tools-to-agent edge and widget callback, supports request → five-fact context → model → optional ten-fact shoe tool → subsequent model → response display. Ingestion is scheduled asynchronously after every successful model response, including tool-call responses. The latest state message can be a tool result. Its unconditional user-name prefix does not authenticate human origin.
+The [workflow](../../../agentic-system-analyses/retained/getzep--graphiti/workflow.md) selects the shipped LangGraph shoe-sales notebook, not an imagined MCP host episode. `examples/langgraph-agent/agent.ipynb`, especially `chatbot`, shoe-search tool, tools-to-agent edge and widget callback, supports request → five-fact context → model → optional ten-fact shoe tool → subsequent model → response display. Ingestion is scheduled asynchronously after every successful model response, including tool-call responses. The latest state message can be a tool result. Its unconditional user-name prefix does not authenticate human origin.
 
 The account adds a useful relationship: user-facing completion and graph-memory completion are different events. It also makes recirculation explicit: retrieved facts can return through a tool and enter a later episode. Framework `MemorySaver` checkpoint state is not Graphiti graph state. External framework behavior, model compliance and completed asynchronous persistence remain unobserved.
 
@@ -59,7 +59,7 @@ Other old findings, including ordinary-ingestion context-count accuracy and deta
 
 ### W2 — Napkin: procedure ownership, persistence and post-write checks
 
-The [workflow](../../../agentic-system-analyses/retained/napkin/workflow.md) follows the complete packaged `skills/distill/SKILL.md`: assess session material → KEEP/SKIP → search existing notes → merge or create → repair links → report. The external agent owns selection, semantics and command sequencing; CLI/core code owns file effects. The separate timer/separate-model design in `docs/distill.md` is not silently attached to that packaged procedure.
+The [workflow](../../../agentic-system-analyses/retained/michaelliv--napkin/workflow.md) follows the complete packaged `skills/distill/SKILL.md`: assess session material → KEEP/SKIP → search existing notes → merge or create → repair links → report. The external agent owns selection, semantics and command sequencing; CLI/core code owns file effects. The separate timer/separate-model design in `docs/distill.md` is not silently attached to that packaged procedure.
 
 Frozen `src/core/crud.ts`, `src/core/links.ts`, `src/utils/files.ts` and `src/commands/links.ts` support the consequential limits. Link checks follow persistence and are diagnostics, not admission vetoes, semantic verification or rollback. Loose/shallowest matching and fragment stripping do not establish an unambiguous heading-level target. The literal skill create example supplies a folder-shaped path where core expects the complete filename, and copying a template does not populate it with distilled content. The accepted workflow, verification and synthesis retain that delivery mismatch rather than claiming successful literal execution.
 
@@ -71,7 +71,7 @@ Disposition: retain the bounded workflow and its create-example limit; no new ma
 
 ### W3 — Letta Code: launch is not child acceptance or caller delivery
 
-The [workflow](../../../agentic-system-analyses/retained/letta-code/workflow.md) selects local non-memory Task delegation in bidirectional headless mode. `src/tools/impl/task.ts` establishes identity/fork admission, background startup, launch receipt and completion conversion. `src/agent/subagents/manager.ts` establishes captured result/error handling and fallback parsing. `src/headless.ts` and `src/queue/turn-queue-runtime.ts` establish queued synthetic-user notification and later parent input.
+The [workflow](../../../agentic-system-analyses/retained/letta-ai--letta-code/workflow.md) selects local non-memory Task delegation in bidirectional headless mode. `src/tools/impl/task.ts` establishes identity/fork admission, background startup, launch receipt and completion conversion. `src/agent/subagents/manager.ts` establishes captured result/error handling and fallback parsing. `src/headless.ts` and `src/queue/turn-queue-runtime.ts` establish queued synthetic-user notification and later parent input.
 
 The useful connected distinction is launch receipt → child protocol completion → bounded notification → parent continuation → delivered answer. A child exit is not a factual/product acceptance decision. Notification delivery is conditional on the selected host mode and queue progression; it is not universal unsolicited delivery. Child unrestricted mode plus inherited disallows does not establish universal delegated permissions or isolation.
 
@@ -83,7 +83,7 @@ Disposition: retain the selected account; qualify recovery-inventory extraction 
 
 ### W4 — Dynamic Cheatsheet: update precedes scoring
 
-The [workflow](../../../agentic-system-analyses/retained/dynamic-cheatsheet/workflow.md) connects the cumulative benchmark driver to generation, optional local code execution, curator output, reference replacement, answer scoring and checkpoint/resume. `run_benchmark.py`, the cumulative branch in `dynamic_cheatsheet/language_model.py`, `utils/extractor.py`, `utils/execute_code.py` and `prompts/curator_prompt_for_dc_cumulative.txt` support this ordering.
+The [workflow](../../../agentic-system-analyses/retained/suzgunmirac--dynamic-cheatsheet/workflow.md) connects the cumulative benchmark driver to generation, optional local code execution, curator output, reference replacement, answer scoring and checkpoint/resume. `run_benchmark.py`, the cumulative branch in `dynamic_cheatsheet/language_model.py`, `utils/extractor.py`, `utils/execute_code.py` and `prompts/curator_prompt_for_dc_cumulative.txt` support this ordering.
 
 The central useful distinction is that scoring does not admit or veto the cheatsheet update: the curator acts before objective scoring. A generated reference may shape a later answer without being certified by the current answer's score. The shipped cumulative curator prompt is optional configuration, not the default behavior: without the supplied prompt path the template is `(empty)`. Code execution is an effect boundary, not a semantic proof about all generated advice. Recursive attempts and execution results do not establish successful benchmark operation at this pin.
 
@@ -93,7 +93,7 @@ Disposition: retain this particularly useful connected account. Its utility come
 
 ### W5 — Instinctual Memory: review is not an immutable approved candidate
 
-The [workflow](../../../agentic-system-analyses/retained/instinctual-memory/workflow.md) selects `/mem tidy`: host readiness → preview → user keep choices → apply → publication → communication. The complete `skills/mem/SKILL.md`, `src/tidy.rs`, `src/cli.rs` and `src/repo.rs` support its instruction-versus-code distinction. Host review/compliance is requested, not demonstrated.
+The [workflow](../../../agentic-system-analyses/retained/jasonkneen--instinctual-memory/workflow.md) selects `/mem tidy`: host readiness → preview → user keep choices → apply → publication → communication. The complete `skills/mem/SKILL.md`, `src/tidy.rs`, `src/cli.rs` and `src/repo.rs` support its instruction-versus-code distinction. Host review/compliance is requested, not demonstrated.
 
 Apply recomputes candidates instead of loading an immutable reviewed preview. Keep IDs veto selected findings but do not bind a human to the exact candidate that is eventually published. Model-error, duplicate-only/degraded and no-change branches are distinct. Candidate structural validation and Git compare-and-swap protect particular publication/concurrency properties, not semantic user approval. Successful publication does not prove tidy judgment quality.
 
