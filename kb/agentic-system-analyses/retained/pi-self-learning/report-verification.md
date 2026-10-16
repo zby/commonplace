@@ -1,0 +1,62 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of pi-self-learning's runtime, memory, epistemic, workflow and reconciliation reports at the frozen extension revision."
+run-id: AAS-2026-10-15-pi-self-learning-1a318610d4b1-01
+reviewed-boundary: e0d76a93195b11b688ca71da8a8b5700c6541542
+---
+
+# pi-self-learning report verification
+
+## Verification
+
+The reports support a bounded code-grounded account of trace-fed candidate memory, deterministic maintenance and later context delivery. No material blocker was found. One local command-count defect remains below; it does not conceal a missing route.
+
+### Independent evidence checks
+
+I read all five reviewed members, the boundary, the empty correction-answer inputs and report-check. Report-check says `none`; there is no structural finding requiring a routed blocker. No correction or declined objection was supplied. I independently read all of SRC-1: `extensions/self-learning.ts`, `README.md`, `AGENTS.md`, `docs/example-settings.json`, `package.json` and `.gitignore`. HEAD equals the reviewed revision, and a comparison against HEAD found no tracked-file differences. The frozen tree contains only those six files. Source inspection, not the analysts' validation statements, supplies the semantic checks below. No target code, tests, examples or providers were executed.
+
+I checked every declared record and annotation against its source anchors, including the meaning of retained quotations, conditions, progression, consumer and evidence strength. I checked every `Part of:` relation, all three supersessions, the remaining container/part overlaps and the sole unresolved conflict. There are no declared evidenced-absence records to assess; the reports' prose negatives were checked against the complete extension and tracked tree. The boundary's whole-system classification remains appropriate for this extension package, not for the excluded host runtime ([boundary](boundary.md#boundary-and-evidence)). All inspected evidence remains implementation or doctrine/design; it establishes neither observed use nor benefit.
+
+### Runtime and workflow
+
+[RT-CMP-reflection-model](runtime.md#rt-cmp-reflection-model) correctly separates symbolic model references from inaccessible provider parameters. Configured/current selection is implemented; exact weights and provider-side mutation remain unresolved. [RT-RTE-runtime-controls](runtime.md#rt-rte-runtime-controls) correctly distinguishes effective branch toggles, ineffective branch model entries and effective global-settings writes. Deep merging combines global/project settings, not partial configuration with defaults. These conclusions follow the settings helpers, pickers and command consumers in SRC-1, `extensions/self-learning.ts`.
+
+For [RT-RTE-task-reflection](runtime.md#rt-rte-task-reflection), I traced both event and manual callers through branch filtering, serialization, the separate execution-signal scan, initial completion, JSON extraction, optional repair, rejection, daily append, derived writes, Git attempts and note creation. The automatic stop-reason/suppression guards do not govern the manual caller. The parser admits qualifying strings, not verified diagnoses; repair lacks the original conversation. The nontransactional ordering and qualified automatic-error guarantee are accurately retained. The theory account separates localized-rule affordance from unobserved content-dependent decisions, criticism and iteration. Its marked dispositional self-change pathway does not assert exercised or successful self-improvement.
+
+[RT-RTE-month-summary](runtime.md#rt-rte-month-summary) correctly traces ascending month-file assembly, prefix budgeting, nonempty-text admission and overwrite. [RT-RTE-core-redistill](runtime.md#rt-rte-core-redistill) correctly traces score-based targeting, sequential chunks, one selected authenticated model candidate, optional repair, missing-ID fallback, kind-prefix processing, collision merge and final writes. I specifically checked that maintenance bypasses learning enablement, dry-run can initialize CORE before suppressing final writes, and suppression starts before argument validation. Requested generality and meaning preservation are not evaluated by these routes (SRC-1, `extensions/self-learning.ts`).
+
+[RT-OBJ-runtime-notes](runtime.md#rt-obj-runtime-notes), [RT-RTE-context-injection](runtime.md#rt-rte-context-injection) and [RT-BAP-memory-policy](runtime.md#rt-bap-memory-policy) preserve the distinction between process notes, bounded file text and static system-prompt instructions. Notes can survive file-context disablement; policy-off does not disable file supply. File order, per-file and aggregate prefix caps, path-only long-term consultation and lack of query matching are correctly described. [RT-CLM-strict-consultation](runtime.md#rt-clm-strict-consultation) accurately contrasts README enforcement language with model-interpreted instructions rather than a read-verification gate (SRC-1, `README.md`, `extensions/self-learning.ts`).
+
+The [workflow account and annotations](workflow.md#workflow-account) add no duplicate records. Its chosen producer-to-later-delivery workflow is supported by the two hooks, not an invented synchronous continuation. The host's task outcome, the extension's write/path return and the later context return are distinct terminal boundaries. Single repair, manual retry, partial-write exposure and absent consumption acknowledgment are faithfully scoped.
+
+### Memory objects and epistemic functions
+
+[MEM-OBJ-branch-messages](memory.md#mem-obj-branch-messages) correctly separates the selected raw-trace input from derived memory, including the broader signal scan. [MEM-OBJ-daily](memory.md#mem-obj-daily) correctly identifies appended model-derived prose without structural transcript provenance. [MEM-OBJ-index-text](memory.md#mem-obj-index-text) and [MEM-OBJ-index-ranking](memory.md#mem-obj-index-ranking) correctly separate interpreted rule content from fixed key/kind/counter/time operations. I traced valid-index loading, coercion, fallback bullet migration, normalized-key updates, score arithmetic, tie-breaks and per-kind reservation. Recurrence is not corroboration (SRC-1, `extensions/self-learning.ts`).
+
+[MEM-OBJ-core](memory.md#mem-obj-core), [MEM-OBJ-long-term-memory](memory.md#mem-obj-long-term-memory) and [MEM-OBJ-monthly](memory.md#mem-obj-monthly) accurately distinguish bounded rendering, all-current-index rendering and a second model transformation over journals. Core rendering strips `Avoid:`, so fallback migration can lose kind and recover only the displayed subset. Redistill does not revise journals, monthly text or existing notes. The write/read annotations preserve the distinct admission mechanisms, actual update consumers, automatic supply and afforded external consultation. Unknown initial authorship does not erase known subsequent transformations. [MEM-CLM-complete-history](memory.md#mem-clm-complete-history) correctly rejects treating the current merged render as complete historical lineage (SRC-1, `README.md`, `extensions/self-learning.ts`).
+
+The epistemic object records—[EPI-OBJ-conversation-signals](epistemic.md#epi-obj-conversation-signals), [EPI-OBJ-reflection-items](epistemic.md#epi-obj-reflection-items), [EPI-OBJ-index-items](epistemic.md#epi-obj-index-items) and [EPI-OBJ-monthly-text](epistemic.md#epi-obj-monthly-text)—are supported as input, candidate, maintenance-container and summary referents. The authority ledger separates content proposal, structural testing, operational admission, retention and downstream force. It does not turn structural admission into epistemic acceptance. Indeterminate model transformations are not automatically classified as conjectures.
+
+[EPI-RTE-watchout-conversion](epistemic.md#epi-rte-watchout-conversion) accurately isolates unconditional avoidance-prefix conversion; its admissible-input countercase is a source deduction, not a claimed observation. [EPI-RTE-core-ranking](epistemic.md#epi-rte-core-ranking) and [EPI-RTE-index-migration](epistemic.md#epi-rte-index-migration) accurately identify deterministic maintenance and recovery, not semantic evaluation. The complete implementation supplies no evidence-consuming truth/prevention acceptance criterion or lifecycle integration after such acceptance. [EPI-CLM-prevention-scope](epistemic.md#epi-clm-prevention-scope) and [EPI-CLM-full-history](epistemic.md#epi-clm-full-history) preserve the difference between declared objectives and implemented/observed support. These assessments match SRC-1, `extensions/self-learning.ts` and `README.md`, and do not imply that every retained proposition is false.
+
+### Reconciliation, conflict and omission dispositions
+
+The [reconciliation](reconciliation.md#reconciliation) appropriately supersedes the duplicate full-history claim, monthly content object and conversation/signal input object. Each pair has the same source-native referent and compatible findings; the amendments do not strengthen evidence. The reflection-items and index-items aggregates remain valid containers alongside memory's finer parts. The declared cross-kind `Part of:` relations correctly locate input/candidate objects and watch-out conversion within reflection, and summary content within monthly generation. Shared ranking/migration stages span more than one runtime route and correctly lack a single-parent relation. No unsupported supersession or missing material operative part was identified.
+
+The command-count conflict is settled by source inspection, with its local reporting consequence retained in Limits. There are eight registrations: learning-now, learning-month, learning-redistill, learning-toggle, learning-model, learning-model-global, learning-daily and learning-status. Selector and argument forms share this registration (SRC-1, `extensions/self-learning.ts`):
+
+> pi.registerCommand("learning-model", {
+>     description: "Set summarization model: /learning-model (selector) or /learning-model <provider/id> | reset",
+> --- `extensions/self-learning.ts`
+
+Omission questions were selected from the complete frozen tree and producer/consumer dependencies: could another shipped entry point evaluate or withdraw candidates; could initialization or migration bypass the apparent admission path; could disablement or preview prevent all effects; and could retained content reach a later consumer by a route omitted from automatic injection? Full registration, completion-call and file-write searches, followed through their callers and consumers, found the represented maintenance, migration, notes and requested-path alternatives, not an additional evaluator or delivery service. The manual developer checks in SRC-1, `AGENTS.md`, are instructions, not supplied results or runtime acceptance. Package metadata exposes only the inspected extension. These checks support the reports' bounded implementation conclusions without attributing excluded host responsibilities to the package.
+
+Further omission expansion stopped because all selected questions have source-supported dispositions and no identified material challenge remains. Host compliance, actual generated propositions, deployment durability and causal benefit remain explicitly unestablished in the reports; their faithful uncertainty is not an additional defect or limit. Another repository or execution would exceed this frozen source boundary.
+
+## Blockers
+
+none
+
+## Limits
+
+- The [runtime account](runtime.md#runtime-account) and [boundary coverage](boundary.md#tracked-top-level-coverage) incorrectly count nine command registrations. The [epistemic coverage finding](epistemic.md#source-and-claim-boundary) reports eight, and [reconciliation's anchored conflict](reconciliation.md#anchored-disagreement) preserves both positions. Complete inspection of SRC-1, `extensions/self-learning.ts`, establishes eight registrations; two documented forms of learning-model share one handler, as quoted above. Readers should not repeat the nine-command inventory count. This is a local enumeration defect, not an unresolved source question or an omitted control mechanism: [RT-RTE-runtime-controls](runtime.md#rt-rte-runtime-controls) and the other runtime routes cover every registered handler, and the producer, admission, maintenance and later-consumer conclusions remain supported. The defect does not change the extension boundary or any system-level comparison finding.
