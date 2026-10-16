@@ -1,0 +1,33 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of jaz-evals memory classifications against accepted records at the frozen parent revision."
+run-id: AAS-2026-10-15-jaz-evals-17ab95f93794-01
+reviewed-boundary: "2ffe7b5e6792a76fccb26f9ce188c88fb95ffa72"
+---
+
+# jaz-evals profile verification
+
+## Verification
+
+I checked all ten axes of the handed [memory profile](memory-profile.md#comparison-rationale), including their unit scopes, positive findings, evidence bases and coverage assessments, against the supplied reports. Reconciliation leaves the advice/count parts and combined playbook container intact and supersedes only the duplicate analysis route; the profile uses the canonical [MEM-RTE-artifact-analysis](memory.md#mem-rte-artifact-analysis). No correction answers or refusal arguments were supplied.
+
+- **Storage substrate:** Live ACE strings and persisted files are supported by [MEM-OBJ-playbook](memory.md#mem-obj-playbook), [MEM-OBJ-playbook-counts](memory.md#mem-obj-playbook-counts) and [MEM-OBJ-adaptation-artifacts](memory.md#mem-obj-adaptation-artifacts). The grouped diagnostic unit also includes the in-process verdict state in [EPI-OBJ-task-verdict](epistemic.md#epi-obj-task-verdict); it does not imply every sidecar has a live counterpart. Forwarded histories have an afforded in-memory path. Letta host exports are separated from unresolved operative server substrates. Neither embeddings nor a server DB label is promoted to an inspected storage technology.
+- **Representational form:** The profile distinguishes interpreted advice, parsed metadata and mixed trace bodies. Its combined units enumerate operative forms rather than asserting that every part has both forms. In particular, [MEM-RTE-smolagents-history](memory.md#mem-rte-smolagents-history) supports the distinction between wrapped payload and visible suffix. The claimed dense representation in [MEM-OBJ-archival-memory](memory.md#mem-obj-archival-memory) remains separate from its opaque raw payload. The known summary-text seam in [MEM-OBJ-compaction-summary](memory.md#mem-obj-compaction-summary) does not resolve installation or retention.
+- **Lineage:** Trace-fed advice, imported seeds and computational refinement have separate derivation explanations in [MEM-OBJ-playbook](memory.md#mem-obj-playbook) and [MEM-RTE-playbook-dedup](memory.md#mem-rte-playbook-dedup). Unknown seed authorship remains included. The counter/diagnostic grouping distinguishes initialized metadata from recorded activity in its note; it does not establish measured helpfulness. Imported verdicts do not acquire independent warrant through retention.
+- **Behavioral authority:** The profile keeps advice at solver readers, traces at update consumers, and advice bodies at similarity grouping distinct: knowledge, learning and ranking respectively. These follow [RT-RTE-ace-adaptation](runtime.md#rt-rte-ace-adaptation) and [MEM-RTE-playbook-dedup](memory.md#mem-rte-playbook-dedup). The combined JAZ unit names both the root's revision use of histories and later solvers' receipt of revised directions; its two findings are not interchangeable forces on one part. Count inapplicability is explicitly bounded to assessed ordinary solver/adaptation paths, not an assertion that merge code never reads counts. Static parser rules are not classified as accumulated validation memory.
+- **Write agency:** Subsequent model/software admissions are automatic at the wired ACE and afforded history/revision mechanisms. Initialization remains unresolved rather than becoming manual merely because configuration supplies a file or text. This is consistent with [MEM-OBJ-playbook](memory.md#mem-obj-playbook), [MEM-OBJ-memory-blocks](memory.md#mem-obj-memory-blocks) and [RT-RTE-jaz-queue](runtime.md#rt-rte-jaz-queue).
+- **Curation operations:** The merge-free and model-replacement branches remain distinct. Removal/replacement supports wired deduplication and evolution; the preservation request supports only afforded consolidation. [EPI-RTE-dedup-replacement](epistemic.md#epi-rte-dedup-replacement) does not establish semantic fidelity or a new claim. The profile therefore does not emit synthesis from a novelty request. Unresolved trace-to-advice semantics and Letta transformations coexist with the positive continuation-summary and refinement findings.
+- **Read-back direction and signal:** [MEM-OBJ-playbook](memory.md#mem-obj-playbook) supports coarse automatic advice supply and separately requested seed loading. Requested history hit windows and operator diagnostics remain pull, not lexical or identifier push. The root's model-directed selection of revised guidance for later delegates supports the afforded judgment-selected push in [RT-RTE-jaz-queue](runtime.md#rt-rte-jaz-queue). Unknown Letta delivery alternatives remain unresolved instead of being made inapplicable by the known conversation-search request.
+- **Trace learning and trace source:** The ACE chain connects recorded session/tool activity, automatic advice admission, retention and later prompt consumption through [MEM-OBJ-adaptation-artifacts](memory.md#mem-obj-adaptation-artifacts) and [RT-RTE-ace-adaptation](runtime.md#rt-rte-ace-adaptation). Requested JAZ and smolagents continuation summaries qualify at afforded strength under [MEM-RTE-jaz-history](memory.md#mem-rte-jaz-history) and [MEM-RTE-smolagents-history](memory.md#mem-rte-smolagents-history). Their session activity and code/output/exception content support the emitted session-log and tool-trace origins. The profile does not infer environmental event streams or multi-step trajectories merely from trace serialization. Letta's summary-production seam alone does not close its retained-write/later-consumer chain.
+
+All axis assessments are partial. The unresolved initialization, external Letta alternatives and unaudited consumers remain visible; a known local witness does not claim complete system coverage. Several units are coarse, but their notes preserve the relevant part, mechanism or consumer distinctions and do not upgrade opaque alternatives. Missing operation and causal evidence is not used to deny inspectable wiring, and no emitted finding claims observation, benefit or exercised self-improvement. I found no unsupported emitted value, false complete-coverage assertion or consequential omission requiring repair. The stated uncertainties already bound the comparisons and require no additional verifier limit.
+
+Source-read log: none. This judgment uses the handed records and reconciliation, without new source inspection or quotations.
+
+## Blockers
+
+none
+
+## Limits
+
+none
