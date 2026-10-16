@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of LACP's public execution, memory and improvement account at the frozen commit."
+run-id: AAS-2026-10-14-lacp-91efd16f7a35-01
+reviewed-boundary: e31f134b689afd6a71d94b0420682d1f528d6fa1
+---
+
+# LACP synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports a bounded implementation account. I checked every substantive paragraph, property assessment, scenario-relative conclusion and limitation against the handed records and reconciliation dispositions. No material unsupported claim or additional unresolved record fault was found. No frozen-source file was read and no target execution or new evidence was added. The evidence remains SRC-1 static implementation and doctrine/design at the [registered boundary](boundary.md#boundary-and-evidence), not observed operation or causal benefit.
+
+The opening explains the two execution owners and whole-system inclusion without implying exhaustive inspection. The execution progression preserves the distinction between native dispatch, managed launch policy, direct or bypassed host paths and external host ownership. Its permission and isolation qualifications follow [RT-RTE-native-turn](runtime.md#rt-rte-native-turn), [RT-RTE-host-launch](runtime.md#rt-rte-host-launch), [RT-RTE-sandbox-launch](runtime.md#rt-rte-sandbox-launch) and [RT-RTE-extension-load](runtime.md#rt-rte-extension-load). The direct-fallback, command-classification and budget-branch counterexamples remain source-level findings, not observed exploits. PLAN guidance is not presented as executor enforcement. Detached launch, checked runner completion and selective host feedback retain different guarantees through [RT-RTE-orchestrated-run](runtime.md#rt-rte-orchestrated-run), [RT-RTE-harness-attempt](runtime.md#rt-rte-harness-attempt) and [RT-RTE-host-hook](runtime.md#rt-rte-host-hook).
+
+The representative workflow remains a manually driven protocol, not an inferred automatic agent team. Token and actor-string checks govern recorded eligibility; caller decisions do not establish task verification. The missing runbook token, rejection/resubmission behavior and final completion criterion are supported by [RT-RTE-workflow-advance](runtime.md#rt-rte-workflow-advance) and the [workflow account](workflow.md#workflow-account). The synthesis does not combine this protocol with the separate harness to invent verified software delivery.
+
+The memory progression preserves distinct stores, producers and consumers. Native messages and keyed entries have separate persistence/read routes; clear, truncation and resume are not described as automatic summarization. Host memory production before later quality checks, bounded startup selection, budget stopping, and unresolved deployed hook activation follow [MEM-RTE-session-memory](memory.md#mem-rte-session-memory). Goal filtering remains an afforded helper rather than a wired startup predicate under [MEM-CLM-goal-filtering](memory.md#mem-clm-goal-filtering). The supported trace-fed contribution is stated positively, while delivery, behavioral activation and capacity improvement remain separate.
+
+The self-model account follows the reconciled object identity in [MEM-OBJ-self-model](memory.md#mem-obj-self-model) and the distinct [EPI-RTE-self-model-update](epistemic.md#epi-rte-self-model-update). Non-entailed success/preference labels and count-derived confidence do not become factual acceptance. The public text also preserves the difference between retained success patterns and selected preferences/failures actually supplied by the context builder. Narrative replacement and startup arc selection remain separate from epoch copying, append and CLI display under [MEM-OBJ-agent-narrative](memory.md#mem-obj-agent-narrative), [MEM-OBJ-epochs](memory.md#mem-obj-epochs) and [MEM-RTE-epoch-synthesis](memory.md#mem-rte-epoch-synthesis); neither part inherits the other's admission or consumer.
+
+Offline transformation, optional daily append and retrieval retain their conditions. Title fallback does not establish full-signal preservation; the shipped suggestion driver does not enable durable append. Applied text's provenance loss remains explicit under [MEM-RTE-trace-research](memory.md#mem-rte-trace-research), [MEM-RTE-daily-promotion](memory.md#mem-rte-daily-promotion) and [EPI-RTE-memory-promotions](epistemic.md#epi-rte-memory-promotions). Saved-index reload is correctly recognized as later consumption despite read-only selector output, following [MEM-RTE-hybrid-retrieval](memory.md#mem-rte-hybrid-retrieval) and [EPI-RTE-retrieval-ranking](epistemic.md#epi-rte-retrieval-ranking). Ranking, retrieval hits and post-write schema feedback are not promoted to factual warrant. Consumer-specific withdrawal, local-only supersedes mutation and archive-driver mismatch preserve the bounded findings of [MEM-RTE-memory-maintenance](memory.md#mem-rte-memory-maintenance) and [EPI-RTE-consolidation-policy](epistemic.md#epi-rte-consolidation-policy).
+
+The evaluation account separates stored outcome assertions, chronological arithmetic, advisory retrieval and enforce-state admission through [EPI-RTE-learning-metrics](epistemic.md#epi-rte-learning-metrics), [MEM-RTE-learning-hints](memory.md#mem-rte-learning-hints) and [RT-RTE-learning-promotion](runtime.md#rt-rte-learning-promotion). It neither authenticates approver strings nor infers advisory exposure or causal benefit from the baseline/treatment labels.
+
+The improvement account leads with the implemented proposal/score-selection organization in [RT-RTE-idle-experiment](runtime.md#rt-rte-idle-experiment), then retains its recovery, edit-scope, score-failure and live-activation limitations. Theory-builder conditions 1 and 2, unresolved conditions 3 and 4, learning from theory criticism, limited reflection, computational progression and unresolved autonomous theory building remain independent assessments at that pathway's boundary. The afforded self-change pathway is not reported as exercised or successful improvement. The bounded non-establishment of accepted ampliative knowledge does not become a whole-system absence; the [epistemic conclusion](epistemic.md#bounded-conclusion) explicitly retains unassessed alternatives.
+
+The [Limitations table](synthesis.md#limitations) carries both handed verification limits with their analytical consequences: incomplete alternative-route coverage and the omitted positive native tool-result import classification in a partial lineage inventory. The latter is consistent with the recorded import step in [RT-RTE-native-turn](runtime.md#rt-rte-native-turn) and the [epistemic assessment](epistemic.md#epistemic-assessment-of-supplied-runtime-chains); unknown upstream derivation is not treated as absent import. Reconciliation contains no remaining unresolved conflict. Existing admission/consumer gaps and lack of execution evidence remain explicit, not new verifier findings. The proposed evidence and system changes address the particular missing enforcement, activation, withdrawal and attribution links without claiming those checks were performed.
+
+## Blockers
+
+none
+
+## Limits
+
+none
