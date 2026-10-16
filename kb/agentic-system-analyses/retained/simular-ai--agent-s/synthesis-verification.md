@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Agent S's public synthesis against its accepted records at the frozen repository revision."
+run-id: AAS-2026-10-16-agent-s-db6fee212353-01
+reviewed-boundary: "15776a8dc659658b1963816ea006f7af1978e595"
+---
+
+# Agent S synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded implementation account. I checked its substantive statements against the supplied records and annotations, applied the reconciliation's two object supersessions, and checked carriage of the report and profile verification judgments. No material blocker or additional local unresolved defect was found. No refusal or substantive synthesis answers were supplied.
+
+The opening correctly identifies the shipped whole-system artifact, revision, cutoff and evidence layers. Its implementation findings are not presented as observed sessions or causal experiments. The exclusions and external dependencies agree with the [boundary](boundary.md#boundary-and-evidence). Public readers can distinguish installed S3, historical S1/S2 and offline selection without consulting the supporting members.
+
+The request-to-action account preserves model-owned action choice, driver-owned execution, caller-specific iteration bounds and procedural rather than enforced guidance. [RT-RTE-desktop-loop](runtime.md#rt-rte-desktop-loop), [RT-OBJ-procedural-memory](runtime.md#rt-obj-procedural-memory) and [RT-RTE-action-check](runtime.md#rt-rte-action-check) support these distinctions. The synthesis accurately explains live trial evaluation, possible repeated immediate effects and last-response return after retry exhaustion; it does not claim an executed exploit, fixed repetition count, sandbox or per-action approval. Its OCR qualifications follow [EPI-OBJ-screen-evidence](epistemic.md#epi-obj-screen-evidence) and [EPI-RTE-text-grounding](epistemic.md#epi-rte-text-grounding), including the remaining screenshot evidence and the conditional scope of coordinate arithmetic.
+
+The representative workflow remains one connected S3 path with opt-in local coding, rather than an invented sequence joining historical planning and offline judging. The [workflow account](workflow.md#workflow-account), [RT-RTE-code-delegation](runtime.md#rt-rte-code-delegation) and [MEM-OBJ-code-result](memory.md#mem-obj-code-result) support the selected task frame, controller feedback, timeout distinction, reduced return and possible GUI recovery. Normal FAIL/budget returns are not generalized to all exceptions or successful recovery. Requested GUI verification remains separate from unguarded termination, and process exit remains separate from task success, as established by [RT-CLM-gui-verification](runtime.md#rt-clm-gui-verification) and [RT-RTE-openclaw-bridge](runtime.md#rt-rte-openclaw-bridge).
+
+The retained-content account leads with supported automatic trace-fed transformations and later consumers, without treating them as demonstrated capacity improvement. Historical JSON admission, preserved keys, incomplete CLI trajectory capture and distinct task/subtask rationale handling agree with [RT-RTE-historical-experience](runtime.md#rt-rte-historical-experience), [MEM-RTE-s1-experience](memory.md#mem-rte-s1-experience), [MEM-OBJ-narrative-memory](memory.md#mem-obj-narrative-memory) and [MEM-OBJ-episodic-memory](memory.md#mem-obj-episodic-memory). Similarity selection, exact-top failure, recipe modification and independent cache reuse agree with [MEM-RTE-experience-retrieval](memory.md#mem-rte-experience-retrieval), [MEM-OBJ-embeddings](memory.md#mem-obj-embeddings) and [MEM-RTE-query-cache](memory.md#mem-rte-query-cache). The alternative save API's unresolved caller is not transferred to the wired CLI, nor is its finalization used to repair that CLI by inference: [MEM-RTE-knowledge-save](memory.md#mem-rte-knowledge-save). The notes and context discussion preserves separate lifetimes, full-list delivery, engine-dependent eviction and lack of replacement summaries, as supported by [MEM-RTE-notes-delivery](memory.md#mem-rte-notes-delivery) and the memory [annotations](memory.md#annotations).
+
+Offline comparison is correctly described as an evidence-consuming model evaluation with a bounded selection consequence, not as either mere logging or certified knowledge. [RT-RTE-osworld-driver](runtime.md#rt-rte-osworld-driver), [RT-RTE-rollout-selection](runtime.md#rt-rte-rollout-selection), [MEM-OBJ-fact-captions](memory.md#mem-obj-fact-captions) and [MEM-OBJ-judge-results](memory.md#mem-obj-judge-results) support the producer/consumer chain, partial visual evidence, answer-only loading, persisted choice and score usage. The synthesis uses the canonical caption and judgment objects after supersession without dropping their epistemic qualifications. [EPI-CLM-fact-accuracy](epistemic.md#epi-clm-fact-accuracy) and [EPI-CLM-bbon-performance](epistemic.md#epi-clm-bbon-performance) support its separation of checking opportunities, unverified caption truth, attributed performance and unavailable causal attribution. It does not imply live policy installation or replay.
+
+The independent property conclusions remain appropriately separate. Autonomous action choice is bounded to caller-granted capabilities, not reliable completion. [EPI-RTE-trajectory-reflection](epistemic.md#epi-rte-trajectory-reflection) supports an architectural self-representation and feedback path without establishing accurate criticism or benefit. Each theory-builder condition is individually unestablished for explanatory theories rather than inferred absent from opaque processing. The self-improvement account acknowledges historical guidance entering behavior-determining prompts, then identifies the missing objective-linked update and subsequent causal-use evidence. These statements agree with the epistemic [bounded conclusion](epistemic.md#bounded-conclusion) and do not collapse reflection, retention, learning and self-improvement into a single verdict. The suggested traces, postconditions and comparisons name evidence or system changes that could alter the corresponding conclusions, not generic adoption advice.
+
+The synthesis [Limitations](synthesis.md#limitations) faithfully carries the report verifier's retained query/search/fusion omission, with the affected records, incomplete warrant comparison and explicit warning against inferring absent epistemic functions. It also preserves the profile's partial-inventory consequences without manufacturing a profile-verification limit. The remaining rows cover unavailable execution and benefit evidence, opaque initialization and vectors, external services/deployment controls, reduced rationale streams, external benchmark criteria and partial historical coverage. No unresolved reconciliation conflict was supplied. These consequences remain beside the positive supported mechanisms rather than weakening them into unsupported negatives. No additional record fault requiring a new public limitation was identified.
+
+Source-read log: none. This judgment used the supplied members and governing contracts only; it adds no source evidence or corrected text.
+
+## Blockers
+
+none
+
+## Limits
+
+none
