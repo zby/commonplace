@@ -1,0 +1,867 @@
+---
+type: "agentic-system-analyses/types/agentic-system-memory-profile.md"
+description: "llm-wiki memory comparison of local knowledge, operational traces, retained guidance and opaque external payload interfaces at the frozen revision."
+run-id: "AAS-2026-10-17-llm-wiki-a93f86f698d7-01"
+source-identity: "https://github.com/nvk/llm-wiki"
+reviewed-boundary: "95a042c68998559305bc69ac8c482c4e1a415ad3"
+memory-comparison:
+  version: 2
+  scope: "Retained raw/article bodies and metadata, navigation indexes, operational session state/digests/feedback, research provenance, topic guides/proposals, personal method/allowlist and adapter registry changes, inventory/Ideas, dataset manifests and external payload interfaces, project rationale/deliverables, maintenance findings, checkpoint bundles and benchmark retained artifacts/later consumers. Includes unresolved native-data/media/private-output and external continuation alternatives at their interfaces. Excludes static shipped instructions as accumulated memory, ordinary transient tool returns, host inference weights and provider training internals, and release administration."
+  axes:
+    storage_substrate:
+      assessment: "partial"
+      units:
+        - scope: "Local raw/articles, indexes/frontmatter, sessions/feedback/provenance, guides, inventory, dataset notes, project text, reports, registries, methods and checkpoint bundles"
+          assessment: "known"
+          findings:
+            - value: "files"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-feedback"
+                - "runtime.md#rt-obj-adapters-registry"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Executable capture, registry and seal paths persist local files."
+            - value: "files"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-raw"
+                - "memory.md#mem-obj-wiki"
+                - "memory.md#mem-obj-inventory"
+                - "memory.md#mem-obj-projects"
+                - "memory.md#mem-rte-review-memory"
+              note: "Model-workflow contracts retain source, article, tracking, project and diagnostic files."
+          records:
+            - "memory.md#mem-obj-raw"
+            - "memory.md#mem-obj-wiki"
+            - "memory.md#mem-obj-frontmatter"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-obj-feedback"
+            - "memory.md#mem-obj-session-provenance"
+            - "memory.md#mem-obj-schema"
+            - "memory.md#mem-obj-inventory"
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-obj-adapters-registry"
+            - "runtime.md#rt-rte-specialist-enable"
+            - "runtime.md#rt-rte-checkpoint-export"
+            - "memory.md#mem-rte-review-memory"
+            - "runtime.md#rt-rte-query-evaluation"
+          note: "The records enumerate filesystem Markdown, JSON, JSONL and colocated artifacts; this classifies storage rather than their mixed encodings."
+        - scope: "External dataset bytes, private adapter outputs and external host continuation storage"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Locations and receipts do not establish operative external storage substrates; no provider-weight memory is inferred."
+      records:
+        - "memory.md#mem-obj-raw"
+        - "memory.md#mem-obj-wiki"
+        - "memory.md#mem-obj-frontmatter"
+        - "memory.md#mem-obj-index"
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-obj-feedback"
+        - "memory.md#mem-obj-session-provenance"
+        - "memory.md#mem-obj-schema"
+        - "memory.md#mem-obj-inventory"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-obj-adapters-registry"
+        - "runtime.md#rt-rte-specialist-enable"
+        - "runtime.md#rt-rte-checkpoint-export"
+        - "memory.md#mem-rte-review-memory"
+        - "runtime.md#rt-rte-query-evaluation"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Local retained bodies, access metadata and control artifacts are file-backed. External dataset and adapter payloads and host continuation state prevent complete substrate coverage; no repository, graph or vector substrate is inferred from links or Git distribution."
+    representational_form:
+      assessment: "partial"
+      units:
+        - scope: "Readable source/article/index summaries, lessons, session summaries, guidance, tracking rationale, reports and checkpoint synthesis consumed by models or humans"
+          assessment: "known"
+          findings:
+            - value: "natural-language"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-raw"
+                - "memory.md#mem-obj-wiki"
+                - "memory.md#mem-obj-schema"
+                - "memory.md#mem-obj-projects"
+                - "memory.md#mem-rte-review-memory"
+              note: "Compilation, queries, planning and review interpret retained prose."
+            - value: "natural-language"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-digest"
+                - "memory.md#mem-rte-feedback-candidates"
+                - "runtime.md#rt-bap-session-context"
+              note: "Code renders retained manual summaries and feedback lessons into digest/rehydration prose."
+          records:
+            - "memory.md#mem-obj-raw"
+            - "memory.md#mem-obj-wiki"
+            - "memory.md#mem-obj-frontmatter"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-obj-feedback"
+            - "memory.md#mem-obj-session-provenance"
+            - "memory.md#mem-obj-schema"
+            - "memory.md#mem-obj-inventory"
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-obj-adapters-registry"
+            - "runtime.md#rt-rte-specialist-enable"
+            - "runtime.md#rt-rte-checkpoint-export"
+            - "memory.md#mem-rte-review-memory"
+            - "runtime.md#rt-rte-query-evaluation"
+          note: "Natural-language paths are distinct from adjacent path/date/hash/mode fields."
+        - scope: "Machine-consumed identities, paths, dates, counts, statuses, hashes, modes and allowlists"
+          assessment: "known"
+          findings:
+            - value: "symbolic"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-feedback"
+                - "runtime.md#rt-obj-adapters-registry"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "State selection, promotion status, registry checks and bundle verification use symbolic fields."
+            - value: "symbolic"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-session-provenance"
+                - "memory.md#mem-obj-frontmatter"
+                - "memory.md#mem-rte-review-memory"
+              note: "Research recovery, incremental compilation and scan-resume contracts use statuses, dates and scores."
+          records:
+            - "memory.md#mem-obj-frontmatter"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-feedback"
+            - "runtime.md#rt-obj-adapters-registry"
+            - "runtime.md#rt-rte-specialist-enable"
+            - "runtime.md#rt-rte-checkpoint-export"
+            - "memory.md#mem-rte-review-memory"
+            - "runtime.md#rt-rte-query-evaluation"
+          note: "Localized fields receive fixed selection, validation and rendering consequences."
+        - scope: "Native dataset, arbitrary project code/media/data, private adapter payloads and host compaction payloads"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Readable manifests and digest pointers cannot classify the opaque payloads; external inference weights are not thereby accumulated memory."
+      records:
+        - "memory.md#mem-obj-raw"
+        - "memory.md#mem-obj-wiki"
+        - "memory.md#mem-obj-frontmatter"
+        - "memory.md#mem-obj-index"
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-obj-feedback"
+        - "memory.md#mem-obj-session-provenance"
+        - "memory.md#mem-obj-schema"
+        - "memory.md#mem-obj-inventory"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-obj-adapters-registry"
+        - "runtime.md#rt-rte-specialist-enable"
+        - "runtime.md#rt-rte-checkpoint-export"
+        - "memory.md#mem-rte-review-memory"
+        - "runtime.md#rt-rte-query-evaluation"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Text interpreted by models/humans and fields interpreted by fixed code are separated. Arbitrary dataset/project/adapter payloads and host continuation forms remain unresolved."
+    lineage:
+      assessment: "partial"
+      units:
+        - scope: "Imported source/collection material and checkpoint collections"
+          assessment: "known"
+          findings:
+            - value: "imported"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-admit-sources"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Source acquisition and bounded checkpoint import retain external content/provenance."
+          records:
+            - "memory.md#mem-obj-raw"
+            - "memory.md#mem-rte-admit-sources"
+            - "runtime.md#rt-rte-checkpoint-export"
+          note: "Import is distinguished from model synthesis and does not certify upstream warrant."
+        - scope: "User-edited topic guides and personal specialist method text"
+          assessment: "known"
+          findings:
+            - value: "authored"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-schema"
+                - "runtime.md#rt-rte-specialist-enable"
+              note: "Explicit guide adoption and local method editing provide authored instruction paths."
+          records:
+            - "memory.md#mem-obj-schema"
+            - "runtime.md#rt-rte-specialist-enable"
+          note: "Authored guidance is distinguishable from proposals derived from retained wiki structure."
+        - scope: "Derived articles/index summaries, schema proposals and checkpoint knowledge synthesis"
+          assessment: "known"
+          findings:
+            - value: "other-compiled"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-wiki"
+                - "memory.md#mem-obj-index"
+                - "memory.md#mem-obj-schema"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Models synthesize/reorganize evidence, derive navigation views and propose topic guidance."
+          records:
+            - "memory.md#mem-obj-wiki"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-obj-schema"
+            - "runtime.md#rt-rte-checkpoint-export"
+          note: "This covers derivation from retained non-trace content, not initial content origins or factual novelty."
+        - scope: "Hook state/digest/feedback derivatives and conversation lessons"
+          assessment: "known"
+          findings:
+            - value: "trace-extracted"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "memory.md#mem-rte-feedback-candidates"
+              note: "Hook metadata and user turns become bounded state, templates and classified candidates."
+            - value: "trace-extracted"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-extract-lessons"
+              note: "The model extracts cause/fix/Rule notes from current conversation."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-rte-feedback-candidates"
+            - "memory.md#mem-rte-extract-lessons"
+          note: "Trace origin is kept distinct from the later raw-note promotion plane."
+        - scope: "Initial/mixed conversation content, native datasets, private adapter outputs, personal payload provenance and host summaries"
+          assessment: "not-determinable"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+            - "memory.md#mem-obj-wiki"
+            - "runtime.md#rt-rte-specialist-enable"
+          note: "Known subsequent derivation does not establish all initial origins; records do not identify every lineage alternative."
+      records:
+        - "memory.md#mem-obj-raw"
+        - "memory.md#mem-rte-admit-sources"
+        - "runtime.md#rt-rte-checkpoint-export"
+        - "memory.md#mem-obj-schema"
+        - "runtime.md#rt-rte-specialist-enable"
+        - "memory.md#mem-obj-wiki"
+        - "memory.md#mem-obj-index"
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-rte-feedback-candidates"
+        - "memory.md#mem-rte-extract-lessons"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Derivation paths include imported evidence, authored guidance, trace extraction and other compilation. Initial provenance of external payloads, personal packages and some user content is not resolved by subsequent transformations."
+    behavioral_authority:
+      assessment: "partial"
+      units:
+        - scope: "Raw/article/index/project/report prose at later answering, compilation, audit and checkpoint consumers"
+          assessment: "known"
+          findings:
+            - value: "knowledge"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-raw"
+                - "memory.md#mem-obj-wiki"
+                - "memory.md#mem-obj-projects"
+                - "memory.md#mem-rte-review-memory"
+              note: "Later models interpret retained claims and diagnostic reasons."
+          records:
+            - "memory.md#mem-obj-raw"
+            - "memory.md#mem-obj-wiki"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-obj-projects"
+            - "memory.md#mem-rte-review-memory"
+            - "runtime.md#rt-rte-checkpoint-export"
+          note: "These paths supply reference and evidence without a universal truth gate."
+        - scope: "Topic guide and enabled specialist method at planning/review models"
+          assessment: "known"
+          findings:
+            - value: "instruction"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-bap-topic-guide"
+                - "runtime.md#rt-bap-specialist-methods"
+              note: "Guide rules shape planning and selected methods direct review."
+          records:
+            - "memory.md#mem-bap-topic-guide"
+            - "runtime.md#rt-bap-specialist-methods"
+          note: "Retained standing directions request behavior but do not grant tools."
+        - scope: "Trace-derived state at digest/feedback/lesson update consumers, and derived summaries at later host invocations"
+          assessment: "known"
+          findings:
+            - value: "learning"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "memory.md#mem-rte-feedback-candidates"
+              note: "Retained experience feeds durable summary/candidate artifacts for later context and review."
+            - value: "learning"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-extract-lessons"
+              note: "Conversation experience feeds durable Rule notes and article appends."
+            - value: "knowledge"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-bap-session-context"
+                - "memory.md#mem-obj-session-digest"
+              note: "The later host receives advisory state-derived summary/path context, not automatic canonical topic knowledge."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-rte-feedback-candidates"
+            - "memory.md#mem-rte-extract-lessons"
+            - "runtime.md#rt-bap-session-context"
+          note: "Update-consumer learning force and output context force are separate; neither demonstrates improved capacity."
+        - scope: "State identities/dates and research checkpoints selecting continuation or context"
+          assessment: "known"
+          findings:
+            - value: "routing"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "runtime.md#rt-rte-session-bridge"
+              note: "Retained cwd/session/topic and digest-path state determine eligible rehydration context."
+            - value: "routing"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-session-provenance"
+              note: "Retained path statuses determine which research work resumes."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-provenance"
+            - "runtime.md#rt-rte-session-bridge"
+          note: "Routing is operation/window selection, not knowledge endorsement."
+        - scope: "Retained date, confidence, score and navigation metadata at query/maintenance prioritization consumers"
+          assessment: "known"
+          findings:
+            - value: "ranking"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-obj-frontmatter"
+                - "memory.md#mem-obj-index"
+                - "memory.md#mem-rte-review-memory"
+              note: "Metadata and diagnostic scores prioritize relevant, hot, stale or thin material."
+          records:
+            - "memory.md#mem-obj-frontmatter"
+            - "memory.md#mem-obj-index"
+            - "memory.md#mem-rte-review-memory"
+          note: "Priority influence is separate from fixed-code validity checks."
+        - scope: "Adapter registry/manifest identity, specialist allowlist and checkpoint hashes/overrides at admission consumers"
+          assessment: "known"
+          findings:
+            - value: "validation"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-adapter-execute"
+                - "runtime.md#rt-rte-specialist-enable"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Saved hashes, registration constraints and bundle attestations are conformance criteria."
+            - value: "enforcement"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-adapter-execute"
+                - "runtime.md#rt-rte-specialist-enable"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Mismatching manifest/approval, invalid method or invalid bundle prevents the corresponding bounded admission."
+          records:
+            - "runtime.md#rt-obj-adapters-registry"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-rte-specialist-enable"
+            - "runtime.md#rt-rte-checkpoint-export"
+          note: "Retained symbolic controls have bounded executable force, not universal filesystem or remote safety guarantees."
+        - scope: "Native dataset/project payload consumers and private adapter outputs or host continuation consumers"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Opaque content and untraced consumer routes prevent complete authority coverage."
+      records:
+        - "memory.md#mem-obj-raw"
+        - "memory.md#mem-obj-wiki"
+        - "memory.md#mem-obj-index"
+        - "memory.md#mem-obj-projects"
+        - "memory.md#mem-rte-review-memory"
+        - "runtime.md#rt-rte-checkpoint-export"
+        - "memory.md#mem-bap-topic-guide"
+        - "runtime.md#rt-bap-specialist-methods"
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-rte-feedback-candidates"
+        - "memory.md#mem-rte-extract-lessons"
+        - "runtime.md#rt-bap-session-context"
+        - "memory.md#mem-obj-session-provenance"
+        - "runtime.md#rt-rte-session-bridge"
+        - "memory.md#mem-obj-frontmatter"
+        - "runtime.md#rt-obj-adapters-registry"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-rte-specialist-enable"
+        - "memory.md#mem-obj-datasets"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Authority is local to retained part and actual consumer; advisory evidence is not enforcement. External native-data/private-output consumers and actual personal method contents remain unresolved."
+    write_agency:
+      assessment: "partial"
+      units:
+        - scope: "Ordinary source/article writes, index/lint fixes, hook capture/digest/feedback and ordinary lesson appends"
+          assessment: "known"
+          findings:
+            - value: "automatic"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-lint-wiki"
+                - "runtime.md#rt-rte-session-bridge"
+                - "memory.md#mem-rte-feedback-candidates"
+              note: "Software selects admitted records and repairs under configured/selected workflows."
+            - value: "automatic"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-admit-sources"
+                - "runtime.md#rt-rte-compile-wiki"
+                - "memory.md#mem-rte-extract-lessons"
+              note: "Models select source normalization, article content and ordinary lesson appends."
+          records:
+            - "memory.md#mem-rte-admit-sources"
+            - "runtime.md#rt-rte-compile-wiki"
+            - "runtime.md#rt-rte-lint-wiki"
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-rte-feedback-candidates"
+            - "memory.md#mem-rte-extract-lessons"
+          note: "No per-content human decision is required on these paths."
+        - scope: "User-selected refresh action, adopted topic guide, Idea approval, lesson dry-run save and individually approved instruction proposals"
+          assessment: "known"
+          findings:
+            - value: "manual"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-refresh-sources"
+                - "memory.md#mem-obj-schema"
+                - "memory.md#mem-obj-inventory"
+                - "memory.md#mem-rte-extract-lessons"
+              note: "A human chooses replacement, approves a snapshot/proposal or confirms saving the displayed result."
+          records:
+            - "memory.md#mem-rte-refresh-sources"
+            - "memory.md#mem-obj-schema"
+            - "memory.md#mem-obj-inventory"
+            - "memory.md#mem-rte-extract-lessons"
+          note: "These contracts specify an explicit content/adoption decision, not merely starting work."
+        - scope: "CLI-only digest/feedback promotion, specialist enablement, adapter approval and withdrawal apply; initial/external admission"
+          assessment: "not-determinable"
+          findings: []
+          records:
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-rte-feedback-candidates"
+            - "runtime.md#rt-rte-specialist-enable"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "memory.md#mem-rte-withdraw-memory"
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Explicit invocation alone does not authenticate a human content decision. Initial controls and untraced dataset/media/private branches remain unresolved."
+      records:
+        - "memory.md#mem-rte-admit-sources"
+        - "runtime.md#rt-rte-compile-wiki"
+        - "runtime.md#rt-rte-lint-wiki"
+        - "runtime.md#rt-rte-session-bridge"
+        - "memory.md#mem-rte-feedback-candidates"
+        - "memory.md#mem-rte-extract-lessons"
+        - "memory.md#mem-rte-refresh-sources"
+        - "memory.md#mem-obj-schema"
+        - "memory.md#mem-obj-inventory"
+        - "runtime.md#rt-rte-specialist-enable"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "memory.md#mem-rte-withdraw-memory"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Ordinary model/software admission is automatic even after workflow initiation. Explicit human content choices establish manual paths; generic CLI caller identity does not."
+    curation_operations:
+      assessment: "partial"
+      units:
+        - scope: "Bounded session state, digest rendering and feedback derivatives"
+          assessment: "known"
+          findings:
+            - value: "consolidate"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "memory.md#mem-rte-feedback-candidates"
+              note: "Selected recent summaries/events and feedback are rendered into reduced operational context."
+            - value: "evolve"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+              note: "Current state and latest digest are revised as further checkpoints arrive."
+            - value: "decay"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+              note: "Bounded last-event/manual-summary windows forget older entries from current operational state; this does not claim erasure of all event files."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-rte-feedback-candidates"
+          note: "Metadata templates reduce retained experience without demonstrating semantic transcript preservation."
+        - scope: "Explicit feedback promotion from operational candidate to topic raw-note plane"
+          assessment: "known"
+          findings:
+            - value: "promote"
+              basis: "wired"
+              records:
+                - "memory.md#mem-rte-feedback-candidates"
+                - "epistemic.md#epi-rte-feedback-promotion"
+              note: "Selected operational lessons become topic source candidates for compilation."
+          records:
+            - "memory.md#mem-rte-feedback-candidates"
+            - "epistemic.md#epi-rte-feedback-promotion"
+          note: "Promotion changes admission tier, not factual validity."
+        - scope: "Explicit digest-body promotion from operational checkpoint to topic raw-note plane"
+          assessment: "known"
+          findings:
+            - value: "promote"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-session-bridge"
+                - "memory.md#mem-obj-session-digest"
+              note: "The selected retained digest body is copied into topic raw notes for later compilation."
+          records:
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-obj-session-digest"
+          note: "This distinct promotion admits digest content rather than a selected feedback candidate; it does not establish factual acceptance."
+        - scope: "Model compilation, lesson extraction, refresh and source-dependent withdrawal"
+          assessment: "partial"
+          findings:
+            - value: "consolidate"
+              basis: "claimed"
+              records:
+                - "runtime.md#rt-rte-compile-wiki"
+                - "memory.md#mem-rte-extract-lessons"
+              note: "Sources and session experience are condensed into articles or structured lessons."
+            - value: "dedup"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-extract-lessons"
+                - "epistemic.md#epi-rte-source-selection"
+              note: "Lesson selection and research selection request duplicate removal rather than mere ID collision rejection."
+            - value: "evolve"
+              basis: "claimed"
+              records:
+                - "runtime.md#rt-rte-compile-wiki"
+                - "memory.md#mem-rte-refresh-sources"
+              note: "Existing article content is revised by compilation and selected refresh."
+          records:
+            - "runtime.md#rt-rte-compile-wiki"
+            - "memory.md#mem-rte-extract-lessons"
+            - "memory.md#mem-rte-refresh-sources"
+            - "memory.md#mem-rte-withdraw-memory"
+          note: "Prescribed compression, duplicate handling and revision are supported; actual semantic novelty and every rewrite branch remain unresolved."
+        - scope: "Native dataset/sample/profile/query, media/private transformations and all lint-fix branches"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-rte-lint-wiki"
+          note: "Names, acquisition and indexes alone cannot establish a curation operation. Literal deletion does not establish history-preserving invalidation."
+      records:
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-rte-feedback-candidates"
+        - "epistemic.md#epi-rte-feedback-promotion"
+        - "runtime.md#rt-rte-session-bridge"
+        - "runtime.md#rt-rte-compile-wiki"
+        - "memory.md#mem-rte-extract-lessons"
+        - "memory.md#mem-rte-refresh-sources"
+        - "memory.md#mem-rte-withdraw-memory"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-rte-lint-wiki"
+      note: "Only transformations over retained content are classified; index rebuilds and primary-key checks alone are not curation. Feedback-candidate and digest-body promotion have distinct retained inputs. Refresh flagging lowers confidence and adds a warning but does not establish history-preserving withdrawal of current reliance. Opaque native-data/media/adapter transformations and untraced maintenance branches retain uncertainty."
+    read_back_direction:
+      assessment: "partial"
+      units:
+        - scope: "User queries, explicit rehydrate/show/promotion, resume, audit reuse, checkpoint verification/import and benchmark fixture requests"
+          assessment: "known"
+          findings:
+            - value: "pull"
+              basis: "claimed"
+              records:
+                - "runtime.md#rt-rte-query-wiki"
+                - "memory.md#mem-rte-review-memory"
+                - "runtime.md#rt-rte-checkpoint-export"
+              note: "Models request retained files, prior findings and selected checkpoint inputs."
+            - value: "pull"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-session-bridge"
+                - "runtime.md#rt-rte-query-evaluation"
+              note: "Explicit session operations and exact fixture-file tool requests return retained material."
+          records:
+            - "runtime.md#rt-rte-query-wiki"
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-rte-review-memory"
+            - "runtime.md#rt-rte-checkpoint-export"
+            - "runtime.md#rt-rte-query-evaluation"
+          note: "Requested delivery is pull even when code performs selection and output."
+        - scope: "Configured SessionStart/UserPromptSubmit automatic context delivery"
+          assessment: "known"
+          findings:
+            - value: "push"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-session-bridge"
+                - "runtime.md#rt-bap-session-context"
+              note: "Code supplies selected state-derived summary and digest pointer through additionalContext."
+          records:
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-obj-session-state"
+            - "runtime.md#rt-bap-session-context"
+          note: "The hook supplies context without a model request for those retained states."
+        - scope: "Native-data/media/private-output read routes and external host continuation delivery"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "A known query pull does not settle these included alternatives."
+      records:
+        - "runtime.md#rt-rte-query-wiki"
+        - "runtime.md#rt-rte-session-bridge"
+        - "memory.md#mem-rte-review-memory"
+        - "runtime.md#rt-rte-checkpoint-export"
+        - "runtime.md#rt-rte-query-evaluation"
+        - "memory.md#mem-obj-session-state"
+        - "runtime.md#rt-bap-session-context"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Requested retrieval and independent hook supply coexist. Untraced dataset/media/private consumers and host continuation alternatives prevent complete direction coverage."
+    read_back_signal:
+      assessment: "partial"
+      units:
+        - scope: "Automatic start/prompt hook: matching cwd states with digest paths, newest last_seen_at first, default limit three"
+          assessment: "known"
+          findings:
+            - value: "identifier"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-session-bridge"
+                - "memory.md#mem-obj-session-state"
+              note: "Exact cwd matching selects eligible retained session states for unsolicited delivery."
+            - value: "coarse"
+              basis: "wired"
+              records:
+                - "runtime.md#rt-rte-session-bridge"
+                - "memory.md#mem-obj-session-state"
+              note: "Digest-path availability, recency ordering and a count budget further filter eligible states without semantic matching."
+          records:
+            - "runtime.md#rt-rte-session-bridge"
+            - "memory.md#mem-obj-session-state"
+          note: "Trigger, selector input and delivered part are explicit: hook event, cwd/state metadata, state summary plus path rather than digest body."
+        - scope: "Model-requested query/files, explicit session reads and requested fixture delivery"
+          assessment: "inapplicable"
+          findings: []
+          records:
+            - "runtime.md#rt-rte-query-wiki"
+            - "runtime.md#rt-rte-session-bridge"
+            - "runtime.md#rt-rte-query-evaluation"
+          note: "These named operations are pull; relevance judgment within a requested retrieval is not an independent push selector."
+        - scope: "Untraced native-data/private-output and external continuation alternatives"
+          assessment: "uninspected"
+          findings: []
+          records:
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Neither availability of manifests nor a known local push establishes selector inputs on these branches."
+      records:
+        - "runtime.md#rt-rte-session-bridge"
+        - "memory.md#mem-obj-session-state"
+        - "runtime.md#rt-rte-query-wiki"
+        - "runtime.md#rt-rte-query-evaluation"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "The inspected hook push uses exact cwd eligibility and recency/count filtering. Explicit file paths on pull routes are not push signals; opaque alternatives prevent complete coverage."
+    trace_learning:
+      assessment: "partial"
+      units:
+        - scope: "Hook metadata/manual-summary state to retained digest/summary and later host context; user turns to retained feedback and later digest/review"
+          assessment: "known"
+          findings:
+            - value: "yes"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "memory.md#mem-rte-feedback-candidates"
+                - "runtime.md#rt-bap-session-context"
+              note: "Trace-derived durable summaries/candidates can shape later invocations, without automatic instruction installation."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "memory.md#mem-rte-feedback-candidates"
+            - "runtime.md#rt-bap-session-context"
+          note: "Automatic extraction/template writes have a retained output and later context/review consumer; full transcript preservation is unnecessary."
+        - scope: "Ordinary conversation-to-lesson raw note/article Rule extraction"
+          assessment: "known"
+          findings:
+            - value: "yes"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-extract-lessons"
+              note: "The model automatically extracts retained Rules from session experience for later query/compile use."
+          records:
+            - "memory.md#mem-rte-extract-lessons"
+          note: "User invocation does not make subsequent model admission manual; individually approved instruction proposals are a separate path."
+        - scope: "Research provenance/checkpoint updates, native dataset/media/private writes and external host compaction"
+          assessment: "not-determinable"
+          findings: []
+          records:
+            - "memory.md#mem-obj-session-provenance"
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Raw provenance retention alone does not establish a behavior-shaping automatic derivation; opaque inputs/write controls/later consumers prevent a bounded no or further yes."
+      records:
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "memory.md#mem-rte-feedback-candidates"
+        - "runtime.md#rt-bap-session-context"
+        - "memory.md#mem-rte-extract-lessons"
+        - "memory.md#mem-obj-session-provenance"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Automatic trace-fed durable context/candidate and lesson paths support yes locally. This is not demonstrated capacity improvement; unresolved write alternatives prevent a complete system-wide classification or negative."
+    trace_source:
+      assessment: "partial"
+      units:
+        - scope: "Automatic feedback candidate extraction from hook user turns"
+          assessment: "known"
+          findings:
+            - value: "session-logs"
+              basis: "wired"
+              records:
+                - "memory.md#mem-rte-feedback-candidates"
+                - "epistemic.md#epi-rte-feedback-classification"
+              note: "Recorded user corrections/preferences/approvals supply feedback text."
+          records:
+            - "memory.md#mem-rte-feedback-candidates"
+            - "epistemic.md#epi-rte-feedback-classification"
+          note: "Classify original conversational content, not the hook envelope."
+        - scope: "Automatic event/state-to-digest/summary continuation route"
+          assessment: "partial"
+          findings:
+            - value: "event-streams"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "runtime.md#rt-rte-session-bridge"
+              note: "Session lifecycle and compaction callbacks supply discrete runtime events used by retained state/digest rendering."
+            - value: "tool-traces"
+              basis: "wired"
+              records:
+                - "memory.md#mem-obj-session-state"
+                - "memory.md#mem-obj-session-digest"
+                - "runtime.md#rt-rte-session-bridge"
+              note: "Recorded PostToolUse/tool-name metadata enters bounded event descriptors and digest rendering; this does not assert tool-result bodies are preserved."
+          records:
+            - "memory.md#mem-obj-session-state"
+            - "memory.md#mem-obj-session-digest"
+            - "runtime.md#rt-rte-session-bridge"
+          note: "Lifecycle/tool-event descriptors are inspected; original provenance of free-form manual summaries and omitted host payloads is not fully determined."
+        - scope: "Conversation diagnosis into retained lesson and article Rule"
+          assessment: "known"
+          findings:
+            - value: "session-logs"
+              basis: "claimed"
+              records:
+                - "memory.md#mem-rte-extract-lessons"
+              note: "The model scans current conversation for errors/fixes and user corrections."
+          records:
+            - "memory.md#mem-rte-extract-lessons"
+          note: "The original input is the working conversation, potentially already host-compacted."
+        - scope: "Other potential trace-fed research/native-data/private/host-summary writes"
+          assessment: "not-determinable"
+          findings: []
+          records:
+            - "memory.md#mem-obj-session-provenance"
+            - "memory.md#mem-obj-datasets"
+            - "memory.md#mem-obj-projects"
+            - "runtime.md#rt-rte-adapter-execute"
+            - "runtime.md#rt-cmp-host-model"
+          note: "Missing qualifying write detail and original payload origins prevent further source classification; an adapter or journal label alone supplies none."
+      records:
+        - "memory.md#mem-rte-feedback-candidates"
+        - "epistemic.md#epi-rte-feedback-classification"
+        - "memory.md#mem-obj-session-state"
+        - "memory.md#mem-obj-session-digest"
+        - "runtime.md#rt-rte-session-bridge"
+        - "memory.md#mem-rte-extract-lessons"
+        - "memory.md#mem-obj-session-provenance"
+        - "memory.md#mem-obj-datasets"
+        - "memory.md#mem-obj-projects"
+        - "runtime.md#rt-rte-adapter-execute"
+        - "runtime.md#rt-cmp-host-model"
+      note: "Qualifying inspected writes consume recorded user turns and discrete hook/tool activity. Full conversational trajectories and all opaque inputs are not established; source coverage remains partial."
+---
+
+# llm-wiki memory profile
+
+## Comparison rationale
+
+The comparison keeps filesystem bodies separate from access metadata and from opaque referenced payloads. A Markdown dataset manifest does not classify the dataset it names, and a readable session summary does not classify external host compaction state. These limits follow [MEM-OBJ-datasets](memory.md#mem-obj-datasets), [MEM-OBJ-projects](memory.md#mem-obj-projects), [MEM-OBJ-session-digest](memory.md#mem-obj-session-digest) and [RT-RTE-adapter-execute](runtime.md#rt-rte-adapter-execute). Every axis remains partial because its included inventory retains unresolved alternatives; no unsupported absence or system-wide trace-learning no is inferred.
+
+Evidence layers remain local. Model-operated compilation, guide use, semantic review, lesson extraction and user-choice refresh are claimed protocols. Hook state/digest/feedback transformations and context delivery, structural controls and guarded fixture delivery have wired mechanisms. Neither establishes observed operation, useful learning or causal benefit. See [RT-RTE-compile-wiki](runtime.md#rt-rte-compile-wiki), [MEM-RTE-extract-lessons](memory.md#mem-rte-extract-lessons), [MEM-RTE-feedback-candidates](memory.md#mem-rte-feedback-candidates), [RT-RTE-session-bridge](runtime.md#rt-rte-session-bridge) and [RT-RTE-query-evaluation](runtime.md#rt-rte-query-evaluation).
+
+Automatic trace-fed production of durable continuation context meets the profile's trace-learning definition even though the digest is a metadata template rather than semantic transcript compression. The actual automatic delivery is the state-derived summary and digest pointer, not the whole digest. User-turn feedback is session-log input despite its hook envelope; lifecycle callbacks are event-stream input; recorded tool-event descriptors are tool-trace input without claiming access to tool-result bodies. Manual-summary provenance remains unresolved. Update-consumer learning authority and downstream knowledge authority are separate paths. See [MEM-OBJ-session-state](memory.md#mem-obj-session-state), [MEM-OBJ-session-digest](memory.md#mem-obj-session-digest), [MEM-RTE-feedback-candidates](memory.md#mem-rte-feedback-candidates) and [RT-BAP-session-context](runtime.md#rt-bap-session-context).
+
+Requested query, rehydrate and fixture delivery are pull. The independent hook route is push: exact cwd matching selects eligible states, while digest availability, recency and count limit supply coarse filtering. No inference from a requested file identifier to identifier-based push is made. See [RT-RTE-query-wiki](runtime.md#rt-rte-query-wiki), [RT-RTE-session-bridge](runtime.md#rt-rte-session-bridge) and [RT-RTE-query-evaluation](runtime.md#rt-rte-query-evaluation).
+
+Curation values classify transformations rather than names. Bounded operational windows forget old entries locally. Feedback-candidate promotion and digest-body promotion separately raise selected operational content into the topic raw-note plane. Refresh flags lower confidence and insert a warning; the accepted record does not establish withdrawal of current reliance while retaining history, so flagging supplies no invalidate finding. Index rebuilding and collision rejection alone add no curation finding. Generalizing lessons and synthesizing articles do not establish a novel claim absent from inputs, so no synthesize finding is asserted from those labels: actual semantic relation remains unresolved. See [MEM-OBJ-session-state](memory.md#mem-obj-session-state), [MEM-RTE-feedback-candidates](memory.md#mem-rte-feedback-candidates), [MEM-OBJ-session-digest](memory.md#mem-obj-session-digest), [RT-RTE-session-bridge](runtime.md#rt-rte-session-bridge), [MEM-RTE-refresh-sources](memory.md#mem-rte-refresh-sources), [MEM-RTE-extract-lessons](memory.md#mem-rte-extract-lessons) and [EPI-OBJ-wiki-articles](epistemic.md#epi-obj-wiki-articles).
+
+Reconciliation supersedes the epistemic lesson-extraction and source-refresh route identities with [MEM-RTE-extract-lessons](memory.md#mem-rte-extract-lessons) and [MEM-RTE-refresh-sources](memory.md#mem-rte-refresh-sources). Citations here use those canonical routes. The surviving refresh delegation disagreement prevents settled context-boundary coverage but does not undo the shared explicit user-choice admission mechanism. Overlapping raw/article/feedback object containers remain valid distinct records; they are not additional independent witnesses. Refresh overwrite, conversation authorship and entry-specific query repair policies prevent universal immutability, raw-only reconstruction or whole-system read-only claims.
+
+No frozen-source files were read for this classification. All warrants are the supplied accepted records and their annotations; no new evidence or records are declared.
