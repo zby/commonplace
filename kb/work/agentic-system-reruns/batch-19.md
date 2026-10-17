@@ -2,15 +2,31 @@
 
 ## Commission and status
 
+**Current status:** all six runs completed internally and the launcher exited 0.
+The [new independent audit](./batches-19-20-audit-commission.md) has now assessed
+all six renewed publications: all remain held. Four original qualifications
+persist or remain unresolved; ModularRSI and JAZ correct the original faults but
+introduce separate regressions. See the
+[audit ledger](./batches-19-20-audit-ledger.json). No result is integrated.
+The following launch observation is historical, not a live-process claim.
+
 The operator requested batch 19 after the Supermemory re-entry trial, then asked
 to check how deep the errors in the other held publications go. After the
-publication audit and integrations, the operator requested a runnable batch:
-**the operator will launch it**, while work on the other cases stays separate.
-The [launcher](./bash-19.sh) is prepared but has not been executed beyond its
-read-only check. No run was reset or launched while creating it. It selects only
-the six recoveries below, without waiving holds or authorizing integration.
-Supermemory is first, restarting from `runtime`; its source acquisition and
-frozen boundary remain unchanged.
+publication audit and integrations, the operator requested a runnable batch,
+initially reserving launch. After batch 20 was prepared, the operator explicitly
+requested execution of this [launcher](./bash-19.sh). It started on October 17;
+at the 07:11 UTC observation, Supermemory's `runtime` reset had completed,
+archiving 29 attempts, and its fresh coordinator was running. The remaining five
+cases were queued behind it. That launch observation did not establish renewed
+publication or content correction.
+No run was reset or launched while initially creating the script. It still
+selects only the six recoveries below, without waiving holds or authorizing
+integration. Supermemory's source acquisition and frozen boundary are unchanged.
+
+The launch recorded wrapper PID `2085897` and script PID `2085901`; these are
+historical identities, not liveness claims. External `outputs/batch-19-launch.log`,
+`.pid` and `.exit` retain ownership/outcome; the final launcher exit is 0. Per-run evidence stays in `outputs/batch-19/`. The existing
+one-shot fence remains binding: do not restart the script against these logs.
 
 The [batch ledger](./batch-19.json) owns selection and assignment status.
 The [completed depth investigation](./batch-19-depth-results.md) covers 23 held
@@ -181,6 +197,7 @@ not Bash agent-CLI substitutes.
   **926 passed**, including slow tests in these directories. No complete-repository
   test-suite or target-system execution claim follows.
 
-The actual reset/launch path has deliberately not been exercised on these live
-runs. Runtime delegation, new worker behavior and content repair remain untested
-until the operator launches and an independent audit checks the results.
+Those were preparation-only checks. Subsequent authorized execution completed
+all six publication jobs; the independent audits above establish current holds.
+Launch and publication success alone did not establish correction, and the
+bounded audits do not certify every worker obligation.

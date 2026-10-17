@@ -287,14 +287,17 @@ held accounts first went wrong. The [completed investigation](./batch-19-depth-r
 covers the original 23 held runs, with all four independent reports parent-reviewed.
 The later deep/local split leaves six selected deep recoveries and eleven blocked
 deep cases. AREX moves to local rework; mixed cases retain independent profile
-repairs. No reset or recovery run has launched. The [depth commission](./batch-19-depth-commission.md)
+repairs. The operator subsequently authorized execution after batch 20 preparation;
+the six-run launcher finished internally with six completed publications.
+All six renewed publications remain held after the new independent audits. The [depth commission](./batch-19-depth-commission.md)
 and [ledger](./batch-19.json) preserve their original scope and assignments;
 the separate publication sweep now includes completed batch-18 results and the
 previous unaudited queue. The 135-set pre-transfer baseline is preserved within
 the current **175-set** canonical corpus. Content depth, incumbent-transfer stops and operational
 violations remain separate decisions.
-The operator-run [batch-19 launcher](./bash-19.sh) is now ready. Its default
-`--check` is read-only. After confirming no prior same-run writers are live, run:
+The operator-run [batch-19 launcher](./bash-19.sh) has finished. Its default
+`--check` was read-only. The authorized launch used this command; **do not replay
+it against the now-existing batch logs**:
 
 ```bash
 bash kb/work/agentic-system-reruns/bash-19.sh --confirm-idle
@@ -303,8 +306,44 @@ bash kb/work/agentic-system-reruns/bash-19.sh --confirm-idle
 It resets the six existing runs sequentially, starting with Supermemory, then
 uses their ordinary frozen drivers without audit feedback. It stops on failures
 and refuses existing batch logs. Nothing was reset or launched while preparing
-it. Only the operator's explicit invocation starts these recoveries; renewed
-results remain held for independent audit, and integration stays separate.
+it. The operator then explicitly requested its launch. External
+`outputs/batch-19-launch.log` and `outputs/batch-19/` retain progress and evidence;
+the [ledger](./batch-19.json) records launch ownership. Renewed results remain
+held for independent audit, and integration stays separate.
+
+## Batch 20: ordinary fresh reruns
+
+The operator ran [script 20](./bash-20.sh), following its [plan](./batch-20.md),
+for nine fresh starts: Academic Research Skills, three remaining LLM Wiki owners,
+ClawVault, Cortex, PAL, Semantic Engine and Memori. The invocation was:
+
+```bash
+bash kb/work/agentic-system-reruns/bash-20.sh
+```
+
+The [batch-18 reconciliation](./batch-20-reconciliation.json) found seven stopped
+opening attempts with inherited naming mismatches, plus ClawVault's pre-creation
+storage check stop. None of those predecessor attempts had a publication to
+audit instead of scheduling a fresh run. The completed batch-20 publications
+are covered by the new audit below. The script validates the committed inherited corpus and pins all preparations to
+that launch-time commit. It uses new external worktrees and preserves old runs.
+Four targets keep their authorized historical local source pins. No reset,
+old-run recovery or integration occurs. Do not restart batch 18 concurrently.
+The separate batch-19 six-run recovery selection is unchanged.
+
+## Independent audit of batches 19 and 20
+
+The operator ran batch 20 separately; all nine fresh runs published internally.
+The [new audit commission](./batches-19-20-audit-commission.md) covers those nine
+and the six renewed batch-19 publications. The [fixed intake](./batches-19-20-audit-intake.md)
+finds all 15 still outside the 175-set canonical corpus. The
+[assignment ledger](./batches-19-20-audit-ledger.json) records isolated single-case
+Sol/medium audits and complete parent review. The
+[completed results](./batches-19-20-audit-results.md) are **seven qualified positive
+recommendations and eight holds**: all six batch-19 renewals remain held; batch 20
+has seven positives and two holds. All 175 canonical sets remain unchanged.
+Audit only: no integration, new reset, source mutation or checklist acceptance
+change is authorized.
 
 ## After the processes finish
 

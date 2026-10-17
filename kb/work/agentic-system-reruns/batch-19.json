@@ -1,7 +1,17 @@
 {
   "commission": "kb/work/agentic-system-reruns/batch-19.md",
   "depth-commission": "kb/work/agentic-system-reruns/batch-19-depth-commission.md",
-  "status": "operator-launcher-ready; six read-only preflights passed; no reset or analysis launched here",
+  "status": "six renewed publications completed internally; independent audits hold all six; no integration",
+  "launch-observation": {
+    "at": "2026-10-17T07:11:00.515894+00:00",
+    "authority": "operator requested batch 19 execution after batch 20 preparation",
+    "preflight": "six exact checks passed; no matching prior writer observed; harness diagnostic COMMONPLACE_WORKER_OK",
+    "launcher-pid": 2085897,
+    "script-pid": 2085901,
+    "launcher-log": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19-launch.log",
+    "launcher-exit": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19-launch.exit",
+    "outcome": "pending; no launcher exit file at observation; no automatic replay"
+  },
   "current-commission": "kb/work/agentic-system-reruns/batch-19.md",
   "classification-commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
   "launcher": {
@@ -21,17 +31,61 @@
   "excluded-count": 17,
   "deep-queue-count": 17,
   "blocked": [
-    {"run-id": "AAS-2026-10-09-dynamic-cheatsheet-2529cdc2795b-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-10-graphiti-5833fd846841-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-10-graphiti-85a21a06d35c-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-10-napkin-b831630d0978-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-11-graphiti-4896fccada9e-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-11-graphiti-72c99440b180-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-11-letta-code-f54d2479889e-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-11-napkin-1b60c5d21780-01", "from-job": "runtime", "stop": "canonical-incumbent transfer"},
-    {"run-id": "AAS-2026-10-11-napkin-28752ba411ea-01", "from-job": "memory", "stop": "canonical-incumbent transfer; separate profile direction fault also requires rework"},
-    {"run-id": "AAS-2026-10-15-dynamic-cheatsheet-11e3e77c2265-01", "from-job": "runtime", "stop": "canonical-incumbent transfer; historical audit-byte gap; separate profile history fault also requires rework"},
-    {"run-id": "AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01", "from-job": "epistemic", "stop": "reserved owner and historical compliance disposition"}
+    {
+      "run-id": "AAS-2026-10-09-dynamic-cheatsheet-2529cdc2795b-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-10-graphiti-5833fd846841-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-10-graphiti-85a21a06d35c-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-10-napkin-b831630d0978-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-11-graphiti-4896fccada9e-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-11-graphiti-72c99440b180-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-11-letta-code-f54d2479889e-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-11-napkin-1b60c5d21780-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer"
+    },
+    {
+      "run-id": "AAS-2026-10-11-napkin-28752ba411ea-01",
+      "from-job": "memory",
+      "stop": "canonical-incumbent transfer; separate profile direction fault also requires rework"
+    },
+    {
+      "run-id": "AAS-2026-10-15-dynamic-cheatsheet-11e3e77c2265-01",
+      "from-job": "runtime",
+      "stop": "canonical-incumbent transfer; historical audit-byte gap; separate profile history fault also requires rework"
+    },
+    {
+      "run-id": "AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01",
+      "from-job": "epistemic",
+      "stop": "reserved owner and historical compliance disposition"
+    }
   ],
   "parent-checks": {
     "scope": "baseline depth investigation: original 23 held runs, excluding qualified AI Memex, batch 18 and then-unaudited publications; later sweep governed separately",
@@ -50,53 +104,89 @@
     {
       "run-id": "AAS-2026-10-15-supermemory-ae21530d128d-01",
       "from-job": "runtime",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
+      "retired-attempt-count": 29,
+      "reset-archive": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/.reset-history/AAS-2026-10-15-supermemory-ae21530d128d-01/0f177cfdbf8c45f780abc507ebc09ea3",
       "current-attempts-in-reset-closure": 29,
-      "preserve": ["opening", "acquire", "boundary", "source revision", "method revision", "run identity", "debug archives"],
+      "preserve": [
+        "opening",
+        "acquire",
+        "boundary",
+        "source revision",
+        "method revision",
+        "run identity",
+        "debug archives"
+      ],
       "audit": "kb/work/agentic-system-reruns/audits/next-publications/AAS-2026-10-15-supermemory-ae21530d128d-01-reentry.md",
-      "finding-owner": "parent"
+      "finding-owner": "parent",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-supermemory-ae21530d128d-01.md",
+      "latest-audit-disposition": "hold"
     },
     {
       "run-id": "AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
       "from-job": "boundary",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
       "current-attempts-in-reset-closure": 48,
-      "preserve": ["opening", "acquire", "source revision", "method revision", "run identity", "debug history"],
+      "preserve": [
+        "opening",
+        "acquire",
+        "source revision",
+        "method revision",
+        "run identity",
+        "debug history"
+      ],
       "reason": "boundary training narrative omits selector and generic fallback; runtime repeats it",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+      "latest-audit-disposition": "hold"
     },
     {
       "run-id": "AAS-2026-10-14-openrsi-c72dec9967a3-01",
       "from-job": "runtime",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
       "current-attempts-in-reset-closure": 33,
       "reason": "initial default isolation/evaluation account omits possible answer-file access; no leakage observed",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "latest-audit-disposition": "hold"
     },
     {
       "run-id": "AAS-2026-10-14-modularrsi-96b89989168e-01",
       "from-job": "runtime",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
       "current-attempts-in-reset-closure": 39,
       "reason": "initial runtime omits review pass-through and describes dormant partial acceptance as active; workflow repeats it",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-modularrsi-96b89989168e-01.md",
+      "latest-audit-disposition": "hold"
     },
     {
       "run-id": "AAS-2026-10-15-jaz-a94bea79c61a-01",
       "from-job": "runtime",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
       "current-attempts-in-reset-closure": 33,
       "reason": "initial replay account omits sequential-invocation condition; dependent epistemic qualification is inconsistent",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "latest-audit-disposition": "hold"
     },
     {
       "run-id": "AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
       "from-job": "boundary",
-      "status": "selected-not-reset-not-launched",
+      "status": "internally-completed-renewed-publication-held",
       "current-attempts-in-reset-closure": 31,
-      "preserve": ["opening", "acquire", "source revision", "method revision", "run identity", "debug history"],
+      "preserve": [
+        "opening",
+        "acquire",
+        "source revision",
+        "method revision",
+        "run identity",
+        "debug history"
+      ],
       "reason": "boundary startup narrative already omits missing local import prerequisite; runtime repeats it",
-      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md"
+      "depth-report": "kb/work/agentic-system-reruns/audits/depth/batch-19-current-content.md",
+      "latest-audit-report": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "latest-audit-disposition": "hold"
     }
   ],
   "groups": [
@@ -162,5 +252,14 @@
         "AAS-2026-10-15-ai-context-os-4a0e34822f96-01"
       ]
     }
-  ]
+  ],
+  "completion-observation": {
+    "at": "2026-10-17T15:51:03.788393+00:00",
+    "launcher-exit": 0,
+    "internally-completed": 6,
+    "current-audit-commission": "kb/work/agentic-system-reruns/batches-19-20-audit-commission.md",
+    "current-audit-ledger": "kb/work/agentic-system-reruns/batches-19-20-audit-ledger.json",
+    "acceptance": "all six held; no integration",
+    "reset-closure-count-scope": "preserved prelaunch snapshot, not current post-reset attempt counts"
+  }
 }

@@ -1,0 +1,361 @@
+{
+  "commission": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-commission.md",
+  "intake": {
+    "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-intake.json",
+    "sha256": "9ba227504657b8f3c01fb589d14376ea0e811cf8a1c793ecc434005d06797ea4"
+  },
+  "reviewed-at": "2026-10-17T16:22:21.961465+00:00",
+  "status": "all 15 complete independent reports parent-read and exact-byte-bound; audit only",
+  "workers": "all fifteen assigned handles terminal; no worker currently owns a report",
+  "counts": {
+    "integrate": 0,
+    "integrate with recorded limits": 7,
+    "hold": 8
+  },
+  "prepared-validation": {
+    "commands": 30,
+    "failures": 0,
+    "warnings": 0,
+    "raw-evidence": {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batches-19-20-audit/parent-prepared-validation.json",
+      "sha256": "2161fab9a2368fefe2859f9f64e194c10591b302ca86e2fdafb33b1245af5a6c"
+    }
+  },
+  "canonical-preservation": {
+    "sets": 175,
+    "members": 2275,
+    "all-member-maps": "unchanged before and after validation",
+    "retained-root-ignore": "unchanged"
+  },
+  "own-publication-preservation": {
+    "sets": 15,
+    "members": 195,
+    "all-member-maps-effects-manifests-preparations-and-run-definitions": "unchanged"
+  },
+  "predecessor-preservation": {
+    "sets": 6,
+    "member-maps-and-reset-reports": "unchanged"
+  },
+  "verification-helper": {
+    "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batches-19-20-audit/verify-audits.py",
+    "sha256": "c60a15b8c2dc6da93529790513d5ef22340349d2aa4601460ed7eb59691d7865"
+  },
+  "cases": [
+    {
+      "run-id": "AAS-2026-10-15-supermemory-ae21530d128d-01",
+      "batch": 19,
+      "system": "Supermemory",
+      "source-identity": "https://github.com/supermemoryai/supermemory",
+      "publication-map-digest": "a95bafbf295413da985ac360e76a7e33ab8cbd482e2f6af3793c9c8f0b7cb449",
+      "publication-effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01/effects/publish.json",
+        "sha256": "dfe3be77de8afa96641cd28bbce3890b025df91160eb2dfc58b89881b2eb963f"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-supermemory-ae21530d128d-01.md",
+        "sha256": "64d1377e8045c219c12d3a65d1c419199bb4bacea275d1eed3b3caa42fdfadb4"
+      },
+      "disposition": "hold",
+      "finding": "Capture qualification changed but unresolved; generic non-system string branch exception still absent; SDK-input reachability and disclosure unestablished. Author correction runtime, verifier report-verification.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
+      "batch": 19,
+      "system": "ContextPilot",
+      "source-identity": "https://github.com/Tencent/ContextPilot",
+      "publication-map-digest": "61f6f599d6b0d476bf0256f8abf9aa9dfa654f49e458bd6f3a71aa09217b925f",
+      "publication-effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01/effects/publish.json",
+        "sha256": "3a7f0632e0fff4bbaaa7d50f6b04a1da54580aed87a9279f2c64f1868593294f"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+        "sha256": "889c0856ab79a35dda8af410a78bea1e346190ba8c9168417a884a9e4efdc329"
+      },
+      "disposition": "hold",
+      "finding": "Original training dispatch selector and generic fallback qualification persists; boundary alignment plus runtime correction and independent report verification; no execution or benefit inference.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-14-openrsi-c72dec9967a3-01",
+      "batch": 19,
+      "system": "OpenRSI",
+      "source-identity": "https://github.com/FrontisAI/OpenRSI",
+      "publication-map-digest": "a79463d3bc035492c47e09a7769ec6c8e2541b8aa902dc52ee22d3c5ab1c4952",
+      "publication-effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01/effects/publish.json",
+        "sha256": "74e5c3f9d4812b06ac5dfe6aaa90ee51e670756b84db86c15cf820676fcf8c3f"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+        "sha256": "cd8a8e7b7fa5ac22b93a0af3a44e29a3e51a29fb35a704750562325e224a6d58"
+      },
+      "disposition": "hold",
+      "finding": "Original candidate access to nominally private answers persists; runtime origin and report-verification barrier; possible access, not observed leakage.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-14-modularrsi-96b89989168e-01",
+      "batch": 19,
+      "system": "ModularRSI",
+      "source-identity": "https://github.com/IQuestLab/ModularRSI",
+      "publication-map-digest": "32e5376c6587cb4e3a9874bba2dba3c36db3e03643dcd22f4112790240da11cf",
+      "publication-effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01/effects/publish.json",
+        "sha256": "23cfccc69f179266287ea3b6fe4615bb3b07388af1c554699262f0915e15155b"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-modularrsi-96b89989168e-01.md",
+        "sha256": "2dd7cf25b45100916adfe7d3fd08b048692e1548b8e79b007dd4fcb13812d4ce"
+      },
+      "disposition": "hold",
+      "finding": "Both original faults corrected; new loss of final-byte review qualification: post-review repair edits do not repeat earlier judgments. Runtime author correction; report-verification barrier.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-15-jaz-a94bea79c61a-01",
+      "batch": 19,
+      "system": "JAZ",
+      "source-identity": "https://github.com/jaz-lang/JAZ",
+      "publication-map-digest": "caa760542b4ab0ef96393c7ea955d92ab5585460a18c0834bdf84468a46a3127",
+      "publication-effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01/effects/publish.json",
+        "sha256": "0790d1051769bb7cd0c42cbefd2aa3c475ce5578fefcdcc912c9f497d595cf9c"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+        "sha256": "705808cfa0bb7d66d0e60dab4834f12bc756b196dcbfdf4fff9baceddfb4e8cb"
+      },
+      "disposition": "hold",
+      "finding": "Original replay/concurrency faults corrected; regression in known workflow input-origin classification omits merged invocation/scope uncertainty. Local memory-profile author repair and profile-verification restart.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
+      "batch": 19,
+      "system": "Autogenesis",
+      "source-identity": "https://github.com/DVampire/Autogenesis",
+      "publication-map-digest": "7dc6a9edcd66f298f5ca013bc5e4872947ba4c9bfb78a38776b545dc9a3bbc56",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01/effects/publish.json",
+        "sha256": "14585d06f66c09fed3521322f41b5d237054af73844cc0453f30e683153a6eeb"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+        "sha256": "edeba7c2e0d06a98665a9705ea2b0a4174e421a64117d8b0960a827cf8fee813"
+      },
+      "disposition": "hold",
+      "finding": "Original missing local tool.other import prerequisite persists in boundary, runtime and synthesis. Boundary/runtime author qualification; report-verification missed barrier.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-academic-research-skills-6fe859d62c16-01",
+      "batch": 20,
+      "system": "academic-research-skills",
+      "source-identity": "https://github.com/Imbad0202/academic-research-skills",
+      "publication-map-digest": "547abc4c0bf56d5549b5f56a0bd49109d50f7e22be62ddb9ef1dbc7c8be4f042",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-academic-research-skills/kb/agentic-system-analyses/state/AAS-2026-10-17-academic-research-skills-6fe859d62c16-01/effects/publish.json",
+        "sha256": "6abe2b5f1b4b6f4aa64ea964d6bf376587222200073fe039b509d190daa7e48e"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-academic-research-skills-6fe859d62c16-01.md",
+        "sha256": "73b8bda91c476fd17e74eb0a17d76d5b346fe8c713ecbc027f923aa166ab1b14"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive: host-mediated protocols, metadata/source-support distinction, cache/screening/finalization limits already public; tracked native evaluations remain attributed, not verified outcomes.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-llm-wiki-507fade8a56e-01",
+      "batch": 20,
+      "system": "llm-wiki",
+      "source-identity": "https://github.com/kenhuangus/llm-wiki",
+      "publication-map-digest": "57b1b316f66d7ddd64c4b052def3b1ad21044350d55ba924e7115c484c0195fd",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-kenhuangus--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-507fade8a56e-01/effects/publish.json",
+        "sha256": "e62a25e5e8c1265007a7d72bedff5229a1ad4c6e83366cbd8481f64bbfbde82d"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-llm-wiki-507fade8a56e-01.md",
+        "sha256": "a84655d02b62cee81aafee1aa645dae5565bf5776ffc34c68d41d55ec6f4588e"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive for kenhuangus owner only; compiler/search/feedback distinctions and long-form paper context omission already publicly qualified; no candidate installation or benefit claim.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-llm-wiki-a93f86f698d7-01",
+      "batch": 20,
+      "system": "llm-wiki",
+      "source-identity": "https://github.com/nvk/llm-wiki",
+      "publication-map-digest": "1f3ecd461cb972113ca4a5d0c41131266f280b89b8c8a88ab3f3518f1ccdf1c7",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-nvk--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-a93f86f698d7-01/effects/publish.json",
+        "sha256": "8f2373df101d9db39d56bbeddecda1e0ac66c9cf33946c20f0ef6f74965be034"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-llm-wiki-a93f86f698d7-01.md",
+        "sha256": "0579bb8e57892d0199cd522c749ea1d19f499deb4491b7b222d63833707d23d7"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive for nvk owner; host-governed compilation, retrieval and executable session continuation distinctions publicly bounded; older historical commit unavailable, no revision-by-revision claim.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01",
+      "batch": 20,
+      "system": "llm-wiki",
+      "source-identity": "https://github.com/MehmetGoekce/llm-wiki",
+      "publication-map-digest": "62c0f40843c8d6250726ee9d629f569dd34fa8b8ec6f8c73d537cc40fd1f5f34",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01/effects/publish.json",
+        "sha256": "50ca108f41a6e2812bfc15537f9e0fdaf461eae4bf3f13150c5722b7cb5bb7c5"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01.md",
+        "sha256": "dcf17038d883a4cc1a9f87752c40005822e476be53fe62796d2375047cd1b95b"
+      },
+      "disposition": "hold",
+      "finding": "Local memory-profile authority omission: access logs guide durable pruning/index updates at human-gated consumer; automatic trace-learning is a distinct test. Accepted source records already support chain; memory-profile author and profile-verification repair.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-clawvault-38c16ae4ab34-01",
+      "batch": 20,
+      "system": "ClawVault",
+      "source-identity": "https://github.com/Versatly/clawvault",
+      "publication-map-digest": "9f9db62dc02bbf6e4297ed36df99ed513655d67c9689eae4400265183e4850b0",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01/effects/publish.json",
+        "sha256": "726d3fcdf51944eb41b9c0fd0119d54cf525eae71e0031b2e0eb8018e90842e6"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-clawvault-38c16ae4ab34-01.md",
+        "sha256": "5b4cc2ff09817d8c1a9f5ad2d387b5e41b240d593778cf97beacd1b83e1b9675"
+      },
+      "disposition": "hold",
+      "finding": "Frozen source deprecates ClawVault for new OpenClaw deployments; published intended-use/synthesis omit that narrow applicability qualification. No universal standalone deprecation or replacement endorsement inferred.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-cortex-3da14ce55a2b-01",
+      "batch": 20,
+      "system": "Cortex",
+      "source-identity": "https://github.com/abbacusgroup/cortex",
+      "publication-map-digest": "e037fa7ad8093b3d6ddb3b47517cfa2dfcfe5010c2fc789ac9cbf7a58e1fea9e",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-cortex/kb/agentic-system-analyses/state/AAS-2026-10-17-cortex-3da14ce55a2b-01/effects/publish.json",
+        "sha256": "9b99fbed405909f40fbd8216b19134bbc6fca35947b24e942f5165023b3646a9"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-cortex-3da14ce55a2b-01.md",
+        "sha256": "5b7d3b61e5f3a7a0bc895a9af69f2765c26b5c1b682f038f41f2a9d1c95bfd7e"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive for exact historical abbacusgroup revision; tier metadata vs ranking, conditional stores/rules, importer warrant and recovery/diagnostic gaps already publicly bounded.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-pal-e313a0902289-01",
+      "batch": 20,
+      "system": "pal",
+      "source-identity": "https://github.com/agno-agi/pal",
+      "publication-map-digest": "b3e8051ef89770a2eb63786dcc10d33bc03d8d9f9b3710ce803d94e7e637e1c2",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-pal/kb/agentic-system-analyses/state/AAS-2026-10-17-pal-e313a0902289-01/effects/publish.json",
+        "sha256": "e9e758ef8a3c9374d314d1b6bfd0388e907097b7ab04757f9219a41c1d3003d4"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-pal-e313a0902289-01.md",
+        "sha256": "3fdfcd2b4d787b53c3d3cec7ddbde6b03d17795f6306686203629bb0802f7a6e"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive for agno-agi historical PAL, not Talorys; configured learning/context, nontransactional raw/bookkeeping, conditional Git delivery, dependency opacity and coarse partial profile units publicly qualified.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-semantic-engine-666c064cd8dc-01",
+      "batch": 20,
+      "system": "semantic-engine",
+      "source-identity": "https://github.com/Open-Research-Institute/semantic-engine",
+      "publication-map-digest": "70401cea982c7ae3911d72126d6b411947dc2dff319619000b8798fac8753b44",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-semantic-engine/kb/agentic-system-analyses/state/AAS-2026-10-17-semantic-engine-666c064cd8dc-01/effects/publish.json",
+        "sha256": "15dfd8a043332b0d5ccc55c4810890997d633d6ff6355b2c502283906251effe"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-semantic-engine-666c064cd8dc-01.md",
+        "sha256": "b2e06e704b1762fb841902c0d92907335cdd74637131700711329c7d3c3f8c35"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified historical positive; no observed retrieval benefit, unresolved vector interoperability and disconnected canvas/Atlas branches already public. Earlier profile warrant fault actually repaired before publication.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    },
+    {
+      "run-id": "AAS-2026-10-17-memori-fd4a0418c09b-01",
+      "batch": 20,
+      "system": "Memori",
+      "source-identity": "https://github.com/MemoriLabs/Memori",
+      "publication-map-digest": "03268b055bc66354974718fc5fb696f25a18ab81bbe3f827c3cbd5024f2f8392",
+      "publication-effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-memori/kb/agentic-system-analyses/state/AAS-2026-10-17-memori-fd4a0418c09b-01/effects/publish.json",
+        "sha256": "6b2d71596f01b9cd6e6c93886ddf87f7ca02f8a20eb354315e5d959c60a89c1c"
+      },
+      "report": {
+        "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-memori-fd4a0418c09b-01.md",
+        "sha256": "ae8715595f0ce6a3ed4f021622ec82e25663382e7addbe25ae589d1abd62fd3f"
+      },
+      "disposition": "integrate with recorded limits",
+      "finding": "Qualified positive: client-mediated retention/read-back, opaque hosted derivation, cache/session limits, adapter gaps and unreproduced evaluator claims already public; earlier profile fault actually repaired.",
+      "parent-complete-report-read": true,
+      "fresh-binding": "passed",
+      "prepared-publication-and-report-validation": "passed",
+      "integration": "not performed or authorized"
+    }
+  ],
+  "limits": "bounded source/operational coverage; positive limits already public; no target execution evidence, complete compliance, exhaustive correctness or integration authority inferred"
+}
