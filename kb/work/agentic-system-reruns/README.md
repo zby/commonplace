@@ -1,11 +1,11 @@
 # Rerun the previously analysed agentic systems
 
-**Current publication checkpoint: the fixed 169-publication sweep is complete.**
-All 40 approved new transfers succeeded; the canonical corpus now has **175 sets**.
-See [reviewed results](./publication-audit-current-results.md) for the 25 holds,
-six incumbent alternatives and exact preservation/validation evidence. No analysis
-reset or recovery launched. Dated batch sections retain their historical scope
-and then-current status; they are not fresh launch authority.
+**Current publication checkpoint: 182 canonical sets / 2,366 members.**
+All seven qualified batch-20 publications were [integrated](./batches-19-20-integration.md), preserving the prior 175 sets and all fifteen audited own-worktree publication maps. All eight new audit holds remain. The fixed inventory now has **181 complete, 21 pending and four older target holds**; Talorys is outside its 206 targets.
+
+[Batch 21](./batch-21.md) is prepared for **all 25 remaining targets**: nine bounded repair proposals, eight source/boundary/refusal decisions and eight ownership/operational decisions. It is **not launched and not an ordinary fresh-run batch**. Its [script](./bash-21.sh) is a read-only checker with no launch mode; unresolved gates are not silently waived.
+
+The historical fixed 169-publication sweep and [reviewed results](./publication-audit-current-results.md) remain unchanged as evidence. Dated batch sections retain their historical scope and then-current status; they are not fresh launch authority.
 
 ## Commission and current approach
 
@@ -293,7 +293,7 @@ All six renewed publications remain held after the new independent audits. The [
 and [ledger](./batch-19.json) preserve their original scope and assignments;
 the separate publication sweep now includes completed batch-18 results and the
 previous unaudited queue. The 135-set pre-transfer baseline is preserved within
-the current **175-set** canonical corpus. Content depth, incumbent-transfer stops and operational
+the then-current **175-set** canonical corpus, now preserved within 182 sets. Content depth, incumbent-transfer stops and operational
 violations remain separate decisions.
 The operator-run [batch-19 launcher](./bash-19.sh) has finished. Its default
 `--check` was read-only. The authorized launch used this command; **do not replay
@@ -336,14 +336,26 @@ The separate batch-19 six-run recovery selection is unchanged.
 The operator ran batch 20 separately; all nine fresh runs published internally.
 The [new audit commission](./batches-19-20-audit-commission.md) covers those nine
 and the six renewed batch-19 publications. The [fixed intake](./batches-19-20-audit-intake.md)
-finds all 15 still outside the 175-set canonical corpus. The
+found all 15 outside the then-current 175-set canonical corpus. The
 [assignment ledger](./batches-19-20-audit-ledger.json) records isolated single-case
 Sol/medium audits and complete parent review. The
 [completed results](./batches-19-20-audit-results.md) are **seven qualified positive
 recommendations and eight holds**: all six batch-19 renewals remain held; batch 20
-has seven positives and two holds. All 175 canonical sets remain unchanged.
-Audit only: no integration, new reset, source mutation or checklist acceptance
-change is authorized.
+had seven positives and two holds. The audit itself preserved all 175 canonical sets unchanged and authorized no integration, reset, source mutation or checklist acceptance change. The operator subsequently authorized only the seven positive transfers; see below.
+
+## Seven transfers and batch 21
+
+The [integration commission](./batches-19-20-integration-commission.md), approvals and complete audit evidence were committed before transfer. Seven ordinary prepared integration commands added 91 exact files, with clean-origin and source/method/incumbent guards before each effect. [The ledger](./batches-19-20-integration.json) binds successful transfers, preservation proofs and the helper-only preflight failure, which was preserved and reconciled before a separate successful attempt. Fourteen per-publication checks and one full-corpus check passed, with zero failures/warnings and the same 208 unavailable-source notices across 37 old sets, none new.
+
+The [batch-21 record](./batch-21.json) binds every incomplete inventory target, native run/preparation and attempt snapshots, and sixteen held own publication maps. [The plan](./batch-21.md) separates actual current repair loci from old reset selections and preserves source, refusal, ownership and operational decisions. Check it read-only:
+
+```bash
+bash kb/work/agentic-system-reruns/bash-21.sh --check
+```
+
+There is no launch mode and no batch-21 analysis has started. A later explicit decision must release the applicable repair/source/ownership route and revalidate current evidence; a successful check does not prove writer idleness or transfer ownership.
+
+The [independent preparation review](./audits/batch-21-preparation-review.md) established no consequential defect. The [parent verification record](./batch-21-preparation-checks.json) binds twenty read-only checker scenarios, 96 selected general/tooling tests and final Markdown/native-map checks. The parent's post-review change only clarifies historical scheduling wording and updates that navigation input's binding; no target, repair scope or gate changed.
 
 ## After the processes finish
 
