@@ -293,7 +293,18 @@ the separate publication sweep now includes completed batch-18 results and the
 previous unaudited queue. The 135-set pre-transfer baseline is preserved within
 the current **175-set** canonical corpus. Content depth, incumbent-transfer stops and operational
 violations remain separate decisions.
-Preparation does not authorize reset or integration.
+The operator-run [batch-19 launcher](./bash-19.sh) is now ready. Its default
+`--check` is read-only. After confirming no prior same-run writers are live, run:
+
+```bash
+bash kb/work/agentic-system-reruns/bash-19.sh --confirm-idle
+```
+
+It resets the six existing runs sequentially, starting with Supermemory, then
+uses their ordinary frozen drivers without audit feedback. It stops on failures
+and refuses existing batch logs. Nothing was reset or launched while preparing
+it. Only the operator's explicit invocation starts these recoveries; renewed
+results remain held for independent audit, and integration stays separate.
 
 ## After the processes finish
 

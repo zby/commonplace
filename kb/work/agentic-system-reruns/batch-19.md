@@ -3,11 +3,14 @@
 ## Commission and status
 
 The operator requested batch 19 after the Supermemory re-entry trial, then asked
-to check how deep the errors in the other held publications go. This prepares a
-recovery batch and investigates restart depth; **it does not launch analyses,
-reset runs, correct accepted outputs, waive holds or integrate publications**.
-The first selected target is Supermemory, restarting its analytical chain from
-`runtime`. Source acquisition and the frozen boundary remain unchanged.
+to check how deep the errors in the other held publications go. After the
+publication audit and integrations, the operator requested a runnable batch:
+**the operator will launch it**, while work on the other cases stays separate.
+The [launcher](./bash-19.sh) is prepared but has not been executed beyond its
+read-only check. No run was reset or launched while creating it. It selects only
+the six recoveries below, without waiving holds or authorizing integration.
+Supermemory is first, restarting from `runtime`; its source acquisition and
+frozen boundary remain unchanged.
 
 The [batch ledger](./batch-19.json) owns selection and assignment status.
 The [completed depth investigation](./batch-19-depth-results.md) covers 23 held
@@ -21,9 +24,9 @@ extend these lists only after complete review.
 
 A different source boundary, unavailable source, incumbent replacement,
 reserved-owner coordination or authority violation remains an explicit decision,
-not automatic scheduling permission. Completed batch-18 results now enter the
-separate all-publication audit; active runs remain untouched. Unreviewed results
-are not presumed erroneous or selected for recovery.
+not automatic scheduling permission. Completed batch-18 results were handled by
+the separate publication sweep; excluded active/unpublished runs remain untouched.
+Unreviewed results are not presumed erroneous or selected for recovery.
 
 ## First selected target: Supermemory
 
@@ -88,7 +91,54 @@ The four original operational-only holds and two added by the current sweep
 require the separate operational dispositions in the local-list companion, not
 automatic content restarts. No hold is waived by appearing in either list.
 
-## Execution boundary for the future launch
+## Operator launch
+
+From the origin checkout:
+
+```bash
+# Default action: read-only identity, source, effect and dependency checks.
+bash kb/work/agentic-system-reruns/bash-19.sh --check
+
+# Run only after confirming no prior coordinator/worker can write these six runs.
+bash kb/work/agentic-system-reruns/bash-19.sh --confirm-idle
+```
+
+The second command resets and runs **one case at a time**, in table order. It
+checks all six before the first reset and repeats each case's checks immediately
+before its reset. It calls the existing current `reset_run(run, job)` API from
+the origin without changing the historical worktree's environment. The only
+reset inputs are the existing run and selected job. A fresh ordinary Pi
+coordinator then starts in that worktree, with only its run, prepared command
+directory and frozen driver in the prompt. Audit findings and this plan are not
+passed into that workflow. Workers must still launch through the harness tool.
+The coordinator performs its required worker-launch diagnostic before advancing;
+`--check` does not test runtime delegation or certify that future launch succeeds.
+
+The launcher keeps reset code/dependency files fixed to their `ce0715a08` bytes.
+Do not change those files or environments while it runs. Unrelated workshop
+bookkeeping may continue. Stop if any selected run gains another writer or a
+canonical incumbent; never run two launchers against these runs.
+
+Logs go to the new external directory:
+
+```text
+/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19/
+```
+
+It retains the initial preflight, per-run reset reports/errors, coordinator JSONL
+and exit codes, and final prepared-command inspection output/errors. The reset
+report names the complete `.reset-history` archive, including the withdrawn old
+publication. An existing batch directory is a hard stop, not permission to
+skip cases, overwrite logs or reset again. Preserve it after interruption and
+reconcile the actual state before any separately authorized continuation.
+
+A nonzero command/coordinator exit or an incomplete/unbound final publication
+stops the batch before the next case. There is no automatic coordinator restart,
+transient-failure retry authorization, operator advance loop, source acquisition,
+new run allocation or integration. Internally completed results stay **held**
+for independent archived-versus-new comparison; process success is not correction.
+
+## Execution boundary
 
 Before an authorized launch, recheck ownership, method/source identities, source
 cleanliness, publication/effect bytes, open attempts, uncertain effects and
@@ -115,6 +165,22 @@ against the frozen source, and manifest/effect binding. Completion is not proof
 of correction, worker compliance, target execution or operational benefit.
 Integration and owner-qualified publication migration remain separate.
 
-No `bash-19.sh` is provided: this batch is a selected-job reset queue for existing
-runs, not the fresh-run launch pattern of batches 15–18. A shell launcher must
-not invoke an agent CLI in place of harness worker delegation.
+Unlike batches 15–18, `bash-19.sh` never invokes the fresh-analysis skill to
+prepare or open a replacement run. Its operator-run Pi processes are whole
+coordinators; their analytical workers still require harness-tool delegation,
+not Bash agent-CLI substitutes.
+
+## Preparation checks
+
+- Bash syntax and embedded Python compilation passed; invalid options are refused.
+- All six real `--check` preflights passed without resets or launches.
+- All six exact prepared `inspect` commands and the launcher's completion/map
+  gate passed against their **old publications**. This checks interface binding,
+  not future execution or correction; no renewed publication was produced.
+- `uv run pytest tests/commonplace/general tests/commonplace/artifactrun tests/commonplace/agentic_analysis -m ''`:
+  **926 passed**, including slow tests in these directories. No complete-repository
+  test-suite or target-system execution claim follows.
+
+The actual reset/launch path has deliberately not been exercised on these live
+runs. Runtime delegation, new worker behavior and content repair remain untested
+until the operator launches and an independent audit checks the results.

@@ -1,8 +1,20 @@
 {
   "commission": "kb/work/agentic-system-reruns/batch-19.md",
   "depth-commission": "kb/work/agentic-system-reruns/batch-19-depth-commission.md",
-  "status": "prepared-not-launched; publication sweep classified deep, local and operational stops",
-  "current-commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
+  "status": "operator-launcher-ready; six read-only preflights passed; no reset or analysis launched here",
+  "current-commission": "kb/work/agentic-system-reruns/batch-19.md",
+  "classification-commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
+  "launcher": {
+    "path": "kb/work/agentic-system-reruns/bash-19.sh",
+    "check": "bash kb/work/agentic-system-reruns/bash-19.sh --check",
+    "run": "bash kb/work/agentic-system-reruns/bash-19.sh --confirm-idle",
+    "output-directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19",
+    "reset-code-commit": "ce0715a086a9957d2fca20b3fdc5ac05b938792a",
+    "coordination": "one existing run at a time, table order; operator confirms no prior live same-run writer",
+    "handoff": "existing run, prepared command directory, frozen ordinary driver; no audit feedback",
+    "stop": "any mismatch, existing batch logs, command failure or incomplete/unbound publication; no automatic retry",
+    "acceptance": "all renewed results remain held for separate independent comparison; no integration"
+  },
   "local-rework-list": "kb/work/agentic-system-reruns/reset-and-rework.json",
   "depth-results": "kb/work/agentic-system-reruns/batch-19-depth-results.md",
   "selected-count": 6,
