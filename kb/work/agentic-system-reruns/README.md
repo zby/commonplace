@@ -1,5 +1,12 @@
 # Rerun the previously analysed agentic systems
 
+**Current publication checkpoint: the fixed 169-publication sweep is complete.**
+All 40 approved new transfers succeeded; the canonical corpus now has **175 sets**.
+See [reviewed results](./publication-audit-current-results.md) for the 25 holds,
+six incumbent alternatives and exact preservation/validation evidence. No analysis
+reset or recovery launched. Dated batch sections retain their historical scope
+and then-current status; they are not fresh launch authority.
+
 ## Commission and current approach
 
 The operator commissioned this workshop on 2026-10-12 to rerun previously
@@ -246,7 +253,7 @@ not completed**, in the [live ledger](./audit-integration-later-46.json).
 Older holds, canonical-incumbent alternatives and batch-18 ownership remain
 unchanged. This is a resumable checkpoint, not audit-workshop closure.
 
-## Audit all current worktree publications
+## Completed fixed publication sweep
 
 The [current commission](./publication-audit-current-commission.md) expands intake
 to all own completed worktree publications, including completed batch-18 results.
@@ -255,13 +262,20 @@ publications with exact effect/manifest binding; active and unpublished runs
 remain excluded. The [assignment ledger](./publication-audit-current-ledger.json)
 tracks 43 new/unbound cases plus a supplemental Agemem audit commissioned for
 an intake lookup/binding gap; an existing batch-03 audit was later rediscovered.
-The [reviewed results](./publication-audit-current-results.md) account for all
-169: 98 already integrated, 40 newly approved transfers, six positive incumbent
-alternatives and 25 holds. All 44 fresh substantive audits are complete and
-parent-read; their [sealed decisions](./publication-audit-current-decisions.json)
-retain exact report bindings. No audit worker remains active. Integration is
-pending the evidence commit and ordinary guarded route. Deep holds go to batch
-19; local faults and separate operational stops go to the [reset-and-rework list](./reset-and-rework.md).
+The [reviewed results](./publication-audit-current-results.md) and
+[integration ledger](./publication-audit-current-integration.json) account for
+all 169: **138 integrated, six positive incumbent alternatives and 25 holds**.
+All 44 fresh substantive audits are complete and parent-read. After committing
+the [sealed decisions](./publication-audit-current-decisions.json), all **40 new
+transfers** completed through the ordinary guarded route. **175 canonical sets**
+now retain all 135 previous sets and root `.gitignore` byte-identically. The 520
+new member files retain accepted own-publication bytes; 31 legacy destinations
+moved separately to owner-qualified names. The fixed checklist has **174 complete,
+28 pending and four older target holds**; Talorys is integrated outside its 206
+targets. The [checklist reconciliation](./publication-audit-current-checklist.json)
+binds 39 supported target completions without inventing a Talorys/PAL match.
+All workers of this sweep have finished. Deep holds go to batch 19; local faults
+and separate operational stops go to the [reset-and-rework list](./reset-and-rework.md).
 No reset or recovery launch is implied. Historical checkpoints retain their
 then-current counts and scope; use the reviewed results before resuming work.
 
@@ -276,8 +290,8 @@ deep cases. AREX moves to local rework; mixed cases retain independent profile
 repairs. No reset or recovery run has launched. The [depth commission](./batch-19-depth-commission.md)
 and [ledger](./batch-19.json) preserve their original scope and assignments;
 the separate publication sweep now includes completed batch-18 results and the
-previous unaudited queue. The canonical baseline remains 135 sets before the
-approved transfers. Content depth, incumbent-transfer stops and operational
+previous unaudited queue. The 135-set pre-transfer baseline is preserved within
+the current **175-set** canonical corpus. Content depth, incumbent-transfer stops and operational
 violations remain separate decisions.
 Preparation does not authorize reset or integration.
 

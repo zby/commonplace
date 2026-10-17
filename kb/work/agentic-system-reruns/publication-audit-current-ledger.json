@@ -2,15 +2,18 @@
   "commission": "kb/work/agentic-system-reruns/publication-audit-current-commission.md",
   "intake": "kb/work/agentic-system-reruns/publication-audit-current-intake.json",
   "intake-sha256": "29c5a94a2c926f9c8b895cf5a5f50b0157461fa2a8aff39779131d14ab6d530e",
-  "status": "44 substantive audits complete and parent-read; all audit workers terminal; no integration performed",
+  "status": "complete for fixed intake: 44 fresh substantive audits parent-accepted, 40 guarded transfers complete, 175 canonical sets validated, checklist reconciled; all workers terminal; no reset/recovery launch",
   "fresh-audit-count": 44,
   "partitioned-audit-count": 43,
+  "final-records":{"integration":"kb/work/agentic-system-reruns/publication-audit-current-integration.json","checklist":"kb/work/agentic-system-reruns/publication-audit-current-checklist.json","results":"kb/work/agentic-system-reruns/publication-audit-current-results.md","fixed-intake-integrated":138,"held":25,"positive-incumbent-alternatives":6,"canonical":175,"inventory-complete":174,"inventory-pending":28,"older-target-holds":4},
   "supplemental": [
     {"run-id": "AAS-2026-10-12-2601-01885v1-32274e5bddc1-01", "status": "complete-parent-read", "handle": "441f3ad1-4f1f-4ea7-a991-4e54838b6837", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-12-2601-01885v1-32274e5bddc1-01.md", "reason": "initial intake lookup did not link existing audits/batch-03-agemem.md; fresh supplement was already commissioned before parent rediscovered/read it; lookup/binding gap, not absence of all historical audits"}
   ],
   "partition-rule": "Sort intake.publications with classification starting 'needs fresh audit' by run-id; group zero-based index n owns rows[n::4]. Each row's proposed-report is its sole case report path.",
-  "auditor-profile": "fresh independent commonplace-worker, openai/gpt-6.1-sol, medium; one session per disjoint group, not per run; no delegation",
+  "auditor-profile": "fresh independent commonplace-worker, openai/gpt-6.1-sol, medium; initial disjoint group sessions, then isolated single-case followups and supplement; no delegation",
   "max-active-auditors": 4,
+  "post-transfer-checklist":{"status":"returned-no-edits; 39 supported mappings, Talorys absent from fixed inventory","handle":"dc2cbd95-3324-47cf-b3ac-4335a739c348","sole-write":"kb/work/agentic-system-reruns/systems.md","requested-scope":"40 successful transfer rows plus two held Sift targets; no source/run mutation or further integration","correction":"canonical175 does not imply175 completed inventory targets; preserve206 targets and record Talorys outside inventory"},
+  "post-transfer-checklist-followup":{"status":"complete-parent-read; 39 exact target mappings and separate Talorys record independently reconciled","handle":"49e839fb-0e16-41a8-a1c4-a62525280032","sole-write":"kb/work/agentic-system-reruns/systems.md","scope":"39 evidenced target completions;174complete/28pending/four older target holds; separate non-checkbox Talorys paragraph; two Sift exact-run hold annotations"},
   "followups": [
     {"run-id": "AAS-2026-10-15-eal-bench-f9a76e2fa858-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-eal-bench-f9a76e2fa858-01-followup.md", "status": "complete-parent-read", "handle": "0452fdb5-1069-4536-9b4f-6c44928e699d"},
     {"run-id": "AAS-2026-10-15-equipa-32016e8dd9ae-01", "report": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-equipa-32016e8dd9ae-01-followup.md", "status": "complete-parent-read", "handle": "0e8281cc-7420-42bf-97c8-3f52eeabd8f7"},

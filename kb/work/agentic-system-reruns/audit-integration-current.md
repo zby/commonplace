@@ -11,13 +11,25 @@ inspected. This explicitly expands the earlier completed-batch-18 exclusion.
 
 The [reviewed results](./publication-audit-current-results.md) and
 [sealed decisions](./publication-audit-current-decisions.json) account for all 169:
-98 already integrated, 40 approved new transfers, six positive incumbent
-alternatives, and 25 held publications. All 44 fresh substantive audits are
-complete and completely parent-read; 125 assessments are reused on exact bytes.
-The [assignment ledger](./publication-audit-current-ledger.json) retains the two
-partial groups and 15 completed fresh single-case followups. No audit worker
-remains active. Commit this evidence before the 40-entry guarded serial transfer.
-No integration has occurred in this sweep yet.
+**138 integrated, six positive incumbent alternatives, and 25 held publications**.
+All 44 fresh substantive audits are complete and completely parent-read; 125
+assessments are reused on exact bytes. The [assignment ledger](./publication-audit-current-ledger.json)
+retains the two partial groups and 15 completed fresh single-case followups.
+
+Evidence commit `866487dd2` preceded all **40 successful new transfers** through
+the ordinary guarded route. The [integration ledger](./publication-audit-current-integration.json)
+binds accepted audit hashes, source/method pins, commits and member maps. **175
+canonical sets** preserve all 135 prior sets and root `.gitignore` byte-for-byte.
+The 520 added members match accepted own-publication bytes, including through
+31 separate owner-qualified namespace migrations. Parent rechecked all 169 own
+maps and completed effects unchanged. Full-corpus validation has zero failures
+and warnings, with 208 unavailable-source quotation notices confined to 37
+pre-existing sets. Do not claim those quotations were freshly verified.
+No analytical reset, recovery launch or incumbent replacement occurred.
+The [checklist reconciliation](./publication-audit-current-checklist.json) records
+174 completed inventory targets, 28 pending and four older target holds. Talorys
+is integrated outside that fixed 206-target inventory; 39 of the 40 transfers
+close inventory rows. All workers of this sweep are terminal and parent-reviewed.
 
 Agemem's supplement closed an intake lookup/binding gap. Parent subsequently
 found and read the existing `audits/batch-03-agemem.md`; not all historical
@@ -30,6 +42,9 @@ AREX moves to local rework; GBrain remains locally reworkable but transfer-block
 Operational and incumbent stops remain separate. Siftly and Sift-KG add two
 operational holds, taking that list to six; no semantic reset is invented for
 them. No recovery queue is launched.
+
+The sections below are historical checkpoints. Their then-current counts,
+exclusions and assignments do not supersede the completed current sweep above.
 
 ## Prior preparation: batch 19 and held-error depth
 
@@ -47,7 +62,7 @@ retain assignments, exact selected jobs and report hashes. The 33 later-publicat
 audits and batch 18 were untouched. Earlier worker-status statements below are
 historical checkpoints, not current ownership.
 
-## Latest integration checkpoint: qualified AI Memex integrated
+## Prior integration checkpoint: qualified AI Memex integrated
 
 The operator subsequently authorized publication with a marked limitation,
 integration, a second re-entry trial and another independent check. See

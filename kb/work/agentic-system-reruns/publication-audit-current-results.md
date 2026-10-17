@@ -1,9 +1,64 @@
 # Current-publication audit and transfer decisions
 
+## Current outcome
+
+**All 40 approved transfers completed. The canonical corpus is now 175 sets.**
+Audit evidence was committed first at `866487dd2`; ordinary guarded integrations
+ran serially. Each of 31 legacy transfers was followed by its own separate
+owner-qualified namespace migration. Nine incoming sets were already owner-qualified. All **520 added members** retain
+exact own-publication bytes. All **135 previous sets, 1,755 previous members and
+the retained root `.gitignore`** remain byte-identical. No incumbent was replaced.
+The 71 first-parent effect commits are exactly 40 integration merges and 31
+namespace commits. Their combined diff contains only the 520 expected additions;
+no other main files changed in that effect range.
+
+The [integration ledger](./publication-audit-current-integration.json) binds all
+40 runs, accepted audit hashes, source/method identities, integration/migration
+commits and member maps. Its SHA-256 is
+`25cdefc6d3561e18ce0e961a1631bccade25ca91b1832385138f9b9f25461841`.
+It also retains paths and hashes for the raw serial results, exact helper code,
+namespace ledgers and full-corpus validation. Parent independently rechecked
+all **169 own publication maps and completed-effect records** after transfer;
+none changed. Frozen worktree names and run IDs did not move.
+
+Within the fixed 169-publication intake, **138 are now integrated, 25 remain
+held, and six positive alternatives retain incumbent-transfer stops**. There
+are no unaudited rows in this snapshot. This does not cover later publications
+or the excluded active/unpublished cases. No reset or recovery launched.
+
+Full-corpus validation analysed all 175 sets: **zero failures and warnings**.
+There are **208 unverified-quotation notices across 37 pre-existing sets** whose
+recorded source checkouts are unavailable here. None concerns the 40 additions.
+Do not interpret validation success as fresh quotation grounding for those older
+sets or as execution/compliance evidence. Their original bytes were preserved;
+no source reacquisition was attempted.
+
+### Target inventory is a different population
+
+The fixed [206-target checklist](./systems.md) has **174 complete, 28 pending and
+four older target holds** after 39 supported target completions. The
+[checklist reconciliation](./publication-audit-current-checklist.json) binds the
+exact before/after bytes, every accepted target/run/report/commit mapping and
+165 unchanged rows. All 174 checked targets link to distinct canonical sets;
+adding the separate Talorys set accounts for all 175, without duplicate counts.
+Talorys (`rociiu/talorys`, run
+`AAS-2026-10-15-talorys-7bce41ba9401-01`) is the fortieth
+successful transfer but has no target or historical lead in that inventory.
+Record it separately outside the 206 targets; do not map it to `agno-agi/pal`
+or invent a historical comparison. Canonical 175 therefore does not imply 175
+completed inventory targets. Pending means not integrated for that target; some
+have completed but held publications, including Siftly and Sift-KG.
+
+The first bookkeeping worker caught this population mismatch and returned
+without edits. Parent revised the requested 175/27 inventory counts to 174/28
+before assigning the supported mapping update. Preserve both assignments in
+the ledger. This is a bookkeeping-scope correction, not a production-analysis
+fault, a new transfer stop or an analysis-reset request.
+
 ## Audit outcome before integration
 
-**All 169 publications in the fixed intake are accounted for. Forty new transfers
-are approved; none has been performed in this sweep yet.** All 44 fresh
+At evidence commit `866487dd2`, **all 169 publications in the fixed intake were
+accounted for, with 40 approved new transfers not yet performed**. All 44 fresh
 substantive audits are complete and completely parent-read. The other 125
 assessments are reused only with renewed current-byte binding. No audit worker
 remains active. Integration is a separate serial phase after this evidence commit.
@@ -124,8 +179,9 @@ SHA-256 `3d338324174e5cef8b404638628510f8cd1e6f94696e4c8a16c0f3dac5d76330`.
 The complete external root is retained by the intake and assignment records.
 Deterministic checks are not semantic clearance or proof of every worker duty.
 
-No target execution, new source acquisition, method/instruction edit, engine
-reset, analytical recovery launch, source cleanup or incumbent replacement
-occurred. No push is commissioned. Standard integration, namespace migration
-without member-byte changes, final corpus validation and checklist updates are
-still pending at this evidence checkpoint.
+At the pre-transfer evidence checkpoint, no target execution, new source
+acquisition, method/instruction edit, engine reset, analytical recovery launch,
+source cleanup or incumbent replacement occurred. Standard integration,
+namespace migration, final corpus validation and checklist updates were still
+pending then; the current outcome above supersedes that phase status. No push
+is commissioned.
