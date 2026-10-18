@@ -1,0 +1,7 @@
+# Operator correction: JAZ workflow input-origin coverage
+
+Explicit audit-assisted profile correction. Use already accepted records and the frozen profile contract; correct only your assigned role through its ordinary draft/refusal-answer channel. Do not edit other roles, retained publications, source, method or state. No new source acquisition, target execution or broad replay reconstruction is authorized.
+
+The `trace_source` unit “Workflow materialization inputs” claims `known` while omitting unresolved merged invocation inputs and resolved scope. Accepted `RT-RTE-workflow-emission` retains that the generator consumes more than query text and execution feedback. Frozen `src/jaz/hooks/builtin/workflow_replay.py:180–197,454–463,485–494` merges explicit inputs/scope and emits their values into standalone invocation code. The original content/origins of all included values are not classified by the accepted records.
+
+Retain supported session-log/tool-trace witnesses, but include the unresolved branch in this unit's assessment, notes and rationale. Axis-level `partial` and unrelated opacity caveats do not repair a false complete unit. Do not invent provenance for arbitrary objects. Preserve the corrected replay sequential/concurrency account and the separate identifier-selector correction. Refresh dependent public assessments through the normal workflow; answer with a bounded correction or contract-grounded disagreement.

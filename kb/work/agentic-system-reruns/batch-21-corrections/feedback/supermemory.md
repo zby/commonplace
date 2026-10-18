@@ -1,0 +1,7 @@
+# Operator correction: Supermemory capture qualification
+
+This is explicit audit-assisted correction feedback, not a blind rerun. Verify the challenge against the frozen source. Correct only your assigned role through its ordinary draft and refusal-answer channel; do not edit another role, retained publication, method, source or state. Preserve supported mechanisms and existing qualifications. No target execution, installation, fetching or expanded dependency inspection is authorized.
+
+The capture account still overgeneralizes tool-content opt-in. In frozen SRC-1, `packages/tools/src/vercel/middleware.ts:65–84` copies nonempty non-system string content before the structured tool-call/result branches at `116–136`, without checking `includeToolCalls`. Qualify the runtime route accordingly: structured parts are option-gated; generic string content follows a different branch. Valid typed SDK-input reachability of a generic tool-role string remains unestablished within this boundary. Do not infer an observed disclosure or hosted-service defect.
+
+Carry the supported distinction in the route record and dependent public account, or give concrete frozen-source evidence for an enforced exclusion. A generic no-operation caveat is insufficient. Preserve other supported client/service mechanisms and public limits. Answer the refusal with the actual correction or a reasoned source-based disagreement, not an unsupported positive verdict.

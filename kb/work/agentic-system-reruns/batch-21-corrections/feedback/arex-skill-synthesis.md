@@ -1,0 +1,9 @@
+# Operator correction: public disposition of the AREX library-state witness
+
+Explicit audit-assisted author feedback, not a prescribed positive classification. Correct only your assigned synthesis through the normal draft and refusal-answer channel, then submit it to fresh independent synthesis verification. Work from the handed accepted members under the frozen synthesis contract. Do not add evidence, reconcile records, edit other roles or retained publications, or edit source, method or state. No execution, acquisition, installation or whole-system reconstruction is authorized.
+
+The accepted runtime and memory records already retain `RT-RTE-library-update` and `MEM-OBJ-library-state`: represented installed-library inventory/digests participate in conflict/noop/update decisions, and the update derives and installs next collection/router/state. The public account does not explicitly dispose of that represented managed-library-state witness while making broad negative statements about reflection.
+
+Explain the witness from those accepted members and give a supported, aspect-relative public disposition. Distinguish managed-library-state behavior from unestablished model/theory reflection, crash atomicity, observed causal benefit and whole-system completeness. A narrow supported capability with limits, or a concrete missing link or justified exclusion supporting a qualified negative/uncertainty, is acceptable. Do not merely repeat the blanket conclusion while omitting the witness. Do not force a positive or independently add source evidence.
+
+Preserve the PassNet and deletion-coverage limits and valid upstream work. If a record conflict cannot be contained truthfully as a public limitation, use the frozen role's `problem` channel rather than repairing records, inventing evidence or publishing a misleading conclusion. This is a bounded correction attempt, not a guarantee that a synthesis-only correction can clear the case.

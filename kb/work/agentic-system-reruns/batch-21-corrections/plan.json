@@ -1,0 +1,2937 @@
+{
+  "status": "prepared-feedback-assisted-not-launched",
+  "authority": "operator approved preparation of nine targeted corrections with explicit audit feedback and recommendations for other sixteen; execution NOT authorized in this commission",
+  "recorded-at": "2026-10-17T23:47:13.267592+00:00",
+  "reset-code-commit": "f12f9a7467f4b01a5777bf8f65f109560b05e848",
+  "runtime-files": [
+    {
+      "path": "/home/zby/llm/commonplace/src/commonplace/artifactrun/reset.py",
+      "sha256": "5f78fc33f267df36af47ab3bdffd42f767571545773240e7fc3a38007faacb39"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/src/commonplace/artifactrun/run.py",
+      "sha256": "74777a8d1a658f8b5522078e88d244ca25ba1a21f3aea5d4bb0cfcf512228910"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/src/commonplace/artifactrun/engine.py",
+      "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/src/commonplace/artifactrun/store.py",
+      "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/src/commonplace/lib/agentic_analysis/publication.py",
+      "sha256": "3ddc551eb1c4b86c07b9c616af26c501847fb365dafb6238df80c5c2b30d54b5"
+    }
+  ],
+  "launcher": {
+    "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/bash-21-corrections.sh",
+    "sha256": "317b63f02aed027369a6e8bbc170a2da7380b2ccea8bd7874f93124dfa81e3c2"
+  },
+  "base-inventory": {
+    "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21.json",
+    "sha256": "64f92ef8d63ba04d40e32c15519ee40fa379238c0cc25c88cd31815813607aeb"
+  },
+  "integration-proof": {
+    "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-integration.json",
+    "sha256": "72034af62ab647997c5c6d63d1363201ac4c505432de0dc72b97691599955926"
+  },
+  "canonical-map-digest": "d2dd28dc3418850ac83bd64479dc3719b94899898226644e4a42438fd115b0a7",
+  "retained-root-files": {
+    ".gitignore": "91f5ff96d390560ac9286e67deab457ca5ad2763cba2a5803a386cc003a10070"
+  },
+  "protected-publications": [
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/retained/agent-skills-for-context-engineering",
+      "members": {
+        "ARTIFACT.yaml": "595333b43c8bb4cfd789ec06c4e99ad377021e59e7ce18d94070842cd302a5ae",
+        "boundary.md": "0b2224a054569a6ade0c586c2e065eeb6cd7d2d931eed1c1d55b830077f23b03",
+        "epistemic.md": "942f1b4f57c80c96b515858ccc972da1175a6dbde4f6b03eb86409a92239e07e",
+        "memory-profile.md": "41da024faf4138264c6cb1473ddb9ab0f577f99c330524a3c2daafdf3d7704c7",
+        "memory.md": "8c01dcc2ca23f665a6e6313cf7f15aef76c6772d3dfd4ee8adf6f7eb33bddc02",
+        "overview.md": "5ba2162abec6c3223bd9488f708efdf5b992cd3c0caba546e9b472c8b9e9f1e2",
+        "profile-verification.md": "c54066cf382e6f95ff7081470ccd427c457e35c566e4937f85652b5c032c0a9a",
+        "reconciliation.md": "334345e7ad9b5552396b209b4fa6774f1846733b573a9b69b0e114a0fc6b9bb9",
+        "report-verification.md": "8c1a74d368b620205716ccabef890ff307742b20630c69db5b3c86ce87a03e6d",
+        "runtime.md": "2d0f9f2a68e62d1d381f10182d614a8aa65ceccf3db52f6da1ff05a85af34529",
+        "synthesis-verification.md": "ae55bd60bf2dd425f9e6a63093f970a7e54598f3e22310248fd99f2e2e6e7c00",
+        "synthesis.md": "93bf2e67acba64a27549b377a6303da25c7b7c1db3d0d49080ee832e94ce7238",
+        "workflow.md": "246b5939b0a63a9cc523b355e24f6fd1cac09bf97c8f6b92841df0d5e02cc429"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01/effects/publish.json",
+        "exists": true,
+        "sha256": "61ee6e63777f2ef34428cf17e23123dd8de193df4871fcb4e2be2227b8203964"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/retained/agent-skills-for-context-engineering/ARTIFACT.yaml",
+        "sha256": "595333b43c8bb4cfd789ec06c4e99ad377021e59e7ce18d94070842cd302a5ae"
+      }
+    },
+    {
+      "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/retained/ai-context-os",
+      "members": {
+        "ARTIFACT.yaml": "3d2e63cc3b3cb831f11857e3ec48564008af21fc625be7863af0477e7abdb9ef",
+        "boundary.md": "bbf881fc0c191a927c65e7352a9095930d6c4ceaafe557d95096d0f43b905a49",
+        "epistemic.md": "7ae7a6a0068aa328d76cf293599cbc88ea5fc38943da4a97ca65e20042442a37",
+        "memory-profile.md": "8a95b480dc084146ce217512b1fa3921b911abc71fa4e6174be91623842b8d5e",
+        "memory.md": "6160aa5c50e3d62e75d7a580e2e3d174c6da7f79a7cca756b72deb1bd0a6ec7c",
+        "overview.md": "ebabfcae1e41047ebceaaa37ba32275e02c043b9d84eb3ecbb09cfea698328bc",
+        "profile-verification.md": "f992dbfb31639c5151131bfde3df0a04d1060dbd80f3a4b2e692e4f790473ca9",
+        "reconciliation.md": "62bdcbd2bc2bbbf74e4950866f5ddcf8cff24f9552b6b6280103ff31f1ed8ee0",
+        "report-verification.md": "c28a4e728cb5391292f1a458184989bc1de8565e8e2aeed7fbd07c1da577729a",
+        "runtime.md": "18d20dafdf48da17342360081cf465339e62034705d6f04358d60e3c5e9239f6",
+        "synthesis-verification.md": "682d0ccd6351b47c2dfeec2ae016dfd7f2490fcb16c3df8ea6276d72600e10a1",
+        "synthesis.md": "cf34c84b5b9622a23fff79c504b30ba75af23095570dd605118f8f2d47c8ec89",
+        "workflow.md": "7d8252f3f5e3fcd08b7eed634c7f7fd5de6ac29cd5dfee112e58187002aa1476"
+      },
+      "effect": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01/effects/publish.json",
+        "exists": true,
+        "sha256": "330ef8b0ad79fab507ab85c08b274e60baba1e526fc768556767e329ee7e4501"
+      },
+      "manifest": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/retained/ai-context-os/ARTIFACT.yaml",
+        "sha256": "3d2e63cc3b3cb831f11857e3ec48564008af21fc625be7863af0477e7abdb9ef"
+      }
+    },
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/retained/from-agent-memory-to-portable-skills",
+      "members": {
+        "ARTIFACT.yaml": "998c68e8beb540814877877ee41fec3b494d68e36c21c263a639c94c4d9cc8a2",
+        "boundary.md": "d9cc406fcb0a2e3921e74977db3657d6d98b4d4e87a4ff7025879a1219a1a232",
+        "epistemic.md": "5ebf55f6adee20d516a96fcce93bd995422614cdcb2eac3808a4ab7e75495c27",
+        "memory-profile.md": "0c231fcc65adef7fe6ff7c871f05af112272b9daa58d833f25c6d4ad8922c90a",
+        "memory.md": "c7323022964723c4a30adc4b10a7692257f82d16c4b0d3f108ab69a304efa05a",
+        "overview.md": "0bc941bd413fa8bb41659782136d34f13e1458fe17b77f2187f156bf017de1ca",
+        "profile-verification.md": "e32dfad9750244a3f34065c6e8b53ef2f5742b7cdf36320b78fefa77cd6a2379",
+        "reconciliation.md": "a7b8d42afe133f38a827c787c1af53e6ba061ef624e78dfbec7a40e6e2a32919",
+        "report-verification.md": "910b0d725963d2d7e141bb0aa970f8909f018a55d1e278e22c721e9d6f4dfa8f",
+        "runtime.md": "a90420a6778e3d3a64079a92ac4221c406925766c24ca618f6023bf966f91e6f",
+        "synthesis-verification.md": "7fea535bc557d6ed71499e6ef23e4f20217a8feab8b79daf2aab740fec890f7c",
+        "synthesis.md": "ee73d0c5f91c035c3f4e7c86a142eb4b6aba7fe1f205ecfbd4bca176c13ec165",
+        "workflow.md": "48c3d4fc3afcada0ee0bb2e06352f19b5733162344c902b88affe7589adab60c"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01/effects/publish.json",
+        "exists": true,
+        "sha256": "22d6c9eed181a5223ca8dd5016f32c2b60bcb89113bd46dd98117c0548c34c7e"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/retained/from-agent-memory-to-portable-skills/ARTIFACT.yaml",
+        "sha256": "998c68e8beb540814877877ee41fec3b494d68e36c21c263a639c94c4d9cc8a2"
+      }
+    },
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/retained/llm-wiki-v3",
+      "members": {
+        "ARTIFACT.yaml": "28bc96df29a749b99c55ce9ba54546c9b9a4c8283ae98d46c1d2e05103cd6959",
+        "boundary.md": "ab69e543a6631fb3e751f0772623d7289e02c1b4c4c4ffe13d066f591d4804ba",
+        "epistemic.md": "433148d27f9d1e6a6cd4a19eb70afd39326bcaaa1079050c39a39eef6320dd79",
+        "memory-profile.md": "5422e5556d89bfb1453d2814a562f9cc81faff75e45327c759e18c1200613fab",
+        "memory.md": "c4a64ae202daf16aecf98ded81daf10c2bcb00cb1a6d4d4d6ca578fb7a6ccba8",
+        "overview.md": "2e1f58f9f7672a5cf94d9c233849daf8b8a282d499a1e43a98b7e84c5c2a2500",
+        "profile-verification.md": "bab74d83c13157b51895b995fa1da621fb000ed1b36a1d30ef2efd35958df264",
+        "reconciliation.md": "454b09ac94c28025e80d4b7ecad848c74d131749a00b18dee4ccef3bcde526f7",
+        "report-verification.md": "dfa660494139b5e0195e945207d1b1a4ea2ac61a4d410f083cf940f2b00d8bc6",
+        "runtime.md": "bd2beb15cf13343a0defc3250d28d37f2023021b80651d4657cd9c196d0905b2",
+        "synthesis-verification.md": "a429a26e0c7629d317c69ea278bfc44ea9322ae029c9f84c1e392fa4aa122e79",
+        "synthesis.md": "e3b7d2ed5c0a5f15f5b155db07caa4aab1c1711807950f9b007c65b6447d8ece",
+        "workflow.md": "91ec019fc1b986a1aaf5c430727254a590e3e2a625e4b8b0f99ff294ee8b814b"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01/effects/publish.json",
+        "exists": true,
+        "sha256": "4c379fd0cad3403158cd44015619906bfb03623211171558865c805e511735de"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/retained/llm-wiki-v3/ARTIFACT.yaml",
+        "sha256": "28bc96df29a749b99c55ce9ba54546c9b9a4c8283ae98d46c1d2e05103cd6959"
+      }
+    },
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/retained/llmwiki-marimo",
+      "members": {
+        "ARTIFACT.yaml": "215c62bc9c7e22de8349bfce75f66bf9d5e93c1a41d9a738f47a84ceeac5f830",
+        "boundary.md": "c8f4e32d8cd2127c61a0e3eece5365183c87f9aae2fd03a87305d3fc69dc4e56",
+        "epistemic.md": "4117032ef412905ee613b99c70cc7d742ef3fd802247451271738a0ba8f774f3",
+        "memory-profile.md": "287fb0a291b770b05f43ff943a9d910edb5c2876b25d255f155dabb2b3ca6458",
+        "memory.md": "ceaaf8da00dbd734b2c331413f4ab0b9edebb9bb0cc7917b04b4c99574e32973",
+        "overview.md": "b1c61ef40e2108a73d9b5ebcdcae60c2b530f1739c5f718964ee34f434ce6309",
+        "profile-verification.md": "24fc3dda91d25361bc4952729c19f69692b931800e8952f06e3efed41ac28587",
+        "reconciliation.md": "22257cf46a527e863c988290153af4163b2822e7297b2202debc715e3552f326",
+        "report-verification.md": "51fc0f732b724ea318cb8a5f9cae2c53bb34c9136fddf24330359ea41490c5a7",
+        "runtime.md": "a44ee0d9b85fefca6b7a8ef2cbba240c0332e74cee3f4a91ab9b22ceb5a42bfb",
+        "synthesis-verification.md": "75cccf7d8f3edad4fc9b60f974399752272d3db94aefbeaa88657e417229b530",
+        "synthesis.md": "7ab0c01677323711ba51a47132c85072f984a3723c36ccf73e41658460de2068",
+        "workflow.md": "0041cda55502339f6658179777ea014f10fd73ac7956ca1279510447bff600c9"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01/effects/publish.json",
+        "exists": true,
+        "sha256": "0100151e8b85a2c8a124a0fd21b9666627dd3374b6166d6454f8431893b670dc"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/retained/llmwiki-marimo/ARTIFACT.yaml",
+        "sha256": "215c62bc9c7e22de8349bfce75f66bf9d5e93c1a41d9a738f47a84ceeac5f830"
+      }
+    },
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/retained/siftly",
+      "members": {
+        "ARTIFACT.yaml": "ed97a55849d38aff8ed515abed320c472851a0365557580cee32b341178cd4de",
+        "boundary.md": "dbddc7c7c2408268e20aea208e2b5396c4a77dc6838a98d197cecbf2d4a0b918",
+        "epistemic.md": "2d242d734a2e66cb96ba620a6402c8161b9c3ca3915e9a848bba80b75f10436a",
+        "memory-profile.md": "4caa952a3650f7a51b391f0396fc93a34a6648de3637f9e92cef6f70a75078f8",
+        "memory.md": "04fe7c3af2e8be4abfab1ac2bc5448bc4da7f54f5736b2f3a69296ed67df50a8",
+        "overview.md": "8839e6684002a54e32632bb453186d8cf47c705fdd4c3025f44525a0972014fe",
+        "profile-verification.md": "c3b3ec9e333f8c4f9c49f149c957a7837a5ff0d6cec24ab6b74029f0a04309a8",
+        "reconciliation.md": "e140e49a4a589e0a010c4a4b4b40419c445ef0dc8762d37c3ef3da6aa4e38aed",
+        "report-verification.md": "8a7fe235a286d68a3531d8c34c70574509d7fd8c4c25bf2be9e2293e08c8e763",
+        "runtime.md": "de21be06a72ff3a1b594f32d0d7494c4f75c3e196a051c387d33de159c3392c4",
+        "synthesis-verification.md": "2d250603b5066b537cd4a1b68a3f3fc8900a0fe08d9172483f1fb863e45f7f4e",
+        "synthesis.md": "4ed81aafa11dabe26e1cb6f8d053ef68535923de1358669cf69586fe085a223e",
+        "workflow.md": "52f05e99831aac659aa254aa0dc476b1603d9e82566ab5fb501f3c8c1f2a092c"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01/effects/publish.json",
+        "exists": true,
+        "sha256": "d3f8960ecf56e5a99c8d82609a8bafb7bd5f334c5c8b4d8273fa49141ff5cd42"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/retained/siftly/ARTIFACT.yaml",
+        "sha256": "ed97a55849d38aff8ed515abed320c472851a0365557580cee32b341178cd4de"
+      }
+    },
+    {
+      "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/retained/sift-kg",
+      "members": {
+        "ARTIFACT.yaml": "871f5846c60ee404aea9f934374b66763ec4e8a94bcc8aae0d5ceb0e13e0a5de",
+        "boundary.md": "786d96c2e15ad0e6837f251d9358f89936c55ea6dbf8aa92681f58533a879e30",
+        "epistemic.md": "ef18eee9e5096c36c800c98374a2ed81abe105b5791e08c8283e56cbf56001db",
+        "memory-profile.md": "d5925500aa41840c8bed53e11e71ae6565802f2ee908ff0dc6f927c647290308",
+        "memory.md": "7fdc00cf49b26c8c215d1fc545992152dcf173b7566ba65ceddc834b9c58ee4d",
+        "overview.md": "60cce98a8b2a2cf514d3b5664858937a62f184014417896ffacd025907154a7b",
+        "profile-verification.md": "c6d39a4aa9eceb220c03bd8965bb46bb02832f181b33e9b8b703e6100367d7eb",
+        "reconciliation.md": "ca819d9e84a239c723a22bebaa548ae37aa73a4ace892535207f6e2c94d295a5",
+        "report-verification.md": "64028f5a170d36c0182649175316491a22a51b42a2339ae142be337c0cd2319e",
+        "runtime.md": "c142e8a4cd439540121ddc76e57b32e2985a10d44bbdb605304ac631225e1618",
+        "synthesis-verification.md": "3bed7bd1b6a1f9c044294b14e7919cfc7672fa6248926ade8e8885a663076cb4",
+        "synthesis.md": "8b161d3700094a364c700539103278541257c0923690a5231843f389d39833ef",
+        "workflow.md": "531a78047d8ceb8e9773bc6d6bf70a105adea2b9584f286d32a570a639dc6213"
+      },
+      "effect": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01/effects/publish.json",
+        "exists": true,
+        "sha256": "6401a0566cd6b2293ce07e280377d0a62afeb873ff9f37f76cdf890585f50069"
+      },
+      "manifest": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/retained/sift-kg/ARTIFACT.yaml",
+        "sha256": "871f5846c60ee404aea9f934374b66763ec4e8a94bcc8aae0d5ceb0e13e0a5de"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": {
+        "key": "supermemory",
+        "name": "supermemory",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/supermemoryai/supermemory",
+        "run-id": "AAS-2026-10-15-supermemory-ae21530d128d-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01/run.json",
+          "sha256": "e552a6c38d4810db27e5b692c5c7d3bae4e2c16e2c997257b18d5e343297b55f"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d.preparation.json",
+          "sha256": "f73dab007ef94afde17ae44a9a57932d07cdd0a91167e4300703cf48ac311a08"
+        },
+        "attempts-map": {
+          "000001-opening.json": "819e7a5acf9e6620caaaf0d855c46a9a5ad04bb26fdd43373291baec4aa7f7c5",
+          "000002-acquire.json": "7002545236f0bd0318286a9265b94c8c50e77c127888160306a9d011d7d20d12",
+          "000003-boundary.json": "801e1d96f2c1ad22c654a1f89362f6d526373558a80fe4a39cdf193a90e67fc2",
+          "000004-check-boundary.json": "c5fdd337632d5513d14bb87d5bccad2b44b684c6236415e2258ddc4b5aac52e0",
+          "000038-runtime.json": "4d69c36ec1a937e39be226e3e0a96298a20b48ad99d79e7769426f7953c0f7f0",
+          "000039-check-runtime.json": "3f614fa87d5e1373d75e55d96594f35c5406beb201c04fa29aa00cd173e8cd47",
+          "000040-memory.json": "5a1cc31bff8836d31f60f3cbfb2247886d6fa42930bd0ca5a2737e9643836627",
+          "000041-epistemic.json": "028b56bb689cce2f377526b6db83c55ddcb6e88627c92d2c7e0cf10dfc9ba047",
+          "000042-workflow.json": "8ce1b6201adfe5bb0cccf223a1d76d3f8619ebe8c0d4f40d6bc2ef4f9deb1e35",
+          "000043-check-memory.json": "962902be9de2892b90a3435b212a71351c4100aa5870e00301e170e232e35fc6",
+          "000044-check-runtime.json": "128d28cb309bca99c297af44799ed9ba78798db69874592d6b65706b64bd61cc",
+          "000045-check-epistemic.json": "4e40d1e336197d2195278ba85de89c94c234306353cd28d020bb6dc00c828ace",
+          "000046-check-runtime.json": "f69a4808e48c11a36e320ab4b365d5f60bcc6fa532a73ceb362f1d4e139cabea",
+          "000047-check-memory.json": "dc99073129defbf42b33917ae70ac1b4ed8a0f38dc922ff65953283acafc7a01",
+          "000048-check-workflow.json": "792e4eca71b38689465b5ce14792859962e13c2f9848589d8fa4ba6e734399e3",
+          "000049-check-runtime.json": "1973721fad8a2f298fe05dd69223460a03b53145d027ea7d03068e03e295ff72",
+          "000050-check-memory.json": "7b9c0eca0ff57f996b7020483fd4352b1d7f73536207af2a2ae26c2b7b1145a4",
+          "000051-check-epistemic.json": "96ef3846e869f3b4d170781b545266a0088eef15878da32200d353ce4ebb5f62",
+          "000052-reconciliation.json": "8e8c3c788a20a083e152e6e4ffd70228db0c324f85f53b71f4bfaf768fda1e80",
+          "000053-check-reconciliation.json": "0911eae979d255a16cdece7483e0dccc81cc7c162fb57d1e3f5158ede0bb392f",
+          "000054-report-check.json": "3cb151c0a6ba4300bae678c4e5bf0c77db239f332a316a4d69036298cd181238",
+          "000055-report-verification.json": "800f56b3d2ef960454e6504ad390402cce80db3df9787b8d1f45a613595ac144",
+          "000056-apply-report-verification.json": "23e952a285776a4b49ed845c2d6ea1fc4cd2b78c8e25cec781533b3cbf518fe8",
+          "000057-memory-profile.json": "48312711580c30ed9c5f484499c0575456ea766d328821c9a38d68287834da23",
+          "000058-check-memory-profile.json": "1f8b38e9a69603a4ab4812a7aea15cdcaaa9d0928197dd4a042b3cc72d2229b0",
+          "000059-profile-verification.json": "f480550fe13b60d789d4bf1d82bea04a0a525aba8a219c2873480b2cc3da07bf",
+          "000060-apply-profile-verification.json": "e88b948c7f84ff17e324e1017ede71ee47ca70fa6c85e7520b4df2a74923f392",
+          "000061-synthesis.json": "9b9d485d2e14973b5b23f4be6b6e9229a7af7b8132db2466823e061ce16ed1f1",
+          "000062-check-synthesis.json": "c92b6a2cf5c93646090fef26e51f3cb9d0a3ffbe81fadcf7b267ab289333f7b7",
+          "000063-synthesis-verification.json": "95652c358c2848ad665f781e839ff4dbe10df494a072049fc69030d55fcd7d3e",
+          "000064-apply-synthesis-verification.json": "eaa644bdb361b0f18d3ed446ee4b8551f87141f1f8e1710418a70e3a1979c719",
+          "000065-assemble.json": "70ef8eff75c829ad293a92fef52483aaa6d28d5355e41e9e3393d488db2cd485",
+          "000066-publish.json": "f14ce3a8e1db565e1387afacf48087bd0e86284915d36f93f06224774df989b4"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/retained/supermemory",
+          "members": {
+            "ARTIFACT.yaml": "0b2418b008fe1a44830689f7e92f56583f276ab7cea27d536a3dbbd51a5d5b4a",
+            "boundary.md": "20eb29eca250e721b520d0cd36ddf7ec0f57478b6d9f71cf50344ce4c7e1660e",
+            "epistemic.md": "505952dbfd89a925fc9be1e8014b03670ad71f5057d10ae20d884bf4903e1344",
+            "memory-profile.md": "ed9a144ec4c738df6ac712dbc79e5b6b0195361dbe4c47ff0b971385181a50a5",
+            "memory.md": "4db2f98c02620d8012292439be4f82b3ef8a05a343fce1c61e4176f9a7ab7ae3",
+            "overview.md": "2a971fcab30863414bc708c34efa9f3efc891217f9fff5234162bda8ba79d39d",
+            "profile-verification.md": "4248c08900dfd8d1016385746976061afada5eca7adf1dbf5ed051d0dc904eec",
+            "reconciliation.md": "a0919e071859de9ac946343fe6384c29555513990a63964fd8b2086e9055ce9c",
+            "report-verification.md": "6a30e62d18f1c4c4cc2d99d1ce1edb0dc06ddd8eb2a99956cac02f5df989dd9f",
+            "runtime.md": "2b5076d667e4bf191f86707fecd3933b5ad968ca68724a3874eb5e8d906fa4e5",
+            "synthesis-verification.md": "0f12437e1251c02ccb84b881dc9002d37dce8d59b7e4c003a806a04c704c9feb",
+            "synthesis.md": "7174ea61301416285f012311af240879c6ec70a716acdf45fbae9257e7dbdac0",
+            "workflow.md": "90de1c859154edb7a6d5e146f7bcc03944559cadf36803674fc47fffadc4fba0"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01/effects/publish.json",
+            "sha256": "dfe3be77de8afa96641cd28bbce3890b025df91160eb2dfc58b89881b2eb963f"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/retained/supermemory/ARTIFACT.yaml",
+            "sha256": "0b2418b008fe1a44830689f7e92f56583f276ab7cea27d536a3dbbd51a5d5b4a"
+          }
+        },
+        "current-fault-or-stop": "Capture qualification still misses generic non-system string path bypassing structured tool-part option gating. SDK valid-input reachability and disclosure remain unestablished.",
+        "candidate-author-jobs": [
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification"
+        ],
+        "next-decision": "Authorize bounded source/public qualification correction and dependent verification; do not repeat blind runtime reset.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-supermemory-ae21530d128d-01.md",
+            "sha256": "64d1377e8045c219c12d3a65d1c419199bb4bacea275d1eed3b3caa42fdfadb4"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "runtime",
+          "version": "2b5076d667e4bf191f86707fecd3933b5ad968ca68724a3874eb5e8d906fa4e5",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/supermemory.md",
+            "sha256": "4d09639640edcf0277b10c04bb039c10fd45f2abb6d46861c8c9463a0b9d8726"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "20eb29eca250e721b520d0cd36ddf7ec0f57478b6d9f71cf50344ce4c7e1660e",
+        "runtime": "2b5076d667e4bf191f86707fecd3933b5ad968ca68724a3874eb5e8d906fa4e5",
+        "memory": "4db2f98c02620d8012292439be4f82b3ef8a05a343fce1c61e4176f9a7ab7ae3",
+        "epistemic": "505952dbfd89a925fc9be1e8014b03670ad71f5057d10ae20d884bf4903e1344",
+        "workflow": "90de1c859154edb7a6d5e146f7bcc03944559cadf36803674fc47fffadc4fba0",
+        "reconciliation": "a0919e071859de9ac946343fe6384c29555513990a63964fd8b2086e9055ce9c"
+      },
+      "judgments-map": {
+        "000050-check-memory-0.json": "4a44ad20551a9cb072e81fb5f7ce1d90a99c80b6d679e03099eac381e7b1ce02",
+        "000051-check-epistemic-0.json": "b0128bea2819fe3661a7a75c3e3ed9c85e189727534bb81f59c77f791e215f9a",
+        "000064-apply-synthesis-verification-0.json": "8c0d674ee4a500d68c40725e6a36d2f464c9e7956ffcf265588885bda388d0c0",
+        "000047-check-memory-0.json": "7ac1a35c52efb2c96a0cf99734fccfd4d801a5d02d31ef0318720c0d4788db28",
+        "000065-assemble-0.json": "58139b3abe3c8286e2fedddf145867e9a3e7858020e04378d71f1cec07f0d3b6",
+        "000056-apply-report-verification-1.json": "bbb62110ef00345230d34141eba9e9cdb335b5ad6dcb2ef00d808d0f401acf9a",
+        "000045-check-epistemic-0.json": "d966da9b5853b0f624822c551322a9c9e42c993de46d28df5d2b753ae394ad75",
+        "000046-check-runtime-0.json": "67d6d1910f760b8448ad3276c65526d2fdcd77f43f50b6cb567b0620cd97d931",
+        "000053-check-reconciliation-0.json": "8f3edee006106bb74ce43eb1f3456e3aca7f9c64234dbb007fe06987196e17eb",
+        "000044-check-runtime-0.json": "7af11764f82eea2eef3f33a85e577af65897704344d3a57fd1b8275faf8b7795",
+        "000056-apply-report-verification-2.json": "bc03d1646a4c8cf8bcfa1030f77ce6d7842ee0e2367d9a4bc1f5a0c11d3838e4",
+        "000004-check-boundary-0.json": "594f0ebcc866de8edad30ba333cdf7fcbd1e6653f53df09a14a9fa0dd7ffb1f4",
+        "000039-check-runtime-0.json": "f61d2c3b66d9cbcb95491416bf336343613e91797732704f4b279f739c63a1dd",
+        "000064-apply-synthesis-verification-1.json": "49040e22cd6435a6a4ffbe6a6582a4b96e74e7f31c6791f1ef6edb95a680abe0",
+        "000056-apply-report-verification-3.json": "5889d16434cba7ef3fbc3f512f4d7b0e35020befe425ce3bd94fc9292f36a6dc",
+        "000049-check-runtime-0.json": "a1a7635bc4926ab711a5446f94baedf72c40928181e13ed17490de51a1a2e9fb",
+        "000048-check-workflow-0.json": "928cbb2bef9f0721a37f8d5b85fdc06fec1735e2fb3ab51b4565ad5d407e5944",
+        "000043-check-memory-0.json": "496bdcb097d1fae4f18cd0fa70eebc48bcaf16adfa2590ac2b92757ef1c38cd7",
+        "000058-check-memory-profile-0.json": "77709928611e28ab37e50df7d905e882636256a1503faea1154c975bac9b734b",
+        "000056-apply-report-verification-0.json": "620cc1ea6120952eb62d3aab8a842febfa4d98aa750c200007a05d980ca49150",
+        "000056-apply-report-verification-5.json": "2f150b9d25953b4eb9c92fc52b6a02b5baf7bf6b4b80023e68ccf03394a7ba5a",
+        "000060-apply-profile-verification-0.json": "3aec7eef22e1cbad47ebc2737234ef0add9724de256135d105ad8562a3cac2f8",
+        "000060-apply-profile-verification-1.json": "f75108872073afc9387beac02b197fd866ea367918bc63e4ad94d56fa28afa85",
+        "000056-apply-report-verification-4.json": "53e3e9275cb0c9ce9f7ca14c2ed3ba5d32551d35d56586640330d6403fb4d994",
+        "000062-check-synthesis-0.json": "567e70cbb2863a35487e5b3528e03f4daa4525b2f6784fe3d96862d75f4f274e"
+      },
+      "versions-map-digest": "2705ae7d86162116d113df8832df6bc7cabbef51f02698ebf09093abad69105e",
+      "sequence": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01/state/seq",
+        "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa"
+      },
+      "budget": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01/state/attempt-budget.json",
+        "sha256": "729c5ed838638231e4b9128d8aea0c9bf7c0f9fc637215bca168e6e993cb135a"
+      },
+      "native-files": [
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/.venv/bin/commonplace-run",
+          "sha256": "61eb5a1e6394b28c5e67dfb3ac9523aa554ed85d14d1919ec7df58713ca66e45"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/.venv/bin/commonplace-analysis",
+          "sha256": "1231e6d3faf6a13ce9049221a5c2e8e0322de2925be9f1b9c62e3e5924a068b6"
+        }
+      ],
+      "opening-version": "b3b520fc99677ee2db9f8378063b5a0c0fe5e2f2f5264baa69ffe0e4af61df04",
+      "source-version": "490eb1da50931f11105ea45a649245b65e489e5a46b3b43abcdb939fd88d5a2e",
+      "source": {
+        "identity": "https://github.com/supermemoryai/supermemory",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/related-systems/supermemoryai--supermemory",
+        "revision": "5323f427d076c7a158a9154867d293b53acc3841",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "contextpilot",
+        "name": "ContextPilot",
+        "inventory-status": "older-target-hold",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/Tencent/ContextPilot",
+        "run-id": "AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/.venv/bin",
+        "method-revision": "4266dabc470929df0ff753e57fee0c55d7b87fc6",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01/run.json",
+          "sha256": "6d62c311d1b2a227ca01c38e8d814f46bb8dd04f54c46203ab5aa71328b7ee49"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc.preparation.json",
+          "sha256": "0a1888c10b077067ed55d17d2a378b0526c7fbf72680eed2e3f88f2ef387ba34"
+        },
+        "attempts-map": {
+          "000001-opening.json": "43492f1d94367e2bb87d2a8257e471ad18cc3e3d3ecf678bb698326b135051a2",
+          "000002-acquire.json": "29d14eace0797e3281ab97a51629b7b670ed39d8f664fe0a5279e2eb447b7028",
+          "000051-boundary.json": "7558c6141ce906a01398e104598859295694a47a393911aec7e3129fef914780",
+          "000052-check-boundary.json": "f2c6f7d63007244c6f70e9ebcca446bc30537314263a9ecf64a0feabfda41911",
+          "000053-runtime.json": "f047d48d7778dd824a25b3a969f282bf74dab60facff5f281c436bef11171657",
+          "000054-check-runtime.json": "0b82abe26625a4dbc9c9d1d82f5328aee28fee19ecf431e5976ac524b57d874b",
+          "000055-memory.json": "fb41ec8b41c50e05b970c317ec393683e5437b8359a45e0a85b1dddabeb7992a",
+          "000056-epistemic.json": "f09490cd22e4bd153d1ac4291eb903ac391ab7ceea875ef3a48ff2e327c8c0db",
+          "000057-workflow.json": "c2113357bb692d237ce3f392435f75b6dee20de6430463bef65558f9569d8185",
+          "000058-check-memory.json": "a68bea665d9887b52d19b115779b3fa0d00ce243a3a6a20edcc440c71e1231c6",
+          "000059-check-runtime.json": "2c14abe75bb4be97efbe796cbbef03f873f71787c2b01e47dc658496fe1dd968",
+          "000060-check-epistemic.json": "8bcfd6f8263e9b9d5bf6eb05c738e0bf2160b5a0acb05a2a01f992a2f2e88279",
+          "000061-check-runtime.json": "a511fc7cb27ab7ca2f40d5e9cdbb47d6fa7ffd5e24eae1361723022ae5394051",
+          "000062-check-memory.json": "e523b7eccaa39c2921a8da42528dc35b3111c8e83330b54a3ad67e2e48b1a971",
+          "000063-check-workflow.json": "963e712e4a3ee6062547bb644a0cb479398fefe33412f8a4ef8123f77368c6ce",
+          "000064-check-runtime.json": "0577ad2ddcd51cb8391513b71ba92dafe34b42d66bddf4c8ed657b6ba583d5d1",
+          "000065-check-memory.json": "e1bc4b4883dc11a2d0efa4939a157578374bc3224771a19250293b548a6982d0",
+          "000066-check-epistemic.json": "9916290931347d0f51af316b52fed2eb2946d61298be91360720026b56386060",
+          "000067-reconciliation.json": "6851e89b2bfe24186f952884ebe682e3b25a87ed63a1f663cd03e809cf37b9ae",
+          "000068-check-reconciliation.json": "3ad61939e1cb8d44b34ba92f85f14c4dd14755f768b3742f7b759f8c0106efa7",
+          "000069-report-check.json": "01672a5ab1ef1ebd1d94a61f79bfdfdc57be2e09eecb011b469e22e6b39e700d",
+          "000070-report-verification.json": "fe6c150ab7498fda122d896cdbcd64dd2eaf69d9930d9a0a9fc6884316aceaf8",
+          "000071-apply-report-verification.json": "48f5502d312d774f7e188240474355c4e739c2214c3d53a9b73f2044b8ebea4d",
+          "000072-runtime.json": "b6233666ac6cca6a53e2bac66b354857c842dabd936fe0bd0d8bcb5625e973b9",
+          "000073-check-runtime.json": "f1ff1bec2e577241dfe6b34f198a0723c683d7dab1981910b89de623aa9c8d5b",
+          "000074-epistemic.json": "e273c67ac37be8ff720086a4b0aced0442fcad2b20b91700c8caf09d8d29e780",
+          "000075-check-memory.json": "8982103721a669421446c8e92189421a89538523e11449c30c78d804b3530d8a",
+          "000076-check-epistemic.json": "ef9611fd8d936a21dc3e62c55c03322f99f78bf8497b1643e920734f66e82efc",
+          "000077-check-runtime.json": "c7b261db590454cfcbb36be4b9f3a9371dedc9c294632e6c076ddc5de16c7c4d",
+          "000078-check-memory.json": "0a8136c80482e46f93f4e2c6a21b888dcff3e5a7f1d6d62dc7dd652bcce197e8",
+          "000079-check-workflow.json": "73c5f699599b0b5f0de7e6b55ecc79324f9685326a33448de756b10118149721",
+          "000080-reconciliation.json": "dfc85e7faeb4358b21c5fc3857217ee959442874e5f8ce150d7ccf39523a65e0",
+          "000081-check-reconciliation.json": "26ca47de7e4a10466201026f16ef4b3482672d41139f40bf8dbcda95a65e29d7",
+          "000082-report-check.json": "cb2672589d3a98e18a0fda7137ee8e5243aa53de36fb303b994562e6426c17da",
+          "000083-report-verification.json": "5fee1b171a71702caf5bb2e6987bd51ee8c0471c925892059f184901b43d9973",
+          "000084-apply-report-verification.json": "9260e8316a742a87c812439e8395e307cd98466ac9b0dadfd4831eabe72e8c66",
+          "000085-memory-profile.json": "eea4cdd84114b57af1e67a484ad0cdb323716d0b3cf8f1ebc7f3ac3dd50ab0bb",
+          "000086-check-memory-profile.json": "050332b95d507a286a8136c4c19045768308110062eb420aff3f56ffee586ae8",
+          "000087-profile-verification.json": "6744c9084fa3379f6320ba996e2c7b950460ce2885492f329bbd2d8391914994",
+          "000088-apply-profile-verification.json": "43cb3278ed97bd1e75fec8c6e79ec7e0d22923d15ad676fe75248cc33b863137",
+          "000089-synthesis.json": "e7d12ca8c2832bae52db4ef4121e79595e664db1d747994a31526646bd3ff63a",
+          "000090-check-synthesis.json": "96ac49de032187fa02fe2c3d5fd2cf874c37ff02d57702fe8841e8635d1862bc",
+          "000091-synthesis-verification.json": "d6f2dde33cdcb62abad8116239e367640e12d4df9c91d21dec69d4e36b8e1a1b",
+          "000092-apply-synthesis-verification.json": "2734c3b0e37ecfd9a3bf18067958cc685ef0e95713334ed1e82e50deddbaddf9",
+          "000093-assemble.json": "2bfa82b818e20b6aab08d70a9c521ade9cb434033256205d0862c429e1eb2ef1",
+          "000094-publish.json": "4074e5a870c338160e055a459314842539f8092f118fb726d1a0e0ce7f10186e"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/retained/contextpilot",
+          "members": {
+            "ARTIFACT.yaml": "3b86d0b5719d33afa6075847c3c1259dfd24706fa7f453a2b96faa66f2683c2c",
+            "boundary.md": "5389cfb9f9f275c25cec0cb3ef8f100f0d91f6f3ed0ccad12ad0cae4c4742b56",
+            "epistemic.md": "530169dc3175a88a8073c635f7f2779e1e7aa20f01687139d8370f52892d7e81",
+            "memory-profile.md": "2103f962924011c6c59f9218c581a8f124c26e3e98f72e16408f5828bbe1885c",
+            "memory.md": "2d1060ccd05238293782dcbec440f726984569cc7d49f80b95e827fd374184a5",
+            "overview.md": "1b421d3993f105bca813fddce2e4a11bcf24583324b636d1dc765a6ea8f3940e",
+            "profile-verification.md": "9cc439fb118ec6156e39df3dbcef9f092e8fad2963b5427dd7dfde2b6fc0aa21",
+            "reconciliation.md": "a4d167d0300d30dbdfbaa2af6e50aa8df8a4b50a520c11396aa649464bc4cc54",
+            "report-verification.md": "7ec80fc51c0853210bc51db3c8e4a7c903ecb284ff2883370296ee231a3ba812",
+            "runtime.md": "e06b83c06cdcb557c24587f5ce233f3e38ba092753f1573709d7ef706ac28d4d",
+            "synthesis-verification.md": "7b71afe1652381b764ef6460cc452589eeb168c745177f17a191faaa1a1ba415",
+            "synthesis.md": "ed357771611a4b7f969d06b7e6b8e5cb036ee74990dbb46784e272a83647fde8",
+            "workflow.md": "657cf1b2afc4ee18b0ee0e65b95943a8564b423b499d3cbdfbfe5af2845c147c"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01/effects/publish.json",
+            "sha256": "3a7f0632e0fff4bbaaa7d50f6b04a1da54580aed87a9279f2c64f1868593294f"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/retained/contextpilot/ARTIFACT.yaml",
+            "sha256": "3b86d0b5719d33afa6075847c3c1259dfd24706fa7f453a2b96faa66f2683c2c"
+          }
+        },
+        "current-fault-or-stop": "Dataset/configuration statelm_tool_agent selector and generic single_turn_agent fallback remain omitted; actual wrong training dispatch is not established.",
+        "candidate-author-jobs": [
+          "boundary",
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification"
+        ],
+        "next-decision": "Choose dependency-aware boundary/runtime qualification correction; preserve source and valid unrelated records.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+            "sha256": "889c0856ab79a35dda8af410a78bea1e346190ba8c9168417a884a9e4efdc329"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "boundary",
+          "version": "5389cfb9f9f275c25cec0cb3ef8f100f0d91f6f3ed0ccad12ad0cae4c4742b56",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/contextpilot.md",
+            "sha256": "32650d0f43afd874576a839ceb070a0da4a4c22fb6c1b0a24041e1395aec1681"
+          }
+        },
+        {
+          "role": "runtime",
+          "version": "e06b83c06cdcb557c24587f5ce233f3e38ba092753f1573709d7ef706ac28d4d",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/contextpilot.md",
+            "sha256": "32650d0f43afd874576a839ceb070a0da4a4c22fb6c1b0a24041e1395aec1681"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "5389cfb9f9f275c25cec0cb3ef8f100f0d91f6f3ed0ccad12ad0cae4c4742b56",
+        "runtime": "e06b83c06cdcb557c24587f5ce233f3e38ba092753f1573709d7ef706ac28d4d",
+        "memory": "2d1060ccd05238293782dcbec440f726984569cc7d49f80b95e827fd374184a5",
+        "epistemic": "530169dc3175a88a8073c635f7f2779e1e7aa20f01687139d8370f52892d7e81",
+        "workflow": "657cf1b2afc4ee18b0ee0e65b95943a8564b423b499d3cbdfbfe5af2845c147c",
+        "reconciliation": "a4d167d0300d30dbdfbaa2af6e50aa8df8a4b50a520c11396aa649464bc4cc54"
+      },
+      "judgments-map": {
+        "000073-check-runtime-0.json": "ce2d9661adac078eff7b86de4eecd359d38c1c24439f5cfcc99fbcd94f72cddb",
+        "000075-check-memory-0.json": "ea451d3214b2af9f2976fd6aa060b49e57ba14ed8b6804f53dc77335bf0357a9",
+        "000058-check-memory-0.json": "b25538fc6ee901f81e3ae85f5608b9f696117e5eb3173e228d8cee9306b71f06",
+        "000092-apply-synthesis-verification-1.json": "9c71fc719f8cf11b90cdc1832f4b083943427aac1049733f6c7d3f7a7a4911f1",
+        "000065-check-memory-0.json": "97d6fba1fca17d8158171be12f6e9d53f175eb41cce64b9bbddad4032a9b47cf",
+        "000064-check-runtime-0.json": "8170559f591cdf50ff123b4907595980ff6eb6463574f964ab0eb49daeb107dc",
+        "000093-assemble-0.json": "42b8f82b8f167a020bd2d5fa6eaecc08580b116629e22c94fc43874a961e3f35",
+        "000059-check-runtime-0.json": "2097564fad0d0cee7f798cabcb85ee82424ba97fa7a8660671b24e5f8010c980",
+        "000084-apply-report-verification-2.json": "431331af1885534e0e26b80b524086bc798da63277f69a73bce41b622be69c2b",
+        "000066-check-epistemic-0.json": "fd176456bf3737bd56f5137c06e5a0d7675111dcc32916788e94a66e182991e1",
+        "000054-check-runtime-0.json": "6523ccfca4211c3e40bf3cfdb54387ac8a7f3745b8be2fb4c55d8d2607aee839",
+        "000084-apply-report-verification-3.json": "bd480020918b7b89b555384b477b7b561396e3162e2e3fb6eef10b7036e9732b",
+        "000086-check-memory-profile-0.json": "717ad08a92210cdf2650c127c5450b97b2e5b5d5f678b292c0ebc5794fe98c95",
+        "000077-check-runtime-0.json": "7cfe0fd4e053dec489e760f0b03a97c6e968667884d1b426f0744759f518ef49",
+        "000068-check-reconciliation-0.json": "5fedc6ac8a673eda6dec159e2be9883250559ef6747d2fe9c132761f650cdb4a",
+        "000078-check-memory-0.json": "6107f145f05b368f43cbefa2e400f8100db98a93a0d9606070bc2ce6e61bf0ce",
+        "000084-apply-report-verification-5.json": "19c9e2bd17d60cbbb0226844925db6f2a92df10dc64db13e1f6a42db3d740ca4",
+        "000092-apply-synthesis-verification-0.json": "9848ca60585c8ec4ae279607849a8d3956aa2219a1e0e31849a106d9697700fc",
+        "000084-apply-report-verification-4.json": "7ad8f09d4b2bb676ce05e86bb9bfc231c32a4e10657da15c3bdeb950a62d9c6d",
+        "000088-apply-profile-verification-0.json": "7af6a0a47707a56b3bb6ee69572b9c86dbe627ee548a468bbc421207c5ff1236",
+        "000081-check-reconciliation-0.json": "60c1b1fd2611fcbc2b663f53d6ec52f762b2221331fa793279f1516534515dbc",
+        "000079-check-workflow-0.json": "6ee71acb8cdac01c2b9067267ac69802858e92c5406a99285509cdf670bbf297",
+        "000084-apply-report-verification-1.json": "1f5616d9e5f9670500a54f59c572939bdccc133556e9a764cc0abbfda7d1fa12",
+        "000063-check-workflow-0.json": "2e101f8021142235a202304eb9117063a0b6d5f4b471a31cab6919f2646a86a0",
+        "000088-apply-profile-verification-1.json": "fcd80b98639dd14772471e3532c4cbb45c29e5d670f22ad2e3e78ff36356234a",
+        "000071-apply-report-verification-1.json": "a41400cd5f154b8543537c34297df39c81fabcb432fe41fb1ca2f39d1db5ac12",
+        "000060-check-epistemic-0.json": "43bc10cb42ff5d9358acc1c2efa1b30ed0baf169cfdf8ea4bebb5ece1790a86b",
+        "000062-check-memory-0.json": "bbeb18c457de05d1ac293d8172452552b727e50aa45fe1b769ca77f7504c391d",
+        "000071-apply-report-verification-0.json": "4c860a1e9b22b2e6f3b74c96763c88af279576d3c6e10c14a96b76393d9080ad",
+        "000071-apply-report-verification-2.json": "98e5e69e47b9bc70f2def7f960c28f45bbb68718d30652abe2c29215ed804d0e",
+        "000090-check-synthesis-0.json": "18807a641c88f8ea76aedf542cef5cdaafe7ef09def7d25eaea2f2cf75258043",
+        "000052-check-boundary-0.json": "7f0b3e555b047c923cc30961e73b4f5f574ec1b569d749b83e74e8c55ba6d17b",
+        "000076-check-epistemic-0.json": "5fd6d8cf64a6aaa76aa875f256815e1ab1d0caf1ed4a54c43d360a27add3e000",
+        "000061-check-runtime-0.json": "eccae82e4562d1f3846492aa0d262bce2554f6d8a25df9e037a4d8979978bb60",
+        "000084-apply-report-verification-0.json": "10fec647ba10810b9a322b6184b29dc3e7ccc5af6f572d77fecb6e756850d4d6"
+      },
+      "versions-map-digest": "cfcab28aac2bea281de8d7f33c5bf498af406a400c7029c404a5d7d2378e7950",
+      "sequence": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01/state/seq",
+        "sha256": "6fc16b03d8c15b9885876848a301a01816cccaf7b48e74f2b51db99c007a3bd5"
+      },
+      "budget": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01/state/attempt-budget.json",
+        "sha256": "d7674241469a72d85e38692ad6de79e7447c373560240641b05a552f86234510"
+      },
+      "native-files": [
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/.venv/bin/commonplace-run",
+          "sha256": "2675deb61271b769abcebefbfadfcf04b99f3d9b734ad869e07648134ce1acfa"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/.venv/bin/commonplace-analysis",
+          "sha256": "8db0c1767f7fe3d668897c7227dd94f21fd36f5bd83de4c4272e9f95b77bbdbc"
+        }
+      ],
+      "opening-version": "f6a368a2f6fdabafa925884931717b9d03f03ff261ca38e13536a60bec7dc3d3",
+      "source-version": "249e42f9976ff3ec6cdca0916876a8425400f98a3c28eb560f20634f3de63e95",
+      "source": {
+        "identity": "https://github.com/Tencent/ContextPilot",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/related-systems/Tencent--ContextPilot",
+        "revision": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "openrsi",
+        "name": "OpenRSI: OpenMLE search, experience and training",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/FrontisAI/OpenRSI",
+        "run-id": "AAS-2026-10-14-openrsi-c72dec9967a3-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/.venv/bin",
+        "method-revision": "f7732e9c6bc5622031571d2d429bc017253eb64f",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01/run.json",
+          "sha256": "32be2b3a0bd564d90c035fef5ebf2458c3befa204af461836f06c1ae75f7d8c1"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3.preparation.json",
+          "sha256": "4fa7045c87f2c70e11e9af4d457917aa9e91868e91002138cbf33a5b4208961e"
+        },
+        "attempts-map": {
+          "000001-opening.json": "020a7401b1faced7ca5fd733e0279af37b37f6252421c4148727e0e0c7f1c0a8",
+          "000002-acquire.json": "5fd3ef90b11a969e37ea2b48046f46532a36859c0bafc2bc05c58322862f0906",
+          "000003-boundary.json": "0df9494aab36db567ecead45deabdec37e9bfd66cf33b7429f4323cade8d9770",
+          "000004-check-boundary.json": "9d8423b7d10ba70440950d5dd3e92a070fde6d797e7ea8b3b234048ad151faf9",
+          "000038-runtime.json": "267f74d823bb4d0eee261256a1d50994f7e65351ebbf7224ce856bd998bc014b",
+          "000039-check-runtime.json": "6e4f7db6aeb029d520dfde1cfc9f84a8fdb398fe651ed15b357012333cd068a4",
+          "000040-memory.json": "21d9e9b24ddb2f097afb53c621cfd4f8a7062cf77d87a436fa36501464f154bd",
+          "000041-epistemic.json": "a11e7ed4b73f4e28f43d6d2d3eac95665b287b5a7b90216772425eefb7208761",
+          "000042-workflow.json": "63886ca4a08a5d1c9f6c8ac9a0a4beaceaeb70c7f83c9d4f5db812daa418ef38",
+          "000043-check-memory.json": "4c2ed7a9433e9ea8734e9725128f8dc294936778b6242d15b957398c801b49bf",
+          "000044-check-runtime.json": "ba35dd367218abd844cb82c002c7fa54a962fd793650c54e6b5e509c751a8dae",
+          "000045-check-epistemic.json": "e12e12cf86d458b5c5a54498668f8d161df11a79517c45a488b9de38aef3e536",
+          "000046-check-runtime.json": "0fc9b9e4f2501f763a43f9618b1e9cd3d9e1a5705c25a45e43e812f25c290603",
+          "000047-check-memory.json": "b1450efcb9aea196462e737cbfc3817e892471fdc219d6dd6731f941b178c2ea",
+          "000048-check-workflow.json": "45af29316290e66f4bbce9e9c22683781aa38f4191938399bff64e095450367f",
+          "000049-check-runtime.json": "f821dee851aaee606ad8cb3760451bbed282c9476ef52c83aa7a4157ee1b7d68",
+          "000050-check-memory.json": "ff68393d9cd6d57bb33036935051776930784bd82eb84a1197dc7edefa5c6777",
+          "000051-check-epistemic.json": "1426be59514ade75e08b29003415b15f9c78113439b53d0e86c8f38f38ea4dab",
+          "000052-reconciliation.json": "cffd48ad5d2b542f8c9b86409a277e0474b73d81bb0eab4a9a12cd51fda4b4d5",
+          "000053-check-reconciliation.json": "8d2cf5db4de11065151c3b38ad81f13eb26d7a8cf6fb7a7856b2afde84e4bde8",
+          "000054-report-check.json": "edcb1d6c57afb505e7344353175ea5212306f6f34885db9e1ca7b60c207dfc66",
+          "000055-report-verification.json": "f0aa48f4d05218055d1256ab5bb35eda0d9bf1bb4ba6683cf9f1e3cb82d72a6a",
+          "000056-apply-report-verification.json": "45cdbd65087ea27f48968e7349e4a57fd92cdbf95d9abf1d97e0ebb1a35cf432",
+          "000057-memory-profile.json": "0b7ecac69c42af21af99795df3d901f345a45eeb71c6dae73e470cd024a4078a",
+          "000058-check-memory-profile.json": "9f7a2044928be2abac302e0b71170295c05ea58e293fd02adc724238e07275cb",
+          "000059-profile-verification.json": "b4bf4b683d73a9a03599542f1ee18898779a3bbcd9f753819166cb66b6cb4dec",
+          "000060-apply-profile-verification.json": "659efe6b20a91b7371396fab068fda74eeb8d29e2d76205a5a5a62c0359d36b8",
+          "000061-synthesis.json": "3aca5c637c9f40faef446ea02e44bf71fc5544796171f283f68083f100797775",
+          "000062-check-synthesis.json": "8064c7469dc47db33c13003ff74e9ac88b7db47ca547c9331c8a35409838ff04",
+          "000063-synthesis-verification.json": "b49edfe850f310fa40ad1b9b9ee8c2db9748acde253818ac98558dbbc00476ea",
+          "000064-apply-synthesis-verification.json": "d13910a5547370114de1c39d8cae88994e489d18f3b9112cfe622d50e8c9f8ea",
+          "000065-assemble.json": "ddeffce33742b8fba51f593141eb62866c823b85e478f41d914381d75b74f10c",
+          "000066-publish.json": "1fb606bbe50f8c306d9255b649bf3835379d5b1c585c3b4b2857134fe445b325"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/retained/openrsi",
+          "members": {
+            "ARTIFACT.yaml": "ab135f557e253f3099524ef50d016f29f21148d362bc07a6e3735b7eca779a12",
+            "boundary.md": "22ce6acceedda244d53f729bfbab28f9a46409c4d8766995b1b9d084f968692b",
+            "epistemic.md": "5bdac3a88ab0ae55e46aacc291c83c9e1fbf4ffb6c87ca95128e8b14727b54b8",
+            "memory-profile.md": "8f9be53d21c21174ce5483cff53747c54cb6f31d96e99cd096be6cf932ae2802",
+            "memory.md": "8a99c0b4bd5d59591bc2c2270636507fdd165628aea00252b7c6881d2f3f7c3b",
+            "overview.md": "de9e689e72bfc1f519e1e918870c25057ffb4b255673baeb026885e86ed1232a",
+            "profile-verification.md": "e3e51dc1d3290ff4dfa79bee42a368636c0410749be5e7d3b409855cd37d0f39",
+            "reconciliation.md": "9bd8e9b05956b9d08956396a1b9cb93a19438c065d7eb3adf95f5a2c2a25fbde",
+            "report-verification.md": "ffc7646bae5699cd0f78e365a9db580aea9cad54f0c3f3feb833252da906fbba",
+            "runtime.md": "84429572a6586216f3778079ea7323a03a12a764edd5ee6ff93d4e7130442bbb",
+            "synthesis-verification.md": "6b006873e2b1a2ee694d5476ae0e80df3a3de016c5f31e214ea63fc11a6bfc7f",
+            "synthesis.md": "5ddbd25202d2a73977a4a01664e18c68ea70d89e6b09d8b3dec298a1b4fa95e2",
+            "workflow.md": "1141902aa759f587348dc4b84bbdf2b311c37071b7249009319e35384f4d2b32"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01/effects/publish.json",
+            "sha256": "74e5c3f9d4812b06ac5dfe6aaa90ee51e670756b84db86c15cf820676fcf8c3f"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/retained/openrsi/ARTIFACT.yaml",
+            "sha256": "ab135f557e253f3099524ef50d016f29f21148d362bc07a6e3735b7eca779a12"
+          }
+        },
+        "current-fault-or-stop": "Default shared mount permits possible candidate access to nominally private answers; observed leakage is not established.",
+        "candidate-author-jobs": [
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification"
+        ],
+        "next-decision": "Authorize bounded evaluation/public qualification correction, not new execution or leak claims.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+            "sha256": "cd8a8e7b7fa5ac22b93a0af3a44e29a3e51a29fb35a704750562325e224a6d58"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "runtime",
+          "version": "84429572a6586216f3778079ea7323a03a12a764edd5ee6ff93d4e7130442bbb",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/openrsi.md",
+            "sha256": "de319351cc0de13f7c31e0b3a28da5320672a75ba15bed102265026d0ffd8ff5"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "22ce6acceedda244d53f729bfbab28f9a46409c4d8766995b1b9d084f968692b",
+        "runtime": "84429572a6586216f3778079ea7323a03a12a764edd5ee6ff93d4e7130442bbb",
+        "memory": "8a99c0b4bd5d59591bc2c2270636507fdd165628aea00252b7c6881d2f3f7c3b",
+        "epistemic": "5bdac3a88ab0ae55e46aacc291c83c9e1fbf4ffb6c87ca95128e8b14727b54b8",
+        "workflow": "1141902aa759f587348dc4b84bbdf2b311c37071b7249009319e35384f4d2b32",
+        "reconciliation": "9bd8e9b05956b9d08956396a1b9cb93a19438c065d7eb3adf95f5a2c2a25fbde"
+      },
+      "judgments-map": {
+        "000050-check-memory-0.json": "c3286b2d5910db1dcf8347160410294736ae4444d6bc6c88a64830546b940158",
+        "000051-check-epistemic-0.json": "17e9114693b03c24d4bd60de9e6c1769cf5a109ecf73fd2d8874d5bb1760f635",
+        "000064-apply-synthesis-verification-0.json": "2768838d403823ac6d60b33a8a3f26095de269546f9d75af607242b31bbc7b87",
+        "000047-check-memory-0.json": "c78278e37c8362860121f47eaf103883de8549188cf69053fa142770eb5dc871",
+        "000065-assemble-0.json": "fd03495d619f7103bd4350b291d4ff3b2a1457a1c6093975b785a3c150986936",
+        "000056-apply-report-verification-1.json": "aaceb254f9681bbd36d576d4f0106cb23540bf420d23567fadd68766b36c95de",
+        "000045-check-epistemic-0.json": "52925838eb1c3fc6694208e8cb1feb9278d9bcb6ed4875a6956f15b4ed82e726",
+        "000046-check-runtime-0.json": "bd36aae7a00fc60ee9bdf328b7ffc914a926242b58b43bbae3bea4e7a4292e71",
+        "000053-check-reconciliation-0.json": "f9f6492d1d06a6c1ceb62ab91cfab989779f992bee7588fef7a746aaf40a1fb3",
+        "000044-check-runtime-0.json": "c1812e5fc4897f12616858b0fc077adcb52820f0b53a8315056a6767fa95df47",
+        "000056-apply-report-verification-2.json": "6b438d5c87ce8a9105f34c4eff5f1feb8e942e9cfd490ad388edf3e5882de495",
+        "000004-check-boundary-0.json": "6afd17d172fcb77051ed05232db005b54bfbf01070802a7717234c7f184b69f5",
+        "000039-check-runtime-0.json": "1f6ce0f05c84f1646695d08829f66022c8e25a3dea8944fd51696e5264244230",
+        "000064-apply-synthesis-verification-1.json": "94a6c684aba5b2a89507361b177b44c0698d92176f61ba30179ca6a46e8ac84d",
+        "000056-apply-report-verification-3.json": "9f690af9bc7ee522459413a6a344dcd7b5e89e8767b81535f070a8f902bb0ab3",
+        "000049-check-runtime-0.json": "00e164049003a5dcff8d539a44f1079bfcc76164825055d64881bae3e49f82e6",
+        "000048-check-workflow-0.json": "cc081fff9b38387603d84af0107f0638474f1e3e3240d840d4e7198f5d4ef3ff",
+        "000043-check-memory-0.json": "c1d01ef4456417e36bda630b48009f7ffb3d7fd6ec0f784b414c940563918fb7",
+        "000058-check-memory-profile-0.json": "635ef7de0059fedd9514cb802227a6e6dc3cde9f9d223e4e27335f1ad002fd17",
+        "000056-apply-report-verification-0.json": "148dc18ca82fb7e8e053fdc7c213578bec0928d7a664ac9ab43044222514ecde",
+        "000056-apply-report-verification-5.json": "b90da7ef752a00b0c87ab78dcad03a93c3492f02f213d1279cc0b75a5df27c0c",
+        "000060-apply-profile-verification-0.json": "fa26c5e125c7a2c021c5032458ef3b01841128846e04d024d94c0cd0590493a5",
+        "000060-apply-profile-verification-1.json": "3f6b5eb39b10a21d6737b34e862765314fa048ff779bf94a0d39c987c8411f0f",
+        "000056-apply-report-verification-4.json": "73a2d9c1a60862511498c4634b4da7a2ae1385bf3391bd3acd8354c9d8a55099",
+        "000062-check-synthesis-0.json": "33083268d388d9992cbd178b0adfb4b6a979b590baf58ad319cf6def1775a714"
+      },
+      "versions-map-digest": "87f1392c3fe3b8714602bc7d0a4076df156f01c34899c6bf38fcfdb8dc04d646",
+      "sequence": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01/state/seq",
+        "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa"
+      },
+      "budget": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01/state/attempt-budget.json",
+        "sha256": "729c5ed838638231e4b9128d8aea0c9bf7c0f9fc637215bca168e6e993cb135a"
+      },
+      "native-files": [
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/.venv/bin/commonplace-run",
+          "sha256": "f6d04bfa2477934ef6232293be9ec48e67d617f7031e6558ca72a27b1c6c2025"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/.venv/bin/commonplace-analysis",
+          "sha256": "3f64cbaea2effb5d0d5fea48203fdf8e0e7507d65484654b6396b95ba82f8d9b"
+        }
+      ],
+      "opening-version": "c988091703b295070a440c2b8df324c201e64be67c036a77d533bdc4ddf4e802",
+      "source-version": "9ebfb522b64fa04360c800f06a1c69c3c5a3ea7504776c99cf7459a355f3fc2b",
+      "source": {
+        "identity": "https://github.com/FrontisAI/OpenRSI",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/related-systems/FrontisAI--OpenRSI",
+        "revision": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "modularrsi",
+        "name": "ModularRSI",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/IQuestLab/ModularRSI",
+        "run-id": "AAS-2026-10-14-modularrsi-96b89989168e-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/.venv/bin",
+        "method-revision": "8414ddbd35da24645c020789bd824cb9749fa677",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01/run.json",
+          "sha256": "7dc655b5d075d3ba43a36ff4cf7e677354356ce742b57c21f6cac5c00aea5a29"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e.preparation.json",
+          "sha256": "d4dd10aba8a64be8330e95f4fb9581dd11d4080ac4893b58075a764e584f1044"
+        },
+        "attempts-map": {
+          "000001-opening.json": "fb902bb455c625dea78adaff7b90eb0ce5fd9e171171f93e38156dfd3ec06e4a",
+          "000002-acquire.json": "19c64b0a803d51dd060d2b523adad8e643328a5c2a57b281b283ce4d7728e287",
+          "000003-boundary.json": "6d5df85f3134bc9443624f89cd0737db673959dd82398cb0ad7d8e15aea4d16c",
+          "000004-check-boundary.json": "477f1dabdf530f30da3ffbea24bcc63a6b4443d03a5b566889ab052f7de1b584",
+          "000044-runtime.json": "16eae6f03bda5c023efec4f3007d74a49f373c26855162fd944b3fdaf5c03f1a",
+          "000045-check-runtime.json": "93fd3246f7b45a2a5e34f08c9732d51e345cdee7bb6c3a001a9801de57209336",
+          "000046-memory.json": "d84883a1aa2f0663d6ad4a44b098722404e4e2d80b5c0430d2a74275ff3ed209",
+          "000047-epistemic.json": "0ca810c297250ad75d9a9743abdca1fbce6b126519b334b714b94597e60f2034",
+          "000048-workflow.json": "d5fb203ce28e3bf84ae5ca960e2ef36c0708b2d021b47c254e9417160fe4add8",
+          "000049-check-memory.json": "989a24596ad880b22e0499844ee389a5c6beef859f9e612d7bf3e85e97d0311e",
+          "000050-check-runtime.json": "8bfe1f0e2e49c2a6272d5f7fe907478c7cb13cc1e5232e45a55cb5f4cc22f925",
+          "000051-check-epistemic.json": "7e1d91b067987b2983c48189e82b500b7d7f4e1b4850f106aac7af61b1fbc18c",
+          "000052-check-runtime.json": "c5969e8eb5c3615486c086e6c091708ac343679ef64d4816cb8040677b9696d9",
+          "000053-check-memory.json": "6bfa42eeb327927b95252bbd2295d22193575b0615f337f5bbaf751ec2a67cbd",
+          "000054-check-workflow.json": "58103bbdef0c7054dd4f8abdd5fdd1e246287704a81a31a155e0952029964625",
+          "000055-check-runtime.json": "26ad49acc993f7042f340b39ba91a357f7e5579cc4fce701d98b8193595b50b0",
+          "000056-check-memory.json": "3da2c3819cc79ef83e6cb7c2b280824087ff2a7309a789044b4c83c07b8cd737",
+          "000057-check-epistemic.json": "e70a104a0ec1ad0ed611634f32d75559d88e7b53a592e0b79146ed00d5c358d8",
+          "000058-reconciliation.json": "2d3b06e14e1eb36b64922f02d2a930035bc06ccae7c7352f83ef88c61bd01e81",
+          "000059-check-reconciliation.json": "dfb9dcd093b9e14b04c664bc66699ce7ad8d0517c6b81e7d523a87236e64b1c3",
+          "000060-report-check.json": "7af0c06c1c598b5d9e31bc4f820bd1d6d0ce350f1142da17e6174e47a1081b9f",
+          "000061-report-verification.json": "a280864e3d335e8284372cebb48b4d3883d6b1650b9dcee99d344ef4ca9c44db",
+          "000062-apply-report-verification.json": "f74270cd681780715e668e2baf0fa7925db5a31440dea152bddaa01ec4694f7c",
+          "000063-runtime.json": "dcba8c33a3c1e431d62e6193cf5e559cf7380225d896a1389ef2a143eb95513a",
+          "000064-check-runtime.json": "6e183493349c29f5b6c5a3ba3bae703bcc0263a3458ef22e167e49296205e9b0",
+          "000065-memory.json": "6d0ca9d98118f0036475ccc2391931b0013ec90cd7bc9a0f05f7d0c27a878506",
+          "000066-epistemic.json": "566df0e0f02d0af4165052055914ef56a003ffc497d9695fdf1f5ca88db246ea",
+          "000067-check-memory.json": "5c14d2be330345ad8e6364b62d2fb60e770512758aef730838aa5d889b03b06e",
+          "000068-check-runtime.json": "d882e94b034a3c0bfcd35c526afc6b0377e237e8e6510d218e90fcccacd909f8",
+          "000069-check-epistemic.json": "bdee22c8344803419ade345844da12967229624f4534b946a5f69dd69548cae6",
+          "000070-check-runtime.json": "f9c2c93ac0fc137e963fa768978905d457542fb4b7704ff127eb76bd71f78465",
+          "000071-check-memory.json": "b09049511b63693f684037809480f4c70f74bc2be6965eb4bc24890d6f950a36",
+          "000072-check-workflow.json": "ef078f0967c25986c20d2cbc5db819eb659a8e90f76ac39d9490f3e6fea71e5d",
+          "000073-reconciliation.json": "4e4b7e1c39e6f2d9f9075edea779b39d93a8be97e84dbaf681a4c4f2c2c2c320",
+          "000074-check-reconciliation.json": "3c43cf81f66eeba3aa79f9011556e012a39885a5537058632a67561cdf4acd00",
+          "000075-report-check.json": "553305de6f4846a97c33b8f3f86510637e9d6028e15252bd0793a117eef6c8d1",
+          "000076-report-verification.json": "8a99e432b1c49d85ac387a9918225950ef158f4ad0003659977cad6b871d1464",
+          "000077-apply-report-verification.json": "7c30a0b32d30655383f2a290eeaf231c36461e84f37ec303c67768c423023e1d",
+          "000078-memory-profile.json": "69dc1e8f1780ac5f7e209a243663aada5000d2a30fdc5b232f1423573b0ceed7",
+          "000079-check-memory-profile.json": "1be00f96ca0335fdb5d59b8270533c704010e4df8f7ec5683413946aaae65d65",
+          "000080-profile-verification.json": "f8ec068bf45c2f77f35f2aad98c34586b430091b4492d405dc347cbbb7f82b71",
+          "000081-apply-profile-verification.json": "ef9669c2f6241473934a7848ae39976aff3607d2be2f0c490785989a0da9a029",
+          "000082-memory-profile.json": "d3195913ae0fa94c87dfc20f2e0d723e151db499cbd169ac41eda529a5ce7c74",
+          "000083-check-memory-profile.json": "78d2fc10ff03a293ee5260668b907e3eb42747ad5d4a4bd5bb769e7b0a8e1023",
+          "000084-profile-verification.json": "46d0250920e50669eda7d65aac6ea2ac1405ce17c1219a9996f0ae764fe10d9a",
+          "000085-apply-profile-verification.json": "e6ba8d4c3528b432cabd1fdf90bdeda365f2b20941496020907d3a565a5219e7",
+          "000086-synthesis.json": "ab5073580a19c4794ded647df4a33b68fb75bf80f9f9c967e08ef709e70a0a88",
+          "000087-check-synthesis.json": "17627d79cfe2f54e6fbc1a6c93a42696c9e7f051e8c09e913abf9aca1ff25b4e",
+          "000088-synthesis-verification.json": "908ecdcc84fe5c1736d13f670982dc791a818691d07ac4c20579bf7bf746c6cf",
+          "000089-apply-synthesis-verification.json": "d7b253ba5cd76f5c4f8186a338c107a097afdcafee94008e222b3af017985360",
+          "000090-assemble.json": "3ad60fa60ed83ddcd7fd8722bbcf775c1c19b6a54e3a0879dd5c1a97c073831a",
+          "000091-publish.json": "aa2993e7b623e9d9c4c5b82c42fccada785900acbe6820e13d7766c5901a42ba"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/retained/modularrsi",
+          "members": {
+            "ARTIFACT.yaml": "0fa8fa255ba11fdcf334eac0d5ea71435198f9b9f9e26e36f509312a8af80c87",
+            "boundary.md": "246bde6bae9a808c9d5f12331dce3e078ae48d27e44dd6156f7885a7f922a743",
+            "epistemic.md": "f5e531083b49740ffa40e379ccb4fc659291e318927cbbe0bbf246d2e4219a18",
+            "memory-profile.md": "f4bc6d1471091f544f48dc90b2e9fc943be2422a300299450496498096ea0307",
+            "memory.md": "22144af2ee75f134d023f4dfa30f81524799bc25d656614367686523373a862f",
+            "overview.md": "a2bbf24c5f0333dc0bab9d05a4ccc6186531ec5d594c2cc7cdc8d5b0eedd8e1a",
+            "profile-verification.md": "17a889b196a58f5087ac4f57eff9a71850866968b7ac1f6d5d44216e3340be58",
+            "reconciliation.md": "b6d5842e7abde625b68be3455642459c6f6c475f522a2d236403648d2cf36695",
+            "report-verification.md": "28b547c4f0536f964bfcb12a5b83a5057652c3be1f5de7ba89f13a8231acce8f",
+            "runtime.md": "53ede5668f1c8c2908f214883524ec96b274553abebcac7992e5ca687534ab5e",
+            "synthesis-verification.md": "bb3b1b25479fe81c68b638ac16a9135dc1dd461cc6c12c666fbbeff38dd41a41",
+            "synthesis.md": "c408fab27386d9c9546c93f918fd6eea72198a8385298b7c6ca096cde67fcf9e",
+            "workflow.md": "5c91bd390c37282e792cc6cbc73e0c462c1e5c675056dd30a2b961f10f0f2d41"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01/effects/publish.json",
+            "sha256": "23cfccc69f179266287ea3b6fe4615bb3b07388af1c554699262f0915e15155b"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/retained/modularrsi/ARTIFACT.yaml",
+            "sha256": "0fa8fa255ba11fdcf334eac0d5ea71435198f9b9f9e26e36f509312a8af80c87"
+          }
+        },
+        "current-fault-or-stop": "Original fail-open and partial-file faults fixed; renewed narrative drops post-review repair changing final candidate bytes without repeating prior judgments.",
+        "candidate-author-jobs": [
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification",
+          "synthesis-verification"
+        ],
+        "next-decision": "Correct new review-to-final-bytes qualification; do not reconstruct already-corrected original faults.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-modularrsi-96b89989168e-01.md",
+            "sha256": "2dd7cf25b45100916adfe7d3fd08b048692e1548b8e79b007dd4fcb13812d4ce"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "runtime",
+          "version": "53ede5668f1c8c2908f214883524ec96b274553abebcac7992e5ca687534ab5e",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/modularrsi.md",
+            "sha256": "3c99c9e62230acdf141c7742557a05197b9064dfd1a98f7b7d591893107be059"
+          }
+        },
+        {
+          "role": "workflow",
+          "version": "5c91bd390c37282e792cc6cbc73e0c462c1e5c675056dd30a2b961f10f0f2d41",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/modularrsi.md",
+            "sha256": "3c99c9e62230acdf141c7742557a05197b9064dfd1a98f7b7d591893107be059"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "246bde6bae9a808c9d5f12331dce3e078ae48d27e44dd6156f7885a7f922a743",
+        "runtime": "53ede5668f1c8c2908f214883524ec96b274553abebcac7992e5ca687534ab5e",
+        "memory": "22144af2ee75f134d023f4dfa30f81524799bc25d656614367686523373a862f",
+        "epistemic": "f5e531083b49740ffa40e379ccb4fc659291e318927cbbe0bbf246d2e4219a18",
+        "workflow": "5c91bd390c37282e792cc6cbc73e0c462c1e5c675056dd30a2b961f10f0f2d41",
+        "reconciliation": "b6d5842e7abde625b68be3455642459c6f6c475f522a2d236403648d2cf36695"
+      },
+      "judgments-map": {
+        "000056-check-memory-0.json": "bb79535252c1a11c18550e62cdb9972885fad5de63d580961c63466f50066877",
+        "000062-apply-report-verification-1.json": "2a9199b7bf4128cd7edcb290093b43f066350ce5b0fbb840d1b0594dbb42021d",
+        "000057-check-epistemic-0.json": "da8c3ff002aa7c8f489a02b63cbe183e1db5eede7d1aa6ddd4fc5822fbdd38b6",
+        "000068-check-runtime-0.json": "e45e3b8cfe544c99b45883c29795ab89692c8915fdae88151a1e3e9302764aa4",
+        "000051-check-epistemic-0.json": "c7c3b172ca45c9dd7f6551e97200b7f245f96a8496f4148a7b91415df705f1aa",
+        "000072-check-workflow-0.json": "8378894e9ac06c976cef12aae60d089cf0639727f887ffb5514d68feadd6bf5d",
+        "000055-check-runtime-0.json": "efbd7c1ab15c74b92e20c360f9069ad15fd7c0a079cd1002e09682a6452f5060",
+        "000064-check-runtime-0.json": "6db1e841f0756d0c28853a25f1d5599102ff85422282c27fc5cf976e21206f35",
+        "000090-assemble-0.json": "e01f480d2e950fe24bf839b2f495a4b1722122ce68e0ded81bb01e3ed14f472d",
+        "000077-apply-report-verification-4.json": "1e3dcb3b45fc2dee0854615889fd3fc50882877d977ea0e98b2d8ac35f8097e0",
+        "000049-check-memory-0.json": "e9f9df496864ca9e62a74344f738398e96c3793e8201af44a9037eb149c7e91b",
+        "000077-apply-report-verification-0.json": "036d1490deb13f2101e9fdd202555e48841aee9370089408a4d6cfa322930de6",
+        "000085-apply-profile-verification-1.json": "e475d554cf34e88ff12380b933fef6049d0bbf11a69efcda1867d3bfa57a0b20",
+        "000085-apply-profile-verification-0.json": "355af2bf356bb85efb29acbd5a926a1027b74be160650203a3b16e7ae1f2254a",
+        "000050-check-runtime-0.json": "3a090d48507b51726902c0b9c82c98d3e34f1beedab811745e4e49fab2b7c33f",
+        "000077-apply-report-verification-1.json": "b8cb5c0a0ee619bb6de195bc0eb4f734ce9d6770d8e90e5228797577f5afd156",
+        "000069-check-epistemic-0.json": "bb0f6b7decb831191ba55668839d7f02e9238b7f235af196193ec1dc2f613877",
+        "000062-apply-report-verification-0.json": "9d5ae30933e9fac173a0c31d5ac52fa7fe95845b645dc1d93ee340836e3395a6",
+        "000074-check-reconciliation-0.json": "ee067b95b5199f61fe941a2cf9304064fd64cb9e31e8b30f5eda39078479ae3c",
+        "000081-apply-profile-verification-0.json": "0672794018b917beb15c6d881e6cc7e94fc89d849e33447078836a57367991c7",
+        "000077-apply-report-verification-3.json": "5c4cf73ea12b0264a5c0a06fc99895d501979c274e1803625e2b9b6b7b425a92",
+        "000004-check-boundary-0.json": "3302444c9c5d48d672c44012c13da5d53a339beef3c071d8b51813088017ef01",
+        "000045-check-runtime-0.json": "8d82a393d718e6bbd8ff13094d5d8de9cda8be25590ffe84c5df0fd8c9278cc2",
+        "000083-check-memory-profile-0.json": "18c464407d7f091291386e709909bf831fd52d351b60e8f377aded6be154e4fc",
+        "000053-check-memory-0.json": "460df1b455cb6f7dbcd4fa4d2a6b35c9877ce1ec1d097a25eac2ee1e613c41ed",
+        "000071-check-memory-0.json": "087477e79db98f2c6ed8946d1da1f7899e22789dec9f5dbebecadea1f4d79612",
+        "000087-check-synthesis-0.json": "56b1768ac5497982c9b023211496e64712cfc60a840b4557d25fc89cad6b4e1c",
+        "000054-check-workflow-0.json": "bf887d434de892b3a54441be35904b2d1dc13e6a341439d9c2387ec8f723a50a",
+        "000089-apply-synthesis-verification-0.json": "737916c1d0e6c1f76917f1012228a77b5a3d61397e5c8e0b39370b555e29a248",
+        "000062-apply-report-verification-2.json": "f8b796daafa38d36dc71c3767dc280a01c958574d10de3be0a464adcfc2beed6",
+        "000052-check-runtime-0.json": "28c025daab63653974d89ded358724e42b6348876ae408af7501b075bfdd4744",
+        "000070-check-runtime-0.json": "782ab6b1c74afae21af589489bb5aa9817af43d9bb8c73793cdc38ffdc396f3f",
+        "000079-check-memory-profile-0.json": "2542a6bb8296c74bdb89071ab0a1c2761936fcef000558da9f0dfcb17005e52a",
+        "000059-check-reconciliation-0.json": "999f973265e803d955561db25dc0acdf2a5007ff84a30275f878332053dd77a0",
+        "000062-apply-report-verification-3.json": "ced954f7c367632751884f881c084a09ea4637a2f9389cbbe556e5febf256654",
+        "000077-apply-report-verification-2.json": "22fc1ec55f3bca8c9bb3680d3b89f60e4b0712448f66445b81e4f511f9d4a141",
+        "000077-apply-report-verification-5.json": "d94f142f9d15ea95ee19a56426e03e332cc80f9428c99888c5873781b1543806",
+        "000089-apply-synthesis-verification-1.json": "411c44085c19ea81162c9e2f2242762ed67c431b4f59dba830cdf6df220f0792",
+        "000081-apply-profile-verification-1.json": "57a324eddfc570a90ed17b819c4e8e66ee991eedfdd3724ab468d8ab474c0c58",
+        "000067-check-memory-0.json": "9d11a92f75cc91cd618bae2c6af203cbd55b82c48cf276d99eefea891e8e2089"
+      },
+      "versions-map-digest": "bfe1fd10bf3ba58709a09ba75a4afd34343492fa9fb4f3e4943200b59dff938c",
+      "sequence": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01/state/seq",
+        "sha256": "0433e993a3dbc505d6e5cad972a1df0ab189cfe7ceece5e94fd47ca9a074370f"
+      },
+      "budget": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01/state/attempt-budget.json",
+        "sha256": "1d4b35d6a09ec4a6c1b5a7b0b233f2aeeb1ca47dbeaee24055f6c82f1144b61d"
+      },
+      "native-files": [
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/.venv/bin/commonplace-run",
+          "sha256": "f854b889b971288b4008e74dcf0460f016b970f2e204743831810d0a688d6c9f"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/.venv/bin/commonplace-analysis",
+          "sha256": "fd2d21187be9562102fce578d7ddb05a4aea140dbd56a43fbd4ad808439d6599"
+        }
+      ],
+      "opening-version": "bdf93d46c6953a1b30e25571ed9cba23801b66f8fd927b246c144ad21a6ac390",
+      "source-version": "eae21d8898402ac4964fa5e237f54b11c9d94aae1ffb50b3617bc64df0c58e2e",
+      "source": {
+        "identity": "https://github.com/IQuestLab/ModularRSI",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/related-systems/IQuestLab--ModularRSI",
+        "revision": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "jaz",
+        "name": "JAZ",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/jaz-lang/JAZ",
+        "run-id": "AAS-2026-10-15-jaz-a94bea79c61a-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01/run.json",
+          "sha256": "5983f1d2e1199d2b39db457768013d7eb1598a50dfb1d362fca11ec9e5f31e36"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a.preparation.json",
+          "sha256": "81e250ebcbbd8feca8fb84b21d80b91a31173d01a5807867e6642159d46bde88"
+        },
+        "attempts-map": {
+          "000001-opening.json": "d8b2f2181075de0bbe66a4723f10f88b30d4261cbe2b4053081573a7e1d022a2",
+          "000002-acquire.json": "592375c1ca56f14eea15fcf56107c11540db82f560c7b78d98a6f9a980afd5d3",
+          "000003-boundary.json": "f59078e9ea38ad1484e23a48a245bff4413739697f6ed465c4cf375f795d6cac",
+          "000004-check-boundary.json": "e43d172c650f90934646e9e9d0ee0a94a841229fbfd6513e0afbb9bde184897b",
+          "000038-runtime.json": "8446481a8b44b13e5d1e51e7f34fc503ef1e22b7a05269f9d282d01ad41f626e",
+          "000039-check-runtime.json": "0384a4900d2b7d91e93e66bb6f529c587ae212dae25e5942225290bfa798c79e",
+          "000040-memory.json": "ddfcb9b56361e196754df123e306f81e67ee4de36e2747ffd9bee06e4b4a8a79",
+          "000041-epistemic.json": "1d7fedb7ddd8754fa4deb6ddbe48957cb15c16aebc8c6fb6dd34117ba1ef640d",
+          "000042-workflow.json": "36e75edccc77c935071a438fb5300cb37a02c2c4460a9b78969dd30ec6c8a47a",
+          "000043-check-memory.json": "42fd57c2d64df557aeadfb874c4f3f6d92643c5d8b5f31ca2853c475c5e92983",
+          "000044-check-runtime.json": "9722dcf1dc3ae5e4cd68a93610ec80d8502f49e5b3a692dad68259721d8cb085",
+          "000045-check-epistemic.json": "cefceb5a3b7844cf13fcba05eeea8f71d2413d295915dd8125e755de97eacf7c",
+          "000046-check-runtime.json": "39f090dbd2e3780333219db0426e7640b4430ab6add5d9210382a8c56e3a69d6",
+          "000047-check-memory.json": "6fd6d664ed94b71ace3164b702e1a1077e39f2cc0b4818b142c5a631622980ee",
+          "000048-check-workflow.json": "7a82f2650e8f745385e1b4942ce0a1fe4bc164a20e42059cbcbd9e9c8b26b944",
+          "000049-check-runtime.json": "cf53debf2848ba5a0cace044a616217ff1f53523cdd3e9d123415ddbfcf00fbc",
+          "000050-check-memory.json": "398afbf43549672c5ab0cfcca907918e34c9ef1e049315f18380bf9fd80ce23e",
+          "000051-check-epistemic.json": "5aa9a7d8279672fb94195e65f87af24730266e8d21a1d285a0beeefdcf5b0a50",
+          "000052-reconciliation.json": "67e661e6ff61f5af2f00f765fc98bc45120ca1ec24cb73c08c764a0ff8ccd1f5",
+          "000053-check-reconciliation.json": "5e4e2bac9c28310ca60f69dbc65840d7c90288e690685891ba0272addaef1278",
+          "000054-report-check.json": "78739e7b03c33ca1f04cb66a10cf6eecd63c75521ca0f5b3f2d282219e85ef7b",
+          "000055-report-verification.json": "becc040d69de17150263d12241a04d93926eaf25935b93968a4b9481d185b45a",
+          "000056-apply-report-verification.json": "b73fed38dcf1ea32be964baf50c09ded6ac987244a66e60ce23963971824f4cc",
+          "000057-runtime.json": "a8f26f94e6790d15ed7c31d2d0f05b39b646b5666f1c9681024d0150a02ad2de",
+          "000058-check-runtime.json": "7c6def883088e94a1c45bbb148878466f1cf1e9ad88703e7095de643784f68cf",
+          "000059-check-memory.json": "d9efb033dd073dcfe139e3ae70711d0610a78bcecbb1ae12fbc081dfe495afbc",
+          "000060-check-epistemic.json": "968ebeeffb5970619b6e494cf0e81d20c95255a6a23ca324cd917c3e9c73face",
+          "000061-check-workflow.json": "c96ee195b3c3a2ef6fb00e10eeb72af3cd371b8248d9aa64bcaf2e453ac2e5d8",
+          "000062-reconciliation.json": "f8fae8d010f0abe3f9d701a028096c6f8e5ecf7391ff6b355685abdf6a4680c3",
+          "000063-check-reconciliation.json": "9f010fe1586bca4e299e667fcc956c9fcba73059d396fdd2b6c0ae62a0e41950",
+          "000064-report-check.json": "2a8c822f6d3c92d65b0b50ade739d5270e52ca664f47a6054fab429095f74e36",
+          "000065-report-verification.json": "d151d7ea3cb815f1801f08ca89c8bdb35a720ea5cd3712902bff185b670175ac",
+          "000066-apply-report-verification.json": "109e59360a46d74d7764477c2ea9305c556809132ad6103f1583bebcfbf2d76e",
+          "000067-memory-profile.json": "af2fea529da1b05283ec4da37deeb206e2ab71b0cb984e57a9d160e03117b83e",
+          "000068-check-memory-profile.json": "b6d9425222925f94e500dd3c38e139f3dfa40a0b07724da13950b370e1baae5d",
+          "000069-profile-verification.json": "0a88a4d574132581a85e451bddd601a5d33e0f650c3fb0ba07435060fce33e6f",
+          "000070-apply-profile-verification.json": "934760b560845ea8395044f3dd74fd2f3a3d3cc90243005bebfec1cae0576ab5",
+          "000071-memory-profile.json": "e8846742763e3afe2f82edb461d90213bb1758d00f6229933845cef2d84f09d1",
+          "000072-check-memory-profile.json": "366f07cb777a722ed84918bdffc557e1e7bce793aedf81d1ac7284a3dd5303c1",
+          "000073-profile-verification.json": "b12311c6a9c9355f929aef53efa33b743c65acd8ea66ef86dacc9ea1575d334e",
+          "000074-apply-profile-verification.json": "def64d446ac820e9134ef03f40553885b33c53926abfcca2af36912ca76a7a6d",
+          "000075-synthesis.json": "772c0c33443f8b46a1363e03a3981afe638e783e1190d2722c8b042165010c3d",
+          "000076-check-synthesis.json": "f9d330afcea0d58d218a5558d3182f8b8d5bd69df9294a8562d4ced599680faf",
+          "000077-synthesis-verification.json": "25616bc8b000747eafa12b2b84d406f9428c891702c76a3b60ff5b50e7b1bd08",
+          "000078-apply-synthesis-verification.json": "a599f1822eba6fd162f6001ac1427d71f69efa80a0f32c56d95d81b36954ce84",
+          "000079-assemble.json": "8888284387783ae8e2511c6e2e6aac9ca2232d77aa280b68cfdf69d31c835888",
+          "000080-publish.json": "7a9aba77656d4a33efd6ed8601235b069f58848efa340c6e7da2266463dd1272"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/retained/jaz",
+          "members": {
+            "ARTIFACT.yaml": "3e9904c981ab688f10ca117343cfc8f2892f2219f748274bcb81f304fe8709bd",
+            "boundary.md": "34a3897d1d136ab9a18f0cd5a6bb0038b4ae32365aa01dfd99b41f7dbfe28116",
+            "epistemic.md": "a38979faaabe15d1570e216c27e9368dce687b217ad0dd63eea2a5b619a205a4",
+            "memory-profile.md": "563bce40113061236d94a526bdcdddbb55ee6a69655c9ad077da71fa154622f5",
+            "memory.md": "163d7b1f6da35a7e80564baa5b08b5f746ce8217ebf45e87be7f7a0303d3fcae",
+            "overview.md": "8cd389b17b79f46d5eb56afb80bb9254eb064c417470bd3614b284a05a872149",
+            "profile-verification.md": "16962ed664b067c790753036c3b665dae93876e6f539621c425f0c4ecd6fa723",
+            "reconciliation.md": "1208b495da6f476d2089970ae2421d6082454aa7929d8ded6625b3641adec6eb",
+            "report-verification.md": "2fde47c65006be2fa9175b20b1e182402edd9af04307b92aea9212b11e510680",
+            "runtime.md": "254bfa441e97bbd49fce8c9b4bb0ee23a5ce0ab4f08a7ea65ff8ae59ea21ecbe",
+            "synthesis-verification.md": "4b3734a257e3115ed897b6ba99d43950b3c6525440b8262ae74ef24a47fe26bf",
+            "synthesis.md": "28ca04b3197c65a7e110686e263a6127ece921e7cde6cb33437de4561e4bd4ec",
+            "workflow.md": "3aedb5e1ff10c19bb3e150cc7ab8dea7fd4dc09f5a8f815dbf5389e649fe4fbb"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01/effects/publish.json",
+            "sha256": "0790d1051769bb7cd0c42cbefd2aa3c475ce5578fefcdcc912c9f497d595cf9c"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/retained/jaz/ARTIFACT.yaml",
+            "sha256": "3e9904c981ab688f10ca117343cfc8f2892f2219f748274bcb81f304fe8709bd"
+          }
+        },
+        "current-fault-or-stop": "Original replay/concurrency faults fixed; profile wrongly marks input origins known without unresolved merged invocation inputs and scope.",
+        "candidate-author-jobs": [
+          "memory-profile"
+        ],
+        "verification-barriers": [
+          "profile-verification"
+        ],
+        "next-decision": "Authorize local profile correction with dependent public refresh; no runtime replay reconstruction.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+            "sha256": "705808cfa0bb7d66d0e60dab4834f12bc756b196dcbfdf4fff9baceddfb4e8cb"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "profile-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-synthesis",
+        "profile-verification",
+        "publish",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "memory-profile",
+          "version": "563bce40113061236d94a526bdcdddbb55ee6a69655c9ad077da71fa154622f5",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/jaz.md",
+            "sha256": "fb414aa4b7698b3f3c684c3a015bf86d686077db513e7410b2b226185f7e75e3"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "34a3897d1d136ab9a18f0cd5a6bb0038b4ae32365aa01dfd99b41f7dbfe28116",
+        "runtime": "254bfa441e97bbd49fce8c9b4bb0ee23a5ce0ab4f08a7ea65ff8ae59ea21ecbe",
+        "memory": "163d7b1f6da35a7e80564baa5b08b5f746ce8217ebf45e87be7f7a0303d3fcae",
+        "epistemic": "a38979faaabe15d1570e216c27e9368dce687b217ad0dd63eea2a5b619a205a4",
+        "workflow": "3aedb5e1ff10c19bb3e150cc7ab8dea7fd4dc09f5a8f815dbf5389e649fe4fbb",
+        "reconciliation": "1208b495da6f476d2089970ae2421d6082454aa7929d8ded6625b3641adec6eb",
+        "report-verification": "2fde47c65006be2fa9175b20b1e182402edd9af04307b92aea9212b11e510680",
+        "memory-profile": "563bce40113061236d94a526bdcdddbb55ee6a69655c9ad077da71fa154622f5"
+      },
+      "judgments-map": {
+        "000050-check-memory-0.json": "b8555058c1d39e20150740f7dfa5918bb8864882afbc21ac2794687d77d6f0f0",
+        "000058-check-runtime-0.json": "a98ffbf33f47327bf423e6b95201fddd8cc21da8afede58835614f2e0e2637de",
+        "000074-apply-profile-verification-1.json": "42d5edc7ec49f0128c94ea35b7c6261d446adf29bf8b30fef406b964143fda5b",
+        "000051-check-epistemic-0.json": "0f4a76413ce5eb9345bc90ed0a0051de6dad911760f527208cb75f54265de946",
+        "000061-check-workflow-0.json": "a2e2951707edc73b466ae745b51b40ddce6426ce33d51e737e93ada5b170256d",
+        "000047-check-memory-0.json": "1ab40559ab3b4c3d94f7338d578991a4435211524c6e3dd866f9732f4d4c3ea0",
+        "000068-check-memory-profile-0.json": "4601f9e81070ef3ae0d04193909a746a9d5febd07bbdb4df3d48c677e826aa15",
+        "000070-apply-profile-verification-0.json": "72617fc7fef01b6dde5561053d2339a356178e34b7f11e6711ba5bcc1a5dd0e2",
+        "000056-apply-report-verification-1.json": "46f9a218e535ae0486ca8fe1f5ca26230dbd07814454409691a0bb4f207462f0",
+        "000045-check-epistemic-0.json": "881a487fa130ccb329b6dbb2d96235a9f064be302148e23aa4995acdf70b1350",
+        "000076-check-synthesis-0.json": "ddf4bd78309f9294a38d10df750e4c977e089ba1bf39fcbf31a18463d9c20fad",
+        "000059-check-memory-0.json": "0a9b15df92a495f6489ad18c90d10dcadf7209911cfbf77009af513fe04811e7",
+        "000046-check-runtime-0.json": "ea70dabdbbf143f5213aed92d770f66a309e34a3e16ef3fa1bb4dbcf431ee6bd",
+        "000072-check-memory-profile-0.json": "2eba73365e4f10a4043a1a3ee707c2152b325303316dc113747b2e2e6ebf892d",
+        "000078-apply-synthesis-verification-0.json": "75a42958690610c60971b72e3a2fd9fd8c53f340657fd7b604d1d7faf76e5b89",
+        "000066-apply-report-verification-2.json": "bde74d9991568b6bc0419ffe66df8d044976701acce46aea1e8742757f6bd303",
+        "000074-apply-profile-verification-0.json": "e33fe8e10881adf837ee09e5af9819c8f63a5ebb24013d3e73ab1bc265ee05c0",
+        "000053-check-reconciliation-0.json": "7dea5b78bb3c77b343b58637664417e2212a13b2910c4ff293593464e4c4bf9f",
+        "000044-check-runtime-0.json": "fd8dd28d6abfe2411c5d62aefb6d37ae9609db3491de644f6bd4efc50609fa3d",
+        "000004-check-boundary-0.json": "7ee4f09870354a8e00312444aee2596b2a7d42ca5fbd43bb99af21269fa01c44",
+        "000039-check-runtime-0.json": "e7ff40b6708ab9e7be325ea6b9d8e27fe59fe1e03593bc45456b95a14568ad6b",
+        "000063-check-reconciliation-0.json": "00c0fc5b29cc8dc47fd3187e6606a31d95bc05377918837ddf7ee384b4615e5c",
+        "000066-apply-report-verification-1.json": "f7b1743417e257d25dfa363d19e79d8fa3e694b04ff01bc6371a131b5f6e8ba5",
+        "000078-apply-synthesis-verification-1.json": "dd7554dd58ef7258870c961fd9d1588e271748cd352227c6fe723b3f48f3e269",
+        "000066-apply-report-verification-3.json": "803c8f514205ef0f31d8752bf52ff10d4d9ce75bd1d08eca126332d870b34ea3",
+        "000049-check-runtime-0.json": "03c40e05386485e5e4f269a7c679a1805cbc827fefcd0f6dfbbfea6a8ef620f7",
+        "000070-apply-profile-verification-1.json": "bc6d675b4cab80bcaf746bf3010df9ce56793a5c3fc9b9fa07f9c1d53161a846",
+        "000048-check-workflow-0.json": "4f213ca4794ad9566121d1d8b6acbbe66bbc0b6d2ba9881fe69dff4ac0954d39",
+        "000066-apply-report-verification-0.json": "f753b6149b12529f26d9444128e8bca8ec658d2ad480ac9282efe7389e9b7f2d",
+        "000043-check-memory-0.json": "9890f92a0b5b8ed14a7b75d7236ab5054eabab970fa53dd7fe08014228861188",
+        "000060-check-epistemic-0.json": "372a216c7d061239f621d6b7cfc2c696dc17f49c2d560920479b8e5225f188db",
+        "000056-apply-report-verification-0.json": "2df183d855d6d02fc17f1f3286a848b92ad87ec07c13389a766f5e940bcd23fe",
+        "000079-assemble-0.json": "f51a34d2da86ca4e630ab32df626b18afa378b71fdc6cf3d0812c692f7ed746c",
+        "000066-apply-report-verification-5.json": "26c8fa75cc65213361f43906f786e5abffb1f5e20e145e3a1dbd552650335245",
+        "000066-apply-report-verification-4.json": "e7cf797fa26b488f5020320df15d722d870006d35f2c866ea76123726599c177"
+      },
+      "versions-map-digest": "cfebdeef6b2bd861fb7cc71f3f6c07abdda1fad9ec84144588754faffd8a2968",
+      "sequence": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01/state/seq",
+        "sha256": "95aebc97bc646c67fdcd923a5965b001f3c8a5c4d3a77075112e12a3a311d760"
+      },
+      "budget": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01/state/attempt-budget.json",
+        "sha256": "729c5ed838638231e4b9128d8aea0c9bf7c0f9fc637215bca168e6e993cb135a"
+      },
+      "native-files": [
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/.venv/bin/commonplace-run",
+          "sha256": "21327cb0b8ff64d3de9080fcc7b3760c770e3080224b28ab9037e3750dacee24"
+        },
+        {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/.venv/bin/commonplace-analysis",
+          "sha256": "b47cabe6333266efc05620dfcd469ee37f85494b85b9e7f528ac1c4b4fabaa68"
+        }
+      ],
+      "opening-version": "1458d24ba328230002f81cf1773df77d0d85455f50fe7702b4996e74b3cf9f93",
+      "source-version": "db366f94c8cede458a75beec7336914fd99217f25e60ce6c1e38f9761afe15ec",
+      "source": {
+        "identity": "https://github.com/jaz-lang/JAZ",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/related-systems/jaz-lang--JAZ",
+        "revision": "0803d4971be785e95b80054b02259664d70fa3da",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "autogenesis",
+        "name": "Autogenesis",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/DVampire/Autogenesis",
+        "run-id": "AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
+        "worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis",
+        "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
+        "command-prefix": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/.venv/bin",
+        "method-revision": "a320038ed1a423b051eedbcec593172f8c2032f4",
+        "run-definition": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01/run.json",
+          "sha256": "670940c6c80073bda415136b097ffe8b1720e667d2956ad12198b4d8fbef0428"
+        },
+        "preparation": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis.preparation.json",
+          "sha256": "8822a35f387cf4c6fe2db0dba9028ca57355d38da895f87409f8adc642a27a14"
+        },
+        "attempts-map": {
+          "000001-opening.json": "a4d4a5d1dda82274d3a43457ac8a4b5093b9bbbaea0e2cd3218ff0ce5ce0b35b",
+          "000002-acquire.json": "67ee332aca6e14d401c128e45677718a64d43b25899268f15980593f53cdc213",
+          "000034-boundary.json": "0ff126b127dbf2ed2bad2141d392bf7d9fb93ca01c177a89b22364721dac3712",
+          "000035-check-boundary.json": "b6b99dee0b5679440bddc3eb7c777bea34489cc2e5e849ab562cb46340a0869d",
+          "000036-runtime.json": "ac0d5956fbd82443ed75d37de4fa2df6dde0797a013fb5dc90c4865dabba78b0",
+          "000037-check-runtime.json": "4c632763ba0259250e012c263adb771896a4140cb637ea3d3ecb36d8758d00a8",
+          "000038-memory.json": "f3a599254a7665153c1055938a97d8e634ecb226d692c4f0f9d43e99cf0d5d30",
+          "000039-epistemic.json": "f10a3183154546368b39ddba33b94b593e398d213660d8fd70c933e405452f60",
+          "000040-workflow.json": "41eadcdc3c96b2dc4fcffa348cd7af0c9a39e43840e38224557f0b8044ad7798",
+          "000041-check-memory.json": "cc8df85147baa6144cf3917f3ac423b22aa1f5c26e296c6a2d8197288c508407",
+          "000042-check-runtime.json": "f9ca1861b95ac215a6e3cfd71894772ca603c55dbdebb34c4701e897ceb0399f",
+          "000043-check-epistemic.json": "3077599cff356e3e07721ed88a2e580f12ddc5f3d9b321412796e0bb3d34351b",
+          "000044-check-runtime.json": "4277c7cbdd1c29908891ee6d09963d8bd9f7e1fad4513e3285c80762def41b3c",
+          "000045-check-memory.json": "05ca02c0c781ccdbd5e1f1902c37bd52ae4aa94866e504371281a59cb1831c0b",
+          "000046-check-workflow.json": "5c9d84440356d0884769a199757567af4c54bd48d41ef090c3cbe5a7c342e072",
+          "000047-check-runtime.json": "1c58eadecaa5f48540f3905f5c485ee3e51c0974a1545bb7618b0d290e5d2cbb",
+          "000048-check-memory.json": "b61bde9987f1b6b97ea2c2748d85f21c4f395c8015fa54b498133ac1f8e4cd56",
+          "000049-check-epistemic.json": "5177b7f50c0fc4f6ec905c830be6af49e191fdb0576640d3008b244cf629e6b9",
+          "000050-reconciliation.json": "f746100a072486aaf08eec0b1fa37c3700f0d77ea1c65313d263c0a8fa0877b4",
+          "000051-check-reconciliation.json": "c05fa38402e442239d6cbce4498d3a82a61067658ae48cd4c1e61840b06c67bb",
+          "000052-report-check.json": "5228ed352be9eeb59e810391ccac6b04cab6f88e158d08748dc0ab5297107d1d",
+          "000053-report-verification.json": "4bad2d402b33efeb6a1bf5335f5f055e0d00305bfcee5537a19f41f36aaecacc",
+          "000054-apply-report-verification.json": "02e2d979c59e421bb8d253c979f18348c1d7142ae5e26f8fc418c4030e54e6ba",
+          "000055-memory-profile.json": "ed4658a27c8e65b7d070c222aee1ad98523a22c4569b0ee38ba705c63e62fb9d",
+          "000056-check-memory-profile.json": "5830e76653e2782c501d30a5414074792044b1f8563399e2e13e28ec22e097cd",
+          "000057-profile-verification.json": "6971ea86f10262548e34e166d641a8e1295e8dec2d1320bf53522e67175d0099",
+          "000058-apply-profile-verification.json": "f7db59cb0aab0b528e3fc8b0381aa2d56fe87289e2c2222c5411d25d42bbfbd0",
+          "000059-memory-profile.json": "78523847342b3b7784ee099815f693e87a31fb8f72a12194c43873cb0849e472",
+          "000060-check-memory-profile.json": "cf57b6a9b754737ae56f55cb0f9c9ba2b127d5c751b469788d8058b6fd2390dd",
+          "000061-profile-verification.json": "70fb691836a80dfce83a9eb5332ff45c6bfd264c136c002b1028f9892af9f9bb",
+          "000062-apply-profile-verification.json": "55ed7bd2fa6e78698418104dfcd820cef785df40f6e56004d6592b1f8f95229c",
+          "000063-synthesis.json": "11f8ae39431596cda709a9ec5229c21d51d3acfd38d160492a65729b9f28ffa7",
+          "000064-check-synthesis.json": "64a6572d9a51f2b540e26cc414389bb5caa0d2e857e8bca7e42ac1299907a223",
+          "000065-synthesis-verification.json": "46e8a1b9a51de14d9476974cf7187c0e6498357198aa632b9fcbeefebb54c60c",
+          "000066-apply-synthesis-verification.json": "8ddb17a8f27bc39c895afb5a5d37e2769fb04abd18c966284548fa4c005048df",
+          "000067-assemble.json": "c9d4dd68ba4df7b26aa0cffcf275f7a4e3f443457aa5ae93cd476b88f02d6d86",
+          "000068-publish.json": "bf4767eb4c8115bd05bb41626d64598b6e99342203912e4b0571768e17421349"
+        },
+        "own-publication": {
+          "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/retained/autogenesis",
+          "members": {
+            "ARTIFACT.yaml": "b8fb9ebb1ef45445bafb840c39657904d9927d174f94cc73278d30078792d231",
+            "boundary.md": "6b1331e74bd7ce3ebb91ab52a6fc2dd3b994a4d6197293b552a0c56f81442582",
+            "epistemic.md": "3ca42922ff220c6e5dc5119fcf9fd7c5a1df196471c14190cf640403d14237c4",
+            "memory-profile.md": "cd7f98e99f23f0f0a3ea76d880650956775ae57c4a2798780c9f3e322c2e7b05",
+            "memory.md": "bebda81713cbc4f0247b536b5b8c50437000d891ec114882a9508e926655fd00",
+            "overview.md": "9a6eb825f9846c629c51951e583f1affab1e0fbded209cb7cc41324833a8afd4",
+            "profile-verification.md": "a2a59463206284781d381cc0e8a6f59a57f7e417800ee0bfe7d0cf17db4fbfeb",
+            "reconciliation.md": "95aecd6295f86cdcb3a9f3d4c1e902eb4425216da8d2a087e54a9198cdb1c4c2",
+            "report-verification.md": "7cf8004c3c09656c90d297ccab5c1a10d7596b53de81ac3ad59c78b26326b140",
+            "runtime.md": "d8f8caa87d5f936594971f9390800505ce3cab0e33d8652ca2497fbb68306c38",
+            "synthesis-verification.md": "2538214383ac072f398f542f1c53b80389bfb960816636b98cdf4587bb475ca5",
+            "synthesis.md": "62bcf2d798d584025210f570680bc3a13fd121123beacde037a893bdc2721bc1",
+            "workflow.md": "1bec89c0cc787ad4256b906b2fb5b418ab6706fc1513c8e5cbb457b97e627d5c"
+          },
+          "effect": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01/effects/publish.json",
+            "sha256": "14585d06f66c09fed3521322f41b5d237054af73844cc0453f30e683153a6eeb"
+          },
+          "manifest": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/retained/autogenesis/ARTIFACT.yaml",
+            "sha256": "b8fb9ebb1ef45445bafb840c39657904d9927d174f94cc73278d30078792d231"
+          }
+        },
+        "current-fault-or-stop": "Entry narrative omits unconditional import of missing tool.other. Static startup prerequisite only; target failure was not executed.",
+        "candidate-author-jobs": [
+          "boundary",
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification"
+        ],
+        "next-decision": "Choose bounded boundary/runtime prerequisite qualification and dependent public verification.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+            "sha256": "edeba7c2e0d06a98665a9705ea2b0a4174e421a64117d8b0960a827cf8fee813"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "boundary",
+          "version": "6b1331e74bd7ce3ebb91ab52a6fc2dd3b994a4d6197293b552a0c56f81442582",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/autogenesis.md",
+            "sha256": "15f3cda567f8962a4ea4b771efe11053e41b4fbedbbec1fd3f0bffd5a133de06"
+          }
+        },
+        {
+          "role": "runtime",
+          "version": "d8f8caa87d5f936594971f9390800505ce3cab0e33d8652ca2497fbb68306c38",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/autogenesis.md",
+            "sha256": "15f3cda567f8962a4ea4b771efe11053e41b4fbedbbec1fd3f0bffd5a133de06"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "6b1331e74bd7ce3ebb91ab52a6fc2dd3b994a4d6197293b552a0c56f81442582",
+        "runtime": "d8f8caa87d5f936594971f9390800505ce3cab0e33d8652ca2497fbb68306c38",
+        "memory": "bebda81713cbc4f0247b536b5b8c50437000d891ec114882a9508e926655fd00",
+        "epistemic": "3ca42922ff220c6e5dc5119fcf9fd7c5a1df196471c14190cf640403d14237c4",
+        "workflow": "1bec89c0cc787ad4256b906b2fb5b418ab6706fc1513c8e5cbb457b97e627d5c",
+        "reconciliation": "95aecd6295f86cdcb3a9f3d4c1e902eb4425216da8d2a087e54a9198cdb1c4c2"
+      },
+      "judgments-map": {
+        "000066-apply-synthesis-verification-1.json": "8b5d7cac26c9c06cd8aba832a4f07f03162e94cb514d0e0441130beeae5d8946",
+        "000062-apply-profile-verification-0.json": "0e1e3acb7f0897b1d88a09e292f7cae056420e3b895cb5a73095851e66f29c63",
+        "000054-apply-report-verification-3.json": "6f08bed3b8f166df5b39ae433e9d1de1cf7ccb0648ccdb7e37dc8d3c755cc282",
+        "000056-check-memory-profile-0.json": "368dcb6bd627da42f921f3ce28f037f303062dca085c3b4fda75bc045311025f",
+        "000048-check-memory-0.json": "67704c31c514f5c81014017ea9c5c0393381cf92d26c6ff012ec8d70ee82809c",
+        "000041-check-memory-0.json": "3cb13aa27dc1c64bb3402d71b0bae4921452ab85991406f2059b3bffedbfff3a",
+        "000067-assemble-0.json": "35b2259041f6a1472e9f6aad8bf860faa70630e13253c900013abaf1d6517679",
+        "000044-check-runtime-0.json": "bb15f78c1a5f6c2e579d85d7c5ed75f5fe25cc149169aa56cb56957638bd866f",
+        "000054-apply-report-verification-0.json": "72d31d8bc8bbc27e683f7875f46831c76195da64a4f1ff8ab6819267c7ab0521",
+        "000043-check-epistemic-0.json": "d82b29ecf9b1e4b0987271f06b0197a8d5249e6e3f7546f27bfa77cc62d6768b",
+        "000058-apply-profile-verification-0.json": "567d2c43961ec8d6f7a8f2412342c7ee6d2ccbbf073cdf36995a133cd50bbcbb",
+        "000046-check-workflow-0.json": "dee4fce8b28b21e3510923a284d65ea34bd31009370d262850456f092feae1b6",
+        "000037-check-runtime-0.json": "aa2f35c1804dbf47fe7e83cc2d9f0e7872c792d261eedb0f368ea22792507dca",
+        "000042-check-runtime-0.json": "7f678a024728c5c415da62e420f99355ccb9c48662d3b94748dc629a8fa4f2f7",
+        "000051-check-reconciliation-0.json": "3e9724732b3207c40067c0e78d8ec12fc012ec13d1f4106c386d39400e70341d",
+        "000054-apply-report-verification-5.json": "16e3ce04cd407ec91eaae36eceb811191cae4e96d4ff9de2b4ca56d030c30f04",
+        "000054-apply-report-verification-1.json": "d6d3087bce6951982418d8497671fe43766e1fe66e6862ddcbd8cafd8c38bdd2",
+        "000047-check-runtime-0.json": "1da04c0f45513145ff3a19e9c901b8f0473b09a8f289dedc0d3bc41ad582dcce",
+        "000062-apply-profile-verification-1.json": "a852c8d8475c03433bc6ab3f2ac36d39e390fb2bb7f79a4d213f2558b328efa2",
+        "000066-apply-synthesis-verification-0.json": "0365efdf25c280ff092c4013ab4f9673aec1046181d0266aa67b61a69b165ee5",
+        "000064-check-synthesis-0.json": "d05a64053d418c69124324055a0eca4b9b542b662c80abaa79b98325d3be388e",
+        "000049-check-epistemic-0.json": "13a2110364c94ae3b0825653637e5a5ebc4d3eda84d777159993de46aa66c5f0",
+        "000054-apply-report-verification-4.json": "79cdc5fe90d295c12700b1d391c5ca27d91490e780ce8577ddda6423e83ae2f1",
+        "000045-check-memory-0.json": "b4077a9e7422ca0773bd24d02b3154372cd50f8b1a38cff9515aee669543892f",
+        "000058-apply-profile-verification-1.json": "af46eaab875559640b75dd834eeffa4641b7046fd520b944c4f39cc6c2e71d2e",
+        "000035-check-boundary-0.json": "11191c0a365420743f364e8c3fc760c224e720d5fa7e7818ad1b7f9991c0f7b4",
+        "000060-check-memory-profile-0.json": "c67f2ffe8c0d32794af5d7f5ec74c6b5eb5340ffafcec9ab9f04d758f8bc51dc",
+        "000054-apply-report-verification-2.json": "fcb714d08b859f1562588d492b6a36dbbbe61632f66d2380ab33fee36fb52818"
+      },
+      "versions-map-digest": "e3c816baf2cbfb4bd57456fe0a6071ab03e25c513f5d9c1090719d24fac414a7",
+      "sequence": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01/state/seq",
+        "sha256": "89e56b272669de11431602f3c77e560ecf6c61512fa8db5ac0006606e88d5282"
+      },
+      "budget": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01/state/attempt-budget.json",
+        "sha256": "d87a7de560e6481c8f3243b751076cc22d620867614f5f76c48961b5f9458f6f"
+      },
+      "native-files": [
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/.venv/bin/commonplace-run",
+          "sha256": "3d53069b760475610be81ba2118954db1f10aad946185f9699dab9d86c6d675e"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/.venv/bin/commonplace-analysis",
+          "sha256": "2cff3e27961f276fa77fdc3863f2fd6b0b5455824ea2b757a0f6b8abb061611a"
+        }
+      ],
+      "opening-version": "cc7e6d0974539cedac43a384d7ea7b420c8e013aec745726ca0ed099cb65fe00",
+      "source-version": "bcca8269974d47e3db16e8e94b0259fb37ff166b030f19e96a26d36eee3379ff",
+      "source": {
+        "identity": "https://github.com/DVampire/Autogenesis",
+        "kind": "git",
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/related-systems/DVampire--Autogenesis",
+        "revision": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "mehmetgoekce--llm-wiki",
+        "name": "LLM Wiki (MehmetGoekce)",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/MehmetGoekce/llm-wiki",
+        "run-id": "AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01",
+        "worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki",
+        "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01",
+        "command-prefix": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/.venv/bin",
+        "method-revision": "fb6ad58fd2fdc0e595e1e6671079b98e2e29730f",
+        "run-definition": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01/run.json",
+          "sha256": "fa20e670582f6810098327656ffd36a0b5b71879229205098f62f3d80f10eca1"
+        },
+        "preparation": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki.preparation.json",
+          "sha256": "ffbaf31ad7ced19d6751abb81084e9e5976ad4ba4d3548aa1239047c7155856d"
+        },
+        "attempts-map": {
+          "000001-opening.json": "b304467029e9fd89d4b4840b9cb76731defaa3ef9b60fef7dd6a2f0887e7bd89",
+          "000002-acquire.json": "eed3fc53b3c95143f988b185f854f73c8510b9a424b408103e20c6fd98fc6782",
+          "000003-boundary.json": "6e8a8326d83b3e70994be5482509047084b80f4dfe74684dcf9c367eb2016401",
+          "000004-check-boundary.json": "5bab3ff3dcee15e8a97f44912f4c1897f9e0ed0781ac51365bde12506df43ddb",
+          "000005-runtime.json": "46a4981526a4f36078be4a6d24e727e596e90b970f878cd54746d64c0ab4802b",
+          "000006-check-runtime.json": "918b74562fba04c28ad86d87922c6bb7a45541ec5de14cd7b559ce7a199c8cbf",
+          "000007-memory.json": "01db4907ab601ab42164dbe44866cd964c982b2a6095d0ef380729cb2538fb48",
+          "000008-epistemic.json": "8f4d9a8650840e59df0841394306f42c31a6c528133060a04696c3dd079aa44c",
+          "000009-workflow.json": "b232fbcbc41fe581c16397a976cc7190dd3e1a2174cb550005c15b266832d137",
+          "000010-check-memory.json": "196a785b7706a64031bd45fe4380b8dd58c646d82d5dae96080686975715bdde",
+          "000011-check-runtime.json": "cbdd0abbd08860b0b405206a42990298d00857017993c6df5340970622707bb2",
+          "000012-check-epistemic.json": "d0965b199b735faa01637e185ec4f7e8134df988b2eea7667716864dc97e82c9",
+          "000013-check-runtime.json": "545df394ff516652b6a68dcd23d0013bee4a7f15a728d3e11e7a098b4cbbe2cb",
+          "000014-check-memory.json": "9c967f9d7f6c8d646e9098710ede289cd6e8f5f35f9c2706d47123d9c8e7322c",
+          "000015-check-workflow.json": "e3771a38b55e69daf1038658ed01b2a55462a8ee5424a49e9e786e3763a6b79a",
+          "000016-check-runtime.json": "a1e1c40fbc22885a23d034daa71419641928d476bd13a948707cbe5ab049cd99",
+          "000017-check-memory.json": "17aeb4cebf3a1bfa1686dd34040367a0572f44f5f393e496237ec3afca4aba45",
+          "000018-check-epistemic.json": "1f0f6569280c48937d9d39b5ba0158a9df60c48625208413d64fa804d2078784",
+          "000019-reconciliation.json": "e9aa5d9cdaacaa2de5e3f1f6728cbf837926d1d079648d98cac56f5e4ba8b202",
+          "000020-check-reconciliation.json": "91831771dbbfc535053f8889784c3a9ed81a1d1e93af616e1da7303fb837e4b3",
+          "000021-report-check.json": "ee4e4fa9f40057c52c4a771d340ec3a90d66942cdc30bef6c4d140517e8c78a5",
+          "000022-report-verification.json": "04535fd16f142c0951c860ce5c0c9a8e385653e0530c5168b214a4bf71421d0c",
+          "000023-apply-report-verification.json": "110f5ff575e17191fba04ed659ef88861291eab1c5d0d99aa9450b5ebbbe71a5",
+          "000024-memory-profile.json": "073712c5d5fc60835cbc703d0f561e1b8ba5d9f1f2d62cf8e8029b4f3b522743",
+          "000025-check-memory-profile.json": "366b61260c792c2b8f6351d8a994f330ba3b9f1cba9af45e16e42bf85be4324a",
+          "000026-profile-verification.json": "c035e1a3b97fee579ca50185d8530aaf26b065bcf7964cedb5d12b870aa6b23a",
+          "000027-apply-profile-verification.json": "694eba5be88483512e5ea4efda46c5511164372475583a0cb96de46ad9c57cb8",
+          "000028-memory-profile.json": "bb9013366c81240d3f6b95309a3250ab77003c8a203411751611404220849efb",
+          "000029-check-memory-profile.json": "3a6f2ef5b3dc05a851893f105ed31b68a8fd3ca0bb52484fff40b27a0802169b",
+          "000030-profile-verification.json": "e43165f662d18bf0466ad90d2f777e07d63cdb1ab77bcee5f3391659fe6eecd2",
+          "000031-apply-profile-verification.json": "6c2ceb0c013cc721911eff9d4f1c4fb74d7aacef0c8672eee0d821190d0e08f5",
+          "000032-synthesis.json": "cc38c9eb42d107c81a9710a5ea90487875d2c6da5767f50a448eb806f84d6b8b",
+          "000033-check-synthesis.json": "b704d0528f8b3878e688d8c12764d8d327bfe6d209529c3baa3d1d280fd48507",
+          "000034-synthesis-verification.json": "c4725b627e6d8ed0e1f8b2cfd0512600f0a599a2bffcaea6943cab92460144e6",
+          "000035-apply-synthesis-verification.json": "f4add37782ef038578cde795a16afa606ff71efb80e8172ee408b56f63bdd36e",
+          "000036-assemble.json": "1f2f55b4f20564e7c258f11e32b4168528a9d36e64294bbb6969585d39f6b993",
+          "000037-publish.json": "900267558dc4bc67f4c13057f19f48c3341e37e6a3107b6eab323d8be0d770d7"
+        },
+        "own-publication": {
+          "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/retained/mehmetgoekce--llm-wiki",
+          "members": {
+            "ARTIFACT.yaml": "67ba26cb6cf66ca3fc6fa01da80e14886b3021382dbf35071864738ea4488d34",
+            "boundary.md": "bee7a24b4dcf5db5a8c31e5b5a963e767f53487324805ca8400137c67c7ffc11",
+            "epistemic.md": "20481bb15be88ba8360de033ec6586bdcb20e5cdd8ec9089871d64ab06d8410e",
+            "memory-profile.md": "78be5c60d9101ed1ae7113d8ce5548d5d10e0ce4671d6400814b265621936c9c",
+            "memory.md": "83fbfafd7c8c08d8a59f398cc65aa79cbf23adbbebfb46690a472010c9119ac3",
+            "overview.md": "404ceeb706cb9b84b7cdaf876134b6368541634ead75737bd4fbf5daa1e5b232",
+            "profile-verification.md": "b13a92a735d000cdf3dba4666e243351894ea324f1b6892e4d3cdb9788031b03",
+            "reconciliation.md": "ed86bfc010479b06123270141c83fcd2555c0df2d70a79bfa4fcab076e42c078",
+            "report-verification.md": "b22226c507bca6cd01f9a7b2ac98e8b6f52bccbb2defd543a6123ae6665f9c82",
+            "runtime.md": "0ebfaabb72427cc29762aa2167fe856b083cd295c227ac3f288115d8d0f1897a",
+            "synthesis-verification.md": "0a0275ba8869236e20be14fd1a18650dff4e15a8647f4560dcdbe945e86872d5",
+            "synthesis.md": "6a10cb7b11e11dea089a6ed2d0f8eb7987ff649a001fb0e36f1b3c18cbda1b44",
+            "workflow.md": "a5658912fde5ce324b3d266017a7d36be444ea7680bbe6e09ad146b98f6b5b6e"
+          },
+          "effect": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01/effects/publish.json",
+            "sha256": "50ca108f41a6e2812bfc15537f9e0fdaf461eae4bf3f13150c5722b7cb5bb7c5"
+          },
+          "manifest": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/retained/mehmetgoekce--llm-wiki/ARTIFACT.yaml",
+            "sha256": "67ba26cb6cf66ca3fc6fa01da80e14886b3021382dbf35071864738ea4488d34"
+          }
+        },
+        "current-fault-or-stop": "Profile omits access-log learning authority at human-approved pruning/update consumer, conflating it with automatic trace learning.",
+        "candidate-author-jobs": [
+          "memory-profile"
+        ],
+        "verification-barriers": [
+          "profile-verification"
+        ],
+        "next-decision": "Authorize local profile correction from already accepted consumer-chain records; do not prescribe automatic learning.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01.md",
+            "sha256": "dcf17038d883a4cc1a9f87752c40005822e476be53fe62796d2375047cd1b95b"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "profile-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-synthesis",
+        "profile-verification",
+        "publish",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "memory-profile",
+          "version": "78be5c60d9101ed1ae7113d8ce5548d5d10e0ce4671d6400814b265621936c9c",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/mehmetgoekce--llm-wiki.md",
+            "sha256": "08b3eb228537056566a18f31018c65f996a69290e80ea6499e677263e0cbea94"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "bee7a24b4dcf5db5a8c31e5b5a963e767f53487324805ca8400137c67c7ffc11",
+        "runtime": "0ebfaabb72427cc29762aa2167fe856b083cd295c227ac3f288115d8d0f1897a",
+        "memory": "83fbfafd7c8c08d8a59f398cc65aa79cbf23adbbebfb46690a472010c9119ac3",
+        "epistemic": "20481bb15be88ba8360de033ec6586bdcb20e5cdd8ec9089871d64ab06d8410e",
+        "workflow": "a5658912fde5ce324b3d266017a7d36be444ea7680bbe6e09ad146b98f6b5b6e",
+        "reconciliation": "ed86bfc010479b06123270141c83fcd2555c0df2d70a79bfa4fcab076e42c078",
+        "report-verification": "b22226c507bca6cd01f9a7b2ac98e8b6f52bccbb2defd543a6123ae6665f9c82",
+        "memory-profile": "78be5c60d9101ed1ae7113d8ce5548d5d10e0ce4671d6400814b265621936c9c"
+      },
+      "judgments-map": {
+        "000035-apply-synthesis-verification-0.json": "9cec0f141a01b3c8371643385979a533c827169f4a4b696065c0cc39c0f9f976",
+        "000027-apply-profile-verification-1.json": "063fcc8ea77fc8f634b0066673cf36f2af7464f6e2e0011f5653b4b9c5751199",
+        "000036-assemble-0.json": "3aa546fa6e54fcc58a11a7bd536c0ddd49739fb9566515600fc72ce30323b5a3",
+        "000023-apply-report-verification-3.json": "4e9ccfe0839cf5c18edbda93653236eea2fcbe1dba800549c2a62c9dd7c21183",
+        "000023-apply-report-verification-0.json": "d41ad882563d9c3919ecb541397453d678b48133d9bf76cc9560b411695b5d9f",
+        "000014-check-memory-0.json": "c4bf4b83d4aef2d7b7ce13ef91ecc784faaeddff70b9ba2372d28a6c405b0b2b",
+        "000013-check-runtime-0.json": "ea35aa120a948eb4cc832cc6ee7a9db91ed98855e01f5906c4f137f7fbabbc3c",
+        "000025-check-memory-profile-0.json": "54207d2b15ff50b8191db4c830d7072d56df04352b8f00a8ac057217d79b78d0",
+        "000015-check-workflow-0.json": "0bd0f4e00f1c0bd709fd1d5f926e6f01b9a6fec65893b41271a4faea6de1cba3",
+        "000029-check-memory-profile-0.json": "14221174a754b0cd042c690ac93a29d399713d2fd42f9590b1b4c9243f50237d",
+        "000033-check-synthesis-0.json": "8c750a87a44c2c94444382ba2d559d88555a98d464a994cb647b4749f7297c23",
+        "000023-apply-report-verification-5.json": "6c62668934bc166ed209a36b557a682455aa85a8d3ceaa224b3e645a8a70ecfb",
+        "000031-apply-profile-verification-1.json": "b01b5a07fbf5ce4c3166b628d1cb641f394a800bf22334d5fd6b5718f1799266",
+        "000012-check-epistemic-0.json": "26c07821373e10b007fecc0aa4ba4c39ee94471d7fc875cfdf7dc3c7c8e33407",
+        "000027-apply-profile-verification-0.json": "1ceb5389efcced773af7ed94b90dbca029ac55ca917c814bf865b836e702b1d5",
+        "000004-check-boundary-0.json": "4634c8b3ea87d174cff5681f3fab493fabbc22d592a7fc8c9ac0cab13256b2fa",
+        "000017-check-memory-0.json": "c550c097be25ccb172b530753850dfb8fa00ba411b2d6357309e12ab89c810b0",
+        "000011-check-runtime-0.json": "ba9adbf7e900453ef77379843dab110e675fc97d707cec8e23bc92ceadd2ecb7",
+        "000031-apply-profile-verification-0.json": "c2eeed8a327fc51844b72af5fa3a7e47e01a16fd99b6b13b13647f7731eb2f83",
+        "000016-check-runtime-0.json": "5f9f9c8dcd5bbc24f02e7ae59d4e4658e20e8edaba37eaa3469ced0cf8e8b791",
+        "000018-check-epistemic-0.json": "6d5a61f9793f2ef4d565bfb123403bea589bf0165798cd5bd79b45b1b36c2b2e",
+        "000020-check-reconciliation-0.json": "b2e301ff6b3fe1023d4ec2f31f7f2997abcbbf3845f4d32becfcf3b96999884a",
+        "000035-apply-synthesis-verification-1.json": "d06638c2f53f1222d9cd483d9b5bbc7ae933aa16c4ea0eee0021ef4ac2e7ee51",
+        "000023-apply-report-verification-1.json": "b93ba97c1d6276276f096d711ef2c6644e03816571679d567ebf534fb535308b",
+        "000023-apply-report-verification-2.json": "86e9c2b5ee648fc8f269b6b659d06bf3d9fb701dec00cfb8ad03d2b3c7ca724f",
+        "000023-apply-report-verification-4.json": "7ab6fab44f1e04ca7c7ba14ccf826d86acc9f5fd3438b7d8b1ee29b1df971ec9",
+        "000006-check-runtime-0.json": "ab0e653c328f1cf212af2f95b8802b98227ccff359fbfd632ac1ef3dc301bbc6",
+        "000010-check-memory-0.json": "80d75b8d56c1b27a24637451b70619dabc5cd69c99ba860007a442e6c581726c"
+      },
+      "versions-map-digest": "9e1d6be2e65473a18925d2cfae92f1add3cea4ce8b5804337be951163afde547",
+      "sequence": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01/state/seq",
+        "sha256": "b58a3da5fde2680191877ec88a1aa7d06927cc3b30cdf0d0db8c39b488891576"
+      },
+      "budget": null,
+      "native-files": [
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/cli/run.py",
+          "sha256": "c932f1e85f485f1c8360fd4ebb4b92fab00dcb46c9303e5db64be80bd5e93847"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/artifactrun/run.py",
+          "sha256": "74777a8d1a658f8b5522078e88d244ca25ba1a21f3aea5d4bb0cfcf512228910"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "3ddc551eb1c4b86c07b9c616af26c501847fb365dafb6238df80c5c2b30d54b5"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/.venv/bin/commonplace-run",
+          "sha256": "b910b5bf43119dcc819f898acc2dea0799e5b0edd58fcf1b171c0ebc4ae415a3"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/.venv/bin/commonplace-analysis",
+          "sha256": "680ed749c7a7884a8da079a2d7bcc2fc125da75d2d3ad7343456c6da81555e02"
+        }
+      ],
+      "opening-version": "8000060f3f7a46f78234ebc161858609c872e11dbb83db71cc6bef0b8ad7871a",
+      "source-version": "de608216f416c236a1adba01e25ae338572e54d9e4b6e1dafe174f187e8f3262",
+      "source": {
+        "identity": "https://github.com/MehmetGoekce/llm-wiki",
+        "kind": "git",
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/related-systems/MehmetGoekce--llm-wiki",
+        "revision": "11538c1195666db24e25e23cc64bb1d70587aef9",
+        "sha256": null
+      },
+      "consumes-budget-floor": true,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 2,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "clawvault",
+        "name": "ClawVault",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/Versatly/clawvault",
+        "run-id": "AAS-2026-10-17-clawvault-38c16ae4ab34-01",
+        "worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault",
+        "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01",
+        "command-prefix": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/.venv/bin",
+        "method-revision": "fb6ad58fd2fdc0e595e1e6671079b98e2e29730f",
+        "run-definition": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01/run.json",
+          "sha256": "a446ceb1083bdcff77c0acc56815830277d7da9e725bd6bc4666fa5b66b75a3b"
+        },
+        "preparation": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault.preparation.json",
+          "sha256": "d62008eaaae70e535a8b764b2e93aa2f051b7d34488fdd750f15c6063e1617ee"
+        },
+        "attempts-map": {
+          "000001-opening.json": "fb2b2eec1b2cb3729074ba2b5b163d930e2342256aa95a07571b3cd594f8a38b",
+          "000002-acquire.json": "a324377fbe208c00d4362fa3b39cb8facbcac4b77b1bba5990e5a3dc74eb2e89",
+          "000003-boundary.json": "d071660731fae483d182db1501eeee1639461b5a0e28f6dc7c1908f6c541b2e4",
+          "000004-check-boundary.json": "131e20b2d3531590f36053852de628d91618b0e98a077732cdac79456193b49c",
+          "000005-runtime.json": "7bfd5f9c4a75f29d0ac05c6d9ef77e4fce5d8538465b36305d2e3b90434e2640",
+          "000006-check-runtime.json": "2b38a652f058a5a361ac27a9ee57f0110779d190b9482d4b3ce2460c10de11a3",
+          "000007-memory.json": "5fd06fa3f7a521827709a8d2f69407698b77ced0a717fc7c7d3bb7964cc43b88",
+          "000008-epistemic.json": "f0bca03da025a47ca3f124a439710584e63121b9cca36dce5664163aa156c607",
+          "000009-workflow.json": "3531c548d28299da24c3a7e6068c6679369b3d58c40a9976133808765c03f864",
+          "000010-check-memory.json": "af93554c2303a9231b023827b358b796a2a9a206d32e52730138de85c660d48d",
+          "000011-check-runtime.json": "f6230557465df6bc868bf5a44f466d7bb975f315651de761e16fbfb6dbf45b61",
+          "000012-check-epistemic.json": "c095a5a7680c0c4af5d673a7f93366e1e3bb73adc3ecf61d3f8784546902b95b",
+          "000013-check-runtime.json": "b2aa9b20e182e94f46a670f965ef84d9a9b62c176f52ee36c73dbf68a22d2710",
+          "000014-check-memory.json": "333f5a61d7327c5c57758195f2442422489352b06673f9f673054ea78125e617",
+          "000015-check-workflow.json": "3877b5f70719c02c67d339a8f93c88aafc452d8d01de47d48eb60562f3942e38",
+          "000016-check-runtime.json": "be9266966a4e1679659932b0665c5cbdb05ffe0e78430cba983dc516f8080b53",
+          "000017-check-memory.json": "37b67493f0fa001348dd2ed9f995e8f74c346d9e4355836c7aeefeb4bb581084",
+          "000018-check-epistemic.json": "91f186e2c1823264486174ca8a4a7d188654ffd3534329b94ee5e3b141a2809c",
+          "000019-reconciliation.json": "2cfcf318e6cbe892c79f8eb4a22d3bd32b644adaac1711680df7ca3ce14c5fba",
+          "000020-check-reconciliation.json": "dd4fd2d34ddb7a1dac9174fa3ced8a149d132f15ae040d5c760b4fbfa0f004b2",
+          "000021-report-check.json": "3015bb02110a5576fd65a70db2f698d0a30a7274f917118d03ba5a1640397e6e",
+          "000022-report-verification.json": "d39decfaa86dca9975268d937538f5d750dc197b9f0e4a43baec1a5d34f94e36",
+          "000023-apply-report-verification.json": "4d57a5bf180159ef89b8ab90cb676126d9886386c1ba5711c62020bb066588b7",
+          "000024-memory-profile.json": "e23bd82325af152f738391bbfcafd0c034479255863b540d81afefc01bee5e52",
+          "000025-check-memory-profile.json": "18828a78e3a91e66ae1e4cf6e8274f0e371c3591d686c64be581881c2f824b62",
+          "000026-profile-verification.json": "bdef513aed3b57941489ab4df09730fed515021b5bbceb1d765f3c56b00de813",
+          "000027-apply-profile-verification.json": "c04935e95be53986429a7387c88800bbbb95436a04692a2755c1d28ca0aa4eb7",
+          "000028-synthesis.json": "a4c870933b603fdf64b1e01a5c352bf510ee01c76bfc91bebf9df671598bbfb3",
+          "000029-check-synthesis.json": "d0b2bf6a224f651c7a7cfa3408be01f554125d38295159daa499cffa09dd86ed",
+          "000030-synthesis-verification.json": "d722f1324580ce6454ccff3c5c863c799c105c87fcde1425e8ecc30c82d2a6d3",
+          "000031-apply-synthesis-verification.json": "6cdad4e67ca0b6ec628320487296beb674601e9fdc0e97a5c8403dda6f6160a2",
+          "000032-assemble.json": "b24de2a1fa19c496c70b620d405b7fa0b4340606a8ba3bcf52b97d536a162b45",
+          "000033-publish.json": "5af74e6274bfd1c4fd3c1f5d87f59da4ba8915964f068e740d1c2f3d956f43f9"
+        },
+        "own-publication": {
+          "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/retained/versatly--clawvault",
+          "members": {
+            "ARTIFACT.yaml": "09d68ba66cdfd30802e9d5aea0578cf70f0d8481034d3004fb3d42e91ab611b1",
+            "boundary.md": "8a47cb0b7c7ce0247eb2b9b57031f4f40069ebb601dd494ce38d975f74f6d361",
+            "epistemic.md": "878bf92ae3f1668e27fb47c760a44487bea71ba43ba2efa5d63263c15839856a",
+            "memory-profile.md": "390b935028478390ffbdee68171dea874274250c4c8ab1739172af2e4450140b",
+            "memory.md": "61edb0986cd0c5443a9492f787ce231da3be378a5fae2d40897b89a9d4923169",
+            "overview.md": "309b44824565b8b68f8aff931ebaafe696bbc377ace72765842b5ed1437e578d",
+            "profile-verification.md": "f0d0a5ab4ee73c190a5d0f49c41bce5266ce2095bfd9ae49bf18a9fc688de598",
+            "reconciliation.md": "d0aea4dc3f0447ff4862e93cc510a5b22c4810427604f36d934001d67d9f2bed",
+            "report-verification.md": "1ef74c291997b54c46a8997aa4b8d5e5fcdc403b79b144a907b9510e7029f40c",
+            "runtime.md": "27fff247d5dd391950710214304e4e790791ac225554a5b8a54bd688d320d63e",
+            "synthesis-verification.md": "3a69f3d3bc21a3ff29ec43ac4e2726c4ed4b030b6a43d5f76978596bdf62f61c",
+            "synthesis.md": "3b7875118284294f3438ff553ce8fabc6285c9fce12205d4167710ee19c541b6",
+            "workflow.md": "a92e24a6a26f01d04ee2bd85527195e0a0c5a9d9cb87c7a2cec4e102cac0cddf"
+          },
+          "effect": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01/effects/publish.json",
+            "sha256": "726d3fcdf51944eb41b9c0fd0119d54cf525eae71e0031b2e0eb8018e90842e6"
+          },
+          "manifest": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/retained/versatly--clawvault/ARTIFACT.yaml",
+            "sha256": "09d68ba66cdfd30802e9d5aea0578cf70f0d8481034d3004fb3d42e91ab611b1"
+          }
+        },
+        "current-fault-or-stop": "Frozen source deprecates new OpenClaw deployments; public intended-use/runtime account omits narrow qualification.",
+        "candidate-author-jobs": [
+          "boundary",
+          "runtime"
+        ],
+        "verification-barriers": [
+          "report-verification",
+          "synthesis-verification"
+        ],
+        "next-decision": "Correct narrow frozen-source qualification; no universal standalone deprecation or replacement endorsement.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-17-clawvault-38c16ae4ab34-01.md",
+            "sha256": "5b4cc2ff09817d8c1a9f5ad2d387b5e41b240d593778cf97beacd1b83e1b9675"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-audit-review.json",
+            "sha256": "8a042c5d9592bcadd4cc86413faa484c1afd9c4c5579b155a77531b6a8a9d872"
+          }
+        ]
+      },
+      "reset-job": "report-verification",
+      "reset-jobs": [
+        "apply-profile-verification",
+        "apply-report-verification",
+        "apply-synthesis-verification",
+        "assemble",
+        "check-memory-profile",
+        "check-synthesis",
+        "memory-profile",
+        "profile-verification",
+        "publish",
+        "report-verification",
+        "synthesis",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "boundary",
+          "version": "8a47cb0b7c7ce0247eb2b9b57031f4f40069ebb601dd494ce38d975f74f6d361",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/clawvault.md",
+            "sha256": "218400086844e116271ff4990c091d725faec31cbd48089f2d80ece29e467912"
+          }
+        },
+        {
+          "role": "runtime",
+          "version": "27fff247d5dd391950710214304e4e790791ac225554a5b8a54bd688d320d63e",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/clawvault.md",
+            "sha256": "218400086844e116271ff4990c091d725faec31cbd48089f2d80ece29e467912"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "8a47cb0b7c7ce0247eb2b9b57031f4f40069ebb601dd494ce38d975f74f6d361",
+        "runtime": "27fff247d5dd391950710214304e4e790791ac225554a5b8a54bd688d320d63e",
+        "memory": "61edb0986cd0c5443a9492f787ce231da3be378a5fae2d40897b89a9d4923169",
+        "epistemic": "878bf92ae3f1668e27fb47c760a44487bea71ba43ba2efa5d63263c15839856a",
+        "workflow": "a92e24a6a26f01d04ee2bd85527195e0a0c5a9d9cb87c7a2cec4e102cac0cddf",
+        "reconciliation": "d0aea4dc3f0447ff4862e93cc510a5b22c4810427604f36d934001d67d9f2bed"
+      },
+      "judgments-map": {
+        "000027-apply-profile-verification-1.json": "de34bc4828265f3feb3e20f52f4f335b71928e73926b0f5595a7aa5eda3b9f16",
+        "000023-apply-report-verification-3.json": "b27783a023dc52957619bedbc49de1e8e9752ad54e52a6f00dd5334e1834c6c6",
+        "000031-apply-synthesis-verification-1.json": "f0a8ee778227b670163cdaef3c683518ed02938d03130d9f315b460be8a71243",
+        "000023-apply-report-verification-0.json": "6434f9f3991531b49e2dff11782c0565832d9a7d958a3a9beab7469157531da6",
+        "000014-check-memory-0.json": "c6f29b08d53fbdac7e99c9a18a248caf05f4d081fdf18aed24198886f69315c0",
+        "000031-apply-synthesis-verification-0.json": "63ffabc457f26ab3f9951b0fa1b3098fa5964c0efeb74d42143f76ef13be39c0",
+        "000013-check-runtime-0.json": "7024a97b7b043165d9e119f69b56658ed403e8a4b1f91f59d506bd9e9a23537a",
+        "000025-check-memory-profile-0.json": "02520a760f34079a67ce8c2694edb8d773ce48a000bf5c16808d7378e11703fa",
+        "000015-check-workflow-0.json": "b13cbf73ba61aca25ddaa9c15af498b2a8065881a988dbc03462030b501d30c4",
+        "000023-apply-report-verification-5.json": "a7837f039b49733d9bdc16a87ce94ee7d5e342398fa8f35efade8d8f7deb6fd4",
+        "000012-check-epistemic-0.json": "4f3667928294459a7d86e3d73d5811c77cc1799f7ae1846e54da4bc87c623169",
+        "000027-apply-profile-verification-0.json": "6927e0de11aa33379ad8c7977a064856d8cfac62b8ceb9f36b3ce3e1ef851f1c",
+        "000004-check-boundary-0.json": "ef21b5fd291582c53b666f94901f8308118c4f5bd6a8b9b1e3fef2def2d19370",
+        "000017-check-memory-0.json": "ea67272987de8b734f7e0c3c8a010ae4b35ae429c050d234b8a9756a25d0f6ae",
+        "000011-check-runtime-0.json": "a4a9233f7283c4145ca46e7464a960c58ff719aecd4d4dfaa16411172c3236e6",
+        "000016-check-runtime-0.json": "1cc20a8289ca8cd49d2747a0bb61213af4ea000d243b14f4c7da9f6a0a4a95ae",
+        "000018-check-epistemic-0.json": "1763ed529860d1e9cbebefd99fcdc54294e798b0bb389218c72e854385f7acb0",
+        "000032-assemble-0.json": "a277ae99f4cf530214716de457e0354a5c09eac710bdf89c8284114a20b15d5d",
+        "000020-check-reconciliation-0.json": "6a44196a3c2419dcacc61a08d6532886ff297da5ef68a75adcddb55f8507486e",
+        "000029-check-synthesis-0.json": "c9063fc80ed9f222d7f65d057315da7af79683e994dcbd2854208c1e4adbafb6",
+        "000023-apply-report-verification-1.json": "9e10d01b53c13395de2be427320c83fe3a3dd687e64af33960929f98037352a8",
+        "000023-apply-report-verification-2.json": "69a4d9ac6187526a75f4ff5f7dfa5af1646e0c8d943b16b7cd6078787b512bee",
+        "000023-apply-report-verification-4.json": "709a1c4ce4ae7cb1a1b04809caa09bb4e56e8c726e357e99931fb169ad123e4b",
+        "000006-check-runtime-0.json": "fd9c26f759847dd133b7c71e6828be32f23b8a9eb2a2706014b0b161b23959f6",
+        "000010-check-memory-0.json": "d9f46db42131e4c04fbc10e9146067677ecedd5ecc3582b22e5697c0312b5040"
+      },
+      "versions-map-digest": "2d3f5ce3f53fe9506ef50875d671d2deea53b20540fca31eb7faefa45009f3d5",
+      "sequence": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01/state/seq",
+        "sha256": "19b8d5c59e421f037fe563007c7254eb8d98bc221b278c3db3e5fdbbfd52e273"
+      },
+      "budget": null,
+      "native-files": [
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/cli/run.py",
+          "sha256": "c932f1e85f485f1c8360fd4ebb4b92fab00dcb46c9303e5db64be80bd5e93847"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/artifactrun/run.py",
+          "sha256": "74777a8d1a658f8b5522078e88d244ca25ba1a21f3aea5d4bb0cfcf512228910"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "3ddc551eb1c4b86c07b9c616af26c501847fb365dafb6238df80c5c2b30d54b5"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/.venv/bin/commonplace-run",
+          "sha256": "e24085593814b7378ecc5b5d963b244a6e46982fcdaa996ffa6759c017c11081"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/.venv/bin/commonplace-analysis",
+          "sha256": "4286c3797915e23e014a7c0899bde27d295dc4acf185f0d17b210a843c597837"
+        }
+      ],
+      "opening-version": "06787b339fbf148ee8ed58c28a260232c7343f27aa87c2d6fdca6d28c98a564b",
+      "source-version": "32ceeb5b0c1ec39c25bb3d3e5dfc378999fd96a159de77d4a7b1477c79d0333b",
+      "source": {
+        "identity": "https://github.com/Versatly/clawvault",
+        "kind": "git",
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/related-systems/Versatly--clawvault",
+        "revision": "bd702e9cce436bc3065827714cd576e8be20c375",
+        "sha256": null
+      },
+      "consumes-budget-floor": true,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "key": "arex-skill",
+        "name": "AREX-Skill",
+        "inventory-status": "pending",
+        "gate": "repair",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/VectorSpaceLab/AREX-Skill",
+        "run-id": "AAS-2026-10-15-arex-skill-1871063034b5-01",
+        "worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill",
+        "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/state/AAS-2026-10-15-arex-skill-1871063034b5-01",
+        "command-prefix": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/.venv/bin",
+        "method-revision": "a320038ed1a423b051eedbcec593172f8c2032f4",
+        "run-definition": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/state/AAS-2026-10-15-arex-skill-1871063034b5-01/run.json",
+          "sha256": "ba7a6a34f11a8ff67c283d67af3ac9a31adb352ad0f810b5fd8c8557d564759f"
+        },
+        "preparation": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill.preparation.json",
+          "sha256": "b792c28a4337abf353da53f3b4fa722eba3f6083cb7dbc83ef0d9014a2f8322c"
+        },
+        "attempts-map": {
+          "000001-opening.json": "119df52156125fcb41bff548063d5b87c50ecc97dc56b602d387ba3f300550d1",
+          "000002-acquire.json": "6ae59573c685e935cf309b89d94a97f4250c7688fb9ba49879e246eb97ca3ee4",
+          "000003-boundary.json": "a6c7849fa39cf0d71007074de5e07cf99749f7a2ff582352320e46df6ca46c80",
+          "000004-check-boundary.json": "eb59d9ed51861cdcfc9aec58d3e5ecf3452bba368d253b8b71a97a1a557fb8ed",
+          "000005-runtime.json": "4b2a86dbd6114c8b9879b37588021fa5493404f7e179d40631508a72eefb3103",
+          "000006-check-runtime.json": "9121ca8402db54492238e2432a150a996186ae7935c9318b0d55e3b06c95af10",
+          "000007-memory.json": "b264ee8628b63f163a81b59743b068386b3d4b3397df0b40bd99664f19c5eeb3",
+          "000008-epistemic.json": "b1d8c82215967bb6557992a1db74912a0600ca970b81dd193384ed4162b6c2bf",
+          "000009-workflow.json": "f21d4df4aca2151cff5dc0b67fd14f8252380c5c28b8821885201f061df6beb7",
+          "000010-check-memory.json": "e83983597498b45f8b4632b4f581e77982c5245f991c444d1aedf8c64049ae01",
+          "000011-check-runtime.json": "4b4cdb60ef14080592269f874c764cdbb5709556aeb8c5d678481c842b7bfd3f",
+          "000012-check-epistemic.json": "0b3eac1efdf4f7d0858469fd45af167b133ea87e3c3924842e07d939473fba08",
+          "000013-check-runtime.json": "4481acd4ec46123f4434ca5bbfe8bb4a2e2207ed89178d0abde7b5323a12e2c5",
+          "000014-check-memory.json": "84e1230ab692b280ebf7ddbd704919db7b478b3670f7145faebc1b2657aa1496",
+          "000015-check-workflow.json": "181c202ad8c45b14980cd6d9899b16836080dd5ab21b9a984acdf3fcb495c68e",
+          "000016-check-runtime.json": "2ef2a3512424beee448dd81b7ed59385ee74af584e93be523d3d41bb27adff9d",
+          "000017-check-memory.json": "3df5ed373def3d761ec5b58bb1aaf28044a54a865299a6d0185841bb93d4544a",
+          "000018-check-epistemic.json": "d18ecabc5f4aae54ea3399c994d2a675f1279907a360fbcbd303d8c6e190cd27",
+          "000019-reconciliation.json": "2698ce252f72a09e2629c311df81dfe8d1648c1030116a85960cb346a96ec9dd",
+          "000020-check-reconciliation.json": "afa7cda32d3ca0c34336c881a4440631595f6342356967f032e93c07e10b17d4",
+          "000021-report-check.json": "43a9df71875b4ae5deff1ba2c7f1918dea84531eb7a4e425df8c14198321ae63",
+          "000022-report-verification.json": "f220c75c8c726f971a3af04a56ec1cb11a4d03e5071a898cceb91020a48cb2aa",
+          "000023-apply-report-verification.json": "a1e67ff379b46379755f04e4d0a797f3fc8f2d99c6ae8f3c93c45551fcf044df",
+          "000024-memory-profile.json": "1e973054b50cdce1836cce18b2d5867cb1742358d215d6746d6db43e4fe3b6ec",
+          "000025-check-memory-profile.json": "4e9a2c52919c6a0eecd8f52a89987e0ec087bfcab4c1e9ab96fd76d9296dbb5d",
+          "000026-profile-verification.json": "50a8794022c2a2e6cd3c449d259fe6bd9f7e4d3aada15ec32ccefb093d439602",
+          "000027-apply-profile-verification.json": "3a540f6d46dcff849cb414787d54d6d4f8427e4027e2d9ca93887f3c9ad81423",
+          "000028-synthesis.json": "ababc80210861460f593dfaf66755631f365310808e8868828c0e456f8945749",
+          "000029-check-synthesis.json": "460c6c8e98b765bec436c88c944c8bc3368c519d16a75452ccdde6de1ff24494",
+          "000030-synthesis-verification.json": "097a14adb10e98d039681a2418dff873fef7f3fc4df190617b9b230c6bdb3a94",
+          "000031-apply-synthesis-verification.json": "d3f4d8a12626f25d553f1eef2c9f29795fa705d5ff43b7d36fcf9e4e7f375047",
+          "000032-assemble.json": "28caaa2976b1d525d111c6f9e1180c53cd3c8fa4612629d5e6557359effbc625",
+          "000033-publish.json": "58fcaf9e1b4f6bfb5a144dcbab0f5023c05fa20076faafa1dc4504b78faec94a"
+        },
+        "own-publication": {
+          "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/retained/arex-skill",
+          "members": {
+            "ARTIFACT.yaml": "650596ab4865595da7ddecc9714286582c0672df96146dc1d8ebc541fbcc6252",
+            "boundary.md": "a45ea291ad7cea15b7d654ab9c96f2ef927da5889b23382bbb1b7483089246d7",
+            "epistemic.md": "a03ee65899e55ff535dbfaaeb74f019c6c644e1fc3d870d91504849f141af29e",
+            "memory-profile.md": "d2b12819495ca6ae6d279ea67b2ae53bfd14a20a059ea6a137f7a1fd20a1eb86",
+            "memory.md": "e3a07a03c24d61eee86e03cd04ce564a4f045739a7c33a3529ca21fd597ca4e5",
+            "overview.md": "c5e7e2207e75a1548381a25f50f711bb1a1970f397572f5c10944e7ef05e6391",
+            "profile-verification.md": "9364230df58a754926b3b0db5542cff688ea2ec44d91839eafa128481d04c3fe",
+            "reconciliation.md": "d720e1777b7b76e04955c5f03d057ea54131d8388b1d5fcc953487e4b58c2346",
+            "report-verification.md": "723c9f818d94009e031cd973ad667524185c7996aba1088312a4816a8d97bb5e",
+            "runtime.md": "2e470dc6d6606bb8fd43d9ee3a35e66320b06d9a5c0a3977c45caf7e3dd0aa38",
+            "synthesis-verification.md": "55cb98459ba788519ca65f8604c0b7e7e0fb3245c771d58c3e67f249e0d7c0b3",
+            "synthesis.md": "a6f7c590677b7024740c4c877209ed12b6cc09f8077d518918119462510b2080",
+            "workflow.md": "1e8253d6898826f491f46053b1f427252b7ffcf688cd43b9a46d0982e1bff41b"
+          },
+          "effect": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/state/AAS-2026-10-15-arex-skill-1871063034b5-01/effects/publish.json",
+            "exists": true,
+            "sha256": "2fe08e2257e57d4b04158fabf7a9acbf8fe3c9bee5e3e16c4c9c4c46e51cc287"
+          },
+          "manifest": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/retained/arex-skill/ARTIFACT.yaml",
+            "sha256": "650596ab4865595da7ddecc9714286582c0672df96146dc1d8ebc541fbcc6252"
+          }
+        },
+        "current-fault-or-stop": "Accepted installed-library-state witness is not disposed of in blanket verification/public assessment.",
+        "candidate-author-jobs": [
+          "synthesis"
+        ],
+        "verification-barriers": [
+          "report-verification"
+        ],
+        "next-decision": "Authorize local synthesis/report-verification correction; add aspect records only if witness disposition requires them. Do not prescribe a positive classification.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/reset-and-rework.md",
+            "sha256": "afd12fedfc34129309d07deef110b9748120dd5bcfcdf28ebb1dc46c4a4cad88"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md",
+            "sha256": "2069490d59ae2f40deedd7554cea7da57f2948d832ebdcbb4811a89ee7b49ed3"
+          }
+        ]
+      },
+      "reset-job": "synthesis-verification",
+      "reset-jobs": [
+        "apply-synthesis-verification",
+        "assemble",
+        "publish",
+        "synthesis-verification"
+      ],
+      "feedback": [
+        {
+          "role": "synthesis",
+          "version": "a6f7c590677b7024740c4c877209ed12b6cc09f8077d518918119462510b2080",
+          "payload": {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-corrections/feedback/arex-skill-synthesis.md",
+            "sha256": "d2e365bb1e1e089bf1e87c5ba0e662b41dd136fa906e2bfc8d4fc04b441f104d"
+          }
+        }
+      ],
+      "preserved-members": {
+        "boundary": "a45ea291ad7cea15b7d654ab9c96f2ef927da5889b23382bbb1b7483089246d7",
+        "runtime": "2e470dc6d6606bb8fd43d9ee3a35e66320b06d9a5c0a3977c45caf7e3dd0aa38",
+        "memory": "e3a07a03c24d61eee86e03cd04ce564a4f045739a7c33a3529ca21fd597ca4e5",
+        "epistemic": "a03ee65899e55ff535dbfaaeb74f019c6c644e1fc3d870d91504849f141af29e",
+        "workflow": "1e8253d6898826f491f46053b1f427252b7ffcf688cd43b9a46d0982e1bff41b",
+        "reconciliation": "d720e1777b7b76e04955c5f03d057ea54131d8388b1d5fcc953487e4b58c2346",
+        "report-verification": "723c9f818d94009e031cd973ad667524185c7996aba1088312a4816a8d97bb5e",
+        "memory-profile": "d2b12819495ca6ae6d279ea67b2ae53bfd14a20a059ea6a137f7a1fd20a1eb86",
+        "profile-verification": "9364230df58a754926b3b0db5542cff688ea2ec44d91839eafa128481d04c3fe",
+        "synthesis": "a6f7c590677b7024740c4c877209ed12b6cc09f8077d518918119462510b2080"
+      },
+      "judgments-map": {
+        "000027-apply-profile-verification-1.json": "6fee5489bec9603e3b4fe9fca3c381ba1ed2439bfb68efc601cfdef0630c2369",
+        "000023-apply-report-verification-3.json": "074bda77ab5a0b5bfe21a35dc2531f2916b5eb9a632065238ab4a8177b079712",
+        "000031-apply-synthesis-verification-1.json": "2de98c1c8437df4af18865f86704c0708c439b21fbfb6124a2c9df6cd660c840",
+        "000023-apply-report-verification-0.json": "e6e3fcaa0e47fbe9aa7a175988288af003a6e0a0ed271912590cb1f916e70be2",
+        "000014-check-memory-0.json": "aa7a1975b0e3fba8cd7b41b086e21e9952e41b797654de9f1eaaede480bdd49b",
+        "000031-apply-synthesis-verification-0.json": "9141b3d302916d46e5dbd8b66637cf31a40effa9b04d1eff3ea6b1471ec03fc1",
+        "000013-check-runtime-0.json": "4ec91a3e4f087bd2caefc19afc76fb96607adb69769432998ea78acce15094fd",
+        "000025-check-memory-profile-0.json": "7e1cb17ad5d8fa21dd68f015372b43b5fff1d711f33c2efe9ddcf11a7b343f33",
+        "000015-check-workflow-0.json": "c784907324b9286c568a7a91b17a3a25d57264ebc11ce58784504ee69a10d054",
+        "000023-apply-report-verification-5.json": "de2093461fa0d17e02ce77296c54c86b39fbd3a1ebd1b0ceb376f4fa2b1364d0",
+        "000012-check-epistemic-0.json": "d1d1d3fafaabadb5935befe77cf1647729d61da3a33c04afb7eb34c996934989",
+        "000027-apply-profile-verification-0.json": "841a7ba3a396a035d89c1292192d1a304d1c9b8c921c114faa2c1a87aa0b8add",
+        "000004-check-boundary-0.json": "d0bd6bd4c40c754342e8d3c9f768900cebcde349e74948e93aa3b538dba2f243",
+        "000017-check-memory-0.json": "e4ccb7f2046b2d2b781afdb21499661f236f24ffe5582337f622f843e2fe98db",
+        "000011-check-runtime-0.json": "363716680805fed647ac5d46d417573f498b938aae4cef27d2de189bcf02cb20",
+        "000016-check-runtime-0.json": "2f8a826e139e2c836e0ab485c51c5a096a81efdc8cf44c98905667aa7966d57b",
+        "000018-check-epistemic-0.json": "d3256bf8a367ccb6440fd721d27c058f3177ac76e6cefb64a755da4d98915423",
+        "000032-assemble-0.json": "e34c73aea960303ac866ffe55a2b950fda5bfd7fc8ecd96c6ee52e57f05151fa",
+        "000020-check-reconciliation-0.json": "ebe52c379ace26951461f3727f60e4f1ea6460d0e0895775117e9e63aa4e8c8b",
+        "000029-check-synthesis-0.json": "d88517ad93d9b485bad614edfed10770096b8923f5ce3f8168a52c78846a1ed5",
+        "000023-apply-report-verification-1.json": "d93c5bb79742d6957467a95cc2aa90501816708394801a31cd7b90ff2de65a62",
+        "000023-apply-report-verification-2.json": "eb29a5621d828a1c4766b0c7289f2fa7cdfc67c819c50225123286d5faba1744",
+        "000023-apply-report-verification-4.json": "48cb8cfd9b389bf65bdefa2e81062b8fb9e51d1b267237c38139c56396cacb18",
+        "000006-check-runtime-0.json": "639ac534fed7d7666a9e2afb573bf2eed230b9b1fce4c8450be6c4b5579b5cc9",
+        "000010-check-memory-0.json": "9123960556b2e592324592ea8d976ad9c7a5bc3e0ce7cf65c3deefb6a165bd5f"
+      },
+      "versions-map-digest": "a838bfa45fa12792f341fa1df92e59bbe17266547d8f4afad76a51d77a54292c",
+      "sequence": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/state/AAS-2026-10-15-arex-skill-1871063034b5-01/state/seq",
+        "sha256": "19b8d5c59e421f037fe563007c7254eb8d98bc221b278c3db3e5fdbbfd52e273"
+      },
+      "budget": null,
+      "native-files": [
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/cli/run.py",
+          "sha256": "87595959caae676ef5150994589090be7bf4edbefd5b759e724c344e63619163"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/artifactrun/run.py",
+          "sha256": "45ec62ef68e55991096ddb4790eef6cb0d32c7e865ac54066a4eb14fb48365b6"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/artifactrun/engine.py",
+          "sha256": "eec3d74427e9c6e40e294484075907a21a8868f72acd914e9362dc69ea737e73"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/artifactrun/store.py",
+          "sha256": "440e90fa26a7fcbeb463d210d3bd49143de5693e5877b88189a308c987ebf27b"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/artifactrun/handlers.py",
+          "sha256": "8b428dd6560cd89aed9243fac1e64591b680871e410704b8cb2e571ecd3e3690"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/src/commonplace/lib/agentic_analysis/publication.py",
+          "sha256": "f0d1e068b2fabbea40494d72573494ee7ed9e2eb0a1dc9e58b1f3b1f85d5ed1c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md",
+          "sha256": "491fcdd9a319c1f2c37796025285ab600901fcaa9519de68fc498243b5d9785c"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/.venv/bin/commonplace-run",
+          "sha256": "5a325460925bfdb9d729f1162c22978eef5630bc2fd276560fd26577a0c2584a"
+        },
+        {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/.venv/bin/commonplace-analysis",
+          "sha256": "7a2c025cd84fefcec522d4f77c0ba51b5752362273ccac9c05174a153006998d"
+        }
+      ],
+      "opening-version": "79bf53762bd2d6a2c58b4daae9cb6532f0a459ef5381026b89b25550fab0c58e",
+      "source-version": "c40440f21606771e5992afeb84ba12748a285fc1eaa457690b76e5de56405e8e",
+      "source": {
+        "identity": "https://github.com/VectorSpaceLab/AREX-Skill",
+        "kind": "git",
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/related-systems/VectorSpaceLab--AREX-Skill",
+        "revision": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+        "sha256": null
+      },
+      "consumes-budget-floor": false,
+      "model-budgets": [
+        {
+          "job": "boundary",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "runtime",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "epistemic",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "workflow",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "reconciliation",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "report-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "memory-profile",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "profile-verification",
+          "retained-attempts": 1,
+          "max-attempts": 3,
+          "retired-by-reset": false
+        },
+        {
+          "job": "synthesis",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": false
+        },
+        {
+          "job": "synthesis-verification",
+          "retained-attempts": 1,
+          "max-attempts": 2,
+          "retired-by-reset": true
+        }
+      ]
+    }
+  ],
+  "policy": "Eight reset their verifier; AREX resets synthesis-verification and refuses installed synthesis; it may use only accepted records and must stop on uncontainable record conflicts. Never reset only an application job. Sequential one-shot future operator launch with --confirm-idle; stop on errors or budget exhaustion. No integration, automatic retry, source acquisition or method/state repair."
+}

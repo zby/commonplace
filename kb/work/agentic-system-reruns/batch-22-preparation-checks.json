@@ -1,0 +1,54 @@
+{
+  "status": "prepared-not-launched-method-alignment-pending",
+  "baseline-head": "f12f9a7467f4b01a5777bf8f65f109560b05e848",
+  "authority": "Create fresh-start batch; add Fragility Grid, ACE and Agent Skills without old-run/reservation reconciliation; clarify profile contract; add Secure LLM Wiki; commit preparation. No acquisition or run launch authorized.",
+  "plan": {
+    "path": "kb/work/agentic-system-reruns/batch-22.json",
+    "sha256": "b02582a2a460a39484e73d56a42f56c15bdfe53e9478cd68bf30b46b7da10e22",
+    "targets": 13,
+    "source-selection-gates": 3,
+    "known-git-inputs": 9,
+    "document-inputs": 1,
+    "method-revision": null,
+    "new-run-ids": 0,
+    "new-workspaces": 0
+  },
+  "checker": {
+    "path": "kb/work/agentic-system-reruns/bash-22.sh",
+    "sha256": "a084f206844d5f099324776779c5f129a27604ee2366230e56dbbaf00ab9800d",
+    "read-only-check": "passed thirteen exact identities, predecessor references and immutable bindings, protected held publications, proposed destination absence/disjointness, and canonical/root-file checkpoint",
+    "exceptions": "ACE and Agent Skills mutable old attempts, unfinished work and reservations are deliberately not admission gates for independently owned new lineages. This does not clear historical incidents or authorize old workspace takeover.",
+    "syntax-and-help": "passed",
+    "rejected-flags": ["--run", "--confirm-idle", "--confirm-all"],
+    "rejected-exit": 2,
+    "launch-mode": false,
+    "limits": "Metadata and path checks do not establish source suitability or writer-idle clearance. No live acquisition or full new-run execution was tested."
+  },
+  "contract": {
+    "path": "kb/agentic-system-analyses/types/agentic-system-memory-profile.md",
+    "sha256": "714534aebc125e81735dddbcf082cf9759b5c4e093984ebd3720ad96cf8606c7",
+    "adopted-rule": "A warranted known local trace-learning no counts as classified coverage. With an unresolved included alternative the axis is partial; incomplete coverage must not yield system-wide no. Preserve local evidence and require a separate unresolved unit.",
+    "validator-and-tests-aligned": false,
+    "release-gate": "profile-contract-validator-alignment",
+    "frozen-methods-modified": false
+  },
+  "verification": {
+    "combined-command": "uv run pytest tests/commonplace/general tests/commonplace/docs tests/commonplace/validation tests/commonplace/comparison tests/commonplace/agentic_analysis tests/commonplace/artifactrun -m ''",
+    "combined-passed": 1304,
+    "combined-duration-seconds": 254.84,
+    "final-docs-analysis-command": "uv run pytest tests/commonplace/docs tests/commonplace/agentic_analysis -m ''",
+    "final-docs-analysis-passed": 599,
+    "final-docs-analysis-duration-seconds": 159.81,
+    "complete-repository-suite": false,
+    "standalone-docs-limitation": "An extra docs-only run had 82 passes and one failure: test_site_current_list_matches_comparison_population imports analysis fixtures after tmp_library redirects library_root; module-level analysis_layout then cannot find temporary agentic-system-analysis-set.md. The test and fixture code are unchanged. Combined docs/analysis collection passes. No unrelated fixture fix or assertion weakening was performed.",
+    "semantic-limit": "Passing current comparison tests confirms the existing code behavior; it does not establish alignment with the newly clarified contract. Conflicting expectations remain pending maintenance.",
+    "lint": "uv run ruff check tests/commonplace/artifactrun/test_feedback_reentry.py passed",
+    "markdown": "Changed contract and planning/navigation Markdown passed commonplace-validate with zero failures/warnings; earlier new preparation reports and feedback texts were also validated",
+    "whitespace": "git diff --check passed",
+    "batch-21-feedback-checker": "passed nine original frozen correction bindings; no native transition"
+  },
+  "evidence-directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21-correction-preparation/",
+  "evidence-logs": ["contract-clarification-tests.txt", "contract-docs-analysis-final.txt"],
+  "preservation": "182 canonical sets / 2366 members and retained root files unchanged. Old runs, refusals, publications and incident records retained. Nine batch-21 corrections remain separate, DualGraph/Fintool deferred, Agentic Harness Engineering separately gated. Inventory completion counts unchanged.",
+  "commit-scope": "Contract clarification, nine-case correction preparation and mechanism reports, thirteen-case fresh-start preparation and source/ownership decisions, Secure LLM Wiki investigation, navigation and disposable feedback regression tests. No validator implementation, schema change, old-run repair, source acquisition, exclusion, publication, integration or push."
+}

@@ -61,35 +61,51 @@ value. One wired witness never upgrades an opaque or claimed alternative.
 Assessment is `known`, `partial`, `absent`, `inapplicable`, `uninspected`, or
 `not-determinable`, describing coverage independently of evidence strength.
 At unit level, `known` means complete classification within its named scope;
-`partial` retains positive findings and names unresolved included parts,
+`partial` retains classified findings and names unresolved included parts,
 missing facts and prevented conclusions. Several findings share a unit only
 when their scope and coverage agree. `not-determinable` means inspection
 established no controlled value; `uninspected` names an included part not
-inspected. Neither means absence. These two states, `absent` and
-`inapplicable` have no positive findings. `absent` needs bounded absence
-records; `inapplicable` needs the relevant boundary and reason.
+inspected. Neither means absence. Units assessed `not-determinable`,
+`uninspected`, `absent` or `inapplicable` have no findings.
+`absent` needs bounded absence records;
+`inapplicable` needs the relevant boundary and reason. A local trace-learning
+`"no"` requires a `known` unit and an evidenced-absence record covering that
+unit's scope. An unresolved alternative belongs in a separate unit, not in a
+partially classified unit carrying `"no"`.
 
 Axis assessment covers the explicitly named inventory, not a separately
 authored complete-value assertion. `known` needs all included units resolved
 and accepted records supporting inventory coverage of the scoped boundary.
-`partial`
-needs positives plus unresolved coverage; without positives, unresolved
-inspection remains `uninspected` or `not-determinable`. Axis `absent` and
-`inapplicable` need their own bounded warrants. An inventory containing only
-inapplicable units uses axis `inapplicable`, not `known`; it is not evidenced
-absence. Every assessment and finding
-has an explanatory note and references canonical accepted records, resolved
-through reconciliation. Unresolved included units cannot be dropped to obtain
-`known`; scope excludes no opaque alternative merely because another is known.
+`partial` requires at least one supported controlled finding and unresolved
+included coverage. A warranted local trace-learning `"no"` counts as classified
+coverage, just as `"yes"` does; it does not assert that learning exists. An
+inventory with a known local `"no"` and an unresolved alternative therefore has
+axis assessment `partial`, not `uninspected` or `not-determinable`. Those latter
+axis assessments apply to unresolved inventories with no controlled findings.
+Axis `absent` and `inapplicable` need their own bounded warrants. An inventory
+containing only inapplicable units uses axis `inapplicable`, not `known`; it is
+not evidenced absence. Every assessment and finding has an explanatory note
+and references canonical accepted records, resolved through reconciliation.
+Unresolved included units cannot be dropped to obtain `known`; scope excludes
+no opaque alternative merely because another is known.
 
-Derived system unions retain every supported positive finding and its local
-warrant. Compatibility projections may derive strongest existence evidence
-per value but must retain unit data, revision and coverage. Complete-value
-statistics need complete coverage and strong evidence for every positive unit
-finding, not merely a strong witness per value. A local trace-learning `"no"`
-is bounded absence in that unit, not a system-wide negative in a partial axis.
-A positive `"yes"` suppresses `"no"` only in the derived system union, never
-in local evidence. Quote both in YAML.
+Derived system unions retain supported findings and their local warrants,
+subject to the trace-learning negative rule below. Compatibility projections
+may derive strongest existence evidence per value but must retain unit data,
+revision and coverage. Complete-value statistics need complete coverage and
+strong evidence for every finding, not merely a strong witness per value.
+
+A local trace-learning `"no"` is bounded absence in that unit. It appears in the
+derived system union only when the entire learning inventory is `known` and
+no `"yes"` finding exists. Incomplete coverage suppresses system-wide `"no"`,
+even when local negatives count toward partial classification. A `"yes"`
+finding also suppresses `"no"` in the derived system union. Neither suppression
+removes local evidence. Quote both values in YAML.
+
+For example, a known `"no"` unit plus a `not-determinable` unit has partial
+coverage and no system-wide learning value; a known `"yes"` unit plus an
+unresolved unit has partial coverage and a supported system `"yes"`. Neither
+inventory supports a complete-value conclusion.
 
 The scope agrees across the profile, the declared and annotated records
 and the members' prose. Every value the prose supports appears in the

@@ -5,6 +5,10 @@ All seven qualified batch-20 publications were [integrated](./batches-19-20-inte
 
 [Batch 21](./batch-21.md) is prepared for **all 25 remaining targets**: nine bounded repair proposals, eight source/boundary/refusal decisions and eight ownership/operational decisions. It is **not launched and not an ordinary fresh-run batch**. Its [script](./bash-21.sh) is a read-only checker with no launch mode; unresolved gates are not silently waived.
 
+The operator then authorized preparation of [nine audit-assisted correction attempts](./batch-21-corrections/README.md) and [concrete recommendations for the other sixteen](./batch-21-decisions.md). Preparation itself neither launched work nor adopted recommendations; subsequent operator decisions are below. The separate correction launcher requires later execution authority; the original batch-21 checker remains read only. Existing holds and inventory counts are unchanged.
+
+[Batch 22](./batch-22.md) now prepares **thirteen** fresh starts: three source-reselection cases, six incident replacements, Fragility Grid, ACE, Agent Skills for Context Engineering and Secure LLM Wiki. The operator does not require reconciliation of the old unfinished run/reservation before separately owned new lineages; old workspaces and incident evidence remain untouched. It is not launched; its [checker](./bash-22.sh) is read only. DualGraph and Fintool are deferred. Secure LLM Wiki's [read-only investigation](./secure-llm-wiki-profile-conflict.md) led to a clarified profile contract; validator/test alignment remains a method-release gate, not a completed fix. No new run has launched. Agentic Harness Engineering is the remaining separately gated case.
+
 The historical fixed 169-publication sweep and [reviewed results](./publication-audit-current-results.md) remain unchanged as evidence. Dated batch sections retain their historical scope and then-current status; they are not fresh launch authority.
 
 ## Commission and current approach

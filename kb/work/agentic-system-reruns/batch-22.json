@@ -1,0 +1,1416 @@
+{
+  "status": "prepared-not-launched",
+  "execution-authorized": false,
+  "commission": "Operator requested another batch restarting source selection/acquisition and analysis for three source-reselection cases and six fresh isolated replacement cases; create batch only, preserve old incident holds. DualGraph and Fintool are separately deferred. Operator then added Fragility Grid as a full source-first restart, and ACE plus Agent Skills for Context Engineering as new isolated lineages without requiring reconciliation of unfinished old runs or reservations. No old workspace takeover or incident clearance. Operator clarified the profile coverage contract, added Secure LLM Wiki as the thirteenth fresh-start case, and authorized committing preparation; validator/test implementation alignment remains pending and no run launch is authorized.",
+  "method-revision": null,
+  "method-policy": "select committed method and validate startup/command bindings at separately authorized release",
+  "worker-profile": "pi-sol",
+  "coordinator-model": "openai/gpt-6.1-sol",
+  "effort": "medium",
+  "base-inventory": {
+    "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21.json",
+    "sha256": "64f92ef8d63ba04d40e32c15519ee40fa379238c0cc25c88cd31815813607aeb"
+  },
+  "bindings": [
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-22.md",
+      "sha256": "1276c94a1a2e80d770bb4ad6a6eb509fc570a4d09fcb2a2e0d95bbabefd6a18c"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/bash-22.sh",
+      "sha256": "a084f206844d5f099324776779c5f129a27604ee2366230e56dbbaf00ab9800d"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-source-decisions.md",
+      "sha256": "7bc9354add97954796fedac3ea18959525e9793630e9662204f7acaed768af2c"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-21-ownership-decisions.md",
+      "sha256": "a907374ac4d154b91740e61a9ce2ab1ce36df6c395d075f872561020f3ae7316"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batches-19-20-integration.json",
+      "sha256": "72034af62ab647997c5c6d63d1363201ac4c505432de0dc72b97691599955926"
+    },
+    {
+      "path": "/home/zby/llm/commonplace/kb/agentic-system-analyses/types/agentic-system-memory-profile.md",
+      "sha256": "714534aebc125e81735dddbcf082cf9759b5c4e093984ebd3720ad96cf8606c7"
+    }
+  ],
+  "canonical": {
+    "sets": 182,
+    "members": 2366,
+    "map-digest": "d2dd28dc3418850ac83bd64479dc3719b94899898226644e4a42438fd115b0a7",
+    "root-files": {
+      ".gitignore": "91f5ff96d390560ac9286e67deab457ca5ad2763cba2a5803a386cc003a10070"
+    }
+  },
+  "rows": [
+    {
+      "key": "awesome-agent-memory",
+      "name": "Awesome Agent Memory",
+      "route": "source-selection-first",
+      "initial-source": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+      "selected-source": null,
+      "new-source-kind": "implementation-selection",
+      "fresh-acquisition-required": true,
+      "revision-policy": "resolve implementation identity/boundary and pin before operational analysis",
+      "previous-source": {
+        "identity": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/related-systems/TeleAI-UAGI--Awesome-Agent-Memory",
+        "revision": "932248b4520a5cc3222e633e1b3de97b40a5ffd1",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/kb/agentic-system-analyses/state/AAS-2026-10-13-awesome-agent-memory-ad0b4035706a-01/state/versions/bcf9d9b33d3983d98792f6b5285b3c0097104e812348e5c38026ca833689b7be",
+        "sha256": "bcf9d9b33d3983d98792f6b5285b3c0097104e812348e5c38026ca833689b7be"
+      },
+      "predecessor": {
+        "key": "awesome-agent-memory",
+        "name": "Awesome Agent Memory",
+        "inventory-status": "pending",
+        "gate": "source-boundary-refusal",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+        "run-id": "AAS-2026-10-13-awesome-agent-memory-ad0b4035706a-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/kb/agentic-system-analyses/state/AAS-2026-10-13-awesome-agent-memory-ad0b4035706a-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/.venv/bin",
+        "method-revision": "4266dabc470929df0ff753e57fee0c55d7b87fc6",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/kb/agentic-system-analyses/state/AAS-2026-10-13-awesome-agent-memory-ad0b4035706a-01/run.json",
+          "sha256": "6045b89db6e73d21ccfad585d2670ac9e53dc56d4bca3a4219a250da706cb46f"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a.preparation.json",
+          "sha256": "5aa31c923033d92b7a6d72243ee2bb0ceeef2884caaab16d92a11773f3508840"
+        },
+        "attempts-map": {
+          "000001-opening.json": "f298ff2a80b271685e6272489320ca52a81497c98a3415fae1d1fecb7cccc8cd",
+          "000002-acquire.json": "ce513cc11389f8c56c0c8c57cd8dd531185e004d4c3f560b8389cbcbd41903cd",
+          "000003-boundary.json": "f7e12975adbd67ead8c61a877610e372ef885cda0f3774588d33fc37234959e1",
+          "000004-check-boundary.json": "e1d51be4ac7daa774268f9b6d87786d409d2fa4c1b3abc2946a2efeb84f92a12",
+          "000005-assemble.json": "f38a8b2d38143be14d950ad934b3448a11c69dff3f6d3831e44a984dffc88d2a",
+          "000006-publish.json": "f5ecb030cbab161cba3ee7551f28dbaa0d3fabea8625caebf0092064f4bcc256"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Completed local out-of-scope result, not transport failure.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicitly decide whether and under what changed scope to reopen the local disposition.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-18.md",
+            "sha256": "a151e5b01367931e57f32d8cf2d171a8684506ed0ab1c21429b33114ac2afd85"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/finished-batch-residue-2026-10-15.md",
+            "sha256": "bac32732b37c6f94fd19428da397b4ca33c2c4385b219c562051d3f141913ef9"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "letta",
+      "name": "Letta",
+      "route": "source-selection-first",
+      "initial-source": "https://github.com/letta-ai/letta",
+      "selected-source": null,
+      "new-source-kind": "implementation-selection",
+      "fresh-acquisition-required": true,
+      "revision-policy": "resolve implementation identity/boundary and pin before operational analysis",
+      "previous-source": {
+        "identity": "https://github.com/letta-ai/letta",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/related-systems/letta-ai--letta",
+        "revision": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/kb/agentic-system-analyses/state/AAS-2026-10-11-letta-d460b458ddad-01/state/versions/5fdd98b519a0019291cd0902214dbe8f86afb730cf7d584330127d8d180b70a1",
+        "sha256": "5fdd98b519a0019291cd0902214dbe8f86afb730cf7d584330127d8d180b70a1"
+      },
+      "predecessor": {
+        "key": "letta",
+        "name": "Letta",
+        "inventory-status": "pending",
+        "gate": "source-boundary-refusal",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/letta-ai/letta",
+        "run-id": "AAS-2026-10-11-letta-d460b458ddad-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/kb/agentic-system-analyses/state/AAS-2026-10-11-letta-d460b458ddad-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/.venv/bin",
+        "method-revision": "6ff7c828e94dd66abdf5af00c89db6420bc6a1ad",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/kb/agentic-system-analyses/state/AAS-2026-10-11-letta-d460b458ddad-01/run.json",
+          "sha256": "de8c44e1400ed233f8d3e13a843ed42dfeeb795c82969720c10ac86e75e370ef"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad.preparation.json",
+          "sha256": "11e36ba9382e0da70f89faff10d0f291700e2dd26166c5dc1f03e4c42959ea21"
+        },
+        "attempts-map": {
+          "000001-opening.json": "3c323ce47f925e4b576a34e484c66335bdf6b5c520722ec2f8321aa2d0294af2",
+          "000002-acquire.json": "680c61c0d6c0b43133ac4d304da699b49b82149b3a5567793e0aac489bbdf0c6",
+          "000003-boundary.json": "e4f15f5ebf9931ed42c61d69f182507ac58fd48a46ca015bc98c8f5af22caad4",
+          "000004-check-boundary.json": "f5fb47f534ced63826ce9a1d17c8878d3b9e1448aa77ec238720f704d0ad356f",
+          "000005-assemble.json": "3466fb2507b5d53b040d80040128c5b4f8061eb29d5a5c51791ede13abadc290",
+          "000006-publish.json": "ce1aab1c700e48e633b8bc4a253db33fa957efec581c64367062d3c1cdce5836"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Frozen revision is a landing page without agent implementation; retired server is on archive branch and README redirects to Letta Code.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Choose source/boundary disposition explicitly; do not substitute archive branch or already-integrated Letta Code.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-18.md",
+            "sha256": "a151e5b01367931e57f32d8cf2d171a8684506ed0ab1c21429b33114ac2afd85"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/finished-batch-residue-2026-10-15.md",
+            "sha256": "bac32732b37c6f94fd19428da397b4ca33c2c4385b219c562051d3f141913ef9"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "operational-ontology-framework",
+      "name": "Operational Ontology Framework",
+      "route": "source-selection-first",
+      "initial-source": "https://github.com/fstech-digital/operational-ontology-framework",
+      "selected-source": null,
+      "new-source-kind": "implementation-selection",
+      "fresh-acquisition-required": true,
+      "revision-policy": "resolve implementation identity/boundary and pin before operational analysis",
+      "previous-source": {
+        "identity": "https://github.com/fstech-digital/operational-ontology-framework",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/related-systems/fstech-digital--operational-ontology-framework",
+        "revision": "3df5d896da2a1e488e1eb325feddf190ad77990d",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/kb/agentic-system-analyses/state/AAS-2026-10-14-operational-ontology-framework-c5cd99471671-01/state/versions/6d80e86d116ba0aebb2d736b8500b0fb8f41b7a4f2f8ead9f330c320ac1e2207",
+        "sha256": "6d80e86d116ba0aebb2d736b8500b0fb8f41b7a4f2f8ead9f330c320ac1e2207"
+      },
+      "predecessor": {
+        "key": "operational-ontology-framework",
+        "name": "Operational Ontology Framework",
+        "inventory-status": "pending",
+        "gate": "source-boundary-refusal",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/fstech-digital/operational-ontology-framework",
+        "run-id": "AAS-2026-10-14-operational-ontology-framework-c5cd99471671-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/kb/agentic-system-analyses/state/AAS-2026-10-14-operational-ontology-framework-c5cd99471671-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/.venv/bin",
+        "method-revision": "d72d0ff43659e0cad5527969e41f79ffa7ab04e5",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/kb/agentic-system-analyses/state/AAS-2026-10-14-operational-ontology-framework-c5cd99471671-01/run.json",
+          "sha256": "2d84423b257233535e502da549161eede8211c1b5b6f2af122f0b12ccd27dfd2"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671.preparation.json",
+          "sha256": "dcb1b6c9f3c8576c5f35a760e507b64b0ba14718e5d29a90d149f83717713077"
+        },
+        "attempts-map": {
+          "000001-opening.json": "979cc3c11b82e9a83f658ec97bb1f2f99b1c6cccce52b588ca7a9eb6a3575163",
+          "000002-acquire.json": "66c09fc3fe5f732b770e0734e0b735be722f53fbad2e23b1b0ed7f963dd86c62",
+          "000003-boundary.json": "09adcd2f03989e981eb3db5c95937da9f9c169847b487517efd6a991ff3b1f37",
+          "000004-check-boundary.json": "10ed90898bc2efbfc8618d62a224dcee9bc54cdafb8bdb2111ffdf4dba5c1dfe",
+          "000005-assemble.json": "a2896b52664c6d7979bbfe856aa824ec242bcb62abc850f268854d3677dfbc4f",
+          "000006-publish.json": "6587d990cbd78c210f78e1cc5d6a2e8b968ddc3ecc5999c8741aeeebe53ae988"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Completed local out-of-scope result, not process failure.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicitly decide whether and under what changed scope to reopen disposition.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-18.md",
+            "sha256": "a151e5b01367931e57f32d8cf2d171a8684506ed0ab1c21429b33114ac2afd85"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/finished-batch-residue-2026-10-15.md",
+            "sha256": "bac32732b37c6f94fd19428da397b4ca33c2c4385b219c562051d3f141913ef9"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "ai-context-os",
+      "name": "AI-Context-OS",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/alexdcd/AI-Context-OS",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/alexdcd/AI-Context-OS",
+        "kind": "git",
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/related-systems/alexdcd--AI-Context-OS",
+        "revision": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01/state/versions/aeb8c9d1e4232e3ad3ef1615b34294dd71e7e45a98da15c9c56d58f63e19868b",
+        "sha256": "aeb8c9d1e4232e3ad3ef1615b34294dd71e7e45a98da15c9c56d58f63e19868b"
+      },
+      "predecessor": {
+        "key": "ai-context-os",
+        "name": "AI-Context-OS",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/alexdcd/AI-Context-OS",
+        "run-id": "AAS-2026-10-15-ai-context-os-4a0e34822f96-01",
+        "worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os",
+        "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01",
+        "command-prefix": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/.venv/bin",
+        "method-revision": "26c5bf9df8ca39166fd6bdc39476689dad437cb5",
+        "run-definition": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01/run.json",
+          "sha256": "5c4e791ceff1430dc6e9273c08fe41301433054139f50ea36d7fe59766cac9a3"
+        },
+        "preparation": {
+          "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os.preparation.json",
+          "sha256": "060f7d3068f9cc4c3e7c70e356820ce3966be97cbe2bc152a28f1d45d59c8843"
+        },
+        "attempts-map": {
+          "000001-opening.json": "ce9a6f1fc7848f49450d22eea4ff30011e62a1e5e0339f8808b9f4fb4fe5e172",
+          "000002-acquire.json": "c41fe6903dd5a6db5cdbc1e73ef3526a923271d46d0e4e3d6bd88bd54f5c49cf",
+          "000003-boundary.json": "92a575ba91b81b133f92d0ade307f7e336b410a1fdb0fbe1197f757bc1d4bfaf",
+          "000004-check-boundary.json": "a02bbc3528ec51e179f968341e0949180d8364740cefd7c4a44610e1de31b4da",
+          "000005-runtime.json": "fa3242541d0f2d63e61f93c811e804de54ea83b3c9f77f07604b9a44cbbe62e0",
+          "000006-check-runtime.json": "93f510f0ba18b7c4bd3562a0e66820643dc7c6e95d43f033c6d04be83b06ea6c",
+          "000007-memory.json": "c68d45b6819b8b91a743c98becf5f461e3debd55f44f60b153096f684b6e4387",
+          "000008-epistemic.json": "50291cb3c185272362326facb0160b818bf3c211a66f5c6670506a9a269b92e3",
+          "000009-workflow.json": "6e6e59bd39b875a1e1ad2a19ba9339e9a660e155c18266a2b1a0e57436411e1b",
+          "000010-check-memory.json": "6fe67b3e9245438512f108fdae9c6de7509f79de649a30810ff5c718d715c696",
+          "000011-check-runtime.json": "d0d75e5f9a0082aeadfa0c0f5d9fbf33284376c605c9adb884b89edd2a1bf32a",
+          "000012-check-epistemic.json": "76e9c4e1efdac826375808ee3741a3c1f00f92b1bcfa5d0c3950e56ddd767934",
+          "000013-check-runtime.json": "3279505feba5e8b36a6fa08d9f5a7612ea94dc6ce5796ab9d422e0d41bd05787",
+          "000014-check-memory.json": "c53c37879777528ca95bee1ec43e14fc74c08f4144b9e134ea4ee2ac2a73d183",
+          "000015-check-workflow.json": "ecbafb28c59c5ac9faf672b1efd926a0b56a59106f5492b8f01f583ac627bf23",
+          "000016-check-runtime.json": "1690d1dde45f47578310bc426fe8eb454607fd29c3ff3452194d7ad342dc884e",
+          "000017-check-memory.json": "fe9675acf95a27872648281762f72d3d15fb139f9c32dfac957c2d5813ed8782",
+          "000018-check-epistemic.json": "3fdc41e9c8bb813a2153cbe1021c7dbbb7a15269b337c86e128b72c60375b932",
+          "000019-reconciliation.json": "960f89bd12b167a42f7172e2db8fd668c7d2595e2ebc95563417eef4f4fd4e4f",
+          "000020-check-reconciliation.json": "b87411f69d1405a1b505d43aee22aeb6f86be557b829dde2673552a0c97e03da",
+          "000021-report-check.json": "f30035e218d1ff81f5902551a125065608bde08d4fec63bb9130e61072e4cc75",
+          "000022-report-verification.json": "8855a25830a5485be3cacba5f2ebec370c068d26179fcaf2b6b8b1293ff002ba",
+          "000023-apply-report-verification.json": "b0f88e007c7a1fc3aebd9446b4e4c1190ba50917ea10aa82b26b452c0b546ecd",
+          "000024-epistemic.json": "c387f02494565a034af96b478868053d6bb89a1e3561cf77ab58bed7f4c6c9ee",
+          "000025-check-epistemic.json": "027e6e4e3a765aeecd3c3423678bc09079348bc3f4f7116a2dae1c5671f3c64b",
+          "000026-check-runtime.json": "3ce952ea10c7b2af9aa4462739f9710b3f201f5059bad9791292ec0b31c80de8",
+          "000027-check-memory.json": "ce27159b9d9ceab5a0f48192f7f5fa1433369eb560a0bcd6a2f1d359843c9e42",
+          "000028-check-workflow.json": "9a5d906a6332be910b9f88521f526cb6482384fabfe18f53a49a2cca97c950eb",
+          "000029-reconciliation.json": "d9bd69b1b85fd57601837f9d2e8e546b7e995cc0414327fa942479e2d15c435d",
+          "000030-check-reconciliation.json": "0a40274316cb2732a99f6987705d1053002d71b9bc843667e7a7df033e9518e6",
+          "000031-report-check.json": "f7c335445bed250ea0c43bca2f65d059dc62c72de8a0c8e288c0383d56144e3a",
+          "000032-report-verification.json": "2aa87eea4d5241cbecedbdcb685d5025d5bae1cbffc488e3dbe43aca876cfa76",
+          "000033-apply-report-verification.json": "e33231bbfe89d5432cbb34b87caf19c85d2a9bd3bcc62a3e246cac885c1131db",
+          "000034-memory-profile.json": "a2bace3353a8ce1dbf174bf95a58dc2aba580ed71ce38b38ed12b64cdc944295",
+          "000035-check-memory-profile.json": "a02eb46b37cb97d32a5b03914579d1d4d150ea1f47b741b434f618a3bc7a7883",
+          "000036-profile-verification.json": "96cd243c6508d03e37898273c0986ef79885dca6a6238803fec607d53e071f00",
+          "000037-apply-profile-verification.json": "cdb75479c0da568c338c422f8952ede615fd7d5e3425097f8c59785402bca908",
+          "000038-synthesis.json": "588b25def1e4742ec43f99d9b24c057d574590541b8b40a7ec7143b9855adb14",
+          "000039-check-synthesis.json": "eff4e60e01a62aa35cf45a87ae9d9d642dfc32c87e2e91a74e8d885d1acf686d",
+          "000040-synthesis-verification.json": "d91b89ee48071307a79145bda09b2742d507189430c543c2d1d1b9d118e73b66",
+          "000041-apply-synthesis-verification.json": "71af1b626686ab8d34df9e95381ce71c197c8947e4a22cc253afa02f3f91819e",
+          "000042-assemble.json": "aa03e107bf394b28af7882626df520afe25527bb7255d977ed033db4df94b141",
+          "000043-publish.json": "11f3ae6ff8cc50b9a69a3b7ad325adfbbd9b78172b32e464df26afe3f934ed4a"
+        },
+        "own-publication": {
+          "directory": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/retained/ai-context-os",
+          "members": {
+            "ARTIFACT.yaml": "3d2e63cc3b3cb831f11857e3ec48564008af21fc625be7863af0477e7abdb9ef",
+            "boundary.md": "bbf881fc0c191a927c65e7352a9095930d6c4ceaafe557d95096d0f43b905a49",
+            "epistemic.md": "7ae7a6a0068aa328d76cf293599cbc88ea5fc38943da4a97ca65e20042442a37",
+            "memory-profile.md": "8a95b480dc084146ce217512b1fa3921b911abc71fa4e6174be91623842b8d5e",
+            "memory.md": "6160aa5c50e3d62e75d7a580e2e3d174c6da7f79a7cca756b72deb1bd0a6ec7c",
+            "overview.md": "ebabfcae1e41047ebceaaa37ba32275e02c043b9d84eb3ecbb09cfea698328bc",
+            "profile-verification.md": "f992dbfb31639c5151131bfde3df0a04d1060dbd80f3a4b2e692e4f790473ca9",
+            "reconciliation.md": "62bdcbd2bc2bbbf74e4950866f5ddcf8cff24f9552b6b6280103ff31f1ed8ee0",
+            "report-verification.md": "c28a4e728cb5391292f1a458184989bc1de8565e8e2aeed7fbd07c1da577729a",
+            "runtime.md": "18d20dafdf48da17342360081cf465339e62034705d6f04358d60e3c5e9239f6",
+            "synthesis-verification.md": "682d0ccd6351b47c2dfeec2ae016dfd7f2490fcb16c3df8ea6276d72600e10a1",
+            "synthesis.md": "cf34c84b5b9622a23fff79c504b30ba75af23095570dd605118f8f2d47c8ec89",
+            "workflow.md": "7d8252f3f5e3fcd08b7eed634c7f7fd5de6ac29cd5dfee112e58187002aa1476"
+          },
+          "effect": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01/effects/publish.json",
+            "exists": true,
+            "sha256": "330ef8b0ad79fab507ab85c08b274e60baba1e526fc768556767e329ee7e4501"
+          },
+          "manifest": {
+            "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/retained/ai-context-os/ARTIFACT.yaml",
+            "sha256": "3d2e63cc3b3cb831f11857e3ec48564008af21fc625be7863af0477e7abdb9ef"
+          }
+        },
+        "current-fault-or-stop": "Synthesis worker wrote outside worktree, moved output and attempted ancestor cleanup; prior contents and collateral effects unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit operational/collateral disposition; old provider failure is not current stop and content reset cannot clear it.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/reset-and-rework.md",
+            "sha256": "afd12fedfc34129309d07deef110b9748120dd5bcfcdf28ebb1dc46c4a4cad88"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/depth/batch-19-operational.md",
+            "sha256": "80a1e2c246ad6e275ae814e30a7e8c6c20334f7f9f6388e2d48645942a9b8c2f"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "nams",
+      "name": "Neo4j Agent Memory Service (NAMS)",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://neo4j.com/blog/genai/from-agent-memory-to-portable-skills",
+      "selected-source": null,
+      "new-source-kind": "document",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh document capture with exact bytes/hash",
+      "previous-source": null,
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01/state/versions/38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+        "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed"
+      },
+      "predecessor": {
+        "key": "nams",
+        "name": "Neo4j Agent Memory Service (NAMS)",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://neo4j.com/blog/genai/from-agent-memory-to-portable-skills",
+        "run-id": "AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/.venv/bin",
+        "method-revision": "8414ddbd35da24645c020789bd824cb9749fa677",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01/run.json",
+          "sha256": "bedb7c5af5a20517ae5e0b3a94070e1117f17266e3ec66cfdc3b54ad084875fd"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0.preparation.json",
+          "sha256": "d8b187781efe3cd74a4611abb27b21daa1bdd0fa0b522824d8df1d20896e9306"
+        },
+        "attempts-map": {
+          "000001-opening.json": "3b72c587fee474323d2e221d252cf81cfd9e85ca202bdb7f70cc900c57eee2d6",
+          "000002-acquire.json": "2a8a0bb1f55fb037995e66b0d5f0ecb01dde8cf72bb4c704c8360d24fca672ed",
+          "000003-boundary.json": "4b3265a1fd6a847abacf300523c5475feccd2b7b0145a0da590d6a9fc3845699",
+          "000004-check-boundary.json": "21820f7f70fe2c2201157f89e46cba1d071cb265fb4fe8ae32947d5714117e41",
+          "000005-runtime.json": "4cadc6a4428274a98f810a95fce4d46b64726b903373f3d76edca41b1047d23c",
+          "000006-check-runtime.json": "25448f14da5ff1efa994091727a36ba1443d4387fc1cc2f9d8cd7423889c0fd5",
+          "000007-memory.json": "e9a9c06c1561f1e3aa2ebe1cb17ec3926e56884c0cbd435f087ac6434e452179",
+          "000008-epistemic.json": "403228aec8c060814bc0757cbcbcbf6cc1a22e7e3d3ff7852f703e7222cdc147",
+          "000009-workflow.json": "5b49af8ae7f8b274063fb426cb16e5575ef6a896e05ec86b193b4d1303bb3822",
+          "000010-check-memory.json": "7a3d5a6bc4ae0a08e638f56ce4eb16691b54079127744d3841dbd78fb38a3cce",
+          "000011-check-runtime.json": "105947c542069bba0268c5b1be3c7ca864f5e750665ffea672b3c33920b836a2",
+          "000012-check-epistemic.json": "80beda0f496dbb94f125248d77f423008756c9f981f8bd2a4cb92d007195c1ac",
+          "000013-check-runtime.json": "6fb9221acec80a01193829f9947c3c90ddca43378754881d2c41df668c499a92",
+          "000014-check-memory.json": "a3b5ba4272b4116e52de27775079e2ff6f7e88fbe608dfa479a32dc71bc86bbb",
+          "000015-check-workflow.json": "e7101a98b8e2805d5363fd3ca6de381b0226b8e91294a7d140455b56c107618c",
+          "000016-check-runtime.json": "3f4ac845cb2113c9cfa0fbbf4e264ba040a0f223a36acfc5fe2c0bbdc01ec3fc",
+          "000017-check-memory.json": "19e0590e1f3b0250ba3d3328ff8954fc74152b3aab648f8bc817d3cef01ff96c",
+          "000018-check-epistemic.json": "55984721e742a7e348b17793da7de708546aaa35ec5b0023b2843aa91127217f",
+          "000019-reconciliation.json": "e19b96048396b6fb53013b71b8a73f987c2e8a0f4a50c564b724ac681ef2f221",
+          "000020-check-reconciliation.json": "4333468268ce87f304fe25e0fd16ac3392c8f2645b1caeda0f81f6e2d86a8dfd",
+          "000021-report-check.json": "3e64324c6c651df9e0c0c6207449e4fbe64977b294be9c3212f704655720b398",
+          "000022-report-verification.json": "9949bdbcfb89c881d0f6bd3493f4231b594213c35808644845baa0a16751b29c",
+          "000023-apply-report-verification.json": "63f18116403f54072af499b0870d2378a3f9a5a0019243bfca1266f176b2da0c",
+          "000024-memory-profile.json": "22ca461ff535a090b9f8b16bb8a3ed8581971eed15db9ed1d1a29e66bb88008f",
+          "000025-check-memory-profile.json": "dd682a62ccdbb8c0d031ad74db6042ed2d74155fb7ddde5ed7b38f5d4ad94fdd",
+          "000026-profile-verification.json": "8c2688385379adb2f6ea9e506f270765bbed5a2e4a6dc30974b832367775d8ad",
+          "000027-apply-profile-verification.json": "c6fbee7f7b229719f7ff55f3506e6e40693d6e875b59f583b61b2a59d552910b",
+          "000028-synthesis.json": "a7fb118e0cbd99b5e61c593ba9efd48be0eca1954f787f6d88b19e376885edc0",
+          "000029-check-synthesis.json": "89d0a1f12e564183b656938bf537184a62572f51f1fae86e194ed4dcaf5899ed",
+          "000030-synthesis-verification.json": "547392ecce1bcac5657ab0ff048bc63e4af5e196db54827bde24774cffd68836",
+          "000031-apply-synthesis-verification.json": "ba301038a059c027423554a68f8b3a2a54b152a961fa7e7512e6cae0f32c6007",
+          "000032-assemble.json": "db9eedd40e6d56096759283255e4032eb660949268d5951ffc51c636f4ff9a7b",
+          "000033-publish.json": "1fe027afa2cc4cf413ac64c9b183e5fb30d8d07a9a67955e3e19a30c14a77079"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/retained/from-agent-memory-to-portable-skills",
+          "members": {
+            "ARTIFACT.yaml": "998c68e8beb540814877877ee41fec3b494d68e36c21c263a639c94c4d9cc8a2",
+            "boundary.md": "d9cc406fcb0a2e3921e74977db3657d6d98b4d4e87a4ff7025879a1219a1a232",
+            "epistemic.md": "5ebf55f6adee20d516a96fcce93bd995422614cdcb2eac3808a4ab7e75495c27",
+            "memory-profile.md": "0c231fcc65adef7fe6ff7c871f05af112272b9daa58d833f25c6d4ad8922c90a",
+            "memory.md": "c7323022964723c4a30adc4b10a7692257f82d16c4b0d3f108ab69a304efa05a",
+            "overview.md": "0bc941bd413fa8bb41659782136d34f13e1458fe17b77f2187f156bf017de1ca",
+            "profile-verification.md": "e32dfad9750244a3f34065c6e8b53ef2f5742b7cdf36320b78fefa77cd6a2379",
+            "reconciliation.md": "a7b8d42afe133f38a827c787c1af53e6ba061ef624e78dfbec7a40e6e2a32919",
+            "report-verification.md": "910b0d725963d2d7e141bb0aa970f8909f018a55d1e278e22c721e9d6f4dfa8f",
+            "runtime.md": "a90420a6778e3d3a64079a92ac4221c406925766c24ca618f6023bf966f91e6f",
+            "synthesis-verification.md": "7fea535bc557d6ed71499e6ef23e4f20217a8feab8b79daf2aab740fec890f7c",
+            "synthesis.md": "ee73d0c5f91c035c3f4e7c86a142eb4b6aba7fe1f205ecfbd4bca176c13ec165",
+            "workflow.md": "48c3d4fc3afcada0ee0bb2e06352f19b5733162344c902b88affe7589adab60c"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01/effects/publish.json",
+            "exists": true,
+            "sha256": "22d6c9eed181a5223ca8dd5016f32c2b60bcb89113bd46dd98117c0548c34c7e"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/retained/from-agent-memory-to-portable-skills/ARTIFACT.yaml",
+            "sha256": "998c68e8beb540814877877ee41fec3b494d68e36c21c263a639c94c4d9cc8a2"
+          }
+        },
+        "current-fault-or-stop": "Report verifier wrote foreign empty file then removed file/directory; prior contents, ownership and loss unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit authority/prior-state disposition, not semantic reset.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/reset-and-rework.md",
+            "sha256": "afd12fedfc34129309d07deef110b9748120dd5bcfcdf28ebb1dc46c4a4cad88"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/depth/batch-19-operational.md",
+            "sha256": "80a1e2c246ad6e275ae814e30a7e8c6c20334f7f9f6388e2d48645942a9b8c2f"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "llm-wiki-v3",
+      "name": "LLM-Wiki-v3",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/related-systems/vvvvvivekkk--LLM-Wiki-v3",
+        "revision": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01/state/versions/193cc2a6a59689a877132ddc45b713b18af05052814de5331642d53933736d98",
+        "sha256": "193cc2a6a59689a877132ddc45b713b18af05052814de5331642d53933736d98"
+      },
+      "predecessor": {
+        "key": "llm-wiki-v3",
+        "name": "LLM-Wiki-v3",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+        "run-id": "AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01/run.json",
+          "sha256": "eaecec832c5fcccdbeb2dccfcc2db7de0b0178a3d83461a03635cbd675330228"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463.preparation.json",
+          "sha256": "9ac15bd608aacff7ab4acab1ade9bf3a909af598741794c2128f7141fde63290"
+        },
+        "attempts-map": {
+          "000001-opening.json": "a9f07cdc76df527552d6b136ff489a2be5004d17256f7ae3bc83802549e20935",
+          "000002-acquire.json": "274630ebe15f11116e75d02da92544b5e658d4613ab95b58ddfa9df070e06ac9",
+          "000003-boundary.json": "cbe08707dc8e365e9504c66354e8058813cff0bf10bc3aa32185933e8cf029a0",
+          "000004-check-boundary.json": "c383200e5fb3cdd5db8eac85f91b73f530df00ea9b0b58b3db466ef85fb86c8e",
+          "000005-runtime.json": "9aa84dbe6bd3f4454418df240247393da3a3ffdd3237e6c8ae1a606ac6183647",
+          "000006-check-runtime.json": "a90756717a1f73a16d148343ea7f3c195194409f89668b83e7711f77ee7d8d72",
+          "000007-memory.json": "2c660a661c6179db240f581bd5c70edd669414ceb81caaf977f033c3ccf2774e",
+          "000008-epistemic.json": "b64668cb4f098933eb2e3d65021c98b6e1704eee66d4171e358360047af4c8b1",
+          "000009-workflow.json": "c012cdb6ed0db8ec954880b8846fe5b58560ae71d3ad08e37e89ba299829897e",
+          "000010-check-memory.json": "49287ef6724b19cbb5d363a4983e18899857675ce099b88712e269e0e92ab0a1",
+          "000011-check-runtime.json": "7a6c7b5b5d57cd13efb3838c2fb0d01ba535107da6a43b4a9d2c5d8be52a24aa",
+          "000012-check-epistemic.json": "0044696bb730e3329927442ffa4266c865e5944b6f72ce50f3ba3662afbe6cf6",
+          "000013-check-runtime.json": "83317f1152a32a3f6ed5fe17e49843a523e1d387ed3f49acc1cec1058c39b528",
+          "000014-check-memory.json": "b608088034a4b23be2c54ea91bd575bdb10fc72ab166931ac7b6c6732210f172",
+          "000015-check-workflow.json": "1b8a8c1cde4d26120d103750cb9aa12db5fb40fa60c1685a94b8ddc2b160c394",
+          "000016-check-runtime.json": "844555afab2e351a50adf740ef2d25b2c537fc8256cbf024c1914fc84f57caea",
+          "000017-check-memory.json": "fdaa3ae1e9de5946280a36ea20aad129776a698e5f9af433311fdaea6391f9f5",
+          "000018-check-epistemic.json": "242bc5613da83f45be8ffcebe161f0aaadbf11ae5fac27292291418e23eb1261",
+          "000019-reconciliation.json": "ef4681dbaecaa46380857616eaa4b44767be960df6686442e6c587651de97de0",
+          "000020-check-reconciliation.json": "8f2f918e75c9397b83628f660687f0f50821973dadd369ccb932b2ac94acefd6",
+          "000021-report-check.json": "2b44ab29dbeaecacdab241452e87d85841d24e61569a6933fcd2b1f638766364",
+          "000022-report-verification.json": "99820bddfca8adaac2cc6a8d66dbcad3160e3d1068a513f2928ec679680fc0a7",
+          "000023-apply-report-verification.json": "ba97f31c04c283f493c0676d08d6211514e09c2e9eca27322d334bb5ba610d9a",
+          "000024-memory-profile.json": "0c4c6aa9fb8ca02e1105cd5eccdb9488d386c26cbf86141e72eebfe7f3d5b03d",
+          "000025-check-memory-profile.json": "f1b7b18ea7885ff096b9d2d5228383f6eb965f6d16dfc9c9fa81b1ee5ddf91e7",
+          "000026-profile-verification.json": "f4f784be9ef1d60eeafa04947510829f27d7fc90d24184a2684afa2a4dd448f3",
+          "000027-apply-profile-verification.json": "8d2404f4d75197caedf69192bae086b38057ef53162b073f0cbbb6c76ccfb8c8",
+          "000028-synthesis.json": "235cd2aded838f122b36c327c8afa93a2af44d814ae2885222fafbad69ea5a95",
+          "000029-check-synthesis.json": "0d4189e0e40ad19a3e368bf1e31718edbfd497096c73a24478a36ccb6db8e4cd",
+          "000030-synthesis-verification.json": "f2c1fc40f97d5bd53ec5657ca8f896aeceabeebbc82dad3f52f2a3b2dc713645",
+          "000031-apply-synthesis-verification.json": "7ca13984fadaf5ff35756deb1d89f856737d08a1d0ad121f3099d079cdf3e301",
+          "000032-assemble.json": "eb01565bb317925b04cd3bcf89770fce5b4e8f34935dfd79b19575e7d96d27fa",
+          "000033-publish.json": "c9473f287708c7385399f0c1be51e937a357bb89840453ba58df402deeabff94"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/retained/llm-wiki-v3",
+          "members": {
+            "ARTIFACT.yaml": "28bc96df29a749b99c55ce9ba54546c9b9a4c8283ae98d46c1d2e05103cd6959",
+            "boundary.md": "ab69e543a6631fb3e751f0772623d7289e02c1b4c4c4ffe13d066f591d4804ba",
+            "epistemic.md": "433148d27f9d1e6a6cd4a19eb70afd39326bcaaa1079050c39a39eef6320dd79",
+            "memory-profile.md": "5422e5556d89bfb1453d2814a562f9cc81faff75e45327c759e18c1200613fab",
+            "memory.md": "c4a64ae202daf16aecf98ded81daf10c2bcb00cb1a6d4d4d6ca578fb7a6ccba8",
+            "overview.md": "2e1f58f9f7672a5cf94d9c233849daf8b8a282d499a1e43a98b7e84c5c2a2500",
+            "profile-verification.md": "bab74d83c13157b51895b995fa1da621fb000ed1b36a1d30ef2efd35958df264",
+            "reconciliation.md": "454b09ac94c28025e80d4b7ecad848c74d131749a00b18dee4ccef3bcde526f7",
+            "report-verification.md": "dfa660494139b5e0195e945207d1b1a4ea2ac61a4d410f083cf940f2b00d8bc6",
+            "runtime.md": "bd2beb15cf13343a0defc3250d28d37f2023021b80651d4657cd9c196d0905b2",
+            "synthesis-verification.md": "a429a26e0c7629d317c69ea278bfc44ea9322ae029c9f84c1e392fa4aa122e79",
+            "synthesis.md": "e3b7d2ed5c0a5f15f5b155db07caa4aab1c1711807950f9b007c65b6447d8ece",
+            "workflow.md": "91ec019fc1b986a1aaf5c430727254a590e3e2a625e4b8b0f99ff294ee8b814b"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01/effects/publish.json",
+            "exists": true,
+            "sha256": "4c379fd0cad3403158cd44015619906bfb03623211171558865c805e511735de"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/retained/llm-wiki-v3/ARTIFACT.yaml",
+            "sha256": "28bc96df29a749b99c55ce9ba54546c9b9a4c8283ae98d46c1d2e05103cd6959"
+          }
+        },
+        "current-fault-or-stop": "Profile worker made foreign empty-file write and removed file/directories; prior contents/ownership unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit operational disposition; earlier content repair does not clear cross-owner uncertainty.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/reset-and-rework.md",
+            "sha256": "afd12fedfc34129309d07deef110b9748120dd5bcfcdf28ebb1dc46c4a4cad88"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/depth/batch-19-operational.md",
+            "sha256": "80a1e2c246ad6e275ae814e30a7e8c6c20334f7f9f6388e2d48645942a9b8c2f"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "llmwiki-marimo",
+      "name": "llmwiki-marimo",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/Clod/llmwiki-marimo",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/Clod/llmwiki-marimo",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/related-systems/Clod--llmwiki-marimo",
+        "revision": "0b5d95b1663c4ca859ab554da40924d5091eb6ed",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01/state/versions/e400e014377ce82adb87c46af9cd0c0312a17129e554321e0a11696ed62bf339",
+        "sha256": "e400e014377ce82adb87c46af9cd0c0312a17129e554321e0a11696ed62bf339"
+      },
+      "predecessor": {
+        "key": "llmwiki-marimo",
+        "name": "llmwiki-marimo",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/Clod/llmwiki-marimo",
+        "run-id": "AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01/run.json",
+          "sha256": "1d2e0768bc38905244f2999929b8f15ebb725cf6e9e37a78b7365c3790a6592b"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe.preparation.json",
+          "sha256": "1a19fa86e35d12eb5e2a89970b4d4b5d37044a6a1207f80fcf65224702f7ae32"
+        },
+        "attempts-map": {
+          "000001-opening.json": "e63b4468d70acce1b6fa287d440ec1d9218dd4bfa95137f2df68b19bdbd98398",
+          "000002-acquire.json": "913e2991acd57c59747da0d85a64ce2a3e5fbcc7d35ded9fc050a588c9543d25",
+          "000003-boundary.json": "0ad8b0e3a7c4ebae24fa91b9ff072a0bf00110ee7d6ef3ce7c66eddb73f04f4c",
+          "000004-check-boundary.json": "2a6a89ff17ff8c5eeaae725b9642b3a105d6919fff9f3c90935c45b3dcdbc9db",
+          "000005-runtime.json": "d6a2814374d5e3c081cc191fa9626c3b41f946387f5dc93ee5a87004c4e07053",
+          "000006-check-runtime.json": "268d578e20f20fdb1ca0a70e630d89f98b4ab5ca031ba368d902c1a42ba278d4",
+          "000007-memory.json": "3c547753014ec690b5065f121b3405ffeb0f0d3492bb9906eff28abf43a43ce2",
+          "000008-epistemic.json": "42173972a6581b659062769f75be15e2fc1fd2d4633b80cf53b403e773f6c412",
+          "000009-workflow.json": "e8b6b311d05300400c923909c89fa086c15eea05ca285c385db655f586637121",
+          "000010-check-memory.json": "50bcd0e16a94eb36ff8c9c3b7b2e03763ea535def5b73025dd925d84f052df7d",
+          "000011-check-runtime.json": "53bc57048e5ba9d9636542ea59bcf6ee522fdd40235de0879abcd1e12223a3a3",
+          "000012-check-epistemic.json": "16a419cbfdc175f669d792d55becf684522a60bb1cdb99ab040865636dd8936f",
+          "000013-check-runtime.json": "f4af97103590fd9f03f49e7a268874d96389fa48868d866c3397c7de73e0cc12",
+          "000014-check-memory.json": "3e49e0d4fd0c1ce62b285ea6cc28280d1c43d70adc91d3731eb9f6f5e8718d66",
+          "000015-check-workflow.json": "2630a97e7e01c679983d8359e29bfa985e2514e787b29d81915bff07bbad49a6",
+          "000016-check-runtime.json": "dad2f0a56b7fd2cf1ba4d5b482004fdecbb0c5d726621f748f40fffe8b0bf1f9",
+          "000017-check-memory.json": "520f7b58cb812ea2cf55e93596271567975661cb98e0f6763ca731bcb0895811",
+          "000018-check-epistemic.json": "c54980d0d6b8fbd97e5fb0f7e0fbbc2777f935d515ff5ba6d07797aec1ac1c45",
+          "000019-reconciliation.json": "04cbeeaa00d665970a6fd5456e1054666edb9f2f9ca5ef1e06b20257bd760dbb",
+          "000020-check-reconciliation.json": "8102651e587fe7bcd6f026895dcefd45cfe0e6a96f987fc6064d38bb9b602681",
+          "000021-report-check.json": "9b31e1a6af762424a4426336cce403f88ef54c2d18cbf2e6221469c4e21a0f2e",
+          "000022-report-verification.json": "4a1e1d22f3279b2ac5760a8399453b9e4088ea5c0fc358ced6a9454d529b1454",
+          "000023-apply-report-verification.json": "412443561d1c11bfba210802ac1e2865b79e361b278c84878767b8d9df907fb7",
+          "000024-memory-profile.json": "030b27ecfcbe142c69d0c3d2de533239ff8fde954dd72c35e5f9c045ef895723",
+          "000025-check-memory-profile.json": "47e0a56bc2a3fd8865b5ee0d103bb47eb994077b3883e336f82c2156df5c9530",
+          "000026-profile-verification.json": "e9dfb54ee61ed4c385b04aa253ce07c962d7f96eef44870cc681c3406e137a48",
+          "000027-apply-profile-verification.json": "33f837dda5209b119e6b21830f87f5cec108df5ea388a3d603215257f40f25fd",
+          "000028-memory-profile.json": "4fa887a0301d2ca70ba8850b88575a18f0878c55d7a542d09984798ed747b792",
+          "000029-check-memory-profile.json": "71b5dc2400bb4a7ed4d034e406e8ec4f66b2c9f4efd97f0e03e6c54d15618071",
+          "000030-profile-verification.json": "6e649a9d242e125efcf19c40f67db96829949f47c13c809aa7bb07310b847a97",
+          "000031-apply-profile-verification.json": "5ab4b019c14bfa83a3ae5ab9972a448fb484a04795d512a1f32d7e9ca92799fa",
+          "000032-synthesis.json": "1b22c11008c7321203a1074c7c6bbf538d34971a38e74194952446839bd80fb7",
+          "000033-check-synthesis.json": "574df92e5768997d5837c6df9cec8c9ba669398d20a289dee433c80bef155ce6",
+          "000034-synthesis-verification.json": "5ceebd93aaf400e36a8044a76f78ad334cf6fb8d20facca1ff9ecdabf219dcd8",
+          "000035-apply-synthesis-verification.json": "b7d14cbf2511f8a1a0fc3b6b3db4eabf6f5330a6877d6afb223f7dfaea83a5b3",
+          "000036-assemble.json": "569176a591e9ace242e9f2fb5534f0720c7d5a2f6b626bcf06a33d7f7315039d",
+          "000037-publish.json": "eddba3f07198b0cc79dee2a11897d097fe53d246d023195090fcde4dd1ee1feb"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/retained/llmwiki-marimo",
+          "members": {
+            "ARTIFACT.yaml": "215c62bc9c7e22de8349bfce75f66bf9d5e93c1a41d9a738f47a84ceeac5f830",
+            "boundary.md": "c8f4e32d8cd2127c61a0e3eece5365183c87f9aae2fd03a87305d3fc69dc4e56",
+            "epistemic.md": "4117032ef412905ee613b99c70cc7d742ef3fd802247451271738a0ba8f774f3",
+            "memory-profile.md": "287fb0a291b770b05f43ff943a9d910edb5c2876b25d255f155dabb2b3ca6458",
+            "memory.md": "ceaaf8da00dbd734b2c331413f4ab0b9edebb9bb0cc7917b04b4c99574e32973",
+            "overview.md": "b1c61ef40e2108a73d9b5ebcdcae60c2b530f1739c5f718964ee34f434ce6309",
+            "profile-verification.md": "24fc3dda91d25361bc4952729c19f69692b931800e8952f06e3efed41ac28587",
+            "reconciliation.md": "22257cf46a527e863c988290153af4163b2822e7297b2202debc715e3552f326",
+            "report-verification.md": "51fc0f732b724ea318cb8a5f9cae2c53bb34c9136fddf24330359ea41490c5a7",
+            "runtime.md": "a44ee0d9b85fefca6b7a8ef2cbba240c0332e74cee3f4a91ab9b22ceb5a42bfb",
+            "synthesis-verification.md": "75cccf7d8f3edad4fc9b60f974399752272d3db94aefbeaa88657e417229b530",
+            "synthesis.md": "7ab0c01677323711ba51a47132c85072f984a3723c36ccf73e41658460de2068",
+            "workflow.md": "0041cda55502339f6658179777ea014f10fd73ac7956ca1279510447bff600c9"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01/effects/publish.json",
+            "exists": true,
+            "sha256": "0100151e8b85a2c8a124a0fd21b9666627dd3374b6166d6454f8431893b670dc"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/retained/llmwiki-marimo/ARTIFACT.yaml",
+            "sha256": "215c62bc9c7e22de8349bfce75f66bf9d5e93c1a41d9a738f47a84ceeac5f830"
+          }
+        },
+        "current-fault-or-stop": "Synthesis worker wrote and removed foreign empty answers file; prior contents and ownership unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit operational disposition; earlier profile correction does not waive incident.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/reset-and-rework.md",
+            "sha256": "afd12fedfc34129309d07deef110b9748120dd5bcfcdf28ebb1dc46c4a4cad88"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/depth/batch-19-operational.md",
+            "sha256": "80a1e2c246ad6e275ae814e30a7e8c6c20334f7f9f6388e2d48645942a9b8c2f"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "siftly",
+      "name": "Siftly",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/ViperrCrypto/Siftly",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/ViperrCrypto/Siftly",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/related-systems/ViperrCrypto--Siftly",
+        "revision": "b25daa45b858f4be096b5c368671c34db4407d8e",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01/state/versions/906620f9d0d7e0291571aaa300cfe3fba5eb92da366523799b1ffc0f5177be13",
+        "sha256": "906620f9d0d7e0291571aaa300cfe3fba5eb92da366523799b1ffc0f5177be13"
+      },
+      "predecessor": {
+        "key": "siftly",
+        "name": "Siftly",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/ViperrCrypto/Siftly",
+        "run-id": "AAS-2026-10-15-siftly-71a1181fbc3d-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/.venv/bin",
+        "method-revision": "26c5bf9df8ca39166fd6bdc39476689dad437cb5",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01/run.json",
+          "sha256": "dc1078bddc3b5d15f8bd6e92cda601896d1da99d1ffb94b7c36267d2f097c8e8"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d.preparation.json",
+          "sha256": "b1c1564953e9e95bdfe2ccd33d3e3435b854d030fa11e9d4e142a4f28f063c68"
+        },
+        "attempts-map": {
+          "000001-opening.json": "20c7b28acb78b186851a8d7143ca86378fe00e1f91b910d38451df3208f9e6f4",
+          "000002-acquire.json": "18c1c0f8be6292d593b721e54f8aa15977d954edfcbdf3d3b9333e914bbd106a",
+          "000003-boundary.json": "bee0faa0275a357fb18b09ec55b64fae2f57bc1bd6c30bccd4733e49f676a09e",
+          "000004-check-boundary.json": "f11aa7fb64ddc75c86902de549bc2c96f5c47c68c641c2c816196b4f42007a05",
+          "000005-runtime.json": "0c083d2e9043c017ca08987defb91b58c05085c0c3364525b9aca4d36cc9ae3a",
+          "000006-check-runtime.json": "df49a683d30e345be437d865f00ecdb123602d1027c221d1bc78968d665c5410",
+          "000007-memory.json": "417d5abb8a2099bc00c87b10d7e1c854da444d401dd03a98b031ae4eb39310ed",
+          "000008-epistemic.json": "4673c928fa7f38162edbda0d2567633e7f8cca19a8f861d82defed6df6ff7020",
+          "000009-workflow.json": "6277d50b6c8c7f19e7849722a1c9d577e09576db2a42ed5a9498ad3e13d71d0a",
+          "000010-check-memory.json": "ae7b4946f7e798beece0e7e22c555371a07c13c6e5cb6a2d077ba759070696f5",
+          "000011-check-runtime.json": "d8cc8936e6da8e6a3303e8a3dc3865ab28a52ba30a936c4b8dbc3a5f71959a54",
+          "000012-check-epistemic.json": "e8d7e786ada9f8cf7117297ebc919f3176bb8541555de970cec681e1b9da10fd",
+          "000013-check-runtime.json": "2414d69d7328b603aca00af77f692a3fe4661f889d6ebc7c025f14f31ef8a560",
+          "000014-check-memory.json": "d01f958acefe961df2f99d91248e6d35100d12f7f5ff55435e0f919d922a2029",
+          "000015-check-workflow.json": "d63fc24e6758d0cdea43ac5b6084e46238e640acb8c16b4b0f7ced519e84b3b4",
+          "000016-check-runtime.json": "0e894d8fa3a62943258bc8f696723651632df8f004e111f9e8e10da3a6eccfb1",
+          "000017-check-memory.json": "6c9281ad6eba209de8b3734d59415b34825561fa4ebc07a6d566ed76eb22cc6b",
+          "000018-check-epistemic.json": "d816ad2188338b1de81b96c604b9965361191418c4b8e9616800f4b9b6ede00d",
+          "000019-reconciliation.json": "a4483c2ecdbd3ea8d31f79a57add092f47e10183ef550662653705013e4dfa88",
+          "000020-check-reconciliation.json": "4c1ec018226f36b112a88ade011d423d6cace51cec496a1612a2480a41608e7b",
+          "000021-report-check.json": "363dafe846a7a588366b8a9fc673162a03520d3f2050c5c95b32b3ebf9b6a77d",
+          "000022-report-verification.json": "2a906f0ead3fb938560db04473edd554b587ba15576811cabfb2153365a55012",
+          "000023-apply-report-verification.json": "328ca60156b8272bcf2fa24ad2fbc46498c56926a7a3a155230b5faa710baa15",
+          "000024-memory-profile.json": "1ae524163c8304195f19160ae1deb9c682f31678d6a983fa5c3428f9039b4ab3",
+          "000025-check-memory-profile.json": "8441e9fe5397048f3c2fadd02ad228326c8c5b38d95594eb1919276af07192d9",
+          "000026-profile-verification.json": "010375895f9dbc6cdf297398d2192d92e2e1415730f7889feb8d819e2987551c",
+          "000027-apply-profile-verification.json": "588bf222aad02f64d417594fabfb9333398ece083bb257fde8ffc4a87f8a72a2",
+          "000028-synthesis.json": "b1fb1de2b76a61d6587784f26ecfc0c34e6ea22898c5a1d4b7b781975143c61b",
+          "000029-check-synthesis.json": "e81cb42167518de05699e3eef00821788fb6f1d5a3b23113c9abc2bc9cd91b18",
+          "000030-synthesis-verification.json": "2d1df0b873629275d2932d2f14e766f557e8b0ef7f182e0c016e67197490b833",
+          "000031-apply-synthesis-verification.json": "89c7360396904319364ddaa3f9d8f9ecf7a2b24902a585a871cfcaae9103e5a1",
+          "000032-assemble.json": "e0570f7abe98a07bbd22dde95cc6ba0bc06d2beff76e91136cf7b9633f53ab87",
+          "000033-publish.json": "e743cf3437fb818a75f4739d78b0e6f563aa62874eb8901f851908436ed22f9c"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/retained/siftly",
+          "members": {
+            "ARTIFACT.yaml": "ed97a55849d38aff8ed515abed320c472851a0365557580cee32b341178cd4de",
+            "boundary.md": "dbddc7c7c2408268e20aea208e2b5396c4a77dc6838a98d197cecbf2d4a0b918",
+            "epistemic.md": "2d242d734a2e66cb96ba620a6402c8161b9c3ca3915e9a848bba80b75f10436a",
+            "memory-profile.md": "4caa952a3650f7a51b391f0396fc93a34a6648de3637f9e92cef6f70a75078f8",
+            "memory.md": "04fe7c3af2e8be4abfab1ac2bc5448bc4da7f54f5736b2f3a69296ed67df50a8",
+            "overview.md": "8839e6684002a54e32632bb453186d8cf47c705fdd4c3025f44525a0972014fe",
+            "profile-verification.md": "c3b3ec9e333f8c4f9c49f149c957a7837a5ff0d6cec24ab6b74029f0a04309a8",
+            "reconciliation.md": "e140e49a4a589e0a010c4a4b4b40419c445ef0dc8762d37c3ef3da6aa4e38aed",
+            "report-verification.md": "8a7fe235a286d68a3531d8c34c70574509d7fd8c4c25bf2be9e2293e08c8e763",
+            "runtime.md": "de21be06a72ff3a1b594f32d0d7494c4f75c3e196a051c387d33de159c3392c4",
+            "synthesis-verification.md": "2d250603b5066b537cd4a1b68a3f3fc8900a0fe08d9172483f1fb863e45f7f4e",
+            "synthesis.md": "4ed81aafa11dabe26e1cb6f8d053ef68535923de1358669cf69586fe085a223e",
+            "workflow.md": "52f05e99831aac659aa254aa0dc476b1603d9e82566ab5fb501f3c8c1f2a092c"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01/effects/publish.json",
+            "exists": true,
+            "sha256": "d3f8960ecf56e5a99c8d82609a8bafb7bd5f334c5c8b4d8273fa49141ff5cd42"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/retained/siftly/ARTIFACT.yaml",
+            "sha256": "ed97a55849d38aff8ed515abed320c472851a0365557580cee32b341178cd4de"
+          }
+        },
+        "current-fault-or-stop": "Epistemic worker wrote/removed run-root worker-identity.json outside its handout; prior contents unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit parent operational/prior-state disposition; qualified content acceptance alone is insufficient.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-siftly-71a1181fbc3d-01-followup.md",
+            "sha256": "64684f504607f87b9f3fb89e1e837d9bddfb6b895941f53ac92ff24e94ce7a9c"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "sift-kg",
+      "name": "sift-kg",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/juanceresa/sift-kg",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/juanceresa/sift-kg",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/related-systems/juanceresa--sift-kg",
+        "revision": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01/state/versions/ff97746fe34e010d11f172ddb275a81061e132bbfae1889cbdce68c27c064282",
+        "sha256": "ff97746fe34e010d11f172ddb275a81061e132bbfae1889cbdce68c27c064282"
+      },
+      "predecessor": {
+        "key": "sift-kg",
+        "name": "sift-kg",
+        "inventory-status": "pending",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/juanceresa/sift-kg",
+        "run-id": "AAS-2026-10-15-sift-kg-dca68bc45a2c-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01/run.json",
+          "sha256": "3746e72ca02357270e64688864fad929cff029e1b89cc47a7b35aa241f099f73"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c.preparation.json",
+          "sha256": "73c4fbf601110ba63ceeb05c412bab29dc115acf38f487cbcb4acff93c70f148"
+        },
+        "attempts-map": {
+          "000001-opening.json": "8fa021d7e5a47a71bdad59ff249440a1c58fd9100d2d1813274a40532b406693",
+          "000002-acquire.json": "32786cb9675dc86769ccf87735f6cebf8b9608012345ce6d2942a82574c8458c",
+          "000003-boundary.json": "b85923f3b241931e2ba95058c880414d14eeaf40e48ac6025c39f0cd6cfbcfc3",
+          "000004-check-boundary.json": "4e48e0d878ae481d365ca699b9a27f45bd03fe92c76426c1c4a3e78252f3d9f7",
+          "000005-runtime.json": "25da934ff8b15ddfdc0c4fb26a6155f6d12096946c99ace61ef777454911445c",
+          "000006-check-runtime.json": "04fcd4d8143e384a189dc24970acfe8fb25b44dfd70825f8e97fb12145aba3e4",
+          "000007-memory.json": "a9e2f58218ecac42fa33918343420115f76740382570a8c1585e45c5b156eee0",
+          "000008-epistemic.json": "cbd44044f3ec89587c09003c1f786996ff7d9facceee3cfe1cd839404f4709f7",
+          "000009-workflow.json": "85556672b08161786864c9ee3d3e7443a56d31a79125fe9117adc65544e85511",
+          "000010-check-memory.json": "6aa595eac0f6470fbf764e90a4f944f3ec82e98bd02ec3181728e5c15c253f1c",
+          "000011-check-runtime.json": "0c42e3c5b0abc378e5516ef5e08d9da1c2bade18d5a59442154f4c26286e15e2",
+          "000012-check-epistemic.json": "b5cd8aaeee041b8f52707500b8a7f3982827c37d867331ef806d05d9bd975a39",
+          "000013-check-runtime.json": "81c17ce1fe834a8280efd7f65497cb18307ad267552c34d866b45bf098a66f89",
+          "000014-check-memory.json": "d0bf07d60d770a314f3be594716fdeedbc9053281e3861b379882632e7bb7bfa",
+          "000015-check-workflow.json": "51b03eb063c95e4b141d50dac7367788aefcb3fd31a8b243330f7c49539fb765",
+          "000016-check-runtime.json": "d8d5e678412377188580ae645fd13fb24c6029e9ea822dabd86131592e19ccde",
+          "000017-check-memory.json": "b5953f0ba1e22f7796dbf324aa99e543c33542e115ed55cb240523da6c53facf",
+          "000018-check-epistemic.json": "4d8b9922a85d47234feb4e13c85c4b417e71e82c8b4b3490fe77d9f6b613aeb7",
+          "000019-reconciliation.json": "3b899c0b43f0e9e5d43048842e87c3e27ec3ce1d2ba25906d656ae67f237a65d",
+          "000020-check-reconciliation.json": "29f42846ed6cd8634ea32c53318ccb4b7950d18fc66a8fc4e141e433a9cab41b",
+          "000021-report-check.json": "3453ca7345cfaf3a31fa4b4d130a7878900dd42c0c700bf40495c247cd6f091d",
+          "000022-report-verification.json": "01ee27ac940aa295aadad3b1de8905e924a421fbd897013bd28855a8067f5089",
+          "000023-apply-report-verification.json": "0ed3f9405029bbe1a7d580f43505ed8af5d716b8b58d4dbe00cfbd835cd57a6a",
+          "000024-memory-profile.json": "4b9dfbe282f33e878e5987be5f5ea2009e37b03e6bd4997b0ce99d15c92e25df",
+          "000025-check-memory-profile.json": "107662de772946978ec07d5c99891ec19b000d66a1d0ff570a1a3f8baba22a87",
+          "000026-profile-verification.json": "40884a092398a836a48ab3c5c1e7f27ceda5bcc9875af91f95230be9e4a5d846",
+          "000027-apply-profile-verification.json": "14c6275e6c0e929c0cb076791cfde370f69010d6dd64516edf909ea5d07e1602",
+          "000028-memory-profile.json": "10d91f21be99ec93c8ce0761422ca0083c0ba2cfaaaba07f86829de88a75b22d",
+          "000029-check-memory-profile.json": "98471ebf4aa947f7355306f6213151482cef32793ce7857cf400075aee86166d",
+          "000030-profile-verification.json": "a97b0dcd56bb8d3064fd54ba2ba3306d67f571a51be22818797d537a1acd0bb6",
+          "000031-apply-profile-verification.json": "9836e8af79e8e270b62d70ca547dc8edca884b08f5074a524901b44c1c1ce12c",
+          "000032-synthesis.json": "9df3176fb26d6f150198b7b21f608e66d50cad218ced1291d9ba037f6bd97d9c",
+          "000033-check-synthesis.json": "29757d73bf9d07f05239ac13826bf65b55917ec53a768e08f46917e6a510c82d",
+          "000034-synthesis-verification.json": "32793c130d4f33fdc0c9415de096b6f0c87df101b3bc18d7592d15f0b6fcc247",
+          "000035-apply-synthesis-verification.json": "25abddb926d5bc307097659142a06f8a3fec6f526ba86392d0836ad7f455a089",
+          "000036-assemble.json": "6d635d02495d85c4ea470b533fc40c3005164b12f37e8771528b5e3e6216a5f2",
+          "000037-publish.json": "a5b6d9c823dcd705bc167b0f631d28541dd8c2e47fab8daefd152eb80439ce9c"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/retained/sift-kg",
+          "members": {
+            "ARTIFACT.yaml": "871f5846c60ee404aea9f934374b66763ec4e8a94bcc8aae0d5ceb0e13e0a5de",
+            "boundary.md": "786d96c2e15ad0e6837f251d9358f89936c55ea6dbf8aa92681f58533a879e30",
+            "epistemic.md": "ef18eee9e5096c36c800c98374a2ed81abe105b5791e08c8283e56cbf56001db",
+            "memory-profile.md": "d5925500aa41840c8bed53e11e71ae6565802f2ee908ff0dc6f927c647290308",
+            "memory.md": "7fdc00cf49b26c8c215d1fc545992152dcf173b7566ba65ceddc834b9c58ee4d",
+            "overview.md": "60cce98a8b2a2cf514d3b5664858937a62f184014417896ffacd025907154a7b",
+            "profile-verification.md": "c6d39a4aa9eceb220c03bd8965bb46bb02832f181b33e9b8b703e6100367d7eb",
+            "reconciliation.md": "ca819d9e84a239c723a22bebaa548ae37aa73a4ace892535207f6e2c94d295a5",
+            "report-verification.md": "64028f5a170d36c0182649175316491a22a51b42a2339ae142be337c0cd2319e",
+            "runtime.md": "c142e8a4cd439540121ddc76e57b32e2985a10d44bbdb605304ac631225e1618",
+            "synthesis-verification.md": "3bed7bd1b6a1f9c044294b14e7919cfc7672fa6248926ade8e8885a663076cb4",
+            "synthesis.md": "8b161d3700094a364c700539103278541257c0923690a5231843f389d39833ef",
+            "workflow.md": "531a78047d8ceb8e9773bc6d6bf70a105adea2b9584f286d32a570a639dc6213"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01/effects/publish.json",
+            "exists": true,
+            "sha256": "6401a0566cd6b2293ce07e280377d0a62afeb873ff9f37f76cdf890585f50069"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/retained/sift-kg/ARTIFACT.yaml",
+            "sha256": "871f5846c60ee404aea9f934374b66763ec4e8a94bcc8aae0d5ceb0e13e0a5de"
+          }
+        },
+        "current-fault-or-stop": "Workflow worker wrote empty report into sibling path then removed file and five directories; prior contents unknown.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Explicit authority/collateral disposition; legitimate installed report does not establish safety of foreign-path actions.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md",
+            "sha256": "2824e1c35e4466814be80d17b8cbd0632f9eef57ee64d86aeb60011e3b5799ba"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "fragility-grid",
+      "name": "fragility-grid collection and resume subsystem",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/NikolaTesla-007/fragility-grid",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/NikolaTesla-007/fragility-grid",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/related-systems/NikolaTesla-007--fragility-grid",
+        "revision": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/kb/agentic-system-analyses/state/AAS-2026-10-14-fragility-grid-f011bbbfc307-01/state/versions/092d79cc0e9a632ff53faedff277ac31ff6bb4994eb2bf5c7d858829e2161629",
+        "sha256": "092d79cc0e9a632ff53faedff277ac31ff6bb4994eb2bf5c7d858829e2161629"
+      },
+      "predecessor": {
+        "key": "fragility-grid",
+        "name": "fragility-grid collection and resume subsystem",
+        "inventory-status": "pending",
+        "gate": "source-boundary-refusal",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/NikolaTesla-007/fragility-grid",
+        "run-id": "AAS-2026-10-14-fragility-grid-f011bbbfc307-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/kb/agentic-system-analyses/state/AAS-2026-10-14-fragility-grid-f011bbbfc307-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/.venv/bin",
+        "method-revision": "c0282c8ccb49edfef4bb095b8598c4b7aeb229b6",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/kb/agentic-system-analyses/state/AAS-2026-10-14-fragility-grid-f011bbbfc307-01/run.json",
+          "sha256": "b939f2415fd040e255c6ed76b49cecc32a0e015293425c2733f7cc117383daab"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307.preparation.json",
+          "sha256": "29b8ea5d23167065c37597e5a685a3c092c9591e32407903652845de087554c7"
+        },
+        "attempts-map": {
+          "000001-opening.json": "7fc55bce9b6472cd8c0eb4638c05808b6e687b47e331be1a8ee6154166036a2d",
+          "000002-acquire.json": "7d05f30b0a91f16f8dac95c26cbbcf08b1ad433a016f9f35866438ce84d6f315",
+          "000003-boundary.json": "4bad20912832cf3662584caa63f9d8ffaaf68b0b7c073fe82e653427dd8ae7dc",
+          "000004-check-boundary.json": "c57e07197b6d38de86f36c5b0ce022e48a1cd1aad6738261e2152239bcfb3bac",
+          "000005-runtime.json": "141857ae1221745cc178f7a3bc69905af899a73ff6ab2e752025fd66afb7cfde",
+          "000006-check-runtime.json": "c2b356e4bcf125bb67d37938fa4cad0e813d8f1ba0cc6fe8940a042f8c6e5a93",
+          "000007-memory.json": "3d8b3e63ebae5fe7d03f6dc4d087af966c500fd621e7d9d5aa23c77393717041",
+          "000008-epistemic.json": "ff3dfb9f0f0e15867fc95e5131c585b8de538064cc681de4ac60959a51d25944",
+          "000009-workflow.json": "734be619b1b036a3078fff32c80d019341bc46c6f23d7b053bd596e087b3c7d4",
+          "000010-check-memory.json": "a2734c09afa6837f05d496b081b1a2096c6bff6f7f76497f6b51b091282dbdf9",
+          "000011-check-runtime.json": "ed85a6d4d5dbfbe77961234ac233bef52a14ed53cddfc24a6ea6133e7dbb545d",
+          "000012-check-epistemic.json": "ccb10e259d22b2e910e7175e6ccfb50313803ec6060a856ca7d3a66dfae6d884",
+          "000013-check-runtime.json": "d70804d038d09a8e9c6cbe0bf899a126753f0164de5b56c4b1123a482ae739cf",
+          "000014-check-memory.json": "87478cef6e565cf47b2e1ebd5558a72d189757ccacf200b8cd57e8eeb2f091a0",
+          "000015-check-workflow.json": "0eb4ae42921d206d2ac32b0e93b93570e5cb4eec7e9f077503bbfdeee52b2d79",
+          "000016-check-runtime.json": "e34d9dec024a9627f4a6891a648282da6f1006e3e1d37aa9a9180c6c146c225e",
+          "000017-check-memory.json": "2d29a6993adc31c40d665991cbc3ebb17551010c5c25cfa094aaa0da92ddac5c",
+          "000018-check-epistemic.json": "c0ead583cacd2ba4178d17b837e7fa4525278683e0527587e0ac91950c7584fe",
+          "000019-reconciliation.json": "343a948889b6e0a01826002d70015b2400cf784876932c9236c410a32764df91",
+          "000020-check-reconciliation.json": "b5693e876da82f2fd17eed7cc5a2cd748ad93fdf5e99a5efa6f14d338956b7de",
+          "000021-report-check.json": "0c9dd4d8b25c1351b360e6d514121c9ea3928ae0ddb81a063592d87fc79eca2e",
+          "000022-report-verification.json": "4649d27c3b483fa296467e683d9b31338e60989f943ef44fb38afc4eb17eaf9a"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Report verifier identified material same-system launchers outside selected boundary.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Choose launcher inclusion versus expressly narrower target; do not hide unresolved scope in ordinary retry.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-18.md",
+            "sha256": "a151e5b01367931e57f32d8cf2d171a8684506ed0ab1c21429b33114ac2afd85"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/finished-batch-residue-2026-10-15.md",
+            "sha256": "bac32732b37c6f94fd19428da397b4ca33c2c4385b219c562051d3f141913ef9"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "ace",
+      "name": "ACE",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/ace-agent/ace",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/ace-agent/ace",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/related-systems/ace-agent--ace",
+        "revision": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/kb/agentic-system-analyses/state/AAS-2026-10-12-ace-a22ddd59ed57-01/state/versions/327ac90ef61f92101326ca75cc64ec3c11f94c14b35fabb1d0ba092fb6607c22",
+        "sha256": "327ac90ef61f92101326ca75cc64ec3c11f94c14b35fabb1d0ba092fb6607c22"
+      },
+      "predecessor": {
+        "key": "ace",
+        "name": "ACE",
+        "inventory-status": "older-target-hold",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/ace-agent/ace",
+        "run-id": "AAS-2026-10-12-ace-a22ddd59ed57-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/kb/agentic-system-analyses/state/AAS-2026-10-12-ace-a22ddd59ed57-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/.venv/bin",
+        "method-revision": "cd6e8250c5277c5c6295b6940a9b01e034c9daa7",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/kb/agentic-system-analyses/state/AAS-2026-10-12-ace-a22ddd59ed57-01/run.json",
+          "sha256": "eadcbf47851b5952342326efd6e29453da18e7f09248f137cb273a8dd2579198"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57.preparation.json",
+          "sha256": "13cdf309b1b81e77030fbfb9f07d3acc53a2adde153b33acaba49ebb6255753b"
+        },
+        "attempts-map": {
+          "000001-opening.json": "cb678f1e9c87c8896d1eb5d9e9ad46cef0e1dec14a4996c1f8cce085faf4ad99",
+          "000002-acquire.json": "0c5029ee77424d34ff67ec37b7f770d8a6f7046ca21e085497fd111fae36002f",
+          "000003-boundary.json": "314570cb6701c64628c494a745fd6bd7f76c8e24e37408294ba980677bb025ac",
+          "000004-check-boundary.json": "c1881c9a7084591eb5b8dbbb73dd2052bd9a26cf83cf416fcd9db12bb15ae2bf",
+          "000005-runtime.json": "92838125f5700dbb5567031a9679cc83f94df38220129ff11fb5cd382401ea87",
+          "000006-check-runtime.json": "8fefc8ecdaeeead6325b527fc8a491fbe782196f1dc583f35e91562c70275a37",
+          "000007-memory.json": "0afa6e37ccdf475bbe9e1e8f7e8984877d31e734111e0b3eb7503adfc40fe6f3",
+          "000008-epistemic.json": "0f1eaa569998cb939a3427ecd9c3b1f23f9343379ca196d71f068da1d9d79158",
+          "000009-workflow.json": "f282fc01603e8ce32ebef1dc9065a96ead8df0a2bc4ddfd3c9a0f3d862b55c1e",
+          "000010-check-memory.json": "bfe81457cc05c199d2cc8670dff9c98d6e581c46be35d5a7c194cbc3979b516d",
+          "000011-check-runtime.json": "be713730a8bda5e0d9e5b97340abe16e442fe8ee778e72ece8823e0a1643614a",
+          "000012-check-epistemic.json": "cf1e8e9f1f855339a7cc4a03f7a2e62e57ae91479b00b45dfff242c5e2c350cb",
+          "000013-check-runtime.json": "6616de77d2639540e780cba9e2e13988331a55518253d0438f244494e0c7736c",
+          "000014-check-memory.json": "3c6295f51fdb7cd5396bb6a7adb361e66f443ab181ebe24106edba54beaf004b",
+          "000015-check-workflow.json": "091bd205664c0da99c10ada401ace7a3ab9e185324d17714100ce4d20a851275",
+          "000016-check-runtime.json": "8a6b77875133d333e4d26402ca2241b55d8a9c70027b9475f6265698a77d5361",
+          "000017-check-memory.json": "797e9266955e23bd07b8f5616b8f362db5b93390d5a2eb5920430f3715c4eeba",
+          "000018-check-epistemic.json": "d47050f154aa3cef6c659953c7e6665efa19cced4411f9ba6c8cf39c8783834e",
+          "000019-reconciliation.json": "a7ab70d055d07e02ca86ede759b67fbb43429bef8d0c3e695839bbd387066ebf"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Reconciliation attempt 000019 remains open after coordinator failure; old worker ownership unresolved.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Reconcile ownership and obtain supported recovery direction. Process absence is not ownership release.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-03.md",
+            "sha256": "21dc346d62d009f82ccca94c7f08fa51279090f054efae60023d272406b6edbf"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/retry-selection-2026-10-15.md",
+            "sha256": "18a738073d27576e696d1d957d4a1d0f39db9949063cf0e8d6fdbce7debcebcd"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "agent-skills-for-context-engineering",
+      "name": "Agent Skills for Context Engineering",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering",
+        "revision": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01/state/versions/33dbba920523998ad15e7be8b0e076becfe58d001178ce66a697f65fdcaeb19a",
+        "sha256": "33dbba920523998ad15e7be8b0e076becfe58d001178ce66a697f65fdcaeb19a"
+      },
+      "predecessor": {
+        "key": "agent-skills-for-context-engineering",
+        "name": "Agent Skills for Context Engineering",
+        "inventory-status": "older-target-hold",
+        "gate": "ownership-operational",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+        "run-id": "AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/.venv/bin",
+        "method-revision": "cd6e8250c5277c5c6295b6940a9b01e034c9daa7",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01/run.json",
+          "sha256": "df2f7e8ba36457f192b76d102004d0256999520a3c71a51cc9506d6a317c6ed2"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83.preparation.json",
+          "sha256": "2adc7321a33805d9e6f9311e974018e7ae3a33afac882df9f65e5f26b6dfa80b"
+        },
+        "attempts-map": {
+          "000001-opening.json": "76935cc5f6f3a9ae3258679e6ec5f470a6eb253ff6a4744bb9df303d08acb87f",
+          "000002-acquire.json": "ee5d66e64cb13e749f9ca64a149cce8c4be873cc4a8f1bd8a4f944fd5d230841",
+          "000003-boundary.json": "414b6898f8a30d901336da3bd4a7f9d9ab78cb3bb3d47bda35eba970e1d3b689",
+          "000004-check-boundary.json": "1dbdee6f57826c082c520693f721ea2d168cd99d2b394d69eaa15a607f42413b",
+          "000005-runtime.json": "888f76074d98650fdbdd50baaf0eccb33c90fc8223fae7635cdde9554a499e10",
+          "000006-check-runtime.json": "d57920060bd84a49d3ce391536cd6eb78747e3f33b17ddba6f03597dfcc95476",
+          "000007-memory.json": "bb9b6f1b07fed084b034a41e8425767a3757573ab8741c2b9c0549fe17af7002",
+          "000008-epistemic.json": "93ad2528470f0c7aed937c865d739ba56169599cf135630613c27096289261d8",
+          "000009-workflow.json": "3555e53e30fff4c57c63a6401854726bb2147ac57398066df6217913e0765c09",
+          "000010-check-memory.json": "71cf608f05575a8c73fefc988ee91ee3a950b847a47620378540ba91593700cf",
+          "000011-check-runtime.json": "b816a086299d701b77b24ff0f3055321305731dd40aabc121b72c2599321b32c",
+          "000012-check-epistemic.json": "b2bbd26cb068322d720f31cc1b5405a37cef3a4f20d8e539840c0e91a816d1f8",
+          "000013-check-runtime.json": "23acfec7ccef6772bbff2b697da2723444ba163573da4fab5102a63cd764188e",
+          "000014-check-memory.json": "73f41b7ef4da7b42d303a368a269fc4f5238d80513ac8796af5b2523111d735e",
+          "000015-check-workflow.json": "6f9f0ac7e1e4b8feef6c633e0b90a15ed1587c2cb8187d7ff60ea0eafeb27ecf",
+          "000016-check-runtime.json": "d12ad65db08e0e2e054fb81c719285302234052833c2a6c41d643a79f917cbd1",
+          "000017-check-memory.json": "71b67ab93634f421192469725ee6b9d7c7de88e453dd8a8071555c140620fe0a",
+          "000018-check-epistemic.json": "588bd07fa5a40c1e8f8a6c5697fd31864edcc328a5ef37e0554b771242ebd6a2",
+          "000019-reconciliation.json": "abff0f9ae68427c9f99a4c474b77c81e76b6019f96f99dd9d5707c30647b4a46",
+          "000020-check-reconciliation.json": "cdeafbf9483de323d7b178a8b11ea0e4f072b5c7f96f390fbc4489fdab99994b",
+          "000021-report-check.json": "266eeeccce75363b078e4bc4620cebc587d354d089bed0a52d24f6b727f7b580",
+          "000022-report-verification.json": "59ff16a652359a6a222d97b9bf9893f7a4065a335738668131b04a08dad3d2ec",
+          "000023-apply-report-verification.json": "82377642bb31eb94b558b2ab1b51423bd9ff2699521e8b04eb07a31818ebfa54",
+          "000024-memory-profile.json": "3ee0a7e17840b58fd1b6138ef2e4dcc0fcf5bc2e690769fa58153c7323450f49",
+          "000025-check-memory-profile.json": "e7be94c2811d2b7620f0c7bada92fb7a63260f0eb2aae4a55e41932eef778e9d",
+          "000026-profile-verification.json": "779635da355bad6a8b900bada835a086288102fa1da872c564ce59c2bfe57bcc",
+          "000027-profile-verification.json": "ea6c2929bc1923773ef01442ea821d3d7f409eab418fe71e852c90d998fd159b",
+          "000028-apply-profile-verification.json": "ca3dc53006900f8e3d3bb383656026b224a593b1e55f0e8960c01bcc03f7a5c8",
+          "000029-synthesis.json": "7eb29182cc0b3af02467082a0995df3917a549fd0fb96d76a9c315d9d263f5de",
+          "000030-check-synthesis.json": "248c532059de9b688311c503f89f516365b3540fe27af43612ce970f4205f85b",
+          "000031-synthesis-verification.json": "59dc17ffd7a8cfad6ff28260cf0c7a49adf386cd3e13411cdde93f3339263928",
+          "000032-apply-synthesis-verification.json": "3a7ad525fbb7a584f64e0886d40ce0c3c91046f10a4fe0686df78b51b82620ec",
+          "000033-assemble.json": "7402d5e3dc10f079e97cef468a0ccbb65bcc6ed9473ef217f804da0d81f4ec2b",
+          "000034-publish.json": "94deda70e21c69ac3469b1c852a949603d5737a40722a6e688cb3408fcfb909a"
+        },
+        "own-publication": {
+          "directory": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/retained/agent-skills-for-context-engineering",
+          "members": {
+            "ARTIFACT.yaml": "595333b43c8bb4cfd789ec06c4e99ad377021e59e7ce18d94070842cd302a5ae",
+            "boundary.md": "0b2224a054569a6ade0c586c2e065eeb6cd7d2d931eed1c1d55b830077f23b03",
+            "epistemic.md": "942f1b4f57c80c96b515858ccc972da1175a6dbde4f6b03eb86409a92239e07e",
+            "memory-profile.md": "41da024faf4138264c6cb1473ddb9ab0f577f99c330524a3c2daafdf3d7704c7",
+            "memory.md": "8c01dcc2ca23f665a6e6313cf7f15aef76c6772d3dfd4ee8adf6f7eb33bddc02",
+            "overview.md": "5ba2162abec6c3223bd9488f708efdf5b992cd3c0caba546e9b472c8b9e9f1e2",
+            "profile-verification.md": "c54066cf382e6f95ff7081470ccd427c457e35c566e4937f85652b5c032c0a9a",
+            "reconciliation.md": "334345e7ad9b5552396b209b4fa6774f1846733b573a9b69b0e114a0fc6b9bb9",
+            "report-verification.md": "8c1a74d368b620205716ccabef890ff307742b20630c69db5b3c86ce87a03e6d",
+            "runtime.md": "2d0f9f2a68e62d1d381f10182d614a8aa65ceccf3db52f6da1ff05a85af34529",
+            "synthesis-verification.md": "ae55bd60bf2dd425f9e6a63093f970a7e54598f3e22310248fd99f2e2e6e7c00",
+            "synthesis.md": "93bf2e67acba64a27549b377a6303da25c7b7c1db3d0d49080ee832e94ce7238",
+            "workflow.md": "246b5939b0a63a9cc523b355e24f6fd1cac09bf97c8f6b92841df0d5e02cc429"
+          },
+          "effect": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01/effects/publish.json",
+            "exists": true,
+            "sha256": "61ee6e63777f2ef34428cf17e23123dd8de193df4871fcb4e2be2227b8203964"
+          },
+          "manifest": {
+            "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/retained/agent-skills-for-context-engineering/ARTIFACT.yaml",
+            "sha256": "595333b43c8bb4cfd789ec06c4e99ad377021e59e7ce18d94070842cd302a5ae"
+          }
+        },
+        "current-fault-or-stop": "Reserved owner; overstated conflict rule plus historical grounding/validation-path concerns.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Coordinate owner and separately plan semantic repair and historical compliance disposition.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01.md",
+            "sha256": "c24c6cccdbaed9b9365ecddb3a1aeb3398dc3773b8a0bd0fc4a1aaa62b15203d"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/audits/path-confusion-agent-skills.md",
+            "sha256": "bb8751b009ab04836e70176c9db45ef7d367590e662e7170a1adebc9bcb15f02"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false
+    },
+    {
+      "key": "secure-llm-wiki",
+      "name": "Secure LLM-Wiki",
+      "route": "fresh-isolated-analysis",
+      "initial-source": "https://github.com/nicobleh/secure-llm-wiki",
+      "selected-source": null,
+      "new-source-kind": "git",
+      "fresh-acquisition-required": true,
+      "revision-policy": "fresh default-branch acquisition; freeze full commit; old pin is provenance only",
+      "previous-source": {
+        "identity": "https://github.com/nicobleh/secure-llm-wiki",
+        "kind": "git",
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/related-systems/nicobleh--secure-llm-wiki",
+        "revision": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+        "sha256": null
+      },
+      "previous-acquisition-record": {
+        "path": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/kb/agentic-system-analyses/state/AAS-2026-10-15-secure-llm-wiki-c9867e0e576a-01/state/versions/aa0d037a237fcfd8839266ccfbc4e88c0f3391b88ba12a99a9860895c8960719",
+        "sha256": "aa0d037a237fcfd8839266ccfbc4e88c0f3391b88ba12a99a9860895c8960719"
+      },
+      "predecessor": {
+        "key": "secure-llm-wiki",
+        "name": "Secure LLM-Wiki",
+        "inventory-status": "pending",
+        "gate": "source-boundary-refusal",
+        "execution-authorized": false,
+        "source-identity": "https://github.com/nicobleh/secure-llm-wiki",
+        "run-id": "AAS-2026-10-15-secure-llm-wiki-c9867e0e576a-01",
+        "worktree": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a",
+        "run": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/kb/agentic-system-analyses/state/AAS-2026-10-15-secure-llm-wiki-c9867e0e576a-01",
+        "command-prefix": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/.venv/bin",
+        "method-revision": "a568c6dc489ad546374536b642c3889ce23149a8",
+        "run-definition": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/kb/agentic-system-analyses/state/AAS-2026-10-15-secure-llm-wiki-c9867e0e576a-01/run.json",
+          "sha256": "2c27d2f01f8b4967c3e21e09a34679b1d9d3f84b5b97708005998d22c9d59df8"
+        },
+        "preparation": {
+          "path": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a.preparation.json",
+          "sha256": "fd68001fb7aadc984e289906a87032623e325d9f2979a3dc765f7e59baf98aaa"
+        },
+        "attempts-map": {
+          "000001-opening.json": "3031fef95ebfff955651cacd8143163d8f718bfa262d0357f315dbe0288d9eeb",
+          "000002-acquire.json": "c0858ec9145c6b20bc0f7e08647b17f7622742e2eba34636e3dc54f523fc82c4",
+          "000003-boundary.json": "61d401bfd5454931eada051d9686d72da26ad98051092062448b7238da296cb5",
+          "000004-check-boundary.json": "06785c70d5f0f3446aac6ad5505a4eecb2fe7d467fae7528567aa0229f63ae7f",
+          "000005-runtime.json": "5b48b95bf721f089268832ae2087f0688419394d13da2e927cb326af2d0d1c53",
+          "000006-check-runtime.json": "c943976bd12b5bb73c768e2ad3c9a2942914744811ee689a84cf771ffa336dcf",
+          "000007-memory.json": "7fbc041a2aabb4a36bb5c5c18f63881316a4a5cf39e685e264b0bf04e172bc3f",
+          "000008-epistemic.json": "24dad8d9c427b24eb8ad764d99b1b9f548421f7e868a4e2cea8f28ecec9351c6",
+          "000009-workflow.json": "79cde5351e31818ad9f2b8847d9a446bd56fb68ee7edced9e41e12a9a36f7ef6",
+          "000010-check-memory.json": "a10b967d5d8a7a05502edf2ed499cfa3385c599cbde799bf1b72408091e84ae9",
+          "000011-check-runtime.json": "cbad0ee6ef3a83da6f94f9a6c4369e4336dc88a064e3f4c458ae890d72f2296a",
+          "000012-check-epistemic.json": "3d4c53e659509904100400e2b5810e5d77907ba5f7b094dea27e79cde7b8b340",
+          "000013-check-runtime.json": "3cd21bd0cbbb21133a97a8741b391b829f9bfb5e99ce2956ca302b05cd0d1486",
+          "000014-check-memory.json": "68d27c34bf37691d1950bb2079b02a0f5a83bc8a2c3d6c503b7c057b87279428",
+          "000015-check-workflow.json": "971af35e827916360c0e4362d67ce48dd80bd3752ec4cd3f29ec2f2e541da7f5",
+          "000016-check-runtime.json": "9edc88983a83de94792003f97272febbb6a84c905cbca17af7ce851e6416daa1",
+          "000017-check-memory.json": "f2db10bf285ad723b0a64287c00535d6bf8c194a78b6147153868d3e1be936aa",
+          "000018-check-epistemic.json": "10e8370fa989a8fff6cd1b241fa58fa25d28e7a811ce73a9845b54d3aeddece7",
+          "000019-reconciliation.json": "20ad920c76df2aee8d2e04c854c93fdd3b2bcc1e9efb8d9a0d058bfe37c460f3",
+          "000020-check-reconciliation.json": "c2300ec208dd949189d9fc87dfd66bb001e770bd8a3de5fe8ee6d0187a9b9c67",
+          "000021-report-check.json": "1e90b9d36997f9b9ced46b49d40b391c1511225d26f786f2d07a00bb55c20726",
+          "000022-report-verification.json": "1ba3d74a8684931ad1ed78ae1a68c00aaa5dae1638b8e64fd990505cb1138d29",
+          "000023-apply-report-verification.json": "fa8dbf2cfeb442c07986d22ef616c168035f9b463c20d00a562562e11ce68042",
+          "000024-memory-profile.json": "fd655589c40ee3309ce1114d2673c582ec5acead8e6d02bcb2468b3171424e6b",
+          "000025-check-memory-profile.json": "0076ff0c4fa96edc8c4c19b3270dae2319b51ffee76730b3132482f070cda1f2",
+          "000026-profile-verification.json": "33284b77c7e03ecffccf4a68206d4b7d4ef543ea6020076f9deae31564d85497",
+          "000027-apply-profile-verification.json": "9c94a7a9f458eed2befa329fa59978bd6bc62e9b69e9b4ff4e77ea4b6220f0b8",
+          "000028-memory-profile.json": "7133017cc8a17637f5d91f5bf48c24fbb222a88248897fa9ba62e1b90e04592d",
+          "000029-check-memory-profile.json": "254b378c47d1992d386513cfb1558c16b2cfef8670153c87acaf945505a2cdfc",
+          "000030-memory-profile.json": "9fca153dfbe87de77bf6daf00f17f9b56e15228f5315128e8bda49007393da2e",
+          "000031-check-memory-profile.json": "5aced0e13d74602274413e9a101cfdfc32cae748fb1ef9508a51a189172cf5e8"
+        },
+        "own-publication": null,
+        "current-fault-or-stop": "Prepared profile/check interpretation conflict remains refused; newer representation capability does not clear old refusal.",
+        "candidate-author-jobs": [],
+        "verification-barriers": [],
+        "next-decision": "Resolve prepared-contract/refusal and recovery route without inventing positive classification or patching frozen method.",
+        "evidence": [
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/batch-18.md",
+            "sha256": "a151e5b01367931e57f32d8cf2d171a8684506ed0ab1c21429b33114ac2afd85"
+          },
+          {
+            "path": "/home/zby/llm/commonplace/kb/work/agentic-system-reruns/finished-batch-residue-2026-10-15.md",
+            "sha256": "bac32732b37c6f94fd19428da397b4ca33c2c4385b219c562051d3f141913ef9"
+          }
+        ]
+      },
+      "old-hold-remains": true,
+      "proposed-worktree": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki",
+      "proposed-preparation-record": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki.preparation.json",
+      "new-run-id": null,
+      "execution-authorized": false,
+      "release-gate": "profile-contract-validator-alignment"
+    }
+  ],
+  "not-in-this-batch": {
+    "audit-assisted-corrections": "nine separate batch-21 cases, unchanged and unlaunched",
+    "deferred": [
+      "dualgraph",
+      "fintool"
+    ],
+    "other-gates": [
+      "agentic-harness-engineering"
+    ]
+  },
+  "limits": [
+    "No source acquired or new workspace/run created",
+    "No old ownership or incident hold released",
+    "No URI-intake enhancement",
+    "No source suitability or writer-idle claim",
+    "No exclusions, integration, cleanup or run launch; preparation commit separately authorized",
+    "New publication requires new fixed intake and independent exact-byte audit before separately authorized integration",
+    "Old ACE/Agent Skills mutable attempts and reservations are not admission gates; new workspace ownership must still be disjoint and exclusive",
+    "Contract clarified only; validator/tests still encode the competing interpretation. No new run may use this inconsistent method release."
+  ],
+  "old-reconciliation-not-required": [
+    "ace",
+    "agent-skills-for-context-engineering"
+  ],
+  "method-release-gate": "profile-contract-validator-alignment"
+}

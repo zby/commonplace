@@ -1,0 +1,7 @@
+# Operator correction: MehmetGoekce LLM Wiki update-consumer authority
+
+Explicit audit-assisted local profile correction. Use accepted records and the frozen profile/record contracts. Correct only your assigned role through its normal draft/refusal-answer channel; do not edit other roles, retained publications, source, method or state. No acquisition, target execution or broad reanalysis is authorized.
+
+The `behavioral_authority` axis omits retained Access-Log traces' authority at the human-approved pruning/update consumer. Accepted `MEM-OBJ-access-log`, `RT-RTE-index-prune` and their annotations already retain the chain: actual full-page reads enter Access-Log; pruning consumes retained dates; human-approved pruning changes live Index membership/archive markers; later query selection uses that Index.
+
+The frozen contract distinguishes experience feeding durable behavior-shaping updates (`learning` authority) from automatic admission (`trace_learning`). Human approval preserves manual write agency; it does not remove the feedback's update-consumer force. Assess or split this consumer and correct the conflating “automatic learning authority” rationale at the supported claimed, not observed, evidence strength. Preserve downstream retrieval authority and the repaired symbolic initialization finding. Do not force `trace_learning: yes`, successful learning or observed improvement. A reasoned rejection must address this exact consumer chain and contract distinction.
