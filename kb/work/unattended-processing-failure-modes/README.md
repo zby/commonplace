@@ -50,6 +50,7 @@ The catalogue is a working list grown by observation, on the model of the [chang
 ## Files
 
 - [catalogue.md](./catalogue.md) — admitted entries, then candidates awaiting a recorded instance.
+- [intervention-study.md](./intervention-study.md) — maps the interaction-function consequences to existing notes and frames one local investigation of an operator dependency in note revision.
 
 ## What closes this workshop
 

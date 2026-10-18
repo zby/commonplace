@@ -20,6 +20,8 @@ Notes on handing decisions from humans to a computational actor: which decisions
 
 ## The human–computation allocation
 
+- [Unattended work needs the functions that interaction supplied](../notes/unattended-work-needs-the-functions-that-interaction-supplied.md) — identifies operator contributions concealed by interactive success before deciding which can transfer
+
 - [Make memory authority explicit](../notes/agent-memory-requirements/make-authority-explicit.md) — risk and verification govern automation, review, and approval
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](../notes/computationally-directed-self-improvement-is-a-reallocation.md) — progress is which decision-bearing functions humans still supply; the endpoint is contracting the boundary to exclude them
 - [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — what a method settles and whether a human decided during operation are separate questions
