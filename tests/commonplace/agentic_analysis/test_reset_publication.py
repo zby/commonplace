@@ -8,7 +8,7 @@ import yaml
 from commonplace.artifactrun import effects
 from commonplace.artifactrun.reset import reset_run
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import publication
+from commonplace.lib.agentic_analysis import handlers, publication
 from tests.commonplace.agentic_analysis.test_publication import (
     ANALYSIS_TYPE,
     ROOT,
@@ -36,13 +36,13 @@ def published(tmp_path, monkeypatch, request):
     monkeypatch.setattr(publication, "inspect_destination", lambda **kwargs: {
         "expected_incumbent_sha256": attempt.metadata["expected-incumbent-sha256"],
     })
-    receipt = publication.publish_analysis(attempt)["receipt"]
+    receipt = handlers.publish_analysis(attempt)["receipt"]
     store = RunStore(attempt.run_dir)
     store.create({"type": (ROOT / "kb" / ANALYSIS_TYPE).read_text(), "type_spec": ANALYSIS_TYPE,
                   "library": str(repo / "kb"), "plan": "fixture.yaml", "parameters": {},
                   "declaration": yaml.safe_dump({"type": ANALYSIS_TYPE, "jobs": [
                       {"name": "opening", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": ["metadata"]},
-                      {"name": "publish", "kind": "code", "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis",
+                      {"name": "publish", "kind": "code", "handler": "commonplace.lib.agentic_analysis.handlers.publish_analysis",
                        "inputs": {"metadata": {"address": "output", "source": "opening:metadata"}}, "outputs": ["receipt"]},
                   ]})})
     store.commit_attempt({"id": "000001-opening", "seq": 1, "job": "opening", "kind": "code", "pins": {},
@@ -73,7 +73,7 @@ def test_reset_withdraws_and_republishes_new_bytes(published):
     manifest = yaml.safe_load(attempt.inputs["manifest"])
     manifest["members"]["overview.md"]["sha256"] = publication._digest(attempt.inputs["overview"])
     attempt.inputs["manifest"] = yaml.safe_dump(manifest, sort_keys=False).encode()
-    receipt = json.loads(publication.publish_analysis(attempt)["receipt"])
+    receipt = json.loads(handlers.publish_analysis(attempt)["receipt"])
     assert receipt["published"] is True
     assert effects.tree(destination) != original
     assert effects.hashes(effects.tree(destination)) == receipt["members"]

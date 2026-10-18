@@ -36,15 +36,21 @@ def engine_fixture(repo, monkeypatch, name="fixture"):
     members = {"boundary": b"boundary", "overview": b"overview"}
     worker = {"profile": "fixture", "harness": "fixture", "launch-model": "fixture/model",
               "model": "fixture-model-1", "effort": "high"}
-    manifest = engine._manifest(SimpleNamespace(layout=layout, type_spec=ANALYSIS_TYPE), members, worker)
+    manifest = engine._manifest(layout, ANALYSIS_TYPE, members, worker)
     metadata = {"system": name, "source-identity": identity,
                 "review-path": (destination / "overview.md").relative_to(repo).as_posix(),
                 "expected-incumbent-sha256": "absent"}
-    attempt = SimpleNamespace(run_dir=run, metadata=metadata, layout=layout, type_spec=ANALYSIS_TYPE,
-                              read=lambda key: manifest if key == "manifest" else None)
-    monkeypatch.setattr(engine, "_snapshot", lambda *a, **kw: (
-        layout, (), members, SimpleNamespace(frontmatter={"result-disposition": "complete"})))
-    monkeypatch.setattr(engine, "_environment", lambda current, *a, **kw: (current.metadata, repo))
+
+    def publish():
+        return engine.publish_analysis(
+            members, metadata=json.dumps(metadata).encode(), source=None, provenance={}, manifest=manifest,
+            layout=layout, type_spec=ANALYSIS_TYPE, criteria={}, run_dir=run, library=repo / "kb")
+
+    attempt = SimpleNamespace(run_dir=run, metadata=metadata, publish=publish)
+    monkeypatch.setattr(engine, "_classified_boundary", lambda *a: SimpleNamespace(
+        frontmatter={"result-disposition": "complete"}))
+    monkeypatch.setattr(engine, "_opened_environment", lambda metadata, *a, **kw: (json.loads(metadata), repo))
+    monkeypatch.setattr(engine, "_environment", lambda *a, **kw: None)
     monkeypatch.setattr(engine, "_provenance", lambda *a: worker)
     monkeypatch.setattr(engine, "validate_pinned_artifact", lambda *a, **kw: None)
     monkeypatch.setattr(engine, "_require_opened_method", lambda *a, **kw: None)
@@ -81,10 +87,10 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
     monkeypatch.setattr(engine, "inspect_destination", inspect)
     monkeypatch.setattr(effects, "write_json", record)
     with ThreadPoolExecutor(max_workers=2) as pool:
-        first_result = pool.submit(engine.publish_analysis, first)
+        first_result = pool.submit(first.publish)
         try:
             assert validating.wait(5)
-            second_result = pool.submit(engine.publish_analysis, second)
+            second_result = pool.submit(second.publish)
             assert waiting.wait(5)
             assert not inspecting.wait(0.1)
             assert not first_destination.exists()
@@ -92,7 +98,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
         finally:
             release.set()
         for result in (first_result, second_result):
-            assert json.loads(result.result(timeout=5)["receipt"])["published"] is True
+            assert json.loads(result.result(timeout=5))["published"] is True
     assert inspecting.is_set()
     for destination in (first_destination, second_destination):
         assert yaml.safe_load((destination / MANIFEST_NAME).read_bytes())["type"] == ANALYSIS_TYPE
@@ -106,7 +112,7 @@ def test_publishers_share_lock_across_runs_and_destinations(tmp_path, monkeypatc
 
     monkeypatch.setattr(engine, "install_tree", replay)
     monkeypatch.setattr(engine, "inspect_destination", lambda **kw: pytest.fail("replay reinspected"))
-    assert json.loads(engine.publish_analysis(second)["receipt"])["published"] is True
+    assert json.loads(second.publish())["published"] is True
     with guards.publication_lock(tmp_path):
         assert_locked(tmp_path)
 
@@ -132,7 +138,7 @@ def test_failure_keeps_lock_through_rollback_and_releases_it(tmp_path, monkeypat
         "expected_incumbent_sha256": "absent"})
     monkeypatch.setattr(effects, "atomic_write", write)
     with pytest.raises(OSError, match="fixture write failure"):
-        engine.publish_analysis(attempt)
+        attempt.publish()
     assert not destination.exists()
     assert b'"rolled-back"' in (attempt.run_dir / engine.JOURNAL).read_bytes()
     with open(tmp_path / LOCK_PATH, "a") as handle:

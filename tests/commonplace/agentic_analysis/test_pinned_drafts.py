@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace.artifactrun.checks import criterion_bytes
+from commonplace.artifactrun.handlers import criterion_bytes
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.validation import validate_draft_in_role
 
@@ -101,13 +101,13 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
 
 def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path, monkeypatch):
     from commonplace.artifactrun import checks as module
+    from commonplace.lib.agentic_analysis.analyses import analysis_layout
 
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
     boundary = ("---\nsource:\n  kind: capture\n  identity: fixture\n  revision: pin\n"
                 f"  path: {tmp_path}\n---\n# Boundary\n").encode()
     pinned = criteria()
-    files = {path: data for path, data in pinned.items() if path != ANALYSIS_TYPE}
-    attempt = fixed_type(run_dir=tmp_path, read_files=lambda: dict(files), run_values={"source-identity": "fixture", "run-id": tmp_path.name})
+    run_values = {"source-identity": "fixture", "run-id": tmp_path.name}
     seen = []
 
     def validate(*args, **kwargs):
@@ -116,7 +116,9 @@ def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path,
 
     monkeypatch.setattr(module, "validate_draft_in_role", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
-    check = module.Candidate(attempt, "reconciliation", CANDIDATE, {"boundary.md": boundary}, tmp_path, source)
+    check = module.Candidate("reconciliation", CANDIDATE, {"boundary.md": boundary}, tmp_path, source,
+                             run_dir=tmp_path, layout=analysis_layout(), relations=(), type_spec=ANALYSIS_TYPE,
+                             criteria=pinned, run_values=run_values)
     assert module.review(check) == []
     args, kwargs = seen[0]
     assert args[2] == CANDIDATE

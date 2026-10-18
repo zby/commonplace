@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from commonplace.artifactrun import checks
+from commonplace.artifactrun import checks, handlers
 from commonplace.artifactrun.run import _parse_type
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
@@ -61,10 +61,14 @@ def attempt(tmp_path, candidate: bytes, judged: list) -> SimpleNamespace:
     )
 
 
-def candidate(tmp_path, data: bytes, judged: list) -> checks.Candidate:
-    """The body candidate with the head as its one partner, as the standard check builds it."""
+def candidate(tmp_path, data: bytes, judged: list) -> tuple[SimpleNamespace, checks.Candidate]:
+    """The body candidate with the head as its one partner, as the standard handler builds it."""
     pinned = attempt(tmp_path, data, judged)
-    return checks.Candidate(pinned, "body", data, {"head.md": pinned.read("head")}, tmp_path, None)
+    check = checks.Candidate(
+        "body", data, {"head.md": pinned.read("head")}, tmp_path, None,
+        run_dir=pinned.run_dir, layout=pinned.layout, relations=pinned.relations,
+        type_spec=pinned.type_spec, criteria=handlers.criterion_bytes(pinned), run_values=pinned.run_values)
+    return pinned, check
 
 
 def body(run: str) -> bytes:
@@ -75,29 +79,29 @@ def body(run: str) -> bytes:
 
 def test_a_matching_body_is_accepted_over_its_relations(tmp_path):
     judged = []
-    check = candidate(tmp_path, body("R1"), judged)
+    pinned, check = candidate(tmp_path, body("R1"), judged)
     reasons = checks.review(check)
-    checks.judge(check, reasons)
+    handlers.judge(pinned, check, reasons, answered=None)
     assert reasons == []
     assert judged == [{"outcome": "accepted", "scope": ("body:cites:head", "body:identity:head"), "findings": ""}]
 
 
 def test_a_body_that_breaks_identity_is_refused_with_findings(tmp_path):
     judged = []
-    check = candidate(tmp_path, body("R2"), judged)
-    checks.judge(check, checks.review(check))
+    pinned, check = candidate(tmp_path, body("R2"), judged)
+    handlers.judge(pinned, check, checks.review(check), answered=None)
     assert judged[0]["outcome"] == "refused"
     assert "identity field run" in judged[0]["findings"] and "## Blockers\n\nnone" in judged[0]["findings"]
 
 
 def test_the_manifest_quotes_a_type_path_yaml_would_cut():
     spec = "types/custom #1.md"
-    assert yaml.safe_load(checks.manifest(SimpleNamespace(type_spec=spec))) == {"type": spec}
+    assert yaml.safe_load(checks.manifest(spec)) == {"type": spec}
 
 
 def test_a_content_acceptance_never_covers_a_verifies_relation(tmp_path):
     judged = []
-    check = candidate(tmp_path, body("R1"), judged)
-    assert ("body", "head", "body:verifies:head") in check.attempt.relations
-    checks.judge(check, checks.review(check))
+    pinned, check = candidate(tmp_path, body("R1"), judged)
+    assert ("body", "head", "body:verifies:head") in check.relations
+    handlers.judge(pinned, check, checks.review(check), answered=None)
     assert "body:verifies:head" not in judged[0]["scope"]

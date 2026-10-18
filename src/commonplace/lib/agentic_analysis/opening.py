@@ -1,17 +1,18 @@
-"""Analysis opening and acquisition handlers.
+"""Analysis opening and acquisition.
 
-Opening is read-only outside the engine's attempt commit. Acquisition passes
-the opening's source pins to the shared effect.
+Opening is read-only and returns the run metadata. Acquisition passes the
+opening's source pins to the shared effect. Both take plain values; the
+engine adapters live in ``handlers``.
 """
 
 from __future__ import annotations
 
 import datetime
 import json
+from collections.abc import Mapping
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.sources import acquire, github_checkout_path
 from commonplace.artifactrun.worktree import (
     preparation_for,
@@ -43,15 +44,16 @@ def _head(repo: Path) -> str:
     return commit
 
 
-def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Open a prepared analysis by returning checked run metadata.
+def open_analysis(
+    parameters: Mapping[str, str], worker_profiles: bytes | None, run_dir: Path, library: Path,
+) -> bytes:
+    """Open a prepared analysis by returning checked run metadata as JSON bytes.
 
     Run parameters are fixed by start_run, not read from a file input. The
     executing code, library, run location, preparation token, method commit,
     worktree cleanliness and incumbent all pass the opening guards. No source
     is acquired. Analysis runs require a ready token-bearing preparation record.
     """
-    parameters = attempt.parameters
     for name in ("system", "source-identity", "source", "worker-profile"):
         if not isinstance(parameters.get(name), str) or not parameters[name].strip():
             raise ValueError(f"analysis opening requires a nonempty {name} run parameter")
@@ -65,7 +67,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     # Members bind their source identity to this run value, so it must already be canonical.
     if normalized != identity:
         raise ValueError(f"source-identity must be given normalized, as {normalized!r}")
-    worker = resolve_worker_profile(attempt.read("worker-profiles"), parameters["worker-profile"])
+    worker = resolve_worker_profile(worker_profiles, parameters["worker-profile"])
     revision = parameters.get("source-revision")
     if revision is not None:
         if not run_ids.is_commit(revision):
@@ -73,8 +75,7 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         if github_checkout_path(identity) is None:
             raise ValueError("source-revision requires a GitHub repository identity")
 
-    run_dir = attempt.run_dir
-    repo = run_checkout(run_dir, attempt.library, job="opening")
+    repo = run_checkout(run_dir, library, job="opening")
     preparation = preparation_for(repo)
     slug = source_slug(identity, system)
     token = preparation["token"]
@@ -102,22 +103,17 @@ def open_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
         "review-path": destination,
         "expected-incumbent-sha256": str(incumbent["expected_incumbent_sha256"]),
     }
-    return {"metadata": (json.dumps(record, indent=2) + "\n").encode("utf-8")}
+    return (json.dumps(record, indent=2) + "\n").encode("utf-8")
 
 
-def acquire_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
+def acquire_analysis(metadata: bytes, run_dir: Path) -> bytes:
     """Acquire from pinned opening metadata without launching an analyst.
 
     Its next model job consumes the engine-specific boundary hand-out.
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """
-    metadata, repo = locate(attempt)
-    return {"source": acquire(repo, attempt.run_dir, identity=metadata["source-identity"],
-                              revision=metadata["source-revision"],
-                              inputs_digest=sha256(attempt.read("metadata")).hexdigest())}
+    record = json.loads(metadata)
+    return acquire(checkout(run_dir), run_dir, identity=record["source-identity"],
+                   revision=record["source-revision"], inputs_digest=sha256(metadata).hexdigest())
 
-
-def locate(attempt: CodeAttempt) -> tuple[dict, Path]:
-    """The opened run's metadata and checkout; opening and publication own the guards."""
-    return json.loads(attempt.read("metadata")), checkout(attempt.run_dir)

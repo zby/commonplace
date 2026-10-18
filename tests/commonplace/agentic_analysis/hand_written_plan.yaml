@@ -52,13 +52,13 @@ criteria:
 jobs:
 - name: opening
   kind: code
-  handler: commonplace.lib.agentic_analysis.opening.open_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.open_analysis
   inputs:
     worker-profiles: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml}
   outputs: [metadata]
 - name: acquire
   kind: code
-  handler: commonplace.lib.agentic_analysis.opening.acquire_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
   inputs:
     metadata: {address: output, source: 'opening:metadata', required: true}
   outputs: [source]
@@ -437,7 +437,7 @@ jobs:
   outputs: []
 - name: assemble
   kind: code
-  handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.assemble_analysis
   criteria: [contracts, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     coverage: {address: coverage}
@@ -467,7 +467,7 @@ jobs:
   role: overview
 - name: publish
   kind: code
-  handler: commonplace.lib.agentic_analysis.publication.publish_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.publish_analysis
   criteria: [contracts, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     coverage: {address: coverage}

@@ -4,6 +4,9 @@ Whole-artifact validation uses closed criterion and member snapshots and refuses
 missing dependencies. Effect recovery
 is independent of engine attempt commits and never infers success from an overview
 alone. Only complete dispositions replace a public artifact.
+
+Assembly and publication take plain values; the engine adapters live in
+``handlers``. The publication reset hook reads engine run records directly.
 """
 from __future__ import annotations
 
@@ -11,13 +14,13 @@ import json
 import os
 from collections.abc import Mapping
 from contextlib import contextmanager
+from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
 import yaml
 
-from commonplace.artifactrun import CodeAttempt, UncertainEffectError
-from commonplace.artifactrun.checks import criterion_bytes
+from commonplace.artifactrun import UncertainEffectError
 from commonplace.artifactrun.effects import hashes, install_tree, safe, tree
 from commonplace.artifactrun.worktree import (
     preparation_for,
@@ -31,14 +34,15 @@ from commonplace.lib.agentic_analysis.analyses import (
 )
 from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
 from commonplace.lib.agentic_analysis.guards import (
+    checkout,
     inspect_destination,
     publication_lock,
     require_prepared_method,
     run_checkout,
 )
-from commonplace.lib.agentic_analysis.opening import locate
 from commonplace.lib.agentic_analysis.records import amendment_index
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
+from commonplace.lib.directory_layout import Layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.validation import validate_pinned_artifact_snapshot
 
@@ -72,38 +76,48 @@ def _require_opened_method(repo: Path, metadata: dict, *, job: str) -> None:
     require_prepared_method(repo, metadata.get("inputs-commit"), preparation, job=job)
 
 
-def _opened_environment(attempt: CodeAttempt, metadata_bytes: bytes | None, *, job: str) -> tuple[dict, Path]:
-    if metadata_bytes is None:
+def _opened_environment(metadata: bytes | None, run_dir: Path, library: Path, *, job: str) -> tuple[dict, Path]:
+    if metadata is None:
         raise ValueError(f"{job} requires the opening metadata")
-    metadata = json.loads(metadata_bytes)
-    if not isinstance(metadata, dict) or metadata.get("run-id") != attempt.run_dir.name:
+    record = json.loads(metadata)
+    if not isinstance(record, dict) or record.get("run-id") != run_dir.name:
         raise ValueError(f"{job} opening metadata must name this run")
-    repo = run_checkout(attempt.run_dir, attempt.library, job=job)
-    _require_opened_method(repo, metadata, job=job)
-    return metadata, repo
+    repo = run_checkout(run_dir, library, job=job)
+    _require_opened_method(repo, record, job=job)
+    return record, repo
 
 
-def _snapshot(attempt: CodeAttempt, *, overview: bool):
-    # The required coverage input gates this job: the engine has established
-    # that every required member is present, accepted and related as declared.
-    layout, relations = attempt.layout, attempt.relations
-    members = {}
-    documents = {}
-    for role in layout.roles:
-        if role == "overview" and not overview:
-            continue
-        data = attempt.read(role)
-        if data is not None:
-            members[role] = data
-            documents[layout.path(role)] = _document(data)
-    boundary = documents.get(layout.path("boundary"))
+def _classified_boundary(members: Mapping[str, bytes]):
+    """The boundary member's document, which must carry a classified disposition.
+
+    Every member must parse. The required coverage input gates the job: the
+    engine has established that every required member is present, accepted
+    and related as declared.
+    """
+    documents = {role: _document(data) for role, data in members.items()}
+    boundary = documents.get("boundary")
     if boundary is None or boundary.frontmatter.get("result-disposition") not in (
             "complete", "blocked", "out-of-scope"):
         raise ValueError("a classified boundary is required")
-    return layout, relations, members, boundary
+    return boundary
 
 
-def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: dict) -> dict:
+@dataclass(frozen=True)
+class Provenance:
+    """What a role's producer record reports about the output it completed.
+
+    `model` and `effort` are what the coordinator reported (None when it did
+    not); `worker_model` and `worker_effort` are what the worker reported;
+    `output_sha256` is the digest of the completed primary output the record pins.
+    """
+    model: str | None
+    effort: str | None
+    worker_model: str | None
+    worker_effort: str | None
+    output_sha256: str
+
+
+def _provenance(members: Mapping[str, bytes], provenance: Mapping[str, Provenance], metadata: dict) -> dict:
     """The run's worker profile and the exact model its workers report.
 
     Opening resolved the worker profile the run started with; every worker uses it.
@@ -124,36 +138,33 @@ def _provenance(attempt: CodeAttempt, members: Mapping[str, bytes], metadata: di
     for role, data in members.items():
         if role == "overview":
             continue  # Code-written, never a model worker.
-        record = _json(attempt.read(f"{role}-attempt"), f"{role} producer attempt")
-        filler = attempt.filler(role)
+        record = provenance.get(role)
         # The member can be older than the producer's latest completed output,
         # so the digest ties the worker identity to the member actually published.
-        if (record.get("kind") != "model"
-                or record.get("job") != filler.name
-                or record.get("outputs", {}).get(filler.outputs[0]) != _digest(data)):
+        if record is None or record.output_sha256 != _digest(data):
             raise ValueError(f"{role} provenance does not identify its completed output")
         for field, profiled in (("model", "launch-model"), ("effort", "effort")):
-            if record.get(field) is not None and record[field] != worker[profiled]:
-                raise ValueError(f"{role} was reported with {field} {record[field]!r}, "
+            value = getattr(record, field)
+            if value is not None and value != worker[profiled]:
+                raise ValueError(f"{role} was reported with {field} {value!r}, "
                                  f"not the run's worker profile's {worker[profiled]!r}")
-        reported_effort = record.get("worker_effort")
-        if not isinstance(reported_effort, str) or not reported_effort:
+        if not isinstance(record.worker_effort, str) or not record.worker_effort:
             raise ValueError(f"{role} reported no worker effort")
-        efforts[role] = reported_effort
-        reported.add(record.get("worker_model"))
+        efforts[role] = record.worker_effort
+        reported.add(record.worker_model)
     if len(reported) != 1 or not all(isinstance(model, str) and model for model in reported):
         raise ValueError("every worker must report the same model; reported: "
                          + ", ".join(sorted(map(str, reported))))
     return {**worker, "model": reported.pop(), "reported-effort": efforts}
 
 
-def validate_pinned_artifact(attempt: CodeAttempt, *, repo: Path, members: Mapping[str, bytes],
-                        manifest: bytes) -> None:
-    """Validate all exact member, manifest and criterion bytes."""
-    boundary = _document(members[attempt.layout.path("boundary")])
+def validate_pinned_artifact(*, repo: Path, members: Mapping[str, bytes], manifest: bytes, layout: Layout,
+                             type_spec: str, criteria: Mapping[str, bytes], run_dir: Path) -> None:
+    """Validate all exact member, manifest and criterion bytes; members are keyed by path."""
+    boundary = _document(members[layout.path("boundary")])
     result = validate_pinned_artifact_snapshot(
-        repo=repo, artifact_type=attempt.type_spec, intended_artifact_path=attempt.run_dir / "artifact", members=members,
-        manifest=manifest, criteria=criterion_bytes(attempt),
+        repo=repo, artifact_type=type_spec, intended_artifact_path=run_dir / "artifact", members=members,
+        manifest=manifest, criteria=criteria,
         frozen_source=boundary.frontmatter.get("source"),
     )
     if result.fails:
@@ -164,54 +175,58 @@ def validate_pinned_artifact(attempt: CodeAttempt, *, repo: Path, members: Mappi
         raise ValueError("pinned artifact validation warnings require review: " + "; ".join(result.warns))
 
 
-def _manifest(attempt: CodeAttempt, members: Mapping[str, bytes], worker: dict) -> bytes:
-    layout = attempt.layout
+def _manifest(layout: Layout, type_spec: str, members: Mapping[str, bytes], worker: dict) -> bytes:
     return yaml.safe_dump({
-        "type": attempt.type_spec,
+        "type": type_spec,
         "members": {layout.path(role): {"sha256": _digest(data)} for role, data in members.items()},
         "worker": worker,
     }, sort_keys=False).encode("utf-8")
 
 
-def _environment(attempt: CodeAttempt, boundary, *, job: str, guard: bool = False):
-    metadata, repo = (_opened_environment(attempt, attempt.read("metadata"), job=job) if guard
-                      else locate(attempt))
-    frozen = acquired_source(attempt.read("source"), job=job)
-    if boundary.frontmatter.get("result-disposition") == "complete" and not isinstance(
-            boundary.frontmatter.get("source"), dict):
+def _environment(metadata: dict, repo: Path, boundary: bytes, source: bytes | None, run_dir: Path,
+                 *, job: str) -> None:
+    """Bind the boundary's source to the opened identity and the acquisition result."""
+    frozen = acquired_source(source, job=job)
+    fields = _document(boundary).frontmatter
+    if fields.get("result-disposition") == "complete" and not isinstance(fields.get("source"), dict):
         raise ValueError("complete publication requires a frozen boundary source")
     reasons = boundary_refusals(
-        attempt.read("boundary"), repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
-        capture_directory=attempt.run_dir / CAPTURE_DIRECTORY,
+        boundary, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
+        capture_directory=run_dir / CAPTURE_DIRECTORY,
     )
     if reasons:
         raise ValueError("source/opening identity: " + "; ".join(reasons))
-    return metadata, repo
 
 
-def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Assemble an entry and exact-byte manifest from declared members only."""
-    layout, relations, members, boundary = _snapshot(attempt, overview=False)
-    metadata, repo = _environment(attempt, boundary, job="assembly")
-    worker = _provenance(attempt, members, metadata)
+def assemble_analysis(members: Mapping[str, bytes], *, metadata: bytes, source: bytes | None,
+                      provenance: Mapping[str, Provenance], layout: Layout, type_spec: str,
+                      criteria: Mapping[str, bytes], run_dir: Path) -> tuple[bytes, bytes]:
+    """Assemble an overview and exact-byte manifest from the present role members only.
+
+    ``members`` are by role, without the overview. Returns (overview, manifest).
+    """
+    boundary = _classified_boundary(members)
+    opened, repo = json.loads(metadata), checkout(run_dir)
+    _environment(opened, repo, members["boundary"], source, run_dir, job="assembly")
+    worker = _provenance(members, provenance, opened)
     fields = boundary.frontmatter
     disposition = fields["result-disposition"]
     description = (str(_document(members["synthesis"]).frontmatter["description"])
                    if disposition == "complete" else
-                   f"Analysis of {metadata['system']} at {fields.get('reviewed-boundary') or 'no established boundary'}, "
+                   f"Analysis of {opened['system']} at {fields.get('reviewed-boundary') or 'no established boundary'}, "
                    f"with {disposition} disposition")
     frontmatter = {
         "type": layout.roles["overview"].type, "description": " ".join(description.split()),
         **{name: fields.get(name) for source in layout.roles["overview"].identity for name in source.fields},
-        "system": metadata["system"], "run-date": metadata["run-date"],
-        "inputs-commit": metadata["inputs-commit"],
+        "system": opened["system"], "run-date": opened["run-date"],
+        "inputs-commit": opened["inputs-commit"],
     }
     index = (amendment_index(_document(members["reconciliation"]).body) if "reconciliation" in members
              else "Amended or superseded records: none. Reconciliation was not reached.")
     links = "\n".join(f"- [{role}](./{layout.path(role)})" for role in members)
     targets = "\n".join(f"- `{layout.path(role)}`: deterministic snapshot checks passed."
                         for role in (*members, "overview"))
-    body = (f"# {metadata['system']} agentic-system analysis\n\n## Members\n\n"
+    body = (f"# {opened['system']} agentic-system analysis\n\n## Members\n\n"
             f"Disposition: `{disposition}`. See the boundary for its stopping condition.\n\n{links}\n\n"
             f"## Amendment index\n\n{index}\n\n## Deterministic validation\n\n{targets}\n\n"
             "The exact manifest and cross-member checks passed; publication rechecks them. "
@@ -219,14 +234,11 @@ def assemble_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
     overview = ("---\n" + yaml.safe_dump(frontmatter, sort_keys=False, allow_unicode=True)
                 + "---\n\n" + body).encode("utf-8")
     complete = {**members, "overview": overview}
-    manifest = _manifest(attempt, complete, worker)
-    validate_pinned_artifact(attempt, repo=repo,
-                        members={layout.path(r): b for r, b in complete.items()}, manifest=manifest)
-    scope = tuple(relation for origin, partner, relation in relations
-                  if "overview" in (origin, partner)
-                  and (partner if origin == "overview" else origin) in members)
-    attempt.judge("overview", outcome="accepted", scope=scope)
-    return {"overview": overview, "manifest": manifest}
+    manifest = _manifest(layout, type_spec, complete, worker)
+    validate_pinned_artifact(repo=repo, members={layout.path(r): b for r, b in complete.items()},
+                             manifest=manifest, layout=layout, type_spec=type_spec, criteria=criteria,
+                             run_dir=run_dir)
+    return overview, manifest
 
 
 def _archive_name(incumbent: Mapping[str, bytes], run_id: str, overview: str) -> str:
@@ -237,66 +249,85 @@ def _archive_name(incumbent: Mapping[str, bytes], run_id: str, overview: str) ->
     return old_id
 
 
-def _prepare_publication(attempt: CodeAttempt):
-    """Check pinned inputs and environment before journal reconciliation or mutation."""
-    layout, _, members, boundary = _snapshot(attempt, overview=True)
-    metadata, repo = _environment(attempt, boundary, job="publication", guard=True)
-    worker = _provenance(attempt, members, metadata)
-    manifest = attempt.read("manifest")
-    if manifest is None:
-        raise ValueError("publication requires assembly's pinned manifest")
-    supplied = yaml.load(manifest, Loader=UniqueKeyLoader)
-    if supplied != yaml.safe_load(_manifest(attempt, members, worker)):
-        raise ValueError("assembly manifest does not pin these exact members and provenance")
-    files = {layout.path(role): data for role, data in members.items()}
-    validate_pinned_artifact(attempt, repo=repo, members=files, manifest=manifest)
-    _require_opened_method(repo, metadata, job="publication")
-    if boundary.frontmatter["result-disposition"] != "complete":
-        if os.path.lexists(attempt.run_dir / JOURNAL):
-            raise UncertainEffectError("non-complete artifact has a publication effect journal")
-        return None  # Accepted artifact remains local; no retained or archive output.
-    destination = repo / RETAINED_ROOT / publication_slug(metadata["source-identity"], metadata["system"])
-    if metadata["review-path"] != (destination / layout.path("overview")).relative_to(repo).as_posix():
-        raise ValueError("opened publication destination differs from the canonical source path")
+@contextmanager
+def preliminary_checks(run_dir: Path):
+    """Checks before journal reconciliation: once a journal exists, their failure is uncertain.
 
-    return metadata, repo, destination, {MANIFEST_NAME: manifest, **files}
-
-
-def publish_analysis(attempt: CodeAttempt) -> dict[str, bytes]:
-    """Publish a pinned complete artifact, or close a non-complete artifact without public mutation."""
+    A guard can fail because an earlier attempt moved tracked files. Until
+    exact-tree reconciliation runs, even a rolled-back journal's label is
+    not proof of the current outcome. Preserve all evidence and the guard.
+    """
     try:
-        prepared = _prepare_publication(attempt)
+        yield
     except UncertainEffectError:
         raise
     except Exception as error:
-        # A guard can fail because an earlier attempt moved tracked files. Until
-        # exact-tree reconciliation runs, even a rolled-back journal's label is
-        # not proof of the current outcome. Preserve all evidence and the guard.
-        if os.path.lexists(attempt.run_dir / JOURNAL):
+        if os.path.lexists(run_dir / JOURNAL):
             raise UncertainEffectError(
                 f"cannot establish publication outcome: preliminary checks failed: {error}"
             ) from error
         raise
+
+
+def _prepare_publication(members: Mapping[str, bytes], *, metadata: bytes | None, source: bytes | None,
+                         provenance: Mapping[str, Provenance], manifest: bytes | None, layout: Layout,
+                         type_spec: str, criteria: Mapping[str, bytes], run_dir: Path, library: Path):
+    """Check pinned inputs and environment before journal reconciliation or mutation."""
+    boundary = _classified_boundary(members)
+    opened, repo = _opened_environment(metadata, run_dir, library, job="publication")
+    _environment(opened, repo, members["boundary"], source, run_dir, job="publication")
+    worker = _provenance(members, provenance, opened)
+    if manifest is None:
+        raise ValueError("publication requires assembly's pinned manifest")
+    supplied = yaml.load(manifest, Loader=UniqueKeyLoader)
+    if supplied != yaml.safe_load(_manifest(layout, type_spec, members, worker)):
+        raise ValueError("assembly manifest does not pin these exact members and provenance")
+    files = {layout.path(role): data for role, data in members.items()}
+    validate_pinned_artifact(repo=repo, members=files, manifest=manifest, layout=layout,
+                             type_spec=type_spec, criteria=criteria, run_dir=run_dir)
+    _require_opened_method(repo, opened, job="publication")
+    if boundary.frontmatter["result-disposition"] != "complete":
+        if os.path.lexists(run_dir / JOURNAL):
+            raise UncertainEffectError("non-complete artifact has a publication effect journal")
+        return None  # Accepted artifact remains local; no retained or archive output.
+    destination = repo / RETAINED_ROOT / publication_slug(opened["source-identity"], opened["system"])
+    if opened["review-path"] != (destination / layout.path("overview")).relative_to(repo).as_posix():
+        raise ValueError("opened publication destination differs from the canonical source path")
+
+    return opened, repo, destination, {MANIFEST_NAME: manifest, **files}
+
+
+def publish_analysis(members: Mapping[str, bytes], *, metadata: bytes | None, source: bytes | None,
+                     provenance: Mapping[str, Provenance], manifest: bytes | None, layout: Layout,
+                     type_spec: str, criteria: Mapping[str, bytes], run_dir: Path, library: Path) -> bytes:
+    """Publish a pinned complete artifact, or close a non-complete artifact without public mutation.
+
+    ``members`` are by role, including the overview. Returns the receipt.
+    """
+    with preliminary_checks(run_dir):
+        prepared = _prepare_publication(
+            members, metadata=metadata, source=source, provenance=provenance, manifest=manifest,
+            layout=layout, type_spec=type_spec, criteria=criteria, run_dir=run_dir, library=library)
     if prepared is None:
-        return {"receipt": _receipt(published=False)}
-    metadata, repo, destination, files = prepared
+        return _receipt(published=False)
+    opened, repo, destination, files = prepared
 
     def inspect_incumbent():
-        decision = inspect_destination(repo_root=repo, generated_destination=metadata["review-path"],
-                                       source_identity=metadata["source-identity"])
-        if decision["expected_incumbent_sha256"] != metadata["expected-incumbent-sha256"]:
+        decision = inspect_destination(repo_root=repo, generated_destination=opened["review-path"],
+                                       source_identity=opened["source-identity"])
+        if decision["expected_incumbent_sha256"] != opened["expected-incumbent-sha256"]:
             raise ValueError("publication destination changed since opening inspection")
 
     # The engine already holds the per-run lock. Never take it inside this lock.
     with publication_lock(repo):
-        install_tree(journal=attempt.run_dir / JOURNAL, destination=destination,
-                     archive_root=repo / ARCHIVE_ROOT, files=files, anchor=attempt.layout.path("overview"),
-                     expected=metadata["expected-incumbent-sha256"],
-                     identity={"run-id": attempt.run_dir.name, "source-identity": metadata["source-identity"]},
-                     archive_name=lambda old: _archive_name(old, attempt.run_dir.name, attempt.layout.path("overview")),
+        install_tree(journal=run_dir / JOURNAL, destination=destination,
+                     archive_root=repo / ARCHIVE_ROOT, files=files, anchor=layout.path("overview"),
+                     expected=opened["expected-incumbent-sha256"],
+                     identity={"run-id": run_dir.name, "source-identity": opened["source-identity"]},
+                     archive_name=lambda old: _archive_name(old, run_dir.name, layout.path("overview")),
                      inspect_incumbent=inspect_incumbent)
-    return {"receipt": _receipt(published=True, destination=str(destination), members=hashes(files),
-                                **{name: metadata.get(name) for name in RECEIPT_PINS})}
+    return _receipt(published=True, destination=str(destination), members=hashes(files),
+                    **{name: opened.get(name) for name in RECEIPT_PINS})
 
 
 @contextmanager

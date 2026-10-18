@@ -137,6 +137,41 @@ Each phase ends with the selected tests passing and a commit.
    and `run_values` in `validate_notes`. Close this workshop and
    `headless-analysis`.
 
+## Phase 2 results (2026-10-18)
+
+The domain code takes plain values; the engine keeps working through thin
+adapters. Three extractions, each with its tests and an independent review
+of the diff by a fresh agent:
+
+- **Candidate checks** (`artifactrun/checks.py`). `Candidate` carries plain
+  values (run directory, layout, relations, type, criteria, run values, the
+  declared inputs' bytes); `check_candidate`, `apply_verdict`,
+  `artifact_check` and `judgment_scope` return findings and judgments. The
+  engine's standard handlers (`artifactrun/handlers.py`) build the candidate
+  from the attempt and stage what they return. The analysis's declared
+  checks read `Candidate.inputs`.
+- **Opening and acquisition** (`lib/agentic_analysis/opening.py`) take the
+  parameters, the worker profiles, the run directory and the library.
+- **Assembly and publication** (`lib/agentic_analysis/publication.py`) take
+  the members by role, the metadata, the acquisition result, a `Provenance`
+  per role (coordinator-reported model and effort, worker-reported model and
+  effort, the output digest), the layout, type, criteria and run directory.
+  The record-structure part of provenance (kind, job, output key) stays in
+  the adapter; the headless script will fill `Provenance` from harness
+  records (gap 5).
+
+The analysis's engine adapters live in `lib/agentic_analysis/handlers.py`,
+which `plan.yaml` names; it also re-exports the publication reset hook,
+which the engine looks up beside the handler. Known drift, accepted: when a
+run has several defects at once, the adapters may report a different first
+error than the old handlers did (provenance structure is now checked before
+the boundary classification). A run started before this change has the old
+handler paths frozen in its run store; advancing it with this code would call
+a plain function with an attempt. Old runs advance with their worktree-local
+commands, which pin their own code, so this only bars advancing an old run
+from a newer checkout. Full fast suite: 1,591 passed; the slow analysis
+tests pass.
+
 ## Phase 1 results (2026-10-18)
 
 In `headless-analysis` ([evidence](../headless-analysis/README.md#evidence-so-far)),

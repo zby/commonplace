@@ -14,10 +14,11 @@ import pytest
 import yaml
 
 from commonplace.artifactrun import RunStatus, Stop, UncertainEffectError, effects
+from commonplace.artifactrun.handlers import criterion_bytes
 from commonplace.artifactrun.inspection import run_inspection
 from commonplace.artifactrun.run import _parse_type
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import publication
+from commonplace.lib.agentic_analysis import handlers, publication
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -41,7 +42,7 @@ class Attempt:
         self.type_spec = ANALYSIS_TYPE
         layout, relations = _parse_type(self.type_text, ANALYSIS_TYPE)
         self.layout, self.relations = layout, tuple(relations)
-        self.inputs = {}
+        self.inputs = {"source": b"null\n"}
         self.files = {}
         boundary_fields = {"run-id": RUN_ID, "result-disposition": disposition,
                            "target-class": None, "boundary-kind": None, "reviewed-boundary": None,
@@ -51,6 +52,7 @@ class Attempt:
             present |= set(layout.roles) - {"overview"}
         if overview:
             present.add("overview")
+            self.inputs["manifest"] = None  # Publication declares assembly's manifest.
         for role in layout.roles:
             if role == "overview" and not overview:
                 continue
@@ -70,6 +72,8 @@ class Attempt:
         self.judgments = []
 
     def read(self, name):
+        if name == "metadata" and name not in self.inputs:
+            return json.dumps(self.metadata).encode()  # The opening's output, as last set.
         return self.inputs[name]  # Undeclared means error, never disk fallback.
 
     def filler(self, role):
@@ -82,10 +86,18 @@ class Attempt:
         self.judgments.append((subject, kwargs))
 
 
+def located(monkeypatch, repo=None):
+    """Each run's checkout is its parent directory, or ``repo``; no location guard runs."""
+    monkeypatch.setattr(publication, "checkout", lambda run_dir: repo or run_dir.parent)
+    monkeypatch.setattr(publication, "_opened_environment", lambda metadata, run_dir, library, **kw: (
+        json.loads(metadata), repo or run_dir.parent))
+
+
 @pytest.fixture
 def scripted(monkeypatch):
     checked = []
-    monkeypatch.setattr(publication, "_environment", lambda attempt, boundary, **kw: (attempt.metadata, attempt.run_dir.parent))
+    located(monkeypatch)
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: None)
     monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
     monkeypatch.setattr(publication, "validate_pinned_artifact", lambda *args, **kw: checked.append(kw))
     return checked
@@ -115,7 +127,7 @@ def test_assembly_returns_pinned_manifest_and_scoped_overview(tmp_path, scripted
     # Garbage mutable projections cannot become analytical input.
     (attempt.run_dir / "artifact").mkdir()
     (attempt.run_dir / "artifact" / "memory.md").write_bytes(b"untracked garbage")
-    outputs = publication.assemble_analysis(attempt)
+    outputs = handlers.assemble_analysis(attempt)
     manifest = yaml.safe_load(outputs["manifest"])
     efforts = {name.removesuffix("-attempt"): "high" for name, data in attempt.inputs.items()
                if name.endswith("-attempt") and data}
@@ -133,7 +145,7 @@ def test_assembly_retains_harness_native_reported_effort(tmp_path, scripted):
     record = json.loads(attempt.inputs["memory-attempt"])
     record["worker_effort"] = "5"
     attempt.inputs["memory-attempt"] = json.dumps(record).encode()
-    manifest = yaml.safe_load(publication.assemble_analysis(attempt)["manifest"])
+    manifest = yaml.safe_load(handlers.assemble_analysis(attempt)["manifest"])
     assert manifest["worker"]["effort"] == WORKER["effort"]
     assert manifest["worker"]["reported-effort"]["memory"] == "5"
 
@@ -158,7 +170,7 @@ def test_assembly_rejects_misattributed_complete_artifact(tmp_path, scripted, de
         record["outputs"] = {"answers": publication._digest(attempt.inputs["memory"])}
     attempt.inputs["memory-attempt"] = json.dumps(record).encode()
     with pytest.raises(ValueError, match=reason):
-        publication.assemble_analysis(attempt)
+        handlers.assemble_analysis(attempt)
     assert not scripted and not attempt.judgments
 
 
@@ -171,9 +183,10 @@ def test_validation_failure_prevents_overview_acceptance(tmp_path, monkeypatch, 
         pinned_criteria(attempt)
         attempt.files["agentic-system-analyses/types/agentic-system-boundary.schema.yaml"] = (
             b"required: [missing-fixture-field]\n")
-    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    located(monkeypatch, tmp_path)
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: None)
     with pytest.raises(ValueError, match=reason):
-        publication.assemble_analysis(attempt)
+        handlers.assemble_analysis(attempt)
     assert not attempt.judgments
     assert not (attempt.run_dir / "artifact" / "overview.md").exists()
 
@@ -182,12 +195,13 @@ def test_validation_failure_prevents_overview_acceptance(tmp_path, monkeypatch, 
 def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypatch, disposition):
     attempt = Attempt(tmp_path / "kb/agentic-system-analyses/state", disposition)
     pinned_criteria(attempt)
-    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: (attempt.metadata, tmp_path))
+    located(monkeypatch, tmp_path)
+    monkeypatch.setattr(publication, "_environment", lambda *args, **kw: None)
     monkeypatch.setattr(publication, "_require_opened_method", lambda *args, **kw: None)
-    outputs = publication.assemble_analysis(attempt)
+    outputs = handlers.assemble_analysis(attempt)
     attempt.inputs.update(outputs)
     monkeypatch.setattr(publication, "install_tree", lambda **kw: pytest.fail("must remain local"))
-    assert json.loads(publication.publish_analysis(attempt)["receipt"]) == {"published": False}
+    assert json.loads(handlers.publish_analysis(attempt)["receipt"]) == {"published": False}
     assert not (tmp_path / "kb/agentic-system-analyses/retained").exists()
     assert not (attempt.run_dir / "output").exists()
     assert not (attempt.run_dir / "run-state.md").exists()
@@ -199,12 +213,14 @@ def test_real_bounded_adapter_assembly_and_local_publication(tmp_path, monkeypat
         name: {"sha256": publication._digest(data)} for name, data in members.items()
     }}).encode()
     with pytest.raises(ValueError, match="identity field run-id"):
-        publication.validate_pinned_artifact(attempt, repo=tmp_path, members=members, manifest=manifest)
+        publication.validate_pinned_artifact(
+            repo=tmp_path, members=members, manifest=manifest, layout=attempt.layout,
+            type_spec=attempt.type_spec, criteria=criterion_bytes(attempt), run_dir=attempt.run_dir)
 
 
 def assembled_publish_attempt(tmp_path, scripted, disposition="complete"):
     assembly = Attempt(tmp_path / "assemble", disposition)
-    outputs = publication.assemble_analysis(assembly)
+    outputs = handlers.assemble_analysis(assembly)
     publish = Attempt(tmp_path / "publish", disposition, overview=True)
     publish.inputs["overview"] = outputs["overview"]
     publish.inputs["manifest"] = outputs["manifest"]
@@ -215,7 +231,7 @@ def test_publish_rejects_manifest_not_matching_pinned_members(tmp_path, scripted
     attempt = assembled_publish_attempt(tmp_path, scripted)
     attempt.inputs["manifest"] = b"type: wrong\n"
     with pytest.raises(ValueError, match="manifest does not pin"):
-        publication.publish_analysis(attempt)
+        handlers.publish_analysis(attempt)
 
 
 def test_engine_report_is_uncertain_without_recovery(tmp_path):
@@ -269,9 +285,8 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     (repo / ".git" / "HEAD").write_text(tree + "\n")
     require_publishable_worktree(repo)
 
-    def environment(current, boundary, **kwargs):
+    def environment(*args, **kwargs):
         require_publishable_worktree(repo)
-        return attempt.metadata, repo
 
     monkeypatch.setattr(publication, "_environment", environment)
     monkeypatch.setattr(publication, "inspect_destination", lambda **kwargs: {
@@ -289,7 +304,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
     monkeypatch.setattr(effects, "atomic_write", interrupt)
     error = KeyboardInterrupt if interruption == "archive" else OSError
     with pytest.raises(error):
-        publication.publish_analysis(attempt)
+        handlers.publish_analysis(attempt)
     journal = attempt.run_dir / publication.JOURNAL
     journal_bytes = journal.read_bytes()
     archive = repo / publication.ARCHIVE_ROOT / old_id
@@ -311,7 +326,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
                   "library": str(ROOT / "kb"), "parameters": {},
                   "declaration": yaml.safe_dump({"type": ANALYSIS_TYPE, "jobs": [
                       {"name": "publish", "kind": "code", "inputs": {}, "outputs": [],
-                       "handler": "commonplace.lib.agentic_analysis.publication.publish_analysis"}]})})
+                       "handler": "commonplace.lib.agentic_analysis.handlers.publish_analysis"}]})})
     monkeypatch.setattr(CodeAttempt, "read", lambda self, name: attempt.read(name))
     # The one-job fixture plan has no role-filling jobs; the fake names them.
     monkeypatch.setattr(CodeAttempt, "filler", lambda self, role: attempt.filler(role))
@@ -333,7 +348,7 @@ def test_real_handler_recovery_preserves_guard_and_engine_classification(
         assert effects.tree(destination) == old
         # A resolved rollback remains an ordinary failure, and can retry.
         monkeypatch.setattr(effects, "atomic_write", write)
-        assert json.loads(publication.publish_analysis(attempt)["receipt"])["published"] is True
+        assert json.loads(handlers.publish_analysis(attempt)["receipt"])["published"] is True
 
 
 @pytest.mark.parametrize("journal", [None, b'{"state": "rolled-back"}', b"malformed"])
@@ -346,7 +361,7 @@ def test_preliminary_failure_requires_journal_to_be_uncertain(tmp_path, journal)
         path.write_bytes(journal)
     expected = ValueError if journal is None else UncertainEffectError
     with pytest.raises(expected, match="classified boundary"):
-        publication.publish_analysis(attempt)
+        handlers.publish_analysis(attempt)
     if journal is not None:
         assert path.read_bytes() == journal
 
@@ -364,8 +379,53 @@ def test_environment_rechecks_the_declared_capture_identity(tmp_path, monkeypatc
     attempt.inputs["metadata"] = json.dumps(attempt.metadata).encode()
     fields = publication._document(attempt.inputs["boundary"]).frontmatter
     attempt.inputs["boundary"] = doc({**fields, "source": source, "reviewed-boundary": source["revision"]})
-    monkeypatch.setattr(publication, "locate", lambda *args, **kw: (attempt.metadata, tmp_path))
-    publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
+    def environment():
+        publication._environment(attempt.metadata, tmp_path, attempt.inputs["boundary"],
+                                 attempt.inputs["source"], attempt.run_dir, job="fixture")
+
+    environment()
     capture.write_bytes(b"changed local fixture bytes")
     with pytest.raises(ValueError, match="SHA-256"):
-        publication._environment(attempt, publication._document(attempt.inputs["boundary"]), job="fixture")
+        environment()
+
+
+def plain_inputs(attempt):
+    """The plain values the assembly adapter reads from a fixture attempt."""
+    members = {role: data for role, data in attempt.inputs.items()
+               if role in attempt.layout.roles and role != "overview" and data is not None}
+    provenance = {role: publication.Provenance(
+        model="fixture/model", effort="high", worker_model="fixture-model-1", worker_effort="high",
+        output_sha256=publication._digest(data)) for role, data in members.items()}
+    return members, provenance
+
+
+def test_plain_assembly_takes_members_and_provenance(tmp_path, scripted):
+    attempt = Attempt(tmp_path, "complete")
+    members, provenance = plain_inputs(attempt)
+    overview, manifest = publication.assemble_analysis(
+        members, metadata=attempt.read("metadata"), source=b"null\n", provenance=provenance,
+        layout=attempt.layout, type_spec=attempt.type_spec, criteria={}, run_dir=attempt.run_dir)
+    pinned = yaml.safe_load(manifest)
+    assert pinned["type"] == ANALYSIS_TYPE
+    assert pinned["members"] == {attempt.layout.path(role): {"sha256": publication._digest(data)}
+                                 for role, data in {**members, "overview": overview}.items()}
+    assert pinned["worker"] == {**WORKER, "model": "fixture-model-1",
+                                "reported-effort": dict.fromkeys(members, "high")}
+    assert publication._document(overview).frontmatter["system"] == "Example"
+    assert scripted[0]["manifest"] == manifest
+    assert not attempt.judgments  # Judging the overview is the adapter's.
+
+
+def test_plain_provenance_accepts_the_published_members(tmp_path):
+    members, provenance = plain_inputs(Attempt(tmp_path, "complete"))
+    worker = publication._provenance(members, provenance, {"worker": WORKER})
+    assert worker == {**WORKER, "model": "fixture-model-1", "reported-effort": dict.fromkeys(members, "high")}
+
+
+def test_plain_provenance_refuses_a_record_of_another_output(tmp_path):
+    members, provenance = plain_inputs(Attempt(tmp_path, "complete"))
+    provenance["memory"] = publication.Provenance(
+        model=None, effort=None, worker_model="fixture-model-1", worker_effort="high",
+        output_sha256=publication._digest(b"an older memory output"))
+    with pytest.raises(ValueError, match="memory provenance does not identify its completed output"):
+        publication._provenance(members, provenance, {"worker": WORKER})

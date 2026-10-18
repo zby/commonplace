@@ -17,7 +17,7 @@ only the latest refusal is in force. Its previous outputs are the rejected
 attempt's, so repeating that attempt's bytes as "corrected" is refused too.
 
 `correction_findings` and `refusal_findings` are the engine's own functions;
-they already take plain values. Phase 2 of the port moves them out of the
+they already take plain values. Phase 6 of the port moves them out of the
 engine package. Until then this module needs the `commonplace` package on the
 path, as the worktree's venv provides.
 """

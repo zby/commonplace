@@ -1,14 +1,13 @@
 """The report verification's declared check and feedback.
 
-The standard apply handler applies the verdict; these supply what the
+The verdict application applies the verdict; these supply what the
 analysis adds: a verifier handed structural findings must block, and an
 author refused by it reads the peer records its blockers cite.
 """
 
 from __future__ import annotations
 
-from commonplace.artifactrun.checks import Candidate
-from commonplace.artifactrun.handlers import ARTIFACT_CHECK_HEADING
+from commonplace.artifactrun.checks import ARTIFACT_CHECK_HEADING, Candidate
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,
@@ -33,7 +32,7 @@ def _artifact_check_failed(data: bytes) -> bool:
 def report_check_gate(check: Candidate) -> list[str]:
     """A verifier handed structural findings must address them with at least one blocker."""
     entries = blocker_entries(section(check.data.decode("utf-8", errors="replace"), "Blockers"))
-    if _artifact_check_failed(check.attempt.read("report-check-handed")) and not entries:
+    if _artifact_check_failed(check.inputs["report-check-handed"]) and not entries:
         return [("structural failures require explicit blockers (code requires at least one; "
                  "the verifier must address every finding)")]
     return []
@@ -41,7 +40,7 @@ def report_check_gate(check: Candidate) -> list[str]:
 
 def cited_records(role: str, blockers: list[str], verdict: Candidate) -> str:
     """Peer record declarations the blockers addressed to `role` cite, for the author to read."""
-    layout = verdict.attempt.layout
+    layout = verdict.layout
     fragments = []
     for identifier in sorted(record_references("\n".join(blockers))):
         # The member that declares the record, wherever it is, not a prefix table.

@@ -68,13 +68,13 @@ defaults:
 jobs:
 - name: opening
   kind: code
-  handler: commonplace.lib.agentic_analysis.opening.open_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.open_analysis
   inputs:
     worker-profiles: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml}
   outputs: [metadata]
 - name: acquire
   kind: code
-  handler: commonplace.lib.agentic_analysis.opening.acquire_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
   inputs:
     metadata: {address: output, source: 'opening:metadata'}
   outputs: [source]
@@ -155,7 +155,7 @@ jobs:
           profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}
 - name: assemble
   kind: code
-  handler: commonplace.lib.agentic_analysis.publication.assemble_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.assemble_analysis
   role: overview
   criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
   inputs: &published
@@ -187,7 +187,7 @@ jobs:
   outputs: [overview, manifest]
 - name: publish
   kind: code
-  handler: commonplace.lib.agentic_analysis.publication.publish_analysis
+  handler: commonplace.lib.agentic_analysis.handlers.publish_analysis
   criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
   inputs:
     <<: *published

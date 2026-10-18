@@ -7,6 +7,7 @@ No workers, external source acquisition, package installation or publication run
 
 from __future__ import annotations
 
+import json
 import shutil
 
 import pytest
@@ -180,3 +181,36 @@ def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monk
     c.advance()
     assert_stopped(c, "opening", reason)
     assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
+
+
+WORKER_PROFILES = "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
+
+
+def open_directly(prepared, parameters=PARAMETERS):
+    """Call the plain opening function with the values the engine adapter passes."""
+    run_dir = prepared.repo / "kb/agentic-system-analyses/state" / RUN_ID
+    run_dir.mkdir(parents=True)
+    profiles = (prepared.repo / WORKER_PROFILES).read_bytes()
+    return opening.open_analysis(parameters, profiles, run_dir, prepared.repo / "kb"), run_dir
+
+
+def test_open_analysis_returns_metadata_bytes_from_plain_values(prepared):
+    metadata, _ = open_directly(prepared)
+    record = json.loads(metadata)
+    assert metadata.endswith(b"\n")
+    assert record["run-id"] == RUN_ID and record["inputs-commit"] == prepared.commit
+    assert record["source-revision"] is None and record["expected-incumbent-sha256"] == "absent"
+    assert record["worker"]["profile"] == "pi-luna"
+
+
+def test_open_analysis_refuses_invalid_parameters_without_an_engine(prepared):
+    with pytest.raises(ValueError, match="system must be a single-line name"):
+        open_directly(prepared, {**PARAMETERS, "system": "System\ninjected"})
+
+
+def test_acquire_analysis_returns_a_null_source_for_a_non_git_identity(prepared):
+    # Git acquisition from a local origin: test_acquisition, through the engine adapter.
+    opened, run_dir = open_directly(prepared)
+    metadata = json.dumps({**json.loads(opened), "source-identity": "local snapshot"}).encode()
+    assert opening.acquire_analysis(metadata, run_dir) == b"null\n"
+    assert not (prepared.repo / "related-systems").exists()
