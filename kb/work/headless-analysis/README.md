@@ -48,6 +48,10 @@ of that isolation is copied.
 - `smoke.py`: one tiny real job per named harness, run after removing API-key
   variables (`OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY` and
   similar) from the environment, so only subscription logins can serve it.
+- `probe.py`: phase 0 of [headless-engine-port](../headless-engine-port/README.md):
+  an analyst-like task (read, `rg`, a `commonplace-*` command, skill
+  availability) under each harness's permission settings, and the model each
+  harness records as used.
 
 Run `python3 selftest.py` from this directory; `python3 smoke.py codex pi`
 calls real models.

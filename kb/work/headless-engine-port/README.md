@@ -137,6 +137,40 @@ Each phase ends with the selected tests passing and a commit.
    and `run_values` in `validate_notes`. Close this workshop and
    `headless-analysis`.
 
+## Phase 0 results (2026-10-18)
+
+Probes: `headless-analysis/probe.py`, run in this checkout with outputs in a
+scratch directory and no API-key variables, Haiku on Claude Code and
+`gpt-6-luna` on Codex and pi, low effort.
+
+- **Unattended work.** All three workers read AGENTS.md, ran `rg`, ran
+  `commonplace-validate --help` and listed the `analyse-agentic-system` skill,
+  in about 16 s each, with no prompt. Settings that sufficed:
+  - Claude Code: `permission-mode: acceptEdits`, the project's
+    `Bash(commonplace-*)` allowance, and `add-dir` for a run directory outside
+    the checkout (not needed when the run directory is in the worktree).
+  - Codex: `sandbox: workspace-write`; writes outside the checkout went to
+    the scratch directory under `/tmp`.
+  - pi: `--approve`, without which pi ignores project-local files; this is the
+    flag that makes a pi worker load the project's configuration, so it
+    belongs in the pi defaults.
+  Not probed: a denied action (what a headless worker does when a tool is not
+  allowed), and runs inside a prepared worktree.
+- **Model actually used.** Each harness records it: Claude Code's JSON result
+  (`modelUsage`: `claude-haiku-5-5`), Codex's session file (`turn_context`
+  payload `model`) and pi's session file (`model` on each reply). This can
+  replace the workers' self-reported `worker-identity` (gap 5); the workers
+  themselves could not name their model on Codex or pi.
+- **Usage limits.** Not triggered; strings in the installed builds only.
+  Claude Code 2.1.302 says "Usage limit reached" in several forms; codex-cli
+  0.162.1 says "You've hit your usage limit…"; pi passes provider errors
+  through and retries HTTP 429 itself with backoff. Proposed rule for phase 1:
+  a failed launch whose output contains "usage limit" (any case) stops the run
+  as usage-limited instead of retrying, and the operator reruns after the
+  reset; the answer cache resumes it. Exit status and stream are unverified.
+- **Resumption.** Rerunning the probe returned all three answers from the
+  cache without launching a worker.
+
 ## Returns to decision
 
 - After phase 0: if a harness cannot run unattended (permissions or usage
