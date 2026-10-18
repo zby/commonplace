@@ -11,7 +11,13 @@ Judge whether the reconciled records support a source-grounded bounded account, 
 
 Independently trace the behavior supporting consequential claims, then compare
 it with the submitted wording. Check conditions, scope, ordering and evidence
-strength; do not treat the analyst's checks as verification.
+strength; do not treat the analyst's checks as verification. For consequential
+claims such as “never,” “excluded by default” or “only when enabled,” inspect
+branches that can reach the same result without the cited control, not just
+the guarded branch. Separately assess branch behavior and supported-input
+reachability. If either is unresolved, require wording bounded by the evidence;
+do not infer safety from types alone or a demonstrated bypass from an unchecked
+branch alone.
 
 Check every record, source anchor, evidence status, `Part of:` relation,
 supersession and unresolved conflict. State the checks and dispositions in

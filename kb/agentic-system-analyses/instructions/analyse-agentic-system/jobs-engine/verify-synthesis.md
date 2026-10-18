@@ -16,7 +16,10 @@ conditions. On a later attempt, reassess the previous verification's limits:
 retain those still warranted and check that the public text carries their
 consequences. Apply the verification type's materiality threshold; structural
 acceptance does not establish support, and neither budget exhaustion nor a
-predecessor objection settles materiality.
+predecessor objection settles materiality. Check that compression has not widened
+a route- or input-specific control into an unconditional guarantee. Conditions
+and unresolved reachability must remain visible beside the public claim, even
+when its supporting record was accepted.
 
 Write no correction and add no evidence. A record fault discovered here is a
 limit for the public text, not a reason to reopen reconciliation. If it cannot
