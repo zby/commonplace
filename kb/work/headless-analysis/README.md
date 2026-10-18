@@ -34,17 +34,41 @@ of that isolation is copied.
   and a harness session ID is recorded for finding the transcript. `run_with_retries` relaunches the same
   prompt only after one of the three provider messages that the analysis
   driver's transient-worker rule lists, waiting 30 s and then 120 s, at most two
-  relaunches. Any other failure, including a timeout, raises at once.
-- `jobs.py`: `Run.ask(job, prompt, outputs, optional)` writes the prompt to an
+  relaunches. A failed launch whose stdout or stderr contains "usage limit"
+  (any case) raises `UsageLimited` without a relaunch. Any other failure,
+  including a timeout, raises `LaunchFailed` at once.
+- `jobs.py`: `Run.ask(job, prompt, outputs, optional, inputs)` writes the
+  prompt and each input (`inputs/<name>.md`, listed under "## Inputs") to an
   attempt directory, points the worker at it with the driver's current
   launch sentence, and returns the output files' contents. Answers are cached by
-  the hash of the prompt, output names and profile; only successes are stored,
-  each with its provenance. A worker may write `refusal.md` instead, which is a
-  result. `Run.checked` is the content retry loop: a failing check asks again
-  with the problems in the prompt, up to the attempt limit, then raises
-  `OutOfAttempts`. `gather` runs independent calls in parallel. Events go to
-  `log.jsonl`.
-- `selftest.py`: exercises both modules with a fake harness; no model is called.
+  the hash of the prompt, the inputs' sha256 digests, output names and profile;
+  only successes are stored, each with its provenance and input digests. A
+  failed launch or incomplete result is appended to
+  `answers/<key>.failures.jsonl`; a usage-limited launch is not. A worker may
+  write `refusal.md` instead, which is a result. `Run.checked` is the content
+  retry loop: a failing check asks again with the problems in the prompt; a
+  failed launch or incomplete result asks the same prompt again. Answered asks
+  and persisted failures count toward the attempt limit, including failures
+  from an earlier run of the script; at the limit it raises `OutOfAttempts`.
+  `UsageLimited` propagates, so the script stops and a rerun after the reset
+  resumes from the cache. `Run(max_workers=n)` bounds concurrent launches;
+  `gather` runs independent calls in parallel. A `Run` holds an exclusive
+  flock on `<root>/lock` until `close()` (it is a context manager); a second
+  `Run` on the root raises `RunLocked`. `Run.accept(path, content)` writes an
+  accepted output to `artifact/<path>` atomically. Events go to `log.jsonl`.
+- `corrections.py`: `correct(run, job, build_prompt, check, outputs, member=,
+  refusal=, previous=, attempts=)` asks a producer to answer a refusal over
+  its previous outputs under the engine's correction protocol: inputs
+  `refusal` and `previous-<name>`, an `answers` output with one `corrected:`
+  or `declined:` entry per blocker in order, "corrected" over identical bytes
+  refused, and a rejected correction attempt followed by a structural refusal
+  that carries the blockers forward over the rejected output. It reuses the
+  engine's `correction_findings` and `refusal_findings`, so it needs the
+  `commonplace` package; phase 2 of the port moves those functions out of the
+  engine.
+- `selftest.py`: exercises the three modules with a fake harness; no model is
+  called. Run it as `uv run python selftest.py` from this directory, which
+  uses the worktree's venv.
 - `smoke.py`: one tiny real job per named harness, run after removing API-key
   variables (`OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY` and
   similar) from the environment, so only subscription logins can serve it.
@@ -53,7 +77,7 @@ of that isolation is copied.
   availability) under each harness's permission settings, and the model each
   harness records as used.
 
-Run `python3 selftest.py` from this directory; `python3 smoke.py codex pi`
+Run `uv run python selftest.py` from this directory; `python3 smoke.py codex pi`
 calls real models.
 
 ## Evidence so far
@@ -62,6 +86,27 @@ calls real models.
   harnesses, a cache hit, one transient failure retried
   after 30 s, a non-transient failure not relaunched, a refusal, one rejected
   attempt then acceptance, three parallel jobs.
+- The extended selftest passes (2026-10-18): an input written and listed
+  before the outputs, its digest in the record and the key (changed bytes ask
+  again); a job whose first launch fails succeeds with two attempts and stops
+  with one, and a fresh `Run` on the same root counts the persisted failure
+  and stops without launching; a usage-limited launch is not relaunched,
+  leaves no failure record and consumes no attempt; with `max_workers=1`
+  three gathered jobs do not overlap (without the limit the fake detects
+  overlap); a second `Run` on a held root raises `RunLocked` and succeeds
+  after the first closes; `accept` writes and re-writes one artifact file.
+  The usage-limit messages are taken from the installed builds' strings; no
+  real exhaustion has been observed.
+- The correction selftest passes (2026-10-18): a "corrected" answer over
+  identical bytes is refused, the retry receives a structural refusal with the
+  findings, the carried blockers and the other sections over the rejected
+  output and is accepted; one answer for two blockers is refused; an
+  unstructured refusal counts as one blocker.
+- Worker self-validation needs no engine resolver: the script knows the
+  output path, the run's `artifact/` and the role when it composes a prompt,
+  so the prompt names `<path-prefix>/commonplace-validate <output>
+  --artifact <artifact> --role <role>` directly, the command the engine's
+  `validate-output` resolved to. The prompt section changes in phase 4.
 - One real `claude -p` job on Haiku (Claude Code 2.1.302) wrote its output file
   and returned its session ID in about 7 s. It ran in a temporary directory with
   `permission-mode: acceptEdits` in the profile's flags; rerun through the
@@ -82,9 +127,6 @@ calls real models.
 - **Domain code.** Whether opening, acquisition, the declared checks, the
   verification gate, assembly and publication take engine inputs (attempt
   records, role addresses, coverage) or plain values is unchecked.
-- **Billing and usage limits.** `claude -p`, `codex exec` and pi's `openai`
-  provider all run on subscription logins. What each prints when a usage
-  window is exhausted is unknown, so the script has no wait-for-reset path.
 - **Status.** A command that summarises `log.jsonl` and the answer cache, to
   replace `commonplace-analysis inspect`.
 

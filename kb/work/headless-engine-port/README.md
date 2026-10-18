@@ -137,6 +137,26 @@ Each phase ends with the selected tests passing and a commit.
    and `run_values` in `validate_notes`. Close this workshop and
    `headless-analysis`.
 
+## Phase 1 results (2026-10-18)
+
+In `headless-analysis` ([evidence](../headless-analysis/README.md#evidence-so-far)),
+with fake-harness selftests for each:
+
+- Gap 1: inputs enter the key by digest; records keep the digests.
+- Gap 2: `corrections.py` implements the engine's correction protocol over
+  the engine's own `correction_findings` and `refusal_findings`.
+- Gap 4: a failed launch or incomplete result is persisted per key and counts
+  toward the attempt limit across reruns; a usage-limited launch stops the
+  run without counting and without a relaunch (gap 9, usage half; the
+  messages are build strings, unobserved in a real exhaustion).
+- Gap 6: no resolver; the prompt names the `commonplace-validate` command
+  with the output, artifact and role the script already knows.
+- Gap 7: `Run.accept` materializes accepted outputs under `artifact/`.
+- Gap 8: `Run(max_workers=)` and an exclusive run lock.
+
+Open after phase 1: gap 3 (phase 3), gap 5 (the harness-recorded model is
+not yet read into the record) and gap 9's permission half.
+
 ## Phase 0 results (2026-10-18)
 
 Probes: `headless-analysis/probe.py`, run in this checkout with outputs in a

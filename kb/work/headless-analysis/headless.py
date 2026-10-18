@@ -4,7 +4,9 @@ A worker profile names a harness, a launch model and an effort, as in
 kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml.
 `launch()` starts that harness once, non-interactively, in the given working
 directory, and waits for it. `run_with_retries()` repeats a launch only after
-a transient provider failure.
+a transient provider failure. A failed launch that reports an exhausted usage
+window raises `UsageLimited` without a relaunch, so the script stops and the
+operator reruns it after the reset.
 
 Workers load their normal configuration. The working directory is the
 prepared worktree, so the harness reads the project's AGENTS.md / CLAUDE.md,
@@ -29,9 +31,9 @@ import signal
 import subprocess
 import time
 import uuid
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Callable
 
 
 @dataclass
@@ -241,12 +243,29 @@ def is_transient(result: Launch) -> bool:
     return result.exit_code not in (0, None) and any(m in result.stderr for m in TRANSIENT)
 
 
+# Claude Code says "Usage limit reached", codex "You've hit your usage limit";
+# pi passes provider errors through (phase 0 probes, strings in the installed
+# builds; neither the stream nor the exit status was observed), so both
+# streams of a failed launch are searched, ignoring case.
+USAGE_LIMIT = "usage limit"
+
+
+def is_usage_limited(result: Launch) -> bool:
+    # A timeout (exit None) is a kill, not a report; it says nothing about limits.
+    return result.exit_code not in (0, None) and USAGE_LIMIT in (result.stdout + result.stderr).lower()
+
+
 class LaunchFailed(Exception):
     def __init__(self, launches: list[Launch]):
         last = launches[-1]
         reason = "timed out" if last.exit_code is None else f"exit {last.exit_code}"
         super().__init__(f"{reason} after {len(launches)} launch(es): {last.stderr.strip()[-500:]}")
         self.launches = launches
+
+
+class UsageLimited(LaunchFailed):
+    """The harness reported an exhausted usage window. Relaunching before the
+    reset cannot succeed, and the failure says nothing about the task."""
 
 
 @dataclass
@@ -260,8 +279,9 @@ def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path
                      harnesses=HARNESSES) -> Delivered:
     """Launch, and relaunch the same prompt only after a transient provider failure.
 
-    Any other failure (a nonzero exit without a transient message, or a
-    timeout, whose effects are uncertain) raises LaunchFailed at once.
+    A failure that mentions a usage limit raises UsageLimited at once. Any
+    other failure (a nonzero exit without a transient message, or a timeout,
+    whose effects are uncertain) raises LaunchFailed at once.
     """
     launches: list[Launch] = []
     for n in range(len(backoff) + 1):
@@ -269,6 +289,8 @@ def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path
         launches.append(result)
         if result.ok:
             return Delivered(result, launches[:-1])
+        if is_usage_limited(result):
+            raise UsageLimited(launches)
         if not is_transient(result) or n == len(backoff):
             raise LaunchFailed(launches)
         sleep(backoff[n])
