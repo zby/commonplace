@@ -93,7 +93,7 @@ def test_multiple_stores_and_distinct_unknown_assessments():
         ),
         (
             lambda p: p["axes"].update(lineage=axis2(unit(finding("authored")), assessment="uninspected")),
-            "empty positive findings",
+            "empty .*findings",
         ),
         (
             lambda p: p["axes"].update(trace_learning=known(["no"], [ABSENCE])),
@@ -306,6 +306,8 @@ def test_revision2_rejects_malformed_and_unsupported_assertions(mutation, error)
 def test_revision2_no_without_bounded_absence_is_rejected(assessment):
     data = revision2()
     data["axes"]["trace_learning"] = axis2(unit(finding("no"), assessment=assessment))
+    # A partial unit is also invalid: no requires both known coverage and an
+    # absence warrant. This case deliberately lacks the warrant for either.
     with pytest.raises(ValueError, match="bounded absence"):
         sm.validate_comparison(data, known_ids=KNOWN2)
 
@@ -345,6 +347,7 @@ def test_load_results_projects_revision2_member(tmp_path, monkeypatch):
     runtime = SimpleNamespace(name="runtime.md", body="## Shared records\n\n#### RT-OBJ-store\n\nLabel: Fixture store\n")
     profile_member = SimpleNamespace(
         name="memory-profile.md", sha256="profile-digest", body="",
+        content=("---\n" + json.dumps({"memory-comparison": data}) + "\n---\n").encode(),
         frontmatter={"memory-comparison": data},
     )
     analysis = SimpleNamespace(
@@ -392,29 +395,54 @@ def test_revision2_partial_unit_can_name_its_own_unresolved_parts():
     assert sm.project_comparison(data)["write_agency"] == ["automatic"]
 
 
-def test_revision2_partial_axis_cannot_promote_only_local_negatives():
+@pytest.mark.parametrize("unresolved", ["uninspected", "not-determinable"])
+def test_revision2_local_no_counts_as_partial_classification_not_system_absence(unresolved):
     data = revision2()
     data["axes"]["trace_learning"] = axis2(
         unit(finding("no", records=["runtime.md#rt-abs-missing-route"])),
-        unit(assessment="uninspected", scope="Uninspected write"), assessment="partial",
+        unit(assessment=unresolved, scope="Unresolved write"), assessment="partial",
     )
-    with pytest.raises(ValueError, match="partial coverage needs positives"):
-        sm.validate_comparison(data, known_ids=KNOWN2)
+    # Revised contract: a warranted local no classifies a unit, even though it
+    # establishes neither learning existence nor a system-wide negative.
+    before = deepcopy(data)
+    comparison_schema().validate(data)
+    assert sm.validate_comparison(data, known_ids=KNOWN2) == before
+    row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
+    assert row["trace_learning_assessment"] == "partial"
+    assert row["trace_learning"] == []
+    assert row["trace_learning_evidence"] == {}
+    assert row["trace_learning_units"] == before["axes"]["trace_learning"]["units"]
+    assert sm.supported_values(row, "trace_learning") == set()
+    assert sm.complete_values(row, "trace_learning") is None
+    assert row["trace_source_assessment"] == "uninspected"
+    assert sm.complete_values(row, "trace_source") is None
+    row.update({name: row.get(name, "fixture") for name in sm.METADATA})
+    serialized = next(csv.DictReader(io.StringIO(sm.csv_text(sm.MatrixInputs([row], {})))))
+    assert serialized["trace_learning_assessment"] == "partial"
+    assert json.loads(serialized["trace_learning"]) == []
+    assert json.loads(serialized["trace_learning_units"]) == row["trace_learning_units"]
+    assert data == before
 
 
 @pytest.mark.parametrize("assessment", ["uninspected", "not-determinable"])
-def test_revision2_local_negative_survives_unresolved_axis_without_system_no(assessment):
+@pytest.mark.parametrize("value, records", [("no", [ABSENCE]), ("yes", [STORE])])
+def test_revision2_unresolved_axis_cannot_hide_a_classified_unit(assessment, value, records):
     data = revision2()
     data["axes"]["trace_learning"] = axis2(
-        unit(finding("no", records=["runtime.md#rt-abs-missing-route"]), scope="Inspected static branch"),
+        unit(finding(value, records=records), scope="Inspected branch"),
         unit(assessment=assessment, scope="Unresolved alternative write"), assessment=assessment,
     )
     comparison_schema().validate(data)
+    # Previously local no was allowed under an unresolved aggregate. Both
+    # controlled values now require partial coverage when alternatives remain.
+    with pytest.raises(ValueError, match="empty .*findings"):
+        sm.validate_comparison(data, known_ids=KNOWN2)
+    data["axes"]["trace_learning"]["assessment"] = "partial"
     sm.validate_comparison(data, known_ids=KNOWN2)
     row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
-    assert row["trace_learning"] == []
-    assert row["trace_learning_units"][0]["findings"][0]["value"] == "no"
-    assert sm.supported_values(row, "trace_learning") == set()
+    assert row["trace_learning"] == (["yes"] if value == "yes" else [])
+    assert row["trace_learning_units"][0]["findings"][0]["value"] == value
+    assert sm.supported_values(row, "trace_learning") == ({"yes"} if value == "yes" else set())
     assert sm.complete_values(row, "trace_learning") is None
 
 
@@ -443,7 +471,9 @@ def test_local_negative_cannot_make_unresolved_inventory_inapplicable(parent, ch
     data["axes"][parent] = axis2(
         unit(finding(value, records=["runtime.md#rt-abs-missing-route"])),
         unit(assessment="uninspected", scope="Opaque alternative"),
-        assessment="uninspected" if value == "no" else "partial",
+        # Local no is classified coverage too; the unresolved alternative makes
+        # either inventory partial, but cannot justify child inapplicability.
+        assessment="partial",
     )
     data["axes"][child] = axis2(assessment="inapplicable")
     with pytest.raises(ValueError, match=f"{child}: inapplicability requires"):
@@ -486,3 +516,89 @@ def test_partial_negative_does_not_establish_absence():
     )
     with pytest.raises(ValueError, match="local no requires resolved bounded absence"):
         sm.validate_comparison(data, known_ids=KNOWN2)
+
+
+@pytest.mark.parametrize("assessment", ["uninspected", "not-determinable"])
+def test_revision2_unresolved_only_learning_has_no_classified_coverage(assessment):
+    data = revision2()
+    data["axes"]["trace_learning"] = axis2(
+        unit(assessment=assessment, scope="Included opaque write"), assessment=assessment,
+    )
+    before = deepcopy(data)
+    sm.validate_comparison(data, known_ids=KNOWN2)
+    row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
+    assert row["trace_learning"] == []
+    assert sm.supported_values(row, "trace_learning") == set()
+    assert sm.complete_values(row, "trace_learning") is None
+    assert data == before
+    data["axes"]["trace_learning"]["assessment"] = "partial"
+    with pytest.raises(ValueError, match="partial coverage needs"):
+        sm.validate_comparison(data, known_ids=KNOWN2)
+
+
+def test_revision2_yes_and_no_must_describe_distinct_units():
+    data = revision2()
+    data["axes"]["trace_learning"] = axis2(unit(
+        finding("yes"), finding("no", records=[ABSENCE]),
+    ))
+    with pytest.raises(ValueError, match="yes and no require distinct units"):
+        sm.validate_comparison(data, known_ids=KNOWN2)
+
+
+@pytest.mark.parametrize("unresolved", ["uninspected", "not-determinable"])
+@pytest.mark.parametrize("include_yes", [False, True])
+def test_revision2_partial_learning_matrix_statistics_keep_local_warrants(unresolved, include_yes, monkeypatch, capsys):
+    from scripts import analyze_matrix as stats
+
+    data = revision2()
+    data["axes"]["trace_learning"] = axis2(
+        *([unit(finding("yes"), scope="Trace-fed guidance")] if include_yes else []),
+        unit(finding("no", records=[ABSENCE]), scope="Static branch", records=[ABSENCE]),
+        unit(assessment=unresolved, scope="Opaque writer"), assessment="partial",
+    )
+    if include_yes:
+        data["axes"]["trace_source"] = axis2(
+            unit(finding("session-logs"), scope="Trace-fed guidance input"),
+            unit(assessment=unresolved, scope="Opaque writer input"), assessment="partial",
+        )
+    before = deepcopy(data)
+    sm.validate_comparison(data, known_ids=KNOWN2)
+    row = {**dict.fromkeys(sm.METADATA, "fixture"), **sm.project_comparison(data),
+           "source_tier": "code-grounded"}
+    expected = ["yes"] if include_yes else []
+    assert row["trace_learning"] == expected
+    assert row["trace_learning_units"][int(include_yes)]["findings"][0]["records"] == [ABSENCE]
+    assert sm.supported_values(row, "trace_learning") == set(expected)
+    assert sm.complete_values(row, "trace_learning") is None
+    assert row["trace_source"] == (["session-logs"] if include_yes else [])
+    assert sm.complete_values(row, "trace_source") is None
+    inputs = sm.MatrixInputs([row], {})
+    exported = next(csv.DictReader(io.StringIO(sm.csv_text(inputs))))
+    assert json.loads(exported["trace_learning_units"]) == before["axes"]["trace_learning"]["units"]
+    assert json.loads(exported["trace_source_units"]) == before["axes"]["trace_source"]["units"]
+    monkeypatch.setattr(stats, "load_results", lambda *_: inputs)
+    assert stats.main([]) == 0
+    text = capsys.readouterr().out
+    assert "assessment trace_learning: {'partial': 1}" in text
+    assert f"finding bases: {{'known:wired': {2 if include_yes else 1}}}" in text
+    assert f"supported trace_learning: { {'yes': 1} if include_yes else {} } / 1" in text
+    assert "complete trace_learning: 0 of 1 rows" in text
+    assert "complete trace_source: 0 of 1 rows" in text
+    assert data == before
+
+
+def test_revision2_complete_no_is_not_global_axis_absence():
+    data = revision2()
+    data["axes"]["trace_learning"] = known(["no"], [ABSENCE])
+    data["axes"]["trace_source"] = axis2(assessment="inapplicable", records=[ABSENCE])
+    before = deepcopy(data)
+    comparison_schema().validate(data)
+    sm.validate_comparison(data, known_ids=KNOWN2)
+    row = sm.project_comparison(data) | {"source_tier": "code-grounded"}
+    assert row["trace_learning_assessment"] == "known"
+    assert row["trace_learning"] == ["no"]
+    assert sm.supported_values(row, "trace_learning") == {"no"}
+    assert sm.complete_values(row, "trace_learning") == ("no",)
+    assert row["trace_source"] == []
+    assert sm.complete_values(row, "trace_source") is None  # Inapplicable is not absent.
+    assert data == before

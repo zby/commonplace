@@ -323,7 +323,13 @@ def validate_analysis_artifact(artifact: DirectoryArtifact, *, layout: Layout | 
     if profile is not None:
         cited = {path: bodies[path] for path in cites[layout.path("memory-profile")] if path in bodies}
         try:
-            profile_member_comparison(profile.frontmatter or {}, record_bodies=cited)
+            retained_content = (
+                artifact.members[layout.path("memory-profile")].content
+                if (artifact.path.parent == run.repo_root / RETAINED_ROOT
+                    and isinstance(artifact.manifest.get("members"), dict)) else None
+            )
+            profile_member_comparison(profile.frontmatter or {}, record_bodies=cited,
+                                      retained_content=retained_content)
         except ValueError as exc:
             findings.append(Finding("memory-profile", f"{layout.path('memory-profile')}: {exc}"))
 

@@ -252,6 +252,58 @@ def test_synthesis_content_check_carries_each_pinned_prior_limit(opened, prior_r
     assert "limit not carried" in judgments(ctx)[0]["findings"]
 
 
+@pytest.mark.parametrize("unresolved", ["uninspected", "not-determinable"])
+def test_profile_validation_consumer_retains_local_no_as_partial(tmp_path, tmp_library, unresolved):
+    """Public role validation, without acquisition, a checkout or analysis state."""
+    from copy import deepcopy
+
+    from commonplace.lib.validation import validate_draft_in_role
+    from tests.commonplace.agentic_analysis.fixtures import frontmatter, member_fixture
+
+    directory = member_fixture(tmp_path) / "artifact"
+    runtime = directory / "runtime.md"
+    runtime.write_text(runtime.read_text().replace(
+        "none found within the fixture boundary.",
+        "#### RT-ABS-static-branch\n\nLabel: Bounded static branch\n\n"
+        "The inspected static branch has no automatic trace-fed write. Evidence: SRC-1.",
+    ))
+    fields = frontmatter(directory / "memory-profile.md")
+    absence = ["runtime.md#rt-abs-static-branch"]
+    store = ["runtime.md#rt-obj-store"]
+    fields["memory-comparison"]["axes"]["trace_learning"] = {
+        "assessment": "partial", "records": absence + store,
+        "note": "Static branch classified; opaque writer prevents a system negative.",
+        "units": [
+            {"scope": "Inspected static branch", "assessment": "known", "records": absence,
+             "note": "The absence record covers this branch only.",
+             "findings": [{"value": "no", "basis": "wired", "records": absence,
+                           "note": "No qualifying write within the inspected branch."}]},
+            {"scope": "Included opaque writer", "assessment": unresolved, "records": store,
+             "note": "Write path inaccessible; neither learning nor absence established.", "findings": []},
+        ],
+    }
+    body = ("# Example System memory profile\n\n## Comparison rationale\n\n"
+            "The local negative does not resolve the included opaque writer or its trace source.\n")
+    before = deepcopy(fields)
+
+    def failures():
+        return [finding.message for finding in validate_draft_in_role(
+            directory, "memory-profile", encoded(fields, body), repo_root=tmp_path,
+        ) if not finding.info and not finding.warn]
+
+    assert failures() == []
+    assert fields == before
+    # A classified local no cannot be hidden under an unresolved aggregate.
+    fields["memory-comparison"]["axes"]["trace_learning"]["assessment"] = unresolved
+    assert any("empty" in error and "findings" in error for error in failures())
+    fields["memory-comparison"]["axes"]["trace_learning"]["assessment"] = "partial"
+    # Nor can its absence warrant make the unresolved source inapplicable.
+    fields["memory-comparison"]["axes"]["trace_source"].update(
+        assessment="inapplicable", records=absence,
+    )
+    assert any("trace_source: inapplicability requires" in error for error in failures())
+
+
 def test_source_drift_refuses_acceptance(opened):
     a = opened
     (a.checkout / "README.md").write_text("Dirty frozen source\n")

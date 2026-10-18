@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.lib import frontmatter
 from commonplace.lib.agentic_analysis.analyses import analysis_layout, current_analyses
 from commonplace.lib.agentic_analysis.records import (
     declared_ids,
@@ -162,7 +163,18 @@ def _coverage(entry: dict, label: str, ids: Mapping[str, str]) -> None:
         raise ValueError(f"{label}: absence requires an evidenced-absence record")
 
 
-def validate_comparison(profile: object, *, known_ids: Mapping[str, str]) -> dict:
+# BACKCOMPAT: two immutable publications used indeterminate coverage for local
+# negatives before the contract clarification; remove after both are replaced
+# by independently audited profiles under the clarified contract. New candidate
+# checks never supply retained content. Do not expand this to a general bypass.
+_HISTORICAL_COVERAGE_PROFILES = frozenset({
+    "0712abad6df9c56751dcef17d50008ee46962eb0e40bac836df5b5a2178ed32a",  # EchoWiki
+    "a5a82049e2fcb5538700295acfc63d41285cd37717879ade977b99c7c9ef434d",  # Interview Doc Agent
+})
+
+
+def validate_comparison(profile: object, *, known_ids: Mapping[str, str],
+                        _historical_coverage: bool = False) -> dict:
     """Check structure and canonical references, not the truth of source claims."""
     if not isinstance(profile, dict) or set(profile) != {"version", "scope", "axes"}:
         raise ValueError("memory-comparison requires version, scope and axes")
@@ -182,7 +194,7 @@ def validate_comparison(profile: object, *, known_ids: Mapping[str, str]) -> dic
         units = entry["units"]
         if not isinstance(units, list):
             raise ValueError(f"{name}: units must be a list")  # noqa: TRY004 - validation API
-        positives = []
+        classified_findings = []
         for index, unit in enumerate(units):
             label = f"{name}.units[{index}]"
             if not isinstance(unit, dict) or set(unit) != {"scope", "assessment", "findings", "records", "note"}:
@@ -203,16 +215,18 @@ def validate_comparison(profile: object, *, known_ids: Mapping[str, str]) -> dic
                 refs = _refs(finding["records"], label + ".finding.records", known_ids, required=True)
                 if not isinstance(finding["note"], str) or not finding["note"].strip():
                     raise ValueError(f"{label}: missing evidence rationale")
-                if name == "trace_learning" and finding["value"] == "no":
-                    if unit["assessment"] != "known" or not any(is_absence(ref) for ref in refs):
-                        raise ValueError(f"{label}: local no requires resolved bounded absence")
-                else:
-                    positives.append(finding)
+                if (name == "trace_learning" and finding["value"] == "no"
+                        and (unit["assessment"] != "known" or not any(is_absence(ref) for ref in refs))):
+                    raise ValueError(f"{label}: local no requires resolved bounded absence")
+                # Coverage counts a warranted local negative too. Existence
+                # unions are a separate projection and still suppress system no
+                # under incomplete coverage.
+                classified_findings.append(finding)
             if unit["assessment"] in {"known", "partial"}:
                 if not findings:
-                    raise ValueError(f"{label}: positive assessment needs findings")
+                    raise ValueError(f"{label}: classified assessment needs findings")
             elif findings:
-                raise ValueError(f"{label}: non-positive assessment requires empty findings")
+                raise ValueError(f"{label}: unclassified assessment requires empty findings")
             if name == "trace_learning" and {f["value"] for f in findings} == {"yes", "no"}:
                 raise ValueError(f"{label}: yes and no require distinct units")
         status = entry["assessment"]
@@ -221,10 +235,15 @@ def validate_comparison(profile: object, *, known_ids: Mapping[str, str]) -> dic
             raise ValueError(f"{name}: known coverage requires resolved units")
         if status == "known" and all(unit["assessment"] == "inapplicable" for unit in units):
             raise ValueError(f"{name}: wholly inapplicable units require inapplicable axis coverage")
-        if status == "partial" and (not positives or not unresolved):
-            raise ValueError(f"{name}: partial coverage needs positives and unresolved coverage")
-        if status not in {"known", "partial"} and positives:
-            raise ValueError(f"{name}: non-positive assessment requires empty positive findings")
+        if status == "partial" and (not classified_findings or not unresolved):
+            raise ValueError(f"{name}: partial coverage needs classified findings and unresolved coverage")
+        historical_negative = (
+            _historical_coverage and name == "trace_learning"
+            and status in {"uninspected", "not-determinable"}
+            and all(finding["value"] == "no" for finding in classified_findings)
+        )
+        if status not in {"known", "partial"} and classified_findings and not historical_negative:
+            raise ValueError(f"{name}: unclassified assessment requires empty findings")
         if status in {"absent", "inapplicable"} and any(unit["findings"] for unit in units):
             raise ValueError(f"{name}: absence or inapplicability requires empty findings")
         if status in {"absent", "inapplicable"} and any(unit["assessment"] != status for unit in units):
@@ -277,13 +296,22 @@ def project_comparison(profile: dict) -> dict:
     return row
 
 
-def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str]) -> dict:
+def profile_member_comparison(metadata: dict, *, record_bodies: dict[str, str],
+                              retained_content: bytes | None = None) -> dict:
     """Resolve profile support against the records the given members declare.
 
-    The artifact rule checks the record members themselves.
+    The artifact rule checks the record members themselves. Retained readers
+    may supply exact published bytes for the narrowly pinned historical case;
+    producer calls omit them and always use current coverage rules.
     """
+    historical = (
+        retained_content is not None
+        and sha256(retained_content).hexdigest() in _HISTORICAL_COVERAGE_PROFILES
+        and frontmatter.parse(retained_content.decode("utf-8")).data == metadata
+    )
     known = {identifier: name for name, body in record_bodies.items() for identifier in declared_ids(body)}
-    return validate_comparison(metadata.get("memory-comparison"), known_ids=known)
+    return validate_comparison(metadata.get("memory-comparison"), known_ids=known,
+                               _historical_coverage=historical)
 
 
 @dataclass(frozen=True)
@@ -326,7 +354,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         cited = layout.roles["memory-profile"].cites
         profile = profile_member_comparison(member.frontmatter, record_bodies={
             layout.path(role): analysis.roles[role].body for role in cited if role in analysis.roles
-        })
+        }, retained_content=member.content)
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
             raise ValueError(f"invalid evidence tier: {retained}")
