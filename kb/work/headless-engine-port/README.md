@@ -171,6 +171,26 @@ scratch directory and no API-key variables, Haiku on Claude Code and
 - **Resumption.** Rerunning the probe returned all three answers from the
   cache without launching a worker.
 
+## For the ADR
+
+Points the ADR retiring the engine must state:
+
+- **Why the step program did not stay simple** (operator, 2026-10-18). With one
+  execution thread, a step program is simple: replay the script, and every
+  model job is either recorded or the next one to hand out. With parallel
+  executions it unravels: several attempts are open at once, so the shared
+  run state needs consistency rules for each open attempt, which round it
+  belongs to, inputs changing while it runs, results reported late or twice,
+  and which workers are known to have stopped. The engine's run lock,
+  readiness rules, attempt closing and reset machinery largely exist to
+  enforce them.
+- **What the headless script keeps of that** (proposed, to confirm in phase
+  3). Control flow lives in one process's call stack, and parallel calls share
+  only the answer cache, where each entry is written once under its own key.
+  The consistency needed reduces to a per-key lock, atomic record writes and
+  a run lock against a second process. Whether the verification cascade keeps
+  it that small is what phase 3 shows.
+
 ## Returns to decision
 
 - After phase 0: if a harness cannot run unattended (permissions or usage
