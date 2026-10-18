@@ -1,5 +1,11 @@
 # Batch 21 targeted correction preparation
 
+**Superseded by operator decision: [batch 21 now uses nine full fresh analyses](../batch-21.md).**
+This file, manifest, feedback packets and helper remain historical evidence.
+Do not execute this correction route under the new commission. Its code guard
+is unchanged; neither bridge tests nor guard refresh are needed for the new
+isolated lineages. The preparation below records the previous decision.
+
 **Nine bounded audit-assisted correction attempts are prepared, not launched.**
 The operator authorized preparation after the explanation of the
 [25-case plan](../batch-21.md). This is a different recovery policy from batch

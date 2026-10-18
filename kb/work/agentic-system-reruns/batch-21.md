@@ -1,143 +1,141 @@
-# Batch 21: all remaining targets, with explicit gates
+# Batch 21: nine full fresh analyses
 
-**Prepared, not launched.** This batch accounts for every remaining target after
-[seven qualified batch-20 integrations](./batches-19-20-integration.md): **25 of
-206 inventory targets remain incomplete**. The other 181 are complete; Talorys
-is outside this inventory. The canonical corpus has 182 sets / 2,366 members.
+**Restart all nine former correction cases from sources in new isolated
+lineages. Do not reset, resume or repair the old runs.** The operator replaced
+the targeted correction route with full fresh analyses. This commission rewrites
+preparation only: no acquisition, installation or analysis is launched.
 
-The operator requested integration, then batch 21 “with all the rest.” That
-commissions preparation of the complete remainder, not automatic execution or
-waiver of old stops. Unlike batch 20, **none of these 25 is currently cleared
-for an ordinary fresh run**. Nine have bounded repair proposals, eight need
-source/boundary/refusal decisions and eight need ownership/operational decisions.
-All are included below, not silently omitted from a supposedly runnable batch.
+## Targets
 
-The [machine record](./batch-21.json) binds all 25 source identities, exact run
-IDs, worktrees, command directories, preparation/run definitions, attempt maps,
-own publication maps where present, evidence and outstanding choices. Candidate
-author jobs name correction loci; they are **not executable reset selections**.
-The read-only planning worker returned a complete reconciliation; the parent
-checked target counts, native metadata and published maps. This is scheduling
-preparation, not a new semantic audit or ownership clearance.
+| Target | Fresh Git source |
+| --- | --- |
+| Supermemory | `https://github.com/supermemoryai/supermemory` |
+| ContextPilot | `https://github.com/Tencent/ContextPilot` |
+| OpenRSI | `https://github.com/FrontisAI/OpenRSI` |
+| ModularRSI | `https://github.com/IQuestLab/ModularRSI` |
+| JAZ | `https://github.com/jaz-lang/JAZ` |
+| Autogenesis | `https://github.com/DVampire/Autogenesis` |
+| LLM Wiki — MehmetGoekce | `https://github.com/MehmetGoekce/llm-wiki` |
+| ClawVault | `https://github.com/Versatly/clawvault` |
+| AREX-Skill | `https://github.com/VectorSpaceLab/AREX-Skill` |
 
-## Nine bounded repair proposals
+The active [fresh manifest](./batch-21-fresh.json) contains nine clean
+coordinator commissions, new proposed destinations and parent-held predecessor
+references. It pins tested method
+`5af51ae1f09f9f903701d9ff11348c201182c950`, whose complete suite passed 1,684
+tests including slow tests. No run IDs or source commits have been allocated.
+All workers use `pi-sol` (`gpt-6.1-sol`, medium), with fully qualified coordinator
+model `openai/gpt-6.1-sol` and medium effort.
 
-The latest audits do not establish a need for new source acquisition or wholesale
-reconstruction in these cases. Retain valid upstream work. Author correction and
-independent verification are distinct. Exact dependency closure and the supported
-feedback/recovery operation must be chosen before dispatch, against each frozen
-contract. Do not replay the old no-feedback six-run launcher or manually alter
-accepted members, state, sources or method files.
+## Full reconstruction, not correction feedback
 
-| Target | Current correction, not a prescribed verdict | Candidate author / verification barrier |
-|---|---|---|
-| Supermemory | Carry generic non-system string capture bypass alongside structured option gating. SDK valid-input reachability and disclosure remain unestablished. | `runtime` / `report-verification` |
-| ContextPilot | Carry dataset/configuration selector and generic fallback in the aligned boundary/runtime account. No actual wrong-loop execution claim. | `boundary`, `runtime` / `report-verification` |
-| OpenRSI | Carry default shared-mount private-answer access possibility; do not claim observed leakage. | `runtime` / `report-verification` |
-| ModularRSI | Restore post-review repair-to-final-bytes qualification; retain the corrected original findings. | `runtime` / `report-verification`, `synthesis-verification` |
-| JAZ | Correct profile input-origin certainty for merged invocation inputs/scope. Original replay/concurrency faults were repaired. | `memory-profile` / `profile-verification` |
-| LLM Wiki — MehmetGoekce | Dispose of access-log update authority at human-approved pruning, separately from automatic trace learning, using accepted consumer-chain records. | `memory-profile` / `profile-verification` |
-| ClawVault | Attribute frozen-source deprecation narrowly to new OpenClaw deployments. Do not generalize to all standalone use or endorse a replacement. | `boundary`, `runtime` / `report-verification`, `synthesis-verification` |
-| Autogenesis | Carry the missing `tool.other` import prerequisite in both entry narratives. This remains static evidence, not a target execution. | `boundary`, `runtime` / `report-verification` |
-| AREX-Skill | Dispose of the installed-library-state witness consistently in verification and public assessment. No positive classification is prescribed. | `synthesis` / `report-verification`; aspect records only if needed |
+Run the complete ordinary analysis workflow: fresh acquisition and boundary,
+all native analyst roles, independent verification, reconciliation, synthesis
+and publication checks. Do not reuse accepted upstream members, old synthesis,
+old source checkouts or snapshots. Do not supply previous audits, findings or
+correction payloads to fresh workers, including for AREX. The parent holds only
+lineage/protection metadata; analysts receive native source-first handoffs.
+Do not prescribe a positive outcome or force completion over a native stop.
 
-The first eight use the [latest batch-19/20 reports](./batches-19-20-audit-review.json).
-AREX uses [local rework](./reset-and-rework.md) and its
-[retained audit](./audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md).
-The historical batch-19 restart selections remain protocol history, not the next
-repair scope. Any corrected publication still needs a fresh exact-byte-bound
-independent audit and separately authorized integration.
+Acquire each exact supplied GitHub root remotely at its default-branch tip,
+then freeze its full commit through ordinary native acquisition. Omit
+`--source-revision`; predecessor pins are historical provenance only. Do not
+seed from old checkouts, use shared objects/alternates, substitute similarly
+named repositories, add guessed sources or execute target code/install its
+dependencies. An unavailable source is a retained acquisition stop, not an
+excuse to reuse old evidence or silently select another identity.
 
-**Next decision:** authorize a bounded correction route for selected cases,
-including whether and how explicit audit feedback reaches the author, and bind
-the actual author/re-verifier scopes. This plan neither chooses a new blind
-reset nor smuggles feedback into a supposedly ordinary no-feedback run.
+A fresh result may concern changed upstream code. It is a new analysis, **not
+a controlled same-pin repair experiment or proof that the original error was
+fixed**. New publication bytes require a fresh fixed intake, independent
+exact-byte/operational audit and separate integration authority.
 
-## Eight source, boundary or refusal decisions
+## Isolation and preserved history
 
-| Target | Decision required before any new run or recovery |
-|---|---|
-| Agentic Harness Engineering | Resolve retained profile refusal over consumer paths/form coverage and learning authority, then supported recovery. Provider failures do not settle the substantive refusal. Preserve both older predecessors. |
-| Awesome Agent Memory | Decide whether, and under what changed scope, to reopen a completed local out-of-scope result. It is not a transport failure. |
-| DualGraph | Identify the intended coherent system in `microsoft/DKI_LLM`; do not silently substitute a subproject. |
-| Fintool | Authorize an article-only view and fresh unexposed worker, preserving original identity/capture. Third-party reply exposure is not repaired by reusing the old boundary worker. |
-| Fragility Grid | Decide material same-system launcher inclusion versus an expressly narrower target. |
-| Letta | Decide the landing-page boundary/disposition. Do not silently select the `archive` branch or substitute already-integrated Letta Code. |
-| Operational Ontology Framework | Decide whether, and under what changed scope, to reopen its completed local out-of-scope result. |
-| Secure LLM Wiki | Resolve the old prepared-contract/profile refusal and supported recovery route. Newer representation capability alone does not clear it. |
+Every target gets a new `batch-21-fresh-<key>` worktree on the external output
+disk and its sibling preparation record. Paths must be absent, non-redirected
+and disjoint from all predecessors and batch-22 destinations. Old unfinished
+work or reservations are not admission gates for an independently owned new
+lineage. Establish exclusive ownership of new writes; do not claim ownership of,
+terminate writers in, reset, withdraw, clean or take over any old workspace.
+The old methods, attempts, refusals, publications, archives, incidents and
+unknown collateral effects remain evidence. Fresh content does not clear them.
 
-[Batch-18 remainder decisions](./batch-18.md),
-[finished-batch residue](./finished-batch-residue-2026-10-15.md) and the native run
-bindings in the machine record retain these stops. Letta's frozen landing-page
-boundary is in its native `artifact/boundary.md`. No branch, redirect, source view,
-reopened disposition or refusal override is selected here.
+The following are now **superseded historical preparation**, not execution
+instructions for this batch:
 
-**Next decision:** the operator names or explicitly delegates each consequential
-source/boundary/disposition choice. Then prepare that released route with its
-exact evidence boundary and normal acquisition stop conditions. Do not acquire
-sources merely to make this planning list look executable.
+- [Original 25-case narrative](./batch-21-original.md) and
+  [original checker](./bash-21-original.sh), preserved byte-for-byte. Their
+  old relative links do not make the new active checker a 25-case checker.
+- [Original 25-case machine record](./batch-21.json), deliberately left unchanged:
+  batch 22 and old correction records bind its exact bytes. Its filename is
+  historical; `batch-21-fresh.json` is the active nine-case manifest.
+- [Nine correction packets](./batch-21-corrections/README.md), active-at-the-time
+  manifest, rejected mechanisms and [compatibility review](./batch-21-compatibility-review.md).
+  Do not launch `bash-21-corrections.sh --confirm-idle` for this commission.
 
-## Eight ownership or operational decisions
+No mixed-package reset bridge, retained old-attempt budget renewal or old helper
+code-guard update is required by the new route. The old guard remains intact;
+its failure does not block these fresh lineages. Do not update it merely to
+make a historical checker green.
 
-| Target | Stop that content reruns cannot waive |
-|---|---|
-| ACE | Reconciliation attempt `000019` remains open and prior-worker ownership unresolved. Process absence is not release. |
-| Agent Skills for Context Engineering | Reserved owner; semantic conflict-rule and historical grounding/validation-path concerns remain separate. |
-| AI-Context-OS | Out-of-worktree write/move and ancestor cleanup attempt; unknown prior contents/collateral effects. The old API failure is not the current stop. |
-| NAMS | Foreign empty-file write/removal and directory removal; prior contents/ownership/loss unresolved. |
-| LLM-Wiki-v3 | Foreign file/directory write/removal; earlier content repair does not clear authority uncertainty. |
-| llmwiki-marimo | Foreign answers-file write/removal; earlier profile repair does not clear prior-state uncertainty. |
-| Siftly | Out-of-handout run-root `worker-identity.json` write/removal; prior contents unknown. |
-| Sift-KG | Sibling report write and removal of file/five directories; prior contents unknown. The legitimate installed report is separate evidence. |
-
-The [operational investigation](./audits/depth/batch-19-operational.md),
-[local/operational queue](./reset-and-rework.md), exact audit followups and
-owner/reservation evidence are bound per case. No historical violation is erased,
-unknown prior content reconstructed or harmlessness established by a new useful
-publication.
-
-**Next decision:** explicit owner coordination/release or operational/collateral
-disposition, with evidence and remaining uncertainty retained. A new replacement
-lineage, if wanted, needs deliberate authority; it cannot silently launder the
-held old run. No worktree cleanup or claim of exclusive ownership follows.
-
-## Read-only check, not launch
+## Preparation check and future execution
 
 ```bash
 bash kb/work/agentic-system-reruns/bash-21.sh --check
 ```
 
-The default is also `--check`. It verifies 25-target completeness against the
-updated checklist, gate counts, bound evidence, current native attempt maps,
-all sixteen held own publication maps and the exact 182-set transfer baseline.
-It checks metadata snapshots, **not writer idleness or ownership clearance**.
-It does not prepare worktrees, acquire sources, install dependencies, launch
-Pi/workers, reset/advance runs, write output logs, integrate or commit.
+The default is also read-only. This now checks **nine fresh cases**, exact
+membership/source/task bindings (approved task hashes live in the checker,
+not beside editable text in the manifest), selected committed method, absent new
+worktree/preparation/output paths, disjointness, the 182-set byte baseline and
+separation from batch 22. It deliberately does not require old mutable attempt
+maps or old writer-idle clearance. It cannot prove new writer exclusivity,
+source availability or future semantic quality. Unknown/effectful flags fail
+closed; the checker has no launch mode.
 
-There is intentionally **no launch mode**. `--confirm-idle`, `--run`, unknown
-options and excess arguments fail closed with exit 2, without starting anything.
-Do not confuse a successful read-only check with permission to execute. A changed
-input fails the check and requires reconciliation, not manual hash refresh to
-hide a stop.
+A later execution instruction is required. Before effects, commit the complete
+fresh preparation, perform the project-worker diagnostic through exposed
+`subagent`, verify rolling-tool/profile/fresh-context capability, and validate
+the full inherited canonical corpus and normalized identities/native names.
+Recheck the selected method/startup/code/dependency binding in index and working
+tree; no silent HEAD substitution. Native preparation may record exclusions of
+unrelated dirty workshop work, but startup/code/corpus changes are a stop.
+Recheck mount, actual destination parents, capacity and exclusive ownership.
 
-At the next authorized action, replan from current evidence: reconcile writers
-and ownership, choose the recovery/source/operational route, recompute native
-dependency closure and preserve predecessor bytes. Any released analyses use the
-harness-based standard worker route and its launch preflight, not a Bash agent
-CLI substitute for analytical workers. Sol/medium remains the inherited worker
-profile unless a new explicit commission selects another supported profile.
+Exclusively create the absent external `outputs/batch-21-fresh/` ledger only
+under execution authority. Record authority, exact manifest/method and baseline
+hashes and each assignment before launch. Do not reuse an existing fence or
+partial output. Dispatch serially through exposed project `subagent` using each
+packet's agent/scope/cwd/model/effort/task fields. Retain handles and results;
+interrupted waits retain ownership and must not cause a duplicate launch.
+There is no assistant Bash agent-CLI fallback or native batch command.
 
-## Population boundaries
+Each fresh coordinator uses the canonical analysis skill, prepares its assigned
+new worktree at the pinned method, then uses the returned worktree and command
+prefix for native start/advance and all exact analytical handoffs. It does not
+read job prompts or author analytical replacements. Existing paths, unsupported
+interfaces, preparation/acquisition failure, unexpected writes or uncertain
+effects stop admission without retry or cleanup. Preserve full command and
+failure evidence. Native clone staging can be removed internally on failure;
+do not promise every transient clone byte survives. No transient-worker retry
+is assumed without a separate explicit grant.
 
-All 25 rows are the exact incomplete **target** remainder: 21 pending plus four
-older target holds (ACE, Agentic Harness Engineering, Agent Skills for Context
-Engineering, ContextPilot). Historical held publications for already-complete
-GBrain, Graphiti, Napkin, Dynamic Cheatsheet and other incumbent-backed targets
-stay in their own queues; they are not extra batch-21 targets or replacement
-authority. The six older positive incumbent alternatives likewise stay stopped.
-The fixed historical 169-publication intake and later fifteen-publication intake
-are preserved, not silently recomputed as one new target population.
+Record final native inspection JSON unchanged. Local blocked/out-of-scope is not
+publication completion. Process exit or completed publication does not prove
+semantic correction, writer idleness, safe operational scope or integration.
 
-No batch-21 coordinator, source acquisition, reset, refusal injection or analysis
-has run. Comparisons, landscape synthesis, transfer scans, cleanup and push stay
-outside this preparation commission.
+## Scope alongside batch 22
+
+Batch 21 has **nine fresh analyses**. Batch 22 remains **thirteen separate
+fresh-start cases**, including three source-selection-first phases. Together
+they account for 22 of the 25 incomplete inventory targets. DualGraph and Fintool
+remain temporarily deferred; Agentic Harness Engineering remains separately
+gated. Do not add any of those three or replay batch-22 assignments here.
+
+Inventory completion and publication counts remain unchanged: 181 complete
+inventory targets plus 25 incomplete = 206; 182 canonical sets / 2,366 members
+include Talorys outside that inventory. This is routing, not new completion.
+Batch-22 sealed preparation may still describe nine correction proposals as
+its historical checkpoint; this operator decision supersedes that route, not
+its thirteen identities or immutable source/predecessor bindings.

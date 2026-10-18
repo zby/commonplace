@@ -1,5 +1,11 @@
 # Batch 21: recommended next actions
 
+**Historical recommendations. The operator has now replaced the nine corrections
+with [nine full fresh analyses](./batch-21.md); batch 22's thirteen cases stay
+separate.** Do not launch the correction sequence suggested below. The reset
+compatibility review and feedback packets are preserved, not active release
+requirements for the new isolated lineages.
+
 **Try the nine bounded corrections with audit feedback; do not rerun the other
 sixteen as an undifferentiated batch.** The [correction preparation](./batch-21-corrections/README.md)
 is separate from these recommendations. Nothing has been launched, excluded,

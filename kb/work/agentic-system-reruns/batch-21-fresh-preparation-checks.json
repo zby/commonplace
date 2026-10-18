@@ -1,0 +1,48 @@
+{
+  "status": "prepared-full-fresh-not-launched",
+  "execution-authorized": false,
+  "targets": 9,
+  "separate-batch-22-targets": 13,
+  "combined-fresh-targets": 22,
+  "method-revision": "5af51ae1f09f9f903701d9ff11348c201182c950",
+  "active-manifest": {
+    "path": "kb/work/agentic-system-reruns/batch-21-fresh.json",
+    "sha256": "7d84b2544e7c201dc84d72116f88f9b7da4fbabd0a3755fbc9dbba7aa7331cdf"
+  },
+  "active-checker": {
+    "path": "kb/work/agentic-system-reruns/bash-21.sh",
+    "sha256": "fa2f0ec525a49feadfbcac96d4c5281eaff9d29aab82fd19c1c7513152b72d1a"
+  },
+  "narrative": {
+    "path": "kb/work/agentic-system-reruns/batch-21.md",
+    "sha256": "612949b877e1ec81d32a7092653e5440c195f48e3947efb7c8730936631bdddc"
+  },
+  "verification": {
+    "checker": "passed nine exact fresh cases, approved task hashes, method binding, absent/disjoint destinations, 182 canonical sets / 2366 member byte maps and root files; no launch mode",
+    "isolated-scenarios": "38 passed; temporary fixture snapshots unchanged, including old open attempts not gating new work and injected/truncated/self-certified task text rejected",
+    "isolated-scenario-results": "/tmp/batch21-fresh-checker-tests.json",
+    "general-tooling-command": "uv run pytest tests/commonplace/general tests/commonplace/tooling -m ''",
+    "general-tooling-result": "96 passed in 2.90 seconds",
+    "general-tooling-log": "/tmp/batch21-fresh-general-tooling.txt",
+    "new-full-suite": false,
+    "prior-method-full-suite": "1684 passed at the selected method; not rerun for this workshop-only rewrite",
+    "extra-native-full-corpus-scan": "Interrupted before completion; not claimed as passed. Repeated broad scans were stopped. The deterministic canonical byte baseline check passed; future execution still needs native semantic corpus/namespace checks.",
+    "syntax": "bash -n passed",
+    "whitespace": "git diff --check passed"
+  },
+  "review": {
+    "initial": "batch-21-fresh-review.md",
+    "initial-worker-handle": "6529bcde-cf91-4416-b09b-c2c00d4794e0",
+    "finding": "F1: initial substring checks did not establish exact task integrity",
+    "resolution": "Checker now pins all nine independently reviewed task hashes outside manifest task text; no semantic change to fresh commissions",
+    "follow-up": "batch-21-fresh-packet-check.md",
+    "follow-up-worker-handle": "59f67d7c-24d5-41e6-925d-0a6de137511c",
+    "result": "F1 closed for exact current reviewed bytes; qualified preparation readiness, not execution authority",
+    "parent-read-complete-reports": true
+  },
+  "history": "Original narrative/checker preserved byte-for-byte as batch-21-original.md and bash-21-original.sh. Original 25-case batch-21.json remains immutable for old correction and batch22 bindings. Old correction manifest/helper/payloads, failures, compatibility reviews and old runs remain intact and superseded; no guard refresh or mixed-package bridge required for fresh runs.",
+  "scope": "Nine known Git roots; new isolated worktrees and run IDs, fresh remote default-tip acquisition, full native analysis and independent verification; no old accepted content, pins, snapshots or audit feedback supplied. No old-writer reconciliation for disjoint new destinations; exclusive new ownership still required.",
+  "effects": "No live source acquisition, new analysis worktree install, native run allocation/reset/judge/advance, analytical coordinator dispatch, publication, integration, cleanup or push. Coding/review workers and disposable checker/general/tooling tests only.",
+  "remaining": "Commit complete preparation, later execution authority and runtime/profile/startup/source/corpus/namespace/mount/capacity/exclusive-ownership rechecks before effects. New publications require new exact-byte audits and separate integration authority. DualGraph/Fintool deferred; Agentic Harness Engineering separately gated.",
+  "unrelated-work": "Concurrent notes, tags, ingests and unattended/headless workshops are outside this commit's scope and left untouched."
+}
