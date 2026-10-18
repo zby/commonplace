@@ -204,6 +204,33 @@ Points the ADR retiring the engine must state:
 - Batch launching (a shell loop over systems) is barred for batch 22; for the
   new method it is the operator's call at phase 5.
 
+## Working arrangement (2026-10-18)
+
+Batches 21 and 22 run from the main checkout at `/home/zby/llm/commonplace`:
+each Pi coordinator starts there, loads that checkout's startup files and
+calls `commonplace-analysis prepare` through the user-level editable tool,
+whose code is that checkout's `src/`. Preparation refuses a launch when any
+startup file there differs from the pinned method commit, and a `src/` edit
+there is run by the next coordinator. So the port is developed on branch
+`headless-port` in the sibling worktree `/home/zby/llm/commonplace-headless`,
+created from `b12b855f4`.
+
+- The worktree has its own `.venv` from `uv sync`. Tests run as `uv run
+  pytest`. When a command must run the branch's code, call the worktree's
+  `.venv/bin/commonplace-*`: this deviates from the rule against project-venv
+  paths because the user-level tool is the live coordinators' code and
+  [INSTALL.md](../../../INSTALL.md) forbids repointing it during an analysis.
+- Merge main into the branch before each phase commit; main advances with
+  integration commits from the reruns.
+- Land a phase on main by fast-forward merge in the main checkout only while
+  no `bash-2x.sh` batch is running. Phase 1 touches only
+  `kb/work/headless-analysis/` and may land at any time; phases 2 and 4 change
+  `src/` and `SKILL.md` and wait for a gap between batches. A batch script
+  captures `HEAD` at start, so the next batch runs the landed method
+  deliberately.
+- Sessions started in the worktree share the main checkout's auto-memory
+  through a symlinked memory directory.
+
 ## Closes when
 
 The engine is retired by ADR and its code deleted, or the operator abandons
