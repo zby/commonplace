@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of AREX-Skill's public synthesis against the accepted partial-loop records."
+run-id: AAS-2026-10-19-arex-skill-089a5ed7476f-01
+reviewed-boundary: ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6
+---
+
+# AREX-Skill synthesis verification
+
+## Verification
+
+The handed synthesis supports publication as a bounded account. I checked every substantive passage against its cited records, the reconciliation's supersession and scope distinctions, and the supplied report and profile judgments. The synthesis answers input is empty; no refusal or previous synthesis-verification judgment was supplied. This judgment concerns meaning and faithful qualification, not a repetition of deterministic checks.
+
+The opening [bounded synthesis](synthesis.md#bounded-synthesis) accurately carries the [boundary](boundary.md#boundary-and-evidence): SRC-1 at the frozen revision, complete artifact with partial loop inspection, code and instructions rather than observed execution or causal experiments. It does not attribute external provider or dependency internals to the inspected implementation.
+
+The [request-to-context account](synthesis.md#from-request-to-operating-context) preserves the division between session assembly, external agent-core scheduling and effect execution in [RT-RTE-session-prompt](runtime.md#rt-rte-session-prompt). Provider identifiers are not presented as weight pins; [RT-CMP-model-runtime](runtime.md#rt-cmp-model-runtime) leaves provider mutability uninspected. Catalog visibility, explicit body delivery and filesystem authority remain distinct under [RT-RTE-skill-delivery](runtime.md#rt-rte-skill-delivery) and its memory annotation. The execution-control paragraph correctly retains the external dispatch condition on registry filtering and the separate supported RPC shell route: [RT-RTE-tool-grants](runtime.md#rt-rte-tool-grants), [RT-RTE-user-bash](runtime.md#rt-rte-user-bash). It makes no universal no-execution or sandbox claim.
+
+The [draft-to-Researcher account](synthesis.md#from-draft-to-later-researcher) uses [WF-RTE-repo-verification](workflow.md#wf-rte-repo-verification), consistent with the supersession of memory's repository-verification declaration. Optional fresh-agent tests, required-backend blocking, loss of auto-import authorization and repair remain prescribed behavior rather than completed tests. [EPI-RTE-import-check](epistemic.md#epi-rte-import-check) and [RT-RTE-repo-import](runtime.md#rt-rte-repo-import) support the narrower executable admission claim. The manual-unrouted branch, caller-controlled overwrite flags and best-effort rollback prevent compression into universal classified admission, authenticated approval or crash atomicity. [RT-RTE-library-update](runtime.md#rt-rte-library-update) remains a separate maintenance route. The distinction between installed guidance and richer review/routing evidence is supported by [MEM-OBJ-repo-skills](memory.md#mem-obj-repo-skills) and [MEM-OBJ-routing-metadata](memory.md#mem-obj-routing-metadata); import success is not widened into later use or success.
+
+The [acceptance account](synthesis.md#checks-with-bounded-acceptance) preserves a substantive implemented positive without granting blanket warrant. [EPI-RTE-recovery-check](epistemic.md#epi-rte-recovery-check) and [EPI-RTE-recovery-decision](epistemic.md#epi-rte-recovery-decision) support input-conditional recovery disposition. Optional-input applicability, target encoding, asymmetric normalization, metric fallback and the separate hard-mode proxy rejection remain beside that claim. [EPI-RTE-qa-normalization](epistemic.md#epi-rte-qa-normalization) and [EPI-RTE-qa-scoring](epistemic.md#epi-rte-qa-scoring) support the distinction between lexical scores and authenticated answer truth. [EPI-RTE-refine-guidance](epistemic.md#epi-rte-refine-guidance) supports requested feedback-consuming revision, not observed revision or scientific acceptance of every proposition.
+
+The [retention account](synthesis.md#retention-continuation-and-replay) keeps default summarization separate from extension cancellation/substitution and optional branch summaries. [EPI-RTE-summary-generation](epistemic.md#epi-rte-summary-generation), [RT-RTE-context-compaction](runtime.md#rt-rte-context-compaction), [MEM-OBJ-compaction-summary](memory.md#mem-obj-compaction-summary) and [MEM-RTE-branch-navigation](memory.md#mem-rte-branch-navigation) support trace-fed production and later delivery, without certifying semantic fidelity or improved capacity. The summary-text finding is not extended to opaque details. Conditional durability and model-facing versus display-only/custom-state distinctions follow [MEM-RTE-session-retention](memory.md#mem-rte-session-retention) and [MEM-OBJ-custom-entry](memory.md#mem-obj-custom-entry). Independent worker conversations, selected completion reports, journal replay and diagnostic truncation retain their different consumers under [MEM-RTE-workflow-context](memory.md#mem-rte-workflow-context), [MEM-RTE-workflow-resume](memory.md#mem-rte-workflow-resume) and [MEM-OBJ-agent-history](memory.md#mem-obj-agent-history). No environmental freshness, authenticated human checkpoint or filesystem-isolation guarantee is inferred.
+
+The [concluding assessment](synthesis.md#what-the-progression-establishes) is scenario-relative rather than a ranking. It leads with supported architectural contributions, then distinguishes each theory-builder condition, improved future capacity, reflection, autonomy and self-improvement. Its uninspected exercised-construction assessments agree with [EPI-RTE-refine-guidance](epistemic.md#epi-rte-refine-guidance). The dormant self-change characterization is conditional on the named Creator-to-Researcher pathway, not an assertion that the causal links were exercised. Its proposed evidence separates a provenance-linked dependent-use trace from outcome evidence of benefit. [EPI-CLM-verified-skills](epistemic.md#epi-clm-verified-skills), [EPI-CLM-accepted-graph](epistemic.md#epi-clm-accepted-graph) and [EPI-CLM-benchmark-gains](epistemic.md#epi-clm-benchmark-gains) remain attributed claims compared with narrower mechanisms, not established collection-wide correctness or component causation.
+
+The [Limitations table](synthesis.md#limitations) carries both report-verification limits with their record citations and prevented conclusions: partial saved-workflow admission/delegation coverage and partial specialized evaluator, maintenance and cross-host withdrawal coverage. The profile judgment declares no additional limits. Reconciliation identifies no unresolved conflict. Additional table rows preserve operation, semantic support, retained-reason, opaque-payload, fidelity and local-enforcement boundaries. These uncertainties leave the emitted bounded findings valid; none asserts absence or complete coverage. I found no material unsupported conclusion, misleading omitted condition or newly discovered record fault requiring a blocker or additional publication limit.
+
+Source-read log: none. This verification used the handed records and judgments only; no named ambiguity required frozen-source inspection and no target was executed.
+
+## Blockers
+
+none
+
+## Limits
+
+none

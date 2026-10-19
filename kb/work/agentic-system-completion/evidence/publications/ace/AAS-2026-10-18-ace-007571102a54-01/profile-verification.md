@@ -1,0 +1,30 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of ACE's ten memory-comparison axes against the accepted main-repository records."
+run-id: AAS-2026-10-18-ace-007571102a54-01
+reviewed-boundary: "82709de050e1db6e6ef2f07bcb0393560b94992a"
+---
+
+# ACE profile verification
+
+## Verification
+
+Checked the complete [memory profile](memory-profile.md#comparison-rationale), including every axis, unit, finding, evidence basis and coverage assessment, against the handed runtime, memory, epistemic and workflow members. Applied the supplied reconciliation: reflection, playbook content and counter updating resolve to the memory declarations; the broader epistemic tags object remains distinct from retained metadata. No predecessor objections or correction answers were supplied. No source reads were needed, and no new evidence or records were introduced.
+
+- **Storage and form:** [MEM-OBJ-playbook-content](memory.md#mem-obj-playbook-content), [MEM-OBJ-bullet-metadata](memory.md#mem-obj-bullet-metadata), [MEM-OBJ-best-playbook](memory.md#mem-obj-best-playbook) and [MEM-OBJ-call-logs](memory.md#mem-obj-call-logs) support the emitted in-memory/files and natural-language/symbolic findings. The profile separates advice, fixed-rule fields and mixed log parts. Temporary analyzer arrays do not establish persistent vector storage; external model weights do not establish memory accumulated by ACE. Provider retention remains explicitly unresolved rather than being classified from a display or model handle.
+- **Lineage:** The profile distinguishes installed trace-derived advice and counters, file import, downstream reconstruction/selection and audit recording. [RT-RTE-sample-adaptation](runtime.md#rt-rte-sample-adaptation), [RT-RTE-batch-adaptation](runtime.md#rt-rte-batch-adaptation), [MEM-RTE-counter-update](memory.md#mem-rte-counter-update) and [RT-RTE-playbook-reload](runtime.md#rt-rte-playbook-reload) support those paths. Known import does not resolve original authorship. Analyzer reconstruction and best-snapshot selection are downstream derivations, not claims that every original bullet has known provenance.
+- **Behavioral authority:** [RT-BAP-playbook-guidance](runtime.md#rt-bap-playbook-guidance) supports generator instruction and knowledge through advisory prompt interpretation, not enforced obedience. Retained advice participates at update consumers separately from its downstream generator use. [MEM-OBJ-analyzer-embeddings](memory.md#mem-obj-analyzer-embeddings) and [RT-RTE-bulletpoint-merge](runtime.md#rt-rte-bulletpoint-merge) support retained-content influence on similarity grouping. Metadata supports ID routing and counter-based advisory context, not permissions or a deterministic harmful-count veto. Log storage alone receives no authority finding.
+- **Write agency:** Additions, reduction/application, counters, analyzer replacement, snapshot selection and logging have computational admission. Grouping some mechanisms under the same automatic finding does not conceal a conflicting control or evidence basis. Initialization and replacement control remain separate unresolved units; caller identity and physical file reads do not justify manual agency.
+- **Curation:** [RT-RTE-bulletpoint-merge](runtime.md#rt-rte-bulletpoint-merge) supports implemented near-duplicate removal and replacement, including destructive fallback. Its concise-combination instruction supports claimed consolidation, not demonstrated semantic preservation. [RT-RTE-evaluate-select](runtime.md#rt-rte-evaluate-select) supports promotion of a selected whole snapshot for final testing, not promotion of every bullet. The profile properly withholds a definite semantic operation for generated additions: [EPI-RTE-curator-admission](epistemic.md#epi-rte-curator-admission) establishes structural admission, not whether a particular lesson consolidates existing claims or synthesizes a new one.
+- **Read-back direction and signal:** The profile separates requested file return from subsequent automatic prompt delivery. Whole-playbook delivery is coarse push; reported-ID filtering actually selects retained lines; analyzer embeddings select retained groups delivered to merging. These are distinct operations and consumers, not three descriptions of generator retrieval. The local inapplicability of push signal to a requested file return does not suppress unresolved log/provider selectors or make the entire axis inapplicable.
+- **Trace learning and source:** Response/feedback through reflection and curation produces retained advice with later generator consumers. Response-conditioned tags similarly produce retained counters for later prompts. These routes satisfy wired trace learning without requiring observed improvement. The linked reasoning, answer, evaluation and corrective sequence supports trajectories; single-message transport does not independently establish session logs or tool traces. External task/oracle provenance remains unresolved alongside the positive route classification. Raw audit retention alone establishes no historical learning consumer.
+
+All ten axes are partial, with supported local findings and named unresolved included alternatives. The inventory preserves initialization uncertainty where relevant and provider-side uncertainty throughout; it does not assert that an unknown provider store exists. AppWorld, static role prompts, unchanged weights and transient frames are explicitly outside the retained-store classification. The known local units therefore support existence comparisons, not complete-value statistics. No local negative trace-learning value, unsupported absence, observed operation or causal benefit is emitted. The workflow's narrower analyzer-disabled example does not contradict the profile's separately evidenced optional maintenance route. The remaining uncertainty is already expressed in the extracted values' assessments and notes; it requires neither a blocker nor an additional publication limit.
+
+## Blockers
+
+none
+
+## Limits
+
+none

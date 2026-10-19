@@ -1,0 +1,41 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Memory-profile verification of Operational Ontology Framework's prescribed operational state at public-reference commit 3df5d896da2a1e488e1eb325feddf190ad77990d."
+run-id: AAS-2026-10-18-operational-ontology-framework-2b5d9616baa4-01
+reviewed-boundary: 3df5d896da2a1e488e1eb325feddf190ad77990d
+---
+
+# Operational Ontology Framework profile verification
+
+## Verification
+
+The [memory profile](memory-profile.md#comparison-rationale) is supported within its declared boundary of prescribed retained operational state. I checked all ten axes, their unit scopes, positive findings, evidence bases and coverage assessments against the supplied reports. No replacement classifications or new source evidence are introduced. All positive findings remain `claimed`; publication CI implementation does not upgrade operational memory to wired behavior.
+
+The inventory preserves Pin, Spec, Handoff, Facts and the authorized organizational source separately. It does not equate the latter with Facts or Spec, infer files from the reference's Markdown, or treat the current draft as retained memory. The reconciliation's four object supersessions lead to the canonical memory objects; they do not replace the epistemic findings or merge the weekly workflow with its acquisition, disposition and retention parts. See [MEM-OBJ-pin](memory.md#mem-obj-pin), [MEM-OBJ-spec](memory.md#mem-obj-spec), [MEM-OBJ-handoff](memory.md#mem-obj-handoff), [MEM-OBJ-facts](memory.md#mem-obj-facts) and [MEM-OBJ-authorized-source](memory.md#mem-obj-authorized-source).
+
+| Axis | Support, natural-unit and coverage judgment |
+|---|---|
+| `storage_substrate` | Supported as `not-determinable`. Each retained object has its own unresolved medium. The five object records specify no controlled substrate; static repository storage cannot classify their operational storage. |
+| `representational_form` | Supported as `partial`. The four described state roles support claimed natural-language interpretation, with unknown actual encoding and additional operative fields retained locally. The organizational source remains separately unresolved rather than inheriting the encoding of its description. See the five object records above and [EPI-RTE-status-retention](epistemic.md#epi-rte-status-retention). |
+| `lineage` | Supported as `partial`. Claimed authored lineage is scoped to the AI-draft/human-confirmation or correction path, not to all organizational input or the final persisted representation. Separate unresolved units preserve initialization and derivation gaps for the other objects. No automatic extraction is inferred from a continuity role. See [RT-RTE-weekly-review](runtime.md#rt-rte-weekly-review), [MEM-OBJ-authorized-source](memory.md#mem-obj-authorized-source), [EPI-RTE-data-import](epistemic.md#epi-rte-data-import) and [EPI-RTE-status-retention](epistemic.md#epi-rte-status-retention). |
+| `behavioral_authority` | Supported as `partial`. Pin rules direct intended later operators; Facts and approved status supply information. Handoff findings distinguish reports supplying context from next-action guidance directing later work, at the same intended next operator. Those are claimed knowledge and instruction effects, not enforcement or learning. Pin assertions and Spec's later-memory effects remain unresolved. See [MEM-OBJ-pin](memory.md#mem-obj-pin), [MEM-OBJ-facts](memory.md#mem-obj-facts), [MEM-OBJ-authorized-source](memory.md#mem-obj-authorized-source), [MEM-OBJ-handoff](memory.md#mem-obj-handoff), [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity) and [MEM-OBJ-spec](memory.md#mem-obj-spec). |
+| `write_agency` | Supported as `partial`. The weekly status/blocker admission has an explicit content-level human decision, supporting claimed manual admission independently of the physical writer. The short handoff, initial content, other replacements and stable-rule amendment remain separate unresolved mechanisms. Ownership and deliberateness alone do not identify a concrete per-content approver. See [EPI-RTE-review-disposition](epistemic.md#epi-rte-review-disposition), [RT-RTE-weekly-review](runtime.md#rt-rte-weekly-review), [RT-RTE-rule-amendment](runtime.md#rt-rte-rule-amendment) and the object records above. |
+| `curation_operations` | Supported as `not-determinable`. The named maintenance branches remain included, but the records establish no implemented retained-memory transformation. Amendment requirements, volatile state, draft sorting and a short handoff do not establish evolve, consolidate, synthesize or invalidate. See [RT-RTE-rule-amendment](runtime.md#rt-rte-rule-amendment), [EPI-RTE-status-retention](epistemic.md#epi-rte-status-retention) and [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity). |
+| `read_back_direction` | Supported as `not-determinable`. General continuity, weekly review and the other state-role branches all lack the request, selection and delivery facts needed to distinguish pull from push. The profile does not count a current draft return as read-back. See [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity), [RT-RTE-weekly-review](runtime.md#rt-rte-weekly-review) and [EPI-RTE-status-retention](epistemic.md#epi-rte-status-retention). |
+| `read_back_signal` | Supported as `not-determinable`, not inapplicable. No recorded push operation supplies a trigger, selector input and selected retained part. Unknown direction cannot establish a pull-only boundary. Observation metadata and overdue-first draft ordering do not establish push selection. See [MEM-OBJ-facts](memory.md#mem-obj-facts), [RT-RTE-weekly-review](runtime.md#rt-rte-weekly-review) and [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity). |
+| `trace_learning` | Supported as `not-determinable`. Handoff production, reviewed-status retention and other state updates remain in the inventory without a qualifying automatic trace-fed durable update being established. The profile does not require novelty or measured benefit; its uncertainty concerns the write mechanism and trace-to-later-consumer chain. No local or system-wide negative is emitted. See [MEM-OBJ-handoff](memory.md#mem-obj-handoff), [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity), [EPI-RTE-status-retention](epistemic.md#epi-rte-status-retention) and [RT-RTE-rule-amendment](runtime.md#rt-rte-rule-amendment). |
+| `trace_source` | Supported as `not-determinable`. Original inputs to qualifying automatic updates are not established on the included branches. Decisions, attempts and recurring reviews do not identify consumed session logs, tool traces, event streams or trajectories. Unresolved learning does not warrant inapplicability. See [MEM-OBJ-handoff](memory.md#mem-obj-handoff), [RT-RTE-weekly-review](runtime.md#rt-rte-weekly-review) and [MEM-BAP-state-continuity](memory.md#mem-bap-state-continuity). |
+
+I checked the apparent tension between a draft-only AI and later recording: the reviewer controls content admission while the authorized organizational writer is unspecified. The manual finding does not imply that the AI writes, or that every Handoff or Facts update is manually approved. The [workflow annotation](workflow.md#annotations) preserves this separation. Likewise, [RT-ABS-agent-entry](runtime.md#rt-abs-agent-entry) establishes only the absence of a published operational agent entry; it cannot establish absence of trace learning or read-back in the prescribed operational system. [RT-RTE-public-surface](runtime.md#rt-rte-public-surface) is executable publication infrastructure, not a competing operational-memory route.
+
+The unresolved branches prevent complete-value comparisons, storage and selector comparisons, and claims of implemented or observed continuity. Those uncertainties are already expressed in the profile's assessments and notes. They are not additional defects requiring a publication limit. No unsupported emitted value, evidence upgrade, absence claim or complete inventory assertion was found.
+
+Source-read log: none. Verification used the handed records, their annotations and reconciliation only; no cited-record ambiguity required a source read.
+
+## Blockers
+
+none
+
+## Limits
+
+none

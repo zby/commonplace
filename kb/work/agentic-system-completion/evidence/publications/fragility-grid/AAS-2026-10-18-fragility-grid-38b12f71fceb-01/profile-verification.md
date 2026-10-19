@@ -1,0 +1,34 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of fragility-grid's ten memory-profile axes against accepted records at the frozen subsystem boundary."
+run-id: AAS-2026-10-18-fragility-grid-38b12f71fceb-01
+reviewed-boundary: "3f51444ead009d8351de1b6b19bf901c4da3d420"
+---
+
+# fragility-grid profile verification
+
+## Verification
+
+I checked all ten axes in the [memory profile](memory-profile.md#comparison-rationale), including each unit's scope, controlled findings, evidence basis and coverage assessment. The profile is supported within its declared retained-measurement boundary. No material defect requires correction.
+
+The profile separates accumulated outputs from static instructions, unchanged pretrained parameters and current-invocation arrays. It retains dependency-cache uncertainty rather than classifying opaque payloads from configured paths. Reconciliation makes the retained aggregate's canonical identity [MEM-OBJ-analysis](memory.md#mem-obj-analysis); the profile uses that identity, retains its epistemic qualifications and keeps [MEM-OBJ-fragility-figures](memory.md#mem-obj-fragility-figures) and [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend) distinct. No parent route is incorrectly discarded in favor of a narrower part.
+
+- **Storage substrate and representational form:** Files are supported for records, summaries, legend, aggregate and figures. Structured fields and plotted statistical encodings support symbolic form; embedded questions, interpretation strings and labels support natural-language form. These classifications do not assert that the CPU consumes the stored question text. Opaque cache parts remain unresolved, so neither axis claims complete coverage. Support: [RT-OBJ-records](runtime.md#rt-obj-records), [RT-OBJ-summary](runtime.md#rt-obj-summary), [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend), [MEM-OBJ-analysis](memory.md#mem-obj-analysis), [MEM-OBJ-fragility-figures](memory.md#mem-obj-fragility-figures).
+- **Lineage:** Imported benchmark material, trace-extracted collector outcomes, compiled legend/analysis outputs and authored interpretation wording are supported at their named derivation paths. The authored wording does not classify all numerical output as authored. Unknown initialization, replacement and cache provenance remain separate from known subsequent transformations. Support: [EPI-OBJ-benchmark-items](epistemic.md#epi-obj-benchmark-items), [RT-RTE-generation-grid](runtime.md#rt-rte-generation-grid), [RT-RTE-likelihood-grid](runtime.md#rt-rte-likelihood-grid), [MEM-OBJ-analysis](memory.md#mem-obj-analysis), [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend).
+- **Behavioral authority:** Consumed bits supply measurement evidence and affect relative ranks; the summary marker routes and enforces collection skips; legend permutation count selects the analysis grid. These are distinct parts and effects, not authority inferred from every stored field. Human reporting remains an affordance rather than observed reliance. The learning finding concerns the trace-fed artifact update, not scientific acceptance or parameter training. Support: [RT-RTE-record-analysis](runtime.md#rt-rte-record-analysis), [EPI-RTE-statistical-check](epistemic.md#epi-rte-statistical-check), [RT-BAP-summary-skip](runtime.md#rt-bap-summary-skip), [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend), [MEM-OBJ-analysis](memory.md#mem-obj-analysis).
+- **Write agency:** Automatic admission is supported for the inspected software writes without per-content approval. Operator launch does not make those admissions manual. Initial or replaced files and opaque cache admission remain unresolved, preserving partial coverage. Support: [RT-RTE-record-analysis](runtime.md#rt-rte-record-analysis), [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend), [MEM-OBJ-fragility-figures](memory.md#mem-obj-fragility-figures).
+- **Curation operations:** Reduction of outcome information supports consolidation. Synthesis is independently supported by the broader interpretive claims that do not follow from the statistical inputs; it is not inferred merely from generated prose or numerical aggregation. Overwrite and acquisition are not promoted to semantic evolution or invalidation. Support: [RT-OBJ-summary](runtime.md#rt-obj-summary), [RT-RTE-record-analysis](runtime.md#rt-rte-record-analysis), [MEM-OBJ-analysis](memory.md#mem-obj-analysis), [EPI-RTE-result-labeling](epistemic.md#epi-rte-result-labeling).
+- **Read-back direction and signal:** CPU loading is requested pull. Automatic scheduling supplies the retained marker to the skip decision. Its model-key match supports identifier selection, while existence supplies a separate coarse availability test. The selected part is the marker, not summary content. Requested file loading and downstream item alignment are not misclassified as identifier push. Cache alternatives prevent complete direction or signal coverage. Support: [RT-RTE-sweep-driver](runtime.md#rt-rte-sweep-driver), [RT-BAP-summary-skip](runtime.md#rt-bap-summary-skip), [RT-RTE-record-analysis](runtime.md#rt-rte-record-analysis), [MEM-OBJ-config-legend](memory.md#mem-obj-config-legend).
+- **Trace learning and source:** The wired model-return → correctness-bit → automatic summary → later collection-skip chain meets the profile's durable behavior-shaping write definition. Content-insensitive consumption of the marker does not erase that retained effect. Execution feedback supports tool-traces without requiring a registered agent-tool interface. Imported gold is not thereby another trace category. These findings establish neither improved capacity nor observed activation. Other qualifying-write alternatives remain unresolved; no unsupported local or system-wide negative is emitted. Support: [RT-RTE-generation-grid](runtime.md#rt-rte-generation-grid), [RT-RTE-likelihood-grid](runtime.md#rt-rte-likelihood-grid), [EPI-RTE-gold-comparison](epistemic.md#epi-rte-gold-comparison), [RT-OBJ-summary](runtime.md#rt-obj-summary), [RT-BAP-summary-skip](runtime.md#rt-bap-summary-skip).
+
+All axes retain supported findings alongside unresolved included alternatives and therefore use partial coverage. The broader unresolved units are conservative, not assertions of absence or complete inventories. Wired findings remain distinct from afforded reporting. Unauthenticated initialization, dependency opacity, unobserved operation and unestablished benefit already qualify the relevant values; they are faithfully scoped uncertainty, not additional verification findings.
+
+Source-read log: no additional source reads. This verification used only the supplied members, reconciliation and governing contracts; it adds no records or quotations.
+
+## Blockers
+
+none
+
+## Limits
+
+none

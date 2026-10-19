@@ -1,5 +1,7 @@
 # Rerun the previously analysed agentic systems
 
+**Closeout only:** the operator opened [agentic-system-completion](../agentic-system-completion/README.md) on 2026-10-19 for the 16 unresolved targets. Its [handoff](../agentic-system-completion/targets.md) owns subsequent target decisions and preserves Git/external evidence locators. This workshop retains durable extraction and closure work; opening the successor neither deletes evidence nor authorizes new runs, repairs or cleanup.
+
 **Current publication checkpoint: 191 canonical sets / 2,483 members.**
 [Batch-23 independent audit](./batch-23-audit-results.md) is complete: **six fresh parent-reviewed reports, five holds, one qualified positive and one verified native integration**. Supermemory's exact new 13-member publication transferred through merge `814bb5ac5e33b0655e53ec64f2d63b1193e130c5`; old holds and incidents remain evidence. Actual inventory: **190 complete, 13 pending and three older target holds**, leaving 16 unchecked targets. All 190 baseline sets/2,470 members, archives, root `.gitignore`, six frozen run/source/log maps and unrelated work are preserved. Full-corpus validation passed with zero warnings/failures and 208 retained unavailable-source notices. The two unpublished timeout cases were excluded from audit/recovery and remain preserved.
 

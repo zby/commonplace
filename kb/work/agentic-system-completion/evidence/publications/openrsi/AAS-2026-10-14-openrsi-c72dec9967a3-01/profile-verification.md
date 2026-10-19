@@ -1,0 +1,29 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of OpenRSI's memory profile against the handed records at the frozen release."
+run-id: AAS-2026-10-14-openrsi-c72dec9967a3-01
+reviewed-boundary: "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa"
+---
+
+# OpenRSI profile verification
+
+## Verification
+
+I assessed all ten axes in the [memory profile](memory-profile.md), including each positive finding, its evidence basis, local coverage and classification unit. I used only the handed members and contracts. No frozen-source files were read and no new evidence was added. The rich-summary object and derivation-route supersessions resolve to [MEM-OBJ-rich-summary](memory.md#mem-obj-rich-summary) and [MEM-RTE-summary-cache](memory.md#mem-rte-summary-cache); the targeted delivery route remains distinct.
+
+- **Storage and form:** Files, Python objects, SQLite and trained parameter state are supported by [MEM-OBJ-journal](memory.md#mem-obj-journal), [MEM-OBJ-experience-card](memory.md#mem-obj-experience-card), [MEM-OBJ-rl-program](memory.md#mem-obj-rl-program), [MEM-OBJ-sft-program](memory.md#mem-obj-sft-program), [MEM-OBJ-alignment-dataset](memory.md#mem-obj-alignment-dataset) and [RT-CMP-training-models](runtime.md#rt-cmp-training-models). The profile separates prose, executable/control fields and distributed parameters. It does not classify the opaque RL payload from its display summary or substitute the SFT trainer for upstream RL.
+- **Lineage and write agency:** Model authorship, trace-derived products and subsequent compilation/update paths remain separate from unknown initialization. The automatic findings concern software admission, not a presumed human decision from launch or configured paths. [MEM-RTE-summary-cache](memory.md#mem-rte-summary-cache), [MEM-OBJ-alignment-dataset](memory.md#mem-obj-alignment-dataset) and [RT-RTE-gym-build](runtime.md#rt-rte-gym-build), including their memory annotations, support those distinctions.
+- **Behavioral authority:** Advice at proposal consumers, ranking/routing at selectors, learning at durable-update consumers, and executable metric validation/enforcement have distinct grounds. [MEM-RTE-targeted-memory](memory.md#mem-rte-targeted-memory), [RT-RTE-sft-training](runtime.md#rt-rte-sft-training), [RT-OBJ-metric](runtime.md#rt-obj-metric), [EPI-RTE-package-validation](epistemic.md#epi-rte-package-validation) and [WF-RTE-final-delivery](workflow.md#wf-rte-final-delivery) support the emitted values without implying reliable compliance, valid final output or historical deployment.
+- **Curation:** Cards/overviews reduce experience; metadata merging revises an entry; SQL pruning and island eviction have different forgetting horizons. These support consolidate, evolve and decay within the stated units. The dedup finding is explicitly reward-key duplicate removal, as recorded by [RT-RTE-sft-training](runtime.md#rt-rte-sft-training), not a claim of semantic duplicate detection. Comparative-summary synthesis remains unresolved rather than inferred from requested explanatory prose. [MEM-OBJ-experience-card](memory.md#mem-obj-experience-card), [MEM-OBJ-rl-program](memory.md#mem-obj-rl-program) and [MEM-RTE-sft-search](memory.md#mem-rte-sft-search) preserve the relevant transformation boundaries.
+- **Read-back direction and signal:** Requested checkpoint/cache/dataset reads are distinct from automatic context selection. Identity matches select related nodes, error signatures select failure experience, and recency/count/tail rules select coarse context. The profile separately scopes RL's lexical Debug finding and does not transfer it to SFT. These distinctions follow [MEM-RTE-targeted-memory](memory.md#mem-rte-targeted-memory), the memory annotation on [RT-RTE-rl-training](runtime.md#rt-rte-rl-training), [MEM-RTE-sft-search](memory.md#mem-rte-sft-search) and [RT-RTE-gym-build](runtime.md#rt-rte-gym-build).
+- **Trace learning and source:** Automatic retained cards/summaries, selected training examples and tool-derived Gym context have later consumers. They qualify without measured improvement or truth acceptance. Tool feedback, parent-linked experience and reconstructed conversational work records support the locally emitted source types; imported static files alone do not. [MEM-RTE-summary-cache](memory.md#mem-rte-summary-cache), [MEM-OBJ-alignment-dataset](memory.md#mem-obj-alignment-dataset) and the memory annotation on [RT-RTE-gym-build](runtime.md#rt-rte-gym-build) supply those chains.
+
+Every axis remains partial. Known witnesses do not resolve the explicitly retained alternative implementations, opaque inputs, initial provenance or external training machinery. Grouped units are sometimes coarse, but their notes preserve the consequential local differences. No unsupported absence, observed-operation upgrade or complete system inventory is asserted. The local inventory omission below does not change the supported positive unions.
+
+## Blockers
+
+none
+
+## Limits
+
+- The profile includes persisted Gym evaluation reports in its scope and retains uncertain later report consumption, but does not give those reports their own storage, form, lineage or admission units. [EPI-OBJ-task-evaluation](epistemic.md#epi-obj-task-evaluation) and [EPI-RTE-quality-disposition](epistemic.md#epi-rte-quality-disposition) establish retained JSON/CSV containing symbolic findings and model-interpreted reasons, with software report normalization and writing. The affected profile axes already say partial, and their emitted positive values remain supported by other units. Consumers should withhold an object-by-object comparison of Gym report retention and admission; the omission supplies neither an additional later read-back route nor evidence of report endorsement.

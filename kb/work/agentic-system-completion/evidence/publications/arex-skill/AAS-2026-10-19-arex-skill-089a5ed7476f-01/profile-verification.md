@@ -1,0 +1,35 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of AREX-Skill's ten memory comparison axes against the accepted partial-loop records."
+run-id: AAS-2026-10-19-arex-skill-089a5ed7476f-01
+reviewed-boundary: ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6
+---
+
+# AREX-Skill profile verification
+
+## Verification
+
+I checked all ten axes, their unit scopes, findings, evidence bases and coverage assessments in the [memory profile](memory-profile.md#comparison-rationale). The profile supports local comparison findings, not a complete inventory. Its unresolved branches remain included, and all ten axis assessments are partial. No observed operation, causal benefit or system-wide negative is asserted.
+
+- **Storage substrate:** Files and in-memory storage are supported by [MEM-OBJ-session-messages](memory.md#mem-obj-session-messages), [MEM-RTE-session-retention](memory.md#mem-rte-session-retention), [MEM-OBJ-workflow-journal](memory.md#mem-obj-workflow-journal) and the named guidance/report objects. Conditional disk flushing is preserved. Grouping opaque extension content with its known storage envelope does not classify the payload's form or provenance. Git acquisition is correctly not treated as a repository memory substrate.
+- **Representational form:** The profile separates interpreted prose from executable scripts, selection fields, cache structure and evaluator metrics. [MEM-OBJ-repo-skills](memory.md#mem-obj-repo-skills), [MEM-OBJ-session-metadata](memory.md#mem-obj-session-metadata) and [EPI-OBJ-qa-records](epistemic.md#epi-obj-qa-records) support those distinctions. Scalar scores are not distributed-parametric representations. Media, arbitrary extension data and full worker values remain unresolved rather than inheriting the form of their display summaries.
+- **Lineage:** Import, default trace extraction and fixed-program derivation are supported at their respective paths by [RT-RTE-repo-import](runtime.md#rt-rte-repo-import), [EPI-RTE-summary-generation](epistemic.md#epi-rte-summary-generation), [MEM-OBJ-agent-history](memory.md#mem-obj-agent-history) and [EPI-RTE-qa-scoring](epistemic.md#epi-rte-qa-scoring). Requested authorship and feedback-based revision remain claimed. Initial provenance and extension substitutes are not resolved by these positives.
+- **Behavioral authority:** The profile distinguishes directions at later model consumers from history used as context, and separates the summarizer's update input from its output's later use. [RT-BAP-skill-guidance](runtime.md#rt-bap-skill-guidance), [MEM-OBJ-project-context](memory.md#mem-obj-project-context), [MEM-RTE-session-retention](memory.md#mem-rte-session-retention) and [EPI-RTE-summary-generation](epistemic.md#epi-rte-summary-generation) support those paths. Session metadata and journal replay support routing; retained admission fields support validation and bounded vetoes. Router ranking and report-driven revision retain their policy basis, not inferred execution or universal semantic endorsement.
+- **Write agency:** Automatic append, summary admission, report production and transaction admission are distinguished from the verification policy's explicit human decisions. [MEM-RTE-session-retention](memory.md#mem-rte-session-retention), [RT-RTE-library-update](runtime.md#rt-rte-library-update) and [WF-RTE-repo-verification](workflow.md#wf-rte-repo-verification) support these separate mechanisms and evidence layers. Workflow initiation and overwrite flags are not mistaken for authenticated content approval. Unknown initial and replacement control remains local.
+- **Curation operations:** Default compression and previous-summary updating support consolidation and evolution; diagnostic budgets support reduction and preferential forgetting. [MEM-OBJ-compaction-summary](memory.md#mem-obj-compaction-summary), [MEM-OBJ-agent-history](memory.md#mem-obj-agent-history) and [MEM-RTE-workflow-resume](memory.md#mem-rte-workflow-resume) support the named transformations, including replacement and withdrawal of cache reuse. Requested guidance repair remains claimed. Neither possible summary error nor index rebuilding is used to infer synthesis or deduplication.
+- **Read-back direction and signal:** [RT-RTE-skill-delivery](runtime.md#rt-rte-skill-delivery) supports catalog supply separately from requested body reads. [MEM-RTE-session-retention](memory.md#mem-rte-session-retention) and [MEM-OBJ-session-metadata](memory.md#mem-obj-session-metadata) support actual ID-based selection plus coarse projection controls. [MEM-RTE-workflow-context](memory.md#mem-rte-workflow-context) supports unsolicited completion-report delivery, whereas [MEM-RTE-workflow-resume](memory.md#mem-rte-workflow-resume) supports requested cached returns. The profile does not count fulfillment as a second push or turn model-directed router reads into inferred-judgment push. Signal inapplicability is confined to named pull operations, not extended over unresolved alternatives.
+- **Trace learning and source:** Default compaction and branch summaries satisfy automatic trace-fed production, retention and later model consumption through [EPI-RTE-summary-generation](epistemic.md#epi-rte-summary-generation), [RT-RTE-context-compaction](runtime.md#rt-rte-context-compaction) and [MEM-RTE-branch-navigation](memory.md#mem-rte-branch-navigation). This supports wired yes without requiring new knowledge or demonstrated improvement. Recorded conversation and tool material support session-log and tool-trace sources. Feedback-directed guidance revision remains a claimed alternative. Diagnostic retention and journal replay are not automatically promoted into qualifying updates; opaque branches remain unresolved, and no unwarranted local or system-wide no is emitted.
+
+I applied the supplied supersession by assessing repository verification through [WF-RTE-repo-verification](workflow.md#wf-rte-repo-verification). [EPI-RTE-refine-guidance](epistemic.md#epi-rte-refine-guidance) retains its additional paper-refinement scope. Overlapping graph and summary objects do not license extending narrow text findings to arbitrary payloads. The records' different inspection scopes and indeterminate semantic fidelity do not contradict implemented summary compression or delivery. Missing execution evidence restricts exercised behavior and benefit, not these supported implementation findings.
+
+Some units aggregate named mechanisms, but their findings and notes retain the consequential part, consumer and evidence-layer distinctions. The grouping does not support a complete-value comparison. Remaining extension, script-admission, export and specialized evaluator coverage is explicitly unresolved; that faithfully scoped uncertainty is not an additional verification limit. I found no material unsupported comparison value or coverage claim requiring repair.
+
+Source-read log: none. This verification used only the handed members and their accepted records; no frozen-source ambiguity required a source read.
+
+## Blockers
+
+none
+
+## Limits
+
+none

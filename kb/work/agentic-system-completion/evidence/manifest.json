@@ -1,0 +1,685 @@
+{
+  "capture_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+  "original_records": {
+    "audits/bash-current-contextpilot.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/bash-current-contextpilot.md",
+      "sha256": "6263c4a06cf940c6c19e79046f44891c55cfd9c96ad0a46ae2ff1cd77d396f51"
+    },
+    "audits/batch-23-arex-skill.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch-23-arex-skill.md",
+      "sha256": "7c68d60ff8a25f550f43cfa4a53aef25cdb7c9f121b392f21a7c16775091adf0"
+    },
+    "audits/batch-23-autogenesis.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch-23-autogenesis.md",
+      "sha256": "bedba1e150a07979cdc3865d6fdba0d83ca60a69f475720498d760ab24c9a739"
+    },
+    "audits/batch-23-contextpilot.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch-23-contextpilot.md",
+      "sha256": "c6f880825db53d91715d96036f49ae3aa47c3b76198faae5f59fcf983ec8ae24"
+    },
+    "audits/batch-23-jaz.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch-23-jaz.md",
+      "sha256": "480829108ea0a78fc2b447253783df4f89e81281e6099589fedc8a6d19f1effa"
+    },
+    "audits/batch-23-openrsi.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch-23-openrsi.md",
+      "sha256": "e278acaadefd7b4c5db351b4e9a838f5f7a88c5f62cb4152a6d655337d44f644"
+    },
+    "audits/batch21-22-batch-22-ace.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-ace.md",
+      "sha256": "b57aa4ae8a1c5c4908ccd96e04f33814b213126d036e519447212a1aefbc05e4"
+    },
+    "audits/batch21-22-batch-22-fragility-grid.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-fragility-grid.md",
+      "sha256": "7da6bdfe3e664ec223edb0707f61a0dce1d57a3d3cc06a4f21f083d76abdc6f7"
+    },
+    "audits/batch21-22-batch-22-operational-ontology-framework-retry-1.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-operational-ontology-framework-retry-1.md",
+      "sha256": "3f8bc1a4e2c98a9fa19471d4712c1d8b1d73a297d990caa822bb428c0346ddb5"
+    },
+    "audits/batch21-22-batch-22-sift-kg.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-sift-kg.md",
+      "sha256": "41d911f9af133ea947c8e8480f92f8082adc560e87755e09bc42af1eaac5222d"
+    },
+    "audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+      "sha256": "889c0856ab79a35dda8af410a78bea1e346190ba8c9168417a884a9e4efdc329"
+    },
+    "audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "sha256": "cd8a8e7b7fa5ac22b93a0af3a44e29a3e51a29fb35a704750562325e224a6d58"
+    },
+    "audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "sha256": "edeba7c2e0d06a98665a9705ea2b0a4174e421a64117d8b0960a827cf8fee813"
+    },
+    "audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "sha256": "705808cfa0bb7d66d0e60dab4834f12bc756b196dcbfdf4fff9baceddfb4e8cb"
+    },
+    "audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md",
+      "sha256": "2824e1c35e4466814be80d17b8cbd0632f9eef57ee64d86aeb60011e3b5799ba"
+    },
+    "audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01.md",
+      "sha256": "e94a340c214338b05984e5d56b7fc81d34e8b7fac5e10bfa2a867601c868fbb7"
+    },
+    "audits/next-publications/AAS-2026-10-15-jaz-a94bea79c61a-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/next-publications/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "sha256": "f0db0e0b2d46ae0e1f0a0a067f05eff26ec641f1df30623b8c6090a142e07e80"
+    },
+    "audits/next-publications/AAS-2026-10-15-jaz-evals-17ab95f93794-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/next-publications/AAS-2026-10-15-jaz-evals-17ab95f93794-01.md",
+      "sha256": "2a4282161111c3d1fa7cbcdc49c90cf5e1af2fffbe7fe491f24a59ddd217c97f"
+    },
+    "audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md",
+      "sha256": "2069490d59ae2f40deedd7554cea7da57f2948d832ebdcbb4811a89ee7b49ed3"
+    },
+    "audits/post-migration/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "sha256": "d4f12ac451bbbc9fe74d81ed4f0d03ad19b6f52c9f4d754c858e470c97b53187"
+    },
+    "audits/unintegrated/AAS-2026-10-14-openrsi-c72dec9967a3-01.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "sha256": "77a748f1457a11bc2b2479d76d520983610f5dd7e5c6b97cb840dfc4745fd976"
+    },
+    "batch-03.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch-03.md",
+      "sha256": "21dc346d62d009f82ccca94c7f08fa51279090f054efae60023d272406b6edbf"
+    },
+    "batch-21-ownership-decisions.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch-21-ownership-decisions.md",
+      "sha256": "a907374ac4d154b91740e61a9ce2ab1ce36df6c395d075f872561020f3ae7316"
+    },
+    "batch-23-audit-decisions.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch-23-audit-decisions.json",
+      "sha256": "56afc17a8a47ee7a0dcf6983a9fa309bfaba458979b32bbcad54634dbcc8f670"
+    },
+    "batch-23-audit-intake.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch-23-audit-intake.json",
+      "sha256": "cfac43a1266907c54b5fb63214d6ac0d9a084cf9712068cbedf142399610e1fa"
+    },
+    "batch-23-tally.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch-23-tally.md",
+      "sha256": "901a1f081171d895cea67163f092798f025ea5af00bc64963d1c5aaa40475f36"
+    },
+    "batch21-22-decisions.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-decisions.json",
+      "sha256": "1e7ce2830cc6155989b5773a06c4ded8fbde1ae4e3cefcb8b34682254d95385b"
+    },
+    "batch21-22-intake.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-intake.json",
+      "sha256": "b97981c80c97be4540bfba212a8616aab4ae27bf838d17ae493afd304e1e8c7f"
+    },
+    "batch21-22-ontology-scope-stop.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-ontology-scope-stop.md",
+      "sha256": "22c6ce34396d456bc4adbc61b8470742b1971d0a349367084147e0edddb39182"
+    },
+    "batch21-22-outcomes.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-outcomes.md",
+      "sha256": "31331bdd2cf4d9996ad76052706110464fb63368aad396ba3d8040731cf0b913"
+    },
+    "batch21-22-parent-review.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-parent-review.json",
+      "sha256": "43b35a5f77989d5ad04f80ccbd9232d30bd2556939462e787627ac13f39677ce"
+    },
+    "batch21-22-remainder-intake.json": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/batch21-22-remainder-intake.json",
+      "sha256": "06cbe460b3d4a25df43fb6a45318ff027b33522c5a7cc1e64c107d19bf2251f7"
+    },
+    "failed-batch-reruns.md": {
+      "git_revision": "defc4efaeeae631cff2a6f3f2370603df504b3ff",
+      "path": "kb/work/agentic-system-reruns/failed-batch-reruns.md",
+      "sha256": "9b77b93cbb262f32f77a52cfeadfb6aad30af1b12ff5295b72f646fe93c9a13b"
+    }
+  },
+  "captured_records": [
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/bash-current-contextpilot.md",
+      "path": "captured/audits/bash-current-contextpilot.md",
+      "sha256": "6263c4a06cf940c6c19e79046f44891c55cfd9c96ad0a46ae2ff1cd77d396f51"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch-23-arex-skill.md",
+      "path": "captured/audits/batch-23-arex-skill.md",
+      "sha256": "7c68d60ff8a25f550f43cfa4a53aef25cdb7c9f121b392f21a7c16775091adf0"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch-23-autogenesis.md",
+      "path": "captured/audits/batch-23-autogenesis.md",
+      "sha256": "bedba1e150a07979cdc3865d6fdba0d83ca60a69f475720498d760ab24c9a739"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch-23-contextpilot.md",
+      "path": "captured/audits/batch-23-contextpilot.md",
+      "sha256": "c6f880825db53d91715d96036f49ae3aa47c3b76198faae5f59fcf983ec8ae24"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch-23-jaz.md",
+      "path": "captured/audits/batch-23-jaz.md",
+      "sha256": "480829108ea0a78fc2b447253783df4f89e81281e6099589fedc8a6d19f1effa"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch-23-openrsi.md",
+      "path": "captured/audits/batch-23-openrsi.md",
+      "sha256": "e278acaadefd7b4c5db351b4e9a838f5f7a88c5f62cb4152a6d655337d44f644"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-ace.md",
+      "path": "captured/audits/batch21-22-batch-22-ace.md",
+      "sha256": "b57aa4ae8a1c5c4908ccd96e04f33814b213126d036e519447212a1aefbc05e4"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-fragility-grid.md",
+      "path": "captured/audits/batch21-22-batch-22-fragility-grid.md",
+      "sha256": "7da6bdfe3e664ec223edb0707f61a0dce1d57a3d3cc06a4f21f083d76abdc6f7"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-operational-ontology-framework-retry-1.md",
+      "path": "captured/audits/batch21-22-batch-22-operational-ontology-framework-retry-1.md",
+      "sha256": "3f8bc1a4e2c98a9fa19471d4712c1d8b1d73a297d990caa822bb428c0346ddb5"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-sift-kg.md",
+      "path": "captured/audits/batch21-22-batch-22-sift-kg.md",
+      "sha256": "41d911f9af133ea947c8e8480f92f8082adc560e87755e09bc42af1eaac5222d"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+      "path": "captured/audits/batches-19-20/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01.md",
+      "sha256": "889c0856ab79a35dda8af410a78bea1e346190ba8c9168417a884a9e4efdc329"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "path": "captured/audits/batches-19-20/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "sha256": "cd8a8e7b7fa5ac22b93a0af3a44e29a3e51a29fb35a704750562325e224a6d58"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "path": "captured/audits/batches-19-20/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "sha256": "edeba7c2e0d06a98665a9705ea2b0a4174e421a64117d8b0960a827cf8fee813"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "path": "captured/audits/batches-19-20/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "sha256": "705808cfa0bb7d66d0e60dab4834f12bc756b196dcbfdf4fff9baceddfb4e8cb"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md",
+      "path": "captured/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01-followup.md",
+      "sha256": "2824e1c35e4466814be80d17b8cbd0632f9eef57ee64d86aeb60011e3b5799ba"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01.md",
+      "path": "captured/audits/current-publications/AAS-2026-10-15-sift-kg-dca68bc45a2c-01.md",
+      "sha256": "e94a340c214338b05984e5d56b7fc81d34e8b7fac5e10bfa2a867601c868fbb7"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/next-publications/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "path": "captured/audits/next-publications/AAS-2026-10-15-jaz-a94bea79c61a-01.md",
+      "sha256": "f0db0e0b2d46ae0e1f0a0a067f05eff26ec641f1df30623b8c6090a142e07e80"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/next-publications/AAS-2026-10-15-jaz-evals-17ab95f93794-01.md",
+      "path": "captured/audits/next-publications/AAS-2026-10-15-jaz-evals-17ab95f93794-01.md",
+      "sha256": "2a4282161111c3d1fa7cbcdc49c90cf5e1af2fffbe7fe491f24a59ddd217c97f"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md",
+      "path": "captured/audits/post-migration/AAS-2026-10-15-arex-skill-1871063034b5-01.md",
+      "sha256": "2069490d59ae2f40deedd7554cea7da57f2948d832ebdcbb4811a89ee7b49ed3"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/post-migration/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "path": "captured/audits/post-migration/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01.md",
+      "sha256": "d4f12ac451bbbc9fe74d81ed4f0d03ad19b6f52c9f4d754c858e470c97b53187"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/audits/unintegrated/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "path": "captured/audits/unintegrated/AAS-2026-10-14-openrsi-c72dec9967a3-01.md",
+      "sha256": "77a748f1457a11bc2b2479d76d520983610f5dd7e5c6b97cb840dfc4745fd976"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/batch-03.md",
+      "path": "captured/batch-03.md",
+      "sha256": "21dc346d62d009f82ccca94c7f08fa51279090f054efae60023d272406b6edbf"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/batch-21-ownership-decisions.md",
+      "path": "captured/batch-21-ownership-decisions.md",
+      "sha256": "a907374ac4d154b91740e61a9ce2ab1ce36df6c395d075f872561020f3ae7316"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/batch-23-tally.md",
+      "path": "captured/batch-23-tally.md",
+      "sha256": "901a1f081171d895cea67163f092798f025ea5af00bc64963d1c5aaa40475f36"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/batch21-22-ontology-scope-stop.md",
+      "path": "captured/batch21-22-ontology-scope-stop.md",
+      "sha256": "22c6ce34396d456bc4adbc61b8470742b1971d0a349367084147e0edddb39182"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/batch21-22-outcomes.md",
+      "path": "captured/batch21-22-outcomes.md",
+      "sha256": "31331bdd2cf4d9996ad76052706110464fb63368aad396ba3d8040731cf0b913"
+    },
+    {
+      "original_path": "kb/work/agentic-system-reruns/failed-batch-reruns.md",
+      "path": "captured/failed-batch-reruns.md",
+      "sha256": "9b77b93cbb262f32f77a52cfeadfb6aad30af1b12ff5295b72f646fe93c9a13b"
+    }
+  ],
+  "bindings_sha256": "80882c1182e212d4b47d60bb2d99dbc7e62a2e95b55b6cc2218611c3ac7bbff5",
+  "publications": [
+    {
+      "target": "contextpilot",
+      "run_id": "AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
+      "original_path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/retained/contextpilot",
+      "member_sha256": {
+        "ARTIFACT.yaml": "3b86d0b5719d33afa6075847c3c1259dfd24706fa7f453a2b96faa66f2683c2c",
+        "boundary.md": "5389cfb9f9f275c25cec0cb3ef8f100f0d91f6f3ed0ccad12ad0cae4c4742b56",
+        "epistemic.md": "530169dc3175a88a8073c635f7f2779e1e7aa20f01687139d8370f52892d7e81",
+        "memory-profile.md": "2103f962924011c6c59f9218c581a8f124c26e3e98f72e16408f5828bbe1885c",
+        "memory.md": "2d1060ccd05238293782dcbec440f726984569cc7d49f80b95e827fd374184a5",
+        "overview.md": "1b421d3993f105bca813fddce2e4a11bcf24583324b636d1dc765a6ea8f3940e",
+        "profile-verification.md": "9cc439fb118ec6156e39df3dbcef9f092e8fad2963b5427dd7dfde2b6fc0aa21",
+        "reconciliation.md": "a4d167d0300d30dbdfbaa2af6e50aa8df8a4b50a520c11396aa649464bc4cc54",
+        "report-verification.md": "7ec80fc51c0853210bc51db3c8e4a7c903ecb284ff2883370296ee231a3ba812",
+        "runtime.md": "e06b83c06cdcb557c24587f5ce233f3e38ba092753f1573709d7ef706ac28d4d",
+        "synthesis-verification.md": "7b71afe1652381b764ef6460cc452589eeb168c745177f17a191faaa1a1ba415",
+        "synthesis.md": "ed357771611a4b7f969d06b7e6b8e5cb036ee74990dbb46784e272a83647fde8",
+        "workflow.md": "657cf1b2afc4ee18b0ee0e65b95943a8564b423b499d3cbdfbfe5af2845c147c"
+      },
+      "capture_path": "publications/contextpilot/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01",
+      "status": "captured"
+    },
+    {
+      "target": "openrsi",
+      "run_id": "AAS-2026-10-14-openrsi-c72dec9967a3-01",
+      "original_path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/retained/openrsi",
+      "member_sha256": {
+        "ARTIFACT.yaml": "ab135f557e253f3099524ef50d016f29f21148d362bc07a6e3735b7eca779a12",
+        "boundary.md": "22ce6acceedda244d53f729bfbab28f9a46409c4d8766995b1b9d084f968692b",
+        "epistemic.md": "5bdac3a88ab0ae55e46aacc291c83c9e1fbf4ffb6c87ca95128e8b14727b54b8",
+        "memory-profile.md": "8f9be53d21c21174ce5483cff53747c54cb6f31d96e99cd096be6cf932ae2802",
+        "memory.md": "8a99c0b4bd5d59591bc2c2270636507fdd165628aea00252b7c6881d2f3f7c3b",
+        "overview.md": "de9e689e72bfc1f519e1e918870c25057ffb4b255673baeb026885e86ed1232a",
+        "profile-verification.md": "e3e51dc1d3290ff4dfa79bee42a368636c0410749be5e7d3b409855cd37d0f39",
+        "reconciliation.md": "9bd8e9b05956b9d08956396a1b9cb93a19438c065d7eb3adf95f5a2c2a25fbde",
+        "report-verification.md": "ffc7646bae5699cd0f78e365a9db580aea9cad54f0c3f3feb833252da906fbba",
+        "runtime.md": "84429572a6586216f3778079ea7323a03a12a764edd5ee6ff93d4e7130442bbb",
+        "synthesis-verification.md": "6b006873e2b1a2ee694d5476ae0e80df3a3de016c5f31e214ea63fc11a6bfc7f",
+        "synthesis.md": "5ddbd25202d2a73977a4a01664e18c68ea70d89e6b09d8b3dec298a1b4fa95e2",
+        "workflow.md": "1141902aa759f587348dc4b84bbdf2b311c37071b7249009319e35384f4d2b32"
+      },
+      "capture_path": "publications/openrsi/AAS-2026-10-14-openrsi-c72dec9967a3-01",
+      "status": "captured"
+    },
+    {
+      "target": "arex-skill",
+      "run_id": "AAS-2026-10-15-arex-skill-1871063034b5-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/retained/arex-skill",
+      "member_sha256": {
+        "ARTIFACT.yaml": "650596ab4865595da7ddecc9714286582c0672df96146dc1d8ebc541fbcc6252",
+        "boundary.md": "a45ea291ad7cea15b7d654ab9c96f2ef927da5889b23382bbb1b7483089246d7",
+        "epistemic.md": "a03ee65899e55ff535dbfaaeb74f019c6c644e1fc3d870d91504849f141af29e",
+        "memory-profile.md": "d2b12819495ca6ae6d279ea67b2ae53bfd14a20a059ea6a137f7a1fd20a1eb86",
+        "memory.md": "e3a07a03c24d61eee86e03cd04ce564a4f045739a7c33a3529ca21fd597ca4e5",
+        "overview.md": "c5e7e2207e75a1548381a25f50f711bb1a1970f397572f5c10944e7ef05e6391",
+        "profile-verification.md": "9364230df58a754926b3b0db5542cff688ea2ec44d91839eafa128481d04c3fe",
+        "reconciliation.md": "d720e1777b7b76e04955c5f03d057ea54131d8388b1d5fcc953487e4b58c2346",
+        "report-verification.md": "723c9f818d94009e031cd973ad667524185c7996aba1088312a4816a8d97bb5e",
+        "runtime.md": "2e470dc6d6606bb8fd43d9ee3a35e66320b06d9a5c0a3977c45caf7e3dd0aa38",
+        "synthesis-verification.md": "55cb98459ba788519ca65f8604c0b7e7e0fb3245c771d58c3e67f249e0d7c0b3",
+        "synthesis.md": "a6f7c590677b7024740c4c877209ed12b6cc09f8077d518918119462510b2080",
+        "workflow.md": "1e8253d6898826f491f46053b1f427252b7ffcf688cd43b9a46d0982e1bff41b"
+      },
+      "capture_path": "publications/arex-skill/AAS-2026-10-15-arex-skill-1871063034b5-01",
+      "status": "captured"
+    },
+    {
+      "target": "autogenesis",
+      "run_id": "AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/retained/autogenesis",
+      "member_sha256": {
+        "ARTIFACT.yaml": "b8fb9ebb1ef45445bafb840c39657904d9927d174f94cc73278d30078792d231",
+        "boundary.md": "6b1331e74bd7ce3ebb91ab52a6fc2dd3b994a4d6197293b552a0c56f81442582",
+        "epistemic.md": "3ca42922ff220c6e5dc5119fcf9fd7c5a1df196471c14190cf640403d14237c4",
+        "memory-profile.md": "cd7f98e99f23f0f0a3ea76d880650956775ae57c4a2798780c9f3e322c2e7b05",
+        "memory.md": "bebda81713cbc4f0247b536b5b8c50437000d891ec114882a9508e926655fd00",
+        "overview.md": "9a6eb825f9846c629c51951e583f1affab1e0fbded209cb7cc41324833a8afd4",
+        "profile-verification.md": "a2a59463206284781d381cc0e8a6f59a57f7e417800ee0bfe7d0cf17db4fbfeb",
+        "reconciliation.md": "95aecd6295f86cdcb3a9f3d4c1e902eb4425216da8d2a087e54a9198cdb1c4c2",
+        "report-verification.md": "7cf8004c3c09656c90d297ccab5c1a10d7596b53de81ac3ad59c78b26326b140",
+        "runtime.md": "d8f8caa87d5f936594971f9390800505ce3cab0e33d8652ca2497fbb68306c38",
+        "synthesis-verification.md": "2538214383ac072f398f542f1c53b80389bfb960816636b98cdf4587bb475ca5",
+        "synthesis.md": "62bcf2d798d584025210f570680bc3a13fd121123beacde037a893bdc2721bc1",
+        "workflow.md": "1bec89c0cc787ad4256b906b2fb5b418ab6706fc1513c8e5cbb457b97e627d5c"
+      },
+      "capture_path": "publications/autogenesis/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01",
+      "status": "captured"
+    },
+    {
+      "target": "jaz",
+      "run_id": "AAS-2026-10-15-jaz-a94bea79c61a-01",
+      "original_path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/retained/jaz",
+      "member_sha256": {
+        "ARTIFACT.yaml": "3e9904c981ab688f10ca117343cfc8f2892f2219f748274bcb81f304fe8709bd",
+        "boundary.md": "34a3897d1d136ab9a18f0cd5a6bb0038b4ae32365aa01dfd99b41f7dbfe28116",
+        "epistemic.md": "a38979faaabe15d1570e216c27e9368dce687b217ad0dd63eea2a5b619a205a4",
+        "memory-profile.md": "563bce40113061236d94a526bdcdddbb55ee6a69655c9ad077da71fa154622f5",
+        "memory.md": "163d7b1f6da35a7e80564baa5b08b5f746ce8217ebf45e87be7f7a0303d3fcae",
+        "overview.md": "8cd389b17b79f46d5eb56afb80bb9254eb064c417470bd3614b284a05a872149",
+        "profile-verification.md": "16962ed664b067c790753036c3b665dae93876e6f539621c425f0c4ecd6fa723",
+        "reconciliation.md": "1208b495da6f476d2089970ae2421d6082454aa7929d8ded6625b3641adec6eb",
+        "report-verification.md": "2fde47c65006be2fa9175b20b1e182402edd9af04307b92aea9212b11e510680",
+        "runtime.md": "254bfa441e97bbd49fce8c9b4bb0ee23a5ce0ab4f08a7ea65ff8ae59ea21ecbe",
+        "synthesis-verification.md": "4b3734a257e3115ed897b6ba99d43950b3c6525440b8262ae74ef24a47fe26bf",
+        "synthesis.md": "28ca04b3197c65a7e110686e263a6127ece921e7cde6cb33437de4561e4bd4ec",
+        "workflow.md": "3aedb5e1ff10c19bb3e150cc7ab8dea7fd4dc09f5a8f815dbf5389e649fe4fbb"
+      },
+      "capture_path": "publications/jaz/AAS-2026-10-15-jaz-a94bea79c61a-01",
+      "status": "captured"
+    },
+    {
+      "target": "sift-kg",
+      "run_id": "AAS-2026-10-15-sift-kg-dca68bc45a2c-01",
+      "original_path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/retained/sift-kg",
+      "member_sha256": {
+        "ARTIFACT.yaml": "871f5846c60ee404aea9f934374b66763ec4e8a94bcc8aae0d5ceb0e13e0a5de",
+        "boundary.md": "786d96c2e15ad0e6837f251d9358f89936c55ea6dbf8aa92681f58533a879e30",
+        "epistemic.md": "ef18eee9e5096c36c800c98374a2ed81abe105b5791e08c8283e56cbf56001db",
+        "memory-profile.md": "d5925500aa41840c8bed53e11e71ae6565802f2ee908ff0dc6f927c647290308",
+        "memory.md": "7fdc00cf49b26c8c215d1fc545992152dcf173b7566ba65ceddc834b9c58ee4d",
+        "overview.md": "60cce98a8b2a2cf514d3b5664858937a62f184014417896ffacd025907154a7b",
+        "profile-verification.md": "c6d39a4aa9eceb220c03bd8965bb46bb02832f181b33e9b8b703e6100367d7eb",
+        "reconciliation.md": "ca819d9e84a239c723a22bebaa548ae37aa73a4ace892535207f6e2c94d295a5",
+        "report-verification.md": "64028f5a170d36c0182649175316491a22a51b42a2339ae142be337c0cd2319e",
+        "runtime.md": "c142e8a4cd439540121ddc76e57b32e2985a10d44bbdb605304ac631225e1618",
+        "synthesis-verification.md": "3bed7bd1b6a1f9c044294b14e7919cfc7672fa6248926ade8e8885a663076cb4",
+        "synthesis.md": "8b161d3700094a364c700539103278541257c0923690a5231843f389d39833ef",
+        "workflow.md": "531a78047d8ceb8e9773bc6d6bf70a105adea2b9584f286d32a570a639dc6213"
+      },
+      "capture_path": "publications/sift-kg/AAS-2026-10-15-sift-kg-dca68bc45a2c-01",
+      "status": "captured"
+    },
+    {
+      "target": "clawvault",
+      "run_id": "AAS-2026-10-17-clawvault-38c16ae4ab34-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/retained/versatly--clawvault",
+      "member_sha256": {
+        "ARTIFACT.yaml": "09d68ba66cdfd30802e9d5aea0578cf70f0d8481034d3004fb3d42e91ab611b1",
+        "boundary.md": "8a47cb0b7c7ce0247eb2b9b57031f4f40069ebb601dd494ce38d975f74f6d361",
+        "epistemic.md": "878bf92ae3f1668e27fb47c760a44487bea71ba43ba2efa5d63263c15839856a",
+        "memory-profile.md": "390b935028478390ffbdee68171dea874274250c4c8ab1739172af2e4450140b",
+        "memory.md": "61edb0986cd0c5443a9492f787ce231da3be378a5fae2d40897b89a9d4923169",
+        "overview.md": "309b44824565b8b68f8aff931ebaafe696bbc377ace72765842b5ed1437e578d",
+        "profile-verification.md": "f0d0a5ab4ee73c190a5d0f49c41bce5266ce2095bfd9ae49bf18a9fc688de598",
+        "reconciliation.md": "d0aea4dc3f0447ff4862e93cc510a5b22c4810427604f36d934001d67d9f2bed",
+        "report-verification.md": "1ef74c291997b54c46a8997aa4b8d5e5fcdc403b79b144a907b9510e7029f40c",
+        "runtime.md": "27fff247d5dd391950710214304e4e790791ac225554a5b8a54bd688d320d63e",
+        "synthesis-verification.md": "3a69f3d3bc21a3ff29ec43ac4e2726c4ed4b030b6a43d5f76978596bdf62f61c",
+        "synthesis.md": "3b7875118284294f3438ff553ce8fabc6285c9fce12205d4167710ee19c541b6",
+        "workflow.md": "a92e24a6a26f01d04ee2bd85527195e0a0c5a9d9cb87c7a2cec4e102cac0cddf"
+      },
+      "capture_path": "publications/clawvault/AAS-2026-10-17-clawvault-38c16ae4ab34-01",
+      "status": "captured"
+    },
+    {
+      "target": "mehmetgoekce--llm-wiki",
+      "run_id": "AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/retained/mehmetgoekce--llm-wiki",
+      "member_sha256": {
+        "ARTIFACT.yaml": "67ba26cb6cf66ca3fc6fa01da80e14886b3021382dbf35071864738ea4488d34",
+        "boundary.md": "bee7a24b4dcf5db5a8c31e5b5a963e767f53487324805ca8400137c67c7ffc11",
+        "epistemic.md": "20481bb15be88ba8360de033ec6586bdcb20e5cdd8ec9089871d64ab06d8410e",
+        "memory-profile.md": "78be5c60d9101ed1ae7113d8ce5548d5d10e0ce4671d6400814b265621936c9c",
+        "memory.md": "83fbfafd7c8c08d8a59f398cc65aa79cbf23adbbebfb46690a472010c9119ac3",
+        "overview.md": "404ceeb706cb9b84b7cdaf876134b6368541634ead75737bd4fbf5daa1e5b232",
+        "profile-verification.md": "b13a92a735d000cdf3dba4666e243351894ea324f1b6892e4d3cdb9788031b03",
+        "reconciliation.md": "ed86bfc010479b06123270141c83fcd2555c0df2d70a79bfa4fcab076e42c078",
+        "report-verification.md": "b22226c507bca6cd01f9a7b2ac98e8b6f52bccbb2defd543a6123ae6665f9c82",
+        "runtime.md": "0ebfaabb72427cc29762aa2167fe856b083cd295c227ac3f288115d8d0f1897a",
+        "synthesis-verification.md": "0a0275ba8869236e20be14fd1a18650dff4e15a8647f4560dcdbe945e86872d5",
+        "synthesis.md": "6a10cb7b11e11dea089a6ed2d0f8eb7987ff649a001fb0e36f1b3c18cbda1b44",
+        "workflow.md": "a5658912fde5ce324b3d266017a7d36be444ea7680bbe6e09ad146b98f6b5b6e"
+      },
+      "capture_path": "publications/mehmetgoekce--llm-wiki/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01",
+      "status": "captured"
+    },
+    {
+      "target": "ace",
+      "run_id": "AAS-2026-10-18-ace-007571102a54-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/kb/agentic-system-analyses/retained/ace-agent--ace",
+      "member_sha256": {
+        "ARTIFACT.yaml": "7a52849f369c2940b505f68a958c02c5dff8c182b7bb4214c3413f26c5922130",
+        "boundary.md": "74780287f606d4bbffd3fb1c348479e8dab6eb31940d3b5fd90a37ce818aa903",
+        "epistemic.md": "9776ef80f34fce09d3e5cb1886cea80e856db3865b35420775e5758aacda5578",
+        "memory-profile.md": "81bc24606bdc9e4b84a6e49e616ac285cce6698cf32f60be1dc5d9cca839e2ff",
+        "memory.md": "1f2caf919567ce99737e6d83d9852bb26cebeeb067402a8c08f50b27ad6ac3b8",
+        "overview.md": "d8eb24cf2686124e4e4864663a77e15d1f2c18dc63b11bdba09e69fcc33879da",
+        "profile-verification.md": "d5035541a892c765384841920e68e5eca421fc0e4e4964a51151e613d0bc403c",
+        "reconciliation.md": "c1cc0609843e7b39414febae0ede9151a4471ab03c68ea373f5ccab76e811df4",
+        "report-verification.md": "d179fd466feddb15e4af4eb6d147db5ccbebb9a9abf85b17bdd97584a3b35a8f",
+        "runtime.md": "3075db085d3643d26d94114487c369c3c7154c548e2f3d24e7d20f01f73d6086",
+        "synthesis-verification.md": "dca9cd569d3b463328e35e091d419925b594a9a29a87baad3fcb853d1c7073ef",
+        "synthesis.md": "694f7af5e69d3d3dd457cef06e4c29b7803047668144155d3b0022a00ae804c1",
+        "workflow.md": "e7e7141e13e5194f1309c4591161617c8c575d3834cec1806d5502ad34e6294d"
+      },
+      "capture_path": "publications/ace/AAS-2026-10-18-ace-007571102a54-01",
+      "status": "captured"
+    },
+    {
+      "target": "fragility-grid",
+      "run_id": "AAS-2026-10-18-fragility-grid-38b12f71fceb-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/kb/agentic-system-analyses/retained/nikolatesla-007--fragility-grid",
+      "member_sha256": {
+        "ARTIFACT.yaml": "6b3827f44f65724c8927f5a1ec815fe61f2e5a2a8445d5afb1ac5f84b8424463",
+        "boundary.md": "31e2954c6dbb887bca93cc5bc8a2e9ade6051ae861f581229399802c84cc72d0",
+        "epistemic.md": "da7443223a5a86d97e76b85a0e5a4ef5e46fcaf3ce2f2cb6e6ec1cbd17d6f384",
+        "memory-profile.md": "9efaaf446d74b5215c5e4cc9bdd19f3bd1f9d375f7ab5badbe7d03e371f57806",
+        "memory.md": "74bf20a1225a72c4c2fa04648158547e96d91da97f9ee252f923d16395f54f2f",
+        "overview.md": "96ada56b24cf0be5c2d491c23f3f912a349ef70b9aaf91e0cd55e3fe2e2d8870",
+        "profile-verification.md": "d054a49eb0757d4644844ff7999a5c87df6476abb204e94ea178797306418774",
+        "reconciliation.md": "7c6ce45da96eb513e476d535826810869ee41fabe89932aa78f348619f719b76",
+        "report-verification.md": "1ff616ebf805a4c9f34eddba455cf78f8ed44aa401a1018543c1ed84d32f99fb",
+        "runtime.md": "785a5525e48cf90cdd2eb2a86b05e6da2c816c0029d74fc70efcf9468e9f8367",
+        "synthesis-verification.md": "1dc647fb07476f25ae97c0cd0ca74eb3b25d133559cd5849149fd76e3fe85e4a",
+        "synthesis.md": "af95b0c18f6d0efa61360a8c71445a0d9758a8d76e32f3ceddfaeacb9aa45216",
+        "workflow.md": "362b381fb7a632d2abce9e3038669e552474fd0bfd0b29b2b1bb767c7a9cd1b2"
+      },
+      "capture_path": "publications/fragility-grid/AAS-2026-10-18-fragility-grid-38b12f71fceb-01",
+      "status": "captured"
+    },
+    {
+      "target": "operational-ontology-framework",
+      "run_id": "AAS-2026-10-18-operational-ontology-framework-2b5d9616baa4-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/kb/agentic-system-analyses/retained/fstech-digital--operational-ontology-framework",
+      "member_sha256": {
+        "ARTIFACT.yaml": "cf62426e6dab8d00482e75bc403fbef6470a9384ac35a5d5a1a5bd692ad4ae8a",
+        "boundary.md": "4148ee783acf7eb19a71ff3b827d8c9954dcaee6d5592633baf5b03aa7b9f2f1",
+        "epistemic.md": "911accf5beab29a64ad67770c702846513cdc2efd87c9fe1d902b47fc6b4471b",
+        "memory-profile.md": "4b700973038ff897ca297b5111b25c14bca293952cd03fcff1d4c0a58e28c5df",
+        "memory.md": "22a3aa36d2be670735936613746b6e01ad369ef79ecc7cc64ad485eddc4ffae3",
+        "overview.md": "16a385fbf9b2987ce98b12c0b8c4b40fb1dc056ecd598056bda475c1d06f9900",
+        "profile-verification.md": "4a0826f4db3181f9847ec8d447c1f8b4d109ac173cf42dcf0ca87f2795d3ab00",
+        "reconciliation.md": "1f2f12494c88606f57bce5dabe9ec1da1ccbef4db7643d7e603d99be2ec7ebce",
+        "report-verification.md": "d3ce109ad58ecb7a9aec13e6a1d60a958bae0f7edd3629de50bc34b54973532f",
+        "runtime.md": "20da5ed9d1242cf48db5072b537332c1137c28ca440d75150d46c8d5314acee1",
+        "synthesis-verification.md": "108d529a0b06bfc04af21fc86417c0cf4cbd85ac5ce566d74d6ddd1e0bd5e6dd",
+        "synthesis.md": "19b3705ad87c0860866c8cf1ce318565e5ec7f5273cd552863b5aeee720db66e",
+        "workflow.md": "773861dbc6b3ffa5c0a2ed60754a9a106e9b34ac3b789347e3fc3a7e0ef9a4e6"
+      },
+      "capture_path": "publications/operational-ontology-framework/AAS-2026-10-18-operational-ontology-framework-2b5d9616baa4-01",
+      "status": "captured"
+    },
+    {
+      "target": "sift-kg",
+      "run_id": "AAS-2026-10-18-sift-kg-e56bce0de992-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/kb/agentic-system-analyses/retained/juanceresa--sift-kg",
+      "member_sha256": {
+        "ARTIFACT.yaml": "ef85fcea5c3c017ad0ccd994983b70e2db728a31546362320aeaac18ed6fd92c",
+        "boundary.md": "0b29f38eb31d5e7b6b7d9ebdca65560c434e06374c67c5a7158af58a22f7c2d2",
+        "epistemic.md": "3d2f5f429eb307efb1bf4a3131ac77d0fd214f9051fe80a070c8b99e1ec377f8",
+        "memory-profile.md": "f97f5411d4920281ff7b099ce79aaadbc80aa952479fb9955d71db376e0ec675",
+        "memory.md": "90384f97f0de7f43787600ade490fd105034c1994601d8b1bd815c2e2aa3106e",
+        "overview.md": "9949bbf14ed2d9678508c96fc85e9373778a862016ebb6d38807516dec0cf624",
+        "profile-verification.md": "33ef721debdf25c7149e955d921d63fe941133e0842c5635014619d223e9ee80",
+        "reconciliation.md": "675a75f0709b69aaa4504afca22b34b835ec657d576d860ca2ffe28b3f2f17de",
+        "report-verification.md": "f93b32c6b5c33f4d5a20ddd0858a72e6e0a3346713d8dac56bee6e91165a10b4",
+        "runtime.md": "bf14d545305ee17247e28a55ede10527b96f34234bb3dbe6f6f7d7a8cb9ee08a",
+        "synthesis-verification.md": "20d11ac49c83e3d3f78c9423fbdca5e385ce1d2c4f02f749cc27e6e0c93e1378",
+        "synthesis.md": "b97030a7253694c4f995e523e75bd81a1a77b5949dca1e2f320399f61eb7d026",
+        "workflow.md": "6d12b344a8410778692ea86b24afd08cca370d03e1d98e202391c8e7b0f137e1"
+      },
+      "capture_path": "publications/sift-kg/AAS-2026-10-18-sift-kg-e56bce0de992-01",
+      "status": "captured"
+    },
+    {
+      "target": "arex-skill",
+      "run_id": "AAS-2026-10-19-arex-skill-089a5ed7476f-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-23-arex-skill/kb/agentic-system-analyses/retained/vectorspacelab--arex-skill",
+      "member_sha256": {
+        "ARTIFACT.yaml": "6a4c17cf6d5434a8637221cff8431a164c091266199551bb2c6e32301ecdbfeb",
+        "boundary.md": "23c127b06a63d7a9d58f7ed0af83cbc048f5973037dee1f99d775e6a01f4049f",
+        "epistemic.md": "c71b78df4f34a958053f0ef7c9244389cb0e9c1558534b7559ce027135bfacb3",
+        "memory-profile.md": "5cead183723639c499de485826231369b69dde7eb51c0efed4541cf9deb7a751",
+        "memory.md": "21231ef7c005f015953f964a8741ec30c087c70074a62f30fc4376f1321d3f3a",
+        "overview.md": "da2b293e215128855f9cc9de1eb6fb1589884e7ac945518b58bbeb8631174c89",
+        "profile-verification.md": "3b9ebbc08b863e3969555e9ad75c607c289d4403d0879158aae2db05924490fc",
+        "reconciliation.md": "220b14de4fd9788ef95027a1a5083692496416cfe35f410a0e1105c832d5e5e8",
+        "report-verification.md": "b2c1f5884343d809bbb0cf9b00f69823663c3cd326518e1d1e729e79a623e303",
+        "runtime.md": "fd71c842858f710cd732e81e6d88ecbdf2e52af2594dfa7c552bdbac6dc18332",
+        "synthesis-verification.md": "4e3a345eb9540e925ade2037f0350372f2b6916cf22a6f7e0ca0e94715dab140",
+        "synthesis.md": "6c5c5cb186e03b062478fc4b49c482b6850ac66a9b2387a7ccb7f6ad3ad707bf",
+        "workflow.md": "aad74502bd9961229b974416333cfe5fd27bba97daf91d73ce9c8a58e6b863ed"
+      },
+      "capture_path": "publications/arex-skill/AAS-2026-10-19-arex-skill-089a5ed7476f-01",
+      "status": "captured"
+    },
+    {
+      "target": "autogenesis",
+      "run_id": "AAS-2026-10-19-autogenesis-05936a4e4c3b-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-23-autogenesis/kb/agentic-system-analyses/retained/dvampire--autogenesis",
+      "member_sha256": {
+        "ARTIFACT.yaml": "d43862b428f1c64cc844a6e7fda062a85be83362bfab4696364eaed91734fb46",
+        "boundary.md": "a822e41b96f7e5cc841a222ce63716bed81a7b79593f92887ed1492b8a11f2f1",
+        "epistemic.md": "d9ee0fb54d3c31cf5c2b86349bad26774b6e6806c37ab8505896a48bdfec7878",
+        "memory-profile.md": "df1cfa31915195f2ff7b5da4b4f8091474e8f5ecb6a66a42137909162303e80a",
+        "memory.md": "0fa72f4f860cb6c1224280a59f3c8b1155dd9ba1d08e69b57f70d0b6a04da7f8",
+        "overview.md": "229a04e30e8f1be8a989fca5c7a1b19674ab669e2b853f7ff9be9725135de161",
+        "profile-verification.md": "a3ccd9420bd9e9ebdf3b3704632a5d2a70b826d9764a9c7d7b38f33a2ffd961c",
+        "reconciliation.md": "88af9c207b9cdafe7bda44046475e9a01f5bf5f93f68c023a26b4c85fa86f4cb",
+        "report-verification.md": "2e1f64d7659e0dfa56ff5c7f7df55c05c1aedbb0fcdfa0fade3427ca47f7fc46",
+        "runtime.md": "af7d40d87a2b4646e6f472431edd39c5dd7144ba0db918e454949ef8d4725556",
+        "synthesis-verification.md": "819d05edf212d77b957c8ab71915767f1d0bfd24dc84901b4fe1027554172a48",
+        "synthesis.md": "c58cd6366390644797b5a68718966a6ec9838aae180ec4ec06ec0d404d9554df",
+        "workflow.md": "f851a1e8d7e86c9389995c5de45552df34eafe66680c369a1d82d79140ddfb91"
+      },
+      "capture_path": "publications/autogenesis/AAS-2026-10-19-autogenesis-05936a4e4c3b-01",
+      "status": "captured"
+    },
+    {
+      "target": "contextpilot",
+      "run_id": "AAS-2026-10-19-contextpilot-0826e2df5b2f-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-23-contextpilot/kb/agentic-system-analyses/retained/tencent--contextpilot",
+      "member_sha256": {
+        "ARTIFACT.yaml": "a3d9788df8357a625bcb105c2045219fb9a39c8a7232a7957a9082cbf2e50c8c",
+        "boundary.md": "ddc5cbe22ec6087b26d97bd4fdb316fb67c0f583968b9ac974e4ddecbf4a01ea",
+        "epistemic.md": "4cafebcd2e445d76780b13e1c43d67e1aafe04b1dbbe989041e5c210497a9b05",
+        "memory-profile.md": "373d23e8ee80d52b337df520b0f7f585c4350d1743326635cd8991e304c992f0",
+        "memory.md": "78694d781163e07ea5c218a07623ea393d67c0299ecee935733efa68b2b59ead",
+        "overview.md": "f2e3b56ef9cd326c5eba3f085b4f23cf4e36eaaae2a5e706b63aa28639f93f84",
+        "profile-verification.md": "aef1fb7056fb6441ae4106f22d3d02e1638874c95c1e24e29cc62ff6fbd5288b",
+        "reconciliation.md": "23ac6f10a0bdaf423368f8d1cd3ffba5baf2ee51fd2217fd5ed2931ec8896be6",
+        "report-verification.md": "08e14422f2bb27916cbcd151f76a432f56c1a4ea0ae1fe67bad6e1b46fdb9086",
+        "runtime.md": "eaef3cdd36b6afc2bf401963a65bea5aa146a6356a85c37994207b041b5fca69",
+        "synthesis-verification.md": "80f06f74248acf2c9f3778debe433d560bba0c6eb081d404d5b0919aa9d68ee4",
+        "synthesis.md": "78823bc3c69910b2fb3260ea2a5164c430b80dc3bfa8870bce0dc3e8476dfb8e",
+        "workflow.md": "63025b63a8e48d35b87f19456e5b74e1dadb4191bfe5e8dead8a231cf9d1b064"
+      },
+      "capture_path": "publications/contextpilot/AAS-2026-10-19-contextpilot-0826e2df5b2f-01",
+      "status": "captured"
+    },
+    {
+      "target": "jaz",
+      "run_id": "AAS-2026-10-19-jaz-9d991c410bb9-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-23-jaz/kb/agentic-system-analyses/retained/jaz-lang--jaz",
+      "member_sha256": {
+        "ARTIFACT.yaml": "ece1588b53948dd1b8297ebee6092e13fe611b27a3e88ad2e4aaeaefa3d0aa68",
+        "boundary.md": "eec8d904b302dfc9af594f5aca5a1a0aa07e277f653ba4d5ebe986a0850f48cd",
+        "epistemic.md": "fdc2efe683f6637b39059030943cbfc69fc86c56e283363f987b49529d8f400e",
+        "memory-profile.md": "621447ec54e75aa3d6e71a6e1d1d5ab035f9f713e8e60a7ea941673ab606bb87",
+        "memory.md": "d76d01d335a4b25edb59e01e4958ec7350354d581362f7efedaf0a5c38daf0eb",
+        "overview.md": "fb3be77189bce394331b4e66c98cd4a030626ee782d91b13f69d7aed94bb256f",
+        "profile-verification.md": "dc245b163d6172a1108f9a44f58cad22e5ad36e09d02dba3a9b591e5574d1fca",
+        "reconciliation.md": "322c38a6e0f4cb461aa875c6c9c6e5e0d6037ddbb6d2adca7b78856f9028d1ce",
+        "report-verification.md": "2c7162f887a202d1f7dbbd469977d96d7429c32c014c28bc8729ed1689d345ff",
+        "runtime.md": "2dbaf5b9f8324996b781a6646296c04e5cb23d89918ab30bb871ae4a491cbd94",
+        "synthesis-verification.md": "500a4b4f9882ce3327e4c5c4e3f0114aceff92b19f294e8a0b69dee948bc1377",
+        "synthesis.md": "24dd73cbaffe85f873e5af17a2086c8e3af51ac873e376f150014ccf70b52812",
+        "workflow.md": "52fd414cfe1b1ea87aa888c967d8ae7d663fa9b60f528496331a899a35f0bd06"
+      },
+      "capture_path": "publications/jaz/AAS-2026-10-19-jaz-9d991c410bb9-01",
+      "status": "captured"
+    },
+    {
+      "target": "openrsi",
+      "run_id": "AAS-2026-10-19-openrsi-4f870183cadd-01",
+      "original_path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-23-openrsi/kb/agentic-system-analyses/retained/frontisai--openrsi",
+      "member_sha256": {
+        "ARTIFACT.yaml": "e3b9f71467cd8afa66fe1e1e1f3495a6994e6b38b1a6ecba930141ddc5cc9416",
+        "boundary.md": "2486701c48ab64cd9eda7a17d21161d0caf8efbed6e417e9c72a666a0919914c",
+        "epistemic.md": "bccb599a73eda50ff9b1820442eada824219b25062a8bcb3aa84207c4866ee35",
+        "memory-profile.md": "574aed8966fca3217bda22fe2e678a312541f66d7644a106d5705712bc902bd9",
+        "memory.md": "780325f9ba6bdb18ce9039c7682ed346ddba5b84b1a268431158ad8aca431374",
+        "overview.md": "1aae5c1fc5606f01b6a85575a0682aa25c14f9a56ba69410f6e80599696f42d0",
+        "profile-verification.md": "0a09d7fc5aae2fa51a394637814058853335512b4be06fa6c77931325f95ef25",
+        "reconciliation.md": "566c55f8cdb5ad1fc11d835401989693134f753be93bdf4534d9344e00606715",
+        "report-verification.md": "0de9b2a60c1936b02fb4037085dd473206c12b7e8c526995263afdcb9a3cfef2",
+        "runtime.md": "8ea3d6d423cb6edf36c25c42bffd6bd94dbdb41187bb0644e0980e42081804e9",
+        "synthesis-verification.md": "e171fa282d9c1c0c6f2f455108d1ea185ec6b757bb1291694bd016d7d210a39c",
+        "synthesis.md": "4c2b09da51b708e7fbaecd72cfd81c834716d03a24ba6fae6b5af76abb93fed9",
+        "workflow.md": "42c47607402e13ad1f65180ac8f154394d12130253b5aa52184c1c05597f266f"
+      },
+      "capture_path": "publications/openrsi/AAS-2026-10-19-openrsi-4f870183cadd-01",
+      "status": "captured"
+    }
+  ],
+  "external_evidence_policy": "External source trees, traces, preparations and run states remain in place; no cleanup authorized. Historical hashes are not fresh source/trace verification."
+}
