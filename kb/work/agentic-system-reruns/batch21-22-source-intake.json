@@ -1,0 +1,618 @@
+{
+  "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/related-systems/supermemoryai--supermemory": {
+    "source": {
+      "identity": "https://github.com/supermemoryai/supermemory",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/related-systems/supermemoryai--supermemory",
+      "revision": "5323f427d076c7a158a9154867d293b53acc3841",
+      "sha256": null
+    },
+    "head": "5323f427d076c7a158a9154867d293b53acc3841",
+    "status": "",
+    "tracked_file_count": 938,
+    "tracked_file_map_digest": "aa63fea44084187da196608302004a89edb72152ef78cf9cd98c39fc5a9a27f5",
+    "git_tree": "0c627cbb80ddc61602e5cf80b8bd31f7942c7cfe"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/related-systems/supermemoryai--supermemory": {
+    "source": {
+      "identity": "https://github.com/supermemoryai/supermemory",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/related-systems/supermemoryai--supermemory",
+      "revision": "f81fad00e4bfc42610159cf6bd7bdb5fc4ca7cbe",
+      "sha256": null
+    },
+    "head": "f81fad00e4bfc42610159cf6bd7bdb5fc4ca7cbe",
+    "status": "",
+    "tracked_file_count": 938,
+    "tracked_file_map_digest": "2b2efbfc677bf40be62e49b5d89a28af68c0162f6c24ffb851960ddd8d0caa42",
+    "git_tree": "88ba60ba6296ef08bd5528461d56a94da3b56c8d"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/related-systems/Tencent--ContextPilot": {
+    "source": {
+      "identity": "https://github.com/Tencent/ContextPilot",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/related-systems/Tencent--ContextPilot",
+      "revision": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+      "sha256": null
+    },
+    "head": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+    "status": "",
+    "tracked_file_count": 1020,
+    "tracked_file_map_digest": "3a1a505e31484c72e44df31fec3f569d75096c0665ecff40b25170af761e571d",
+    "git_tree": "af8e47ff417557bebe574b8d4a7e9b3cbb519dde"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-contextpilot/related-systems/Tencent--ContextPilot": {
+    "source": {
+      "identity": "https://github.com/Tencent/ContextPilot",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-contextpilot/related-systems/Tencent--ContextPilot",
+      "revision": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+      "sha256": null
+    },
+    "head": "782cbb6611fb610c4cf6fafda6022b7e89cae191",
+    "status": "",
+    "tracked_file_count": 1020,
+    "tracked_file_map_digest": "3a1a505e31484c72e44df31fec3f569d75096c0665ecff40b25170af761e571d",
+    "git_tree": "af8e47ff417557bebe574b8d4a7e9b3cbb519dde"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/related-systems/FrontisAI--OpenRSI": {
+    "source": {
+      "identity": "https://github.com/FrontisAI/OpenRSI",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/related-systems/FrontisAI--OpenRSI",
+      "revision": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+      "sha256": null
+    },
+    "head": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+    "status": "",
+    "tracked_file_count": 897,
+    "tracked_file_map_digest": "87abdc1a23040acc0964ce88b0d2339f31a7a42a51b32885ceb37c5dd37cff8f",
+    "git_tree": "f7cb8c5646188eb309103af009eb34a0b29a4495"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-openrsi/related-systems/FrontisAI--OpenRSI": {
+    "source": {
+      "identity": "https://github.com/FrontisAI/OpenRSI",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-openrsi/related-systems/FrontisAI--OpenRSI",
+      "revision": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+      "sha256": null
+    },
+    "head": "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa",
+    "status": "",
+    "tracked_file_count": 897,
+    "tracked_file_map_digest": "87abdc1a23040acc0964ce88b0d2339f31a7a42a51b32885ceb37c5dd37cff8f",
+    "git_tree": "f7cb8c5646188eb309103af009eb34a0b29a4495"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/related-systems/IQuestLab--ModularRSI": {
+    "source": {
+      "identity": "https://github.com/IQuestLab/ModularRSI",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/related-systems/IQuestLab--ModularRSI",
+      "revision": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+      "sha256": null
+    },
+    "head": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+    "status": "",
+    "tracked_file_count": 3252,
+    "tracked_file_map_digest": "c43930511af47e5ad375723aa94055c5d306379a74d26b3c6cf1eb2606b93d7a",
+    "git_tree": "afd8a7733db9196663d8d47515e0cea41034526d"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/related-systems/IQuestLab--ModularRSI": {
+    "source": {
+      "identity": "https://github.com/IQuestLab/ModularRSI",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/related-systems/IQuestLab--ModularRSI",
+      "revision": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+      "sha256": null
+    },
+    "head": "b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9",
+    "status": "",
+    "tracked_file_count": 3252,
+    "tracked_file_map_digest": "c43930511af47e5ad375723aa94055c5d306379a74d26b3c6cf1eb2606b93d7a",
+    "git_tree": "afd8a7733db9196663d8d47515e0cea41034526d"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/related-systems/jaz-lang--JAZ": {
+    "source": {
+      "identity": "https://github.com/jaz-lang/JAZ",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/related-systems/jaz-lang--JAZ",
+      "revision": "0803d4971be785e95b80054b02259664d70fa3da",
+      "sha256": null
+    },
+    "head": "0803d4971be785e95b80054b02259664d70fa3da",
+    "status": "",
+    "tracked_file_count": 109,
+    "tracked_file_map_digest": "200ffbb01d7db4a23bd1771aa6bc5edb22ad9e065ea25bb23fe47da8b6e6e920",
+    "git_tree": "4b084cc2f40aec9b53a994e4e9bf2d0b91e04c61"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/autogenesis-63415b37b96e/related-systems/DVampire--Autogenesis": {
+    "source": {
+      "identity": "https://github.com/DVampire/Autogenesis",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/autogenesis-63415b37b96e/related-systems/DVampire--Autogenesis",
+      "revision": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+      "sha256": null
+    },
+    "head": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+    "status": "",
+    "tracked_file_count": 2071,
+    "tracked_file_map_digest": "351611a807931ab6a85e52e8db8e7bf39966ef831447741c8484b6eba722b5cc",
+    "git_tree": "afb712d487aa814deb69daf6aeb22beca433aea3"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/related-systems/DVampire--Autogenesis": {
+    "source": {
+      "identity": "https://github.com/DVampire/Autogenesis",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/related-systems/DVampire--Autogenesis",
+      "revision": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+      "sha256": null
+    },
+    "head": "5b070d5cd497e951a188a01409138e8b530eaf4a",
+    "status": "",
+    "tracked_file_count": 2071,
+    "tracked_file_map_digest": "351611a807931ab6a85e52e8db8e7bf39966ef831447741c8484b6eba722b5cc",
+    "git_tree": "afb712d487aa814deb69daf6aeb22beca433aea3"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/related-systems/MehmetGoekce--llm-wiki": {
+    "source": {
+      "identity": "https://github.com/MehmetGoekce/llm-wiki",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/related-systems/MehmetGoekce--llm-wiki",
+      "revision": "11538c1195666db24e25e23cc64bb1d70587aef9",
+      "sha256": null
+    },
+    "head": "11538c1195666db24e25e23cc64bb1d70587aef9",
+    "status": "",
+    "tracked_file_count": 55,
+    "tracked_file_map_digest": "bb2cedefb705ad4c692289c677567565d7052341f214cac9dc0d84955208b12b",
+    "git_tree": "b6aa8fd636e4e66de647a7dca5d8b16952786b45"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/related-systems/Versatly--clawvault": {
+    "source": {
+      "identity": "https://github.com/Versatly/clawvault",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/related-systems/Versatly--clawvault",
+      "revision": "bd702e9cce436bc3065827714cd576e8be20c375",
+      "sha256": null
+    },
+    "head": "bd702e9cce436bc3065827714cd576e8be20c375",
+    "status": "",
+    "tracked_file_count": 439,
+    "tracked_file_map_digest": "9c42271f2f96f307e9fe0c9559cbe8323ae11df6291464eaf6bdc40229652d18",
+    "git_tree": "a10008471c898c75b0b68f861606ecd1b7a3ab14"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/arex-skill-db1b68297b6b/related-systems/VectorSpaceLab--AREX-Skill": {
+    "source": {
+      "identity": "https://github.com/VectorSpaceLab/AREX-Skill",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/arex-skill-db1b68297b6b/related-systems/VectorSpaceLab--AREX-Skill",
+      "revision": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+      "sha256": null
+    },
+    "head": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+    "status": "",
+    "tracked_file_count": 34309,
+    "tracked_file_map_digest": "dff903d4690413edd17cee26ab9b96f667cfb998805c1146286235120703fdf9",
+    "git_tree": "f296164196222772e4fbd541f2c7657766a9c3f2"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/related-systems/VectorSpaceLab--AREX-Skill": {
+    "source": {
+      "identity": "https://github.com/VectorSpaceLab/AREX-Skill",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/related-systems/VectorSpaceLab--AREX-Skill",
+      "revision": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+      "sha256": null
+    },
+    "head": "ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6",
+    "status": "",
+    "tracked_file_count": 34309,
+    "tracked_file_map_digest": "dff903d4690413edd17cee26ab9b96f667cfb998805c1146286235120703fdf9",
+    "git_tree": "f296164196222772e4fbd541f2c7657766a9c3f2"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-49c4f24b03c3/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+    "source": {
+      "identity": "https://github.com/china-qijizhifeng/agentic-harness-engineering",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-49c4f24b03c3/related-systems/china-qijizhifeng--agentic-harness-engineering",
+      "revision": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+      "sha256": null
+    },
+    "head": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+    "status": "",
+    "tracked_file_count": 224,
+    "tracked_file_map_digest": "5c25af967b9f748e89e5f2bb53eeed242d266b97a7265fa9232e6727e74f6026",
+    "git_tree": "c2aa4f4f5856c4717ff0944c76d79aa4a18bbf34"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-914fd0094689/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+    "source": {
+      "identity": "https://github.com/china-qijizhifeng/agentic-harness-engineering",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-914fd0094689/related-systems/china-qijizhifeng--agentic-harness-engineering",
+      "revision": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+      "sha256": null
+    },
+    "head": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+    "status": "",
+    "tracked_file_count": 224,
+    "tracked_file_map_digest": "5c25af967b9f748e89e5f2bb53eeed242d266b97a7265fa9232e6727e74f6026",
+    "git_tree": "c2aa4f4f5856c4717ff0944c76d79aa4a18bbf34"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-b7fb59b2f7bd/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+    "source": {
+      "identity": "https://github.com/china-qijizhifeng/agentic-harness-engineering",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-b7fb59b2f7bd/related-systems/china-qijizhifeng--agentic-harness-engineering",
+      "revision": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+      "sha256": null
+    },
+    "head": "8b2a55d97590363fe50c3cc6b5e833b020a4bb4c",
+    "status": "",
+    "tracked_file_count": 224,
+    "tracked_file_map_digest": "5c25af967b9f748e89e5f2bb53eeed242d266b97a7265fa9232e6727e74f6026",
+    "git_tree": "c2aa4f4f5856c4717ff0944c76d79aa4a18bbf34"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/related-systems/TeleAI-UAGI--Awesome-Agent-Memory": {
+    "source": {
+      "identity": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/related-systems/TeleAI-UAGI--Awesome-Agent-Memory",
+      "revision": "932248b4520a5cc3222e633e1b3de97b40a5ffd1",
+      "sha256": null
+    },
+    "head": "932248b4520a5cc3222e633e1b3de97b40a5ffd1",
+    "status": "",
+    "tracked_file_count": 21,
+    "tracked_file_map_digest": "ab984fdab975ff00f41c9155e38f89da50489f648c9f3de838e812cb7fa469de",
+    "git_tree": "f2ad54a81e49933600329499b1a8d3b039473ba7"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory-retry-1/related-systems/TeleAI-UAGI--Awesome-Agent-Memory": {
+    "source": {
+      "identity": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory-retry-1/related-systems/TeleAI-UAGI--Awesome-Agent-Memory",
+      "revision": "07775180db1466826fda610af83d932c58d944eb",
+      "sha256": null
+    },
+    "head": "07775180db1466826fda610af83d932c58d944eb",
+    "status": "",
+    "tracked_file_count": 21,
+    "tracked_file_map_digest": "c9cb3318dd185d32429730eb8f7e4b7f6692a70f27d3a474fc4e4f42ef62893f",
+    "git_tree": "9355f29589b13fc3ad5f53bf7ef50eb7a88c6706"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/dki-llm-da75a840ca8d/related-systems/microsoft--DKI_LLM": {
+    "source": {
+      "identity": "https://github.com/microsoft/DKI_LLM",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/dki-llm-da75a840ca8d/related-systems/microsoft--DKI_LLM",
+      "revision": "c090b7d57e3996c8900e86fecd16085b27e07f29",
+      "sha256": null
+    },
+    "head": "c090b7d57e3996c8900e86fecd16085b27e07f29",
+    "status": "",
+    "tracked_file_count": 1863,
+    "tracked_file_map_digest": "ea52223f42d1f6cacad75e033e8a26c0099c842b107215769692b604026ed8de",
+    "git_tree": "0bd40a98b8d0eac32cd465ec5285f214fa236b27"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/related-systems/NikolaTesla-007--fragility-grid": {
+    "source": {
+      "identity": "https://github.com/NikolaTesla-007/fragility-grid",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/related-systems/NikolaTesla-007--fragility-grid",
+      "revision": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+      "sha256": null
+    },
+    "head": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+    "status": "",
+    "tracked_file_count": 113,
+    "tracked_file_map_digest": "8d551bfb9ad4d4cb928823c3f7d19900d73eda808fceb64eee329976cef54242",
+    "git_tree": "1f356051fac12db9c2664595a498ca85ee90bf69"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/related-systems/NikolaTesla-007--fragility-grid": {
+    "source": {
+      "identity": "https://github.com/NikolaTesla-007/fragility-grid",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/related-systems/NikolaTesla-007--fragility-grid",
+      "revision": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+      "sha256": null
+    },
+    "head": "3f51444ead009d8351de1b6b19bf901c4da3d420",
+    "status": "",
+    "tracked_file_count": 113,
+    "tracked_file_map_digest": "8d551bfb9ad4d4cb928823c3f7d19900d73eda808fceb64eee329976cef54242",
+    "git_tree": "1f356051fac12db9c2664595a498ca85ee90bf69"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/related-systems/letta-ai--letta": {
+    "source": {
+      "identity": "https://github.com/letta-ai/letta",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/related-systems/letta-ai--letta",
+      "revision": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+      "sha256": null
+    },
+    "head": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+    "status": "",
+    "tracked_file_count": 12,
+    "tracked_file_map_digest": "c7d179a7c5c35649560b54172115a6beb82ba61b7e9955f9f72df238fb3f1b12",
+    "git_tree": "7670e9cbe86049bcd77de0b74545468fc2a21cf7"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta-retry-1/related-systems/letta-ai--letta": {
+    "source": {
+      "identity": "https://github.com/letta-ai/letta",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta-retry-1/related-systems/letta-ai--letta",
+      "revision": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+      "sha256": null
+    },
+    "head": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+    "status": "",
+    "tracked_file_count": 12,
+    "tracked_file_map_digest": "c7d179a7c5c35649560b54172115a6beb82ba61b7e9955f9f72df238fb3f1b12",
+    "git_tree": "7670e9cbe86049bcd77de0b74545468fc2a21cf7"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/related-systems/fstech-digital--operational-ontology-framework": {
+    "source": {
+      "identity": "https://github.com/fstech-digital/operational-ontology-framework",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/related-systems/fstech-digital--operational-ontology-framework",
+      "revision": "3df5d896da2a1e488e1eb325feddf190ad77990d",
+      "sha256": null
+    },
+    "head": "3df5d896da2a1e488e1eb325feddf190ad77990d",
+    "status": "",
+    "tracked_file_count": 14,
+    "tracked_file_map_digest": "05335d82da3e19f2555d8e4838b173bd700b9f30bb5c0b1eb38750d5022cc911",
+    "git_tree": "611f06676b3ebe5602e2e5f9f360cde92dc8a5b5"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/related-systems/fstech-digital--operational-ontology-framework": {
+    "source": {
+      "identity": "https://github.com/fstech-digital/operational-ontology-framework",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/related-systems/fstech-digital--operational-ontology-framework",
+      "revision": "3df5d896da2a1e488e1eb325feddf190ad77990d",
+      "sha256": null
+    },
+    "head": "3df5d896da2a1e488e1eb325feddf190ad77990d",
+    "status": "",
+    "tracked_file_count": 14,
+    "tracked_file_map_digest": "05335d82da3e19f2555d8e4838b173bd700b9f30bb5c0b1eb38750d5022cc911",
+    "git_tree": "611f06676b3ebe5602e2e5f9f360cde92dc8a5b5"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/related-systems/nicobleh--secure-llm-wiki": {
+    "source": {
+      "identity": "https://github.com/nicobleh/secure-llm-wiki",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/related-systems/nicobleh--secure-llm-wiki",
+      "revision": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+      "sha256": null
+    },
+    "head": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+    "status": "",
+    "tracked_file_count": 48,
+    "tracked_file_map_digest": "f131bedc84a6eb532174a0eb9920c4dce21e5405ee8a0333ed491fa7a04ff385",
+    "git_tree": "31d348ca19c868d8eac816811d0d4b8c72320da9"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/related-systems/nicobleh--secure-llm-wiki": {
+    "source": {
+      "identity": "https://github.com/nicobleh/secure-llm-wiki",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/related-systems/nicobleh--secure-llm-wiki",
+      "revision": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+      "sha256": null
+    },
+    "head": "dfbc60e37487b61e9a5cbce1271a13576a776d51",
+    "status": "",
+    "tracked_file_count": 48,
+    "tracked_file_map_digest": "f131bedc84a6eb532174a0eb9920c4dce21e5405ee8a0333ed491fa7a04ff385",
+    "git_tree": "31d348ca19c868d8eac816811d0d4b8c72320da9"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/related-systems/ace-agent--ace": {
+    "source": {
+      "identity": "https://github.com/ace-agent/ace",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/related-systems/ace-agent--ace",
+      "revision": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+      "sha256": null
+    },
+    "head": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+    "status": "",
+    "tracked_file_count": 45,
+    "tracked_file_map_digest": "c8a0c887583ec6328a67c213d45aa41f505e10cb2d49cd730943436e61eb5a2e",
+    "git_tree": "19c371fc0f48e576d5449196f14fcc8fe8646e43"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/related-systems/ace-agent--ace": {
+    "source": {
+      "identity": "https://github.com/ace-agent/ace",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/related-systems/ace-agent--ace",
+      "revision": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+      "sha256": null
+    },
+    "head": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+    "status": "",
+    "tracked_file_count": 45,
+    "tracked_file_map_digest": "c8a0c887583ec6328a67c213d45aa41f505e10cb2d49cd730943436e61eb5a2e",
+    "git_tree": "19c371fc0f48e576d5449196f14fcc8fe8646e43"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering": {
+    "source": {
+      "identity": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering",
+      "revision": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
+      "sha256": null
+    },
+    "head": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
+    "status": "",
+    "tracked_file_count": 511,
+    "tracked_file_map_digest": "03886e492cc7e36c5b47f7fb33ad961a1a4c8351a8a8a3bd6ed7b88b9fd4eeeb",
+    "git_tree": "404babfb9b3434440162e06286b8da05a5b16139"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering": {
+    "source": {
+      "identity": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering",
+      "revision": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
+      "sha256": null
+    },
+    "head": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
+    "status": "",
+    "tracked_file_count": 511,
+    "tracked_file_map_digest": "03886e492cc7e36c5b47f7fb33ad961a1a4c8351a8a8a3bd6ed7b88b9fd4eeeb",
+    "git_tree": "404babfb9b3434440162e06286b8da05a5b16139"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/ai-context-os-4f81c8c12f62/related-systems/alexdcd--AI-Context-OS": {
+    "source": {
+      "identity": "https://github.com/alexdcd/AI-Context-OS",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/ai-context-os-4f81c8c12f62/related-systems/alexdcd--AI-Context-OS",
+      "revision": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+      "sha256": null
+    },
+    "head": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+    "status": "",
+    "tracked_file_count": 181,
+    "tracked_file_map_digest": "4af975ec8f69fbddc09643d2d9a46a861f7c6880610218e3180f52541e88be37",
+    "git_tree": "b1d2aafd5d06d81d55478765d955c9de43c310ec"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/related-systems/alexdcd--AI-Context-OS": {
+    "source": {
+      "identity": "https://github.com/alexdcd/AI-Context-OS",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/related-systems/alexdcd--AI-Context-OS",
+      "revision": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+      "sha256": null
+    },
+    "head": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+    "status": "",
+    "tracked_file_count": 181,
+    "tracked_file_map_digest": "4af975ec8f69fbddc09643d2d9a46a861f7c6880610218e3180f52541e88be37",
+    "git_tree": "b1d2aafd5d06d81d55478765d955c9de43c310ec"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/related-systems/alexdcd--AI-Context-OS": {
+    "source": {
+      "identity": "https://github.com/alexdcd/AI-Context-OS",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/related-systems/alexdcd--AI-Context-OS",
+      "revision": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+      "sha256": null
+    },
+    "head": "9ed263080cadf98702bebb42d5260b45bd526f6c",
+    "status": "",
+    "tracked_file_count": 181,
+    "tracked_file_map_digest": "4af975ec8f69fbddc09643d2d9a46a861f7c6880610218e3180f52541e88be37",
+    "git_tree": "b1d2aafd5d06d81d55478765d955c9de43c310ec"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/related-systems/vvvvvivekkk--LLM-Wiki-v3": {
+    "source": {
+      "identity": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/related-systems/vvvvvivekkk--LLM-Wiki-v3",
+      "revision": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+      "sha256": null
+    },
+    "head": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+    "status": "",
+    "tracked_file_count": 100,
+    "tracked_file_map_digest": "942ae3803d854134b0910e055a575ecd2a78f18dff0a85a7694c75ef003136a8",
+    "git_tree": "91086c8deedec0279026df5e934922d59ba4b077"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/related-systems/vvvvvivekkk--LLM-Wiki-v3": {
+    "source": {
+      "identity": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/related-systems/vvvvvivekkk--LLM-Wiki-v3",
+      "revision": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+      "sha256": null
+    },
+    "head": "267541db838cbca757a112bd0cfa47fa61eb5fb2",
+    "status": "",
+    "tracked_file_count": 100,
+    "tracked_file_map_digest": "942ae3803d854134b0910e055a575ecd2a78f18dff0a85a7694c75ef003136a8",
+    "git_tree": "91086c8deedec0279026df5e934922d59ba4b077"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/related-systems/Clod--llmwiki-marimo": {
+    "source": {
+      "identity": "https://github.com/Clod/llmwiki-marimo",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/related-systems/Clod--llmwiki-marimo",
+      "revision": "0b5d95b1663c4ca859ab554da40924d5091eb6ed",
+      "sha256": null
+    },
+    "head": "0b5d95b1663c4ca859ab554da40924d5091eb6ed",
+    "status": "",
+    "tracked_file_count": 655,
+    "tracked_file_map_digest": "49d20064c0ceea2946e4c1cd7031c47df4ca3f96178d87daa061e27e99467930",
+    "git_tree": "93b95eeb2174363ac63a9ecb765e78f45c46ca83"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/related-systems/Clod--llmwiki-marimo": {
+    "source": {
+      "identity": "https://github.com/Clod/llmwiki-marimo",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/related-systems/Clod--llmwiki-marimo",
+      "revision": "0df06b0499a6242a4a5edfb1495e1d55a3e3c8b7",
+      "sha256": null
+    },
+    "head": "0df06b0499a6242a4a5edfb1495e1d55a3e3c8b7",
+    "status": "",
+    "tracked_file_count": 660,
+    "tracked_file_map_digest": "2e731a6ae4f1d3edfdba896b56d1efeeb72baafe9076e83528e6ebdf4b98fa80",
+    "git_tree": "aa08bda55468b7146219834a40df143d5d044832"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/related-systems/ViperrCrypto--Siftly": {
+    "source": {
+      "identity": "https://github.com/ViperrCrypto/Siftly",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/related-systems/ViperrCrypto--Siftly",
+      "revision": "b25daa45b858f4be096b5c368671c34db4407d8e",
+      "sha256": null
+    },
+    "head": "b25daa45b858f4be096b5c368671c34db4407d8e",
+    "status": "",
+    "tracked_file_count": 116,
+    "tracked_file_map_digest": "c0f39f3d424cf3b1e15c22a4f217c7cb91e3842db2e664c8e022b5e31ef8b48d",
+    "git_tree": "24af4ef29ebcb4282b42a54436b21f57f0117efb"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/related-systems/ViperrCrypto--Siftly": {
+    "source": {
+      "identity": "https://github.com/ViperrCrypto/Siftly",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/related-systems/ViperrCrypto--Siftly",
+      "revision": "b25daa45b858f4be096b5c368671c34db4407d8e",
+      "sha256": null
+    },
+    "head": "b25daa45b858f4be096b5c368671c34db4407d8e",
+    "status": "",
+    "tracked_file_count": 116,
+    "tracked_file_map_digest": "c0f39f3d424cf3b1e15c22a4f217c7cb91e3842db2e664c8e022b5e31ef8b48d",
+    "git_tree": "24af4ef29ebcb4282b42a54436b21f57f0117efb"
+  },
+  "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/related-systems/juanceresa--sift-kg": {
+    "source": {
+      "identity": "https://github.com/juanceresa/sift-kg",
+      "kind": "git",
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/related-systems/juanceresa--sift-kg",
+      "revision": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+      "sha256": null
+    },
+    "head": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+    "status": "",
+    "tracked_file_count": 109,
+    "tracked_file_map_digest": "22abc1cdbdfa5b5bbce5e094182c84376acb49cf9bfce7e6b17aeb14941a6710",
+    "git_tree": "0f2176267e4a854508a1ef390576fe1ffc681984"
+  },
+  "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/related-systems/juanceresa--sift-kg": {
+    "source": {
+      "identity": "https://github.com/juanceresa/sift-kg",
+      "kind": "git",
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/related-systems/juanceresa--sift-kg",
+      "revision": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+      "sha256": null
+    },
+    "head": "d786991c024f5401f113fc0cb70aee96dd1bd3bf",
+    "status": "",
+    "tracked_file_count": 109,
+    "tracked_file_map_digest": "22abc1cdbdfa5b5bbce5e094182c84376acb49cf9bfce7e6b17aeb14941a6710",
+    "git_tree": "0f2176267e4a854508a1ef390576fe1ffc681984"
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "historical_observed_at": "2026-10-19T06:16:48.792125+00:00",
+  "inventory_targets": 206,
+  "complete": 189,
+  "pending": 14,
+  "older_target_holds": 3,
+  "unchecked": 17,
+  "canonical_sets": 190,
+  "canonical_members": 2470,
+  "outside_inventory": [
+    "rociiu--talorys"
+  ],
+  "integrated_this_commission": 8,
+  "completion_evidence": "kb/work/agentic-system-reruns/batch21-22-final-preservation-resume.json",
+  "count_recipe": "206 actual checkbox rows: 189 checked, 17 unchecked; remaining prior-status rows: 14 pending and 3 older-target-hold. Seven pending plus one older-held target integrated, not eight pending targets.",
+  "integrated_keys": ["modularrsi", "agent-skills-for-context-engineering", "ai-context-os", "llm-wiki-v3", "llmwiki-marimo", "nams", "secure-llm-wiki", "siftly"],
+  "unchecked_keys": ["supermemory", "contextpilot", "openrsi", "jaz", "autogenesis", "mehmetgoekce--llm-wiki", "clawvault", "arex-skill", "agentic-harness-engineering", "awesome-agent-memory", "dualgraph", "fintool", "fragility-grid", "letta", "operational-ontology-framework", "ace", "sift-kg"],
+  "ordinary_wholly_untouched_targets": 0,
+  "selected_but_analysis_unstarted_after_preparation_refusal": 5,
+  "category_counts": {
+    "completed-local-source-stop": 2,
+    "exact-publication-hold": 5,
+    "failed-runtime-input": 1,
+    "fresh-preparation-refused-analysis-unstarted": 5,
+    "interrupted-open-reconciliation": 1,
+    "operator-deferred-not-selected": 2,
+    "technical-gate-not-selected": 1
+  },
+  "historical_rows_note": "The following 25 rows retain the pre-transfer decisions and then-current statuses verbatim. Current integrated_keys and unchecked_keys supersede only their completion/category status, not predecessor holds, source decisions or scope limits. Exact publication and merge commits are in completion_evidence.",
+  "historical_rows": [
+    {
+      "key": "supermemory",
+      "name": "supermemory",
+      "source_identity": "https://github.com/supermemoryai/supermemory",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "exact-publication-hold",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/kb/agentic-system-analyses/state/AAS-2026-10-18-supermemory-75d21b14316b-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/kb/agentic-system-analyses/retained/supermemoryai--supermemory",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch-21-supermemory-75d21b14316b.md",
+      "auditor_disposition": "hold",
+      "parent_disposition": "hold",
+      "next_decision": "Resolve exact semantic capture qualification through separately authorized route"
+    },
+    {
+      "key": "contextpilot",
+      "name": "ContextPilot",
+      "source_identity": "https://github.com/Tencent/ContextPilot",
+      "inventory_complete": false,
+      "prior_inventory_status": "older-target-hold",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "failed-runtime-input",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-contextpilot/kb/agentic-system-analyses/state/AAS-2026-10-18-contextpilot-1394d2080dc8-01",
+      "next_decision": "Preserve failed 000009-workflow and defective runtime input; separate supported recovery decision required"
+    },
+    {
+      "key": "openrsi",
+      "name": "OpenRSI: OpenMLE search, experience and training",
+      "source_identity": "https://github.com/FrontisAI/OpenRSI",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "interrupted-open-reconciliation",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-openrsi/kb/agentic-system-analyses/state/AAS-2026-10-18-openrsi-29674d2f0830-01",
+      "next_decision": "Engine still running with 000019-reconciliation open, no publication. No active batch writer observed, but recheck ownership before any separately authorized recovery; do not resume here"
+    },
+    {
+      "key": "modularrsi",
+      "name": "ModularRSI",
+      "source_identity": "https://github.com/IQuestLab/ModularRSI",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/kb/agentic-system-analyses/state/AAS-2026-10-18-modularrsi-4218ceff5530-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/kb/agentic-system-analyses/retained/iquestlab--modularrsi",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-21-fresh-modularrsi.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "jaz",
+      "name": "JAZ",
+      "source_identity": "https://github.com/jaz-lang/JAZ",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 1,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "fresh-preparation-refused-analysis-unstarted",
+      "run": null,
+      "next_decision": "Five batch-21 fresh selections failed before preparation due startup mismatch at b12b855f. Current committed method differs, but no retry authority here. Old held own publication remains; if later authorized, require new disjoint evidence paths because current script skips these existing logs."
+    },
+    {
+      "key": "autogenesis",
+      "name": "Autogenesis",
+      "source_identity": "https://github.com/DVampire/Autogenesis",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "fresh-preparation-refused-analysis-unstarted",
+      "run": null,
+      "next_decision": "Five batch-21 fresh selections failed before preparation due startup mismatch at b12b855f. Current committed method differs, but no retry authority here. Old held own publication remains; if later authorized, require new disjoint evidence paths because current script skips these existing logs."
+    },
+    {
+      "key": "mehmetgoekce--llm-wiki",
+      "name": "LLM Wiki (MehmetGoekce)",
+      "source_identity": "https://github.com/MehmetGoekce/llm-wiki",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "fresh-preparation-refused-analysis-unstarted",
+      "run": null,
+      "next_decision": "Five batch-21 fresh selections failed before preparation due startup mismatch at b12b855f. Current committed method differs, but no retry authority here. Old held own publication remains; if later authorized, require new disjoint evidence paths because current script skips these existing logs."
+    },
+    {
+      "key": "clawvault",
+      "name": "ClawVault",
+      "source_identity": "https://github.com/Versatly/clawvault",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "fresh-preparation-refused-analysis-unstarted",
+      "run": null,
+      "next_decision": "Five batch-21 fresh selections failed before preparation due startup mismatch at b12b855f. Current committed method differs, but no retry authority here. Old held own publication remains; if later authorized, require new disjoint evidence paths because current script skips these existing logs."
+    },
+    {
+      "key": "arex-skill",
+      "name": "AREX-Skill",
+      "source_identity": "https://github.com/VectorSpaceLab/AREX-Skill",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "fresh-preparation-refused-analysis-unstarted",
+      "run": null,
+      "next_decision": "Five batch-21 fresh selections failed before preparation due startup mismatch at b12b855f. Current committed method differs, but no retry authority here. Old held own publication remains; if later authorized, require new disjoint evidence paths because current script skips these existing logs."
+    },
+    {
+      "key": "agentic-harness-engineering",
+      "name": "Agentic Harness Engineering",
+      "source_identity": "https://github.com/china-qijizhifeng/agentic-harness-engineering",
+      "inventory_complete": false,
+      "prior_inventory_status": "older-target-hold",
+      "older_native_run_count": 3,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "technical-gate-not-selected",
+      "run": "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-914fd0094689/kb/agentic-system-analyses/state/AAS-2026-10-13-agentic-harness-engineering-914fd0094689-01",
+      "next_decision": "Current frozen run still stopped with retained memory-profile refusal and no publication; supported refusal/contract disposition and recovery planning need separate authority. No blind retry."
+    },
+    {
+      "key": "awesome-agent-memory",
+      "name": "Awesome Agent Memory",
+      "source_identity": "https://github.com/TeleAI-UAGI/Awesome-Agent-Memory",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "completed-local-source-stop",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-awesome-agent-memory-8e0e01c02b3a-01",
+      "local_disposition": "out-of-scope",
+      "next_decision": "Explicit source/boundary selection or operator-approved exclusion; do not treat local completion as publication or inventory completion"
+    },
+    {
+      "key": "dualgraph",
+      "name": "DualGraph",
+      "source_identity": "https://github.com/microsoft/DKI_LLM",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 1,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "operator-deferred-not-selected",
+      "run": "/home/zby/llm/commonplace/.commonplace/worktrees/dki-llm-da75a840ca8d/kb/agentic-system-analyses/state/AAS-2026-10-14-dki-llm-da75a840ca8d-01",
+      "next_decision": "Name intended system/boundary; no silent subproject substitution. Operator deferred these cases; no fresh analysis authority here."
+    },
+    {
+      "key": "fintool",
+      "name": "Fintool",
+      "source_identity": "https://x.com/nicbstme/status/2015174818497437834",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 1,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "operator-deferred-not-selected",
+      "run": "/home/zby/llm/commonplace/.commonplace/worktrees/fintool-e109159e0559/kb/agentic-system-analyses/state/AAS-2026-10-14-2015174818497437834-e109159e0559-01",
+      "next_decision": "Authorize article-only source view and fresh unexposed worker without changing source identity; preserve original capture. Operator deferred these cases; no fresh analysis authority here."
+    },
+    {
+      "key": "fragility-grid",
+      "name": "fragility-grid collection and resume subsystem",
+      "source_identity": "https://github.com/NikolaTesla-007/fragility-grid",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "exact-publication-hold",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/kb/agentic-system-analyses/state/AAS-2026-10-18-fragility-grid-38b12f71fceb-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/kb/agentic-system-analyses/retained/nikolatesla-007--fragility-grid",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-fragility-grid.md",
+      "auditor_disposition": "hold",
+      "parent_disposition": "hold",
+      "next_decision": "Operator disposition of verified new off-scope mutation and collateral uncertainty; old incidents separately preserved"
+    },
+    {
+      "key": "letta",
+      "name": "Letta",
+      "source_identity": "https://github.com/letta-ai/letta",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "completed-local-source-stop",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-letta-527f0244ee20-01",
+      "local_disposition": "blocked",
+      "next_decision": "Explicit source/boundary selection or operator-approved exclusion; do not treat local completion as publication or inventory completion"
+    },
+    {
+      "key": "operational-ontology-framework",
+      "name": "Operational Ontology Framework",
+      "source_identity": "https://github.com/fstech-digital/operational-ontology-framework",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "exact-publication-hold",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-operational-ontology-framework-2b5d9616baa4-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/kb/agentic-system-analyses/retained/fstech-digital--operational-ontology-framework",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-operational-ontology-framework-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "hold",
+      "next_decision": "Operator scope acceptance or suitable implemented boundary/source selection; conceptual-only positive content audit retained"
+    },
+    {
+      "key": "secure-llm-wiki",
+      "name": "Secure LLM-Wiki",
+      "source_identity": "https://github.com/nicobleh/secure-llm-wiki",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-19-secure-llm-wiki-df02f419bddb-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/kb/agentic-system-analyses/retained/nicobleh--secure-llm-wiki",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-secure-llm-wiki.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "ace",
+      "name": "ACE",
+      "source_identity": "https://github.com/ace-agent/ace",
+      "inventory_complete": false,
+      "prior_inventory_status": "older-target-hold",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": "no baseline own publication",
+        "publication_effect_same": "no baseline publish effect"
+      },
+      "category": "exact-publication-hold",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/kb/agentic-system-analyses/state/AAS-2026-10-18-ace-007571102a54-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/kb/agentic-system-analyses/retained/ace-agent--ace",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-ace.md",
+      "auditor_disposition": "hold",
+      "parent_disposition": "hold",
+      "next_decision": "Operator disposition of verified new off-scope mutation and collateral uncertainty; old incidents separately preserved"
+    },
+    {
+      "key": "agent-skills-for-context-engineering",
+      "name": "Agent Skills for Context Engineering",
+      "source_identity": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "inventory_complete": false,
+      "prior_inventory_status": "older-target-hold",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/kb/agentic-system-analyses/state/AAS-2026-10-19-agent-skills-for-context-engineering-7e663338370b-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/kb/agentic-system-analyses/retained/muratcankoylan--agent-skills-for-context-engineering",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-agent-skills-for-context-engineering.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "ai-context-os",
+      "name": "AI-Context-OS",
+      "source_identity": "https://github.com/alexdcd/AI-Context-OS",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 3,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-ai-context-os-82777c0c3926-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/kb/agentic-system-analyses/retained/alexdcd--ai-context-os",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-ai-context-os-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "nams",
+      "name": "Neo4j Agent Memory Service (NAMS)",
+      "source_identity": "https://neo4j.com/blog/genai/from-agent-memory-to-portable-skills",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-from-agent-memory-to-portable-skills-4a509c7732b1-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams-retry-1/kb/agentic-system-analyses/retained/from-agent-memory-to-portable-skills",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-nams-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "llm-wiki-v3",
+      "name": "LLM-Wiki-v3",
+      "source_identity": "https://github.com/vvvvvivekkk/LLM-Wiki-v3",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llm-wiki-v3-0c553a3118eb-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/kb/agentic-system-analyses/retained/vvvvvivekkk--llm-wiki-v3",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-llm-wiki-v3-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "llmwiki-marimo",
+      "name": "llmwiki-marimo",
+      "source_identity": "https://github.com/Clod/llmwiki-marimo",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llmwiki-marimo-58054ccd9ae7-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/kb/agentic-system-analyses/retained/clod--llmwiki-marimo",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-llmwiki-marimo-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "siftly",
+      "name": "Siftly",
+      "source_identity": "https://github.com/ViperrCrypto/Siftly",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "approved-clean-origin-blocked",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-siftly-b81c94cf0f77-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/kb/agentic-system-analyses/retained/viperrcrypto--siftly",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-siftly-retry-1.md",
+      "auditor_disposition": "integrate with recorded limits",
+      "parent_disposition": "integrate with recorded limits",
+      "next_decision": "Resolve clean-origin blocker externally, then rebind exact bytes and writers before native integration; no bypass"
+    },
+    {
+      "key": "sift-kg",
+      "name": "sift-kg",
+      "source_identity": "https://github.com/juanceresa/sift-kg",
+      "inventory_complete": false,
+      "prior_inventory_status": "pending",
+      "older_native_run_count": 2,
+      "baseline_preservation": {
+        "run_definition_same": true,
+        "preparation_same": true,
+        "attempt_map_same": true,
+        "publication_same": true,
+        "publication_effect_same": true
+      },
+      "category": "exact-publication-hold",
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/kb/agentic-system-analyses/state/AAS-2026-10-18-sift-kg-e56bce0de992-01",
+      "publication": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/kb/agentic-system-analyses/retained/juanceresa--sift-kg",
+      "audit_report": "kb/work/agentic-system-reruns/audits/batch21-22-batch-22-sift-kg.md",
+      "auditor_disposition": "hold",
+      "parent_disposition": "hold",
+      "next_decision": "Operator disposition of verified new off-scope mutation and collateral uncertainty; old incidents separately preserved"
+    }
+  ],
+  "ambiguities": [
+    "Operational Ontology Framework: positive conceptual-only content audit does not establish fulfillment/waiver of workshop implementation-source-selection gate; transfer held pending operator decision.",
+    "Three source-reselection phases were instead driven by source-only ordinary analysis prompts; no source-selection.json found for Ontology; local results for Awesome/Letta do not complete selection or approve exclusion.",
+    "Interactive parent Pi session remains; /proc observations do not prove future writer idleness.",
+    "Pre-write filesystem contents and collateral effects of operational incidents remain unresolved; fresh lineage does not clear predecessor incidents."
+  ],
+  "coverage": "All 25 original targets remain accounted for: eight integrated with recorded limits and 17 unchecked. Final separate read-only preservation passed for all 49 run/preparation/own-publication maps, 44 frozen Git-source fingerprints and 57 log/exit fingerprints. Corpus is exactly the old 182/2366 map plus 104 approved members, now 190/2470; root .gitignore and archives unchanged. Full 206 inventory checkbox rows recounted: 189 complete, 14 pending, three older target holds. Ontology gate and all predecessor incidents remain. Historical clean-origin refusal and outer 200-second verification timeout are retained in their evidence, not current blockers."
+}
