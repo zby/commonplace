@@ -20,7 +20,7 @@ stand-in that can produce the harm. So a guard written against an
 untested requirement removes the experiment that would test it, and the
 absence of trouble afterwards corroborates nothing.
 
-The claim is universal in mode. It is refuted by a prevention guard under
+The claim is universal in mode. It is refuted by a suppressing guard under
 which evidence later produced in the guarded system refutes or corroborates
 the conjecture the guard was written against.
 
@@ -28,10 +28,10 @@ the conjecture the guard was written against.
 
 Treat the conjecture as a single edge in a causal graph, from the unguarded
 condition to user-visible harm. Passive observation eliminates a graph only
-when the data show a dependence or independence the graph forbids, and either
-needs the condition to vary. Interventions discriminate between graphs only at values where
-the graphs predict different outcomes, as in [competing causal theories can
-guide distinguishing
+when the data show a dependence or independence the graph forbids, and
+showing either needs the condition to vary. Interventions discriminate
+between graphs only at values where the graphs predict different outcomes, as
+in [competing causal theories can guide distinguishing
 experiments](./competing-causal-theories-can-guide-distinguishing-experiments.md).
 A guard is an intervention, but at the non-discriminating value: it holds the
 condition at the level where both the edge and its absence predict no harm.
@@ -59,12 +59,12 @@ comes, is informative. Adding the guard is a commitment that cannot be
 refuted from inside the running system. One branch learns and the other does
 not.
 
-Accumulation follows. Each guard freezes one open question for as long as it stands, and
-later code can come to depend on the guarantee the guard provides, so the
+Accumulation follows. Each guard freezes one open question while it stands,
+and later code can come to depend on the guarantee the guard provides, so the
 experiment grows more expensive the longer the guard stands. Sean Goedecke
 describes the endpoint, in [What requirements don't you
-have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md), as requirements
-that "petrify the system over time". On this note's reading, a petrified
+have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md),
+as requirements that "petrify the system over time". On this note's reading, a petrified
 system is one whose design conjectures have been immunized one by one, so
 that evidence can no longer revise them.
 
@@ -81,27 +81,28 @@ the implementer cannot settle from doctrine, commission and evidence is a gap
 in the commission, and an implementer facing a gap projects an interpretation
 into it. The projection lands on the safe side.
 
-The second is oracle asymmetry, and it decides the direction. In the loops Goedecke describes, the operative
-check on generated code is a test suite plus a review that looks for bugs.
-That oracle penalizes a missed edge case at once and a carried guard rarely
-and late, so from the implementer's side the guard's carrying cost reads as
-near zero. Since [weakly discriminated qualities tend to be
+The second is oracle asymmetry, and it decides the direction. In the loops
+Goedecke describes, the operative check on generated code is a test suite
+plus a review that looks for bugs. That oracle penalizes a missed edge case
+at once and a carried guard rarely and late, so from the implementer's side
+the guard's carrying cost reads as near zero. Since [weakly discriminated
+qualities tend to be
 underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md),
 "solves only the problems this system has" is exactly the quality the loop
 fails to enrich. With a carrying cost near zero, any conjecture of nonzero
-credence is worth guarding, and an instruction to make no mistakes raises the
+credence is worth guarding. An instruction to make no mistakes raises the
 perceived cost of the missed case without touching the carrying cost, so it
 moves the threshold further toward guarding everything. Goedecke reports the
-visible result: models "obsessed with satisfying the Grader" that introduce
-a mutex to keep semi-related data in sync, or a mid-flight re-check of data
-already checked, without being told to, and about half of the large generated
-changes he reviews carrying a requirement the model introduced itself.
+visible result: models "obsessed with satisfying the Grader" introduce a
+mutex to keep semi-related data in sync, or a mid-flight re-check of data
+already checked, without being told to. About half of the large generated
+changes he reviews carry a requirement the model introduced itself.
 
 ## Where omitting the guard is the right move
 
 The decision turns on two costs the implementer rarely holds: the cost of
-carrying the guard, and the cost of running the experiment, which is the
-cost of being wrong once without it. Where the experiment is cheap and
+carrying the guard and the cost of running the experiment, which is the cost
+of being wrong once without it. Where the experiment is cheap and
 reversible, omitting the guard is both the simpler design and the way to
 learn whether the requirement exists. This is the regime in which [ad hoc
 explanation can be rational when error is cheap and
@@ -116,9 +117,9 @@ default, at a threshold the owner never set.
 
 A recorded non-requirement is the artifact this analysis calls for. It states
 that the owner ran the experiment, or chose to run it, and the conjectured
-requirement did not survive. It is also what lets the ruling travel to a sub-agent: a positive
-requirement leaves tests behind, and a non-requirement leaves nothing unless
-someone writes it down.
+requirement did not survive. It is also what lets the ruling travel to a
+sub-agent: a positive requirement leaves tests behind, and a non-requirement
+leaves nothing unless someone writes it down.
 
 ## Scope
 
@@ -128,9 +129,8 @@ someone writes it down.
 - It concerns guards that suppress the condition. A guard that observes
   instead, such as a counter on lock contention or a log of stale reads,
   lets the condition vary and keeps part of the experiment. It can
-  establish how often the condition occurs; it still cannot establish whether
-  the condition would have harmed anyone, because the consequence remains
-  suppressed.
+  establish how often the condition occurs but not whether the condition
+  would have harmed anyone, because the consequence remains suppressed.
 - It assumes the harm, had it occurred, would have been observable. Where
   harm is silent, omitting the guard runs the experiment without reading its
   result.
