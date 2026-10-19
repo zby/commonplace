@@ -357,14 +357,16 @@ class Analysis:
 
     # Candidates and checks
 
-    def candidate(self, role: str, data: bytes, exclude: Iterable[str] = ()) -> Candidate:
+    def candidate(self, role: str, data: bytes, members: Mapping[str, bytes] | None = None) -> Candidate:
         """The candidate at its role beside its partners, as the engine's derived check or apply job built it.
 
         A producer's partners are its identity sources, its citations and
         the frozen source, with the accepted member as incumbent; a
         verifier's are the members it reads, handed as `<name>-handed`, with
-        no incumbent. `exclude` leaves named roles out, so a candidate of a
-        parallel round is checked against the members present before it.
+        no incumbent. `members` is the accepted members to check against:
+        the current ones, or a parallel round's snapshot of the members
+        present before it, so the check does not depend on which sibling
+        finished first.
         """
         method, layout = self.method, self.layout
         declared = layout.roles[role]
@@ -373,8 +375,8 @@ class Analysis:
             partners = {method.frozen, *(s for s in method.reads(role) if s in layout.roles)}
         else:
             partners = {method.frozen, *(s.role for s in declared.identity), *declared.cites}
-        partners -= {role, *exclude}
-        members = dict(self.members)
+        partners -= {role}
+        members = dict(self.members) if members is None else dict(members)
         snapshot = {layout.path(r): members[r] for r in partners if r in members}
         inputs = {name: self.read_value(source) for name, source in method.check_inputs(role).items()}
         if verifying:
@@ -387,16 +389,29 @@ class Analysis:
             extensions=method.extensions(role),
             inputs={name: None if value is None else value.encode("utf-8") for name, value in inputs.items()})
 
-    def findings(self, role: str, data: bytes, exclude: Iterable[str] = ()) -> list[str]:
+    def findings(self, role: str, data: bytes, members: Mapping[str, bytes] | None = None) -> list[str]:
         """The role's own check of `data`: content and declared checks, or a verdict's own findings."""
-        candidate = self.candidate(role, data, exclude)
+        candidate = self.candidate(role, data, members)
         if self.layout.roles[role].verifies:
             return apply_verdict(candidate)[0]
         return check_candidate(candidate)
 
-    def content_check(self, role: str, exclude: Iterable[str] = ()) -> Callable[[Answer], list[str]]:
+    def content_check(self, role: str, members: Mapping[str, bytes] | None = None
+                      ) -> Callable[[Answer], list[str]]:
         primary = self.method.outputs(role)[0]
-        return lambda answer: self.findings(role, answer.outputs[primary].encode("utf-8"), exclude)
+        return lambda answer: self.findings(role, answer.outputs[primary].encode("utf-8"), members)
+
+    def parallel(self, roles: Iterable[str], refused: Mapping[str, str] = {}) -> None:
+        """Ask the roles in parallel, each checked against a snapshot of the members present before the round.
+
+        Siblings corrected in the same round do not see each other's new
+        versions, so a check's outcome and the attempts it spends do not
+        depend on completion order; `recheck` then checks the round's
+        results together.
+        """
+        snapshot = dict(self.members)
+        gather(*(lambda r=r: self.role_job(r, self.content_check(r, snapshot), refused.get(r))
+                 for r in roles))
 
     def verdict_check(self, role: str, judgments: list) -> Callable[[Answer], list[str]]:
         """Reject a verdict for its own findings; otherwise keep the subject judgments it makes."""
@@ -487,10 +502,7 @@ class Analysis:
 
     def reports(self) -> None:
         self.role_job(RUNTIME, self.content_check(RUNTIME))
-        # Each parallel candidate is checked against the members present before the round, so the
-        # check does not depend on which sibling finished first; then all are re-checked together.
-        gather(*(lambda r=r: self.role_job(r, self.content_check(r, exclude=PARALLEL_ANALYSTS))
-                 for r in PARALLEL_ANALYSTS))
+        self.parallel(PARALLEL_ANALYSTS)
         self.recheck(PARALLEL_ANALYSTS)
         self.role_job(RECONCILIATION, self.content_check(RECONCILIATION))
         verified = self.layout.roles[REPORT_VERIFICATION].verifies
@@ -507,8 +519,7 @@ class Analysis:
             self.last_verification(REPORT_VERIFICATION)
             if RUNTIME in refused:
                 self.role_job(RUNTIME, self.content_check(RUNTIME), refused[RUNTIME])
-            gather(*(lambda r=r, refusal=refused[r]: self.role_job(r, self.content_check(r), refusal)
-                     for r in PARALLEL_ANALYSTS if r in refused))
+            self.parallel([r for r in PARALLEL_ANALYSTS if r in refused], refused)
             self.recheck(ANALYSTS)
             # Reconciliation answers its refusal, is asked afresh when a report changed, or stays current.
             self.role_job(RECONCILIATION, self.content_check(RECONCILIATION), refused.get(RECONCILIATION))

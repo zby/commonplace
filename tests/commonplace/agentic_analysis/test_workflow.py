@@ -6,12 +6,15 @@ member that passes the real checks, built with the execution fixtures'
 generators. It then validates the member in its role, as a real worker does,
 and writes a problem if that fails. A scenario file (`FAKE_SCENARIO`) says what
 each role does per call: the boundary's disposition, the report verifier's
-blockers per verdict, and the calls at which a role writes a problem instead.
+blockers per verdict, the calls at which a role writes a problem instead, and
+the seconds a role sleeps before answering a correction (`delay`).
 """
 
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import sys
 from hashlib import sha256
 from pathlib import Path
@@ -46,7 +49,7 @@ pytestmark = pytest.mark.slow
 ROOT = Path(__file__).resolve().parents[3]
 
 FAKE = r'''
-import json, os, re, sys
+import json, os, re, sys, time
 from pathlib import Path
 
 sys.path.insert(0, os.environ["FAKE_ROOT"])
@@ -96,6 +99,7 @@ if refusal is not None:
         blockers = ["unstructured"]
     else:
         blockers = [line for line in section.group(1).splitlines() if line.startswith("- ")]
+    time.sleep(scenario.get("delay", {}).get(role, 0))
 
 if role == "boundary":
     member = candidate(a, scenario.get("disposition", "complete"))
@@ -141,6 +145,8 @@ elif refusal is not None:
 '''
 
 REFUSE_RUNTIME_AND_MEMORY = "- runtime: reconsider the SRC-1 runtime account.\n- memory: reconsider the SRC-1 memory account."
+REFUSE_MEMORY_AND_EPISTEMIC = ("- memory: reconsider the SRC-1 memory account.\n"
+                               "- epistemic: reconsider the SRC-1 epistemic account.")
 
 
 @pytest.fixture
@@ -261,6 +267,100 @@ def test_complete_run_with_one_correction_round(workflow):
     assert len(status["jobs"]["runtime"]["answers"]) == 2
     assert status["problems"] == []
     assert set(status["members"]) == complete_members(analysis) | {"ARTIFACT.yaml"}
+
+
+def digests(members) -> dict[str, str]:
+    """Member digests; the copy is atomic, so a sibling thread accepting a member cannot change it mid-iteration."""
+    return {role: sha256(data).hexdigest() for role, data in dict(members).items()}
+
+
+class CheckRecorder:
+    """Record each `Analysis.candidate` call with its round and the members it was handed; behaviour unchanged.
+
+    A round is the nth call of `Analysis.parallel` or `Analysis.recheck`, as
+    `("parallel", n)`; each round's start records the members before it.
+    """
+
+    def __init__(self, monkeypatch):
+        self.calls: list[dict] = []
+        self.rounds = {"parallel": 0, "recheck": 0}
+        self.phase = None
+        candidate = Analysis.candidate
+        recorder = self
+
+        def phased(kind, original):
+            def wrapper(self, *args, **kwargs):
+                recorder.rounds[kind] += 1
+                recorder.phase = (kind, recorder.rounds[kind])
+                recorder.calls.append({"phase": recorder.phase, "before": digests(self.members)})
+                try:
+                    return original(self, *args, **kwargs)
+                finally:
+                    recorder.phase = None
+            return wrapper
+
+        def recording(self, role, data, members=None):
+            recorder.calls.append({"phase": recorder.phase, "role": role,
+                                   "given": digests(self.members if members is None else members),
+                                   "current": digests(self.members)})
+            return candidate(self, role, data, members)
+
+        monkeypatch.setattr(Analysis, "candidate", recording)
+        monkeypatch.setattr(Analysis, "parallel", phased("parallel", Analysis.parallel))
+        monkeypatch.setattr(Analysis, "recheck", phased("recheck", Analysis.recheck))
+
+    def reset(self) -> None:
+        self.calls.clear()
+        self.rounds.update(parallel=0, recheck=0)
+
+    def started(self, phase) -> dict[str, str]:
+        return next(c["before"] for c in self.calls if c["phase"] == phase and "before" in c)
+
+    def checks(self, phase, *roles) -> list[dict]:
+        return [c for c in self.calls if c["phase"] == phase and c.get("role") in roles]
+
+
+def correction_round(workflow, recorder: CheckRecorder, delayed: str):
+    """Run with memory and epistemic refused once and `delayed`'s correction slowed; return the evidence."""
+    recorder.reset()
+    shutil.rmtree(Path(os.environ["FAKE_SCENARIO"]).with_name("counts"), ignore_errors=True)  # fresh call counts
+    run_dir, new = workflow(disposition="complete", delay={delayed: 2},
+                            **{"report-verification": [REFUSE_MEMORY_AND_EPISTEMIC, "none"]})
+    analysis, receipt = run(new)
+    assert receipt["published"] is True, receipt
+    verdicts = [e["refused"] for e in events(run_dir)
+                if e["event"] == "verdict" and e["role"] == "report-verification"]
+    assert verdicts == [["epistemic", "memory"], []], verdicts
+    return digests(analysis.members), run_dir, receipt
+
+
+def test_parallel_corrections_are_checked_against_the_round_snapshot(workflow, monkeypatch):
+    recorder = CheckRecorder(monkeypatch)
+    final, run_dir, receipt = correction_round(workflow, recorder, delayed="epistemic")
+    correcting, after = ("parallel", 2), ("recheck", 2)
+    before = recorder.started(correcting)
+    assert before["memory"] != final["memory"] and before["epistemic"] != final["epistemic"], "both corrected"
+    memory, epistemic = recorder.checks(correcting, "memory"), recorder.checks(correcting, "epistemic")
+    assert memory and epistemic and recorder.checks(correcting, "workflow", "runtime") == []
+    assert all(c["given"]["epistemic"] == before["epistemic"] for c in memory), \
+        "memory's correction is checked against epistemic's pre-round version"
+    assert all(c["given"]["memory"] == before["memory"] for c in epistemic), \
+        "epistemic's correction is checked against memory's pre-round version"
+    assert all(c["current"]["memory"] == final["memory"] for c in epistemic), \
+        "memory's correction was already accepted when epistemic's check ran"
+    rechecks = recorder.checks(after, "memory", "epistemic")
+    assert {c["role"] for c in rechecks} == {"memory", "epistemic"}, rechecks
+    assert all((c["given"]["memory"], c["given"]["epistemic"]) == (final["memory"], final["epistemic"])
+               for c in rechecks), "the collective re-check sees both new versions"
+    counts = launch_counts(run_dir)
+    assert counts["memory"] == counts["epistemic"] == 2 and counts["workflow"] == 1, counts
+
+    # The other completion order spends the same attempts and publishes the same members.
+    swapped_final, swapped_dir, swapped = correction_round(workflow, recorder, delayed="memory")
+    assert all(c["current"]["epistemic"] == swapped_final["epistemic"]
+               for c in recorder.checks(correcting, "memory")), "epistemic's correction was accepted first"
+    assert launch_counts(swapped_dir) == counts
+    assert list(swapped["members"]) == list(receipt["members"])
 
 
 def test_construction_writes_the_type_manifest_that_publication_replaces(workflow):

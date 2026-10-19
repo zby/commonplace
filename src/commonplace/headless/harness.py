@@ -321,16 +321,21 @@ class Delivered:
 
 def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path,
                      timeout: float | None = None, backoff=BACKOFF, sleep=time.sleep,
-                     harnesses=HARNESSES) -> Delivered:
+                     harnesses=HARNESSES, outputs: Path | None = None) -> Delivered:
     """Launch, and relaunch the same prompt after a nonzero exit, at most twice.
 
     A failure that mentions a usage limit raises UsageLimited at once. A
     timeout raises LaunchFailed at once: the worker was killed, so it may
-    have spent its work. A third nonzero exit raises LaunchFailed.
+    have spent its work. A third nonzero exit raises LaunchFailed. Whatever
+    a failed launch wrote under `outputs` is moved into that launch's
+    directory before the relaunch, so the files found after a successful
+    launch are that launch's alone: a report or a problem left by a failed
+    launch is evidence, not the result.
     """
     launches: list[Launch] = []
     for n in range(len(backoff) + 1):
-        result = launch(profile, prompt, cwd, attempt_dir / f"launch-{n + 1}", timeout, harnesses)
+        launch_dir = attempt_dir / f"launch-{n + 1}"
+        result = launch(profile, prompt, cwd, launch_dir, timeout, harnesses)
         launches.append(result)
         if result.ok:
             return Delivered(result, launches[:-1])
@@ -338,5 +343,8 @@ def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path
             raise UsageLimited(launches)
         if result.exit_code is None or n == len(backoff):
             raise LaunchFailed(launches)
+        if outputs is not None and outputs.is_dir() and any(outputs.iterdir()):
+            outputs.rename(launch_dir / outputs.name)
+            outputs.mkdir()
         sleep(backoff[n])
     raise AssertionError("unreachable")

@@ -310,9 +310,14 @@ No failed attempts, worker problems or operator judgments in any of the
 four; every check accepted. Per worker, the engine runs took about 3–4 min
 for the boundary, 4–7 min per analyst, 3 min for reconciliation, 3–5 min
 per verification, 4–6 min for the profile and 4 min for the synthesis.
-The engine's self-validation and prompt frame are what the headless prompt
-reproduces, so differences in attempts and corrections are the port's
-(or the model's variance), not the method's.
+These runs are operational context (what the engine route cost on this
+system), not a controlled comparison: they ran at four method commits, one
+without the workflow role, and a difference in attempts or corrections
+cannot be attributed to the orchestration alone (Astra's review,
+2026-10-19). Behavioural preservation rests on the fake-harness tests that
+exercise the same requirements (the correction protocol, budgets, the
+cascade, publication) under both routes; the live pilot establishes that
+real workers complete the workflow headlessly, and what that costs.
 
 First attempt (worktree `3def3fbc6430`, run
 `AAS-2026-10-19-dynamic-cheatsheet-3def3fbc6430-01`): opening and acquisition
@@ -327,6 +332,20 @@ Fixed: `Analysis` writes the type-only manifest at start, the validator
 binds identity values from the run's `parameters.json` as it did from the
 engine's `run.json`, and the fake worker now self-validates like a real
 worker. The pinned environment means a new worktree and run for the retry.
+
+Astra's review of the working tree (2026-10-19, during the second attempt)
+found two defects, both fixed in code: relaunches shared one `outputs/`
+directory, so a report or a stale `problem.md` left by a launch that exited
+nonzero was read as the next launch's result with that launch's provenance
+(now a failed launch's outputs move into its `launch-<n>/` directory before
+the relaunch, and only the successful launch's files are read); and the
+correction round's checks read the member map while sibling corrections
+updated it, so a check's outcome and the attempts it spent could depend on
+completion order (now every parallel round checks against a snapshot of the
+members present before it, as the initial round already did, and the
+collective re-check follows). The second pilot attempt runs on the commit
+before these fixes; neither defect can affect it unless a launch fails or
+two analysts are corrected in one round, which its records will show.
 
 ## Phase 4 results (2026-10-19)
 

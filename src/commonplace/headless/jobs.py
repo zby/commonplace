@@ -203,7 +203,7 @@ class Run:
         def run():
             return run_with_retries(self.profile, POINTER.format(path=attempt_dir / "prompt.md"),
                                     self.cwd, attempt_dir, self.timeout, sleep=self.sleep,
-                                    harnesses=self.harnesses)
+                                    harnesses=self.harnesses, outputs=attempt_dir / "outputs")
         if self._workers is None:
             return run()
         with self._workers:

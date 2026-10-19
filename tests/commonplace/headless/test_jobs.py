@@ -7,7 +7,10 @@ timeout on its first launch only (its marker is in the working directory, so
 it spans attempts and runs), INCOMPLETE exits 0 without writing, USAGE prints
 a usage-limit message and exits 1, SERIAL exits 1 with OVERLAP if another
 SERIAL worker is running, PROBLEM writes a problem, and "Problems found" in a
-retry prompt makes it write an accepted answer. It checks that every listed
+retry prompt makes it write an accepted answer. On its first launch only (the
+TRANSIENT marker), PARTIAL-EXIT writes every listed output and exits 1, its
+relaunch then exiting 0 without writing, and PROBLEM-EXIT writes a problem and
+exits 1, its relaunch then answering normally. It checks that every listed
 input file exists and is not empty. In a correction (a `refusal` input),
 ANSWERS=<n> writes n `- corrected:` lines to `answers`, and SAME on a first
 attempt repeats the previous primary output's bytes.
@@ -29,7 +32,13 @@ from commonplace.headless.harness import (
     Profile,
     UsageLimited,
 )
-from commonplace.headless.jobs import OutOfAttempts, Run, RunLocked, gather
+from commonplace.headless.jobs import (
+    IncompleteOutputs,
+    OutOfAttempts,
+    Run,
+    RunLocked,
+    gather,
+)
 
 FAKE = r'''
 import os, re, sys, time
@@ -41,6 +50,17 @@ marker = prompt_path.parent / "seen"
 if "TRANSIENT" in prompt and not marker.exists():
     marker.write_text("1")
     print("Our servers are currently overloaded. Please try again later.", file=sys.stderr)
+    sys.exit(1)
+if "PARTIAL-EXIT" in prompt:
+    if marker.exists():
+        sys.exit(0)
+    marker.write_text("1")
+    for name, path in re.findall(r"- `([\w-]+)`(?: \(optional\))?: write to `([^`]+)`", prompt):
+        Path(path).write_text(f"{name}: from the failed launch")
+    sys.exit(1)
+if "PROBLEM-EXIT" in prompt and not marker.exists():
+    marker.write_text("1")
+    Path(re.search(r"write why to `([^`]+)`", prompt).group(1)).write_text("left by the failed launch")
     sys.exit(1)
 if "USAGE" in prompt:
     print("Usage limit reached. Your limit resets at 5pm.")
@@ -65,7 +85,7 @@ for name, path in re.findall(r"- `([\w-]+)`: `([^`]+/inputs/[^`]+)`", prompt):
 if "BROKEN" in prompt:
     print("tool error", file=sys.stderr)
     sys.exit(1)
-if "PROBLEM" in prompt:
+if re.search(r"PROBLEM(?!-EXIT)", prompt):
     Path(re.search(r"write why to `([^`]+)`", prompt).group(1)).write_text("source unavailable")
     sys.exit(0)
 inputs = dict(re.findall(r"- `([\w-]+)`: `([^`]+/inputs/[^`]+)`", prompt))
@@ -165,6 +185,28 @@ def test_broken_launch_raises_after_two_relaunches(run, sleeps):
     assert len(e.value.launches) == 3, "a nonzero exit is relaunched twice"
     assert sleeps == [30, 120], sleeps
     assert list((run.root / "answers").glob("*.json")), "earlier answers remain"
+
+
+def test_a_failed_launchs_outputs_are_not_the_relaunchs_result(run, sleeps):
+    key = run.key("PARTIAL-EXIT.", ["report"], [])
+    with pytest.raises(IncompleteOutputs) as e:
+        run.ask("draft", "PARTIAL-EXIT.", ["report"])
+    assert e.value.missing == ["report"], e.value.missing
+    (record,) = run.failure_records(key)
+    assert record["kind"] == "incomplete" and run.failures(key) == 1, record
+    attempt = Path(record["attempt"])
+    assert (attempt / "launch-1" / "outputs" / "report.md").read_text() == "report: from the failed launch"
+    assert list((attempt / "outputs").iterdir()) == [], "the relaunch starts from an empty outputs directory"
+    assert sleeps == [30]
+
+
+def test_a_failed_launchs_problem_is_evidence_not_the_answer(run):
+    a = run.ask("draft", "PROBLEM-EXIT then GOOD.", ["report"])
+    assert a.problem is None and a.outputs == {"report": "report: good"}, (a.problem, a.outputs)
+    attempt = Path(a.record["attempt"])
+    assert (attempt / "launch-1" / "outputs" / "problem.md").read_text() == "left by the failed launch"
+    (failed,) = a.record["failed-launches"]
+    assert failed["exit"] == 1, failed
 
 
 def test_problem_is_a_result_not_a_failure(run):
