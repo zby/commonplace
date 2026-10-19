@@ -14,8 +14,9 @@ occur and would do harm. Implementing the guard does not test that
 conjecture. It fixes the condition at the one value where the conjecture and
 its negation predict the same outcome. Staleness held at zero produces no
 harm whether or not staleness would have harmed anyone. The only experiment
-that can eliminate the conjecture is to let the condition vary, which in
-software means shipping without the guard. So a guard written against an
+that can eliminate the conjecture is to let the condition occur and watch the
+outcome, which means running without the guard, in production or in a
+stand-in that can produce the harm. So a guard written against an
 untested requirement removes the experiment that would test it, and the
 absence of trouble afterwards corroborates nothing.
 
@@ -27,8 +28,8 @@ the conjecture the guard was written against.
 
 Treat the conjecture as a single edge in a causal graph, from the unguarded
 condition to user-visible harm. Passive observation eliminates a graph only
-when the data show an independence the graph forbids, and that needs the
-cause to vary. Interventions discriminate between graphs only at values where
+when the data show a dependence or independence the graph forbids, and either
+needs the cause to vary. Interventions discriminate between graphs only at values where
 the graphs predict different outcomes, as in [competing causal theories can
 guide distinguishing
 experiments](./competing-causal-theories-can-guide-distinguishing-experiments.md).
@@ -64,8 +65,8 @@ experiment grows more expensive the longer the guard stands. Sean Goedecke
 describes the endpoint, in [What requirements don't you
 have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md), as requirements
 that "petrify the system over time". On this note's reading, a petrified
-system is one whose design conjectures have all been immunized, so that none
-can be revised on evidence.
+system is one whose design conjectures have been immunized one by one, so
+that evidence can no longer revise them.
 
 ## Why test-selected implementers add guards
 
@@ -80,14 +81,14 @@ the executor cannot settle from doctrine, commission and evidence is a gap in
 the commission, and an executor facing a gap projects an interpretation into
 it. The projection lands on the safe side.
 
-The second is oracle asymmetry, and it decides the direction. The operative
-check on generated code is usually a test suite plus a review that looks for
-bugs. That oracle penalizes a missed edge case and does not penalize a
-carried guard, so from the implementer's side the guard's carrying cost reads
-as zero. Since [weakly discriminated qualities tend to be
+The second is oracle asymmetry, and it decides the direction. In the loops Goedecke describes, the operative
+check on generated code is a test suite plus a review that looks for bugs.
+That oracle penalizes a missed edge case at once and a carried guard rarely
+and late, so from the implementer's side the guard's carrying cost reads as
+near zero. Since [weakly discriminated qualities tend to be
 underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md),
 "solves only the problems this system has" is exactly the quality the loop
-fails to enrich. With a zero carrying cost, any conjecture of nonzero
+fails to enrich. With a carrying cost near zero, any conjecture of nonzero
 credence is worth guarding, and an instruction to make no mistakes raises the
 perceived cost of the missed case without touching the carrying cost, so it
 moves the threshold further toward guarding everything. Goedecke reports the
@@ -101,7 +102,7 @@ changes he reviews carrying a requirement the model introduced itself.
 The decision turns on two costs the implementer rarely holds: the cost of
 carrying the guard, and the cost of running the experiment, which is the
 cost of being wrong once without it. Where the experiment is cheap and
-reversible, omitting the guard is both the simpler design and the only way to
+reversible, omitting the guard is both the simpler design and the way to
 learn whether the requirement exists. This is the regime in which [ad hoc
 explanation can be rational when error is cheap and
 local](./ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md):
@@ -115,9 +116,9 @@ default, at a threshold the owner never set.
 
 A recorded non-requirement is the artifact this analysis calls for. It states
 that the owner ran the experiment, or chose to run it, and the conjectured
-requirement did not survive. It is also the one form of the ruling that can
-travel to a sub-agent, because a positive requirement leaves tests behind and
-a non-requirement leaves nothing unless someone writes it down.
+requirement did not survive. It is also what lets the ruling travel to a sub-agent: a positive
+requirement leaves tests behind, and a non-requirement leaves nothing unless
+someone writes it down.
 
 ## Scope
 
