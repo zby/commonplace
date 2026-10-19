@@ -11,10 +11,13 @@ When a tool call fails and the agent silently works around it, [final task succe
 
 This is not [interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) (spec was clear, model violated it), and it excludes specs that explicitly delegate discretion. It is the agent repairing a contract gap the spec didn't acknowledge — which means task completion alone cannot distinguish "the spec was sufficient" from "the agent improvised well enough."
 
+An unrequested guard is a common instance. Sean Goedecke reports, in [What requirements don't you have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md), agents adding a mutex or a mid-flight re-check the task never asked for. Whether to guard was a branch the spec left open; the agent resolved it toward guarding, and a passing diff hides that the resolution was the agent's rather than the spec's.
+
 ---
 
 Relevant Notes:
 
+- [What requirements don't you have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md) — evidenced-by: illustrates silent resolution of an open branch toward an unrequested guard; practitioner observation, not a test of the claim
 - [Final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — extends: this note carries the same non-identifiability argument one layer up, from tool failure to unacknowledged semantic underdetermination
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: ambiguity exists because natural-language specs admit multiple valid interpretations
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — sharpens: the first silent choice is already a degraded run state, not only a future maintenance problem
