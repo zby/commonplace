@@ -29,12 +29,12 @@ the conjecture the guard was written against.
 Treat the conjecture as a single edge in a causal graph, from the unguarded
 condition to user-visible harm. Passive observation eliminates a graph only
 when the data show a dependence or independence the graph forbids, and either
-needs the cause to vary. Interventions discriminate between graphs only at values where
+needs the condition to vary. Interventions discriminate between graphs only at values where
 the graphs predict different outcomes, as in [competing causal theories can
 guide distinguishing
 experiments](./competing-causal-theories-can-guide-distinguishing-experiments.md).
-A guard is an intervention, but at the non-discriminating value: it sets the
-cause to the level at which both the edge and its absence predict no harm.
+A guard is an intervention, but at the non-discriminating value: it holds the
+condition at the level where both the edge and its absence predict no harm.
 It therefore blocks both routes to elimination at once. Nothing varies, so
 observation cannot eliminate the edge, and the one intervention actually run
 is the one that cannot distinguish.
@@ -77,9 +77,9 @@ The first is missing information. Whether a stale read is acceptable is a
 decision premise the owner holds and the code does not express. By [an author
 should fix what the executor can't determine, not what it
 will](./fix-what-the-executor-cant-determine-not-what-it-will.md), a choice
-the executor cannot settle from doctrine, commission and evidence is a gap in
-the commission, and an executor facing a gap projects an interpretation into
-it. The projection lands on the safe side.
+the implementer cannot settle from doctrine, commission and evidence is a gap
+in the commission, and an implementer facing a gap projects an interpretation
+into it. The projection lands on the safe side.
 
 The second is oracle asymmetry, and it decides the direction. In the loops Goedecke describes, the operative
 check on generated code is a test suite plus a review that looks for bugs.
@@ -127,7 +127,7 @@ someone writes it down.
   stated as commitments. A stated requirement has already been weighed.
 - It concerns guards that suppress the condition. A guard that observes
   instead, such as a counter on lock contention or a log of stale reads,
-  preserves variance in the cause and keeps part of the experiment. It can
+  lets the condition vary and keeps part of the experiment. It can
   establish how often the condition occurs; it still cannot establish whether
   the condition would have harmed anyone, because the consequence remains
   suppressed.
@@ -160,7 +160,7 @@ Relevant Notes:
 - [competing causal theories can guide distinguishing experiments](./competing-causal-theories-can-guide-distinguishing-experiments.md) — mechanism: interventions discriminate only at values where rival graphs predict different outcomes
 - [domain pricing routes an exception to idealization assessment but does not decide it](./domain-pricing-routes-an-exception-to-idealization-assessment.md) — grounds: the immunizing move as defined for claims
 - [weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: why a test-only oracle sets the guard's carrying cost to zero
-- [an author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — grounds: a non-requirement is a choice the executor cannot settle from its commission
+- [an author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — grounds: a non-requirement is a choice the implementer cannot settle from its commission
 - [ad hoc explanation can be rational when error is cheap and local](./ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — extends: the cheap-and-local regime is where omitting the guard is the economical error-control policy
 - [commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — grounds: either resolution of the conjecture is a commitment the task did not entail
 - [current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — contrasts: that note prices entrenchment by reversibility; this note adds that an entrenched guard also forecloses learning
