@@ -20,7 +20,7 @@ stand-in that can produce the harm. So a guard written against an
 untested requirement removes the experiment that would test it, and the
 absence of trouble afterwards corroborates nothing.
 
-The claim is universal in mode. It is refuted by a suppressing guard under
+Claim mode: universal. It is refuted by a suppressing guard under
 which evidence later produced in the guarded system refutes or corroborates
 the conjecture the guard was written against.
 
@@ -92,13 +92,13 @@ should fix what the executor can't determine, not what it
 will](./fix-what-the-executor-cant-determine-not-what-it-will.md), a choice
 the implementer cannot settle from doctrine, commission and evidence is a gap
 in the commission, and an implementer facing a gap projects an interpretation
-into it. The projection lands on the safe side.
+into it. Which way the projection goes is settled by the second mechanism.
 
 The second is oracle asymmetry, and it decides the direction. In the loops
 Goedecke describes, the operative check on generated code is a test suite
 plus a review that looks for bugs. That oracle penalizes a missed edge case
 at once and a carried guard rarely and late, so from the implementer's side
-the guard's carrying cost reads as near zero. The oracle under-prices guards
+the guard's carrying cost appears near zero. The oracle under-prices guards
 for the reason the guard branch rarely meets its refuter: carrying cost
 arrives late and unattributed, so no check in the loop sees it. Since [weakly discriminated
 qualities tend to be
@@ -106,7 +106,7 @@ underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md),
 "solves only the problems this system has" is exactly the quality the loop
 fails to enrich. With a carrying cost near zero, any conjecture of nonzero
 credence is worth guarding. An instruction to make no mistakes raises the
-perceived cost of the missed case without touching the carrying cost, so it
+perceived cost of the missed case without changing the carrying cost, so it
 moves the threshold further toward guarding everything. Goedecke reports the
 visible result: models "obsessed with satisfying the Grader" introduce a
 mutex to keep semi-related data in sync, or a mid-flight re-check of data
@@ -125,11 +125,11 @@ explanation can be rational when error is cheap and
 local](./ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md):
 a wrong guess costs about one iteration and nothing downstream depends on it.
 Goedecke's dropped requirements are each a case where someone judged the
-experiment survivable: a stale page, a lost datapoint, a slow tail request.
+cost of the experiment acceptable: a stale page, a lost datapoint, a slow tail request.
 Where the experiment is expensive or irreversible, keeping the guard is
 rational even though it immunizes the conjecture, and the owner accepts that
-the question stays open. The error is not guarding as such. It is guarding by
-default, at a threshold the owner never set.
+the question stays open. The error is guarding by default, at a
+threshold the owner never set.
 
 A record of the untested side is the artifact this analysis calls for,
 whichever way the collapse went, because [design rationale must preserve
@@ -139,21 +139,22 @@ and neither the credence nor the two costs can be read back from the code. A
 recorded non-requirement states that the owner ran the experiment and the
 conjectured requirement did not survive, or chose to run it and accepts the
 exposure. It is also what lets the owner's decision reach a sub-agent: a
-positive requirement leaves tests behind, and a non-requirement leaves
-nothing unless someone writes it down.
+positive requirement is recorded in tests, and a non-requirement is recorded
+nowhere unless someone writes it down.
 
 ## Scope
 
 - The claim concerns requirements that are conjectures about the environment
-  (users, load, concurrency, failure rates), not requirements the owner has
-  stated as commitments. A stated requirement has already been weighed.
+  (users, load, concurrency, failure rates). Requirements the owner has stated
+  as commitments are outside it, because a stated requirement has already
+  been weighed.
 - It concerns guards that suppress the condition. A guard that observes
   instead, such as a counter on lock contention or a log of stale reads,
   lets the condition vary and keeps part of the experiment. It can
   establish how often the condition occurs but not whether the condition
   would have harmed anyone, because the consequence remains suppressed.
 - It assumes the harm, had it occurred, would have been observable. Where
-  harm is silent, omitting the guard runs the experiment without reading its
+  harm is unobservable, omitting the guard runs the experiment without reading its
   result.
 - The two-mechanism account of why implementers add guards is a conjecture
   about test-selected code generation, and the feedback-channel asymmetry is
