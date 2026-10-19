@@ -1,0 +1,48 @@
+{
+  "profile": "openai/gpt-6.1-sol medium; commonplace-worker project scope",
+  "max-active": 4,
+  "jobs": {
+    "jaz": {
+      "handle": "551f2f5a-8016-415a-bbef-bfe79359fa78",
+      "report": "audits/batch-23-jaz.md",
+      "state": "completed",
+      "result": "hold; replay concurrency and profile input coverage; parent reviewed",
+      "parent-read": true
+    },
+    "autogenesis": {
+      "handle": "c1aa29cf-97f7-47c9-8aee-75f44a38464e",
+      "report": "audits/batch-23-autogenesis.md",
+      "state": "completed",
+      "result": "hold; missing startup-import qualification; parent reviewed",
+      "parent-read": true
+    },
+    "arex-skill": {
+      "handle": "3992cf7e-6c82-4aea-aaf4-aaa512233df6",
+      "report": "audits/batch-23-arex-skill.md",
+      "state": "completed",
+      "result": "hold; reflection witness qualification; parent reviewed",
+      "parent-read": true
+    },
+    "contextpilot": {
+      "handle": "50f9a609-6508-4fa8-8673-e847bc575807",
+      "report": "audits/batch-23-contextpilot.md",
+      "state": "completed",
+      "result": "hold; training selector/fallback qualification; parent reviewed",
+      "parent-read": true
+    },
+    "openrsi": {
+      "handle": "62d60649-b163-40e4-a362-647d40967a41",
+      "report": "audits/batch-23-openrsi.md",
+      "state": "completed",
+      "result": "hold; private-answer shared mount qualification; parent reviewed",
+      "parent-read": true
+    },
+    "supermemory": {
+      "handle": "b67bcb96-6fd1-4d63-a5f0-781b60a357a1",
+      "report": "audits/batch-23-supermemory.md",
+      "state": "completed",
+      "parent-read": true,
+      "result": "integrate with recorded limits; parent source/public qualification check passed"
+    }
+  }
+}
