@@ -148,11 +148,12 @@ nowhere unless someone writes it down.
   (users, load, concurrency, failure rates). Requirements the owner has stated
   as commitments are outside it, because a stated requirement has already
   been weighed.
-- It concerns guards that suppress the condition. A guard that observes
-  instead, such as a counter on lock contention or a log of stale reads,
-  lets the condition vary and keeps part of the experiment. It can
-  establish how often the condition occurs but not whether the condition
-  would have harmed anyone, because the consequence remains suppressed.
+- It concerns guards that suppress the condition. A guard that only
+  observes, such as a log of stale reads, lets the condition vary and keeps
+  the whole experiment. A suppressing guard with instrumentation, such as a
+  counter on lock contention, measures how often the condition occurs but
+  not whether it would have harmed anyone, because the consequence remains
+  suppressed.
 - It assumes the harm, had it occurred, would have been observable. Where
   harm is unobservable, omitting the guard runs the experiment without reading its
   result.
