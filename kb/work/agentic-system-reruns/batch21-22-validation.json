@@ -143,6 +143,83 @@
       "exit": 0,
       "stdout": "=== VALIDATION: batch21-22-ontology-scope-stop.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
       "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/batch21-22-results.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/batch21-22-results.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: batch21-22-results.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/batch21-22-remainder.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/batch21-22-remainder.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: batch21-22-remainder.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/README.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/README.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: README.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/systems.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/systems.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: systems.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/batch21-22-commission.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/batch21-22-commission.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: batch21-22-commission.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/batch21-22-outcomes.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/batch21-22-outcomes.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: batch21-22-outcomes.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
+    },
+    {
+      "target": "kb/work/agentic-system-reruns/audits/batch-21-supermemory-75d21b14316b.md",
+      "command": [
+        "commonplace-validate",
+        "--full",
+        "kb/work/agentic-system-reruns/audits/batch-21-supermemory-75d21b14316b.md"
+      ],
+      "exit": 0,
+      "stdout": "=== VALIDATION: batch-21-supermemory-75d21b14316b.md ===\n\nType: text\n\nPASS:\n- [base] text file: no frontmatter, no structural requirements\n\nWARN:\n- (none)\n\nFAIL:\n- (none)\n\nINFO:\n- (none)\n\nOverall: PASS (clean)\n===\n",
+      "stderr": ""
     }
   ]
 }
