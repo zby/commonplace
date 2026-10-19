@@ -9,6 +9,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [step-program-demo](./step-program-demo/README.md) — meetup demo of memoized replay with computed and reported jobs; decide whether to extract it as a standalone module
 - [headless-analysis](./headless-analysis/README.md) — headless harness adapters, retries and a result cache for running the analysis workflow as a Python script; decide whether to replace the engine
 - [headless-engine-port](./headless-engine-port/README.md) — plan for porting `analyse-agentic-system` from the artifact-run engine onto headless workers driven by a Python script
+- [headless-workflow-extraction](./headless-workflow-extraction/README.md) — extract a reusable base for direct headless execution, retries and resumable results; keep KB types and environment preparation with callers, with Treadle as the predecessor
 
 - [agentic-system-reruns](./agentic-system-reruns/README.md) — rerun the full previously analysed population through the current workflow; 206 targets inventoried, with a fast report-only stats script
 
