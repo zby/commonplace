@@ -43,6 +43,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 import threading
 import time
 import uuid
@@ -50,12 +51,28 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from headless import HARNESSES, LaunchFailed, Profile, UsageLimited, model_used, run_with_retries
+from headless import (
+    HARNESSES,
+    LaunchFailed,
+    Profile,
+    UsageLimited,
+    model_used,
+    run_with_retries,
+)
 
 POINTER = ("Read the complete invocation at `{path}` and follow it. "
            "Recover any truncated read before proceeding.")
 PROBLEM = "problem"
 COUNTED_FAILURES = ("timeout", "incomplete")   # failure kinds that spend an attempt; "exit" does not
+TOKEN = re.compile(r"\{(input|output):([A-Za-z0-9_-]+)\}|\{(problem|scratch|attempt)\}")
+"""Attempt-path tokens a prompt may hold; `ask` fills them after the key is computed.
+
+The key covers the prompt with its tokens, so one prompt gives one key
+whatever attempt directory it lands in: `{input:<name>}` and
+`{output:<name>}` become that attempt's input and output files, `{problem}`
+its problem file, `{scratch}` a directory for intermediate files and
+`{attempt}` the attempt directory itself.
+"""
 
 
 def digest(text: str) -> str:
@@ -68,6 +85,7 @@ class Answer:
     outputs: dict[str, str]           # output name -> file content; absent optional outputs are missing
     problem: str | None               # the worker's report that it cannot do the job: a result, not a failure
     record: dict                      # provenance, as stored
+    attempts: int = 1                 # attempts `checked` spent reaching this answer, counted failures included
 
 
 class OutOfAttempts(Exception):
@@ -179,12 +197,20 @@ class Run:
 
         Each input is written to the attempt's `inputs/<name>.md` and listed
         in the invocation. The worker is told where to write each output and
-        that it may write `problem.md` instead. A failed launch, or a run that
+        that it may write `problem.md` instead; the prompt may place those
+        paths itself with the `TOKEN` forms, and a token naming no input or
+        output of the call is an error. A failed launch, or a run that
         exits 0 without every required output and without a problem, is
         appended to the key's failure log and raised; neither is cached. A
         usage-limited launch is raised without a failure record.
         """
         inputs = dict(inputs or {})
+        names = list(outputs) + list(optional)
+        unknown = [m.group(0) for m in TOKEN.finditer(prompt)
+                   if (m.group(1) == "input" and m.group(2) not in inputs)
+                   or (m.group(1) == "output" and m.group(2) not in names)]
+        if unknown:
+            raise ValueError(f"{job}: prompt names no input or output of this ask: {', '.join(unknown)}")
         key = self.key(prompt, outputs, list(optional), inputs)
         record_path = self.answers / f"{key}.json"
         with self._lock(key):                       # two callers of one key launch one worker
@@ -194,21 +220,23 @@ class Run:
             # The random suffix separates two attempts at one key within the same second.
             attempt_dir = (self.root / "attempts"
                            / f"{job}-{key[:8]}-{int(time.time())}-{uuid.uuid4().hex[:6]}")
-            out_dir = attempt_dir / "outputs"
+            out_dir, in_dir, scratch = attempt_dir / "outputs", attempt_dir / "inputs", attempt_dir / "scratch"
             out_dir.mkdir(parents=True)
-            invocation = prompt
+            scratch.mkdir()
+            paths = {"problem": out_dir / f"{PROBLEM}.md", "scratch": scratch, "attempt": attempt_dir}
+            invocation = TOKEN.sub(lambda m: str(in_dir / f"{m.group(2)}.md" if m.group(1) == "input"
+                                                 else out_dir / f"{m.group(2)}.md" if m.group(1) == "output"
+                                                 else paths[m.group(3)]), prompt)
             if inputs:
-                in_dir = attempt_dir / "inputs"
                 in_dir.mkdir()
                 for name, text in inputs.items():
                     (in_dir / f"{name}.md").write_text(text)
                 invocation += "\n\n## Inputs\n\n" + "\n".join(
                     f"- `{name}`: `{in_dir / (name + '.md')}`" for name in inputs)
-            names = list(outputs) + list(optional)
             invocation += "\n\n## Outputs\n\n" + "\n".join(
                 f"- `{name}`{' (optional)' if name in optional else ''}: write to `{out_dir / (name + '.md')}`"
                 for name in names) + (
-                f"\n\nIf you cannot do the job, write why to `{out_dir / (PROBLEM + '.md')}` instead.")
+                f"\n\nIf you cannot do the job, write why to `{paths['problem']}` instead.")
             (attempt_dir / "prompt.md").write_text(invocation)
             self.log(event="launch", job=job, key=key, attempt=str(attempt_dir))
             try:
@@ -273,8 +301,8 @@ class Run:
         failure: str | None = None
         last: Answer | None = None
         while True:
+            given = inputs(problems, last) if callable(inputs) else inputs   # before the prompt: it may depend on them
             prompt = build_prompt(problems)
-            given = inputs(problems, last) if callable(inputs) else inputs
             key = self.key(prompt, outputs, list(optional), given)
             counted = [f for f in self.failure_records(key) if f["kind"] in COUNTED_FAILURES]
             if counted:
@@ -292,6 +320,7 @@ class Run:
             except IncompleteOutputs:
                 continue                            # counted through the key's failure log
             used += self.failures(key) + 1
+            answer.attempts = used
             if answer.problem is not None:
                 return answer
             found = check(answer)
@@ -324,6 +353,8 @@ def gather(*calls, max_workers: int | None = None) -> list:
     The first exception is raised after every call has finished, so no worker
     is left running when the script stops.
     """
+    if not calls:
+        return []
     with ThreadPoolExecutor(max_workers=max_workers or len(calls)) as pool:
         futures = [pool.submit(c) for c in calls]
     return [f.result() for f in futures]

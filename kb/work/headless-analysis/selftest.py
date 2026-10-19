@@ -25,7 +25,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from corrections import correct
+from corrections import produce
 from headless import HARNESSES, Harness, LaunchFailed, Profile, UsageLimited
 from jobs import OutOfAttempts, Run, RunLocked, gather
 
@@ -66,14 +66,15 @@ if "BROKEN" in prompt:
 if "PROBLEM" in prompt:
     Path(re.search(r"write why to `([^`]+)`", prompt).group(1)).write_text("source unavailable")
     sys.exit(0)
-good = "Problems found" in prompt or "GOOD" in prompt
 inputs = dict(re.findall(r"- `([\w-]+)`: `([^`]+/inputs/[^`]+)`", prompt))
+structural = "refusal" in inputs and "not good" in Path(inputs["refusal"]).read_text()  # a check's finding
+good = "Problems found" in prompt or "GOOD" in prompt or structural
 for name, path in re.findall(r"- `([\w-]+)`(?: \(optional\))?: write to `([^`]+)`", prompt):
     if name == "answers" and "refusal" in inputs:
         n = int(re.search(r"ANSWERS=(\d+)", prompt).group(1))
         Path(path).write_text("".join(f"- corrected: fixed {i}\n" for i in range(n)))
         continue
-    if "SAME" in prompt and "Problems found" not in prompt and f"previous-{name}" in inputs:
+    if "SAME" in prompt and not structural and f"previous-{name}" in inputs:
         Path(path).write_text(Path(inputs[f"previous-{name}"]).read_text())
         continue
     Path(path).write_text(f"{name}: {'good' if good else 'bad'}")
@@ -144,7 +145,7 @@ def main():
             return [] if answer.outputs["report"].endswith("good") else ["not good"]
 
         c = run.checked("runtime", prompt, check, ["report", "answers"], optional=["answers"])
-        assert c.outputs["report"] == "report: good"
+        assert c.outputs["report"] == "report: good" and c.attempts == 2
         rejected = [line for line in (run.root / "log.jsonl").read_text().splitlines() if '"rejected"' in line]
         assert len(rejected) == 1, rejected
 
@@ -182,6 +183,20 @@ def check_inputs(run):
     changed = run.ask("runtime", "Write GOOD things.", ["report"], inputs={"source": "v2"})
     assert changed.key != a.key, "a changed input asks again"
     assert run.ask("draft", "Write GOOD things.", ["report"]).key != a.key
+    # Attempt-path tokens are filled after keying, so the key is the same for any attempt directory.
+    tokens = "Write GOOD things to {output:report} from {input:source}; scratch in {scratch}; or {problem}"
+    t = run.ask("runtime", tokens, ["report"], inputs={"source": "v1"})
+    assert t.key == run.key(tokens, ["report"], [], {"source": "v1"})
+    attempt = Path(t.record["attempt"])
+    written = (attempt / "prompt.md").read_text()
+    assert f"to {attempt / 'outputs' / 'report.md'} from {attempt / 'inputs' / 'source.md'}" in written, written
+    assert f"scratch in {attempt / 'scratch'}; or {attempt / 'outputs' / 'problem.md'}" in written, written
+    assert (attempt / "scratch").is_dir()
+    try:
+        run.ask("runtime", "Write to {output:nope}", ["report"])
+        raise AssertionError("a token naming no output must be refused")
+    except ValueError as e:
+        assert "{output:nope}" in str(e)
 
 
 def check_usage_limit(run, sleeps, check):
@@ -205,7 +220,7 @@ def check_attempt_counting(tmp, script, check):
     root = tmp / "counting"
     with fake_run(root, script) as run:
         ok = run.checked("runtime", lambda p: "SLOW-a then GOOD.", check, ["report"], attempts=2)
-        assert ok.outputs["report"] == "report: good" and run.failures(ok.key) == 1
+        assert ok.outputs["report"] == "report: good" and run.failures(ok.key) == 1 and ok.attempts == 2
         assert run.failure_records(ok.key)[0]["kind"] == "timeout"
         try:
             run.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=1)
@@ -284,18 +299,19 @@ REFUSAL = ("## Findings\n\n- runtime: the trace skips the fallback branch\n\n"
 
 
 def check_corrections(tmp, script, check):
-    previous = {"report": "report: bad v0"}       # a first attempt answers no refusal
+    previous = {"report": "report: bad v0"}       # the verifier refused this version
 
-    def prompt(problems):
-        return "Correct the report. ANSWERS=2 SAME" + (f"\n\nProblems found: {problems}" if problems else "")
+    def prompt(given):
+        assert given.keys() >= {"refusal", "previous-report"}, given.keys()
+        return "Correct the report. ANSWERS=2 SAME"
 
     with fake_run(tmp / "corrections", script) as run:
         # A "corrected" answer over identical bytes is refused; the next attempt
         # answers a structural refusal carrying the blockers, over the rejected output.
-        fixed = correct(run, "runtime", prompt, check, ["report"], member="runtime",
+        fixed = produce(run, "runtime", prompt, check, ["report", "answers"], member="runtime",
                         refusal=REFUSAL, previous=previous, attempts=2)
         assert fixed.outputs["report"] == "report: good", fixed.outputs
-        assert fixed.outputs["answers"].count("- corrected:") == 2
+        assert fixed.outputs["answers"].count("- corrected:") == 2 and fixed.attempts == 2
         events = [json.loads(line) for line in (run.root / "log.jsonl").read_text().splitlines()]
         rejected = [e for e in events if e["event"] == "rejected"]
         assert len(rejected) == 1 and "identical to its predecessor" in rejected[0]["problems"][-1], rejected
@@ -309,17 +325,47 @@ def check_corrections(tmp, script, check):
 
         # Too few answers for the blockers: one attempt, then out of attempts with the finding.
         try:
-            correct(run, "memory", lambda p: "Correct GOOD. ANSWERS=1", check, ["report"],
+            produce(run, "memory", lambda c: "Correct GOOD. ANSWERS=1", check, ["report", "answers"],
                     member="memory", refusal=REFUSAL, previous=previous, attempts=1)
             raise AssertionError("one answer for two blockers must be refused")
         except OutOfAttempts as e:
             assert "needs exactly 2 entries" in e.problems[-1][0], e.problems
 
         # Unstructured operator findings count as one blocker.
-        one = correct(run, "memory", lambda p: "Correct GOOD. ANSWERS=1", check, ["report"],
+        one = produce(run, "memory", lambda c: "Correct GOOD. ANSWERS=1", check, ["report", "answers"],
                       member="memory", refusal="the profile omits the eviction rule", previous=previous,
                       attempts=1)
         assert one.outputs["report"] == "report: good"
+
+        # A first attempt answers no refusal; its rejection hands the next attempt a
+        # structural refusal with no blockers (so no answer entries) over the rejected output.
+        seen = []
+        first = produce(run, "epistemic", lambda g: seen.append("refusal" in g) or "Write the report. ANSWERS=0",
+                        check, ["report", "answers"], member="epistemic", attempts=2, inputs={"boundary": "b1"})
+        assert seen == [False, True] and first.attempts == 2
+        assert first.outputs == {"report": "report: good", "answers": ""}, first.outputs
+        assert first.record["inputs"].keys() == {"boundary", "refusal", "previous-report", "previous-answers"}
+        handed = (Path(first.record["attempt"]) / "inputs" / "refusal.md").read_text()
+        assert handed == "## Findings\n\nnot good\n\n## Blockers\n\nnone\n", handed
+
+        # A role without an answers output repairs in its primary output alone: an unchanged
+        # refused version is refused, a changed one is accepted without answers.
+        try:
+            produce(run, "reconciliation", lambda g: "Reconcile. SAME", check, ["report"], member="reconciliation",
+                    refusal="the conflict table omits a record", previous={"report": "report: good"}, attempts=1)
+            raise AssertionError("an unchanged refused version must be refused")
+        except OutOfAttempts as e:
+            assert e.problems[-1] == [("[correction] answered a refusal with the refused version unchanged "
+                                       "and no new auxiliary output")], e.problems
+        changed = produce(run, "reconciliation", lambda g: "Reconcile GOOD.", check, ["report"],
+                          member="reconciliation", refusal="the conflict table omits a record",
+                          previous={"report": "report: good v0"}, attempts=1)
+        assert changed.outputs == {"report": "report: good"} and changed.record["inputs"].keys() == {
+            "refusal", "previous-report"}
+        # A rerun without a refusal still hands the previous outputs.
+        again = produce(run, "reconciliation", lambda g: f"Reconcile GOOD. {sorted(g)}", check, ["report"],
+                        member="reconciliation", previous={"report": "report: good"}, attempts=1)
+        assert again.record["inputs"].keys() == {"previous-report"} and "previous-report" in again.record["prompt"]
 
 
 if __name__ == "__main__":

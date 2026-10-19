@@ -283,6 +283,75 @@ The plan's phase 3, phase 4, phase 6 and the decision gate carry these into
 the work. The correction cascade in explicit order is the part the
 primitives have not yet demonstrated; it is phase 3's main result.
 
+## Phase 3 results (2026-10-19)
+
+The workflow script is `headless-analysis/analyse.py`: `start` allocates a
+run in a prepared worktree and `run` resumes one; `Analysis.analyse()` is
+the control flow, 325 lines in one class, with the plan file read as data
+(instructions, outputs, reads, budgets, criteria groups, declared checks and
+feedback, the frozen-source role, the prompt section). Prompts keep the
+engine's frame (`Follow <instruction> with:`, `name = value` lines, the
+rendered prompt section, reading batches and ranges); the attempt's paths
+enter through tokens `Run.ask` fills after keying. The primitives gained
+those tokens, `Answer.attempts` for per-job budgets, and `produce`, which
+covers a first attempt, its check-driven retries and a verifier's correction
+under one protocol, including the engine's rules for roles without an
+`answers` output. The prompt section now names
+`commonplace-validate {output} --artifact {artifact} --role {role}` for
+both routes.
+
+Verification: `headless-analysis/test_workflow.py` drives the script with a
+fake harness through the engine tests' prepared-worktree and local-Git
+fixtures, members built by the fixture generators (5 tests, slow): a
+complete run with one correction round (runtime and memory refused;
+runtime corrected before memory; epistemic and workflow not re-asked;
+reconciliation re-asked under a new key; the manifest's model is the
+harness-recorded one), blocked and out-of-scope boundaries (nothing but the
+boundary asked, not published), the verifier's budget exhausted (three
+verdicts, no correction after the third, nothing published), and a resume
+after a synthesis problem (no earlier role re-launched). The primitives
+selftest and the analysis and engine suites pass. An independent review of
+the script against the plan, ADRs 108/113/114, the engine's check and
+hand-out semantics and the exclusions found one defect (roles without an
+`answers` output were held to correction answers) and eight deviations;
+the script now matches the engine on: `previous-*` handed on every rerun,
+no attempt spent on a role whose reads are unchanged, partner snapshots per
+the derived check and apply jobs (identity, cites and frozen source for
+producers; reads for verifiers; no incumbent for verifiers), members
+re-checked against their partners after the parallel round and after each
+correction round with a structural refusal when one fails, line ranges for
+oversized inputs, the verifiers' `refusal:<role>` read absent as the engine
+resolved it, and a final assertion that every member passes its check
+before assembly. Parallel candidates are checked against the members
+present before their round, so a rerun's checks do not depend on thread
+timing.
+
+Deviations kept, to decide at phase 5:
+
+- Blockers at a verifier's last attempt stop the run before any correction
+  is asked (ADR 108's text); the engine still ran the refused authors'
+  corrections and a reconciliation before stopping.
+- Every check validates against all criteria groups plus the whole type
+  closure, a superset of the engine's per-job closure.
+- A refusal handed to a producer is the findings body; the engine prefixed
+  frontmatter with refusal id, version and scope.
+- Reconciliation asked afresh after a correction round spends its budget
+  (3), as in the engine; three rounds fit exactly, and a single check
+  rejection of a fresh reconciliation ends the run.
+
+Known gaps: the script's own code is not pinned by the worktree guards until
+phase 4 moves it into the package; `test_workflow.py` imports member
+generators from `test_profile.py` and `test_verification.py` (test modules
+as fixture libraries) and copies the types' link targets into the prepared
+worktree because the `prepared_template` fixture pins criteria whose links
+publication checks; both move into `tests/` fixtures in phase 4. The
+re-check path is exercised only by members that pass; no fixture fails
+against a sibling yet.
+
+Decision gate: 325 lines of control flow, no scheduler, no readiness or
+coverage state; the cascade is plain calls with per-job counters. Proceed
+to phase 4.
+
 ## Phase 2 results (2026-10-18)
 
 The domain code takes plain values; the engine keeps working through thin
@@ -405,6 +474,7 @@ Points the ADR retiring the engine must state:
   the verification cascade does not fit plain calls, or the script needs a
   scheduler (readiness or coverage state beyond the call stack), reconsider
   a small declarative layer before phase 4 rather than writing the scheduler.
+  Passed 2026-10-19 (phase 3 results).
 - Phase 5 is the decision point for adoption; nothing in phases 1–3 deletes
   engine code.
 - Batch launching (a shell loop over systems) is barred for batch 22; for the

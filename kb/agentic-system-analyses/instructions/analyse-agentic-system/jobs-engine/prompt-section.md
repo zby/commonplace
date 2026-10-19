@@ -31,7 +31,7 @@ Write your answers to the refusal's Blockers to `output-answers`, in the
 records contract's grammar.
 
 Before returning, run
-`{command-path}/commonplace-run validate-output {prompt-path}`
+`{command-path}/commonplace-validate {output} --artifact {artifact} --role {role}`
 as written, directly in a separate shell call, and inspect its complete result.
 The shell tool already reports its exit status. Appending a status-printing
 command can replace the validator's failure status with the printing command's
