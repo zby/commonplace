@@ -30,9 +30,8 @@ path, as the worktree's venv provides.
 
 from __future__ import annotations
 
-from jobs import Answer, Run, digest
-
 from commonplace.artifactrun.checks import correction_findings, refusal_findings
+from commonplace.headless.jobs import Answer, Run, digest
 
 ANSWERS = "answers"
 

@@ -24,7 +24,7 @@ member's format; attribution and record formats belong to its supplied contracts
 
 Analysis workers write only assigned working outputs. Retained analyses are frozen: substantive
 corrections require a new run. Assembly, acceptance and publication are
-coordinator tasks.
+code's, not a worker's.
 
 ## Placement and types
 

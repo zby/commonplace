@@ -44,12 +44,6 @@ def test_collection_method_inputs_cover_discovered_contracts_and_exclude_outputs
     assert REPO_ROOT / STATE_ROOT == collection / "state"
 
 
-def test_coordinator_driver_is_not_delivered_to_analysts() -> None:
-    driver = "agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md"
-    jobs = load_plan(yaml.safe_dump(expanded(LIBRARY)))
-    assert all(spec.source != driver for job in jobs.jobs for spec in job.inputs.values())
-
-
 def test_every_worker_whose_types_defer_to_the_records_contract_receives_it() -> None:
     """The delivery invariant contract consolidation rests on: a rule moved from a
     type into the records contract still reaches every worker that reads that type."""

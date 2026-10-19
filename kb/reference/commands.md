@@ -148,6 +148,11 @@ observation under a basename ending in the capture date.
 
 ### commonplace-analysis
 
+The analysis lifecycle: prepare a worktree, run the analysis in it, inspect,
+reset and integrate the run. The workflow is `commonplace.lib.agentic_analysis.workflow`
+over the headless primitives in `commonplace.headless`; see
+[the analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md).
+
 `prepare --name <system>` creates a dedicated Commonplace source
 worktree and installs and verifies its local command environment. It pins a
 commit and a 12-hex worktree token in the preparation record for distinct
@@ -155,52 +160,58 @@ analysis run IDs. By default it permits unrelated uncommitted origin changes,
 excludes their bytes from the worktree, and records their exclusion.
 `--require-clean-origin` instead rejects a dirty origin; startup instructions and
 configuration that differ from the selected commit always stop preparation. An
-optional command after `--` launches a fresh harness with the prepared working
-directory and environment. Without `--revision` it refuses a `HEAD` behind the
-default branch. It does not open or advance an analysis. Analysis mutation
-commands require the prepared checkout and its local executing code. Draft
-validation also uses that command environment. See
+optional command after `--` runs in the prepared worktree with its commands on
+`PATH`, such as a fresh harness or `commonplace-analysis run`. Without
+`--revision` it refuses a `HEAD` behind the default branch. Analysis run
+commands require the prepared checkout and its local executing code. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
-`start --system <name> --source-identity <identity> --source <input>`
-allocates a token-bearing run ID, pins the active plan, and
-prints its path without advancing or acquiring sources. Optional
-`--source-revision <full-40-hex-commit>` requires a GitHub identity. Worker
-provenance is not an opening parameter: report actual model/effort with
-completed results through `commonplace-run advance`.
+`run --system <name> --source-identity <identity> --source <input>
+--worker-profile <profile>` allocates a token-bearing run ID under
+`kb/agentic-system-analyses/state/`, prints its path and runs the whole
+workflow there: opening, source acquisition, each role's worker launched as a
+fresh headless session of the profile's harness, the analysis's checks,
+verification and corrections under the plan's attempt budgets, assembly and
+publication. Optional `--source-revision <full-40-hex-commit>` requires a
+GitHub identity; `--max-workers` (default 3) bounds concurrent workers and
+`--timeout` (default 10800 s) each launch. `run <run>` resumes an allocated,
+stopped or interrupted run: every worker answer is cached by its content, so
+only jobs whose inputs changed are asked again. The run holds a lock; a second
+`run` on the same directory is refused. Exit status 0 prints the publication
+receipt (`published: false` for a local `blocked` or `out-of-scope` result),
+2 means the run stopped and printed why (a usage limit, an environment
+failure, a worker's problem, an exhausted budget, blockers at a verifier's
+last attempt), 1 means the command failed. A job is retried by deleting its
+cache entry under `answers/` and rerunning.
 
-`inspect <run>` emits JSON engine evidence without changing logical
-state (locking may create a lock file). It distinguishes completed local
-`blocked`/`out-of-scope` dispositions from completion of the publication job.
-It reports attempts, current failures, historical `worker-problems` (including
-completed attempts), exhausted jobs, refusals and canonical peer drift.
-Completion does not establish that every worker obligation was fulfilled or
-every reported problem resolved. Missing historical problem text means not
-recorded, not proof that no problem occurred. Journal labels are unverified,
-and invocation-specific stops require the
-original advance result. It is not a retained-filesystem audit or an old-style
-handoff command.
+`inspect <run>` prints the run's state (`published`, `local`, `stopped` with
+its reason, `running`, `interrupted`), parameters, opening metadata, boundary
+disposition, verdicts, worker problems, each job's launches, answers (with
+their cache files) and failures, the accepted members' digests and the
+receipt, as JSON, from `log.jsonl`, the answer cache, `artifact/` and
+`receipt.json`. It changes nothing and is not a retained-filesystem audit.
 
-`integrate <run>` independently verifies engine completion, current
-coverage, exact pinned publication inputs, retained bytes, journal and archive
-evidence. After separate operator authorization it commits the published artifact and
-incumbent archive on an analysis branch and merges into `main`. The origin
-checkout must be clean and on `main`, regardless of preparation mode. A conflict
-leaves the branch and worktree for review while `main` stays unchanged. An agent
-supplies `--model <model-id>` for its commit trailer.
+`reset <run>` withdraws the run's unreleased worktree publication: it
+requires the publication journal and the exact published bytes, keeps them
+under the run's `withdrawn/` as evidence, restores the opening incumbent and
+deletes the receipt, so a rerun after changed members can publish again.
+Already integrated results are refused.
 
-These four subcommands are the entire analysis lifecycle surface. Scheduling
-and result submission belong to `commonplace-run`; assembly and publication are
-bound code jobs, not standalone commands. Old/mixed run directories are rejected,
-not converted. Retained data is preserved. Independently chosen handling of old
-evidence requires its archived method checkout; this tree has no compatibility
-adapter. See the
-[run driver](../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md)
-for coordination and stop rules.
+`integrate <run>` independently verifies the run's opening metadata and
+receipt against the retained bytes and the archive, then, after separate
+operator authorization, commits the published artifact and incumbent archive
+on an analysis branch and merges into `main`. The origin checkout must be clean
+and on `main`. A conflict leaves the branch and worktree for review while
+`main` stays unchanged. An agent supplies `--model <model-id>` for its commit
+trailer.
+
+Old engine run directories (`run.json`) are not read by these commands; their
+worktrees keep their own pinned commands.
 
 ### commonplace-run
 
-Run the generic engine on a plan, such as the active analysis workflow's.
+Run the generic engine on a plan. The analysis workflow no longer runs on it
+(`commonplace-analysis run` above); the engine stays until its retirement.
 `start <run> <plan.yaml>` writes
 the run's metadata, fixing the declaration for the run; a compact plan is
 expanded first, deriving each role's check or verdict application from the

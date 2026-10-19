@@ -47,11 +47,14 @@ import re
 import threading
 import time
 import uuid
+from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from pathlib import Path
+from typing import Self
 
-from headless import (
+from commonplace.headless.harness import (
     HARNESSES,
     LaunchFailed,
     Profile,
@@ -111,6 +114,27 @@ class RunLocked(Exception):
         self.root = root
 
 
+def _acquire(root: Path) -> int:
+    """Take the exclusive flock on `<root>/lock`; the descriptor holds it until closed."""
+    fd = os.open(root / "lock", os.O_RDWR | os.O_CREAT, 0o644)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        os.close(fd)
+        raise RunLocked(root) from None
+    return fd
+
+
+@contextmanager
+def run_lock(root: Path) -> Iterator[None]:
+    """Hold the lock a `Run` on `root` would take, so no run changes its records meanwhile."""
+    fd = _acquire(Path(root))
+    try:
+        yield
+    finally:
+        os.close(fd)
+
+
 class Run:
     """One workflow run: a working directory for workers and a directory for its records.
 
@@ -127,13 +151,7 @@ class Run:
         self.answers = self.root / "answers"
         self.artifact = self.root / "artifact"
         self.answers.mkdir(parents=True, exist_ok=True)
-        self._lock_fd: int | None = os.open(self.root / "lock", os.O_RDWR | os.O_CREAT, 0o644)
-        try:
-            fcntl.flock(self._lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            os.close(self._lock_fd)
-            self._lock_fd = None
-            raise RunLocked(self.root) from None
+        self._lock_fd: int | None = _acquire(self.root)
         self._workers = threading.BoundedSemaphore(max_workers) if max_workers else None
         self._locks: dict[str, threading.Lock] = {}
         self._guard = threading.Lock()
@@ -144,7 +162,7 @@ class Run:
             os.close(self._lock_fd)           # closing the descriptor releases the flock
             self._lock_fd = None
 
-    def __enter__(self) -> Run:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *exc) -> None:

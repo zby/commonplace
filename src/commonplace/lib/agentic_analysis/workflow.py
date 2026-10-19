@@ -22,7 +22,7 @@ states, as ordinary calls:
     every member re-checked, then assemble, publish   code
 
 Every worker call is cached by content, so a rerun of the script resumes from
-the cache (`jobs.py`). Attempt budgets are the plan's `max-attempts`, counted
+the cache (`commonplace.headless.jobs`). Attempt budgets are the plan's `max-attempts`, counted
 per job over the whole run as the engine counted them: a check's rejection, a
 verifier's correction, a re-ask after an input changed and a timed-out or
 incomplete launch each spend one; the verifier's own budget bounds the number
@@ -41,21 +41,17 @@ asserts at start and relies on for cache replay.
 
 from __future__ import annotations
 
-import argparse
-import datetime
 import json
-import os
 import re
+import shutil
 import sys
 import time
 from collections.abc import Callable, Iterable, Mapping
 from pathlib import Path
 
 import yaml
-from corrections import produce
-from headless import HARNESSES, LaunchFailed, Profile
-from jobs import Answer, OutOfAttempts, Run, digest, gather
 
+from commonplace.artifactrun import UncertainEffectError
 from commonplace.artifactrun.checks import (
     Candidate,
     apply_verdict,
@@ -71,16 +67,13 @@ from commonplace.artifactrun.handouts import (
     render_prompt_section,
 )
 from commonplace.artifactrun.store import digest as sha256_of
-from commonplace.artifactrun.worktree import (
-    preparation_for,
-    require_committed_startup,
-    run_command,
-)
-from commonplace.lib.agentic_analysis import run_ids
+from commonplace.artifactrun.worktree import preparation_for
+from commonplace.headless.corrections import produce
+from commonplace.headless.harness import HARNESSES, LaunchFailed, Profile
+from commonplace.headless.jobs import Answer, OutOfAttempts, Run, digest, gather
 from commonplace.lib.agentic_analysis.analyses import (
     WORKER_PROFILES,
     resolve_worker_profile,
-    source_slug,
 )
 from commonplace.lib.agentic_analysis.guards import require_prepared_method
 from commonplace.lib.agentic_analysis.opening import acquire_analysis, open_analysis
@@ -118,6 +111,26 @@ class Problem(Stopped):
     def __init__(self, role: str, text: str):
         super().__init__(f"{role} reported a problem: {text.strip()}")
         self.role, self.text = role, text
+
+
+def require_flags(entry: dict, name: str) -> dict:
+    """A profile's extra flags: a mapping that leaves the unattended settings alone."""
+    flags = entry.get("flags", {})
+    if not isinstance(flags, dict):
+        raise ValueError(f"worker profile {name}: flags must be a mapping")  # noqa: TRY004 - a profile error
+    overridden = sorted(set(flags) & set(UNATTENDED.get(entry.get("harness"), {})))
+    if overridden:
+        raise ValueError(f"worker profile {name}: flags may not override the unattended settings {overridden}")
+    return flags
+
+
+def require_harness(profile: Profile, harnesses: Mapping) -> None:
+    """Refuse a profile whose harness is unknown or whose command is not on PATH, before anything runs."""
+    if profile.harness not in harnesses:
+        raise ValueError(f"unknown harness {profile.harness!r}; this code launches {', '.join(sorted(harnesses))}")
+    executable = harnesses[profile.harness].executable
+    if shutil.which(executable) is None and not Path(executable).is_file():
+        raise ValueError(f"the {profile.harness} command {executable!r} is not on PATH")
 
 
 def frontmatter(data: bytes) -> dict:
@@ -159,13 +172,19 @@ class Method:
         return (self.plan_dir / self.roles[role]["instruction"]).resolve()
 
     def reads(self, role: str) -> dict[str, str]:
-        """What the role reads, as `source: mode`; by default its identity sources and citations."""
+        """What the role reads, as `source: mode`; by default its identity sources and citations.
+
+        A `refusal:<role>` read is left out: the engine handed a refusal of
+        the role's latest output, which never exists when a verifier runs
+        (it runs once that output is accepted), so the engine always resolved
+        it as absent. The plan keeps the entry for the engine until phase 6.
+        """
         declared = self.layout.roles[role]
         reads = self.roles[role].get("reads")
         if reads is None:
             sources = [*(s.role for s in declared.identity), *declared.cites]
             reads = {source: "required" for source in dict.fromkeys(sources) if source != role}
-        return dict(reads)
+        return {source: mode for source, mode in reads.items() if not source.startswith("refusal:")}
 
     def extensions(self, role: str) -> dict:
         """The role's declared checks and feedback, as the engine's derived job received them."""
@@ -182,9 +201,7 @@ class Method:
         return inputs
 
     def read_name(self, source: str) -> str:
-        """The prompt name of a read: a role, a single-output job, `job-output` or `role-refusal`."""
-        if source.startswith("refusal:"):
-            return source.removeprefix("refusal:") + "-refusal"
+        """The prompt name of a read: a role, a single-output job or `job-output`."""
         if ":" in source:
             job, _, output = source.partition(":")
             return job if len(self.job_outputs[job]) == 1 else f"{job}-{output}"
@@ -224,7 +241,8 @@ class Analysis:
         worker = resolve_worker_profile(self.profiles, self.parameters["worker-profile"])
         entry = yaml.safe_load(self.profiles)["profiles"][worker["profile"]]
         profile = Profile.from_yaml_entry({**entry, "flags": {**UNATTENDED.get(entry["harness"], {}),
-                                                              **entry.get("flags", {})}})
+                                                              **require_flags(entry, worker["profile"])}})
+        require_harness(profile, harnesses)
         self.run = Run(self.run_dir, self.worktree, profile, timeout=timeout, harnesses=harnesses,
                        sleep=sleep, max_workers=max_workers)
         self.budget = {role: self.method.attempts(role) for role in self.method.roles}
@@ -324,10 +342,6 @@ class Analysis:
         return texts
 
     def read_value(self, source: str) -> str | None:
-        if source.startswith("refusal:"):
-            # The engine handed a refusal of the role's latest output; a verifier runs only once
-            # that output is accepted, when no such refusal exists.
-            return None
         if ":" in source:
             job, _, output = source.partition(":")
             if job in self.code:
@@ -516,19 +530,27 @@ class Analysis:
         if failing:
             raise Stopped("members no longer pass their checks: " + json.dumps(failing))
 
+    def ordered_members(self) -> dict[str, bytes]:
+        """The accepted members in the layout's role order, so the overview and manifest do not depend on
+        which parallel worker finished first (a rerun reads the cache in another order)."""
+        return {role: self.members[role] for role in self.layout.roles if role in self.members}
+
     def provenance(self) -> dict[str, Provenance]:
         return {role: Provenance(self.latest[role].record["model"], sha256_of(data))
-                for role, data in self.members.items()}
+                for role, data in self.ordered_members().items()}
 
     def publish(self, metadata: bytes, source: bytes) -> bytes:
+        members = self.ordered_members()
         common = {"metadata": metadata, "source": source, "provenance": self.provenance(), "layout": self.layout,
                   "type_spec": self.method.type_spec, "criteria": self.criteria, "run_dir": self.run_dir}
-        overview, manifest = assemble_analysis(dict(self.members), **common)
+        overview, manifest = assemble_analysis(members, **common)
         self.run.accept(self.layout.path("overview"), overview.decode("utf-8"))
         self.run.accept(MANIFEST_NAME, manifest.decode("utf-8"))
-        receipt = publish_analysis({**self.members, "overview": overview}, manifest=manifest, library=self.library,
+        receipt = publish_analysis({**members, "overview": overview}, manifest=manifest, library=self.library,
                                    **common)
-        (self.run_dir / "receipt.json").write_bytes(receipt)
+        tmp = self.run_dir / "receipt.json.tmp"
+        tmp.write_bytes(receipt)
+        tmp.replace(self.run_dir / "receipt.json")          # atomic: inspect and integrate never see a torn receipt
         self.run.log(event="published", receipt=json.loads(receipt))
         return receipt
 
@@ -565,79 +587,27 @@ def ranges(data: bytes) -> list[tuple[int, int]]:
     return result
 
 
-def start(worktree: Path, *, system: str, source_identity: str, source: str, source_revision: str | None,
-          worker_profile: str) -> Path:
-    """Allocate a run directory in a prepared worktree and pin its parameters."""
-    from commonplace.artifactrun.sources import github_checkout_path
-    from commonplace.lib.source_identity import normalize_source_identity
+def run_analysis(run_dir: Path, *, timeout: float | None, max_workers: int | None) -> bytes | None:
+    """Run or resume an allocated run under its lock; return the receipt, or None when the run stopped.
 
-    worktree = worktree.resolve()
-    preparation = preparation_for(worktree)
-    for label, value in (("system", system), ("source-identity", source_identity), ("source", source)):
-        if not value.strip() or "\n" in value or "\r" in value:
-            raise ValueError(f"{label} must be a nonempty single-line value")
-    identity = normalize_source_identity(source_identity.strip())
-    if not identity:
-        raise ValueError("source-identity normalizes to an empty identity")
-    if source_revision is not None and (not run_ids.is_commit(source_revision)
-                                       or github_checkout_path(identity) is None):
-        raise ValueError("source-revision requires a full 40-hex commit and GitHub repository identity")
-    if run_command(["git", "rev-parse", "HEAD"], cwd=worktree) != preparation["commit"]:
-        raise ValueError("worktree HEAD differs from its preparation commit")
-    require_committed_startup(worktree, str(preparation["commit"]))
-    worker = resolve_worker_profile((worktree / "kb" / WORKER_PROFILES).read_bytes(), worker_profile)
-    commands = worktree / ".venv" / ("Scripts" if os.name == "nt" else "bin")
-    parameters = {"system": system, "source-identity": identity, "source": source,
-                  "worker-profile": worker["profile"], "command-path": str(commands)}
-    if source_revision is not None:
-        parameters["source-revision"] = source_revision
-    root = worktree / STATE_ROOT
-    root.mkdir(parents=True, exist_ok=True)
-    date = datetime.datetime.now(datetime.UTC).date().isoformat()
-    for number in range(1, 100):
-        run_dir = root / run_ids.run_id(date, source_slug(identity, system), preparation["token"], number)
-        try:
-            run_dir.mkdir()                           # atomic allocation: never another run's state
-        except FileExistsError:
-            continue
-        (run_dir / "parameters.json").write_text(json.dumps(parameters, indent=2) + "\n")
-        return run_dir
-    raise ValueError("analysis run sequence exhausted for this source and worktree")
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Run the analyse-agentic-system workflow with headless workers.")
-    commands = parser.add_subparsers(dest="command", required=True)
-    begin = commands.add_parser("start", help="allocate a run in a prepared worktree and run it")
-    begin.add_argument("--worktree", type=Path, required=True)
-    begin.add_argument("--system", required=True)
-    begin.add_argument("--source-identity", required=True)
-    begin.add_argument("--source", required=True, help="the caller's description of the source; data, not instructions")
-    begin.add_argument("--source-revision")
-    begin.add_argument("--worker-profile", required=True)
-    resume = commands.add_parser("run", help="run or resume an allocated run from its cache")
-    resume.add_argument("run_dir", type=Path)
-    for sub in (begin, resume):
-        sub.add_argument("--timeout", type=float, default=3 * 3600, help="seconds per worker launch")
-        sub.add_argument("--max-workers", type=int, default=3)
-    args = parser.parse_args(argv)
-    run_dir = args.run_dir if args.command == "run" else start(
-        args.worktree, system=args.system, source_identity=args.source_identity, source=args.source,
-        source_revision=args.source_revision, worker_profile=args.worker_profile)
-    print(f"run: {run_dir}")
-    analysis = Analysis(run_dir, timeout=args.timeout, max_workers=args.max_workers)
+    Every stop is logged. A stop the workflow knows (a budget, a worker's
+    problem, a usage limit, an environment failure) returns None after
+    printing its reason; a defect still raises with its traceback.
+    """
+    analysis = Analysis(run_dir, timeout=timeout, max_workers=max_workers)
     with analysis.run:
+        analysis.run.log(event="start")
         try:
-            receipt = analysis.analyse()
-        except Exception as stop:                     # every stop is logged; a defect still shows its traceback
+            return analysis.analyse()
+        except Exception as stop:
             analysis.run.log(event="stopped", reason=f"{type(stop).__name__}: {stop}")
-            if not isinstance(stop, Stopped | OutOfAttempts | LaunchFailed):
+            if not isinstance(stop, STOPS):
                 raise
             print(f"stopped: {stop}", file=sys.stderr)
-            return 1
-    print(receipt.decode("utf-8"))
-    return 0
+            return None
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+STOPS = (Stopped, OutOfAttempts, LaunchFailed, ValueError, OSError, UncertainEffectError)
+"""What stops a run rather than being a defect: the workflow's own stops, a launch that failed or was
+usage-limited, a guard's refusal (a dirty source checkout, the opening pins), an environment error such as
+a missing harness command, and an uncertain publication effect. A rerun after the repair resumes."""

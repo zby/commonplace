@@ -14,8 +14,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-from headless import Profile
-from jobs import Run
+from commonplace.headless.harness import Profile
+from commonplace.headless.jobs import Run
 
 # Removed before any launch; workers inherit os.environ.
 STRIPPED = ("OPENAI_API_KEY", "OPENAI_BASE_URL", "OPENAI_ORG_ID", "OPENAI_PROJECT_ID",

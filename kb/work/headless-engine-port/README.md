@@ -283,6 +283,95 @@ The plan's phase 3, phase 4, phase 6 and the decision gate carry these into
 the work. The correction cascade in explicit order is the part the
 primitives have not yet demonstrated; it is phase 3's main result.
 
+## Phase 4 results (2026-10-19)
+
+The code moved into the package and is pinned by the worktree guards like
+the rest: `headless-analysis/{headless,jobs,corrections}.py` became
+`src/commonplace/headless/{harness,jobs,corrections}.py` (plus `run_lock`,
+the lock a `Run` takes, for the commands that must not overlap a run), and
+`analyse.py` became `src/commonplace/lib/agentic_analysis/workflow.py`
+(`run_analysis` replaces its `main`). `commonplace-analysis` is now
+`prepare`, `run`, `inspect`, `reset` and `integrate`:
+
+- `run` starts a run (`--system`, `--source-identity`, `--source`,
+  `--worker-profile`, optional `--source-revision`, `--timeout`,
+  `--max-workers`) or resumes one (`run <run>`), exits 0 complete, 2
+  stopped, 1 failed, and refuses a second controller through the run lock.
+  `start` and `--harness` are gone (audit item 5): the profile is named, and
+  `worker-profiles.yaml` lost its per-harness `defaults`.
+- `inspect` is a status view over `log.jsonl`, the answer cache, `artifact/`
+  and `receipt.json`: state (`published`, `local`, `stopped` with reason,
+  `running`, `interrupted`, `allocated`), per-job launches, answers with
+  their cache files, failures and rejections, verdicts, problems, member
+  digests, receipt. A retry is deleting an answer's cache file and rerunning.
+- `reset` withdraws an unreleased worktree publication: the engine's reset
+  hook's checks were extracted into `_unreleased_publication`, shared with
+  the engine hook until phase 6; the withdrawn tree and journal move under
+  the run's `withdrawn/<time>/`, the incumbent moves back from the archive,
+  the receipt is deleted.
+- `integrate` proves publication from `code/opening.json`, `receipt.json`
+  and `parameters.json` against the retained bytes and the archive (audit
+  item 9); the engine's fixed-plan and type digest checks are dropped, since
+  `merge_paths` refuses tracked changes outside the merged paths, so a method
+  file changed in the worktree cannot be integrated.
+
+Instructions: `SKILL.md` rewritten for the headless route (confirm target,
+prepare, `run`, stops and reruns, report with `inspect`, integrate);
+`follow-worker-rules.md` without the coordinator residue (audit item 8:
+`job`, `attempt`, `worker-identity`, `workspace`, "Report your runtime",
+engine state, coordinator ownership; the inputs table names what
+`Analysis.prompt` and `Run.ask` emit, after the review added the frame's
+`identity`/`cites`/`verifies` and criteria-file names and the workflow stopped
+emitting the plan's always-absent `refusal:<role>` reads); `drive-a-code-scheduled-run.md`
+deleted with its redirects re-pointed at the skill; `publish-analysis.md`,
+the collection, `check-subagent-harness.md`, `commands.md`, the plan header,
+the Pi docs and the boundary instruction's title updated. The Pi coordinator
+agent (`.pi/agents/commonplace-coordinator.md`) stays: the rerun batches on
+main still launch through it, and batch launching for the new method is the
+phase 5 decision. `commonplace-run` and the engine stay until phase 6; the
+`jobs-engine/` directory name goes with them.
+
+Tests: `tests/commonplace/headless/test_jobs.py` (the selftest as 14 pytest
+tests, about 6 s), `tests/commonplace/agentic_analysis/test_workflow.py` (17
+slow tests, about 105 s: the five of phase 3 plus `inspect_analysis` after a
+complete run and after a stop, the CLI refusing a held run, a CLI stop then
+a retry by deleting the cache entry, `integrate` merging a published run into
+an origin's `main` through a linked worktree, `reset` withdrawing a
+publication with and without an incumbent and a rerun publishing the same
+bytes again without a launch, `reset` refused with nothing published, an
+interrupted withdrawal finished by a second `reset` while a `run` meanwhile
+stops, the state view after a stray `start`, and the profile refusals before
+any launch), the member generators moved from
+`test_profile.py`/`test_verification.py` into `execution_fixtures.py`, the
+`prepared_template` fixture completed with the types' link targets, and the
+lifecycle tests (`test_integration.py`, `test_worktree.py`,
+`test_analyses.py`) rewritten for the records. The engine's
+`commonplace-analysis inspect` test and the driver-delivery test were
+deleted with their subjects.
+
+An independent review of the phase (code, instructions, residue, exclusions)
+found no excluded mechanism restored and six defects, all fixed: `inspect`
+derived the state from the whole log, so a resumed run killed midway showed
+the old stop and a reset run showed `interrupted` (now the state is read from
+the events after the latest `start`, with `withdrawn` logged by `reset`); the
+exit-code contract excluded guard refusals, environment errors and uncertain
+effects (now every stop the workflow logs exits 2, `STOPS` in `workflow.py`);
+a profile's harness was checked only at the first launch, after acquisition
+(now `Analysis` refuses an unknown harness, a command missing from `PATH`,
+non-mapping `flags` and `flags` overriding the unattended settings before
+anything runs); `reset` on a run with nothing published deleted its receipt
+(now refused); a withdrawal interrupted between its two moves needed manual
+recovery (now the journal is marked `withdrawing` first and a second `reset`
+finishes it, while a `run` meanwhile stops on the unrecognised journal); the
+receipt was not written atomically. Writing the reset tests found a seventh:
+the overview and manifest listed members in the order the workers finished,
+so a rerun's publication bytes differed from the first run's; members are now
+ordered by the layout's roles and the rerun test compares the receipts byte
+for byte. The review's residue findings in
+`check-subagent-harness.md` (requirements A1, A2, R4 and the round probe
+still described a coordinator launching workers), `commands.md` and the Pi
+delegation contract were fixed too.
+
 ## Phase 3 results (2026-10-19)
 
 The workflow script is `headless-analysis/analyse.py`: `start` allocates a

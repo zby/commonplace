@@ -15,8 +15,8 @@ import os
 import sys
 from pathlib import Path
 
-from headless import Profile
-from jobs import Run
+from commonplace.headless.harness import Profile
+from commonplace.headless.jobs import Run
 from smoke import STRIPPED
 
 CHECKOUT = Path(__file__).resolve().parents[3]

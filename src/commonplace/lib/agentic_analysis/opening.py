@@ -109,7 +109,7 @@ def open_analysis(
 def acquire_analysis(metadata: bytes, run_dir: Path) -> bytes:
     """Acquire from pinned opening metadata without launching an analyst.
 
-    Its next model job consumes the engine-specific boundary hand-out.
+    The boundary worker reads the result as its `acquire` input.
     Git results are frozen source objects; JSON null means the boundary still
     has to establish a non-Git capture, not that a source check succeeded.
     """

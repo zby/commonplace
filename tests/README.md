@@ -41,7 +41,8 @@ All suite paths below are relative to `tests/commonplace/`.
 | Changed responsibility or production paths | Required subsystem suites, in addition to `general/` |
 |---|---|
 | `src/commonplace/artifactrun/`, `cli/run.py` | `artifactrun/`, `agentic_analysis/` (workflow consumer; include slow coverage for behavior changes) |
-| `lib/agentic_analysis/`, analysis plan, instructions, roles, schemas | `agentic_analysis/`; also `comparison/`, `validation/`, or `docs/` when their inputs/contracts change |
+| `src/commonplace/headless/` | `headless/`, `agentic_analysis/` (the workflow runs on it; its end-to-end tests are slow) |
+| `lib/agentic_analysis/`, `cli/analysis.py`, analysis plan, instructions, roles, schemas | `agentic_analysis/` (include the slow workflow tests for behavior changes); also `comparison/`, `validation/`, or `docs/` when their inputs/contracts change |
 | `src/commonplace/review/`, `cli/review/` | `review/`; also `freshness/` and `relocation/` when shared review state or selectors change |
 | `src/commonplace/freshness/`, `cli/freshness_*.py` | `freshness/`, `review/` |
 | `lib/validation.py`, `lifecycle_validation.py`, `full_pass.py`, validation/guard CLIs | `validation/`, `sources/`, `review/`, `agentic_analysis/`, `installation/` (validation consumers); include relevant slow analysis tests |

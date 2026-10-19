@@ -1,9 +1,4 @@
-"""Exercise headless.py, jobs.py and corrections.py with a fake harness; no model is called.
-
-    uv run python selftest.py
-
-(`uv run` from this directory finds the worktree's project, whose venv has the
-`commonplace` package that corrections.py imports.)
+"""Tests for the headless job primitives on a fake harness; no model is called.
 
 The fake worker reads the prompt file it is pointed at and writes each listed
 output. Words in the prompt choose its behaviour: TRANSIENT exits 1 once with
@@ -22,12 +17,19 @@ import hashlib
 import json
 import re
 import sys
-import tempfile
 from pathlib import Path
 
-from corrections import produce
-from headless import HARNESSES, Harness, LaunchFailed, Profile, UsageLimited
-from jobs import OutOfAttempts, Run, RunLocked, gather
+import pytest
+
+from commonplace.headless.corrections import produce
+from commonplace.headless.harness import (
+    HARNESSES,
+    Harness,
+    LaunchFailed,
+    Profile,
+    UsageLimited,
+)
+from commonplace.headless.jobs import OutOfAttempts, Run, RunLocked, gather
 
 FAKE = r'''
 import os, re, sys, time
@@ -80,13 +82,48 @@ for name, path in re.findall(r"- `([\w-]+)`(?: \(optional\))?: write to `([^`]+)
     Path(path).write_text(f"{name}: {'good' if good else 'bad'}")
 '''
 
+REFUSAL = ("## Findings\n\n- runtime: the trace skips the fallback branch\n\n"
+           "## Blockers\n\n- runtime: trace the fallback branch\n- runtime: bound the exclusion claim\n\n"
+           "## Scope\n\nverification of the runtime record\n")
+
 
 def fake_harness(script):
     return Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile, d: ({}, "fake-session"),
                    model_used=lambda launch: "fake-model-1" if launch.ok else None)
 
 
-def check_commands():
+def fake_run(root, script, **kw):
+    """A Run on the fake harness whose workers run in root's parent directory, with a 1 s timeout."""
+    return Run(root, root.parent, Profile("fake", "m", "low"), timeout=1,
+               harnesses={"fake": fake_harness(script)}, sleep=lambda s: None, **kw)
+
+
+def check(answer):
+    return [] if answer.outputs["report"].endswith("good") else ["not good"]
+
+
+@pytest.fixture
+def script(tmp_path):
+    path = tmp_path / "fake.py"
+    path.write_text(FAKE)
+    return path
+
+
+@pytest.fixture
+def sleeps():
+    return []
+
+
+@pytest.fixture
+def run(tmp_path, script, sleeps):
+    """A Run with no timeout that records the backoff waits instead of sleeping."""
+    run = Run(tmp_path / "run", tmp_path, Profile("fake", "m", "low"),
+              harnesses={"fake": fake_harness(script)}, sleep=sleeps.append)
+    yield run
+    run.close()
+
+
+def test_harness_commands():
     d = Path("/run/x")
     spec, session = HARNESSES["claude-code"].command(
         Profile("claude-code", "opus", "medium",
@@ -108,70 +145,51 @@ def check_commands():
     assert spec.argv()[:4] == ["pi", "--print", "--model", "gpt-6-luna:low"], spec.argv()
 
 
-def main():
-    check_commands()
-    with tempfile.TemporaryDirectory() as tmp:
-        tmp = Path(tmp)
-        script = tmp / "fake.py"
-        script.write_text(FAKE)
-        sleeps = []
-        run = Run(tmp / "run", tmp, Profile("fake", "m", "low"),
-                  harnesses={"fake": fake_harness(script)}, sleep=sleeps.append)
-
-        a = run.ask("draft", "Write GOOD things.", ["report"])
-        assert a.outputs == {"report": "report: good"}, a.outputs
-        assert a.record["model"] == "fake-model-1", "the harness-recorded model is the provenance"
-        again = run.ask("draft", "Write GOOD things.", ["report"])
-        assert again.record["attempt"] == a.record["attempt"], "second ask must be a cache hit"
-
-        t = run.ask("draft", "TRANSIENT then GOOD.", ["report"])
-        assert sleeps == [30] and len(t.record["failed-launches"]) == 1, (sleeps, t.record)
-
-        try:
-            run.ask("draft", "BROKEN.", ["report"])
-            raise AssertionError("BROKEN must raise")
-        except LaunchFailed as e:
-            assert len(e.launches) == 3, "a nonzero exit is relaunched twice"
-        assert sleeps == [30, 30, 120], sleeps
-        assert list((run.root / "answers").glob("*.json")), "earlier answers remain"
-
-        r = run.ask("boundary", "PROBLEM.", ["boundary"])
-        assert r.problem == "source unavailable" and r.outputs == {}
-
-        def prompt(problems):
-            return "Write the report." + (f"\n\nProblems found: {problems}" if problems else "")
-
-        def check(answer):
-            return [] if answer.outputs["report"].endswith("good") else ["not good"]
-
-        c = run.checked("runtime", prompt, check, ["report", "answers"], optional=["answers"])
-        assert c.outputs["report"] == "report: good" and c.attempts == 2
-        rejected = [line for line in (run.root / "log.jsonl").read_text().splitlines() if '"rejected"' in line]
-        assert len(rejected) == 1, rejected
-
-        results = gather(*(lambda r=role: run.ask(r, f"GOOD {r}", ["report"])
-                           for role in ("memory", "epistemic", "workflow")))
-        assert [x.outputs["report"] for x in results] == ["report: good"] * 3
-        assert re.fullmatch(r"[0-9a-f]{64}", results[0].key)
-
-        check_inputs(run)
-        check_usage_limit(run, sleeps, check)
-        run.close()
-        check_attempt_counting(tmp, script, check)
-        check_worker_limit(tmp, script)
-        check_run_lock(tmp, script)
-        check_accept(tmp, script)
-        check_corrections(tmp, script, check)
-    print("selftest passed")
+def test_ask_records_model_and_second_ask_hits_cache(run):
+    a = run.ask("draft", "Write GOOD things.", ["report"])
+    assert a.outputs == {"report": "report: good"}, a.outputs
+    assert a.record["model"] == "fake-model-1", "the harness-recorded model is the provenance"
+    again = run.ask("draft", "Write GOOD things.", ["report"])
+    assert again.record["attempt"] == a.record["attempt"], "second ask must be a cache hit"
 
 
-def fake_run(root, script, **kw):
-    """A Run on the fake harness whose workers run in root's parent directory, with a 1 s timeout."""
-    return Run(root, root.parent, Profile("fake", "m", "low"), timeout=1,
-               harnesses={"fake": fake_harness(script)}, sleep=lambda s: None, **kw)
+def test_transient_failure_relaunches_after_backoff(run, sleeps):
+    t = run.ask("draft", "TRANSIENT then GOOD.", ["report"])
+    assert sleeps == [30] and len(t.record["failed-launches"]) == 1, (sleeps, t.record)
 
 
-def check_inputs(run):
+def test_broken_launch_raises_after_two_relaunches(run, sleeps):
+    run.ask("draft", "Write GOOD things.", ["report"])
+    with pytest.raises(LaunchFailed) as e:
+        run.ask("draft", "BROKEN.", ["report"])
+    assert len(e.value.launches) == 3, "a nonzero exit is relaunched twice"
+    assert sleeps == [30, 120], sleeps
+    assert list((run.root / "answers").glob("*.json")), "earlier answers remain"
+
+
+def test_problem_is_a_result_not_a_failure(run):
+    r = run.ask("boundary", "PROBLEM.", ["boundary"])
+    assert r.problem == "source unavailable" and r.outputs == {}
+
+
+def test_checked_retries_with_problems_and_reports_attempts(run):
+    def prompt(problems):
+        return "Write the report." + (f"\n\nProblems found: {problems}" if problems else "")
+
+    c = run.checked("runtime", prompt, check, ["report", "answers"], optional=["answers"])
+    assert c.outputs["report"] == "report: good" and c.attempts == 2
+    rejected = [line for line in (run.root / "log.jsonl").read_text().splitlines() if '"rejected"' in line]
+    assert len(rejected) == 1, rejected
+
+
+def test_gather_runs_asks_in_parallel(run):
+    results = gather(*(lambda r=role: run.ask(r, f"GOOD {r}", ["report"])
+                       for role in ("memory", "epistemic", "workflow")))
+    assert [x.outputs["report"] for x in results] == ["report: good"] * 3
+    assert re.fullmatch(r"[0-9a-f]{64}", results[0].key)
+
+
+def test_inputs_keyed_by_digest_and_tokens_filled_after_keying(run):
     a = run.ask("runtime", "Write GOOD things.", ["report"], inputs={"source": "v1"})
     prompt_md = (Path(a.record["attempt"]) / "prompt.md").read_text()
     assert prompt_md.index("## Inputs") < prompt_md.index("## Outputs"), prompt_md
@@ -192,98 +210,75 @@ def check_inputs(run):
     assert f"to {attempt / 'outputs' / 'report.md'} from {attempt / 'inputs' / 'source.md'}" in written, written
     assert f"scratch in {attempt / 'scratch'}; or {attempt / 'outputs' / 'problem.md'}" in written, written
     assert (attempt / "scratch").is_dir()
-    try:
+    with pytest.raises(ValueError, match=re.escape("{output:nope}")):
         run.ask("runtime", "Write to {output:nope}", ["report"])
-        raise AssertionError("a token naming no output must be refused")
-    except ValueError as e:
-        assert "{output:nope}" in str(e)
 
 
-def check_usage_limit(run, sleeps, check):
-    before = list(sleeps)
+def test_usage_limit_is_neither_relaunched_nor_counted(run, sleeps):
     key = run.key("USAGE.", ["report"], [])
-    try:
+    with pytest.raises(UsageLimited) as e:
         run.ask("draft", "USAGE.", ["report"])
-        raise AssertionError("USAGE must raise")
-    except UsageLimited as e:
-        assert len(e.launches) == 1, "a usage-limited launch is not relaunched"
-    assert sleeps == before and run.failures(key) == 0, "no wait and no failure record"
-    try:   # attempts=1 is not consumed: checked launches again and stops on the limit
+    assert len(e.value.launches) == 1, "a usage-limited launch is not relaunched"
+    assert sleeps == [] and run.failures(key) == 0, "no wait and no failure record"
+    # attempts=1 is not consumed: checked launches again and stops on the limit
+    with pytest.raises(UsageLimited):
         run.checked("draft", lambda problems: "USAGE.", check, ["report"], attempts=1)
-        raise AssertionError("USAGE must raise")
-    except UsageLimited:
-        pass
     assert run.failures(key) == 0
 
 
-def check_attempt_counting(tmp, script, check):
-    root = tmp / "counting"
+def test_timeouts_and_incomplete_results_spend_attempts_across_runs(tmp_path, script):
+    root = tmp_path / "counting"
     with fake_run(root, script) as run:
         ok = run.checked("runtime", lambda p: "SLOW-a then GOOD.", check, ["report"], attempts=2)
         assert ok.outputs["report"] == "report: good" and run.failures(ok.key) == 1 and ok.attempts == 2
         assert run.failure_records(ok.key)[0]["kind"] == "timeout"
-        try:
+        with pytest.raises(OutOfAttempts) as e:
             run.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=1)
-            raise AssertionError("one attempt must not suffice")
-        except OutOfAttempts as e:
-            assert e.problems == [] and "timed out" in e.failure, (e.problems, e.failure)
+        assert e.value.problems == [] and "timed out" in e.value.failure, (e.value.problems, e.value.failure)
         key_b = run.key("SLOW-b then GOOD.", ["report"], [])
         launches = (root / "log.jsonl").read_text().count('"launch"')
     with fake_run(root, script) as rerun:   # a fresh Run sees the persisted failure
         assert rerun.failures(key_b) == 1
-        try:
+        with pytest.raises(OutOfAttempts):
             rerun.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=1)
-            raise AssertionError("the persisted failure must count")
-        except OutOfAttempts:
-            pass
         assert (root / "log.jsonl").read_text().count('"launch"') == launches, "stopped before launching"
         b = rerun.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=2)
         assert b.outputs["report"] == "report: good"
 
         # An incomplete result spends an attempt; a persistent nonzero exit stops the run without one.
-        try:
+        with pytest.raises(OutOfAttempts) as e:
             rerun.checked("memory", lambda p: "INCOMPLETE.", check, ["report"], attempts=2)
-            raise AssertionError("incomplete results must exhaust the attempts")
-        except OutOfAttempts as e:
-            assert "without outputs ['report']" in e.failure, e.failure
+        assert "without outputs ['report']" in e.value.failure, e.value.failure
         assert rerun.failures(rerun.key("INCOMPLETE.", ["report"], [])) == 2
-        try:
+        with pytest.raises(LaunchFailed):
             rerun.checked("memory", lambda p: "BROKEN.", check, ["report"], attempts=1)
-            raise AssertionError("a persistent nonzero exit must propagate")
-        except LaunchFailed:
-            pass
         key_broken = rerun.key("BROKEN.", ["report"], [])
         assert rerun.failures(key_broken) == 0 and rerun.failure_records(key_broken)[0]["kind"] == "exit"
         launches = (root / "log.jsonl").read_text().count('"launch"')
     with fake_run(root, script) as third:    # the exit failure is evidence, not a spent attempt
-        try:
+        with pytest.raises(LaunchFailed):
             third.checked("memory", lambda p: "BROKEN.", check, ["report"], attempts=1)
-            raise AssertionError("BROKEN still exits 1")
-        except LaunchFailed:
-            pass
         assert (root / "log.jsonl").read_text().count('"launch"') == launches + 1, "asked again after the rerun"
 
 
-def check_worker_limit(tmp, script):
-    with fake_run(tmp / "serial", script, max_workers=1) as run:
+def test_worker_limit_serialises_launches(tmp_path, script):
+    with fake_run(tmp_path / "serial", script, max_workers=1) as run:
         results = gather(*(lambda r=role: run.ask(r, f"SERIAL GOOD {r}", ["report"])
                            for role in ("memory", "epistemic", "workflow")))
         assert [x.outputs["report"] for x in results] == ["report: good"] * 3
 
 
-def check_run_lock(tmp, script):
-    first = fake_run(tmp / "locked", script)
-    try:
-        fake_run(tmp / "locked", script)
-        raise AssertionError("a second Run on a held root must fail")
-    except RunLocked as e:
-        assert e.root == tmp / "locked"
+def test_run_lock_refuses_a_second_run(tmp_path, script):
+    first = fake_run(tmp_path / "locked", script)
+    with pytest.raises(RunLocked) as e:
+        fake_run(tmp_path / "locked", script)
+    assert e.value.root == tmp_path / "locked"
     first.close()
-    fake_run(tmp / "locked", script).close()
+    fake_run(tmp_path / "locked", script).close()
 
 
-def check_accept(tmp, script):
-    with fake_run(tmp / "accept", script) as run:
+def test_accept_writes_the_artifact_and_logs_each_acceptance(tmp_path, script):
+    with fake_run(tmp_path / "accept", script) as run:
         path = run.accept("members/report.md", "accepted text")
         assert path == (run.artifact / "members" / "report.md").resolve()
         assert path.read_text() == "accepted text"
@@ -293,19 +288,14 @@ def check_accept(tmp, script):
         assert [e["path"] for e in events if e["event"] == "accepted"] == ["members/report.md"] * 2
 
 
-REFUSAL = ("## Findings\n\n- runtime: the trace skips the fallback branch\n\n"
-           "## Blockers\n\n- runtime: trace the fallback branch\n- runtime: bound the exclusion claim\n\n"
-           "## Scope\n\nverification of the runtime record\n")
-
-
-def check_corrections(tmp, script, check):
+def test_produce_runs_the_correction_protocol(tmp_path, script):
     previous = {"report": "report: bad v0"}       # the verifier refused this version
 
     def prompt(given):
         assert given.keys() >= {"refusal", "previous-report"}, given.keys()
         return "Correct the report. ANSWERS=2 SAME"
 
-    with fake_run(tmp / "corrections", script) as run:
+    with fake_run(tmp_path / "corrections", script) as run:
         # A "corrected" answer over identical bytes is refused; the next attempt
         # answers a structural refusal carrying the blockers, over the rejected output.
         fixed = produce(run, "runtime", prompt, check, ["report", "answers"], member="runtime",
@@ -324,12 +314,10 @@ def check_corrections(tmp, script, check):
         assert fixed.record["inputs"].keys() == {"refusal", "previous-report", "previous-answers"}
 
         # Too few answers for the blockers: one attempt, then out of attempts with the finding.
-        try:
+        with pytest.raises(OutOfAttempts) as e:
             produce(run, "memory", lambda c: "Correct GOOD. ANSWERS=1", check, ["report", "answers"],
                     member="memory", refusal=REFUSAL, previous=previous, attempts=1)
-            raise AssertionError("one answer for two blockers must be refused")
-        except OutOfAttempts as e:
-            assert "needs exactly 2 entries" in e.problems[-1][0], e.problems
+        assert "needs exactly 2 entries" in e.value.problems[-1][0], e.value.problems
 
         # Unstructured operator findings count as one blocker.
         one = produce(run, "memory", lambda c: "Correct GOOD. ANSWERS=1", check, ["report", "answers"],
@@ -350,13 +338,11 @@ def check_corrections(tmp, script, check):
 
         # A role without an answers output repairs in its primary output alone: an unchanged
         # refused version is refused, a changed one is accepted without answers.
-        try:
+        with pytest.raises(OutOfAttempts) as e:
             produce(run, "reconciliation", lambda g: "Reconcile. SAME", check, ["report"], member="reconciliation",
                     refusal="the conflict table omits a record", previous={"report": "report: good"}, attempts=1)
-            raise AssertionError("an unchanged refused version must be refused")
-        except OutOfAttempts as e:
-            assert e.problems[-1] == [("[correction] answered a refusal with the refused version unchanged "
-                                       "and no new auxiliary output")], e.problems
+        assert e.value.problems[-1] == [("[correction] answered a refusal with the refused version unchanged "
+                                         "and no new auxiliary output")], e.value.problems
         changed = produce(run, "reconciliation", lambda g: "Reconcile GOOD.", check, ["report"],
                           member="reconciliation", refusal="the conflict table omits a record",
                           previous={"report": "report: good v0"}, attempts=1)
@@ -366,7 +352,3 @@ def check_corrections(tmp, script, check):
         again = produce(run, "reconciliation", lambda g: f"Reconcile GOOD. {sorted(g)}", check, ["report"],
                         member="reconciliation", previous={"report": "report: good"}, attempts=1)
         assert again.record["inputs"].keys() == {"previous-report"} and "previous-report" in again.record["prompt"]
-
-
-if __name__ == "__main__":
-    main()

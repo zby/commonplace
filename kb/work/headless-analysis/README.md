@@ -24,76 +24,15 @@ of that isolation is copied.
 
 ## Files
 
-- `headless.py`: a worker profile (harness, `launch-model`, effort, optional
-  `flags`) and one headless launch per call. Commands are built as mdflow
-  builds them: a dictionary of flags (the harness's print-mode defaults, then
-  the profile's model and effort, then the profile's own `flags`) becomes
-  arguments, with `_subcommand` and `_env` for the builder and variadic flags
-  such as `--add-dir` written as `--flag=value` so they cannot swallow the
-  prompt. Stdin is closed, the worker's process group is killed on a timeout,
-  and a harness session ID is recorded for finding the transcript.
-  `run_with_retries` relaunches the same prompt after a nonzero exit, waiting
-  30 s and then 120 s, at most two relaunches; the coordinator-era rule that
-  relaunched only on three known provider messages was dropped on 2026-10-19,
-  since those messages were observed in a launch tool's results, not in
-  headless exits. A failed launch whose stdout or stderr contains "usage limit"
-  (any case) raises `UsageLimited` without a relaunch. A timeout raises
-  `LaunchFailed` at once. `model_used` reads the model the harness recorded
-  for a launch: Claude Code's JSON result (`modelUsage`), codex's session file
-  (`payload.model`) or pi's (`message.model`).
-- `jobs.py`: `Run.ask(job, prompt, outputs, optional, inputs)` writes the
-  prompt and each input (`inputs/<name>.md`, listed under "## Inputs") to an
-  attempt directory, points the worker at it, and returns the output files'
-  contents. A prompt may place the attempt's paths itself with the tokens
-  `{input:<name>}`, `{output:<name>}`, `{problem}`, `{scratch}` and
-  `{attempt}`, filled after the key is computed, so a frame such as
-  `output = <path>` costs no cache misses. Answers are cached by the hash of
-  the prompt (tokens unfilled), the inputs' sha256
-  digests, output names and profile; only successes are stored, each with its
-  provenance (profile, the harness-recorded model, session, times) and input
-  digests. A failed launch or incomplete result is appended to
-  `answers/<key>.failures.jsonl` with its kind (`timeout`, `incomplete` or
-  `exit`); a usage-limited launch is not. A worker may write `problem.md`
-  instead, which is a result the script decides about (the workflow's
-  `problem`; a refusal is code's rejection of a candidate). `Run.checked` is
-  the content retry loop: a failing check asks again with the problems in the
-  prompt; a timeout or incomplete result asks the same prompt again. Answered
-  asks, timeouts and incomplete results count toward the attempt limit,
-  including ones from an earlier run of the script; at the limit it raises
-  `OutOfAttempts`, and the returned answer's `attempts` says how many it
-  spent, so a script can keep one budget per job across calls. A launch that
-  still exits nonzero after its relaunches is
-  an environment failure: logged, not counted, and propagated like
-  `UsageLimited`, so the script stops and a rerun after the repair or the
-  reset resumes from the cache. `Run(max_workers=n)` bounds concurrent launches;
-  `gather` runs independent calls in parallel. A `Run` holds an exclusive
-  flock on `<root>/lock` until `close()` (it is a context manager); a second
-  `Run` on the root raises `RunLocked`. `Run.accept(path, content)` writes an
-  accepted output to `artifact/<path>` atomically. Events go to `log.jsonl`.
-- `corrections.py`: `produce(run, job, build_prompt, check, outputs, member=,
-  attempts=, refusal=, previous=, inputs=)` asks a producer for its outputs:
-  a first attempt without a refusal, or an answer to a verifier's `refusal`
-  over its `previous` outputs, under the engine's correction protocol: inputs
-  `refusal` and `previous-<name>`, an `answers` output with one `corrected:`
-  or `declined:` entry per blocker in order, "corrected" over identical bytes
-  refused, and any attempt the check rejects followed by a structural refusal
-  that carries the blockers forward over the rejected output.
-  `build_prompt(given)` receives the attempt's inputs, so the prompt can name
-  them. It reuses the engine's `correction_findings` and `refusal_findings`,
-  so it needs the `commonplace` package; phase 6 of the port moves those
-  functions out of the engine.
-- `analyse.py`: the workflow script, phase 3 of the port. `start` allocates a
-  run in a prepared worktree and `run` resumes one; `Analysis.analyse()` is
-  the control flow (see its docstring): the code jobs, each role's worker
-  through `produce` with the analysis's own checks, the ADR 108 correction
-  cascade in explicit order, assembly and publication from
-  `lib/agentic_analysis`. The plan file supplies data only (instructions,
-  reads, outputs, budgets, criteria, the prompt section); prompts keep the
-  engine's frame. `test_workflow.py` drives it with a fake harness through
-  the engine tests' prepared-worktree fixtures.
-- `selftest.py`: exercises the three modules with a fake harness; no model is
-  called. Run it as `uv run python selftest.py` from this directory, which
-  uses the worktree's venv.
+Phase 4 of the port (2026-10-19) moved the code into the package:
+`headless.py` is `src/commonplace/headless/harness.py`, `jobs.py` and
+`corrections.py` are `src/commonplace/headless/jobs.py` and `corrections.py`,
+`analyse.py` is `src/commonplace/lib/agentic_analysis/workflow.py` (its `start`
+and `run` commands are `commonplace-analysis run`), `selftest.py` is
+`tests/commonplace/headless/test_jobs.py` and `test_workflow.py` is
+`tests/commonplace/agentic_analysis/test_workflow.py`. Their designs are in
+the modules' docstrings. What stays here:
+
 - `smoke.py`: one tiny real job per named harness, run after removing API-key
   variables (`OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY` and
   similar) from the environment, so only subscription logins can serve it.
@@ -102,8 +41,8 @@ of that isolation is copied.
   availability) under each harness's permission settings, and the model each
   harness records as used.
 
-Run `uv run python selftest.py` from this directory; `python3 smoke.py codex pi`
-calls real models.
+Both import the package: run them as `uv run python smoke.py codex pi` and
+`uv run python probe.py ...` from this directory; both call real models.
 
 ## Evidence so far
 
@@ -153,10 +92,9 @@ calls real models.
 ## Open
 
 - **Permissions.** A headless worker cannot answer a permission prompt. The
-  project's settings must allow what analysts do, or the profile passes a
-  permission mode; which is right for the worktree is undecided.
-- **Status.** A command that summarises `log.jsonl` and the answer cache, to
-  replace `commonplace-analysis inspect`.
+  workflow passes each harness an unattended setting (`UNATTENDED` in
+  `workflow.py`: Claude Code `acceptEdits`, codex `workspace-write`, pi
+  `approve`), which phase 5's pilot checks against what analysts do.
 
 ## Closes when
 

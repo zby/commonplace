@@ -39,7 +39,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
         "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
-            "defaults: {pi: pi-luna}\nprofiles:\n  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}\n",
+            "profiles:\n  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}\n",
     }
     for name, content in files.items():
         path = root / name
@@ -218,26 +218,27 @@ def test_override_keeps_a_separate_token_and_rejects_a_foreign_record(origin: Pa
         iso.preparation_for(destination)
 
 
-def test_analysis_start_allocates_token_without_advancing(origin: Path, tmp_path: Path, monkeypatch) -> None:
-    import commonplace.artifactrun
-    from commonplace.lib.agentic_analysis.plan import PLAN
-
+def test_analysis_start_allocates_token_and_pins_parameters(origin: Path, tmp_path: Path, monkeypatch) -> None:
     prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
-    calls = []
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
-    monkeypatch.setattr(commonplace.artifactrun, "start_run", lambda *args, **kwargs: calls.append((args, kwargs)))
-    monkeypatch.setattr(commonplace.artifactrun, "advance", lambda *args, **kwargs: pytest.fail("must not advance"))
+    import commonplace.artifactrun
+
+    for name in ("start_run", "advance"):
+        monkeypatch.setattr(commonplace.artifactrun, name, lambda *args, **kwargs: pytest.fail("must not run the engine"))
     params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository",
-              "harness": "pi"}
+              "worker_profile": "pi-luna"}
     first = aw.start_analysis(tree, **params)
     second = aw.start_analysis(tree, **params)
     assert first.name.endswith(f"-{prepared['token']}-01")
     assert second.name.endswith(f"-{prepared['token']}-02")
-    assert calls[0][0] == (first, tree / "kb" / PLAN)
-    assert calls[0][1]["parameters"]["source-identity"] == "https://github.com/Example/Repo"
-    assert calls[0][1]["parameters"]["worker-profile"] == "pi-luna"
-    assert list(first.iterdir()) == []
+    assert first.parent == tree / aw.STATE_ROOT
+    assert json.loads((first / aw.PARAMETERS).read_text()) == {
+        "system": "Example", "source-identity": "https://github.com/Example/Repo", "source": "repository",
+        "worker-profile": "pi-luna", "command-path": str(tree / ".venv" / ("Scripts" if os.name == "nt" else "bin")),
+    }
+    # Allocation launches nothing: parameters are its only record.
+    assert [path.name for path in first.iterdir()] == [aw.PARAMETERS]
 
 
 @pytest.mark.parametrize("failure,message", [
@@ -346,38 +347,35 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
 
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
-def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, monkeypatch, capsys, disposition: str) -> None:
-    from hashlib import sha256
-
-    from commonplace.artifactrun import inspection
-
-    boundary = f"---\nresult-disposition: {disposition}\n---\n".encode()
-    (tmp_path / "artifact").mkdir()
-    (tmp_path / "artifact" / "boundary.md").write_bytes(boundary)
-    monkeypatch.setattr(inspection, "render_run_inspection", lambda run, **kw: json.dumps({
-        "state": "completed", "artifact": str(tmp_path / "artifact"), "members": {"boundary": sha256(boundary).hexdigest()},
-        "effects": {"publish": {"verified": False}},
-    }))
-    assert main(["inspect", str(tmp_path)]) == 0
+def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, capsys, disposition: str) -> None:
+    run = tmp_path / "worktree" / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
+    run.mkdir(parents=True)
+    (run / aw.PARAMETERS).write_text(json.dumps({"system": "Example"}))
+    (run / "log.jsonl").write_text(json.dumps({"event": "boundary", "disposition": disposition}) + "\n")
+    (run / aw.RECEIPT).write_text(json.dumps({"published": disposition == "complete"}))
+    assert main(["inspect", str(run)]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["result-disposition"] == disposition
-    assert result["completion"] == ("publication-job-completed" if disposition == "complete" else "local")
-    assert result["effects"]["publish"]["verified"] is False
+    assert result["state"] == ("published" if disposition == "complete" else "local")
+    assert result["parameters"] == {"system": "Example"}
 
 
+def test_run_cli_requires_start_options_or_a_run_alone(tmp_path: Path, capsys) -> None:
+    assert main(["run"]) == 1
+    assert "--system, --source-identity, --source, --worker-profile" in capsys.readouterr().err
+    run = tmp_path / "worktree" / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
+    run.mkdir(parents=True)
+    (run / aw.PARAMETERS).write_text("{}")
+    assert main(["run", str(run), "--system", "x"]) == 1
+    assert "a resumed run takes its parameters from its records" in capsys.readouterr().err
+    assert [path.name for path in run.iterdir()] == [aw.PARAMETERS]
 
-@pytest.mark.parametrize("choice,reason", [
-    ({"worker_profile": "opus"}, "unknown worker profile 'opus'; choose one of pi-luna"),
-    ({}, "name a worker profile or a harness with a default: pi"),
-    ({"harness": "codex"}, "name a worker profile or a harness with a default: pi"),
-    ({"worker_profile": "pi-luna", "harness": "codex"}, "worker profile pi-luna runs in pi, not codex"),
-])
-def test_analysis_start_refuses_an_unresolvable_worker_profile(origin: Path, tmp_path: Path, monkeypatch,
-                                                               choice, reason) -> None:
+
+def test_analysis_start_refuses_an_unknown_worker_profile(origin: Path, tmp_path: Path, monkeypatch) -> None:
     prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
-    with pytest.raises(ValueError, match=re.escape(reason)):
+    with pytest.raises(ValueError, match=re.escape("unknown worker profile 'opus'; choose one of pi-luna")):
         aw.start_analysis(tree, system="Example", source_identity="https://github.com/Example/Repo",
-                          source="repository", **choice)
+                          source="repository", worker_profile="opus")
     assert not (tree / "kb/agentic-system-analyses/state").exists()

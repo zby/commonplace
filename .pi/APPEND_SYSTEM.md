@@ -30,6 +30,7 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
   `commonplace-coordinator` only when commissioning a whole workflow whose
   standard skill requires worker launches; it exposes `subagent` while the
   ordinary worker does not. Delegation still requires the workflow's preflight.
+  No current skill requires it: the analysis skill runs its workers itself.
 - Always set `agentScope: "project"` for these agents. The extension's default
   scope is `user`, which does not search this project's `.pi/agents/`.
   Definitions are selected from the child's effective `cwd`. The extension
@@ -60,9 +61,6 @@ Do not launch an agent CLI through `bash` as a substitute for the tool.
   unless the call overrides them with `model` or `thinkingLevel`. Each call
   starts a fresh non-persisted session without the parent's conversation.
   Repository context still loads; this is not a filesystem sandbox.
-- For a code-scheduled job, pass the exact handoff prescribed by the workflow,
-  with its printed prompt path. Do not add parent context or read the job prompt
-  yourself. Dispatch all jobs of a round before advancing the workflow.
 - `fork_turns: "none"` expresses no parent conversation; this extension supplies
   that isolation by construction. It is not a supported tool argument. If any
   other launch requirement cannot be applied, report the launch failure rather

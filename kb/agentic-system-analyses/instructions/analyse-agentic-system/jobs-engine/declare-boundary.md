@@ -3,7 +3,7 @@ description: "Use for the boundary to classify one target and establish its froz
 type: types/instruction.md
 ---
 
-# Declare the boundary from the engine inputs
+# Declare the boundary from the acquired source
 
 Write the boundary that fixes this run's target, disposition and frozen evidence for every later job.
 

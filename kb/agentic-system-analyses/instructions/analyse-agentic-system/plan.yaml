@@ -1,19 +1,19 @@
-# The analyse-agentic-system plan for the artifact-run engine, in compact form.
-# commonplace.artifactrun.compact expands it when a run starts: each role
-# entry becomes its model job plus a derived check-<role>, or apply-<role>
-# for a verifying role, whose partners, criteria and correction inputs come
-# from the type's layout. Entries declare mission only: instruction, reads,
-# gates, attempts and the analysis's own checks. Every model job also
-# receives its member type, the types of the members it reads and the
-# prompt section, which the engine renders into its prompt.
-# Instructions and the prompt section are relative to this file; other file
-# inputs are library paths. Opening, acquisition,
-# assembly and publication are the analysis's own code jobs in the engine's
-# full form. Opening consumes the run parameters system, source-identity,
-# source and optional source-revision. Every model job prints system,
-# command-path (the prepared checkout's command directory), source-identity
-# and capture-directory as lines. Assembly and publication are gated by the
-# engine's coverage input.
+# The analyse-agentic-system plan: the method's data, read by the workflow
+# (commonplace.lib.agentic_analysis.workflow). Each role entry declares its
+# mission only: instruction, reads, attempts, criteria groups and the
+# analysis's own checks and feedback; the workflow's control flow (the order
+# of roles, the correction cascade, assembly and publication) is code, and a
+# role's check partners come from the type's layout. Every worker also
+# receives its member type, the types of the members it reads and the prompt
+# section, rendered into its prompt. Instructions and the prompt section are
+# relative to this file; other file inputs are library paths. Opening consumes
+# the run parameters system, source-identity, source and optional
+# source-revision. Every worker prompt prints system, command-path (the
+# prepared checkout's command directory), source-identity and
+# capture-directory as lines.
+# Until the artifact-run engine is retired, commonplace.artifactrun.compact
+# still expands this file into the engine's full form (a derived check-<role>
+# or apply-<role> job per role; the code jobs below).
 type: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
 prompt-section: jobs-engine/prompt-section.md

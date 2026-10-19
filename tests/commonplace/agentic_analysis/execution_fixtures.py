@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 from copy import deepcopy
@@ -24,6 +25,7 @@ from commonplace.artifactrun import sources as agentic_checkout
 from commonplace.artifactrun import start_run, worktree
 from commonplace.artifactrun.sources import JOURNAL
 from commonplace.artifactrun.store import RunStore
+from commonplace.lib.systems_matrix import AXES
 from tests.commonplace.agentic_analysis.fixtures import expanded
 from tests.commonplace.artifactrun.support import Coordinator
 
@@ -43,6 +45,7 @@ REPORT_TYPES = {
     "epistemic": "agentic-system-epistemic-report",
     "workflow": "agentic-system-workflow-report",
 }
+LINK = re.compile(r"\]\(([^)#\s]+\.md)(?:#[^)]*)?\)")
 KINDS = ["Components", "Operative objects", "Routes", "Claims", "Evidenced absences", "Behavioral-authority paths"]
 
 
@@ -128,6 +131,24 @@ def assert_stopped(c: Coordinator, job: str, reason: str) -> None:
     assert not c.handed() and not c.open and not c.status.publishable
 
 
+def copy_link_targets(library: Path) -> None:
+    """Copy the KB files the copied type specs link to, so link-health checks see a whole library.
+
+    The template copies only the method's directories; the type specs it pins
+    as criteria link to notes and reference documents outside them, and
+    assembly refuses an artifact whose criteria carry link warnings.
+    """
+    for spec in [*library.glob("types/*.md"), *library.glob("agentic-system-analyses/types/*.md")]:
+        for target in LINK.findall(spec.read_text()):
+            local = (spec.parent / target).resolve()
+            if not local.is_relative_to(library.resolve()) or local.exists():
+                continue
+            original = ROOT / "kb" / local.relative_to(library.resolve())
+            if original.is_file():
+                local.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(original, local)
+
+
 @pytest.fixture(scope="session")
 def prepared_template(tmp_path_factory) -> PreparedTemplate:
     """Build once; tests receive independent copies, including independent Git objects."""
@@ -147,6 +168,7 @@ def prepared_template(tmp_path_factory) -> PreparedTemplate:
     (repo / "src/commonplace/__init__.py").write_text("# Local package binding fixture.\n")
     (repo / "src/commonplace/artifactrun/engine.py").write_text("# Source-checkout marker.\n")
     (repo / ".gitignore").write_text("kb/agentic-system-analyses/state/\nrelated-systems/\n")
+    copy_link_targets(repo / "kb")
     git(repo, "init", "--quiet")
     git(repo, "config", "user.name", "Fixture")
     git(repo, "config", "user.email", "fixture@example.invalid")
@@ -374,3 +396,66 @@ def through_analysts(a):
     c.advance(*(c.result(member, report(a, member), answers="")
                 for member in ("memory", "epistemic", "workflow")))
     assert not c.status.stops
+
+
+def encoded(fields, body):
+    return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
+
+
+def member_fields(a, kind, **extra):
+    """Identity frontmatter for a profile, synthesis or verification member of type `kind`."""
+    return {
+        "type": f"agentic-system-analyses/types/{kind}.md",
+        "description": "Example System at the frozen local scripted fixture boundary",
+        "run-id": a.coordinator.run_dir.name,
+        "reviewed-boundary": a.source()["revision"], **extra,
+    }
+
+
+def memory_profile(a, **changes):
+    fields = member_fields(a, "agentic-system-memory-profile", **{
+        "source-identity": a.source()["identity"],
+        "memory-comparison": {
+            "version": 2, "scope": "Local scripted fixture; memory surfaces not inspected.",
+            "axes": {name: {"assessment": "uninspected", "units": [], "records": [],
+                            "note": "No analytical inspection; no comparison conclusion warranted."}
+                     for name in AXES},
+        },
+    })
+    fields.update(changes)
+    return encoded(fields, "# Example System memory profile\n\n## Comparison rationale\n\nNo analytical inspection was performed.\n")
+
+
+def synthesis(a, limitations="none", **changes):
+    fields = member_fields(a, "agentic-system-synthesis", **changes)
+    return encoded(fields, "# Example System synthesis\n\n## Bounded synthesis\n\n"
+                   "Local scripted fixture at SRC-1; no model analysis or execution evidence.\n\n"
+                   f"## Limitations\n\n{limitations}\n")
+
+
+def subject_verdict(a, blockers="none", limits="none", **changes):
+    """A profile or synthesis verifier's verdict, as bytes."""
+    fields = member_fields(a, "agentic-system-verification")
+    fields.update(changes)
+    return encoded(fields, "# Example System verification\n\n## Verification\n\n"
+                   "Scripted fixture only; no analytical verification was performed.\n\n"
+                   f"## Blockers\n\n{blockers}\n\n## Limits\n\n{limits}\n")
+
+
+def document(a, kind, body, **changes):
+    role_type = "reconciliation-report" if kind == "reconciliation" else "verification"
+    fields = {"type": f"agentic-system-analyses/types/agentic-system-{role_type}.md",
+              "description": f"Example System {kind} at the frozen local fixture boundary",
+              "run-id": a.coordinator.run_dir.name, "reviewed-boundary": a.source()["revision"]}
+    fields.update(changes)
+    return "---\n" + yaml.safe_dump(fields) + f"---\n\n# Example System {kind}\n\n" + body + "\n"
+
+
+def reconciliation(a, body="The fixture reports converge independently; SRC-1 fixes the evidence.", **changes):
+    return document(a, "reconciliation", "## Reconciliation\n\n" + body, **changes)
+
+
+def report_verdict(a, blockers="none", limits="none", **changes):
+    """The report verifier's verdict, as text."""
+    return document(a, "verification", "## Verification\n\nChecked the scripted fixture records against SRC-1; no model ran.\n\n"
+                    "## Blockers\n\n" + blockers + "\n\n## Limits\n\n" + limits, **changes)

@@ -26,7 +26,7 @@ def test_missing_target_requires_an_answer_before_preparation():
 
 
 def test_preparation_label_correction_is_not_general_setup_recovery():
-    text = " ".join(SKILL.read_text().split("## Isolated run setup\n", 1)[1].split("## 1. Open the run", 1)[0].split())
+    text = " ".join(SKILL.read_text().split("## Isolated run setup\n", 1)[1].split("## 1. Run the analysis", 1)[0].split())
     assert "only lowercase letters, digits and hyphens" in text
     assert "starting with a letter or digit (`[a-z0-9][a-z0-9-]*`)" in text
     assert 'use `--name ace` here and `--system "ACE"`' in text
@@ -35,7 +35,7 @@ def test_preparation_label_correction_is_not_general_setup_recovery():
     assert "with the target, source and scope unchanged" in text
     assert "For every other preparation failure, stop" in text
     assert "do not retry automatically" in text
-    assert "Do not open a run in the originating checkout" in text
+    assert "Do not start a run in the originating checkout" in text
     assert "If preparation fails, stop" not in text
 
 

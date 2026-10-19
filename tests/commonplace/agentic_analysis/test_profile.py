@@ -16,59 +16,29 @@ from commonplace.artifactrun import CodeAttempt
 from commonplace.artifactrun.handlers import apply_verification, check
 from commonplace.artifactrun.run import Resolved, Run
 from commonplace.artifactrun.store import RunStore
-from commonplace.lib.systems_matrix import AXES
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import candidate as boundary
 from tests.commonplace.agentic_analysis.execution_fixtures import (
+    encoded,
+    report,
+    synthesis,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    member_fields as identity,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    memory_profile as profile,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
-from tests.commonplace.agentic_analysis.execution_fixtures import report
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    subject_verdict as verdict,
+)
 
 pytestmark = pytest.mark.slow
-
-
-def encoded(fields, body):
-    return ("---\n" + yaml.safe_dump(fields, sort_keys=False) + "---\n\n" + body).encode()
-
-
-def identity(a, kind, **extra):
-    return {
-        "type": f"agentic-system-analyses/types/{kind}.md",
-        "description": "Example System at the frozen local scripted fixture boundary",
-        "run-id": a.coordinator.run_dir.name,
-        "reviewed-boundary": a.source()["revision"], **extra,
-    }
-
-
-def profile(a, **changes):
-    fields = identity(a, "agentic-system-memory-profile", **{
-        "source-identity": a.source()["identity"],
-        "memory-comparison": {
-            "version": 2, "scope": "Local scripted fixture; memory surfaces not inspected.",
-            "axes": {name: {"assessment": "uninspected", "units": [], "records": [],
-                            "note": "No analytical inspection; no comparison conclusion warranted."}
-                     for name in AXES},
-        },
-    })
-    fields.update(changes)
-    return encoded(fields, "# Example System memory profile\n\n## Comparison rationale\n\nNo analytical inspection was performed.\n")
-
-
-def synthesis(a, limitations="none", **changes):
-    fields = identity(a, "agentic-system-synthesis", **changes)
-    return encoded(fields, "# Example System synthesis\n\n## Bounded synthesis\n\n"
-                   "Local scripted fixture at SRC-1; no model analysis or execution evidence.\n\n"
-                   f"## Limitations\n\n{limitations}\n")
-
-
-def verdict(a, blockers="none", limits="none", **changes):
-    fields = identity(a, "agentic-system-verification")
-    fields.update(changes)
-    return encoded(fields, "# Example System verification\n\n## Verification\n\n"
-                   "Scripted fixture only; no analytical verification was performed.\n\n"
-                   f"## Blockers\n\n{blockers}\n\n## Limits\n\n{limits}\n")
 
 
 @pytest.fixture

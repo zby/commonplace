@@ -1,11 +1,9 @@
-# Worker profiles for analyse-agentic-system runs. A run names one profile at
-# start, or its harness's default; opening records it, and every worker of
-# the run uses it. `launch-model` is the name the harness selects a model by,
-# such as Claude Code's aliases, not a resolved version.
-defaults:
-  claude-code: sonnet
-  codex: codex-sol
-  pi: pi-sol
+# Worker profiles for analyse-agentic-system runs. A run names one profile
+# when it starts; opening records it, and every worker of the run uses it.
+# `launch-model` is the name the harness selects a model by, such as Claude
+# Code's aliases, not a resolved version; the manifest records the model the
+# harness reports. Optional `flags` are extra harness command-line flags, as
+# `commonplace.headless.harness` builds them.
 profiles:
   opus: {harness: claude-code, launch-model: opus, effort: medium}
   sonnet: {harness: claude-code, launch-model: sonnet, effort: medium}

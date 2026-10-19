@@ -130,9 +130,8 @@ files, use tools, invoke skills, spawn workers, or modify anything.
 ```
 
 Success establishes that one worker can run, not a maximum depth or capacity.
-For code-scheduled analysis jobs, use the exact handoff prescribed by
-`kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`.
-Do not add parent conversation or source interpretations to the job handoff.
+An analysis run (`commonplace-analysis run`) launches its own workers through
+the worker profile's headless harness; it needs no `subagent` launches.
 
 ## Rolling dispatch
 

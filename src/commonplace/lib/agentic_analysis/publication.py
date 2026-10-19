@@ -316,9 +316,66 @@ def publish_analysis(members: Mapping[str, bytes], *, metadata: bytes | None, so
                     **{name: opened.get(name) for name in RECEIPT_PINS})
 
 
+def _unreleased_publication(run_dir: Path, repo: Path, metadata: dict, anchor: str
+                            ) -> tuple[Path, Path | None, Path, str, dict | None]:
+    """This run's unreleased worktree publication: destination, archive, journal, its state and record.
+
+    The state is ``none`` (no journal; the destination holds the opening
+    incumbent), ``rolled-back`` (the journal says so and the destination holds
+    the incumbent) or ``established`` (the destination holds the published
+    bytes and the archive the exact incumbent). A withdrawal interrupted
+    after it marked the journal ``withdrawing`` is ``established`` while the
+    archive still holds the incumbent (the destination may already be moved
+    away) and ``rolled-back`` once the incumbent is back. Anything else, and
+    an already integrated result, raises. Caller holds the publication lock.
+    """
+    overview = safe(repo / metadata["review-path"])
+    destination = overview.parent
+    if destination.parent != repo / RETAINED_ROOT or overview.name != anchor:
+        raise ValueError("publication reset destination is not a retained analysis")
+    preparation = preparation_for(repo)
+    origin = Path(str(preparation["origin"]))
+    if origin == repo:
+        raise ValueError("publication reset only replaces an unreleased worktree result")
+    for published in [*(origin / RETAINED_ROOT).glob("*/overview.md"),
+                      origin / ARCHIVE_ROOT / run_dir.name / "overview.md"]:
+        if published.is_file() and _document(published.read_bytes()).frontmatter.get("run-id") == run_dir.name:
+            raise ValueError("publication is already integrated; reset only supports unreleased results")
+    journal = safe(run_dir / JOURNAL)
+    expected = metadata["expected-incumbent-sha256"]
+    if not journal.exists():
+        incumbent = tree(destination)
+        actual = "absent" if incumbent is None else hashes(incumbent).get(anchor)
+        if actual != expected:
+            raise ValueError("publication reset has no journal establishing the changed destination")
+        return destination, None, journal, "none", None
+    record = json.loads(journal.read_bytes())
+    if (record.get("run-id") != run_dir.name or record.get("destination") != str(destination)
+            or record.get("source-identity") != metadata["source-identity"]
+            or record.get("expected") != expected):
+        raise ValueError("publication reset journal differs from opening identity")
+    old, new = record.get("old"), record.get("new")
+    if not isinstance(new, dict) or (old is not None and not isinstance(old, dict)):
+        raise ValueError("invalid publication reset byte maps")
+    if ("absent" if old is None else old.get(anchor)) != expected:
+        raise ValueError("publication reset incumbent differs from opening")
+    archive = safe(Path(record["archive"])) if record.get("archive") else None
+    if (old is None) != (archive is None) or (archive and archive.parent != repo / ARCHIVE_ROOT):
+        raise ValueError("invalid publication reset archive")
+    now = hashes(tree(destination))
+    archived = hashes(tree(archive)) if archive else None
+    if record.get("state") in ("rolled-back", "withdrawing") and now == old and archived is None:
+        return destination, None, journal, "rolled-back", record
+    if record.get("state") == "withdrawing" and now in (None, new) and archived == old:
+        return destination, archive, journal, "established", record
+    if record.get("state") not in ("started", "completed") or now != new or archived != old:
+        raise ValueError("publication reset requires exact established publication bytes")
+    return destination, archive, journal, "established", record
+
+
 @contextmanager
 def reset_publish_analysis(run_dir: Path, job):
-    """Lock publication, then prepare withdrawal of this run's unreleased effect.
+    """Lock publication, then prepare withdrawal of an engine run's unreleased effect.
 
     Restore the opening incumbent (if any), so ordinary publication can run again
     with its unchanged opening metadata. The debugging snapshot retains withdrawn
@@ -342,47 +399,12 @@ def reset_publish_analysis(run_dir: Path, job):
         if opened is None:
             raise ValueError("publication reset requires opening metadata")
         metadata = _json(run.store.get(opened["outputs"]["metadata"]), "opening metadata")
-        overview = safe(repo / metadata["review-path"])
-        destination = overview.parent
-        if destination.parent != repo / RETAINED_ROOT or overview.name != run.layout.path("overview"):
-            raise ValueError("publication reset destination is not a retained analysis")
-        preparation = preparation_for(repo)
-        origin = Path(str(preparation["origin"]))
-        if origin == repo:
-            raise ValueError("publication reset only replaces an unreleased worktree result")
-        for overview in [*(origin / RETAINED_ROOT).glob("*/overview.md"),
-                         origin / ARCHIVE_ROOT / run_dir.name / "overview.md"]:
-            if overview.is_file() and _document(overview.read_bytes()).frontmatter.get("run-id") == run_dir.name:
-                raise ValueError("publication is already integrated; reset only supports unreleased results")
-        journal = safe(run_dir / JOURNAL)
-        expected = metadata["expected-incumbent-sha256"]
-        if not journal.exists():
-            incumbent = tree(destination)
-            anchor = run.layout.path("overview")
-            actual = "absent" if incumbent is None else hashes(incumbent).get(anchor)
-            if actual != expected:
-                raise ValueError("publication reset has no journal establishing the changed destination")
+        destination, archive, journal, state, _ = _unreleased_publication(
+            run_dir, repo, metadata, run.layout.path("overview"))
+        if state == "none":
             return []
-        record = json.loads(journal.read_bytes())
-        if (record.get("run-id") != run_dir.name or record.get("destination") != str(destination)
-                or record.get("source-identity") != metadata["source-identity"]
-                or record.get("expected") != expected):
-            raise ValueError("publication reset journal differs from opening identity")
-        old, new = record.get("old"), record.get("new")
-        if not isinstance(new, dict) or (old is not None and not isinstance(old, dict)):
-            raise ValueError("invalid publication reset byte maps")
-        anchor = run.layout.path("overview")
-        if ("absent" if old is None else old.get(anchor)) != expected:
-            raise ValueError("publication reset incumbent differs from opening")
-        archive = safe(Path(record["archive"])) if record.get("archive") else None
-        if (old is None) != (archive is None) or (archive and archive.parent != repo / ARCHIVE_ROOT):
-            raise ValueError("invalid publication reset archive")
-        now = hashes(tree(destination))
-        archived = hashes(tree(archive)) if archive else None
-        if record.get("state") == "rolled-back" and now == old and archived is None:
+        if state == "rolled-back":
             return [Replacement(journal)]
-        if record.get("state") not in ("started", "completed") or now != new or archived != old:
-            raise ValueError("publication reset requires exact established publication bytes")
         replacements = [Replacement(destination, archive), Replacement(journal)]
         if archive is not None:
             replacements.append(Replacement(archive))
@@ -390,6 +412,47 @@ def reset_publish_analysis(run_dir: Path, job):
 
     with publication_lock(repo):
         yield prepare
+
+
+def withdraw_publication(run_dir: Path, metadata: dict, *, anchor: str) -> dict:
+    """Withdraw a workflow run's unreleased worktree publication and restore the opening incumbent.
+
+    Requires the publication journal: with nothing published, there is
+    nothing to withdraw. The withdrawn destination and journal are kept under
+    the run's ``withdrawn/<time>/`` as evidence; the archive, when there was
+    an incumbent, moves back to the destination unchanged. The journal is
+    marked ``withdrawing`` before the moves, so a withdrawal interrupted
+    between them is finished by calling again, and a `run` meanwhile stops on
+    the unrecognised journal. Afterwards the unchanged opening metadata
+    supports an ordinary publication again. Caller holds the run lock; an
+    already integrated result is refused.
+    """
+    import datetime
+    import shutil
+    import uuid
+
+    from commonplace.artifactrun.effects import write_json
+    from commonplace.artifactrun.worktree import source_checkout
+
+    repo = source_checkout(run_dir)
+    if repo is None:
+        raise ValueError("publication reset requires an analysis worktree")
+    with publication_lock(repo):
+        destination, archive, journal, state, record = _unreleased_publication(run_dir, repo, metadata, anchor)
+        if state == "none":
+            raise ValueError("nothing to withdraw: no publication journal, and the destination holds the "
+                             "opening incumbent")
+        stamp = datetime.datetime.now(datetime.UTC).strftime("%Y%m%dT%H%M%SZ")
+        evidence = run_dir / "withdrawn" / f"{stamp}-{uuid.uuid4().hex[:6]}"
+        evidence.mkdir(parents=True)
+        if state == "established":
+            write_json(journal, {**record, "state": "withdrawing"})
+            if destination.exists():
+                shutil.move(destination, evidence / destination.name)
+            if archive is not None:
+                shutil.move(archive, destination)
+        shutil.move(journal, evidence / journal.name)
+        return {"state": state, "destination": str(destination), "evidence": str(evidence)}
 
 
 RECEIPT_PINS = ("run-id", "inputs-commit", "system", "source-identity", "source", "source-revision",

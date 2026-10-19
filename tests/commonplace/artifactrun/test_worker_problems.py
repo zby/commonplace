@@ -10,7 +10,6 @@ from commonplace.artifactrun.engine import _close
 from commonplace.artifactrun.inspection import run_inspection
 from commonplace.artifactrun.run import Run
 from commonplace.artifactrun.store import RunStore
-from commonplace.cli.analysis import main as analysis_main
 from commonplace.cli.run import main
 from tests.commonplace.artifactrun.support import COMPLETE_BRIEF
 
@@ -41,17 +40,6 @@ def test_completed_run_retains_problem_and_cli_exposes_it(coordinator, capsys):
     text = capsys.readouterr().out
     assert f"worker problem {handout.attempt} brief (completed):\n{REPORT}" in text
     assert "every reported problem resolved" in text
-
-
-def test_analysis_inspect_uses_shared_problem_history(coordinator, capsys):
-    c = coordinator
-    handout = c.handout("brief")
-    handout.problem.write_text(REPORT, encoding="utf-8")
-    c.through_brief()
-    assert analysis_main(["inspect", str(c.run_dir)]) == 0
-    view = json.loads(capsys.readouterr().out)
-    assert view["worker-problems"] == [problem_entry(handout)]
-    assert view["attempts"][0]["problem"] == REPORT
 
 
 def test_problem_without_output_survives_failure_and_correction(coordinator):

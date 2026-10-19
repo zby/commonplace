@@ -7,6 +7,9 @@ from properdocs.structure.files import File, Files, InclusionLevel
 
 from commonplace.docs import properdocs_hooks
 
+# Imported at collection: the fixture module reads the real library's layout when first imported.
+from tests.commonplace.agentic_analysis.fixtures import retained_fixture
+
 
 def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -263,7 +266,6 @@ def test_on_page_markdown_keeps_headless_tags_as_text(tmp_path: Path) -> None:
 
 def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_library) -> None:
     from commonplace.lib.systems_matrix import load_results
-    from tests.commonplace.agentic_analysis.fixtures import retained_fixture
     retained_fixture(tmp_path)
     docs_dir = tmp_path / "kb"
     readme = write(docs_dir / "agentic-system-analyses/README.md", "# Analyses\n")

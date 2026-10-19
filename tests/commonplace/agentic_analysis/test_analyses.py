@@ -13,20 +13,16 @@ def document(values: str):
     return parsed
 
 
-def test_shipped_ultramarine_profile_does_not_change_pi_default() -> None:
+def test_shipped_profiles_resolve_by_name() -> None:
     profiles = (Path(__file__).resolve().parents[3] / "kb" / analyses.WORKER_PROFILES).read_bytes()
-    assert analyses.resolve_worker_profile(profiles, "pi-ultramarine", harness="pi") == {
+    assert analyses.resolve_worker_profile(profiles, "pi-ultramarine") == {
         "profile": "pi-ultramarine",
         "harness": "pi",
         "launch-model": "paperinstruments/ultramarine-1-flash",
         "effort": "off",
     }
-    assert analyses.resolve_worker_profile(profiles, None, harness="pi") == {
-        "profile": "pi-sol",
-        "harness": "pi",
-        "launch-model": "gpt-6.1-sol",
-        "effort": "medium",
-    }
+    with pytest.raises(ValueError, match=r"unknown worker profile 'nobody'; choose one of .*pi-ultramarine"):
+        analyses.resolve_worker_profile(profiles, "nobody")
 
 
 @pytest.mark.parametrize("identity,expected", [

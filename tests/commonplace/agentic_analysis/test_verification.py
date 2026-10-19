@@ -14,6 +14,7 @@ from commonplace.artifactrun.store import RunStore, digest
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     parameters,
+    reconciliation,
     report,
     through_analysts,
 )
@@ -25,6 +26,9 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    report_verdict as verdict,
 )
 from tests.commonplace.artifactrun.support import Coordinator
 
@@ -51,24 +55,6 @@ def records(request, tmp_path):
     through_analysts(a)
     assert c.handed() == {"reconciliation"}
     return a
-
-
-def document(a, kind, body, **changes):
-    role_type = "reconciliation-report" if kind == "reconciliation" else "verification"
-    fields = {"type": f"agentic-system-analyses/types/agentic-system-{role_type}.md",
-              "description": f"Example System {kind} at the frozen local fixture boundary",
-              "run-id": a.coordinator.run_dir.name, "reviewed-boundary": a.source()["revision"]}
-    fields.update(changes)
-    return "---\n" + yaml.safe_dump(fields) + f"---\n\n# Example System {kind}\n\n" + body + "\n"
-
-
-def reconciliation(a, body="The fixture reports converge independently; SRC-1 fixes the evidence.", **changes):
-    return document(a, "reconciliation", "## Reconciliation\n\n" + body, **changes)
-
-
-def verdict(a, blockers="none", limits="none", **changes):
-    return document(a, "verification", "## Verification\n\nChecked the scripted fixture records against SRC-1; no model ran.\n\n"
-                    "## Blockers\n\n" + blockers + "\n\n## Limits\n\n" + limits, **changes)
 
 
 def judgments(a, job):

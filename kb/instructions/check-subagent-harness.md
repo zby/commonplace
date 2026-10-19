@@ -30,18 +30,22 @@ layer.
 
 ### Layer 1: orchestrate one analysis
 
-An analysis coordinator runs the `analyse-agentic-system` workflow in its
-prepared isolated worktree. Code schedules the jobs; the coordinator launches
-fresh analytical workers using the exact printed handoffs, collects their
-completion or failure and submits results to the engine. It launches every
-handout in a round before the next advance and waits for that round to settle.
-It does not select analytical jobs, judge outputs, invent retries or bypass stops.
+An analysis runs as one `commonplace-analysis run` process in its prepared
+isolated worktree. Code schedules the jobs and launches every analytical
+worker itself, as a fresh headless session of the worker profile's harness
+(`claude -p`, `codex exec` or `pi -p`); the agent commissioning the analysis
+launches no workers. It confirms the target, prepares the worktree, starts the
+run, waits for it to exit, and reports with `commonplace-analysis inspect`. It
+does not select analytical jobs, judge outputs, invent retries or bypass stops.
 
-The operational interface is the current analysis skill and
-`kb/agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md`.
-This check does not execute that workflow. A layer-1 assessment establishes that
-an agent already acting as the analysis coordinator can launch and manage its
-workers; it need not establish that an outer agent can launch that coordinator.
+The operational interface is the current analysis skill,
+`kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md`.
+This check does not execute that workflow. A layer-1 assessment establishes
+that an agent in this harness can run a shell command lasting hours in a
+chosen working directory, wait for its exit and read its status and output;
+the harness's own subagent tool is not involved. Whether a harness can serve
+as the workers' headless harness is a separate question, answered by the
+worker-profile probes, not by this check.
 
 ### Layer 2: orchestrate the outer rerun workflow
 
@@ -52,7 +56,7 @@ hold, refill that slot without waiting for the other pipelines. The outer
 orchestrator owns assignments, recovery decisions and serial integration.
 
 Layer 2 needs layer 1 inside a delegated coordinator, establishing the full
-outer orchestrator → analysis coordinator → analytical worker path. Four is the
+outer orchestrator → analysis coordinator → `commonplace-analysis run` path. Four is the
 outer pipeline count, not a global limit on all descendants. The inner round
 boundary must not become a barrier between independent outer pipelines. Report
 the two layers separately; layer 1 can pass while layer 2 is unsupported.
@@ -65,19 +69,19 @@ Separate runtime-enforced properties from instructions the model must obey.
 | ID | Applies to | Required behavior and evidence |
 |---|---|---|
 | B1 | Layer 1, inherited by layer 2 | Launch a genuinely fresh conversation without parent turns, summaries, prior answers or automatic answer forwarding. Shared repository rules are allowed and must be identified. A request to “ignore history” is not isolation. |
-| B2 | Both layers | Deliver the exact task handoff, including an absolute invocation-file path when supplied. The child can read the complete file and recover truncated reads. Do not replace a code-scheduled handoff with the parent's interpretation. |
+| B2 | Both layers | Deliver the exact task handoff, including an absolute invocation-file path when supplied. The child can read the complete file and recover truncated reads. Do not replace a supplied handoff with the parent's interpretation. |
 | B3 | Both layers | Deliver applicable standing instructions and job contracts with known authority. Identify what is automatically loaded, explicitly read, or absent; do not assume inheritance across harnesses. |
 | B4 | Both layers | Provide the job's needed file and command tools. Select or verify the requested model and reasoning effort through supported overrides or binding inheritance. Report requested and runtime-exposed identity separately; never infer execution identity from a role name or successful reply. Unknown required settings block model-specific work. |
 | B5 | Both layers | Execute in the commissioned directory with the intended code, command environment and resources. A worker in another worktree must not silently use the origin's definitions or shared editable installation. Identify cwd, executable resolution and definition/configuration origins. |
 | B6 | Both layers | Return an individually attributable result or failure. Preserve the task/attempt mapping, tool-call/result pairing, command exit status, stderr and relevant output. Surface truncation and how complete evidence can be obtained. A child process exiting normally does not mean its workflow succeeded. |
 | B7 | Both layers | Know when a worker can no longer write before replacing it or reassigning its output. Explain cancellation, termination acknowledgement, session shutdown and interruption behavior. Expose uncertainty after crashes rather than treating an empty registry as proof of termination. |
 | B8 | Both layers | Preserve the commissioned write scope and evidence boundary. State whether these are instructions or sandbox enforcement. Fresh conversation isolation is not filesystem isolation; shared filesystem access must not be described as a sandbox. |
-| A1 | Layer 1 | From the analysis coordinator, launch fresh workers with exact supplied handoffs and required model/effort. Retain each worker-to-attempt mapping and collect the whole round before advancing. One successful diagnostic is not proof of multi-worker round support. |
-| A2 | Layer 1 | Expose or test enough capacity for the workflow's worker rounds. Identify global versus per-session limits, depth restrictions, queued launches and whether an idle coordinator consumes capacity. Never infer maximum capacity from one success. |
+| A1 | Layer 1 | Run `commonplace-analysis run` in the prepared worktree as one shell command lasting hours, without the harness ending it, and read its exit status and output when it ends. State the harness's command timeout and how a command outlives a tool call (a background process whose exit is awaited, a terminal the operator keeps open). |
+| A2 | Layer 1 | Let the run's workers, which are fresh headless sessions of the worker profile's harness started by code, run unattended: the harness running this agent must not prompt for, throttle or kill the child processes. Capacity for the workers is the worker harness's, checked by the worker-profile probes, not this agent's subagent pool. |
 | R1 | Layer 2 | Launch four independent coordinators without awaiting all their completions in the launch call. Return control to the orchestrator while unfinished jobs continue. Handles, callbacks or another supported completion interface may satisfy this. |
 | R2 | Layer 2 | Receive one terminal result and launch its successor while other jobs remain live. Demonstrate first-completion handling and refill; progress messages from a wait-for-all call are insufficient. |
 | R3 | Layer 2 | Distinguish active, terminating and terminal jobs; retain results until recorded or explicitly consumed. State repeated-read, cancellation, failed-start and capacity behavior. The orchestrator can retain a durable job-to-assignment mapping outside ephemeral handles. |
-| R4 | Layer 2 | Demonstrate the outer orchestrator → analysis coordinator → analytical worker path with the required isolation, tools and model/effort at each boundary. Keep analytical workers possible while four outer pipelines occupy their slots. Show the resource policy and bounded observed capacity; four leaf workers alone do not establish this layer. |
+| R4 | Layer 2 | Demonstrate the outer orchestrator → analysis coordinator → `commonplace-analysis run` path with the required isolation, tools and model/effort at each boundary. The run's own workers are processes of the worker harness, outside the subagent pool. Show the resource policy and bounded observed capacity. |
 | R5 | Layer 2 | Resolve trust and approval for the commissioned destinations before unattended dispatch. Support either bounded preapproval or an explicit operator interaction plan. Do not disable trust globally or treat external source repositories as trusted agent configuration. |
 
 The workflow owns scheduling, audit disposition, acceptance, integration and
@@ -132,12 +136,11 @@ in these probes. Return visible runtime facts, not hidden reasoning or secrets.
 - For context exclusion, inspect the launch configuration or available child
   input trace. A synthetic parent-only marker can detect leakage, but failure
   to repeat the marker is not proof of isolation. Do not use real private data.
-- Acting as the analysis coordinator, launch an approved round of harmless
-  workers with disjoint tokens or fixture outputs. Collect each result under
-  its assigned attempt token and wait for the whole round before marking the
-  simulated advance ready. Include a failed launch or worker result within the
-  approved budget; preserve it separately rather than reporting the whole round
-  successful. Do not invoke the production engine for this probe.
+- Run an approved harmless long shell command in the prepared worktree (for
+  example a script that sleeps past the harness's usual tool timeout and then
+  writes a file) the way the analysis run would be started, and show the
+  command's exit status and output were read after it ended. Do not invoke
+  the production workflow for this probe.
 
 ### Layer 2 probes: nested coordination, rolling completion and refill
 

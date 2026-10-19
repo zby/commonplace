@@ -131,29 +131,19 @@ WORKER_PROFILES = "agentic-system-analyses/instructions/analyse-agentic-system/w
 """Library-relative path of the named worker identities a run chooses from."""
 
 
-def resolve_worker_profile(data: bytes, name: str | None, *, harness: str | None = None) -> dict[str, str]:
-    """Resolve a worker profile by name, or the harness's default, to its identity.
-
-    A named profile must belong to ``harness`` when one is given.
-    """
+def resolve_worker_profile(data: bytes, name: str) -> dict[str, str]:
+    """Resolve a worker profile by name to its identity: harness, launch model and effort."""
     parsed = yaml.safe_load(data)
     profiles = parsed.get("profiles") if isinstance(parsed, dict) else None
-    defaults = parsed.get("defaults") if isinstance(parsed, dict) else None
-    if not isinstance(profiles, dict) or not profiles or not isinstance(defaults, dict):
-        raise ValueError("worker profiles need nonempty profiles and a defaults mapping")
-    if name is None:
-        if harness not in defaults:
-            raise ValueError(f"name a worker profile or a harness with a default: {', '.join(sorted(defaults))}")
-        name = defaults[harness]
+    if not isinstance(profiles, dict) or not profiles:
+        raise ValueError("worker profiles need a nonempty profiles mapping")
     if name not in profiles:
         raise ValueError(f"unknown worker profile {name!r}; choose one of {', '.join(sorted(profiles))}")
     profile = profiles[name]
     fields = ("harness", "launch-model", "effort")
-    if (not isinstance(profile, dict) or set(profile) != set(fields)
+    if (not isinstance(profile, dict) or set(profile) - {"flags"} != set(fields)
             or any(not isinstance(profile[field], str) or not profile[field].strip() for field in fields)):
-        raise ValueError(f"worker profile {name} needs exactly a harness, launch-model and effort")
-    if harness is not None and profile["harness"] != harness:
-        raise ValueError(f"worker profile {name} runs in {profile['harness']}, not {harness}")
+        raise ValueError(f"worker profile {name} needs a harness, launch-model and effort, and at most flags")
     return {"profile": name, **{field: profile[field] for field in fields}}
 
 

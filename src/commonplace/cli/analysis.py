@@ -1,4 +1,19 @@
-"""Analysis lifecycle: prepare, start, inspect and integrate; generic engine operations live in commonplace-run."""
+"""Analysis lifecycle: prepare a worktree, run an analysis in it, inspect, reset and integrate the run.
+
+    commonplace-analysis prepare --name LABEL [--revision COMMIT] [--worktree PATH] [-- COMMAND ...]
+    commonplace-analysis run --system NAME --source-identity ID --source TEXT --worker-profile NAME
+                             [--source-revision COMMIT] [--timeout SECONDS] [--max-workers N]
+    commonplace-analysis run RUN [--timeout SECONDS] [--max-workers N]      # resume from the cache
+    commonplace-analysis inspect RUN
+    commonplace-analysis reset RUN      # withdraw an unreleased worktree publication
+    commonplace-analysis integrate RUN [--model ID]
+
+`run` exits 0 when the run completed (published, or a local non-complete
+result), 2 when it stopped and printed why (a budget, a worker's problem, a
+launch failure, a usage limit, a guard's refusal, an environment error or an
+uncertain publication effect; a rerun after the repair resumes), and 1 when
+the command failed, including when another process holds the run.
+"""
 
 from __future__ import annotations
 
@@ -6,15 +21,29 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from commonplace.artifactrun import UncertainEffectError
-from commonplace.artifactrun.worktree import command_environment, prepare_worktree
-from commonplace.lib.agentic_analysis.worktree import integrate_analysis, start_analysis
+from commonplace.artifactrun.worktree import (
+    command_environment,
+    prepare_worktree,
+    require_run_code,
+)
+from commonplace.lib.agentic_analysis.worktree import (
+    OPENING,
+    RECEIPT,
+    analysis_run,
+    inspect_analysis,
+    integrate_analysis,
+    start_analysis,
+)
+
+STOPPED = 2
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="commonplace-analysis", description=__doc__)
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="commonplace-analysis", description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
     prepare = commands.add_parser("prepare", help="prepare a commit-bound worktree and local commands")
     prepare.add_argument("--name", required=True)
@@ -25,50 +54,83 @@ def main(argv: list[str] | None = None) -> int:
         help="reject unrelated uncommitted origin changes (otherwise excluded); startup mismatches always fail",
     )
     prepare.add_argument("launch", nargs=argparse.REMAINDER, help="optional fresh harness command after --")
-    start = commands.add_parser("start", help="allocate a run without advancing or acquiring sources")
-    start.add_argument("--system", required=True)
-    start.add_argument("--source-identity", required=True)
-    start.add_argument("--source", required=True)
-    start.add_argument("--source-revision")
-    start.add_argument("--worker-profile", help="worker profile from the method's worker-profiles.yaml")
-    start.add_argument("--harness", help="the harness running the workers; selects its default worker profile")
+    run = commands.add_parser("run", help="run an analysis in this prepared worktree, or resume one")
+    run.add_argument("run", nargs="?", type=Path, help="an allocated run to resume; otherwise a new run")
+    run.add_argument("--system")
+    run.add_argument("--source-identity")
+    run.add_argument("--source", help="the caller's description of the source; data, not instructions")
+    run.add_argument("--source-revision")
+    run.add_argument("--worker-profile", help="worker profile from the method's worker-profiles.yaml")
+    run.add_argument("--timeout", type=float, default=3 * 3600, help="seconds per worker launch")
+    run.add_argument("--max-workers", type=int, default=3, help="workers running at once")
+    inspect = commands.add_parser("inspect", help="print the run's state, jobs, members and receipt as JSON")
+    inspect.add_argument("run", type=Path)
+    reset = commands.add_parser("reset", help="withdraw the run's unreleased publication so a rerun can publish")
+    reset.add_argument("run", type=Path)
     integrate = commands.add_parser("integrate", help="commit exact published bytes and merge into main")
     integrate.add_argument("run", type=Path)
     integrate.add_argument("--model")
-    inspect = commands.add_parser("inspect", help="print engine evidence as JSON, not a publication audit")
-    inspect.add_argument("run", type=Path)
-    arguments = parser.parse_args(sys.argv[1:] if argv is None else argv)
-    try:
-        if arguments.command == "start":
-            print(start_analysis(Path.cwd(), system=arguments.system, source_identity=arguments.source_identity,
+    return parser
+
+
+def _run(arguments: argparse.Namespace) -> int:
+    from commonplace.headless.jobs import RunLocked
+    from commonplace.lib.agentic_analysis.workflow import run_analysis
+
+    if arguments.run is None:
+        missing = [name for name in ("system", "source_identity", "source", "worker_profile")
+                   if getattr(arguments, name) is None]
+        if missing:
+            raise ValueError("a new run needs --" + ", --".join(name.replace("_", "-") for name in missing))
+        run_dir = start_analysis(Path.cwd(), system=arguments.system, source_identity=arguments.source_identity,
                                  source=arguments.source, source_revision=arguments.source_revision,
-                                 worker_profile=arguments.worker_profile, harness=arguments.harness))
-        elif arguments.command == "integrate":
+                                 worker_profile=arguments.worker_profile)
+    else:
+        if any(getattr(arguments, name) is not None
+               for name in ("system", "source_identity", "source", "source_revision", "worker_profile")):
+            raise ValueError("a resumed run takes its parameters from its records; give the run alone")
+        run_dir, _ = analysis_run(arguments.run)
+        require_run_code(run_dir, cwd=Path.cwd())
+    print(f"run: {run_dir}", flush=True)
+    try:
+        receipt = run_analysis(run_dir, timeout=arguments.timeout, max_workers=arguments.max_workers)
+    except RunLocked as held:
+        raise ValueError(f"another process runs this analysis: {held}") from held
+    if receipt is None:
+        return STOPPED
+    print(receipt.decode("utf-8"))
+    return 0
+
+
+def _reset(run: Path) -> None:
+    from commonplace.headless.jobs import run_lock
+    from commonplace.lib.agentic_analysis.analyses import analysis_layout
+    from commonplace.lib.agentic_analysis.publication import withdraw_publication
+
+    run_dir, _ = analysis_run(run)
+    require_run_code(run_dir, cwd=Path.cwd())
+    if not (run_dir / OPENING).is_file():
+        raise ValueError("publication reset requires the run's opening metadata")
+    with run_lock(run_dir):
+        report = withdraw_publication(run_dir, json.loads((run_dir / OPENING).read_text()),
+                                      anchor=analysis_layout().path("overview"))
+        (run_dir / RECEIPT).unlink(missing_ok=True)
+        with (run_dir / "log.jsonl").open("a") as log:
+            log.write(json.dumps({"time": time.time(), "event": "withdrawn", **report}) + "\n")
+    print(json.dumps(report, indent=2))
+
+
+def main(argv: list[str] | None = None) -> int:
+    arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
+    try:
+        if arguments.command == "run":
+            return _run(arguments)
+        if arguments.command == "integrate":
             print(integrate_analysis(arguments.run, model=arguments.model))
         elif arguments.command == "inspect":
-            from commonplace.artifactrun.inspection import render_run_inspection
-
-            rendered = json.loads(render_run_inspection(arguments.run, final_job="publish"))
-            if rendered["state"] == "completed":
-                from commonplace.artifactrun.store import digest
-                from commonplace.lib.note_parser import parse_document
-
-                version = rendered["members"].get("boundary")
-                if version is None:
-                    raise ValueError("completed analysis has no boundary member")
-                # The artifact directory holds the members materialized; content identity ties it to the inspection.
-                data = (Path(rendered["artifact"]) / "boundary.md").read_bytes()
-                if digest(data) != version:
-                    raise ValueError("the materialized boundary differs from the inspected member")
-                document, error = parse_document(data.decode("utf-8"))
-                if error or document is None or not document.frontmatter:
-                    raise ValueError("completed analysis has an unreadable boundary member")
-                disposition = document.frontmatter.get("result-disposition")
-                if disposition not in ("complete", "blocked", "out-of-scope"):
-                    raise ValueError("completed analysis has no classified disposition")
-                rendered["result-disposition"] = disposition
-                rendered["completion"] = "local" if disposition != "complete" else "publication-job-completed"
-            print(json.dumps(rendered, indent=2, sort_keys=True))
+            print(json.dumps(inspect_analysis(arguments.run), indent=2, sort_keys=True))
+        elif arguments.command == "reset":
+            _reset(arguments.run)
         else:
             preparation = prepare_worktree(
                 Path.cwd(), name=arguments.name, require_clean_origin=arguments.require_clean_origin,

@@ -192,4 +192,4 @@ with the same worker.
 
 ---
 
-- [Drive a code-scheduled run](../../agentic-system-analyses/instructions/analyse-agentic-system/drive-a-code-scheduled-run.md) — see-also: the current agent-facing execution protocol, which an alternative orchestrator need not reproduce internally.
+- [Analyse an agentic system](../../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — see-also: the current execution, a Python workflow over headless workers, which an alternative orchestrator need not reproduce internally.

@@ -10,9 +10,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace import artifactrun
 from commonplace.artifactrun import effects
-from commonplace.artifactrun.store import RunStore
 from commonplace.lib.agentic_analysis import publication
 from commonplace.lib.agentic_analysis import worktree as aw
 from commonplace.lib.agentic_analysis.plan import PLAN
@@ -24,8 +22,8 @@ def git(root: Path, *args: str) -> str:
 
 
 @pytest.fixture
-def proof(tmp_path, monkeypatch):
-    """Only the engine/validation boundary is scripted; tree checks use real bytes."""
+def proof(tmp_path):
+    """The run's records are scripted; tree checks use real bytes."""
     root = tmp_path / "repo"
     root.mkdir()
     git(root, "init", "-b", "main")
@@ -40,10 +38,7 @@ def proof(tmp_path, monkeypatch):
     git(root, "commit", "-m", "Fixture method")
     method = git(root, "rev-parse", "HEAD")
     run = root / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
-    store = RunStore(run)
-    store.create({"declaration": declaration.read_text(), "plan": str(declaration),
-                  "plan_sha256": sha256(declaration.read_bytes()).hexdigest(),
-                  "type": "scripted type\n", "type_spec": "type.md"})
+    run.mkdir(parents=True)
     destination = root / aw.RETAINED_ROOT / "example"
     destination.mkdir(parents=True)
     files = {"overview.md": (f"---\nrun-id: {run.name}\ninputs-commit: {method}\n"
@@ -51,23 +46,32 @@ def proof(tmp_path, monkeypatch):
              "ARTIFACT.yaml": b"fixture manifest\n", "boundary.md": b"fixture boundary\n"}
     for name, data in files.items():
         (destination / name).write_bytes(data)
-    parameters = {"system": "Example", "source": "fixture", "source-identity": "identity"}
-    view = {"declaration": {"plan": str(declaration), "plan_sha256": sha256(declaration.read_bytes()).hexdigest(),
-                            "declaration_sha256": sha256(b"an expansion the engine fixed\n").hexdigest(),
-                            "type_spec": "type.md", "type_sha256": sha256(b"scripted type\n").hexdigest()},
-            "condition": "publishable", "failed_attempts": [], "exhausted_jobs": [], "parameters": parameters}
+    parameters = {"system": "Example", "source": "fixture", "source-identity": "identity",
+                  "worker-profile": "pi-luna", "command-path": "/commands"}
+    pins = {name: parameters[name] for name in ("system", "source-identity", "source")}
+    opening = {"run-id": run.name, "inputs-commit": method, **pins, "source-revision": None,
+               "review-path": str(destination), "expected-incumbent-sha256": "absent"}
     receipt = {"published": True, "destination": str(destination), "members": effects.hashes(files),
-               "run-id": run.name, "inputs-commit": method, **parameters, "source-revision": None,
+               "run-id": run.name, "inputs-commit": method, **pins, "source-revision": None,
                "expected-incumbent-sha256": "absent"}
-    engine = SimpleNamespace(view=view, receipt=receipt, current=True)
-    monkeypatch.setattr(artifactrun, "inspect", lambda run_dir: engine.view)
-    monkeypatch.setattr(artifactrun, "current_outputs", lambda run_dir, job: (
-        {"receipt": json.dumps(engine.receipt).encode()} if engine.current else None))
+    records = SimpleNamespace(parameters=parameters, opening=opening, receipt=receipt)
     return SimpleNamespace(root=root, method=method, run=run, destination=destination,
-                           files=files, engine=engine, receipt=receipt)
+                           files=files, records=records, receipt=receipt)
+
+
+def write_records(proof):
+    """Write the run's current records; a record set to None is absent."""
+    for path, record in ((aw.PARAMETERS, proof.records.parameters), (aw.OPENING, proof.records.opening),
+                         (aw.RECEIPT, proof.records.receipt)):
+        target = proof.run / path
+        target.unlink(missing_ok=True)
+        if record is not None:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(record))
 
 
 def verify(proof):
+    write_records(proof)
     return aw._integration_publication(proof.run, proof.root, proof.method)
 
 
@@ -93,20 +97,23 @@ def test_exact_retained_tree_required(proof, change):
     assert git(proof.root, "diff", "--cached", "--name-only") == ""
 
 
-@pytest.mark.parametrize("case", ["not-current", "uncovered", "failed", "exhausted", "local", "other-method"])
-def test_engine_completion_is_required_independently(proof, case):
-    if case == "not-current":
-        proof.engine.current = False
-    elif case == "uncovered":
-        proof.engine.view["condition"] = "running"
-    elif case == "failed":
-        proof.engine.view["failed_attempts"] = ["a failed attempt"]
-    elif case == "exhausted":
-        proof.engine.view["exhausted_jobs"] = ["verify"]
+@pytest.mark.parametrize("case", ["no-receipt", "no-opening", "local", "receipt-run-id",
+                                  "receipt-method", "opening-method", "receipt-pins"])
+def test_publication_records_are_required(proof, case):
+    if case == "no-receipt":
+        proof.records.receipt = None
+    elif case == "no-opening":
+        proof.records.opening = None
     elif case == "local":
-        proof.engine.receipt = {"published": False}
+        proof.records.receipt = {"published": False}
+    elif case == "receipt-run-id":
+        proof.receipt["run-id"] = "AAS-2026-01-01-example-abcdefabcdef-02"
+    elif case == "receipt-method":
+        proof.receipt["inputs-commit"] = "0" * 40
+    elif case == "opening-method":
+        proof.records.opening["inputs-commit"] = "0" * 40
     else:
-        proof.engine.view["declaration"]["plan_sha256"] = "0" * 64
+        proof.receipt["source"] = "a different source"
     with pytest.raises(ValueError):
         verify(proof)
 
@@ -122,6 +129,7 @@ def test_archive_must_equal_the_git_incumbent(proof):
     git(proof.root, "commit", "-m", "Fixture incumbent")
     proof.method = git(proof.root, "rev-parse", "HEAD")
     proof.receipt["inputs-commit"] = proof.method
+    proof.records.opening["inputs-commit"] = proof.method
     proof.receipt["expected-incumbent-sha256"] = sha256(old["overview.md"]).hexdigest()
     proof.files["overview.md"] = (f"---\nrun-id: {proof.run.name}\ninputs-commit: {proof.method}\n"
                                   "result-disposition: complete\nreviewed-boundary: revision\n---\n").encode()
@@ -150,8 +158,7 @@ def test_integration_git_actions_are_scoped_and_merge(proof, monkeypatch, tmp_pa
     shutil.rmtree(proof.destination)
     run = tree / proof.run.relative_to(origin)
     run.mkdir(parents=True)
-    (run / "run.json").write_text("{}")
-    (run / "state").mkdir()
+    (run / aw.PARAMETERS).write_text(json.dumps(proof.records.parameters))
     preparation = {"status": "ready", "worktree": str(tree), "origin": str(origin),
                    "commit": proof.method, "token": "abcdefabcdef"}
     tree.with_name(tree.name + ".preparation.json").write_text(json.dumps(preparation))

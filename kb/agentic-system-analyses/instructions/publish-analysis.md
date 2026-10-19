@@ -6,17 +6,17 @@ type: types/instruction.md
 # Publish an accepted analysis
 
 Expose one accepted complete analysis per source while preserving exact accepted
-bytes. Only the coordinator loads this instruction. Analyst obligations end at
-their assigned outputs. No regeneration or Git authority follows from this
-instruction.
+bytes. Only the agent running the analysis loads this instruction; workers do
+not. Analyst obligations end at their assigned outputs. No regeneration or Git
+authority follows from this instruction.
 
-Let the bound assembly and publication jobs run through `commonplace-run advance`
-in the prepared worktree. They require exact members, current acceptance and
-relation coverage, pinned validation criteria, completed producer provenance,
-frozen source and unchanged method/code. Assembly produces the exact-byte
-manifest separately from the engine's type-only working projection in `artifact/`.
-Publication consumes the pinned manifest and members, not a second `output/` artifact.
-There is no standalone finalize, handoff or publication command.
+Assembly and publication are the last steps of `commonplace-analysis run` in
+the prepared worktree. They require exact members, every member passing its
+check against the current members, pinned validation criteria, producer
+provenance from the harness records, frozen source and unchanged method/code.
+Assembly produces the exact-byte manifest; publication consumes the pinned
+manifest and members from the run's `artifact/`. There is no standalone
+finalize, handoff or publication command.
 
 A `complete` disposition publishes GitHub sources to
 `retained/<owner>--<project>/`, lowercasing both components and preserving
@@ -24,10 +24,9 @@ repository punctuation. Other source kinds retain their existing naming.
 Publication names do not change run IDs. An incumbent
 moves unchanged to `retained-archive/<its-run-id>/`, then the accepted manifest
 and members are copied unchanged. `blocked` and `out-of-scope` dispositions
-complete locally without retained mutation. Use `commonplace-analysis
-report <run>` to distinguish these results. Its `completed` state means
-the bound job completed on current inputs; neither that state nor engine
-publishability is a fresh audit of retained files.
+complete locally without retained mutation. `commonplace-analysis inspect
+<run>` distinguishes these results: `published` means the receipt says so,
+`local` a non-complete result; neither is a fresh audit of retained files.
 
 After the report and separate operator authorization, run
 `commonplace-analysis integrate <run>` with the prepared worktree's
