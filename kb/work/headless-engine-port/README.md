@@ -42,6 +42,10 @@ judgment become code.
   are inspected, reset and integrated (phase 6).
 - **Compare only same-model runs** when judging equivalence (Luna on pi for
   tests, Sol on Codex for production).
+- **The port declines the requirements listed under
+  [Exclusions for phase 3](#exclusions-for-phase-3-2026-10-19)** (Astra's
+  review, 2026-10-19). Each exclusion names the machinery it removes; code
+  that restores one is a behaviour change to decide, not robustness work.
 
 ## What stays, what goes
 
@@ -118,12 +122,31 @@ Each phase ends with the selected tests passing and a commit.
    verification with its correction loop, memory profile and its
    verification, synthesis and its verification, assemble, publish. Prompts
    are composed from the existing `jobs-engine/*.md` instructions and prompt
-   section. A fake-harness end-to-end test drives the complete, blocked and
-   out-of-scope branches. Bound by the exclusions below; the correction
-   cascade in explicit order is the main result.
+   section. The script is ordinary functions for this one workflow:
+   - The correction cascade is written in explicit order. A verifier's
+     refusal leads directly to the correction calls of the authors it
+     refused, their checks, then the verifier again, under ADR 108's budgets
+     held as plain counters in the calling function (gap 3). No readiness,
+     judgment-scope or coverage state is kept; publication asserts that every
+     required member's current bytes passed its check.
+   - The script asserts the worktree pins at start (HEAD equals the
+     preparation commit, clean tree, running package equals the method
+     commit) and relies on them for cache replay; it does not discover what
+     a worker read.
+   - A process killed between a launch and its record repeats that work on
+     the rerun; the script does not reconcile interrupted attempts.
+   - Provenance is filled from the launch records (audit item 1).
+   A fake-harness end-to-end test drives the complete, blocked and
+   out-of-scope branches, plus one cascade: a report verification refusal
+   that corrects two authors, re-checks them and re-verifies, and a budget
+   exhausted mid-cascade. The review of the script checks each exclusion
+   against the code: which machinery it removed, and whether any crept back.
 4. **Commands and instructions.** `commonplace-analysis prepare` stays;
-   `start` plus the driver become one `run` command without `--harness`;
-   `inspect`, `integrate` and the publication reset read the new records.
+   `start` plus the driver become one `run` command without `--harness` that
+   refuses a second controller through the run lock; `inspect` becomes a
+   status view over `log.jsonl` and the answer cache; a retry is deleting a
+   cache entry and rerunning; `integrate` and the publication reset read the
+   new records, and the reset keeps its journal reconciliation.
    Rewrite `SKILL.md` and the worker rules (audit items 5 and 8); delete
    `drive-a-code-scheduled-run.md` and the Pi coordinator agent if nothing
    else needs them; update `commands.md` and the prompt section.
@@ -133,9 +156,10 @@ Each phase ends with the selected tests passing and a commit.
    defects of the port. Then a small batch (3–5 systems) driven by a loop over
    systems.
 6. **Retire the engine.** ADR revising 113 and 117 (and 101/106 where run
-   start and IDs change). Decide how old worktree runs stay inspectable and
-   integrable (likely: their own pinned `.venv`, since `prepare` installs one
-   per worktree; verify). Delete `artifactrun/`, its tests, `commonplace-run`,
+   start and IDs change), stating the declined requirements and attempts as
+   recorded executions. Unfinished engine runs are not migrated: decide how
+   old worktree runs stay inspectable and integrable (likely: their own
+   pinned `.venv`, since `prepare` installs one per worktree; verify). Delete `artifactrun/`, its tests, `commonplace-run`,
    `run_values` in `validate_notes`, and `prepare`'s origin startup guard and
    HEAD-behind-main stop (audit item 6). Close this workshop and
    `headless-analysis`.
@@ -255,13 +279,9 @@ Three contracts follow from it:
   silently replaced incumbent. Simplification stops at the publication
   boundary.
 
-Phase 3's decision gate gains a second trigger beside the line count: needing
-a scheduler inside the script (any readiness or coverage state beyond the
-call stack) means the simpler model has failed, and the declarative layer is
-reconsidered rather than a scheduler written. The correction cascade (a
-refusal leads directly to the affected correction calls and the renewed
-verification, in explicit order) is the part the primitives have not yet
-demonstrated; it is phase 3's main result.
+The plan's phase 3, phase 4, phase 6 and the decision gate carry these into
+the work. The correction cascade in explicit order is the part the
+primitives have not yet demonstrated; it is phase 3's main result.
 
 ## Phase 2 results (2026-10-18)
 
@@ -371,6 +391,10 @@ Points the ADR retiring the engine must state:
   The consistency needed reduces to a per-key lock, atomic record writes and
   a run lock against a second process. Whether the verification cascade keeps
   it that small is what phase 3 shows.
+- **The declined requirements** from the exclusions table, each with the
+  machinery it removes, and the three contracts (cache over a pinned
+  environment, repeated work after an interruption, publication guarantees
+  kept). An attempt is a recorded execution of a job.
 
 ## Returns to decision
 
@@ -378,8 +402,9 @@ Points the ADR retiring the engine must state:
   limits), the port targets the others, and that harness is listed as
   unsupported.
 - After phase 3: if the script exceeds about 600 lines of control flow, or
-  the verification cascade does not fit plain calls, reconsider a small
-  declarative layer before phase 4.
+  the verification cascade does not fit plain calls, or the script needs a
+  scheduler (readiness or coverage state beyond the call stack), reconsider
+  a small declarative layer before phase 4 rather than writing the scheduler.
 - Phase 5 is the decision point for adoption; nothing in phases 1–3 deletes
   engine code.
 - Batch launching (a shell loop over systems) is barred for batch 22; for the
