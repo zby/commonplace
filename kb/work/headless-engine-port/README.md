@@ -347,6 +347,80 @@ collective re-check follows). The second pilot attempt runs on the commit
 before these fixes; neither defect can affect it unless a launch fails or
 two analysts are corrected in one round, which its records will show.
 
+Second attempt (worktree `2390eec63b75`, method `2b70d329d`, run
+`AAS-2026-10-19-dynamic-cheatsheet-2390eec63b75-01`): published, with the
+incumbent (`ca0a0b29d273`) archived. Every worker was accepted on its first
+attempt; no launch failed, no check rejected, no verifier refused, no worker
+reported a problem. The pinned artifact validates clean in the worktree
+(`commonplace-validate` on the retained directory), and `inspect` reports
+`published`.
+
+| Worker | Headless seconds | Engine range (4 runs) |
+|---|---|---|
+| boundary | 196 | 188–249 |
+| runtime | 299 | 268–405 |
+| memory, epistemic, workflow (parallel) | 279, 368, 158 | ≤384–508 each, sharing one end |
+| reconciliation | 135 | 151–196 |
+| report-verification | 328 | 188–324 |
+| memory-profile | 259 | 233–363 |
+| profile-verification | 192 | 170–219 |
+| synthesis | 207 | 220–244 |
+| synthesis-verification | 180 | 162–184 |
+
+Totals: 11 worker attempts (engine: 10–13), 0 corrections (engine: 0–1),
+wall time 39:56 from `start` to `published` (engine: 39:40–46:52), of which
+opening took 90 s and assembly plus publication 113 s; worker seconds sum to
+43:21 (engine: 47:16–51:26). Launch records: `pi --print --model
+gpt-6.1-sol:medium --session-id <uuid>` plus the unattended flag; each
+answer's `model` is the one Pi's session file records, `gpt-6.1-sol`, where
+the engine route's manifests carried the worker's self-report
+`openai/gpt-6.1-sol` (the provider prefix is not in Pi's record; decide
+whether the manifest should carry Pi's `provider` field too).
+
+What the pilot establishes: real workers of the production profile complete
+the whole workflow headlessly, with self-validation, the analysis's checks,
+three verifications and publication, at the engine route's cost. What it
+does not establish: the correction cascade under real workers (no refusal
+occurred; the fake-harness tests cover it), and relaunch behaviour (no launch
+failed). Content comparison of the headless members against the engine's
+retained ones (read-only, by an Opus agent): the same classifications
+(target class, boundary kind, evidence tier, disposition, every
+memory-comparison axis `partial`), the same consequential mechanism claims
+(whole-text cheatsheet replacement gated only by the opening tag, scoring
+after adoption, the six approaches, the post-execution depth check,
+non-atomic checkpoints), no blockers in any of the six verifications, and
+syntheses that agree in substance. Differences are of the kind model
+variance produces: 22 declared records against the engine's 35 (the engine
+split the memory and epistemic objects more finely and recorded four
+supersessions), differently cut runtime routes and epistemic stages, and
+differing unit judgments in the memory profile (whether the precomputed
+embeddings and the retained targets count as memory; decay and invalidate
+operations). No identity field, path or run state of the other route
+appears in either set. Two route-level observations: the engine's memory
+member ended with a "Validation: passed" line and no headless member
+records its self-validation, but every one of the eleven Pi transcripts
+holds the `commonplace-validate` call, so the check ran and the members
+simply do not say so; and the headless members cite line ranges in some
+quote attributions (`path:241-480` for a one-line quote), which the rules
+allow but which looks like the read tool's ranges leaking through.
+
+Decisions for the operator at this point:
+
+- Adopt the port (phase 6): the pilot completed at the engine's cost with
+  the same method, and the fake-harness tests cover what the pilot could
+  not exercise (the correction cascade, relaunches, interrupted runs).
+- The deviations kept since phase 3: stop before corrections at a
+  verifier's last attempt; the criteria superset in checks; the refusal body
+  without frontmatter; reconciliation's fresh asks spending its budget.
+- The relaunch policy (two relaunches, 30 s and 120 s): no headless launch
+  has failed yet, so there is no observation to re-derive it from.
+- Batch launching: a shell loop over `commonplace-analysis prepare --name X
+  -- commonplace-analysis run ...` per system, with `--max-workers`
+  bounding each run; the Pi coordinator agent and `check-subagent-harness`
+  layer 2 then go.
+- Whether to integrate the pilot's publication (it archives the 10-12
+  incumbent) or keep it as evidence only.
+
 ## Phase 4 results (2026-10-19)
 
 The code moved into the package and is pinned by the worktree guards like
