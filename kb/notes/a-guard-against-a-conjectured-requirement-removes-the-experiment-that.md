@@ -1,5 +1,5 @@
 ---
-description: "A guard against an unstated requirement fixes the cause at the value where the conjecture and its negation agree, so it immunizes the conjecture; explains why test-selected agents guard by default and when omitting is the learning move"
+description: "A guard against an unstated requirement holds the condition at the value where the conjecture and its negation agree, so it immunizes the conjecture; explains why test-selected agents guard by default and when omitting is the learning move"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [llm-reliability, evaluation, learning-theory]
